@@ -1,0 +1,49 @@
+name: dev
+
+on: 
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    env:
+        projName: V2RayGCon
+        projCfg: Release
+
+    runs-on: windows-latest
+
+    steps:
+
+        - name: Checkout master
+          uses: actions/checkout@v2
+          with:
+            ref: dev
+
+        - name: Show versions
+          run: |
+            python --version
+            echo "power shell version:"
+            $Host.Version
+
+        - name: Setup .net framework env
+          uses: vrnobody/Setup-DotNetFrameworkEnv@v1
+
+        - name: Restore packages
+          run: nuget restore ${env:projName}.sln
+
+        - name: Build with MSBuild
+          run: msbuild ${env:projName}.sln -p:Configuration=${env:projCfg}
+
+        - name: Run unit tests
+          run: |
+            function Invoke-VSTest {
+              & "vstest.console.exe" $args
+              if(-not $?){ throw "fail!" }
+            }
+            Invoke-VSTest "V2RayGConTests\bin\${{ env.projCfg }}\V2RayGCon.Test.dll"
+            Invoke-VSTest "VgcApisTests\bin\${{ env.projCfg }}\VgcApisTests.dll"
+            Invoke-VSTest "Plugins\ProxySetterTests\bin\${{ env.projCfg }}\ProxySetterTests.dll"
+
+        - name: All done!
+          run: echo "All done!"

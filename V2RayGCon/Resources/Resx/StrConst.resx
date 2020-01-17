@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="config_min" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Config\config_min.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="DownloadLinkTpl" xml:space="preserve">
+    <value>https://github.com/v2ray/v2ray-core/releases/download/{0}/{1}</value>
+  </data>
+  <data name="PkgWin32" xml:space="preserve">
+    <value>v2ray-windows-32.zip</value>
+  </data>
+  <data name="DefCoreVersion" xml:space="preserve">
+    <value>v3.26</value>
+  </data>
+  <data name="ExecutableV2ray" xml:space="preserve">
+    <value>v2ray.exe</value>
+  </data>
+  <data name="DummyServ1" xml:space="preserve">
+    <value>vmess://ew0KICAicHMiOiAiZHVtbXkxIiwNCiAgImFkZCI6ICIxLjIuMy40IiwNCiAgInBvcnQiOiAiNDQzIiwNCiAgImlkIjogImI4NzNkNWY0LTMyNjEtNGYxOS04MGE3LWYwZTY3YzkwYzA4MiIsDQogICJhaWQiOiAiMTAwIiwNCiAgIm5ldCI6ICJ3cyIsDQogICJ0eXBlIjogIm5vbmUiLA0KICAiaG9zdCI6ICIvcmF5IiwNCiAgInRscyI6ICJ0bHMiDQp9</value>
+  </data>
+  <data name="DummyServ2" xml:space="preserve">
+    <value>vmess://ew0KICAicHMiOiAiZHVtbXkyIiwNCiAgImFkZCI6ICIyLjMuNC41IiwNCiAgInBvcnQiOiAiMTIzNCIsDQogICJpZCI6ICI1NjIxODM4ZS1hYmM1LTRiNmQtOWQzMS00MmUwOGE3ZWMzMmYiLA0KICAiYWlkIjogIjY0IiwNCiAgIm5ldCI6ICJ0Y3AiLA0KICAidHlwZSI6ICJub25lIiwNCiAgImhvc3QiOiAiIiwNCiAgInRscyI6ICIiDQp9</value>
+  </data>
+  <data name="PkgWin64" xml:space="preserve">
+    <value>v2ray-windows-64.zip</value>
+  </data>
+  <data name="ExtPng" xml:space="preserve">
+    <value>PNG Files|*.png|All File|*.*</value>
+  </data>
+  <data name="LatestCoreLink" xml:space="preserve">
+    <value>https://github.com/v2ray/v2ray-core/releases/latest</value>
+  </data>
+  <data name="PatternDownloadLink" xml:space="preserve">
+    <value>/v2ray/v2ray-core/releases/download/(v[\.0-9]+)/v2ray-windows-64.zip</value>
+  </data>
+  <data name="V2rayCoreReleasePageUrl" xml:space="preserve">
+    <value>https://github.com/v2ray/v2ray-core/releases</value>
+  </data>
+  <data name="PatternLatestVGC" xml:space="preserve">
+    <value>/nobody3u/V2RayGCon/releases/tag/([\.0-9]+)</value>
+  </data>
+  <data name="TplUrlVGCRelease" xml:space="preserve">
+    <value>https://github.com/nobody3u/V2RayGCon/releases/tag/{0}</value>
+  </data>
+  <data name="UrlLatestVGC" xml:space="preserve">
+    <value>https://github.com/nobody3u/V2RayGCon/releases/latest</value>
+  </data>
+  <data name="VlinkWiki" xml:space="preserve">
+    <value>https://github.com/nobody3u/V2RayGCon/wiki/vlink</value>
+  </data>
+  <data name="config_pkg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Config\config_pkg.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="config_example" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Config\config_example.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="ExtJs" xml:space="preserve">
+    <value>JS Files|*.js|All File|*.*</value>
+  </data>
+  <data name="Nobody3uVideoUrl" xml:space="preserve">
+    <value>https://www.youtube.com/watch?v=BA7fdSkp8ds</value>
+  </data>
+  <data name="ExecutableV2ctl" xml:space="preserve">
+    <value>v2ctl.exe</value>
+  </data>
+  <data name="StatsQueryParamTpl" xml:space="preserve">
+    <value>api --server="127.0.0.1:{0}" StatsService.GetStats "name: """"inbound&gt;&gt;&gt;agentin&gt;&gt;&gt;traffic&gt;&gt;&gt;{1}"""" reset: true"</value>
+  </data>
+  <data name="ConfigJsonKeywords" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Files\CSharp\ConfigJsonKeywords.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="config_tpl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Config\config_tpl.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+</root>

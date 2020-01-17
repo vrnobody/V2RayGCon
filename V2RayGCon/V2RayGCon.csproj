@@ -1,0 +1,603 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7B799000-E68F-450F-84AF-5EC9A5EFF384}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>V2RayGCon</RootNamespace>
+    <AssemblyName>V2RayGCon</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>V2RayGCon.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>V2RayGCon.ruleset</CodeAnalysisRuleSet>
+    <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon_dark.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>B138403422E8D97959E0334B6B877C6AED20CFB9</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>V2RayGCon_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutocompleteMenu-ScintillaNET, Version=1.3.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoCompleteMenu-ScintillaNET.1.6.1\lib\net40\AutocompleteMenu-ScintillaNET.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoUpdater.NET, Version=1.5.3.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autoupdater.NET.Official.1.5.3\lib\net40\AutoUpdater.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetZip, Version=1.13.3.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.13.3\lib\net40\DotNetZip.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="KeraLua, Version=1.0.14.0, Culture=neutral, PublicKeyToken=6a194c04b9c89217, processorArchitecture=MSIL">
+      <HintPath>..\packages\KeraLua.1.0.14\lib\net45\KeraLua.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLua, Version=1.4.18.0, Culture=neutral, PublicKeyToken=6a194c04b9c89217, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLua.1.4.18\lib\net45\NLua.dll</HintPath>
+    </Reference>
+    <Reference Include="ScintillaNET, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\jacobslusser.ScintillaNET.3.6.3\lib\net40\ScintillaNET.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="zxing, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.4\lib\net40\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.4\lib\net40\zxing.presentation.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants\Strings.cs" />
+    <Compile Include="Controllers\FormOptionComponent\TabDefaults.cs" />
+    <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
+    <Compile Include="Models\Datas\SpeedTestOptions.cs" />
+    <Compile Include="Models\Datas\UpdateInfo.cs" />
+    <Compile Include="Services\Caches\JsonAcm.cs" />
+    <Compile Include="Controllers\ConfigerComponent\MenuUpdater.cs" />
+    <Compile Include="Controllers\CoreServerComponent\Configer.cs" />
+    <Compile Include="Controllers\CoreServerComponent\CoreCtrl.cs" />
+    <Compile Include="Controllers\CoreServerComponent\CoreStates.cs" />
+    <Compile Include="Controllers\CoreServerComponent\Logger.cs" />
+    <Compile Include="Controllers\FormConfigerCtrl.cs" />
+    <Compile Include="Controllers\ConfigerComponent\Editor.cs" />
+    <Compile Include="Controllers\ConfigerComponent\Import.cs" />
+    <Compile Include="Controllers\ConfigerComponent\EnvVar.cs" />
+    <Compile Include="Controllers\ConfigerComponent\Shadowsocks.cs" />
+    <Compile Include="Controllers\ConfigerComponent\VGC.cs" />
+    <Compile Include="Controllers\ConfigerComponent\StreamSettings.cs" />
+    <Compile Include="Controllers\ConfigerComponent\Vmess.cs" />
+    <Compile Include="Controllers\FormMainComponent\FlyServer.cs" />
+    <Compile Include="Controllers\FormMainComponent\FormMainComponentController.cs" />
+    <Compile Include="Controllers\FormMainComponent\MenuItemsSelect.cs" />
+    <Compile Include="Controllers\FormMainComponent\MenuItemsServer.cs" />
+    <Compile Include="Controllers\FormMainComponent\MenuItemsBasic.cs" />
+    <Compile Include="Controllers\FormMainCtrl.cs" />
+    <Compile Include="Controllers\ConfigerComponent\Quick.cs" />
+    <Compile Include="Controllers\FormOptionComponent\OptionComponentController.cs" />
+    <Compile Include="Controllers\FormOptionComponent\Import.cs" />
+    <Compile Include="Controllers\FormOptionComponent\TabPlugin.cs" />
+    <Compile Include="Controllers\FormOptionComponent\TabSetting.cs" />
+    <Compile Include="Controllers\FormOptionComponent\Subscription.cs" />
+    <Compile Include="Controllers\FormOptionCtrl.cs" />
+    <Compile Include="Libs\Lua\ApiComponents\UtilsApi.cs" />
+    <Compile Include="Libs\Lua\ApiComponents\WebApi.cs" />
+    <Compile Include="Libs\Lua\Apis.cs" />
+    <Compile Include="Libs\Sys\ChildProcessTracker.cs" />
+    <Compile Include="Libs\Sys\DllLoader.cs" />
+    <Compile Include="Libs\QRCode\HybridBinarizer.cs" />
+    <Compile Include="Libs\QRCode\QRCode.cs" />
+    <Compile Include="Libs\Sys\SafeNativeMethods.cs" />
+    <Compile Include="Misc\UI.cs" />
+    <Compile Include="Libs\Sys\CancelableTimeout.cs" />
+    <Compile Include="BaseClasses\IFormMainFlyPanelComponent.cs" />
+    <Compile Include="BaseClasses\IFormComponentController.cs" />
+    <Compile Include="BaseClasses\FormController.cs" />
+    <Compile Include="Controllers\ConfigerComponent\ConfigerComponentController.cs" />
+    <Compile Include="Models\Datas\PluginInfoItem.cs" />
+    <Compile Include="Models\Datas\ServerTracker.cs" />
+    <Compile Include="Models\Datas\UserSettings.cs" />
+    <Compile Include="Libs\V2Ray\Core.cs" />
+    <Compile Include="BaseClasses\ICacheComponent.cs" />
+    <Compile Include="BaseClasses\FormComponentController.cs" />
+    <Compile Include="BaseClasses\NotifyComponent.cs" />
+    <Compile Include="BaseClasses\SingletonService.cs" />
+    <Compile Include="Models\Datas\ImportItem.cs" />
+    <Compile Include="Models\VeeShareLinks\Utils.cs" />
+    <Compile Include="Models\VeeShareLinks\Ver1a.cs" />
+    <Compile Include="Services\Caches\JsonBestMatchItems.cs" />
+    <Compile Include="Services\Caches\JsonKeywordItems.cs" />
+    <Compile Include="Services\ConfigMgr.cs" />
+    <Compile Include="Services\Launcher.cs" />
+    <Compile Include="Services\PluginsServer.cs" />
+    <Compile Include="Services\ServersComponents\IndexHandler.cs" />
+    <Compile Include="Services\ServersComponents\QueryHandler.cs" />
+    <Compile Include="Services\ShareLinkComponents\Codecs.cs" />
+    <Compile Include="Services\ShareLinkComponents\VeeCodecs\IVeeDecoder.cs" />
+    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Vee1a.cs" />
+    <Compile Include="Models\VeeShareLinks\Ver0a.cs" />
+    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Vee0a.cs" />
+    <Compile Include="Services\ShareLinkComponents\VeeDecoder.cs" />
+    <Compile Include="Services\ShareLinkComponents\VmessDecoder.cs" />
+    <Compile Include="Services\ShareLinkComponents\SsDecoder.cs" />
+    <Compile Include="Services\ShareLinkComponents\V2cfgDecoder.cs" />
+    <Compile Include="Services\ShareLinkMgr.cs" />
+    <Compile Include="Services\Updater.cs" />
+    <Compile Include="Views\UserControls\ImportUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\ImportUI.Designer.cs">
+      <DependentUpon>ImportUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Servers.cs" />
+    <Compile Include="Models\Datas\StreamComponent.cs" />
+    <Compile Include="Models\Datas\LockValuePair.cs" />
+    <Compile Include="Controllers\CoreServerCtrl.cs" />
+    <Compile Include="Models\Datas\SubscriptionItem.cs" />
+    <Compile Include="Views\UserControls\PluginInfoUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\PluginInfoUI.Designer.cs">
+      <DependentUpon>PluginInfoUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\ServerUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\ServerUI.Designer.cs">
+      <DependentUpon>ServerUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\SubscriptionUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\SubscriptionUI.Designer.cs">
+      <DependentUpon>SubscriptionUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\WelcomeUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\WelcomeUI.Designer.cs">
+      <DependentUpon>WelcomeUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Caches\CoreCache.cs" />
+    <Compile Include="BaseClasses\CacheComponent.cs" />
+    <Compile Include="Services\Caches\HTML.cs" />
+    <Compile Include="Models\Datas\Enums.cs" />
+    <Compile Include="Models\Datas\Shadowsocks.cs" />
+    <Compile Include="Models\Datas\Table.cs" />
+    <Compile Include="Resources\Resx\StrConst.Designer.cs">
+      <DependentUpon>StrConst.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Resx\I18N.zh-CN.Designer.cs">
+      <DependentUpon>I18N.zh-CN.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Resx\I18N.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>I18N.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Datas\Vmess.cs" />
+    <Compile Include="Services\Cache.cs" />
+    <Compile Include="Services\Caches\Template.cs" />
+    <Compile Include="Libs\Nets\Downloader.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Views\WinForms\FormConfiger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormConfiger.Designer.cs">
+      <DependentUpon>FormConfiger.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForms\FormDownloadCore.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormDownloadCore.Designer.cs">
+      <DependentUpon>FormDownloadCore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForms\FormImportLinksResult.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormImportLinksResult.Designer.cs">
+      <DependentUpon>FormImportLinksResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForms\FormBatchModifyServerSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormBatchModifyServerSetting.Designer.cs">
+      <DependentUpon>FormBatchModifyServerSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForms\FormSingleServerLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormSingleServerLog.Designer.cs">
+      <DependentUpon>FormSingleServerLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForms\FormLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormLog.Designer.cs">
+      <DependentUpon>FormLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForms\FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Settings.cs" />
+    <Compile Include="Misc\Utils.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Notifier.cs" />
+    <Compile Include="Libs\QRCode\QRCodeSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormOption.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormOption.Designer.cs">
+      <DependentUpon>FormOption.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForms\FormQRCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormQRCode.Designer.cs">
+      <DependentUpon>FormQRCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForms\FormSimAddVmessClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormSimAddVmessClient.Designer.cs">
+      <DependentUpon>FormSimAddVmessClient.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Views\UserControls\PluginInfoUI.resx">
+      <DependentUpon>PluginInfoUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\PluginInfoUI.zh-CN.resx">
+      <DependentUpon>PluginInfoUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\ServerUI.resx">
+      <DependentUpon>ServerUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\ServerUI.zh-CN.resx">
+      <DependentUpon>ServerUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\ImportUI.resx">
+      <DependentUpon>ImportUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\ImportUI.zh-CN.resx">
+      <DependentUpon>ImportUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\SubscriptionUI.resx">
+      <DependentUpon>SubscriptionUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\SubscriptionUI.zh-CN.resx">
+      <DependentUpon>SubscriptionUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\WelcomeUI.resx">
+      <DependentUpon>WelcomeUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\WelcomeUI.zh-CN.resx">
+      <DependentUpon>WelcomeUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Resources\Resx\StrConst.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StrConst.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resx\I18N.zh-CN.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>I18N.zh-CN.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resx\I18N.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>I18N.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormBatchModifyServerSetting.resx">
+      <DependentUpon>FormBatchModifyServerSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormBatchModifyServerSetting.zh-CN.resx">
+      <DependentUpon>FormBatchModifyServerSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormConfiger.resx">
+      <DependentUpon>FormConfiger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormConfiger.zh-CN.resx">
+      <DependentUpon>FormConfiger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormDownloadCore.resx">
+      <DependentUpon>FormDownloadCore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormImportLinksResult.resx">
+      <DependentUpon>FormImportLinksResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormImportLinksResult.zh-CN.resx">
+      <DependentUpon>FormImportLinksResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormSingleServerLog.resx">
+      <DependentUpon>FormSingleServerLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormSingleServerLog.zh-CN.resx">
+      <DependentUpon>FormSingleServerLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormLog.resx">
+      <DependentUpon>FormLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormLog.zh-CN.resx">
+      <DependentUpon>FormLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormMain.zh-CN.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormOption.resx">
+      <DependentUpon>FormOption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormOption.zh-CN.resx">
+      <DependentUpon>FormOption.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormQRCode.resx">
+      <DependentUpon>FormQRCode.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormQRCode.zh-CN.resx">
+      <DependentUpon>FormQRCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormDownloadCore.zh-CN.resx">
+      <DependentUpon>FormDownloadCore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormSimAddVmessClient.resx">
+      <DependentUpon>FormSimAddVmessClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormSimAddVmessClient.zh-CN.resx">
+      <DependentUpon>FormSimAddVmessClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Resources\Files\lua\Example.lua" />
+    <None Include="Resources\Files\lua\libs\utils.lua" />
+    <None Include="Resources\Files\lua\modules\logger.lua" />
+    <None Include="Resources\Files\lua\modules\reader.lua" />
+    <None Include="Resources\Files\lua\modules\set.lua" />
+    <None Include="Resources\Files\lua\modules\writer.lua" />
+    <None Include="Resources\Files\lua\UnitTests.lua" />
+    <None Include="Resources\Files\templates\basic\basic.json" />
+    <None Include="Resources\Files\templates\routing\whitelist.json" />
+    <None Include="V2RayGCon.ruleset" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon_dark.ico" />
+    <Content Include="Resources\Files\CSharp\ConfigJsonKeywords.txt" />
+    <None Include="Resources\Icon\TaskTray\RemoteServer_16x.png" />
+    <None Include="Resources\Icon\FormMainToolStrip\ExpandScope_16x.png" />
+    <None Include="Resources\Icon\TaskTray\Module_16x.png" />
+    <None Include="Resources\Icon\ServerUI\StepOverArrow_16x.png" />
+    <None Include="Resources\Icon\ServerUI\StepBackArrow_16x.png" />
+    <None Include="Resources\Icon\ServerUI\GlyphUp_16x.png" />
+    <None Include="Resources\Icon\TaskTray\ExpandScope_16x.png" />
+    <None Include="Resources\Icon\TaskTray\WindowsForm_16x.png" />
+    <None Include="Resources\Icon\TaskTray\StatusHelp_16x.png" />
+    <None Include="Resources\Icon\TaskTray\Settings_16x.png" />
+    <None Include="Resources\Icon\TaskTray\FSInteractiveWindow_16x.png" />
+    <None Include="Resources\Icon\TaskTray\EditWindow_16x.png" />
+    <None Include="Resources\Icon\TaskTray\CPPWin32Project_16x.png" />
+    <None Include="Resources\Icon\TaskTray\CopyLongTextToClipboard_16x.png" />
+    <None Include="Resources\Icon\TaskTray\CloseSolution_16x.png" />
+    <None Include="Resources\Icon\TaskTray\AzureVirtualMachineExtension_16x.png" />
+    <None Include="Resources\Icon\TaskTray\ASX_TransferDownload_blue_16x.png" />
+    <None Include="Resources\Config\config_example.txt" />
+    <Content Include="Resources\Config\config_pkg.txt" />
+    <Content Include="Resources\Config\config_tpl.txt" />
+    <None Include="Resources\Config\config_min.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Files\templates\custom\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Plugins\Luna\Luna.csproj">
+      <Project>{2d29f9e2-f358-4b07-8f50-1cbe4291eed8}</Project>
+      <Name>Luna</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Pacman\Pacman.csproj">
+      <Project>{78aaefc7-621e-45c8-8524-3aba221336f6}</Project>
+      <Name>Pacman</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\ProxySetter\ProxySetter.csproj">
+      <Project>{8ddda069-8b11-4b48-93c1-c608bff0c361}</Project>
+      <Name>ProxySetter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Plugins\Statistics\Statistics.csproj">
+      <Project>{b75a3390-b84b-43b0-9507-483ac7e1be38}</Project>
+      <Name>Statistics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VgcApis\VgcApis.csproj">
+      <Project>{b3cf9873-afbc-4703-8a3b-06d39fd761b9}</Project>
+      <Name>VgcApis</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>set "libsDir=libs\"
+set "copyFolderList=lua templates"
+set "allDlls=KeraLua liblua53 lua53 Nlua AutocompleteMenu-ScintillaNET Luna ProxySetter Statistics Pacman HtmlAgilityPack DotNetZip Newtonsoft ScintillaNET VgcApis zxing AutoUpdater.NET"
+
+call:CreateFoldersOnDemand "%25libsDir%25 %25copyFolderList%25"
+call:MoveFilesByList "%25allDlls%25"
+call:CopyFolders "%25copyFolderList%25"
+
+rem NLua v1.3.2.1 require this
+rem call:CopyLuaNativeDlls
+
+rem NLua v1.4+ require these
+set "luaFolders=x86 x64"
+call:MoveFolders "%25luaFolders%25"
+
+goto:eof
+
+:CopyFolders
+  for %25%25i in (%25~1) do ( 
+	xcopy /s /e /y "$(ProjectDir)Resource\Files\%25%25i" "%25%25i"
+  ) 
+goto:eof
+
+:MoveFolders
+  for %25%25i in (%25~1) do ( 
+	IF EXIST "%25libsDir%25\%25%25i\" ( 
+	  ROBOCOPY "%25%25i" "%25libsDir%25\%25%25i" /E /IS /MOVE
+	) ELSE (
+	  MOVE /Y "%25%25i" "%25libsDir%25\"
+	) 
+	rem move "%25%25i" "%25libsDir%25"
+  ) 
+goto:eof
+
+:CopyLuaNativeDlls
+  xcopy /s /y "$(SolutionDir)packages\NLua.1.3.2.1\lib\native\*.*" "%25libsDir%25"
+goto:eof
+
+:RemoveFiles
+  for %25%25i in (%25~1) do ( 
+	echo "Remove files %25%25i"	
+	del "%25%25i*"
+	del "zh-CN\%25%25i.resources.dll"
+  ) 
+goto:eof
+
+:CreateFoldersOnDemand
+  for %25%25i in (%25~1) do ( 
+	  if not exist "%25%25i" ( 
+	   echo "Create dir %25%25i"
+	   mkdir "%25%25i"
+	  ) 
+  ) 
+goto:eof
+
+:MoveFilesByList
+  for %25%25i in (%25~1) do ( 
+    echo "move files %25%25i"
+	move /Y "%25%25i*" "%25libsDir%25"
+  ) 
+goto:eof</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\KeraLua.1.0.14\build\net45\KeraLua.targets" Condition="Exists('..\packages\KeraLua.1.0.14\build\net45\KeraLua.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\KeraLua.1.0.14\build\net45\KeraLua.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\KeraLua.1.0.14\build\net45\KeraLua.targets'))" />
+  </Target>
+</Project>

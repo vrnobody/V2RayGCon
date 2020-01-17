@@ -1,0 +1,411 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnImportAdd.Text" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="btnImportAdd.ToolTip" xml:space="preserve">
+    <value>添加import URL</value>
+  </data>
+  <data name="flyImportPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPageImport.Text" xml:space="preserve">
+    <value>全局import</value>
+  </data>
+  <data name="tabPageImport.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnSubsInvertSelection.Text" xml:space="preserve">
+    <value>反选</value>
+  </data>
+  <data name="btnSubsInvertSelection.ToolTip" xml:space="preserve">
+    <value>反选</value>
+  </data>
+  <data name="btnSubsUseAll.Text" xml:space="preserve">
+    <value>全选</value>
+  </data>
+  <data name="btnSubsUseAll.ToolTip" xml:space="preserve">
+    <value>把所有"启用"都打上钩</value>
+  </data>
+  <data name="chkSubsIsUseProxy.Text" xml:space="preserve">
+    <value>使用代理</value>
+  </data>
+  <data name="chkSubsIsUseProxy.ToolTip" xml:space="preserve">
+    <value>用第一个运行中的HTTP代理来更新订阅</value>
+  </data>
+  <data name="btnUpdateViaSubscription.Text" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="btnUpdateViaSubscription.ToolTip" xml:space="preserve">
+    <value>从订阅URL下载服务器</value>
+  </data>
+  <data name="btnAddSubsUrl.Text" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="btnAddSubsUrl.ToolTip" xml:space="preserve">
+    <value>添加订阅url</value>
+  </data>
+  <data name="flySubsUrlContainer.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPageSubscribe.Text" xml:space="preserve">
+    <value>订阅</value>
+  </data>
+  <data name="tabPageSubscribe.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkSetCheckWhenStart.Text" xml:space="preserve">
+    <value>启动时检查</value>
+  </data>
+  <data name="chkSetCheckWhenStart.ToolTip" xml:space="preserve">
+    <value>启动时检查是否有新版本</value>
+  </data>
+  <data name="chkSetUpgradeUseProxy.Text" xml:space="preserve">
+    <value>使用代理</value>
+  </data>
+  <data name="chkSetUpgradeUseProxy.ToolTip" xml:space="preserve">
+    <value>随机选一个运行中的HTTP代理用于升级</value>
+  </data>
+  <data name="groupBox2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnSetOpenStartupFolder.Text" xml:space="preserve">
+    <value>自启动文件夹</value>
+  </data>
+  <data name="btnSetOpenStartupFolder.ToolTip" xml:space="preserve">
+    <value>拖个快捷方式进去就可以开机启动啦</value>
+  </data>
+  <data name="chkSetUseV4.Text" xml:space="preserve">
+    <value>优先使用v4格式</value>
+  </data>
+  <data name="chkSetUseV4.ToolTip" xml:space="preserve">
+    <value>导入/编辑时使用v4的in(out)bounds</value>
+  </data>
+  <data name="chkSetSysPortable.Text" xml:space="preserve">
+    <value>便携模式</value>
+  </data>
+  <data name="chkSetSysPortable.ToolTip" xml:space="preserve">
+    <value>将配置信息保存到软件运行目录内</value>
+  </data>
+  <data name="groupBox6.Text" xml:space="preserve">
+    <value>系统</value>
+  </data>
+  <data name="groupBox6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxSettingsMaxCoreNum.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkSetServStatistics.Text" xml:space="preserve">
+    <value>统计支持(仅v4格式)</value>
+  </data>
+  <data name="chkSetServStatistics.ToolTip" xml:space="preserve">
+    <value>开启统计支持。会导致旧配置格式服务器无法启动！</value>
+  </data>
+  <data name="chkSetServAutotrack.Text" xml:space="preserve">
+    <value>自动追踪</value>
+  </data>
+  <data name="chkSetServAutotrack.ToolTip" xml:space="preserve">
+    <value>保持上次退出时的服务器运行状态。</value>
+  </data>
+  <data name="label13.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label12.Text" xml:space="preserve">
+    <value>最大并发</value>
+  </data>
+  <data name="label12.ToolTip" xml:space="preserve">
+    <value>测速时并发运行的v2ray-core最大数量</value>
+  </data>
+  <data name="groupBox5.Text" xml:space="preserve">
+    <value>服务器</value>
+  </data>
+  <data name="groupBox5.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxSettingPageSize.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label8.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>分页大小</value>
+  </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value>主窗口服务器列表每页显示服务器数</value>
+  </data>
+  <data name="cboxSettingLanguage.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>界面</value>
+  </data>
+  <data name="groupBox1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPageSetting.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="tabPageSetting.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkDefImportIsFold.Text" xml:space="preserve">
+    <value>折叠</value>
+  </data>
+  <data name="chkDefImportIsFold.ToolTip" xml:space="preserve">
+    <value>将服务器面板折叠成单行模式</value>
+  </data>
+  <data name="chkDefImportInjectGlobalImport.Text" xml:space="preserve">
+    <value>全局import</value>
+  </data>
+  <data name="chkDefImportInjectGlobalImport.ToolTip" xml:space="preserve">
+    <value>注入全局import</value>
+  </data>
+  <data name="chkDefImportBypassCnSite.Text" xml:space="preserve">
+    <value>绕过CN网站</value>
+  </data>
+  <data name="chkDefImportBypassCnSite.ToolTip" xml:space="preserve">
+    <value>绕过CN网站</value>
+  </data>
+  <data name="chkDefImportSsShareLink.ToolTip" xml:space="preserve">
+    <value>导入时包含shadowsocks分享链接</value>
+  </data>
+  <data name="cboxDefImportMode.ToolTip" xml:space="preserve">
+    <value>Config表示保持原样</value>
+  </data>
+  <data name="label9.Text" xml:space="preserve">
+    <value>默认地址</value>
+  </data>
+  <data name="label9.ToolTip" xml:space="preserve">
+    <value>默认代理地址</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>默认模式</value>
+  </data>
+  <data name="label10.ToolTip" xml:space="preserve">
+    <value>Config表示保持原样</value>
+  </data>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>导入分享链接</value>
+  </data>
+  <data name="groupBox4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxDefSpeedtestTimeout.ToolTip" xml:space="preserve">
+    <value>20000（20秒）</value>
+  </data>
+  <data name="chkDefSpeedtestIsUse.Text" xml:space="preserve">
+    <value>使用</value>
+  </data>
+  <data name="chkDefSpeedtestIsUse.ToolTip" xml:space="preserve">
+    <value>使用这些测速设置</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>大小(KiB)</value>
+  </data>
+  <data name="label7.ToolTip" xml:space="preserve">
+    <value>实际下载数据小于预期时，当成测速超时处理。</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>测试次数</value>
+  </data>
+  <data name="label6.ToolTip" xml:space="preserve">
+    <value>测速次数</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>自定义URL</value>
+  </data>
+  <data name="label5.ToolTip" xml:space="preserve">
+    <value>自定义测速URL</value>
+  </data>
+  <data name="label11.Text" xml:space="preserve">
+    <value>超时(ms)</value>
+  </data>
+  <data name="label11.ToolTip" xml:space="preserve">
+    <value>超时（单位毫秒）</value>
+  </data>
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>测速</value>
+  </data>
+  <data name="groupBox3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPageDefaults.Text" xml:space="preserve">
+    <value>默认值</value>
+  </data>
+  <data name="tabPageDefaults.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>钩选并保存后，主窗口及托盘图标将多出一个插件菜单。</value>
+  </data>
+  <data name="label4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="flyPluginsItemsContainer.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPagePlugins.Text" xml:space="preserve">
+    <value>插件</value>
+  </data>
+  <data name="tabPagePlugins.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabControl1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnBakBackup.Text" xml:space="preserve">
+    <value>备份</value>
+  </data>
+  <data name="btnBakBackup.ToolTip" xml:space="preserve">
+    <value>将订阅等设置导出到文件</value>
+  </data>
+  <data name="btnOptionSave.Text" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="btnOptionSave.ToolTip" xml:space="preserve">
+    <value>保存所有选项</value>
+  </data>
+  <data name="btnBakRestore.Text" xml:space="preserve">
+    <value>还原</value>
+  </data>
+  <data name="btnBakRestore.ToolTip" xml:space="preserve">
+    <value>从文件还原订阅等设置</value>
+  </data>
+  <data name="btnOptionExit.Text" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="btnOptionExit.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>选项</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+</root>

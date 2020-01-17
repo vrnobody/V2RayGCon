@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script >__PACFileContent__</script>
+    <style>
+        .main-wrapper {
+            margin: 8px auto;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .inline-block {
+            display: inline-block;
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .download {
+            text-align: left;
+        }
+        
+        .tag {
+			vertical-align: top;
+            width: 90px;
+            font-size: 16px;
+        }
+        
+        .content {
+            width: 80%;
+            max-width: 400px;
+            font-size: 16px;
+            color: goldenrod;
+        }
+        
+        .searcher {
+            color: black;
+            margin: 3px;
+        }
+        
+        .fill {
+            width: 100%;
+            max-width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <br />
+        <div class="title">PAC debugger</div>
+		<div>
+            <div class="inline-block tag">Mode:</div>
+            <div class="inline-block content"><span>__PacMode__ list</span></div>
+        </div>
+        <div>
+            <div class="inline-block tag">Keyword:</div>
+            <div class="inline-block content"><span id="keyword"></span></div>
+        </div>
+        <div>
+            <div class="inline-block tag">Result:</div>
+            <div class="inline-block content"><span id="output"></span></div>
+        </div>
+        <div>
+            <div class="inline-block tag">URL:</div>
+            <div class="inline-block content">
+                <input class="inline-block fill searcher" placeholder="google.com <Enter>" type="text" id="inUrl"
+                    onchange="SearchUrl();" onClick="this.select();">
+            </div>
+        </div>
+        <div>
+            <div class="inline-block tag">IP:</div>
+            <div class="inline-block content">
+                <input class="inline-block fill searcher" placeholder="192.168.1.1 <Enter>" type="text" id="inIp"
+                    onchange="SearchIp();" onClick="this.select();">
+            </div>
+        </div>
+        <div><br /></div>
+        <div class="download">
+            <a target="_blank" href="__PacServerUrl__">Download PAC file</a>
+        </div>
+        <br />
+    </div>
+
+    <script>
+        var isPlainHostName = isPlainHostName || function (c) {
+            return c.indexOf(".") < 0;
+        };
+
+        var output = document.getElementById("output");
+        var inUrl = document.getElementById("inUrl");
+        var inIp=document.getElementById("inIp");
+        var keyword = document.getElementById("keyword");
+
+        var SearchUrl = function () {
+            var kw = inUrl.value;
+            try {
+                var result = FindProxyForURL("", kw);
+                output.innerHTML = result;
+            } catch (err) {
+                output.innerHTML = err;
+            }
+            keyword.innerHTML = kw;
+        };
+
+        var SearchIp=function(){
+            var kw=inIp.value;
+            keyword.innerHTML=kw;
+
+            try{
+                for (var m = ip2decimal(kw), n = 0, a = cidrs.length; !(a < n + 1);) {
+                    var i = Math.floor(n + (a - n) / 2);
+
+                    // found
+                    if (m >= cidrs[i][0] && m <= cidrs[i][1]) {
+                        if ("white" == mode) {
+                            output.innerHTML="DIRECT";
+                        }else{
+                            output.innerHTML=proxy;
+                        }
+                        return;
+                    } else m < cidrs[i][0] ? a = i : n = i + 1
+                }
+            }catch(err){
+                output.innerHTML = err;
+                return;
+            }
+
+            // not found
+            if ("white" == mode) {
+                output.innerHTML=proxy;
+            }else{
+                output.innerHTML="DIRECT";
+            }
+        };
+
+        (function () {
+            inUrl.value = "google.com";
+            SearchUrl();
+        })();
+    </script>
+</body>
+
+</html>

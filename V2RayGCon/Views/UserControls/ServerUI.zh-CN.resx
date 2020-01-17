@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="lbStatus.ToolTip" xml:space="preserve">
+    <value>下载测速网页所用的时间</value>
+  </data>
+  <data name="cboxInbound.ToolTip" xml:space="preserve">
+    <value>改写配置中的inbound</value>
+  </data>
+  <data name="tboxInboundAddr.ToolTip" xml:space="preserve">
+    <value>仅在HTTP或SOCKS模式下生效</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnMenu.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAERJREFUOE+1zqENADAMA8HOlv3nCXVZSR/ErQxOigJeXpK+4NNxju6WAwNVNZIL
+        ODIBmktyAUcmQHNJLuC4Aq/wOae1ARVS/s9sUlFoAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnMenu.ToolTip" xml:space="preserve">
+    <value>菜单</value>
+  </data>
+  <data name="lbRunning.ToolTip" xml:space="preserve">
+    <value>拖放可调整顺序</value>
+  </data>
+  <data name="chkSelected.ToolTip" xml:space="preserve">
+    <value>选中此服务器</value>
+  </data>
+  <data name="btnStart.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
+        0IjIJ1eHT8xBVUrp4RFudUQihgKk8JJzFpxTrYQYG7DcwXMIQZxzEmOslliGA4TlIaUk3vvDEmIoqK5K
+        iKFgdFZCDAWjTwVn8HZPDIUb8CZibMDSL8/4/iPt0pLnX/mNq8P7lmYFTOJvU/foAJoAAAAASUVORK5C
+        YII=
+</value>
+  </data>
+  <data name="btnStart.ToolTip" xml:space="preserve">
+    <value>停止全部服务器，然后运行这个服务器</value>
+  </data>
+  <data name="cboxMark.ToolTip" xml:space="preserve">
+    <value>设置标记（任意文字）</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>模式</value>
+  </data>
+  <data name="label4.ToolTip" xml:space="preserve">
+    <value>Inbound模式，Config表示保持原inbound配置</value>
+  </data>
+  <data name="btnIsCollapse.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAGtJREFUOE/dkEEKwDAIBH1S3+Dj/G4vkmsbg4IQJXorXVgIcXdIhO+Kma8xxi2W
+        s17XZGUiesQtiC8j4nIZEpVbkKxsNojGd82hBI7WeC7/ldLTvaI9lCFRuQXJymaDaHzXHK4lnazxfwjg
+        BetvEIaRVWFoAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnIsCollapse.ToolTip" xml:space="preserve">
+    <value>折叠或展开面板</value>
+  </data>
+  <data name="lbIsAutorun.ToolTip" xml:space="preserve">
+    <value>A自启动，I全局import，C不代理国内网址, U不追踪</value>
+  </data>
+  <data name="btnStop.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
+        jpx4AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnStop.ToolTip" xml:space="preserve">
+    <value>停止这个服务器</value>
+  </data>
+  <data name="btnMultiboxing.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAMNJREFUOE+1kkEKwyAQRVN6lWwL3XQfeoIcwyN4HZEsPUQWWXeXE3QnBAzELqd/
+        gqFFhbaGfnjg6MwDEysi2kV28xdeixDv/SEs18T1lqwAzTW4gVOoj6ADcm14SyJAU70sy90YQ845i/rC
+        w8Mw0DiOFEtygmaaJi+EICklzfPMQ6S1prZtE0ki4KDhaq19xBKlVCLJCjhBQp8k/xGE4bIr4GDfR8Rh
+        /BvPoOv7PhnmJAIOS0DZQ9qC5rKnXEp283uoegLMLHdaNBg49QAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="btnMultiboxing.ToolTip" xml:space="preserve">
+    <value>和其他服务器并行运行（注意错开端口）</value>
+  </data>
+  <data name="toolStripMenuItem3.Text" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="startToolStripMenuItem.Text" xml:space="preserve">
+    <value>开启</value>
+  </data>
+  <data name="startToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>关闭全部服务器，然后运行这个服务器</value>
+  </data>
+  <data name="multiboxingToolStripMenuItem1.Text" xml:space="preserve">
+    <value>多开</value>
+  </data>
+  <data name="multiboxingToolStripMenuItem1.ToolTipText" xml:space="preserve">
+    <value>和其他已开启服务器并行运行（注意错开inbound端口）</value>
+  </data>
+  <data name="stopToolStripMenuItem1.Text" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
+    <value>停止这个服务器</value>
+  </data>
+  <data name="toolStripMenuItem6.Text" xml:space="preserve">
+    <value>移动</value>
+  </data>
+  <data name="moveToTopToolStripMenuItem.Text" xml:space="preserve">
+    <value>置顶</value>
+  </data>
+  <data name="moveToTopToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>将此服务器移至顶部</value>
+  </data>
+  <data name="moveToBottomToolStripMenuItem.Text" xml:space="preserve">
+    <value>置底</value>
+  </data>
+  <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>将此服务器移至底部</value>
+  </data>
+  <data name="toolStripMenuItem4.Text" xml:space="preserve">
+    <value>设定</value>
+  </data>
+  <data name="autorunToolStripMenuItem.Text" xml:space="preserve">
+    <value>自启动</value>
+  </data>
+  <data name="autorunToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>跟随软件启动</value>
+  </data>
+  <data name="globalImportToolStripMenuItem.Text" xml:space="preserve">
+    <value>全局import</value>
+  </data>
+  <data name="globalImportToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>服务器启动时注入全局import</value>
+  </data>
+  <data name="skipCNWebsiteToolStripMenuItem.Text" xml:space="preserve">
+    <value>分流CN网站</value>
+  </data>
+  <data name="skipCNWebsiteToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>不代理国内网址。高级用户请使用v2ray-core的routing</value>
+  </data>
+  <data name="untrackToolStripMenuItem.Text" xml:space="preserve">
+    <value>不追踪</value>
+  </data>
+  <data name="untrackToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>不追踪这个服务器</value>
+  </data>
+  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="vToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>包含主要配置信息</value>
+  </data>
+  <data name="vmessToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>包含主要配置信息</value>
+  </data>
+  <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>包含全部配置信息</value>
+  </data>
+  <data name="editToolStripMenuItem.Text" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="debugToolStripMenuItem.Text" xml:space="preserve">
+    <value>调试</value>
+  </data>
+  <data name="debugToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>传给v2ray-core的最终配置</value>
+  </data>
+  <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="logOfThisServerToolStripMenuItem.Text" xml:space="preserve">
+    <value>此服务器日志</value>
+  </data>
+  <data name="runSpeedTestToolStripMenuItem1.Text" xml:space="preserve">
+    <value>速度测试</value>
+  </data>
+  <data name="runSpeedTestToolStripMenuItem1.ToolTipText" xml:space="preserve">
+    <value>下载google主页所需时间</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value>拖放可调整顺序</value>
+  </data>
+</root>

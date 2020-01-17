@@ -1,0 +1,146 @@
+﻿{
+  "pkgV4Tpl": {
+    "log": {
+      "loglevel": "warning"
+    },
+    "v2raygcon": {
+      "alias": "PackageV4",
+      "description": ""
+    },
+    "routing": {
+      "balancers": [
+        {
+          "tag": "balancer",
+          "selector": [
+            "agentout"
+          ]
+        }
+      ],
+      "rules": [
+        {
+          "type": "field",
+          "inboundTag": [
+            "agentin"
+          ],
+          "balancerTag": "balancer"
+        }
+      ]
+    },
+    "inbounds": [
+      {
+        "port": 1080,
+        "listen": "127.0.0.1",
+        "protocol": "socks",
+        "settings": {},
+        "tag": "agentin"
+      }
+    ],
+    "outbounds": []
+  },
+  "main": {
+    "v2raygcon": {
+      "alias": "PackageV3",
+      "description": ""
+    },
+    "log": {
+      "loglevel": "warning"
+    },
+    "inbound": {
+      "port": 1080,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth",
+        "udp": false,
+        "ip": "127.0.0.1"
+      }
+    },
+    "outbound": {
+      "mux": {
+        "enabled": true,
+        "concurrency": 24
+      },
+      "protocol": "vmess",
+      "tag": "agentout"
+    },
+    "policy": {
+      "levels": {
+        "0": {
+          "handshake": 4,
+          "connIdle": 300,
+          "uplinkOnly": 2,
+          "downlinkOnly": 5,
+          "statsUserUplink": false,
+          "statsUserDownlink": false,
+          "bufferSize": 1024
+        }
+      },
+      "system": {
+        "statsInboundUplink": false,
+        "statsInboundDownlink": false
+      }
+    }
+  },
+  "vnext": {
+    "outbound": {
+      "settings": {
+        "vnext": [
+          {
+            "address": "127.0.0.1",
+            "port": 10800,
+            "users": [
+              {
+                "id": "null",
+                "alterId": 10,
+                "security": "auto",
+                "level": 0
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "package": {
+    "routing": {
+      "strategy": "rules",
+      "settings": {
+        "rules": [
+          {
+            "type": "field",
+            "inboundTag": [
+              "tagin1"
+            ],
+            "outboundTag": "tagout1"
+          }
+        ]
+      }
+    },
+    "inboundDetour": [
+      {
+        "protocol": "vmess",
+        "port": "10800",
+        "tag": "tagin1",
+        "listen": "127.0.0.1",
+        "settings": {
+          "clients": [
+            {
+              "id": "null",
+              "alterId": 10,
+              "security": "auto",
+              "level": 0
+            }
+          ]
+        }
+      }
+    ],
+    "outboundDetour": [
+      {
+        "protocol": "协议名称",
+        "tag": "tagout1",
+        "settings": {},
+        "streamSettings": {}
+      }
+    ]
+  }
+}

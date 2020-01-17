@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B3CF9873-AFBC-4703-8A3B-06D39FD761B9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VgcApis</RootNamespace>
+    <AssemblyName>VgcApis</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="KeraLua, Version=1.0.14.0, Culture=neutral, PublicKeyToken=6a194c04b9c89217, processorArchitecture=MSIL">
+      <HintPath>..\packages\KeraLua.1.0.14\lib\net45\KeraLua.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLua, Version=1.4.18.0, Culture=neutral, PublicKeyToken=6a194c04b9c89217, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLua.1.4.18\lib\net45\NLua.dll</HintPath>
+    </Reference>
+    <Reference Include="ScintillaNET, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\jacobslusser.ScintillaNET.3.6.3\lib\net40\ScintillaNET.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Libs\Streams\BitStream.cs" />
+    <Compile Include="Libs\Streams\Crc8.cs" />
+    <Compile Include="Libs\Streams\RawBitStream\Bytes.cs" />
+    <Compile Include="Libs\Streams\RawBitStream\RawBitStream.cs" />
+    <Compile Include="Libs\Streams\RawBitStream\Address.cs" />
+    <Compile Include="Libs\Streams\RawBitStream\Numbers.cs" />
+    <Compile Include="Libs\Streams\RawBitStream\Utils.cs" />
+    <Compile Include="Libs\Streams\RawBitStream\Uuids.cs" />
+    <Compile Include="Libs\Sys\KeyboardHook.cs" />
+    <Compile Include="Libs\Sys\NotepadHelper.cs" />
+    <Compile Include="Libs\Tasks\Bar.cs" />
+    <Compile Include="Libs\Tasks\Routine.cs" />
+    <Compile Include="Libs\Views\RepaintCtrl.cs" />
+    <Compile Include="Models\BaseClasses\Disposable.cs" />
+    <Compile Include="Models\BaseClasses\AuxSiWinForm.cs" />
+    <Compile Include="Libs\Sys\QueueLogger.cs" />
+    <Compile Include="Models\BaseClasses\ComponentOf.cs" />
+    <Compile Include="Models\Consts\BitStream.cs" />
+    <Compile Include="Models\Consts\Config.cs" />
+    <Compile Include="Models\Consts\Core.cs" />
+    <Compile Include="Models\Consts\Lua.cs" />
+    <Compile Include="Models\Consts\Patterns.cs" />
+    <Compile Include="Models\Consts\Import.cs" />
+    <Compile Include="Models\Consts\Libs.cs" />
+    <Compile Include="Models\Consts\Intervals.cs" />
+    <Compile Include="Models\Consts\Files.cs" />
+    <Compile Include="Models\Consts\Webs.cs" />
+    <Compile Include="Models\Datas\CoreInfo.cs" />
+    <Compile Include="Models\Datas\Enum.cs" />
+    <Compile Include="Models\Interfaces\CoreCtrlComponents\IConfiger.cs" />
+    <Compile Include="Models\Interfaces\CoreCtrlComponents\ICoreCtrl.cs" />
+    <Compile Include="Models\Interfaces\CoreCtrlComponents\ILogger.cs" />
+    <Compile Include="Models\Interfaces\CoreCtrlComponents\ICoreStates.cs" />
+    <Compile Include="Models\Interfaces\IComponentOf.cs" />
+    <Compile Include="Models\Interfaces\Lua\ILuaJson.cs" />
+    <Compile Include="Models\Interfaces\IShareLinkDecoder.cs" />
+    <Compile Include="Models\Interfaces\Lua\ILuaServer.cs" />
+    <Compile Include="Models\Interfaces\Lua\ILuaMisc.cs" />
+    <Compile Include="Models\Interfaces\Lua\ILuaWeb.cs" />
+    <Compile Include="Models\IServices\IApiServices.cs" />
+    <Compile Include="Models\Interfaces\IPlugin.cs" />
+    <Compile Include="Libs\Tasks\CancelableTimeout.cs" />
+    <Compile Include="Libs\Tasks\LazyGuy.cs" />
+    <Compile Include="Libs\Sys\FileLogger.cs" />
+    <Compile Include="Models\BaseClasses\LuaSignal.cs" />
+    <Compile Include="Models\BaseClasses\Plugin.cs" />
+    <Compile Include="Models\Datas\DataEvent.cs" />
+    <Compile Include="Models\Interfaces\ICoreServCtrl.cs" />
+    <Compile Include="Models\Interfaces\IDropableControl.cs" />
+    <Compile Include="Models\Interfaces\Lua\ILuaSignal.cs" />
+    <Compile Include="Models\IServices\INotifierService.cs" />
+    <Compile Include="Models\IServices\IShareLinkMgr.cs" />
+    <Compile Include="Models\IServices\IConfigMgr.cs" />
+    <Compile Include="Models\IServices\IServersService.cs" />
+    <Compile Include="Models\IServices\ISettingsService.cs" />
+    <Compile Include="Models\Datas\StatsSample.cs" />
+    <Compile Include="Models\IServices\IUtilsService.cs" />
+    <Compile Include="Models\IServices\IWebService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Langs\I18N.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>I18N.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Libs\UI.cs" />
+    <Compile Include="Libs\Utils.cs" />
+    <Compile Include="WinForms\FormSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\FormSearch.Designer.cs">
+      <DependentUpon>FormSearch.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Langs\I18N.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>I18N.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Langs\I18N.zh-CN.resx" />
+    <EmbeddedResource Include="WinForms\FormSearch.resx">
+      <DependentUpon>FormSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\FormSearch.zh-CN.resx">
+      <DependentUpon>FormSearch.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Resources\icons\icon_dark.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons\icon_light.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\Grpcs\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\KeraLua.1.0.14\build\net45\KeraLua.targets" Condition="Exists('..\packages\KeraLua.1.0.14\build\net45\KeraLua.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\KeraLua.1.0.14\build\net45\KeraLua.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\KeraLua.1.0.14\build\net45\KeraLua.targets'))" />
+  </Target>
+</Project>

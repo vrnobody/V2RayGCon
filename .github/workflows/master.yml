@@ -1,0 +1,106 @@
+name: master
+
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    env:
+        projName: V2RayGCon
+        projCfg: Release
+        releaseNoteUrl: "https://github.com/vrnobody/V2RayGCon/wiki/release-notes"
+        verStr: '1.2.x'
+        boxAppend: box
+        md5Filename: 'md5.txt'
+        v2rayCorePkgName: 'v2ray-windows-32.zip'
+        v2rayCoreVer: 'v4.22.1'
+        # https://github.com/v2ray/v2ray-core/releases/download/v4.20.0/v2ray-windows-32.zip
+        v2rayCoreUrl: 'https://github.com/v2ray/v2ray-core/releases/download'
+
+    steps:
+        - name: Checkout master
+          uses: actions/checkout@master
+
+        - name: Show versions
+          run: |
+            python --version
+            echo "power shell version:"
+            $Host.Version
+
+        - name: Setup Nuget.exe
+          uses: warrenbuckley/Setup-Nuget@v1
+        - name: Restore packages
+          run: nuget restore ${env:projName}.sln
+
+        - name: Setup MSBuild.exe
+          uses: warrenbuckley/Setup-MSBuild@v1
+        - name: Build with MSBuild
+          run: msbuild ${env:projName}.sln -p:Configuration=${env:projCfg}
+
+        - name: Create assets
+          shell: pwsh
+          run: |
+            $outdir = "${env:projName}/bin/${env:projCfg}"
+            Compress-Archive -Path ${outdir}/* ${env:projName}'.zip'
+            Invoke-WebRequest -Uri "${env:v2rayCoreUrl}/${env:v2rayCoreVer}/${env:v2rayCorePkgName}" -OutFile "${env:v2rayCorePkgName}"
+            Expand-Archive "${env:v2rayCorePkgName}" -DestinationPath "${outdir}/core"
+            Compress-Archive -Path ${outdir}/* ${env:projName}'-'${env:boxAppend}'.zip'
+            Get-FileHash "${env:projName}*.zip" -Algorithm MD5 | Format-List > "${env:md5Filename}"
+            $hash1 = Get-FileHash "${env:projName}.zip" -Algorithm MD5
+            $hash2 = Get-FileHash "${env:projName}-${env:boxAppend}.zip" -Algorithm MD5
+            $hv1 = $hash1.Hash
+            $hv2 = $hash2.Hash
+            echo "::set-env name=hashVgcZip::${hv1}"
+            echo "::set-env name=hashVgcBoxZip::${hv2}"
+
+        - name: Create Release
+          id: create_release
+          uses: actions/create-release@master
+          env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+              tag_name: ${{ env.verStr }}
+              release_name: 'v${{ env.verStr }}'
+              body: |
+                [Release notes](${{ env.releaseNoteUrl }})
+                
+                #### MD5:
+                ${{ env.projName }}.zip (${{ env.hashVgcZip }})
+                ${{ env.projName }}-${{ env.boxAppend }}.zip (${{ env.hashVgcBoxZip }})
+              draft: true
+              prerelease: false
+
+        - name: Upload ${{ env.projName }}.zip
+          uses: actions/upload-release-asset@v1.0.1
+          env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+              upload_url: ${{ steps.create_release.outputs.upload_url }} 
+              asset_path: ./${{ env.projName }}.zip
+              asset_name: ${{ env.projName }}.zip
+              asset_content_type: application/zip
+
+        - name: Upload ${{ env.projName }}-${{ env.boxAppend }}.zip
+          uses: actions/upload-release-asset@v1.0.1
+          env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+              upload_url: ${{ steps.create_release.outputs.upload_url }} 
+              asset_path: ./${{ env.projName }}-${{ env.boxAppend }}.zip
+              asset_name: ${{ env.projName }}-${{ env.boxAppend }}.zip
+              asset_content_type: application/zip
+
+        - name: Upload ${{ env.md5Filename }}
+          uses: actions/upload-release-asset@v1.0.1
+          env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+              upload_url: ${{ steps.create_release.outputs.upload_url }} 
+              asset_path: ./${{ env.md5Filename }}
+              asset_name: ${{ env.md5Filename }}
+              asset_content_type: text/plain

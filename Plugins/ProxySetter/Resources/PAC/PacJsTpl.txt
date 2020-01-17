@@ -1,0 +1,31 @@
+﻿var proxy = '__PROXY__',
+    mode = '__MODE__',
+    domains = { __DOMAINS__ },
+    cidrs = [__CIDRS__];
+
+function ip2decimal(o) { var c = o.split("."); return 256 * (256 * (256 * +c[0] + +c[1]) + +c[2]) + +c[3] }
+
+function FindProxyForURL(o, c) {
+    if (/\d+\.\d+\.\d+\.\d+/.test(c)) {
+        if (isInNet(dnsResolve(c), "10.0.0.0", "255.0.0.0") ||
+            isInNet(dnsResolve(c), "172.16.0.0", "255.240.0.0") ||
+            isInNet(dnsResolve(c), "192.168.0.0", "255.255.0.0") ||
+            isInNet(dnsResolve(c), "127.0.0.0", "255.255.255.0"))
+            return "DIRECT";
+
+        for (var m = ip2decimal(c), n = 0, a = cidrs.length; !(a < n + 1);) {
+            var i = Math.floor(n + (a - n) / 2);
+            if (m >= cidrs[i][0] && m <= cidrs[i][1]) {
+                if ("white" == mode) return "DIRECT";
+                if ("black" == mode) return proxy
+            } else m < cidrs[i][0] ? a = i : n = i + 1
+        }
+    }
+    if (isPlainHostName(c)) return "DIRECT";
+    for (var e = c.split("."), t = e.length - 1; 0 <= t; t--)
+        if (domains.hasOwnProperty(e.slice(t).join("."))) {
+            if ("white" == mode) return "DIRECT";
+            if ("black" == mode) return proxy
+        }
+    return "white" == mode ? proxy : "black" == mode ? "DIRECT" : "global" == mode ? proxy : void 0
+}

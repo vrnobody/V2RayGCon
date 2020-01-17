@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkBasicUseHotkey.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 22</value>
+  </data>
+  <data name="chkBasicUseHotkey.Text" xml:space="preserve">
+    <value>使用</value>
+  </data>
+  <data name="chkBasicUseHotkey.ToolTip" xml:space="preserve">
+    <value>开启或停用全局热键</value>
+  </data>
+  <data name="chkBasicUseShift.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkBasicUseAlt.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxBasicHotkey.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label9.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 18</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>热键</value>
+  </data>
+  <data name="label8.ToolTip" xml:space="preserve">
+    <value>切换代理模式全局热键</value>
+  </data>
+  <data name="cboxBasicPacProtocol.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkBasicUseCustomPac.Location" type="System.Drawing.Point, System.Drawing">
+    <value>348, 231</value>
+  </data>
+  <data name="chkBasicUseCustomPac.Size" type="System.Drawing.Size, System.Drawing">
+    <value>115, 22</value>
+  </data>
+  <data name="chkBasicUseCustomPac.Text" xml:space="preserve">
+    <value>自定义PAC</value>
+  </data>
+  <data name="chkBasicUseCustomPac.ToolTip" xml:space="preserve">
+    <value>使用自定义PAC文件</value>
+  </data>
+  <data name="cboxBasicPacMode.Items" xml:space="preserve">
+    <value>白名单</value>
+  </data>
+  <data name="cboxBasicPacMode.Items1" xml:space="preserve">
+    <value>黑名单</value>
+  </data>
+  <data name="cboxBasicPacMode.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxBasicSysProxyMode.Items" xml:space="preserve">
+    <value>保持现状</value>
+  </data>
+  <data name="cboxBasicSysProxyMode.Items2" xml:space="preserve">
+    <value>全局代理</value>
+  </data>
+  <data name="cboxBasicSysProxyMode.Items3" xml:space="preserve">
+    <value>直连</value>
+  </data>
+  <data name="cboxBasicSysProxyMode.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 18</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>代理模式</value>
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value>系统代理模式</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 18</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>代理端口</value>
+  </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value>系统代理端口</value>
+  </data>
+  <data name="btnBasicBrowseCustomPac.Text" xml:space="preserve">
+    <value>浏览</value>
+  </data>
+  <data name="btnBasicBrowseCustomPac.ToolTip" xml:space="preserve">
+    <value>浏览自定义PAC文件</value>
+  </data>
+  <data name="chkBasicAutoUpdateSysProxy.Text" xml:space="preserve">
+    <value>自动</value>
+  </data>
+  <data name="chkBasicAutoUpdateSysProxy.ToolTip" xml:space="preserve">
+    <value>自动更新系统代理设置，仅在全局和PAC模式下生效。</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 18</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>PAC协议</value>
+  </data>
+  <data name="label4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 18</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>PAC模式</value>
+  </data>
+  <data name="label6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 18</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>PAC端口</value>
+  </data>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value>PAC服务器端口（不和其他软件冲突就可以）</value>
+  </data>
+  <data name="chkBasicPacAlwaysOn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>348, 112</value>
+  </data>
+  <data name="chkBasicPacAlwaysOn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 22</value>
+  </data>
+  <data name="chkBasicPacAlwaysOn.Text" xml:space="preserve">
+    <value>保持开启</value>
+  </data>
+  <data name="chkBasicPacAlwaysOn.ToolTip" xml:space="preserve">
+    <value>保持PAC服务器处于开启状态</value>
+  </data>
+  <data name="tboxBasicCustomPacPath.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxBaiscPacPort.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxBasicGlobalPort.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="groupBox1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnBasicViewInNotepad.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAR9JREFUOE9jQAbfvn37TwB/BGJzqHJMAFO4YO/1/zfuPfmfkZHx38nJCY4LCgr+
+        v3v37hNOQ2AGRPTu+a+Vv+b/vaev/z97+vz/h/cfwQbk5+djNwTIiQHiazADPn/5+j8casijl+/hBrx8
+        8QrTECCRcOHui//Gpev/MwTPwcAh3bvhBoBoZEM+f/78EWTAfcOSdf8L5h4F2/b8zYf/T169/+/Vsh3D
+        Bej49evX/8H+Btn04Pk7WEijOP/Tx09gA9AxsgEPdArW/C9bePz/2w+fwQZM234Zr2YQRjYg7fTNZ/+1
+        gYZkzzoMNuDLly94NYMw3ABoLKQA8cNPn7+CDcCmAR2jGAADIAGQBDYN6Hi4G0AsxjDg69evYEHi8ev/
+        AF2bz1tCf+8RAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnBasicViewInNotepad.ToolTip" xml:space="preserve">
+    <value>在记事本中查看PAC内容</value>
+  </data>
+  <data name="btnBasicClearSysProxy.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAALZJREFUOE9jQAbfvn0zgDJxApxqgBIVQPwfiDOhQhgAJAdVUwEVggCQwKubV/9v
+        i3T///b+HayGgMRAcltCHP4/v3gWYQiQYQDEYM0L1Xj/r3XWxTAEphkkB1IDMgSkB6QXqwJkQ/DJgTXD
+        AC6FRGmGAWyGEK0ZBtANIUkzCFBkALpmEI3MxmsINs0gPjYxDENwaQaJ45ODaaZKQiI/KcMASACIsWqG
+        AZAcVA2qZhgASpCYnRkYAKjTuVoFkX4yAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnBasicClearSysProxy.ToolTip" xml:space="preserve">
+    <value>清除系统代理</value>
+  </data>
+  <data name="lbBasicProxyLink.ToolTip" xml:space="preserve">
+    <value>当前系统代理</value>
+  </data>
+  <data name="lbBasicCurPacServerStatus.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnBaiscCopyProxyLink.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAJVJREFUOE+10EEKgCAQQFFv1V6X4tpreJxa1BE1W7idmmDAxrSEEj4RNQ9VAIBI
+        KUGleDSI1iJASlnknAPv/dZEcmAN8dIyL89IC8iREML9kWqAtRaMMaC1bh+pBuAwf5/GqUR6AHwW99IL
+        YIQcc7ELoOhecO41wPsHyLeplLodpAqAx3fE4wDvG+Ap/O8E+MIP70qwA3iV0qEij2QHAAAAAElFTkSu
+        QmCC
+</value>
+  </data>
+  <data name="btnBaiscCopyProxyLink.ToolTip" xml:space="preserve">
+    <value>复制系统代理信息</value>
+  </data>
+  <data name="btnBasicDebugPacServer.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAMxJREFUOE+9U7sNgzAU9CgZITN4Cg/gNtSEAeg9QUagcO+eLSiStCQStssXnYWR
+        iQJOQMqTTsf73PFsyWx3OOdoD4IB53wT/mdQVRUZY6ht28DIUZ8MclBKzQyRx97qBvgThsvyTLfrnR79
+        MzBy1K21l1UDrAuO4gjkqGc3wJnBqThCCEFd1+XvAAabN0BPSknFqZhMwMjHi2wWDbTWVNd1+IZJ2hvF
+        vff+8NEgFYMxjLkETRAvvYV38TAMxzCcCwxCAOHP4hjR5DsxYy+1KlKi/qW/8wAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="btnBasicDebugPacServer.ToolTip" xml:space="preserve">
+    <value>在浏览器中打开调试页面</value>
+  </data>
+  <data name="btnBasicStartPacServer.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
+        0IjIJ1eHT8xBVUrp4RFudUQihgKk8JJzFpxTrYQYG7DcwXMIQZxzEmOslliGA4TlIaUk3vvDEmIoqK5K
+        iKFgdFZCDAWjTwVn8HZPDIUb8CZibMDSL8/4/iPt0pLnX/mNq8P7lmYFTOJvU/foAJoAAAAASUVORK5C
+        YII=
+</value>
+  </data>
+  <data name="btnBasicStartPacServer.ToolTip" xml:space="preserve">
+    <value>重启PAC服务器</value>
+  </data>
+  <data name="btnBasicStopPacServer.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
+        jpx4AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnBasicStopPacServer.ToolTip" xml:space="preserve">
+    <value>停止PAC服务器</value>
+  </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="groupBox2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tableLayoutPanel2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabBasic.Text" xml:space="preserve">
+    <value>常规</value>
+  </data>
+  <data name="tabBasic.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnSetSortWhitelist.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAANRJREFUOE+dkDESgjAURHM2rmBDYUkrl8Ch9gB2cg4ruYnaqg1tZHfYzE8gMLoz
+        O5//8/dNghuGwW/ZrQkLRVFk/ROgaY7+/fqw/gXobz0BqCkA1ZphCA0Wy7JkuD7UrOhTgNud6UVAd+kY
+        lNFvAbwfiwCP+zO8HRW9AFhMAWEmQM44ly0gzGyT8/50ZbWAMNP71owQAgLom2cCrF3fhi0kAsht2zJc
+        VRV7/az0BjqjtJSGR0fnCM7CUCZMTysBAkdhCEO929oCIARnYUjkJU8rGTn3BZ1cWLtWGSqyAAAAAElF
+        TkSuQmCC
+</value>
+  </data>
+  <data name="btnSetSortWhitelist.ToolTip" xml:space="preserve">
+    <value>排序</value>
+  </data>
+  <data name="rtboxPacWhiteList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>473, 407</value>
+  </data>
+  <data name="rtboxPacWhiteList.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>483, 481</value>
+  </data>
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>白名单</value>
+  </data>
+  <data name="groupBox3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnSetSortBlacklist.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAANRJREFUOE+dkDESgjAURHM2rmBDYUkrl8Ch9gB2cg4ruYnaqg1tZHfYzE8gMLoz
+        O5//8/dNghuGwW/ZrQkLRVFk/ROgaY7+/fqw/gXobz0BqCkA1ZphCA0Wy7JkuD7UrOhTgNud6UVAd+kY
+        lNFvAbwfiwCP+zO8HRW9AFhMAWEmQM44ly0gzGyT8/50ZbWAMNP71owQAgLom2cCrF3fhi0kAsht2zJc
+        VRV7/az0BjqjtJSGR0fnCM7CUCZMTysBAkdhCEO929oCIARnYUjkJU8rGTn3BZ1cWLtWGSqyAAAAAElF
+        TkSuQmCC
+</value>
+  </data>
+  <data name="btnSetSortBlacklist.ToolTip" xml:space="preserve">
+    <value>排序</value>
+  </data>
+  <data name="rtboxPacBlackList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>471, 407</value>
+  </data>
+  <data name="rtboxPacBlackList.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>483, 481</value>
+  </data>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>黑名单</value>
+  </data>
+  <data name="groupBox4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tableLayoutPanel3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>982, 489</value>
+  </data>
+  <data name="tableLayoutPanel3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPac.Size" type="System.Drawing.Size, System.Drawing">
+    <value>990, 497</value>
+  </data>
+  <data name="tabPac.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="tabPac.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>323, 18</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>这个插件使用以下项目作为默认PAC源。</value>
+  </data>
+  <data name="label5.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxUsageReadMe.Size" type="System.Drawing.Size, System.Drawing">
+    <value>944, 351</value>
+  </data>
+  <data name="tboxUsageReadMe.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="linkLabelUsageTxthinkingPac.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>377, 18</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>你可以在设置分页中像下面这样调整默认PAC。</value>
+  </data>
+  <data name="label7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>984, 491</value>
+  </data>
+  <data name="groupBox5.Text" xml:space="preserve">
+    <value>说明</value>
+  </data>
+  <data name="groupBox5.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>990, 497</value>
+  </data>
+  <data name="panel2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabUsage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>990, 497</value>
+  </data>
+  <data name="tabUsage.Text" xml:space="preserve">
+    <value>用法</value>
+  </data>
+  <data name="tabUsage.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabControl1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="btnCancel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnSave.Text" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="btnSave.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tableLayoutPanel1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>V2RayGCon plugins</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+</root>

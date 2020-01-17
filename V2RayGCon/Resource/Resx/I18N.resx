@@ -1,0 +1,723 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="CannotParseJson" xml:space="preserve">
+    <value>Can not parse json! Discard changes?</value>
+  </data>
+  <data name="CantLauchCore" xml:space="preserve">
+    <value>Error: can not lauch v2ray-core.</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="ConfirmDeleteSelectedServers" xml:space="preserve">
+    <value>Delete selected servers?</value>
+  </data>
+  <data name="ConfirmExitApp" xml:space="preserve">
+    <value>Exit program?</value>
+  </data>
+  <data name="CopyFail" xml:space="preserve">
+    <value>Copy fail!</value>
+  </data>
+  <data name="CoreCantSetLocalAddr" xml:space="preserve">
+    <value>Can not set local proxy address!</value>
+  </data>
+  <data name="CoreExit" xml:space="preserve">
+    <value>V2ray-core has stopped!</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Graphics configuration editor for v2ray-core.</value>
+  </data>
+  <data name="DownloadCompleted" xml:space="preserve">
+    <value>Download v2ray-core completed!</value>
+  </data>
+  <data name="TryManualDownload" xml:space="preserve">
+    <value>Download fail!
+You can download manually from the link below.
+https://github.com/v2ray/v2ray-core</value>
+  </data>
+  <data name="DownloadV2rayCore" xml:space="preserve">
+    <value>Download v2ray-core</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Downloading, please wait ...</value>
+  </data>
+  <data name="EditorCannotLoadServerConfig" xml:space="preserve">
+    <value>Cannot load server config. Using default config!</value>
+  </data>
+  <data name="EditorCheckConfig" xml:space="preserve">
+    <value>Can not parse json! Please check you config.</value>
+  </data>
+  <data name="EditorDiscardChange" xml:space="preserve">
+    <value>Config is invalid.
+Discard latest changes and continue?</value>
+  </data>
+  <data name="EditorNoExample" xml:space="preserve">
+    <value>No example for this part.</value>
+  </data>
+  <data name="EditorSaveChange" xml:space="preserve">
+    <value>Config has change, save it now?</value>
+  </data>
+  <data name="ExeNotFound" xml:space="preserve">
+    <value>Please download v2ray-core first!（checkout systray icon's popup menu.）</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="ImportLink" xml:space="preserve">
+    <value>Import links from clipboard</value>
+  </data>
+  <data name="ImportLinkFail" xml:space="preserve">
+    <value>Found no link!</value>
+  </data>
+  <data name="ImportLinkSuccess" xml:space="preserve">
+    <value>Import Success!</value>
+  </data>
+  <data name="ConfigEditor" xml:space="preserve">
+    <value>Config Editor</value>
+  </data>
+  <data name="Windows" xml:space="preserve">
+    <value>Windows</value>
+  </data>
+  <data name="MainWin" xml:space="preserve">
+    <value>Main Window</value>
+  </data>
+  <data name="NoQRCode" xml:space="preserve">
+    <value>Can not find any QR code.</value>
+  </data>
+  <data name="NotSupportLinkType" xml:space="preserve">
+    <value>Duplicate link or unable to decode</value>
+  </data>
+  <data name="ScanQRCode" xml:space="preserve">
+    <value>Scan QR code</value>
+  </data>
+  <data name="Win32" xml:space="preserve">
+    <value>Windows 32bit</value>
+  </data>
+  <data name="Win64" xml:space="preserve">
+    <value>Windows 64bit</value>
+  </data>
+  <data name="CopySuccess" xml:space="preserve">
+    <value>Copied to clipboard.</value>
+  </data>
+  <data name="ProxyModeAll" xml:space="preserve">
+    <value>Proxy all website</value>
+  </data>
+  <data name="ProxyModeNone" xml:space="preserve">
+    <value>No proxy</value>
+  </data>
+  <data name="ProxyModePAC" xml:space="preserve">
+    <value>Proxy accroding to PAC setting</value>
+  </data>
+  <data name="SetProxyMode" xml:space="preserve">
+    <value>Set proxy mode</value>
+  </data>
+  <data name="WarnIENotSupportPac" xml:space="preserve">
+    <value>Notice! IE not support PAC.</value>
+  </data>
+  <data name="PleaseCheckConfig" xml:space="preserve">
+    <value>Can not parse json! Please check current config.</value>
+  </data>
+  <data name="WarnMultipleInstance" xml:space="preserve">
+    <value>Another instance is already running.
+Are you sure to launch another one?</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>(Empty)</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>Save as</value>
+  </data>
+  <data name="WriteFileFail" xml:space="preserve">
+    <value>Write to file fail!</value>
+  </data>
+  <data name="AddNewServer" xml:space="preserve">
+    <value>Save current config as new server?</value>
+  </data>
+  <data name="ReplaceServer" xml:space="preserve">
+    <value>Use current config to replace selected server?</value>
+  </data>
+  <data name="ConfirmLoadNewServer" xml:space="preserve">
+    <value>Current config will be cleared!
+Load new config?</value>
+  </data>
+  <data name="LoadJsonFail" xml:space="preserve">
+    <value>Load json file fail!</value>
+  </data>
+  <data name="AvailableExamples" xml:space="preserve">
+    <value>Available examples ...</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="AddServer" xml:space="preserve">
+    <value>Add server</value>
+  </data>
+  <data name="AddServSuccess" xml:space="preserve">
+    <value>Add server success!</value>
+  </data>
+  <data name="DuplicateServer" xml:space="preserve">
+    <value>Duplicate server</value>
+  </data>
+  <data name="DownloadProgress" xml:space="preserve">
+    <value>Download progress</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Latest" xml:space="preserve">
+    <value>latest</value>
+  </data>
+  <data name="GetLatestVerFail" xml:space="preserve">
+    <value>Get latest version fail!</value>
+  </data>
+  <data name="GetVersionListFail" xml:space="preserve">
+    <value>Get v2ray-core versions list fail!</value>
+  </data>
+  <data name="CancelDownload" xml:space="preserve">
+    <value>Cancel current download?</value>
+  </data>
+  <data name="DownloadCancelled" xml:space="preserve">
+    <value>Download cancelled!</value>
+  </data>
+  <data name="ConfirmUpgradeVgc" xml:space="preserve">
+    <value>Newer V2RayGCon v{0} is available, upgrade now?</value>
+  </data>
+  <data name="GetVGCVerFail" xml:space="preserve">
+    <value>Get V2RayGCon latest version number fail!</value>
+  </data>
+  <data name="NoNewVGC" xml:space="preserve">
+    <value>The current V2RayGCon is the latest version.</value>
+  </data>
+  <data name="VistProjectPage" xml:space="preserve">
+    <value>Vist project page?</value>
+  </data>
+  <data name="ConfirmDeleteAllServers" xml:space="preserve">
+    <value>DELETE ALL SERVERS?</value>
+  </data>
+  <data name="ConfirmSaveCurConfig" xml:space="preserve">
+    <value>Save current config?</value>
+  </data>
+  <data name="OrgServNotFound" xml:space="preserve">
+    <value>Can not find original config!
+Please use [Add new server] or [Replace server].</value>
+  </data>
+  <data name="AddServFail" xml:space="preserve">
+    <value>Add server fail, please check your settings.</value>
+  </data>
+  <data name="CurrentCoreVerIs" xml:space="preserve">
+    <value>Current v2ray-core version is v{0}</value>
+  </data>
+  <data name="GetCoreVerFail" xml:space="preserve">
+    <value>Get v2ray-core version fail!</value>
+  </data>
+  <data name="ConfirmCloseWindow" xml:space="preserve">
+    <value>Close window?</value>
+  </data>
+  <data name="ServerListIsEmpty" xml:space="preserve">
+    <value>Server list is empty!</value>
+  </data>
+  <data name="DataTooBig" xml:space="preserve">
+    <value>Data too big. Please trim down the config file.</value>
+  </data>
+  <data name="EmptyLink" xml:space="preserve">
+    <value>Link is empty!</value>
+  </data>
+  <data name="VistWikiPage" xml:space="preserve">
+    <value>Visit wiki page of this project?</value>
+  </data>
+  <data name="CFnGoogle" xml:space="preserve">
+    <value>CF and Google</value>
+  </data>
+  <data name="DecodeVLinkFail" xml:space="preserve">
+    <value>Fail to decode v-link!</value>
+  </data>
+  <data name="GenVLinkFail" xml:space="preserve">
+    <value>Fail to generate v-link!</value>
+  </data>
+  <data name="VisitVlinkPage" xml:space="preserve">
+    <value>Vist v-link wiki page?</value>
+  </data>
+  <data name="DecodeFail" xml:space="preserve">
+    <value>Decode fail.</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success.</value>
+  </data>
+  <data name="NoLinkFound" xml:space="preserve">
+    <value>No links found.</value>
+  </data>
+  <data name="NetworkTimeout" xml:space="preserve">
+    <value>Network timeout</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="DecodeImportFail" xml:space="preserve">
+    <value>Decode import fail!</value>
+  </data>
+  <data name="AnalysingImport" xml:space="preserve">
+    <value>Analysing import, please wait ...</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>File not found!</value>
+  </data>
+  <data name="UsingDecodeCache" xml:space="preserve">
+    <value>Use decode cache.</value>
+  </data>
+  <data name="ConfigTester" xml:space="preserve">
+    <value>ConfigTester</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="Log" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="GenQRCode" xml:space="preserve">
+    <value>Generate QRCode</value>
+  </data>
+  <data name="ConfirmRemoveV2RayCore" xml:space="preserve">
+    <value>Remove v2ray-core from this computer?</value>
+  </data>
+  <data name="FileInUse" xml:space="preserve">
+    <value>The file is in use. Please close v2ray-core first.</value>
+  </data>
+  <data name="ConfirmCloseWinWithoutSave" xml:space="preserve">
+    <value>Discard unsaved changes and close this window?</value>
+  </data>
+  <data name="AttachToV2rayCoreProcessFail" xml:space="preserve">
+    <value>Attach to v2ray-core process fail!</value>
+  </data>
+  <data name="V2rayCoreExitAbnormally" xml:space="preserve">
+    <value>{0} exited with error code {1}!
+Please check server configuration and log.</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="NoSubsUrlAvailable" xml:space="preserve">
+    <value>No subscription links available.</value>
+  </data>
+  <data name="DownloadFail" xml:space="preserve">
+    <value>Download fail!</value>
+  </data>
+  <data name="ConfirmDeleteControl" xml:space="preserve">
+    <value>Delete this item?</value>
+  </data>
+  <data name="SaveChangeFirst" xml:space="preserve">
+    <value>Please save the modified option first!</value>
+  </data>
+  <data name="ConfirmImportServers" xml:space="preserve">
+    <value>Import server/client configs from backup file?</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="CantFindOrgServDelFail" xml:space="preserve">
+    <value>Can find original server. Delete fail!</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="NotSet" xml:space="preserve">
+    <value>not set</value>
+  </data>
+  <data name="SysProxyRequireHTTPServer" xml:space="preserve">
+    <value>System proxy must be a HTTP server.</value>
+  </data>
+  <data name="StopServerFirst" xml:space="preserve">
+    <value>Stop server first, please!</value>
+  </data>
+  <data name="ConfirmClearSysProxy" xml:space="preserve">
+    <value>Clear system proxy setting?</value>
+  </data>
+  <data name="ConfirmRestartAllAutorunServer" xml:space="preserve">
+    <value>Restart all autorun servers?</value>
+  </data>
+  <data name="ConfirmRestartAllServer" xml:space="preserve">
+    <value>Restart all running servers?</value>
+  </data>
+  <data name="ConfirmStopAllServer" xml:space="preserve">
+    <value>Stop all servers?</value>
+  </data>
+  <data name="VisitV2rayCoreReleasePage" xml:space="preserve">
+    <value>Vist v2ray-core release page?</value>
+  </data>
+  <data name="VisitVGCIssuePage" xml:space="preserve">
+    <value>Vist V2RayGCon issue page?</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ConfirmRestartAllSelectedServers" xml:space="preserve">
+    <value>Restart all selected servers?</value>
+  </data>
+  <data name="ConfirmStopAllSelectedServers" xml:space="preserve">
+    <value>Stop all selected servers?</value>
+  </data>
+  <data name="GetFreePortFail" xml:space="preserve">
+    <value>Fail to get free tcp port!</value>
+  </data>
+  <data name="SpeedTest" xml:space="preserve">
+    <value>Speed test</value>
+  </data>
+  <data name="Timeout" xml:space="preserve">
+    <value>Timeout</value>
+  </data>
+  <data name="LastTestNoFinishYet" xml:space="preserve">
+    <value>Last test is not finished yet. Please wait till test finish.</value>
+  </data>
+  <data name="Testing" xml:space="preserve">
+    <value>Testing </value>
+  </data>
+  <data name="TestWillTakeALongTime" xml:space="preserve">
+    <value>The test will take a very long time.
+Are you sure you want to continue?</value>
+  </data>
+  <data name="SpeedTestFinished" xml:space="preserve">
+    <value>Speed tests have finished.</value>
+  </data>
+  <data name="ServersAreRunning" xml:space="preserve">
+    <value>servers are running.</value>
+  </data>
+  <data name="ExitOtherVGCFirst" xml:space="preserve">
+    <value>Another V2RayGCon is running, please exit first.</value>
+  </data>
+  <data name="SelectServerFirst" xml:space="preserve">
+    <value>Please select ther servers first.</value>
+  </data>
+  <data name="LooksLikeABug" xml:space="preserve">
+    <value>Looks like you found a bug.
+Please send bug report to the author.</value>
+  </data>
+  <data name="PackageFail" xml:space="preserve">
+    <value>Package failed</value>
+  </data>
+  <data name="PackageSuccess" xml:space="preserve">
+    <value>Package success</value>
+  </data>
+  <data name="PackageDone" xml:space="preserve">
+    <value>Package done.</value>
+  </data>
+  <data name="SetSysProxyDone" xml:space="preserve">
+    <value>Set system proxy complete.</value>
+  </data>
+  <data name="LogOfThisServer" xml:space="preserve">
+    <value>Log of this server</value>
+  </data>
+  <data name="Multiboxing" xml:space="preserve">
+    <value>Multiboxing</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="NoMark" xml:space="preserve">
+    <value>No mark</value>
+  </data>
+  <data name="SysNotSupportTLS12" xml:space="preserve">
+    <value>Your system does not support TLS1.2.
+Please upgrade to .NET 4.5 or higher.
+Otherwise operations involving the network may fail.</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="StatusBarPagerInfoTpl" xml:space="preserve">
+    <value>Page {0}/{1}</value>
+  </data>
+  <data name="SysProxyRequireHttpOrSocksMode" xml:space="preserve">
+    <value>Set mode to HTTP or SOCKS first, please!</value>
+  </data>
+  <data name="AutoTracker" xml:space="preserve">
+    <value>Auto tracker</value>
+  </data>
+  <data name="SetSysProxyFail" xml:space="preserve">
+    <value>Set system proxy fail! 
+Please take a look at log.</value>
+  </data>
+  <data name="GetInboundInfoFail" xml:space="preserve">
+    <value>Get inbound information fail!</value>
+  </data>
+  <data name="SetAnyServerAsPacServerFirst" xml:space="preserve">
+    <value>Please set any server as PAC proxy first.</value>
+  </data>
+  <data name="VisitWebPage" xml:space="preserve">
+    <value>Visit the following web page?</value>
+  </data>
+  <data name="SaveUserSettingsToFileFail" xml:space="preserve">
+    <value>Save settings to file fail!
+Please move this app to a writeable folder.</value>
+  </data>
+  <data name="UnsetPortableModeFail" xml:space="preserve">
+    <value>Unset partable mode fail!
+Please delete {0} in app folder.</value>
+  </data>
+  <data name="Portable" xml:space="preserve">
+    <value>Portable mode</value>
+  </data>
+  <data name="CreateFolderFail" xml:space="preserve">
+    <value>Create folder fail!</value>
+  </data>
+  <data name="GlobalProxy" xml:space="preserve">
+    <value>Global proxy</value>
+  </data>
+  <data name="PacProxy" xml:space="preserve">
+    <value>PAC proxy</value>
+  </data>
+  <data name="Plugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="FindNoPlugin" xml:space="preserve">
+    <value>Find no plugin.</value>
+  </data>
+  <data name="NoQualifyProxyServer" xml:space="preserve">
+    <value>No qualify proxy server available!
+Switch to direct download.</value>
+  </data>
+  <data name="ListIsEmpty" xml:space="preserve">
+    <value>List is empty!</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="FetchUpdateInfoFail" xml:space="preserve">
+    <value>Fetch update information fail!</value>
+  </data>
+  <data name="NoUpdateTryLater" xml:space="preserve">
+    <value>You are using the latest version now.</value>
+  </data>
+  <data name="FileCheckSumFail" xml:space="preserve">
+    <value>File check sum fail!</value>
+  </data>
+  <data name="DecompressFileFail" xml:space="preserve">
+    <value>Decompress fail!</value>
+  </data>
+  <data name="InjectPackagingImportsFail" xml:space="preserve">
+    <value>Inject packageing imports fail, ignore imports.</value>
+  </data>
+  <data name="ConfirmClearLog" xml:space="preserve">
+    <value>Are you sure to clear logs?</value>
+  </data>
+  <data name="UpdatingPleaseWait" xml:space="preserve">
+    <value>Checking for update, please wait.
+If last update fail, please restart this software and try again.</value>
+  </data>
+  <data name="ChangesColon" xml:space="preserve">
+    <value>Changes:</value>
+  </data>
+  <data name="WarningColon" xml:space="preserve">
+    <value>Warning:</value>
+  </data>
+  <data name="ConfirmLoadDefaultUserSettings" xml:space="preserve">
+    <value>Load user settings fail! Use default settings?
+Yes, use default settings.
+No, abort.</value>
+  </data>
+  <data name="ConfirmRestorePluginsSetting" xml:space="preserve">
+    <value>Restore plugins setting and restart all plugins?</value>
+  </data>
+  <data name="ConfirmOriginalSettingWillBeReset" xml:space="preserve">
+    <value>The original settings will be reset. Do you really want to continue?</value>
+  </data>
+  <data name="ConfirmRestoreGlobalImportSettings" xml:space="preserve">
+    <value>Restore global import settings?</value>
+  </data>
+  <data name="ConfirmRestoreSubscriptionSettings" xml:space="preserve">
+    <value>Restore subscription settings?</value>
+  </data>
+  <data name="AndThenSaveThisFileAs" xml:space="preserve">
+    <value>And then save this text file as {0}.</value>
+  </data>
+  <data name="OrDisablePortableMode" xml:space="preserve">
+    <value>or disable portable mode.</value>
+  </data>
+  <data name="LastModified" xml:space="preserve">
+    <value>Last modified </value>
+  </data>
+  <data name="MMdd" xml:space="preserve">
+    <value>MM-dd</value>
+  </data>
+  <data name="CurSysProxy" xml:space="preserve">
+    <value>CurSysProxy: </value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="ProjectPage" xml:space="preserve">
+    <value>GitHub</value>
+  </data>
+  <data name="ProjectWiki" xml:space="preserve">
+    <value>Wiki</value>
+  </data>
+  <data name="Servers" xml:space="preserve">
+    <value>Servers</value>
+  </data>
+  <data name="CheckForUpdate" xml:space="preserve">
+    <value>Check for update</value>
+  </data>
+  <data name="StopAllServers" xml:space="preserve">
+    <value>Stop all servers</value>
+  </data>
+  <data name="CanNotStartPlsCheckLogs" xml:space="preserve">
+    <value>can not start. Please check logs.</value>
+  </data>
+  <data name="HasFaultyConfig" xml:space="preserve">
+    <value>can not start. Please check configuration.</value>
+  </data>
+  <data name="KilledByUserOrOtherApp" xml:space="preserve">
+    <value>was killed by user or another app.</value>
+  </data>
+  <data name="SpeedtestPortNum" xml:space="preserve">
+    <value>Speedtest on port: </value>
+  </data>
+  <data name="AvgSpeedtestResult" xml:space="preserve">
+    <value>Average speedtest delay: </value>
+  </data>
+  <data name="CurSpeedtestResult" xml:space="preserve">
+    <value>Current speedtest delay: </value>
+  </data>
+  <data name="ConcurrentV2RayCoreNum" xml:space="preserve">
+    <value>Concurrent V2Ray-core number: </value>
+  </data>
+  <data name="StatusBarPagerMenuItemTpl" xml:space="preserve">
+    <value>Page {0,3} ({1,4} - {2,4})</value>
+  </data>
+  <data name="StatusBarMessageTpl" xml:space="preserve">
+    <value>Total {0}/{1} Selected {2}/{3}</value>
+  </data>
+  <data name="TotalNum" xml:space="preserve">
+    <value>Total: </value>
+  </data>
+</root>

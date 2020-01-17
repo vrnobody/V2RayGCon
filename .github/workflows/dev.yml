@@ -1,0 +1,34 @@
+name: dev
+
+on: 
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    env:
+        projName: V2RayGCon
+        projCfg: full
+
+    runs-on: windows-latest
+
+    steps:
+        - name: Checkout master
+          uses: actions/checkout@dev
+
+        - name: Show versions
+          run: |
+            python --version
+            echo "power shell version:"
+            $Host.Version
+
+        - name: Setup Nuget.exe
+          uses: warrenbuckley/Setup-Nuget@v1
+        - name: Restore packages
+          run: nuget restore ${env:projName}.sln
+
+        - name: Setup MSBuild.exe
+          uses: warrenbuckley/Setup-MSBuild@v1
+        - name: Build with MSBuild
+          run: msbuild ${env:projName}.sln -p:Configuration=${env:projCfg}

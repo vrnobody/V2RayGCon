@@ -123,15 +123,15 @@ namespace V2RayGCon.Views.WinForms
                 configer.GetConfigFormated(),
                 out string filename))
             {
-                case VgcApis.Models.Datas.Enum.SaveFileErrorCode.Success:
+                case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Success:
                     SetTitle(filename);
                     configer.MarkOriginalFile();
                     MessageBox.Show(I18N.Done);
                     break;
-                case VgcApis.Models.Datas.Enum.SaveFileErrorCode.Fail:
+                case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Fail:
                     MessageBox.Show(I18N.WriteFileFail);
                     break;
-                case VgcApis.Models.Datas.Enum.SaveFileErrorCode.Cancel:
+                case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Cancel:
                     // do nothing
                     break;
             }

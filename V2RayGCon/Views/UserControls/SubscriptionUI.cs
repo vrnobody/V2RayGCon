@@ -174,8 +174,10 @@ namespace V2RayGCon.Views.UserControls
         }
 
         private void UrlListItem_MouseDown(object sender, MouseEventArgs e) =>
-            DoDragDrop((SubscriptionUI)sender, DragDropEffects.Move);
+            DoDragDrop(this, DragDropEffects.Move);
 
+        private void lbTotal_MouseDown(object sender, MouseEventArgs e) =>
+            DoDragDrop(this, DragDropEffects.Move);
         #endregion
 
         #region protected

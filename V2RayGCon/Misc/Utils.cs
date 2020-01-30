@@ -722,7 +722,7 @@ namespace V2RayGCon.Misc
         /// <returns></returns>
         public static List<string> ExtractLinks(
             string text,
-            VgcApis.Models.Datas.Enum.LinkTypes linkType)
+            VgcApis.Models.Datas.Enums.LinkTypes linkType)
         {
             var links = new List<string>();
             try
@@ -1158,7 +1158,7 @@ namespace V2RayGCon.Misc
         public static string InboundTypeNumberToName(int typeNumber)
         {
             var table = Models.Datas.Table.customInbTypeNames;
-            return table[Misc.Utils.Clamp(typeNumber, 0, table.Length)];
+            return table[Clamp(typeNumber, 0, table.Length)];
         }
         #endregion
 
@@ -1268,27 +1268,27 @@ namespace V2RayGCon.Misc
 
 
         static string GenLinkPrefix(
-            VgcApis.Models.Datas.Enum.LinkTypes linkType) =>
+            VgcApis.Models.Datas.Enums.LinkTypes linkType) =>
             $"{linkType.ToString()}";
 
         public static string GenPattern(
-            VgcApis.Models.Datas.Enum.LinkTypes linkType)
+            VgcApis.Models.Datas.Enums.LinkTypes linkType)
         {
             string pattern;
             switch (linkType)
             {
-                case VgcApis.Models.Datas.Enum.LinkTypes.ss:
+                case VgcApis.Models.Datas.Enums.LinkTypes.ss:
                     pattern = GenLinkPrefix(linkType) + "://" +
                         VgcApis.Models.Consts.Patterns.SsShareLinkContent;
                     break;
-                case VgcApis.Models.Datas.Enum.LinkTypes.vmess:
-                case VgcApis.Models.Datas.Enum.LinkTypes.v2cfg:
-                case VgcApis.Models.Datas.Enum.LinkTypes.v:
+                case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
+                case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
+                case VgcApis.Models.Datas.Enums.LinkTypes.v:
                     pattern = GenLinkPrefix(linkType) + "://" +
                         VgcApis.Models.Consts.Patterns.Base64NonStandard;
                     break;
-                case VgcApis.Models.Datas.Enum.LinkTypes.http:
-                case VgcApis.Models.Datas.Enum.LinkTypes.https:
+                case VgcApis.Models.Datas.Enums.LinkTypes.http:
+                case VgcApis.Models.Datas.Enums.LinkTypes.https:
                     pattern = VgcApis.Models.Consts.Patterns.HttpUrl;
                     break;
                 default:
@@ -1301,7 +1301,7 @@ namespace V2RayGCon.Misc
 
         public static string AddLinkPrefix(
             string b64Content,
-            VgcApis.Models.Datas.Enum.LinkTypes linkType)
+            VgcApis.Models.Datas.Enums.LinkTypes linkType)
         {
             return GenLinkPrefix(linkType) + "://" + b64Content;
         }

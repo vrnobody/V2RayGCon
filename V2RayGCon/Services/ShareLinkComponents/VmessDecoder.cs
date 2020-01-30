@@ -30,7 +30,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             ConfigString2Vmess(config)?.ToVmessLink();
 
         public List<string> ExtractLinksFromText(string text) =>
-            Misc.Utils.ExtractLinks(text, VgcApis.Models.Datas.Enum.LinkTypes.vmess);
+            Misc.Utils.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
         #endregion
 
         #region private methods

@@ -58,27 +58,27 @@ namespace Luna.Models.Apis.Components
 
         public string Config2VeeLink(string config) =>
             vgcSlinkMgr.EncodeConfigToShareLink(
-                config, VgcApis.Models.Datas.Enum.LinkTypes.v);
+                config, VgcApis.Models.Datas.Enums.LinkTypes.v);
 
         public string Config2VmessLink(string config) =>
             vgcSlinkMgr.EncodeConfigToShareLink(
-                config, VgcApis.Models.Datas.Enum.LinkTypes.vmess);
+                config, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
 
         public string Config2V2cfg(string config) =>
             vgcSlinkMgr.EncodeConfigToShareLink(
-                config, VgcApis.Models.Datas.Enum.LinkTypes.v2cfg);
+                config, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
 
         public string ShareLink2ConfigString(string shareLink) =>
           vgcSlinkMgr.DecodeShareLinkToConfig(shareLink) ?? @"";
 
         public string AddVeePrefix(string b64Str) =>
-           vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enum.LinkTypes.v);
+           vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.v);
 
         public string AddVmessPrefix(string b64Str) =>
-           vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enum.LinkTypes.vmess);
+           vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
 
         public string AddV2cfgPrefix(string b64Str) =>
-           vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enum.LinkTypes.v2cfg);
+           vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
 
         public string Base64Encode(string text) =>
             vgcUtils.Base64Encode(text);

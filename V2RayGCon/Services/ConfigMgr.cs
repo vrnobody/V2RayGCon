@@ -93,7 +93,7 @@ namespace V2RayGCon.Services
             return decodedConfig;
         }
 
-        public bool ModifyInboundByCustomSetting(
+        public bool ModifyInboundWithCustomSetting(
             ref JObject config,
             int inbType,
             string ip,
@@ -111,11 +111,10 @@ namespace V2RayGCon.Services
             }
 
             var protocol = Misc.Utils.InboundTypeNumberToName(inbType);
-            var part = protocol + "In";
+            var tplKey = protocol + "In";
             try
             {
-                JObject o = CreateInboundSetting(
-                    inbType, ip, port, protocol, part);
+                JObject o = CreateInboundSetting(inbType, ip, port, protocol, tplKey);
 
                 ReplaceInboundSetting(ref config, o);
 #if DEBUG
@@ -445,14 +444,14 @@ namespace V2RayGCon.Services
            string ip,
            int port,
            string protocol,
-           string part)
+           string tplKey)
         {
             var o = JObject.Parse(@"{}");
             o["tag"] = "agentin";
             o["protocol"] = protocol;
             o["listen"] = ip;
             o["port"] = port;
-            o["settings"] = cache.tpl.LoadTemplate(part);
+            o["settings"] = cache.tpl.LoadTemplate(tplKey);
 
             if (inboundType == (int)Models.Datas.Enums.ProxyTypes.SOCKS)
             {
@@ -494,7 +493,7 @@ namespace V2RayGCon.Services
                 config["log"] = JToken.Parse("{'loglevel': 'warning'}");
             }
 
-            if (!ModifyInboundByCustomSetting(
+            if (!ModifyInboundWithCustomSetting(
                 ref config,
                 (int)Models.Datas.Enums.ProxyTypes.HTTP,
                 VgcApis.Models.Consts.Webs.LoopBackIP,

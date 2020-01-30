@@ -1101,7 +1101,7 @@ namespace V2RayGCon.Resources.Resx {
         
         /// <summary>
         ///   查找类似 Looks like you found a bug.
-        ///Please send bug report to the author. 的本地化字符串。
+        ///Please send this bug report to the author. 的本地化字符串。
         /// </summary>
         internal static string LooksLikeABug {
             get {
@@ -1716,7 +1716,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Vist v2ray-core release page? 的本地化字符串。
+        ///   查找类似 Vist v2ray-core release webpage? 的本地化字符串。
         /// </summary>
         internal static string VisitV2rayCoreReleasePage {
             get {
@@ -1725,7 +1725,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Vist V2RayGCon issue page? 的本地化字符串。
+        ///   查找类似 Vist V2RayGCon issue webpage? 的本地化字符串。
         /// </summary>
         internal static string VisitVGCIssuePage {
             get {
@@ -1734,16 +1734,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Vist v-link wiki page? 的本地化字符串。
-        /// </summary>
-        internal static string VisitVlinkPage {
-            get {
-                return ResourceManager.GetString("VisitVlinkPage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Visit the following web page? 的本地化字符串。
+        ///   查找类似 Visit the following webpage? 的本地化字符串。
         /// </summary>
         internal static string VisitWebPage {
             get {
@@ -1752,7 +1743,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Vist project page? 的本地化字符串。
+        ///   查找类似 Vist project webpage? 的本地化字符串。
         /// </summary>
         internal static string VistProjectPage {
             get {
@@ -1761,7 +1752,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Visit wiki page of this project? 的本地化字符串。
+        ///   查找类似 Visit user manual webpage? 的本地化字符串。
         /// </summary>
         internal static string VistWikiPage {
             get {

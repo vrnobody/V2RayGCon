@@ -62,7 +62,7 @@ namespace V2RayGCon.Controllers
             {
                 // insert a space in the front for regex matching
                 serverString += @" "
-                    + VgcApis.Models.Datas.Enum.LinkTypes.v2cfg.ToString()
+                    + VgcApis.Models.Datas.Enums.LinkTypes.v2cfg.ToString()
                     + @"://"
                     + Misc.Utils.Base64Encode(server.GetConfiger().GetConfig())
                     + Environment.NewLine;

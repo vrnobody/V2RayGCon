@@ -10,9 +10,9 @@
 [8]: https://github.com/vrnobody/V2RayGCon/blob/master/LICENSE "Licence"
 [9]: https://github.com/vrnobody/V2RayGCon/releases/latest "Latest release"
 
-V2RayGCon是windos下[v2ray-core](https://v2ray.com)的第三方图形界面客户端。  
+V2RayGCon是windows下[v2ray-core](https://v2ray.com)的第三方图形界面客户端。  
 
-[\[下载 download\]][9]&nbsp;&nbsp;[\[手册 wiki\]](https://github.com/vrnobody/V2RayGCon/wiki)&nbsp;&nbsp;[\[唯一联系方式 issue\]](https://github.com/vrnobody/V2RayGCon/issues)  
+[\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]](https://vrnobody.github.io/V2RayGCon/)&nbsp;&nbsp;[\[唯一联系方式 issue\]](https://github.com/vrnobody/V2RayGCon/issues)  
 
 ### 安装 Install
 系统需要先装.net framework 4.5或以上（通常已经装了）。  
@@ -22,7 +22,7 @@ Download and extract [V2RayGCon-box.zip][9] to any directory you like. That's it
 Require .net framework 4.5 or higher.  
 
 ### 演示 Demo
-![Demo v1.1.10 GIF](https://github.com/vrnobody/V2RayGCon/raw/version/imgs/demo1.1.10.gif)  
+![Demo v1.1.10 GIF](https://vrnobody.github.io/V2RayGCon/images/forms/demo_basics_v1.1.10.gif)  
 
 ### 引用按字母排序 Credits (in alphabetical order)  
 [2dust/v2rayN](https://github.com/2dust/v2rayN) vmess分享链接及订阅格式  

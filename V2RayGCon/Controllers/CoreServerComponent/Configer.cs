@@ -53,7 +53,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 return null;
             }
 
-            if (!configMgr.ModifyInboundByCustomSetting(
+            if (!configMgr.ModifyInboundWithCustomSetting(
                 ref finalConfig,
                 coreInfo.customInbType,
                 coreInfo.inbIp,

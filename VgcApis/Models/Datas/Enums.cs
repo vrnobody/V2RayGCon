@@ -1,12 +1,13 @@
 ﻿namespace VgcApis.Models.Datas
 {
-    public class Enum
+    public class Enums
     {
         public enum ShutdownReasons
         {
+            Undefined,  // default
             CloseByUser,  // close by user
             Poweroff, // system shut down
-            Abort, // attack by aliens :>
+            Abort, // attacked by aliens :>
         }
 
         /// <summary>

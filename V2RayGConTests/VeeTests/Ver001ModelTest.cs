@@ -11,7 +11,7 @@ namespace V2RayGCon.Test.VeeTests
         {
             for (int i = 0; i < 10; i++)
             {
-                var v1 = new Models.VeeShareLinks.Ver0a
+                var v1 = new Models.VeeShareLinks.Vmess0a
                 {
                     address = "::1",
                     alias = "中文abc 123",
@@ -25,7 +25,7 @@ namespace V2RayGCon.Test.VeeTests
                     uuid = Guid.NewGuid(),
                 };
                 var bytes = v1.ToBytes();
-                var v2 = new Models.VeeShareLinks.Ver0a(bytes);
+                var v2 = new Models.VeeShareLinks.Vmess0a(bytes);
                 Assert.AreEqual(true, v1.EqTo(v2));
             }
         }

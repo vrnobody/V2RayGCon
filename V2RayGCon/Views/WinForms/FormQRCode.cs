@@ -20,7 +20,7 @@ namespace V2RayGCon.Views.WinForms
         Services.ShareLinkMgr slinkMgr;
 
         int servIndex;
-        VgcApis.Models.Datas.Enum.LinkTypes linkType;
+        VgcApis.Models.Datas.Enums.LinkTypes linkType;
         List<string> serverList;
 
         VgcApis.Libs.Tasks.LazyGuy servListUpdater;
@@ -31,7 +31,7 @@ namespace V2RayGCon.Views.WinForms
             slinkMgr = Services.ShareLinkMgr.Instance;
 
             servIndex = -1;
-            linkType = VgcApis.Models.Datas.Enum.LinkTypes.vmess;
+            linkType = VgcApis.Models.Datas.Enums.LinkTypes.vmess;
 
             InitializeComponent();
 
@@ -84,29 +84,29 @@ namespace V2RayGCon.Views.WinForms
             servers.OnServerPropertyChange += OnSettingChangeHandler;
         }
 
-        VgcApis.Models.Datas.Enum.LinkTypes ComboBoxSelectedIndexToLinkType(
+        VgcApis.Models.Datas.Enums.LinkTypes ComboBoxSelectedIndexToLinkType(
             int index)
         {
             switch (index)
             {
                 case 0:
-                    return VgcApis.Models.Datas.Enum.LinkTypes.vmess;
+                    return VgcApis.Models.Datas.Enums.LinkTypes.vmess;
                 case 1:
-                    return VgcApis.Models.Datas.Enum.LinkTypes.v;
+                    return VgcApis.Models.Datas.Enums.LinkTypes.v;
 
                 default:
-                    return VgcApis.Models.Datas.Enum.LinkTypes.unknow;
+                    return VgcApis.Models.Datas.Enums.LinkTypes.unknow;
             }
         }
 
         int LinkTypeToComboBoxSelectedIndex(
-            VgcApis.Models.Datas.Enum.LinkTypes linkType)
+            VgcApis.Models.Datas.Enums.LinkTypes linkType)
         {
             switch (linkType)
             {
-                case VgcApis.Models.Datas.Enum.LinkTypes.vmess:
+                case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
                     return 0;
-                case VgcApis.Models.Datas.Enum.LinkTypes.v:
+                case VgcApis.Models.Datas.Enums.LinkTypes.v:
                     return 1;
                 default:
                     return -1;

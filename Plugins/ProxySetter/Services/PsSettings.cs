@@ -23,7 +23,7 @@
         public void DebugLog(string content)
         {
 #if DEBUG
-            SendLog($"(Degug) {content}");
+            SendLog($"(debug) {content}");
 #endif
         }
 

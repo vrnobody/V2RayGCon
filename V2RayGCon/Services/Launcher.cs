@@ -13,7 +13,7 @@ namespace V2RayGCon.Services
         Servers servers;
         Updater updater;
 
-        bool isCleanupDone = false;
+        bool isDisposing = false;
         List<IDisposable> services = new List<IDisposable>();
 
         public Launcher() { }
@@ -22,7 +22,7 @@ namespace V2RayGCon.Services
         public bool Run()
         {
             setting = Settings.Instance;
-            if (setting.ShutdownReason == VgcApis.Models.Datas.Enum.ShutdownReasons.Abort)
+            if (setting.ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
             {
                 return false;
             }
@@ -32,7 +32,7 @@ namespace V2RayGCon.Services
 
             SetCulture(setting.culture);
 
-            Prepare();
+            InitAllServices();
 
             BindEvents();
 
@@ -93,7 +93,7 @@ namespace V2RayGCon.Services
 
         #region private method
 
-        void Prepare()
+        void InitAllServices()
         {
             // warn-up
             var cache = Cache.Instance;
@@ -126,50 +126,44 @@ namespace V2RayGCon.Services
 
         void BindEvents()
         {
-            Application.ApplicationExit +=
-                (s, a) => OnApplicationExitHandler();
+            Application.ApplicationExit += (s, a) => DisposeAllServices();
 
-            Microsoft.Win32.SystemEvents.SessionEnding +=
-                (s, a) =>
-                {
-                    setting.ShutdownReason = VgcApis.Models.Datas.Enum.ShutdownReasons.Poweroff;
-                    OnApplicationExitHandler();
-                };
+            Microsoft.Win32.SystemEvents.SessionEnding += (s, a) =>
+            {
+                setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff;
+                DisposeAllServices();
+            };
 
-            Application.ThreadException +=
-                (s, a) => ShowExceptionDetailAndExit(
-                    a.Exception.ToString());
-
-            AppDomain.CurrentDomain.UnhandledException +=
-                (s, a) => ShowExceptionDetailAndExit(
-                    (a.ExceptionObject as Exception).ToString());
+            Application.ThreadException += (s, a) => ShowExceptionDetailAndExit(a.Exception);
+            AppDomain.CurrentDomain.UnhandledException += (s, a) => ShowExceptionDetailAndExit(a.ExceptionObject as Exception);
         }
 
-        readonly object cleanupLocker = new object();
-        void OnApplicationExitHandler()
+        readonly object disposeLocker = new object();
+        void DisposeAllServices()
         {
             // throw new NullReferenceException("for debugging");
 
-            if (setting.ShutdownReason == VgcApis.Models.Datas.Enum.ShutdownReasons.Abort)
+            if (setting.ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
             {
                 // shutdown directly
                 return;
             }
 
-            lock (cleanupLocker)
+            lock (disposeLocker)
             {
-                if (isCleanupDone)
+                if (isDisposing)
                 {
                     return;
                 }
-
-                setting.SetIsShutdown(true);
-                foreach (var service in services)
-                {
-                    service.Dispose();
-                }
-                isCleanupDone = true;
+                isDisposing = true;
             }
+
+            setting.SetIsShutdown(true);
+            foreach (var service in services)
+            {
+                service.Dispose();
+            }
+
         }
 
         void SetCulture(Models.Datas.Enums.Cultures culture)
@@ -201,27 +195,28 @@ namespace V2RayGCon.Services
         #endregion
 
         #region unhandle exception
-        void ShowExceptionDetailAndExit(string detail)
+        void ShowExceptionDetailAndExit(Exception exception)
         {
-            var log = detail;
+            if (setting.ShutdownReason != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
+            {
+                ShowExceptionDetails(exception);
+            }
+            Application.Exit();
+        }
+
+        private void ShowExceptionDetails(Exception exception)
+        {
+            var log = $"{I18N.LooksLikeABug}";
+
             try
             {
-                log += Environment.NewLine
-                    + Environment.NewLine
-                    + setting.GetLogContent();
+                var nl = Environment.NewLine;
+                log += nl + nl + exception.ToString();
+                log += nl + nl + setting.GetLogContent();
             }
-            catch
-            {
-                // Why must I write sth. here?
-            }
+            catch { }
 
-            if (setting.ShutdownReason == VgcApis.Models.Datas.Enum.ShutdownReasons.CloseByUser)
-            {
-                VgcApis.Libs.Sys.NotepadHelper.ShowMessage(log, "V2RayGCon bug report");
-                MessageBox.Show(I18N.LooksLikeABug);
-            }
-
-            Application.Exit();
+            VgcApis.Libs.Sys.NotepadHelper.ShowMessage(log, "V2RayGCon bug report");
         }
 
         #endregion

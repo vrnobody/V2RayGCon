@@ -13,7 +13,11 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         Services.Settings setting;
+
         VgcApis.Libs.Views.RepaintCtrl repaintCtrl;
+        long updateTimeStamp = DateTime.Now.Ticks;
+        Timer updateLogTimer = new Timer { Interval = 500 };
+        VgcApis.Libs.Tasks.Bar bar = new VgcApis.Libs.Tasks.Bar();
 
         public FormLog()
         {
@@ -35,26 +39,23 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.AutoSetFormIcon(this);
         }
 
+        private void FormLog_Load(object sender, System.EventArgs e)
+        {
+            // throw new NullReferenceException("for debugging");
+
+            repaintCtrl = new VgcApis.Libs.Views.RepaintCtrl(rtBoxLogger);
+            updateLogTimer.Tick += UpdateLog;
+            updateLogTimer.Start();
+        }
+
+        #region private methods
+
         private void ScrollToBottom()
         {
             rtBoxLogger.SelectionStart = rtBoxLogger.Text.Length;
             rtBoxLogger.ScrollToCaret();
         }
 
-        Timer updateLogTimer = new Timer { Interval = 500 };
-        private void FormLog_Load(object sender, System.EventArgs e)
-        {
-            repaintCtrl = new VgcApis.Libs.Views.RepaintCtrl(rtBoxLogger);
-            updateLogTimer.Tick += UpdateLog;
-            updateLogTimer.Start();
-        }
-
-        readonly object updateLogLocker = new object();
-
-        long updateTimeStamp = DateTime.Now.Ticks;
-
-
-        VgcApis.Libs.Tasks.Bar bar = new VgcApis.Libs.Tasks.Bar();
         void UpdateLog(object sender, EventArgs args)
         {
             if (!bar.Install())
@@ -84,5 +85,6 @@ namespace V2RayGCon.Views.WinForms
                 bar.Remove();
             }
         }
+        #endregion
     }
 }

@@ -69,7 +69,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             done.WaitOne();
         }
 
-        public void StopCoreQuiet() => v2rayCore.StopCore();
+        public void StopCoreQuiet() => v2rayCore.StopCoreThen(null);
 
         public void StopCore()
         {

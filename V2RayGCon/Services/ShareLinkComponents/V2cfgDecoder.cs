@@ -42,12 +42,12 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             return Misc.Utils.AddLinkPrefix(
                 body,
-                VgcApis.Models.Datas.Enum.LinkTypes.v2cfg);
+                VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
         }
 
 
         public List<string> ExtractLinksFromText(string text) =>
-            Misc.Utils.ExtractLinks(text, VgcApis.Models.Datas.Enum.LinkTypes.v2cfg);
+            Misc.Utils.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
         #endregion
 
         #region private methods

@@ -102,6 +102,7 @@
             this.lbTotal.ForeColor = System.Drawing.Color.Red;
             this.lbTotal.Name = "lbTotal";
             this.toolTip1.SetToolTip(this.lbTotal, resources.GetString("lbTotal.ToolTip"));
+            this.lbTotal.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbTotal_MouseDown);
             // 
             // SubscriptionUI
             // 

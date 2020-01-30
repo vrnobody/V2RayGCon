@@ -312,7 +312,7 @@ Load new config?</value>
     <value>The current V2RayGCon is the latest version.</value>
   </data>
   <data name="VistProjectPage" xml:space="preserve">
-    <value>Vist project page?</value>
+    <value>Vist project webpage?</value>
   </data>
   <data name="ConfirmDeleteAllServers" xml:space="preserve">
     <value>DELETE ALL SERVERS?</value>
@@ -346,7 +346,7 @@ Please use [Add new server] or [Replace server].</value>
     <value>Link is empty!</value>
   </data>
   <data name="VistWikiPage" xml:space="preserve">
-    <value>Visit wiki page of this project?</value>
+    <value>Visit user manual webpage?</value>
   </data>
   <data name="CFnGoogle" xml:space="preserve">
     <value>CF and Google</value>
@@ -356,9 +356,6 @@ Please use [Add new server] or [Replace server].</value>
   </data>
   <data name="GenVLinkFail" xml:space="preserve">
     <value>Fail to generate v-link!</value>
-  </data>
-  <data name="VisitVlinkPage" xml:space="preserve">
-    <value>Vist v-link wiki page?</value>
   </data>
   <data name="DecodeFail" xml:space="preserve">
     <value>Decode fail.</value>
@@ -473,10 +470,10 @@ Please check server configuration and log.</value>
     <value>Stop all servers?</value>
   </data>
   <data name="VisitV2rayCoreReleasePage" xml:space="preserve">
-    <value>Vist v2ray-core release page?</value>
+    <value>Vist v2ray-core release webpage?</value>
   </data>
   <data name="VisitVGCIssuePage" xml:space="preserve">
-    <value>Vist V2RayGCon issue page?</value>
+    <value>Vist V2RayGCon issue webpage?</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
@@ -520,7 +517,7 @@ Are you sure you want to continue?</value>
   </data>
   <data name="LooksLikeABug" xml:space="preserve">
     <value>Looks like you found a bug.
-Please send bug report to the author.</value>
+Please send this bug report to the author.</value>
   </data>
   <data name="PackageFail" xml:space="preserve">
     <value>Package failed</value>
@@ -574,7 +571,7 @@ Please take a look at log.</value>
     <value>Please set any server as PAC proxy first.</value>
   </data>
   <data name="VisitWebPage" xml:space="preserve">
-    <value>Visit the following web page?</value>
+    <value>Visit the following webpage?</value>
   </data>
   <data name="SaveUserSettingsToFileFail" xml:space="preserve">
     <value>Save settings to file fail!

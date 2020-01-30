@@ -5,7 +5,7 @@ namespace VgcApis.Libs.Tasks
     public class LazyGuy
     {
         Action task = null;
-        int timeout = -1;
+        CancelableTimeout lazyTimer = null;
 
         /// <summary>
         /// 
@@ -20,26 +20,8 @@ namespace VgcApis.Libs.Tasks
             }
 
             this.task = task;
-            this.timeout = timeout;
-
+            lazyTimer = new CancelableTimeout(DoItNow, timeout);
         }
-
-        #region properties
-        readonly object taskLocker = new object();
-
-        CancelableTimeout _lazyTimer = null;
-        CancelableTimeout lazyTimer
-        {
-            get
-            {
-                if (_lazyTimer == null)
-                {
-                    _lazyTimer = new CancelableTimeout(task, timeout);
-                }
-                return _lazyTimer;
-            }
-        }
-        #endregion
 
         #region public method
         public void ForgetIt()
@@ -47,40 +29,22 @@ namespace VgcApis.Libs.Tasks
             lazyTimer.Cancel();
         }
 
-        public void Remember(Action task)
-        {
-            this.task = task;
-        }
-
         public void DoItLater()
         {
             lazyTimer.Start();
         }
 
-        bool cancel = false;
         public void DoItNow()
         {
             lazyTimer.Cancel();
-
-            lock (taskLocker)
-            {
-                if (cancel)
-                {
-                    return;
-                }
-                task?.Invoke();
-            }
+            task?.Invoke();
         }
 
         public void Quit()
         {
-            cancel = true;
-            lock (taskLocker)
-            {
-                lazyTimer.Cancel();
-                lazyTimer.Release();
-                task = null;
-            }
+            task = null;
+            lazyTimer.Cancel();
+            lazyTimer.Release();
         }
         #endregion
 

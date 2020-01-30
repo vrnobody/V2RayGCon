@@ -14,7 +14,7 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
 
         public List<string> ExtractLinks(
             string text,
-            VgcApis.Models.Datas.Enum.LinkTypes linkType) =>
+            VgcApis.Models.Datas.Enums.LinkTypes linkType) =>
             Misc.Utils.ExtractLinks(text, linkType);
 
         public string Search(string keywords, int first, int proxyPort, int timeout)

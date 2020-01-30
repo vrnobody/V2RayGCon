@@ -65,7 +65,7 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
         #endregion
 
         #region misc
-        public string AddLinkPrefix(string linkBody, VgcApis.Models.Datas.Enum.LinkTypes type) =>
+        public string AddLinkPrefix(string linkBody, VgcApis.Models.Datas.Enums.LinkTypes type) =>
             Misc.Utils.AddLinkPrefix(linkBody, type);
 
         public string Base64Encode(string plainText) =>

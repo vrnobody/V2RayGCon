@@ -27,11 +27,9 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #region public methods
         public override void Prepare()
         {
-            var v0a = new VeeCodecs.Vee0a(cache);
-            var v1a = new VeeCodecs.Vee1a(cache);
-
-            AddChild(v0a);
-            AddChild(v1a);
+            AddChild(new VeeCodecs.Vmess0a(cache));
+            AddChild(new VeeCodecs.Ss1a(cache));
+            AddChild(new VeeCodecs.Socks2a(cache));
         }
 
         public Tuple<JObject, JToken> Decode(string shareLink)
@@ -55,18 +53,13 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public string Encode(string config)
         {
-            string message = null;
             try
             {
                 return EncodeWorker(config);
             }
             catch (Exception e)
             {
-                message = e.Message;
-            }
-            if (!string.IsNullOrEmpty(message))
-            {
-                setting.SendLog(message);
+                setting.SendLog(e.Message);
             }
             return null;
         }
@@ -74,7 +67,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         public List<string> ExtractLinksFromText(string text) =>
             Misc.Utils.ExtractLinks(
                 text,
-                VgcApis.Models.Datas.Enum.LinkTypes.v);
+                VgcApis.Models.Datas.Enums.LinkTypes.v);
         #endregion
 
         #region private methods
@@ -109,10 +102,13 @@ namespace V2RayGCon.Services.ShareLinkComponents
             switch (protocol)
             {
                 case VgcApis.Models.Consts.Config.ProtocolNameVmess:
-                    encoder = GetChild<VeeCodecs.Vee0a>();
+                    encoder = GetChild<VeeCodecs.Vmess0a>();
                     break;
                 case VgcApis.Models.Consts.Config.ProtocolNameSs:
-                    encoder = GetChild<VeeCodecs.Vee1a>();
+                    encoder = GetChild<VeeCodecs.Ss1a>();
+                    break;
+                case VgcApis.Models.Consts.Config.ProtocolNameSocks:
+                    encoder = GetChild<VeeCodecs.Socks2a>();
                     break;
                 default:
                     return null;
@@ -143,7 +139,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             var b64Str = Convert.ToBase64String(bytes);
             return Misc.Utils.AddLinkPrefix(
                 b64Str,
-                VgcApis.Models.Datas.Enum.LinkTypes.v);
+                VgcApis.Models.Datas.Enums.LinkTypes.v);
         }
 
         #endregion

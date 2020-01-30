@@ -51,6 +51,19 @@
     "protocol": "socks",
     "settings": {}
   },
+  "outbVeeSocks": {
+    "protocol": "socks",
+    "settings": {
+      "servers": [
+        {
+          "address": "",
+          "port": 1234
+        }
+      ]
+    },
+    "tag": "agentout",
+    "streamSettings": {}
+  },
   "outbVeeVmess": {
     "protocol": "vmess",
     "settings": {
@@ -172,7 +185,7 @@
   "socksIn": {
     "auth": "noauth",
     "accounts": [],
-    "udp": false,
+    "udp": true,
     "ip": "127.0.0.1",
     "timeout": 0,
     "userLevel": 0

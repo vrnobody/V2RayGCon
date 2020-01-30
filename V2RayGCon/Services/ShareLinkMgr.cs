@@ -34,11 +34,11 @@ namespace V2RayGCon.Services
             var linkType = VgcApis.Misc.Utils.DetectLinkType(shareLink);
             switch (linkType)
             {
-                case VgcApis.Models.Datas.Enum.LinkTypes.v:
+                case VgcApis.Models.Datas.Enums.LinkTypes.v:
                     return codecs.Decode<ShareLinkComponents.VeeDecoder>(shareLink);
-                case VgcApis.Models.Datas.Enum.LinkTypes.vmess:
+                case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
                     return codecs.Decode<ShareLinkComponents.VmessDecoder>(shareLink);
-                case VgcApis.Models.Datas.Enum.LinkTypes.v2cfg:
+                case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
                     return codecs.Decode<ShareLinkComponents.V2cfgDecoder>(shareLink);
                 default:
                     return null;
@@ -50,15 +50,15 @@ namespace V2RayGCon.Services
         /// </summary>
         public string EncodeConfigToShareLink(
             string config,
-            VgcApis.Models.Datas.Enum.LinkTypes linkType)
+            VgcApis.Models.Datas.Enums.LinkTypes linkType)
         {
             switch (linkType)
             {
-                case VgcApis.Models.Datas.Enum.LinkTypes.v:
+                case VgcApis.Models.Datas.Enums.LinkTypes.v:
                     return codecs.Encode<ShareLinkComponents.VeeDecoder>(config);
-                case VgcApis.Models.Datas.Enum.LinkTypes.vmess:
+                case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
                     return codecs.Encode<ShareLinkComponents.VmessDecoder>(config);
-                case VgcApis.Models.Datas.Enum.LinkTypes.v2cfg:
+                case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
                     return codecs.Encode<ShareLinkComponents.V2cfgDecoder>(config);
                 default:
                     return null;

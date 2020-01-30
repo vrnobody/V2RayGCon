@@ -27,7 +27,7 @@ namespace VgcApis.Interfaces.Services
         #endregion
 
         #region misc        
-        string AddLinkPrefix(string linkBody, VgcApis.Models.Datas.Enum.LinkTypes type);
+        string AddLinkPrefix(string linkBody, VgcApis.Models.Datas.Enums.LinkTypes type);
         string Base64Encode(string plainText);
         string Base64Decode(string b64String);
         string GetLinkBody(string link);

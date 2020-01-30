@@ -54,7 +54,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         public List<string> ExtractLinksFromText(string text) =>
             Misc.Utils.ExtractLinks(
                 text,
-                VgcApis.Models.Datas.Enum.LinkTypes.ss);
+                VgcApis.Models.Datas.Enums.LinkTypes.ss);
         #endregion
 
         #region private methods

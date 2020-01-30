@@ -90,6 +90,7 @@ namespace V2RayGCon.Services
             {
                 if (AutoUpdater.DownloadUpdate())
                 {
+                    setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;
                     Application.Exit();
                 }
             }

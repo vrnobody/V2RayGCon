@@ -276,9 +276,6 @@
   <data name="&gt;&gt;btnDelete.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="chkIsUse.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -294,6 +291,9 @@
   <data name="chkIsUse.Text" xml:space="preserve">
     <value>Use</value>
   </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="chkIsUse.ToolTip" xml:space="preserve">
     <value>Use this subscription.</value>
   </data>
@@ -309,9 +309,6 @@
   <data name="&gt;&gt;chkIsUse.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="chkIsSetMark.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>

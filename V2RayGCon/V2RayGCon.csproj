@@ -134,6 +134,8 @@
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
     <Compile Include="Models\Datas\SpeedTestOptions.cs" />
     <Compile Include="Models\Datas\UpdateInfo.cs" />
+    <Compile Include="Models\VeeShareLinks\Socks2a.cs" />
+    <Compile Include="Models\VeeShareLinks\BasicSettings.cs" />
     <Compile Include="Services\Caches\JsonAcm.cs" />
     <Compile Include="Controllers\ConfigerComponent\MenuUpdater.cs" />
     <Compile Include="Controllers\CoreServerComponent\Configer.cs" />
@@ -185,7 +187,7 @@
     <Compile Include="BaseClasses\SingletonService.cs" />
     <Compile Include="Models\Datas\ImportItem.cs" />
     <Compile Include="Models\VeeShareLinks\Utils.cs" />
-    <Compile Include="Models\VeeShareLinks\Ver1a.cs" />
+    <Compile Include="Models\VeeShareLinks\Ss1a.cs" />
     <Compile Include="Services\Caches\JsonBestMatchItems.cs" />
     <Compile Include="Services\Caches\JsonKeywordItems.cs" />
     <Compile Include="Services\ConfigMgr.cs" />
@@ -194,10 +196,12 @@
     <Compile Include="Services\ServersComponents\IndexHandler.cs" />
     <Compile Include="Services\ServersComponents\QueryHandler.cs" />
     <Compile Include="Services\ShareLinkComponents\Codecs.cs" />
+    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Comm.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\IVeeDecoder.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Vee1a.cs" />
-    <Compile Include="Models\VeeShareLinks\Ver0a.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Vee0a.cs" />
+    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Ss1a.cs" />
+    <Compile Include="Models\VeeShareLinks\Vmess0a.cs" />
+    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Socks2a.cs" />
+    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Vmess0a.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeDecoder.cs" />
     <Compile Include="Services\ShareLinkComponents\VmessDecoder.cs" />
     <Compile Include="Services\ShareLinkComponents\SsDecoder.cs" />

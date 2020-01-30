@@ -292,20 +292,20 @@ namespace VgcApisTests
 
         [DataTestMethod]
         [DataRow(@"http://abc.com",
-            VgcApis.Models.Datas.Enum.LinkTypes.http)]
+            VgcApis.Models.Datas.Enums.LinkTypes.http)]
         [DataRow(@"V://abc.com",
-            VgcApis.Models.Datas.Enum.LinkTypes.v)]
+            VgcApis.Models.Datas.Enums.LinkTypes.v)]
         [DataRow(@"vmess://abc.com",
-            VgcApis.Models.Datas.Enum.LinkTypes.vmess)]
+            VgcApis.Models.Datas.Enums.LinkTypes.vmess)]
         [DataRow(@"v2cfg://abc.com",
-            VgcApis.Models.Datas.Enum.LinkTypes.v2cfg)]
+            VgcApis.Models.Datas.Enums.LinkTypes.v2cfg)]
         [DataRow(@"linkTypeNotExist://abc.com",
-            VgcApis.Models.Datas.Enum.LinkTypes.unknow)]
+            VgcApis.Models.Datas.Enums.LinkTypes.unknow)]
         [DataRow(@"abc.com",
-            VgcApis.Models.Datas.Enum.LinkTypes.unknow)]
+            VgcApis.Models.Datas.Enums.LinkTypes.unknow)]
         [DataRow(@"ss://abc.com",
-            VgcApis.Models.Datas.Enum.LinkTypes.ss)]
-        public void DetectLinkTypeTest(string link, VgcApis.Models.Datas.Enum.LinkTypes expect)
+            VgcApis.Models.Datas.Enums.LinkTypes.ss)]
+        public void DetectLinkTypeTest(string link, VgcApis.Models.Datas.Enums.LinkTypes expect)
         {
             var linkType = DetectLinkType(link);
             Assert.AreEqual(expect, linkType);

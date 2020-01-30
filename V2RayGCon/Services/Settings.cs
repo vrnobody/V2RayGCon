@@ -38,8 +38,8 @@ namespace V2RayGCon.Services
             }
         }
 
-        public VgcApis.Models.Datas.Enum.ShutdownReasons ShutdownReason { get; set; } =
-            VgcApis.Models.Datas.Enum.ShutdownReasons.CloseByUser;
+        public VgcApis.Models.Datas.Enums.ShutdownReasons ShutdownReason { get; set; } =
+            VgcApis.Models.Datas.Enums.ShutdownReasons.Undefined;
 
         public bool isDownloadWin32V2RayCore
         {
@@ -384,7 +384,7 @@ namespace V2RayGCon.Services
             }
 
             var serializedUserSettings = JsonConvert.SerializeObject(userSettings);
-            if (ValidateSerializedUserSettings(serializedUserSettings))
+            if (IsValid(serializedUserSettings))
             {
                 if (userSettings.isPortable)
                 {
@@ -400,7 +400,7 @@ namespace V2RayGCon.Services
             }
             else
             {
-                if (ShutdownReason == VgcApis.Models.Datas.Enum.ShutdownReasons.CloseByUser)
+                if (ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
                 {
                     SendLog("UserSettings: " + Environment.NewLine + serializedUserSettings);
                     throw new ArgumentException("Validate serialized user settings fail!");
@@ -601,7 +601,7 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
-        bool ValidateSerializedUserSettings(string serializedUserSettings)
+        bool IsValid(string serializedUserSettings)
         {
             if (string.IsNullOrEmpty(serializedUserSettings))
             {
@@ -665,7 +665,7 @@ namespace V2RayGCon.Services
             }
             catch { }
 
-            if (ShutdownReason == VgcApis.Models.Datas.Enum.ShutdownReasons.CloseByUser)
+            if (ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
             {
                 // this is important do not use task
                 var msg = string.Format(I18N.UnsetPortableModeFail, mainUsFilename);
@@ -707,20 +707,25 @@ namespace V2RayGCon.Services
             // main file or bak file write fail, clear cache
             serializedUserSettingsCache = @"";
 
-            if (ShutdownReason == VgcApis.Models.Datas.Enum.ShutdownReasons.CloseByUser)
+            if (ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
             {
-                var msg = I18N.SaveUserSettingsToFileFail;
-                if (isClosing)
-                {
-                    // 兄弟只能帮你到这了
-                    VgcApis.Libs.Sys.NotepadHelper.ShowMessage(content, Properties.Resources.PortableUserSettingsFilename);
-                    msg += Environment.NewLine + string.Format(I18N.AndThenSaveThisFileAs, Properties.Resources.PortableUserSettingsFilename);
-                }
-
-                // this is important do not use task!
-                msg += Environment.NewLine + I18N.OrDisablePortableMode;
-                MessageBox.Show(msg);
+                WarnUserSaveSettingsFailed(content);
             }
+        }
+
+        private void WarnUserSaveSettingsFailed(string content)
+        {
+            var msg = I18N.SaveUserSettingsToFileFail;
+            if (isClosing)
+            {
+                // 兄弟只能帮你到这了
+                VgcApis.Libs.Sys.NotepadHelper.ShowMessage(content, Properties.Resources.PortableUserSettingsFilename);
+                msg += Environment.NewLine + string.Format(I18N.AndThenSaveThisFileAs, Properties.Resources.PortableUserSettingsFilename);
+            }
+
+            // this is important do not use task!
+            msg += Environment.NewLine + I18N.OrDisablePortableMode;
+            MessageBox.Show(msg);
         }
 
         Models.Datas.UserSettings LoadUserSettingsFromPorperties()
@@ -776,7 +781,7 @@ namespace V2RayGCon.Services
                 && (File.Exists(mainUsFile) || File.Exists(bakUsFile))
                 && !Misc.UI.Confirm(I18N.ConfirmLoadDefaultUserSettings))
             {
-                ShutdownReason = VgcApis.Models.Datas.Enum.ShutdownReasons.Abort;
+                ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.Abort;
             }
 
             return result ?? new Models.Datas.UserSettings();

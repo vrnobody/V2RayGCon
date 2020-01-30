@@ -76,7 +76,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 var vlink = Misc.Utils.AddLinkPrefix(
                     Misc.Utils.Base64Encode(server.GetConfiger().GetConfig()),
-                    VgcApis.Models.Datas.Enum.LinkTypes.v2cfg);
+                    VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
 
                 s += vlink + System.Environment.NewLine + System.Environment.NewLine;
             }

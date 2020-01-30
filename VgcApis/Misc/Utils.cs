@@ -551,13 +551,13 @@ namespace VgcApis.Misc
             return prefix.ToLower();
         }
 
-        public static Models.Datas.Enum.LinkTypes DetectLinkType(
+        public static Models.Datas.Enums.LinkTypes DetectLinkType(
             string shareLink)
         {
-            var unknow = Models.Datas.Enum.LinkTypes.unknow;
+            var unknow = Models.Datas.Enums.LinkTypes.unknow;
             var prefix = GetLinkPrefix(shareLink);
             if (!string.IsNullOrEmpty(prefix)
-                && Enum.TryParse(prefix, out Models.Datas.Enum.LinkTypes linkType))
+                && Enum.TryParse(prefix, out Models.Datas.Enums.LinkTypes linkType))
             {
                 return linkType;
             }

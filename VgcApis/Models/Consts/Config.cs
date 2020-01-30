@@ -12,6 +12,7 @@ namespace VgcApis.Models.Consts
         public static int FormMainStatusPagerMenuGroupSize = 25;
 
         public const string ProtocolNameVmess = @"vmess";
+        public const string ProtocolNameSocks = @"socks";
         public const string ProtocolNameSs = @"shadowsocks";
 
         public const string JsonArray = @"[]";

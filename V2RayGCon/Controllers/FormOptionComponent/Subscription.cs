@@ -272,15 +272,15 @@ namespace V2RayGCon.Controllers.OptionComponent
             {
                 // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
 
-                var data = a.Data.GetData(typeof(Views.UserControls.SubscriptionUI))
+                var subject = a.Data.GetData(typeof(Views.UserControls.SubscriptionUI))
                     as Views.UserControls.SubscriptionUI;
 
-                var dest = s as FlowLayoutPanel;
-                Point p = dest.PointToClient(new Point(a.X, a.Y));
-                var item = dest.GetChildAtPoint(p);
-                int index = dest.Controls.GetChildIndex(item, false);
-                dest.Controls.SetChildIndex(data, index);
-                dest.Invalidate();
+                var container = s as FlowLayoutPanel;
+                Point p = container.PointToClient(new Point(a.X, a.Y));
+                var dest = container.GetChildAtPoint(p);
+                int idxDest = container.Controls.GetChildIndex(dest, false);
+                container.Controls.SetChildIndex(subject, idxDest);
+                container.Invalidate();
             };
         }
 

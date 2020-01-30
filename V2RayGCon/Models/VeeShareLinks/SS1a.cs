@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace V2RayGCon.Models.VeeShareLinks
 {
-    public sealed class Ver1a
+    public sealed class Ss1a
     {
-        // ver 0b is optimized for shadowshocks protocol
+        // ver 1a is optimized for shadowshocks protocol
 
         const string version = @"1a";
         static public string SupportedVersion() => version;
@@ -21,7 +21,7 @@ namespace V2RayGCon.Models.VeeShareLinks
         public string streamType, streamParam1, streamParam2, streamParam3; // 256 bytes each
 
 
-        public Ver1a()
+        public Ss1a()
         {
             // config
             alias = string.Empty;
@@ -43,7 +43,7 @@ namespace V2RayGCon.Models.VeeShareLinks
             streamParam3 = string.Empty;
         }
 
-        public Ver1a(byte[] bytes) :
+        public Ss1a(byte[] bytes) :
            this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
@@ -147,7 +147,7 @@ namespace V2RayGCon.Models.VeeShareLinks
             return result;
         }
 
-        public bool EqTo(Ver1a vee)
+        public bool EqTo(Ss1a vee)
         {
             if (isUseOta != vee.isUseOta
                 || port != vee.port

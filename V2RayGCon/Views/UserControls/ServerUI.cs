@@ -401,7 +401,7 @@ namespace V2RayGCon.Views.UserControls
         {
             var vmessLink = slinkMgr.EncodeConfigToShareLink(
                 GetConfig(),
-                VgcApis.Models.Datas.Enum.LinkTypes.vmess);
+                VgcApis.Models.Datas.Enums.LinkTypes.vmess);
 
             Misc.Utils.CopyToClipboardAndPrompt(vmessLink);
         }
@@ -410,7 +410,7 @@ namespace V2RayGCon.Views.UserControls
         {
             var content = slinkMgr.EncodeConfigToShareLink(
                 GetConfig(),
-                VgcApis.Models.Datas.Enum.LinkTypes.v2cfg);
+                VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
 
             Misc.Utils.CopyToClipboardAndPrompt(content);
         }
@@ -557,7 +557,7 @@ namespace V2RayGCon.Views.UserControls
         {
             var vee = slinkMgr.EncodeConfigToShareLink(
                 GetConfig(),
-                VgcApis.Models.Datas.Enum.LinkTypes.v);
+                VgcApis.Models.Datas.Enums.LinkTypes.v);
             Misc.Utils.CopyToClipboardAndPrompt(vee);
         }
 

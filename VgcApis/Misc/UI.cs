@@ -160,20 +160,20 @@ namespace VgcApis.Misc
 
             switch (err)
             {
-                case Models.Datas.Enum.SaveFileErrorCode.Success:
+                case Models.Datas.Enums.SaveFileErrorCode.Success:
                     MessageBox.Show(I18N.Done);
                     break;
-                case Models.Datas.Enum.SaveFileErrorCode.Fail:
+                case Models.Datas.Enums.SaveFileErrorCode.Fail:
                     MessageBox.Show(I18N.WriteFileFail);
                     break;
-                case Models.Datas.Enum.SaveFileErrorCode.Cancel:
+                case Models.Datas.Enums.SaveFileErrorCode.Cancel:
                     // do nothing
                     break;
             }
             return filename;
         }
 
-        public static Models.Datas.Enum.SaveFileErrorCode ShowSaveFileDialog(
+        public static Models.Datas.Enums.SaveFileErrorCode ShowSaveFileDialog(
             string extension, string content, out string fileName)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog
@@ -190,16 +190,16 @@ namespace VgcApis.Misc
             fileName = saveFileDialog.FileName;
             if (string.IsNullOrEmpty(fileName))
             {
-                return Models.Datas.Enum.SaveFileErrorCode.Cancel;
+                return Models.Datas.Enums.SaveFileErrorCode.Cancel;
             }
 
             try
             {
                 File.WriteAllText(fileName, content);
-                return Models.Datas.Enum.SaveFileErrorCode.Success;
+                return Models.Datas.Enums.SaveFileErrorCode.Success;
             }
             catch { }
-            return Models.Datas.Enum.SaveFileErrorCode.Fail;
+            return Models.Datas.Enums.SaveFileErrorCode.Fail;
         }
 
         /// <summary>

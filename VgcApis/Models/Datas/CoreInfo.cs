@@ -46,7 +46,7 @@
             uid = string.Empty;
 
 
-            customInbType = (int)Enum.ProxyTypes.HTTP;
+            customInbType = (int)Enums.ProxyTypes.HTTP;
             inbIp = Consts.Webs.LoopBackIP;
             inbPort = Consts.Webs.DefaultProxyPort;
         }

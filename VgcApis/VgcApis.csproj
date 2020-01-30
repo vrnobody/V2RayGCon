@@ -89,7 +89,7 @@
     <Compile Include="Models\Consts\Files.cs" />
     <Compile Include="Models\Consts\Webs.cs" />
     <Compile Include="Models\Datas\CoreInfo.cs" />
-    <Compile Include="Models\Datas\Enum.cs" />
+    <Compile Include="Models\Datas\Enums.cs" />
     <Compile Include="Interfaces\CoreCtrlComponents\IConfiger.cs" />
     <Compile Include="Interfaces\CoreCtrlComponents\ICoreCtrl.cs" />
     <Compile Include="Interfaces\CoreCtrlComponents\ILogger.cs" />

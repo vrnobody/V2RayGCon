@@ -7,7 +7,7 @@ namespace VgcApis.Interfaces.Services
         string DecodeShareLinkToConfig(string shareLink);
 
         string EncodeConfigToShareLink(
-            string config, Models.Datas.Enum.LinkTypes linkType);
+            string config, Models.Datas.Enums.LinkTypes linkType);
 
         List<Interfaces.IShareLinkDecoder> GenDecoderList(
             bool isIncludeV2cfgDecoder);

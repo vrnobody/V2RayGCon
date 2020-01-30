@@ -66,7 +66,7 @@ namespace V2RayGCon.Test.DecoderTests
             var subText = string.Join(Environment.NewLine, vmessLinks);
 
             var extracted = Misc.Utils.ExtractLinks(
-                subText, VgcApis.Models.Datas.Enum.LinkTypes.vmess);
+                subText, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
 
             Assert.AreEqual(testData.Count, extracted.Count);
             foreach (var link in extracted)

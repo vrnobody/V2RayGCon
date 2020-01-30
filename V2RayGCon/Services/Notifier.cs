@@ -525,6 +525,7 @@ namespace V2RayGCon.Services
                         {
                             if (Misc.UI.Confirm(I18N.ConfirmExitApp))
                             {
+                                setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;
                                 Application.Exit();
                             }
                         }),
@@ -563,8 +564,7 @@ namespace V2RayGCon.Services
             children.Add(
                 I18N.ProjectPage,
                 null,
-                (s, a) => Misc.UI.VisitUrl(
-                    I18N.VistProjectPage, Properties.Resources.ProjectLink));
+                (s, a) => Misc.UI.VisitUrl(I18N.VistProjectPage, Properties.Resources.ProjectLink));
 
             children.Add(
                I18N.CheckForUpdate,
@@ -596,11 +596,9 @@ namespace V2RayGCon.Services
 
             ReleaseServerEvents();
 
+            serversMenuUpdater.Quit();
             notifierUpdater.Quit();
         }
-
-
-
         #endregion
     }
 }

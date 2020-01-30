@@ -1,56 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace V2RayGCon.Models.VeeShareLinks
 {
-    public sealed class Ver0a
+    public sealed class Vmess0a :
+        BasicSettings
     {
         // ver 0a is optimized for vmess protocol 
-
         const string version = @"0a";
-        static public string SupportedVersion() => version;
 
-        public string alias, description; // 256 bytes each
-        public bool isUseTls;
-        public int port, alterId; // 16 bit each
+        public static string SupportedVersion() => version;
+
+        public int alterId; // 16 bit each
         public Guid uuid;
-        public string address; // 256 bytes
-        public string streamType, streamParam1, streamParam2, streamParam3; // 256 bytes each
 
-        public Ver0a()
+        public Vmess0a() : base()
         {
-            alias = string.Empty;
-            description = string.Empty;
-            isUseTls = false;
-            port = 0;
-            uuid = new Guid(); // zeros
-            address = string.Empty;
-            streamType = string.Empty;
-            streamParam1 = string.Empty;
-            streamParam2 = string.Empty;
-            streamParam3 = string.Empty;
+            alterId = 0;
+            uuid = new Guid(); // zeros   
         }
 
-        #region string table for compression 
-        const int tableLenInBits = 4;
-        List<string> strTable = new List<string>{
-            "ws", "tcp", "kcp", "h2", "quic",
-            "none", "srtp", "utp", "wechat-video",
-            "dtls", "wireguard", "",
-        };
-
-        #endregion
+        public Vmess0a(BasicSettings source) : this()
+        {
+            CopyFrom(source);
+        }
 
         #region public methods
 
-        public Ver0a(byte[] bytes) :
+        public Vmess0a(byte[] bytes) :
             this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
             if (ver != version)
             {
-                throw new NotSupportedException(
-                    $"Not supported version ${ver}");
+                throw new NotSupportedException($"Not supported version ${ver}");
             }
 
             using (var bs = new VgcApis.Libs.Streams.BitStream(bytes))
@@ -60,6 +42,7 @@ namespace V2RayGCon.Models.VeeShareLinks
                 alias = bs.Read<string>();
                 description = readString();
                 isUseTls = bs.Read<bool>();
+                isSecTls = bs.Read<bool>();
                 port = bs.Read<int>();
                 alterId = bs.Read<int>();
                 uuid = bs.Read<Guid>();
@@ -83,6 +66,7 @@ namespace V2RayGCon.Models.VeeShareLinks
                 bs.Write(alias);
                 writeString(description);
                 bs.Write(isUseTls);
+                bs.Write(isSecTls);
                 bs.Write(port);
                 bs.Write(alterId);
                 bs.Write(uuid);
@@ -94,25 +78,19 @@ namespace V2RayGCon.Models.VeeShareLinks
 
                 result = bs.ToBytes(version);
             }
-            
+
             return result;
         }
 
-        public bool EqTo(Ver0a veeLink)
+        public bool EqTo(Vmess0a veeLink)
         {
-            if (isUseTls != veeLink.isUseTls
-                || port != veeLink.port
-                || uuid != veeLink.uuid
-                || address != veeLink.address
-                || streamType != veeLink.streamType
-                || streamParam1 != veeLink.streamParam1
-                || streamParam2 != veeLink.streamParam2
-                || streamParam3 != veeLink.streamParam3
-                || alias != veeLink.alias
-                || description != veeLink.description)
+            if (!EqTo(veeLink as BasicSettings)
+                || alterId != veeLink.alterId
+                || uuid != veeLink.uuid)
             {
                 return false;
             }
+
             return true;
         }
         #endregion

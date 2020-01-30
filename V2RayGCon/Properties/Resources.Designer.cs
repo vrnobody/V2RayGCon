@@ -283,7 +283,7 @@ namespace V2RayGCon.Properties {
         }
         
         /// <summary>
-        ///   查找类似 https://github.com/vrnobody/V2RayGCon/wiki 的本地化字符串。
+        ///   查找类似 https://vrnobody.github.io/V2RayGCon 的本地化字符串。
         /// </summary>
         internal static string WikiLink {
             get {

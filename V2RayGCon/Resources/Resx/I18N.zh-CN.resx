@@ -341,7 +341,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>空链接！</value>
   </data>
   <data name="VistWikiPage" xml:space="preserve">
-    <value>访问本项目的wiki页面?</value>
+    <value>访问本项目的用户手册?</value>
   </data>
   <data name="CFnGoogle" xml:space="preserve">
     <value>CF 和 Google</value>
@@ -351,9 +351,6 @@ https://github.com/v2ray/v2ray-core</value>
   </data>
   <data name="GenVLinkFail" xml:space="preserve">
     <value>生成v-link失败!</value>
-  </data>
-  <data name="VisitVlinkPage" xml:space="preserve">
-    <value>访问v-link的wiki说明页面？</value>
   </data>
   <data name="DecodeFail" xml:space="preserve">
     <value>解码失败</value>
@@ -516,7 +513,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>请先选择要进行此操作的服务器</value>
   </data>
   <data name="LooksLikeABug" xml:space="preserve">
-    <value>看来你遇到bug了,请将bug report发给作者。</value>
+    <value>看来你遇到bug了,请将以下内容发给作者。</value>
   </data>
   <data name="PackageFail" xml:space="preserve">
     <value>打包失败</value>
@@ -655,7 +652,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>然后将此文本另存为 {0}。</value>
   </data>
   <data name="OrDisablePortableMode" xml:space="preserve">
-    <value>或禁用便携模式。</value>
+    <value>或者在选项中关闭便携模式。</value>
   </data>
   <data name="LastModified" xml:space="preserve">
     <value>修改于</value>

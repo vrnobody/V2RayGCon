@@ -1,11 +1,9 @@
 {
-  "version": "1.2.7.0",
-  "md5": "DF579A54C4AEDB52175F649247666F76",
+  "version": "1.2.7.7",
+  "md5": "9F2614D18D2A8149449C955D0D253CB5",
   "warnings": [
   ],
   "changes": [
-      "少量更新",
-      "",
-      "a few updates"
+      "(测试中)v://...支持v2ray discussion #513"
   ]
 }

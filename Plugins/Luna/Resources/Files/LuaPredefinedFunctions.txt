@@ -6,7 +6,7 @@ function Each(o)
     local e = o:GetEnumerator()
     return function()
         if e:MoveNext() then
-			return e.Current
+            return e.Current
         end
     end
 end

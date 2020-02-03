@@ -56,7 +56,11 @@
         #region protected methods
         protected override void CleanupAfterChildrenDisposed()
         {
-            logForm?.Close();
+            if (logForm != null)
+            {
+                VgcApis.Misc.UI.RunInUiThreadIgnoreError(logForm, () => logForm?.Close());
+            }
+
             qLogger.Dispose();
         }
         #endregion

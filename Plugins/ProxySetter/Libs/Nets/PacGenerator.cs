@@ -134,10 +134,10 @@ namespace ProxySetter.Libs.Nets
             Model.Data.PacUrlParams urlParam,
             string[] customLists)
         {
-            var proxy = urlParam.isSocks ?
-                            "SOCKS5 {0}:{1}; SOCKS {0}:{1}; DIRECT" :
-                            "PROXY {0}:{1}; DIRECT";
+            // dns leaks
+            // var proxy = urlParam.isSocks ? "SOCKS5 {0}:{1}; SOCKS {0}:{1}; DIRECT" : "PROXY {0}:{1}; DIRECT";
 
+            var proxy = urlParam.isSocks ? "SOCKS5 {0}:{1};" : "PROXY {0}:{1};";
             var isWhiteList = urlParam.isWhiteList;
             var mode = isWhiteList ? "white" : "black";
 

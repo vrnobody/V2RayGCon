@@ -543,10 +543,7 @@ call:CreateFoldersOnDemand "%25libsDir%25 %25copyFolderList%25"
 call:MoveFilesByList "%25allDlls%25"
 call:CopyFolders "%25copyFolderList%25"
 
-rem NLua v1.3.2.1 require this
-rem call:CopyLuaNativeDlls
-
-rem NLua v1.4+ require these
+rem NLua v1.4+
 set "luaFolders=x86 x64"
 call:MoveFolders "%25luaFolders%25"
 
@@ -554,7 +551,7 @@ goto:eof
 
 :CopyFolders
   for %25%25i in (%25~1) do ( 
-	xcopy /s /e /y "$(ProjectDir)Resource\Files\%25%25i" "%25%25i"
+	xcopy /s /e /y "$(ProjectDir)Resources\Files\%25%25i" "%25%25i"
   ) 
 goto:eof
 
@@ -567,10 +564,6 @@ goto:eof
 	) 
 	rem move "%25%25i" "%25libsDir%25"
   ) 
-goto:eof
-
-:CopyLuaNativeDlls
-  xcopy /s /y "$(SolutionDir)packages\NLua.1.3.2.1\lib\native\*.*" "%25libsDir%25"
 goto:eof
 
 :RemoveFiles

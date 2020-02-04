@@ -262,6 +262,7 @@
             resources.ApplyResources(this.tboxSSAddr, "tboxSSAddr");
             this.tboxSSAddr.Name = "tboxSSAddr";
             this.toolTip1.SetToolTip(this.tboxSSAddr, resources.GetString("tboxSSAddr.ToolTip"));
+            this.tboxSSAddr.TextChanged += new System.EventHandler(this.tboxSSAddr_TextChanged);
             // 
             // rbtnIsServerMode
             // 
@@ -361,6 +362,7 @@
             resources.ApplyResources(this.tboxVMessIPaddr, "tboxVMessIPaddr");
             this.tboxVMessIPaddr.Name = "tboxVMessIPaddr";
             this.toolTip1.SetToolTip(this.tboxVMessIPaddr, resources.GetString("tboxVMessIPaddr.ToolTip"));
+            this.tboxVMessIPaddr.TextChanged += new System.EventHandler(this.tboxVMessIPaddr_TextChanged);
             // 
             // tboxVMessAid
             // 
@@ -394,6 +396,7 @@
             resources.ApplyResources(this.tboxVMessID, "tboxVMessID");
             this.tboxVMessID.Name = "tboxVMessID";
             this.toolTip1.SetToolTip(this.tboxVMessID, resources.GetString("tboxVMessID.ToolTip"));
+            this.tboxVMessID.TextChanged += new System.EventHandler(this.tboxVMessID_TextChanged);
             // 
             // label1
             // 

@@ -370,7 +370,7 @@ namespace V2RayGCon.Views.UserControls
             lazyAddrSetter = new VgcApis.Libs.Tasks.CancelableTimeout(
                 () =>
                 {
-                    if (VgcApis.Misc.Utils.TryParseIPAddr(address, out var ip, out var port))
+                    if (VgcApis.Misc.Utils.TryParseAddress(address, out var ip, out var port))
                     {
                         coreServCtrl.GetCoreStates().SetInboundAddr(ip, port);
                     }

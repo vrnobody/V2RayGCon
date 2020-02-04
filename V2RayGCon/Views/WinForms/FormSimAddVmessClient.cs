@@ -103,5 +103,15 @@ namespace V2RayGCon.Views.WinForms
         {
             tboxUID.Text = Guid.NewGuid().ToString();
         }
+
+        private void tboxPort_TextChanged(object sender, EventArgs e)
+        {
+            VgcApis.Misc.UI.MarkInvalidPortWithColorRed(tboxPort);
+        }
+
+        private void tboxUID_TextChanged(object sender, EventArgs e)
+        {
+            VgcApis.Misc.UI.MarkInvalidGuidWithColorRed(tboxUID);
+        }
     }
 }

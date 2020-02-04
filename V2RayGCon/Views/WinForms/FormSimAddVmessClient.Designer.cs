@@ -61,7 +61,6 @@
             // 
             // groupBox1
             // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.btnGenUserID);
             this.groupBox1.Controls.Add(this.tboxAID);
             this.groupBox1.Controls.Add(this.label8);
@@ -70,15 +69,14 @@
             this.groupBox1.Controls.Add(this.tboxUID);
             this.groupBox1.Controls.Add(this.tboxHost);
             this.groupBox1.Controls.Add(this.label3);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
-            this.toolTip1.SetToolTip(this.groupBox1, resources.GetString("groupBox1.ToolTip"));
             // 
             // btnGenUserID
             // 
             resources.ApplyResources(this.btnGenUserID, "btnGenUserID");
             this.btnGenUserID.Name = "btnGenUserID";
-            this.toolTip1.SetToolTip(this.btnGenUserID, resources.GetString("btnGenUserID.ToolTip"));
             this.btnGenUserID.UseVisualStyleBackColor = true;
             this.btnGenUserID.Click += new System.EventHandler(this.btnGenUserID_Click);
             // 
@@ -86,31 +84,29 @@
             // 
             resources.ApplyResources(this.tboxAID, "tboxAID");
             this.tboxAID.Name = "tboxAID";
-            this.toolTip1.SetToolTip(this.tboxAID, resources.GetString("tboxAID.ToolTip"));
             // 
             // label8
             // 
             resources.ApplyResources(this.label8, "label8");
             this.label8.Name = "label8";
-            this.toolTip1.SetToolTip(this.label8, resources.GetString("label8.ToolTip"));
             // 
             // tboxPort
             // 
             resources.ApplyResources(this.tboxPort, "tboxPort");
             this.tboxPort.Name = "tboxPort";
-            this.toolTip1.SetToolTip(this.tboxPort, resources.GetString("tboxPort.ToolTip"));
+            this.tboxPort.TextChanged += new System.EventHandler(this.tboxPort_TextChanged);
             // 
             // label6
             // 
             resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
-            this.toolTip1.SetToolTip(this.label6, resources.GetString("label6.ToolTip"));
             // 
             // tboxUID
             // 
             resources.ApplyResources(this.tboxUID, "tboxUID");
             this.tboxUID.Name = "tboxUID";
             this.toolTip1.SetToolTip(this.tboxUID, resources.GetString("tboxUID.ToolTip"));
+            this.tboxUID.TextChanged += new System.EventHandler(this.tboxUID_TextChanged);
             // 
             // tboxHost
             // 
@@ -122,11 +118,9 @@
             // 
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-            this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
             // 
             // groupBox2
             // 
-            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.chkboxTLS);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label4);
@@ -136,48 +130,42 @@
             this.groupBox2.Controls.Add(this.tboxWSPath);
             this.groupBox2.Controls.Add(this.rbtnWS);
             this.groupBox2.Controls.Add(this.rbtnNoStream);
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
-            this.toolTip1.SetToolTip(this.groupBox2, resources.GetString("groupBox2.ToolTip"));
             // 
             // chkboxTLS
             // 
             resources.ApplyResources(this.chkboxTLS, "chkboxTLS");
             this.chkboxTLS.Name = "chkboxTLS";
-            this.toolTip1.SetToolTip(this.chkboxTLS, resources.GetString("chkboxTLS.ToolTip"));
             this.chkboxTLS.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
             resources.ApplyResources(this.label5, "label5");
             this.label5.Name = "label5";
-            this.toolTip1.SetToolTip(this.label5, resources.GetString("label5.ToolTip"));
             // 
             // label4
             // 
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
-            this.toolTip1.SetToolTip(this.label4, resources.GetString("label4.ToolTip"));
             // 
             // cboxKCP
             // 
-            resources.ApplyResources(this.cboxKCP, "cboxKCP");
             this.cboxKCP.FormattingEnabled = true;
+            resources.ApplyResources(this.cboxKCP, "cboxKCP");
             this.cboxKCP.Name = "cboxKCP";
-            this.toolTip1.SetToolTip(this.cboxKCP, resources.GetString("cboxKCP.ToolTip"));
             // 
             // rbtnKCP
             // 
             resources.ApplyResources(this.rbtnKCP, "rbtnKCP");
             this.rbtnKCP.Name = "rbtnKCP";
-            this.toolTip1.SetToolTip(this.rbtnKCP, resources.GetString("rbtnKCP.ToolTip"));
             this.rbtnKCP.UseVisualStyleBackColor = true;
             // 
             // rbtnTCP
             // 
             resources.ApplyResources(this.rbtnTCP, "rbtnTCP");
             this.rbtnTCP.Name = "rbtnTCP";
-            this.toolTip1.SetToolTip(this.rbtnTCP, resources.GetString("rbtnTCP.ToolTip"));
             this.rbtnTCP.UseVisualStyleBackColor = true;
             // 
             // tboxWSPath
@@ -190,7 +178,6 @@
             // 
             resources.ApplyResources(this.rbtnWS, "rbtnWS");
             this.rbtnWS.Name = "rbtnWS";
-            this.toolTip1.SetToolTip(this.rbtnWS, resources.GetString("rbtnWS.ToolTip"));
             this.rbtnWS.UseVisualStyleBackColor = true;
             // 
             // rbtnNoStream
@@ -199,26 +186,22 @@
             this.rbtnNoStream.Checked = true;
             this.rbtnNoStream.Name = "rbtnNoStream";
             this.rbtnNoStream.TabStop = true;
-            this.toolTip1.SetToolTip(this.rbtnNoStream, resources.GetString("rbtnNoStream.ToolTip"));
             this.rbtnNoStream.UseVisualStyleBackColor = true;
             // 
             // tboxAlias
             // 
             resources.ApplyResources(this.tboxAlias, "tboxAlias");
             this.tboxAlias.Name = "tboxAlias";
-            this.toolTip1.SetToolTip(this.tboxAlias, resources.GetString("tboxAlias.ToolTip"));
             // 
             // label7
             // 
             resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
-            this.toolTip1.SetToolTip(this.label7, resources.GetString("label7.ToolTip"));
             // 
             // btnOK
             // 
             resources.ApplyResources(this.btnOK, "btnOK");
             this.btnOK.Name = "btnOK";
-            this.toolTip1.SetToolTip(this.btnOK, resources.GetString("btnOK.ToolTip"));
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
@@ -226,7 +209,6 @@
             // 
             resources.ApplyResources(this.btnExit, "btnExit");
             this.btnExit.Name = "btnExit";
-            this.toolTip1.SetToolTip(this.btnExit, resources.GetString("btnExit.ToolTip"));
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
@@ -235,7 +217,6 @@
             resources.ApplyResources(this.linkConfigEditor, "linkConfigEditor");
             this.linkConfigEditor.Name = "linkConfigEditor";
             this.linkConfigEditor.TabStop = true;
-            this.toolTip1.SetToolTip(this.linkConfigEditor, resources.GetString("linkConfigEditor.ToolTip"));
             this.linkConfigEditor.UseCompatibleTextRendering = true;
             this.linkConfigEditor.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkConfigEditor_LinkClicked);
             // 
@@ -254,7 +235,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSimAddVmessClient";
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

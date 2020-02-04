@@ -81,9 +81,9 @@ namespace VgcApis.Misc
         #endregion
 
         #region net
-        public static bool TryParseIPAddr(string address, out string ip, out int port)
+        public static bool TryParseAddress(string address, out string ip, out int port)
         {
-            ip = VgcApis.Models.Consts.Webs.LoopBackIP;
+            ip = Models.Consts.Webs.LoopBackIP;
             port = 1080;
 
             int index = address.LastIndexOf(':');
@@ -93,10 +93,8 @@ namespace VgcApis.Misc
             }
 
             var ipStr = address.Substring(0, index);
-            var portStr = address.Substring(index + 1);
-            var portInt = Clamp(Str2Int(portStr), 0, 65536);
-
-            if (string.IsNullOrEmpty(ipStr) || portInt == 0)
+            var portInt = Str2Int(address.Substring(index + 1));
+            if (string.IsNullOrEmpty(ipStr) || portInt < 1 || portInt > 65535)
             {
                 return false;
             }

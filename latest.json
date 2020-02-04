@@ -1,9 +1,13 @@
 {
-  "version": "1.2.7.7",
-  "md5": "9F2614D18D2A8149449C955D0D253CB5",
+  "version": "1.2.8.0",
+  "md5": "510F901AD58ECAC65C2276A113272F63",
   "warnings": [
   ],
   "changes": [
-      "(测试中)v://...支持v2ray discussion #513"
+      "更新各Nuget包",
+      "修复lua/templates文件夹为空问题",
+      "修复订阅选项页有时会崩溃的问题",
+      "修复主窗口聚焦问题",
+      "默认启用ProxySetter插件"
   ]
 }

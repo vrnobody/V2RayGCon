@@ -52,6 +52,7 @@
     "settings": {}
   },
   "outbVeeSocks": {
+    "tag": "agentout",
     "protocol": "socks",
     "settings": {
       "servers": [
@@ -61,8 +62,10 @@
         }
       ]
     },
-    "tag": "agentout",
-    "streamSettings": {}
+    "streamSettings": {},
+    "mux": {
+      "enabled": true
+    }
   },
   "outbVeeVmess": {
     "protocol": "vmess",

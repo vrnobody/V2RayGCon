@@ -4,8 +4,7 @@
         VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
         VgcApis.Interfaces.CoreCtrlComponents.ILogger
     {
-        VgcApis.Libs.Sys.QueueLogger qLogger =
-            new VgcApis.Libs.Sys.QueueLogger();
+        VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
         Services.Settings setting;
 
         public Logger(Services.Settings setting)
@@ -56,7 +55,7 @@
         #region protected methods
         protected override void CleanupAfterChildrenDisposed()
         {
-            logForm?.Close();
+            VgcApis.Misc.UI.CloseFormIgnoreError(logForm);
             qLogger.Dispose();
         }
         #endregion

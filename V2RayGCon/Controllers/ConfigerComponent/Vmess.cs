@@ -109,7 +109,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 tpl.LoadTemplate(serverMode ?
                 "vmessServer" : "vmessClient");
 
-            VgcApis.Misc.Utils.TryParseIPAddr(this.address, out string ip, out int port);
+            VgcApis.Misc.Utils.TryParseAddress(this.address, out string ip, out int port);
 
             if (serverMode)
             {

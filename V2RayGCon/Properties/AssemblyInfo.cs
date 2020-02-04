@@ -33,17 +33,9 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.7.7")]
+[assembly: AssemblyVersion("1.2.8.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
- * v1.2.7.7 update user manual url
- * v1.2.7.6 socks vee share link supports user auth.
- * v1.2.7.5 support socks outbound in v://...
- *          (https://github.com/v2ray/discussion/issues/513)
- *          
- * v1.2.7.4 enable udp support by default for socks inbound
- * v1.2.7.3 add drag drop support on subs total label
- * v1.2.7.2 fix bug report not show up problem
- * v1.2.7.1 remove blocking code in disposing
+ * 
  */

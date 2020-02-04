@@ -62,7 +62,7 @@ namespace ProxySetter.Services
             setting.isCleaning = true;
 
             serverTracker.OnSysProxyChanged -= UpdateMenuItemCheckedStatHandler;
-            formMain?.Close();
+            VgcApis.Misc.UI.CloseFormIgnoreError(formMain);
             serverTracker.Cleanup();
             pacServer.Cleanup();
             setting.Cleanup();

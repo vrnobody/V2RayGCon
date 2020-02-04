@@ -47,11 +47,7 @@ namespace Statistics
 
         protected override void Stop()
         {
-            if (formMain != null)
-            {
-                formMain.Close();
-            }
-
+            VgcApis.Misc.UI.CloseFormIgnoreError(formMain);
             settings?.Cleanup();
         }
         #endregion

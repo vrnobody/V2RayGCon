@@ -53,7 +53,6 @@
     <Compile Include="Controllers\VGCPluginComponents\TabUsage.cs" />
     <Compile Include="Controllers\VGCPluginComponents\TabStatus.cs" />
     <Compile Include="Controllers\VGCPluginComponents\TabPacCustomList.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Libs\Nets\PacGenerator.cs" />
     <Compile Include="Libs\Sys\CancelableTask.cs" />
     <Compile Include="Libs\Sys\CancelableTimeout.cs" />

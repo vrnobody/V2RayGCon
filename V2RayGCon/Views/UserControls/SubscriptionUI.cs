@@ -73,6 +73,7 @@ namespace V2RayGCon.Views.UserControls
                 url = tboxUrl.Text,
             };
         }
+
         public void SetIndex(int index)
         {
             lbIndex.Text = index.ToString();
@@ -150,17 +151,15 @@ namespace V2RayGCon.Views.UserControls
 
         void UpdateServerTotalNow()
         {
-            var alias = tboxAlias.Text;
-
-            var coreNum = servers.GetAllServersOrderByIndex()
-                .Select(s => s.GetCoreStates())
-                .Where(cfg => cfg.GetMark() == alias)
-                .Count();
-
             VgcApis.Misc.UI.RunInUiThreadIgnoreError(
                 lbTotal,
                 () =>
                 {
+                    var alias = tboxAlias.Text;
+                    var coreNum = servers.GetAllServersOrderByIndex()
+                        .Select(s => s.GetCoreStates())
+                        .Where(cfg => cfg.GetMark() == alias)
+                        .Count();
                     lbTotal.Text = $"{I18N.TotalNum}{coreNum}";
                     lbTotal.ForeColor = coreNum == 0 ? Color.Red : Color.DarkGray;
                 });
@@ -182,7 +181,5 @@ namespace V2RayGCon.Views.UserControls
 
         #region protected
         #endregion
-
-
     }
 }

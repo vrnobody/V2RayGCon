@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
 
 namespace ProxySetterTests
 {
@@ -16,7 +17,7 @@ namespace ProxySetterTests
 
         void Wait(int milSeconds)
         {
-            System.Threading.Thread.Sleep(milSeconds);
+            Task.Delay(milSeconds).Wait();
         }
 
         [TestMethod]

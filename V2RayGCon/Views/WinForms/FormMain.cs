@@ -123,7 +123,7 @@ namespace V2RayGCon.Views.WinForms
                         menu.PerformClick();
 
                         // Do not know why, form main will lost focus sometimes.
-                        this.Activate();
+                        Focus();
                     };
                 }
                 else

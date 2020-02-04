@@ -84,7 +84,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             }
 
             // mode
-            if (VgcApis.Misc.Utils.TryParseIPAddr(tboxDefImportAddr.Text, out string ip, out int port))
+            if (VgcApis.Misc.Utils.TryParseAddress(tboxDefImportAddr.Text, out string ip, out int port))
             {
                 setting.CustomDefImportIp = ip;
                 setting.CustomDefImportPort = port;
@@ -108,7 +108,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         public override bool IsOptionsChanged()
         {
-            var success = VgcApis.Misc.Utils.TryParseIPAddr(tboxDefImportAddr.Text, out string ip, out int port);
+            var success = VgcApis.Misc.Utils.TryParseAddress(tboxDefImportAddr.Text, out string ip, out int port);
             if (!success
                 || setting.CustomDefImportGlobalImport != chkImportInjectGlobalImport.Checked
                 || setting.CustomDefImportBypassCnSite != chkImportBypassCnSite.Checked
@@ -132,8 +132,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         #region private method
         void OnTboxImportAddrTextChanged(object sender, EventArgs e) =>
-            VgcApis.Misc.UI.TryParseControlTextToIpAndPort(
-                tboxDefImportAddr, out string ip, out int port);
+            VgcApis.Misc.UI.MarkInvalidAddressWithColorRed(tboxDefImportAddr);
         #endregion
     }
 }

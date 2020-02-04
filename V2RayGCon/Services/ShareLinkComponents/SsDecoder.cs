@@ -66,7 +66,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            VgcApis.Misc.Utils.TryParseIPAddr(ss.addr, out string ip, out int port);
+            VgcApis.Misc.Utils.TryParseAddress(ss.addr, out string ip, out int port);
             var outbSs = cache.tpl.LoadTemplate("outbSs");
             var node = outbSs["settings"]["servers"][0];
             node["address"] = ip;

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -17,21 +19,20 @@ namespace V2RayGCon.Libs.V2Ray
 
         public event EventHandler<VgcApis.Models.Datas.StrEvent> OnLog;
         public event EventHandler OnCoreStatusChanged;
-        event EventHandler OnCoreReady;
+
+        Services.Settings setting;
+        static VgcApis.Libs.Tasks.Bar globalCoreStartStopToken = new VgcApis.Libs.Tasks.Bar();
 
         Process v2rayCore;
         static object coreLock = new object();
         static int curConcurrentV2RayCoreNum = 0;
-        Services.Settings setting;
-
         bool isForcedExit = false;
-
-        static VgcApis.Libs.Tasks.Bar globalCoreStartStopToken = new VgcApis.Libs.Tasks.Bar();
+        AutoResetEvent isCoreReadyEvent = new AutoResetEvent(false);
 
         public Core(Services.Settings setting)
         {
             isRunning = false;
-            isCheckCoreReady = false;
+            isWatchCoreReadyLog = false;
             v2rayCore = null;
             this.setting = setting;
         }
@@ -71,7 +72,7 @@ namespace V2RayGCon.Libs.V2Ray
             private set;
         }
 
-        bool isCheckCoreReady
+        bool isWatchCoreReadyLog
         {
             get;
             set;
@@ -162,15 +163,7 @@ namespace V2RayGCon.Libs.V2Ray
             return folders;
         }
 
-        VgcApis.Libs.Tasks.Bar coreStartStopToken = null;
-        public void WaitForStopCoreToken()
-        {
-            while (!globalCoreStartStopToken.Install())
-            {
-                Thread.Sleep(VgcApis.Models.Consts.Intervals.GetStopCoreTokenInterval);
-            }
-            coreStartStopToken = globalCoreStartStopToken;
-        }
+        VgcApis.Libs.Tasks.Bar coreStartToken = null;
 
         public void WaitForStartCoreToken()
         {
@@ -178,7 +171,7 @@ namespace V2RayGCon.Libs.V2Ray
             {
                 while (!globalCoreStartStopToken.Install())
                 {
-                    Thread.Sleep(VgcApis.Models.Consts.Intervals.GetStartCoreTokenInterval);
+                    Task.Delay(VgcApis.Models.Consts.Intervals.GetStartCoreTokenInterval).Wait();
                 }
 
                 if (curConcurrentV2RayCoreNum < setting.maxConcurrentV2RayCoreNum)
@@ -190,18 +183,18 @@ namespace V2RayGCon.Libs.V2Ray
                     globalCoreStartStopToken.Remove();
                 }
             }
-            coreStartStopToken = globalCoreStartStopToken;
+            coreStartToken = globalCoreStartStopToken;
         }
 
         public void ReleaseToken()
         {
-            if (coreStartStopToken == null)
+            if (coreStartToken == null)
             {
                 throw new ArgumentNullException(@"Token is null!");
             }
 
-            var token = coreStartStopToken;
-            coreStartStopToken = null;
+            var token = coreStartToken;
+            coreStartToken = null;
             token.Remove();
         }
 
@@ -265,14 +258,7 @@ namespace V2RayGCon.Libs.V2Ray
 
         #region private method
 
-        void InvokeEventOnCoreReady()
-        {
-            try
-            {
-                OnCoreReady?.Invoke(this, EventArgs.Empty);
-            }
-            catch { }
-        }
+
 
         void InvokeEventOnCoreStatusChanged()
         {
@@ -439,6 +425,7 @@ namespace V2RayGCon.Libs.V2Ray
         void OnCoreExited(object sender, EventArgs args)
         {
             Interlocked.Decrement(ref curConcurrentV2RayCoreNum);
+            isCoreReadyEvent.Set();
             SendLog($"{I18N.ConcurrentV2RayCoreNum}{curConcurrentV2RayCoreNum}");
 
             SendLog(I18N.CoreExit);
@@ -473,36 +460,46 @@ namespace V2RayGCon.Libs.V2Ray
         void StartCore(string config, Dictionary<string, string> envs = null)
         {
             isForcedExit = false;
+            isCoreReadyEvent.Reset();
+            isWatchCoreReadyLog = IsConfigWaitable(config);
 
             v2rayCore = CreateV2RayCoreProcess();
             InjectEnv(v2rayCore, envs);
             BindEvents(v2rayCore);
 
-            AutoResetEvent ready = new AutoResetEvent(false);
-            EventHandler onCoreReady = (s, a) =>
-            {
-                try { ready.Set(); } catch { }
-            };
-            isCheckCoreReady = true;
-            OnCoreReady += onCoreReady;
-
             isRunning = true;
             v2rayCore.Start();
+            Interlocked.Increment(ref curConcurrentV2RayCoreNum);
 
             // Add to JOB object require win8+.
-            Libs.Sys.ChildProcessTracker.AddProcess(v2rayCore);
+            Sys.ChildProcessTracker.AddProcess(v2rayCore);
 
             v2rayCore.StandardInput.WriteLine(config);
             v2rayCore.StandardInput.Close();
             v2rayCore.BeginErrorReadLine();
             v2rayCore.BeginOutputReadLine();
 
-            // Assume core ready after 3.5 seconds, in case log set to none.
-            ready.WaitOne(VgcApis.Models.Consts.Core.WaitUntilReadyTimeout);
-            OnCoreReady -= onCoreReady;
-            isCheckCoreReady = false;
-            Interlocked.Increment(ref curConcurrentV2RayCoreNum);
+            if (isWatchCoreReadyLog)
+            {
+                // Assume core ready after 5 seconds, in case log set to none.
+                isCoreReadyEvent.WaitOne(VgcApis.Models.Consts.Core.WaitUntilReadyTimeout);
+            }
+            isWatchCoreReadyLog = false;
+
             SendLog($"{I18N.ConcurrentV2RayCoreNum}{curConcurrentV2RayCoreNum}");
+        }
+
+        bool IsConfigWaitable(string config)
+        {
+            List<string> levels = new List<string> { "none", "error" };
+            try
+            {
+                var json = JObject.Parse(config);
+                var loglevel = Misc.Utils.GetValue<string>(json, "log.loglevel")?.ToLower();
+                return !levels.Contains(loglevel);
+            }
+            catch { }
+            return true;
         }
 
         void SendLogHandler(object sender, DataReceivedEventArgs args)
@@ -514,9 +511,9 @@ namespace V2RayGCon.Libs.V2Ray
                 return;
             }
 
-            if (isCheckCoreReady && MatchAllReadyMarks(msg))
+            if (isWatchCoreReadyLog && MatchAllReadyMarks(msg))
             {
-                InvokeEventOnCoreReady();
+                isCoreReadyEvent.Set();
             }
 
             SendLog(msg);

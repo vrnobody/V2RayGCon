@@ -6,7 +6,7 @@ function Each(o)
     local e = o:GetEnumerator()
     return function()
         if e:MoveNext() then
-			return e.Current
+            return e.Current
         end
     end
 end
@@ -17,7 +17,7 @@ string.startswith = function (text, keyword)
     end
     local t = string.lower(text)
     local kw ='^' .. string.lower(keyword)
-    return string.find(t, kw) 
+    return string.find(t, kw) ~= nil
 end
 
 string.endswith = function (text, keyword)
@@ -26,7 +26,7 @@ string.endswith = function (text, keyword)
     end
     local t = string.lower(text)
     local kw = string.lower(keyword) .. '$'
-    return string.find(t, kw)
+    return string.find(t, kw) ~= nil
 end
 
 string.isempty = function(text)

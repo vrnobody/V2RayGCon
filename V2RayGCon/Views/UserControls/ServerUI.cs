@@ -364,21 +364,26 @@ namespace V2RayGCon.Views.UserControls
             HighlightSelectedServerItem(chkSelected.Checked);
         }
 
-        void SetInboundAddrLater(string ip, int port)
+        void SetInboundAddrLater(string address)
         {
             lazyAddrSetter?.Cancel();
             lazyAddrSetter = new VgcApis.Libs.Tasks.CancelableTimeout(
-                () => coreServCtrl.GetCoreStates().SetInboundAddr(ip, port),
-                2000);
+                () =>
+                {
+                    if (VgcApis.Misc.Utils.TryParseAddress(address, out var ip, out var port))
+                    {
+                        coreServCtrl.GetCoreStates().SetInboundAddr(ip, port);
+                    }
+                }, 2000);
             lazyAddrSetter.Start();
         }
 
         private void cboxInboundAddr_TextChanged(object sender, EventArgs e)
         {
-            if (VgcApis.Misc.UI.TryParseControlTextToIpAndPort(cboxInboundAddr, out string ip, out int port))
-            {
-                SetInboundAddrLater(ip, port);
-            }
+            VgcApis.Misc.UI.MarkInvalidAddressWithColorRed(cboxInboundAddr);
+
+            var addr = cboxInboundAddr.Text;
+            SetInboundAddrLater(addr);
         }
 
         private void lbSummary_Click(object sender, EventArgs e)

@@ -127,6 +127,7 @@ namespace VgcApisTests
         }
 
         [DataTestMethod]
+        [DataRow("a::b:1233333", false, "127.0.0.1", 1080)]
         [DataRow("a::b:123", true, "a::b", 123)]
         [DataRow("ab123", false, "127.0.0.1", 1080)]
         [DataRow("ab123:", false, "127.0.0.1", 1080)]
@@ -134,7 +135,7 @@ namespace VgcApisTests
         [DataRow(":", false, "127.0.0.1", 1080)]
         public void TryParseIPAddrTest(string address, bool expResult, string expIp, int expPort)
         {
-            var result = VgcApis.Misc.Utils.TryParseIPAddr(address, out string ip, out int port);
+            var result = TryParseAddress(address, out string ip, out int port);
             Assert.AreEqual(expResult, result);
             Assert.AreEqual(expIp, ip);
             Assert.AreEqual(expPort, port);
@@ -403,12 +404,12 @@ namespace VgcApisTests
             adam.DoItLater();
             adam.DoItLater();
             adam.DoItLater();
-            Thread.Sleep(1000);
+            Task.Delay(1000).Wait();
             Assert.AreEqual(".", str);
 
             str = "";
             adam.DoItLater();
-            Thread.Sleep(300);
+            Task.Delay(300).Wait();
             Assert.AreEqual(".", str);
 #endif
         }

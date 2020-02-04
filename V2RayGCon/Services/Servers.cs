@@ -486,7 +486,13 @@ namespace V2RayGCon.Services
 
         public void StopAllServersThen(Action lambda = null)
         {
-            var list = coreServList;
+
+            List<Controllers.CoreServerCtrl> list;
+            lock (serverListWriteLock)
+            {
+                list = coreServList.Where(c => c.GetCoreCtrl().IsCoreRunning()).ToList();
+            }
+
             void worker(int index, Action next)
             {
                 list[index].GetCoreCtrl().StopCoreThen(next);

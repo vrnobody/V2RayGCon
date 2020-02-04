@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Forms;
-using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
 {
@@ -137,7 +136,7 @@ namespace V2RayGCon.Services
 
         public Dictionary<string, VgcApis.Interfaces.IPlugin> LoadAllPlugins()
         {
-            // Original design of plugins would load dll files from file system.
+            // Original design of plug-in system would load dll files from hard drive.
             // That is why loading logic looks so complex.
             var pluginList = new Dictionary<string, VgcApis.Interfaces.IPlugin>();
             var plugins = new List<VgcApis.Interfaces.IPlugin>();

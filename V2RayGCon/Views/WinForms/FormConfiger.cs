@@ -99,6 +99,21 @@ namespace V2RayGCon.Views.WinForms
 
 
         #region UI event handler
+        private void tboxVMessID_TextChanged(object sender, EventArgs e)
+        {
+            VgcApis.Misc.UI.MarkInvalidGuidWithColorRed(tboxVMessID);
+        }
+
+        private void tboxVMessIPaddr_TextChanged(object sender, EventArgs e)
+        {
+            VgcApis.Misc.UI.MarkInvalidAddressWithColorRed(tboxVMessIPaddr);
+        }
+
+        private void tboxSSAddr_TextChanged(object sender, EventArgs e)
+        {
+            VgcApis.Misc.UI.MarkInvalidAddressWithColorRed(tboxSSAddr);
+        }
+
         private void ShowLeftPanelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToggleToolsPanel(true);
@@ -473,6 +488,9 @@ namespace V2RayGCon.Views.WinForms
             formSearch = new VgcApis.WinForms.FormSearch(editor.GetEditor());
             formSearch.FormClosed += (s, a) => formSearch = null;
         }
+
         #endregion
+
+
     }
 }

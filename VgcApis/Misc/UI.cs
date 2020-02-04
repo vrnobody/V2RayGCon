@@ -15,22 +15,57 @@ namespace VgcApis.Misc
     {
 
         #region Controls
-        public static bool TryParseControlTextToIpAndPort(Control control, out string ip, out int port)
+        static void SetControlFontColor(Control control, bool isValid)
         {
-            var success = Utils.TryParseIPAddr(control.Text, out ip, out port);
-            var color = success ? Color.Black : Color.Red;
-
-            // UI operation is expansive
+            var color = isValid ? Color.Black : Color.Red;
             if (control.ForeColor != color)
             {
                 control.ForeColor = color;
             }
+        }
 
-            return success;
+        public static void MarkInvalidGuidWithColorRed(Control control)
+        {
+            var isValid = false;
+            try
+            {
+                var _ = new Guid(control.Text);
+                isValid = true;
+            }
+            catch { }
+            SetControlFontColor(control, isValid);
+        }
+
+        public static void MarkInvalidPortWithColorRed(Control control)
+        {
+            var port = Utils.Str2Int(control.Text);
+            SetControlFontColor(control, port > 0 && port < 65536);
+        }
+
+        public static void MarkInvalidAddressWithColorRed(Control control)
+        {
+            var isValid = Utils.TryParseAddress(control.Text, out _, out _);
+            SetControlFontColor(control, isValid);
         }
         #endregion
 
         #region update ui
+        public static void CloseFormIgnoreError(Form form)
+        {
+            try
+            {
+                form?.Invoke((MethodInvoker)delegate
+                {
+                    try
+                    {
+                        form?.Close();
+                    }
+                    catch { }
+                });
+            }
+            catch { }
+        }
+
         /// <summary>
         /// If control==null return;
         /// </summary>

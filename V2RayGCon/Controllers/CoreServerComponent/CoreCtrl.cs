@@ -174,12 +174,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             v2rayCore.title = coreStates.GetTitle();
             v2rayCore.RestartCoreThen(
                 finalConfig.ToString(),
-                () =>
-                {
-                    // Libs.V2Ray.Core will fire OnCoreStart
-                    // container.InvokeEventOnCoreStart();
-                    next?.Invoke();
-                },
+                () => next?.Invoke(),
                 Misc.Utils.GetEnvVarsFromConfig(finalConfig));
         }
         #endregion

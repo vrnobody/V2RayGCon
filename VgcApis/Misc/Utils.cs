@@ -16,8 +16,6 @@ namespace VgcApis.Misc
 {
     public static class Utils
     {
-
-
         #region string
         public static bool TryExtractAliasFromSubscriptionUrl(
             string url, out string alias)

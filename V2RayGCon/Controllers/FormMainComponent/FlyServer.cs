@@ -23,6 +23,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         int curPageNumber = 0;
         int totalPageNumber = 1;
+        bool isFocusOnFormMain;
 
         public FlyServer(
             Form formMain,
@@ -49,7 +50,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             this.welcomeItem = new Views.UserControls.WelcomeUI();
 
             lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarNow, 300);
-            lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(ShowSearchResultNow, 1500);
+            lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(ShowSearchResultNow, 1000);
             lazyUiRefresher = new VgcApis.Libs.Tasks.LazyGuy(() => RefreshUI(), 300);
 
             InitFormControls(lbMarkFilter, miResizeFormMain);
@@ -253,12 +254,17 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 UpdateStatusBarPagingButtons();
 
                 // prevent formain lost focus after click next page
-                // formMain.Activate();
-                formMain.Focus();
+                if (isFocusOnFormMain)
+                {
+                    formMain.Focus();
+                    isFocusOnFormMain = false;
+                }
             });
 
             HighLightSearchKeywordsNow();
         }
+
+
 
         void HighLightSearchKeywordsNow()
         {
@@ -375,17 +381,18 @@ namespace V2RayGCon.Controllers.FormMainComponent
             tslbPrePage.Click += (s, a) =>
             {
                 curPageNumber--;
+                isFocusOnFormMain = true;
                 RefreshUI();
             };
 
             tslbNextPage.Click += (s, a) =>
             {
                 curPageNumber++;
+                isFocusOnFormMain = true;
                 RefreshUI();
             };
 
             lbMarkFilter.Click += (s, a) => this.cboxMarkFilter.Text = string.Empty;
-
             miResizeFormMain.Click += (s, a) => ResizeFormMain();
         }
 

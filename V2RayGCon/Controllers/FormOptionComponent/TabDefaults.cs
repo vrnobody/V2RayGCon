@@ -132,8 +132,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         #region private method
         void OnTboxImportAddrTextChanged(object sender, EventArgs e) =>
-            VgcApis.Misc.UI.TryParseControlTextToIpAndPort(
-                tboxDefImportAddr, out string ip, out int port);
+            VgcApis.Misc.UI.MarkInvalidAddressWithColorRed(tboxDefImportAddr);
         #endregion
     }
 }

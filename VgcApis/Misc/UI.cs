@@ -15,18 +15,15 @@ namespace VgcApis.Misc
     {
 
         #region Controls
-        public static bool TryParseControlTextToIpAndPort(Control control, out string ip, out int port)
+        public static void MarkInvalidAddressWithColorRed(Control control)
         {
-            var success = Utils.TryParseIPAddr(control.Text, out ip, out port);
-            var color = success ? Color.Black : Color.Red;
+            var color = Utils.TryParseIPAddr(control.Text, out _, out _) ? Color.Black : Color.Red;
 
             // UI operation is expansive
             if (control.ForeColor != color)
             {
                 control.ForeColor = color;
             }
-
-            return success;
         }
         #endregion
 

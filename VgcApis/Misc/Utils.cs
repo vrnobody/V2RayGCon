@@ -127,8 +127,7 @@ namespace VgcApis.Misc
         #endregion
 
         #region Task
-        public static void Sleep(int milliseconds) =>
-          System.Threading.Thread.Sleep(milliseconds);
+        public static void Sleep(int milliseconds) => Task.Delay(milliseconds).Wait();
 
         public static Task RunInBackground(Action worker) =>
             Task.Factory.StartNew(worker, TaskCreationOptions.LongRunning);

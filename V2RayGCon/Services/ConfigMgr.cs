@@ -411,17 +411,10 @@ namespace V2RayGCon.Services
             {
                 expectedSizeInKib = setting.CustomSpeedtestExpectedSizeInKib;
             }
+
             long testResult = Misc.Utils.VisitWebPageSpeedTest(testUrl, port, expectedSizeInKib, testTimeout);
 
-            speedTester.WaitForStopCoreToken();
-            try
-            {
-                speedTester.StopCore();
-            }
-            finally
-            {
-                speedTester.ReleaseToken();
-            }
+            speedTester.StopCore();
 
             if (logDeliever != null)
             {

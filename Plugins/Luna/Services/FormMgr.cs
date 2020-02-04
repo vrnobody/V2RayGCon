@@ -31,8 +31,7 @@ namespace Luna.Services
         {
             lock (formLocker)
             {
-                var newForm = new Views.WinForms.FormMain(
-                    api, settings, luaServer, this);
+                var newForm = new Views.WinForms.FormMain(api, settings, luaServer, this);
 
                 newForm.FormClosed += (s, a) =>
                 {
@@ -72,13 +71,15 @@ namespace Luna.Services
         #region protected methods
         protected override void Cleanup()
         {
+            List<Views.WinForms.FormMain> formList;
             lock (formLocker)
             {
-                var formList = forms.ToList();
-                foreach (var form in formList)
-                {
-                    form.Close();
-                }
+                formList = forms.ToList();
+            }
+
+            foreach (var form in formList)
+            {
+                VgcApis.Misc.UI.CloseFormIgnoreError(form);
             }
         }
         #endregion

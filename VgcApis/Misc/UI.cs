@@ -31,6 +31,22 @@ namespace VgcApis.Misc
         #endregion
 
         #region update ui
+        public static void CloseFormIgnoreError(Form form)
+        {
+            try
+            {
+                form?.Invoke((MethodInvoker)delegate
+                {
+                    try
+                    {
+                        form?.Close();
+                    }
+                    catch { }
+                });
+            }
+            catch { }
+        }
+
         /// <summary>
         /// If control==null return;
         /// </summary>

@@ -2,7 +2,7 @@
 {
     static public class Intervals
     {
-        public const int GetStartCoreTokenInterval = 213;
+        public const int GetStartCoreTokenInterval = 391;
         public const int GetStopCoreTokenInterval = 67;
 
         // Service.Setting 

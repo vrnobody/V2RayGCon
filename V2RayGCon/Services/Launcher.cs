@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -53,7 +54,7 @@ namespace V2RayGCon.Services
                 {
 #if DEBUG
 #else
-                    Thread.Sleep(VgcApis.Models.Consts.Webs.CheckForUpdateDelay);
+                    Task.Delay(VgcApis.Models.Consts.Webs.CheckForUpdateDelay).Wait();
 #endif
                     updater.CheckForUpdate(false);
                 });

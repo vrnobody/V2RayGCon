@@ -403,12 +403,12 @@ namespace VgcApisTests
             adam.DoItLater();
             adam.DoItLater();
             adam.DoItLater();
-            Thread.Sleep(1000);
+            Task.Delay(1000).Wait();
             Assert.AreEqual(".", str);
 
             str = "";
             adam.DoItLater();
-            Thread.Sleep(300);
+            Task.Delay(300).Wait();
             Assert.AreEqual(".", str);
 #endif
         }

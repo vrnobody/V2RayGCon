@@ -10,6 +10,7 @@ namespace V2RayGCon.Test
     [TestClass]
     public class LibTest
     {
+        static long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
         [DataTestMethod]
         [DataRow(@"http://abc.com", @"abc.com")]
@@ -125,10 +126,10 @@ namespace V2RayGCon.Test
         public void VisitWebPageSpeedTestTest(string url)
         {
             var time = VisitWebPageSpeedTest(url, -1, 1024 * 1024, -1);
-            Assert.AreEqual(long.MaxValue, time);
+            Assert.AreEqual(SpeedtestTimeout, time);
 
             time = VisitWebPageSpeedTest(url, -1, -1, -1);
-            Assert.AreEqual(true, time < long.MaxValue);
+            Assert.AreEqual(true, time < SpeedtestTimeout);
         }
 
         [DataTestMethod]

@@ -708,4 +708,7 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="TotalNum" xml:space="preserve">
     <value>合计：</value>
   </data>
+  <data name="StoppingSpeedtest" xml:space="preserve">
+    <value>正在停止速度测试...</value>
+  </data>
 </root>

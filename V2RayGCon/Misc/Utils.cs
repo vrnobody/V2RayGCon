@@ -22,6 +22,8 @@ namespace V2RayGCon.Misc
 {
     public static class Utils
     {
+        static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+
         #region copy from vgc
 
         #region Json
@@ -969,7 +971,7 @@ namespace V2RayGCon.Misc
             }
 
             var maxTimeout = timeout > 0 ? timeout : VgcApis.Models.Consts.Intervals.SpeedTestTimeout;
-            long elasped = long.MaxValue;
+            long elasped = SpeedtestTimeout;
             Stopwatch sw = new Stopwatch();
             sw.Reset();
             sw.Start();

@@ -12,6 +12,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         Services.Settings setting;
         Services.ConfigMgr configMgr;
 
+        static long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+
         public CoreCtrl(
             Services.Settings setting,
             Services.ConfigMgr configMgr)
@@ -90,8 +92,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public bool IsCoreRunning() => v2rayCore.isRunning;
 
-        public void RunSpeedTest() =>
-            SpeedTestWorker(configer.GetConfig());
+        public void RunSpeedTest() => SpeedTestWorker(configer.GetConfig());
         #endregion
 
         #region private methods
@@ -110,7 +111,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         string TranslateSpeedTestResult(long speedtestDelay)
         {
-            if (speedtestDelay == long.MaxValue)
+            if (speedtestDelay == SpeedtestTimeout)
             {
                 return I18N.Timeout;
             }
@@ -120,16 +121,16 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         void SpeedTestWorker(string rawConfig)
         {
             long avgDelay = -1;
-            long curDelay = long.MaxValue;
+            long curDelay = SpeedtestTimeout;
             var cycles = Math.Max(1, setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestCycles : 1);
 
             coreStates.SetStatus(I18N.Testing);
             logger.Log(I18N.Testing);
-            for (int i = 0; i < cycles; i++)
+            for (int i = 0; i < cycles && !setting.isSpeedtestCancelled; i++)
             {
                 curDelay = configMgr.RunDefaultSpeedTest(rawConfig, coreStates.GetTitle(), (s, a) => logger.Log(a.Data));
                 logger.Log(I18N.CurSpeedtestResult + TranslateSpeedTestResult(curDelay));
-                if (curDelay == long.MaxValue)
+                if (curDelay == SpeedtestTimeout)
                 {
                     continue;
                 }
@@ -139,7 +140,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             // all speedtest timeout 
             if (avgDelay <= 0)
             {
-                avgDelay = long.MaxValue;
+                avgDelay = SpeedtestTimeout;
             }
             var speedtestResult = TranslateSpeedTestResult(avgDelay);
             coreStates.SetStatus(speedtestResult);

@@ -717,4 +717,7 @@ No, abort.</value>
   <data name="TotalNum" xml:space="preserve">
     <value>Total: </value>
   </data>
+  <data name="StoppingSpeedtest" xml:space="preserve">
+    <value>Stopping speed test.</value>
+  </data>
 </root>

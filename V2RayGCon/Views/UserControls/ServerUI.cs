@@ -12,6 +12,7 @@ namespace V2RayGCon.Views.UserControls
         VgcApis.Interfaces.IDropableControl
     {
         Services.Servers servers;
+        Services.Settings settings;
         Services.ShareLinkMgr slinkMgr;
         VgcApis.Interfaces.ICoreServCtrl coreServCtrl;
 
@@ -30,6 +31,7 @@ namespace V2RayGCon.Views.UserControls
         {
             servers = Services.Servers.Instance;
             slinkMgr = Services.ShareLinkMgr.Instance;
+            settings = Services.Settings.Instance;
 
             this.coreServCtrl = serverItem;
             InitializeComponent();
@@ -535,7 +537,11 @@ namespace V2RayGCon.Views.UserControls
 
         private void runSpeedTestToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            VgcApis.Misc.Utils.RunInBackground(() => coreServCtrl.GetCoreCtrl().RunSpeedTest());
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                settings.isSpeedtestCancelled = false;
+                coreServCtrl.GetCoreCtrl().RunSpeedTest();
+            });
         }
 
         private void moveToTopToolStripMenuItem_Click(object sender, EventArgs e)

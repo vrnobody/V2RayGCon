@@ -25,11 +25,11 @@ namespace VgcApis.Interfaces.Services
             string orgUid, string pkgName);
 
         string PackServersIntoV4Package(
-            List<Interfaces.ICoreServCtrl> servList,
+            List<ICoreServCtrl> servList,
             string orgServerUid,
             string packageName);
 
-        ReadOnlyCollection<Interfaces.ICoreServCtrl> GetTrackableServerList();
-        ReadOnlyCollection<Interfaces.ICoreServCtrl> GetAllServersOrderByIndex();
+        ReadOnlyCollection<ICoreServCtrl> GetTrackableServerList();
+        ReadOnlyCollection<ICoreServCtrl> GetAllServersOrderByIndex();
     }
 }

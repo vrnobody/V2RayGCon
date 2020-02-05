@@ -603,7 +603,7 @@ namespace VgcApis.Misc
         {
             if (weight <= 0 || weight >= 1)
             {
-                throw new ArgumentOutOfRangeException("firstWeight should between 0 to 1");
+                throw new ArgumentOutOfRangeException("weight should between 0 to 1");
             }
 
             if (left <= 0 || right <= 0)

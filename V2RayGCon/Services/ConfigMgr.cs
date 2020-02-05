@@ -13,7 +13,8 @@ namespace V2RayGCon.Services
     {
         Settings setting;
         Cache cache;
-        Servers servers;
+
+        static long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
         ConfigMgr() { }
 
@@ -327,12 +328,10 @@ namespace V2RayGCon.Services
 
         public void Run(
             Settings setting,
-            Cache cache,
-            Servers servers)
+            Cache cache)
         {
             this.setting = setting;
             this.cache = cache;
-            this.servers = servers;
         }
 
         #endregion
@@ -383,7 +382,7 @@ namespace V2RayGCon.Services
             if (string.IsNullOrEmpty(speedTestConfig))
             {
                 logDeliever?.Invoke(this, new VgcApis.Models.Datas.StrEvent(I18N.DecodeImportFail));
-                return long.MaxValue;
+                return SpeedtestTimeout;
             }
 
             var speedTester = new Libs.V2Ray.Core(setting)
@@ -391,12 +390,18 @@ namespace V2RayGCon.Services
                 title = title
             };
 
+            speedTester.WaitForStartCoreToken();
+            if (setting.isSpeedtestCancelled)
+            {
+                speedTester.ReleaseToken();
+                return VgcApis.Models.Consts.Core.SpeedtestAbort;
+            }
+
             if (logDeliever != null)
             {
                 speedTester.OnLog += logDeliever;
             }
 
-            speedTester.WaitForStartCoreToken();
             try
             {
                 speedTester.RestartCore(speedTestConfig);
@@ -406,11 +411,8 @@ namespace V2RayGCon.Services
                 speedTester.ReleaseToken();
             }
 
-            var expectedSizeInKib = 0;
-            if (setting.isUseCustomSpeedtestSettings)
-            {
-                expectedSizeInKib = setting.CustomSpeedtestExpectedSizeInKib;
-            }
+            var expectedSizeInKib = setting.isUseCustomSpeedtestSettings ?
+                setting.CustomSpeedtestExpectedSizeInKib : 0;
 
             long testResult = Misc.Utils.VisitWebPageSpeedTest(testUrl, port, expectedSizeInKib, testTimeout);
 

@@ -9,6 +9,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
     class MenuItemsServer : FormMainComponentController
     {
         Services.Cache cache;
+        Services.Settings settings;
         Services.Servers servers;
         Services.ShareLinkMgr slinkMgr;
 
@@ -27,7 +28,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem copyAsVeeSubscriptions,
 
             // batch op
-            ToolStripMenuItem speedTestOnSelected,
+            ToolStripMenuItem stopBatchSpeedtest,
+            ToolStripMenuItem runBatchSpeedtest,
 
             ToolStripMenuItem modifySelected,
             ToolStripMenuItem stopSelected,
@@ -45,6 +47,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             cache = Services.Cache.Instance;
             servers = Services.Servers.Instance;
             slinkMgr = Services.ShareLinkMgr.Instance;
+            settings = Services.Settings.Instance;
 
             InitCtrlSorting(sortBySpeed, sortByDate, sortBySummary);
             InitCtrlView(moveToTop, moveToBottom, foldPanel, expansePanel);
@@ -64,9 +67,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
             InitCtrlBatchOperation(
                 stopSelected,
                 restartSelected,
-                speedTestOnSelected,
+                runBatchSpeedtest,
+                stopBatchSpeedtest,
                 modifySelected);
-
         }
 
         #region public method
@@ -97,13 +100,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
         private void InitCtrlBatchOperation(
             ToolStripMenuItem stopSelected,
             ToolStripMenuItem restartSelected,
-            ToolStripMenuItem speedTestOnSelected,
+            ToolStripMenuItem runBatchSpeedtest,
+            ToolStripMenuItem stopBatchSpeedtest,
             ToolStripMenuItem modifySelected)
         {
             modifySelected.Click += ApplyActionOnSelectedServers(
                 () => Views.WinForms.FormBatchModifyServerSetting.GetForm());
 
-            speedTestOnSelected.Click += ApplyActionOnSelectedServers(() =>
+            runBatchSpeedtest.Click += ApplyActionOnSelectedServers(() =>
             {
                 if (!Misc.UI.Confirm(I18N.TestWillTakeALongTime))
                 {
@@ -112,6 +116,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
                 servers.RunSpeedTestOnSelectedServersBg();
             });
+
+            stopBatchSpeedtest.Click += (s, a) =>
+            {
+                settings.SendLog(I18N.StoppingSpeedtest);
+                settings.isSpeedtestCancelled = true;
+            };
 
             stopSelected.Click += ApplyActionOnSelectedServers(() =>
             {

@@ -4,29 +4,6 @@ using System.Threading;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
-/*
-// upgraded to dot net 4.5 
-
-#region Support CallerMemberName on .net 4.0
-namespace System.Runtime.CompilerServices
-{
-    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
-    public sealed class CallerMemberNameAttribute : Attribute
-    {
-    }
-
-    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
-    public sealed class CallerFilePathAttribute : Attribute
-    {
-    }
-
-    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
-    public sealed class CallerLineNumberAttribute : Attribute
-    {
-    }
-}
-#endregion
-*/
 
 namespace V2RayGCon
 {

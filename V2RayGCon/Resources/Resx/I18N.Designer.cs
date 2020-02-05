@@ -1573,6 +1573,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Stopping speed test. 的本地化字符串。
+        /// </summary>
+        internal static string StoppingSpeedtest {
+            get {
+                return ResourceManager.GetString("StoppingSpeedtest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Stop server first, please! 的本地化字符串。
         /// </summary>
         internal static string StopServerFirst {

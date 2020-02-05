@@ -15,6 +15,8 @@ namespace V2RayGCon.Services
         BaseClasses.SingletonService<Notifier>,
         VgcApis.Interfaces.Services.INotifierService
     {
+        static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+
         NotifyIcon ni;
         Settings setting;
         Servers servers;
@@ -185,7 +187,7 @@ namespace V2RayGCon.Services
 
             var dely = coreState.GetSpeedTestResult();
             var title = coreState.GetTitle();
-            if (dely == long.MaxValue)
+            if (dely == SpeedtestTimeout)
             {
                 title = $"{title} - ({I18N.Timeout})";
             }

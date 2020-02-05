@@ -116,7 +116,7 @@ namespace V2RayGCon.Services
 
             // dependency injection
             cache.Run(setting);
-            configMgr.Run(setting, cache, servers);
+            configMgr.Run(setting, cache);
             servers.Run(setting, cache, configMgr);
             updater.Run(setting, servers);
             slinkMgr.Run(setting, servers, cache);

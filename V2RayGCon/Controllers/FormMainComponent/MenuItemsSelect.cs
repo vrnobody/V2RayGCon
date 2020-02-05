@@ -6,7 +6,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
 {
     class MenuItemsSelect : FormMainComponentController
     {
+        static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+
         Services.Servers servers;
+
         public MenuItemsSelect(
             ToolStripMenuItem selectAllCurPage,
             ToolStripMenuItem invertSelectionCurPage,
@@ -83,7 +86,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
                  (s, a) => SelectAllPagesWhere(el => el.GetCoreCtrl().IsCoreRunning());
 
             selectTimeoutAllPages.Click +=
-                (s, a) => SelectAllPagesWhere(el => el.GetCoreStates().GetSpeedTestResult() == long.MaxValue);
+                (s, a) => SelectAllPagesWhere(
+                    el => el.GetCoreStates().GetSpeedTestResult() == SpeedtestTimeout);
 
             selectNoSpeedTestAllPages.Click +=
                 (s, a) => SelectAllPagesWhere(el => el.GetCoreStates().GetSpeedTestResult() < 0);
@@ -125,7 +129,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 (s, a) => SelectAllServersWhere(el => el.GetCoreStates().GetSpeedTestResult() < 0);
 
             selectTimeoutAllServers.Click +=
-                (s, a) => SelectAllServersWhere(el => el.GetCoreStates().GetSpeedTestResult() == long.MaxValue);
+                (s, a) => SelectAllServersWhere(el => el.GetCoreStates().GetSpeedTestResult() == SpeedtestTimeout);
 
             selectRunningAllServers.Click +=
                 (s, a) => SelectAllServersWhere(el => el.GetCoreCtrl().IsCoreRunning());

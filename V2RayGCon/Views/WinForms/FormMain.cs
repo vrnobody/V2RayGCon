@@ -149,7 +149,7 @@ namespace V2RayGCon.Views.WinForms
             bind(toolStripButtonAllServerSelectNone, selectNoneAllServersToolStripMenuItem);
 
             bind(toolStripButtonModifySelected, toolStripMenuItemModifySettings, false);
-            bind(toolStripButtonRunSpeedTest, toolStripMenuItemSpeedTestOnSelected);
+            bind(toolStripButtonRunSpeedTest, toolStripMenuItemRunBatchSpeedTest);
             bind(toolStripButtonSortSelectedBySpeedTestResult, toolStripMenuItemSortBySpeedTest);
 
             bind(toolStripButtonFormOption, toolMenuItemOptions, false);
@@ -267,11 +267,8 @@ namespace V2RayGCon.Views.WinForms
                 toolStripMenuItemCopyAsVeeSubscription,
 
                 //// batch op
-                //ToolStripMenuItem speedTestOnSelected,
-                //ToolStripMenuItem modifySelected,
-                //ToolStripMenuItem stopSelected,
-                //ToolStripMenuItem restartSelected,
-                toolStripMenuItemSpeedTestOnSelected,
+                toolStripMenuItemStopBatchSpeedTest,
+                toolStripMenuItemRunBatchSpeedTest,
                 toolStripMenuItemModifySettings,
                 toolStripMenuItemStopSelected,
                 toolStripMenuItemRestartSelected,

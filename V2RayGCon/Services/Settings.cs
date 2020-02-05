@@ -28,6 +28,8 @@ namespace V2RayGCon.Services
         }
 
         #region Properties
+        public bool isSpeedtestCancelled = false;
+
         public string AllPluginsSetting
         {
             get => userSettings.PluginsSetting;

@@ -242,7 +242,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             int selectedServersCount = servers.CountSelectedServers(); // may cause dead lock in UI thread
             int serverControlCount = GetAllServerControls().Count();
 
-            VgcApis.Misc.UI.RunInUiThread(formMain, () =>
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, () =>
             {
                 UpdateStatusBarText(
                     filteredListCount,
@@ -281,11 +281,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             var text = string.Format(
                 $"{I18N.StatusBarMessageTpl}",
-                 filteredListCount,
-            allServersCount,
-            selectedServersCount,
-            serverControlCount
-              );
+                filteredListCount,
+                allServersCount,
+                selectedServersCount,
+                serverControlCount);
 
             if (text != tslbTotal.Text)
             {
@@ -352,6 +351,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     (s, a) =>
                     {
                         curPageNumber = pn;
+                        isFocusOnFormMain = true;
                         RefreshUI();
                     });
                 pagerMenuItemCache.Add(item);

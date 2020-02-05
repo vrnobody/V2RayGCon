@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
+using VgcApis.Interfaces;
 
 namespace V2RayGCon.Services
 {
@@ -400,21 +401,21 @@ namespace V2RayGCon.Services
 
         public bool RunSpeedTestOnSelectedServers()
         {
-            var selectedServers = queryHandler.GetSelectedServers(false).ToList();
-            return SpeedTestWorker(selectedServers);
+            var evDone = new AutoResetEvent(false);
+            var success = BatchSpeedTestWorkerThen(GetSelectedServer(), () => evDone.Set());
+            evDone.WaitOne();
+            return success;
         }
 
         public void RunSpeedTestOnSelectedServersBg()
         {
-            var selectedServers = queryHandler.GetSelectedServers(false).ToList();
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            var success = BatchSpeedTestWorkerThen(
+                GetSelectedServer(),
+                () => MessageBox.Show(I18N.SpeedTestFinished));
+            if (!success)
             {
-                var result = SpeedTestWorker(selectedServers);
-                MessageBox.Show(
-                    result ?
-                    I18N.SpeedTestFinished :
-                    I18N.LastTestNoFinishYet);
-            });
+                MessageBox.Show(I18N.LastTestNoFinishYet);
+            }
         }
 
         public void RestartServersThen(
@@ -770,7 +771,16 @@ namespace V2RayGCon.Services
         }
         #endregion
 
-        #region private method
+        #region private methods
+
+        private List<ICoreServCtrl> GetSelectedServer()
+        {
+            lock (serverListWriteLock)
+            {
+                return queryHandler.GetSelectedServers(false).ToList();
+            }
+        }
+
         string PackServersIntoV4PackageWorker(
            List<VgcApis.Interfaces.ICoreServCtrl> servList,
            string orgUid,
@@ -800,17 +810,24 @@ namespace V2RayGCon.Services
             return newUid;
         }
 
-        bool SpeedTestWorker(
-           IEnumerable<VgcApis.Interfaces.ICoreServCtrl> servList)
+        bool BatchSpeedTestWorkerThen(IEnumerable<ICoreServCtrl> servList, Action next)
         {
             if (!speedTestingBar.Install())
             {
                 return false;
             }
-            Misc.Utils.ExecuteInParallel(
-                servList,
-                serv => serv.GetCoreCtrl().RunSpeedTest());
-            speedTestingBar.Remove();
+
+            setting.isSpeedtestCancelled = false;
+
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                Misc.Utils.ExecuteInParallel(
+                    servList,
+                    serv => serv.GetCoreCtrl().RunSpeedTest());
+                speedTestingBar.Remove();
+                setting.SendLog(I18N.SpeedTestFinished);
+                next?.Invoke();
+            });
             return true;
         }
 

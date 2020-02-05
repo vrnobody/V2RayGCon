@@ -48,11 +48,11 @@ namespace V2RayGCon.Models.Datas
 
             ServerPanelPageSize = 8;
 
-            MaxConcurrentV2RayCoreNum = 100;
+            MaxConcurrentV2RayCoreNum = 20;
 
             isCheckUpdateWhenAppStart = false;
 
-            isUpdateUseProxy = false;
+            isUpdateUseProxy = true;
             isUseV4Format = true;
             CfgShowToolPanel = true;
             isPortable = true;

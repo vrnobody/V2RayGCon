@@ -35,11 +35,7 @@ namespace Luna.Controllers
 
             // event handling
             miExit.Click += (s, a) =>
-            {
-                VgcApis.Misc.UI.RunInUiThread(
-                    this.formMain,
-                    () => this.formMain.Close());
-            };
+                VgcApis.Misc.UI.CloseFormIgnoreError(formMain);
 
             miLoad.Click += (s, a) =>
             {

@@ -1,13 +1,10 @@
 {
-  "version": "1.2.8.0",
-  "md5": "510F901AD58ECAC65C2276A113272F63",
+  "version": "1.2.8.2",
+  "md5": "1456FCE56B00DBDCFA4FD0DA1781118B",
   "warnings": [
   ],
   "changes": [
-      "更新各Nuget包",
-      "修复lua/templates文件夹为空问题",
-      "修复订阅选项页有时会崩溃的问题",
-      "修复主窗口聚焦问题",
-      "默认启用ProxySetter插件"
+      "添加停止测速功能",
+      "修复主窗口的失焦问题"
   ]
 }

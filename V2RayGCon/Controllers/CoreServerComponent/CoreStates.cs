@@ -78,22 +78,21 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             });
         }
 
-        public void ToggleIsInjectSkipCnSite()
+        public void SetIsInjectSkipCnSite(bool isInjectSkipCnSite)
         {
-            ToggleBoolPropertyOnDemand(ref coreInfo.isInjectSkipCNSite, true);
+            SetSettingsPropertyOnDemand(ref coreInfo.isInjectSkipCNSite, true);
         }
 
-        public void ToggleIsAutoRun() =>
-            ToggleBoolPropertyOnDemand(ref coreInfo.isAutoRun);
+        public void SetIsAutoRun(bool isAutoRun) =>
+            SetSettingsPropertyOnDemand(ref coreInfo.isAutoRun, isAutoRun);
 
-        public void ToggleIsUntrack() =>
-            ToggleBoolPropertyOnDemand(ref coreInfo.isUntrack);
+        public void SetIsUntrack(bool isUntrack) =>
+            SetSettingsPropertyOnDemand(ref coreInfo.isUntrack, isUntrack);
 
-        public void ToggleIsInjectImport()
+        public void SetIsInjectImport(bool IsInjectImport)
         {
-            ToggleBoolPropertyOnDemand(ref coreInfo.isInjectImport, true);
-            configer.UpdateSummaryThen(
-                () => GetParent().InvokeEventOnPropertyChange());
+            SetSettingsPropertyOnDemand(ref coreInfo.isInjectImport, IsInjectImport, true);
+            configer.UpdateSummaryThen(() => GetParent().InvokeEventOnPropertyChange());
         }
 
         public VgcApis.Models.Datas.CoreInfo GetAllRawCoreInfo() => coreInfo;
@@ -133,10 +132,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public void SetLastModifiedUtcTicks(long utcTicks) =>
             SetPropertyOnDemand(ref coreInfo.lastModifiedUtcTicks, utcTicks);
-
-        public int GetFoldingState() => coreInfo.foldingLevel;
-        public void SetFoldingState(int level) =>
-            SetPropertyOnDemand(ref coreInfo.foldingLevel, level);
 
         public void SetIsSelected(bool selected)
         {
@@ -252,9 +247,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region private methods
-        void ToggleBoolPropertyOnDemand(ref bool property, bool requireRestart = false)
+        void SetSettingsPropertyOnDemand(ref bool property, bool value, bool requireRestart = false)
         {
-            property = !property;
+            if (property == value)
+            {
+                return;
+            }
+
+            property = value;
 
             // refresh UI immediately
             GetParent().InvokeEventOnPropertyChange();

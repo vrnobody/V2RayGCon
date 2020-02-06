@@ -40,7 +40,6 @@
             this.flySubsUrlContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPageDefaults = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.chkDefImportIsFold = new System.Windows.Forms.CheckBox();
             this.chkDefImportInjectGlobalImport = new System.Windows.Forms.CheckBox();
             this.chkDefImportBypassCnSite = new System.Windows.Forms.CheckBox();
             this.chkDefImportSsShareLink = new System.Windows.Forms.CheckBox();
@@ -180,7 +179,6 @@
             // groupBox4
             // 
             resources.ApplyResources(this.groupBox4, "groupBox4");
-            this.groupBox4.Controls.Add(this.chkDefImportIsFold);
             this.groupBox4.Controls.Add(this.chkDefImportInjectGlobalImport);
             this.groupBox4.Controls.Add(this.chkDefImportBypassCnSite);
             this.groupBox4.Controls.Add(this.chkDefImportSsShareLink);
@@ -190,13 +188,6 @@
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.TabStop = false;
-            // 
-            // chkDefImportIsFold
-            // 
-            resources.ApplyResources(this.chkDefImportIsFold, "chkDefImportIsFold");
-            this.chkDefImportIsFold.Name = "chkDefImportIsFold";
-            this.toolTip1.SetToolTip(this.chkDefImportIsFold, resources.GetString("chkDefImportIsFold.ToolTip"));
-            this.chkDefImportIsFold.UseVisualStyleBackColor = true;
             // 
             // chkDefImportInjectGlobalImport
             // 
@@ -641,7 +632,6 @@
         private System.Windows.Forms.CheckBox chkDefImportSsShareLink;
         private System.Windows.Forms.CheckBox chkDefImportInjectGlobalImport;
         private System.Windows.Forms.CheckBox chkDefImportBypassCnSite;
-        private System.Windows.Forms.CheckBox chkDefImportIsFold;
         private System.Windows.Forms.Button btnSetOpenStartupFolder;
         private System.Windows.Forms.Button btnSubsInvertSelection;
         private System.Windows.Forms.Button btnSubsUseAll;

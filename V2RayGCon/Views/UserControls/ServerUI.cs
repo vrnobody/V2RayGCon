@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
@@ -16,18 +17,14 @@ namespace V2RayGCon.Views.UserControls
         Services.ShareLinkMgr slinkMgr;
         VgcApis.Interfaces.ICoreServCtrl coreServCtrl;
 
-        int[] formHeight;
-        Bitmap[] foldingButtonIcons;
         string keyword = null;
 
-        string lazyMarkSaverCache = @"";
-
         VgcApis.Libs.Tasks.Bar uiUpdateLock = new VgcApis.Libs.Tasks.Bar();
-        VgcApis.Libs.Tasks.LazyGuy lazyMarkSaver, lazyUiUpdater;
-        VgcApis.Libs.Tasks.CancelableTimeout lazyAddrSetter = null;
+        VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater;
 
-        public ServerUI(
-            VgcApis.Interfaces.ICoreServCtrl serverItem)
+        static readonly Bitmap[] btnBgCaches = new Bitmap[3];
+
+        public ServerUI(VgcApis.Interfaces.ICoreServCtrl serverItem)
         {
             servers = Services.Servers.Instance;
             slinkMgr = Services.ShareLinkMgr.Instance;
@@ -36,28 +33,23 @@ namespace V2RayGCon.Views.UserControls
             this.coreServCtrl = serverItem;
             InitializeComponent();
 
-            this.foldingButtonIcons = new Bitmap[] {
-                Properties.Resources.StepBackArrow_16x,
-                Properties.Resources.StepOverArrow_16x,
-            };
-
-            this.formHeight = new int[] {
-                this.Height,  // collapseLevel= 0
-                this.cboxInbound.Top,
-            };
-
-            lazyMarkSaver = new VgcApis.Libs.Tasks.LazyGuy(
-                () => coreServCtrl.GetCoreStates().SetMark(lazyMarkSaverCache), 2000);
-            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(
-                RefreshUiLater, 100);
+            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiLater, 100);
         }
 
         private void ServerUI_Load(object sender, EventArgs e)
         {
-            rtboxServerTitle.BackColor = this.BackColor;
+            rtboxServerTitle.BackColor = BackColor;
+            InitButtonBackgroundImage();
             InitStatusLabel();
             BindCoreCtrlEvents();
             RefreshUiLater();
+        }
+
+        private void InitButtonBackgroundImage()
+        {
+            CreateBgImgForButton(btnStart, ButtonTypes.Start);
+            CreateBgImgForButton(btnStop, ButtonTypes.Stop);
+            CreateBgImgForButton(btnMenu, ButtonTypes.Menu);
         }
 
         private void ReleaseCoreCtrlEvents()
@@ -75,30 +67,28 @@ namespace V2RayGCon.Views.UserControls
         }
 
         #region interface VgcApis.Models.IDropableControl
-        public string GetTitle() =>
-            coreServCtrl.GetCoreStates().GetTitle();
+        public string GetTitle() => coreServCtrl.GetCoreStates().GetTitle();
 
-        public string GetUid() =>
-            coreServCtrl.GetCoreStates().GetUid();
+        public string GetUid() => coreServCtrl.GetCoreStates().GetUid();
 
-        public string GetStatus() =>
-            coreServCtrl.GetCoreStates().GetStatus();
+        public string GetStatus() => coreServCtrl.GetCoreStates().GetStatus();
         #endregion
 
         #region private method
         void InitStatusLabel()
         {
-            VgcApis.Misc.UI.RunInUiThread(lbStatus, () =>
+
+            VgcApis.Misc.UI.RunInUiThread(rlbSpeedtest, () =>
             {
                 try
                 {
-                    Misc.UI.UpdateControlOnDemand(lbStatus, @"");
+                    UpdateControlTextOndemand(rlbSpeedtest, @"");
                 }
                 catch { }
             });
         }
 
-        private void HighLightTitleWithKeywords()
+        private void HighLightServerTitleWithKeywords()
         {
             VgcApis.Misc.UI.RunInUiThread(rtboxServerTitle, () =>
             {
@@ -129,12 +119,10 @@ namespace V2RayGCon.Views.UserControls
             });
         }
 
-        void RestartServer()
+        void StartThisServerOnlyThen(Action done = null)
         {
             var server = this.coreServCtrl;
-            lazyAddrSetter?.Timeout();
-            servers.StopAllServersThen(
-                () => server.GetCoreCtrl().RestartCoreThen());
+            servers.StopAllServersThen(() => server.GetCoreCtrl().RestartCoreThen(done));
         }
 
         void RefreshUiLater()
@@ -151,6 +139,180 @@ namespace V2RayGCon.Views.UserControls
         void OnCorePropertyChangesHandler(object sender, EventArgs args) =>
             RefreshUiLater();
 
+        void UpdateControlTextAndTooltip(Control control, string text, string tooltip)
+        {
+            if (control.Text != text)
+            {
+                control.Text = text;
+            }
+
+            if (toolTip1.GetToolTip(control) != tooltip)
+            {
+                toolTip1.SetToolTip(control, tooltip);
+            }
+        }
+
+        void CompactRoundLables()
+        {
+            var margin = rlbSetting.Left / 2;
+            var end = rlbInboundMode.Right;
+
+            var controls = new List<Control>
+            {
+                rlbLastModify,
+                rlbMark,
+                rlbSpeedtest,
+            };
+
+            foreach (var control in controls)
+            {
+                if (!control.Visible)
+                {
+                    continue;
+                }
+
+                var left = end + margin;
+                if (control.Left != left)
+                {
+                    control.Left = end + margin;
+                }
+                end = control.Right;
+            }
+        }
+
+        enum ButtonTypes
+        {
+            Start,
+            Stop,
+            Menu,
+        }
+
+        readonly object drawImageLocker = new object();
+        void CreateBgImgForButton(Button btn, ButtonTypes btnType)
+        {
+            var idx = (int)btnType;
+            btn.Text = string.Empty;
+            btn.FlatAppearance.BorderSize = 0;
+
+            Bitmap clone;
+            lock (drawImageLocker)
+            {
+                if (btnBgCaches[idx] == null || btnBgCaches[idx].Size != btn.Size)
+                {
+                    btnBgCaches[idx] = CreateBgCache(btn.ClientSize, btn.Padding, btnType);
+                }
+                clone = btnBgCaches[idx].Clone() as Bitmap;
+            }
+            btn.BackgroundImage = clone;
+            btn.BackgroundImageLayout = ImageLayout.None;
+        }
+
+        Bitmap CreateBgCache(Size size, Padding padding, ButtonTypes btnType)
+        {
+            var bmp = new Bitmap(
+                size.Width - padding.Left - padding.Right,
+                size.Height - padding.Top - padding.Bottom);
+
+            var r = Math.Min(bmp.Width, bmp.Height) * 0.6f / 2f;
+            var cx = bmp.Width / 2f;
+            var cy = bmp.Height / 2f;
+            var pw = r * 0.4f;
+            using (var g = Graphics.FromImage(bmp))
+            using (var pen = new Pen(Color.DimGray, pw))
+            {
+                pen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+                pen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                switch (btnType)
+                {
+                    case ButtonTypes.Stop:
+                        DrawRect(g, cx, cy, r);
+                        break;
+                    case ButtonTypes.Start:
+                        DrawTriangle(g, pen, pw, cx, cy, r);
+                        break;
+                    case ButtonTypes.Menu:
+                    default:
+                        DrawHamburg(g, pen, pw, cx, cy, r);
+                        break;
+                }
+            }
+            return bmp;
+        }
+
+        void DrawHamburg(Graphics g, Pen pen, float pw, float cx, float cy, float r)
+        {
+            var xs = cx - r;
+            var xe = cx + r;
+            var h = r - pw / 2f;
+
+            g.DrawLine(pen, xs, cy - h, xe, cy - h);
+            g.DrawLine(pen, xs, cy, xe, cy);
+            g.DrawLine(pen, xs, cy + h, xe, cy + h);
+        }
+
+        void DrawTriangle(Graphics g, Pen pen, float pw, float cx, float cy, float r)
+        {
+            var ml = r * 3 / 4;
+            var mr = r * 2 / 4;
+
+            var points = new PointF[] {
+                    new PointF(cx - ml, cy - r+pw/2),
+                    new PointF(cx + mr, cy),
+                    new PointF(cx - ml, cy + r-pw/2),
+                };
+            g.DrawLines(pen, points);
+        }
+
+        void DrawRect(Graphics g, float cx, float cy, float r)
+        {
+            g.FillRectangle(Brushes.Brown, cx - r, cy - r, r * 2, r * 2);
+        }
+
+        void UpdateInboundModeLabel(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreState)
+        {
+            var text = @"Config";
+            var tooltip = I18N.InbModeConfigToolTip;
+            var inbModeIdx = coreState.GetInboundType();
+            var lower = coreState.GetInboundIp().Equals(VgcApis.Models.Consts.Webs.LoopBackIP);
+
+            switch (inbModeIdx)
+            {
+                case (int)VgcApis.Models.Datas.Enums.ProxyTypes.HTTP:
+                    text = (lower ? @"h" : @"H") + coreState.GetInboundPort();
+                    tooltip = @"inbound -> http://" + coreState.GetInboundAddr();
+                    break;
+                case (int)VgcApis.Models.Datas.Enums.ProxyTypes.SOCKS:
+                    text = (lower ? @"s" : @"S") + coreState.GetInboundPort();
+                    tooltip = @"inbound -> socks://" + coreState.GetInboundAddr();
+                    break;
+            }
+            UpdateControlTextAndTooltip(rlbInboundMode, text, tooltip);
+        }
+
+        void UpdateControlTextOndemand(Control control, string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                if (control.Visible)
+                {
+                    control.Visible = false;
+                }
+                return;
+            }
+
+            if (control.Text != text)
+            {
+                control.Text = text;
+            }
+
+            if (!control.Visible)
+            {
+                control.Visible = true;
+            }
+        }
+
         void RefreshUiThen(Action done)
         {
             VgcApis.Misc.UI.RunInUiThread(rtboxServerTitle, () =>
@@ -159,18 +321,20 @@ namespace V2RayGCon.Views.UserControls
                 {
                     var cs = coreServCtrl.GetCoreStates();
                     var cc = coreServCtrl.GetCoreCtrl();
-                    Misc.UI.UpdateControlOnDemand(cboxInbound, cs.GetInboundType());
-                    Misc.UI.UpdateControlOnDemand(rtboxServerTitle, cs.GetTitle());
-                    Misc.UI.UpdateControlOnDemand(lbStatus, cs.GetStatus());
-                    UpdateServerOptionTickStat(cs);
-                    Misc.UI.UpdateControlOnDemand(cboxInboundAddr, cs.GetInboundAddr());
-                    UpdateMarkLable(cs);
-                    UpdateSelectedTickStat(cs);
+
+                    // first line
                     UpdateOnOffLabel(cc.IsCoreRunning());
-                    Misc.UI.UpdateControlOnDemand(cboxMark, cs.GetMark());
-                    UpdateBorderFoldingStat(cs.GetFoldingState());
-                    UpdateToolsTip();
+                    UpdateSelectCheckboxState(cs);
+                    var title = cs.GetTitle();
+                    UpdateControlTextAndTooltip(rtboxServerTitle, title, title);
+
+                    // second line
+                    UpdateInboundModeLabel(cs);
                     UpdateLastModifiedLable(cs.GetLastModifiedUtcTicks());
+                    UpdateControlTextOndemand(rlbMark, cs.GetMark());
+                    UpdateControlTextOndemand(rlbSpeedtest, cs.GetStatus());
+                    UpdateSettingsLable(cs);
+                    CompactRoundLables();
                 }
                 catch { }
                 finally
@@ -183,96 +347,72 @@ namespace V2RayGCon.Views.UserControls
         void UpdateLastModifiedLable(long utcTicks)
         {
             var date = new DateTime(utcTicks, DateTimeKind.Utc).ToLocalTime();
-
-            Misc.UI.UpdateControlOnDemand(lbLastModify, date.ToString(I18N.MMdd));
+            var text = date.ToString(I18N.MMdd);
             var tooltip = I18N.LastModified + date.ToLongDateString() + date.ToLongTimeString();
-            if (toolTip1.GetToolTip(lbLastModify) != tooltip)
-            {
-                toolTip1.SetToolTip(lbLastModify, tooltip);
-            }
+            UpdateControlTextAndTooltip(rlbLastModify, text, tooltip);
         }
 
-        private void UpdateServerOptionTickStat(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
-        {
-            Misc.UI.UpdateControlOnDemand(globalImportToolStripMenuItem, coreStates.IsInjectGlobalImport());
-            Misc.UI.UpdateControlOnDemand(skipCNWebsiteToolStripMenuItem, coreStates.IsInjectSkipCnSite());
-            Misc.UI.UpdateControlOnDemand(autorunToolStripMenuItem, coreStates.IsAutoRun());
-            Misc.UI.UpdateControlOnDemand(untrackToolStripMenuItem, coreStates.IsUntrack());
-        }
-
-        private void UpdateToolsTip()
-        {
-            var title = rtboxServerTitle.Text;
-            if (toolTip1.GetToolTip(rtboxServerTitle) != title)
-            {
-                toolTip1.SetToolTip(rtboxServerTitle, title);
-            }
-        }
-
-        private void UpdateMarkLable(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
+        private void UpdateSettingsLable(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
         {
             var text = (coreStates.IsAutoRun() ? "A" : "")
                 + (coreStates.IsInjectSkipCnSite() ? "C" : "")
                 + (coreStates.IsInjectGlobalImport() ? "I" : "")
                 + (coreStates.IsUntrack() ? "U" : "");
 
-            if (lbIsAutorun.Text != text)
-            {
-                lbIsAutorun.Text = text;
-            }
+            UpdateControlTextOndemand(rlbSetting, text);
         }
 
-        void UpdateBorderFoldingStat(int foldingState)
+        void UpdateSelectCheckboxState(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
         {
-            var level = Misc.Utils.Clamp(foldingState, 0, foldingButtonIcons.Length);
-
-            if (btnIsCollapse.BackgroundImage != foldingButtonIcons[level])
-            {
-                btnIsCollapse.BackgroundImage = foldingButtonIcons[level];
-            }
-
-            var newHeight = this.formHeight[level];
-            if (this.Height != newHeight)
-            {
-                this.Height = newHeight;
-            }
-        }
-
-        void UpdateSelectedTickStat(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
-        {
-            if (coreStates.IsSelected() == chkSelected.Checked)
+            var selected = coreStates.IsSelected();
+            if (selected == chkSelected.Checked)
             {
                 return;
             }
 
-            chkSelected.Checked = coreStates.IsSelected();
-            HighlightSelectedServerItem(chkSelected.Checked);
+            chkSelected.Checked = selected;
+            SetServerTitleLabelFontStyle(selected);
         }
 
-        void HighlightSelectedServerItem(bool selected)
+        void SetServerTitleLabelFontStyle(bool selected)
         {
             var fontStyle = new Font(rtboxServerTitle.Font, selected ? FontStyle.Bold : FontStyle.Regular);
-            var colorRed = selected ? Color.OrangeRed : Color.Black;
             rtboxServerTitle.Font = fontStyle;
-            lbStatus.Font = fontStyle;
-            lbStatus.ForeColor = colorRed;
         }
 
         private void UpdateOnOffLabel(bool isServerOn)
         {
             var text = isServerOn ? "ON" : "OFF";
 
-            if (cboxInboundAddr.Enabled == isServerOn)
+            if (rlbIsRunning.Text != text)
             {
-                cboxInboundAddr.Enabled = !isServerOn;
+                rlbIsRunning.Text = text;
+            }
+            var bc = isServerOn ? Color.DarkOrange : BackColor;
+            var fc = isServerOn ? BackColor : Color.ForestGreen;
+
+            if (rlbIsRunning._BackColor != bc)
+            {
+                rlbIsRunning._BackColor = bc;
             }
 
-            if (lbRunning.Text != text)
+            if (rlbIsRunning.ForeColor != fc)
             {
-                lbRunning.Text = text;
-                lbRunning.ForeColor = isServerOn ? Color.DarkOrange : Color.Green;
+                rlbIsRunning.ForeColor = fc;
             }
         }
+
+        void UserMouseDown()
+        {
+            DoDragDrop(this, DragDropEffects.Move);
+        }
+
+        void ShowPopupMenu(Control control)
+        {
+            Point pos = new Point(control.Left, control.Top + control.Height);
+            ctxMenuStripMore.Show(this, pos);
+        }
+
         #endregion
 
         #region properties
@@ -300,7 +440,7 @@ namespace V2RayGCon.Views.UserControls
                 // control may be desposed, the sun may explode while this function is running
                 try
                 {
-                    HighLightTitleWithKeywords();
+                    HighLightServerTitleWithKeywords();
                 }
                 catch { }
             });
@@ -322,10 +462,6 @@ namespace V2RayGCon.Views.UserControls
 
         public void Cleanup()
         {
-            lazyAddrSetter?.Timeout();
-
-            lazyMarkSaver?.DoItNow();
-            lazyMarkSaver?.Quit();
             lazyUiUpdater?.Quit();
 
             ReleaseCoreCtrlEvents();
@@ -339,20 +475,7 @@ namespace V2RayGCon.Views.UserControls
         {
             // this effect is ugly and useless
             // Cursor.Current = Misc.UI.CreateCursorIconFromUserControl(this);
-            DoDragDrop((ServerUI)sender, DragDropEffects.Move);
-        }
-
-        private void btnAction_Click(object sender, System.EventArgs e)
-        {
-            Button btnSender = sender as Button;
-            Point pos = new Point(btnSender.Left, btnSender.Top + btnSender.Height);
-            ctxMenuStripMore.Show(this, pos);
-            //menu.Show(this, pos);
-        }
-
-        private void cboxInbound_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            coreServCtrl.GetCoreStates().SetInboundType(cboxInbound.SelectedIndex);
+            UserMouseDown();
         }
 
         private void chkSelected_CheckedChanged(object sender, EventArgs e)
@@ -363,39 +486,7 @@ namespace V2RayGCon.Views.UserControls
                 return;
             }
             coreServCtrl.GetCoreStates().SetIsSelected(selected);
-            HighlightSelectedServerItem(chkSelected.Checked);
-        }
-
-        void SetInboundAddrLater(string address)
-        {
-            lazyAddrSetter?.Cancel();
-            lazyAddrSetter = new VgcApis.Libs.Tasks.CancelableTimeout(
-                () =>
-                {
-                    if (VgcApis.Misc.Utils.TryParseAddress(address, out var ip, out var port))
-                    {
-                        coreServCtrl.GetCoreStates().SetInboundAddr(ip, port);
-                    }
-                }, 2000);
-            lazyAddrSetter.Start();
-        }
-
-        private void cboxInboundAddr_TextChanged(object sender, EventArgs e)
-        {
-            VgcApis.Misc.UI.MarkInvalidAddressWithColorRed(cboxInboundAddr);
-
-            var addr = cboxInboundAddr.Text;
-            SetInboundAddrLater(addr);
-        }
-
-        private void lbSummary_Click(object sender, EventArgs e)
-        {
-            chkSelected.Checked = !chkSelected.Checked;
-        }
-
-        private void btnStart_Click(object sender, EventArgs e)
-        {
-            RestartServer();
+            SetServerTitleLabelFontStyle(chkSelected.Checked);
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
@@ -437,69 +528,6 @@ namespace V2RayGCon.Views.UserControls
             coreServCtrl.GetLogger().ShowFormLog();
         }
 
-        private void cboxMark_TextChanged(object sender, EventArgs e)
-        {
-            lazyMarkSaverCache = cboxMark.Text;
-            lazyMarkSaver?.DoItLater();
-        }
-
-        private void cboxMark_DropDown(object sender, EventArgs e)
-        {
-            var servers = Services.Servers.Instance;
-            cboxMark.Items.Clear();
-            foreach (var item in servers.GetMarkList())
-            {
-                cboxMark.Items.Add(item);
-            }
-            Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMark);
-        }
-
-        private void Label1_MouseDown(object sender, MouseEventArgs e)
-        {
-            ServerListItem_MouseDown(this, e);
-        }
-
-        private void LbAddTimestamp_MouseDown(object sender, MouseEventArgs e)
-        {
-            ServerListItem_MouseDown(this, e);
-        }
-
-        private void lbStatus_MouseDown(object sender, MouseEventArgs e)
-        {
-            ServerListItem_MouseDown(this, e);
-        }
-
-        private void label4_MouseDown(object sender, MouseEventArgs e)
-        {
-            ServerListItem_MouseDown(this, e);
-        }
-
-        private void lbRunning_MouseDown(object sender, MouseEventArgs e)
-        {
-            ServerListItem_MouseDown(this, e);
-        }
-
-        private void btnMultiboxing_Click(object sender, EventArgs e)
-        {
-            coreServCtrl.GetCoreCtrl().RestartCoreThen();
-        }
-
-        private void btnStop_Click(object sender, EventArgs e)
-        {
-            coreServCtrl.GetCoreCtrl().StopCoreThen();
-        }
-
-        private void btnIsCollapse_Click(object sender, EventArgs e)
-        {
-            var level = (coreServCtrl.GetCoreStates().GetFoldingState() + 1) % 2;
-            coreServCtrl.GetCoreStates().SetFoldingState(level);
-        }
-
-        private void lbIsAutorun_MouseDown(object sender, MouseEventArgs e)
-        {
-            ServerListItem_MouseDown(this, e);
-        }
-
         private void rtboxServerTitle_Click(object sender, EventArgs e)
         {
             chkSelected.Checked = !chkSelected.Checked;
@@ -507,7 +535,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RestartServer();
+            StartThisServerOnlyThen();
         }
 
         private void multiboxingToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -519,21 +547,6 @@ namespace V2RayGCon.Views.UserControls
         {
             coreServCtrl.GetCoreCtrl().StopCoreThen();
         }
-
-        private void untrackToolStripMenuItem_Click(object sender, EventArgs e) =>
-            coreServCtrl.GetCoreStates().ToggleIsUntrack();
-
-        private void autorunToolStripMenuItem_Click(object sender, EventArgs e) =>
-            coreServCtrl.GetCoreStates().ToggleIsAutoRun();
-
-
-        private void globalImportToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            coreServCtrl.GetCoreStates().ToggleIsInjectImport();
-        }
-
-        private void skipCNWebsiteToolStripMenuItem_Click(object sender, EventArgs e) =>
-            coreServCtrl.GetCoreStates().ToggleIsInjectSkipCnSite();
 
         private void runSpeedTestToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -562,8 +575,6 @@ namespace V2RayGCon.Views.UserControls
             new WinForms.FormConfiger(finalConfig.ToString(Formatting.Indented));
         }
 
-
-
         private void vToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var vee = slinkMgr.EncodeConfigToShareLink(
@@ -573,7 +584,80 @@ namespace V2RayGCon.Views.UserControls
         }
 
 
+        bool isRlbIsRunningDisabled = false;
+        private void rlbIsRunning_Click(object sender, EventArgs e)
+        {
+
+            if (isRlbIsRunningDisabled)
+            {
+                return;
+            }
+
+            var cc = coreServCtrl.GetCoreCtrl();
+            rlbIsRunning._BackColor = Color.DarkGray;
+            isRlbIsRunningDisabled = true;
+
+            Action done = () =>
+            {
+                isRlbIsRunningDisabled = false;
+            };
+
+            if (cc.IsCoreRunning())
+            {
+                cc.StopCoreThen(done);
+            }
+            else
+            {
+                cc.RestartCoreThen(done);
+            }
+        }
+
+        private void showSettingsWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);
+        }
+
+        private void btnShowPopupMenu_Click(object sender, EventArgs e)
+        {
+            ShowPopupMenu(sender as Control);
+        }
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            StartThisServerOnlyThen();
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            coreServCtrl.GetCoreCtrl().StopCoreThen();
+        }
+
+        private void rlbInboundMode_MouseDown(object sender, MouseEventArgs e)
+        {
+            UserMouseDown();
+        }
+        private void rlbSetting_MouseDown(object sender, MouseEventArgs e)
+        {
+            UserMouseDown();
+        }
+
+        private void rlbLastModify_MouseDown(object sender, MouseEventArgs e)
+        {
+            UserMouseDown();
+        }
+
+        private void rlbMark_MouseDown(object sender, MouseEventArgs e)
+        {
+            UserMouseDown();
+        }
+
+        private void rlbSpeedtest_MouseDown(object sender, MouseEventArgs e)
+        {
+            UserMouseDown();
+        }
         #endregion
+
+
 
 
     }

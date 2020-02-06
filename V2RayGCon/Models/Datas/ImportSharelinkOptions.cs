@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace V2RayGCon.Models.Datas
+﻿namespace V2RayGCon.Models.Datas
 {
     public class ImportSharelinkOptions
     {
-        public bool IsFold { get; set; } // single line mode
         public bool IsImportSsShareLink { get; set; }
         public bool IsInjectGlobalImport { get; set; }
         public bool IsBypassCnSite { get; set; }
@@ -19,7 +12,6 @@ namespace V2RayGCon.Models.Datas
 
         public ImportSharelinkOptions()
         {
-            IsFold = false;
             IsImportSsShareLink = true;
             IsInjectGlobalImport = false;
             IsBypassCnSite = false;
@@ -32,7 +24,6 @@ namespace V2RayGCon.Models.Datas
         public bool Equals(ImportSharelinkOptions target)
         {
             if (target == null
-                || IsFold != target.IsFold
                 || IsImportSsShareLink != target.IsImportSsShareLink
                 || IsInjectGlobalImport != target.IsInjectGlobalImport
                 || IsBypassCnSite != target.IsBypassCnSite

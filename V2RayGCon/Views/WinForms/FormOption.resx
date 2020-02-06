@@ -342,36 +342,6 @@
   <data name="groupBox4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="chkDefImportIsFold.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkDefImportIsFold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>172, 45</value>
-  </data>
-  <data name="chkDefImportIsFold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
-  <data name="chkDefImportIsFold.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="chkDefImportIsFold.Text" xml:space="preserve">
-    <value>Fold</value>
-  </data>
-  <data name="chkDefImportIsFold.ToolTip" xml:space="preserve">
-    <value>Fold server panel into single-line-mode.</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportIsFold.Name" xml:space="preserve">
-    <value>chkDefImportIsFold</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportIsFold.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportIsFold.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportIsFold.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="chkDefImportInjectGlobalImport.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -379,7 +349,7 @@
     <value>NoControl</value>
   </data>
   <data name="chkDefImportInjectGlobalImport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>239, 45</value>
+    <value>172, 45</value>
   </data>
   <data name="chkDefImportInjectGlobalImport.Size" type="System.Drawing.Size, System.Drawing">
     <value>102, 16</value>
@@ -403,7 +373,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;chkDefImportInjectGlobalImport.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="chkDefImportBypassCnSite.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -433,7 +403,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;chkDefImportBypassCnSite.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="chkDefImportSsShareLink.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -466,7 +436,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;chkDefImportSsShareLink.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="tboxDefImportAddr.Location" type="System.Drawing.Point, System.Drawing">
     <value>239, 18</value>
@@ -496,7 +466,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;tboxDefImportAddr.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="cboxDefImportMode.Items" xml:space="preserve">
     <value>Config</value>
@@ -532,7 +502,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;cboxDefImportMode.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="label9.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -568,7 +538,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>5</value>
   </data>
   <data name="label10.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -601,7 +571,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 91</value>

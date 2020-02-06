@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Threading.Tasks;
 using VgcApis.Interfaces.CoreCtrlComponents;
+using VgcApis.Models.Datas;
 
 namespace V2RayGCon.Controllers
 {
@@ -13,15 +17,15 @@ namespace V2RayGCon.Controllers
             OnCoreStop,
             OnCoreStart;
 
-        VgcApis.Models.Datas.CoreInfo coreInfo;
-
+        CoreInfo coreInfo;
         CoreServerComponent.CoreStates states;
         CoreServerComponent.Logger logger;
         CoreServerComponent.Configer configer;
         CoreServerComponent.CoreCtrl coreCtrl;
 
-        public CoreServerCtrl(
-            VgcApis.Models.Datas.CoreInfo coreInfo)
+        bool isDisposed = false;
+
+        public CoreServerCtrl(CoreInfo coreInfo)
         {
             this.coreInfo = coreInfo;
         }
@@ -71,7 +75,88 @@ namespace V2RayGCon.Controllers
 
         #endregion
 
-        #region public method
+        #region private methods
+        void SetServerNameAndDescription(string name, string description)
+        {
+            var root = "v2raygcon";
+            var node = JObject.Parse("{v2raygcon:{alias:\"\",description:\"\"}}");
+            node[root]["alias"] = name;
+            node[root]["description"] = description;
+
+            try
+            {
+                var json = JObject.Parse(coreInfo.config);
+                json.Merge(node);
+                coreInfo.config = json.ToString(Formatting.None);
+                coreInfo.name = name;
+            }
+            catch { }
+        }
+
+        bool SetCustomInboundInfo(CoreServSettings cs)
+        {
+            var ci = coreInfo;
+            var restartCore = false;
+            if (cs.inboundMode != ci.customInbType)
+            {
+                ci.customInbType = Math.Abs(cs.inboundMode) % 3;
+                restartCore = true;
+            }
+
+            if (VgcApis.Misc.Utils.TryParseAddress(cs.inboundAddress, out var ip, out var port))
+            {
+                if (ci.inbIp != ip)
+                {
+                    ci.inbIp = ip;
+                    restartCore = true;
+                }
+                if (ci.inbPort != port)
+                {
+                    ci.inbPort = port;
+                    restartCore = true;
+                }
+            }
+
+            return restartCore;
+        }
+        #endregion
+
+        #region public methods
+        public void UpdateCoreSettings(CoreServSettings coreServSettings)
+        {
+            if (isDisposed)
+            {
+                return;
+            }
+
+            var cs = coreServSettings;
+            var ci = coreInfo;
+
+            SetServerNameAndDescription(cs.serverName, cs.serverDescription);
+            ci.customMark = cs.mark;
+            ci.isAutoRun = cs.isAutorun;
+            ci.isUntrack = cs.isUntrack;
+
+            bool restartCore = SetCustomInboundInfo(cs);
+            if (ci.isInjectImport != cs.isGlobalImport
+                || ci.isInjectSkipCNSite != cs.isBypassCnSite)
+            {
+                restartCore = true;
+            }
+
+            ci.isInjectImport = cs.isGlobalImport;
+            ci.isInjectSkipCNSite = cs.isBypassCnSite;
+
+            Task.Run(() =>
+            {
+                if (restartCore && GetCoreCtrl().IsCoreRunning())
+                {
+                    GetCoreCtrl().RestartCore();
+                }
+                GetConfiger().UpdateSummaryThen();
+            });
+        }
+
         public ICoreStates GetCoreStates() => states;
         public ICoreCtrl GetCoreCtrl() => coreCtrl;
         public ILogger GetLogger() => logger;
@@ -95,8 +180,11 @@ namespace V2RayGCon.Controllers
         #endregion
 
         #region protected methods
+
+
         protected override void CleanupBeforeChildrenDispose()
         {
+            isDisposed = true;
             InvokeEventOnCoreClosing();
             coreCtrl?.StopCore();
             coreCtrl?.ReleaseEvents();

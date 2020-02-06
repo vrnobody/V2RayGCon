@@ -711,4 +711,7 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="StoppingSpeedtest" xml:space="preserve">
     <value>正在停止速度测试...</value>
   </data>
+  <data name="InbModeConfigToolTip" xml:space="preserve">
+    <value>使用config中的inbound设定</value>
+  </data>
 </root>

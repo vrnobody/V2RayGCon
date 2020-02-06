@@ -13,5 +13,7 @@ namespace VgcApis.Interfaces
         CoreCtrlComponents.ICoreCtrl GetCoreCtrl();
         CoreCtrlComponents.ILogger GetLogger();
         CoreCtrlComponents.IConfiger GetConfiger();
+
+        void UpdateCoreSettings(Models.Datas.CoreServSettings coreServSettings);
     }
 }

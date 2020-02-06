@@ -38,8 +38,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             // view
             ToolStripMenuItem moveToTop,
             ToolStripMenuItem moveToBottom,
-            ToolStripMenuItem foldPanel,
-            ToolStripMenuItem expansePanel,
             ToolStripMenuItem sortBySpeed,
             ToolStripMenuItem sortByDate,
             ToolStripMenuItem sortBySummary)
@@ -50,7 +48,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             settings = Services.Settings.Instance;
 
             InitCtrlSorting(sortBySpeed, sortByDate, sortBySummary);
-            InitCtrlView(moveToTop, moveToBottom, foldPanel, expansePanel);
+            InitCtrlView(moveToTop, moveToBottom);
 
             InitCtrlCopyToClipboard(
                 copyAsV2cfgLinks,
@@ -218,20 +216,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private void InitCtrlView(
             ToolStripMenuItem moveToTop,
-            ToolStripMenuItem moveToBottom,
-            ToolStripMenuItem collapsePanel,
-            ToolStripMenuItem expansePanel)
+            ToolStripMenuItem moveToBottom)
         {
-            expansePanel.Click += ApplyActionOnSelectedServers(() =>
-            {
-                SetServerItemPanelCollapseLevel(0);
-            });
-
-            collapsePanel.Click += ApplyActionOnSelectedServers(() =>
-            {
-                SetServerItemPanelCollapseLevel(1);
-            });
-
             moveToTop.Click += ApplyActionOnSelectedServers(() =>
             {
                 SetServerItemsIndex(0);
@@ -256,20 +242,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             sortBySpeed.Click += ApplyActionOnSelectedServers(
                 () => servers.SortSelectedBySpeedTest());
-        }
-
-        void SetServerItemPanelCollapseLevel(int collapseLevel)
-        {
-            collapseLevel = Misc.Utils.Clamp(collapseLevel, 0, 3);
-            servers
-                .GetAllServersOrderByIndex()
-                .Where(s => s.GetCoreStates().IsSelected())
-                .Select(s =>
-                {
-                    s.GetCoreStates().SetFoldingState(collapseLevel);
-                    return true;
-                })
-                .ToList(); // force linq to execute
         }
 
         void RemoveAllControlsAndRefreshFlyPanel()

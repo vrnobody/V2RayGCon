@@ -117,162 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lbStatus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lbStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>232, 30</value>
-  </data>
-  <data name="lbStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 21</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lbStatus.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="lbStatus.Text" xml:space="preserve">
-    <value>2000ms</value>
-  </data>
-  <data name="lbStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="lbStatus.ToolTip" xml:space="preserve">
-    <value>Time of download speed-test-webpage.</value>
-  </data>
-  <data name="&gt;&gt;lbStatus.Name" xml:space="preserve">
-    <value>lbStatus</value>
-  </data>
-  <data name="&gt;&gt;lbStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbStatus.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbStatus.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="cboxInbound.Items" xml:space="preserve">
-    <value>Config</value>
-  </data>
-  <data name="cboxInbound.Items1" xml:space="preserve">
-    <value>HTTP</value>
-  </data>
-  <data name="cboxInbound.Items2" xml:space="preserve">
-    <value>SOCKS</value>
-  </data>
-  <data name="cboxInbound.Location" type="System.Drawing.Point, System.Drawing">
-    <value>41, 30</value>
-  </data>
-  <data name="cboxInbound.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 20</value>
-  </data>
-  <data name="cboxInbound.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="cboxInbound.ToolTip" xml:space="preserve">
-    <value>Overwrite inbound temporary.</value>
-  </data>
-  <data name="&gt;&gt;cboxInbound.Name" xml:space="preserve">
-    <value>cboxInbound</value>
-  </data>
-  <data name="&gt;&gt;cboxInbound.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboxInbound.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;cboxInbound.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="btnMenu.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAERJREFUOE+1zqENADAMA8HOlv3nCXVZSR/ErQxOigJeXpK+4NNxju6WAwNVNZIL
-        ODIBmktyAUcmQHNJLuC4Aq/wOae1ARVS/s9sUlFoAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="btnMenu.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="btnMenu.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnMenu.Location" type="System.Drawing.Point, System.Drawing">
-    <value>439, 4</value>
-  </data>
-  <data name="btnMenu.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
-  </data>
-  <data name="btnMenu.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="btnMenu.ToolTip" xml:space="preserve">
-    <value>Show menu.</value>
-  </data>
-  <data name="&gt;&gt;btnMenu.Name" xml:space="preserve">
-    <value>btnMenu</value>
-  </data>
-  <data name="&gt;&gt;btnMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnMenu.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnMenu.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="lbRunning.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 9pt, style=Bold</value>
-  </data>
-  <data name="lbRunning.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lbRunning.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 4</value>
-  </data>
-  <data name="lbRunning.Size" type="System.Drawing.Size, System.Drawing">
-    <value>26, 20</value>
-  </data>
-  <data name="lbRunning.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="lbRunning.Text" xml:space="preserve">
-    <value>OFF</value>
-  </data>
-  <data name="lbRunning.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="lbRunning.ToolTip" xml:space="preserve">
-    <value>Drag and drop to adjust order.</value>
-  </data>
-  <data name="&gt;&gt;lbRunning.Name" xml:space="preserve">
-    <value>lbRunning</value>
-  </data>
-  <data name="&gt;&gt;lbRunning.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbRunning.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbRunning.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="chkSelected.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="chkSelected.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkSelected.Location" type="System.Drawing.Point, System.Drawing">
-    <value>41, 7</value>
+    <value>50, 10</value>
   </data>
   <data name="chkSelected.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
@@ -293,37 +151,31 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chkSelected.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="btnStart.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
-        0IjIJ1eHT8xBVUrp4RFudUQihgKk8JJzFpxTrYQYG7DcwXMIQZxzEmOslliGA4TlIaUk3vvDEmIoqK5K
-        iKFgdFZCDAWjTwVn8HZPDIUb8CZibMDSL8/4/iPt0pLnX/mNq8P7lmYFTOJvU/foAJoAAAAASUVORK5C
-        YII=
-</value>
+    <value>10</value>
   </data>
   <data name="btnStart.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
+    <value>Zoom</value>
+  </data>
+  <data name="btnStart.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <data name="btnStart.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnStart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>379, 4</value>
-  </data>
-  <data name="btnStart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+    <value>393, 18</value>
   </data>
   <data name="btnStart.Size" type="System.Drawing.Size, System.Drawing">
     <value>20, 20</value>
   </data>
   <data name="btnStart.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>20</value>
+  </data>
+  <data name="btnStart.Text" xml:space="preserve">
+    <value>＞</value>
   </data>
   <data name="btnStart.ToolTip" xml:space="preserve">
-    <value>Stop other servers then start this server.</value>
+    <value>Start this server only.</value>
   </data>
   <data name="&gt;&gt;btnStart.Name" xml:space="preserve">
     <value>btnStart</value>
@@ -335,172 +187,28 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnStart.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="cboxMark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>379, 30</value>
-  </data>
-  <data name="cboxMark.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="cboxMark.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 20</value>
-  </data>
-  <data name="cboxMark.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="cboxMark.ToolTip" xml:space="preserve">
-    <value>Set mark.  (Any string that you like.)</value>
-  </data>
-  <data name="&gt;&gt;cboxMark.Name" xml:space="preserve">
-    <value>cboxMark</value>
-  </data>
-  <data name="&gt;&gt;cboxMark.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboxMark.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;cboxMark.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 34</value>
-  </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 12</value>
-  </data>
-  <data name="label4.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>Mode</value>
-  </data>
-  <data name="label4.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="label4.ToolTip" xml:space="preserve">
-    <value>Inbound protocol. Config means keep original inbound config.</value>
-  </data>
-  <data name="&gt;&gt;label4.Name" xml:space="preserve">
-    <value>label4</value>
-  </data>
-  <data name="&gt;&gt;label4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="btnIsCollapse.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAGtJREFUOE/dkEEKwDAIBH1S3+Dj/G4vkmsbg4IQJXorXVgIcXdIhO+Kma8xxi2W
-        s17XZGUiesQtiC8j4nIZEpVbkKxsNojGd82hBI7WeC7/ldLTvaI9lCFRuQXJymaDaHzXHK4lnazxfwjg
-        BetvEIaRVWFoAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="btnIsCollapse.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
-  </data>
-  <data name="btnIsCollapse.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 6.5pt</value>
-  </data>
-  <data name="btnIsCollapse.ImageIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="btnIsCollapse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnIsCollapse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>470, 4</value>
-  </data>
-  <data name="btnIsCollapse.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnIsCollapse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
-  </data>
-  <data name="btnIsCollapse.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="btnIsCollapse.ToolTip" xml:space="preserve">
-    <value>Collapse or expanse this panel.</value>
-  </data>
-  <data name="&gt;&gt;btnIsCollapse.Name" xml:space="preserve">
-    <value>btnIsCollapse</value>
-  </data>
-  <data name="&gt;&gt;btnIsCollapse.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnIsCollapse.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnIsCollapse.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="lbIsAutorun.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lbIsAutorun.Location" type="System.Drawing.Point, System.Drawing">
-    <value>463, 30</value>
-  </data>
-  <data name="lbIsAutorun.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="lbIsAutorun.Size" type="System.Drawing.Size, System.Drawing">
-    <value>34, 21</value>
-  </data>
-  <data name="lbIsAutorun.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="lbIsAutorun.Text" xml:space="preserve">
-    <value>ACIU</value>
-  </data>
-  <data name="lbIsAutorun.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="lbIsAutorun.ToolTip" xml:space="preserve">
-    <value>(A)utorun / Global (I)mport / Skip (C)N website / (U)ntrack</value>
-  </data>
-  <data name="&gt;&gt;lbIsAutorun.Name" xml:space="preserve">
-    <value>lbIsAutorun</value>
-  </data>
-  <data name="&gt;&gt;lbIsAutorun.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbIsAutorun.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbIsAutorun.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="btnStop.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
-        jpx4AAAAAElFTkSuQmCC
-</value>
+    <value>3</value>
   </data>
   <data name="btnStop.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
+    <value>Zoom</value>
+  </data>
+  <data name="btnStop.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="btnStop.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="btnStop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>419, 4</value>
+    <value>414, 18</value>
   </data>
   <data name="btnStop.Size" type="System.Drawing.Size, System.Drawing">
     <value>20, 20</value>
   </data>
   <data name="btnStop.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
+    <value>20</value>
+  </data>
+  <data name="btnStop.Text" xml:space="preserve">
+    <value>■</value>
   </data>
   <data name="btnStop.ToolTip" xml:space="preserve">
     <value>Stop this server.</value>
@@ -515,115 +223,247 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnStop.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>2</value>
   </data>
-  <data name="btnMultiboxing.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAMNJREFUOE+1kkEKwyAQRVN6lWwL3XQfeoIcwyN4HZEsPUQWWXeXE3QnBAzELqd/
-        gqFFhbaGfnjg6MwDEysi2kV28xdeixDv/SEs18T1lqwAzTW4gVOoj6ADcm14SyJAU70sy90YQ845i/rC
-        w8Mw0DiOFEtygmaaJi+EICklzfPMQ6S1prZtE0ki4KDhaq19xBKlVCLJCjhBQp8k/xGE4bIr4GDfR8Rh
-        /BvPoOv7PhnmJAIOS0DZQ9qC5rKnXEp283uoegLMLHdaNBg49QAAAABJRU5ErkJggg==
-</value>
+  <data name="btnMenu.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
   </data>
-  <data name="btnMultiboxing.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
+  <data name="btnMenu.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
-  <data name="btnMultiboxing.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="btnMenu.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 10.5pt</value>
+  </data>
+  <data name="btnMenu.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="btnMultiboxing.Location" type="System.Drawing.Point, System.Drawing">
-    <value>399, 4</value>
+  <data name="btnMenu.Location" type="System.Drawing.Point, System.Drawing">
+    <value>435, 18</value>
   </data>
-  <data name="btnMultiboxing.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="btnMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>20, 20</value>
   </data>
-  <data name="btnMultiboxing.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
+  <data name="btnMenu.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
   </data>
-  <data name="btnMultiboxing.ToolTip" xml:space="preserve">
-    <value>Start this server along with others.</value>
+  <data name="btnMenu.Text" xml:space="preserve">
+    <value>≡</value>
   </data>
-  <data name="&gt;&gt;btnMultiboxing.Name" xml:space="preserve">
-    <value>btnMultiboxing</value>
+  <data name="btnMenu.ToolTip" xml:space="preserve">
+    <value>Show menu.</value>
   </data>
-  <data name="&gt;&gt;btnMultiboxing.Type" xml:space="preserve">
+  <data name="&gt;&gt;btnMenu.Name" xml:space="preserve">
+    <value>btnMenu</value>
+  </data>
+  <data name="&gt;&gt;btnMenu.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btnMultiboxing.Parent" xml:space="preserve">
+  <data name="&gt;&gt;btnMenu.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;btnMultiboxing.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;btnMenu.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="lbLastModify.Location" type="System.Drawing.Point, System.Drawing">
-    <value>314, 30</value>
+  <data name="rlbIsRunning.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 9pt, style=Bold</value>
   </data>
-  <data name="lbLastModify.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 21</value>
+  <data name="rlbIsRunning.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="lbLastModify.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+  <data name="rlbIsRunning.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 8</value>
   </data>
-  <data name="lbLastModify.Text" xml:space="preserve">
-    <value>04月10日</value>
+  <data name="rlbIsRunning.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 18</value>
   </data>
-  <data name="lbLastModify.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="rlbIsRunning.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbIsRunning.Text" xml:space="preserve">
+    <value>OFF</value>
+  </data>
+  <data name="rlbIsRunning.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
   </data>
-  <data name="lbLastModify.ToolTip" xml:space="preserve">
-    <value>This server's date of birth XD.</value>
+  <data name="rlbIsRunning.ToolTip" xml:space="preserve">
+    <value>Click to turn server ON/OFF.</value>
   </data>
-  <data name="&gt;&gt;lbLastModify.Name" xml:space="preserve">
-    <value>lbLastModify</value>
+  <data name="&gt;&gt;rlbIsRunning.Name" xml:space="preserve">
+    <value>rlbIsRunning</value>
   </data>
-  <data name="&gt;&gt;lbLastModify.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;rlbIsRunning.Type" xml:space="preserve">
+    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.3, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;lbLastModify.Parent" xml:space="preserve">
+  <data name="&gt;&gt;rlbIsRunning.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;lbLastModify.ZOrder" xml:space="preserve">
-    <value>14</value>
+  <data name="&gt;&gt;rlbIsRunning.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
-  <data name="cboxInboundAddr.Items" xml:space="preserve">
-    <value>0.0.0.0:1080</value>
+  <data name="rlbSetting.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="cboxInboundAddr.Items1" xml:space="preserve">
-    <value>0.0.0.0:8080</value>
+  <data name="rlbSetting.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 33</value>
   </data>
-  <data name="cboxInboundAddr.Items2" xml:space="preserve">
-    <value>127.0.0.1:1080</value>
+  <data name="rlbSetting.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 18</value>
   </data>
-  <data name="cboxInboundAddr.Items3" xml:space="preserve">
-    <value>127.0.0.1:8080</value>
+  <data name="rlbSetting.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
   </data>
-  <data name="cboxInboundAddr.Location" type="System.Drawing.Point, System.Drawing">
-    <value>113, 30</value>
+  <data name="rlbSetting.Text" xml:space="preserve">
+    <value>ACIU</value>
   </data>
-  <data name="cboxInboundAddr.Size" type="System.Drawing.Size, System.Drawing">
-    <value>113, 20</value>
+  <data name="rlbSetting.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
-  <data name="cboxInboundAddr.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+  <data name="rlbSetting.ToolTip" xml:space="preserve">
+    <value>(A)utorun / Global (I)mport / Skip (C)N website / (U)ntrack</value>
   </data>
-  <data name="cboxInboundAddr.Text" xml:space="preserve">
-    <value>127.0.0.1:8080</value>
+  <data name="&gt;&gt;rlbSetting.Name" xml:space="preserve">
+    <value>rlbSetting</value>
   </data>
-  <data name="cboxInboundAddr.ToolTip" xml:space="preserve">
-    <value>Work on HTTP and SOCKS mode only.</value>
+  <data name="&gt;&gt;rlbSetting.Type" xml:space="preserve">
+    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.3, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;cboxInboundAddr.Name" xml:space="preserve">
-    <value>cboxInboundAddr</value>
-  </data>
-  <data name="&gt;&gt;cboxInboundAddr.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboxInboundAddr.Parent" xml:space="preserve">
+  <data name="&gt;&gt;rlbSetting.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;cboxInboundAddr.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;rlbSetting.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="rlbMark.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rlbMark.Location" type="System.Drawing.Point, System.Drawing">
+    <value>194, 33</value>
+  </data>
+  <data name="rlbMark.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 18</value>
+  </data>
+  <data name="rlbMark.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbMark.Text" xml:space="preserve">
+    <value>PackageV4Mark</value>
+  </data>
+  <data name="rlbMark.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="rlbMark.ToolTip" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="&gt;&gt;rlbMark.Name" xml:space="preserve">
+    <value>rlbMark</value>
+  </data>
+  <data name="&gt;&gt;rlbMark.Type" xml:space="preserve">
+    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.3, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rlbMark.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rlbMark.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="rlbLastModify.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rlbLastModify.Location" type="System.Drawing.Point, System.Drawing">
+    <value>127, 33</value>
+  </data>
+  <data name="rlbLastModify.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 18</value>
+  </data>
+  <data name="rlbLastModify.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbLastModify.Text" xml:space="preserve">
+    <value>02月30日</value>
+  </data>
+  <data name="rlbLastModify.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="rlbLastModify.ToolTip" xml:space="preserve">
+    <value>Last modified time.</value>
+  </data>
+  <data name="&gt;&gt;rlbLastModify.Name" xml:space="preserve">
+    <value>rlbLastModify</value>
+  </data>
+  <data name="&gt;&gt;rlbLastModify.Type" xml:space="preserve">
+    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.3, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rlbLastModify.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rlbLastModify.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="rlbSpeedtest.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rlbSpeedtest.Location" type="System.Drawing.Point, System.Drawing">
+    <value>290, 33</value>
+  </data>
+  <data name="rlbSpeedtest.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 18</value>
+  </data>
+  <data name="rlbSpeedtest.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbSpeedtest.Text" xml:space="preserve">
+    <value>正在测试</value>
+  </data>
+  <data name="rlbSpeedtest.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="rlbSpeedtest.ToolTip" xml:space="preserve">
+    <value>Speed test result.</value>
+  </data>
+  <data name="&gt;&gt;rlbSpeedtest.Name" xml:space="preserve">
+    <value>rlbSpeedtest</value>
+  </data>
+  <data name="&gt;&gt;rlbSpeedtest.Type" xml:space="preserve">
+    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.3, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rlbSpeedtest.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rlbSpeedtest.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="rlbInboundMode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rlbInboundMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 33</value>
+  </data>
+  <data name="rlbInboundMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 18</value>
+  </data>
+  <data name="rlbInboundMode.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbInboundMode.Text" xml:space="preserve">
+    <value>S65535</value>
+  </data>
+  <data name="rlbInboundMode.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="rlbInboundMode.ToolTip" xml:space="preserve">
+    <value>Inbound information.</value>
+  </data>
+  <data name="&gt;&gt;rlbInboundMode.Name" xml:space="preserve">
+    <value>rlbInboundMode</value>
+  </data>
+  <data name="&gt;&gt;rlbInboundMode.Type" xml:space="preserve">
+    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.3, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rlbInboundMode.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rlbInboundMode.ZOrder" xml:space="preserve">
+    <value>9</value>
   </data>
   <metadata name="ctxMenuStripMore.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>119, 18</value>
@@ -685,51 +525,6 @@
   <data name="toolStripMenuItem6.Text" xml:space="preserve">
     <value>Move</value>
   </data>
-  <data name="autorunToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 22</value>
-  </data>
-  <data name="autorunToolStripMenuItem.Text" xml:space="preserve">
-    <value>Autorun</value>
-  </data>
-  <data name="autorunToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Start this server along with this software.</value>
-  </data>
-  <data name="globalImportToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 22</value>
-  </data>
-  <data name="globalImportToolStripMenuItem.Text" xml:space="preserve">
-    <value>Global import</value>
-  </data>
-  <data name="globalImportToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Inject global import when this server start.</value>
-  </data>
-  <data name="skipCNWebsiteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 22</value>
-  </data>
-  <data name="skipCNWebsiteToolStripMenuItem.Text" xml:space="preserve">
-    <value>Skip CN website</value>
-  </data>
-  <data name="skipCNWebsiteToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Do not proxy CN website. For beginners only. Advanced users please edit section routing.</value>
-  </data>
-  <data name="untrackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 22</value>
-  </data>
-  <data name="untrackToolStripMenuItem.Text" xml:space="preserve">
-    <value>Untrack</value>
-  </data>
-  <data name="untrackToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Do not track this server.</value>
-  </data>
-  <data name="toolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
-  </data>
-  <data name="toolStripMenuItem4.Text" xml:space="preserve">
-    <value>Setting</value>
-  </data>
-  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 6</value>
-  </data>
   <data name="vToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>138, 22</value>
   </data>
@@ -762,6 +557,18 @@
   </data>
   <data name="copyToolStripMenuItem.Text" xml:space="preserve">
     <value>Copy</value>
+  </data>
+  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 6</value>
+  </data>
+  <data name="showSettingWindowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="showSettingWindowToolStripMenuItem.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="showSettingWindowToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Show settings window.</value>
   </data>
   <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 22</value>
@@ -815,7 +622,7 @@
     <value>宋体, 9pt</value>
   </data>
   <data name="rtboxServerTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>61, 7</value>
+    <value>70, 10</value>
   </data>
   <data name="rtboxServerTitle.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -827,7 +634,7 @@
     <value>None</value>
   </data>
   <data name="rtboxServerTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>313, 14</value>
+    <value>309, 14</value>
   </data>
   <data name="rtboxServerTitle.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
@@ -848,7 +655,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;rtboxServerTitle.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>11</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -857,7 +664,7 @@
     <value>6, 12</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>502, 58</value>
+    <value>476, 60</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value>Drag and drop to adjust order.</value>
@@ -910,42 +717,6 @@
   <data name="&gt;&gt;moveToBottomToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripMenuItem4.Name" xml:space="preserve">
-    <value>toolStripMenuItem4</value>
-  </data>
-  <data name="&gt;&gt;toolStripMenuItem4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;autorunToolStripMenuItem.Name" xml:space="preserve">
-    <value>autorunToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;autorunToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;globalImportToolStripMenuItem.Name" xml:space="preserve">
-    <value>globalImportToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;globalImportToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;skipCNWebsiteToolStripMenuItem.Name" xml:space="preserve">
-    <value>skipCNWebsiteToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;skipCNWebsiteToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;untrackToolStripMenuItem.Name" xml:space="preserve">
-    <value>untrackToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;untrackToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripMenuItem1.Name" xml:space="preserve">
-    <value>toolStripMenuItem1</value>
-  </data>
-  <data name="&gt;&gt;toolStripMenuItem1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;copyToolStripMenuItem.Name" xml:space="preserve">
     <value>copyToolStripMenuItem</value>
   </data>
@@ -968,6 +739,18 @@
     <value>v2cfgToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;v2cfgToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItem1.Name" xml:space="preserve">
+    <value>toolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;showSettingWindowToolStripMenuItem.Name" xml:space="preserve">
+    <value>showSettingWindowToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;showSettingWindowToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">

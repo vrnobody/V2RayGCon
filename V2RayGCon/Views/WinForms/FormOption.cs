@@ -89,7 +89,6 @@ namespace V2RayGCon.Views.WinForms
                     cboxDefImportMode,
                     tboxDefImportAddr,
                     chkDefImportSsShareLink,
-                    chkDefImportIsFold,
                     chkDefImportBypassCnSite,
                     chkDefImportInjectGlobalImport,
 

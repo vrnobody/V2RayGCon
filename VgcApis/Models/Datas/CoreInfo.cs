@@ -17,7 +17,7 @@
 
         public string name, summary, inbIp, customMark, uid;
 
-        public int customInbType, inbPort, foldingLevel;
+        public int customInbType, inbPort;
 
         public double index;
 
@@ -35,8 +35,6 @@
 
             isAutoRun = false;
             isInjectImport = false;
-
-            foldingLevel = 0;
 
             customMark = string.Empty;
 

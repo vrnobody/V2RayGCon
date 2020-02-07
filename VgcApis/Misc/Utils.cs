@@ -130,6 +130,102 @@ namespace VgcApis.Misc
         #endregion
 
         #region Json
+        public static Func<string, string, string> GetStringByPrefixAndKeyHelper(JObject json)
+        {
+            var o = json;
+            return (prefix, key) =>
+            {
+                return GetValue<string>(o, $"{prefix}.{key}");
+            };
+        }
+
+        public static Func<string, string> GetStringByKeyHelper(JObject json)
+        {
+            var o = json;
+            return (key) =>
+            {
+                return GetValue<string>(o, $"{key}");
+            };
+        }
+
+        public static T GetValue<T>(JToken json, string prefix, string key)
+        {
+            return GetValue<T>(json, $"{prefix}.{key}");
+        }
+
+        /// <summary>
+        /// return null if not exist.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="json"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static T GetValue<T>(JToken json, string path)
+        {
+            var key = GetKey(json, path);
+
+            var def = default(T) == null && typeof(T) == typeof(string) ?
+                (T)(object)string.Empty :
+                default;
+
+            if (key == null)
+            {
+                return def;
+            }
+            try
+            {
+                return key.Value<T>();
+            }
+            catch { }
+            return def;
+        }
+
+        /// <summary>
+        /// return null if path is null or path not exists.
+        /// </summary>
+        /// <param name="json"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static JToken GetKey(JToken json, string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                return null;
+            }
+
+
+            var curPos = json;
+            var keys = path.Split('.');
+
+            int depth;
+            for (depth = 0; depth < keys.Length; depth++)
+            {
+                if (curPos == null || !curPos.HasValues)
+                {
+                    break;
+                }
+
+                try
+                {
+                    if (int.TryParse(keys[depth], out int n))
+                    {
+                        curPos = curPos[n];
+                    }
+                    else
+                    {
+                        curPos = curPos[keys[depth]];
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            return depth < keys.Length ? null : curPos;
+
+        }
+
         public static bool ClumsyWriter(string content, string mainFilename, string bakFilename)
         {
             try
@@ -582,6 +678,18 @@ namespace VgcApis.Misc
         #endregion
 
         #region numbers
+        public static bool TryParseEnum<TEnum>(int value, out TEnum outEnum)
+            where TEnum : struct
+        {
+            outEnum = (TEnum)(object)value;
+            if (Enum.IsDefined(typeof(TEnum), value))
+            {
+
+                return true;
+            }
+            return false;
+        }
+
         public static int Str2Int(string value)
         {
             if (float.TryParse(value, out float f))

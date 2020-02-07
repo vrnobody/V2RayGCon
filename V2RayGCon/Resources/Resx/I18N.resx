@@ -720,4 +720,7 @@ No, abort.</value>
   <data name="StoppingSpeedtest" xml:space="preserve">
     <value>Stopping speed test.</value>
   </data>
+  <data name="InbModeConfigToolTip" xml:space="preserve">
+    <value>Use inbound settings in config.</value>
+  </data>
 </root>

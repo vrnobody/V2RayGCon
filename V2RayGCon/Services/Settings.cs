@@ -106,16 +106,6 @@ namespace V2RayGCon.Services
             }
         }
 
-        public bool CustomDefImportIsFold
-        {
-            get => userSettings.ImportOptions.IsFold;
-            set
-            {
-                userSettings.ImportOptions.IsFold = value;
-                LazySaveUserSettings();
-            }
-        }
-
         public bool CustomDefImportSsShareLink
         {
             get => userSettings.ImportOptions.IsImportSsShareLink;

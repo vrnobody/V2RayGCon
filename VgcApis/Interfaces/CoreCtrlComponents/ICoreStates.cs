@@ -8,7 +8,6 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
 
         bool GetterInfoForSearch(Func<string[], bool> filter);
 
-        int GetFoldingState();
         string GetInboundAddr();
         string GetInboundIp();
         int GetInboundPort();
@@ -30,7 +29,6 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         bool IsInjectSkipCnSite();
         bool IsInjectGlobalImport();
 
-        void SetFoldingState(int state);
         void SetIndex(double index);
         void SetIndexQuiet(double index);
         void SetIsSelected(bool selected);
@@ -39,10 +37,10 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         void SetLastModifiedUtcTicks(long utcTicks);
         void SetMark(string mark);
 
-        void ToggleIsAutoRun();
-        void ToggleIsUntrack();
-        void ToggleIsInjectImport();
-        void ToggleIsInjectSkipCnSite();
+        void SetIsAutoRun(bool isAutoRun);
+        void SetIsUntrack(bool isUntrack);
+        void SetIsInjectImport(bool isInjectImport);
+        void SetIsInjectSkipCnSite(bool isInjectSkipCnSite);
 
     }
 }

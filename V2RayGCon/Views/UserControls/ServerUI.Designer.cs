@@ -30,21 +30,17 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServerUI));
-            this.lbStatus = new System.Windows.Forms.Label();
-            this.cboxInbound = new System.Windows.Forms.ComboBox();
-            this.btnMenu = new System.Windows.Forms.Button();
-            this.lbRunning = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.chkSelected = new System.Windows.Forms.CheckBox();
             this.btnStart = new System.Windows.Forms.Button();
-            this.cboxMark = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.btnIsCollapse = new System.Windows.Forms.Button();
-            this.lbIsAutorun = new System.Windows.Forms.Label();
             this.btnStop = new System.Windows.Forms.Button();
-            this.btnMultiboxing = new System.Windows.Forms.Button();
-            this.lbLastModify = new System.Windows.Forms.Label();
-            this.cboxInboundAddr = new System.Windows.Forms.ComboBox();
+            this.btnMenu = new System.Windows.Forms.Button();
+            this.rlbIsRunning = new V2RayGCon.Views.UserControls.RoundLabel();
+            this.rlbSetting = new V2RayGCon.Views.UserControls.RoundLabel();
+            this.rlbMark = new V2RayGCon.Views.UserControls.RoundLabel();
+            this.rlbLastModify = new V2RayGCon.Views.UserControls.RoundLabel();
+            this.rlbSpeedtest = new V2RayGCon.Views.UserControls.RoundLabel();
+            this.rlbInboundMode = new V2RayGCon.Views.UserControls.RoundLabel();
             this.ctxMenuStripMore = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,16 +49,12 @@
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToBottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.autorunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.globalImportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.skipCNWebsiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.untrackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vmessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.v2cfgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.showSettingWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,50 +64,6 @@
             this.rtboxServerTitle = new System.Windows.Forms.RichTextBox();
             this.ctxMenuStripMore.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lbStatus
-            // 
-            this.lbStatus.AutoEllipsis = true;
-            this.lbStatus.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            this.lbStatus.ForeColor = System.Drawing.SystemColors.ControlText;
-            resources.ApplyResources(this.lbStatus, "lbStatus");
-            this.lbStatus.Name = "lbStatus";
-            this.toolTip1.SetToolTip(this.lbStatus, resources.GetString("lbStatus.ToolTip"));
-            this.lbStatus.UseCompatibleTextRendering = true;
-            this.lbStatus.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbStatus_MouseDown);
-            // 
-            // cboxInbound
-            // 
-            this.cboxInbound.Cursor = System.Windows.Forms.Cursors.Default;
-            this.cboxInbound.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxInbound.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cboxInbound.FormattingEnabled = true;
-            this.cboxInbound.Items.AddRange(new object[] {
-            resources.GetString("cboxInbound.Items"),
-            resources.GetString("cboxInbound.Items1"),
-            resources.GetString("cboxInbound.Items2")});
-            resources.ApplyResources(this.cboxInbound, "cboxInbound");
-            this.cboxInbound.Name = "cboxInbound";
-            this.toolTip1.SetToolTip(this.cboxInbound, resources.GetString("cboxInbound.ToolTip"));
-            this.cboxInbound.SelectedIndexChanged += new System.EventHandler(this.cboxInbound_SelectedIndexChanged);
-            // 
-            // btnMenu
-            // 
-            resources.ApplyResources(this.btnMenu, "btnMenu");
-            this.btnMenu.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnMenu.Name = "btnMenu";
-            this.toolTip1.SetToolTip(this.btnMenu, resources.GetString("btnMenu.ToolTip"));
-            this.btnMenu.UseVisualStyleBackColor = true;
-            this.btnMenu.Click += new System.EventHandler(this.btnAction_Click);
-            // 
-            // lbRunning
-            // 
-            this.lbRunning.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            resources.ApplyResources(this.lbRunning, "lbRunning");
-            this.lbRunning.ForeColor = System.Drawing.Color.Green;
-            this.lbRunning.Name = "lbRunning";
-            this.toolTip1.SetToolTip(this.lbRunning, resources.GetString("lbRunning.ToolTip"));
-            this.lbRunning.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbRunning_MouseDown);
             // 
             // chkSelected
             // 
@@ -130,88 +78,102 @@
             // 
             resources.ApplyResources(this.btnStart, "btnStart");
             this.btnStart.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnStart.ForeColor = System.Drawing.Color.DimGray;
             this.btnStart.Name = "btnStart";
             this.toolTip1.SetToolTip(this.btnStart, resources.GetString("btnStart.ToolTip"));
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // cboxMark
-            // 
-            this.cboxMark.Cursor = System.Windows.Forms.Cursors.Default;
-            this.cboxMark.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cboxMark.FormattingEnabled = true;
-            resources.ApplyResources(this.cboxMark, "cboxMark");
-            this.cboxMark.Name = "cboxMark";
-            this.toolTip1.SetToolTip(this.cboxMark, resources.GetString("cboxMark.ToolTip"));
-            this.cboxMark.DropDown += new System.EventHandler(this.cboxMark_DropDown);
-            this.cboxMark.TextChanged += new System.EventHandler(this.cboxMark_TextChanged);
-            // 
-            // label4
-            // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label4.Name = "label4";
-            this.toolTip1.SetToolTip(this.label4, resources.GetString("label4.ToolTip"));
-            this.label4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label4_MouseDown);
-            // 
-            // btnIsCollapse
-            // 
-            resources.ApplyResources(this.btnIsCollapse, "btnIsCollapse");
-            this.btnIsCollapse.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnIsCollapse.Name = "btnIsCollapse";
-            this.toolTip1.SetToolTip(this.btnIsCollapse, resources.GetString("btnIsCollapse.ToolTip"));
-            this.btnIsCollapse.UseVisualStyleBackColor = true;
-            this.btnIsCollapse.Click += new System.EventHandler(this.btnIsCollapse_Click);
-            // 
-            // lbIsAutorun
-            // 
-            this.lbIsAutorun.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            this.lbIsAutorun.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            resources.ApplyResources(this.lbIsAutorun, "lbIsAutorun");
-            this.lbIsAutorun.Name = "lbIsAutorun";
-            this.toolTip1.SetToolTip(this.lbIsAutorun, resources.GetString("lbIsAutorun.ToolTip"));
-            this.lbIsAutorun.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbIsAutorun_MouseDown);
-            // 
             // btnStop
             // 
             resources.ApplyResources(this.btnStop, "btnStop");
             this.btnStop.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnStop.ForeColor = System.Drawing.Color.Maroon;
             this.btnStop.Name = "btnStop";
             this.toolTip1.SetToolTip(this.btnStop, resources.GetString("btnStop.ToolTip"));
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
-            // btnMultiboxing
+            // btnMenu
             // 
-            resources.ApplyResources(this.btnMultiboxing, "btnMultiboxing");
-            this.btnMultiboxing.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnMultiboxing.Name = "btnMultiboxing";
-            this.toolTip1.SetToolTip(this.btnMultiboxing, resources.GetString("btnMultiboxing.ToolTip"));
-            this.btnMultiboxing.UseVisualStyleBackColor = true;
-            this.btnMultiboxing.Click += new System.EventHandler(this.btnMultiboxing_Click);
+            resources.ApplyResources(this.btnMenu, "btnMenu");
+            this.btnMenu.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnMenu.ForeColor = System.Drawing.Color.DimGray;
+            this.btnMenu.Name = "btnMenu";
+            this.toolTip1.SetToolTip(this.btnMenu, resources.GetString("btnMenu.ToolTip"));
+            this.btnMenu.UseVisualStyleBackColor = true;
+            this.btnMenu.Click += new System.EventHandler(this.btnShowPopupMenu_Click);
             // 
-            // lbLastModify
+            // rlbIsRunning
             // 
-            this.lbLastModify.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            resources.ApplyResources(this.lbLastModify, "lbLastModify");
-            this.lbLastModify.Name = "lbLastModify";
-            this.toolTip1.SetToolTip(this.lbLastModify, resources.GetString("lbLastModify.ToolTip"));
-            this.lbLastModify.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LbAddTimestamp_MouseDown);
+            this.rlbIsRunning._BackColor = System.Drawing.Color.DarkOrange;
+            this.rlbIsRunning.AutoEllipsis = true;
+            this.rlbIsRunning.Cursor = System.Windows.Forms.Cursors.Default;
+            resources.ApplyResources(this.rlbIsRunning, "rlbIsRunning");
+            this.rlbIsRunning.ForeColor = System.Drawing.SystemColors.Control;
+            this.rlbIsRunning.Name = "rlbIsRunning";
+            this.toolTip1.SetToolTip(this.rlbIsRunning, resources.GetString("rlbIsRunning.ToolTip"));
+            this.rlbIsRunning.UseCompatibleTextRendering = true;
+            this.rlbIsRunning.Click += new System.EventHandler(this.rlbIsRunning_Click);
             // 
-            // cboxInboundAddr
+            // rlbSetting
             // 
-            this.cboxInboundAddr.Cursor = System.Windows.Forms.Cursors.Default;
-            this.cboxInboundAddr.FormattingEnabled = true;
-            this.cboxInboundAddr.Items.AddRange(new object[] {
-            resources.GetString("cboxInboundAddr.Items"),
-            resources.GetString("cboxInboundAddr.Items1"),
-            resources.GetString("cboxInboundAddr.Items2"),
-            resources.GetString("cboxInboundAddr.Items3")});
-            resources.ApplyResources(this.cboxInboundAddr, "cboxInboundAddr");
-            this.cboxInboundAddr.Name = "cboxInboundAddr";
-            this.toolTip1.SetToolTip(this.cboxInboundAddr, resources.GetString("cboxInboundAddr.ToolTip"));
-            this.cboxInboundAddr.TextChanged += new System.EventHandler(this.cboxInboundAddr_TextChanged);
+            this.rlbSetting._BackColor = System.Drawing.Color.Silver;
+            this.rlbSetting.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbSetting, "rlbSetting");
+            this.rlbSetting.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbSetting.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbSetting.Name = "rlbSetting";
+            this.toolTip1.SetToolTip(this.rlbSetting, resources.GetString("rlbSetting.ToolTip"));
+            this.rlbSetting.UseCompatibleTextRendering = true;
+            this.rlbSetting.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbSetting_MouseDown);
+            // 
+            // rlbMark
+            // 
+            this.rlbMark._BackColor = System.Drawing.Color.Chartreuse;
+            this.rlbMark.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbMark, "rlbMark");
+            this.rlbMark.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbMark.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbMark.Name = "rlbMark";
+            this.toolTip1.SetToolTip(this.rlbMark, resources.GetString("rlbMark.ToolTip"));
+            this.rlbMark.UseCompatibleTextRendering = true;
+            this.rlbMark.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbMark_MouseDown);
+            // 
+            // rlbLastModify
+            // 
+            this.rlbLastModify._BackColor = System.Drawing.Color.LightSalmon;
+            this.rlbLastModify.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbLastModify, "rlbLastModify");
+            this.rlbLastModify.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbLastModify.Name = "rlbLastModify";
+            this.toolTip1.SetToolTip(this.rlbLastModify, resources.GetString("rlbLastModify.ToolTip"));
+            this.rlbLastModify.UseCompatibleTextRendering = true;
+            this.rlbLastModify.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbLastModify_MouseDown);
+            // 
+            // rlbSpeedtest
+            // 
+            this.rlbSpeedtest._BackColor = System.Drawing.Color.Khaki;
+            this.rlbSpeedtest.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbSpeedtest, "rlbSpeedtest");
+            this.rlbSpeedtest.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbSpeedtest.ForeColor = System.Drawing.Color.Red;
+            this.rlbSpeedtest.Name = "rlbSpeedtest";
+            this.toolTip1.SetToolTip(this.rlbSpeedtest, resources.GetString("rlbSpeedtest.ToolTip"));
+            this.rlbSpeedtest.UseCompatibleTextRendering = true;
+            this.rlbSpeedtest.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbSpeedtest_MouseDown);
+            // 
+            // rlbInboundMode
+            // 
+            this.rlbInboundMode._BackColor = System.Drawing.Color.Turquoise;
+            this.rlbInboundMode.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbInboundMode, "rlbInboundMode");
+            this.rlbInboundMode.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbInboundMode.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbInboundMode.Name = "rlbInboundMode";
+            this.toolTip1.SetToolTip(this.rlbInboundMode, resources.GetString("rlbInboundMode.ToolTip"));
+            this.rlbInboundMode.UseCompatibleTextRendering = true;
+            this.rlbInboundMode.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbInboundMode_MouseDown);
             // 
             // ctxMenuStripMore
             // 
@@ -219,9 +181,9 @@
             this.ctxMenuStripMore.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem3,
             this.toolStripMenuItem6,
-            this.toolStripMenuItem4,
-            this.toolStripMenuItem1,
             this.copyToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.showSettingWindowToolStripMenuItem,
             this.editToolStripMenuItem,
             this.debugToolStripMenuItem,
             this.deleteToolStripMenuItem,
@@ -278,45 +240,6 @@
             resources.ApplyResources(this.moveToBottomToolStripMenuItem, "moveToBottomToolStripMenuItem");
             this.moveToBottomToolStripMenuItem.Click += new System.EventHandler(this.moveToBottomToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.autorunToolStripMenuItem,
-            this.globalImportToolStripMenuItem,
-            this.skipCNWebsiteToolStripMenuItem,
-            this.untrackToolStripMenuItem});
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            resources.ApplyResources(this.toolStripMenuItem4, "toolStripMenuItem4");
-            // 
-            // autorunToolStripMenuItem
-            // 
-            this.autorunToolStripMenuItem.Name = "autorunToolStripMenuItem";
-            resources.ApplyResources(this.autorunToolStripMenuItem, "autorunToolStripMenuItem");
-            this.autorunToolStripMenuItem.Click += new System.EventHandler(this.autorunToolStripMenuItem_Click);
-            // 
-            // globalImportToolStripMenuItem
-            // 
-            this.globalImportToolStripMenuItem.Name = "globalImportToolStripMenuItem";
-            resources.ApplyResources(this.globalImportToolStripMenuItem, "globalImportToolStripMenuItem");
-            this.globalImportToolStripMenuItem.Click += new System.EventHandler(this.globalImportToolStripMenuItem_Click);
-            // 
-            // skipCNWebsiteToolStripMenuItem
-            // 
-            this.skipCNWebsiteToolStripMenuItem.Name = "skipCNWebsiteToolStripMenuItem";
-            resources.ApplyResources(this.skipCNWebsiteToolStripMenuItem, "skipCNWebsiteToolStripMenuItem");
-            this.skipCNWebsiteToolStripMenuItem.Click += new System.EventHandler(this.skipCNWebsiteToolStripMenuItem_Click);
-            // 
-            // untrackToolStripMenuItem
-            // 
-            this.untrackToolStripMenuItem.Name = "untrackToolStripMenuItem";
-            resources.ApplyResources(this.untrackToolStripMenuItem, "untrackToolStripMenuItem");
-            this.untrackToolStripMenuItem.Click += new System.EventHandler(this.untrackToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
-            // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -343,6 +266,17 @@
             this.v2cfgToolStripMenuItem.Name = "v2cfgToolStripMenuItem";
             resources.ApplyResources(this.v2cfgToolStripMenuItem, "v2cfgToolStripMenuItem");
             this.v2cfgToolStripMenuItem.Click += new System.EventHandler(this.v2cfgToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
+            // 
+            // showSettingWindowToolStripMenuItem
+            // 
+            this.showSettingWindowToolStripMenuItem.Name = "showSettingWindowToolStripMenuItem";
+            resources.ApplyResources(this.showSettingWindowToolStripMenuItem, "showSettingWindowToolStripMenuItem");
+            this.showSettingWindowToolStripMenuItem.Click += new System.EventHandler(this.showSettingsWindowToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -395,21 +329,17 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.cboxInboundAddr);
-            this.Controls.Add(this.cboxMark);
-            this.Controls.Add(this.btnMultiboxing);
-            this.Controls.Add(this.btnStop);
-            this.Controls.Add(this.btnIsCollapse);
-            this.Controls.Add(this.btnStart);
-            this.Controls.Add(this.chkSelected);
             this.Controls.Add(this.btnMenu);
-            this.Controls.Add(this.cboxInbound);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.lbRunning);
+            this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.btnStart);
+            this.Controls.Add(this.rlbIsRunning);
+            this.Controls.Add(this.rlbSetting);
+            this.Controls.Add(this.rlbMark);
+            this.Controls.Add(this.rlbLastModify);
+            this.Controls.Add(this.rlbSpeedtest);
+            this.Controls.Add(this.rlbInboundMode);
+            this.Controls.Add(this.chkSelected);
             this.Controls.Add(this.rtboxServerTitle);
-            this.Controls.Add(this.lbStatus);
-            this.Controls.Add(this.lbLastModify);
-            this.Controls.Add(this.lbIsAutorun);
             this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Name = "ServerUI";
             this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
@@ -422,13 +352,8 @@
         }
 
         #endregion
-        private System.Windows.Forms.Label lbStatus;
-        private System.Windows.Forms.ComboBox cboxInbound;
-        private System.Windows.Forms.Button btnMenu;
-        private System.Windows.Forms.Label lbRunning;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox chkSelected;
-        private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.ContextMenuStrip ctxMenuStripMore;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
@@ -438,29 +363,26 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem logOfThisServerToolStripMenuItem;
-        private System.Windows.Forms.ComboBox cboxMark;
-        private System.Windows.Forms.Button btnIsCollapse;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label lbIsAutorun;
-        private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.Button btnMultiboxing;
         private System.Windows.Forms.RichTextBox rtboxServerTitle;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem multiboxingToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
-        private System.Windows.Forms.ToolStripMenuItem autorunToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem globalImportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem skipCNWebsiteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem untrackToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showSettingWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem runSpeedTestToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
         private System.Windows.Forms.ToolStripMenuItem moveToTopToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveToBottomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vToolStripMenuItem;
-        private System.Windows.Forms.Label lbLastModify;
-        private System.Windows.Forms.ComboBox cboxInboundAddr;
+        private RoundLabel rlbInboundMode;
+        private RoundLabel rlbSpeedtest;
+        private RoundLabel rlbLastModify;
+        private RoundLabel rlbMark;
+        private RoundLabel rlbSetting;
+        private RoundLabel rlbIsRunning;
+        private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Button btnMenu;
     }
 }

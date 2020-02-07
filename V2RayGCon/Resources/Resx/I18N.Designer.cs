@@ -1019,6 +1019,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Use inbound settings in config. 的本地化字符串。
+        /// </summary>
+        internal static string InbModeConfigToolTip {
+            get {
+                return ResourceManager.GetString("InbModeConfigToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Inject packageing imports fail, ignore imports. 的本地化字符串。
         /// </summary>
         internal static string InjectPackagingImportsFail {

@@ -225,6 +225,9 @@
     <Compile Include="Views\UserControls\PluginInfoUI.Designer.cs">
       <DependentUpon>PluginInfoUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\RoundLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Views\UserControls\ServerUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -292,6 +295,12 @@
     </Compile>
     <Compile Include="Views\WinForms\FormBatchModifyServerSetting.Designer.cs">
       <DependentUpon>FormBatchModifyServerSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForms\FormModifyServerSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormModifyServerSettings.Designer.cs">
+      <DependentUpon>FormModifyServerSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\WinForms\FormSingleServerLog.cs">
       <SubType>Form</SubType>
@@ -411,6 +420,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormImportLinksResult.zh-CN.resx">
       <DependentUpon>FormImportLinksResult.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormModifyServerSettings.resx">
+      <DependentUpon>FormModifyServerSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormModifyServerSettings.zh-CN.resx">
+      <DependentUpon>FormModifyServerSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormSingleServerLog.resx">
       <DependentUpon>FormSingleServerLog.cs</DependentUpon>

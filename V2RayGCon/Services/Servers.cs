@@ -677,7 +677,6 @@ namespace V2RayGCon.Services
 
             var coreInfo = new VgcApis.Models.Datas.CoreInfo
             {
-                foldingLevel = setting.CustomDefImportIsFold ? 1 : 0,
                 isInjectImport = setting.CustomDefImportGlobalImport,
                 isInjectSkipCNSite = setting.CustomDefImportBypassCnSite,
                 customInbType = setting.CustomDefImportMode,

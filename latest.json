@@ -1,10 +1,9 @@
 {
-  "version": "1.2.8.2",
-  "md5": "1456FCE56B00DBDCFA4FD0DA1781118B",
+  "version": "1.2.8.4",
+  "md5": "6959D6D77663BDF9EF16D1DA5011BDCD",
   "warnings": [
   ],
   "changes": [
-      "添加停止测速功能",
-      "修复主窗口的失焦问题"
+      "重新设计服务器面板"
   ]
 }

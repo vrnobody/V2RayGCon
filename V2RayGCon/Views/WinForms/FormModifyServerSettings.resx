@@ -123,7 +123,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>83, 12</value>
+    <value>35, 12</value>
   </data>
   <data name="&gt;&gt;tboxServerName.Name" xml:space="preserve">
     <value>tboxServerName</value>
@@ -137,14 +137,18 @@
   <data name="label6.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tboxDescription.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
   <data name="label7.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="&gt;&gt;label5.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label4.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>800, 286</value>
   </data>
   <data name="&gt;&gt;label7.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -153,7 +157,7 @@
     <value>$this</value>
   </data>
   <data name="tboxServerName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 12</value>
+    <value>83, 39</value>
   </data>
   <data name="tboxDescription.ToolTip" xml:space="preserve">
     <value />
@@ -166,6 +170,9 @@
   </data>
   <data name="&gt;&gt;btnSave.Name" xml:space="preserve">
     <value>btnSave</value>
+  </data>
+  <data name="&gt;&gt;tboxTitle.Name" xml:space="preserve">
+    <value>tboxTitle</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
     <value>Mark</value>
@@ -182,7 +189,6 @@
   <data name="&gt;&gt;label2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="cboxMark.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -190,7 +196,10 @@
     <value>chkAutoRun</value>
   </data>
   <data name="&gt;&gt;chkAutoRun.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;tboxTitle.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="chkAutoRun.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -205,10 +214,10 @@
     <value>Global import *</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>244, 247</value>
+    <value>314, 247</value>
   </data>
-  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 43</value>
+  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
+    <value>14</value>
   </data>
   <data name="label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -226,10 +235,10 @@
     <value>cboxMark</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>FormModifyServerSettings</value>
+    <value>Server settings</value>
   </data>
   <data name="chkAutoRun.Text" xml:space="preserve">
-    <value>Auto run</value>
+    <value>Autorun</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
     <value>* means server will restart</value>
@@ -237,11 +246,11 @@
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>17</value>
   </data>
-  <data name="tboxDescription.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="tboxDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>83, 66</value>
   </data>
   <data name="cboxInboundAddress.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 20</value>
+    <value>127, 20</value>
   </data>
   <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
@@ -252,8 +261,8 @@
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>167, 12</value>
   </data>
-  <data name="chkBypassCnSite.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 166</value>
+  <data name="label7.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;cboxMark.Parent" xml:space="preserve">
     <value>$this</value>
@@ -270,11 +279,14 @@
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>11, 12</value>
   </data>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>Inbound addr.</value>
+    <value>Title</value>
   </data>
   <data name="chkUntrack.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -286,16 +298,13 @@
     <value>*</value>
   </data>
   <data name="tboxServerName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 21</value>
+    <value>200, 21</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="tboxDescription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 39</value>
-  </data>
   <data name="cboxMark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 118</value>
+    <value>83, 119</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -304,28 +313,28 @@
     <value>Inject bypass cn sites routing setting when core starts.</value>
   </data>
   <data name="&gt;&gt;cboxInboundAddress.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="&gt;&gt;tboxTitle.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="cboxInboundMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 20</value>
+    <value>67, 20</value>
   </data>
   <data name="&gt;&gt;label5.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="cboxInboundAddress.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="btnSave.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>15</value>
   </data>
   <data name="tboxServerName.ToolTip" xml:space="preserve">
     <value />
@@ -349,19 +358,19 @@
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="chkAutoRun.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 144</value>
+    <value>83, 145</value>
   </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>221, 96</value>
+  <data name="label6.ToolTip" xml:space="preserve">
+    <value>Label for searching.</value>
   </data>
   <data name="cboxMark.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 20</value>
+    <value>200, 20</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 16</value>
+    <value>6, 43</value>
   </data>
   <data name="chkGlobalImport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 144</value>
+    <value>156, 145</value>
   </data>
   <data name="tboxServerName.Text" xml:space="preserve">
     <value>lovely</value>
@@ -375,8 +384,8 @@
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormModifyServerSettings</value>
   </data>
-  <data name="&gt;&gt;label4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tboxTitle.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;label10.Name" xml:space="preserve">
     <value>label10</value>
@@ -384,14 +393,17 @@
   <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
     <value>toolTip1</value>
   </data>
-  <data name="&gt;&gt;chkGlobalImport.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;tboxTitle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>12</value>
+  <data name="&gt;&gt;chkGlobalImport.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>260, 286</value>
+    <value>330, 286</value>
+  </data>
+  <data name="chkBypassCnSite.Location" type="System.Drawing.Point, System.Drawing">
+    <value>157, 167</value>
   </data>
   <data name="&gt;&gt;chkGlobalImport.Parent" xml:space="preserve">
     <value>$this</value>
@@ -400,28 +412,22 @@
     <value>9</value>
   </data>
   <data name="&gt;&gt;cboxMark.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="label4.ToolTip" xml:space="preserve">
-    <value>Server will restart!</value>
-  </data>
-  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>7</value>
   </data>
   <data name="chkBypassCnSite.Text" xml:space="preserve">
     <value>Bypass CN sites *</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 12</value>
+    <value>47, 12</value>
   </data>
   <data name="&gt;&gt;chkBypassCnSite.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
-  <data name="cboxInboundMode.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
   </data>
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>221, 70</value>
+    <value>291, 97</value>
   </data>
   <data name="&gt;&gt;btnSave.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -429,11 +435,11 @@
   <data name="&gt;&gt;label2.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
+  <data name="label5.ToolTip" xml:space="preserve">
+    <value>Server will restart!</value>
+  </data>
   <data name="&gt;&gt;cboxInboundMode.Parent" xml:space="preserve">
     <value>$this</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
   </data>
   <data name="chkAutoRun.ToolTip" xml:space="preserve">
     <value>Run this server when app start.</value>
@@ -447,9 +453,6 @@
   <data name="chkUntrack.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
   <data name="&gt;&gt;chkAutoRun.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
@@ -460,10 +463,7 @@
     <value>2</value>
   </data>
   <data name="&gt;&gt;chkUntrack.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;label4.Name" xml:space="preserve">
-    <value>label4</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;chkGlobalImport.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -471,26 +471,35 @@
   <data name="label7.Text" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="tboxTitle.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
   <data name="chkAutoRun.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 16</value>
+    <value>66, 16</value>
+  </data>
+  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="&gt;&gt;tboxDescription.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="btnSave.Text" xml:space="preserve">
     <value>Save</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 96</value>
+    <value>6, 16</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="label3.ToolTip" xml:space="preserve">
-    <value>Override inbound ip and port.</value>
+  <data name="label6.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tboxTitle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>83, 12</value>
   </data>
   <data name="label10.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -510,11 +519,8 @@
   <data name="cboxInboundAddress.Items1" xml:space="preserve">
     <value>0.0.0.0:8080</value>
   </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>*</value>
-  </data>
   <data name="&gt;&gt;tboxServerName.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="&gt;&gt;label7.Parent" xml:space="preserve">
     <value>$this</value>
@@ -524,6 +530,9 @@
   </data>
   <data name="&gt;&gt;label3.Name" xml:space="preserve">
     <value>label3</value>
+  </data>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value>修改Inbound地址及端口</value>
   </data>
   <data name="&gt;&gt;label6.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -541,22 +550,25 @@
     <value>$this</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
-    <value>Inbound mode</value>
+    <value>Inbound</value>
   </data>
   <data name="label2.ToolTip" xml:space="preserve">
-    <value>Override inbound protocol. Config means no override.</value>
+    <value>Override inbound settings. Config means no override.</value>
   </data>
   <data name="btnSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
   </data>
-  <data name="label5.ToolTip" xml:space="preserve">
-    <value>Server will restart!</value>
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 70</value>
   </data>
   <data name="cboxInboundMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 66</value>
+    <value>83, 93</value>
   </data>
   <data name="cboxInboundAddress.Text" xml:space="preserve">
     <value>127.0.0.1:12345</value>
+  </data>
+  <data name="tboxTitle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 21</value>
   </data>
   <data name="&gt;&gt;tboxDescription.Name" xml:space="preserve">
     <value>tboxDescription</value>
@@ -564,14 +576,11 @@
   <data name="&gt;&gt;tboxDescription.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label6.ToolTip" xml:space="preserve">
-    <value>Label for searching.</value>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>12</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>71, 12</value>
-  </data>
-  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>29, 12</value>
   </data>
   <data name="cboxMark.ToolTip" xml:space="preserve">
     <value />
@@ -585,11 +594,11 @@
   <data name="&gt;&gt;chkUntrack.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>122, 211</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>Server name</value>
+    <value>Name</value>
   </data>
   <data name="&gt;&gt;chkGlobalImport.Name" xml:space="preserve">
     <value>chkGlobalImport</value>
@@ -616,7 +625,7 @@
     <value />
   </data>
   <data name="tboxDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 21</value>
+    <value>200, 21</value>
   </data>
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
@@ -627,11 +636,8 @@
   <data name="cboxInboundAddress.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="label7.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 70</value>
+    <value>6, 97</value>
   </data>
   <data name="tboxServerName.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -643,7 +649,7 @@
     <value>8</value>
   </data>
   <data name="cboxInboundAddress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 92</value>
+    <value>156, 93</value>
   </data>
   <data name="cboxInboundMode.Items2" xml:space="preserve">
     <value>SOCKS</value>
@@ -655,19 +661,16 @@
     <value>chkUntrack</value>
   </data>
   <data name="&gt;&gt;cboxInboundMode.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>16</value>
   </data>
   <data name="tboxServerName.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 211</value>
+  <data name="btnSave.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="tboxDescription.Text" xml:space="preserve">
     <value>a lovely server</value>
@@ -681,35 +684,26 @@
   <data name="&gt;&gt;chkUntrack.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>11, 12</value>
-  </data>
   <data name="chkUntrack.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 166</value>
+    <value>83, 167</value>
   </data>
   <data name="btnSave.Size" type="System.Drawing.Size, System.Drawing">
     <value>70, 24</value>
   </data>
-  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
   <data name="&gt;&gt;chkBypassCnSite.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="label6.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
   <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 122</value>
+    <value>6, 123</value>
   </data>
-  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="&gt;&gt;cboxInboundMode.Name" xml:space="preserve">
     <value>cboxInboundMode</value>
   </data>
   <data name="&gt;&gt;btnSave.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="cboxInboundMode.Items1" xml:space="preserve">
     <value>HTTP</value>

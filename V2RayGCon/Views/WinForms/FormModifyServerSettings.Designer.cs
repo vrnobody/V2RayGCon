@@ -40,8 +40,6 @@
             this.cboxMark = new System.Windows.Forms.ComboBox();
             this.chkUntrack = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
@@ -49,6 +47,8 @@
             this.label7 = new System.Windows.Forms.Label();
             this.tboxDescription = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tboxTitle = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -130,18 +130,6 @@
             this.label2.Name = "label2";
             this.toolTip1.SetToolTip(this.label2, resources.GetString("label2.ToolTip"));
             // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
-            this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
-            // 
-            // label4
-            // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Name = "label4";
-            this.toolTip1.SetToolTip(this.label4, resources.GetString("label4.ToolTip"));
-            // 
             // label5
             // 
             resources.ApplyResources(this.label5, "label5");
@@ -180,10 +168,24 @@
             this.label10.Name = "label10";
             this.toolTip1.SetToolTip(this.label10, resources.GetString("label10.ToolTip"));
             // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
+            // 
+            // tboxTitle
+            // 
+            resources.ApplyResources(this.tboxTitle, "tboxTitle");
+            this.tboxTitle.Name = "tboxTitle";
+            this.tboxTitle.ReadOnly = true;
+            this.toolTip1.SetToolTip(this.tboxTitle, resources.GetString("tboxTitle.ToolTip"));
+            // 
             // FormModifyServerSettings
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.tboxTitle);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.chkBypassCnSite);
             this.Controls.Add(this.chkUntrack);
@@ -196,11 +198,10 @@
             this.Controls.Add(this.tboxServerName);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Name = "FormModifyServerSettings";
             this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
@@ -223,13 +224,13 @@
         private System.Windows.Forms.ComboBox cboxMark;
         private System.Windows.Forms.CheckBox chkUntrack;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tboxDescription;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tboxTitle;
     }
 }

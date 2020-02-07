@@ -7,15 +7,19 @@ namespace V2RayGCon.Views.WinForms
     {
         #region Sigleton
         static FormModifyServerSettings _instant;
+        static readonly object formInstanLocker = new object();
         public static void ShowForm(ICoreServCtrl coreServ)
         {
-            if (_instant == null || _instant.IsDisposed)
+            lock (formInstanLocker)
             {
-                _instant = new FormModifyServerSettings();
+                if (_instant == null || _instant.IsDisposed)
+                {
+                    _instant = new FormModifyServerSettings();
+                }
+                _instant.InitControls(coreServ);
+                _instant.Show();
+                _instant.Activate();
             }
-            _instant.InitControls(coreServ);
-            _instant.Show();
-            _instant.Activate();
         }
         #endregion
 
@@ -72,7 +76,7 @@ namespace V2RayGCon.Views.WinForms
 
             VgcApis.Misc.UI.RunInUiThread(this, () =>
             {
-                this.Text = coreServ.GetCoreStates().GetTitle();
+                tboxTitle.Text = coreServ.GetCoreStates().GetTitle();
                 cboxMark.Items.Clear();
                 foreach (var mark in marks)
                 {

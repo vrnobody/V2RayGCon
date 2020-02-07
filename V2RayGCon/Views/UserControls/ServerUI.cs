@@ -18,6 +18,7 @@ namespace V2RayGCon.Views.UserControls
         VgcApis.Interfaces.ICoreServCtrl coreServCtrl;
 
         string keyword = null;
+        Color backColorCache;
 
         VgcApis.Libs.Tasks.Bar uiUpdateLock = new VgcApis.Libs.Tasks.Bar();
         VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater;
@@ -33,14 +34,19 @@ namespace V2RayGCon.Views.UserControls
             this.coreServCtrl = serverItem;
             InitializeComponent();
 
+
             lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiLater, 100);
         }
 
         private void ServerUI_Load(object sender, EventArgs e)
         {
             rtboxServerTitle.BackColor = BackColor;
+            rlbSpeedtest.Text = @"";
+            rlbSpeedtest.Visible = false;
+
+            backColorCache = this.BackColor;
+
             InitButtonBackgroundImage();
-            InitStatusLabel();
             BindCoreCtrlEvents();
             RefreshUiLater();
         }
@@ -75,18 +81,6 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region private method
-        void InitStatusLabel()
-        {
-
-            VgcApis.Misc.UI.RunInUiThread(rlbSpeedtest, () =>
-            {
-                try
-                {
-                    UpdateControlTextOndemand(rlbSpeedtest, @"");
-                }
-                catch { }
-            });
-        }
 
         private void HighLightServerTitleWithKeywords()
         {
@@ -154,7 +148,11 @@ namespace V2RayGCon.Views.UserControls
 
         void CompactRoundLables()
         {
-            var margin = rlbSetting.Left / 2;
+            var rleft = rlbIsRunning.Left;
+            var margin = rleft / 2;
+
+            rlbSetting.Left = rleft + (rlbIsRunning.Width - rlbSetting.Width) / 2;
+
             var end = rlbInboundMode.Right;
 
             var controls = new List<Control>
@@ -171,8 +169,8 @@ namespace V2RayGCon.Views.UserControls
                     continue;
                 }
 
-                var left = end + margin;
-                if (control.Left != left)
+                var start = end + margin;
+                if (control.Left != start)
                 {
                     control.Left = end + margin;
                 }
@@ -217,8 +215,9 @@ namespace V2RayGCon.Views.UserControls
             var cx = bmp.Width / 2f;
             var cy = bmp.Height / 2f;
             var pw = r * 0.4f;
+            var pc = Color.FromArgb(50, 50, 50);
             using (var g = Graphics.FromImage(bmp))
-            using (var pen = new Pen(Color.DimGray, pw))
+            using (var pen = new Pen(pc, pw))
             {
                 pen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
                 pen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
@@ -313,6 +312,24 @@ namespace V2RayGCon.Views.UserControls
             }
         }
 
+        void UpdateBackgroundColor(bool isSelected)
+        {
+            // Beige too blight, Linen too red
+            var color = isSelected ? Color.WhiteSmoke : backColorCache;
+            if (this.BackColor != color)
+            {
+                this.BackColor = color;
+            }
+
+            foreach (Control control in this.Controls)
+            {
+                if (control.BackColor != color)
+                {
+                    control.BackColor = color;
+                }
+            }
+        }
+
         void RefreshUiThen(Action done)
         {
             VgcApis.Misc.UI.RunInUiThread(rtboxServerTitle, () =>
@@ -322,9 +339,17 @@ namespace V2RayGCon.Views.UserControls
                     var cs = coreServCtrl.GetCoreStates();
                     var cc = coreServCtrl.GetCoreCtrl();
 
+                    // must update background first
+                    var isSelected = cs.IsSelected();
+
+                    // not good
+                    // UpdateBackgroundColor(isSelected);
+
                     // first line
                     UpdateOnOffLabel(cc.IsCoreRunning());
-                    UpdateSelectCheckboxState(cs);
+                    UpdateSelectCheckboxState(isSelected);
+
+
                     var title = cs.GetTitle();
                     UpdateControlTextAndTooltip(rtboxServerTitle, title, title);
 
@@ -332,7 +357,7 @@ namespace V2RayGCon.Views.UserControls
                     UpdateInboundModeLabel(cs);
                     UpdateLastModifiedLable(cs.GetLastModifiedUtcTicks());
                     UpdateControlTextOndemand(rlbMark, cs.GetMark());
-                    UpdateControlTextOndemand(rlbSpeedtest, cs.GetStatus());
+                    UpdateSpeedTestLable(cs.GetStatus());
                     UpdateSettingsLable(cs);
                     CompactRoundLables();
                 }
@@ -342,6 +367,17 @@ namespace V2RayGCon.Views.UserControls
                     done?.Invoke();
                 }
             });
+        }
+
+        void UpdateSpeedTestLable(string status)
+        {
+
+            UpdateControlTextOndemand(rlbSpeedtest, status);
+            var color = status.Equals(I18N.Timeout) ? Color.OrangeRed : Color.DimGray;
+            if (rlbSpeedtest.ForeColor != color)
+            {
+                rlbSpeedtest.ForeColor = color;
+            }
         }
 
         void UpdateLastModifiedLable(long utcTicks)
@@ -359,19 +395,23 @@ namespace V2RayGCon.Views.UserControls
                 + (coreStates.IsInjectGlobalImport() ? "I" : "")
                 + (coreStates.IsUntrack() ? "U" : "");
 
+            if (text.Length > 0 && text.Length <= 2)
+            {
+                text = $" {text} ";
+            }
+
             UpdateControlTextOndemand(rlbSetting, text);
         }
 
-        void UpdateSelectCheckboxState(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
+        void UpdateSelectCheckboxState(bool isSelected)
         {
-            var selected = coreStates.IsSelected();
-            if (selected == chkSelected.Checked)
+            if (isSelected == chkSelected.Checked)
             {
                 return;
             }
 
-            chkSelected.Checked = selected;
-            SetServerTitleLabelFontStyle(selected);
+            chkSelected.Checked = isSelected;
+            SetServerTitleLabelFontStyle(isSelected);
         }
 
         void SetServerTitleLabelFontStyle(bool selected)
@@ -389,7 +429,7 @@ namespace V2RayGCon.Views.UserControls
                 rlbIsRunning.Text = text;
             }
             var bc = isServerOn ? Color.DarkOrange : BackColor;
-            var fc = isServerOn ? BackColor : Color.ForestGreen;
+            var fc = isServerOn ? Color.White : Color.ForestGreen;
 
             if (rlbIsRunning._BackColor != bc)
             {
@@ -656,9 +696,5 @@ namespace V2RayGCon.Views.UserControls
             UserMouseDown();
         }
         #endregion
-
-
-
-
     }
 }

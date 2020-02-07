@@ -106,7 +106,7 @@
             // 
             // rlbIsRunning
             // 
-            this.rlbIsRunning._BackColor = System.Drawing.Color.ForestGreen;
+            this.rlbIsRunning._BackColor = System.Drawing.Color.DarkOrange;
             this.rlbIsRunning.AutoEllipsis = true;
             this.rlbIsRunning.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.rlbIsRunning, "rlbIsRunning");
@@ -118,11 +118,11 @@
             // 
             // rlbSetting
             // 
-            this.rlbSetting._BackColor = System.Drawing.Color.Gainsboro;
+            this.rlbSetting._BackColor = System.Drawing.Color.Silver;
             this.rlbSetting.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbSetting, "rlbSetting");
             this.rlbSetting.BackColor = System.Drawing.SystemColors.Control;
             this.rlbSetting.ForeColor = System.Drawing.Color.DimGray;
-            resources.ApplyResources(this.rlbSetting, "rlbSetting");
             this.rlbSetting.Name = "rlbSetting";
             this.toolTip1.SetToolTip(this.rlbSetting, resources.GetString("rlbSetting.ToolTip"));
             this.rlbSetting.UseCompatibleTextRendering = true;
@@ -130,11 +130,11 @@
             // 
             // rlbMark
             // 
-            this.rlbMark._BackColor = System.Drawing.Color.Gainsboro;
+            this.rlbMark._BackColor = System.Drawing.Color.Chartreuse;
             this.rlbMark.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbMark, "rlbMark");
             this.rlbMark.BackColor = System.Drawing.SystemColors.Control;
             this.rlbMark.ForeColor = System.Drawing.Color.DimGray;
-            resources.ApplyResources(this.rlbMark, "rlbMark");
             this.rlbMark.Name = "rlbMark";
             this.toolTip1.SetToolTip(this.rlbMark, resources.GetString("rlbMark.ToolTip"));
             this.rlbMark.UseCompatibleTextRendering = true;
@@ -142,10 +142,10 @@
             // 
             // rlbLastModify
             // 
-            this.rlbLastModify._BackColor = System.Drawing.Color.Gainsboro;
+            this.rlbLastModify._BackColor = System.Drawing.Color.LightSalmon;
             this.rlbLastModify.AutoEllipsis = true;
-            this.rlbLastModify.ForeColor = System.Drawing.Color.DimGray;
             resources.ApplyResources(this.rlbLastModify, "rlbLastModify");
+            this.rlbLastModify.ForeColor = System.Drawing.Color.DimGray;
             this.rlbLastModify.Name = "rlbLastModify";
             this.toolTip1.SetToolTip(this.rlbLastModify, resources.GetString("rlbLastModify.ToolTip"));
             this.rlbLastModify.UseCompatibleTextRendering = true;
@@ -153,11 +153,11 @@
             // 
             // rlbSpeedtest
             // 
-            this.rlbSpeedtest._BackColor = System.Drawing.Color.Gainsboro;
+            this.rlbSpeedtest._BackColor = System.Drawing.Color.Khaki;
             this.rlbSpeedtest.AutoEllipsis = true;
-            this.rlbSpeedtest.BackColor = System.Drawing.SystemColors.Control;
-            this.rlbSpeedtest.ForeColor = System.Drawing.Color.DimGray;
             resources.ApplyResources(this.rlbSpeedtest, "rlbSpeedtest");
+            this.rlbSpeedtest.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbSpeedtest.ForeColor = System.Drawing.Color.Red;
             this.rlbSpeedtest.Name = "rlbSpeedtest";
             this.toolTip1.SetToolTip(this.rlbSpeedtest, resources.GetString("rlbSpeedtest.ToolTip"));
             this.rlbSpeedtest.UseCompatibleTextRendering = true;
@@ -165,11 +165,11 @@
             // 
             // rlbInboundMode
             // 
-            this.rlbInboundMode._BackColor = System.Drawing.Color.Gainsboro;
+            this.rlbInboundMode._BackColor = System.Drawing.Color.Turquoise;
             this.rlbInboundMode.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbInboundMode, "rlbInboundMode");
             this.rlbInboundMode.BackColor = System.Drawing.SystemColors.Control;
             this.rlbInboundMode.ForeColor = System.Drawing.Color.DimGray;
-            resources.ApplyResources(this.rlbInboundMode, "rlbInboundMode");
             this.rlbInboundMode.Name = "rlbInboundMode";
             this.toolTip1.SetToolTip(this.rlbInboundMode, resources.GetString("rlbInboundMode.ToolTip"));
             this.rlbInboundMode.UseCompatibleTextRendering = true;

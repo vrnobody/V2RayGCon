@@ -33,7 +33,7 @@ namespace V2RayGCon.Views.UserControls
 
         private GraphicsPath _getRoundRectangle(Rectangle rectangle)
         {
-            int cornerRadius = rectangle.Height / 2; // change this value according to your needs
+            int cornerRadius = rectangle.Height / 3; // change this value according to your needs
             int diminisher = 1;
             GraphicsPath path = new GraphicsPath();
             path.AddArc(rectangle.X, rectangle.Y, cornerRadius, cornerRadius, 180, 90);

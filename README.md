@@ -22,7 +22,7 @@ Download and extract [V2RayGCon-box.zip][9] to any directory you like. That's it
 Require .net framework 4.5 or higher.  
 
 ### 演示 Demo
-![Demo v1.1.10 GIF](https://vrnobody.github.io/V2RayGCon/images/forms/demo_basics_v1.1.10.gif)  
+![Demo v1.2.8.4 GIF](https://vrnobody.github.io/V2RayGCon/images/forms/demo_basics_v1.2.8.4.gif)  
 
 ### 引用按字母排序 Credits (in alphabetical order)  
 [2dust/v2rayN](https://github.com/2dust/v2rayN) vmess分享链接及订阅格式  

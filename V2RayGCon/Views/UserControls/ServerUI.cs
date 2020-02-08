@@ -195,9 +195,10 @@ namespace V2RayGCon.Views.UserControls
             Bitmap clone;
             lock (drawImageLocker)
             {
-                if (btnBgCaches[idx] == null || btnBgCaches[idx].Size != btn.Size)
+                var size = btn.ClientSize;
+                if (btnBgCaches[idx] == null || btnBgCaches[idx].Size != size)
                 {
-                    btnBgCaches[idx] = CreateBgCache(btn.ClientSize, btn.Padding, btnType);
+                    btnBgCaches[idx] = CreateBgCache(size, btnType);
                 }
                 clone = btnBgCaches[idx].Clone() as Bitmap;
             }
@@ -205,17 +206,15 @@ namespace V2RayGCon.Views.UserControls
             btn.BackgroundImageLayout = ImageLayout.None;
         }
 
-        Bitmap CreateBgCache(Size size, Padding padding, ButtonTypes btnType)
+        Bitmap CreateBgCache(Size size, ButtonTypes btnType)
         {
-            var bmp = new Bitmap(
-                size.Width - padding.Left - padding.Right,
-                size.Height - padding.Top - padding.Bottom);
+            var bmp = new Bitmap(size.Width, size.Height);
 
             var r = Math.Min(bmp.Width, bmp.Height) * 0.6f / 2f;
             var cx = bmp.Width / 2f;
             var cy = bmp.Height / 2f;
             var pw = r * 0.4f;
-            var pc = Color.FromArgb(50, 50, 50);
+            var pc = Color.FromArgb(45, 45, 45);
             using (var g = Graphics.FromImage(bmp))
             using (var pen = new Pen(pc, pw))
             {
@@ -356,7 +355,7 @@ namespace V2RayGCon.Views.UserControls
                     // second line
                     UpdateInboundModeLabel(cs);
                     UpdateLastModifiedLable(cs.GetLastModifiedUtcTicks());
-                    UpdateControlTextOndemand(rlbMark, cs.GetMark());
+                    UpdateMarkLabel(cs.GetMark());
                     UpdateSpeedTestLable(cs.GetStatus());
                     UpdateSettingsLable(cs);
                     CompactRoundLables();
@@ -367,6 +366,13 @@ namespace V2RayGCon.Views.UserControls
                     done?.Invoke();
                 }
             });
+        }
+
+        void UpdateMarkLabel(string mark)
+        {
+            var m = Misc.Utils.CutStr(mark, 40);
+            var tooltip = $"{I18N.Mark}{m}";
+            UpdateControlTextAndTooltip(rlbMark, mark, tooltip);
         }
 
         void UpdateSpeedTestLable(string status)

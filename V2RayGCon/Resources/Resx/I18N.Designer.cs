@@ -1128,6 +1128,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Mark:  的本地化字符串。
+        /// </summary>
+        internal static string Mark {
+            get {
+                return ResourceManager.GetString("Mark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 MM-dd 的本地化字符串。
         /// </summary>
         internal static string MMdd {

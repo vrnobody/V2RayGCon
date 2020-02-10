@@ -203,7 +203,6 @@ namespace V2RayGCon.Views.UserControls
                 clone = btnBgCaches[idx].Clone() as Bitmap;
             }
             btn.BackgroundImage = clone;
-            btn.BackgroundImageLayout = ImageLayout.None;
         }
 
         Bitmap CreateBgCache(Size size, ButtonTypes btnType)

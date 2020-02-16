@@ -723,4 +723,7 @@ No, abort.</value>
   <data name="InbModeConfigToolTip" xml:space="preserve">
     <value>Use inbound settings in config.</value>
   </data>
+  <data name="Mark" xml:space="preserve">
+    <value>Mark: </value>
+  </data>
 </root>

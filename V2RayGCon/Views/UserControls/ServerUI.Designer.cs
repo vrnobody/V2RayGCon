@@ -122,6 +122,7 @@
             this.rlbSetting.AutoEllipsis = true;
             resources.ApplyResources(this.rlbSetting, "rlbSetting");
             this.rlbSetting.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbSetting.Cursor = System.Windows.Forms.Cursors.Default;
             this.rlbSetting.ForeColor = System.Drawing.Color.DimGray;
             this.rlbSetting.Name = "rlbSetting";
             this.toolTip1.SetToolTip(this.rlbSetting, resources.GetString("rlbSetting.ToolTip"));
@@ -134,6 +135,7 @@
             this.rlbMark.AutoEllipsis = true;
             resources.ApplyResources(this.rlbMark, "rlbMark");
             this.rlbMark.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbMark.Cursor = System.Windows.Forms.Cursors.Default;
             this.rlbMark.ForeColor = System.Drawing.Color.DimGray;
             this.rlbMark.Name = "rlbMark";
             this.toolTip1.SetToolTip(this.rlbMark, resources.GetString("rlbMark.ToolTip"));
@@ -145,6 +147,7 @@
             this.rlbLastModify._BackColor = System.Drawing.Color.LightSalmon;
             this.rlbLastModify.AutoEllipsis = true;
             resources.ApplyResources(this.rlbLastModify, "rlbLastModify");
+            this.rlbLastModify.Cursor = System.Windows.Forms.Cursors.Default;
             this.rlbLastModify.ForeColor = System.Drawing.Color.DimGray;
             this.rlbLastModify.Name = "rlbLastModify";
             this.toolTip1.SetToolTip(this.rlbLastModify, resources.GetString("rlbLastModify.ToolTip"));
@@ -157,6 +160,7 @@
             this.rlbSpeedtest.AutoEllipsis = true;
             resources.ApplyResources(this.rlbSpeedtest, "rlbSpeedtest");
             this.rlbSpeedtest.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbSpeedtest.Cursor = System.Windows.Forms.Cursors.Default;
             this.rlbSpeedtest.ForeColor = System.Drawing.Color.Red;
             this.rlbSpeedtest.Name = "rlbSpeedtest";
             this.toolTip1.SetToolTip(this.rlbSpeedtest, resources.GetString("rlbSpeedtest.ToolTip"));
@@ -169,6 +173,7 @@
             this.rlbInboundMode.AutoEllipsis = true;
             resources.ApplyResources(this.rlbInboundMode, "rlbInboundMode");
             this.rlbInboundMode.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbInboundMode.Cursor = System.Windows.Forms.Cursors.Default;
             this.rlbInboundMode.ForeColor = System.Drawing.Color.DimGray;
             this.rlbInboundMode.Name = "rlbInboundMode";
             this.toolTip1.SetToolTip(this.rlbInboundMode, resources.GetString("rlbInboundMode.ToolTip"));

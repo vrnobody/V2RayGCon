@@ -714,4 +714,7 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="InbModeConfigToolTip" xml:space="preserve">
     <value>使用config中的inbound设定</value>
   </data>
+  <data name="Mark" xml:space="preserve">
+    <value>标记：</value>
+  </data>
 </root>

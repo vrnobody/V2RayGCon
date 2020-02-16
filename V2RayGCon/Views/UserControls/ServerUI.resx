@@ -154,7 +154,7 @@
     <value>10</value>
   </data>
   <data name="btnStart.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>None</value>
+    <value>Zoom</value>
   </data>
   <data name="btnStart.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -190,7 +190,7 @@
     <value>3</value>
   </data>
   <data name="btnStop.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>None</value>
+    <value>Zoom</value>
   </data>
   <data name="btnStop.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -226,7 +226,7 @@
     <value>2</value>
   </data>
   <data name="btnMenu.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>None</value>
+    <value>Zoom</value>
   </data>
   <data name="btnMenu.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -292,7 +292,7 @@
     <value>rlbIsRunning</value>
   </data>
   <data name="&gt;&gt;rlbIsRunning.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.4, Culture=neutral, PublicKeyToken=null</value>
+    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.5, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rlbIsRunning.Parent" xml:space="preserve">
     <value>$this</value>
@@ -334,7 +334,7 @@
     <value>rlbSetting</value>
   </data>
   <data name="&gt;&gt;rlbSetting.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.4, Culture=neutral, PublicKeyToken=null</value>
+    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.5, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rlbSetting.Parent" xml:space="preserve">
     <value>$this</value>
@@ -376,7 +376,7 @@
     <value>rlbMark</value>
   </data>
   <data name="&gt;&gt;rlbMark.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.4, Culture=neutral, PublicKeyToken=null</value>
+    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.5, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rlbMark.Parent" xml:space="preserve">
     <value>$this</value>
@@ -418,7 +418,7 @@
     <value>rlbLastModify</value>
   </data>
   <data name="&gt;&gt;rlbLastModify.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.4, Culture=neutral, PublicKeyToken=null</value>
+    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.5, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rlbLastModify.Parent" xml:space="preserve">
     <value>$this</value>
@@ -460,7 +460,7 @@
     <value>rlbSpeedtest</value>
   </data>
   <data name="&gt;&gt;rlbSpeedtest.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.4, Culture=neutral, PublicKeyToken=null</value>
+    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.5, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rlbSpeedtest.Parent" xml:space="preserve">
     <value>$this</value>
@@ -502,7 +502,7 @@
     <value>rlbInboundMode</value>
   </data>
   <data name="&gt;&gt;rlbInboundMode.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.4, Culture=neutral, PublicKeyToken=null</value>
+    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.2.8.5, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rlbInboundMode.Parent" xml:space="preserve">
     <value>$this</value>

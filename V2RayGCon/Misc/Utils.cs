@@ -212,6 +212,7 @@ namespace V2RayGCon.Misc
                     ipKey += ".settings.servers.0.address";
                     break;
                 case "socks":
+                case "http":
                     ipKey += ".settings.servers.0.address";
                     break;
             }

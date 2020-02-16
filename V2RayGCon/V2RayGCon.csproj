@@ -134,6 +134,7 @@
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
     <Compile Include="Models\Datas\SpeedTestOptions.cs" />
     <Compile Include="Models\Datas\UpdateInfo.cs" />
+    <Compile Include="Models\VeeShareLinks\Http3a.cs" />
     <Compile Include="Models\VeeShareLinks\Socks2a.cs" />
     <Compile Include="Models\VeeShareLinks\BasicSettings.cs" />
     <Compile Include="Services\Caches\JsonAcm.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Services\ShareLinkComponents\Codecs.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Comm.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\IVeeDecoder.cs" />
+    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Http3a.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Ss1a.cs" />
     <Compile Include="Models\VeeShareLinks\Vmess0a.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Socks2a.cs" />

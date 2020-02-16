@@ -1,9 +1,9 @@
 {
-  "version": "1.2.8.4",
-  "md5": "6959D6D77663BDF9EF16D1DA5011BDCD",
+  "version": "1.2.8.7",
+  "md5": "36BD32CB8C9624A6D85ABFA6F59BC9AE",
   "warnings": [
   ],
   "changes": [
-      "重新设计服务器面板"
+      "v://... 分享链接支持http协议"
   ]
 }

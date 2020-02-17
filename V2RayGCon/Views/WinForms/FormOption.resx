@@ -121,29 +121,62 @@
   <data name="tabControl1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
+  <data name="chkSubsIsAutoPatch.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="chkSubsIsAutoPatch.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkSubsIsAutoPatch.Location" type="System.Drawing.Point, System.Drawing">
+    <value>390, 85</value>
+  </data>
+  <data name="chkSubsIsAutoPatch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 16</value>
+  </data>
+  <data name="chkSubsIsAutoPatch.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="chkSubsIsAutoPatch.Text" xml:space="preserve">
+    <value>Autopatch</value>
+  </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="chkSubsIsAutoPatch.ToolTip" xml:space="preserve">
+    <value>Auto patch github url.</value>
+  </data>
+  <data name="&gt;&gt;chkSubsIsAutoPatch.Name" xml:space="preserve">
+    <value>chkSubsIsAutoPatch</value>
+  </data>
+  <data name="&gt;&gt;chkSubsIsAutoPatch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkSubsIsAutoPatch.Parent" xml:space="preserve">
+    <value>tabPageSubscribe</value>
+  </data>
+  <data name="&gt;&gt;chkSubsIsAutoPatch.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="btnSubsInvertSelection.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
   <data name="btnSubsInvertSelection.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnSubsInvertSelection.Location" type="System.Drawing.Point, System.Drawing">
-    <value>402, 348</value>
+    <value>392, 348</value>
   </data>
   <data name="btnSubsInvertSelection.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnSubsInvertSelection.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="btnSubsInvertSelection.Text" xml:space="preserve">
     <value>Invert</value>
   </data>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="btnSubsInvertSelection.ToolTip" xml:space="preserve">
     <value>Invert selection.</value>
   </data>
@@ -157,13 +190,13 @@
     <value>tabPageSubscribe</value>
   </data>
   <data name="&gt;&gt;btnSubsInvertSelection.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="btnSubsUseAll.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
   <data name="btnSubsUseAll.Location" type="System.Drawing.Point, System.Drawing">
-    <value>402, 319</value>
+    <value>392, 319</value>
   </data>
   <data name="btnSubsUseAll.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -187,7 +220,7 @@
     <value>tabPageSubscribe</value>
   </data>
   <data name="&gt;&gt;btnSubsUseAll.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="chkSubsIsUseProxy.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -199,7 +232,7 @@
     <value>NoControl</value>
   </data>
   <data name="chkSubsIsUseProxy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>401, 63</value>
+    <value>390, 63</value>
   </data>
   <data name="chkSubsIsUseProxy.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 16</value>
@@ -223,13 +256,13 @@
     <value>tabPageSubscribe</value>
   </data>
   <data name="&gt;&gt;chkSubsIsUseProxy.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="btnUpdateViaSubscription.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="btnUpdateViaSubscription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>402, 34</value>
+    <value>392, 34</value>
   </data>
   <data name="btnUpdateViaSubscription.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -253,13 +286,13 @@
     <value>tabPageSubscribe</value>
   </data>
   <data name="&gt;&gt;btnUpdateViaSubscription.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="btnAddSubsUrl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="btnAddSubsUrl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>402, 6</value>
+    <value>392, 6</value>
   </data>
   <data name="btnAddSubsUrl.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -283,7 +316,7 @@
     <value>tabPageSubscribe</value>
   </data>
   <data name="&gt;&gt;btnAddSubsUrl.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="flySubsUrlContainer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -295,7 +328,7 @@
     <value>6, 6</value>
   </data>
   <data name="flySubsUrlContainer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>393, 371</value>
+    <value>378, 371</value>
   </data>
   <data name="flySubsUrlContainer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -310,7 +343,7 @@
     <value>tabPageSubscribe</value>
   </data>
   <data name="&gt;&gt;flySubsUrlContainer.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="tabPageSubscribe.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>

@@ -117,20 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnImportAdd.Text" xml:space="preserve">
-    <value>添加</value>
+  <data name="chkSubsIsAutoPatch.Text" xml:space="preserve">
+    <value>自动修整</value>
   </data>
-  <data name="btnImportAdd.ToolTip" xml:space="preserve">
-    <value>添加import URL</value>
-  </data>
-  <data name="flyImportPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPageImport.Text" xml:space="preserve">
-    <value>全局import</value>
-  </data>
-  <data name="tabPageImport.ToolTip" xml:space="preserve">
-    <value />
+  <data name="chkSubsIsAutoPatch.ToolTip" xml:space="preserve">
+    <value>自动修整GitHub链接</value>
   </data>
   <data name="btnSubsInvertSelection.Text" xml:space="preserve">
     <value>反选</value>
@@ -169,6 +160,87 @@
     <value>订阅</value>
   </data>
   <data name="tabPageSubscribe.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkDefImportInjectGlobalImport.Text" xml:space="preserve">
+    <value>全局import</value>
+  </data>
+  <data name="chkDefImportInjectGlobalImport.ToolTip" xml:space="preserve">
+    <value>注入全局import</value>
+  </data>
+  <data name="chkDefImportBypassCnSite.Text" xml:space="preserve">
+    <value>绕过CN网站</value>
+  </data>
+  <data name="chkDefImportBypassCnSite.ToolTip" xml:space="preserve">
+    <value>绕过CN网站</value>
+  </data>
+  <data name="chkDefImportSsShareLink.ToolTip" xml:space="preserve">
+    <value>导入时包含shadowsocks分享链接</value>
+  </data>
+  <data name="cboxDefImportMode.ToolTip" xml:space="preserve">
+    <value>Config表示保持原样</value>
+  </data>
+  <data name="label9.Text" xml:space="preserve">
+    <value>默认地址</value>
+  </data>
+  <data name="label9.ToolTip" xml:space="preserve">
+    <value>默认代理地址</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>默认模式</value>
+  </data>
+  <data name="label10.ToolTip" xml:space="preserve">
+    <value>Config表示保持原样</value>
+  </data>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>导入分享链接</value>
+  </data>
+  <data name="groupBox4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxDefSpeedtestTimeout.ToolTip" xml:space="preserve">
+    <value>20000（20秒）</value>
+  </data>
+  <data name="chkDefSpeedtestIsUse.Text" xml:space="preserve">
+    <value>使用</value>
+  </data>
+  <data name="chkDefSpeedtestIsUse.ToolTip" xml:space="preserve">
+    <value>使用这些测速设置</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>大小(KiB)</value>
+  </data>
+  <data name="label7.ToolTip" xml:space="preserve">
+    <value>实际下载数据小于预期时，当成测速超时处理。</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>测试次数</value>
+  </data>
+  <data name="label6.ToolTip" xml:space="preserve">
+    <value>测速次数</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>自定义URL</value>
+  </data>
+  <data name="label5.ToolTip" xml:space="preserve">
+    <value>自定义测速URL</value>
+  </data>
+  <data name="label11.Text" xml:space="preserve">
+    <value>超时(ms)</value>
+  </data>
+  <data name="label11.ToolTip" xml:space="preserve">
+    <value>超时（单位毫秒）</value>
+  </data>
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>测速</value>
+  </data>
+  <data name="groupBox3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPageDefaults.Text" xml:space="preserve">
+    <value>默认值</value>
+  </data>
+  <data name="tabPageDefaults.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="chkSetCheckWhenStart.Text" xml:space="preserve">
@@ -273,91 +345,19 @@
   <data name="tabPageSetting.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="chkDefImportIsFold.Text" xml:space="preserve">
-    <value>折叠</value>
+  <data name="btnImportAdd.Text" xml:space="preserve">
+    <value>添加</value>
   </data>
-  <data name="chkDefImportIsFold.ToolTip" xml:space="preserve">
-    <value>将服务器面板折叠成单行模式</value>
+  <data name="btnImportAdd.ToolTip" xml:space="preserve">
+    <value>添加import URL</value>
   </data>
-  <data name="chkDefImportInjectGlobalImport.Text" xml:space="preserve">
+  <data name="flyImportPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPageImport.Text" xml:space="preserve">
     <value>全局import</value>
   </data>
-  <data name="chkDefImportInjectGlobalImport.ToolTip" xml:space="preserve">
-    <value>注入全局import</value>
-  </data>
-  <data name="chkDefImportBypassCnSite.Text" xml:space="preserve">
-    <value>绕过CN网站</value>
-  </data>
-  <data name="chkDefImportBypassCnSite.ToolTip" xml:space="preserve">
-    <value>绕过CN网站</value>
-  </data>
-  <data name="chkDefImportSsShareLink.ToolTip" xml:space="preserve">
-    <value>导入时包含shadowsocks分享链接</value>
-  </data>
-  <data name="cboxDefImportMode.ToolTip" xml:space="preserve">
-    <value>Config表示保持原样</value>
-  </data>
-  <data name="label9.Text" xml:space="preserve">
-    <value>默认地址</value>
-  </data>
-  <data name="label9.ToolTip" xml:space="preserve">
-    <value>默认代理地址</value>
-  </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>默认模式</value>
-  </data>
-  <data name="label10.ToolTip" xml:space="preserve">
-    <value>Config表示保持原样</value>
-  </data>
-  <data name="groupBox4.Text" xml:space="preserve">
-    <value>导入分享链接</value>
-  </data>
-  <data name="groupBox4.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxDefSpeedtestTimeout.ToolTip" xml:space="preserve">
-    <value>20000（20秒）</value>
-  </data>
-  <data name="chkDefSpeedtestIsUse.Text" xml:space="preserve">
-    <value>使用</value>
-  </data>
-  <data name="chkDefSpeedtestIsUse.ToolTip" xml:space="preserve">
-    <value>使用这些测速设置</value>
-  </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>大小(KiB)</value>
-  </data>
-  <data name="label7.ToolTip" xml:space="preserve">
-    <value>实际下载数据小于预期时，当成测速超时处理。</value>
-  </data>
-  <data name="label6.Text" xml:space="preserve">
-    <value>测试次数</value>
-  </data>
-  <data name="label6.ToolTip" xml:space="preserve">
-    <value>测速次数</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>自定义URL</value>
-  </data>
-  <data name="label5.ToolTip" xml:space="preserve">
-    <value>自定义测速URL</value>
-  </data>
-  <data name="label11.Text" xml:space="preserve">
-    <value>超时(ms)</value>
-  </data>
-  <data name="label11.ToolTip" xml:space="preserve">
-    <value>超时（单位毫秒）</value>
-  </data>
-  <data name="groupBox3.Text" xml:space="preserve">
-    <value>测速</value>
-  </data>
-  <data name="groupBox3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPageDefaults.Text" xml:space="preserve">
-    <value>默认值</value>
-  </data>
-  <data name="tabPageDefaults.ToolTip" xml:space="preserve">
+  <data name="tabPageImport.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="label4.Text" xml:space="preserve">

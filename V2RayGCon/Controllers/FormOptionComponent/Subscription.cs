@@ -13,7 +13,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         readonly FlowLayoutPanel flyPanel;
         readonly Button btnAdd, btnUpdate, btnUseAll, btnInvertSelection;
         readonly CheckBox chkSubsIsUseProxy;
-
+        private readonly CheckBox chkSubsIsAutoPatch;
         readonly Services.Settings setting;
         readonly Services.Servers servers;
         readonly Services.ShareLinkMgr slinkMgr;
@@ -25,6 +25,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             Button btnAdd,
             Button btnUpdate,
             CheckBox chkSubsIsUseProxy,
+            CheckBox chkSubsIsAutoPatch,
             Button btnUseAll,
             Button btnInvertSelection)
         {
@@ -36,6 +37,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.btnAdd = btnAdd;
             this.btnUpdate = btnUpdate;
             this.chkSubsIsUseProxy = chkSubsIsUseProxy;
+            this.chkSubsIsAutoPatch = chkSubsIsAutoPatch;
             this.btnUseAll = btnUseAll;
             this.btnInvertSelection = btnInvertSelection;
 
@@ -119,8 +121,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         string GetCurOptions()
         {
-            return JsonConvert.SerializeObject(
-                CollectSubscriptionItems());
+            return JsonConvert.SerializeObject(CollectSubscriptionItems());
         }
 
         List<Models.Datas.SubscriptionItem> CollectSubscriptionItems()
@@ -148,6 +149,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         void InitPanel()
         {
             var subItemList = setting.GetSubscriptionItems();
+            chkSubsIsAutoPatch.Checked = setting.isAutoPatchSubsInfo;
 
             this.oldOptions = JsonConvert.SerializeObject(subItemList);
 
@@ -290,6 +292,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             BindEventBtnUpdateClick();
             BindEventBtnSelections();
             BindEventFlyPanelDragDrop();
+
+            chkSubsIsAutoPatch.CheckedChanged += (s, a) => setting.isAutoPatchSubsInfo = chkSubsIsAutoPatch.Checked;
 
             this.flyPanel.DragEnter += (s, a) =>
             {

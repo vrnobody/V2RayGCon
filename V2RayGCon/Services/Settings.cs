@@ -53,6 +53,16 @@ namespace V2RayGCon.Services
             }
         }
 
+        public bool isAutoPatchSubsInfo
+        {
+            get => userSettings.isAutoPatchSubsInfo;
+            set
+            {
+                userSettings.isAutoPatchSubsInfo = value;
+                LazySaveUserSettings();
+            }
+        }
+
         public string decodeCache
         {
             get

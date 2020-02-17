@@ -14,6 +14,7 @@ namespace V2RayGCon.Views.UserControls
         public event OnDeleteHandler OnDelete; // add empty delegate
 
         Services.Servers servers;
+        Services.Settings settings;
         VgcApis.Libs.Tasks.LazyGuy lazyCounter;
         private readonly Subscription subsCtrl;
 
@@ -24,7 +25,10 @@ namespace V2RayGCon.Views.UserControls
             InitializeComponent();
 
             this.subsCtrl = subsCtrl;
+
             servers = Services.Servers.Instance;
+            settings = Services.Settings.Instance;
+
             lazyCounter = new VgcApis.Libs.Tasks.LazyGuy(UpdateServerTotalNow, 1000);
 
             // tab page is lazy, do not call this in Load().
@@ -50,10 +54,7 @@ namespace V2RayGCon.Views.UserControls
 
         #region public method
 
-
-        public void UpdateTextBoxColor(
-            IEnumerable<string> alias,
-            IEnumerable<string> urls)
+        public void UpdateTextBoxColor(IEnumerable<string> alias, IEnumerable<string> urls)
         {
             UpdateTextBoxColorWorker(tboxUrl, urls);
             UpdateTextBoxColorWorker(tboxAlias, alias);
@@ -89,8 +90,18 @@ namespace V2RayGCon.Views.UserControls
 
         private void tboxUrl_TextChanged(object sender, EventArgs e)
         {
+            var url = tboxUrl.Text;
+
+            if (settings.isAutoPatchSubsInfo
+                && !string.IsNullOrEmpty(url)
+                && VgcApis.Misc.Utils.TryPatchGitHubUrl(url, out var patched))
+            {
+                tboxUrl.Text = patched;
+                return;
+            }
+
             if (string.IsNullOrEmpty(tboxAlias.Text)
-                && VgcApis.Misc.Utils.TryExtractAliasFromSubscriptionUrl(tboxUrl.Text, out var alias))
+                && VgcApis.Misc.Utils.TryExtractAliasFromSubscriptionUrl(url, out var alias))
             {
                 tboxAlias.Text = alias;
             }

@@ -17,6 +17,27 @@ namespace VgcApis.Misc
     public static class Utils
     {
         #region string
+        public static bool TryPatchGitHubUrl(string url, out string patched)
+        {
+            patched = string.Empty;
+
+            try
+            {
+                var groups = Regex.Match(url, Models.Consts.Patterns.GitHubRepoInfo).Groups;
+                if (groups != null && groups.Count == 3)
+                {
+                    var repo = groups[1];
+                    var tail = groups[2];
+                    patched = $"https://raw.githubusercontent.com{repo}{tail}";
+                    return true;
+                }
+            }
+            catch (ArgumentException) { }
+            catch (RegexMatchTimeoutException) { }
+
+            return false;
+        }
+
         public static bool TryExtractAliasFromSubscriptionUrl(
             string url, out string alias)
         {

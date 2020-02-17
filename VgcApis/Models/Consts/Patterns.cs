@@ -2,6 +2,8 @@
 {
     public static class Patterns
     {
+        public const string GitHubRepoInfo = @"https://github.com(/[^/]+/[^/]+)/blob(/.*)";
+
         public const string ExtractAliasFromSubscriptUrl = @"//[^/]+/([^/]+)";
 
         public const string JsonSnippetSearchPattern = @"[:/,_\.\-\\\*\$\w]";

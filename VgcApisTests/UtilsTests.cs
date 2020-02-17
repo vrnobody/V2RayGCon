@@ -16,6 +16,18 @@ namespace VgcApisTests
     public class UtilsTests
     {
         [DataTestMethod]
+        [DataRow(
+            @"https://github.com/user/reponame/blob/master/README.md",
+            true,
+            @"https://raw.githubusercontent.com/user/reponame/master/README.md")]
+        public void TryPatchGitHubUrlTest(string url, bool expectedResult, string expectedPatched)
+        {
+            var result = TryPatchGitHubUrl(url, out var patched);
+            Assert.AreEqual(expectedResult, result);
+            Assert.AreEqual(expectedPatched, patched);
+        }
+
+        [DataTestMethod]
         [DataRow(@"abc", @"http://baidu.com/abc/a/b/c/d.html")]
         [DataRow(@"a1中b2文", @"http://baidu.com/a1中b2文/a/b/c/d.html")]
         [DataRow(@"index.html", @"http://baidu.com/index.html")]

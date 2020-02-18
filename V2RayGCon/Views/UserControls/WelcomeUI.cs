@@ -70,7 +70,7 @@ namespace V2RayGCon.Views.UserControls
         {
             void Success(string text)
             {
-                var msg = Misc.Utils.CutStr(text, 90);
+                var msg = Misc.Utils.CutStr(text, VgcApis.Models.Consts.Numbers.QrcodeTextMaxLength);
                 setting.SendLog($"QRCode: {msg}");
                 slinkMgr.ImportLinkWithOutV2cfgLinks(text);
             }

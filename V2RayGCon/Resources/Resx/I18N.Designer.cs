@@ -1155,6 +1155,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Name:  的本地化字符串。
+        /// </summary>
+        internal static string NameColon {
+            get {
+                return ResourceManager.GetString("NameColon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Network timeout 的本地化字符串。
         /// </summary>
         internal static string NetworkTimeout {
@@ -1614,6 +1623,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string Success {
             get {
                 return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Summary:  的本地化字符串。
+        /// </summary>
+        internal static string SummaryColon {
+            get {
+                return ResourceManager.GetString("SummaryColon", resourceCulture);
             }
         }
         

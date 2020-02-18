@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.8.8")]
+[assembly: AssemblyVersion("1.2.8.9")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.2.8.9 (issue #3) increase server name length in tooltip
  * v1.2.8.8 auto patch github raw url
  * v1.2.8.7 v://... supports http outbound
  * v1.2.8.6 change cursor style of labels in server panel to default

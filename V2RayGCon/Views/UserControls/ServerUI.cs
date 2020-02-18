@@ -340,16 +340,11 @@ namespace V2RayGCon.Views.UserControls
                     // must update background first
                     var isSelected = cs.IsSelected();
 
-                    // not good
-                    // UpdateBackgroundColor(isSelected);
-
                     // first line
                     UpdateOnOffLabel(cc.IsCoreRunning());
                     UpdateSelectCheckboxState(isSelected);
 
-
-                    var title = cs.GetTitle();
-                    UpdateControlTextAndTooltip(rtboxServerTitle, title, title);
+                    UpdateTitleTextBox(cs);
 
                     // second line
                     UpdateInboundModeLabel(cs);
@@ -367,9 +362,20 @@ namespace V2RayGCon.Views.UserControls
             });
         }
 
+        private void UpdateTitleTextBox(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
+        {
+            var cs = coreStates;
+            var title = cs.GetTitle();
+            var name = Misc.Utils.CutStr(cs.GetName(), VgcApis.Models.Consts.Numbers.ServerNameMaxLength);
+            var summary = Misc.Utils.CutStr(cs.GetSummary(), VgcApis.Models.Consts.Numbers.ServerSummaryMaxLength);
+            var tip = $"{I18N.NameColon}{name}\n{I18N.SummaryColon}{summary}";
+
+            UpdateControlTextAndTooltip(rtboxServerTitle, title, tip);
+        }
+
         void UpdateMarkLabel(string mark)
         {
-            var m = Misc.Utils.CutStr(mark, 40);
+            var m = Misc.Utils.CutStr(mark, VgcApis.Models.Consts.Numbers.MarkLabelTextMaxLength);
             var tooltip = $"{I18N.Mark}{m}";
             UpdateControlTextAndTooltip(rlbMark, mark, tooltip);
         }

@@ -213,17 +213,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public string GetTitle()
         {
             var ci = coreInfo;
-            var result = $"{ci.index}.[{ci.name}] {ci.summary}";
-            return Misc.Utils.CutStr(result, 60);
+            var name = Misc.Utils.CutStr(GetName(), VgcApis.Models.Consts.Numbers.ServerNameInTitleMaxLength);
+            var result = $"{ci.index}.[{name}] {ci.summary}";
+            return Misc.Utils.CutStr(result, VgcApis.Models.Consts.Numbers.ServerTitleMaxLength);
         }
 
         public VgcApis.Models.Datas.CoreInfo GetAllInfo() => coreInfo;
 
         public string GetName() => coreInfo.name;
-        public void SetName(string value)
-        {
-            coreInfo.name = value;
-        }
 
         int statPort = -1;
         public int GetStatPort() => statPort;

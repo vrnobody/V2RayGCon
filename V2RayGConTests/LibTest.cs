@@ -133,10 +133,21 @@ namespace V2RayGCon.Test
         }
 
         [DataTestMethod]
-        [DataRow("aaaaaa", 0, "...")]
+        [DataRow("中文aa测试", 8, "中文a...")]
+        [DataRow("中文aa测试", 7, "中文...")]
+        [DataRow("中文aa测试", 6, "中...")]
+        [DataRow("中aaa文测试", 6, "中a...")]
+        [DataRow("中aaa文测试", 5, "中...")]
+        [DataRow("中文测试", 4, "...")]
+        [DataRow("a中文测试", 9, "a中文测试")]
+        [DataRow("a中文测试", 8, "a中文...")]
+        [DataRow("a中文测试", 7, "a中...")]
+        [DataRow("a中文测试", 6, "a中...")]
+        [DataRow("a中文测试", 5, "a...")]
+        [DataRow("a中文测试", 4, "a...")]
+        [DataRow("a中文测试", 3, "")]
+        [DataRow("a中文测试", -1, "")]
         [DataRow("aaaaaaaaa", 5, "aa...")]
-        [DataRow("aaaaaa", 3, "...")]
-        [DataRow("aaaaaa", -1, "...")]
         [DataRow("", 100, "")]
         public void CutStrTest(string org, int len, string expect)
         {

@@ -152,7 +152,7 @@ namespace V2RayGCon.Misc
         public static string GetAliasFromConfig(JObject config)
         {
             var name = GetValue<string>(config, "v2raygcon.alias");
-            return string.IsNullOrEmpty(name) ? I18N.Empty : CutStr(name, 12);
+            return string.IsNullOrEmpty(name) ? I18N.Empty : name;
         }
 
         public static string GetSummaryFromConfig(JObject config)
@@ -1250,22 +1250,32 @@ namespace V2RayGCon.Misc
             return -1;
         }
 
-        public static string CutStr(string s, int len)
+        public static string CutStr(string text, int lenInAscii)
         {
-
-            if (len >= s.Length)
+            if (lenInAscii <= 3 || string.IsNullOrEmpty(text))
             {
-                return s;
+                return string.Empty;
             }
 
-            var ellipsis = "...";
+            var font = System.Drawing.SystemFonts.DefaultFont;
 
-            if (len <= 3)
+            var baseLine = TextRenderer.MeasureText(new string('a', lenInAscii), font).Width;
+            var len = TextRenderer.MeasureText(text, font).Width;
+            if (len <= baseLine)
             {
-                return ellipsis;
+                return text;
             }
 
-            return s.Substring(0, len - 3) + ellipsis;
+            baseLine = TextRenderer.MeasureText(new string('a', lenInAscii - 3), font).Width;
+            var s = text.Substring(0, Math.Min(text.Length, lenInAscii));
+            len = TextRenderer.MeasureText(s, font).Width;
+            while (len > baseLine)
+            {
+                s = s.Substring(0, s.Length - 1);
+                len = TextRenderer.MeasureText(s, font).Width;
+            }
+
+            return $"{s}...";
         }
 
 

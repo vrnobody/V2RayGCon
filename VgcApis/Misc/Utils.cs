@@ -16,6 +16,8 @@ namespace VgcApis.Misc
 {
     public static class Utils
     {
+
+
         #region string
         public static bool TryPatchGitHubUrl(string url, out string patched)
         {

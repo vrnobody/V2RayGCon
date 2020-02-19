@@ -130,7 +130,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkSubsIsAutoPatch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>390, 85</value>
+    <value>391, 85</value>
   </data>
   <data name="chkSubsIsAutoPatch.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 16</value>
@@ -166,7 +166,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnSubsInvertSelection.Location" type="System.Drawing.Point, System.Drawing">
-    <value>392, 348</value>
+    <value>394, 348</value>
   </data>
   <data name="btnSubsInvertSelection.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -196,7 +196,7 @@
     <value>Bottom, Right</value>
   </data>
   <data name="btnSubsUseAll.Location" type="System.Drawing.Point, System.Drawing">
-    <value>392, 319</value>
+    <value>394, 319</value>
   </data>
   <data name="btnSubsUseAll.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -232,7 +232,7 @@
     <value>NoControl</value>
   </data>
   <data name="chkSubsIsUseProxy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>390, 63</value>
+    <value>391, 63</value>
   </data>
   <data name="chkSubsIsUseProxy.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 16</value>
@@ -262,7 +262,7 @@
     <value>Top, Right</value>
   </data>
   <data name="btnUpdateViaSubscription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>392, 34</value>
+    <value>394, 34</value>
   </data>
   <data name="btnUpdateViaSubscription.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -291,8 +291,11 @@
   <data name="btnAddSubsUrl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
+  <data name="btnAddSubsUrl.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="btnAddSubsUrl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>392, 6</value>
+    <value>394, 6</value>
   </data>
   <data name="btnAddSubsUrl.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -328,7 +331,7 @@
     <value>6, 6</value>
   </data>
   <data name="flySubsUrlContainer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>378, 371</value>
+    <value>381, 371</value>
   </data>
   <data name="flySubsUrlContainer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>

@@ -133,29 +133,6 @@ namespace V2RayGCon.Test
         }
 
         [DataTestMethod]
-        [DataRow("中文aa测试", 8, "中文a...")]
-        [DataRow("中文aa测试", 7, "中文...")]
-        [DataRow("中文aa测试", 6, "中...")]
-        [DataRow("中aaa文测试", 6, "中a...")]
-        [DataRow("中aaa文测试", 5, "中...")]
-        [DataRow("中文测试", 4, "...")]
-        [DataRow("a中文测试", 9, "a中文测试")]
-        [DataRow("a中文测试", 8, "a中文...")]
-        [DataRow("a中文测试", 7, "a中...")]
-        [DataRow("a中文测试", 6, "a中...")]
-        [DataRow("a中文测试", 5, "a...")]
-        [DataRow("a中文测试", 4, "a...")]
-        [DataRow("a中文测试", 3, "")]
-        [DataRow("a中文测试", -1, "")]
-        [DataRow("aaaaaaaaa", 5, "aa...")]
-        [DataRow("", 100, "")]
-        public void CutStrTest(string org, int len, string expect)
-        {
-            var cut = Misc.Utils.CutStr(org, len);
-            Assert.AreEqual(expect, cut);
-        }
-
-        [DataTestMethod]
         [DataRow(@"{}", "")]
         [DataRow(@"{v2raygcon:{env:['1','2']}}", "")]
         [DataRow(@"{v2raygcon:{env:{a:'1',b:2}}}", "a:1,b:2")]

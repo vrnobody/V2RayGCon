@@ -17,8 +17,56 @@ namespace VgcApis.Misc
     public static class Utils
     {
 
-
         #region string
+        public static string AutoEllipsis(string text, int lenInAscii)
+        {
+            var ellipsis = Models.Consts.AutoEllipsis.ellipsis;
+            var defFont = Models.Consts.AutoEllipsis.defFont;
+
+            if (string.IsNullOrEmpty(text) || lenInAscii <= 0)
+            {
+                return string.Empty;
+            }
+
+            var width = TextRenderer.MeasureText(text, defFont).Width;
+            var baseline = TextRenderer.MeasureText(new string('a', lenInAscii), defFont).Width;
+
+            if (width <= baseline)
+            {
+                return text;
+            }
+
+            int end = Math.Min(text.Length, lenInAscii);
+            int pos = BinarySearchForEllipsisPos(text, 0, end, baseline);
+            return text.Substring(0, pos) + ellipsis;
+        }
+
+        static int BinarySearchForEllipsisPos(string text, int start, int end, int baseline)
+        {
+            int mid = (start + end) / 2;
+            while (mid != start && mid != end)
+            {
+                var s = text.Substring(0, mid) + Models.Consts.AutoEllipsis.ellipsis;
+                var w = TextRenderer.MeasureText(s, Models.Consts.AutoEllipsis.defFont).Width;
+                if (w == baseline)
+                {
+                    return mid;
+                }
+
+                if (w < baseline)
+                {
+                    start = mid;
+                }
+                else
+                {
+                    end = mid;
+                }
+                mid = (start + end) / 2;
+            }
+            return mid;
+        }
+
+
         public static bool TryPatchGitHubUrl(string url, out string patched)
         {
             patched = string.Empty;

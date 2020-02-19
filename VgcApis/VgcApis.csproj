@@ -82,7 +82,7 @@
     <Compile Include="Models\Consts\Config.cs" />
     <Compile Include="Models\Consts\Core.cs" />
     <Compile Include="Models\Consts\Lua.cs" />
-    <Compile Include="Models\Consts\Numbers.cs" />
+    <Compile Include="Models\Consts\AutoEllipsis.cs" />
     <Compile Include="Models\Consts\Patterns.cs" />
     <Compile Include="Models\Consts\Import.cs" />
     <Compile Include="Models\Consts\Libs.cs" />

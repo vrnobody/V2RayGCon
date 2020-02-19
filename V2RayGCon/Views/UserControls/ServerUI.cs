@@ -366,8 +366,8 @@ namespace V2RayGCon.Views.UserControls
         {
             var cs = coreStates;
             var title = cs.GetTitle();
-            var name = Misc.Utils.CutStr(cs.GetName(), VgcApis.Models.Consts.Numbers.ServerNameMaxLength);
-            var summary = Misc.Utils.CutStr(cs.GetSummary(), VgcApis.Models.Consts.Numbers.ServerSummaryMaxLength);
+            var name = VgcApis.Misc.Utils.AutoEllipsis(cs.GetName(), VgcApis.Models.Consts.AutoEllipsis.ServerNameMaxLength);
+            var summary = VgcApis.Misc.Utils.AutoEllipsis(cs.GetSummary(), VgcApis.Models.Consts.AutoEllipsis.ServerSummaryMaxLength);
             var tip = $"{I18N.NameColon}{name}\n{I18N.SummaryColon}{summary}";
 
             UpdateControlTextAndTooltip(rtboxServerTitle, title, tip);
@@ -375,7 +375,7 @@ namespace V2RayGCon.Views.UserControls
 
         void UpdateMarkLabel(string mark)
         {
-            var m = Misc.Utils.CutStr(mark, VgcApis.Models.Consts.Numbers.MarkLabelTextMaxLength);
+            var m = VgcApis.Misc.Utils.AutoEllipsis(mark, VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength);
             var tooltip = $"{I18N.Mark}{m}";
             UpdateControlTextAndTooltip(rlbMark, mark, tooltip);
         }

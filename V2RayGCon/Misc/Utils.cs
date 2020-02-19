@@ -1250,36 +1250,6 @@ namespace V2RayGCon.Misc
             return -1;
         }
 
-        public static string CutStr(string text, int lenInAscii)
-        {
-            if (lenInAscii <= 3 || string.IsNullOrEmpty(text))
-            {
-                return string.Empty;
-            }
-
-            var font = System.Drawing.SystemFonts.DefaultFont;
-
-            var baseLine = TextRenderer.MeasureText(new string('a', lenInAscii), font).Width;
-            var len = TextRenderer.MeasureText(text, font).Width;
-            if (len <= baseLine)
-            {
-                return text;
-            }
-
-            baseLine = TextRenderer.MeasureText(new string('a', lenInAscii - 3), font).Width;
-            var s = text.Substring(0, Math.Min(text.Length, lenInAscii));
-            len = TextRenderer.MeasureText(s, font).Width;
-            while (len > baseLine)
-            {
-                s = s.Substring(0, s.Length - 1);
-                len = TextRenderer.MeasureText(s, font).Width;
-            }
-
-            return $"{s}...";
-        }
-
-
-
         static string GenLinkPrefix(
             VgcApis.Models.Datas.Enums.LinkTypes linkType) =>
             $"{linkType.ToString()}";

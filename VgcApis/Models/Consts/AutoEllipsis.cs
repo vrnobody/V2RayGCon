@@ -1,7 +1,12 @@
-﻿namespace VgcApis.Models.Consts
+﻿using System.Drawing;
+
+namespace VgcApis.Models.Consts
 {
-    public static class Numbers
+    public static class AutoEllipsis
     {
+        public static string ellipsis = @"…";
+        public static Font defFont = SystemFonts.DefaultFont;
+
         public static int ServerNameMaxLength = 60;
         public static int ServerSummaryMaxLength = 80;
 

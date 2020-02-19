@@ -213,9 +213,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public string GetTitle()
         {
             var ci = coreInfo;
-            var name = Misc.Utils.CutStr(GetName(), VgcApis.Models.Consts.Numbers.ServerNameInTitleMaxLength);
+            var name = VgcApis.Misc.Utils.AutoEllipsis(GetName(), VgcApis.Models.Consts.AutoEllipsis.ServerNameInTitleMaxLength);
             var result = $"{ci.index}.[{name}] {ci.summary}";
-            return Misc.Utils.CutStr(result, VgcApis.Models.Consts.Numbers.ServerTitleMaxLength);
+            return VgcApis.Misc.Utils.AutoEllipsis(result, VgcApis.Models.Consts.AutoEllipsis.ServerTitleMaxLength);
         }
 
         public VgcApis.Models.Datas.CoreInfo GetAllInfo() => coreInfo;

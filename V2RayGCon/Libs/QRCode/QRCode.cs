@@ -132,7 +132,7 @@ namespace V2RayGCon.Libs.QRCode
         static void ShowResult(Result result, Point screenLocation, Rectangle winRect, Rectangle screenRect, Action<string> success)
         {
             var link = result.Text;
-            Debug.WriteLine("Read: " + Misc.Utils.CutStr(link, 32));
+            Debug.WriteLine("Read: " + VgcApis.Misc.Utils.AutoEllipsis(link, 32));
 
             var qrcodeRect = GetQRCodeRect(result, winRect, screenRect);
 

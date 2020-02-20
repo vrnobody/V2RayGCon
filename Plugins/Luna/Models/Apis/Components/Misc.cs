@@ -10,6 +10,7 @@ namespace Luna.Models.Apis.Components
         Services.Settings settings;
         VgcApis.Interfaces.Services.IUtilsService vgcUtils;
         VgcApis.Interfaces.Services.IShareLinkMgrService vgcSlinkMgr;
+        VgcApis.Interfaces.Services.IServersService vgcServer;
 
         public Misc(
             Services.Settings settings,
@@ -18,10 +19,10 @@ namespace Luna.Models.Apis.Components
             this.settings = settings;
             vgcUtils = api.GetUtilsService();
             vgcSlinkMgr = api.GetShareLinkMgrService();
+            vgcServer = api.GetServersService();
         }
 
         #region ILuaMisc.ImportLinks     
-
         public int ImportLinks(string links, string mark)
         {
             var pair = new string[] { links, mark ?? "" };
@@ -45,6 +46,11 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc thinggy
+
+        public long GetTimeoutValue() => VgcApis.Models.Consts.Core.SpeedtestTimeout;
+
+        public void RefreshFormMain() => vgcServer.RequireFormMainReload();
+
         public void WriteLocalStorage(string key, string value) =>
           settings.SetLuaShareMemory(key, value);
 

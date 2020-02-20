@@ -1342,9 +1342,12 @@ namespace V2RayGCon.Misc
         {
             try
             {
-                ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+                ServicePointManager.SecurityProtocol =
+                    SecurityProtocolType.Tls12
+                    | SecurityProtocolType.Tls11
+                    | SecurityProtocolType.Tls;
             }
-            catch (System.NotSupportedException)
+            catch (NotSupportedException)
             {
                 MessageBox.Show(I18N.SysNotSupportTLS12);
             }

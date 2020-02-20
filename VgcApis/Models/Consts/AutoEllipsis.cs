@@ -7,10 +7,9 @@ namespace VgcApis.Models.Consts
         public static string ellipsis = @"…";
         public static Font defFont = SystemFonts.DefaultFont;
 
-        public static int ServerNameMaxLength = 60;
+        public static int ServerShortNameMaxLength = 18;
+        public static int ServerLongNameMaxLength = 60;
         public static int ServerSummaryMaxLength = 80;
-
-        public static int ServerNameInTitleMaxLength = 20;
         public static int ServerTitleMaxLength = 60;
 
         public static int V2rayCoreTitleMaxLength = 48;

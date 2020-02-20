@@ -213,12 +213,37 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public string GetTitle()
         {
             var ci = coreInfo;
-            var name = VgcApis.Misc.Utils.AutoEllipsis(GetName(), VgcApis.Models.Consts.AutoEllipsis.ServerNameInTitleMaxLength);
-            var result = $"{ci.index}.[{name}] {ci.summary}";
-            return VgcApis.Misc.Utils.AutoEllipsis(result, VgcApis.Models.Consts.AutoEllipsis.ServerTitleMaxLength);
+            if (string.IsNullOrEmpty(ci.title))
+            {
+                var result = $"{ci.index}.[{GetShortName()}] {ci.summary}";
+                ci.title = VgcApis.Misc.Utils.AutoEllipsis(result, VgcApis.Models.Consts.AutoEllipsis.ServerTitleMaxLength);
+            }
+            return ci.title;
         }
 
         public VgcApis.Models.Datas.CoreInfo GetAllInfo() => coreInfo;
+
+        public string GetLongName()
+        {
+            if (string.IsNullOrEmpty(coreInfo.longName)
+                && !string.IsNullOrEmpty(coreInfo.name))
+            {
+                coreInfo.longName = VgcApis.Misc.Utils.AutoEllipsis(
+                    coreInfo.name, VgcApis.Models.Consts.AutoEllipsis.ServerLongNameMaxLength);
+            }
+            return coreInfo.longName;
+        }
+
+        public string GetShortName()
+        {
+            if (string.IsNullOrEmpty(coreInfo.shortName)
+                && !string.IsNullOrEmpty(coreInfo.name))
+            {
+                coreInfo.shortName = VgcApis.Misc.Utils.AutoEllipsis(
+                    coreInfo.name, VgcApis.Models.Consts.AutoEllipsis.ServerShortNameMaxLength);
+            }
+            return coreInfo.shortName;
+        }
 
         public string GetName() => coreInfo.name;
 

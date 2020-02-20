@@ -1633,7 +1633,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnImportAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>402, 6</value>
+    <value>394, 6</value>
   </data>
   <data name="btnImportAdd.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -1675,7 +1675,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="flyImportPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>393, 369</value>
+    <value>381, 371</value>
   </data>
   <data name="flyImportPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1759,7 +1759,7 @@
     <value>6, 6</value>
   </data>
   <data name="flyPluginsItemsContainer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>393, 348</value>
+    <value>381, 348</value>
   </data>
   <data name="flyPluginsItemsContainer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1961,6 +1961,9 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>511, 451</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>527, 340</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>

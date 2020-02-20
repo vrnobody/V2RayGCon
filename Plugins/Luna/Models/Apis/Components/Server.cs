@@ -20,7 +20,7 @@ namespace Luna.Models.Apis.Components
         public void UpdateAllSummary() =>
             vgcServers.UpdateAllServersSummarySync();
 
-        public void ResetIndexQuiet() =>
+        public void ResetIndexes() =>
             vgcServers.ResetIndexQuiet();
 
         // expose for ILuaServer
@@ -32,9 +32,6 @@ namespace Luna.Models.Apis.Components
 
         public List<VgcApis.Interfaces.ICoreServCtrl> GetAllServers() =>
             vgcServers.GetAllServersOrderByIndex().ToList();
-
-        public void RequireFormMainReload() =>
-            vgcServers.RequireFormMainReload();
 
         public void SortSelectedServersByLastModifiedDate() =>
             vgcServers.SortSelectedByLastModifiedDate();

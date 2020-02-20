@@ -10,7 +10,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
     {
         Services.Settings setting;
         Services.Cache cache;
-        Services.Servers servers;
         Services.ConfigMgr configMgr;
         VgcApis.Models.Datas.CoreInfo coreInfo;
 
@@ -22,13 +21,11 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             Services.Settings setting,
             Services.Cache cache,
             Services.ConfigMgr configMgr,
-            Services.Servers servers,
             VgcApis.Models.Datas.CoreInfo coreInfo)
         {
             this.configMgr = configMgr;
             this.setting = setting;
             this.cache = cache;
-            this.servers = servers;
             this.coreInfo = coreInfo;
         }
 
@@ -143,22 +140,24 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public void GetterInfoForNotifyIconf(Action<string> next)
         {
-            var serverName = coreInfo.name;
+            var cs = GetParent().GetCoreStates();
+            var servInfo = $"{cs.GetIndex()}.[{cs.GetShortName()}]";
+
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 var inInfo = GetterParsedInboundInfo(GetConfig());
                 if (inInfo == null)
                 {
-                    next(string.Format("[{0}]", serverName));
+                    next(servInfo);
                     return;
                 }
                 if (string.IsNullOrEmpty(inInfo.Item2))
                 {
-                    next(string.Format("[{0}] {1}", serverName, inInfo.Item1));
+                    next(string.Format("{0} {1}", servInfo, inInfo.Item1));
                     return;
                 }
-                next(string.Format("[{0}] {1}://{2}:{3}",
-                    serverName,
+                next(string.Format("{0} {1}://{2}:{3}",
+                    servInfo,
                     inInfo.Item1,
                     inInfo.Item2,
                     inInfo.Item3));
@@ -208,8 +207,13 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         void UpdateSummary(JObject config)
         {
-            coreInfo.name = Misc.Utils.GetAliasFromConfig(config);
+            var name = Misc.Utils.GetAliasFromConfig(config);
+            coreInfo.name = name;
             coreInfo.summary = Misc.Utils.GetSummaryFromConfig(config);
+
+            coreInfo.longName = string.Empty;
+            coreInfo.shortName = string.Empty;
+            coreInfo.title = string.Empty;
         }
 
         bool IsProtocolMatchProxyRequirment(bool isGlobalProxy, string protocol)

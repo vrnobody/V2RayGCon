@@ -365,12 +365,9 @@ namespace V2RayGCon.Views.UserControls
         private void UpdateTitleTextBox(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
         {
             var cs = coreStates;
-            var title = cs.GetTitle();
-            var name = VgcApis.Misc.Utils.AutoEllipsis(cs.GetName(), VgcApis.Models.Consts.AutoEllipsis.ServerNameMaxLength);
             var summary = VgcApis.Misc.Utils.AutoEllipsis(cs.GetSummary(), VgcApis.Models.Consts.AutoEllipsis.ServerSummaryMaxLength);
-            var tip = $"{I18N.NameColon}{name}\n{I18N.SummaryColon}{summary}";
-
-            UpdateControlTextAndTooltip(rtboxServerTitle, title, tip);
+            var tip = $"{I18N.NameColon}{cs.GetLongName()}\n{I18N.SummaryColon}{summary}";
+            UpdateControlTextAndTooltip(rtboxServerTitle, cs.GetTitle(), tip);
         }
 
         void UpdateMarkLabel(string mark)

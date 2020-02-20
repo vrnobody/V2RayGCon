@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static VgcApis.Misc.Utils;
 
 namespace VgcApisTests
@@ -40,10 +41,45 @@ namespace VgcApisTests
         [DataRow("", 100, false, "")]
         public void AutoEllipsisTest(string org, int len, bool isEllipsised, string expect)
         {
+            var defFont = VgcApis.Models.Consts.AutoEllipsis.defFont;
+            var orgLen = org.Length;
+            var result = AutoEllipsis(org, len);
+
+            if (orgLen <= 0 || len <= 0)
+            {
+                Assert.AreEqual(string.Empty, result);
+                return;
+            }
+
+            var orgWidth = TextRenderer.MeasureText(org, defFont).Width;
+            var resultWidth = TextRenderer.MeasureText(result, defFont).Width;
+            var expectedWidth = TextRenderer.MeasureText(new string('a', len), defFont).Width;
+
+            if (orgWidth <= expectedWidth)
+            {
+                Assert.AreEqual(org, result);
+                return;
+            }
+
+            var ellipsis = VgcApis.Models.Consts.AutoEllipsis.ellipsis;
+            Assert.AreEqual(ellipsis.Last(), result.Last());
+
+            var d = TextRenderer.MeasureText(ellipsis, defFont).Width;
+
+            if (resultWidth <= d)
+            {
+                return;
+            }
+
+            Assert.IsTrue(resultWidth <= expectedWidth);
+            Assert.IsTrue(resultWidth >= expectedWidth - d);
+
+            /* 以下代码只对特定字体有效
             string ellipsis = VgcApis.Models.Consts.AutoEllipsis.ellipsis;
             var cut = AutoEllipsis(org, len);
             var exp = expect + (isEllipsised ? ellipsis : "");
             Assert.AreEqual(exp, cut);
+            */
         }
 
         [DataTestMethod]

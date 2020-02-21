@@ -133,18 +133,6 @@ namespace V2RayGCon.Test
         }
 
         [DataTestMethod]
-        [DataRow("aaaaaa", 0, "...")]
-        [DataRow("aaaaaaaaa", 5, "aa...")]
-        [DataRow("aaaaaa", 3, "...")]
-        [DataRow("aaaaaa", -1, "...")]
-        [DataRow("", 100, "")]
-        public void CutStrTest(string org, int len, string expect)
-        {
-            var cut = Misc.Utils.CutStr(org, len);
-            Assert.AreEqual(expect, cut);
-        }
-
-        [DataTestMethod]
         [DataRow(@"{}", "")]
         [DataRow(@"{v2raygcon:{env:['1','2']}}", "")]
         [DataRow(@"{v2raygcon:{env:{a:'1',b:2}}}", "a:1,b:2")]

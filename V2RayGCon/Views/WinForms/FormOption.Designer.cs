@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormOption));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageSubscribe = new System.Windows.Forms.TabPage();
+            this.chkSubsIsAutoPatch = new System.Windows.Forms.CheckBox();
             this.btnSubsInvertSelection = new System.Windows.Forms.Button();
             this.btnSubsUseAll = new System.Windows.Forms.Button();
             this.chkSubsIsUseProxy = new System.Windows.Forms.CheckBox();
@@ -116,6 +117,7 @@
             // 
             // tabPageSubscribe
             // 
+            this.tabPageSubscribe.Controls.Add(this.chkSubsIsAutoPatch);
             this.tabPageSubscribe.Controls.Add(this.btnSubsInvertSelection);
             this.tabPageSubscribe.Controls.Add(this.btnSubsUseAll);
             this.tabPageSubscribe.Controls.Add(this.chkSubsIsUseProxy);
@@ -125,6 +127,13 @@
             resources.ApplyResources(this.tabPageSubscribe, "tabPageSubscribe");
             this.tabPageSubscribe.Name = "tabPageSubscribe";
             this.tabPageSubscribe.UseVisualStyleBackColor = true;
+            // 
+            // chkSubsIsAutoPatch
+            // 
+            resources.ApplyResources(this.chkSubsIsAutoPatch, "chkSubsIsAutoPatch");
+            this.chkSubsIsAutoPatch.Name = "chkSubsIsAutoPatch";
+            this.toolTip1.SetToolTip(this.chkSubsIsAutoPatch, resources.GetString("chkSubsIsAutoPatch.ToolTip"));
+            this.chkSubsIsAutoPatch.UseVisualStyleBackColor = true;
             // 
             // btnSubsInvertSelection
             // 
@@ -638,5 +647,6 @@
         private System.Windows.Forms.TextBox tboxSettingsMaxCoreNum;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.CheckBox chkSubsIsAutoPatch;
     }
 }

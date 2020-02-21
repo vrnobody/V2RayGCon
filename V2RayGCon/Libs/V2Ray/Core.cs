@@ -58,7 +58,7 @@ namespace V2RayGCon.Libs.V2Ray
             {
                 return string.IsNullOrEmpty(_title) ?
                     string.Empty :
-                    Misc.Utils.CutStr(_title, 46);
+                    VgcApis.Misc.Utils.AutoEllipsis(_title, VgcApis.Models.Consts.AutoEllipsis.V2rayCoreTitleMaxLength);
             }
             set
             {

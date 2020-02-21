@@ -15,7 +15,7 @@
             isInjectSkipCNSite,
             isUntrack;
 
-        public string name, summary, inbIp, customMark, uid;
+        public string name, longName, shortName, summary, title, inbIp, customMark, uid;
 
         public int customInbType, inbPort;
 
@@ -39,6 +39,9 @@
             customMark = string.Empty;
 
             name = string.Empty;
+            longName = string.Empty;
+            shortName = string.Empty;
+            title = string.Empty;
             summary = string.Empty;
             config = string.Empty;
             uid = string.Empty;
@@ -47,6 +50,13 @@
             customInbType = (int)Enums.ProxyTypes.HTTP;
             inbIp = Consts.Webs.LoopBackIP;
             inbPort = Consts.Webs.DefaultProxyPort;
+        }
+
+        public void ClearCachedString()
+        {
+            shortName = string.Empty;
+            longName = string.Empty;
+            title = string.Empty;
         }
     }
 }

@@ -717,4 +717,10 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="Mark" xml:space="preserve">
     <value>标记：</value>
   </data>
+  <data name="NameColon" xml:space="preserve">
+    <value>名称：</value>
+  </data>
+  <data name="SummaryColon" xml:space="preserve">
+    <value>摘要：</value>
+  </data>
 </root>

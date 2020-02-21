@@ -64,6 +64,7 @@ namespace V2RayGCon.Views.WinForms
                     btnAddSubsUrl,
                     btnUpdateViaSubscription,
                     chkSubsIsUseProxy,
+                    chkSubsIsAutoPatch,
                     btnSubsUseAll,
                     btnSubsInvertSelection));
 

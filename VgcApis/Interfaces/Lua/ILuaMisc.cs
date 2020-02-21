@@ -4,6 +4,9 @@ namespace VgcApis.Interfaces.Lua
 {
     public interface ILuaMisc
     {
+        // sort server panel by index
+        void RefreshFormMain();
+
         // share among all scripts
         string ReadLocalStorage(string key);
 
@@ -43,6 +46,8 @@ namespace VgcApis.Interfaces.Lua
 
         // GetLinkBody("vmess://abcdefg") == "abcdefg"
         string GetLinkBody(string link);
+
+        long GetTimeoutValue();
 
         string PredefinedFunctions();
         void Print(params object[] contents);

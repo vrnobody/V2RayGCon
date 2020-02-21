@@ -41,7 +41,7 @@ namespace V2RayGCon.Controllers
             states = new CoreServerComponent.CoreStates(servers, coreInfo);
             logger = new CoreServerComponent.Logger(setting);
             configer = new CoreServerComponent.Configer(
-                setting, cache, configMgr, servers, coreInfo);
+                setting, cache, configMgr, coreInfo);
 
             AddChild(coreCtrl);
             AddChild(states);
@@ -89,6 +89,7 @@ namespace V2RayGCon.Controllers
                 json.Merge(node);
                 coreInfo.config = json.ToString(Formatting.None);
                 coreInfo.name = name;
+                coreInfo.ClearCachedString();
             }
             catch { }
         }

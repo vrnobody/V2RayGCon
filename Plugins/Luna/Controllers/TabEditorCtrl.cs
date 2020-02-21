@@ -82,10 +82,6 @@ namespace Luna.Controllers
             BindEvents();
 
             ReloadScriptName();
-            if (cboxScriptName.Items.Count > 0)
-            {
-                cboxScriptName.SelectedIndex = 0;
-            }
 
             repaintCtrl = new VgcApis.Libs.Views.RepaintCtrl(rtboxOutput);
             logUpdater.Run();

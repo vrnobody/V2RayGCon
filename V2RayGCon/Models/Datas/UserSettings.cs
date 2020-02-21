@@ -6,6 +6,8 @@ namespace V2RayGCon.Models.Datas
     {
         #region public properties
 
+        public bool isAutoPatchSubsInfo { get; set; }
+
         // FormOption->Defaults->Mode
         public ImportSharelinkOptions ImportOptions = null;
 
@@ -45,6 +47,8 @@ namespace V2RayGCon.Models.Datas
         public UserSettings()
         {
             Normalized();
+
+            isAutoPatchSubsInfo = false;
 
             ServerPanelPageSize = 8;
 

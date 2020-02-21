@@ -152,7 +152,7 @@ namespace V2RayGCon.Misc
         public static string GetAliasFromConfig(JObject config)
         {
             var name = GetValue<string>(config, "v2raygcon.alias");
-            return string.IsNullOrEmpty(name) ? I18N.Empty : CutStr(name, 12);
+            return string.IsNullOrEmpty(name) ? I18N.Empty : name;
         }
 
         public static string GetSummaryFromConfig(JObject config)
@@ -1250,26 +1250,6 @@ namespace V2RayGCon.Misc
             return -1;
         }
 
-        public static string CutStr(string s, int len)
-        {
-
-            if (len >= s.Length)
-            {
-                return s;
-            }
-
-            var ellipsis = "...";
-
-            if (len <= 3)
-            {
-                return ellipsis;
-            }
-
-            return s.Substring(0, len - 3) + ellipsis;
-        }
-
-
-
         static string GenLinkPrefix(
             VgcApis.Models.Datas.Enums.LinkTypes linkType) =>
             $"{linkType.ToString()}";
@@ -1362,9 +1342,12 @@ namespace V2RayGCon.Misc
         {
             try
             {
-                ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+                ServicePointManager.SecurityProtocol =
+                    SecurityProtocolType.Tls12
+                    | SecurityProtocolType.Tls11
+                    | SecurityProtocolType.Tls;
             }
-            catch (System.NotSupportedException)
+            catch (NotSupportedException)
             {
                 MessageBox.Show(I18N.SysNotSupportTLS12);
             }

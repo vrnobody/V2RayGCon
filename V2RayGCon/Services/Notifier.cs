@@ -90,7 +90,7 @@ namespace V2RayGCon.Services
                     return;
                 }
 
-                var msg = Misc.Utils.CutStr(link, 90);
+                var msg = VgcApis.Misc.Utils.AutoEllipsis(link, VgcApis.Models.Consts.AutoEllipsis.QrcodeTextMaxLength);
                 setting.SendLog($"QRCode: {msg}");
                 slinkMgr.ImportLinkWithOutV2cfgLinks(link);
             }
@@ -387,7 +387,7 @@ namespace V2RayGCon.Services
                 var sysProxyInfo = GetterSysProxyInfo();
                 if (!string.IsNullOrEmpty(sysProxyInfo))
                 {
-                    texts.Add(I18N.CurSysProxy + Misc.Utils.CutStr(sysProxyInfo, 50));
+                    texts.Add(I18N.CurSysProxy + VgcApis.Misc.Utils.AutoEllipsis(sysProxyInfo, VgcApis.Models.Consts.AutoEllipsis.NotifierSysProxyInfoMaxLength));
                 }
                 SetNotifyText(string.Join(Environment.NewLine, texts));
                 return;
@@ -419,7 +419,7 @@ namespace V2RayGCon.Services
         {
             var text = string.IsNullOrEmpty(rawText) ?
                 I18N.Description :
-                Misc.Utils.CutStr(rawText, 127);
+                VgcApis.Misc.Utils.AutoEllipsis(rawText, VgcApis.Models.Consts.AutoEllipsis.NotifierTextMaxLength);
 
             if (ni.Text == text)
             {
@@ -594,12 +594,11 @@ namespace V2RayGCon.Services
         #region protected methods
         protected override void Cleanup()
         {
-            ni.Visible = false;
-
             ReleaseServerEvents();
-
             serversMenuUpdater.Quit();
             notifierUpdater.Quit();
+
+            ni.Visible = false;
         }
         #endregion
     }

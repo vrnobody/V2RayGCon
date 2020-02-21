@@ -62,7 +62,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 var name = string.Format(
                     "{0}.{1}",
                     coreState.GetIndex(),
-                    coreState.GetName());
+                    coreState.GetLongName());
 
 
                 var org = coreServ.GetConfiger().GetConfig();

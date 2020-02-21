@@ -15,11 +15,16 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         double GetIndex();
         long GetLastModifiedUtcTicks();
         string GetMark();
+
+        string GetShortName();
+        string GetLongName();
         string GetName();
+
         string GetRawUid();
         long GetSpeedTestResult();
         string GetStatus();
         string GetSummary();
+
         string GetTitle();
         string GetUid();
 

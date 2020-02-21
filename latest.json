@@ -1,9 +1,10 @@
 {
-  "version": "1.2.8.7",
-  "md5": "36BD32CB8C9624A6D85ABFA6F59BC9AE",
+  "version": "1.2.9.0",
+  "md5": "26E849E6AD384DA300B5FFBA2E601BB9",
   "warnings": [
   ],
   "changes": [
-      "v://... 分享链接支持http协议"
+      "界面少量调整",
+      "修改lua/libs/utils.lua"
   ]
 }

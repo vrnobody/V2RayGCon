@@ -211,9 +211,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             coreInfo.name = name;
             coreInfo.summary = Misc.Utils.GetSummaryFromConfig(config);
 
-            coreInfo.longName = string.Empty;
-            coreInfo.shortName = string.Empty;
-            coreInfo.title = string.Empty;
+            coreInfo.ClearCachedString();
         }
 
         bool IsProtocolMatchProxyRequirment(bool isGlobalProxy, string protocol)

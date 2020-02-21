@@ -51,5 +51,12 @@
             inbIp = Consts.Webs.LoopBackIP;
             inbPort = Consts.Webs.DefaultProxyPort;
         }
+
+        public void ClearCachedString()
+        {
+            shortName = string.Empty;
+            longName = string.Empty;
+            title = string.Empty;
+        }
     }
 }

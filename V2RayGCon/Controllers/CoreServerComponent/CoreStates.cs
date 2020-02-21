@@ -52,6 +52,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
 
             coreInfo.index = index;
+            coreInfo.title = string.Empty;
             coreCtrl.SetTitle(GetTitle());
             if (!quiet)
             {

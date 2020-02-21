@@ -52,6 +52,10 @@ function u.ToNumber(str)
     return ToNumber(str)
 end
 
+function u.SecondDiff(tLeft, tRight)
+    return math.abs(tLeft - tRight)
+end
+
 function u.MinuteDiff(tLeft, tRight)
     local mLeft = Ticks2Minutes(tLeft)
     local mRight = Ticks2Minutes(tRight)
@@ -78,42 +82,59 @@ function u.Ticks2Hours(ticks)
     return Ticks2Hours(ticks)
 end
 
-function u.GetServWithMark(mark)
-    assert(type(mark) == "string")
+function u.GetUidOfServer(coreServ)
+    if coreServ ~= nil then
+        local coreState = coreServ:GetCoreStates()
+        return coreState:GetUid()
+    end
+    return ""
+end
+
+function GetServsByMarks(marks, isContainsMark)
+    assert(type(marks) == "table")
+    assert(type(isContainsMark), "boolean")
+    local hasMark = {}
+    local noMark = {}
     for coreServ in AllServs() do
         local coreState = coreServ:GetCoreStates()
-        if mark == coreState:GetMark() then
-            return coreServ
+        if IsInTable(marks, coreState:GetMark()) then
+            table.insert(hasMark, coreServ)
+        else
+            table.insert(noMark, coreServ)
         end
+    end
+    if isContainsMark then
+        return hasMark
+    else
+        return noMark
+    end
+end
+
+function u.GetServersWithMarks(marks)
+    return GetServsByMarks(marks, true)
+end
+
+function u.GetServersWithoutMarks(marks)
+    return GetServsByMarks(marks, false)
+end
+
+function u.GetFirstServerWithMarks(marks)
+    local servs = GetServsByMarks(marks, true)
+    if #servs > 0 then
+        return servs[1]
     end
     return nil
 end
 
-function u.GetServsWithMark(mark)
-    assert(type(mark) == "string")
-    local t = {}
-    for coreServ in AllServs() do
-        local coreState = coreServ:GetCoreStates()
-        if mark == coreState:GetMark() then
-            table.insert(t, coreServ)
-        end
+function u.GetFirstServerWithoutMarks(marks)
+    local servs = GetServsByMarks(marks, false)
+    if #servs > 0 then
+        return servs[1]
     end
-    return t
+    return nil
 end
 
-function u.GetServsWithMarks(marks)
-    assert(type(marks) == "table")
-    local t = {}
-    for coreServ in AllServs() do
-        local coreState = coreServ:GetCoreStates()
-        if IsInTable(marks, coreState:GetMark()) then
-            table.insert(t, coreServ)
-        end
-    end
-    return t
-end
-
-function u.GetServWithName(name)
+function u.GetFirstServerWithName(name)
     assert(type(name) == "string")
     for coreServ in AllServs() do
         local coreState = coreServ:GetCoreStates()
@@ -124,7 +145,7 @@ function u.GetServWithName(name)
     return nil
 end
 
-function u.GetServWithUid(uid)
+function u.GetFirstServerWithUid(uid)
     assert(type(uid) == "string")
     for coreServ in AllServs() do
         local coreState = coreServ:GetCoreStates()
@@ -135,7 +156,7 @@ function u.GetServWithUid(uid)
     return nil
 end
 
-function u.GetServWithIndex(index)
+function u.GetServerByIndex(index)
     assert(type(index) == "number")
     for coreServ in AllServs() do
         local coreState = coreServ:GetCoreStates()
@@ -146,23 +167,39 @@ function u.GetServWithIndex(index)
     return nil
 end
 
-function u.SelectByMarks(marks)
-    assert(type(marks) == "table")
-    for coreServ in AllServs() do
+function u.InvertServersSelection(servers)
+    assert(type(servers) == "table")
+    for k, coreServ in pairs(servers) do
         local coreState = coreServ:GetCoreStates()
-        if IsInTable(marks, coreState:GetMark()) then
-		  coreState:SetIsSelected(true)
+        local selected = coreState:IsSelected()
+        coreState:SetIsSelected(not selected)
+    end
+end
+
+function u.UnSelectServers(servers)
+    assert(type(servers) == "table")
+    for k, coreServ in pairs(servers) do
+        if coreServ ~= nil then
+            local coreState = coreServ:GetCoreStates()
+            coreState:SetIsSelected(false)
         end
     end
 end
 
-function u.SelectByMark(mark)
-    assert(type(mark) == "string")
-    for coreServ in AllServs() do
-        local coreState = coreServ:GetCoreStates()
-        if coreState:GetMark() == mark then
+function u.SelectServers(servers)
+    assert(type(servers) == "table")
+    for k, coreServ in pairs(servers) do
+        if coreServ ~= nil then
+            local coreState = coreServ:GetCoreStates()
             coreState:SetIsSelected(true)
         end
+    end
+end
+
+function u.SelectAll()
+    for coreServ in AllServs() do
+        local coreState = coreServ:GetCoreStates()
+        coreState:SetIsSelected(true)
     end
 end
 

@@ -89,6 +89,7 @@ namespace V2RayGCon.Controllers
                 json.Merge(node);
                 coreInfo.config = json.ToString(Formatting.None);
                 coreInfo.name = name;
+                coreInfo.ClearCachedString();
             }
             catch { }
         }

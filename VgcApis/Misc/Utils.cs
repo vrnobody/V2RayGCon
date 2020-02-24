@@ -4,6 +4,7 @@ using ScintillaNET;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -17,7 +18,49 @@ namespace VgcApis.Misc
     public static class Utils
     {
 
+        #region files
+        public static string GetImageResolution(string filename)
+        {
+            try
+            {
+                var img = Image.FromFile(filename);
+                return $"{img.Width}x{img.Height}";
+            }
+            catch { }
+            return null;
+        }
+
+        public static string PickRandomLine(string filename)
+        {
+            string url = string.Empty;
+
+            if (!File.Exists(filename))
+            {
+                return url;
+            }
+
+            using (var file = File.OpenText(filename))
+            {
+                int numberSeen = 0;
+                var rng = new Random();
+                var lines = File.ReadLines(filename);
+                foreach (var line in lines)
+                {
+                    if (!string.IsNullOrEmpty(line) && rng.Next(++numberSeen) == 0)
+                    {
+                        url = line;
+                    }
+                }
+            }
+
+            return url.Replace("\r", "").Replace("\n", "");
+        }
+        #endregion
+
         #region string
+
+        public static string GetAppName() => Properties.Resources.AppName;
+
         public static string AutoEllipsis(string text, int lenInAscii)
         {
             var ellipsis = Models.Consts.AutoEllipsis.ellipsis;

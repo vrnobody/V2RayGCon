@@ -24,8 +24,22 @@ namespace Luna.Models.Apis.Components
         public int GetProxyPort() =>
             vgcServers.GetAvailableHttpProxyPort();
 
-        public string Fetch(string url) =>
-            vgcWeb.Fetch(url, -1, -1);
+        public bool Download(string url, string filename) =>
+            vgcWeb.Download(url, filename, -1, -1);
+
+        public bool Download(string url, string filename, int millSecond) =>
+            vgcWeb.Download(url, filename, -1, millSecond);
+
+        public bool Download(string url, string filename, int proxyPort, int millSecond) =>
+            vgcWeb.Download(url, filename, proxyPort, millSecond);
+
+        public string Fetch(string url) => vgcWeb.Fetch(url, -1, -1);
+
+        public string Fetch(string url, int milliSeconds) =>
+            vgcWeb.Fetch(url, -1, milliSeconds);
+
+        public string Fetch(string url, int proxyPort, int milliSeconds) =>
+            vgcWeb.Fetch(url, proxyPort, milliSeconds);
 
         public int UpdateSubscriptions() =>
             vgcSlinkMgr.UpdateSubscriptions(-1);
@@ -54,8 +68,7 @@ namespace Luna.Models.Apis.Components
         public List<string> FindAllHrefs(string text) =>
             vgcWeb.FindAllHrefs(text);
 
-        public string Fetch(string url, int proxyPort, int milliSeconds) =>
-          vgcWeb.Fetch(url, proxyPort, milliSeconds);
+
 
         #endregion
     }

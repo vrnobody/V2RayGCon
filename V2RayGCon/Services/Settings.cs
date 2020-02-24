@@ -569,6 +569,8 @@ namespace V2RayGCon.Services
             LazySaveUserSettings();
         }
 
+        public string GetSubscriptionConfig() => userSettings.SubscribeUrls;
+
         public List<Models.Datas.SubscriptionItem> GetSubscriptionItems()
         {
             try

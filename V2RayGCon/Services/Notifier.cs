@@ -440,7 +440,7 @@ namespace V2RayGCon.Services
             {
                 Text = I18N.Description,
                 Icon = VgcApis.Misc.UI.GetAppIcon(),
-                BalloonTipTitle = Properties.Resources.AppName,
+                BalloonTipTitle = VgcApis.Misc.Utils.GetAppName(),
 
                 ContextMenuStrip = CreateMenu(),
                 Visible = true

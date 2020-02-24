@@ -985,6 +985,62 @@ namespace V2RayGCon.Misc
             return elasped;
         }
 
+        static bool DownloadFileWorker(string url, string filename, int proxyPort, int timeout)
+        {
+            var success = true;
+            if (timeout <= 0)
+            {
+                timeout = VgcApis.Models.Consts.Intervals.FetchDefaultTimeout;
+            }
+
+            WebClient wc = new WebClient();
+
+            if (proxyPort > 0 && proxyPort < 65536)
+            {
+                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, proxyPort);
+            }
+
+            AutoResetEvent dlCompleted = new AutoResetEvent(false);
+            wc.DownloadFileCompleted += (s, a) =>
+            {
+                if (a.Cancelled)
+                {
+                    success = false;
+                }
+                dlCompleted.Set();
+            };
+
+            try
+            {
+                if (!VgcApis.Misc.Utils.IsHttpLink(url))
+                {
+                    url = VgcApis.Misc.Utils.RelativePath2FullPath(url);
+                }
+
+                wc.DownloadFileAsync(new Uri(url), filename);
+
+                // 收到信号为True
+                if (!dlCompleted.WaitOne(timeout))
+                {
+                    success = false;
+                    wc.CancelAsync();
+                }
+            }
+            catch
+            {
+                success = false;
+            }
+            finally
+            {
+                wc.Dispose();
+            }
+
+            return success;
+        }
+
+        public static bool DownloadFile(string url, string filename, int proxyPort, int timeout) =>
+            DownloadFileWorker(url, filename, proxyPort, timeout);
+
         /// <summary>
         /// Download through http://127.0.0.1:proxyPort. Return string.Empty if sth. goes wrong.
         /// </summary>
@@ -1137,7 +1193,8 @@ namespace V2RayGCon.Misc
         {
             var appData = System.Environment.GetFolderPath(
                 Environment.SpecialFolder.CommonApplicationData);
-            return Path.Combine(appData, Properties.Resources.AppName);
+            var appName = VgcApis.Misc.Utils.GetAppName();
+            return Path.Combine(appData, appName);
         }
 
         public static void CreateAppDataFolder()

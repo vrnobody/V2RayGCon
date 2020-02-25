@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInput));
             this.btnOk = new System.Windows.Forms.Button();
             this.lbTitle = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.rtboxInput = new System.Windows.Forms.RichTextBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // btnOk
@@ -81,5 +83,6 @@
         private System.Windows.Forms.Label lbTitle;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.RichTextBox rtboxInput;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

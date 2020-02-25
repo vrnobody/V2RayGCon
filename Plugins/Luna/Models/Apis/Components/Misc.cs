@@ -52,6 +52,7 @@ namespace Luna.Models.Apis.Components
         #region ILuaMisc thinggy
         public int SetWallpaper(string filename) =>
             Libs.Sys.WinApis.SetWallpaper(filename);
+
         public string GetImageResolution(string filename) =>
             VgcApis.Misc.Utils.GetImageResolution(filename);
 
@@ -64,9 +65,11 @@ namespace Luna.Models.Apis.Components
 
         public string GetSubscriptionConfig() => vgcSettings.GetSubscriptionConfig();
 
-        public string Input(string title)
+        public string Input(string title) => Input(title, 3);
+
+        public string Input(string title, int lines)
         {
-            using (var form = new Views.WinForms.FormInput(title))
+            using (var form = new Views.WinForms.FormInput(title, lines))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)
@@ -77,32 +80,29 @@ namespace Luna.Models.Apis.Components
             return null;
         }
 
-        public List<int> Choices(string title, params string[] choices)
+        public List<int> Choices(string title, NLua.LuaTable choices) =>
+            Choices(title, choices, false);
+
+        public List<int> Choices(string title, NLua.LuaTable choices, bool isShowKey)
         {
-            using (var form = new Views.WinForms.FormChoices(title, choices))
-            {
-                var result = form.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    return form.results;
-                }
-            }
-            return new List<int>();
+            var list = LuaTableToList(choices, isShowKey);
+            return GetResultFromChoicesDialog(title, list.ToArray());
         }
 
+        public List<int> Choices(string title, params string[] choices) =>
+            GetResultFromChoicesDialog(title, choices);
 
-        public int Choice(string title, params string[] choices)
+        public int Choice(string title, NLua.LuaTable choices) =>
+            Choice(title, choices, false);
+
+        public int Choice(string title, NLua.LuaTable choices, bool isShowKey)
         {
-            using (var form = new Views.WinForms.FormChoice(title, choices))
-            {
-                var result = form.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    return form.result;
-                }
-            }
-            return -1;
+            var list = LuaTableToList(choices, isShowKey);
+            return GetResultFromChoiceDialog(title, list.ToArray());
         }
+
+        public int Choice(string title, params string[] choices) =>
+            GetResultFromChoiceDialog(title, choices);
 
         public bool Confirm(string content) =>
             VgcApis.Misc.UI.Confirm(content);
@@ -189,6 +189,45 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region private methods
+        List<string> LuaTableToList(NLua.LuaTable table, bool isShowKey)
+        {
+            var r = new List<string>();
+            foreach (KeyValuePair<object, object> de in table)
+            {
+                var v = de.Value.ToString();
+                if (isShowKey)
+                {
+                    v = de.Key.ToString() + @"." + v;
+                }
+                r.Add(v);
+            }
+            return r;
+        }
+
+        private static List<int> GetResultFromChoicesDialog(string title, string[] choices)
+        {
+            using (var form = new Views.WinForms.FormChoices(title, choices))
+            {
+                var result = form.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    return form.results;
+                }
+            }
+            return new List<int>();
+        }
+        private static int GetResultFromChoiceDialog(string title, string[] choices)
+        {
+            using (var form = new Views.WinForms.FormChoice(title, choices))
+            {
+                var result = form.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    return form.result;
+                }
+            }
+            return -1;
+        }
 
         #endregion
     }

@@ -16,14 +16,24 @@ namespace VgcApis.Interfaces.Lua
 
         string GetSubscriptionConfig();
 
-        // max content length is 2MiB
+        // 2MiB char max
         string Input(string title);
 
-        // max choices number is 6
+        // 25 lines max
+        string Input(string title, int lines);
+
+        // 18 choices max
         List<int> Choices(string title, params string[] choices);
 
-        // max choices number is 6
+        List<int> Choices(string title, NLua.LuaTable choices);
+
+        List<int> Choices(string title, NLua.LuaTable choices, bool isShowKey);
+
         int Choice(string title, params string[] choices);
+
+        int Choice(string title, NLua.LuaTable choices);
+
+        int Choice(string title, NLua.LuaTable choices, bool isShowKey);
 
         bool Confirm(string content);
 

@@ -8,7 +8,7 @@ namespace Luna.Views.WinForms
     {
         readonly int MAX_TITLE_LEN = 60;
         readonly int MAX_CHOICE_LEN = 50;
-        readonly int MAX_CHOICES_NUM = 8;
+        readonly int MAX_CHOICES_NUM = 18;
         private readonly string title;
         private readonly string[] choices;
 
@@ -45,6 +45,7 @@ namespace Luna.Views.WinForms
         void InitControls()
         {
             lbTitle.Text = VgcApis.Misc.Utils.AutoEllipsis(title, MAX_TITLE_LEN);
+            toolTip1.SetToolTip(lbTitle, title);
 
             var margin = lbTitle.Top;
             var left = lbTitle.Left * 2;
@@ -59,16 +60,17 @@ namespace Luna.Views.WinForms
 
             for (int i = 0; i < num; i++)
             {
-                var btn = new RadioButton
+                var control = new RadioButton
                 {
                     Text = VgcApis.Misc.Utils.AutoEllipsis(choices[i], MAX_CHOICE_LEN),
                     Left = left,
                     Top = h * (i + 1) + margin,
                     AutoSize = true,
                 };
+                toolTip1.SetToolTip(control, choices[i]);
 
-                Controls.Add(btn);
-                radioButtons.Add(btn);
+                Controls.Add(control);
+                radioButtons.Add(control);
             }
         }
         #endregion

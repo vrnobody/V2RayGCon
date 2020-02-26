@@ -50,6 +50,7 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc thinggy
+
         public int SetWallpaper(string filename) =>
             Libs.Sys.WinApis.SetWallpaper(filename);
 

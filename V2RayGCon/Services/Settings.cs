@@ -40,6 +40,12 @@ namespace V2RayGCon.Services
             }
         }
 
+        public void ExitApp()
+        {
+            ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;
+            Application.Exit();
+        }
+
         public VgcApis.Models.Datas.Enums.ShutdownReasons ShutdownReason { get; set; } =
             VgcApis.Models.Datas.Enums.ShutdownReasons.Undefined;
 

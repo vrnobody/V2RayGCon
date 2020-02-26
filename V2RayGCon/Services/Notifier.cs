@@ -523,8 +523,7 @@ namespace V2RayGCon.Services
                     new ToolStripMenuItem(
                         I18N.Exit,
                         Properties.Resources.CloseSolution_16x,
-                        (s, a) =>
-                        {
+                        (s, a) => {
                             if (Misc.UI.Confirm(I18N.ConfirmExitApp))
                             {
                                 setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;

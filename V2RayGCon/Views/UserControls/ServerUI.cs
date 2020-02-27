@@ -81,6 +81,7 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region private method
+        void ShowModifyConfigsWinForm() => WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);
 
         private void HighLightServerTitleWithKeywords()
         {
@@ -662,7 +663,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void showSettingsWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);
+            ShowModifyConfigsWinForm();
         }
 
         private void btnShowPopupMenu_Click(object sender, EventArgs e)
@@ -680,21 +681,7 @@ namespace V2RayGCon.Views.UserControls
             coreServCtrl.GetCoreCtrl().StopCoreThen();
         }
 
-        private void rlbInboundMode_MouseDown(object sender, MouseEventArgs e)
-        {
-            UserMouseDown();
-        }
-        private void rlbSetting_MouseDown(object sender, MouseEventArgs e)
-        {
-            UserMouseDown();
-        }
-
         private void rlbLastModify_MouseDown(object sender, MouseEventArgs e)
-        {
-            UserMouseDown();
-        }
-
-        private void rlbMark_MouseDown(object sender, MouseEventArgs e)
         {
             UserMouseDown();
         }
@@ -703,6 +690,22 @@ namespace V2RayGCon.Views.UserControls
         {
             UserMouseDown();
         }
+
+        private void rlbSetting_Click(object sender, EventArgs e)
+        {
+            ShowModifyConfigsWinForm();
+        }
+
+        private void rlbInboundMode_Click(object sender, EventArgs e)
+        {
+            ShowModifyConfigsWinForm();
+        }
+
+        private void rlbMark_Click(object sender, EventArgs e)
+        {
+            ShowModifyConfigsWinForm();
+        }
+
         #endregion
     }
 }

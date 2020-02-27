@@ -440,7 +440,7 @@ namespace V2RayGCon.Services
             {
                 Text = I18N.Description,
                 Icon = VgcApis.Misc.UI.GetAppIcon(),
-                BalloonTipTitle = Properties.Resources.AppName,
+                BalloonTipTitle = VgcApis.Misc.Utils.GetAppName(),
 
                 ContextMenuStrip = CreateMenu(),
                 Visible = true
@@ -523,8 +523,7 @@ namespace V2RayGCon.Services
                     new ToolStripMenuItem(
                         I18N.Exit,
                         Properties.Resources.CloseSolution_16x,
-                        (s, a) =>
-                        {
+                        (s, a) => {
                             if (Misc.UI.Confirm(I18N.ConfirmExitApp))
                             {
                                 setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;

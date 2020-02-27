@@ -9,7 +9,14 @@ namespace VgcApis.Interfaces.Lua
         List<string> ExtractVmessLinks(string text);
         List<string> ExtractSsLinks(string text);
         string Fetch(string url);
+        string Fetch(string url, int milliSeconds);
         string Fetch(string url, int proxyPort, int milliSeconds);
+
+        // Download("http://baidu.com", "d:\index.html")
+        bool Download(string url, string filename);
+        bool Download(string url, string filename, int millSeconds);
+        bool Download(string url, string filename, int proxyPort, int millSeconds);
+
         List<string> FindAllHrefs(string text);
 
         // the first running http server's port number

@@ -117,18 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppName" xml:space="preserve">
-    <value>V2RayGCon</value>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>取消</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="icon_dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons\icon_dark.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_light" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons\icon_light.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LogFileName" xml:space="preserve">
-    <value />
-    <comment>Set this to empty for disabling log file.</comment>
+  <data name="$this.Text" xml:space="preserve">
+    <value>单选</value>
   </data>
 </root>

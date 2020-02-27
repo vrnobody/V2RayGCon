@@ -74,6 +74,7 @@
     <Compile Include="Libs\LuaSnippet\LuaSubFuncSnippets.cs" />
     <Compile Include="Libs\LuaSnippet\ApiFunctionSnippets.cs" />
     <Compile Include="Libs\LuaSnippet\LuaAcm.cs" />
+    <Compile Include="Libs\Sys\WinApis.cs" />
     <Compile Include="Misc\UI.cs" />
     <Compile Include="Luna.cs" />
     <Compile Include="Models\Apis\Components\Server.cs" />
@@ -109,6 +110,24 @@
     <Compile Include="Views\UserControls\LuaUI.Designer.cs">
       <DependentUpon>LuaUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\WinForms\FormInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormInput.Designer.cs">
+      <DependentUpon>FormInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForms\FormChoices.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormChoices.Designer.cs">
+      <DependentUpon>FormChoices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForms\FormChoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormChoice.Designer.cs">
+      <DependentUpon>FormChoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\WinForms\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,6 +161,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\LuaUI.zh-CN.resx">
       <DependentUpon>LuaUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormInput.resx">
+      <DependentUpon>FormInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormInput.zh-CN.resx">
+      <DependentUpon>FormInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormChoices.resx">
+      <DependentUpon>FormChoices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormChoices.zh-CN.resx">
+      <DependentUpon>FormChoices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormChoice.resx">
+      <DependentUpon>FormChoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormChoice.zh-CN.resx">
+      <DependentUpon>FormChoice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

@@ -91,7 +91,7 @@ namespace V2RayGCon.Views.WinForms
             var version = Misc.Utils.GetAssemblyVersion();
             formTitle = string.Format(
                 "{0} v{1}",
-                Properties.Resources.AppName,
+                VgcApis.Misc.Utils.GetAppName(),
                 Misc.Utils.TrimVersionString(version));
         }
 

@@ -6,5 +6,8 @@
         void SendLog(string log);
         void SavePluginsSetting(string pluginName, string value);
         string GetPluginsSetting(string pluginName);
+
+        // for luna plug-in
+        string GetSubscriptionConfig();
     }
 }

@@ -127,7 +127,8 @@
             this.rlbSetting.Name = "rlbSetting";
             this.toolTip1.SetToolTip(this.rlbSetting, resources.GetString("rlbSetting.ToolTip"));
             this.rlbSetting.UseCompatibleTextRendering = true;
-            this.rlbSetting.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbSetting_MouseDown);
+            this.rlbSetting.Click += new System.EventHandler(this.rlbSetting_Click);
+
             // 
             // rlbMark
             // 
@@ -140,7 +141,7 @@
             this.rlbMark.Name = "rlbMark";
             this.toolTip1.SetToolTip(this.rlbMark, resources.GetString("rlbMark.ToolTip"));
             this.rlbMark.UseCompatibleTextRendering = true;
-            this.rlbMark.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbMark_MouseDown);
+            this.rlbMark.Click += new System.EventHandler(this.rlbMark_Click);
             // 
             // rlbLastModify
             // 
@@ -178,7 +179,7 @@
             this.rlbInboundMode.Name = "rlbInboundMode";
             this.toolTip1.SetToolTip(this.rlbInboundMode, resources.GetString("rlbInboundMode.ToolTip"));
             this.rlbInboundMode.UseCompatibleTextRendering = true;
-            this.rlbInboundMode.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbInboundMode_MouseDown);
+            this.rlbInboundMode.Click += new System.EventHandler(this.rlbInboundMode_Click);
             // 
             // ctxMenuStripMore
             // 

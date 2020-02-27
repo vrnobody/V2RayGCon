@@ -1,5 +1,6 @@
 ﻿import = function () end
 print = function(...) Misc:Print(...) end
+os.exit = function() print("os.exit() is disabled") end
                 
 -- copy from NLua
 function Each(o)

@@ -4,6 +4,41 @@ namespace VgcApis.Interfaces.Lua
 {
     public interface ILuaMisc
     {
+        int SetWallpaper(string filename);
+
+        string GetImageResolution(string filename);
+
+        string PickRandomLine(string filename);
+
+        string RandomHex(int len);
+
+        string NewGuid();
+
+        string GetSubscriptionConfig();
+
+        // 2MiB char max
+        string Input(string title);
+
+        // 25 lines max
+        string Input(string title, int lines);
+
+        // 18 choices max
+        List<int> Choices(string title, params string[] choices);
+
+        List<int> Choices(string title, NLua.LuaTable choices);
+
+        List<int> Choices(string title, NLua.LuaTable choices, bool isShowKey);
+
+        int Choice(string title, params string[] choices);
+
+        int Choice(string title, NLua.LuaTable choices);
+
+        int Choice(string title, NLua.LuaTable choices, bool isShowKey);
+
+        bool Confirm(string content);
+
+        void Alert(string content);
+
         // sort server panel by index
         void RefreshFormMain();
 

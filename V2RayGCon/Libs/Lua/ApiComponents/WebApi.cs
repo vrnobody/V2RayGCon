@@ -24,6 +24,9 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
         }
 
         public string Fetch(string url, int proxyPort, int timeout) =>
-          Misc.Utils.Fetch(url, proxyPort, timeout);
+            Misc.Utils.Fetch(url, proxyPort, timeout);
+
+        public bool Download(string url, string filename, int proxyPort, int timeout) =>
+            Misc.Utils.DownloadFile(url, filename, proxyPort, timeout);
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Luna.Models.Apis.Components
 {
@@ -11,6 +13,7 @@ namespace Luna.Models.Apis.Components
         VgcApis.Interfaces.Services.IUtilsService vgcUtils;
         VgcApis.Interfaces.Services.IShareLinkMgrService vgcSlinkMgr;
         VgcApis.Interfaces.Services.IServersService vgcServer;
+        VgcApis.Interfaces.Services.ISettingsService vgcSettings;
 
         public Misc(
             Services.Settings settings,
@@ -20,6 +23,7 @@ namespace Luna.Models.Apis.Components
             vgcUtils = api.GetUtilsService();
             vgcSlinkMgr = api.GetShareLinkMgrService();
             vgcServer = api.GetServersService();
+            vgcSettings = api.GetSettingService();
         }
 
         #region ILuaMisc.ImportLinks     
@@ -46,6 +50,67 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc thinggy
+
+        public int SetWallpaper(string filename) =>
+            Libs.Sys.WinApis.SetWallpaper(filename);
+
+        public string GetImageResolution(string filename) =>
+            VgcApis.Misc.Utils.GetImageResolution(filename);
+
+        public string PickRandomLine(string filename) =>
+            VgcApis.Misc.Utils.PickRandomLine(filename);
+
+        public string RandomHex(int len) => VgcApis.Misc.Utils.RandomHex(len);
+
+        public string NewGuid() => Guid.NewGuid().ToString();
+
+        public string GetSubscriptionConfig() => vgcSettings.GetSubscriptionConfig();
+
+        public string Input(string title) => Input(title, 3);
+
+        public string Input(string title, int lines)
+        {
+            using (var form = new Views.WinForms.FormInput(title, lines))
+            {
+                var result = form.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    return form.result;
+                }
+            }
+            return null;
+        }
+
+        public List<int> Choices(string title, NLua.LuaTable choices) =>
+            Choices(title, choices, false);
+
+        public List<int> Choices(string title, NLua.LuaTable choices, bool isShowKey)
+        {
+            var list = LuaTableToList(choices, isShowKey);
+            return GetResultFromChoicesDialog(title, list.ToArray());
+        }
+
+        public List<int> Choices(string title, params string[] choices) =>
+            GetResultFromChoicesDialog(title, choices);
+
+        public int Choice(string title, NLua.LuaTable choices) =>
+            Choice(title, choices, false);
+
+        public int Choice(string title, NLua.LuaTable choices, bool isShowKey)
+        {
+            var list = LuaTableToList(choices, isShowKey);
+            return GetResultFromChoiceDialog(title, list.ToArray());
+        }
+
+        public int Choice(string title, params string[] choices) =>
+            GetResultFromChoiceDialog(title, choices);
+
+        public bool Confirm(string content) =>
+            VgcApis.Misc.UI.Confirm(content);
+
+        public void Alert(string content) =>
+            MessageBox.Show(content, VgcApis.Misc.Utils.GetAppName());
+
 
         public long GetTimeoutValue() => VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
@@ -122,6 +187,49 @@ namespace Luna.Models.Apis.Components
             }
             GetParent().SendLog(text);
         }
+        #endregion
+
+        #region private methods
+        List<string> LuaTableToList(NLua.LuaTable table, bool isShowKey)
+        {
+            var r = new List<string>();
+            foreach (KeyValuePair<object, object> de in table)
+            {
+                var v = de.Value.ToString();
+                if (isShowKey)
+                {
+                    v = de.Key.ToString() + @"." + v;
+                }
+                r.Add(v);
+            }
+            return r;
+        }
+
+        private static List<int> GetResultFromChoicesDialog(string title, string[] choices)
+        {
+            using (var form = new Views.WinForms.FormChoices(title, choices))
+            {
+                var result = form.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    return form.results;
+                }
+            }
+            return new List<int>();
+        }
+        private static int GetResultFromChoiceDialog(string title, string[] choices)
+        {
+            using (var form = new Views.WinForms.FormChoice(title, choices))
+            {
+                var result = form.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    return form.result;
+                }
+            }
+            return -1;
+        }
+
         #endregion
     }
 }

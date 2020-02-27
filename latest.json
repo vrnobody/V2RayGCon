@@ -1,10 +1,9 @@
 {
-  "version": "1.2.9.0",
-  "md5": "26E849E6AD384DA300B5FFBA2E601BB9",
+  "version": "1.2.9.3",
+  "md5": "FF8F602B6583A33AC90E9698862C83D4",
   "warnings": [
   ],
   "changes": [
-      "界面少量调整",
-      "修改lua/libs/utils.lua"
+      "luna插件添加Input，Choices等几个输入控件"
   ]
 }

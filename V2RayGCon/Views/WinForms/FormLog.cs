@@ -45,7 +45,7 @@ namespace V2RayGCon.Views.WinForms
             updateLogTimer.Tick += UpdateLog;
             updateLogTimer.Start();
 
-            throw new NullReferenceException("for debugging");
+            // throw new NullReferenceException("for debugging");
         }
 
         #region private methods

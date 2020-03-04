@@ -817,7 +817,7 @@
             this.KeyPreview = true;
             this.MainMenuStrip = this.mainMenu;
             this.Name = "FormConfiger";
-            this.Shown += new System.EventHandler(this.FormConfiger_Shown);
+            this.Load += new System.EventHandler(this.FormConfiger_Load);
             this.tabCtrlToolPanel.ResumeLayout(false);
             this.tabPageProtocol.ResumeLayout(false);
             this.tabPageProtocol.PerformLayout();

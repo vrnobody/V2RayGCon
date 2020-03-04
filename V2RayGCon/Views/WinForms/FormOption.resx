@@ -375,615 +375,6 @@
   <data name="&gt;&gt;tabPageSubscribe.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="groupBox4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="chkDefImportInjectGlobalImport.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkDefImportInjectGlobalImport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkDefImportInjectGlobalImport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>172, 45</value>
-  </data>
-  <data name="chkDefImportInjectGlobalImport.Size" type="System.Drawing.Size, System.Drawing">
-    <value>102, 16</value>
-  </data>
-  <data name="chkDefImportInjectGlobalImport.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="chkDefImportInjectGlobalImport.Text" xml:space="preserve">
-    <value>Global import</value>
-  </data>
-  <data name="chkDefImportInjectGlobalImport.ToolTip" xml:space="preserve">
-    <value>Inject global imports.</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportInjectGlobalImport.Name" xml:space="preserve">
-    <value>chkDefImportInjectGlobalImport</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportInjectGlobalImport.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportInjectGlobalImport.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportInjectGlobalImport.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="chkDefImportBypassCnSite.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkDefImportBypassCnSite.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 45</value>
-  </data>
-  <data name="chkDefImportBypassCnSite.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 16</value>
-  </data>
-  <data name="chkDefImportBypassCnSite.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="chkDefImportBypassCnSite.Text" xml:space="preserve">
-    <value>Bypass CN</value>
-  </data>
-  <data name="chkDefImportBypassCnSite.ToolTip" xml:space="preserve">
-    <value>Bypass CN sites.</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportBypassCnSite.Name" xml:space="preserve">
-    <value>chkDefImportBypassCnSite</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportBypassCnSite.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportBypassCnSite.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportBypassCnSite.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="chkDefImportSsShareLink.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkDefImportSsShareLink.Location" type="System.Drawing.Point, System.Drawing">
-    <value>398, 20</value>
-  </data>
-  <data name="chkDefImportSsShareLink.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="chkDefImportSsShareLink.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 16</value>
-  </data>
-  <data name="chkDefImportSsShareLink.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="chkDefImportSsShareLink.Text" xml:space="preserve">
-    <value>SS</value>
-  </data>
-  <data name="chkDefImportSsShareLink.ToolTip" xml:space="preserve">
-    <value>Import shadowsocks share links.</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportSsShareLink.Name" xml:space="preserve">
-    <value>chkDefImportSsShareLink</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportSsShareLink.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportSsShareLink.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportSsShareLink.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="tboxDefImportAddr.Location" type="System.Drawing.Point, System.Drawing">
-    <value>239, 18</value>
-  </data>
-  <data name="tboxDefImportAddr.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="tboxDefImportAddr.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 21</value>
-  </data>
-  <data name="tboxDefImportAddr.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tboxDefImportAddr.Text" xml:space="preserve">
-    <value>127.0.0.1:1080</value>
-  </data>
-  <data name="tboxDefImportAddr.ToolTip" xml:space="preserve">
-    <value>127.0.0.1:1080</value>
-  </data>
-  <data name="&gt;&gt;tboxDefImportAddr.Name" xml:space="preserve">
-    <value>tboxDefImportAddr</value>
-  </data>
-  <data name="&gt;&gt;tboxDefImportAddr.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxDefImportAddr.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;tboxDefImportAddr.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="cboxDefImportMode.Items" xml:space="preserve">
-    <value>Config</value>
-  </data>
-  <data name="cboxDefImportMode.Items1" xml:space="preserve">
-    <value>HTTP</value>
-  </data>
-  <data name="cboxDefImportMode.Items2" xml:space="preserve">
-    <value>SOCKS</value>
-  </data>
-  <data name="cboxDefImportMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 18</value>
-  </data>
-  <data name="cboxDefImportMode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="cboxDefImportMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 20</value>
-  </data>
-  <data name="cboxDefImportMode.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="cboxDefImportMode.ToolTip" xml:space="preserve">
-    <value>Config means keep original inbound config.</value>
-  </data>
-  <data name="&gt;&gt;cboxDefImportMode.Name" xml:space="preserve">
-    <value>cboxDefImportMode</value>
-  </data>
-  <data name="&gt;&gt;cboxDefImportMode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboxDefImportMode.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;cboxDefImportMode.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="label9.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>170, 22</value>
-  </data>
-  <data name="label9.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 12</value>
-  </data>
-  <data name="label9.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="label9.Text" xml:space="preserve">
-    <value>Def. Addr.</value>
-  </data>
-  <data name="label9.ToolTip" xml:space="preserve">
-    <value>Default proxy address.</value>
-  </data>
-  <data name="&gt;&gt;label9.Name" xml:space="preserve">
-    <value>label9</value>
-  </data>
-  <data name="&gt;&gt;label9.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 22</value>
-  </data>
-  <data name="label10.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 12</value>
-  </data>
-  <data name="label10.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>Def. Mode</value>
-  </data>
-  <data name="label10.ToolTip" xml:space="preserve">
-    <value>Config means keep original inbound config.</value>
-  </data>
-  <data name="&gt;&gt;label10.Name" xml:space="preserve">
-    <value>label10</value>
-  </data>
-  <data name="&gt;&gt;label10.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 91</value>
-  </data>
-  <data name="groupBox4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="groupBox4.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 68</value>
-  </data>
-  <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="groupBox4.Text" xml:space="preserve">
-    <value>Import share link</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.Name" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.Parent" xml:space="preserve">
-    <value>tabPageDefaults</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="groupBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="tboxDefSpeedtestTimeout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>325, 43</value>
-  </data>
-  <data name="tboxDefSpeedtestTimeout.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="tboxDefSpeedtestTimeout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 21</value>
-  </data>
-  <data name="tboxDefSpeedtestTimeout.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="tboxDefSpeedtestTimeout.ToolTip" xml:space="preserve">
-    <value>20000 (20 seconds)</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestTimeout.Name" xml:space="preserve">
-    <value>tboxDefSpeedtestTimeout</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestTimeout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestTimeout.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestTimeout.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tboxDefSpeedtestExpectedSize.Location" type="System.Drawing.Point, System.Drawing">
-    <value>207, 43</value>
-  </data>
-  <data name="tboxDefSpeedtestExpectedSize.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="tboxDefSpeedtestExpectedSize.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 21</value>
-  </data>
-  <data name="tboxDefSpeedtestExpectedSize.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="tboxDefSpeedtestExpectedSize.ToolTip" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestExpectedSize.Name" xml:space="preserve">
-    <value>tboxDefSpeedtestExpectedSize</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestExpectedSize.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestExpectedSize.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestExpectedSize.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tboxDefSpeedtestCycles.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 43</value>
-  </data>
-  <data name="tboxDefSpeedtestCycles.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="tboxDefSpeedtestCycles.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 21</value>
-  </data>
-  <data name="tboxDefSpeedtestCycles.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tboxDefSpeedtestCycles.ToolTip" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestCycles.Name" xml:space="preserve">
-    <value>tboxDefSpeedtestCycles</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestCycles.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestCycles.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestCycles.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="tboxDefSpeedtestUrl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 18</value>
-  </data>
-  <data name="tboxDefSpeedtestUrl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="tboxDefSpeedtestUrl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>307, 21</value>
-  </data>
-  <data name="tboxDefSpeedtestUrl.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="tboxDefSpeedtestUrl.ToolTip" xml:space="preserve">
-    <value>https://www.google.com</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestUrl.Name" xml:space="preserve">
-    <value>tboxDefSpeedtestUrl</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestUrl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestUrl.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestUrl.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="chkDefSpeedtestIsUse.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkDefSpeedtestIsUse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkDefSpeedtestIsUse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>398, 20</value>
-  </data>
-  <data name="chkDefSpeedtestIsUse.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="chkDefSpeedtestIsUse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 16</value>
-  </data>
-  <data name="chkDefSpeedtestIsUse.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="chkDefSpeedtestIsUse.Text" xml:space="preserve">
-    <value>Use</value>
-  </data>
-  <data name="chkDefSpeedtestIsUse.ToolTip" xml:space="preserve">
-    <value>Use these custom speed-test settings.</value>
-  </data>
-  <data name="&gt;&gt;chkDefSpeedtestIsUse.Name" xml:space="preserve">
-    <value>chkDefSpeedtestIsUse</value>
-  </data>
-  <data name="&gt;&gt;chkDefSpeedtestIsUse.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkDefSpeedtestIsUse.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;chkDefSpeedtestIsUse.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>144, 47</value>
-  </data>
-  <data name="label7.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 12</value>
-  </data>
-  <data name="label7.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>Size(KiB)</value>
-  </data>
-  <data name="label7.ToolTip" xml:space="preserve">
-    <value>If actual download-size less than expected size, speedtest result will be "Timeout".</value>
-  </data>
-  <data name="&gt;&gt;label7.Name" xml:space="preserve">
-    <value>label7</value>
-  </data>
-  <data name="&gt;&gt;label7.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 47</value>
-  </data>
-  <data name="label6.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 12</value>
-  </data>
-  <data name="label6.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="label6.Text" xml:space="preserve">
-    <value>Cycles</value>
-  </data>
-  <data name="label6.ToolTip" xml:space="preserve">
-    <value>Speedtest cycles.</value>
-  </data>
-  <data name="&gt;&gt;label6.Name" xml:space="preserve">
-    <value>label6</value>
-  </data>
-  <data name="&gt;&gt;label6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 22</value>
-  </data>
-  <data name="label5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 12</value>
-  </data>
-  <data name="label5.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>Custom URL</value>
-  </data>
-  <data name="label5.ToolTip" xml:space="preserve">
-    <value>Custom speed-test URL.</value>
-  </data>
-  <data name="&gt;&gt;label5.Name" xml:space="preserve">
-    <value>label5</value>
-  </data>
-  <data name="&gt;&gt;label5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>271, 47</value>
-  </data>
-  <data name="label11.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 12</value>
-  </data>
-  <data name="label11.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="label11.Text" xml:space="preserve">
-    <value>Timeout</value>
-  </data>
-  <data name="label11.ToolTip" xml:space="preserve">
-    <value>Timeout in milliseconds.</value>
-  </data>
-  <data name="&gt;&gt;label11.Name" xml:space="preserve">
-    <value>label11</value>
-  </data>
-  <data name="&gt;&gt;label11.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 12</value>
-  </data>
-  <data name="groupBox3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="groupBox3.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 73</value>
-  </data>
-  <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="groupBox3.Text" xml:space="preserve">
-    <value>Speedtest</value>
-  </data>
-  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;groupBox3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox3.Parent" xml:space="preserve">
-    <value>tabPageDefaults</value>
-  </data>
-  <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tabPageDefaults.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="tabPageDefaults.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="tabPageDefaults.Size" type="System.Drawing.Size, System.Drawing">
-    <value>479, 377</value>
-  </data>
-  <data name="tabPageDefaults.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="tabPageDefaults.Text" xml:space="preserve">
-    <value>Defaults</value>
-  </data>
-  <data name="&gt;&gt;tabPageDefaults.Name" xml:space="preserve">
-    <value>tabPageDefaults</value>
-  </data>
-  <data name="&gt;&gt;tabPageDefaults.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabPageDefaults.Parent" xml:space="preserve">
-    <value>tabControl1</value>
-  </data>
-  <data name="&gt;&gt;tabPageDefaults.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="groupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -1624,6 +1015,615 @@
     <value>tabControl1</value>
   </data>
   <data name="&gt;&gt;tabPageSetting.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBox4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="chkDefImportInjectGlobalImport.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkDefImportInjectGlobalImport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkDefImportInjectGlobalImport.Location" type="System.Drawing.Point, System.Drawing">
+    <value>172, 45</value>
+  </data>
+  <data name="chkDefImportInjectGlobalImport.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 16</value>
+  </data>
+  <data name="chkDefImportInjectGlobalImport.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="chkDefImportInjectGlobalImport.Text" xml:space="preserve">
+    <value>Global import</value>
+  </data>
+  <data name="chkDefImportInjectGlobalImport.ToolTip" xml:space="preserve">
+    <value>Inject global imports.</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportInjectGlobalImport.Name" xml:space="preserve">
+    <value>chkDefImportInjectGlobalImport</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportInjectGlobalImport.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportInjectGlobalImport.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportInjectGlobalImport.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="chkDefImportBypassCnSite.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkDefImportBypassCnSite.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 45</value>
+  </data>
+  <data name="chkDefImportBypassCnSite.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 16</value>
+  </data>
+  <data name="chkDefImportBypassCnSite.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="chkDefImportBypassCnSite.Text" xml:space="preserve">
+    <value>Bypass CN</value>
+  </data>
+  <data name="chkDefImportBypassCnSite.ToolTip" xml:space="preserve">
+    <value>Bypass CN sites.</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportBypassCnSite.Name" xml:space="preserve">
+    <value>chkDefImportBypassCnSite</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportBypassCnSite.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportBypassCnSite.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportBypassCnSite.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="chkDefImportSsShareLink.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkDefImportSsShareLink.Location" type="System.Drawing.Point, System.Drawing">
+    <value>398, 20</value>
+  </data>
+  <data name="chkDefImportSsShareLink.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkDefImportSsShareLink.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 16</value>
+  </data>
+  <data name="chkDefImportSsShareLink.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="chkDefImportSsShareLink.Text" xml:space="preserve">
+    <value>SS</value>
+  </data>
+  <data name="chkDefImportSsShareLink.ToolTip" xml:space="preserve">
+    <value>Import shadowsocks share links.</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportSsShareLink.Name" xml:space="preserve">
+    <value>chkDefImportSsShareLink</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportSsShareLink.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportSsShareLink.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportSsShareLink.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tboxDefImportAddr.Location" type="System.Drawing.Point, System.Drawing">
+    <value>239, 18</value>
+  </data>
+  <data name="tboxDefImportAddr.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="tboxDefImportAddr.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 21</value>
+  </data>
+  <data name="tboxDefImportAddr.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tboxDefImportAddr.Text" xml:space="preserve">
+    <value>127.0.0.1:1080</value>
+  </data>
+  <data name="tboxDefImportAddr.ToolTip" xml:space="preserve">
+    <value>127.0.0.1:1080</value>
+  </data>
+  <data name="&gt;&gt;tboxDefImportAddr.Name" xml:space="preserve">
+    <value>tboxDefImportAddr</value>
+  </data>
+  <data name="&gt;&gt;tboxDefImportAddr.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxDefImportAddr.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;tboxDefImportAddr.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="cboxDefImportMode.Items" xml:space="preserve">
+    <value>Config</value>
+  </data>
+  <data name="cboxDefImportMode.Items1" xml:space="preserve">
+    <value>HTTP</value>
+  </data>
+  <data name="cboxDefImportMode.Items2" xml:space="preserve">
+    <value>SOCKS</value>
+  </data>
+  <data name="cboxDefImportMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 18</value>
+  </data>
+  <data name="cboxDefImportMode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="cboxDefImportMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 20</value>
+  </data>
+  <data name="cboxDefImportMode.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="cboxDefImportMode.ToolTip" xml:space="preserve">
+    <value>Config means keep original inbound config.</value>
+  </data>
+  <data name="&gt;&gt;cboxDefImportMode.Name" xml:space="preserve">
+    <value>cboxDefImportMode</value>
+  </data>
+  <data name="&gt;&gt;cboxDefImportMode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboxDefImportMode.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;cboxDefImportMode.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label9.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>170, 22</value>
+  </data>
+  <data name="label9.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 12</value>
+  </data>
+  <data name="label9.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label9.Text" xml:space="preserve">
+    <value>Def. Addr.</value>
+  </data>
+  <data name="label9.ToolTip" xml:space="preserve">
+    <value>Default proxy address.</value>
+  </data>
+  <data name="&gt;&gt;label9.Name" xml:space="preserve">
+    <value>label9</value>
+  </data>
+  <data name="&gt;&gt;label9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 22</value>
+  </data>
+  <data name="label10.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 12</value>
+  </data>
+  <data name="label10.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>Def. Mode</value>
+  </data>
+  <data name="label10.ToolTip" xml:space="preserve">
+    <value>Config means keep original inbound config.</value>
+  </data>
+  <data name="&gt;&gt;label10.Name" xml:space="preserve">
+    <value>label10</value>
+  </data>
+  <data name="&gt;&gt;label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 91</value>
+  </data>
+  <data name="groupBox4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="groupBox4.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>449, 68</value>
+  </data>
+  <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>Import share link</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Name" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Parent" xml:space="preserve">
+    <value>tabPageDefaults</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="groupBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="tboxDefSpeedtestTimeout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>325, 43</value>
+  </data>
+  <data name="tboxDefSpeedtestTimeout.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="tboxDefSpeedtestTimeout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 21</value>
+  </data>
+  <data name="tboxDefSpeedtestTimeout.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="tboxDefSpeedtestTimeout.ToolTip" xml:space="preserve">
+    <value>20000 (20 seconds)</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestTimeout.Name" xml:space="preserve">
+    <value>tboxDefSpeedtestTimeout</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestTimeout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestTimeout.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestTimeout.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tboxDefSpeedtestExpectedSize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>207, 43</value>
+  </data>
+  <data name="tboxDefSpeedtestExpectedSize.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="tboxDefSpeedtestExpectedSize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 21</value>
+  </data>
+  <data name="tboxDefSpeedtestExpectedSize.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tboxDefSpeedtestExpectedSize.ToolTip" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestExpectedSize.Name" xml:space="preserve">
+    <value>tboxDefSpeedtestExpectedSize</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestExpectedSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestExpectedSize.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestExpectedSize.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tboxDefSpeedtestCycles.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 43</value>
+  </data>
+  <data name="tboxDefSpeedtestCycles.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="tboxDefSpeedtestCycles.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 21</value>
+  </data>
+  <data name="tboxDefSpeedtestCycles.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tboxDefSpeedtestCycles.ToolTip" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestCycles.Name" xml:space="preserve">
+    <value>tboxDefSpeedtestCycles</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestCycles.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestCycles.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestCycles.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tboxDefSpeedtestUrl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 18</value>
+  </data>
+  <data name="tboxDefSpeedtestUrl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="tboxDefSpeedtestUrl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>307, 21</value>
+  </data>
+  <data name="tboxDefSpeedtestUrl.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tboxDefSpeedtestUrl.ToolTip" xml:space="preserve">
+    <value>https://www.google.com</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestUrl.Name" xml:space="preserve">
+    <value>tboxDefSpeedtestUrl</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestUrl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestUrl.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;tboxDefSpeedtestUrl.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="chkDefSpeedtestIsUse.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkDefSpeedtestIsUse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkDefSpeedtestIsUse.Location" type="System.Drawing.Point, System.Drawing">
+    <value>398, 20</value>
+  </data>
+  <data name="chkDefSpeedtestIsUse.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="chkDefSpeedtestIsUse.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 16</value>
+  </data>
+  <data name="chkDefSpeedtestIsUse.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="chkDefSpeedtestIsUse.Text" xml:space="preserve">
+    <value>Use</value>
+  </data>
+  <data name="chkDefSpeedtestIsUse.ToolTip" xml:space="preserve">
+    <value>Use these custom speed-test settings.</value>
+  </data>
+  <data name="&gt;&gt;chkDefSpeedtestIsUse.Name" xml:space="preserve">
+    <value>chkDefSpeedtestIsUse</value>
+  </data>
+  <data name="&gt;&gt;chkDefSpeedtestIsUse.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkDefSpeedtestIsUse.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;chkDefSpeedtestIsUse.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>144, 47</value>
+  </data>
+  <data name="label7.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 12</value>
+  </data>
+  <data name="label7.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Size(KiB)</value>
+  </data>
+  <data name="label7.ToolTip" xml:space="preserve">
+    <value>If actual download-size less than expected size, speedtest result will be "Timeout".</value>
+  </data>
+  <data name="&gt;&gt;label7.Name" xml:space="preserve">
+    <value>label7</value>
+  </data>
+  <data name="&gt;&gt;label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 47</value>
+  </data>
+  <data name="label6.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 12</value>
+  </data>
+  <data name="label6.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>Cycles</value>
+  </data>
+  <data name="label6.ToolTip" xml:space="preserve">
+    <value>Speedtest cycles.</value>
+  </data>
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
+  </data>
+  <data name="&gt;&gt;label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 22</value>
+  </data>
+  <data name="label5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 12</value>
+  </data>
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Custom URL</value>
+  </data>
+  <data name="label5.ToolTip" xml:space="preserve">
+    <value>Custom speed-test URL.</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>271, 47</value>
+  </data>
+  <data name="label11.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 12</value>
+  </data>
+  <data name="label11.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="label11.Text" xml:space="preserve">
+    <value>Timeout</value>
+  </data>
+  <data name="label11.ToolTip" xml:space="preserve">
+    <value>Timeout in milliseconds.</value>
+  </data>
+  <data name="&gt;&gt;label11.Name" xml:space="preserve">
+    <value>label11</value>
+  </data>
+  <data name="&gt;&gt;label11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 12</value>
+  </data>
+  <data name="groupBox3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="groupBox3.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>449, 73</value>
+  </data>
+  <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>Speedtest</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Parent" xml:space="preserve">
+    <value>tabPageDefaults</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabPageDefaults.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabPageDefaults.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="tabPageDefaults.Size" type="System.Drawing.Size, System.Drawing">
+    <value>479, 377</value>
+  </data>
+  <data name="tabPageDefaults.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="tabPageDefaults.Text" xml:space="preserve">
+    <value>Defaults</value>
+  </data>
+  <data name="&gt;&gt;tabPageDefaults.Name" xml:space="preserve">
+    <value>tabPageDefaults</value>
+  </data>
+  <data name="&gt;&gt;tabPageDefaults.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPageDefaults.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabPageDefaults.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="btnImportAdd.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">

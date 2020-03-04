@@ -33,10 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.9.5")]
+[assembly: AssemblyVersion("1.2.9.7")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.2.9.7 Try to fix issue #4 SubscriptionUI bug.
+ * v1.2.9.6 Add version information in bug report.
  * v1.2.9.5 Input of Luna plug-in can initialize with content.
  * v1.2.9.4 fix "锟斤拷"
  * v1.2.9.3 add click event handler in tags of server panel

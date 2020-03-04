@@ -39,13 +39,13 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.AutoSetFormIcon(this);
         }
 
-        private void FormLog_Load(object sender, System.EventArgs e)
+        private void FormLog_Load(object sender, EventArgs e)
         {
-            // throw new NullReferenceException("for debugging");
-
             repaintCtrl = new VgcApis.Libs.Views.RepaintCtrl(rtBoxLogger);
             updateLogTimer.Tick += UpdateLog;
             updateLogTimer.Start();
+
+            throw new NullReferenceException("for debugging");
         }
 
         #region private methods

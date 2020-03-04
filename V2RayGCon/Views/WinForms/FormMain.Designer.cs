@@ -855,7 +855,7 @@ namespace V2RayGCon.Views.WinForms
             this.Controls.Add(this.mainMneuStrip);
             this.MainMenuStrip = this.mainMneuStrip;
             this.Name = "FormMain";
-            this.Shown += new System.EventHandler(this.FormMain_Shown);
+            this.Load += new System.EventHandler(this.FormMain_Load);
             this.toolStripContainer2.ContentPanel.ResumeLayout(false);
             this.toolStripContainer2.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer2.TopToolStripPanel.PerformLayout();

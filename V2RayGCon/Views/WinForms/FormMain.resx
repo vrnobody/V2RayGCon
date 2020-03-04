@@ -787,7 +787,7 @@
     <value>Select</value>
   </data>
   <data name="toolStripMenuItemModifySettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="toolStripMenuItemModifySettings.Text" xml:space="preserve">
     <value>Modify settings</value>
@@ -796,37 +796,37 @@
     <value>Batch modify servers settings. Selected servers which are running will reboot.</value>
   </data>
   <data name="toolStripSeparator11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
+    <value>175, 6</value>
   </data>
   <data name="toolStripMenuItemSortBySpeedTest.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="toolStripMenuItemSortBySpeedTest.Text" xml:space="preserve">
     <value>Sort by speed test</value>
   </data>
   <data name="toolStripMenuItemSortByDateT.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="toolStripMenuItemSortByDateT.Text" xml:space="preserve">
     <value>Sort by date</value>
   </data>
   <data name="toolStripMenuItemSortBySummary.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="toolStripMenuItemSortBySummary.Text" xml:space="preserve">
     <value>Sort by summary</value>
   </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
+    <value>175, 6</value>
   </data>
   <data name="toolStripMenuItemMoveToTop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="toolStripMenuItemMoveToTop.Text" xml:space="preserve">
     <value>Move to top</value>
   </data>
   <data name="toolStripMenuItemMoveToBottom.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="toolStripMenuItemMoveToBottom.Text" xml:space="preserve">
     <value>Move to bottom</value>
@@ -838,7 +838,7 @@
     <value>Adjust selected</value>
   </data>
   <data name="toolStripMenuItemCopyAsV2cfgLink.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="toolStripMenuItemCopyAsV2cfgLink.Text" xml:space="preserve">
     <value>v2cfg://...</value>
@@ -847,7 +847,7 @@
     <value>Contain all config information.</value>
   </data>
   <data name="toolStripMenuItemCopyAsVmessLink.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="toolStripMenuItemCopyAsVmessLink.Text" xml:space="preserve">
     <value>vmess://...</value>
@@ -856,7 +856,7 @@
     <value>Contain main config information.</value>
   </data>
   <data name="toolStripMenuItemCopyAsVeeLink.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="toolStripMenuItemCopyAsVeeLink.Text" xml:space="preserve">
     <value>v:// ...</value>
@@ -865,7 +865,7 @@
     <value>Contain main config information.</value>
   </data>
   <data name="toolStripMenuItemCopyAsVmessSubscription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="toolStripMenuItemCopyAsVmessSubscription.Text" xml:space="preserve">
     <value>Vmess subscription</value>
@@ -874,7 +874,7 @@
     <value>Encode selected servers as subscription content. (vmess server only).</value>
   </data>
   <data name="toolStripMenuItemCopyAsVeeSubscription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="toolStripMenuItemCopyAsVeeSubscription.Text" xml:space="preserve">
     <value>Vee subscription</value>

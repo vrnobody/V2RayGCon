@@ -141,7 +141,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.picQRCode);
             this.Name = "FormQRCode";
-            this.Shown += new System.EventHandler(this.FormQRCode_Shown);
+            this.Load += new System.EventHandler(this.FormQRCode_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picQRCode)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

@@ -27,16 +27,12 @@ namespace V2RayGCon.Services
         ToolStripMenuItem pluginRootMenuItem = null;
         ToolStripMenuItem serversRootMenuItem = null;
 
-        VgcApis.Libs.Tasks.LazyGuy notifierUpdater, serversMenuUpdater;
+        VgcApis.Libs.Tasks.LazyGuy lazyNotifyIconUpdater;
 
         Notifier()
         {
-            notifierUpdater = new VgcApis.Libs.Tasks.LazyGuy(
-                UpdateNotifyIconNow,
-                VgcApis.Models.Consts.Intervals.NotifierTextUpdateIntreval);
-
-            serversMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(
-                UpdateServersMenu,
+            lazyNotifyIconUpdater = new VgcApis.Libs.Tasks.LazyGuy(
+                UpdateNotifyIcon,
                 VgcApis.Models.Consts.Intervals.NotifierTextUpdateIntreval);
         }
 
@@ -55,29 +51,14 @@ namespace V2RayGCon.Services
 
             BindServerEvents();
 
-            ni.MouseClick += (s, a) =>
-            {
-                if (a.Button != MouseButtons.Left)
-                {
-                    return;
-                }
+            BindMouseClickEvent();
 
-                // https://stackoverflow.com/questions/2208690/invoke-notifyicons-context-menu
-                // MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
-                // mi.Invoke(ni, null);
-
-                Views.WinForms.FormMain.GetForm()?.Show();
-            };
-
-            notifierUpdater.DoItLater();
-            serversMenuUpdater.DoItLater();
+            lazyNotifyIconUpdater.DoItLater();
         }
-
-
 
         #region public method
         public void RefreshNotifyIcon() =>
-            notifierUpdater.DoItLater();
+            lazyNotifyIconUpdater.DoItLater();
 
         public void ScanQrcode()
         {
@@ -137,31 +118,38 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
+        private void BindMouseClickEvent()
+        {
+            ni.MouseClick += (s, a) =>
+            {
+                if (a.Button != MouseButtons.Left)
+                {
+                    return;
+                }
+
+                // https://stackoverflow.com/questions/2208690/invoke-notifyicons-context-menu
+                // MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
+                // mi.Invoke(ni, null);
+
+                Views.WinForms.FormMain.GetForm()?.Show();
+            };
+        }
+
         private void BindServerEvents()
         {
             //删除一个运行中的core时，core stop监听器会在core停止前移除，所以stop事件丢失
             servers.OnServerCountChange += UpdateNotifyIconHandler;
-
             servers.OnCoreStart += UpdateNotifyIconHandler;
             servers.OnCoreStop += UpdateNotifyIconHandler;
-
-            servers.OnServerCountChange += UpdateServerMenuHandler;
-            servers.OnCoreStart += UpdateServerMenuHandler;
-            servers.OnCoreStop += UpdateServerMenuHandler;
-            servers.OnServerPropertyChange += UpdateServerMenuHandler;
+            servers.OnServerPropertyChange += UpdateNotifyIconHandler;
         }
 
         private void ReleaseServerEvents()
         {
             servers.OnServerCountChange -= UpdateNotifyIconHandler;
-
             servers.OnCoreStart -= UpdateNotifyIconHandler;
             servers.OnCoreStop -= UpdateNotifyIconHandler;
-
-            servers.OnServerCountChange -= UpdateServerMenuHandler;
-            servers.OnCoreStart -= UpdateServerMenuHandler;
-            servers.OnCoreStop -= UpdateServerMenuHandler;
-            servers.OnServerPropertyChange -= UpdateServerMenuHandler;
+            servers.OnServerPropertyChange -= UpdateNotifyIconHandler;
         }
 
         List<ToolStripMenuItem> ServerList2MenuItems(
@@ -178,8 +166,6 @@ namespace V2RayGCon.Services
                 menuItems,
                 VgcApis.Models.Consts.Config.NotifyIconServerMenuGroupSize);
         }
-
-
 
         private ToolStripMenuItem CoreServ2MenuItem(VgcApis.Interfaces.ICoreServCtrl coreServ)
         {
@@ -203,23 +189,6 @@ namespace V2RayGCon.Services
             return item;
         }
 
-        void UpdateServerMenuHandler(object sender, EventArgs events) =>
-            serversMenuUpdater.DoItLater();
-
-
-        VgcApis.Libs.Tasks.Bar updateServersMenuItemLock = new VgcApis.Libs.Tasks.Bar();
-        void UpdateServersMenu()
-        {
-            if (!updateServersMenuItemLock.Install())
-            {
-                serversMenuUpdater.DoItLater();
-                return;
-            }
-
-            Action next = () => updateServersMenuItemLock.Remove();
-            UpdateServersMenuNow(next);
-        }
-
         void ReplaceServersMenuWith(List<ToolStripMenuItem> newServersMenuItems)
         {
             var root = serversRootMenuItem.DropDownItems;
@@ -237,7 +206,7 @@ namespace V2RayGCon.Services
             serversRootMenuItem.Visible = true;
         }
 
-        void UpdateServersMenuNow(Action next = null)
+        void UpdateServersMenuThen(Action next = null)
         {
             var serverList = servers.GetAllServersOrderByIndex();
             var newMenuItems = ServerList2MenuItems(serverList);
@@ -256,13 +225,24 @@ namespace V2RayGCon.Services
             });
         }
 
-        void UpdateNotifyIconNow()
+        VgcApis.Libs.Tasks.Bar updateNotifyIconLock = new VgcApis.Libs.Tasks.Bar();
+        void UpdateNotifyIcon()
         {
+            if (!updateNotifyIconLock.Install())
+            {
+                lazyNotifyIconUpdater.DoItLater();
+                return;
+            }
+
+            Action finished = () => updateNotifyIconLock.Remove();
+            Action updateServersMenu = () => UpdateServersMenuThen(finished);
+
             var list = servers.GetAllServersOrderByIndex()
                 .Where(s => s.GetCoreCtrl().IsCoreRunning())
                 .ToList();
-            UpdateNotifyIconText(list);
+
             UpdateNotifyIconImage(list.Count());
+            UpdateNotifyIconTextThen(list, updateServersMenu);
         }
 
         private void UpdateNotifyIconImage(int activeServNum)
@@ -359,7 +339,7 @@ namespace V2RayGCon.Services
         }
 
         void UpdateNotifyIconHandler(object sender, EventArgs args) =>
-            notifierUpdater.DoItLater();
+            lazyNotifyIconUpdater.DoItLater();
 
         string GetterSysProxyInfo()
         {
@@ -375,8 +355,9 @@ namespace V2RayGCon.Services
             return null;
         }
 
-        void UpdateNotifyIconText(
-            List<VgcApis.Interfaces.ICoreServCtrl> list)
+        void UpdateNotifyIconTextThen(
+            List<VgcApis.Interfaces.ICoreServCtrl> list,
+            Action finished)
         {
             var count = list.Count;
 
@@ -390,7 +371,7 @@ namespace V2RayGCon.Services
                     texts.Add(I18N.CurSysProxy + VgcApis.Misc.Utils.AutoEllipsis(sysProxyInfo, VgcApis.Models.Consts.AutoEllipsis.NotifierSysProxyInfoMaxLength));
                 }
                 SetNotifyText(string.Join(Environment.NewLine, texts));
-                return;
+                finished?.Invoke();
             }
 
             if (count <= 0 || count > 2)
@@ -593,9 +574,10 @@ namespace V2RayGCon.Services
         #region protected methods
         protected override void Cleanup()
         {
+            ni.Visible = false;
+
             ReleaseServerEvents();
-            serversMenuUpdater.Quit();
-            notifierUpdater.Quit();
+            lazyNotifyIconUpdater.Quit();
 
             ni.Visible = false;
         }

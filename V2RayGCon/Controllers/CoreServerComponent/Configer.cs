@@ -74,14 +74,18 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 var configString = coreInfo.isInjectImport ?
                     configMgr.InjectImportTpls(coreInfo.config, false, true) :
                     coreInfo.config;
+
+                JObject finalConfig = null;
                 try
                 {
-                    UpdateSummary(
-                        configMgr.ParseImport(configString));
+                    finalConfig = JObject.Parse(configString);
+                    finalConfig = configMgr.ParseImport(configString);
                 }
-                catch
+                catch { }
+
+                if (finalConfig != null)
                 {
-                    UpdateSummary(JObject.Parse(configString));
+                    UpdateSummary(finalConfig);
                 }
 
                 // update summary should not clear status
@@ -120,8 +124,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             var trimed = VgcApis.Misc.Utils.TrimConfig(newConfig);
 
-            if (string.IsNullOrEmpty(trimed)
-                || coreInfo.config == trimed)
+            if (string.IsNullOrEmpty(trimed) || coreInfo.config == trimed)
             {
                 return;
             }
@@ -129,13 +132,11 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             coreInfo.config = trimed;
             UpdateSummaryThen(() =>
             {
-                GetParent().InvokeEventOnPropertyChange();
+                if (coreCtrl.IsCoreRunning())
+                {
+                    coreCtrl.RestartCoreThen();
+                }
             });
-
-            if (coreCtrl.IsCoreRunning())
-            {
-                coreCtrl.RestartCoreThen();
-            }
         }
 
         public void GetterInfoForNotifyIconf(Action<string> next)

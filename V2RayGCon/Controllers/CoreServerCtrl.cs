@@ -150,11 +150,13 @@ namespace V2RayGCon.Controllers
 
             Task.Run(() =>
             {
-                if (restartCore && GetCoreCtrl().IsCoreRunning())
+                GetConfiger().UpdateSummaryThen(() =>
                 {
-                    GetCoreCtrl().RestartCore();
-                }
-                GetConfiger().UpdateSummaryThen();
+                    if (restartCore && GetCoreCtrl().IsCoreRunning())
+                    {
+                        GetCoreCtrl().RestartCore();
+                    }
+                });
             });
         }
 
@@ -181,8 +183,6 @@ namespace V2RayGCon.Controllers
         #endregion
 
         #region protected methods
-
-
         protected override void CleanupBeforeChildrenDispose()
         {
             isDisposed = true;

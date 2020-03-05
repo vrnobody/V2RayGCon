@@ -781,7 +781,7 @@ namespace V2RayGCon.Services
         }
 
         string PackServersIntoV4PackageWorker(
-           List<VgcApis.Interfaces.ICoreServCtrl> servList,
+           List<ICoreServCtrl> servList,
            string orgUid,
            string packageName,
            bool quiet)

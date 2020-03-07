@@ -222,7 +222,6 @@ namespace V2RayGCon.Services
         {
             if (!updateNotifyIconLock.Install())
             {
-                setting.SendLog("notify icon 锁未释放");
                 lazyNotifyIconUpdater.DoItLater();
                 return;
             }

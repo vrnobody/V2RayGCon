@@ -53,12 +53,11 @@ namespace V2RayGCon.Services
 
             BindMouseClickEvent();
 
-            lazyNotifyIconUpdater.DoItLater();
+            UpdateNotifyIcon();
         }
 
         #region public method
-        public void RefreshNotifyIcon() =>
-            lazyNotifyIconUpdater.DoItLater();
+        public void RefreshNotifyIcon() => UpdateNotifyIcon();
 
         public void ScanQrcode()
         {
@@ -84,8 +83,8 @@ namespace V2RayGCon.Services
             Libs.QRCode.QRCode.ScanQRCode(Success, Fail);
         }
 
-        public void RunInUiThread(Action updater) =>
-            VgcApis.Misc.UI.RunInUiThread(ni.ContextMenuStrip, updater);
+        public void RunInUiThreadIgnoreErrorThen(Action updater, Action next) =>
+            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(ni.ContextMenuStrip, updater, next);
 
 #if DEBUG
         public void InjectDebugMenuItem(ToolStripMenuItem menu)
@@ -101,7 +100,7 @@ namespace V2RayGCon.Services
         /// <param name="pluginMenu"></param>
         public void UpdatePluginMenu(IEnumerable<ToolStripMenuItem> children)
         {
-            RunInUiThread(() =>
+            RunInUiThreadIgnoreErrorThen(() =>
             {
                 pluginRootMenuItem.DropDownItems.Clear();
                 if (children == null || children.Count() < 1)
@@ -112,7 +111,7 @@ namespace V2RayGCon.Services
 
                 pluginRootMenuItem.DropDownItems.AddRange(children.ToArray());
                 pluginRootMenuItem.Visible = true;
-            });
+            }, null);
         }
 
         #endregion
@@ -200,8 +199,10 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            root.Add(new ToolStripMenuItem(I18N.StopAllServers, null, (s, a) => servers.StopAllServersThen()));
-            root.Add(new ToolStripSeparator());
+            var closeAll = new ToolStripMenuItem(I18N.StopAllServers, null, (s, a) => servers.StopAllServersThen());
+            var sp = new ToolStripSeparator();
+            root.Add(closeAll);
+            root.Add(sp);
             root.AddRange(newServersMenuItems.ToArray());
             serversRootMenuItem.Visible = true;
         }
@@ -211,18 +212,9 @@ namespace V2RayGCon.Services
             var serverList = servers.GetAllServersOrderByIndex();
             var newMenuItems = ServerList2MenuItems(serverList);
 
-            RunInUiThread(() =>
-            {
-                try
-                {
-                    ReplaceServersMenuWith(newMenuItems);
-                }
-                catch { throw; }
-                finally
-                {
-                    next?.Invoke();
-                }
-            });
+            RunInUiThreadIgnoreErrorThen(
+                () => ReplaceServersMenuWith(newMenuItems),
+                next);
         }
 
         VgcApis.Libs.Tasks.Bar updateNotifyIconLock = new VgcApis.Libs.Tasks.Bar();
@@ -230,6 +222,7 @@ namespace V2RayGCon.Services
         {
             if (!updateNotifyIconLock.Install())
             {
+                setting.SendLog("notify icon 锁未释放");
                 lazyNotifyIconUpdater.DoItLater();
                 return;
             }
@@ -339,7 +332,7 @@ namespace V2RayGCon.Services
         }
 
         void UpdateNotifyIconHandler(object sender, EventArgs args) =>
-            lazyNotifyIconUpdater.DoItLater();
+            UpdateNotifyIcon();
 
         string GetterSysProxyInfo()
         {

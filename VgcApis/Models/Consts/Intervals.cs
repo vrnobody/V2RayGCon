@@ -15,7 +15,7 @@
         public const int FetchDefaultTimeout = 30 * 1000;
 
 
-        public const int NotifierTextUpdateIntreval = 1500;
+        public const int NotifierTextUpdateIntreval = 1000;
 
         public const int SiFormLogRefreshInterval = 500;
         public const int LuaPluginLogRefreshInterval = 500;

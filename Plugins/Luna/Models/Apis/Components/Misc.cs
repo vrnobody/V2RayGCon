@@ -50,6 +50,8 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc thinggy
+        public string Replace(string text, string oldStr, string newStr) =>
+            text?.Replace(oldStr, newStr);
 
         public int SetWallpaper(string filename) =>
             Libs.Sys.WinApis.SetWallpaper(filename);
@@ -68,9 +70,11 @@ namespace Luna.Models.Apis.Components
 
         public string Input(string title) => Input(title, 3);
 
-        public string Input(string title, int lines)
+        public string Input(string title, int lines) => Input(title, string.Empty, lines);
+
+        public string Input(string title, string content, int lines)
         {
-            using (var form = new Views.WinForms.FormInput(title, lines))
+            using (var form = new Views.WinForms.FormInput(title, content, lines))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)
@@ -152,9 +156,15 @@ namespace Luna.Models.Apis.Components
         public string AddV2cfgPrefix(string b64Str) =>
            vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
 
+        /// <summary>
+        /// null: failed
+        /// </summary>
         public string Base64Encode(string text) =>
             vgcUtils.Base64Encode(text);
 
+        /// <summary>
+        /// null: failed
+        /// </summary>
         public string Base64Decode(string b64Str) =>
             vgcUtils.Base64Decode(b64Str);
 

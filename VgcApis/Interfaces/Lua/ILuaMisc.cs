@@ -4,6 +4,8 @@ namespace VgcApis.Interfaces.Lua
 {
     public interface ILuaMisc
     {
+        string Replace(string text, string oldStr, string newStr);
+
         int SetWallpaper(string filename);
 
         string GetImageResolution(string filename);
@@ -21,6 +23,8 @@ namespace VgcApis.Interfaces.Lua
 
         // 25 lines max
         string Input(string title, int lines);
+
+        string Input(string title, string content, int lines);
 
         // 18 choices max
         List<int> Choices(string title, params string[] choices);

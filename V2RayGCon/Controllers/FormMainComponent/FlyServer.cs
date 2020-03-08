@@ -139,38 +139,25 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 return false;
             }
 
-            RefreshUiThen(() => refreshUiLock.Remove());
+            RefreshServersUiThen(() => refreshUiLock.Remove());
+            UpdateStatusBarLater();
             return true;
         }
         #endregion
 
         #region private method
-        void RefreshUiThen(Action next = null)
-        {
-            RefreshServersUiThen(next);
-            UpdateStatusBarLater();
-        }
 
-        private void RefreshServersUiThen(Action next = null)
+        private void RefreshServersUiThen(Action next)
         {
             servers.ResetIndex();
-
             var flatList = this.GetFilteredList();
             var pagedList = GenPagedServerList(flatList);
 
-            VgcApis.Misc.UI.RunInUiThread(formMain, () =>
+            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(formMain, () =>
             {
-                try
-                {
-                    ClearFlyPanel(pagedList);
-                    FillFlyPanelWith(ref pagedList);
-                }
-                catch { }
-                finally
-                {
-                    next?.Invoke();
-                }
-            });
+                ClearFlyPanel(pagedList);
+                FillFlyPanelWith(ref pagedList);
+            }, next);
         }
 
         private void FillFlyPanelWith(ref List<VgcApis.Interfaces.ICoreServCtrl> pagedList)

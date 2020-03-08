@@ -22,7 +22,7 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.AutoSetFormIcon(this);
         }
 
-        private void FormOption_Shown(object sender, System.EventArgs e)
+        private void FormOption_Load(object sender, System.EventArgs e)
         {
             // throw new System.ArgumentException("for debug");
 
@@ -41,7 +41,6 @@ namespace V2RayGCon.Views.WinForms
                 Services.Settings.Instance.LazyGC();
             };
         }
-
 
         #region public method
 
@@ -132,6 +131,7 @@ namespace V2RayGCon.Views.WinForms
         {
             optionCtrl.RestoreOptions();
         }
+
         #endregion
 
 

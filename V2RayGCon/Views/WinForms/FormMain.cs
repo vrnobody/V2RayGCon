@@ -29,10 +29,10 @@ namespace V2RayGCon.Views.WinForms
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             Misc.UI.AutoScaleToolStripControls(this, 16);
-            GenFormTitle();
+            formTitle = Misc.Utils.GetAppNameAndVer();
         }
 
-        public void FormMain_Shown(object sender, EventArgs e)
+        private void FormMain_Load(object sender, EventArgs e)
         {
             UpdateFormTitle(this, EventArgs.Empty);
             setting.RestoreFormRect(this);
@@ -84,15 +84,6 @@ namespace V2RayGCon.Views.WinForms
         {
             var notifier = Services.Notifier.Instance;
             notifier.ScanQrcode();
-        }
-
-        private void GenFormTitle()
-        {
-            var version = Misc.Utils.GetAssemblyVersion();
-            formTitle = string.Format(
-                "{0} v{1}",
-                VgcApis.Misc.Utils.GetAppName(),
-                Misc.Utils.TrimVersionString(version));
         }
 
         private void UpdateFormTitle(object sender, EventArgs args)
@@ -294,6 +285,7 @@ namespace V2RayGCon.Views.WinForms
         {
             this.Close();
         }
+
         #endregion
 
 

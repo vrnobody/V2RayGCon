@@ -26,6 +26,22 @@ namespace V2RayGCon.Misc
 
         #region copy from vgc
 
+        #region strings
+        static string appNameAndVersion = null;
+        public static string GetAppNameAndVer()
+        {
+            if (string.IsNullOrEmpty(appNameAndVersion))
+            {
+                var rawVer = GetAssemblyVersion();
+                var ver = TrimVersionString(rawVer);
+                var name = VgcApis.Misc.Utils.GetAppName();
+                appNameAndVersion = $"{name} v{ver}";
+            }
+            return appNameAndVersion;
+        }
+
+        #endregion
+
         #region Json
         public static JArray ExtractOutboundsFromConfig(string config)
         {

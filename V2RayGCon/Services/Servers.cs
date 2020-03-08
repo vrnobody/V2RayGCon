@@ -487,8 +487,8 @@ namespace V2RayGCon.Services
 
         public void StopAllServersThen(Action lambda = null)
         {
-
             List<Controllers.CoreServerCtrl> list;
+
             lock (serverListWriteLock)
             {
                 list = coreServList.Where(c => c.GetCoreCtrl().IsCoreRunning()).ToList();
@@ -743,34 +743,44 @@ namespace V2RayGCon.Services
             return true;
         }
 
-        public string ReplaceOrAddNewServer(string orgUid, string newConfig)
+        public string ReplaceOrAddNewServer(string orgUid, string newConfig) =>
+            ReplaceOrAddNewServer(orgUid, newConfig, @"");
+
+        public string ReplaceOrAddNewServer(string orgUid, string newConfig, string mark)
         {
+            string orgConfig = null;
+
             lock (serverListWriteLock)
             {
-                var servUid = "";
-
                 var orgServ = coreServList.FirstOrDefault(s => s.GetCoreStates().GetUid() == orgUid);
                 if (orgServ != null)
                 {
-                    ReplaceServerConfig(orgServ.GetConfiger().GetConfig(), newConfig);
-                    servUid = orgUid;
+                    orgConfig = orgServ.GetConfiger().GetConfig();
                 }
-                else
-                {
-                    AddServer(newConfig, "PackageV4");
-                    var newServ = coreServList.FirstOrDefault(s => s.GetConfiger().GetConfig() == newConfig);
-                    if (newServ != null)
-                    {
-                        servUid = newServ.GetCoreStates().GetUid();
-                    }
-                }
-
-                return servUid;
             }
+
+            if (orgConfig != null)
+            {
+                ReplaceServerConfig(orgConfig, newConfig);
+                return orgUid;
+            }
+
+            AddServer(newConfig, mark);
+            lock (serverListWriteLock)
+            {
+                var newServ = coreServList.FirstOrDefault(s => s.GetConfiger().GetConfig() == newConfig);
+                if (newServ != null)
+                {
+                    return newServ.GetCoreStates().GetUid();
+                }
+            }
+
+            return string.Empty;
         }
         #endregion
 
         #region private methods
+
 
         private List<ICoreServCtrl> GetSelectedServer()
         {
@@ -781,7 +791,7 @@ namespace V2RayGCon.Services
         }
 
         string PackServersIntoV4PackageWorker(
-           List<VgcApis.Interfaces.ICoreServCtrl> servList,
+           List<ICoreServCtrl> servList,
            string orgUid,
            string packageName,
            bool quiet)
@@ -798,7 +808,7 @@ namespace V2RayGCon.Services
             JObject package = configMgr.GenV4ServersPackage(servList, packageName);
 
             var newConfig = package.ToString(Formatting.None);
-            string newUid = ReplaceOrAddNewServer(orgUid, newConfig);
+            string newUid = ReplaceOrAddNewServer(orgUid, newConfig, @"PackageV4");
 
             UpdateMarkList();
             setting.SendLog(I18N.PackageDone);

@@ -9,13 +9,15 @@ namespace Luna.Views.WinForms
         readonly int MAX_LINE_NUM = 25;
 
         private readonly string title;
+        private readonly string content;
         private readonly int lines;
 
 
-        public FormInput(string title, int lines)
+        public FormInput(string title, string content, int lines)
         {
             InitializeComponent();
             this.title = title;
+            this.content = content;
             this.lines = lines;
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             AutosetFormHeight();
@@ -46,6 +48,7 @@ namespace Luna.Views.WinForms
         void InitControls()
         {
             lbTitle.Text = VgcApis.Misc.Utils.AutoEllipsis(title, MAX_TITLE_LEN);
+            rtboxInput.Text = content ?? string.Empty;
             toolTip1.SetToolTip(lbTitle, title);
         }
         #endregion

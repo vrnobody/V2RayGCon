@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using VgcApis.Resources.Langs;
 
@@ -70,57 +71,103 @@ namespace VgcApis.Misc
         /// If control==null return;
         /// </summary>
         /// <param name="control">invokeable control</param>
-        /// <param name="updateUi">UI updater</param>
-        public static void RunInUiThread(Control control, Action updateUi)
+        /// <param name="uiUpdater">UI updater</param>
+        public static void RunInUiThread(Control control, Action uiUpdater)
         {
             if (control == null || control.IsDisposed)
             {
                 return;
             }
 
-            if (control.InvokeRequired)
+            if (!control.InvokeRequired)
+            {
+                uiUpdater?.Invoke();
+                return;
+            }
+
+            control.Invoke((MethodInvoker)delegate
+            {
+                uiUpdater?.Invoke();
+            });
+        }
+
+        public static void RunInUiThreadIgnoreErrorThen(Control control, Action uiUpdater, Action next)
+        {
+            if (control == null || control.IsDisposed)
+            {
+                return;
+            }
+
+            void done()
+            {
+                _ = Task.Run(() =>
+                {
+                    try
+                    {
+                        next?.Invoke();
+                    }
+                    catch { }
+                });
+            }
+
+            void TryUpdateUi()
+            {
+                try
+                {
+                    uiUpdater?.Invoke();
+                }
+                catch { }
+            }
+
+            if (!control.InvokeRequired)
+            {
+                TryUpdateUi();
+                done();
+                return;
+            }
+
+            try
+            {
+                control?.Invoke((MethodInvoker)delegate
+                {
+                    TryUpdateUi();
+                    done();
+                });
+                return;
+            }
+            catch { }
+            done();
+        }
+
+        public static void RunInUiThreadIgnoreError(Control control, Action uiUpdater)
+        {
+            if (control == null || control.IsDisposed)
+            {
+                return;
+            }
+
+            if (!control.InvokeRequired)
+            {
+                try
+                {
+                    uiUpdater?.Invoke();
+                }
+                catch { }
+                return;
+            }
+
+            try
             {
                 control.Invoke((MethodInvoker)delegate
                 {
-                    updateUi();
+                    try
+                    {
+                        uiUpdater?.Invoke();
+                    }
+                    catch { }
                 });
             }
-            else
-            {
-                updateUi();
-            }
-        }
-
-        public static void RunInUiThreadIgnoreError(Control control, Action updateUi)
-        {
-            if (control == null || control.IsDisposed)
-            {
-                return;
-            }
-
-            if (control.InvokeRequired)
-            {
-                try
-                {
-                    control.Invoke((MethodInvoker)delegate
-                    {
-                        try
-                        {
-                            updateUi();
-                        }
-                        catch { }
-                    });
-                }
-                catch { }
-            }
-            else
-            {
-                try
-                {
-                    updateUi();
-                }
-                catch { }
-            }
+            catch { }
         }
 
         // https://stackoverflow.com/questions/87795/how-to-prevent-flickering-in-listview-when-updating-a-single-listviewitems-text

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +17,8 @@ namespace V2RayGCon.Libs.V2Ray
         // https://stackoverflow.com/questions/283128/how-do-i-send-ctrlc-to-a-process-in-c
         internal const int CTRL_C_EVENT = 0;
         #endregion
+
+        readonly Encoding ioEncoding = Encoding.UTF8;
 
         public event EventHandler<VgcApis.Models.Datas.StrEvent> OnLog;
         public event EventHandler OnCoreStatusChanged;
@@ -365,6 +368,8 @@ namespace V2RayGCon.Libs.V2Ray
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     RedirectStandardInput = true,
+                    StandardOutputEncoding = ioEncoding,
+                    StandardErrorEncoding = ioEncoding,
                 }
             };
             p.EnableRaisingEvents = true;
@@ -474,8 +479,9 @@ namespace V2RayGCon.Libs.V2Ray
             // Add to JOB object require win8+.
             Sys.ChildProcessTracker.AddProcess(v2rayCore);
 
-            v2rayCore.StandardInput.WriteLine(config);
-            v2rayCore.StandardInput.Close();
+            WriteConfigToStandardInput(config);
+
+            v2rayCore.PriorityClass = ProcessPriorityClass.AboveNormal;
             v2rayCore.BeginErrorReadLine();
             v2rayCore.BeginOutputReadLine();
 
@@ -487,6 +493,15 @@ namespace V2RayGCon.Libs.V2Ray
             isWatchCoreReadyLog = false;
 
             SendLog($"{I18N.ConcurrentV2RayCoreNum}{curConcurrentV2RayCoreNum}");
+        }
+
+        private void WriteConfigToStandardInput(string config)
+        {
+            var input = v2rayCore.StandardInput;
+            var buff = ioEncoding.GetBytes(config);
+            input.BaseStream.Write(buff, 0, buff.Length);
+            input.WriteLine();
+            input.Close();
         }
 
         bool IsConfigWaitable(string config)

@@ -207,11 +207,13 @@ namespace V2RayGCon.Services
 
         private void ShowExceptionDetails(Exception exception)
         {
-            var log = $"{I18N.LooksLikeABug}";
+            var nl = Environment.NewLine;
+            var verInfo = Misc.Utils.GetAppNameAndVer();
+            var log = $"{I18N.LooksLikeABug}{nl}{nl}{verInfo}";
 
             try
             {
-                var nl = Environment.NewLine;
+
                 log += nl + nl + exception.ToString();
                 log += nl + nl + setting.GetLogContent();
             }

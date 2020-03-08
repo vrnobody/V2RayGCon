@@ -134,7 +134,7 @@
     <value>Luna</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>0.1.5</value>
-    <comment>accept lua table as param</comment>
+    <value>0.1.6</value>
+    <comment>Input can initialize with content.</comment>
   </data>
 </root>

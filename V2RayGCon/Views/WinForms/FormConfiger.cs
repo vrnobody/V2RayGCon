@@ -54,7 +54,7 @@ namespace V2RayGCon.Views.WinForms
             this.Show();
         }
 
-        private void FormConfiger_Shown(object sender, EventArgs e)
+        private void FormConfiger_Load(object sender, EventArgs e)
         {
             setting.RestoreFormRect(this);
 
@@ -489,8 +489,8 @@ namespace V2RayGCon.Views.WinForms
             formSearch.FormClosed += (s, a) => formSearch = null;
         }
 
-        #endregion
 
+        #endregion
 
     }
 }

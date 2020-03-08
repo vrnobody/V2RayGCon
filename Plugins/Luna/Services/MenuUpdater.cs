@@ -56,25 +56,17 @@ namespace Luna.Services
         void UpdateMenuNow(Action next)
         {
             var mis = GenSubMenuItems();
-            vgcNotifierService.RunInUiThread(() =>
+            vgcNotifierService.RunInUiThreadIgnoreErrorThen(() =>
             {
-                try
+                var root = miRoot.DropDownItems;
+                root.Clear();
+                root.Add(miShowWindow);
+                if (mis.Count > 0)
                 {
-                    var root = miRoot.DropDownItems;
-                    root.Clear();
-                    root.Add(miShowWindow);
-                    if (mis.Count > 0)
-                    {
-                        root.Add(new ToolStripSeparator());
-                        root.AddRange(mis.ToArray());
-                    }
+                    root.Add(new ToolStripSeparator());
+                    root.AddRange(mis.ToArray());
                 }
-                catch { }
-                finally
-                {
-                    next();
-                }
-            });
+            }, next);
         }
 
         List<ToolStripMenuItem> GenSubMenuItems()

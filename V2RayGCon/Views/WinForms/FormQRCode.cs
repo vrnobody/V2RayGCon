@@ -38,7 +38,7 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.AutoSetFormIcon(this);
         }
 
-        private void FormQRCode_Shown(object sender, EventArgs e)
+        private void FormQRCode_Load(object sender, EventArgs e)
         {
             ClearServerList();
 
@@ -277,5 +277,7 @@ namespace V2RayGCon.Views.WinForms
             UpdateTboxLink();
         }
         #endregion
+
+
     }
 }

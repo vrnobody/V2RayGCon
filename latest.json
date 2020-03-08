@@ -1,9 +1,11 @@
 {
-  "version": "1.2.9.3",
-  "md5": "FF8F602B6583A33AC90E9698862C83D4",
+  "version": "1.3.0.0",
+  "md5": "8A505CC669A3E4791B607D0172209B18",
   "warnings": [
   ],
   "changes": [
-      "luna插件添加Input，Choices等几个输入控件"
+      "Luna插件的Input控件可设定初值",
+      "修复一个导致菜单冻住的bug",
+      "修复中文tag乱码问题"
   ]
 }

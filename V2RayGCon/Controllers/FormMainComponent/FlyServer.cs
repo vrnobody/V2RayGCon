@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -49,7 +50,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             this.welcomeItem = new Views.UserControls.WelcomeUI();
 
-            lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarNow, 300);
+            lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarLater, 300);
             lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(ShowSearchResultNow, 1000);
             lazyUiRefresher = new VgcApis.Libs.Tasks.LazyGuy(() => RefreshUI(), 300);
 
@@ -127,8 +128,21 @@ namespace V2RayGCon.Controllers.FormMainComponent
             }
         }
 
-        public void UpdateStatusBarLater() =>
-            lazyStatusBarUpdater?.DoItLater();
+        readonly VgcApis.Libs.Tasks.Bar updateStatusBarLock = new VgcApis.Libs.Tasks.Bar();
+        public void UpdateStatusBarLater()
+        {
+            if (!updateStatusBarLock.Install())
+            {
+                lazyStatusBarUpdater?.DoItLater();
+                return;
+            }
+
+            _ = Task.Run(() =>
+            {
+                HighLightSearchKeywordsNow();
+                UpdateStatusBarThen(() => updateStatusBarLock.Remove());
+            });
+        }
 
         readonly VgcApis.Libs.Tasks.Bar refreshUiLock = new VgcApis.Libs.Tasks.Bar();
         public override bool RefreshUI()
@@ -139,8 +153,15 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 return false;
             }
 
-            RefreshServersUiThen(() => refreshUiLock.Remove());
-            UpdateStatusBarLater();
+            _ = Task.Run(() =>
+            {
+                RefreshServersUiThen(() =>
+                {
+                    refreshUiLock.Remove();
+                    UpdateStatusBarLater();
+                });
+            });
+
             return true;
         }
         #endregion
@@ -222,14 +243,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
             UpdateStatusBarLater();
         }
 
-        void UpdateStatusBarNow()
+        void UpdateStatusBarThen(Action next)
         {
             int filteredListCount = GetFilteredList().Count;
             int allServersCount = servers.CountAllServers();
             int selectedServersCount = servers.CountSelectedServers(); // may cause dead lock in UI thread
             int serverControlCount = GetAllServerControls().Count();
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, () =>
+            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(formMain, () =>
             {
                 UpdateStatusBarText(
                     filteredListCount,
@@ -246,9 +267,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     formMain.Focus();
                     isFocusOnFormMain = false;
                 }
-            });
-
-            HighLightSearchKeywordsNow();
+            }, next);
         }
 
 
@@ -291,7 +310,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             UpdateStatusBarPagerMenuCache();
             var groupedMenu = VgcApis.Misc.UI.AutoGroupMenuItems(
                 pagerMenuItemCache,
-                VgcApis.Models.Consts.Config.FormMainStatusPagerMenuGroupSize);
+                VgcApis.Models.Consts.Config.MenuItemGroupSize);
             pagerMenu.AddRange(groupedMenu.ToArray());
         }
 

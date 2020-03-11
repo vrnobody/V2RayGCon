@@ -33,11 +33,13 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.0.0")]
+[assembly: AssemblyVersion("1.3.0.1")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
- *
+ * v1.3.0.1 AutoGroupMenuItem supports multiple level grouping. 服务器太多了ヾ(≧▽≦*)o
+ *          Fix a bug in form-main status-bar updating.
+ *          Fix a bug in streamSettings decoding.
  * ----------------------------------------------------
  * v1.2.9.11 Remove code for debugging.
  * v1.2.9.10 Fix a dead-lock.

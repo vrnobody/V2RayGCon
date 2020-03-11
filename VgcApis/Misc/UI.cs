@@ -469,7 +469,20 @@ namespace VgcApis.Misc
         }
 
         public static List<ToolStripMenuItem> AutoGroupMenuItems(
-            IEnumerable<ToolStripMenuItem> menuItems, int groupSize)
+            List<ToolStripMenuItem> menuItems, int groupSize)
+        {
+            var mi = menuItems;
+            var menuSpan = groupSize;
+            while (mi.Count() > groupSize)
+            {
+                mi = AutoGroupMenuItemsWorker(mi, groupSize, menuSpan);
+                menuSpan *= groupSize;
+            }
+            return mi;
+        }
+
+        static List<ToolStripMenuItem> AutoGroupMenuItemsWorker(
+            IEnumerable<ToolStripMenuItem> menuItems, int groupSize, int menuSpan)
         {
             var count = menuItems.Count();
             if (count <= groupSize)
@@ -479,15 +492,17 @@ namespace VgcApis.Misc
 
             // grouping
             var groups = new List<ToolStripMenuItem>();
-            var index = 0;
-            while (index < count)
+            var servIdx = 0;
+            var pageIdx = 0;
+            while (servIdx < count)
             {
-                var take = Math.Min(groupSize, count - index);
+                var take = Math.Min(groupSize, count - servIdx);
                 groups.Add(new ToolStripMenuItem(
-                     string.Format("{0,4} - {1,4}", index + 1, index + groupSize),
+                     string.Format("{0,4} - {1,4}", pageIdx + 1, pageIdx + menuSpan),
                      null,
-                     menuItems.Skip(index).Take(take).ToArray()));
-                index += groupSize;
+                     menuItems.Skip(servIdx).Take(take).ToArray()));
+                servIdx += groupSize;
+                pageIdx += menuSpan;
             }
             return groups;
         }

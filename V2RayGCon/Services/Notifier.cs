@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -163,8 +164,10 @@ namespace V2RayGCon.Services
 
             return VgcApis.Misc.UI.AutoGroupMenuItems(
                 menuItems,
-                VgcApis.Models.Consts.Config.NotifyIconServerMenuGroupSize);
+                VgcApis.Models.Consts.Config.MenuItemGroupSize);
         }
+
+
 
         private ToolStripMenuItem CoreServ2MenuItem(VgcApis.Interfaces.ICoreServCtrl coreServ)
         {
@@ -226,15 +229,18 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            Action finished = () => updateNotifyIconLock.Remove();
-            Action updateServersMenu = () => UpdateServersMenuThen(finished);
+            _ = Task.Run(() =>
+            {
+                Action finished = () => updateNotifyIconLock.Remove();
+                Action updateServersMenu = () => UpdateServersMenuThen(finished);
 
-            var list = servers.GetAllServersOrderByIndex()
-                .Where(s => s.GetCoreCtrl().IsCoreRunning())
-                .ToList();
+                var list = servers.GetAllServersOrderByIndex()
+                    .Where(s => s.GetCoreCtrl().IsCoreRunning())
+                    .ToList();
 
-            UpdateNotifyIconImage(list.Count());
-            UpdateNotifyIconTextThen(list, updateServersMenu);
+                UpdateNotifyIconImage(list.Count());
+                UpdateNotifyIconTextThen(list, updateServersMenu);
+            });
         }
 
         private void UpdateNotifyIconImage(int activeServNum)

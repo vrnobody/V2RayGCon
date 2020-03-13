@@ -10,6 +10,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
 {
     class FlyServer : FormMainComponentController
     {
+        int statusBarUpdateInterval = 300;
+        int uiRefreshInterval = 1000;
+
         readonly Form formMain;
         readonly FlowLayoutPanel flyPanel;
         readonly Services.Servers servers;
@@ -50,9 +53,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             this.welcomeItem = new Views.UserControls.WelcomeUI();
 
-            lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarLater, 300);
+            lazyUiRefresher = new VgcApis.Libs.Tasks.LazyGuy(() => RefreshUI(), uiRefreshInterval);
+            lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarLater, statusBarUpdateInterval);
             lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(ShowSearchResultNow, 1000);
-            lazyUiRefresher = new VgcApis.Libs.Tasks.LazyGuy(() => RefreshUI(), 300);
 
             InitFormControls(lbMarkFilter, miResizeFormMain);
             BindDragDropEvent();
@@ -137,10 +140,22 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 return;
             }
 
+            var start = DateTime.Now;
+            Action finished = async () =>
+            {
+                var relex = statusBarUpdateInterval - (DateTime.Now - start).TotalMilliseconds;
+                if (relex > 0)
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(relex));
+                }
+                updateStatusBarLock.Remove();
+            };
+
             _ = Task.Run(() =>
             {
+
                 HighLightSearchKeywordsNow();
-                UpdateStatusBarThen(() => updateStatusBarLock.Remove());
+                UpdateStatusBarThen(finished);
             });
         }
 
@@ -153,12 +168,23 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 return false;
             }
 
+            var start = DateTime.Now;
+            Action finished = async () =>
+            {
+                var relex = uiRefreshInterval - (DateTime.Now - start).TotalMilliseconds;
+                if (relex > 0)
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(relex));
+                }
+                refreshUiLock.Remove();
+            };
+
             _ = Task.Run(() =>
             {
                 RefreshServersUiThen(() =>
                 {
-                    refreshUiLock.Remove();
                     UpdateStatusBarLater();
+                    finished?.Invoke();
                 });
             });
 

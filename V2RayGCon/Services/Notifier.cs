@@ -28,13 +28,13 @@ namespace V2RayGCon.Services
         ToolStripMenuItem pluginRootMenuItem = null;
         ToolStripMenuItem serversRootMenuItem = null;
 
+        readonly int notifyIconUpdateInterval = VgcApis.Models.Consts.Intervals.NotifierTextUpdateIntreval;
         VgcApis.Libs.Tasks.LazyGuy lazyNotifyIconUpdater;
 
         Notifier()
         {
             lazyNotifyIconUpdater = new VgcApis.Libs.Tasks.LazyGuy(
-                UpdateNotifyIcon,
-                VgcApis.Models.Consts.Intervals.NotifierTextUpdateIntreval);
+                UpdateNotifyIcon, notifyIconUpdateInterval);
         }
 
         public void Run(
@@ -229,9 +229,19 @@ namespace V2RayGCon.Services
                 return;
             }
 
+            var start = DateTime.Now;
+            Action finished = async () =>
+            {
+                var relex = notifyIconUpdateInterval - (DateTime.Now - start).TotalMilliseconds;
+                if (relex > 0)
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(relex));
+                }
+                updateNotifyIconLock.Remove();
+            };
+
             _ = Task.Run(() =>
             {
-                Action finished = () => updateNotifyIconLock.Remove();
                 Action updateServersMenu = () => UpdateServersMenuThen(finished);
 
                 var list = servers.GetAllServersOrderByIndex()

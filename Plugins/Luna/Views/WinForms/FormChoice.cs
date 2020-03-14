@@ -11,12 +11,14 @@ namespace Luna.Views.WinForms
         readonly int MAX_CHOICES_NUM = 18;
         private readonly string title;
         private readonly string[] choices;
+        private readonly int defChoice;
 
-        public FormChoice(string title, string[] choices)
+        public FormChoice(string title, string[] choices, int defChoice)
         {
             InitializeComponent();
             this.title = title;
             this.choices = choices;
+            this.defChoice = defChoice;
             VgcApis.Misc.UI.AutoSetFormIcon(this);
         }
 
@@ -67,6 +69,12 @@ namespace Luna.Views.WinForms
                     Top = h * (i + 1) + margin,
                     AutoSize = true,
                 };
+
+                if (defChoice - 1 == i)
+                {
+                    control.Checked = true;
+                }
+
                 toolTip1.SetToolTip(control, choices[i]);
 
                 Controls.Add(control);

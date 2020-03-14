@@ -98,16 +98,19 @@ namespace Luna.Models.Apis.Components
             GetResultFromChoicesDialog(title, choices);
 
         public int Choice(string title, NLua.LuaTable choices) =>
-            Choice(title, choices, false);
+            Choice(title, choices, false, -1);
 
-        public int Choice(string title, NLua.LuaTable choices, bool isShowKey)
+        public int Choice(string title, NLua.LuaTable choices, bool isShowKey) =>
+            Choice(title, choices, isShowKey, -1);
+
+        public int Choice(string title, NLua.LuaTable choices, bool isShowKey, int defChoice)
         {
             var list = LuaTableToList(choices, isShowKey);
-            return GetResultFromChoiceDialog(title, list.ToArray());
+            return GetResultFromChoiceDialog(title, list.ToArray(), defChoice);
         }
 
         public int Choice(string title, params string[] choices) =>
-            GetResultFromChoiceDialog(title, choices);
+            GetResultFromChoiceDialog(title, choices, -1);
 
         public bool Confirm(string content) =>
             VgcApis.Misc.UI.Confirm(content);
@@ -227,9 +230,10 @@ namespace Luna.Models.Apis.Components
             }
             return new List<int>();
         }
-        private static int GetResultFromChoiceDialog(string title, string[] choices)
+
+        private static int GetResultFromChoiceDialog(string title, string[] choices, int defChoice)
         {
-            using (var form = new Views.WinForms.FormChoice(title, choices))
+            using (var form = new Views.WinForms.FormChoice(title, choices, defChoice))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)

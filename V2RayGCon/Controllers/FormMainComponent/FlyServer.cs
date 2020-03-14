@@ -21,7 +21,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         readonly ToolStripStatusLabel tslbTotal, tslbPrePage, tslbNextPage;
         readonly ToolStripDropDownButton tsdbtnPager;
 
-        readonly VgcApis.Libs.Tasks.LazyGuy lazyStatusBarUpdater, lazySearchResultDisplayer, lazyUiRefresher;
+        readonly VgcApis.Libs.Tasks.LazyGuy lazyStatusBarUpdater, lazySearchResultDisplayer, lazyFlyUpdater;
 
         readonly Views.UserControls.WelcomeUI welcomeItem = null;
 
@@ -53,7 +53,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             this.welcomeItem = new Views.UserControls.WelcomeUI();
 
-            lazyUiRefresher = new VgcApis.Libs.Tasks.LazyGuy(() => RefreshUI(), uiRefreshInterval);
+            lazyFlyUpdater = new VgcApis.Libs.Tasks.LazyGuy(() => UpdateFlyPanelLater(), uiRefreshInterval);
             lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarLater, statusBarUpdateInterval);
             lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(ShowSearchResultNow, 1000);
 
@@ -101,7 +101,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             UnwatchServers();
 
-            lazyUiRefresher?.Quit();
+            lazyFlyUpdater?.Quit();
             lazyStatusBarUpdater?.Quit();
             lazySearchResultDisplayer?.Quit();
 
@@ -153,18 +153,22 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             _ = Task.Run(() =>
             {
-
-                HighLightSearchKeywordsNow();
                 UpdateStatusBarThen(finished);
             });
         }
 
-        readonly VgcApis.Libs.Tasks.Bar refreshUiLock = new VgcApis.Libs.Tasks.Bar();
         public override bool RefreshUI()
         {
-            if (!refreshUiLock.Install())
+            UpdateStatusBarLater();
+            return UpdateFlyPanelLater();
+        }
+
+        readonly VgcApis.Libs.Tasks.Bar flyUpdatelLock = new VgcApis.Libs.Tasks.Bar();
+        public bool UpdateFlyPanelLater()
+        {
+            if (!flyUpdatelLock.Install())
             {
-                lazyUiRefresher?.DoItLater();
+                lazyFlyUpdater?.DoItLater();
                 return false;
             }
 
@@ -176,14 +180,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 {
                     await Task.Delay(TimeSpan.FromMilliseconds(relex));
                 }
-                refreshUiLock.Remove();
+                flyUpdatelLock.Remove();
             };
 
             _ = Task.Run(() =>
             {
                 RefreshServersUiThen(() =>
                 {
-                    UpdateStatusBarLater();
+                    HighLightSearchKeywordsNow();
                     finished?.Invoke();
                 });
             });
@@ -266,6 +270,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void OnServerPropertyChangeHandler(object sender, EventArgs args)
         {
+            HighLightSearchKeywordsNow();
             UpdateStatusBarLater();
         }
 
@@ -343,6 +348,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         private void UpdateStatusBarPagingButtons()
         {
             var showPager = totalPageNumber > 1;
+            var cpn = VgcApis.Misc.Utils.Clamp(curPageNumber, 0, totalPageNumber);
 
             if (tsdbtnPager.Visible != showPager)
             {
@@ -351,17 +357,13 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 tslbPrePage.Visible = showPager;
             }
 
-            tslbPrePage.Enabled = curPageNumber != 0;
-            tslbNextPage.Enabled = totalPageNumber > 1 && curPageNumber != totalPageNumber - 1;
-
-            tsdbtnPager.Text = string.Format(
-                    I18N.StatusBarPagerInfoTpl,
-                    curPageNumber + 1,
-                    totalPageNumber);
+            tslbPrePage.Enabled = cpn > 0;
+            tslbNextPage.Enabled = totalPageNumber > 1 && cpn < totalPageNumber - 1;
+            tsdbtnPager.Text = string.Format(I18N.StatusBarPagerInfoTpl, cpn + 1, totalPageNumber);
 
             for (int i = 0; i < pagerMenuItemCache.Count; i++)
             {
-                pagerMenuItemCache[i].Checked = curPageNumber == i;
+                pagerMenuItemCache[i].Checked = cpn == i;
             }
         }
 

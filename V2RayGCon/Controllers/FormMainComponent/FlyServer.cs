@@ -53,7 +53,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             this.welcomeItem = new Views.UserControls.WelcomeUI();
 
-            lazyFlyUpdater = new VgcApis.Libs.Tasks.LazyGuy(() => UpdateFlyPanelLater(), uiRefreshInterval);
+            lazyFlyUpdater = new VgcApis.Libs.Tasks.LazyGuy(() => RefreshUI(), uiRefreshInterval);
             lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarLater, statusBarUpdateInterval);
             lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(ShowSearchResultNow, 1000);
 
@@ -157,14 +157,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
             });
         }
 
-        public override bool RefreshUI()
-        {
-            UpdateStatusBarLater();
-            return UpdateFlyPanelLater();
-        }
-
         readonly VgcApis.Libs.Tasks.Bar flyUpdatelLock = new VgcApis.Libs.Tasks.Bar();
-        public bool UpdateFlyPanelLater()
+        public override bool RefreshUI()
         {
             if (!flyUpdatelLock.Install())
             {
@@ -188,6 +182,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 RefreshServersUiThen(() =>
                 {
                     HighLightSearchKeywordsNow();
+                    UpdateStatusBarLater();
                     finished?.Invoke();
                 });
             });

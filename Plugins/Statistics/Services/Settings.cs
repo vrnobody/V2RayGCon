@@ -160,8 +160,7 @@ namespace Statistics.Services
             lock (updateHistoryStatsDataLocker)
             {
                 isUpdating = true;
-                var newDatas = vgcServers
-                    .GetAllServersOrderByIndex()
+                var newDatas = vgcServers.GetAllServersOrderByIndex()
                     .Where(s => s.GetCoreCtrl().IsCoreRunning())
                     .Select(s => GetterCoreInfo(s))
                     .ToList();

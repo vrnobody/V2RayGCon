@@ -81,9 +81,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 s += vlink + System.Environment.NewLine + System.Environment.NewLine;
             }
 
-            VgcApis.Misc.UI.SaveToFile(
-                VgcApis.Models.Consts.Files.TxtExt,
-                s);
+            VgcApis.Misc.UI.SaveToFile(VgcApis.Models.Consts.Files.TxtExt, s);
         }
 
         public override bool RefreshUI() { return false; }

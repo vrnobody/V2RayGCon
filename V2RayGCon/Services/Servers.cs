@@ -72,11 +72,9 @@ namespace V2RayGCon.Services
         }
 
         #region sort
-        public void ResetIndex() =>
-            indexHandler.ResetIndex();
+        public void ResetIndex() => indexHandler.ResetIndex();
 
-        public void ResetIndexQuiet() =>
-            indexHandler.ResetIndexQuiet();
+        public void ResetIndexQuiet() => indexHandler.ResetIndexQuiet();
 
         public void SortSelectedBySpeedTest()
         {
@@ -111,16 +109,13 @@ namespace V2RayGCon.Services
         #endregion
 
         #region querys
-        public ReadOnlyCollection<VgcApis.Interfaces.ICoreServCtrl>
-          GetRunningServers() =>
-          queryHandler.GetRunningServers();
+        public ReadOnlyCollection<ICoreServCtrl> GetRunningServers() =>
+            queryHandler.GetRunningServers();
 
-        public ReadOnlyCollection<VgcApis.Interfaces.ICoreServCtrl>
-           GetAllServersOrderByIndex() =>
-           queryHandler.GetAllServersOrderByIndex();
+        public ReadOnlyCollection<ICoreServCtrl> GetAllServersOrderByIndex() =>
+            queryHandler.GetAllServersOrderByIndex();
 
-        public ReadOnlyCollection<VgcApis.Interfaces.ICoreServCtrl>
-            GetTrackableServerList() =>
+        public ReadOnlyCollection<ICoreServCtrl> GetTrackableServerList() =>
             queryHandler.GetTrackableServerList();
 
         #endregion
@@ -271,7 +266,7 @@ namespace V2RayGCon.Services
         /// <returns></returns>
         public int GetAvailableHttpProxyPort()
         {
-            List<VgcApis.Interfaces.ICoreServCtrl> list;
+            List<ICoreServCtrl> list;
 
             lock (serverListWriteLock)
             {

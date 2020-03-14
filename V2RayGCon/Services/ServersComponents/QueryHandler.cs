@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using VgcApis.Interfaces;
@@ -21,51 +22,57 @@ namespace V2RayGCon.Services.ServersComponents
         #region public methods
         public ReadOnlyCollection<ICoreServCtrl> GetRunningServers()
         {
-            return GetAllServersOrderByIndex()
+            return AtomOp(() => GetAllServersOrderByIndex()
                 .Where(s => s.GetCoreCtrl().IsCoreRunning())
-                .ToList()
-                .AsReadOnly();
+                .ToList());
         }
 
-        public ReadOnlyCollection<ICoreServCtrl> GetAllServersOrderByIndex() =>
-           coreServList
-           .Select(s => s as ICoreServCtrl)
-           .OrderBy(s => s.GetCoreStates().GetIndex())
-           .ToList()
-           .AsReadOnly();
-
+        public ReadOnlyCollection<ICoreServCtrl> GetAllServersOrderByIndex()
+        {
+            return AtomOp(() => coreServList.Select(s => s as ICoreServCtrl)
+                .OrderBy(s => s.GetCoreStates().GetIndex())
+                .ToList());
+        }
 
         public ReadOnlyCollection<ICoreServCtrl> GetSelectedServers(
            bool descending = false)
         {
-            var list = coreServList.Where(s => s.GetCoreStates().IsSelected());
+            return AtomOp(() =>
+            {
+                var list = coreServList.Where(s => s.GetCoreStates().IsSelected());
 
-            var orderedList = descending ?
-                list.OrderByDescending(s => s.GetCoreStates().GetIndex()) :
-                list.OrderBy(s => s.GetCoreStates().GetIndex());
+                var orderedList = descending ?
+                    list.OrderByDescending(s => s.GetCoreStates().GetIndex()) :
+                    list.OrderBy(s => s.GetCoreStates().GetIndex());
 
-            return orderedList
-                .Select(s => s as ICoreServCtrl)
-                .ToList()
-                .AsReadOnly();
+                return orderedList
+                    .Select(s => s as ICoreServCtrl)
+                    .ToList();
+            });
         }
 
-        public ReadOnlyCollection<VgcApis.Interfaces.ICoreServCtrl>
-            GetTrackableServerList()
+        public ReadOnlyCollection<ICoreServCtrl> GetTrackableServerList()
         {
-            lock (serverListWriteLock)
-            {
-                return coreServList
-                    .Where(s => s.GetCoreCtrl().IsCoreRunning() && !s.GetCoreStates().IsUntrack())
-                    .Select(s => s as VgcApis.Interfaces.ICoreServCtrl)
-                    .ToList()
-                    .AsReadOnly();
-            }
+            return AtomOp(
+                () => coreServList
+                .Where(s => s.GetCoreCtrl().IsCoreRunning() && !s.GetCoreStates().IsUntrack())
+                .Select(s => s as ICoreServCtrl)
+                .ToList());
         }
 
         #endregion
 
         #region private methods
+
+        ReadOnlyCollection<ICoreServCtrl> AtomOp(Func<List<ICoreServCtrl>> op)
+        {
+            List<ICoreServCtrl> r = null;
+            lock (serverListWriteLock)
+            {
+                r = op?.Invoke();
+            }
+            return r.AsReadOnly();
+        }
 
         #endregion
     }

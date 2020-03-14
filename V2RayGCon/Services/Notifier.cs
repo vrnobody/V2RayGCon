@@ -368,7 +368,6 @@ namespace V2RayGCon.Services
             Action finished)
         {
             var count = list.Count;
-
             var texts = new List<string>();
 
             void done()
@@ -376,20 +375,11 @@ namespace V2RayGCon.Services
                 var sysProxyInfo = GetterSysProxyInfo();
                 if (!string.IsNullOrEmpty(sysProxyInfo))
                 {
-                    texts.Add(I18N.CurSysProxy + VgcApis.Misc.Utils.AutoEllipsis(sysProxyInfo, VgcApis.Models.Consts.AutoEllipsis.NotifierSysProxyInfoMaxLength));
+                    int len = VgcApis.Models.Consts.AutoEllipsis.NotifierSysProxyInfoMaxLength;
+                    texts.Add(I18N.CurSysProxy + VgcApis.Misc.Utils.AutoEllipsis(sysProxyInfo, len));
                 }
                 SetNotifyText(string.Join(Environment.NewLine, texts));
                 finished?.Invoke();
-            }
-
-            if (count <= 0 || count > 2)
-            {
-                texts.Add(count <= 0 ?
-                    I18N.Description :
-                    count.ToString() + I18N.ServersAreRunning);
-
-                done();
-                return;
             }
 
             void worker(int index, Action next)
@@ -399,6 +389,14 @@ namespace V2RayGCon.Services
                     texts.Add(s);
                     next?.Invoke();
                 });
+            }
+
+            if (count <= 0 || count > 2)
+            {
+                var t = count <= 0 ? I18N.Description : count.ToString() + I18N.ServersAreRunning;
+                texts.Add(t);
+                done();
+                return;
             }
 
             Misc.Utils.ChainActionHelperAsync(count, worker, done);

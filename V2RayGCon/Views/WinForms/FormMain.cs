@@ -286,6 +286,10 @@ namespace V2RayGCon.Views.WinForms
             this.Close();
         }
 
+        private void flyServerListContainer_Scroll(object sender, ScrollEventArgs e)
+        {
+            flyServerListContainer.Refresh();
+        }
         #endregion
 
 

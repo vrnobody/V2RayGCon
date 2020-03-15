@@ -176,6 +176,7 @@
             resources.ApplyResources(this.flySubsUrlContainer, "flySubsUrlContainer");
             this.flySubsUrlContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flySubsUrlContainer.Name = "flySubsUrlContainer";
+            this.flySubsUrlContainer.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flySubsUrlContainer_Scroll);
             // 
             // tabPageSetting
             // 
@@ -500,6 +501,7 @@
             resources.ApplyResources(this.flyImportPanel, "flyImportPanel");
             this.flyImportPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flyImportPanel.Name = "flyImportPanel";
+            this.flyImportPanel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flyImportPanel_Scroll);
             // 
             // tabPagePlugins
             // 
@@ -519,6 +521,7 @@
             resources.ApplyResources(this.flyPluginsItemsContainer, "flyPluginsItemsContainer");
             this.flyPluginsItemsContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flyPluginsItemsContainer.Name = "flyPluginsItemsContainer";
+            this.flyPluginsItemsContainer.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flyPluginsItemsContainer_Scroll);
             // 
             // btnBakBackup
             // 
@@ -560,6 +563,7 @@
             this.Controls.Add(this.btnOptionExit);
             this.Controls.Add(this.btnOptionSave);
             this.Controls.Add(this.tabControl1);
+            this.DoubleBuffered = true;
             this.Name = "FormOption";
             this.Load += new System.EventHandler(this.FormOption_Load);
             this.tabControl1.ResumeLayout(false);

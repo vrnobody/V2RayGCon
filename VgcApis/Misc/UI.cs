@@ -497,10 +497,10 @@ namespace VgcApis.Misc
             while (servIdx < count)
             {
                 var take = Math.Min(groupSize, count - servIdx);
-                groups.Add(new ToolStripMenuItem(
-                     string.Format("{0,4} - {1,4}", pageIdx + 1, pageIdx + menuSpan),
-                     null,
-                     menuItems.Skip(servIdx).Take(take).ToArray()));
+                var text = string.Format("{0,4} - {1,4}", pageIdx + 1, pageIdx + menuSpan);
+                var mis = menuItems.Skip(servIdx).Take(take).ToArray();
+                var mi = new ToolStripMenuItem(text, null, mis);
+                groups.Add(mi);
                 servIdx += groupSize;
                 pageIdx += menuSpan;
             }

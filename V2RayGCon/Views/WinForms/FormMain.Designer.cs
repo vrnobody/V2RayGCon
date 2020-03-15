@@ -175,6 +175,7 @@ namespace V2RayGCon.Views.WinForms
             this.flyServerListContainer.BackColor = System.Drawing.Color.White;
             this.flyServerListContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flyServerListContainer.Name = "flyServerListContainer";
+            this.flyServerListContainer.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flyServerListContainer_Scroll);
             // 
             // toolStrip1
             // 
@@ -853,6 +854,7 @@ namespace V2RayGCon.Views.WinForms
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.mainMneuStrip);
+            this.DoubleBuffered = true;
             this.MainMenuStrip = this.mainMneuStrip;
             this.Name = "FormMain";
             this.Load += new System.EventHandler(this.FormMain_Load);

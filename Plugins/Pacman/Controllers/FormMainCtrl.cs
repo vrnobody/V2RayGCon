@@ -214,12 +214,14 @@ namespace Pacman.Controllers
 
         void LoopThroughFlyContentItems(Action<Views.UserControls.BeanUI> action)
         {
+            flyContent.SuspendLayout();
             var controls = flyContent.Controls.OfType<Views.UserControls.BeanUI>().ToList();
 
             foreach (Views.UserControls.BeanUI control in controls)
             {
                 action(control);
             }
+            flyContent.ResumeLayout();
         }
 
         void Pack()
@@ -292,15 +294,15 @@ namespace Pacman.Controllers
                 return;
             }
 
-            var sortedList = beanList
+            var beans = beanList
                 .OrderBy(b => b.index)
-                .ToList();
+                .Select(el => new Views.UserControls.BeanUI(el))
+                .ToArray();
 
-            foreach (var bean in sortedList)
-            {
-                flyContent.Controls.Add(
-                    new Views.UserControls.BeanUI(bean));
-            }
+            flyContent.SuspendLayout();
+            flyContent.Controls.AddRange(beans);
+            flyContent.ResumeLayout();
+
         }
 
         void PackageListSelectedIndexChanged()

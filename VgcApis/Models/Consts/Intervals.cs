@@ -3,7 +3,6 @@
     static public class Intervals
     {
         public const int GetStartCoreTokenInterval = 391;
-        public const int GetStopCoreTokenInterval = 67;
 
         // Service.Setting 
         public const int LazyGcDelay = 10 * 60 * 1000; // 10 minutes

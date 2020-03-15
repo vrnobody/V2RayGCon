@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -102,34 +100,17 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 return;
             }
 
+            var groupSize = VgcApis.Models.Consts.Config.MenuItemGroupSize;
+            var groupedMiLoad = VgcApis.Misc.UI.AutoGroupMenuItems(
+                loadServMiList, groupSize);
+            var groupedMiReplace = VgcApis.Misc.UI.AutoGroupMenuItems(
+                replaceServMiList, groupSize);
+
+            miRootLoad.AddRange(groupedMiLoad.ToArray());
+            miRootReplace.AddRange(groupedMiReplace.ToArray());
+
             miLoadServer.Enabled = true;
             miReplaceServer.Enabled = true;
-
-            var miPerSubmenu = VgcApis.Models.Consts.Config.ConfigEditorServerMenuGroupSize;
-            var isUseSubMenu = loadServMiList.Count > miPerSubmenu;
-            if (!isUseSubMenu)
-            {
-                miRootLoad.AddRange(loadServMiList.ToArray());
-                miRootReplace.AddRange(replaceServMiList.ToArray());
-                return;
-            }
-
-            int submenuCount = (int)(Math.Ceiling(1.0 * loadServMiList.Count / miPerSubmenu));
-            for (int i = 0; i < submenuCount; i++)
-            {
-                var skip = i * miPerSubmenu;
-                var submenuTitle = string.Format(
-                    "{0,3} - {1,3}", skip + 1, skip + miPerSubmenu);
-
-                var submenuLoad = new ToolStripMenuItem(submenuTitle);
-                var submenuReplace = new ToolStripMenuItem(submenuTitle);
-                var partialMisLoad = loadServMiList.Skip(skip).Take(miPerSubmenu).ToArray();
-                var partialMisReplace = replaceServMiList.Skip(skip).Take(miPerSubmenu).ToArray();
-                submenuLoad.DropDownItems.AddRange(partialMisLoad);
-                submenuReplace.DropDownItems.AddRange(partialMisReplace);
-                miRootLoad.Add(submenuLoad);
-                miRootReplace.Add(submenuReplace);
-            }
         }
 
         private ToolStripMenuItem GenMenuItemLoad(string name, string orgConfig)

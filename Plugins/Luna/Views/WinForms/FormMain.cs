@@ -104,5 +104,9 @@ namespace Luna.Views.WinForms
             }
         }
 
+        private void flyScriptUIContainer_Scroll(object sender, ScrollEventArgs e)
+        {
+            flyScriptUIContainer.Refresh();
+        }
     }
 }

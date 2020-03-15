@@ -37,9 +37,8 @@ namespace Pacman.Services
                 packageName);
         }
 
-        public ReadOnlyCollection<VgcApis.Interfaces.ICoreServCtrl>
-            GetAllServersList()
-                => vgcServers.GetAllServersOrderByIndex();
+        public ReadOnlyCollection<VgcApis.Interfaces.ICoreServCtrl> GetAllServersList() =>
+            vgcServers.GetAllServersOrderByIndex();
 
         public List<Models.Data.Package> GetPackageList()
         {

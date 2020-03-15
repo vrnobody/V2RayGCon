@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -9,6 +10,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
 {
     class FlyServer : FormMainComponentController
     {
+        int statusBarUpdateInterval = 300;
+        int uiRefreshInterval = 1000;
+
         readonly Form formMain;
         readonly FlowLayoutPanel flyPanel;
         readonly Services.Servers servers;
@@ -17,7 +21,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         readonly ToolStripStatusLabel tslbTotal, tslbPrePage, tslbNextPage;
         readonly ToolStripDropDownButton tsdbtnPager;
 
-        readonly VgcApis.Libs.Tasks.LazyGuy lazyStatusBarUpdater, lazySearchResultDisplayer, lazyUiRefresher;
+        readonly VgcApis.Libs.Tasks.LazyGuy lazyStatusBarUpdater, lazySearchResultDisplayer, lazyFlyUpdater;
 
         readonly Views.UserControls.WelcomeUI welcomeItem = null;
 
@@ -49,9 +53,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             this.welcomeItem = new Views.UserControls.WelcomeUI();
 
-            lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarNow, 300);
+            lazyFlyUpdater = new VgcApis.Libs.Tasks.LazyGuy(() => RefreshUI(), uiRefreshInterval);
+            lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarLater, statusBarUpdateInterval);
             lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(ShowSearchResultNow, 1000);
-            lazyUiRefresher = new VgcApis.Libs.Tasks.LazyGuy(() => RefreshUI(), 300);
 
             InitFormControls(lbMarkFilter, miResizeFormMain);
             BindDragDropEvent();
@@ -97,7 +101,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             UnwatchServers();
 
-            lazyUiRefresher?.Quit();
+            lazyFlyUpdater?.Quit();
             lazyStatusBarUpdater?.Quit();
             lazySearchResultDisplayer?.Quit();
 
@@ -127,20 +131,62 @@ namespace V2RayGCon.Controllers.FormMainComponent
             }
         }
 
-        public void UpdateStatusBarLater() =>
-            lazyStatusBarUpdater?.DoItLater();
+        readonly VgcApis.Libs.Tasks.Bar updateStatusBarLock = new VgcApis.Libs.Tasks.Bar();
+        public void UpdateStatusBarLater()
+        {
+            if (!updateStatusBarLock.Install())
+            {
+                lazyStatusBarUpdater?.DoItLater();
+                return;
+            }
 
-        readonly VgcApis.Libs.Tasks.Bar refreshUiLock = new VgcApis.Libs.Tasks.Bar();
+            var start = DateTime.Now;
+            Action finished = async () =>
+            {
+                var relex = statusBarUpdateInterval - (DateTime.Now - start).TotalMilliseconds;
+                if (relex > 0)
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(relex));
+                }
+                updateStatusBarLock.Remove();
+            };
+
+            _ = Task.Run(() =>
+            {
+                UpdateStatusBarThen(finished);
+            });
+        }
+
+        readonly VgcApis.Libs.Tasks.Bar flyUpdatelLock = new VgcApis.Libs.Tasks.Bar();
         public override bool RefreshUI()
         {
-            if (!refreshUiLock.Install())
+            if (!flyUpdatelLock.Install())
             {
-                lazyUiRefresher?.DoItLater();
+                lazyFlyUpdater?.DoItLater();
                 return false;
             }
 
-            RefreshServersUiThen(() => refreshUiLock.Remove());
-            UpdateStatusBarLater();
+            var start = DateTime.Now;
+            Action finished = async () =>
+            {
+                var relex = uiRefreshInterval - (DateTime.Now - start).TotalMilliseconds;
+                if (relex > 0)
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(relex));
+                }
+                flyUpdatelLock.Remove();
+            };
+
+            _ = Task.Run(() =>
+            {
+                RefreshServersUiThen(() =>
+                {
+                    HighLightSearchKeywordsNow();
+                    UpdateStatusBarLater();
+                    finished?.Invoke();
+                });
+            });
+
             return true;
         }
         #endregion
@@ -219,17 +265,18 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void OnServerPropertyChangeHandler(object sender, EventArgs args)
         {
+            HighLightSearchKeywordsNow();
             UpdateStatusBarLater();
         }
 
-        void UpdateStatusBarNow()
+        void UpdateStatusBarThen(Action next)
         {
             int filteredListCount = GetFilteredList().Count;
             int allServersCount = servers.CountAllServers();
             int selectedServersCount = servers.CountSelectedServers(); // may cause dead lock in UI thread
             int serverControlCount = GetAllServerControls().Count();
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, () =>
+            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(formMain, () =>
             {
                 UpdateStatusBarText(
                     filteredListCount,
@@ -246,9 +293,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     formMain.Focus();
                     isFocusOnFormMain = false;
                 }
-            });
-
-            HighLightSearchKeywordsNow();
+            }, next);
         }
 
 
@@ -291,13 +336,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
             UpdateStatusBarPagerMenuCache();
             var groupedMenu = VgcApis.Misc.UI.AutoGroupMenuItems(
                 pagerMenuItemCache,
-                VgcApis.Models.Consts.Config.FormMainStatusPagerMenuGroupSize);
+                VgcApis.Models.Consts.Config.MenuItemGroupSize);
             pagerMenu.AddRange(groupedMenu.ToArray());
         }
 
         private void UpdateStatusBarPagingButtons()
         {
             var showPager = totalPageNumber > 1;
+            var cpn = VgcApis.Misc.Utils.Clamp(curPageNumber, 0, totalPageNumber);
 
             if (tsdbtnPager.Visible != showPager)
             {
@@ -306,17 +352,13 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 tslbPrePage.Visible = showPager;
             }
 
-            tslbPrePage.Enabled = curPageNumber != 0;
-            tslbNextPage.Enabled = totalPageNumber > 1 && curPageNumber != totalPageNumber - 1;
-
-            tsdbtnPager.Text = string.Format(
-                    I18N.StatusBarPagerInfoTpl,
-                    curPageNumber + 1,
-                    totalPageNumber);
+            tslbPrePage.Enabled = cpn > 0;
+            tslbNextPage.Enabled = totalPageNumber > 1 && cpn < totalPageNumber - 1;
+            tsdbtnPager.Text = string.Format(I18N.StatusBarPagerInfoTpl, cpn + 1, totalPageNumber);
 
             for (int i = 0; i < pagerMenuItemCache.Count; i++)
             {
-                pagerMenuItemCache[i].Checked = curPageNumber == i;
+                pagerMenuItemCache[i].Checked = cpn == i;
             }
         }
 

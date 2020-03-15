@@ -53,5 +53,12 @@ namespace Pacman.Views.WinForms
                 btnRefreshSelected);
         }
         #endregion
+        #region UI events
+
+        private void flyContents_Scroll(object sender, ScrollEventArgs e)
+        {
+            flyContents.Refresh();
+        }
+        #endregion
     }
 }

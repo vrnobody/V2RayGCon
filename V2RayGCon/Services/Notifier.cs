@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -27,13 +28,13 @@ namespace V2RayGCon.Services
         ToolStripMenuItem pluginRootMenuItem = null;
         ToolStripMenuItem serversRootMenuItem = null;
 
+        readonly int notifyIconUpdateInterval = VgcApis.Models.Consts.Intervals.NotifierTextUpdateIntreval;
         VgcApis.Libs.Tasks.LazyGuy lazyNotifyIconUpdater;
 
         Notifier()
         {
             lazyNotifyIconUpdater = new VgcApis.Libs.Tasks.LazyGuy(
-                UpdateNotifyIcon,
-                VgcApis.Models.Consts.Intervals.NotifierTextUpdateIntreval);
+                UpdateNotifyIcon, notifyIconUpdateInterval);
         }
 
         public void Run(
@@ -163,8 +164,10 @@ namespace V2RayGCon.Services
 
             return VgcApis.Misc.UI.AutoGroupMenuItems(
                 menuItems,
-                VgcApis.Models.Consts.Config.NotifyIconServerMenuGroupSize);
+                VgcApis.Models.Consts.Config.MenuItemGroupSize);
         }
+
+
 
         private ToolStripMenuItem CoreServ2MenuItem(VgcApis.Interfaces.ICoreServCtrl coreServ)
         {
@@ -226,15 +229,28 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            Action finished = () => updateNotifyIconLock.Remove();
-            Action updateServersMenu = () => UpdateServersMenuThen(finished);
+            var start = DateTime.Now;
+            Action finished = async () =>
+            {
+                var relex = notifyIconUpdateInterval - (DateTime.Now - start).TotalMilliseconds;
+                if (relex > 0)
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(relex));
+                }
+                updateNotifyIconLock.Remove();
+            };
 
-            var list = servers.GetAllServersOrderByIndex()
-                .Where(s => s.GetCoreCtrl().IsCoreRunning())
-                .ToList();
+            _ = Task.Run(() =>
+            {
+                Action updateServersMenu = () => UpdateServersMenuThen(finished);
 
-            UpdateNotifyIconImage(list.Count());
-            UpdateNotifyIconTextThen(list, updateServersMenu);
+                var list = servers.GetAllServersOrderByIndex()
+                    .Where(s => s.GetCoreCtrl().IsCoreRunning())
+                    .ToList();
+
+                UpdateNotifyIconImage(list.Count());
+                UpdateNotifyIconTextThen(list, updateServersMenu);
+            });
         }
 
         private void UpdateNotifyIconImage(int activeServNum)
@@ -352,7 +368,6 @@ namespace V2RayGCon.Services
             Action finished)
         {
             var count = list.Count;
-
             var texts = new List<string>();
 
             void done()
@@ -360,20 +375,11 @@ namespace V2RayGCon.Services
                 var sysProxyInfo = GetterSysProxyInfo();
                 if (!string.IsNullOrEmpty(sysProxyInfo))
                 {
-                    texts.Add(I18N.CurSysProxy + VgcApis.Misc.Utils.AutoEllipsis(sysProxyInfo, VgcApis.Models.Consts.AutoEllipsis.NotifierSysProxyInfoMaxLength));
+                    int len = VgcApis.Models.Consts.AutoEllipsis.NotifierSysProxyInfoMaxLength;
+                    texts.Add(I18N.CurSysProxy + VgcApis.Misc.Utils.AutoEllipsis(sysProxyInfo, len));
                 }
                 SetNotifyText(string.Join(Environment.NewLine, texts));
                 finished?.Invoke();
-            }
-
-            if (count <= 0 || count > 2)
-            {
-                texts.Add(count <= 0 ?
-                    I18N.Description :
-                    count.ToString() + I18N.ServersAreRunning);
-
-                done();
-                return;
             }
 
             void worker(int index, Action next)
@@ -383,6 +389,14 @@ namespace V2RayGCon.Services
                     texts.Add(s);
                     next?.Invoke();
                 });
+            }
+
+            if (count <= 0 || count > 2)
+            {
+                var t = count <= 0 ? I18N.Description : count.ToString() + I18N.ServersAreRunning;
+                texts.Add(t);
+                done();
+                return;
             }
 
             Misc.Utils.ChainActionHelperAsync(count, worker, done);

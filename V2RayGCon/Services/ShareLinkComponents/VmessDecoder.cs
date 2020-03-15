@@ -182,7 +182,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             // insert stream type
             string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic" };
-            string streamType = vmess.net.ToLower();
+            string streamType = vmess?.net?.ToLower();
 
             if (!streamTypes.Contains(streamType))
             {

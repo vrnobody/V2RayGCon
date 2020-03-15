@@ -390,10 +390,10 @@ namespace V2RayGCon.Services
                 title = title
             };
 
-            speedTester.WaitForStartCoreToken();
+            setting.SpeedTestPool.WaitOne();
             if (setting.isSpeedtestCancelled)
             {
-                speedTester.ReleaseToken();
+                setting.SpeedTestPool.Release();
                 return VgcApis.Models.Consts.Core.SpeedtestAbort;
             }
 
@@ -402,21 +402,18 @@ namespace V2RayGCon.Services
                 speedTester.OnLog += logDeliever;
             }
 
+            long testResult = VgcApis.Models.Consts.Core.SpeedtestTimeout;
             try
             {
                 speedTester.RestartCore(speedTestConfig);
+                var expectedSizeInKib = setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestExpectedSizeInKib : 0;
+                testResult = Misc.Utils.VisitWebPageSpeedTest(testUrl, port, expectedSizeInKib, testTimeout);
+                speedTester.StopCore();
             }
             finally
             {
-                speedTester.ReleaseToken();
+                setting.SpeedTestPool.Release();
             }
-
-            var expectedSizeInKib = setting.isUseCustomSpeedtestSettings ?
-                setting.CustomSpeedtestExpectedSizeInKib : 0;
-
-            long testResult = Misc.Utils.VisitWebPageSpeedTest(testUrl, port, expectedSizeInKib, testTimeout);
-
-            speedTester.StopCore();
 
             if (logDeliever != null)
             {

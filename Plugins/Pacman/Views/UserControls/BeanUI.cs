@@ -16,7 +16,7 @@ namespace Pacman.Views.UserControls
 
         private void BeanUI_Load(object sender, EventArgs e)
         {
-            chkTitle.Text = bean.title;
+            lbTitle.Text = bean.title;
             lbStatus.Text = bean.status;
             chkTitle.Checked = bean.isSelected;
         }
@@ -62,7 +62,7 @@ namespace Pacman.Views.UserControls
             {
                 return;
             }
-            chkTitle.Text = title;
+            lbTitle.Text = title;
             bean.title = title;
         }
 
@@ -87,16 +87,18 @@ namespace Pacman.Views.UserControls
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            this.Parent.Controls.Remove(this);
-        }
-
-        #endregion
-
         private void lbStatus_MouseDown(object sender, MouseEventArgs e)
         {
             DoDragDrop(this, DragDropEffects.Move);
         }
+
+        private void lbTitle_Click(object sender, EventArgs e)
+        {
+            chkTitle.Checked = !chkTitle.Checked;
+        }
+
+        #endregion
+
+
     }
 }

@@ -1523,10 +1523,7 @@ namespace V2RayGCon.Misc
             var taskList = new List<Task<TResult>>();
             foreach (var value in param)
             {
-                var task = new Task<TResult>(
-                    () => worker(value),
-                    TaskCreationOptions.LongRunning);
-
+                var task = new Task<TResult>(() => worker(value), TaskCreationOptions.LongRunning);
                 taskList.Add(task);
                 task.Start();
             }
@@ -1542,19 +1539,19 @@ namespace V2RayGCon.Misc
             return result;
         }
 
-        public static void RunAsSTAThread(Action lambda)
+        public static void RunAsSTAThread(Action action)
         {
             // https://www.codeproject.com/Questions/727531/ThreadStateException-cant-handeled-in-ClipBoard-Se
-            AutoResetEvent @event = new AutoResetEvent(false);
+            AutoResetEvent done = new AutoResetEvent(false);
             Thread thread = new Thread(
                 () =>
                 {
-                    lambda();
-                    @event.Set();
+                    action?.Invoke();
+                    done.Set();
                 });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
-            @event.WaitOne();
+            done.WaitOne();
         }
 
         /// <summary>

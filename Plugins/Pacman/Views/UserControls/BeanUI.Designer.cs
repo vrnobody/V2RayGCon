@@ -31,30 +31,41 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BeanUI));
             this.chkTitle = new System.Windows.Forms.CheckBox();
             this.lbStatus = new System.Windows.Forms.Label();
+            this.lbTitle = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // chkTitle
             // 
-            this.chkTitle.AutoEllipsis = true;
-            this.chkTitle.Cursor = System.Windows.Forms.Cursors.Default;
             resources.ApplyResources(this.chkTitle, "chkTitle");
+            this.chkTitle.Cursor = System.Windows.Forms.Cursors.Default;
             this.chkTitle.Name = "chkTitle";
             this.chkTitle.UseVisualStyleBackColor = true;
             this.chkTitle.CheckedChanged += new System.EventHandler(this.chkTitle_CheckedChanged);
             // 
             // lbStatus
             // 
+            resources.ApplyResources(this.lbStatus, "lbStatus");
             this.lbStatus.AutoEllipsis = true;
             this.lbStatus.ForeColor = System.Drawing.Color.Red;
-            resources.ApplyResources(this.lbStatus, "lbStatus");
             this.lbStatus.Name = "lbStatus";
+            this.lbStatus.UseCompatibleTextRendering = true;
             this.lbStatus.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbStatus_MouseDown);
+            // 
+            // lbTitle
+            // 
+            resources.ApplyResources(this.lbTitle, "lbTitle");
+            this.lbTitle.AutoEllipsis = true;
+            this.lbTitle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lbTitle.Name = "lbTitle";
+            this.lbTitle.UseCompatibleTextRendering = true;
+            this.lbTitle.Click += new System.EventHandler(this.lbTitle_Click);
             // 
             // BeanUI
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.lbTitle);
             this.Controls.Add(this.lbStatus);
             this.Controls.Add(this.chkTitle);
             this.Cursor = System.Windows.Forms.Cursors.SizeAll;
@@ -62,6 +73,7 @@
             this.Load += new System.EventHandler(this.BeanUI_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BeanUI_MouseDown);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -69,5 +81,6 @@
 
         private System.Windows.Forms.CheckBox chkTitle;
         private System.Windows.Forms.Label lbStatus;
+        private System.Windows.Forms.Label lbTitle;
     }
 }

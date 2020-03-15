@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -25,9 +26,18 @@ namespace V2RayGCon.Services
         {
             userSettings = LoadUserSettings();
             userSettings.Normalized();  // replace null with empty object.
+
+            InitVariables();
         }
 
         #region Properties
+        Semaphore _speedTestPool = null;
+        public Semaphore SpeedTestPool
+        {
+            get => _speedTestPool;
+            private set { }
+        }
+
         public bool isSpeedtestCancelled = false;
 
         public string AllPluginsSetting
@@ -611,6 +621,12 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
+        private void InitVariables()
+        {
+            var maxCoreNum = userSettings.MaxConcurrentV2RayCoreNum;
+            _speedTestPool = new Semaphore(maxCoreNum, maxCoreNum);
+        }
+
         bool IsValid(string serializedUserSettings)
         {
             if (string.IsNullOrEmpty(serializedUserSettings))

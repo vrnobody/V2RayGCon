@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -24,7 +23,6 @@ namespace V2RayGCon.Libs.V2Ray
         public event EventHandler OnCoreStatusChanged;
 
         Services.Settings setting;
-        static VgcApis.Libs.Tasks.Bar globalCoreStartStopToken = new VgcApis.Libs.Tasks.Bar();
 
         Process v2rayCore;
         static object coreLock = new object();
@@ -164,41 +162,6 @@ namespace V2RayGCon.Libs.V2Ray
             }
 
             return folders;
-        }
-
-        VgcApis.Libs.Tasks.Bar coreStartToken = null;
-
-        public void WaitForStartCoreToken()
-        {
-            while (true)
-            {
-                while (!globalCoreStartStopToken.Install())
-                {
-                    Task.Delay(VgcApis.Models.Consts.Intervals.GetStartCoreTokenInterval).Wait();
-                }
-
-                if (curConcurrentV2RayCoreNum < setting.maxConcurrentV2RayCoreNum)
-                {
-                    break;
-                }
-                else
-                {
-                    globalCoreStartStopToken.Remove();
-                }
-            }
-            coreStartToken = globalCoreStartStopToken;
-        }
-
-        public void ReleaseToken()
-        {
-            if (coreStartToken == null)
-            {
-                throw new ArgumentNullException(@"Token is null!");
-            }
-
-            var token = coreStartToken;
-            coreStartToken = null;
-            token.Remove();
         }
 
         // blocking

@@ -132,8 +132,21 @@ namespace V2RayGCon.Views.WinForms
             optionCtrl.RestoreOptions();
         }
 
-        #endregion
+        private void flySubsUrlContainer_Scroll(object sender, ScrollEventArgs e)
+        {
+            flySubsUrlContainer.Refresh();
+        }
 
+        private void flyImportPanel_Scroll(object sender, ScrollEventArgs e)
+        {
+            flyImportPanel.Refresh();
+        }
+
+        private void flyPluginsItemsContainer_Scroll(object sender, ScrollEventArgs e)
+        {
+            flyPluginsItemsContainer.Refresh();
+        }
+        #endregion
 
     }
 }

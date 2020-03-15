@@ -39,7 +39,7 @@ namespace VgcApis.Interfaces.Lua
 
         int Choice(string title, NLua.LuaTable choices, bool isShowKey);
 
-        int Choice(string title, NLua.LuaTable choices, bool isShowKey, int defChoice);
+        int Choice(string title, NLua.LuaTable choices, bool isShowKey, int selected);
 
         bool Confirm(string content);
 

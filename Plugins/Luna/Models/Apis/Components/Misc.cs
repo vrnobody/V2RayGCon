@@ -103,10 +103,10 @@ namespace Luna.Models.Apis.Components
         public int Choice(string title, NLua.LuaTable choices, bool isShowKey) =>
             Choice(title, choices, isShowKey, -1);
 
-        public int Choice(string title, NLua.LuaTable choices, bool isShowKey, int defChoice)
+        public int Choice(string title, NLua.LuaTable choices, bool isShowKey, int selected)
         {
             var list = LuaTableToList(choices, isShowKey);
-            return GetResultFromChoiceDialog(title, list.ToArray(), defChoice);
+            return GetResultFromChoiceDialog(title, list.ToArray(), selected);
         }
 
         public int Choice(string title, params string[] choices) =>
@@ -231,9 +231,9 @@ namespace Luna.Models.Apis.Components
             return new List<int>();
         }
 
-        private static int GetResultFromChoiceDialog(string title, string[] choices, int defChoice)
+        private static int GetResultFromChoiceDialog(string title, string[] choices, int selected)
         {
-            using (var form = new Views.WinForms.FormChoice(title, choices, defChoice))
+            using (var form = new Views.WinForms.FormChoice(title, choices, selected))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)

@@ -390,10 +390,13 @@ namespace V2RayGCon.Services
                 title = title
             };
 
-            setting.SpeedTestPool.WaitOne();
+            // setting.SpeedTestPool may change while testing
+            var pool = setting.SpeedTestPool;
+
+            pool.WaitOne();
             if (setting.isSpeedtestCancelled)
             {
-                setting.SpeedTestPool.Release();
+                pool.Release();
                 return VgcApis.Models.Consts.Core.SpeedtestAbort;
             }
 
@@ -412,7 +415,7 @@ namespace V2RayGCon.Services
             }
             finally
             {
-                setting.SpeedTestPool.Release();
+                pool.Release();
             }
 
             if (logDeliever != null)

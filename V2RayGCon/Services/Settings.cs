@@ -26,8 +26,7 @@ namespace V2RayGCon.Services
         {
             userSettings = LoadUserSettings();
             userSettings.Normalized();  // replace null with empty object.
-
-            InitVariables();
+            UpdateSpeedTestPool();
         }
 
         #region Properties
@@ -281,6 +280,7 @@ namespace V2RayGCon.Services
             set
             {
                 userSettings.MaxConcurrentV2RayCoreNum = Misc.Utils.Clamp(value, 10, 1001);
+                UpdateSpeedTestPool();
                 LazySaveUserSettings();
             }
         }
@@ -621,10 +621,10 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
-        private void InitVariables()
+        void UpdateSpeedTestPool()
         {
-            var maxCoreNum = userSettings.MaxConcurrentV2RayCoreNum;
-            _speedTestPool = new Semaphore(maxCoreNum, maxCoreNum);
+            var poolSize = userSettings.MaxConcurrentV2RayCoreNum;
+            _speedTestPool = new Semaphore(poolSize, poolSize);
         }
 
         bool IsValid(string serializedUserSettings)

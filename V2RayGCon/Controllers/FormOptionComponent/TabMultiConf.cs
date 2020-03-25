@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace V2RayGCon.Controllers.OptionComponent
 {
-    class Import : OptionComponentController
+    class TabMultiConf : OptionComponentController
     {
         FlowLayoutPanel flyPanel;
         Button btnAdd;
@@ -13,7 +13,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         Services.Settings setting;
         string oldOptions;
 
-        public Import(
+        public TabMultiConf(
             FlowLayoutPanel flyPanel,
             Button btnAdd)
         {
@@ -33,9 +33,8 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             if (curOptions != oldOptions)
             {
-                setting.SaveGlobalImportItems(curOptions);
+                setting.SaveMultiConfItems(curOptions);
                 oldOptions = curOptions;
-                Services.Servers.Instance.RestartServersWithImportMark();
                 return true;
             }
             return false;
@@ -48,7 +47,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         public void Reload(string rawSetting)
         {
-            setting.SaveGlobalImportItems(rawSetting);
+            setting.SaveMultiConfItems(rawSetting);
             Misc.UI.ClearFlowLayoutPanel(this.flyPanel);
             InitPanel();
         }
@@ -57,17 +56,16 @@ namespace V2RayGCon.Controllers.OptionComponent
         #region private method
         string GetCurOptions()
         {
-            return JsonConvert.SerializeObject(CollectImportItems());
+            return JsonConvert.SerializeObject(CollectMultiConfItems());
         }
 
-        List<Models.Datas.ImportItem> CollectImportItems()
+        List<Models.Datas.MultiConfItem> CollectMultiConfItems()
         {
-            var itemList = new List<Models.Datas.ImportItem>();
-            foreach (Views.UserControls.ImportUI item in this.flyPanel.Controls)
+            var itemList = new List<Models.Datas.MultiConfItem>();
+            foreach (Views.UserControls.MultiConfUI item in this.flyPanel.Controls)
             {
                 var v = item.GetValue();
-                if (!string.IsNullOrEmpty(v.alias)
-                    || !string.IsNullOrEmpty(v.url))
+                if (!string.IsNullOrEmpty(v.alias) || !string.IsNullOrEmpty(v.path))
                 {
                     itemList.Add(v);
                 }
@@ -77,18 +75,18 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         void InitPanel()
         {
-            var importUrlItemList = setting.GetGlobalImportItems();
+            var importUrlItemList = setting.GetMultiConfItems();
 
             this.oldOptions = JsonConvert.SerializeObject(importUrlItemList);
 
             if (importUrlItemList.Count <= 0)
             {
-                importUrlItemList.Add(new Models.Datas.ImportItem());
+                importUrlItemList.Add(new Models.Datas.MultiConfItem());
             }
 
             foreach (var item in importUrlItemList)
             {
-                this.flyPanel.Controls.Add(new Views.UserControls.ImportUI(item, UpdatePanelItemsIndex));
+                this.flyPanel.Controls.Add(new Views.UserControls.MultiConfUI(item, UpdatePanelItemsIndex));
             }
 
             UpdatePanelItemsIndex();
@@ -98,10 +96,10 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             this.btnAdd.Click += (s, a) =>
             {
-                this.flyPanel.Controls.Add(
-                    new Views.UserControls.ImportUI(
-                        new Models.Datas.ImportItem(),
-                        UpdatePanelItemsIndex));
+                var item = new Views.UserControls.MultiConfUI(
+                        new Models.Datas.MultiConfItem(),
+                        UpdatePanelItemsIndex);
+                this.flyPanel.Controls.Add(item);
                 UpdatePanelItemsIndex();
             };
         }
@@ -112,8 +110,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             {
                 // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
 
-                var data = a.Data.GetData(typeof(Views.UserControls.ImportUI))
-                    as Views.UserControls.ImportUI;
+                var data = a.Data.GetData(typeof(Views.UserControls.MultiConfUI))
+                    as Views.UserControls.MultiConfUI;
 
                 var _destination = s as FlowLayoutPanel;
                 Point p = _destination.PointToClient(new Point(a.X, a.Y));
@@ -138,7 +136,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         void UpdatePanelItemsIndex()
         {
             var index = 1;
-            foreach (Views.UserControls.ImportUI item in this.flyPanel.Controls)
+            foreach (Views.UserControls.MultiConfUI item in this.flyPanel.Controls)
             {
                 item.SetIndex(index++);
             }

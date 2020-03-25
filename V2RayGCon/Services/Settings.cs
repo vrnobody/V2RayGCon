@@ -531,6 +531,29 @@ namespace V2RayGCon.Services
             form.Top = Misc.Utils.Clamp(rect.Top, 0, screen.Bottom - form.Height);
         }
 
+        public List<Models.Datas.MultiConfItem> GetMultiConfItems()
+        {
+            try
+            {
+                var items = JsonConvert
+                    .DeserializeObject<List<Models.Datas.MultiConfItem>>(
+                        userSettings.MultiConfItems);
+
+                if (items != null)
+                {
+                    return items;
+                }
+            }
+            catch { };
+            return new List<Models.Datas.MultiConfItem>();
+        }
+
+        public void SaveMultiConfItems(string options)
+        {
+            userSettings.MultiConfItems = options;
+            LazySaveUserSettings();
+        }
+
         public List<Models.Datas.ImportItem> GetGlobalImportItems()
         {
             try

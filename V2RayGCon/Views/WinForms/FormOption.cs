@@ -53,7 +53,12 @@ namespace V2RayGCon.Views.WinForms
             var ctrl = new Controllers.FormOptionCtrl();
 
             ctrl.Plug(
-                new Controllers.OptionComponent.Import(
+                new Controllers.OptionComponent.TabMultiConf(
+                    flyMultiConfPanel,
+                    btnMultiConfAdd));
+
+            ctrl.Plug(
+                new Controllers.OptionComponent.TabImport(
                     flyImportPanel,
                     btnImportAdd));
 

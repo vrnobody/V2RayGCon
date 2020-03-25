@@ -360,6 +360,21 @@
   <data name="tabPageImport.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="btnMultiConfAdd.Text" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="btnMultiConfAdd.ToolTip" xml:space="preserve">
+    <value>添加配置文件</value>
+  </data>
+  <data name="flyMultiConfPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPageMultiConf.Text" xml:space="preserve">
+    <value>多配置文件</value>
+  </data>
+  <data name="tabPageMultiConf.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label4.Text" xml:space="preserve">
     <value>钩选并保存后，主窗口及托盘图标将多出一个插件菜单。</value>
   </data>

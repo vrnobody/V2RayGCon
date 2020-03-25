@@ -82,6 +82,9 @@
             this.tabPageImport = new System.Windows.Forms.TabPage();
             this.btnImportAdd = new System.Windows.Forms.Button();
             this.flyImportPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.tabPageMultiConf = new System.Windows.Forms.TabPage();
+            this.btnMultiConfAdd = new System.Windows.Forms.Button();
+            this.flyMultiConfPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPagePlugins = new System.Windows.Forms.TabPage();
             this.label4 = new System.Windows.Forms.Label();
             this.flyPluginsItemsContainer = new System.Windows.Forms.FlowLayoutPanel();
@@ -101,6 +104,7 @@
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPageImport.SuspendLayout();
+            this.tabPageMultiConf.SuspendLayout();
             this.tabPagePlugins.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -111,6 +115,7 @@
             this.tabControl1.Controls.Add(this.tabPageSetting);
             this.tabControl1.Controls.Add(this.tabPageDefaults);
             this.tabControl1.Controls.Add(this.tabPageImport);
+            this.tabControl1.Controls.Add(this.tabPageMultiConf);
             this.tabControl1.Controls.Add(this.tabPagePlugins);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -523,6 +528,30 @@
             this.toolTip1.SetToolTip(this.flyImportPanel, resources.GetString("flyImportPanel.ToolTip"));
             this.flyImportPanel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flyImportPanel_Scroll);
             // 
+            // tabPageMultiConf
+            // 
+            resources.ApplyResources(this.tabPageMultiConf, "tabPageMultiConf");
+            this.tabPageMultiConf.Controls.Add(this.btnMultiConfAdd);
+            this.tabPageMultiConf.Controls.Add(this.flyMultiConfPanel);
+            this.tabPageMultiConf.Name = "tabPageMultiConf";
+            this.toolTip1.SetToolTip(this.tabPageMultiConf, resources.GetString("tabPageMultiConf.ToolTip"));
+            this.tabPageMultiConf.UseVisualStyleBackColor = true;
+            // 
+            // btnMultiConfAdd
+            // 
+            resources.ApplyResources(this.btnMultiConfAdd, "btnMultiConfAdd");
+            this.btnMultiConfAdd.Name = "btnMultiConfAdd";
+            this.toolTip1.SetToolTip(this.btnMultiConfAdd, resources.GetString("btnMultiConfAdd.ToolTip"));
+            this.btnMultiConfAdd.UseVisualStyleBackColor = true;
+            // 
+            // flyMultiConfPanel
+            // 
+            resources.ApplyResources(this.flyMultiConfPanel, "flyMultiConfPanel");
+            this.flyMultiConfPanel.AllowDrop = true;
+            this.flyMultiConfPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.flyMultiConfPanel.Name = "flyMultiConfPanel";
+            this.toolTip1.SetToolTip(this.flyMultiConfPanel, resources.GetString("flyMultiConfPanel.ToolTip"));
+            // 
             // tabPagePlugins
             // 
             resources.ApplyResources(this.tabPagePlugins, "tabPagePlugins");
@@ -609,6 +638,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.tabPageImport.ResumeLayout(false);
+            this.tabPageMultiConf.ResumeLayout(false);
             this.tabPagePlugins.ResumeLayout(false);
             this.tabPagePlugins.PerformLayout();
             this.ResumeLayout(false);
@@ -677,5 +707,8 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.CheckBox chkSubsIsAutoPatch;
+        private System.Windows.Forms.TabPage tabPageMultiConf;
+        private System.Windows.Forms.Button btnMultiConfAdd;
+        private System.Windows.Forms.FlowLayoutPanel flyMultiConfPanel;
     }
 }

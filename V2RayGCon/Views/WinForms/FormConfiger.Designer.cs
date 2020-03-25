@@ -66,6 +66,12 @@
             this.tboxVMessID = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPageMisc = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.tboxMultiConfPath = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.btnInsertMultiConf = new System.Windows.Forms.Button();
+            this.cboxMultiConfAlias = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.tboxEnvValue = new System.Windows.Forms.TextBox();
             this.btnInsertEnv = new System.Windows.Forms.Button();
@@ -132,6 +138,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPageMisc.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -405,6 +412,7 @@
             // 
             // tabPageMisc
             // 
+            this.tabPageMisc.Controls.Add(this.groupBox3);
             this.tabPageMisc.Controls.Add(this.groupBox8);
             this.tabPageMisc.Controls.Add(this.groupBox7);
             this.tabPageMisc.Controls.Add(this.groupBox5);
@@ -412,6 +420,44 @@
             resources.ApplyResources(this.tabPageMisc, "tabPageMisc");
             this.tabPageMisc.Name = "tabPageMisc";
             this.tabPageMisc.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.tboxMultiConfPath);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.btnInsertMultiConf);
+            this.groupBox3.Controls.Add(this.cboxMultiConfAlias);
+            this.groupBox3.Controls.Add(this.label8);
+            resources.ApplyResources(this.groupBox3, "groupBox3");
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.TabStop = false;
+            // 
+            // tboxMultiConfPath
+            // 
+            resources.ApplyResources(this.tboxMultiConfPath, "tboxMultiConfPath");
+            this.tboxMultiConfPath.Name = "tboxMultiConfPath";
+            // 
+            // label6
+            // 
+            resources.ApplyResources(this.label6, "label6");
+            this.label6.Name = "label6";
+            // 
+            // btnInsertMultiConf
+            // 
+            resources.ApplyResources(this.btnInsertMultiConf, "btnInsertMultiConf");
+            this.btnInsertMultiConf.Name = "btnInsertMultiConf";
+            this.btnInsertMultiConf.UseVisualStyleBackColor = true;
+            // 
+            // cboxMultiConfAlias
+            // 
+            this.cboxMultiConfAlias.FormattingEnabled = true;
+            resources.ApplyResources(this.cboxMultiConfAlias, "cboxMultiConfAlias");
+            this.cboxMultiConfAlias.Name = "cboxMultiConfAlias";
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
             // 
             // groupBox8
             // 
@@ -828,6 +874,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPageMisc.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             this.groupBox7.ResumeLayout(false);
@@ -949,5 +997,11 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnSaveExpansedConfigToFile;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox tboxMultiConfPath;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnInsertMultiConf;
+        private System.Windows.Forms.ComboBox cboxMultiConfAlias;
+        private System.Windows.Forms.Label label8;
     }
 }

@@ -130,7 +130,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Strings.cs" />
+    <Compile Include="Controllers\FormOptionComponent\TabMultiConf.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabDefaults.cs" />
+    <Compile Include="Models\Datas\MultiConfItem.cs" />
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
     <Compile Include="Models\Datas\SpeedTestOptions.cs" />
     <Compile Include="Models\Datas\UpdateInfo.cs" />
@@ -145,8 +147,8 @@
     <Compile Include="Controllers\CoreServerComponent\Logger.cs" />
     <Compile Include="Controllers\FormConfigerCtrl.cs" />
     <Compile Include="Controllers\ConfigerComponent\Editor.cs" />
-    <Compile Include="Controllers\ConfigerComponent\Import.cs" />
-    <Compile Include="Controllers\ConfigerComponent\EnvVar.cs" />
+    <Compile Include="Controllers\ConfigerComponent\ExpandGlobalImports.cs" />
+    <Compile Include="Controllers\ConfigerComponent\EnvImportMultiConf.cs" />
     <Compile Include="Controllers\ConfigerComponent\Shadowsocks.cs" />
     <Compile Include="Controllers\ConfigerComponent\VGC.cs" />
     <Compile Include="Controllers\ConfigerComponent\StreamSettings.cs" />
@@ -159,7 +161,7 @@
     <Compile Include="Controllers\FormMainCtrl.cs" />
     <Compile Include="Controllers\ConfigerComponent\Quick.cs" />
     <Compile Include="Controllers\FormOptionComponent\OptionComponentController.cs" />
-    <Compile Include="Controllers\FormOptionComponent\Import.cs" />
+    <Compile Include="Controllers\FormOptionComponent\TabImport.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabPlugin.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabSetting.cs" />
     <Compile Include="Controllers\FormOptionComponent\Subscription.cs" />
@@ -210,6 +212,12 @@
     <Compile Include="Services\ShareLinkComponents\V2cfgDecoder.cs" />
     <Compile Include="Services\ShareLinkMgr.cs" />
     <Compile Include="Services\Updater.cs" />
+    <Compile Include="Views\UserControls\MultiConfUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\MultiConfUI.Designer.cs">
+      <DependentUpon>MultiConfUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\ImportUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -348,6 +356,12 @@
     <Compile Include="Views\WinForms\FormSimAddVmessClient.Designer.cs">
       <DependentUpon>FormSimAddVmessClient.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\UserControls\MultiConfUI.resx">
+      <DependentUpon>MultiConfUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\MultiConfUI.zh-CN.resx">
+      <DependentUpon>MultiConfUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\PluginInfoUI.resx">
       <DependentUpon>PluginInfoUI.cs</DependentUpon>
     </EmbeddedResource>

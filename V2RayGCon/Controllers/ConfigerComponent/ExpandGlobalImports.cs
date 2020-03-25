@@ -8,7 +8,7 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.ConfigerComponet
 {
-    class Import : ConfigerComponentController
+    class ExpandGlobalImports : ConfigerComponentController
     {
         Services.Settings setting;
         Services.ConfigMgr configMgr;
@@ -16,7 +16,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         Scintilla editor;
         CheckBox cboxGlobalImport;
 
-        public Import(
+        public ExpandGlobalImports(
             Panel container,
             CheckBox globalImport,
             Button btnExpand,

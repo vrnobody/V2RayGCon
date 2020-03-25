@@ -33,10 +33,13 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.1.1")]
+[assembly: AssemblyVersion("1.3.1.2")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.3.1.2 Fix notify icon menu of ProxySetter not update bug.
+ *          Add env var V2RAY_LOCATION_CONFDIR.
+ *          Upgrade to v2ray-core v4.23.1
  * v1.3.1.1 Retry with no restart after update failed.
  *          Max concurrent v2ray core setting take effect in next speed testing.
  * --------------------------------------------------------

@@ -128,7 +128,6 @@
             this.toolTip1.SetToolTip(this.rlbSetting, resources.GetString("rlbSetting.ToolTip"));
             this.rlbSetting.UseCompatibleTextRendering = true;
             this.rlbSetting.Click += new System.EventHandler(this.rlbSetting_Click);
-
             // 
             // rlbMark
             // 

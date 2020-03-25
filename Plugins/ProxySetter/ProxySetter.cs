@@ -45,6 +45,7 @@ namespace ProxySetter
         {
             luncher = new Services.PsLuncher();
             luncher.Run(api);
+            menuItemCache = null;
         }
 
         protected override void Popup()

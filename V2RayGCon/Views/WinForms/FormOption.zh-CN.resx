@@ -300,6 +300,12 @@
   <data name="groupBox4.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="cboxDefSpeedTestExpectedSize.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxDefSpeedTestUrl.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="tboxDefSpeedtestTimeout.ToolTip" xml:space="preserve">
     <value>20000（20秒）</value>
   </data>
@@ -313,7 +319,9 @@
     <value>大小(KiB)</value>
   </data>
   <data name="label7.ToolTip" xml:space="preserve">
-    <value>实际下载数据小于预期时，当成测速超时处理。</value>
+    <value>实际下载数据小于预期时，当成测速超时处理。
+-1：下载整个页面
+0：相当于tcp ping</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
     <value>测试次数</value>
@@ -370,7 +378,7 @@
     <value />
   </data>
   <data name="tabPageMultiConf.Text" xml:space="preserve">
-    <value>多配置文件</value>
+    <value>多文件配置</value>
   </data>
   <data name="tabPageMultiConf.ToolTip" xml:space="preserve">
     <value />

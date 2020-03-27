@@ -275,11 +275,11 @@ namespace V2RayGCon.Services
             get
             {
                 var size = userSettings.MaxConcurrentV2RayCoreNum;
-                return Misc.Utils.Clamp(size, 10, 1001);
+                return Misc.Utils.Clamp(size, 1, 1001);
             }
             set
             {
-                userSettings.MaxConcurrentV2RayCoreNum = Misc.Utils.Clamp(value, 10, 1001);
+                userSettings.MaxConcurrentV2RayCoreNum = Misc.Utils.Clamp(value, 1, 1001);
                 UpdateSpeedTestPool();
                 LazySaveUserSettings();
             }

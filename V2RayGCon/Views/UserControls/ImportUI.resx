@@ -126,14 +126,10 @@
     <value>宋体, 12pt, style=Bold</value>
   </data>
   <data name="lbIndex.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 10</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lbIndex.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
+    <value>5, 7</value>
   </data>
   <data name="lbIndex.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 24</value>
+    <value>26, 16</value>
   </data>
   <data name="lbIndex.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -157,13 +153,10 @@
     <value>8</value>
   </data>
   <data name="tboxAlias.Location" type="System.Drawing.Point, System.Drawing">
-    <value>114, 8</value>
-  </data>
-  <data name="tboxAlias.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+    <value>76, 5</value>
   </data>
   <data name="tboxAlias.Size" type="System.Drawing.Size, System.Drawing">
-    <value>403, 28</value>
+    <value>270, 21</value>
   </data>
   <data name="tboxAlias.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -184,13 +177,10 @@
     <value>True</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>52, 14</value>
-  </data>
-  <data name="label2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
+    <value>35, 9</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 18</value>
+    <value>35, 12</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -214,13 +204,10 @@
     <value>True</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>52, 51</value>
-  </data>
-  <data name="label3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
+    <value>35, 34</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 18</value>
+    <value>23, 12</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -241,13 +228,10 @@
     <value>6</value>
   </data>
   <data name="tboxUrl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>114, 45</value>
-  </data>
-  <data name="tboxUrl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+    <value>76, 30</value>
   </data>
   <data name="tboxUrl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>403, 28</value>
+    <value>270, 21</value>
   </data>
   <data name="tboxUrl.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -264,17 +248,15 @@
   <data name="&gt;&gt;tboxUrl.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnDelete.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnDelete.Location" type="System.Drawing.Point, System.Drawing">
-    <value>419, 81</value>
-  </data>
-  <data name="btnDelete.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+    <value>281, 54</value>
   </data>
   <data name="btnDelete.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 32</value>
+    <value>65, 21</value>
   </data>
   <data name="btnDelete.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -298,13 +280,10 @@
     <value>True</value>
   </data>
   <data name="chkMergeWhenStart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>194, 86</value>
-  </data>
-  <data name="chkMergeWhenStart.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+    <value>129, 56</value>
   </data>
   <data name="chkMergeWhenStart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>79, 22</value>
+    <value>54, 16</value>
   </data>
   <data name="chkMergeWhenStart.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -334,10 +313,13 @@
     <value>True</value>
   </data>
   <data name="chkMergeWhenSpeedTest.Location" type="System.Drawing.Point, System.Drawing">
-    <value>114, 86</value>
+    <value>76, 56</value>
+  </data>
+  <data name="chkMergeWhenSpeedTest.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="chkMergeWhenSpeedTest.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 22</value>
+    <value>48, 16</value>
   </data>
   <data name="chkMergeWhenSpeedTest.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -364,13 +346,10 @@
     <value>True</value>
   </data>
   <data name="chkMergeWhenPacking.Location" type="System.Drawing.Point, System.Drawing">
-    <value>284, 86</value>
-  </data>
-  <data name="chkMergeWhenPacking.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+    <value>189, 56</value>
   </data>
   <data name="chkMergeWhenPacking.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 22</value>
+    <value>66, 16</value>
   </data>
   <data name="chkMergeWhenPacking.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -397,13 +376,10 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>9, 18</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
+    <value>6, 12</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>528, 122</value>
+    <value>353, 82</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value>Drag and drop to adjust order.</value>

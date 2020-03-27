@@ -99,9 +99,9 @@ namespace V2RayGCon.Views.WinForms
 
                     // speedtest 
                     chkDefSpeedtestIsUse,
-                    tboxDefSpeedtestUrl,
+                    cboxDefSpeedTestUrl,
                     tboxDefSpeedtestCycles,
-                    tboxDefSpeedtestExpectedSize,
+                    cboxDefSpeedTestExpectedSize,
                     tboxDefSpeedtestTimeout)
             );
 

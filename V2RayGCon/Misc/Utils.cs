@@ -1023,17 +1023,61 @@ namespace V2RayGCon.Misc
             }
 
             var maxTimeout = timeout > 0 ? timeout : VgcApis.Models.Consts.Intervals.SpeedTestTimeout;
-            long elasped = SpeedtestTimeout;
-            Stopwatch sw = new Stopwatch();
-            sw.Reset();
-            sw.Start();
-            var html = Fetch(url, port, maxTimeout);
-            sw.Stop();
-            if (!string.IsNullOrEmpty(html) && html.Length >= Math.Max(0, expectedSizeInKiB * 1024))
+
+            WebClient wc = new WebClient
             {
-                elasped = sw.ElapsedMilliseconds;
+                Encoding = Encoding.UTF8,
+            };
+
+            if (port > 0 && port < 65536)
+            {
+                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, port);
             }
-            return elasped;
+
+            Stopwatch sw = new Stopwatch();
+            AutoResetEvent dlCompleted = new AutoResetEvent(false);
+            long totalReceived = 0;
+            var expectedBytes = expectedSizeInKiB * 1024;
+
+            if (expectedSizeInKiB >= 0)
+            {
+                wc.DownloadProgressChanged += (s, a) =>
+                {
+                    Interlocked.Add(ref totalReceived, a.BytesReceived);
+                    if (totalReceived > expectedBytes)
+                    {
+                        sw.Stop();
+                        wc.CancelAsync();
+                    }
+                };
+            }
+
+            wc.DownloadStringCompleted += (s, a) =>
+            {
+                sw.Stop();
+                dlCompleted.Set();
+                wc.Dispose();
+            };
+
+            try
+            {
+                var patchedUrl = VgcApis.Misc.Utils.IsHttpLink(url) ? url : VgcApis.Misc.Utils.RelativePath2FullPath(url);
+                sw.Start();
+                wc.DownloadStringAsync(new Uri(patchedUrl));
+                // 收到信号为True
+                if (!dlCompleted.WaitOne(maxTimeout))
+                {
+                    wc.CancelAsync();
+                    return SpeedtestTimeout;
+                }
+            }
+            catch
+            {
+                // network operation always buggy.
+                return SpeedtestTimeout;
+            }
+
+            return totalReceived <= expectedBytes ? SpeedtestTimeout : sw.ElapsedMilliseconds;
         }
 
         static bool DownloadFileWorker(string url, string filename, int proxyPort, int timeout)
@@ -1119,20 +1163,19 @@ namespace V2RayGCon.Misc
             }
 
             AutoResetEvent dlCompleted = new AutoResetEvent(false);
-
             wc.DownloadStringCompleted += (s, a) =>
             {
                 try
                 {
-                    html = a.Result;
+                    if (!a.Cancelled)
+                    {
+                        html = a.Result;
+                    }
                 }
                 catch { }
 
-                try
-                {
-                    dlCompleted.Set();
-                }
-                catch { }
+                dlCompleted.Set();
+                wc.Dispose();
             };
 
             try
@@ -1143,7 +1186,6 @@ namespace V2RayGCon.Misc
                 }
 
                 wc.DownloadStringAsync(new Uri(url));
-
                 // 收到信号为True
                 if (!dlCompleted.WaitOne(timeout))
                 {
@@ -1155,12 +1197,6 @@ namespace V2RayGCon.Misc
                 // network operation always buggy.
             }
 
-            try
-            {
-                wc.Dispose();
-            }
-            catch { }
-
             return html;
         }
 
@@ -1168,10 +1204,10 @@ namespace V2RayGCon.Misc
             FetchWorker(url, proxyPort, timeout);
 
         public static string Fetch(string url) =>
-            FetchWorker(url, -1, -1);
+            Fetch(url, -1, -1);
 
         public static string Fetch(string url, int timeout) =>
-            FetchWorker(url, -1, timeout);
+            Fetch(url, -1, timeout);
 
         public static string GetLatestVgcVersion()
         {

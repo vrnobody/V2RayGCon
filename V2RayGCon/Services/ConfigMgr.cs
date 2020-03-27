@@ -370,30 +370,29 @@ namespace V2RayGCon.Services
             bool isInjectActivateTpl,
             EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever)
         {
-            var port = VgcApis.Misc.Utils.GetFreeTcpPort();
+            void log(string content) =>
+                logDeliever?.Invoke(this, new VgcApis.Models.Datas.StrEvent(content));
 
-            // for debugging 
-            logDeliever?.Invoke(this, new VgcApis.Models.Datas.StrEvent(
-                I18N.SpeedtestPortNum + port.ToString()));
+            var port = VgcApis.Misc.Utils.GetFreeTcpPort();
+            log($"{I18N.SpeedtestPortNum}{port}");
 
             var speedTestConfig = CreateSpeedTestConfig(
                 rawConfig, port, isUseCache, isInjectSpeedTestTpl, isInjectActivateTpl);
-
             if (string.IsNullOrEmpty(speedTestConfig))
             {
-                logDeliever?.Invoke(this, new VgcApis.Models.Datas.StrEvent(I18N.DecodeImportFail));
+                log(I18N.DecodeImportFail);
                 return SpeedtestTimeout;
             }
 
-            var speedTester = new Libs.V2Ray.Core(setting)
-            {
-                title = title
-            };
+            var speedTester = new Libs.V2Ray.Core(setting) { title = title };
 
-            setting.SpeedTestPool.WaitOne();
+            // setting.SpeedTestPool may change while testing
+            var pool = setting.SpeedTestPool;
+            pool.WaitOne();
+
             if (setting.isSpeedtestCancelled)
             {
-                setting.SpeedTestPool.Release();
+                pool.Release();
                 return VgcApis.Models.Consts.Core.SpeedtestAbort;
             }
 
@@ -406,13 +405,13 @@ namespace V2RayGCon.Services
             try
             {
                 speedTester.RestartCore(speedTestConfig);
-                var expectedSizeInKib = setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestExpectedSizeInKib : 0;
+                var expectedSizeInKib = setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestExpectedSizeInKib : -1;
                 testResult = Misc.Utils.VisitWebPageSpeedTest(testUrl, port, expectedSizeInKib, testTimeout);
                 speedTester.StopCore();
             }
             finally
             {
-                setting.SpeedTestPool.Release();
+                pool.Release();
             }
 
             if (logDeliever != null)

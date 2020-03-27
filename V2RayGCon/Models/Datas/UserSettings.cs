@@ -26,6 +26,9 @@ namespace V2RayGCon.Models.Datas
         public bool isCheckUpdateWhenAppStart { get; set; }
         public bool isUpdateUseProxy { get; set; }
 
+        // v2ray-core v4.23.1 multiple config file supports
+        public string MultiConfItems { get; set; }
+
         public string ImportUrls { get; set; }
         public string DecodeCache { get; set; }
         public string SubscribeUrls { get; set; }
@@ -61,6 +64,7 @@ namespace V2RayGCon.Models.Datas
             CfgShowToolPanel = true;
             isPortable = true;
 
+            MultiConfItems = string.Empty;
             ImportUrls = string.Empty;
             DecodeCache = string.Empty;
             SubscribeUrls = string.Empty;

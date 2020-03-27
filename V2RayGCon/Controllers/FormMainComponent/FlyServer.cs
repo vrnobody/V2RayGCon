@@ -140,6 +140,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 return;
             }
 
+            HighLightSearchKeywordsNow();
             var start = DateTime.Now;
             Action finished = async () =>
             {
@@ -181,7 +182,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 RefreshServersUiThen(() =>
                 {
-                    HighLightSearchKeywordsNow();
                     UpdateStatusBarLater();
                     finished?.Invoke();
                 });
@@ -265,7 +265,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void OnServerPropertyChangeHandler(object sender, EventArgs args)
         {
-            HighLightSearchKeywordsNow();
             UpdateStatusBarLater();
         }
 

@@ -109,7 +109,7 @@ namespace V2RayGCon.Controllers
             if (options.ContainsKey(BAK_IMPORT)
                 && Misc.UI.Confirm(I18N.ConfirmRestoreGlobalImportSettings))
             {
-                GetComponent<OptionComponent.Import>().Reload(options[BAK_IMPORT]);
+                GetComponent<OptionComponent.TabImport>().Reload(options[BAK_IMPORT]);
             }
 
             if (options.ContainsKey(BAK_SUBSCRIPTION)

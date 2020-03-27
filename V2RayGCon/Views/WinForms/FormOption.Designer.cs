@@ -70,10 +70,10 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cboxDefSpeedTestExpectedSize = new System.Windows.Forms.ComboBox();
+            this.cboxDefSpeedTestUrl = new System.Windows.Forms.ComboBox();
             this.tboxDefSpeedtestTimeout = new System.Windows.Forms.TextBox();
-            this.tboxDefSpeedtestExpectedSize = new System.Windows.Forms.TextBox();
             this.tboxDefSpeedtestCycles = new System.Windows.Forms.TextBox();
-            this.tboxDefSpeedtestUrl = new System.Windows.Forms.TextBox();
             this.chkDefSpeedtestIsUse = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -82,6 +82,9 @@
             this.tabPageImport = new System.Windows.Forms.TabPage();
             this.btnImportAdd = new System.Windows.Forms.Button();
             this.flyImportPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.tabPageMultiConf = new System.Windows.Forms.TabPage();
+            this.btnMultiConfAdd = new System.Windows.Forms.Button();
+            this.flyMultiConfPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPagePlugins = new System.Windows.Forms.TabPage();
             this.label4 = new System.Windows.Forms.Label();
             this.flyPluginsItemsContainer = new System.Windows.Forms.FlowLayoutPanel();
@@ -101,6 +104,7 @@
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPageImport.SuspendLayout();
+            this.tabPageMultiConf.SuspendLayout();
             this.tabPagePlugins.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -111,6 +115,7 @@
             this.tabControl1.Controls.Add(this.tabPageSetting);
             this.tabControl1.Controls.Add(this.tabPageDefaults);
             this.tabControl1.Controls.Add(this.tabPageImport);
+            this.tabControl1.Controls.Add(this.tabPageMultiConf);
             this.tabControl1.Controls.Add(this.tabPagePlugins);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -413,10 +418,10 @@
             // groupBox3
             // 
             resources.ApplyResources(this.groupBox3, "groupBox3");
+            this.groupBox3.Controls.Add(this.cboxDefSpeedTestExpectedSize);
+            this.groupBox3.Controls.Add(this.cboxDefSpeedTestUrl);
             this.groupBox3.Controls.Add(this.tboxDefSpeedtestTimeout);
-            this.groupBox3.Controls.Add(this.tboxDefSpeedtestExpectedSize);
             this.groupBox3.Controls.Add(this.tboxDefSpeedtestCycles);
-            this.groupBox3.Controls.Add(this.tboxDefSpeedtestUrl);
             this.groupBox3.Controls.Add(this.chkDefSpeedtestIsUse);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.label6);
@@ -425,29 +430,48 @@
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
             // 
+            // cboxDefSpeedTestExpectedSize
+            // 
+            this.cboxDefSpeedTestExpectedSize.FormattingEnabled = true;
+            this.cboxDefSpeedTestExpectedSize.Items.AddRange(new object[] {
+            resources.GetString("cboxDefSpeedTestExpectedSize.Items"),
+            resources.GetString("cboxDefSpeedTestExpectedSize.Items1"),
+            resources.GetString("cboxDefSpeedTestExpectedSize.Items2"),
+            resources.GetString("cboxDefSpeedTestExpectedSize.Items3"),
+            resources.GetString("cboxDefSpeedTestExpectedSize.Items4"),
+            resources.GetString("cboxDefSpeedTestExpectedSize.Items5"),
+            resources.GetString("cboxDefSpeedTestExpectedSize.Items6"),
+            resources.GetString("cboxDefSpeedTestExpectedSize.Items7"),
+            resources.GetString("cboxDefSpeedTestExpectedSize.Items8"),
+            resources.GetString("cboxDefSpeedTestExpectedSize.Items9")});
+            resources.ApplyResources(this.cboxDefSpeedTestExpectedSize, "cboxDefSpeedTestExpectedSize");
+            this.cboxDefSpeedTestExpectedSize.Name = "cboxDefSpeedTestExpectedSize";
+            // 
+            // cboxDefSpeedTestUrl
+            // 
+            this.cboxDefSpeedTestUrl.FormattingEnabled = true;
+            this.cboxDefSpeedTestUrl.Items.AddRange(new object[] {
+            resources.GetString("cboxDefSpeedTestUrl.Items"),
+            resources.GetString("cboxDefSpeedTestUrl.Items1"),
+            resources.GetString("cboxDefSpeedTestUrl.Items2"),
+            resources.GetString("cboxDefSpeedTestUrl.Items3"),
+            resources.GetString("cboxDefSpeedTestUrl.Items4"),
+            resources.GetString("cboxDefSpeedTestUrl.Items5"),
+            resources.GetString("cboxDefSpeedTestUrl.Items6")});
+            resources.ApplyResources(this.cboxDefSpeedTestUrl, "cboxDefSpeedTestUrl");
+            this.cboxDefSpeedTestUrl.Name = "cboxDefSpeedTestUrl";
+            // 
             // tboxDefSpeedtestTimeout
             // 
             resources.ApplyResources(this.tboxDefSpeedtestTimeout, "tboxDefSpeedtestTimeout");
             this.tboxDefSpeedtestTimeout.Name = "tboxDefSpeedtestTimeout";
             this.toolTip1.SetToolTip(this.tboxDefSpeedtestTimeout, resources.GetString("tboxDefSpeedtestTimeout.ToolTip"));
             // 
-            // tboxDefSpeedtestExpectedSize
-            // 
-            resources.ApplyResources(this.tboxDefSpeedtestExpectedSize, "tboxDefSpeedtestExpectedSize");
-            this.tboxDefSpeedtestExpectedSize.Name = "tboxDefSpeedtestExpectedSize";
-            this.toolTip1.SetToolTip(this.tboxDefSpeedtestExpectedSize, resources.GetString("tboxDefSpeedtestExpectedSize.ToolTip"));
-            // 
             // tboxDefSpeedtestCycles
             // 
             resources.ApplyResources(this.tboxDefSpeedtestCycles, "tboxDefSpeedtestCycles");
             this.tboxDefSpeedtestCycles.Name = "tboxDefSpeedtestCycles";
             this.toolTip1.SetToolTip(this.tboxDefSpeedtestCycles, resources.GetString("tboxDefSpeedtestCycles.ToolTip"));
-            // 
-            // tboxDefSpeedtestUrl
-            // 
-            resources.ApplyResources(this.tboxDefSpeedtestUrl, "tboxDefSpeedtestUrl");
-            this.tboxDefSpeedtestUrl.Name = "tboxDefSpeedtestUrl";
-            this.toolTip1.SetToolTip(this.tboxDefSpeedtestUrl, resources.GetString("tboxDefSpeedtestUrl.ToolTip"));
             // 
             // chkDefSpeedtestIsUse
             // 
@@ -502,6 +526,28 @@
             this.flyImportPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flyImportPanel.Name = "flyImportPanel";
             this.flyImportPanel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flyImportPanel_Scroll);
+            // 
+            // tabPageMultiConf
+            // 
+            this.tabPageMultiConf.Controls.Add(this.btnMultiConfAdd);
+            this.tabPageMultiConf.Controls.Add(this.flyMultiConfPanel);
+            resources.ApplyResources(this.tabPageMultiConf, "tabPageMultiConf");
+            this.tabPageMultiConf.Name = "tabPageMultiConf";
+            this.tabPageMultiConf.UseVisualStyleBackColor = true;
+            // 
+            // btnMultiConfAdd
+            // 
+            resources.ApplyResources(this.btnMultiConfAdd, "btnMultiConfAdd");
+            this.btnMultiConfAdd.Name = "btnMultiConfAdd";
+            this.toolTip1.SetToolTip(this.btnMultiConfAdd, resources.GetString("btnMultiConfAdd.ToolTip"));
+            this.btnMultiConfAdd.UseVisualStyleBackColor = true;
+            // 
+            // flyMultiConfPanel
+            // 
+            this.flyMultiConfPanel.AllowDrop = true;
+            resources.ApplyResources(this.flyMultiConfPanel, "flyMultiConfPanel");
+            this.flyMultiConfPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.flyMultiConfPanel.Name = "flyMultiConfPanel";
             // 
             // tabPagePlugins
             // 
@@ -584,6 +630,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.tabPageImport.ResumeLayout(false);
+            this.tabPageMultiConf.ResumeLayout(false);
             this.tabPagePlugins.ResumeLayout(false);
             this.tabPagePlugins.PerformLayout();
             this.ResumeLayout(false);
@@ -632,9 +679,7 @@
         private System.Windows.Forms.ComboBox cboxDefImportMode;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox tboxDefSpeedtestExpectedSize;
         private System.Windows.Forms.TextBox tboxDefSpeedtestCycles;
-        private System.Windows.Forms.TextBox tboxDefSpeedtestUrl;
         private System.Windows.Forms.CheckBox chkDefSpeedtestIsUse;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
@@ -652,5 +697,10 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.CheckBox chkSubsIsAutoPatch;
+        private System.Windows.Forms.TabPage tabPageMultiConf;
+        private System.Windows.Forms.Button btnMultiConfAdd;
+        private System.Windows.Forms.FlowLayoutPanel flyMultiConfPanel;
+        private System.Windows.Forms.ComboBox cboxDefSpeedTestExpectedSize;
+        private System.Windows.Forms.ComboBox cboxDefSpeedTestUrl;
     }
 }

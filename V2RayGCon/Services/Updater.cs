@@ -79,12 +79,15 @@ namespace V2RayGCon.Services
 
         void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
         {
-            if (!CheckUpdateInfoArgs(args)
-                || !ConfirmUpdate())
+            if (!CheckUpdateInfoArgs(args) || !ConfirmUpdate())
             {
+                // must confirm first
                 updateBar.Remove();
                 return;
             }
+
+            // if download file failed or cancelled, user can try again
+            updateBar.Remove();
 
             try
             {
@@ -182,20 +185,16 @@ namespace V2RayGCon.Services
         void InitAutoUpdater()
         {
             AutoUpdater.ReportErrors = true;
-            AutoUpdater.ParseUpdateInfoEvent +=
-                AutoUpdaterOnParseUpdateInfoEvent;
-            AutoUpdater.CheckForUpdateEvent +=
-                AutoUpdaterOnCheckForUpdateEvent;
+            AutoUpdater.ParseUpdateInfoEvent += AutoUpdaterOnParseUpdateInfoEvent;
+            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
         }
         #endregion
 
         #region protected methods
         protected override void Cleanup()
         {
-            AutoUpdater.ParseUpdateInfoEvent -=
-                AutoUpdaterOnParseUpdateInfoEvent;
-            AutoUpdater.CheckForUpdateEvent -=
-                AutoUpdaterOnCheckForUpdateEvent;
+            AutoUpdater.ParseUpdateInfoEvent -= AutoUpdaterOnParseUpdateInfoEvent;
+            AutoUpdater.CheckForUpdateEvent -= AutoUpdaterOnCheckForUpdateEvent;
         }
         #endregion
     }

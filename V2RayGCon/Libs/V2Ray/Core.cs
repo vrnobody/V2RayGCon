@@ -224,8 +224,6 @@ namespace V2RayGCon.Libs.V2Ray
 
         #region private method
 
-
-
         void InvokeEventOnCoreStatusChanged()
         {
             try
@@ -318,14 +316,16 @@ namespace V2RayGCon.Libs.V2Ray
             catch { }
         }
 
-        Process CreateV2RayCoreProcess()
+        Process CreateV2RayCoreProcess(string config)
         {
+            var args = Misc.Utils.GenCmdArgFromConfig(config);
+
             var p = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = GetExecutablePath(),
-                    Arguments = "-config=stdin: -format=json",
+                    Arguments = args,
                     CreateNoWindow = true,
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
@@ -431,7 +431,7 @@ namespace V2RayGCon.Libs.V2Ray
             isCoreReadyEvent.Reset();
             isWatchCoreReadyLog = IsConfigWaitable(config);
 
-            v2rayCore = CreateV2RayCoreProcess();
+            v2rayCore = CreateV2RayCoreProcess(config);
             InjectEnv(v2rayCore, envs);
             BindEvents(v2rayCore);
 

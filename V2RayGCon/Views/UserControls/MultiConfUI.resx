@@ -150,7 +150,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbIndex.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>5</value>
   </data>
   <data name="tboxAlias.Location" type="System.Drawing.Point, System.Drawing">
     <value>76, 5</value>
@@ -171,7 +171,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tboxAlias.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>2</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -198,7 +198,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>4</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -207,13 +207,19 @@
     <value>35, 34</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 12</value>
+    <value>29, 12</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>URL</value>
+    <value>Path</value>
+  </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value>Must be absolute path.</value>
   </data>
   <data name="&gt;&gt;label3.Name" xml:space="preserve">
     <value>label3</value>
@@ -225,7 +231,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>3</value>
   </data>
   <data name="tboxUrl.Location" type="System.Drawing.Point, System.Drawing">
     <value>76, 30</value>
@@ -235,6 +241,9 @@
   </data>
   <data name="tboxUrl.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
+  </data>
+  <data name="tboxUrl.ToolTip" xml:space="preserve">
+    <value>d:/folder/tpl.json</value>
   </data>
   <data name="&gt;&gt;tboxUrl.Name" xml:space="preserve">
     <value>tboxUrl</value>
@@ -246,7 +255,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tboxUrl.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>1</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnDelete.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
@@ -274,102 +283,6 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnDelete.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="chkMergeWhenStart.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkMergeWhenStart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>129, 56</value>
-  </data>
-  <data name="chkMergeWhenStart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 16</value>
-  </data>
-  <data name="chkMergeWhenStart.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="chkMergeWhenStart.Text" xml:space="preserve">
-    <value>Start</value>
-  </data>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <data name="chkMergeWhenStart.ToolTip" xml:space="preserve">
-    <value>Use this template when starting server.</value>
-  </data>
-  <data name="&gt;&gt;chkMergeWhenStart.Name" xml:space="preserve">
-    <value>chkMergeWhenStart</value>
-  </data>
-  <data name="&gt;&gt;chkMergeWhenStart.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkMergeWhenStart.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;chkMergeWhenStart.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="chkMergeWhenSpeedTest.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkMergeWhenSpeedTest.Location" type="System.Drawing.Point, System.Drawing">
-    <value>76, 56</value>
-  </data>
-  <data name="chkMergeWhenSpeedTest.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="chkMergeWhenSpeedTest.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
-  <data name="chkMergeWhenSpeedTest.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="chkMergeWhenSpeedTest.Text" xml:space="preserve">
-    <value>Test</value>
-  </data>
-  <data name="chkMergeWhenSpeedTest.ToolTip" xml:space="preserve">
-    <value>Use this template when running speed test.</value>
-  </data>
-  <data name="&gt;&gt;chkMergeWhenSpeedTest.Name" xml:space="preserve">
-    <value>chkMergeWhenSpeedTest</value>
-  </data>
-  <data name="&gt;&gt;chkMergeWhenSpeedTest.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkMergeWhenSpeedTest.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;chkMergeWhenSpeedTest.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="chkMergeWhenPacking.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkMergeWhenPacking.Location" type="System.Drawing.Point, System.Drawing">
-    <value>189, 56</value>
-  </data>
-  <data name="chkMergeWhenPacking.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 16</value>
-  </data>
-  <data name="chkMergeWhenPacking.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="chkMergeWhenPacking.Text" xml:space="preserve">
-    <value>Package</value>
-  </data>
-  <data name="chkMergeWhenPacking.ToolTip" xml:space="preserve">
-    <value>Use this template when packing servers.</value>
-  </data>
-  <data name="&gt;&gt;chkMergeWhenPacking.Name" xml:space="preserve">
-    <value>chkMergeWhenPacking</value>
-  </data>
-  <data name="&gt;&gt;chkMergeWhenPacking.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkMergeWhenPacking.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;chkMergeWhenPacking.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -391,7 +304,7 @@
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>ImportUI</value>
+    <value>MultiConfUI</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

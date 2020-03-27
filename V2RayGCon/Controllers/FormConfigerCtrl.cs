@@ -30,7 +30,7 @@ namespace V2RayGCon.Controllers
         public void Cleanup()
         {
             GetComponent<ConfigerComponet.MenuUpdater>()?.Cleanup();
-            GetComponent<ConfigerComponet.Import>()?.Cleanup();
+            GetComponent<ConfigerComponet.ExpandGlobalImports>()?.Cleanup();
             GetComponent<ConfigerComponet.Editor>()?.Cleanup();
         }
 

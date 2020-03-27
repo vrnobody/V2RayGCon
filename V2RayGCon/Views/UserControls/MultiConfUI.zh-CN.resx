@@ -117,15 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Name" xml:space="preserve">
-    <value>ProxySetter</value>
+  <data name="lbIndex.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="VBDynamicWeb_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\App\VBDynamicWeb_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tboxAlias.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="Version" xml:space="preserve">
-    <value>0.1.4</value>
-    <comment>修复菜单缓存引发的一个BUG</comment>
+  <data name="label2.Text" xml:space="preserve">
+    <value>别名</value>
+  </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>路径</value>
+  </data>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value>必须是绝对路径</value>
+  </data>
+  <data name="tboxUrl.ToolTip" xml:space="preserve">
+    <value>d:/folder/tpl.json</value>
+  </data>
+  <data name="btnDelete.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="btnDelete.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value>拖放可以调整顺序</value>
   </data>
 </root>

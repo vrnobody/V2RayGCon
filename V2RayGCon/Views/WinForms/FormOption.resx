@@ -331,7 +331,7 @@
     <value>6, 6</value>
   </data>
   <data name="flySubsUrlContainer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>381, 371</value>
+    <value>381, 368</value>
   </data>
   <data name="flySubsUrlContainer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -604,7 +604,7 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="tboxSettingsMaxCoreNum.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 37</value>
+    <value>80, 14</value>
   </data>
   <data name="tboxSettingsMaxCoreNum.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 21</value>
@@ -627,8 +627,11 @@
   <data name="chkSetServStatistics.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="chkSetServStatistics.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="chkSetServStatistics.Location" type="System.Drawing.Point, System.Drawing">
-    <value>125, 18</value>
+    <value>125, 41</value>
   </data>
   <data name="chkSetServStatistics.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -661,7 +664,7 @@
     <value>True</value>
   </data>
   <data name="chkSetServAutotrack.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 18</value>
+    <value>15, 41</value>
   </data>
   <data name="chkSetServAutotrack.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -697,16 +700,16 @@
     <value>NoControl</value>
   </data>
   <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
-    <value>189, 41</value>
+    <value>189, 18</value>
   </data>
   <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 12</value>
+    <value>65, 12</value>
   </data>
   <data name="label13.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="label13.Text" xml:space="preserve">
-    <value>(10 - 1000 need to restart)</value>
+    <value>(1 - 1000)</value>
   </data>
   <data name="&gt;&gt;label13.Name" xml:space="preserve">
     <value>label13</value>
@@ -727,7 +730,7 @@
     <value>NoControl</value>
   </data>
   <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 41</value>
+    <value>13, 18</value>
   </data>
   <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>
@@ -1284,6 +1287,99 @@
   <data name="groupBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
+  <data name="cboxDefSpeedTestExpectedSize.Items" xml:space="preserve">
+    <value>-1</value>
+  </data>
+  <data name="cboxDefSpeedTestExpectedSize.Items1" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cboxDefSpeedTestExpectedSize.Items2" xml:space="preserve">
+    <value>64</value>
+  </data>
+  <data name="cboxDefSpeedTestExpectedSize.Items3" xml:space="preserve">
+    <value>128</value>
+  </data>
+  <data name="cboxDefSpeedTestExpectedSize.Items4" xml:space="preserve">
+    <value>256</value>
+  </data>
+  <data name="cboxDefSpeedTestExpectedSize.Items5" xml:space="preserve">
+    <value>512</value>
+  </data>
+  <data name="cboxDefSpeedTestExpectedSize.Items6" xml:space="preserve">
+    <value>1024</value>
+  </data>
+  <data name="cboxDefSpeedTestExpectedSize.Items7" xml:space="preserve">
+    <value>2048</value>
+  </data>
+  <data name="cboxDefSpeedTestExpectedSize.Items8" xml:space="preserve">
+    <value>4096</value>
+  </data>
+  <data name="cboxDefSpeedTestExpectedSize.Items9" xml:space="preserve">
+    <value>8192</value>
+  </data>
+  <data name="cboxDefSpeedTestExpectedSize.Location" type="System.Drawing.Point, System.Drawing">
+    <value>208, 43</value>
+  </data>
+  <data name="cboxDefSpeedTestExpectedSize.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 20</value>
+  </data>
+  <data name="cboxDefSpeedTestExpectedSize.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;cboxDefSpeedTestExpectedSize.Name" xml:space="preserve">
+    <value>cboxDefSpeedTestExpectedSize</value>
+  </data>
+  <data name="&gt;&gt;cboxDefSpeedTestExpectedSize.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboxDefSpeedTestExpectedSize.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;cboxDefSpeedTestExpectedSize.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cboxDefSpeedTestUrl.Items" xml:space="preserve">
+    <value>https://www.bing.com</value>
+  </data>
+  <data name="cboxDefSpeedTestUrl.Items1" xml:space="preserve">
+    <value>https://www.gogole.com</value>
+  </data>
+  <data name="cboxDefSpeedTestUrl.Items2" xml:space="preserve">
+    <value>https://www.youtube.com</value>
+  </data>
+  <data name="cboxDefSpeedTestUrl.Items3" xml:space="preserve">
+    <value>https://www.github.com</value>
+  </data>
+  <data name="cboxDefSpeedTestUrl.Items4" xml:space="preserve">
+    <value>http://ovh.net/files/1Mio.dat</value>
+  </data>
+  <data name="cboxDefSpeedTestUrl.Items5" xml:space="preserve">
+    <value>http://ovh.net/files/10Mio.dat</value>
+  </data>
+  <data name="cboxDefSpeedTestUrl.Items6" xml:space="preserve">
+    <value>http://ovh.net/files/100Mio.dat</value>
+  </data>
+  <data name="cboxDefSpeedTestUrl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 18</value>
+  </data>
+  <data name="cboxDefSpeedTestUrl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>305, 20</value>
+  </data>
+  <data name="cboxDefSpeedTestUrl.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;cboxDefSpeedTestUrl.Name" xml:space="preserve">
+    <value>cboxDefSpeedTestUrl</value>
+  </data>
+  <data name="&gt;&gt;cboxDefSpeedTestUrl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboxDefSpeedTestUrl.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;cboxDefSpeedTestUrl.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="tboxDefSpeedtestTimeout.Location" type="System.Drawing.Point, System.Drawing">
     <value>325, 43</value>
   </data>
@@ -1309,34 +1405,7 @@
     <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;tboxDefSpeedtestTimeout.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tboxDefSpeedtestExpectedSize.Location" type="System.Drawing.Point, System.Drawing">
-    <value>207, 43</value>
-  </data>
-  <data name="tboxDefSpeedtestExpectedSize.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="tboxDefSpeedtestExpectedSize.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 21</value>
-  </data>
-  <data name="tboxDefSpeedtestExpectedSize.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
-  </data>
-  <data name="tboxDefSpeedtestExpectedSize.ToolTip" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestExpectedSize.Name" xml:space="preserve">
-    <value>tboxDefSpeedtestExpectedSize</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestExpectedSize.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestExpectedSize.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestExpectedSize.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="tboxDefSpeedtestCycles.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 43</value>
@@ -1363,33 +1432,6 @@
     <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;tboxDefSpeedtestCycles.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="tboxDefSpeedtestUrl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 18</value>
-  </data>
-  <data name="tboxDefSpeedtestUrl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="tboxDefSpeedtestUrl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>307, 21</value>
-  </data>
-  <data name="tboxDefSpeedtestUrl.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="tboxDefSpeedtestUrl.ToolTip" xml:space="preserve">
-    <value>https://www.google.com</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestUrl.Name" xml:space="preserve">
-    <value>tboxDefSpeedtestUrl</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestUrl.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestUrl.Parent" xml:space="preserve">
-    <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestUrl.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="chkDefSpeedtestIsUse.AutoSize" type="System.Boolean, mscorlib">
@@ -1450,7 +1492,9 @@
     <value>Size(KiB)</value>
   </data>
   <data name="label7.ToolTip" xml:space="preserve">
-    <value>If actual download-size less than expected size, speedtest result will be "Timeout".</value>
+    <value>If actual download-size less than expected size, speedtest result will be "Timeout". 
+-1: download the whole page
+0: tpc ping</value>
   </data>
   <data name="&gt;&gt;label7.Name" xml:space="preserve">
     <value>label7</value>
@@ -1675,7 +1719,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="flyImportPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>381, 371</value>
+    <value>381, 368</value>
   </data>
   <data name="flyImportPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1718,6 +1762,99 @@
   </data>
   <data name="&gt;&gt;tabPageImport.ZOrder" xml:space="preserve">
     <value>3</value>
+  </data>
+  <data name="btnMultiConfAdd.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btnMultiConfAdd.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnMultiConfAdd.Location" type="System.Drawing.Point, System.Drawing">
+    <value>394, 6</value>
+  </data>
+  <data name="btnMultiConfAdd.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="btnMultiConfAdd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btnMultiConfAdd.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="btnMultiConfAdd.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="btnMultiConfAdd.ToolTip" xml:space="preserve">
+    <value>Add config file.</value>
+  </data>
+  <data name="&gt;&gt;btnMultiConfAdd.Name" xml:space="preserve">
+    <value>btnMultiConfAdd</value>
+  </data>
+  <data name="&gt;&gt;btnMultiConfAdd.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnMultiConfAdd.Parent" xml:space="preserve">
+    <value>tabPageMultiConf</value>
+  </data>
+  <data name="&gt;&gt;btnMultiConfAdd.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="flyMultiConfPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="flyMultiConfPanel.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="flyMultiConfPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 6</value>
+  </data>
+  <data name="flyMultiConfPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="flyMultiConfPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>381, 368</value>
+  </data>
+  <data name="flyMultiConfPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;flyMultiConfPanel.Name" xml:space="preserve">
+    <value>flyMultiConfPanel</value>
+  </data>
+  <data name="&gt;&gt;flyMultiConfPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;flyMultiConfPanel.Parent" xml:space="preserve">
+    <value>tabPageMultiConf</value>
+  </data>
+  <data name="&gt;&gt;flyMultiConfPanel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabPageMultiConf.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabPageMultiConf.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="tabPageMultiConf.Size" type="System.Drawing.Size, System.Drawing">
+    <value>479, 377</value>
+  </data>
+  <data name="tabPageMultiConf.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="tabPageMultiConf.Text" xml:space="preserve">
+    <value>MultiConf</value>
+  </data>
+  <data name="&gt;&gt;tabPageMultiConf.Name" xml:space="preserve">
+    <value>tabPageMultiConf</value>
+  </data>
+  <data name="&gt;&gt;tabPageMultiConf.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPageMultiConf.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabPageMultiConf.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="label4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -1801,7 +1938,7 @@
     <value>tabControl1</value>
   </data>
   <data name="&gt;&gt;tabPagePlugins.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 12</value>

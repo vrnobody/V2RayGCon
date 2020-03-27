@@ -26,8 +26,7 @@ namespace V2RayGCon.Services
         {
             userSettings = LoadUserSettings();
             userSettings.Normalized();  // replace null with empty object.
-
-            InitVariables();
+            UpdateSpeedTestPool();
         }
 
         #region Properties
@@ -276,11 +275,12 @@ namespace V2RayGCon.Services
             get
             {
                 var size = userSettings.MaxConcurrentV2RayCoreNum;
-                return Misc.Utils.Clamp(size, 10, 1001);
+                return Misc.Utils.Clamp(size, 1, 1001);
             }
             set
             {
-                userSettings.MaxConcurrentV2RayCoreNum = Misc.Utils.Clamp(value, 10, 1001);
+                userSettings.MaxConcurrentV2RayCoreNum = Misc.Utils.Clamp(value, 1, 1001);
+                UpdateSpeedTestPool();
                 LazySaveUserSettings();
             }
         }
@@ -531,6 +531,29 @@ namespace V2RayGCon.Services
             form.Top = Misc.Utils.Clamp(rect.Top, 0, screen.Bottom - form.Height);
         }
 
+        public List<Models.Datas.MultiConfItem> GetMultiConfItems()
+        {
+            try
+            {
+                var items = JsonConvert
+                    .DeserializeObject<List<Models.Datas.MultiConfItem>>(
+                        userSettings.MultiConfItems);
+
+                if (items != null)
+                {
+                    return items;
+                }
+            }
+            catch { };
+            return new List<Models.Datas.MultiConfItem>();
+        }
+
+        public void SaveMultiConfItems(string options)
+        {
+            userSettings.MultiConfItems = options;
+            LazySaveUserSettings();
+        }
+
         public List<Models.Datas.ImportItem> GetGlobalImportItems()
         {
             try
@@ -621,10 +644,10 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
-        private void InitVariables()
+        void UpdateSpeedTestPool()
         {
-            var maxCoreNum = userSettings.MaxConcurrentV2RayCoreNum;
-            _speedTestPool = new Semaphore(maxCoreNum, maxCoreNum);
+            var poolSize = userSettings.MaxConcurrentV2RayCoreNum;
+            _speedTestPool = new Semaphore(poolSize, poolSize);
         }
 
         bool IsValid(string serializedUserSettings)

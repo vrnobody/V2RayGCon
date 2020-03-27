@@ -264,10 +264,15 @@ namespace V2RayGCon.Views.WinForms
             var configer = new Controllers.FormConfigerCtrl(this.originalConfigString);
 
             configer
-                .Plug(new Controllers.ConfigerComponet.EnvVar(
+                .Plug(new Controllers.ConfigerComponet.EnvImportMultiConf(
+                    cboxMultiConfAlias,
+                    tboxMultiConfPath,
+                    btnInsertMultiConf,
+
                     cboxImportAlias,
                     tboxImportURL,
                     btnInsertImport,
+
                     cboxEnvName,
                     tboxEnvValue,
                     btnInsertEnv))
@@ -313,7 +318,7 @@ namespace V2RayGCon.Views.WinForms
                     chkSSIsUseOTA,
                     btnInsertSSSettings))
 
-                .Plug(new Controllers.ConfigerComponet.Import(
+                .Plug(new Controllers.ConfigerComponet.ExpandGlobalImports(
                     panelExpandConfig,
                     cboxGlobalImport,
                     btnExpandImport,

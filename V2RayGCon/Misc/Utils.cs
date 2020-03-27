@@ -1074,6 +1074,7 @@ namespace V2RayGCon.Misc
             catch
             {
                 // network operation always buggy.
+                wc.CancelAsync();
                 return SpeedtestTimeout;
             }
 
@@ -1147,7 +1148,7 @@ namespace V2RayGCon.Misc
         {
             var html = string.Empty;
 
-            if (timeout <= 1)
+            if (timeout <= 0)
             {
                 timeout = VgcApis.Models.Consts.Intervals.FetchDefaultTimeout;
             }
@@ -1195,6 +1196,7 @@ namespace V2RayGCon.Misc
             catch
             {
                 // network operation always buggy.
+                wc.CancelAsync();
             }
 
             return html;

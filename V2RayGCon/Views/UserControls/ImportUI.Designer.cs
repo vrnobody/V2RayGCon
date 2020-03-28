@@ -33,13 +33,13 @@
             this.lbIndex = new System.Windows.Forms.Label();
             this.tboxAlias = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.tboxUrl = new System.Windows.Forms.TextBox();
             this.btnDelete = new System.Windows.Forms.Button();
             this.chkMergeWhenStart = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.chkMergeWhenSpeedTest = new System.Windows.Forms.CheckBox();
             this.chkMergeWhenPacking = new System.Windows.Forms.CheckBox();
+            this.btnBrowseLocalFile = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbIndex
@@ -55,15 +55,9 @@
             // 
             // label2
             // 
-            resources.ApplyResources(this.label2, "label2");
             this.label2.Cursor = System.Windows.Forms.Cursors.Default;
+            resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label3.Name = "label3";
             // 
             // tboxUrl
             // 
@@ -102,18 +96,27 @@
             this.toolTip1.SetToolTip(this.chkMergeWhenPacking, resources.GetString("chkMergeWhenPacking.ToolTip"));
             this.chkMergeWhenPacking.UseVisualStyleBackColor = true;
             // 
+            // btnBrowseLocalFile
+            // 
+            this.btnBrowseLocalFile.Cursor = System.Windows.Forms.Cursors.Default;
+            resources.ApplyResources(this.btnBrowseLocalFile, "btnBrowseLocalFile");
+            this.btnBrowseLocalFile.Name = "btnBrowseLocalFile";
+            this.toolTip1.SetToolTip(this.btnBrowseLocalFile, resources.GetString("btnBrowseLocalFile.ToolTip"));
+            this.btnBrowseLocalFile.UseVisualStyleBackColor = true;
+            this.btnBrowseLocalFile.Click += new System.EventHandler(this.btnBrowseLocalFile_Click);
+            // 
             // ImportUI
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.btnBrowseLocalFile);
             this.Controls.Add(this.chkMergeWhenPacking);
             this.Controls.Add(this.chkMergeWhenSpeedTest);
             this.Controls.Add(this.chkMergeWhenStart);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.tboxUrl);
             this.Controls.Add(this.tboxAlias);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lbIndex);
             this.Cursor = System.Windows.Forms.Cursors.SizeAll;
@@ -131,12 +134,12 @@
         private System.Windows.Forms.Label lbIndex;
         private System.Windows.Forms.TextBox tboxAlias;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tboxUrl;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.CheckBox chkMergeWhenStart;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox chkMergeWhenSpeedTest;
         private System.Windows.Forms.CheckBox chkMergeWhenPacking;
+        private System.Windows.Forms.Button btnBrowseLocalFile;
     }
 }

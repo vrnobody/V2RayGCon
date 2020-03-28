@@ -48,6 +48,26 @@ namespace V2RayGCon.Views.UserControls
 
             this.OnDeleted?.Invoke();
         }
+
+        private void btnBrowseLocalFile_Click(object sender, EventArgs e)
+        {
+            var path = VgcApis.Misc.UI.ShowSelectFileDialog(VgcApis.Models.Consts.Files.JsonExt);
+
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                return;
+            }
+
+            try
+            {
+                tboxUrl.Text = path;
+                if (string.IsNullOrEmpty(tboxAlias.Text))
+                {
+                    tboxAlias.Text = System.IO.Path.GetFileNameWithoutExtension(path);
+                }
+            }
+            catch { }
+        }
         #endregion
 
         #region private method
@@ -57,5 +77,7 @@ namespace V2RayGCon.Views.UserControls
             DoDragDrop((MultiConfUI)sender, DragDropEffects.Move);
         }
         #endregion
+
+      
     }
 }

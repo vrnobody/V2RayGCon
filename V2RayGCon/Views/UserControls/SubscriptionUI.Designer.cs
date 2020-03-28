@@ -56,14 +56,14 @@
             // 
             // label2
             // 
-            resources.ApplyResources(this.label2, "label2");
             this.label2.Cursor = System.Windows.Forms.Cursors.Default;
+            resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
             // 
             // label3
             // 
-            resources.ApplyResources(this.label3, "label3");
             this.label3.Cursor = System.Windows.Forms.Cursors.Default;
+            resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
             // 
             // tboxUrl

@@ -909,8 +909,7 @@ namespace VgcApis.Misc
 
         public static string RelativePath2FullPath(string path)
         {
-            if (string.IsNullOrEmpty(path)
-                || Path.IsPathRooted(path))
+            if (string.IsNullOrEmpty(path) || Path.IsPathRooted(path))
             {
                 return path;
             }

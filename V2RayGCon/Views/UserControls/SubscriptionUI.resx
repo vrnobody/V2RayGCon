@@ -153,10 +153,10 @@
     <value>8</value>
   </data>
   <data name="tboxAlias.Location" type="System.Drawing.Point, System.Drawing">
-    <value>76, 5</value>
+    <value>82, 5</value>
   </data>
   <data name="tboxAlias.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 21</value>
+    <value>264, 21</value>
   </data>
   <data name="tboxAlias.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -173,20 +173,20 @@
   <data name="&gt;&gt;tboxAlias.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 9</value>
+    <value>37, 9</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 12</value>
+    <value>39, 12</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>Alias</value>
+  </data>
+  <data name="label2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
@@ -200,20 +200,20 @@
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 34</value>
+    <value>37, 34</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 12</value>
+    <value>39, 12</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>URL</value>
+  </data>
+  <data name="label3.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;label3.Name" xml:space="preserve">
     <value>label3</value>
@@ -228,10 +228,10 @@
     <value>6</value>
   </data>
   <data name="tboxUrl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>76, 30</value>
+    <value>82, 30</value>
   </data>
   <data name="tboxUrl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 21</value>
+    <value>264, 21</value>
   </data>
   <data name="tboxUrl.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -280,7 +280,7 @@
     <value>True</value>
   </data>
   <data name="chkIsUse.Location" type="System.Drawing.Point, System.Drawing">
-    <value>76, 56</value>
+    <value>82, 56</value>
   </data>
   <data name="chkIsUse.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 16</value>
@@ -313,7 +313,7 @@
     <value>True</value>
   </data>
   <data name="chkIsSetMark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>131, 56</value>
+    <value>137, 56</value>
   </data>
   <data name="chkIsSetMark.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 16</value>
@@ -349,7 +349,7 @@
     <value>NoControl</value>
   </data>
   <data name="lbTotal.Location" type="System.Drawing.Point, System.Drawing">
-    <value>197, 58</value>
+    <value>195, 58</value>
   </data>
   <data name="lbTotal.Size" type="System.Drawing.Size, System.Drawing">
     <value>77, 12</value>
@@ -382,7 +382,7 @@
     <value>6, 12</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>352, 82</value>
+    <value>353, 82</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value>Drag and drop to adjust order.</value>

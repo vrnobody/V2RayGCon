@@ -139,7 +139,7 @@ namespace Luna.Models.Apis.Components
         public void Alert(string content) =>
             MessageBox.Show(content, VgcApis.Misc.Utils.GetAppName());
 
-        public long GetSpeedtestTimeout() => VgcApis.Models.Consts.Core.SpeedtestTimeout;
+        public long GetTimeoutValue() => VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
         public void RefreshFormMain() => vgcServer.RequireFormMainReload();
 

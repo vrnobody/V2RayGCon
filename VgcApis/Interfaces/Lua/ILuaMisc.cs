@@ -13,6 +13,9 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region vgc
+        // timeout = long.MaxValue
+        long GetTimeoutValue();
+
         string ScanQrcode();
         string GetSubscriptionConfig();
 
@@ -31,8 +34,6 @@ namespace VgcApis.Interfaces.Lua
 
         #region utils
         string PredefinedFunctions();
-
-        long GetSpeedtestTimeout();
 
         void Print(params object[] contents);
 

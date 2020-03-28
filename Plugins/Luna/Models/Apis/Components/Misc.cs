@@ -50,6 +50,27 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc thinggy
+
+
+        public string GetOsVersion() => Environment.OSVersion.VersionString;
+
+        static string osReleaseId;
+        public string GetOsReleaseInfo()
+        {
+            if (string.IsNullOrEmpty(osReleaseId))
+            {
+                // https://stackoverflow.com/questions/39778525/how-to-get-windows-version-as-in-windows-10-version-1607/39778770
+                var root = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion";
+                var name = Microsoft.Win32.Registry.GetValue(root, @"ProductName", @"")?.ToString();
+                var arch = Environment.Is64BitOperatingSystem ? @"x64" : @"x86";
+                var id = Microsoft.Win32.Registry.GetValue(root, @"ReleaseId", "")?.ToString();
+                var build = Microsoft.Win32.Registry.GetValue(root, @"CurrentBuildNumber", @"")?.ToString();
+
+                osReleaseId = $"{name} {arch} {id} build {build}";
+            }
+            return osReleaseId;
+        }
+
         public string Replace(string text, string oldStr, string newStr) =>
             text?.Replace(oldStr, newStr);
 
@@ -118,8 +139,7 @@ namespace Luna.Models.Apis.Components
         public void Alert(string content) =>
             MessageBox.Show(content, VgcApis.Misc.Utils.GetAppName());
 
-
-        public long GetTimeoutValue() => VgcApis.Models.Consts.Core.SpeedtestTimeout;
+        public long GetSpeedtestTimeout() => VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
         public void RefreshFormMain() => vgcServer.RequireFormMainReload();
 

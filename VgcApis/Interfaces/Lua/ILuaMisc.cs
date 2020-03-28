@@ -4,19 +4,56 @@ namespace VgcApis.Interfaces.Lua
 {
     public interface ILuaMisc
     {
-        string Replace(string text, string oldStr, string newStr);
+        #region system
+        string GetOsVersion();
 
+        string GetOsReleaseInfo();
         int SetWallpaper(string filename);
+        string GetAppDir();
+        #endregion
 
-        string GetImageResolution(string filename);
+        #region vgc
+        string ScanQrcode();
+        string GetSubscriptionConfig();
 
-        string PickRandomLine(string filename);
+        // share among all scripts
+        string ReadLocalStorage(string key);
+
+        // share among all scripts
+        void WriteLocalStorage(string key, string value);
+
+        // remove a key from local storage
+        bool RemoveLocalStorage(string key);
+
+        // get all keys of local storage
+        List<string> LocalStorageKeys();
+        #endregion
+
+        #region utils
+        string PredefinedFunctions();
+
+        long GetSpeedtestTimeout();
+
+        void Print(params object[] contents);
+
+        void Sleep(int milliseconds);
+
+        string Replace(string text, string oldStr, string newStr);
 
         string RandomHex(int len);
 
         string NewGuid();
 
-        string GetSubscriptionConfig();
+        string GetImageResolution(string filename);
+
+        #endregion
+
+
+        #region file
+        string PickRandomLine(string filename);
+        #endregion
+
+        #region UI thing
 
         // 2MiB char max
         string Input(string title);
@@ -48,19 +85,14 @@ namespace VgcApis.Interfaces.Lua
         // sort server panel by index
         void RefreshFormMain();
 
-        // share among all scripts
-        string ReadLocalStorage(string key);
+        #endregion
 
-        // share among all scripts
-        void WriteLocalStorage(string key, string value);
 
-        // remove a key from local storage
-        bool RemoveLocalStorage(string key);
-
-        // get all keys of local storage
-        List<string> LocalStorageKeys();
 
         #region encode decode
+        // GetLinkBody("vmess://abcdefg") == "abcdefg"
+        string GetLinkBody(string link);
+
         // v2cfg://(b64Str)
         string AddV2cfgPrefix(string b64Str);
 
@@ -83,16 +115,8 @@ namespace VgcApis.Interfaces.Lua
         int ImportLinks(string links, string mark);
         #endregion
 
-        string GetAppDir();
 
-        // GetLinkBody("vmess://abcdefg") == "abcdefg"
-        string GetLinkBody(string link);
 
-        long GetTimeoutValue();
 
-        string PredefinedFunctions();
-        void Print(params object[] contents);
-        string ScanQrcode();
-        void Sleep(int milliseconds);
     }
 }

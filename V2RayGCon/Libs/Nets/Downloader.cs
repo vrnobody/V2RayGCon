@@ -242,6 +242,7 @@ namespace V2RayGCon.Libs.Nets
             }
 
             webClient = new WebClient();
+            webClient.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
 
             if (proxyPort > 0)
             {

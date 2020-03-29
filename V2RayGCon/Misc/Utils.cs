@@ -1028,6 +1028,7 @@ namespace V2RayGCon.Misc
             {
                 Encoding = Encoding.UTF8,
             };
+            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
 
             if (port > 0 && port < 65536)
             {
@@ -1090,6 +1091,7 @@ namespace V2RayGCon.Misc
             }
 
             WebClient wc = new WebClient();
+            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
 
             if (proxyPort > 0 && proxyPort < 65536)
             {
@@ -1157,6 +1159,8 @@ namespace V2RayGCon.Misc
             {
                 Encoding = Encoding.UTF8,
             };
+
+            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
 
             if (proxyPort > 0 && proxyPort < 65536)
             {

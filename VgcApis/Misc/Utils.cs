@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -237,6 +238,21 @@ namespace VgcApis.Misc
         #endregion
 
         #region Task
+        public static void RunAsSTAThread(Action action)
+        {
+            // https://www.codeproject.com/Questions/727531/ThreadStateException-cant-handeled-in-ClipBoard-Se
+            AutoResetEvent done = new AutoResetEvent(false);
+            Thread thread = new Thread(
+                () =>
+                {
+                    action?.Invoke();
+                    done.Set();
+                });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            done.WaitOne();
+        }
+
         public static void Sleep(int milliseconds) => Task.Delay(milliseconds).Wait();
 
         public static Task RunInBackground(Action worker) =>

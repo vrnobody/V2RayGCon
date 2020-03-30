@@ -50,6 +50,7 @@ namespace Luna.Views.WinForms
             lbTitle.Text = VgcApis.Misc.Utils.AutoEllipsis(title, MAX_TITLE_LEN);
             rtboxInput.Text = content ?? string.Empty;
             toolTip1.SetToolTip(lbTitle, title);
+            VgcApis.Misc.UI.AddContextMenu(rtboxInput);
         }
         #endregion
 

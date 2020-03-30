@@ -1616,21 +1616,6 @@ namespace V2RayGCon.Misc
             return result;
         }
 
-        public static void RunAsSTAThread(Action action)
-        {
-            // https://www.codeproject.com/Questions/727531/ThreadStateException-cant-handeled-in-ClipBoard-Se
-            AutoResetEvent done = new AutoResetEvent(false);
-            Thread thread = new Thread(
-                () =>
-                {
-                    action?.Invoke();
-                    done.Set();
-                });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            done.WaitOne();
-        }
-
         /// <summary>
         /// UseShellExecute = false,
         /// RedirectStandardOutput = true,

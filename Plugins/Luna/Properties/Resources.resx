@@ -134,7 +134,7 @@
     <value>Luna</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>0.1.7</value>
-    <comment>GetOsVersion/GetOsReleaseId</comment>
+    <value>0.1.8</value>
+    <comment>Context menustrip support in Input.</comment>
   </data>
 </root>

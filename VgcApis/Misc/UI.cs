@@ -16,6 +16,74 @@ namespace VgcApis.Misc
     {
 
         #region Controls
+        public static void AddContextMenu(RichTextBox rtb)
+        {
+            // https://stackoverflow.com/questions/18966407/enable-copy-cut-past-window-in-a-rich-text-box/44064791
+
+            if (rtb.ContextMenuStrip != null)
+            {
+                return;
+            }
+
+            ContextMenuStrip cms = new ContextMenuStrip()
+            {
+                ShowImageMargin = false
+            };
+
+            var tsmiUndo = new ToolStripMenuItem(
+                I18N.Undo, null, (sender, e) => rtb.Undo());
+
+            var tsmiRedo = new ToolStripMenuItem(
+                I18N.Redo, null, (sender, e) => rtb.Redo());
+
+            var tsmiCut = new ToolStripMenuItem(
+                I18N.Cut, null, (sender, e) => rtb.Cut());
+
+            var tsmiCopy = new ToolStripMenuItem(
+                I18N.Copy, null, (sender, e) => rtb.Copy());
+
+            var tsmiPaste = new ToolStripMenuItem(
+                I18N.Paste, null, (sender, e) => rtb.Paste());
+
+            var tsmiDelete = new ToolStripMenuItem(
+                I18N.Delete, null, (sender, e) => rtb.SelectedText = "");
+
+            var tsmiSelectAll = new ToolStripMenuItem(
+                I18N.SelectAll, null, (sender, e) => rtb.SelectAll());
+
+            ToolStripSeparator nsp() => new ToolStripSeparator();
+            cms.Items.AddRange(new ToolStripItem[] {
+                tsmiSelectAll,
+                nsp(),
+                tsmiCut,
+                tsmiCopy,
+                tsmiPaste,
+                nsp(),
+                tsmiUndo,
+                tsmiRedo,
+                tsmiDelete,
+            });
+
+            bool isClipboardHasText()
+            {
+                var r = false;
+                Utils.RunAsSTAThread(() => r = Clipboard.ContainsText());
+                return r;
+            }
+
+            cms.Opening += (sender, e) =>
+            {
+                tsmiUndo.Enabled = !rtb.ReadOnly && rtb.CanUndo;
+                tsmiRedo.Enabled = !rtb.ReadOnly && rtb.CanRedo;
+                tsmiCut.Enabled = !rtb.ReadOnly && rtb.SelectionLength > 0;
+                tsmiCopy.Enabled = rtb.SelectionLength > 0;
+                tsmiPaste.Enabled = !rtb.ReadOnly && isClipboardHasText();
+                tsmiDelete.Enabled = !rtb.ReadOnly && rtb.SelectionLength > 0;
+                tsmiSelectAll.Enabled = rtb.TextLength > 0 && rtb.SelectionLength < rtb.TextLength;
+            };
+
+            rtb.ContextMenuStrip = cms;
+        }
         static void SetControlFontColor(Control control, bool isValid)
         {
             var color = isValid ? Color.Black : Color.Red;

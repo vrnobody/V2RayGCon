@@ -2,7 +2,8 @@
 {
     public static class Patterns
     {
-        public const string GitHubRepoInfo = @"https://github.com(/[^/]+/[^/]+)/blob(/.*)";
+        public const string GitHubReadmeUrl = @"https://github.com(/[^/]+/[^/]+)/blob(/.*)";
+        public const string GitHuhFileUrl = @"https://github.com(/[^/]+/[^/]+)/blob(/.*)";
 
         public const string ExtractAliasFromSubscriptUrl = @"//[^/]+/([^/]+)";
 

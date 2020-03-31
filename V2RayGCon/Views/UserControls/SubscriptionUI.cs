@@ -11,7 +11,6 @@ namespace V2RayGCon.Views.UserControls
     public partial class SubscriptionUI : UserControl
     {
         public delegate void OnDeleteHandler();
-        public event OnDeleteHandler OnDelete; // add empty delegate
 
         Services.Servers servers;
         Services.Settings settings;
@@ -49,10 +48,25 @@ namespace V2RayGCon.Views.UserControls
             tboxAlias.Text = subscriptItem.alias;
             chkIsUse.Checked = subscriptItem.isUse;
             chkIsSetMark.Checked = subscriptItem.isSetMark;
+            SetBtnDeleteStat();
+        }
+
+        void SetBtnDeleteStat()
+        {
+            var isEnable = !IsEmpty();
+
+            if (btnDelete.Enabled != isEnable)
+            {
+                btnDelete.Enabled = isEnable;
+            }
         }
         #endregion
 
         #region public method
+        public bool IsEmpty() =>
+            string.IsNullOrWhiteSpace(tboxAlias.Text)
+            && string.IsNullOrWhiteSpace(tboxUrl.Text);
+
 
         public void UpdateTextBoxColor(IEnumerable<string> alias, IEnumerable<string> urls)
         {
@@ -85,6 +99,8 @@ namespace V2RayGCon.Views.UserControls
         private void tboxAlias_TextChanged(object sender, EventArgs e)
         {
             subsCtrl.MarkDuplicatedSubsInfo();
+            SetBtnDeleteStat();
+            subsCtrl.AutoAddEmptyUi();
             UpdateServerTotalLater();
         }
 
@@ -106,6 +122,8 @@ namespace V2RayGCon.Views.UserControls
                 tboxAlias.Text = alias;
             }
 
+            SetBtnDeleteStat();
+            subsCtrl.AutoAddEmptyUi();
             subsCtrl.MarkDuplicatedSubsInfo();
         }
 
@@ -116,14 +134,7 @@ namespace V2RayGCon.Views.UserControls
                 return;
             }
 
-            var flyPanel = this.Parent as FlowLayoutPanel;
-            flyPanel.Controls.Remove(this);
-
-            try
-            {
-                OnDelete?.Invoke();
-            }
-            catch { }
+            subsCtrl.RemoveSubsUi(this);
         }
         #endregion
 

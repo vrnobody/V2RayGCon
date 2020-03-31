@@ -80,14 +80,62 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             VgcApis.Misc.UI.RunInUiThreadIgnoreError(flyPanel, MarkDuplicatedSubsInfoWorker);
         }
+
+        public void RemoveSubsUi(Views.UserControls.SubscriptionUI subsUi)
+        {
+            var subs = GetAllSubsUi();
+            foreach (var sub in subs)
+            {
+                if (sub == subsUi)
+                {
+                    VgcApis.Misc.UI.RunInUiThreadIgnoreError(flyPanel, () => Remove(subsUi));
+                }
+            }
+
+            UpdatePanelItemsIndex();
+        }
+
+        public void AutoAddEmptyUi()
+        {
+            var controls = GetAllSubsUi();
+            foreach (Views.UserControls.SubscriptionUI ctrl in controls)
+            {
+                if (ctrl.IsEmpty())
+                {
+                    return;
+                }
+            }
+
+            AddSubsUiItem(new Models.Datas.SubscriptionItem());
+            UpdatePanelItemsIndex();
+        }
         #endregion
 
         #region private method
+        List<Views.UserControls.SubscriptionUI> GetAllSubsUi() =>
+            flyPanel.Controls.OfType<Views.UserControls.SubscriptionUI>().ToList();
 
+        void RemoveEmptyUi()
+        {
+            var controls = GetAllSubsUi();
+            foreach (var control in controls)
+            {
+                if (control.IsEmpty())
+                {
+                    flyPanel.Controls.Remove(control);
+                }
+            }
+        }
+
+        void Remove(Views.UserControls.SubscriptionUI subsUi)
+        {
+            flyPanel.Controls.Remove(subsUi);
+            AutoAddEmptyUi();
+        }
 
         void MarkDuplicatedSubsInfoWorker()
         {
-            var subsUis = flyPanel.Controls.OfType<Views.UserControls.SubscriptionUI>().ToList();
+            var subsUis = GetAllSubsUi();
             var subs = subsUis.Select(ctrl => ctrl.GetValue()).ToList();
 
             var urls = subs.Select(item => item.url).ToList();
@@ -128,7 +176,8 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             var itemList = new List<Models.Datas.SubscriptionItem>();
             var urlCache = new List<string>();
-            foreach (Views.UserControls.SubscriptionUI item in this.flyPanel.Controls)
+            var subsUi = GetAllSubsUi();
+            foreach (var item in subsUi)
             {
                 var v = item.GetValue(); // capture
 
@@ -163,13 +212,14 @@ namespace V2RayGCon.Controllers.OptionComponent
                 AddSubsUiItem(item);
             }
 
-            UpdatePanelItemsIndex();
+            // 因tboxAlias.Changed事件引起一个空的subsUi在顶部,所以要先删除
+            RemoveEmptyUi();
+            AutoAddEmptyUi();
         }
 
         void AddSubsUiItem(Models.Datas.SubscriptionItem data)
         {
             var subsUi = new Views.UserControls.SubscriptionUI(this, data);
-            subsUi.OnDelete += UpdatePanelItemsIndex;
             flyPanel.Controls.Add(subsUi);
         }
 
@@ -186,7 +236,8 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             this.btnUseAll.Click += (s, a) =>
             {
-                foreach (Views.UserControls.SubscriptionUI subUi in this.flyPanel.Controls)
+                var subsUi = GetAllSubsUi();
+                foreach (var subUi in subsUi)
                 {
                     subUi.SetIsUse(true);
                 }
@@ -194,7 +245,8 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             this.btnInvertSelection.Click += (s, a) =>
             {
-                foreach (Views.UserControls.SubscriptionUI subUi in this.flyPanel.Controls)
+                var subsUi = GetAllSubsUi();
+                foreach (var subUi in subsUi)
                 {
                     var selected = subUi.IsUse();
                     subUi.SetIsUse(!selected);
@@ -251,8 +303,9 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             var subs = new List<Models.Datas.SubscriptionItem>();
             var urlCache = new List<string>();
+            var subsUi = GetAllSubsUi();
 
-            foreach (Views.UserControls.SubscriptionUI subUi in this.flyPanel.Controls)
+            foreach (var subUi in subsUi)
             {
                 var subItem = subUi.GetValue();
                 if (!subItem.isUse
@@ -304,7 +357,8 @@ namespace V2RayGCon.Controllers.OptionComponent
         void UpdatePanelItemsIndex()
         {
             var index = 1;
-            foreach (Views.UserControls.SubscriptionUI item in this.flyPanel.Controls)
+            var subsUi = GetAllSubsUi();
+            foreach (var item in subsUi)
             {
                 item.SetIndex(index++);
             }

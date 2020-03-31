@@ -117,7 +117,21 @@ namespace VgcApis.Misc
 
             try
             {
-                var groups = Regex.Match(url, Models.Consts.Patterns.GitHubRepoInfo).Groups;
+                var groups = Regex.Match(url, Models.Consts.Patterns.GitHuhFileUrl).Groups;
+                if (groups != null && groups.Count == 3)
+                {
+                    var repo = groups[1];
+                    var tail = groups[2];
+                    patched = $"https://raw.githubusercontent.com{repo}{tail}";
+                    return true;
+                }
+            }
+            catch (ArgumentException) { }
+            catch (RegexMatchTimeoutException) { }
+
+            try
+            {
+                var groups = Regex.Match(url, Models.Consts.Patterns.GitHuhFileUrl).Groups;
                 if (groups != null && groups.Count == 3)
                 {
                     var repo = groups[1];

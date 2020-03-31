@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.2.8")]
+[assembly: AssemblyVersion("1.3.2.9")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.3.2.9 Run batch speed testing in random order.
  * v1.3.2.8 Show result amid speed testing.
  * v1.3.2.7 Auto append new subs. item in form option.
  * v1.3.2.6 Add context menustrip to Input of Luna plug-in.

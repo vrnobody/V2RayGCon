@@ -823,10 +823,12 @@ namespace V2RayGCon.Services
 
             setting.isSpeedtestCancelled = false;
 
+            var randList = VgcApis.Misc.Utils.Shuffle(servList);
+
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 Misc.Utils.ExecuteInParallel(
-                    servList,
+                    randList,
                     serv => serv.GetCoreCtrl().RunSpeedTest());
                 speedTestingBar.Remove();
                 setting.SendLog(I18N.SpeedTestFinished);

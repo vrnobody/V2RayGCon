@@ -19,6 +19,27 @@ namespace VgcApis.Misc
     public static class Utils
     {
 
+        #region List
+        static Random rngForShuffle = new Random();
+
+        public static List<T> Shuffle<T>(IEnumerable<T> source)
+        {
+            var list = source.ToList();
+
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rngForShuffle.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+
+            return list;
+        }
+        #endregion
+
         #region files
         public static string GetImageResolution(string filename)
         {

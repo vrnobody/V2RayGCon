@@ -109,15 +109,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
         }
 
-        string TranslateSpeedTestResult(long speedtestDelay)
-        {
-            if (speedtestDelay == SpeedtestTimeout)
-            {
-                return I18N.Timeout;
-            }
-            return $"{speedtestDelay}ms";
-        }
-
         void SpeedTestWorker(string rawConfig)
         {
             long avgDelay = -1;
@@ -129,11 +120,12 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             for (int i = 0; i < cycles && !setting.isSpeedtestCancelled; i++)
             {
                 curDelay = configMgr.RunDefaultSpeedTest(rawConfig, coreStates.GetTitle(), (s, a) => logger.Log(a.Data));
-                logger.Log(I18N.CurSpeedtestResult + TranslateSpeedTestResult(curDelay));
+                ShowCurrentSpeedtestResult(I18N.CurSpeedtestResult, curDelay);
                 if (curDelay == SpeedtestTimeout)
                 {
                     continue;
                 }
+
                 avgDelay = VgcApis.Misc.Utils.SpeedtestMean(avgDelay, curDelay, VgcApis.Models.Consts.Config.CustomSpeedtestMeanWeight);
             }
 
@@ -142,10 +134,19 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             {
                 avgDelay = SpeedtestTimeout;
             }
-            var speedtestResult = TranslateSpeedTestResult(avgDelay);
-            coreStates.SetStatus(speedtestResult);
-            coreStates.SetSpeedTestResult(avgDelay);
-            logger.Log(I18N.AvgSpeedtestResult + speedtestResult);
+            ShowCurrentSpeedtestResult(I18N.AvgSpeedtestResult, avgDelay);
+        }
+
+        void ShowCurrentSpeedtestResult(string prefix, long delay)
+        {
+            if (delay <= 0)
+            {
+                delay = SpeedtestTimeout;
+            }
+            var text = delay == SpeedtestTimeout ? I18N.Timeout : $"{delay}ms";
+            coreStates.SetStatus(text);
+            coreStates.SetSpeedTestResult(delay);
+            logger.Log($"{prefix}{text}");
         }
 
         void OnLogHandler(object sender, VgcApis.Models.Datas.StrEvent arg) =>

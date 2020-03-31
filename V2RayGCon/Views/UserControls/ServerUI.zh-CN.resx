@@ -220,7 +220,7 @@
     <value>速度测试</value>
   </data>
   <data name="runSpeedTestToolStripMenuItem1.ToolTipText" xml:space="preserve">
-    <value>下载google主页所需时间</value>
+    <value>下载测试网页所需的时间</value>
   </data>
   <data name="ctxMenuStripMore.ToolTip" xml:space="preserve">
     <value />

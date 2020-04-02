@@ -61,7 +61,7 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.logOfThisServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runSpeedTestToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.rtboxServerTitle = new System.Windows.Forms.RichTextBox();
+            this.rtboxServerTitle = new VgcApis.UserControls.ExRichTextBox();
             this.ctxMenuStripMore.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -368,7 +368,7 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem logOfThisServerToolStripMenuItem;
-        private System.Windows.Forms.RichTextBox rtboxServerTitle;
+        private VgcApis.UserControls.ExRichTextBox rtboxServerTitle;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem multiboxingToolStripMenuItem1;

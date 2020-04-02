@@ -33,7 +33,7 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.lbTitle = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.rtboxInput = new System.Windows.Forms.RichTextBox();
+            this.rtboxInput = new VgcApis.UserControls.ExRichTextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
@@ -82,7 +82,7 @@
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Label lbTitle;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.RichTextBox rtboxInput;
+        private VgcApis.UserControls.ExRichTextBox rtboxInput;
         private System.Windows.Forms.ToolTip toolTip1;
     }
 }

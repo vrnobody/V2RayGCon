@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSingleServerLog));
-            this.rtBoxLogger = new System.Windows.Forms.RichTextBox();
+            this.rtBoxLogger = new VgcApis.UserControls.ExRichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.actionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,7 +123,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.RichTextBox rtBoxLogger;
+        private VgcApis.UserControls.ExRichTextBox rtBoxLogger;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem actionToolStripMenuItem;

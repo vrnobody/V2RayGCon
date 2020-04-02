@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLog));
-            this.rtBoxLogger = new System.Windows.Forms.RichTextBox();
+            this.rtBoxLogger = new VgcApis.UserControls.ExRichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -61,7 +61,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.RichTextBox rtBoxLogger;
+        private VgcApis.UserControls.ExRichTextBox rtBoxLogger;
         private System.Windows.Forms.Panel panel1;
     }
 }

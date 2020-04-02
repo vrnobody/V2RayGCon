@@ -56,6 +56,7 @@ namespace Luna.Services
         void UpdateMenuNow(Action next)
         {
             var mis = GenSubMenuItems();
+
             vgcNotifierService.RunInUiThreadIgnoreErrorThen(() =>
             {
                 var root = miRoot.DropDownItems;

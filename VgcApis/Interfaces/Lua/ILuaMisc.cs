@@ -8,7 +8,9 @@ namespace VgcApis.Interfaces.Lua
         string GetOsVersion();
 
         string GetOsReleaseInfo();
+
         int SetWallpaper(string filename);
+
         string GetAppDir();
         #endregion
 
@@ -49,12 +51,16 @@ namespace VgcApis.Interfaces.Lua
 
         #endregion
 
-
         #region file
         string PickRandomLine(string filename);
         #endregion
 
         #region UI thing
+        string BrowseFolder();
+
+        string BrowseFile();
+
+        string BrowseFile(string extends);
 
         // 2MiB char max
         string Input(string title);
@@ -63,6 +69,9 @@ namespace VgcApis.Interfaces.Lua
         string Input(string title, int lines);
 
         string Input(string title, string content, int lines);
+
+        List<List<string>> ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows);
+        List<List<string>> ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows, int defColumn);
 
         // 18 choices max
         List<int> Choices(string title, params string[] choices);

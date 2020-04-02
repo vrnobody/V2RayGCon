@@ -4,12 +4,13 @@
     {
         public static readonly string CoreFolderName = "core";
 
+        public static readonly string AllExt = @"All File|*.*";
+
         static string GenExtString(string extension, bool appendAllFile = true)
         {
             var l = extension.ToLower();
             var e = $"{l} file|*.{l}";
-            var a = "|All File|*.*";
-            return appendAllFile ? e + a : e;
+            return appendAllFile ? $"{e}|{AllExt}" : e;
         }
 
         public static readonly string JsExt = GenExtString("js");

@@ -134,7 +134,7 @@
     <value>Luna</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>0.1.9</value>
-    <comment>add browse folder, file dialog</comment>
+    <value>0.2.0</value>
+    <comment>optimize data grid dialog</comment>
   </data>
 </root>

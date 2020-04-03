@@ -18,6 +18,7 @@
         public static readonly string PacExt = GenExtString("pac");
         public static readonly string LuaExt = GenExtString("lua");
         public static readonly string TxtExt = GenExtString("txt");
+        public static readonly string CsvExt = GenExtString("csv");
 
         #region helper functions
 

@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Luna.Resources.Langs;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Luna.Views.WinForms
@@ -11,7 +14,7 @@ namespace Luna.Views.WinForms
         readonly int UPDATE_INTERVAL = 500;
 
         private readonly string title;
-        private readonly DataTable dataSource;
+        private DataTable dataSource;
         private readonly int defColumn;
         private string filterKeyword = string.Empty;
 
@@ -36,6 +39,118 @@ namespace Luna.Views.WinForms
         }
 
         #region private methods
+        List<string> GetHeaders(DataGridView dataGrid)
+        {
+            var r = new List<string>();
+            var columns = dataGrid.Columns;
+            foreach (DataGridViewColumn column in columns)
+            {
+                r.Add(column.HeaderText.ToString());
+            }
+            return r;
+        }
+
+        List<List<string>> GetColumns(bool isIncludeHeader, bool isSelectedOnly)
+        {
+            var r = new List<List<string>>();
+            if (isIncludeHeader)
+            {
+                r.Add(GetHeaders(dgvData));
+            }
+
+            if (isSelectedOnly)
+            {
+                var selectedRowCount = dgvData.Rows.GetRowCount(DataGridViewElementStates.Selected);
+                if (selectedRowCount > 0)
+                {
+                    for (int i = selectedRowCount - 1; i >= 0; i--)
+                    {
+                        var row = dgvData.SelectedRows[i];
+                        if (!row.IsNewRow)
+                        {
+                            r.Add(RowToList(row));
+                        }
+
+                    }
+                }
+            }
+            else
+            {
+                foreach (DataGridViewRow row in dgvData.Rows)
+                {
+                    if (!row.IsNewRow)
+                    {
+                        r.Add(RowToList(row));
+                    }
+                }
+            }
+            return r;
+        }
+
+        List<string> RowToList(DataGridViewRow row)
+        {
+            var l = new List<string>();
+            foreach (DataGridViewCell cell in row.Cells)
+            {
+                l.Add(cell.Value.ToString());
+            }
+            return l;
+        }
+
+        DataTable CsvToDataTable(string csv)
+        {
+            var result = new DataTable();
+            if (string.IsNullOrEmpty(csv))
+            {
+                return result;
+            }
+
+            try
+            {
+                var lines = csv.Split('\n');
+                var len = lines.Count();
+                if (len < 1)
+                {
+                    return result;
+                }
+
+                var headers = lines[0].Split(',').Select(c => c ?? @"").ToList();
+                var count = headers.Count();
+                if (count < 1)
+                {
+                    return result;
+                }
+
+                foreach (var header in headers)
+                {
+                    result.Columns.Add(header);
+                }
+
+                for (int i = 1; i < len; i++)
+                {
+                    var cells = lines[i].Split(',').Select(c => c ?? @"").ToArray();
+                    if (cells.Length != count)
+                    {
+                        continue;
+                    }
+                    result.Rows.Add(cells);
+                }
+            }
+            catch { }
+            return result;
+        }
+
+        string List2Csv(IEnumerable<IEnumerable<string>> contents)
+        {
+            var sb = new StringBuilder();
+            foreach (var line in contents)
+            {
+                sb.Append(string.Join(@",", line));
+                sb.Append('\n');
+            }
+            return sb.ToString();
+        }
+
         void Cleanup()
         {
             uiUpdater?.Quit();
@@ -121,21 +236,42 @@ namespace Luna.Views.WinForms
 
         void SetResult()
         {
-            results.Clear();
-            var dt = dgvData.DataSource as DataTable;
-            foreach (DataRow row in dt.Rows)
+            results = GetColumns(false, true);
+        }
+
+        private void SaveColumnsToFile(bool isSelectedOnly)
+        {
+            var content = GetColumns(true, isSelectedOnly);
+            var text = List2Csv(content);
+            VgcApis.Models.Datas.Enums.SaveFileErrorCode ok = VgcApis.Models.Datas.Enums.SaveFileErrorCode.Cancel;
+            VgcApis.Misc.Utils.RunAsSTAThread(
+                () => ok = VgcApis.Misc.UI.ShowSaveFileDialog(
+                    VgcApis.Models.Consts.Files.CsvExt, text, out _));
+            switch (ok)
             {
-                var lr = new List<string>();
-                foreach (string value in row.ItemArray)
-                {
-                    lr.Add(value);
-                }
-                results.Add(lr);
+                case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Fail:
+                    VgcApis.Misc.UI.MsgBoxAsync(I18N.Fail);
+                    break;
+                case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Success:
+                    VgcApis.Misc.UI.MsgBoxAsync(I18N.Done);
+                    break;
+                default:
+                    break;
             }
         }
         #endregion
 
         #region UI events
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            var content = GetColumns(true, true);
+            var text = List2Csv(content);
+            var success = false;
+            VgcApis.Misc.Utils.RunAsSTAThread(
+                () => success = VgcApis.Misc.Utils.CopyToClipboard(text));
+            VgcApis.Misc.UI.MsgBoxAsync(success ? I18N.Done : I18N.Fail);
+        }
+
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -158,10 +294,54 @@ namespace Luna.Views.WinForms
 
         private void cboxColumnIdx_SelectedIndexChanged(object sender, EventArgs e)
         {
+            tboxFilter.Text = @"";
             UpdateUiLater();
         }
+
+        private void autosizeByHeaderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
+        }
+
+        private void autosizeByContentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+        }
+
+        private void disableAutosizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+        }
+
+        private void importFromCsvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string text = null;
+
+            VgcApis.Misc.Utils.RunAsSTAThread(() =>
+            {
+                text = VgcApis.Misc.UI.ReadFileContentFromDialog(
+                    VgcApis.Models.Consts.Files.CsvExt);
+            });
+
+            if (text == null)
+            {
+                return;
+            }
+
+            this.dataSource = CsvToDataTable(text);
+            tboxFilter.Text = @"";
+            UpdateUiLater();
+        }
+
+        private void exportAllToCsvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveColumnsToFile(false);
+        }
+
+        private void exportSelectedToCsvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveColumnsToFile(true);
+        }
         #endregion
-
-
     }
 }

@@ -245,9 +245,6 @@
   <data name="btnSaveScript.ToolTip" xml:space="preserve">
     <value>保存脚本</value>
   </data>
-  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 21</value>
-  </data>
   <data name="fileToolStripMenuItem.Text" xml:space="preserve">
     <value>文件</value>
   </data>

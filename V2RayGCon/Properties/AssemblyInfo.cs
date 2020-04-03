@@ -33,11 +33,25 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.2.0")]
+[assembly: AssemblyVersion("1.3.3.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
- *
+ * ------------------------------------------------------
+ * v1.3.2.14 Data grid supports select by cell.
+ * v1.3.2.13 Add new features in data gird dialog.
+ * v1.3.2.12 Show unicode in rich text box.
+ * v1.3.2.11 Change background color of data grid view.
+ * v1.3.2.10 Add BrowseFolder(), BrowseFile(), ShowData() in Luna plug-in.
+ * v1.3.2.9 Run batch speed testing in random order.
+ * v1.3.2.8 Show result amid speed testing.
+ * v1.3.2.7 Auto append new subs. item in form option.
+ * v1.3.2.6 Add context menustrip to Input of Luna plug-in.
+ * v1.3.2.5 Fix a bug in Web:Fetch() of Luna plug-in.
+ * v1.3.2.4 Fix a bug.
+ * v1.3.2.3 MultiConf supports relative path.
+ * v1.3.2.2 Add GetOsVersion(), GetOsReleaseInfo() in Luna plug-in.
+ * v1.3.2.1 Disable url detecting in all log form.
  * --------------------------------------------------------
  * v1.3.1.5 Fix a bug.
  * v1.3.1.4 Refine speed testing algorithm.

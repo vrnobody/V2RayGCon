@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -49,24 +50,45 @@ namespace Luna.Models.Apis.Components
         }
         #endregion
 
-        #region ILuaMisc thinggy
-        public string Replace(string text, string oldStr, string newStr) =>
-            text?.Replace(oldStr, newStr);
+        #region ILuaMisc.Forms
+        public List<List<string>> ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows, int defColumn)
+        {
+            var dt = LuaTableToDataTable(columns, rows);
+            return ShowDataGridDialog(title, dt, defColumn);
+        }
 
-        public int SetWallpaper(string filename) =>
-            Libs.Sys.WinApis.SetWallpaper(filename);
+        public List<List<string>> ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows) =>
+            ShowData(title, columns, rows, -1);
 
-        public string GetImageResolution(string filename) =>
-            VgcApis.Misc.Utils.GetImageResolution(filename);
+        public string BrowseFolder()
+        {
+            string r = null;
+            VgcApis.Misc.Utils.RunAsSTAThread(() =>
+            {
+                r = VgcApis.Misc.UI.ShowSelectFolderDialog();
+            });
+            return r;
+        }
 
-        public string PickRandomLine(string filename) =>
-            VgcApis.Misc.Utils.PickRandomLine(filename);
+        public string BrowseFile()
+        {
+            string r = null;
+            VgcApis.Misc.Utils.RunAsSTAThread(() =>
+            {
+                r = VgcApis.Misc.UI.ShowSelectFileDialog(VgcApis.Models.Consts.Files.AllExt);
+            });
+            return r;
+        }
 
-        public string RandomHex(int len) => VgcApis.Misc.Utils.RandomHex(len);
-
-        public string NewGuid() => Guid.NewGuid().ToString();
-
-        public string GetSubscriptionConfig() => vgcSettings.GetSubscriptionConfig();
+        public string BrowseFile(string filter)
+        {
+            string r = null;
+            VgcApis.Misc.Utils.RunAsSTAThread(() =>
+            {
+                r = VgcApis.Misc.UI.ShowSelectFileDialog(filter);
+            });
+            return r;
+        }
 
         public string Input(string title) => Input(title, 3);
 
@@ -118,6 +140,46 @@ namespace Luna.Models.Apis.Components
         public void Alert(string content) =>
             MessageBox.Show(content, VgcApis.Misc.Utils.GetAppName());
 
+        #endregion
+
+        #region other ILuaMisc thinggy
+
+        public string GetOsVersion() => Environment.OSVersion.VersionString;
+
+        static string osReleaseId;
+        public string GetOsReleaseInfo()
+        {
+            if (string.IsNullOrEmpty(osReleaseId))
+            {
+                // https://stackoverflow.com/questions/39778525/how-to-get-windows-version-as-in-windows-10-version-1607/39778770
+                var root = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion";
+                var name = Microsoft.Win32.Registry.GetValue(root, @"ProductName", @"")?.ToString();
+                var arch = Environment.Is64BitOperatingSystem ? @"x64" : @"x86";
+                var id = Microsoft.Win32.Registry.GetValue(root, @"ReleaseId", "")?.ToString();
+                var build = Microsoft.Win32.Registry.GetValue(root, @"CurrentBuildNumber", @"")?.ToString();
+
+                osReleaseId = $"{name} {arch} {id} build {build}";
+            }
+            return osReleaseId;
+        }
+
+        public string Replace(string text, string oldStr, string newStr) =>
+            text?.Replace(oldStr, newStr);
+
+        public int SetWallpaper(string filename) =>
+            Libs.Sys.WinApis.SetWallpaper(filename);
+
+        public string GetImageResolution(string filename) =>
+            VgcApis.Misc.Utils.GetImageResolution(filename);
+
+        public string PickRandomLine(string filename) =>
+            VgcApis.Misc.Utils.PickRandomLine(filename);
+
+        public string RandomHex(int len) => VgcApis.Misc.Utils.RandomHex(len);
+
+        public string NewGuid() => Guid.NewGuid().ToString();
+
+        public string GetSubscriptionConfig() => vgcSettings.GetSubscriptionConfig();
 
         public long GetTimeoutValue() => VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
@@ -203,6 +265,41 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region private methods
+        DataTable LuaTableToDataTable(NLua.LuaTable columns, NLua.LuaTable rows)
+        {
+            var d = new DataTable();
+            foreach (KeyValuePair<object, object> title in columns)
+            {
+                d.Columns.Add(title.Value.ToString());
+            }
+
+            foreach (KeyValuePair<object, object> row in rows)
+            {
+                var cells = row.Value as NLua.LuaTable;
+                List<string> values = new List<string>();
+                foreach (KeyValuePair<object, object> cell in cells)
+                {
+                    values.Add(cell.Value.ToString());
+                }
+                d.Rows.Add(values.ToArray());
+            }
+
+            return d;
+        }
+
+        List<List<string>> ShowDataGridDialog(string title, DataTable dataSource, int defColumn)
+        {
+            using (var form = new Views.WinForms.FormDataGrid(title, dataSource, defColumn))
+            {
+                var result = form.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    return form.results;
+                }
+            }
+            return null;
+        }
+
         List<string> LuaTableToList(NLua.LuaTable table, bool isShowKey)
         {
             var r = new List<string>();

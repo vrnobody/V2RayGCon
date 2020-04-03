@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,6 +18,27 @@ namespace VgcApis.Misc
 {
     public static class Utils
     {
+
+        #region List
+        static Random rngForShuffle = new Random();
+
+        public static List<T> Shuffle<T>(IEnumerable<T> source)
+        {
+            var list = source.ToList();
+
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rngForShuffle.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+
+            return list;
+        }
+        #endregion
 
         #region files
         public static string GetImageResolution(string filename)
@@ -116,7 +138,21 @@ namespace VgcApis.Misc
 
             try
             {
-                var groups = Regex.Match(url, Models.Consts.Patterns.GitHubRepoInfo).Groups;
+                var groups = Regex.Match(url, Models.Consts.Patterns.GitHuhFileUrl).Groups;
+                if (groups != null && groups.Count == 3)
+                {
+                    var repo = groups[1];
+                    var tail = groups[2];
+                    patched = $"https://raw.githubusercontent.com{repo}{tail}";
+                    return true;
+                }
+            }
+            catch (ArgumentException) { }
+            catch (RegexMatchTimeoutException) { }
+
+            try
+            {
+                var groups = Regex.Match(url, Models.Consts.Patterns.GitHuhFileUrl).Groups;
                 if (groups != null && groups.Count == 3)
                 {
                     var repo = groups[1];
@@ -237,6 +273,21 @@ namespace VgcApis.Misc
         #endregion
 
         #region Task
+        public static void RunAsSTAThread(Action action)
+        {
+            // https://www.codeproject.com/Questions/727531/ThreadStateException-cant-handeled-in-ClipBoard-Se
+            AutoResetEvent done = new AutoResetEvent(false);
+            Thread thread = new Thread(
+                () =>
+                {
+                    action?.Invoke();
+                    done.Set();
+                });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            done.WaitOne();
+        }
+
         public static void Sleep(int milliseconds) => Task.Delay(milliseconds).Wait();
 
         public static Task RunInBackground(Action worker) =>
@@ -909,8 +960,7 @@ namespace VgcApis.Misc
 
         public static string RelativePath2FullPath(string path)
         {
-            if (string.IsNullOrEmpty(path)
-                || Path.IsPathRooted(path))
+            if (string.IsNullOrEmpty(path) || Path.IsPathRooted(path))
             {
                 return path;
             }

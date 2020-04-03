@@ -117,19 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnDelete.Text" xml:space="preserve">
-    <value>删除</value>
+  <data name="lbTitle.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="btnBrowseLocalFile.Text" xml:space="preserve">
-    <value>文件</value>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>取消</value>
   </data>
-  <data name="btnBrowseLocalFile.ToolTip" xml:space="preserve">
-    <value>浏览本地文件</value>
+  <data name="btnCancel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnOk.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="dgvData.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnCopy.Text" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="btnCopy.ToolTip" xml:space="preserve">
+    <value>将选中的内容复制到剪切板</value>
+  </data>
+  <data name="cboxColumnIdx.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>别名</value>
+    <value>过滤</value>
+  </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxFilter.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="importFromCsvToolStripMenuItem.Text" xml:space="preserve">
+    <value>从csv文件导入</value>
+  </data>
+  <data name="exportSelectedToCsvToolStripMenuItem.Text" xml:space="preserve">
+    <value>导出选中行</value>
+  </data>
+  <data name="exportSelectedToCsvToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>将选中行的内容导出为csv文件</value>
+  </data>
+  <data name="exportAllToCsvToolStripMenuItem.Text" xml:space="preserve">
+    <value>导出全部行</value>
+  </data>
+  <data name="exportAllToCsvToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>将全部数据导出为csv文件</value>
+  </data>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="autosizeByHeaderToolStripMenuItem.Text" xml:space="preserve">
+    <value>按标题调整列宽</value>
+  </data>
+  <data name="autosizeByContentToolStripMenuItem.Text" xml:space="preserve">
+    <value>按内容调整列宽</value>
+  </data>
+  <data name="disableAutosizeToolStripMenuItem.Text" xml:space="preserve">
+    <value>取消自动调整</value>
+  </data>
+  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
+    <value>视图</value>
+  </data>
+  <data name="menuStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>数据视图</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
-    <value>拖放可以调整顺序</value>
+    <value />
   </data>
 </root>

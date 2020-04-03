@@ -1028,6 +1028,7 @@ namespace V2RayGCon.Misc
             {
                 Encoding = Encoding.UTF8,
             };
+            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
 
             if (port > 0 && port < 65536)
             {
@@ -1090,6 +1091,7 @@ namespace V2RayGCon.Misc
             }
 
             WebClient wc = new WebClient();
+            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
 
             if (proxyPort > 0 && proxyPort < 65536)
             {
@@ -1157,6 +1159,8 @@ namespace V2RayGCon.Misc
             {
                 Encoding = Encoding.UTF8,
             };
+
+            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
 
             if (proxyPort > 0 && proxyPort < 65536)
             {
@@ -1610,21 +1614,6 @@ namespace V2RayGCon.Misc
             }
 
             return result;
-        }
-
-        public static void RunAsSTAThread(Action action)
-        {
-            // https://www.codeproject.com/Questions/727531/ThreadStateException-cant-handeled-in-ClipBoard-Se
-            AutoResetEvent done = new AutoResetEvent(false);
-            Thread thread = new Thread(
-                () =>
-                {
-                    action?.Invoke();
-                    done.Set();
-                });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            done.WaitOne();
         }
 
         /// <summary>

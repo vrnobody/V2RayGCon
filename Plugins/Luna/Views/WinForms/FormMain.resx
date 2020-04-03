@@ -563,7 +563,7 @@
     <value>Zoom</value>
   </data>
   <data name="btnKillScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>267, 2</value>
+    <value>268, 2</value>
   </data>
   <data name="btnKillScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -603,7 +603,7 @@
     <value>Zoom</value>
   </data>
   <data name="btnStopScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>246, 2</value>
+    <value>247, 2</value>
   </data>
   <data name="btnStopScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -728,7 +728,7 @@
     <value>Zoom</value>
   </data>
   <data name="btnSaveScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>185, 2</value>
+    <value>184, 2</value>
   </data>
   <data name="btnSaveScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>

@@ -110,7 +110,7 @@ namespace Luna.Properties {
         }
         
         /// <summary>
-        ///   查找类似 0.1.6 的本地化字符串。
+        ///   查找类似 0.2.1 的本地化字符串。
         /// </summary>
         internal static string Version {
             get {

@@ -61,7 +61,7 @@ namespace V2RayGCon.Views.WinForms
 
         void CopyToClipboard(List<string> links)
         {
-            Misc.Utils.RunAsSTAThread(() =>
+            VgcApis.Misc.Utils.RunAsSTAThread(() =>
             {
                 Misc.Utils.CopyToClipboardAndPrompt(
                     string.Join(Environment.NewLine, links));

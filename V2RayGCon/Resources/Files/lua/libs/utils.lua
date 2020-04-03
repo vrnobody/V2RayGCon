@@ -11,6 +11,11 @@ function ToNumber(str)
     return tonumber(str)
 end
 
+function ToLuaTicks(cSharpTicks)
+    local t = ToNumber(cSharpTicks)
+    return math.floor(t / 10000000 - 62135596800)
+end
+
 function IsInTable(haystack, needle)
     assert(type(needle) == "string")
     assert(type(haystack) == "table")
@@ -240,6 +245,15 @@ function u.IsInTablePartially(haystack, needle)
         end
     end
     return false
+end
+
+function u.ToLuaTicks(cSharpTicks)
+    return ToLuaTicks(cSharpTicks)
+end
+
+function u.ToLuaDate(cSharpTicks)
+    local t = ToLuaTicks(cSharpTicks)
+    return os.date('%Y-%m-%d %H:%M:%S', t)
 end
 
 return u

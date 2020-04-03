@@ -111,7 +111,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         {
             var stdinKey = @"Standard Input";
             multiConfTable = new Dictionary<string, string> {
-                {                    stdinKey,                    VgcApis.Models.Consts.Core.StdIn                },
+                {stdinKey, VgcApis.Models.Consts.Core.StdIn                },
             };
 
             var multiConfItems = Services.Settings.Instance.GetMultiConfItems();
@@ -122,14 +122,17 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
             foreach (var item in multiConfItems)
             {
-                if (!multiConfTable.ContainsKey(item.alias))
+                var alias = item.alias;
+                var path = VgcApis.Misc.Utils.RelativePath2FullPath(item.path);
+
+                if (!multiConfTable.ContainsKey(alias))
                 {
-                    multiConfTable.Add(item.alias, item.path);
-                    items.Add(item.alias);
+                    multiConfTable.Add(alias, path);
+                    items.Add(alias);
                 }
                 else
                 {
-                    importTable[item.alias] = item.path;
+                    importTable[alias] = path;
                 }
             }
 

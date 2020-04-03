@@ -312,6 +312,7 @@
             // rtBoxOutput
             // 
             this.rtBoxOutput.BackColor = System.Drawing.SystemColors.Control;
+            this.rtBoxOutput.DetectUrls = false;
             resources.ApplyResources(this.rtBoxOutput, "rtBoxOutput");
             this.rtBoxOutput.Name = "rtBoxOutput";
             this.rtBoxOutput.ReadOnly = true;

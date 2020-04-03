@@ -117,29 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lbIndex.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxAlias.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="label2.Text" xml:space="preserve">
     <value>别名</value>
   </data>
-  <data name="label2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxUrl.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnDelete.Text" xml:space="preserve">
     <value>删除</value>
-  </data>
-  <data name="btnDelete.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="chkMergeWhenStart.Text" xml:space="preserve">
     <value>开启</value>
@@ -158,6 +140,12 @@
   </data>
   <data name="chkMergeWhenPacking.ToolTip" xml:space="preserve">
     <value>打包时使用此模板</value>
+  </data>
+  <data name="btnBrowseLocalFile.Text" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="btnBrowseLocalFile.ToolTip" xml:space="preserve">
+    <value>浏览本地文件</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value>拖放可以调整顺序</value>

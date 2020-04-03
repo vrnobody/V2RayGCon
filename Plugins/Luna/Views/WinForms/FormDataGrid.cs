@@ -60,31 +60,59 @@ namespace Luna.Views.WinForms
 
             if (isSelectedOnly)
             {
-                var selectedRowCount = dgvData.Rows.GetRowCount(DataGridViewElementStates.Selected);
-                if (selectedRowCount > 0)
-                {
-                    for (int i = selectedRowCount - 1; i >= 0; i--)
-                    {
-                        var row = dgvData.SelectedRows[i];
-                        if (!row.IsNewRow)
-                        {
-                            r.Add(RowToList(row));
-                        }
-
-                    }
-                }
+                AddSelectedRowsToDataTable(r);
             }
             else
             {
-                foreach (DataGridViewRow row in dgvData.Rows)
-                {
-                    if (!row.IsNewRow)
-                    {
-                        r.Add(RowToList(row));
-                    }
-                }
+                AddAllRows(r);
             }
             return r;
+        }
+
+        private void AddAllRows(List<List<string>> dataTable)
+        {
+            foreach (DataGridViewRow row in dgvData.Rows)
+            {
+                if (!row.IsNewRow)
+                {
+                    dataTable.Add(RowToList(row));
+                }
+            }
+        }
+
+        private void AddSelectedRowsToDataTable(List<List<string>> dataTable)
+        {
+            List<int> cache = new List<int>();
+            List<DataGridViewRow> rows = new List<DataGridViewRow>();
+
+            foreach (DataGridViewRow row in dgvData.SelectedRows)
+            {
+                AddToRows(cache, rows, row);
+            }
+
+            foreach (DataGridViewCell cell in dgvData.SelectedCells)
+            {
+                var r = dgvData.Rows[cell.RowIndex];
+                AddToRows(cache, rows, r);
+            }
+
+            rows.Reverse();
+
+            foreach (DataGridViewRow row in rows)
+            {
+                dataTable.Add(RowToList(row));
+            }
+        }
+
+        void AddToRows(List<int> cache, List<DataGridViewRow> rows, DataGridViewRow row)
+        {
+            var idx = row.Index;
+            if (row.IsNewRow || cache.Contains(idx))
+            {
+                return;
+            }
+            rows.Add(row);
+            cache.Add(idx);
         }
 
         List<string> RowToList(DataGridViewRow row)
@@ -105,38 +133,35 @@ namespace Luna.Views.WinForms
                 return result;
             }
 
-            try
+            var lines = csv.Split('\n');
+            var len = lines.Count();
+            if (len < 1)
             {
-                var lines = csv.Split('\n');
-                var len = lines.Count();
-                if (len < 1)
-                {
-                    return result;
-                }
-
-                var headers = lines[0].Split(',').Select(c => c ?? @"").ToList();
-                var count = headers.Count();
-                if (count < 1)
-                {
-                    return result;
-                }
-
-                foreach (var header in headers)
-                {
-                    result.Columns.Add(header);
-                }
-
-                for (int i = 1; i < len; i++)
-                {
-                    var cells = lines[i].Split(',').Select(c => c ?? @"").ToArray();
-                    if (cells.Length != count)
-                    {
-                        continue;
-                    }
-                    result.Rows.Add(cells);
-                }
+                return result;
             }
-            catch { }
+
+            var headers = lines[0].Split(',').Select(c => c ?? @"").ToList();
+            var count = headers.Count();
+            if (count < 1)
+            {
+                return result;
+            }
+
+            foreach (var header in headers)
+            {
+                result.Columns.Add(header);
+            }
+
+            for (int i = 1; i < len; i++)
+            {
+                var cells = lines[i].Split(',').Select(c => c ?? @"").ToArray();
+                if (cells.Length != count)
+                {
+                    continue;
+                }
+                result.Rows.Add(cells);
+            }
+
             return result;
         }
 

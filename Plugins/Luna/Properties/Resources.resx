@@ -134,7 +134,7 @@
     <value>Luna</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>0.2.0</value>
-    <comment>optimize data grid dialog</comment>
+    <value>0.2.1</value>
+    <comment>data grid supports select by cell</comment>
   </data>
 </root>

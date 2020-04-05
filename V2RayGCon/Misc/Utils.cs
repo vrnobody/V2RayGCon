@@ -1012,7 +1012,7 @@ namespace V2RayGCon.Misc
 
         public static string UrlEncode(string value) => HttpUtility.UrlEncode(value);
 
-        public static long VisitWebPageSpeedTest(
+        public static long TimedDownloadTesting(
             string url,
             int port,
             int expectedSizeInKiB,

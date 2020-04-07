@@ -30,6 +30,7 @@ namespace V2RayGCon.Services
 
         readonly int notifyIconUpdateInterval = VgcApis.Models.Consts.Intervals.NotifierTextUpdateIntreval;
         VgcApis.Libs.Tasks.LazyGuy lazyNotifyIconUpdater;
+        bool isMenuOpened = false;
 
         Notifier()
         {
@@ -223,7 +224,7 @@ namespace V2RayGCon.Services
         VgcApis.Libs.Tasks.Bar updateNotifyIconLock = new VgcApis.Libs.Tasks.Bar();
         void UpdateNotifyIcon()
         {
-            if (!updateNotifyIconLock.Install())
+            if (isMenuOpened || !updateNotifyIconLock.Install())
             {
                 lazyNotifyIconUpdater.DoItLater();
                 return;
@@ -423,13 +424,17 @@ namespace V2RayGCon.Services
 
         void CreateNotifyIcon()
         {
+            var menu = CreateMenu();
+            menu.Opening += (s, a) => isMenuOpened = true;
+            menu.Closed += (s, a) => isMenuOpened = false;
+
             ni = new NotifyIcon
             {
                 Text = I18N.Description,
                 Icon = VgcApis.Misc.UI.GetAppIcon(),
                 BalloonTipTitle = VgcApis.Misc.Utils.GetAppName(),
 
-                ContextMenuStrip = CreateMenu(),
+                ContextMenuStrip = menu,
                 Visible = true
             };
 

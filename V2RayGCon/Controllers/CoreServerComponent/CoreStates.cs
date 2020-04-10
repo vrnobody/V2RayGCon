@@ -27,7 +27,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             coreCtrl = GetSibling<CoreCtrl>();
             configer = GetSibling<Configer>();
 
-            GenerateStatusTextFromSpeedTestResult();
+            UpdateStatusWithSpeedTestResult();
         }
 
         #region properties
@@ -276,28 +276,39 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         string status = @"";
         public string GetStatus() => status;
 
-        public void SetStatus(string value)
+        public void SetStatus(string text)
         {
-            status = value;
+            if (status == text)
+            {
+                return;
+            }
+
+            status = text;
             GetParent().InvokeEventOnPropertyChange();
         }
 
         public long GetLastSpeedTestUtcTicks() => coreInfo.lastSpeedTestUtcTicks;
 
         public long GetSpeedTestResult() => coreInfo.speedTestResult;
-        public void SetSpeedTestResult(long value)
+        public void SetSpeedTestResult(long latency)
         {
             // 0: testing <0: none long.max: timeout >0: ???ms
-            coreInfo.speedTestResult = value;
+            if (coreInfo.speedTestResult == latency)
+            {
+                return;
+            }
+
+            coreInfo.speedTestResult = latency;
             coreInfo.lastSpeedTestUtcTicks = DateTime.UtcNow.Ticks;
-            GenerateStatusTextFromSpeedTestResult();
+            UpdateStatusWithSpeedTestResult();
+            GetParent().InvokeEventOnPropertyChange();
         }
 
         public string GetRawUid() => coreInfo.uid;
         #endregion
 
         #region private methods
-        void GenerateStatusTextFromSpeedTestResult()
+        void UpdateStatusWithSpeedTestResult()
         {
             var latency = GetSpeedTestResult();
 

@@ -143,7 +143,7 @@
             // 
             // rlbRemark
             // 
-            this.rlbRemark._BackColor = System.Drawing.Color.PaleGreen;
+            this.rlbRemark._BackColor = System.Drawing.Color.LightSkyBlue;
             this.rlbRemark.AutoEllipsis = true;
             resources.ApplyResources(this.rlbRemark, "rlbRemark");
             this.rlbRemark.Cursor = System.Windows.Forms.Cursors.Hand;

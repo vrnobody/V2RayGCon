@@ -349,7 +349,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbMark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>160, 31</value>
+    <value>209, 31</value>
   </data>
   <data name="rlbMark.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>90, 18</value>
@@ -391,7 +391,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbRemark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>312, 31</value>
+    <value>160, 31</value>
   </data>
   <data name="rlbRemark.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>70, 18</value>
@@ -400,13 +400,13 @@
     <value>1, 3, 1, 3</value>
   </data>
   <data name="rlbRemark.Size" type="System.Drawing.Size, System.Drawing">
-    <value>67, 18</value>
+    <value>43, 18</value>
   </data>
   <data name="rlbRemark.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
   </data>
   <data name="rlbRemark.Text" xml:space="preserve">
-    <value>备注aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</value>
+    <value>备注🖤</value>
   </data>
   <data name="rlbRemark.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
@@ -475,7 +475,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbSpeedtest.Location" type="System.Drawing.Point, System.Drawing">
-    <value>251, 31</value>
+    <value>300, 31</value>
   </data>
   <data name="rlbSpeedtest.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>60, 18</value>
@@ -555,6 +555,21 @@
   <metadata name="ctxMenuStripMore.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>119, 18</value>
   </metadata>
+  <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 214</value>
+  </data>
+  <data name="&gt;&gt;ctxMenuStripMore.Name" xml:space="preserve">
+    <value>ctxMenuStripMore</value>
+  </data>
+  <data name="&gt;&gt;ctxMenuStripMore.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="toolStripMenuItem3.Text" xml:space="preserve">
+    <value>Action</value>
+  </data>
   <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>145, 22</value>
   </data>
@@ -582,11 +597,11 @@
   <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>Stop this server.</value>
   </data>
-  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 22</value>
   </data>
-  <data name="toolStripMenuItem3.Text" xml:space="preserve">
-    <value>Action</value>
+  <data name="toolStripMenuItem6.Text" xml:space="preserve">
+    <value>Move</value>
   </data>
   <data name="moveToTopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 22</value>
@@ -606,11 +621,11 @@
   <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Move this server to bottom.</value>
   </data>
-  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 22</value>
   </data>
-  <data name="toolStripMenuItem6.Text" xml:space="preserve">
-    <value>Move</value>
+  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy</value>
   </data>
   <data name="vToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>138, 22</value>
@@ -638,12 +653,6 @@
   </data>
   <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Contain all config information.</value>
-  </data>
-  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
-  </data>
-  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
-    <value>Copy</value>
   </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 6</value>
@@ -695,15 +704,6 @@
   </data>
   <data name="runSpeedTestToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>The time it takes to download the test web page.</value>
-  </data>
-  <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 214</value>
-  </data>
-  <data name="&gt;&gt;ctxMenuStripMore.Name" xml:space="preserve">
-    <value>ctxMenuStripMore</value>
-  </data>
-  <data name="&gt;&gt;ctxMenuStripMore.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="rtboxServerTitle.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 9pt</value>

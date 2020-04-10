@@ -24,6 +24,8 @@ namespace V2RayGCon.Views.UserControls
 
         static readonly Bitmap[] btnBgCaches = new Bitmap[3];
 
+        List<Control> roundLables;
+
         public ServerUI(VgcApis.Interfaces.ICoreServCtrl serverItem)
         {
             servers = Services.Servers.Instance;
@@ -32,15 +34,23 @@ namespace V2RayGCon.Views.UserControls
 
             this.coreServCtrl = serverItem;
             InitializeComponent();
-
-            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiLater, 100);
         }
 
         private void ServerUI_Load(object sender, EventArgs e)
         {
+            roundLables = new List<Control>
+            {
+                rlbLastModify,
+                rlbRemark,
+                rlbMark,
+                rlbSpeedtest,
+            };
+
             rtboxServerTitle.BackColor = BackColor;
             rlbSpeedtest.Text = @"";
             rlbSpeedtest.Visible = false;
+
+            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiLater, 100);
 
             InitButtonBackgroundImage();
             BindCoreCtrlEvents();
@@ -149,15 +159,9 @@ namespace V2RayGCon.Views.UserControls
 
             var end = rlbInboundMode.Right;
 
-            var controls = new List<Control>
-            {
-                rlbLastModify,
-                rlbMark,
-                rlbSpeedtest,
-                rlbRemark,
-            };
 
-            foreach (var control in controls)
+
+            foreach (var control in roundLables)
             {
                 if (!control.Visible)
                 {

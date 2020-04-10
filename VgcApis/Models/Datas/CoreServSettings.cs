@@ -4,7 +4,7 @@ namespace VgcApis.Models.Datas
 {
     public class CoreServSettings
     {
-        public string serverName, serverDescription, inboundAddress, mark;
+        public string serverName, serverDescription, inboundAddress, mark, remark;
         public int inboundMode;
         public bool isAutorun, isUntrack, isGlobalImport, isBypassCnSite;
 
@@ -15,6 +15,7 @@ namespace VgcApis.Models.Datas
             serverDescription = em;
             inboundAddress = em;
             mark = em;
+            remark = em;
 
             inboundMode = 0;
             isAutorun = false;
@@ -29,6 +30,7 @@ namespace VgcApis.Models.Datas
             var cs = coreServ.GetCoreStates();
 
             mark = cs.GetMark();
+            remark = cs.GetRemark();
             isAutorun = cs.IsAutoRun();
             isUntrack = cs.IsUntrack();
             isGlobalImport = cs.IsInjectGlobalImport();
@@ -60,6 +62,7 @@ namespace VgcApis.Models.Datas
                 || t.serverDescription != serverDescription
                 || t.inboundAddress != inboundAddress
                 || t.mark != mark
+                || t.remark != remark
                 || t.inboundMode != inboundMode
                 || t.isAutorun != isAutorun
                 || t.isUntrack != isUntrack

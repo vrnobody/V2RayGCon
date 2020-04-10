@@ -21,6 +21,8 @@ namespace VgcApis.Interfaces.Lua
         void SortSelectedServersBySpeedTest();
         void SortSelectedServersBySummary();
 
+        void StopAllServers();
+
         // refresh servers' title in form main
         void UpdateAllSummary();
     }

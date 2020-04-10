@@ -723,4 +723,7 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="SummaryColon" xml:space="preserve">
     <value>摘要：</value>
   </data>
+  <data name="Remark" xml:space="preserve">
+    <value>备注：</value>
+  </data>
 </root>

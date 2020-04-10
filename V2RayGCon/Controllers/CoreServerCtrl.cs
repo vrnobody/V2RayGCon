@@ -135,6 +135,7 @@ namespace V2RayGCon.Controllers
 
             SetServerNameAndDescription(cs.serverName, cs.serverDescription);
             ci.customMark = cs.mark;
+            ci.customRemark = cs.remark;
             ci.isAutoRun = cs.isAutorun;
             ci.isUntrack = cs.isUntrack;
 

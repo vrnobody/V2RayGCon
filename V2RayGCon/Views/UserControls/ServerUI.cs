@@ -18,7 +18,6 @@ namespace V2RayGCon.Views.UserControls
         VgcApis.Interfaces.ICoreServCtrl coreServCtrl;
 
         string keyword = null;
-        Color backColorCache;
 
         VgcApis.Libs.Tasks.Bar uiUpdateLock = new VgcApis.Libs.Tasks.Bar();
         VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater;
@@ -34,7 +33,6 @@ namespace V2RayGCon.Views.UserControls
             this.coreServCtrl = serverItem;
             InitializeComponent();
 
-
             lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiLater, 100);
         }
 
@@ -43,8 +41,6 @@ namespace V2RayGCon.Views.UserControls
             rtboxServerTitle.BackColor = BackColor;
             rlbSpeedtest.Text = @"";
             rlbSpeedtest.Visible = false;
-
-            backColorCache = this.BackColor;
 
             InitButtonBackgroundImage();
             BindCoreCtrlEvents();
@@ -136,12 +132,9 @@ namespace V2RayGCon.Views.UserControls
 
         void UpdateControlTextAndTooltip(Control control, string text, string tooltip)
         {
-            if (control.Text != text)
-            {
-                control.Text = text;
-            }
+            UpdateControlTextOndemand(control, text);
 
-            if (toolTip1.GetToolTip(control) != tooltip)
+            if (control.Visible && toolTip1.GetToolTip(control) != tooltip)
             {
                 toolTip1.SetToolTip(control, tooltip);
             }
@@ -161,6 +154,7 @@ namespace V2RayGCon.Views.UserControls
                 rlbLastModify,
                 rlbMark,
                 rlbSpeedtest,
+                rlbRemark,
             };
 
             foreach (var control in controls)
@@ -311,24 +305,6 @@ namespace V2RayGCon.Views.UserControls
             }
         }
 
-        void UpdateBackgroundColor(bool isSelected)
-        {
-            // Beige too blight, Linen too red
-            var color = isSelected ? Color.WhiteSmoke : backColorCache;
-            if (this.BackColor != color)
-            {
-                this.BackColor = color;
-            }
-
-            foreach (Control control in this.Controls)
-            {
-                if (control.BackColor != color)
-                {
-                    control.BackColor = color;
-                }
-            }
-        }
-
         void RefreshUiThen(Action done)
         {
             VgcApis.Misc.UI.RunInUiThread(rtboxServerTitle, () =>
@@ -344,14 +320,14 @@ namespace V2RayGCon.Views.UserControls
                     // first line
                     UpdateOnOffLabel(cc.IsCoreRunning());
                     UpdateSelectCheckboxState(isSelected);
-
                     UpdateTitleTextBox(cs);
 
                     // second line
                     UpdateInboundModeLabel(cs);
                     UpdateLastModifiedLable(cs.GetLastModifiedUtcTicks());
                     UpdateMarkLabel(cs.GetMark());
-                    UpdateSpeedTestLable(cs.GetStatus());
+                    UpdateRemarkLabel(cs.GetRemark());
+                    UpdateStatusLable(cs);
                     UpdateSettingsLable(cs);
                     CompactRoundLables();
                 }
@@ -378,11 +354,22 @@ namespace V2RayGCon.Views.UserControls
             UpdateControlTextAndTooltip(rlbMark, mark, tooltip);
         }
 
-        void UpdateSpeedTestLable(string status)
+        void UpdateRemarkLabel(string remark)
         {
+            var m = VgcApis.Misc.Utils.AutoEllipsis(remark, VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength);
+            var tooltip = $"{I18N.Remark}{m}";
+            UpdateControlTextAndTooltip(rlbRemark, remark, tooltip);
+        }
 
-            UpdateControlTextOndemand(rlbSpeedtest, status);
-            var color = status.Equals(I18N.Timeout) ? Color.OrangeRed : Color.DimGray;
+        void UpdateStatusLable(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates cs)
+        {
+            var r = cs.GetSpeedTestResult();
+            var isTimeout = r == long.MaxValue;
+            var color = isTimeout ? Color.OrangeRed : Color.DimGray;
+            var status = cs.GetStatus();
+            var tooltip = Ticks2Tooltip(cs.GetLastSpeedTestUtcTicks());
+
+            UpdateControlTextAndTooltip(rlbSpeedtest, status, tooltip);
             if (rlbSpeedtest.ForeColor != color)
             {
                 rlbSpeedtest.ForeColor = color;
@@ -393,8 +380,14 @@ namespace V2RayGCon.Views.UserControls
         {
             var date = new DateTime(utcTicks, DateTimeKind.Utc).ToLocalTime();
             var text = date.ToString(I18N.MMdd);
-            var tooltip = I18N.LastModified + date.ToLongDateString() + date.ToLongTimeString();
+            var tooltip = Ticks2Tooltip(utcTicks);
             UpdateControlTextAndTooltip(rlbLastModify, text, tooltip);
+        }
+
+        string Ticks2Tooltip(long utcTicks)
+        {
+            var date = new DateTime(utcTicks, DateTimeKind.Utc).ToLocalTime();
+            return I18N.LastModified + date.ToLongDateString() + date.ToLongTimeString();
         }
 
         private void UpdateSettingsLable(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
@@ -706,6 +699,10 @@ namespace V2RayGCon.Views.UserControls
             ShowModifyConfigsWinForm();
         }
 
+        private void rlbRemark_Click(object sender, EventArgs e)
+        {
+            ShowModifyConfigsWinForm();
+        }
         #endregion
     }
 }

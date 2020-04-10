@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Luna.Models.Apis.Components
 {
@@ -42,13 +43,18 @@ namespace Luna.Models.Apis.Components
         public void SortSelectedServersBySpeedTest() =>
             vgcServers.SortSelectedBySpeedTest();
 
+        public void StopAllServers()
+        {
+            var evDone = new AutoResetEvent(false);
+            vgcServers.StopAllServersThen(() => evDone.Set());
+            evDone.WaitOne();
+        }
+
         public bool RunSpeedTestOnSelectedServers() =>
             vgcServers.RunSpeedTestOnSelectedServers();
 
         public string PackSelectedServers(
             string orgUid, string pkgName) =>
             vgcServers.PackSelectedServersIntoV4Package(orgUid, pkgName);
-
-
     }
 }

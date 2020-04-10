@@ -732,4 +732,7 @@ No, abort.</value>
   <data name="SummaryColon" xml:space="preserve">
     <value>Summary: </value>
   </data>
+  <data name="Remark" xml:space="preserve">
+    <value>Remark: </value>
+  </data>
 </root>

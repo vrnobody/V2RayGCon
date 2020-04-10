@@ -97,9 +97,12 @@ namespace Pacman.Controllers
             {
                 Views.UserControls.BeanUI beanUI = null;
                 // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
-                if (a.Data.GetDataPresent("V2RayGCon.Views.UserControls.ServerUI"))
+
+                var objName = "V2RayGCon.Views.UserControls.ServerUI";
+
+                if (a.Data.GetDataPresent(objName))
                 {
-                    var item = (VgcApis.Interfaces.IDropableControl)a.Data.GetData("V2RayGCon.Views.UserControls.ServerUI");
+                    var item = (VgcApis.Interfaces.IDropableControl)a.Data.GetData(objName);
                     var bean = new Models.Data.Bean
                     {
                         title = item.GetTitle(),
@@ -204,9 +207,9 @@ namespace Pacman.Controllers
                         return;
                     }
 
-                    var states = c.GetCoreStates();
-                    b.SetStatus(states.GetStatus());
-                    b.SetTitle(states.GetTitle());
+                    var coreStates = c.GetCoreStates();
+                    b.SetStatus(coreStates.GetStatus());
+                    b.SetTitle(coreStates.GetTitle());
                 });
 
             };

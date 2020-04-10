@@ -235,9 +235,6 @@
     <Compile Include="Views\UserControls\PluginInfoUI.Designer.cs">
       <DependentUpon>PluginInfoUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\RoundLabel.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Views\UserControls\ServerUI.cs">
       <SubType>UserControl</SubType>
     </Compile>

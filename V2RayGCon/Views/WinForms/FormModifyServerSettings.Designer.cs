@@ -45,10 +45,12 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.tboxDescription = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.tboxTitle = new System.Windows.Forms.TextBox();
+            this.tboxRemark = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -150,6 +152,12 @@
             this.label3.Name = "label3";
             this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
             // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            this.toolTip1.SetToolTip(this.label4, resources.GetString("label4.ToolTip"));
+            // 
             // label7
             // 
             resources.ApplyResources(this.label7, "label7");
@@ -171,6 +179,11 @@
             this.tboxTitle.Name = "tboxTitle";
             this.tboxTitle.ReadOnly = true;
             // 
+            // tboxRemark
+            // 
+            resources.ApplyResources(this.tboxRemark, "tboxRemark");
+            this.tboxRemark.Name = "tboxRemark";
+            // 
             // FormModifyServerSettings
             // 
             resources.ApplyResources(this, "$this");
@@ -185,15 +198,16 @@
             this.Controls.Add(this.cboxMark);
             this.Controls.Add(this.cboxInboundAddress);
             this.Controls.Add(this.tboxDescription);
+            this.Controls.Add(this.tboxRemark);
             this.Controls.Add(this.tboxServerName);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
-            this.MaximizeBox = false;
             this.Name = "FormModifyServerSettings";
             this.Load += new System.EventHandler(this.FormModifyServerSettings_Load);
             this.ResumeLayout(false);
@@ -222,5 +236,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tboxTitle;
+        private System.Windows.Forms.TextBox tboxRemark;
+        private System.Windows.Forms.Label label4;
     }
 }

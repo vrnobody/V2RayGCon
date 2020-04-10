@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
 {
@@ -25,6 +26,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             coreCtrl = GetSibling<CoreCtrl>();
             configer = GetSibling<Configer>();
+
+            GenerateStatusTextFromSpeedTestResult();
         }
 
         #region properties
@@ -75,7 +78,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 + ci.inbIp + @":" + ci.inbPort.ToString(),
 
                 // index 2
-                ci.customMark??"",
+                ci.customMark??@"",
+
+                ci.customRemark??@"",
             });
         }
 
@@ -199,6 +204,19 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             GetParent().InvokeEventOnPropertyChange();
         }
 
+        public void SetRemark(string remark)
+        {
+            if (coreInfo.customRemark == remark)
+            {
+                return;
+            }
+
+            coreInfo.customRemark = remark;
+            GetParent().InvokeEventOnPropertyChange();
+        }
+
+        public string GetRemark() => coreInfo.customRemark;
+
         public string GetInboundIp() => coreInfo.inbIp;
         public int GetInboundPort() => coreInfo.inbPort;
 
@@ -255,20 +273,42 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         /// </summary>
         public void SetStatPort(int port) => statPort = port;
 
-        string status = "";
+        string status = @"";
         public string GetStatus() => status;
-        public void SetStatus(string value) =>
-            SetPropertyOnDemand(ref status, value);
 
-        long speedTestResult = -1;
-        public long GetSpeedTestResult() => speedTestResult;
-        public void SetSpeedTestResult(long value) =>
-            speedTestResult = value;
+        public void SetStatus(string value)
+        {
+            status = value;
+            GetParent().InvokeEventOnPropertyChange();
+        }
+
+        public long GetLastSpeedTestUtcTicks() => coreInfo.lastSpeedTestUtcTicks;
+
+        public long GetSpeedTestResult() => coreInfo.speedTestResult;
+        public void SetSpeedTestResult(long value)
+        {
+            // 0: testing <0: none long.max: timeout >0: ???ms
+            coreInfo.speedTestResult = value;
+            coreInfo.lastSpeedTestUtcTicks = DateTime.UtcNow.Ticks;
+            GenerateStatusTextFromSpeedTestResult();
+        }
 
         public string GetRawUid() => coreInfo.uid;
         #endregion
 
         #region private methods
+        void GenerateStatusTextFromSpeedTestResult()
+        {
+            var latency = GetSpeedTestResult();
+
+            var status = @"";
+            if (latency > 0)
+            {
+                status = latency == long.MaxValue ? I18N.Timeout : $"{latency}ms";
+            }
+            SetStatus(status);
+        }
+
         void SetSettingsPropertyOnDemand(ref bool property, bool value, bool requireRestart = false)
         {
             if (property == value)

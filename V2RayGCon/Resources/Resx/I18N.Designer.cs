@@ -1400,6 +1400,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Remark:  的本地化字符串。
+        /// </summary>
+        internal static string Remark {
+            get {
+                return ResourceManager.GetString("Remark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Use current config to replace selected server? 的本地化字符串。
         /// </summary>
         internal static string ReplaceServer {

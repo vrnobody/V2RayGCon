@@ -22,6 +22,9 @@ namespace VgcApis.Interfaces.Services
         void SortSelectedBySpeedTest();
 
         void SortSelectedBySummary();
+
+        void StopAllServersThen(Action lambda = null);
+
         void UpdateAllServersSummarySync();
 
         string PackSelectedServersIntoV4Package(

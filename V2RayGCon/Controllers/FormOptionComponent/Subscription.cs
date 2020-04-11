@@ -221,6 +221,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             var subsUi = new Views.UserControls.SubscriptionUI(this, data);
             flyPanel.Controls.Add(subsUi);
+            flyPanel.ScrollControlIntoView(subsUi);
         }
 
         void BindEventBtnAddClick()

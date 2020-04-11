@@ -87,6 +87,7 @@ namespace V2RayGCon.Views.WinForms
                     chkSetServStatistics,
                     chkSetUpgradeUseProxy,
                     chkSetCheckWhenStart));
+
             ctrl.Plug(
                 new Controllers.OptionComponent.TabDefaults(
 

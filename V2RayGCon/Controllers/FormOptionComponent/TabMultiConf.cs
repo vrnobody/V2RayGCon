@@ -96,10 +96,11 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             this.btnAdd.Click += (s, a) =>
             {
-                var item = new Views.UserControls.MultiConfUI(
+                var control = new Views.UserControls.MultiConfUI(
                         new Models.Datas.MultiConfItem(),
                         UpdatePanelItemsIndex);
-                this.flyPanel.Controls.Add(item);
+                flyPanel.Controls.Add(control);
+                flyPanel.ScrollControlIntoView(control);
                 UpdatePanelItemsIndex();
             };
         }

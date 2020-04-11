@@ -136,6 +136,23 @@ namespace V2RayGCon.Views.UserControls
 
             subsCtrl.RemoveSubsUi(this);
         }
+
+        private void lbAlias_Click(object sender, EventArgs e)
+        {
+            tboxAlias.Focus();
+            var msg = VgcApis.Misc.Utils.CopyToClipboard(tboxAlias.Text) ?
+                 I18N.CopySuccess : I18N.CopyFail;
+            VgcApis.Misc.UI.MsgBoxAsync(msg);
+        }
+
+        private void lbUrl_Click(object sender, EventArgs e)
+        {
+            tboxUrl.Focus();
+            var msg = VgcApis.Misc.Utils.CopyToClipboard(tboxUrl.Text) ?
+                 I18N.CopySuccess : I18N.CopyFail;
+            VgcApis.Misc.UI.MsgBoxAsync(msg);
+
+        }
         #endregion
 
         #region private method
@@ -203,5 +220,7 @@ namespace V2RayGCon.Views.UserControls
 
         #region protected
         #endregion
+
+
     }
 }

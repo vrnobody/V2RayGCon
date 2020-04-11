@@ -68,6 +68,8 @@ namespace Luna.Views.WinForms
                 saveAsToolStripMenuItem,
                 exitToolStripMenuItem);
 
+            menuCtrl.Run();
+
             this.FormClosing += FormClosingHandler;
             this.FormClosed += (s, a) =>
             {
@@ -78,13 +80,6 @@ namespace Luna.Views.WinForms
 
             this.KeyDown += (s, a) => editorCtrl?.KeyBoardShortcutHandler(a);
         }
-
-        //protected override bool ProcessCmdKey(ref Message msg, Keys keyCode)
-        //{
-
-        //    editorCtrl?.KeyBoardShortcutHandler(keyCode);
-        //    return base.ProcessCmdKey(ref msg, keyCode);
-        //}
 
         void FixSplitPanelWidth()
         {

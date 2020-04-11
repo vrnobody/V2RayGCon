@@ -34,7 +34,7 @@ namespace VgcApis.Models.Consts
             " os.clock os.date os.difftime os.execute os.exit os.getenv os.remove os.rename os.setlocale os.time os.tmpname" +
             " package.loaders package.seeall package.config package.searchers package.searchpath package.cpath package.loaded package.loadlib package.path package.preload";
 
-        const string LuaPredefinedFunctionNames = @"string.startswith string.endswith string.isempty";
+        const string LuaPredefinedFunctionNames = @"string.startswith string.endswith string.isempty table.contains";
 
         static List<string> GetterApiFuncNames()
         {

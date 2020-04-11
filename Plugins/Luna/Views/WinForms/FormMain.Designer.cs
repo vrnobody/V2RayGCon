@@ -58,7 +58,7 @@
             this.btnSaveScript = new System.Windows.Forms.Button();
             this.pnlScriptEditor = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rtBoxOutput = new System.Windows.Forms.RichTextBox();
+            this.rtBoxOutput = new VgcApis.UserControls.ExRichTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -429,7 +429,7 @@
         private System.Windows.Forms.Button btnSaveScript;
         private System.Windows.Forms.Panel pnlScriptEditor;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RichTextBox rtBoxOutput;
+        private VgcApis.UserControls.ExRichTextBox rtBoxOutput;
         private System.Windows.Forms.Button btnClearOutput;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnNewScript;

@@ -134,7 +134,7 @@
     <value>Luna</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>0.2.1</value>
-    <comment>data grid supports select by cell</comment>
+    <value>0.2.2</value>
+    <comment>unicode in output box</comment>
   </data>
 </root>

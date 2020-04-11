@@ -1,7 +1,51 @@
+-- constants
+local TimeZone8 = 8 * 60 * 60
+local SecPerHour = 60 * 60
+local SecPerDay = 24 * SecPerHour
+
+-- export utils
 local u={}
 
+u.TimeZone8 = TimeZone8
+u.SecPerHour = SecPerHour
+u.SecPerDay = SecPerDay
+u.Timeout = Misc:GetTimeoutValue()
+
+-- helper functions 
 function AllServs()
     return Each(Server:GetAllServers())
+end
+
+function FirstServerOf(servs)
+    assert(type(servers) == "table")
+    if #servs > 0 then
+        return servs[1]
+    end
+    return nil
+end
+
+function GetServsByMarks(marks, isRemark, isContainsMark)
+    
+    assert(type(marks) == "table")
+    assert(type(isContainsMark), "boolean")
+    assert(type(isRemark), "boolean")
+    
+    local hasMark = {}
+    local noMark = {}
+    for coreServ in AllServs() do
+        local coreState = coreServ:GetCoreStates()
+        local mark = isRemark and coreState:GetRemark() or coreState:GetMark()
+        if IsInTable(marks, mark) then
+            table.insert(hasMark, coreServ)
+        else
+            table.insert(noMark, coreServ)
+        end
+    end
+    if isContainsMark then
+        return hasMark
+    else
+        return noMark
+    end
 end
 
 function ToNumber(str)
@@ -28,10 +72,6 @@ function IsInTable(haystack, needle)
     return false
 end
 
-local TimeZone8 = 8 * 60 * 60
-local SecPerHour = 60 * 60
-local SecPerDay = 24 * SecPerHour
-
 function Ticks2Minutes(ticks)
     local r = ToNumber(ticks) / 60
     return math.floor(r)
@@ -48,10 +88,7 @@ function Ticks2Days(ticks)
     return math.floor(days)
 end
 
-u.TimeZone8 = TimeZone8
-u.SecPerHour = SecPerHour
-u.SecPerDay = SecPerDay
-u.Timeout = Misc:GetTimeoutValue()
+-- utils
 
 function u.ToNumber(str)
     return ToNumber(str)
@@ -95,48 +132,40 @@ function u.GetUidOfServer(coreServ)
     return ""
 end
 
-function GetServsByMarks(marks, isContainsMark)
-    assert(type(marks) == "table")
-    assert(type(isContainsMark), "boolean")
-    local hasMark = {}
-    local noMark = {}
-    for coreServ in AllServs() do
-        local coreState = coreServ:GetCoreStates()
-        if IsInTable(marks, coreState:GetMark()) then
-            table.insert(hasMark, coreServ)
-        else
-            table.insert(noMark, coreServ)
-        end
-    end
-    if isContainsMark then
-        return hasMark
-    else
-        return noMark
-    end
+function u.GetServersWithMarks(marks)
+    return GetServsByMarks(marks, false, true)
 end
 
-function u.GetServersWithMarks(marks)
-    return GetServsByMarks(marks, true)
+function u.GetServersWithRemarks(remarks)
+    return GetServsByMarks(remarks, true, true)
 end
 
 function u.GetServersWithoutMarks(marks)
-    return GetServsByMarks(marks, false)
+    return GetServsByMarks(marks, false, false)
+end
+
+function u.GetServersWithoutRemarks(remarks)
+    return GetServsByMarks(remarks, true, false)
 end
 
 function u.GetFirstServerWithMarks(marks)
-    local servs = GetServsByMarks(marks, true)
-    if #servs > 0 then
-        return servs[1]
-    end
-    return nil
+    local servs = GetServsByMarks(marks, false, true)
+    return FirstServerOf(servs)
+end
+
+function u.GetFirstServerWithRemarks(remarks)
+    local servs = GetServsByMarks(remarks, true, true)
+    return FirstServerOf(servs)
 end
 
 function u.GetFirstServerWithoutMarks(marks)
-    local servs = GetServsByMarks(marks, false)
-    if #servs > 0 then
-        return servs[1]
-    end
-    return nil
+    local servs = GetServsByMarks(marks, false, false)
+    return FirstServerOf(servs)
+end
+
+function u.GetFirstServerWithoutRemarks(remarks)
+    local servs = GetServsByMarks(remarks, true, false)
+    return FirstServerOf(servs)
 end
 
 function u.GetFirstServerWithName(name)

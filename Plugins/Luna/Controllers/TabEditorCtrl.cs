@@ -202,72 +202,52 @@ namespace Luna.Controllers
             this.maxLineNumberCharLength = maxLineNumberCharLength;
         }
 
-        string GetCurrentLineText(int endPos)
-        {
-            int curPos = luaEditor.CurrentPosition;
-            int lineNumber = luaEditor.LineFromPosition(curPos);
-            int startPos = luaEditor.Lines[lineNumber].Position;
-            return luaEditor.GetTextRange(startPos, (endPos - startPos)); //Text until the caret so that the whitespace is always equal in every line.
-        }
+        string Scintilla_TrimText(string text) =>
+            text?.Replace("\t", "")
+                ?.Replace("\r", "")
+                ?.Replace("\n", "")
+                ?.Trim()
+                ?.ToLower();
 
         private void Scintilla_InsertCheck(object sender, InsertCheckEventArgs e)
         {
-            if ((e.Text.EndsWith("\n") || e.Text.EndsWith("\r")))
+            if (!e.Text.EndsWith("\n"))
             {
-                //Text until the caret so that the whitespace is always equal in every line.
-                string curLineText = GetCurrentLineText(e.Position);
-                Match curIndentMatch = Regex.Match(curLineText, "^[ \\t]*");
-                string curIndent = curIndentMatch.Value;
-
-                var cline = curLineText
-                    .ToLower()
-                    .Replace("\r", "")
-                    .Replace("\n", "")
-                    .Trim();
-
-                e.Text = (e.Text + curIndent);
-
-                if (cline.StartsWith("function")
-                    || cline.EndsWith("do")
-                    || cline.EndsWith("then")
-                    || cline.EndsWith("else")
-                    || Regex.IsMatch(curLineText, "{\\s*$"))
-                {
-                    e.Text = (e.Text + @"    "); // 4 spaces
-                }
+                return;
             }
+
+            var line = luaEditor.Lines[luaEditor.CurrentLine];
+            var indent = line.Indentation;
+            var text = Scintilla_TrimText(line.Text);
+            if (text.StartsWith("function")
+                || text.EndsWith("do")
+                || text.EndsWith("then")
+                || text.EndsWith("else")
+                || Regex.IsMatch(text, "{\\s*$"))
+            {
+                indent += 4;
+            }
+
+            e.Text = e.Text + new string(' ', Math.Max(0, indent));
         }
 
         private void Scintilla_CharAdded(object sender, CharAddedEventArgs e)
         {
-            int curLine = luaEditor.LineFromPosition(luaEditor.CurrentPosition);
+            int curLine = luaEditor.CurrentLine;
             if (curLine < 2)
             {
                 return;
             }
 
-            string ct = luaEditor.Lines[curLine].Text.Trim().ToLower();
-            if (ct == "}"
-                || ct == "else"
-                || ct == "end")
-            { //Check whether the bracket is the only thing on the line.. For cases like "if() { }".
-                SetIndent(luaEditor, curLine, GetIndent(luaEditor, curLine - 1) - 4);
+            string text = luaEditor.Lines[curLine].Text;
+            string ct = Scintilla_TrimText(text);
+            if (ct == "}" || ct == "else" || ct == "end")
+            {
+                var indent = luaEditor.Lines[curLine - 1].Indentation - 4;
+                luaEditor.Lines[curLine].Indentation = Math.Max(0, indent);
             }
         }
 
-        //Codes for the handling the Indention of the lines.
-        //They are manually added here until they get officially added to the Scintilla control.
-
-        const int SCI_SETLINEINDENTATION = 2126;
-        const int SCI_GETLINEINDENTATION = 2127;
-        private void SetIndent(Scintilla scin, int line, int indent)
-        {
-            scin.DirectMessage(SCI_SETLINEINDENTATION, new IntPtr(line), new IntPtr(indent));
-        }
-        private int GetIndent(Scintilla scin, int line)
-        {
-            return (scin.DirectMessage(SCI_GETLINEINDENTATION, new IntPtr(line), (IntPtr)null).ToInt32());
-        }
         #endregion
 
         #region private methods

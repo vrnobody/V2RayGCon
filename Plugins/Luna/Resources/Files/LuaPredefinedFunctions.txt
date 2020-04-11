@@ -33,3 +33,14 @@ end
 string.isempty = function(text)
     return text == nil or text == ''
 end
+
+table.contains = function(haystack, needle)
+    assert(type(haystack) == "table")
+	for _, item in pairs(haystack)
+    do
+        if needle == item then
+            return true
+        end
+    end
+    return false
+end

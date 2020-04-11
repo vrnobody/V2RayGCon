@@ -16,10 +16,10 @@ function AllServs()
     return Each(Server:GetAllServers())
 end
 
-function FirstServerOf(servs)
+function FirstServerOf(servers)
     assert(type(servers) == "table")
-    if #servs > 0 then
-        return servs[1]
+    if #servers > 0 then
+        return servers[1]
     end
     return nil
 end

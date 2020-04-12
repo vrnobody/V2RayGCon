@@ -336,8 +336,8 @@ Please use [Add new server] or [Replace server].</value>
   <data name="ConfirmCloseWindow" xml:space="preserve">
     <value>Close window?</value>
   </data>
-  <data name="ServerListIsEmpty" xml:space="preserve">
-    <value>Server list is empty!</value>
+  <data name="NoServerAvailable" xml:space="preserve">
+    <value>No server available!</value>
   </data>
   <data name="DataTooBig" xml:space="preserve">
     <value>Data too big. Please trim down the config file.</value>
@@ -734,5 +734,17 @@ No, abort.</value>
   </data>
   <data name="Remark" xml:space="preserve">
     <value>Remark: </value>
+  </data>
+  <data name="QuickSwitch" xml:space="preserve">
+    <value>Quick switch</value>
+  </data>
+  <data name="RandomServer" xml:space="preserve">
+    <value>Random server</value>
+  </data>
+  <data name="RandomTlsserver" xml:space="preserve">
+    <value>Random TLS server</value>
+  </data>
+  <data name="TheNthServer" xml:space="preserve">
+    <value>Server #{0}</value>
   </data>
 </root>

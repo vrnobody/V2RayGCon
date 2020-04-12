@@ -1219,6 +1219,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 No server available! 的本地化字符串。
+        /// </summary>
+        internal static string NoServerAvailable {
+            get {
+                return ResourceManager.GetString("NoServerAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 No subscription links available. 的本地化字符串。
         /// </summary>
         internal static string NoSubsUrlAvailable {
@@ -1391,6 +1400,33 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Quick switch 的本地化字符串。
+        /// </summary>
+        internal static string QuickSwitch {
+            get {
+                return ResourceManager.GetString("QuickSwitch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Random server 的本地化字符串。
+        /// </summary>
+        internal static string RandomServer {
+            get {
+                return ResourceManager.GetString("RandomServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Random TLS server 的本地化字符串。
+        /// </summary>
+        internal static string RandomTlsserver {
+            get {
+                return ResourceManager.GetString("RandomTlsserver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Reason 的本地化字符串。
         /// </summary>
         internal static string Reason {
@@ -1460,15 +1496,6 @@ namespace V2RayGCon.Resources.Resx {
         internal static string SelectServerFirst {
             get {
                 return ResourceManager.GetString("SelectServerFirst", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Server list is empty! 的本地化字符串。
-        /// </summary>
-        internal static string ServerListIsEmpty {
-            get {
-                return ResourceManager.GetString("ServerListIsEmpty", resourceCulture);
             }
         }
         
@@ -1689,6 +1716,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string TestWillTakeALongTime {
             get {
                 return ResourceManager.GetString("TestWillTakeALongTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Server #{0} 的本地化字符串。
+        /// </summary>
+        internal static string TheNthServer {
+            get {
+                return ResourceManager.GetString("TheNthServer", resourceCulture);
             }
         }
         

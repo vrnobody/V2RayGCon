@@ -65,7 +65,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             if (this.servers.IsEmpty())
             {
-                MessageBox.Show(I18N.ServerListIsEmpty);
+                MessageBox.Show(I18N.NoServerAvailable);
                 return;
             }
 

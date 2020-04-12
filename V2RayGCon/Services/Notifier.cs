@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
+using VgcApis.Interfaces;
 
 namespace V2RayGCon.Services
 {
@@ -192,6 +193,106 @@ namespace V2RayGCon.Services
             return item;
         }
 
+        ToolStripItem[] fixedServersMenuCache = null;
+        readonly object fixedServersMenuCacheLocker = new object();
+        ToolStripItem[] GetFixedServerMenu()
+        {
+            lock (fixedServersMenuCacheLocker)
+            {
+                if (fixedServersMenuCache == null)
+                {
+                    fixedServersMenuCache = new ToolStripItem[]
+                    {
+                        new ToolStripMenuItem(I18N.StopAllServers,null,(s, a) => servers.StopAllServersThen()),
+                        CreateQuickSwitchMenu(),
+                        new ToolStripSeparator(),
+                    };
+                }
+            }
+            return fixedServersMenuCache;
+        }
+
+        ToolStripMenuItem CreateQuickSwitchMenu()
+        {
+            var randMenuItems = new ToolStripMenuItem[] {
+                new ToolStripMenuItem(I18N.RandomServer,null,(s,a)=>SwitchToRandomServer()),
+                new ToolStripMenuItem(I18N.RandomTlsserver,null,(s,a)=>SwitchRandomTlsServer()),
+            };
+
+            var menu = new ToolStripMenuItem(I18N.QuickSwitch, null);
+            var items = menu.DropDownItems;
+            items.AddRange(randMenuItems);
+            items.Add(new ToolStripSeparator());
+            for (int i = 0; i < 5; i++)
+            {
+                var nth = i + 1; // capture
+                var title = string.Format(I18N.TheNthServer, nth);
+                var mi = new ToolStripMenuItem(title, null, (s, a) => SwitchToNthServer(nth));
+                items.Add(mi);
+            }
+            return menu;
+        }
+
+        void SwitchRandomTlsServer()
+        {
+            var latency = setting.QuickSwitchServerLantency;
+            var list = servers.GetAllServersOrderByIndex()
+                .Where(s =>
+                {
+                    var st = s.GetCoreStates();
+                    var summary = st.GetSummary()?.ToLower();
+                    var d = st.GetSpeedTestResult();
+                    return
+                        d > 0 && d <= latency
+                        && !string.IsNullOrEmpty(summary)
+                        && summary.Contains(@".tls@");
+                })
+                .ToList();
+            StartRandomServerInList(list);
+        }
+
+        void SwitchToRandomServer()
+        {
+            var latency = setting.QuickSwitchServerLantency;
+            var list = servers.GetAllServersOrderByIndex()
+                .Where(s =>
+                {
+                    var d = s.GetCoreStates().GetSpeedTestResult();
+                    return d > 0 && d <= latency;
+                })
+                .ToList();
+            StartRandomServerInList(list);
+        }
+
+        private void StartRandomServerInList(List<ICoreServCtrl> list)
+        {
+            var len = list.Count;
+            if (len <= 0)
+            {
+                VgcApis.Misc.UI.MsgBoxAsync(I18N.NoServerAvailable);
+                return;
+            }
+
+            var picked = list[new Random().Next(len)];
+            servers.StopAllServersThen(() => picked.GetCoreCtrl().RestartCore());
+        }
+
+        /// <summary>
+        /// nth: 1st -> serv[0] , 2nd -> serv[1] ...
+        /// </summary>
+        /// <param name="nth"></param>
+        void SwitchToNthServer(int nth)
+        {
+            var list = servers.GetAllServersOrderByIndex();
+            if (nth < 1 || nth > list.Count)
+            {
+                VgcApis.Misc.UI.MsgBoxAsync(I18N.NoServerAvailable);
+                return;
+            }
+
+            servers.StopAllServersThen(() => list[nth - 1].GetCoreCtrl().RestartCore());
+        }
+
         void ReplaceServersMenuWith(List<ToolStripMenuItem> newServersMenuItems)
         {
             var root = serversRootMenuItem.DropDownItems;
@@ -203,10 +304,7 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            var closeAll = new ToolStripMenuItem(I18N.StopAllServers, null, (s, a) => servers.StopAllServersThen());
-            var sp = new ToolStripSeparator();
-            root.Add(closeAll);
-            root.Add(sp);
+            root.AddRange(GetFixedServerMenu());
             root.AddRange(newServersMenuItems.ToArray());
             serversRootMenuItem.Visible = true;
         }

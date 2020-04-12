@@ -17,6 +17,7 @@ namespace VgcApis.Interfaces.Lua
         long RunSpeedTest(string rawConfig);
         bool RunSpeedTestOnSelectedServers();
 
+        void ReverseSelectedByIndex();
         void SortSelectedServersByLastModifiedDate();
         void SortSelectedServersBySpeedTest();
         void SortSelectedServersBySummary();

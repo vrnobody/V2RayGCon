@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="toolStripContainer2.BottomToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="flyServerListContainer.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer2.ContentPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer2.LeftToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer2.RightToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripButtonAddServerSimple.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -284,8 +302,11 @@
   <data name="toolStripLabelMarkFilter.ToolTipText" xml:space="preserve">
     <value>过滤服务器列表，点击清除过滤参数</value>
   </data>
-  <data name="operationToolStripMenuItem.Text" xml:space="preserve">
-    <value>文件</value>
+  <data name="toolStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer2.TopToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="toolMenuItemSimAddVmessServer.Text" xml:space="preserve">
     <value>添加vmess客户端</value>
@@ -317,14 +338,8 @@
   <data name="exitToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>退出V2RayGCon程序</value>
   </data>
-  <data name="selectToolStripMenuItem.Text" xml:space="preserve">
-    <value>选择</value>
-  </data>
-  <data name="currentPageToolStripMenuItem.Text" xml:space="preserve">
-    <value>当前页面</value>
-  </data>
-  <data name="currentPageToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>仅对当前分页有效</value>
+  <data name="operationToolStripMenuItem.Text" xml:space="preserve">
+    <value>文件</value>
   </data>
   <data name="selectAllCurPageToolStripMenuItem.Text" xml:space="preserve">
     <value>全选</value>
@@ -335,11 +350,11 @@
   <data name="selectNoneCurPageToolStripMenuItem1.Text" xml:space="preserve">
     <value>清除选择</value>
   </data>
-  <data name="allPagesToolStripMenuItem.Text" xml:space="preserve">
-    <value>全部页面</value>
+  <data name="currentPageToolStripMenuItem.Text" xml:space="preserve">
+    <value>当前页面</value>
   </data>
-  <data name="allPagesToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>对全部分页有效</value>
+  <data name="currentPageToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>仅对当前分页有效</value>
   </data>
   <data name="selectAllAllPagesToolStripMenuItem.Text" xml:space="preserve">
     <value>全选</value>
@@ -368,11 +383,11 @@
   <data name="selectUntrackAllPagesToolStripMenuItem.Text" xml:space="preserve">
     <value>选中不追踪</value>
   </data>
-  <data name="allServersToolStripMenuItem.Text" xml:space="preserve">
-    <value>全部服务器</value>
+  <data name="allPagesToolStripMenuItem.Text" xml:space="preserve">
+    <value>全部页面</value>
   </data>
-  <data name="allServersToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>对全部服务器有效</value>
+  <data name="allPagesToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>对全部分页有效</value>
   </data>
   <data name="selectAllAllServersToolStripMenuItem.Text" xml:space="preserve">
     <value>全选</value>
@@ -401,11 +416,14 @@
   <data name="selectUntrackAllServersToolStripMenuItem.Text" xml:space="preserve">
     <value>选中不追踪</value>
   </data>
-  <data name="toolMenuItemServer.Text" xml:space="preserve">
-    <value>服务器</value>
+  <data name="allServersToolStripMenuItem.Text" xml:space="preserve">
+    <value>全部服务器</value>
   </data>
-  <data name="toolStripMenuItemModifySelected.Text" xml:space="preserve">
-    <value>调整选中</value>
+  <data name="allServersToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>对全部服务器有效</value>
+  </data>
+  <data name="selectToolStripMenuItem.Text" xml:space="preserve">
+    <value>选择</value>
   </data>
   <data name="toolStripMenuItemModifySettings.Text" xml:space="preserve">
     <value>修改设置</value>
@@ -422,26 +440,17 @@
   <data name="toolStripMenuItemSortBySummary.Text" xml:space="preserve">
     <value>按摘要排序</value>
   </data>
+  <data name="toolStripMenuItemReverseByIndex.Text" xml:space="preserve">
+    <value>按序号逆序</value>
+  </data>
   <data name="toolStripMenuItemMoveToTop.Text" xml:space="preserve">
     <value>置顶</value>
   </data>
   <data name="toolStripMenuItemMoveToBottom.Text" xml:space="preserve">
     <value>置底</value>
   </data>
-  <data name="toolStripMenuItemFoldingPanel.Text" xml:space="preserve">
-    <value>折叠面板</value>
-  </data>
-  <data name="toolStripMenuItemFoldingPanel.ToolTipText" xml:space="preserve">
-    <value>单行服务器面板模式</value>
-  </data>
-  <data name="toolStripMenuItemExpansePanel.Text" xml:space="preserve">
-    <value>展开面板</value>
-  </data>
-  <data name="toolStripMenuItemExpansePanel.ToolTipText" xml:space="preserve">
-    <value>完整的服务器面板</value>
-  </data>
-  <data name="toolStripMenuItem1.Text" xml:space="preserve">
-    <value>复制选中</value>
+  <data name="toolStripMenuItemModifySelected.Text" xml:space="preserve">
+    <value>调整选中</value>
   </data>
   <data name="toolStripMenuItemCopyAsV2cfgLink.ToolTipText" xml:space="preserve">
     <value>包含全部配置信息</value>
@@ -463,6 +472,9 @@
   </data>
   <data name="toolStripMenuItemCopyAsVeeSubscription.ToolTipText" xml:space="preserve">
     <value>将选中的服务器编码为订阅内容（支持vmess及shadowsocks服务器）</value>
+  </data>
+  <data name="toolStripMenuItem1.Text" xml:space="preserve">
+    <value>复制选中</value>
   </data>
   <data name="toolStripMenuItemRestartSelected.Text" xml:space="preserve">
     <value>重启选中</value>
@@ -500,8 +512,8 @@
   <data name="deleteSelectedServersToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>删除选中的服务器</value>
   </data>
-  <data name="windowToolStripMenuItem.Text" xml:space="preserve">
-    <value>窗口</value>
+  <data name="toolMenuItemServer.Text" xml:space="preserve">
+    <value>服务器</value>
   </data>
   <data name="toolMenuItemConfigEditor.Text" xml:space="preserve">
     <value>配置编辑器</value>
@@ -521,11 +533,11 @@
   <data name="toolStripMenuItemResize.ToolTipText" xml:space="preserve">
     <value>调整主窗口大小</value>
   </data>
+  <data name="windowToolStripMenuItem.Text" xml:space="preserve">
+    <value>窗口</value>
+  </data>
   <data name="pluginToolStripMenuItem.Text" xml:space="preserve">
     <value>插件</value>
-  </data>
-  <data name="aboutToolStripMenuItem1.Text" xml:space="preserve">
-    <value>关于</value>
   </data>
   <data name="toolStripMenuItemDownLoadV2rayCore.Text" xml:space="preserve">
     <value>下载v2ray-core</value>
@@ -550,6 +562,12 @@
   </data>
   <data name="deleteAllServersToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>删除所有服务器</value>
+  </data>
+  <data name="aboutToolStripMenuItem1.Text" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="mainMneuStrip.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="toolStripDropDownButtonPager.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -597,7 +615,16 @@
   <data name="toolStripStatusLabelNextPage.ToolTipText" xml:space="preserve">
     <value>后一页</value>
   </data>
+  <data name="statusStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>主窗口</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

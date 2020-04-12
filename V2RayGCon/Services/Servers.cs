@@ -76,6 +76,16 @@ namespace V2RayGCon.Services
 
         public void ResetIndexQuiet() => indexHandler.ResetIndexQuiet();
 
+        public void ReverseSelectedByIndex()
+        {
+            lock (serverListWriteLock)
+            {
+                var selectedServers = queryHandler.GetSelectedServers().ToList();
+                indexHandler.ReverseCoreservCtrlListByIndex(ref selectedServers);
+            }
+            RequireFormMainReload();
+        }
+
         public void SortSelectedBySpeedTest()
         {
             lock (serverListWriteLock)

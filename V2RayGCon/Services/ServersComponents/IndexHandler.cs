@@ -31,6 +31,15 @@ namespace V2RayGCon.Services.ServersComponents
             }
         }
 
+        public void ReverseCoreservCtrlListByIndex(
+            ref List<VgcApis.Interfaces.ICoreServCtrl> coreList)
+        {
+            lock (writeLocker)
+            {
+                SortServerItemList(ref coreList, ReverseIndexComparer);
+            }
+        }
+
         public void SortCoreServerCtrlListByLastModifyDate(
          ref List<VgcApis.Interfaces.ICoreServCtrl> coreList)
         {
@@ -88,6 +97,15 @@ namespace V2RayGCon.Services.ServersComponents
         #endregion
 
         #region private methods
+        int ReverseIndexComparer(
+           VgcApis.Interfaces.ICoreServCtrl a,
+           VgcApis.Interfaces.ICoreServCtrl b)
+        {
+            var idxA = a.GetCoreStates().GetIndex();
+            var idxB = b.GetCoreStates().GetIndex();
+            return idxB.CompareTo(idxA);
+        }
+
         int SpeedTestComparer(
             VgcApis.Interfaces.ICoreServCtrl a,
             VgcApis.Interfaces.ICoreServCtrl b)
@@ -129,12 +147,12 @@ namespace V2RayGCon.Services.ServersComponents
             }
 
             selectedServers.Sort(comparer);
-            var minIndex = selectedServers.First().GetCoreStates().GetIndex();
+            var minIndex = selectedServers.Select(s => s.GetCoreStates().GetIndex()).Min();
             var delta = 1.0 / 2 / selectedServers.Count;
-            for (int i = 1; i < selectedServers.Count; i++)
+            for (int i = 0; i < selectedServers.Count; i++)
             {
                 selectedServers[i].GetCoreStates()
-                    .SetIndexQuiet(minIndex + delta * i);
+                    .SetIndexQuiet(minIndex + delta * (i + 1));
             }
             ResetIndexQuiet();
         }

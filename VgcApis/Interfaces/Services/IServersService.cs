@@ -17,6 +17,8 @@ namespace VgcApis.Interfaces.Services
         void ResetIndexQuiet();
         bool RunSpeedTestOnSelectedServers();
 
+        void ReverseSelectedByIndex();
+
         void SortSelectedByLastModifiedDate();
 
         void SortSelectedBySpeedTest();

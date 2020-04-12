@@ -34,6 +34,9 @@ namespace Luna.Models.Apis.Components
         public List<VgcApis.Interfaces.ICoreServCtrl> GetAllServers() =>
             vgcServers.GetAllServersOrderByIndex().ToList();
 
+        public void ReverseSelectedByIndex() =>
+            vgcServers.ReverseSelectedByIndex();
+
         public void SortSelectedServersByLastModifiedDate() =>
             vgcServers.SortSelectedByLastModifiedDate();
 

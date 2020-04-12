@@ -228,6 +228,7 @@ namespace Luna.Views.WinForms
             VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(dgvData, () =>
             {
                 var ds = GetFilteredDataTable();
+                lbTotal.Text = ds.Rows.Count.ToString();
                 dgvData.DataSource = ds;
             }, next);
         }

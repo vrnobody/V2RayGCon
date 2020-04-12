@@ -78,42 +78,22 @@ namespace V2RayGCon.Services
 
         public void ReverseSelectedByIndex()
         {
-            lock (serverListWriteLock)
-            {
-                var selectedServers = queryHandler.GetSelectedServers().ToList();
-                indexHandler.ReverseCoreservCtrlListByIndex(ref selectedServers);
-            }
-            RequireFormMainReload();
+            SortSelectedServers((list) => indexHandler.ReverseCoreservCtrlListByIndex(ref list));
         }
 
         public void SortSelectedBySpeedTest()
         {
-            lock (serverListWriteLock)
-            {
-                var selectedServers = queryHandler.GetSelectedServers().ToList();
-                indexHandler.SortCoreServCtrlListBySpeedTestResult(ref selectedServers);
-            }
-            RequireFormMainReload();
+            SortSelectedServers((list) => indexHandler.SortCoreServCtrlListBySpeedTestResult(ref list));
         }
 
         public void SortSelectedByLastModifiedDate()
         {
-            lock (serverListWriteLock)
-            {
-                var selectedServers = queryHandler.GetSelectedServers().ToList();
-                indexHandler.SortCoreServerCtrlListByLastModifyDate(ref selectedServers);
-            }
-            RequireFormMainReload();
+            SortSelectedServers((list) => indexHandler.SortCoreServerCtrlListByLastModifyDate(ref list));
         }
 
         public void SortSelectedBySummary()
         {
-            lock (serverListWriteLock)
-            {
-                var selectedServers = queryHandler.GetSelectedServers().ToList();
-                indexHandler.SortCoreServCtrlListBySummary(ref selectedServers);
-            }
-            RequireFormMainReload();
+            SortSelectedServers((list) => indexHandler.SortCoreServCtrlListBySummary(ref list));
         }
 
         #endregion
@@ -785,7 +765,16 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
-
+        void SortSelectedServers(Action<List<ICoreServCtrl>> sorter)
+        {
+            lock (serverListWriteLock)
+            {
+                var selectedServers = queryHandler.GetSelectedServers().ToList();
+                sorter?.Invoke(selectedServers);
+            }
+            RequireFormMainReload();
+            InvokeEventOnServerPropertyChange(this, EventArgs.Empty);
+        }
 
         private List<ICoreServCtrl> GetSelectedServer()
         {

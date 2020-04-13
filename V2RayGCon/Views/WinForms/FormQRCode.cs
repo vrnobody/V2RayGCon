@@ -13,6 +13,7 @@ namespace V2RayGCon.Views.WinForms
         static readonly VgcApis.BaseClasses.AuxSiWinForm<FormQRCode> auxSiForm =
             new VgcApis.BaseClasses.AuxSiWinForm<FormQRCode>();
         static public FormQRCode GetForm() => auxSiForm.GetForm();
+
         static public void ShowForm() => auxSiForm.ShowForm();
         #endregion
 

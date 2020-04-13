@@ -155,8 +155,8 @@
             // 
             // cboxConfigSection
             // 
-            this.cboxConfigSection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             resources.ApplyResources(this.cboxConfigSection, "cboxConfigSection");
+            this.cboxConfigSection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxConfigSection.FormattingEnabled = true;
             this.cboxConfigSection.Items.AddRange(new object[] {
             resources.GetString("cboxConfigSection.Items"),
@@ -838,8 +838,8 @@
             // 
             // cboxExamples
             // 
-            this.cboxExamples.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             resources.ApplyResources(this.cboxExamples, "cboxExamples");
+            this.cboxExamples.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxExamples.FormattingEnabled = true;
             this.cboxExamples.Name = "cboxExamples";
             // 

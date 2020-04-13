@@ -5,7 +5,7 @@ namespace V2RayGCon.Models.Datas
     class UserSettings
     {
         #region public properties
-
+        public int QuickSwitchServerLatency { get; set; }
         public bool isAutoPatchSubsInfo { get; set; }
 
         // FormOption->Defaults->Mode
@@ -50,6 +50,8 @@ namespace V2RayGCon.Models.Datas
         public UserSettings()
         {
             Normalized();
+
+            QuickSwitchServerLatency = 5000;
 
             isAutoPatchSubsInfo = false;
 

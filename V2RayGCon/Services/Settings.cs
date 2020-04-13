@@ -30,6 +30,26 @@ namespace V2RayGCon.Services
         }
 
         #region Properties
+        public int QuickSwitchServerLantency
+        {
+            get
+            {
+                var d = userSettings.QuickSwitchServerLatency;
+                return Math.Max(1, d);
+            }
+            set
+            {
+                var d = Math.Max(1, value);
+                if (userSettings.QuickSwitchServerLatency == d)
+                {
+                    return;
+                }
+                userSettings.QuickSwitchServerLatency = d;
+                LazySaveUserSettings();
+            }
+        }
+
+
         Semaphore _speedTestPool = null;
         public Semaphore SpeedTestPool
         {

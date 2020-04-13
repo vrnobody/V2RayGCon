@@ -235,9 +235,6 @@
     <Compile Include="Views\UserControls\PluginInfoUI.Designer.cs">
       <DependentUpon>PluginInfoUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\RoundLabel.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Views\UserControls\ServerUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -510,6 +507,10 @@
   <ItemGroup>
     <Content Include="icon_dark.ico" />
     <Content Include="Resources\Files\CSharp\ConfigJsonKeywords.txt" />
+    <None Include="Resources\Icon\TaskTray\SFTPConnection_16x.png" />
+    <None Include="Resources\Icon\TaskTray\FTPConnection_16x.png" />
+    <None Include="Resources\Icon\TaskTray\Stop_16x.png" />
+    <None Include="Resources\Icon\TaskTray\SwitchSourceOrTarget_16x.png" />
     <None Include="Resources\Icon\TaskTray\RemoteServer_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\ExpandScope_16x.png" />
     <None Include="Resources\Icon\TaskTray\Module_16x.png" />

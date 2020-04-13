@@ -151,7 +151,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chkSelected.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="btnStart.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -292,7 +292,7 @@
     <value>rlbIsRunning</value>
   </data>
   <data name="&gt;&gt;rlbIsRunning.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.3.2.7, Culture=neutral, PublicKeyToken=null</value>
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rlbIsRunning.Parent" xml:space="preserve">
     <value>$this</value>
@@ -312,11 +312,11 @@
   <data name="rlbSetting.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>60, 18</value>
   </data>
-  <data name="rlbSetting.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 18</value>
+  <data name="rlbSetting.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 1, 3</value>
   </data>
   <data name="rlbSetting.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 18</value>
+    <value>31, 18</value>
   </data>
   <data name="rlbSetting.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -334,7 +334,7 @@
     <value>rlbSetting</value>
   </data>
   <data name="&gt;&gt;rlbSetting.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.3.2.7, Culture=neutral, PublicKeyToken=null</value>
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rlbSetting.Parent" xml:space="preserve">
     <value>$this</value>
@@ -349,13 +349,13 @@
     <value>NoControl</value>
   </data>
   <data name="rlbMark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 31</value>
+    <value>209, 31</value>
   </data>
   <data name="rlbMark.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>90, 18</value>
   </data>
-  <data name="rlbMark.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 18</value>
+  <data name="rlbMark.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 1, 3</value>
   </data>
   <data name="rlbMark.Size" type="System.Drawing.Size, System.Drawing">
     <value>85, 18</value>
@@ -376,13 +376,55 @@
     <value>rlbMark</value>
   </data>
   <data name="&gt;&gt;rlbMark.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.3.2.7, Culture=neutral, PublicKeyToken=null</value>
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rlbMark.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;rlbMark.ZOrder" xml:space="preserve">
     <value>6</value>
+  </data>
+  <data name="rlbRemark.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rlbRemark.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rlbRemark.Location" type="System.Drawing.Point, System.Drawing">
+    <value>160, 31</value>
+  </data>
+  <data name="rlbRemark.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>70, 18</value>
+  </data>
+  <data name="rlbRemark.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 1, 3</value>
+  </data>
+  <data name="rlbRemark.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 18</value>
+  </data>
+  <data name="rlbRemark.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbRemark.Text" xml:space="preserve">
+    <value>备注🖤</value>
+  </data>
+  <data name="rlbRemark.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="rlbRemark.ToolTip" xml:space="preserve">
+    <value>Remark</value>
+  </data>
+  <data name="&gt;&gt;rlbRemark.Name" xml:space="preserve">
+    <value>rlbRemark</value>
+  </data>
+  <data name="&gt;&gt;rlbRemark.Type" xml:space="preserve">
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rlbRemark.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rlbRemark.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <data name="rlbLastModify.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -391,16 +433,16 @@
     <value>NoControl</value>
   </data>
   <data name="rlbLastModify.Location" type="System.Drawing.Point, System.Drawing">
-    <value>98, 31</value>
+    <value>99, 31</value>
   </data>
   <data name="rlbLastModify.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>60, 18</value>
   </data>
-  <data name="rlbLastModify.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 18</value>
+  <data name="rlbLastModify.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 1, 3</value>
   </data>
   <data name="rlbLastModify.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 18</value>
+    <value>55, 18</value>
   </data>
   <data name="rlbLastModify.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -418,13 +460,13 @@
     <value>rlbLastModify</value>
   </data>
   <data name="&gt;&gt;rlbLastModify.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.3.2.7, Culture=neutral, PublicKeyToken=null</value>
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rlbLastModify.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;rlbLastModify.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="rlbSpeedtest.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -433,22 +475,22 @@
     <value>NoControl</value>
   </data>
   <data name="rlbSpeedtest.Location" type="System.Drawing.Point, System.Drawing">
-    <value>249, 31</value>
+    <value>300, 31</value>
   </data>
   <data name="rlbSpeedtest.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>60, 18</value>
   </data>
-  <data name="rlbSpeedtest.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 18</value>
+  <data name="rlbSpeedtest.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 1, 3</value>
   </data>
   <data name="rlbSpeedtest.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 18</value>
+    <value>55, 18</value>
   </data>
   <data name="rlbSpeedtest.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
   </data>
   <data name="rlbSpeedtest.Text" xml:space="preserve">
-    <value>超时</value>
+    <value>正在测试中啊啊啊</value>
   </data>
   <data name="rlbSpeedtest.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
@@ -460,13 +502,13 @@
     <value>rlbSpeedtest</value>
   </data>
   <data name="&gt;&gt;rlbSpeedtest.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.3.2.7, Culture=neutral, PublicKeyToken=null</value>
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rlbSpeedtest.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;rlbSpeedtest.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="rlbInboundMode.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -480,11 +522,11 @@
   <data name="rlbInboundMode.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>60, 18</value>
   </data>
-  <data name="rlbInboundMode.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 18</value>
+  <data name="rlbInboundMode.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 1, 3</value>
   </data>
   <data name="rlbInboundMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 18</value>
+    <value>43, 18</value>
   </data>
   <data name="rlbInboundMode.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -502,17 +544,32 @@
     <value>rlbInboundMode</value>
   </data>
   <data name="&gt;&gt;rlbInboundMode.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.RoundLabel, V2RayGCon, Version=1.3.2.7, Culture=neutral, PublicKeyToken=null</value>
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rlbInboundMode.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;rlbInboundMode.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <metadata name="ctxMenuStripMore.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>119, 18</value>
   </metadata>
+  <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 214</value>
+  </data>
+  <data name="&gt;&gt;ctxMenuStripMore.Name" xml:space="preserve">
+    <value>ctxMenuStripMore</value>
+  </data>
+  <data name="&gt;&gt;ctxMenuStripMore.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="toolStripMenuItem3.Text" xml:space="preserve">
+    <value>Action</value>
+  </data>
   <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>145, 22</value>
   </data>
@@ -540,11 +597,11 @@
   <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>Stop this server.</value>
   </data>
-  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 22</value>
   </data>
-  <data name="toolStripMenuItem3.Text" xml:space="preserve">
-    <value>Action</value>
+  <data name="toolStripMenuItem6.Text" xml:space="preserve">
+    <value>Move</value>
   </data>
   <data name="moveToTopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 22</value>
@@ -564,11 +621,11 @@
   <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Move this server to bottom.</value>
   </data>
-  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 22</value>
   </data>
-  <data name="toolStripMenuItem6.Text" xml:space="preserve">
-    <value>Move</value>
+  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy</value>
   </data>
   <data name="vToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>138, 22</value>
@@ -596,12 +653,6 @@
   </data>
   <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Contain all config information.</value>
-  </data>
-  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
-  </data>
-  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
-    <value>Copy</value>
   </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 6</value>
@@ -654,15 +705,6 @@
   <data name="runSpeedTestToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>The time it takes to download the test web page.</value>
   </data>
-  <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 214</value>
-  </data>
-  <data name="&gt;&gt;ctxMenuStripMore.Name" xml:space="preserve">
-    <value>ctxMenuStripMore</value>
-  </data>
-  <data name="&gt;&gt;ctxMenuStripMore.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="rtboxServerTitle.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 9pt</value>
   </data>
@@ -694,13 +736,13 @@
     <value>rtboxServerTitle</value>
   </data>
   <data name="&gt;&gt;rtboxServerTitle.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>VgcApis.UserControls.ExRichTextBox, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rtboxServerTitle.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;rtboxServerTitle.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

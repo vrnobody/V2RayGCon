@@ -152,6 +152,16 @@ namespace V2RayGCon.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap FTPConnection_16x {
+            get {
+                object obj = ResourceManager.GetObject("FTPConnection_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap GlyphUp_16x {
             get {
                 object obj = ResourceManager.GetObject("GlyphUp_16x", resourceCulture);
@@ -237,6 +247,16 @@ namespace V2RayGCon.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap SFTPConnection_16x {
+            get {
+                object obj = ResourceManager.GetObject("SFTPConnection_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap StatusHelp_16x {
             get {
                 object obj = ResourceManager.GetObject("StatusHelp_16x", resourceCulture);
@@ -260,6 +280,26 @@ namespace V2RayGCon.Properties {
         internal static System.Drawing.Bitmap StepOverArrow_16x {
             get {
                 object obj = ResourceManager.GetObject("StepOverArrow_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Stop_16x {
+            get {
+                object obj = ResourceManager.GetObject("Stop_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap SwitchSourceOrTarget_16x {
+            get {
+                object obj = ResourceManager.GetObject("SwitchSourceOrTarget_16x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -82,11 +82,13 @@ namespace V2RayGCon.Views.WinForms
                     cboxSettingPageSize,
                     chkSetServAutotrack,
                     tboxSettingsMaxCoreNum,
+                    cboxSettingsRandomSelectServerLatency,
                     chkSetSysPortable,
                     chkSetUseV4,
                     chkSetServStatistics,
                     chkSetUpgradeUseProxy,
                     chkSetCheckWhenStart));
+
             ctrl.Plug(
                 new Controllers.OptionComponent.TabDefaults(
 

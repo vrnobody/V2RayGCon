@@ -6,6 +6,10 @@ namespace Luna.Controllers
     internal sealed class MenuCtrl
     {
         TabEditorCtrl editorCtrl;
+        private readonly ToolStripMenuItem miNewWindow;
+        private readonly ToolStripMenuItem miLoad;
+        private readonly ToolStripMenuItem miSaveAs;
+        private readonly ToolStripMenuItem miExit;
         Views.WinForms.FormMain formMain;
         Services.FormMgr formMgrService;
 
@@ -20,15 +24,20 @@ namespace Luna.Controllers
         {
             this.formMgrService = formMgrService;
 
-            BindControls(formMain, editorCtrl);
-            BindEvents(miNewWindow, miLoad, miSaveAs, miExit);
+            this.editorCtrl = editorCtrl;
+            this.miNewWindow = miNewWindow;
+            this.miLoad = miLoad;
+            this.miSaveAs = miSaveAs;
+            this.miExit = miExit;
+            this.formMain = formMain;
         }
 
-        private void BindEvents(
-            ToolStripMenuItem miNewWindow,
-            ToolStripMenuItem miLoad,
-            ToolStripMenuItem miSaveAs,
-            ToolStripMenuItem miExit)
+        public void Run()
+        {
+            BindEvents();
+        }
+
+        private void BindEvents()
         {
             miNewWindow.Click += (s, a) =>
                 formMgrService.CreateNewForm();
@@ -65,11 +74,5 @@ namespace Luna.Controllers
             };
         }
 
-        private void BindControls(Views.WinForms.FormMain formMain, TabEditorCtrl editorCtrl)
-        {
-            // binding
-            this.editorCtrl = editorCtrl;
-            this.formMain = formMain;
-        }
     }
 }

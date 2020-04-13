@@ -3,11 +3,10 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace V2RayGCon.Views.UserControls
+namespace VgcApis.UserControls
 {
-
     // https://stackoverflow.com/questions/42627293/label-with-smooth-rounded-corners
-    public class RoundLabel : Label
+    public class RoundLabel : System.Windows.Forms.Label
     {
         [Browsable(true)]
         public Color _BackColor { get; set; }
@@ -19,7 +18,6 @@ namespace V2RayGCon.Views.UserControls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
             using (var graphicsPath = _getRoundRectangle(this.ClientRectangle))
             {
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -43,5 +41,6 @@ namespace V2RayGCon.Views.UserControls
             path.CloseAllFigures();
             return path;
         }
+
     }
 }

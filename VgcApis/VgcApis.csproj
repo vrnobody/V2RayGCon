@@ -139,6 +139,9 @@
     <Compile Include="UserControls\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UserControls\RoundLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WinForms\FormSearch.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -11,7 +11,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
         Cache cache;
         Settings setting;
 
-
         public VeeDecoder(
             Cache cache,
             Settings setting)

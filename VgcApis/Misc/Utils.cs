@@ -231,6 +231,16 @@ namespace VgcApis.Misc
         #endregion
 
         #region net
+        public static bool IsValidPort(string port)
+        {
+            return IsValidPort(Str2Int(port));
+        }
+
+        public static bool IsValidPort(int port)
+        {
+            return port > 0 && port < 65536;
+        }
+
         public static bool TryParseAddress(string address, out string ip, out int port)
         {
             ip = Models.Consts.Webs.LoopBackIP;

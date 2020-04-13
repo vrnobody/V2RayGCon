@@ -40,14 +40,16 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem moveToBottom,
             ToolStripMenuItem sortBySpeed,
             ToolStripMenuItem sortByDate,
-            ToolStripMenuItem sortBySummary)
+            ToolStripMenuItem sortBySummary,
+            ToolStripMenuItem reverseByIndex)
         {
             cache = Services.Cache.Instance;
             servers = Services.Servers.Instance;
             slinkMgr = Services.ShareLinkMgr.Instance;
             settings = Services.Settings.Instance;
 
-            InitCtrlSorting(sortBySpeed, sortByDate, sortBySummary);
+            InitCtrlSorting(sortBySpeed, sortByDate, sortBySummary, reverseByIndex);
+
             InitCtrlView(moveToTop, moveToBottom);
 
             InitCtrlCopyToClipboard(
@@ -232,8 +234,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
         private void InitCtrlSorting(
             ToolStripMenuItem sortBySpeed,
             ToolStripMenuItem sortByDate,
-            ToolStripMenuItem sortBySummary)
+            ToolStripMenuItem sortBySummary,
+            ToolStripMenuItem reverseByIndex)
         {
+            reverseByIndex.Click += ApplyActionOnSelectedServers(
+                () => servers.ReverseSelectedByIndex());
+
             sortByDate.Click += ApplyActionOnSelectedServers(
                 () => servers.SortSelectedByLastModifiedDate());
 

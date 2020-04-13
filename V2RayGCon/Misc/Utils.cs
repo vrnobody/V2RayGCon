@@ -802,6 +802,7 @@ namespace V2RayGCon.Misc
                 if (!string.IsNullOrEmpty(vmess.add)
                     && !string.IsNullOrEmpty(vmess.port)
                     && !string.IsNullOrEmpty(vmess.id)
+                    && VgcApis.Misc.Utils.IsValidPort(vmess.port)
                     && new Guid(vmess.id) != new Guid())
                 {
                     return vmess;
@@ -1011,7 +1012,7 @@ namespace V2RayGCon.Misc
 
         public static string UrlEncode(string value) => HttpUtility.UrlEncode(value);
 
-        public static long VisitWebPageSpeedTest(
+        public static long TimedDownloadTesting(
             string url,
             int port,
             int expectedSizeInKiB,

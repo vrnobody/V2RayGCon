@@ -147,6 +147,9 @@
   <data name="rlbInboundMode.ToolTip" xml:space="preserve">
     <value>Inbound信息</value>
   </data>
+  <data name="rlbRemark.ToolTip" xml:space="preserve">
+    <value>备注</value>
+  </data>
   <data name="startToolStripMenuItem.Text" xml:space="preserve">
     <value>开启</value>
   </data>

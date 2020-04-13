@@ -33,10 +33,28 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.3.0")]
+[assembly: AssemblyVersion("1.3.4.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * -----------------------------------------------------------------
+ * v1.3.3.13 Modify servers menu in notify icon.
+ * v1.3.3.12 Add total in FormDataGrid of Luna plug-in.
+ * v1.3.3.11 Fix a bug that notify icon menu does not update after sorting.
+ * v1.3.3.10 Change menu group size from 18 to 12.
+ *           Add reverse selected server by index menu item in form main. 
+ * v1.3.3.9 Add quick switch menu to systray icon.
+ * v1.3.3.8 Copy on click in subs UI.
+ * v1.3.3.7 Fix a bug in lua/libs/utils.lua.
+ * v1.3.3.6 Luna output box supports unicode.
+ * v1.3.3.5 Refactoring.
+ * v1.3.3.4 Add remark label on server panel.
+ *          Preserve speed-test-results.
+ *          Add Servers:StopAllServers() in Luna plug-in.
+ *          Adjust UI.
+ * v1.3.3.3 Pause notify icon updating when menu shows up.
+ * v1.3.3.2 Try to fix port is taken up problem.
+ * v1.3.3.1 Validate port range on vmess share link.
  * ------------------------------------------------------
  * v1.3.2.14 Data grid supports select by cell.
  * v1.3.2.13 Add new features in data gird dialog.

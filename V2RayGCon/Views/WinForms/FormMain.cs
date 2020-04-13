@@ -273,7 +273,8 @@ namespace V2RayGCon.Views.WinForms
                 toolStripMenuItemMoveToBottom,
                 toolStripMenuItemSortBySpeedTest,
                 toolStripMenuItemSortByDateT,
-                toolStripMenuItemSortBySummary));
+                toolStripMenuItemSortBySummary,
+                toolStripMenuItemReverseByIndex));
 
             return ctrl;
         }

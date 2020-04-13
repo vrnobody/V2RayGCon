@@ -49,6 +49,8 @@
             this.autosizeByHeaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autosizeByContentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disableAutosizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lbTotal = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -57,13 +59,11 @@
             // 
             resources.ApplyResources(this.lbTitle, "lbTitle");
             this.lbTitle.Name = "lbTitle";
-            this.toolTip1.SetToolTip(this.lbTitle, resources.GetString("lbTitle.ToolTip"));
             // 
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
-            this.toolTip1.SetToolTip(this.btnCancel, resources.GetString("btnCancel.ToolTip"));
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
@@ -71,20 +71,18 @@
             // 
             resources.ApplyResources(this.btnOk, "btnOk");
             this.btnOk.Name = "btnOk";
-            this.toolTip1.SetToolTip(this.btnOk, resources.GetString("btnOk.ToolTip"));
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // dgvData
             // 
-            resources.ApplyResources(this.dgvData, "dgvData");
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.dgvData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            resources.ApplyResources(this.dgvData, "dgvData");
             this.dgvData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Name = "dgvData";
             this.dgvData.RowTemplate.Height = 23;
-            this.toolTip1.SetToolTip(this.dgvData, resources.GetString("dgvData.ToolTip"));
             // 
             // btnCopy
             // 
@@ -96,93 +94,101 @@
             // 
             // cboxColumnIdx
             // 
-            resources.ApplyResources(this.cboxColumnIdx, "cboxColumnIdx");
             this.cboxColumnIdx.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxColumnIdx.FormattingEnabled = true;
+            resources.ApplyResources(this.cboxColumnIdx, "cboxColumnIdx");
             this.cboxColumnIdx.Name = "cboxColumnIdx";
-            this.toolTip1.SetToolTip(this.cboxColumnIdx, resources.GetString("cboxColumnIdx.ToolTip"));
             this.cboxColumnIdx.SelectedIndexChanged += new System.EventHandler(this.cboxColumnIdx_SelectedIndexChanged);
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // tboxFilter
             // 
             resources.ApplyResources(this.tboxFilter, "tboxFilter");
             this.tboxFilter.Name = "tboxFilter";
-            this.toolTip1.SetToolTip(this.tboxFilter, resources.GetString("tboxFilter.ToolTip"));
             this.tboxFilter.TextChanged += new System.EventHandler(this.tboxFilter_TextChanged);
             // 
             // menuStrip1
             // 
-            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem});
+            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Name = "menuStrip1";
-            this.toolTip1.SetToolTip(this.menuStrip1, resources.GetString("menuStrip1.ToolTip"));
             // 
             // fileToolStripMenuItem
             // 
-            resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importFromCsvToolStripMenuItem,
             this.exportSelectedToCsvToolStripMenuItem,
             this.exportAllToCsvToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
             // 
             // importFromCsvToolStripMenuItem
             // 
-            resources.ApplyResources(this.importFromCsvToolStripMenuItem, "importFromCsvToolStripMenuItem");
             this.importFromCsvToolStripMenuItem.Name = "importFromCsvToolStripMenuItem";
+            resources.ApplyResources(this.importFromCsvToolStripMenuItem, "importFromCsvToolStripMenuItem");
             this.importFromCsvToolStripMenuItem.Click += new System.EventHandler(this.importFromCsvToolStripMenuItem_Click);
             // 
             // exportSelectedToCsvToolStripMenuItem
             // 
-            resources.ApplyResources(this.exportSelectedToCsvToolStripMenuItem, "exportSelectedToCsvToolStripMenuItem");
             this.exportSelectedToCsvToolStripMenuItem.Name = "exportSelectedToCsvToolStripMenuItem";
+            resources.ApplyResources(this.exportSelectedToCsvToolStripMenuItem, "exportSelectedToCsvToolStripMenuItem");
             this.exportSelectedToCsvToolStripMenuItem.Click += new System.EventHandler(this.exportSelectedToCsvToolStripMenuItem_Click);
             // 
             // exportAllToCsvToolStripMenuItem
             // 
-            resources.ApplyResources(this.exportAllToCsvToolStripMenuItem, "exportAllToCsvToolStripMenuItem");
             this.exportAllToCsvToolStripMenuItem.Name = "exportAllToCsvToolStripMenuItem";
+            resources.ApplyResources(this.exportAllToCsvToolStripMenuItem, "exportAllToCsvToolStripMenuItem");
             this.exportAllToCsvToolStripMenuItem.Click += new System.EventHandler(this.exportAllToCsvToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
-            resources.ApplyResources(this.viewToolStripMenuItem, "viewToolStripMenuItem");
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.autosizeByHeaderToolStripMenuItem,
             this.autosizeByContentToolStripMenuItem,
             this.disableAutosizeToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            resources.ApplyResources(this.viewToolStripMenuItem, "viewToolStripMenuItem");
             // 
             // autosizeByHeaderToolStripMenuItem
             // 
-            resources.ApplyResources(this.autosizeByHeaderToolStripMenuItem, "autosizeByHeaderToolStripMenuItem");
             this.autosizeByHeaderToolStripMenuItem.Name = "autosizeByHeaderToolStripMenuItem";
+            resources.ApplyResources(this.autosizeByHeaderToolStripMenuItem, "autosizeByHeaderToolStripMenuItem");
             this.autosizeByHeaderToolStripMenuItem.Click += new System.EventHandler(this.autosizeByHeaderToolStripMenuItem_Click);
             // 
             // autosizeByContentToolStripMenuItem
             // 
-            resources.ApplyResources(this.autosizeByContentToolStripMenuItem, "autosizeByContentToolStripMenuItem");
             this.autosizeByContentToolStripMenuItem.Name = "autosizeByContentToolStripMenuItem";
+            resources.ApplyResources(this.autosizeByContentToolStripMenuItem, "autosizeByContentToolStripMenuItem");
             this.autosizeByContentToolStripMenuItem.Click += new System.EventHandler(this.autosizeByContentToolStripMenuItem_Click);
             // 
             // disableAutosizeToolStripMenuItem
             // 
-            resources.ApplyResources(this.disableAutosizeToolStripMenuItem, "disableAutosizeToolStripMenuItem");
             this.disableAutosizeToolStripMenuItem.Name = "disableAutosizeToolStripMenuItem";
+            resources.ApplyResources(this.disableAutosizeToolStripMenuItem, "disableAutosizeToolStripMenuItem");
             this.disableAutosizeToolStripMenuItem.Click += new System.EventHandler(this.disableAutosizeToolStripMenuItem_Click);
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
+            // lbTotal
+            // 
+            resources.ApplyResources(this.lbTotal, "lbTotal");
+            this.lbTotal.Name = "lbTotal";
             // 
             // FormDataGrid
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lbTotal);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.tboxFilter);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboxColumnIdx);
@@ -194,7 +200,6 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormDataGrid";
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.FormDataGrid_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -224,5 +229,7 @@
         private System.Windows.Forms.ToolStripMenuItem autosizeByContentToolStripMenuItem;
         private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.ToolStripMenuItem disableAutosizeToolStripMenuItem;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbTotal;
     }
 }

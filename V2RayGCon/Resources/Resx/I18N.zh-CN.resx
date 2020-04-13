@@ -331,8 +331,8 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="ConfirmCloseWindow" xml:space="preserve">
     <value>关闭窗口?</value>
   </data>
-  <data name="ServerListIsEmpty" xml:space="preserve">
-    <value>没服务器可导！</value>
+  <data name="NoServerAvailable" xml:space="preserve">
+    <value>无可用服务器！</value>
   </data>
   <data name="DataTooBig" xml:space="preserve">
     <value>信息量太大，请裁减配置文件。</value>
@@ -722,5 +722,20 @@ https://github.com/v2ray/v2ray-core</value>
   </data>
   <data name="SummaryColon" xml:space="preserve">
     <value>摘要：</value>
+  </data>
+  <data name="Remark" xml:space="preserve">
+    <value>备注：</value>
+  </data>
+  <data name="QuickSwitch" xml:space="preserve">
+    <value>快速切换</value>
+  </data>
+  <data name="SwitchToRandomServer" xml:space="preserve">
+    <value>切换至随机服务器</value>
+  </data>
+  <data name="SwitchToRandomTlsserver" xml:space="preserve">
+    <value>切换至随机TLS服务器</value>
+  </data>
+  <data name="TheNthServer" xml:space="preserve">
+    <value>第{0}个服务器</value>
   </data>
 </root>

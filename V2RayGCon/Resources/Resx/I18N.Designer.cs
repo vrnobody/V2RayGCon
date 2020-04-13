@@ -1219,6 +1219,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 No server available! 的本地化字符串。
+        /// </summary>
+        internal static string NoServerAvailable {
+            get {
+                return ResourceManager.GetString("NoServerAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 No subscription links available. 的本地化字符串。
         /// </summary>
         internal static string NoSubsUrlAvailable {
@@ -1391,11 +1400,29 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Quick switch 的本地化字符串。
+        /// </summary>
+        internal static string QuickSwitch {
+            get {
+                return ResourceManager.GetString("QuickSwitch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Reason 的本地化字符串。
         /// </summary>
         internal static string Reason {
             get {
                 return ResourceManager.GetString("Reason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Remark:  的本地化字符串。
+        /// </summary>
+        internal static string Remark {
+            get {
+                return ResourceManager.GetString("Remark", resourceCulture);
             }
         }
         
@@ -1451,15 +1478,6 @@ namespace V2RayGCon.Resources.Resx {
         internal static string SelectServerFirst {
             get {
                 return ResourceManager.GetString("SelectServerFirst", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Server list is empty! 的本地化字符串。
-        /// </summary>
-        internal static string ServerListIsEmpty {
-            get {
-                return ResourceManager.GetString("ServerListIsEmpty", resourceCulture);
             }
         }
         
@@ -1636,6 +1654,24 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Switch to a random server 的本地化字符串。
+        /// </summary>
+        internal static string SwitchToRandomServer {
+            get {
+                return ResourceManager.GetString("SwitchToRandomServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Switch to a random TLS server 的本地化字符串。
+        /// </summary>
+        internal static string SwitchToRandomTlsserver {
+            get {
+                return ResourceManager.GetString("SwitchToRandomTlsserver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Your system does not support TLS1.2.
         ///Please upgrade to .NET 4.5 or higher.
         ///Otherwise operations involving the network may fail. 的本地化字符串。
@@ -1680,6 +1716,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string TestWillTakeALongTime {
             get {
                 return ResourceManager.GetString("TestWillTakeALongTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Server #{0} 的本地化字符串。
+        /// </summary>
+        internal static string TheNthServer {
+            get {
+                return ResourceManager.GetString("TheNthServer", resourceCulture);
             }
         }
         

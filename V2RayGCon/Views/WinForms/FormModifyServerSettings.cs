@@ -47,6 +47,7 @@ namespace V2RayGCon.Views.WinForms
             result.inboundMode = cboxInboundMode.SelectedIndex;
             result.inboundAddress = cboxInboundAddress.Text;
             result.mark = cboxMark.Text;
+            result.remark = tboxRemark.Text;
             result.isAutorun = chkAutoRun.Checked;
             result.isBypassCnSite = chkBypassCnSite.Checked;
             result.isGlobalImport = chkGlobalImport.Checked;
@@ -62,6 +63,7 @@ namespace V2RayGCon.Views.WinForms
             cboxInboundMode.SelectedIndex = s.inboundMode;
             cboxInboundAddress.Text = s.inboundAddress;
             cboxMark.Text = s.mark;
+            tboxRemark.Text = s.remark;
             chkAutoRun.Checked = s.isAutorun;
             chkBypassCnSite.Checked = s.isBypassCnSite;
             chkGlobalImport.Checked = s.isGlobalImport;

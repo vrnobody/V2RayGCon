@@ -201,8 +201,20 @@
   <data name="groupBox6.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="cboxSettingsRandomSelectServerLatency.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label14.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="tboxSettingsMaxCoreNum.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="label15.Text" xml:space="preserve">
+    <value>快速切换</value>
+  </data>
+  <data name="label15.ToolTip" xml:space="preserve">
+    <value>使用托盘图标快速切换功能时，随机选取的服务器的最大延迟</value>
   </data>
   <data name="chkSetServStatistics.Text" xml:space="preserve">
     <value>统计支持(仅v4格式)</value>

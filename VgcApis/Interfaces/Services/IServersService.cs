@@ -17,11 +17,16 @@ namespace VgcApis.Interfaces.Services
         void ResetIndexQuiet();
         bool RunSpeedTestOnSelectedServers();
 
+        void ReverseSelectedByIndex();
+
         void SortSelectedByLastModifiedDate();
 
         void SortSelectedBySpeedTest();
 
         void SortSelectedBySummary();
+
+        void StopAllServersThen(Action lambda = null);
+
         void UpdateAllServersSummarySync();
 
         string PackSelectedServersIntoV4Package(

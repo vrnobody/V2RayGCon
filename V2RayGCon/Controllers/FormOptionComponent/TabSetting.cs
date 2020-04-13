@@ -7,20 +7,28 @@ namespace V2RayGCon.Controllers.OptionComponent
         Services.Settings setting;
         Services.Servers servers;
 
-        ComboBox cboxLanguage = null, cboxPageSize = null;
-        CheckBox chkServAutoTrack = null,
+        private readonly ComboBox
+            cboxLanguage = null,
+            cboxPageSize = null,
+            cboxRandomSelectServerLatency = null;
+
+        private readonly CheckBox
+            chkServAutoTrack = null,
             chkPortableMode = null,
             chkSetUseV4 = null,
             chkSetEnableStat = null,
             chkSetUpdateUseProxy = null,
             chkSetCheckWhenAppStart = null;
-        TextBox tboxMaxCoreNum;
+
+        private readonly TextBox
+            tboxMaxCoreNum = null;
 
         public TabSetting(
             ComboBox cboxLanguage,
             ComboBox cboxPageSize,
             CheckBox chkServAutoTrack,
             TextBox tboxMaxCoreNum,
+            ComboBox cboxRandomSelectServerLatency,
             CheckBox chkPortableMode,
             CheckBox chkSetUseV4,
             CheckBox chkSetEnableStat,
@@ -35,6 +43,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.cboxPageSize = cboxPageSize;
             this.chkServAutoTrack = chkServAutoTrack;
             this.tboxMaxCoreNum = tboxMaxCoreNum;
+            this.cboxRandomSelectServerLatency = cboxRandomSelectServerLatency;
             this.chkPortableMode = chkPortableMode;
             this.chkSetUseV4 = chkSetUseV4;
             this.chkSetEnableStat = chkSetEnableStat;
@@ -46,6 +55,8 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         private void InitElement()
         {
+            cboxRandomSelectServerLatency.Text = setting.QuickSwitchServerLantency.ToString();
+
             chkSetUpdateUseProxy.Checked = setting.isUpdateUseProxy;
             chkSetCheckWhenAppStart.Checked = setting.isCheckUpdateWhenAppStart;
 
@@ -93,14 +104,14 @@ namespace V2RayGCon.Controllers.OptionComponent
                 servers.OnAutoTrackingOptionChanged();
             }
 
+            setting.QuickSwitchServerLantency = VgcApis.Misc.Utils.Str2Int(cboxRandomSelectServerLatency.Text);
             setting.isUpdateUseProxy = chkSetUpdateUseProxy.Checked;
             setting.isCheckUpdateWhenAppStart = chkSetCheckWhenAppStart.Checked;
             setting.isPortable = chkPortableMode.Checked;
             setting.isUseV4 = chkSetUseV4.Checked;
 
             // Must enable v4 mode first.
-            setting.isEnableStatistics =
-                setting.isUseV4 && chkSetEnableStat.Checked;
+            setting.isEnableStatistics = setting.isUseV4 && chkSetEnableStat.Checked;
 
             setting.SaveUserSettingsNow();
             return true;
@@ -109,6 +120,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         public override bool IsOptionsChanged()
         {
             if (setting.isUseV4 != chkSetUseV4.Checked
+                || setting.QuickSwitchServerLantency != VgcApis.Misc.Utils.Str2Int(cboxRandomSelectServerLatency.Text)
                 || setting.isUpdateUseProxy != chkSetUpdateUseProxy.Checked
                 || setting.isCheckUpdateWhenAppStart != chkSetCheckWhenAppStart.Checked
                 || setting.isEnableStatistics != chkSetEnableStat.Checked

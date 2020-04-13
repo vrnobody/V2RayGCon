@@ -33,10 +33,11 @@ namespace VgcApis.BaseClasses
             return instance;
         }
 
-        public void ShowForm()
+        public TForm ShowForm()
         {
             var form = GetForm();
             form.Show();
+            return form;
         }
     }
 }

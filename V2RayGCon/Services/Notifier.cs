@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
+using VgcApis.Interfaces;
 
 namespace V2RayGCon.Services
 {
@@ -30,6 +31,11 @@ namespace V2RayGCon.Services
 
         readonly int notifyIconUpdateInterval = VgcApis.Models.Consts.Intervals.NotifierTextUpdateIntreval;
         VgcApis.Libs.Tasks.LazyGuy lazyNotifyIconUpdater;
+        bool isMenuOpened = false;
+
+        ToolStripItem[] miServersTopMenuItems;
+        ToolStripMenuItem miQuickSwitch;
+        ToolStripItem[] miQuickSwitchTopSubMenuItems;
 
         Notifier()
         {
@@ -47,6 +53,8 @@ namespace V2RayGCon.Services
             this.servers = servers;
             this.slinkMgr = shareLinkMgr;
             this.updater = updater;
+
+            GenServerMenuItemComponents();
 
             CreateNotifyIcon();
 
@@ -152,8 +160,21 @@ namespace V2RayGCon.Services
             servers.OnServerPropertyChange -= UpdateNotifyIconHandler;
         }
 
+        List<ToolStripMenuItem> CreateTopNthServerMenuItems(
+            ReadOnlyCollection<ICoreServCtrl> serverList,
+            int num)
+        {
+            var mis = new List<ToolStripMenuItem>();
+            for (int i = 0; i < serverList.Count && i < num; i++)
+            {
+                mis.Add(CoreServ2MenuItem(serverList[i]));
+            }
+            return mis;
+        }
+
+
         List<ToolStripMenuItem> ServerList2MenuItems(
-            ReadOnlyCollection<VgcApis.Interfaces.ICoreServCtrl> serverList)
+            ReadOnlyCollection<ICoreServCtrl> serverList)
         {
             var menuItems = new List<ToolStripMenuItem>();
 
@@ -167,14 +188,14 @@ namespace V2RayGCon.Services
                 VgcApis.Models.Consts.Config.MenuItemGroupSize);
         }
 
-
-
-        private ToolStripMenuItem CoreServ2MenuItem(VgcApis.Interfaces.ICoreServCtrl coreServ)
+        private ToolStripMenuItem CoreServ2MenuItem(ICoreServCtrl coreServ)
         {
             var coreState = coreServ.GetCoreStates();
+            var name = coreState.GetLongName();
+            var idx = ((int)coreState.GetIndex()).ToString();
 
+            var title = $"{idx}.{name}";
             var dely = coreState.GetSpeedTestResult();
-            var title = coreState.GetTitle();
             if (dely == SpeedtestTimeout)
             {
                 title = $"{title} - ({I18N.Timeout})";
@@ -191,39 +212,136 @@ namespace V2RayGCon.Services
             return item;
         }
 
-        void ReplaceServersMenuWith(List<ToolStripMenuItem> newServersMenuItems)
+        void GenServerMenuItemComponents()
+        {
+            miQuickSwitch = new ToolStripMenuItem(
+                I18N.QuickSwitch, Properties.Resources.SwitchSourceOrTarget_16x);
+
+            miServersTopMenuItems = new ToolStripItem[]
+            {
+                new ToolStripMenuItem(
+                    I18N.StopAllServers,
+                    Properties.Resources.Stop_16x,
+                    (s, a) => servers.StopAllServersThen()),
+
+                miQuickSwitch,
+                new ToolStripSeparator(),
+            };
+
+            miQuickSwitchTopSubMenuItems = new ToolStripItem[] {
+                new ToolStripMenuItem(
+                    I18N.SwitchToRandomServer,
+                    Properties.Resources.FTPConnection_16x,
+                    (s,a)=>SwitchToRandomServer()),
+
+                new ToolStripMenuItem(
+                    I18N.SwitchToRandomTlsserver,
+                    Properties.Resources.SFTPConnection_16x,
+                    (s,a)=>SwitchRandomTlsServer()),
+
+                new ToolStripSeparator(),
+            };
+        }
+
+        void SwitchRandomTlsServer()
+        {
+            var latency = setting.QuickSwitchServerLantency;
+            var list = servers.GetAllServersOrderByIndex()
+                .Where(s =>
+                {
+                    var st = s.GetCoreStates();
+                    var summary = st.GetSummary()?.ToLower();
+                    var d = st.GetSpeedTestResult();
+                    return
+                        d > 0 && d <= latency
+                        && !string.IsNullOrEmpty(summary)
+                        && summary.Contains(@".tls@");
+                })
+                .ToList();
+            StartRandomServerInList(list);
+        }
+
+        void SwitchToRandomServer()
+        {
+            var latency = setting.QuickSwitchServerLantency;
+            var list = servers.GetAllServersOrderByIndex()
+                .Where(s =>
+                {
+                    var d = s.GetCoreStates().GetSpeedTestResult();
+                    return d > 0 && d <= latency;
+                })
+                .ToList();
+            StartRandomServerInList(list);
+        }
+
+        private void StartRandomServerInList(List<ICoreServCtrl> list)
+        {
+            var len = list.Count;
+            if (len <= 0)
+            {
+                VgcApis.Misc.UI.MsgBoxAsync(I18N.NoServerAvailable);
+                return;
+            }
+
+            var picked = list[new Random().Next(len)];
+            servers.StopAllServersThen(() => picked.GetCoreCtrl().RestartCore());
+        }
+
+        /// <summary>
+        /// nth: 1st -> serv[0] , 2nd -> serv[1] ...
+        /// </summary>
+        /// <param name="nth"></param>
+        void SwitchToNthServer(int nth)
+        {
+            var list = servers.GetAllServersOrderByIndex();
+            if (nth < 1 || nth > list.Count)
+            {
+                VgcApis.Misc.UI.MsgBoxAsync(I18N.NoServerAvailable);
+                return;
+            }
+
+            servers.StopAllServersThen(() => list[nth - 1].GetCoreCtrl().RestartCore());
+        }
+
+        void ReplaceServersMenuWith(
+            List<ToolStripMenuItem> miAllServers,
+            List<ToolStripMenuItem> miTopNthServers)
         {
             var root = serversRootMenuItem.DropDownItems;
             root.Clear();
 
-            if (newServersMenuItems == null || newServersMenuItems.Count < 1)
+            if (miAllServers == null || miAllServers.Count < 1)
             {
                 serversRootMenuItem.Visible = false;
                 return;
             }
 
-            var closeAll = new ToolStripMenuItem(I18N.StopAllServers, null, (s, a) => servers.StopAllServersThen());
-            var sp = new ToolStripSeparator();
-            root.Add(closeAll);
-            root.Add(sp);
-            root.AddRange(newServersMenuItems.ToArray());
+            var subRoot = miQuickSwitch.DropDownItems;
+            subRoot.Clear();
+            subRoot.AddRange(miQuickSwitchTopSubMenuItems);
+            subRoot.AddRange(miTopNthServers.ToArray());
+
+            root.AddRange(miServersTopMenuItems);
+            root.AddRange(miAllServers.ToArray());
             serversRootMenuItem.Visible = true;
         }
 
         void UpdateServersMenuThen(Action next = null)
         {
             var serverList = servers.GetAllServersOrderByIndex();
-            var newMenuItems = ServerList2MenuItems(serverList);
+            var miAllServers = ServerList2MenuItems(serverList);
+            var num = VgcApis.Models.Consts.Config.QuickSwitchMenuItemNum;
+            var miTopNthServers = CreateTopNthServerMenuItems(serverList, num);
 
             RunInUiThreadIgnoreErrorThen(
-                () => ReplaceServersMenuWith(newMenuItems),
+                () => ReplaceServersMenuWith(miAllServers, miTopNthServers),
                 next);
         }
 
         VgcApis.Libs.Tasks.Bar updateNotifyIconLock = new VgcApis.Libs.Tasks.Bar();
         void UpdateNotifyIcon()
         {
-            if (!updateNotifyIconLock.Install())
+            if (isMenuOpened || !updateNotifyIconLock.Install())
             {
                 lazyNotifyIconUpdater.DoItLater();
                 return;
@@ -423,13 +541,17 @@ namespace V2RayGCon.Services
 
         void CreateNotifyIcon()
         {
+            var menu = CreateMenu();
+            menu.Opening += (s, a) => isMenuOpened = true;
+            menu.Closed += (s, a) => isMenuOpened = false;
+
             ni = new NotifyIcon
             {
                 Text = I18N.Description,
                 Icon = VgcApis.Misc.UI.GetAppIcon(),
                 BalloonTipTitle = VgcApis.Misc.Utils.GetAppName(),
 
-                ContextMenuStrip = CreateMenu(),
+                ContextMenuStrip = menu,
                 Visible = true
             };
 

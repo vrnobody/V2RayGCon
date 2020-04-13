@@ -98,10 +98,12 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             this.btnAdd.Click += (s, a) =>
             {
-                this.flyPanel.Controls.Add(
-                    new Views.UserControls.ImportUI(
+                var control = new Views.UserControls.ImportUI(
                         new Models.Datas.ImportItem(),
-                        UpdatePanelItemsIndex));
+                        UpdatePanelItemsIndex);
+
+                flyPanel.Controls.Add(control);
+                flyPanel.ScrollControlIntoView(control);
                 UpdatePanelItemsIndex();
             };
         }

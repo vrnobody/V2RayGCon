@@ -15,7 +15,10 @@ namespace Luna
         ToolStripMenuItem miRoot = null, miShowWindow;
         public Luna()
         {
-            miShowWindow = new ToolStripMenuItem(I18N.ShowWindow, null, (s, a) => Show());
+            miShowWindow = new ToolStripMenuItem(
+                I18N.OpenScriptManger,
+                Properties.Resources.StoredProcedureScript_16x,
+                (s, a) => Show());
         }
 
         #region properties

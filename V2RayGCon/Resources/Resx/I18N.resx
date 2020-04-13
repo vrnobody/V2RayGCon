@@ -738,11 +738,11 @@ No, abort.</value>
   <data name="QuickSwitch" xml:space="preserve">
     <value>Quick switch</value>
   </data>
-  <data name="RandomServer" xml:space="preserve">
-    <value>Random server</value>
+  <data name="SwitchToRandomServer" xml:space="preserve">
+    <value>Switch to a random server</value>
   </data>
-  <data name="RandomTlsserver" xml:space="preserve">
-    <value>Random TLS server</value>
+  <data name="SwitchToRandomTlsserver" xml:space="preserve">
+    <value>Switch to a random TLS server</value>
   </data>
   <data name="TheNthServer" xml:space="preserve">
     <value>Server #{0}</value>

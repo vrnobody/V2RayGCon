@@ -729,11 +729,11 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="QuickSwitch" xml:space="preserve">
     <value>快速切换</value>
   </data>
-  <data name="RandomServer" xml:space="preserve">
-    <value>随机服务器</value>
+  <data name="SwitchToRandomServer" xml:space="preserve">
+    <value>切换至随机服务器</value>
   </data>
-  <data name="RandomTlsserver" xml:space="preserve">
-    <value>随机TLS服务器</value>
+  <data name="SwitchToRandomTlsserver" xml:space="preserve">
+    <value>切换至随机TLS服务器</value>
   </data>
   <data name="TheNthServer" xml:space="preserve">
     <value>第{0}个服务器</value>

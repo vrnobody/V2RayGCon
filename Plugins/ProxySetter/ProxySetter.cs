@@ -26,7 +26,10 @@ namespace ProxySetter
             menuItemCache.ToolTipText = Description;
 
             var children = menuItemCache.DropDownItems;
-            children.Add(new ToolStripMenuItem(I18N.Options, null, (s, a) => Show()));
+            children.Add(new ToolStripMenuItem(
+                I18N.Options,
+                Properties.Resources.WebConfiguration_16x,
+                (s, a) => Show()));
             children.Add(new ToolStripSeparator());
             children.AddRange(luncher?.GetSubMenu());
 

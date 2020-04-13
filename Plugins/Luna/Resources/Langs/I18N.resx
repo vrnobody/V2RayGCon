@@ -147,6 +147,9 @@
   <data name="ImportScriptsSuccess" xml:space="preserve">
     <value>Import scripts success!</value>
   </data>
+  <data name="OpenScriptManger" xml:space="preserve">
+    <value>Open script manager</value>
+  </data>
   <data name="ScriptNameNotSet" xml:space="preserve">
     <value>Script name not set!</value>
   </data>
@@ -155,9 +158,6 @@
   </data>
   <data name="SendStopSignalTo" xml:space="preserve">
     <value>send stop signal to </value>
-  </data>
-  <data name="ShowWindow" xml:space="preserve">
-    <value>Show window</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>start</value>

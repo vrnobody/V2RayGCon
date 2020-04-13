@@ -1409,24 +1409,6 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Random server 的本地化字符串。
-        /// </summary>
-        internal static string RandomServer {
-            get {
-                return ResourceManager.GetString("RandomServer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Random TLS server 的本地化字符串。
-        /// </summary>
-        internal static string RandomTlsserver {
-            get {
-                return ResourceManager.GetString("RandomTlsserver", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Reason 的本地化字符串。
         /// </summary>
         internal static string Reason {
@@ -1668,6 +1650,24 @@ namespace V2RayGCon.Resources.Resx {
         internal static string SummaryColon {
             get {
                 return ResourceManager.GetString("SummaryColon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Switch to a random server 的本地化字符串。
+        /// </summary>
+        internal static string SwitchToRandomServer {
+            get {
+                return ResourceManager.GetString("SwitchToRandomServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Switch to a random TLS server 的本地化字符串。
+        /// </summary>
+        internal static string SwitchToRandomTlsserver {
+            get {
+                return ResourceManager.GetString("SwitchToRandomTlsserver", resourceCulture);
             }
         }
         

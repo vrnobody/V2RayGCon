@@ -51,7 +51,7 @@ namespace V2RayGCon.Models.Datas
         {
             Normalized();
 
-            QuickSwitchServerLatency = 5000;
+            QuickSwitchServerLatency = 0;
 
             isAutoPatchSubsInfo = false;
 

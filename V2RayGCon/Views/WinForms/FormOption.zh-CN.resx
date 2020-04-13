@@ -204,6 +204,9 @@
   <data name="cboxSettingsRandomSelectServerLatency.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="label14.Text" xml:space="preserve">
+    <value>ms (零表示忽略延迟)</value>
+  </data>
   <data name="label14.ToolTip" xml:space="preserve">
     <value />
   </data>

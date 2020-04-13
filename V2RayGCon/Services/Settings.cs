@@ -34,12 +34,11 @@ namespace V2RayGCon.Services
         {
             get
             {
-                var d = userSettings.QuickSwitchServerLatency;
-                return Math.Max(1, d);
+                return Math.Max(0, userSettings.QuickSwitchServerLatency);
             }
             set
             {
-                var d = Math.Max(1, value);
+                var d = Math.Max(0, value);
                 if (userSettings.QuickSwitchServerLatency == d)
                 {
                     return;

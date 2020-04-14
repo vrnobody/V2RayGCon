@@ -12,11 +12,6 @@ namespace V2RayGCon.Libs.V2Ray
 {
     public class Core
     {
-        #region support ctrl+c
-        // https://stackoverflow.com/questions/283128/how-do-i-send-ctrlc-to-a-process-in-c
-        internal const int CTRL_C_EVENT = 0;
-        #endregion
-
         readonly Encoding ioEncoding = Encoding.UTF8;
 
         public event EventHandler<VgcApis.Models.Datas.StrEvent> OnLog;
@@ -245,7 +240,7 @@ namespace V2RayGCon.Libs.V2Ray
                 return;
             }
 
-            var success = SendCtrlCSignalToV2RayCore();
+            var success = VgcApis.Misc.Utils.SendStopSignal(v2rayCore);
             if (!success)
             {
                 try
@@ -258,53 +253,18 @@ namespace V2RayGCon.Libs.V2Ray
             isRunning = false;
         }
 
-        bool SendCtrlCSignalToV2RayCore()
-        {
-            var success = false;
-            try
-            {
-                if (Libs.Sys.SafeNativeMethods.AttachConsole((uint)v2rayCore.Id))
-                {
-                    AutoResetEvent done = new AutoResetEvent(false);
-                    v2rayCore.Exited += (s, a) =>
-                    {
-                        v2rayCore.Close();
-                        done.Set();
-                    };
-
-                    Libs.Sys.SafeNativeMethods.SetConsoleCtrlHandler(null, true);
-                    Libs.Sys.SafeNativeMethods.GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
-
-                    if (done.WaitOne(VgcApis.Models.Consts.Core.SendCtrlCTimeout))
-                    {
-                        success = true;
-                    }
-
-                    Libs.Sys.SafeNativeMethods.FreeConsole();
-                    Libs.Sys.SafeNativeMethods.SetConsoleCtrlHandler(null, false);
-                }
-            }
-            catch { }
-
-            return success;
-        }
-
         void KillCore()
         {
             Debug.WriteLine("Kill core!");
 
             isForcedExit = true;
-            AutoResetEvent finished = new AutoResetEvent(false);
-
             SendLog(I18N.AttachToV2rayCoreProcessFail);
-
-            v2rayCore.Exited += (s, a) =>
+            try
             {
-                finished.Set();
-            };
-
-            Misc.Utils.KillProcessAndChildrens(v2rayCore.Id);
-            finished.WaitOne(VgcApis.Models.Consts.Core.KillCoreTimeout);
+                VgcApis.Misc.Utils.KillProcessAndChildrens(v2rayCore.Id);
+                v2rayCore.WaitForExit(VgcApis.Models.Consts.Core.KillCoreTimeout);
+            }
+            catch { }
         }
 
         static void InvokeActionIgnoreError(Action lambda)
@@ -339,31 +299,21 @@ namespace V2RayGCon.Libs.V2Ray
             return p;
         }
 
-        void InjectEnv(Process proc, Dictionary<string, string> envs)
+        string TranslateErrorCode(int exitCode)
         {
-            if (envs == null || envs.Count <= 0)
+
+            if (exitCode == 0)
             {
-                return;
+                return null;
             }
 
-            var procEnv = proc.StartInfo.EnvironmentVariables;
-            foreach (var env in envs)
-            {
-                procEnv[env.Key] = env.Value;
-            }
-        }
-
-        void ShowExitErrorMessage(int exitCode)
-        {
-            /*
-            * https://stackoverflow.com/questions/4344923/process-exit-code-when-process-is-killed-forcibly
-            * 1: Killed forcibly.
-            */
+            // exitCode = 1 means Killed forcibly.
+            // src https://stackoverflow.com/questions/4344923/process-exit-code-when-process-is-killed-forcibly
 
             // ctrl + c not working
             if (isForcedExit && exitCode == 1)
             {
-                return;
+                return null;
             }
 
             /*
@@ -387,7 +337,7 @@ namespace V2RayGCon.Libs.V2Ray
                     break;
             }
 
-            MessageBox.Show(msg);
+            return msg;
         }
 
         void OnCoreExited(object sender, EventArgs args)
@@ -399,12 +349,21 @@ namespace V2RayGCon.Libs.V2Ray
             SendLog(I18N.CoreExit);
             ReleaseEvents(v2rayCore);
 
-            var err = v2rayCore.ExitCode;
-            if (err != 0)
+            try
+            {
+                var msg = TranslateErrorCode(v2rayCore.ExitCode);
+                if (!string.IsNullOrEmpty(msg))
+                {
+                    VgcApis.Misc.UI.MsgBoxAsync(msg);
+                }
+            }
+            catch { }
+
+            try
             {
                 v2rayCore.Close();
-                VgcApis.Misc.Utils.RunInBackground(() => ShowExitErrorMessage(err));
             }
+            catch { }
 
             // SendLog("Exit code: " + err);
             isRunning = false;
@@ -432,7 +391,7 @@ namespace V2RayGCon.Libs.V2Ray
             isWatchCoreReadyLog = IsConfigWaitable(config);
 
             v2rayCore = CreateV2RayCoreProcess(config);
-            InjectEnv(v2rayCore, envs);
+            VgcApis.Misc.Utils.SetProcessEnvs(v2rayCore, envs);
             BindEvents(v2rayCore);
 
             isRunning = true;
@@ -440,7 +399,7 @@ namespace V2RayGCon.Libs.V2Ray
             Interlocked.Increment(ref curConcurrentV2RayCoreNum);
 
             // Add to JOB object require win8+.
-            Sys.ChildProcessTracker.AddProcess(v2rayCore);
+            VgcApis.Libs.Sys.ChildProcessTracker.AddProcess(v2rayCore);
 
             WriteConfigToStandardInput(config);
 

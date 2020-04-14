@@ -747,4 +747,7 @@ No, abort.</value>
   <data name="TheNthServer" xml:space="preserve">
     <value>Server #{0}</value>
   </data>
+  <data name="ConfirmClearSpeedTestResults" xml:space="preserve">
+    <value>Clear speed test results?</value>
+  </data>
 </root>

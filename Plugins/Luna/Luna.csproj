@@ -77,11 +77,14 @@
     <Compile Include="Libs\Sys\WinApis.cs" />
     <Compile Include="Misc\UI.cs" />
     <Compile Include="Luna.cs" />
+    <Compile Include="Misc\Utils.cs" />
+    <Compile Include="Models\Apis\LuaSignal.cs" />
     <Compile Include="Models\Apis\Components\Server.cs" />
     <Compile Include="Models\Apis\Components\Misc.cs" />
     <Compile Include="Models\Apis\Components\Web.cs" />
     <Compile Include="Models\Apis\LuaApis.cs" />
     <Compile Include="Models\Apis\Components\Json.cs" />
+    <Compile Include="Models\Apis\LuaSys.cs" />
     <Compile Include="Models\Data\LuaCoreSetting.cs" />
     <Compile Include="Models\Data\UserSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

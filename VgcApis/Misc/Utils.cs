@@ -4,9 +4,11 @@ using ScintillaNET;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
@@ -283,6 +285,84 @@ namespace VgcApis.Misc
         #endregion
 
         #region Task
+        public static void SetProcessEnvs(Process proc, Dictionary<string, string> envs)
+        {
+            if (envs == null || envs.Count <= 0)
+            {
+                return;
+            }
+
+            var procEnv = proc.StartInfo.EnvironmentVariables;
+            foreach (var env in envs)
+            {
+                procEnv[env.Key] = env.Value;
+            }
+        }
+
+        static readonly AutoResetEvent sendCtrlCLocker = new AutoResetEvent(true);
+        public static bool SendStopSignal(Process proc)
+        {
+            // https://stackoverflow.com/questions/283128/how-do-i-send-ctrlc-to-a-process-in-c
+
+            const int CTRL_C_EVENT = 0;
+
+            var success = false;
+            sendCtrlCLocker.WaitOne();
+            try
+            {
+                if (Libs.Sys.ConsoleCtrls.AttachConsole((uint)proc.Id))
+                {
+                    Libs.Sys.ConsoleCtrls.SetConsoleCtrlHandler(null, true);
+                    Libs.Sys.ConsoleCtrls.GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
+                    try
+                    {
+                        if (proc.WaitForExit(Models.Consts.Core.SendCtrlCTimeout))
+                        {
+                            success = true;
+                        }
+                    }
+                    catch { }
+                    Libs.Sys.ConsoleCtrls.FreeConsole();
+                    Libs.Sys.ConsoleCtrls.SetConsoleCtrlHandler(null, false);
+                }
+            }
+            catch { }
+            sendCtrlCLocker.Set();
+
+            return success;
+        }
+
+        public static void KillProcessAndChildrens(int pid)
+        {
+            ManagementObjectSearcher processSearcher = new ManagementObjectSearcher
+              ("Select * From Win32_Process Where ParentProcessID=" + pid);
+            ManagementObjectCollection processCollection = processSearcher.Get();
+
+            // We must kill child processes first!
+            if (processCollection != null)
+            {
+                foreach (ManagementObject mo in processCollection)
+                {
+                    KillProcessAndChildrens(Convert.ToInt32(mo["ProcessID"])); //kill child processes(also kills childrens of childrens etc.)
+                }
+            }
+
+            // Then kill parents.
+            try
+            {
+                Process proc = Process.GetProcessById(pid);
+                if (!proc.HasExited)
+                {
+                    proc.Kill();
+                    proc.WaitForExit(1000);
+                }
+            }
+            catch
+            {
+                // Process already exited.
+            }
+        }
+
         public static void RunAsSTAThread(Action action)
         {
             // https://www.codeproject.com/Questions/727531/ThreadStateException-cant-handeled-in-ClipBoard-Se

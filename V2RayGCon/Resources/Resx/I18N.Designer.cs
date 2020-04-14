@@ -286,6 +286,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Clear speed test results? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmClearSpeedTestResults {
+            get {
+                return ResourceManager.GetString("ConfirmClearSpeedTestResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Clear system proxy setting? 的本地化字符串。
         /// </summary>
         internal static string ConfirmClearSysProxy {

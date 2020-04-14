@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace V2RayGCon.Libs.Sys
+namespace VgcApis.Libs.Sys
 
 {
     /// <summary>

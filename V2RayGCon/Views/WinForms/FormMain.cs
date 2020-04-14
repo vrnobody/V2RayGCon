@@ -260,6 +260,8 @@ namespace V2RayGCon.Views.WinForms
                 //// batch op
                 toolStripMenuItemStopBatchSpeedTest,
                 toolStripMenuItemRunBatchSpeedTest,
+                toolStripMenuItemClearSpeedTestResults,
+
                 toolStripMenuItemModifySettings,
                 toolStripMenuItemStopSelected,
                 toolStripMenuItemRestartSelected,

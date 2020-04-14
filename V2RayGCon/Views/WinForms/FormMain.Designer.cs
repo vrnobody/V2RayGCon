@@ -114,6 +114,7 @@ namespace V2RayGCon.Views.WinForms
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemRunBatchSpeedTest = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemStopBatchSpeedTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemClearSpeedTestResults = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemModifySettings = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshSummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -592,6 +593,7 @@ namespace V2RayGCon.Views.WinForms
             this.toolStripSeparator1,
             this.toolStripMenuItemRunBatchSpeedTest,
             this.toolStripMenuItemStopBatchSpeedTest,
+            this.toolStripMenuItemClearSpeedTestResults,
             this.toolStripMenuItem6,
             this.toolStripMenuItemModifySettings,
             this.refreshSummaryToolStripMenuItem,
@@ -711,6 +713,11 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this.toolStripMenuItemStopBatchSpeedTest, "toolStripMenuItemStopBatchSpeedTest");
             this.toolStripMenuItemStopBatchSpeedTest.Name = "toolStripMenuItemStopBatchSpeedTest";
+            // 
+            // toolStripMenuItemClearSpeedTestResults
+            // 
+            resources.ApplyResources(this.toolStripMenuItemClearSpeedTestResults, "toolStripMenuItemClearSpeedTestResults");
+            this.toolStripMenuItemClearSpeedTestResults.Name = "toolStripMenuItemClearSpeedTestResults";
             // 
             // toolStripMenuItem6
             // 
@@ -1020,5 +1027,6 @@ namespace V2RayGCon.Views.WinForms
         private ToolStripSeparator toolStripMenuItem6;
         private ToolStripMenuItem toolStripMenuItemReverseByIndex;
         private ToolStripMenuItem toolStripMenuItemModifySettings;
+        private ToolStripMenuItem toolStripMenuItemClearSpeedTestResults;
     }
 }

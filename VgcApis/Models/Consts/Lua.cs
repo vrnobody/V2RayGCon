@@ -8,7 +8,7 @@ namespace VgcApis.Models.Consts
         public const string LuaModules = "require module";
 
         public const string LuaKeywords =
-            "Signal Json Misc Server Web"
+            "Signal Json Misc Server Web Sys"
             // + " coreServ coreConfiger coreCtrl coreState coreLogger" 
             + " and break do else elseif end for function if in local nil not or repeat return then until while false true goto";
 
@@ -42,6 +42,7 @@ namespace VgcApis.Models.Consts
 
             var types = new List<Type>
             {
+                typeof(Interfaces.Lua.ILuaSys),
                 typeof(Interfaces.Lua.ILuaSignal),
                 typeof(Interfaces.Lua.ILuaJson),
                 typeof(Interfaces.Lua.ILuaMisc),
@@ -56,8 +57,7 @@ namespace VgcApis.Models.Consts
 
             foreach (var t in types)
             {
-                foreach (var methodName in
-                    VgcApis.Misc.Utils.GetPublicMethodNames(t))
+                foreach (var methodName in Misc.Utils.GetPublicMethodNames(t))
                 {
                     if (!luaKeywords.Contains(methodName))
                     {

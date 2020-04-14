@@ -53,6 +53,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -61,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\Lua\ILuaSys.cs" />
     <Compile Include="Libs\Streams\BitStream.cs" />
     <Compile Include="Libs\Streams\Crc8.cs" />
     <Compile Include="Libs\Streams\RawBitStream\Bytes.cs" />
@@ -69,6 +71,8 @@
     <Compile Include="Libs\Streams\RawBitStream\Numbers.cs" />
     <Compile Include="Libs\Streams\RawBitStream\Utils.cs" />
     <Compile Include="Libs\Streams\RawBitStream\Uuids.cs" />
+    <Compile Include="Libs\Sys\ChildProcessTracker.cs" />
+    <Compile Include="Libs\Sys\ConsoleCtrls.cs" />
     <Compile Include="Libs\Sys\KeyboardHook.cs" />
     <Compile Include="Libs\Sys\NotepadHelper.cs" />
     <Compile Include="Libs\Tasks\Bar.cs" />
@@ -109,7 +113,6 @@
     <Compile Include="Libs\Tasks\CancelableTimeout.cs" />
     <Compile Include="Libs\Tasks\LazyGuy.cs" />
     <Compile Include="Libs\Sys\FileLogger.cs" />
-    <Compile Include="BaseClasses\LuaSignal.cs" />
     <Compile Include="BaseClasses\Plugin.cs" />
     <Compile Include="Models\Datas\DataEvent.cs" />
     <Compile Include="Interfaces\ICoreServCtrl.cs" />

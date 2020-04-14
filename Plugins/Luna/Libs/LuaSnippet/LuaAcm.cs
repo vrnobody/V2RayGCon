@@ -110,6 +110,8 @@ namespace Luna.Libs.LuaSnippet
         {
             var apis = new List<Tuple<string, Type>>
             {
+                new Tuple<string,Type>("mailbox", typeof(VgcApis.Interfaces.Lua.ILuaMailBox)),
+                new Tuple<string,Type>("mail", typeof(VgcApis.Interfaces.Lua.ILuaMail)),
                 new Tuple<string,Type>("Sys", typeof(VgcApis.Interfaces.Lua.ILuaSys)),
                 new Tuple<string,Type>("Json", typeof(VgcApis.Interfaces.Lua.ILuaJson)),
                 new Tuple<string,Type>("Misc", typeof(VgcApis.Interfaces.Lua.ILuaMisc)),

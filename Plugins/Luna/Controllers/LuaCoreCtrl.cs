@@ -66,8 +66,6 @@ namespace Luna.Controllers
                 if (_isRunning == false)
                 {
                     SendLog($"{coreSetting.name} {I18N.Stopped}");
-                    luaCoreTask = null;
-                    luaCoreThread = null;
                 }
                 InvokeOnStateChangeIgnoreError();
             }
@@ -106,23 +104,23 @@ namespace Luna.Controllers
 
             SendLog($"{I18N.SendStopSignalTo} {coreSetting.name}");
             luaSignal.SetStopSignal(true);
-            luaSys?.Dispose();
         }
 
         public void Kill()
         {
-            if (luaCoreTask == null)
+            if (!isRunning)
             {
                 return;
             }
 
             Stop();
-            if (luaCoreTask.Wait(2000))
+            if (luaCoreTask?.Wait(2000) == true)
             {
                 return;
             }
 
             SendLog($"{I18N.Terminate} {coreSetting.name}");
+            luaSys?.Dispose();
             try
             {
                 luaCoreThread?.Abort();
@@ -141,7 +139,7 @@ namespace Luna.Controllers
             isRunning = true;
 
             luaSys?.Dispose();
-            luaSys = new Models.Apis.LuaSys();
+            luaSys = new Models.Apis.LuaSys(luaApis);
 
             SendLog($"{I18N.Start} {coreSetting.name}");
             luaCoreTask = VgcApis.Misc.Utils.RunInBackground(() => RunLuaScript(luaSys));

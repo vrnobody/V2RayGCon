@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLua;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -11,11 +12,36 @@ namespace Luna.Models.Apis
         VgcApis.Interfaces.Lua.ILuaSys
     {
         readonly object procLocker = new object();
-        List<Process> processes = new List<Process>();
+        private readonly LuaApis luaApis;
 
-        public LuaSys() { }
+        List<Process> processes = new List<Process>();
+        List<VgcApis.Interfaces.Lua.ILuaMailBox> mailboxs = new List<VgcApis.Interfaces.Lua.ILuaMailBox>();
+
+        static readonly SysCmpos.PostOffice postOffice = new SysCmpos.PostOffice();
+
+        public LuaSys(LuaApis luaApis)
+        {
+            this.luaApis = luaApis;
+        }
 
         #region private methods
+        void SendLogHandler(object sender, DataReceivedEventArgs args)
+        {
+            string msg = null;
+            try
+            {
+                msg = args.Data;
+            }
+            catch { }
+
+            if (msg == null)
+            {
+                return;
+            }
+
+            luaApis.SendLog(msg);
+        }
+
         void TrackdownProcess(Process proc)
         {
             lock (procLocker)
@@ -28,6 +54,28 @@ namespace Luna.Models.Apis
             }
             VgcApis.Libs.Sys.ChildProcessTracker.AddProcess(proc);
         }
+        #endregion
+
+        #region ILuaSys.PostOffice
+        public VgcApis.Interfaces.Lua.ILuaMailBox CreateMailBox(string name)
+        {
+            var mailbox = postOffice.CreateMailBox(name);
+            if (mailbox != null)
+            {
+                lock (procLocker)
+                {
+                    if (!mailboxs.Contains(mailbox))
+                    {
+                        mailboxs.Add(mailbox);
+                    }
+                }
+            }
+            return mailbox;
+        }
+
+
+        public bool DestoryMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailbox) =>
+            postOffice.DestoryMailBox(mailbox);
         #endregion
 
         #region ILuaSys.Process
@@ -59,11 +107,20 @@ namespace Luna.Models.Apis
             return true;
         }
 
-        public bool Stop(Process proc) => VgcApis.Misc.Utils.SendStopSignal(proc);
+        public bool SendStopSignal(Process proc) => VgcApis.Misc.Utils.SendStopSignal(proc);
 
-        public Process Run(
-            string exePath, string args, bool hasWindow,
-            string stdin, NLua.LuaTable envs)
+        public Process Run(string exePath) =>
+            Run(exePath, null);
+
+        public Process Run(string exePath, string args) =>
+            Run(exePath, args, null);
+
+        public Process Run(string exePath, string args, string stdin) =>
+            Run(exePath, args, stdin, null, true, false);
+
+
+        public Process Run(string exePath, string args, string stdin,
+            LuaTable envs, bool hasWindow, bool redirectOutput)
         {
             var useStdIn = !string.IsNullOrEmpty(stdin);
             var p = new Process
@@ -75,8 +132,22 @@ namespace Luna.Models.Apis
                     CreateNoWindow = !hasWindow,
                     UseShellExecute = false,
                     RedirectStandardInput = useStdIn,
+                    RedirectStandardError = redirectOutput,
+                    RedirectStandardOutput = redirectOutput,
                 }
             };
+
+            if (redirectOutput)
+            {
+                p.Exited += (s, a) =>
+                {
+                    p.ErrorDataReceived -= SendLogHandler;
+                    p.OutputDataReceived -= SendLogHandler;
+                };
+
+                p.ErrorDataReceived += SendLogHandler;
+                p.OutputDataReceived += SendLogHandler;
+            }
 
             if (envs != null)
             {
@@ -85,6 +156,12 @@ namespace Luna.Models.Apis
 
             p.Start();
             TrackdownProcess(p);
+
+            if (redirectOutput)
+            {
+                p.BeginErrorReadLine();
+                p.BeginOutputReadLine();
+            }
 
             if (useStdIn)
             {
@@ -147,6 +224,12 @@ namespace Luna.Models.Apis
         #region protected methods
         protected override void Cleanup()
         {
+            var boxes = new List<VgcApis.Interfaces.Lua.ILuaMailBox>(mailboxs);
+            foreach (var box in boxes)
+            {
+                DestoryMailBox(box);
+            }
+
             var ps = new List<Process>(processes);
             foreach (var p in ps)
             {
@@ -160,6 +243,8 @@ namespace Luna.Models.Apis
                 catch { }
             }
         }
+
+
         #endregion
     }
 }

@@ -4,12 +4,25 @@ namespace VgcApis.Interfaces.Lua
 {
     public interface ILuaSys
     {
+        #region post office
+        ILuaMailBox CreateMailBox(string name);
+        bool DestoryMailBox(ILuaMailBox mailbox);
+        #endregion
+
         #region process
         void Cleanup(Process proc);
         bool CloseMainWindow(Process proc);
         bool HasExited(Process proc);
-        Process Run(string exePath, string args, bool hasWindow, string stdin, NLua.LuaTable envs);
-        bool Stop(Process proc);
+
+        Process Run(string exePath);
+
+        Process Run(string exePath, string args);
+
+        Process Run(string exePath, string args, string stdin);
+
+        Process Run(string exePath, string args, string stdin,
+            NLua.LuaTable envs, bool hasWindow, bool redirectOutput);
+        bool SendStopSignal(Process proc);
         void WaitForExit(Process proc);
         #endregion
 

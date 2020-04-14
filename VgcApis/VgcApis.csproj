@@ -63,6 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\Lua\ILuaSys.cs" />
+    <Compile Include="Interfaces\Lua\ILuaMail.cs" />
+    <Compile Include="Interfaces\Lua\ILuaMailBox.cs" />
     <Compile Include="Libs\Streams\BitStream.cs" />
     <Compile Include="Libs\Streams\Crc8.cs" />
     <Compile Include="Libs\Streams\RawBitStream\Bytes.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="Interfaces\Services\IConfigMgr.cs" />
     <Compile Include="Interfaces\Services\IServersService.cs" />
     <Compile Include="Interfaces\Services\ISettingsService.cs" />
+    <Compile Include="Models\Datas\LuaMail.cs" />
     <Compile Include="Models\Datas\StatsSample.cs" />
     <Compile Include="Interfaces\Services\IUtilsService.cs" />
     <Compile Include="Interfaces\Services\IWebService.cs" />

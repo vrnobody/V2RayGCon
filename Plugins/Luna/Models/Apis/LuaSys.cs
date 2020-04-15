@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Luna.Models.Apis
@@ -60,22 +61,23 @@ namespace Luna.Models.Apis
         public VgcApis.Interfaces.Lua.ILuaMailBox CreateMailBox(string name)
         {
             var mailbox = postOffice.CreateMailBox(name);
-            if (mailbox != null)
+            if (mailbox == null)
             {
-                lock (procLocker)
+                return null;
+            }
+
+            lock (procLocker)
+            {
+                if (!mailboxs.Contains(mailbox))
                 {
-                    if (!mailboxs.Contains(mailbox))
-                    {
-                        mailboxs.Add(mailbox);
-                    }
+                    mailboxs.Add(mailbox);
+                    return mailbox;
                 }
             }
-            return mailbox;
+
+            return null;
         }
 
-
-        public bool DestoryMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailbox) =>
-            postOffice.DestoryMailBox(mailbox);
         #endregion
 
         #region ILuaSys.Process
@@ -221,16 +223,32 @@ namespace Luna.Models.Apis
         }
         #endregion
 
-        #region protected methods
-        protected override void Cleanup()
+        #region public methods
+        public void CloseAllMailBox()
         {
-            var boxes = new List<VgcApis.Interfaces.Lua.ILuaMailBox>(mailboxs);
-            foreach (var box in boxes)
+            List<VgcApis.Interfaces.Lua.ILuaMailBox> boxes;
+            lock (procLocker)
             {
-                DestoryMailBox(box);
+                boxes = mailboxs.ToList();
+                mailboxs.Clear();
             }
 
-            var ps = new List<Process>(processes);
+            foreach (var box in boxes)
+            {
+                postOffice.RemoveMailBox(box);
+            }
+        }
+        #endregion
+
+        #region private methods
+        private void KillAllProcesses()
+        {
+            List<Process> ps;
+            lock (procLocker)
+            {
+                ps = processes.ToList();
+                processes.Clear();
+            }
             foreach (var p in ps)
             {
                 try
@@ -243,6 +261,16 @@ namespace Luna.Models.Apis
                 catch { }
             }
         }
+        #endregion
+
+        #region protected methods
+        protected override void Cleanup()
+        {
+            CloseAllMailBox();
+            KillAllProcesses();
+        }
+
+
 
 
         #endregion

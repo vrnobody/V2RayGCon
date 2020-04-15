@@ -6,7 +6,6 @@ namespace VgcApis.Interfaces.Lua
     {
         #region post office
         ILuaMailBox CreateMailBox(string name);
-        bool DestoryMailBox(ILuaMailBox mailbox);
         #endregion
 
         #region process

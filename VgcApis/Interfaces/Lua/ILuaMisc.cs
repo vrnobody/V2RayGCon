@@ -31,7 +31,7 @@ namespace VgcApis.Interfaces.Lua
 
         void Print(params object[] contents);
 
-        void Sleep(int milliseconds);
+        void Sleep(int milSec);
 
         string Replace(string text, string oldStr, string newStr);
 

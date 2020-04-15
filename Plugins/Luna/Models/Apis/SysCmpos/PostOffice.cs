@@ -14,14 +14,29 @@ namespace Luna.Models.Apis.SysCmpos
         #endregion
 
         #region public methods
-        public bool DestoryMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailBox)
+        public bool RemoveMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailBox)
         {
+            if (mailBox == null)
+            {
+                return false;
+            }
+
             var address = mailBox.GetAddress();
-            return mailboxs.TryRemove(address, out _);
+            if (mailboxs.TryRemove(address, out var box))
+            {
+                box.Close();
+                return true;
+            }
+            return false;
         }
 
         public VgcApis.Interfaces.Lua.ILuaMailBox CreateMailBox(string address)
         {
+            if (string.IsNullOrEmpty(address))
+            {
+                return null;
+            }
+
             var mailbox = new MailBox(address, this);
             if (mailboxs.TryAdd(address, mailbox))
             {
@@ -33,13 +48,16 @@ namespace Luna.Models.Apis.SysCmpos
 
         public bool Send(string address, VgcApis.Models.Datas.LuaMail mail)
         {
-            if (!mailboxs.TryGetValue(address, out var mailbox))
+            if (string.IsNullOrEmpty(address) || mail == null)
             {
                 return false;
             }
 
-            mailbox.Add(mail);
-            return true;
+            if (!mailboxs.TryGetValue(address, out var mailbox))
+            {
+                return false;
+            }
+            return mailbox.TryAdd(mail);
         }
         #endregion
 

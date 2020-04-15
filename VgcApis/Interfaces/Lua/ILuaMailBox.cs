@@ -4,22 +4,29 @@
     {
         int Count();
 
+        void Close();
+
         Models.Datas.LuaMail Check();
+
+        Models.Datas.LuaMail Wait();
 
         string GetAddress();
 
-        bool Reply(ILuaMail source, string header);
+        bool Reply(ILuaMail mail, string title);
 
-        bool Reply(ILuaMail source, string header, string body);
+        bool Reply(ILuaMail mail, string title, string content);
 
-        bool Reply(ILuaMail source, string header, string body, string footer);
+        bool Reply(ILuaMail mail, double code);
 
-        bool Send(string address);
+        bool Reply(ILuaMail mail, double code, string content);
 
-        bool Send(string address, string header);
+        bool Reply(ILuaMail mail, double code, string title, string content);
 
-        bool Send(string address, string header, string body);
 
-        bool Send(string address, string header, string body, string footer);
+        bool Send(string address, string title);
+        bool Send(string address, string title, string content);
+        bool Send(string address, double code);
+        bool Send(string address, double code, string content);
+        bool Send(string address, double code, string title, string content);
     }
 }

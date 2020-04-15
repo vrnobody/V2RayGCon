@@ -209,6 +209,18 @@ namespace Luna.Controllers
                 ?.Trim()
                 ?.ToLower();
 
+        string GetCurrentText(int curPos)
+        {
+            var line = luaEditor.Lines[luaEditor.CurrentLine];
+            var text = line.Text;
+            var len = Math.Min(curPos - line.Position, text.Length);
+            if (len <= 0)
+            {
+                return string.Empty;
+            }
+            return text.Substring(0, len);
+        }
+
         private void Scintilla_InsertCheck(object sender, InsertCheckEventArgs e)
         {
             if (!e.Text.EndsWith("\n"))
@@ -216,13 +228,13 @@ namespace Luna.Controllers
                 return;
             }
 
-            var line = luaEditor.Lines[luaEditor.CurrentLine];
-            var indent = line.Indentation;
-            var text = Scintilla_TrimText(line.Text);
+            var indent = luaEditor.Lines[luaEditor.CurrentLine].Indentation;
+            var text = Scintilla_TrimText(GetCurrentText(e.Position));
             if (text.StartsWith("function")
                 || text.EndsWith("do")
                 || text.EndsWith("then")
                 || text.EndsWith("else")
+                || text == "repeat"
                 || Regex.IsMatch(text, "{\\s*$"))
             {
                 indent += 4;
@@ -239,9 +251,11 @@ namespace Luna.Controllers
                 return;
             }
 
-            string text = luaEditor.Lines[curLine].Text;
-            string ct = Scintilla_TrimText(text);
-            if (ct == "}" || ct == "else" || ct == "end")
+            string text = Scintilla_TrimText(luaEditor.Lines[curLine].Text);
+            if (text == "}"
+                || text.StartsWith("until")
+                || text == "else"
+                || text == "end")
             {
                 var indent = luaEditor.Lines[curLine - 1].Indentation - 4;
                 luaEditor.Lines[curLine].Indentation = Math.Max(0, indent);

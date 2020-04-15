@@ -7,7 +7,8 @@ namespace Luna.Models.Apis.SysCmpos
         private readonly string myAddress;
         private readonly PostOffice postOffice;
 
-        ConcurrentQueue<VgcApis.Models.Datas.LuaMail> mails = new ConcurrentQueue<VgcApis.Models.Datas.LuaMail>();
+        BlockingCollection<VgcApis.Models.Datas.LuaMail> mails =
+            new BlockingCollection<VgcApis.Models.Datas.LuaMail>();
 
         public MailBox(string myAddress, PostOffice postOffice)
         {
@@ -22,51 +23,84 @@ namespace Luna.Models.Apis.SysCmpos
         #region public methods
         public string GetAddress() => myAddress;
 
-        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail source, string header) =>
-            Reply(source, header, null);
+        public int Count() => mails.Count;
 
-        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail source, string header, string body) =>
-            Reply(source, header, body, null);
+        public VgcApis.Models.Datas.LuaMail Wait()
+        {
+            try
+            {
+                return mails.Take();
+            }
+            catch (System.ObjectDisposedException) { }
+            catch (System.InvalidOperationException) { }
+            return null;
+        }
 
-        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail source, string header, string body, string footer) =>
-            Send(source.GetAddress(), header, body, footer);
+        public VgcApis.Models.Datas.LuaMail Check()
+        {
+            try
+            {
+                if (mails.TryTake(out var mail))
+                {
+                    return mail;
+                }
+            }
+            catch (System.ObjectDisposedException) { }
+            catch (System.InvalidOperationException) { }
+            return null;
+        }
 
-        public bool Send(string address) =>
-            Send(address, header: null);
+        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, string title) =>
+            Reply(mail, title, null);
 
-        public bool Send(string address, string header) =>
-            Send(address, header, null);
+        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, string title, string content) =>
+            Reply(mail, 0, title, content);
 
-        public bool Send(string address, string header, string body) =>
-            Send(address, header, body, null);
+        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, double code) =>
+            Reply(mail, code, null);
 
-        public bool Send(string address, string header, string body, string footer)
+        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, double code, string content) =>
+            Reply(mail, code, null, content);
+
+        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, double code, string title, string content) =>
+            Send(mail.GetAddress(), code, title, content);
+
+        public bool Send(string address, string title) =>
+            Send(address, title, null);
+
+        public bool Send(string address, string title, string content) =>
+            Send(address, 0, title, content);
+        public bool Send(string address, double code) =>
+            Send(address, code, null);
+        public bool Send(string address, double code, string content) =>
+            Send(address, code, null, content);
+        public bool Send(string address, double code, string title, string content)
         {
             var mail = new VgcApis.Models.Datas.LuaMail
             {
                 from = myAddress,
-                header = header,
-                body = body,
-                footer = footer,
+                title = title,
+                content = content,
+                code = code,
             };
 
             return postOffice.Send(address, mail);
         }
 
-        public int Count() => mails.Count;
-
-        public VgcApis.Models.Datas.LuaMail Check()
+        public void Close()
         {
-            if (mails.TryDequeue(out var mail))
-            {
-                return mail;
-            }
-            return null;
+            mails.CompleteAdding();
         }
 
-        public void Add(VgcApis.Models.Datas.LuaMail mail)
+        public bool TryAdd(VgcApis.Models.Datas.LuaMail mail)
         {
-            mails.Enqueue(mail);
+            try
+            {
+                return mails.TryAdd(mail);
+            }
+            catch (System.ObjectDisposedException) { }
+            catch (System.InvalidOperationException) { }
+            return false;
         }
         #endregion
 

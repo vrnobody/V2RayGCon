@@ -104,6 +104,7 @@ namespace Luna.Controllers
 
             SendLog($"{I18N.SendStopSignalTo} {coreSetting.name}");
             luaSignal.SetStopSignal(true);
+            luaSys?.CloseAllMailBox();
         }
 
         public void Kill()

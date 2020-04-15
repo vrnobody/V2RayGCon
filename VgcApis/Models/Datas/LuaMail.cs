@@ -3,15 +3,15 @@
     public class LuaMail : Interfaces.Lua.ILuaMail
     {
         public string from { get; set; }
-        public string header { get; set; }
-        public string body { get; set; }
-        public string footer { get; set; }
+        public string title { get; set; }
+        public string content { get; set; }
+        public double code { get; set; }
 
         public LuaMail() { }
 
         public string GetAddress() => from;
-        public string GetHeader() => header;
-        public string GetBody() => body;
-        public string GetFooter() => footer;
+        public string GetTitle() => title;
+        public string GetContent() => content;
+        public double GetCode() => code;
     }
 }

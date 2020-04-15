@@ -3,8 +3,8 @@
     public interface ILuaMail
     {
         string GetAddress();
-        string GetHeader();
-        string GetBody();
-        string GetFooter();
+        string GetTitle();
+        string GetContent();
+        double GetCode();
     }
 }

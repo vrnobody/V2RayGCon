@@ -69,7 +69,8 @@ namespace Luna.Views.WinForms
                 newWindowToolStripMenuItem,
                 loadFileToolStripMenuItem,
                 saveAsToolStripMenuItem,
-                exitToolStripMenuItem);
+                exitToolStripMenuItem,
+                tabControl1);
 
             menuCtrl.Run();
 

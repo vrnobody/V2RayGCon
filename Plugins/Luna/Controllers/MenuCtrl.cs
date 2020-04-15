@@ -10,6 +10,7 @@ namespace Luna.Controllers
         private readonly ToolStripMenuItem miLoad;
         private readonly ToolStripMenuItem miSaveAs;
         private readonly ToolStripMenuItem miExit;
+        private readonly TabControl tabControlMain;
         Views.WinForms.FormMain formMain;
         Services.FormMgr formMgrService;
 
@@ -20,7 +21,9 @@ namespace Luna.Controllers
             ToolStripMenuItem miNewWindow,
             ToolStripMenuItem miLoad,
             ToolStripMenuItem miSaveAs,
-            ToolStripMenuItem miExit)
+            ToolStripMenuItem miExit,
+
+            TabControl tabControlMain)
         {
             this.formMgrService = formMgrService;
 
@@ -29,6 +32,7 @@ namespace Luna.Controllers
             this.miLoad = miLoad;
             this.miSaveAs = miSaveAs;
             this.miExit = miExit;
+            this.tabControlMain = tabControlMain;
             this.formMain = formMain;
         }
 
@@ -63,6 +67,7 @@ namespace Luna.Controllers
                     return;
                 }
 
+                tabControlMain.SelectTab(1);
                 editorCtrl.SetCurrentEditorContent(script);
             };
 

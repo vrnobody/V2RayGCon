@@ -31,7 +31,9 @@ namespace Luna.Views.WinForms
 
         private void FormMain_Load(object sender, System.EventArgs e)
         {
-            FixSplitPanelWidth();
+
+
+            InitSplitPanel();
             lbStatusBarMsg.Text = "";
 
             // TabGeneral should initialize before TabEditor.
@@ -55,7 +57,8 @@ namespace Luna.Views.WinForms
                 btnKillScript,
                 btnClearOutput,
                 rtBoxOutput,
-                pnlScriptEditor);
+                pnlScriptEditor,
+                splitContainerTabEditor);
 
             editorCtrl.Run(api, settings, luaServer);
 
@@ -81,9 +84,10 @@ namespace Luna.Views.WinForms
             this.KeyDown += (s, a) => editorCtrl?.KeyBoardShortcutHandler(a);
         }
 
-        void FixSplitPanelWidth()
+        void InitSplitPanel()
         {
             splitContainerTabEditor.SplitterDistance = this.Width * 6 / 10;
+            splitContainerTabEditor.Panel2Collapsed = true;
         }
 
         private void FormClosingHandler(object sender, FormClosingEventArgs e)
@@ -103,5 +107,19 @@ namespace Luna.Views.WinForms
         {
             flyScriptUIContainer.Refresh();
         }
+
+        private void hideOutputPanelToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            splitContainerTabEditor.Panel2Collapsed = true;
+        }
+
+        private void showOutputPanelToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            splitContainerTabEditor.Panel2Collapsed = false;
+        }
+
+        #region private methods
+
+        #endregion
     }
 }

@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.4.4")]
+[assembly: AssemblyVersion("1.3.4.5")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.3.4.5 Hide output panel in Luna plug-in by default.
  * v1.3.4.4 Refactor mailbox of Luna plug-in.
  *          Fix "function" keyword indentation problem in lua editor.
  * v1.3.4.3 Add mailbox feature in Luna plug-in.

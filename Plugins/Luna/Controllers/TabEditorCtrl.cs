@@ -50,23 +50,25 @@ namespace Luna.Controllers
             Button btnKillScript,
             Button btnClearOutput,
             RichTextBox rtboxOutput,
-            Panel pnlEditorContainer)
+            Panel pnlEditorContainer,
+            SplitContainer splitContainer)
         {
-            BindControls(
-                cboxScriptName,
-                btnNewScript,
-                btnSaveScript,
-                btnDeleteScript,
-                btnRunScript,
-                btnStopScript,
-                btnKillScript,
-                btnClearOutput,
-                rtboxOutput,
-                pnlEditorContainer);
+            this.cboxScriptName = cboxScriptName;
+            this.btnNewScript = btnNewScript;
+            this.btnSaveScript = btnSaveScript;
+            this.btnDeleteScript = btnDeleteScript;
+            this.btnRunScript = btnRunScript;
+            this.btnStopScript = btnStopScript;
+            this.btnKillScript = btnKillScript;
+            this.btnClearOutput = btnClearOutput;
+            this.rtboxOutput = rtboxOutput;
+            this.pnlEditorContainer = pnlEditorContainer;
+            this.splitContainer = splitContainer;
 
             logUpdater = new VgcApis.Libs.Tasks.Routine(
                UpdateOutput,
                VgcApis.Models.Consts.Intervals.LuaPluginLogRefreshInterval);
+
         }
 
         public void Run(
@@ -281,6 +283,8 @@ namespace Luna.Controllers
 
         long updateOutputTimeStamp = 0;
         VgcApis.Libs.Tasks.Bar bar = new VgcApis.Libs.Tasks.Bar();
+        private readonly SplitContainer splitContainer;
+
         void UpdateOutput()
         {
             if (!bar.Install())
@@ -328,6 +332,8 @@ namespace Luna.Controllers
 
             btnRunScript.Click += (s, a) =>
             {
+                splitContainer.Panel2Collapsed = false;
+
                 var name = cboxScriptName.Text;
 
                 luaCoreCtrl.Kill();
@@ -445,29 +451,7 @@ namespace Luna.Controllers
             }
         }
 
-        private void BindControls(
-            ComboBox cboxScriptName,
-            Button btnNewScript,
-            Button btnSaveScript,
-            Button btnDeleteScript,
-            Button btnRunScript,
-            Button btnStopScript,
-            Button btnKillScript,
-            Button btnClearOutput,
-            RichTextBox rtboxOutput,
-            Panel pnlEditorContainer)
-        {
-            this.cboxScriptName = cboxScriptName;
-            this.btnNewScript = btnNewScript;
-            this.btnSaveScript = btnSaveScript;
-            this.btnDeleteScript = btnDeleteScript;
-            this.btnRunScript = btnRunScript;
-            this.btnStopScript = btnStopScript;
-            this.btnKillScript = btnKillScript;
-            this.btnClearOutput = btnClearOutput;
-            this.rtboxOutput = rtboxOutput;
-            this.pnlEditorContainer = pnlEditorContainer;
-        }
+
         #endregion
     }
 }

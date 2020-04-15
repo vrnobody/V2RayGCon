@@ -313,10 +313,10 @@ namespace VgcApis.Misc
                 if (Libs.Sys.ConsoleCtrls.AttachConsole((uint)proc.Id))
                 {
                     Libs.Sys.ConsoleCtrls.SetConsoleCtrlHandler(null, true);
-                    Libs.Sys.ConsoleCtrls.GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
                     try
                     {
-                        if (proc.WaitForExit(Models.Consts.Core.SendCtrlCTimeout))
+                        if (Libs.Sys.ConsoleCtrls.GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0)
+                            && proc.WaitForExit(Models.Consts.Core.SendCtrlCTimeout))
                         {
                             success = true;
                         }

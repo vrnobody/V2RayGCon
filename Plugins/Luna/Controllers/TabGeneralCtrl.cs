@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Luna.Controllers
@@ -32,8 +33,50 @@ namespace Luna.Controllers
             this.settings = settings;
             this.luaServer = luaServer;
             BindEvents(luaServer);
+            BindDragDropEvent();
+
             RefreshFlyPanel();
-            luaServer.OnLuaCoreCtrlListChange += OnLuaCoreCtrlListChangeHandler;
+            luaServer.OnLuaCoreCtrlListChanged += OnLuaCoreCtrlListChangeHandler;
+        }
+
+        void BindDragDropEvent()
+        {
+            flyLuaUiPanel.DragEnter += (s, a) =>
+            {
+                a.Effect = DragDropEffects.Move;
+            };
+
+            flyLuaUiPanel.DragDrop += (s, a) =>
+            {
+                // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
+
+                var curUiItem = a.Data.GetData(typeof(Views.UserControls.LuaUI)) as Views.UserControls.LuaUI;
+
+                var panel = s as FlowLayoutPanel;
+                Point p = panel.PointToClient(new Point(a.X, a.Y));
+                var destUiItem = panel.GetChildAtPoint(p) as Views.UserControls.LuaUI;
+                if (curUiItem == null || destUiItem == null || curUiItem == destUiItem)
+                {
+                    return;
+                }
+
+                var curIdx = curUiItem.GetIndex();
+                var destIdx = destUiItem.GetIndex();
+
+                destIdx = destIdx + 0.5;
+                if (curIdx > destIdx)
+                {
+                    curIdx = destIdx - 0.1;
+                }
+                else
+                {
+                    curIdx = destIdx + 0.1;
+                }
+
+                destUiItem.SetIndex(destIdx);
+                curUiItem.SetIndex(curIdx);
+                luaServer.ResetIndex();
+            };
         }
 
         private void BindEvents(Services.LuaServer luaServer)
@@ -107,7 +150,7 @@ namespace Luna.Controllers
 
         public void Cleanup()
         {
-            luaServer.OnLuaCoreCtrlListChange -= OnLuaCoreCtrlListChangeHandler;
+            luaServer.OnLuaCoreCtrlListChanged -= OnLuaCoreCtrlListChangeHandler;
             RunInUiThread(() =>
             {
                 ClearFlyPanel();

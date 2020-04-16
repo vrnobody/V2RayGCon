@@ -38,6 +38,7 @@
             this.lbRunningState = new System.Windows.Forms.Label();
             this.lbName = new System.Windows.Forms.Label();
             this.btnRemove = new System.Windows.Forms.Button();
+            this.chkIsHidden = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnRun
@@ -78,27 +79,39 @@
             // 
             // lbRunningState
             // 
-            this.lbRunningState.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lbRunningState.Cursor = System.Windows.Forms.Cursors.SizeAll;
             resources.ApplyResources(this.lbRunningState, "lbRunningState");
             this.lbRunningState.ForeColor = System.Drawing.Color.Green;
             this.lbRunningState.Name = "lbRunningState";
             this.toolTip1.SetToolTip(this.lbRunningState, resources.GetString("lbRunningState.ToolTip"));
+            this.lbRunningState.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbRunningState_MouseDown);
             // 
             // lbName
             // 
             this.lbName.AutoEllipsis = true;
-            this.lbName.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lbName.Cursor = System.Windows.Forms.Cursors.SizeAll;
             resources.ApplyResources(this.lbName, "lbName");
             this.lbName.Name = "lbName";
             this.toolTip1.SetToolTip(this.lbName, resources.GetString("lbName.ToolTip"));
+            this.lbName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbName_MouseDown);
             // 
             // btnRemove
             // 
             resources.ApplyResources(this.btnRemove, "btnRemove");
+            this.btnRemove.Cursor = System.Windows.Forms.Cursors.Default;
             this.btnRemove.Name = "btnRemove";
             this.toolTip1.SetToolTip(this.btnRemove, resources.GetString("btnRemove.ToolTip"));
             this.btnRemove.UseVisualStyleBackColor = true;
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            // 
+            // chkIsHidden
+            // 
+            resources.ApplyResources(this.chkIsHidden, "chkIsHidden");
+            this.chkIsHidden.Cursor = System.Windows.Forms.Cursors.Default;
+            this.chkIsHidden.Name = "chkIsHidden";
+            this.toolTip1.SetToolTip(this.chkIsHidden, resources.GetString("chkIsHidden.ToolTip"));
+            this.chkIsHidden.UseVisualStyleBackColor = true;
+            this.chkIsHidden.CheckedChanged += new System.EventHandler(this.chkIsHidden_CheckedChanged);
             // 
             // LuaUI
             // 
@@ -108,13 +121,15 @@
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.lbName);
             this.Controls.Add(this.lbRunningState);
+            this.Controls.Add(this.chkIsHidden);
             this.Controls.Add(this.chkIsAutoRun);
             this.Controls.Add(this.btnKill);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnRun);
-            this.Cursor = System.Windows.Forms.Cursors.Default;
+            this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Name = "LuaUI";
             this.Load += new System.EventHandler(this.LuaUI_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LuaUI_MouseDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -130,5 +145,6 @@
         private System.Windows.Forms.Label lbRunningState;
         private System.Windows.Forms.Label lbName;
         private System.Windows.Forms.Button btnRemove;
+        private System.Windows.Forms.CheckBox chkIsHidden;
     }
 }

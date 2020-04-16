@@ -9,7 +9,7 @@ namespace Luna.Controllers
 {
     public class LuaCoreCtrl
     {
-        public EventHandler OnStateChange;
+        public EventHandler OnStateChange, OnIsHiddenChanged;
 
         Services.Settings settings;
         Models.Data.LuaCoreSetting coreSetting;
@@ -35,6 +35,35 @@ namespace Luna.Controllers
 
         #region properties 
         public string name => coreSetting.name;
+
+        public double index
+        {
+            get => coreSetting.index;
+            set
+            {
+                if (coreSetting.index == value)
+                {
+                    return;
+                }
+                coreSetting.index = value;
+                Save();
+            }
+        }
+
+        public bool isHidden
+        {
+            get => coreSetting.isHidden;
+            set
+            {
+                if (coreSetting.isHidden == value)
+                {
+                    return;
+                }
+                coreSetting.isHidden = value;
+                Save();
+                InvokeOnIsHiddenChangeIgnoreError();
+            }
+        }
 
         public bool isAutoRun
         {
@@ -69,6 +98,15 @@ namespace Luna.Controllers
                 }
                 InvokeOnStateChangeIgnoreError();
             }
+        }
+
+        void InvokeOnIsHiddenChangeIgnoreError()
+        {
+            try
+            {
+                OnIsHiddenChanged?.Invoke(null, null);
+            }
+            catch { }
         }
 
         void InvokeOnStateChangeIgnoreError()

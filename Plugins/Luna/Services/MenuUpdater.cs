@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Luna.Services
@@ -11,7 +12,7 @@ namespace Luna.Services
         ToolStripMenuItem miRoot, miShowWindow;
         VgcApis.Interfaces.Services.INotifierService vgcNotifierService;
         VgcApis.Libs.Tasks.LazyGuy lazyMenuUpdater;
-        VgcApis.Libs.Tasks.Bar menuUpdaterLock = new VgcApis.Libs.Tasks.Bar();
+        AutoResetEvent menuUpdaterLock = new AutoResetEvent(true);
 
         public MenuUpdater(VgcApis.Interfaces.Services.INotifierService vgcNotifierService)
         {
@@ -43,22 +44,21 @@ namespace Luna.Services
 
         void UpdateMenuLater()
         {
-            if (!menuUpdaterLock.Install())
+            if (!menuUpdaterLock.WaitOne(0))
             {
                 lazyMenuUpdater?.DoItLater();
                 return;
             }
 
-            Action next = () => menuUpdaterLock.Remove();
+            Action next = () => menuUpdaterLock.Set();
             UpdateMenuNow(next);
         }
 
         void UpdateMenuNow(Action next)
         {
-            var mis = GenSubMenuItems();
-
             vgcNotifierService.RunInUiThreadIgnoreErrorThen(() =>
             {
+                var mis = GenSubMenuItems();
                 var root = miRoot.DropDownItems;
                 root.Clear();
                 root.Add(miShowWindow);
@@ -73,7 +73,7 @@ namespace Luna.Services
         List<ToolStripMenuItem> GenSubMenuItems()
         {
             var mis = new List<ToolStripMenuItem>();
-            var luaCtrls = luaServer.GetAllLuaCoreCtrls();
+            var luaCtrls = luaServer.GetVisibleCoreCtrls();
             foreach (var luaCtrl in luaCtrls)
             {
                 var ctrl = luaCtrl; // capture
@@ -90,12 +90,14 @@ namespace Luna.Services
 
         void BindEvents()
         {
-            luaServer.OnLuaCoreCtrlListChange += LuaCoreCtrlListChangeHandler;
+            luaServer.OnLuaCoreCtrlListChanged += LuaCoreCtrlListChangeHandler;
+            luaServer.OnLuaCoreCtrlHiddenStateChanged += LuaCoreCtrlListChangeHandler;
         }
 
         void ReleaseEvents()
         {
-            luaServer.OnLuaCoreCtrlListChange -= LuaCoreCtrlListChangeHandler;
+            luaServer.OnLuaCoreCtrlListChanged -= LuaCoreCtrlListChangeHandler;
+            luaServer.OnLuaCoreCtrlHiddenStateChanged -= LuaCoreCtrlListChangeHandler;
         }
         #endregion
 

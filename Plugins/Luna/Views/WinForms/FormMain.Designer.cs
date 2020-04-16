@@ -48,13 +48,12 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnNewScript = new System.Windows.Forms.Button();
             this.cboxScriptName = new System.Windows.Forms.ComboBox();
+            this.btnNewScript = new System.Windows.Forms.Button();
             this.btnClearOutput = new System.Windows.Forms.Button();
             this.btnKillScript = new System.Windows.Forms.Button();
             this.btnStopScript = new System.Windows.Forms.Button();
             this.btnRunScript = new System.Windows.Forms.Button();
-            this.btnRemoveScript = new System.Windows.Forms.Button();
             this.btnSaveScript = new System.Windows.Forms.Button();
             this.pnlScriptEditor = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -234,23 +233,15 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnNewScript);
             this.panel1.Controls.Add(this.cboxScriptName);
+            this.panel1.Controls.Add(this.btnNewScript);
             this.panel1.Controls.Add(this.btnClearOutput);
             this.panel1.Controls.Add(this.btnKillScript);
             this.panel1.Controls.Add(this.btnStopScript);
             this.panel1.Controls.Add(this.btnRunScript);
-            this.panel1.Controls.Add(this.btnRemoveScript);
             this.panel1.Controls.Add(this.btnSaveScript);
             resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
-            // 
-            // btnNewScript
-            // 
-            resources.ApplyResources(this.btnNewScript, "btnNewScript");
-            this.btnNewScript.Name = "btnNewScript";
-            this.toolTip1.SetToolTip(this.btnNewScript, resources.GetString("btnNewScript.ToolTip"));
-            this.btnNewScript.UseVisualStyleBackColor = true;
             // 
             // cboxScriptName
             // 
@@ -258,6 +249,13 @@
             this.cboxScriptName.FormattingEnabled = true;
             this.cboxScriptName.Name = "cboxScriptName";
             this.toolTip1.SetToolTip(this.cboxScriptName, resources.GetString("cboxScriptName.ToolTip"));
+            // 
+            // btnNewScript
+            // 
+            resources.ApplyResources(this.btnNewScript, "btnNewScript");
+            this.btnNewScript.Name = "btnNewScript";
+            this.toolTip1.SetToolTip(this.btnNewScript, resources.GetString("btnNewScript.ToolTip"));
+            this.btnNewScript.UseVisualStyleBackColor = true;
             // 
             // btnClearOutput
             // 
@@ -286,13 +284,6 @@
             this.btnRunScript.Name = "btnRunScript";
             this.toolTip1.SetToolTip(this.btnRunScript, resources.GetString("btnRunScript.ToolTip"));
             this.btnRunScript.UseVisualStyleBackColor = true;
-            // 
-            // btnRemoveScript
-            // 
-            resources.ApplyResources(this.btnRemoveScript, "btnRemoveScript");
-            this.btnRemoveScript.Name = "btnRemoveScript";
-            this.toolTip1.SetToolTip(this.btnRemoveScript, resources.GetString("btnRemoveScript.ToolTip"));
-            this.btnRemoveScript.UseVisualStyleBackColor = true;
             // 
             // btnSaveScript
             // 
@@ -450,7 +441,6 @@
         private System.Windows.Forms.Button btnKillScript;
         private System.Windows.Forms.Button btnStopScript;
         private System.Windows.Forms.Button btnRunScript;
-        private System.Windows.Forms.Button btnRemoveScript;
         private System.Windows.Forms.Button btnSaveScript;
         private System.Windows.Forms.Panel pnlScriptEditor;
         private System.Windows.Forms.GroupBox groupBox1;

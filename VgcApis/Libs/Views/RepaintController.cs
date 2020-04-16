@@ -5,13 +5,14 @@ using System.Windows.Forms;
 namespace VgcApis.Libs.Views
 {
     // https://stackoverflow.com/questions/192413/how-do-you-prevent-a-richtextbox-from-refreshing-its-display
-    public sealed class RepaintCtrl
+    public sealed class RepaintController
     {
 
-        Libs.Tasks.Bar bar = new Tasks.Bar();
+        bool isDisabled = false;
+
         Control control;
 
-        public RepaintCtrl(Control control)
+        public RepaintController(Control control)
         {
             this.control = control;
         }
@@ -26,12 +27,14 @@ namespace VgcApis.Libs.Views
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
 
         #region public methods
-        public void Enable()
+        public void EnableRepaintEvent()
         {
-            if (!bar.Install())
+            if (!isDisabled)
             {
                 return;
             }
+            isDisabled = false;
+
             // turn on events
             SendMessage(control.Handle, EM_SETEVENTMASK, IntPtr.Zero, eventMask);
             // turn on redrawing
@@ -40,19 +43,18 @@ namespace VgcApis.Libs.Views
             control.Invalidate();
         }
 
-        public void Disable()
+        public void DisableRepaintEvent()
         {
-            if (bar.Install())
+            if (isDisabled)
             {
-                bar.Remove();
                 return;
             }
+            isDisabled = true;
+
             // Stop redrawing:
             SendMessage(control.Handle, WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero);
             // Stop sending of events:
             eventMask = SendMessage(control.Handle, EM_GETEVENTMASK, IntPtr.Zero, IntPtr.Zero);
-
-            bar.Remove();
         }
         #endregion
 

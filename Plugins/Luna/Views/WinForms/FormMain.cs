@@ -31,8 +31,6 @@ namespace Luna.Views.WinForms
 
         private void FormMain_Load(object sender, System.EventArgs e)
         {
-
-
             InitSplitPanel();
             lbStatusBarMsg.Text = "";
 
@@ -48,17 +46,16 @@ namespace Luna.Views.WinForms
             genCtrl.Run(settings, luaServer);
 
             editorCtrl = new Controllers.TabEditorCtrl(
+                this,
                 cboxScriptName,
                 btnNewScript,
                 btnSaveScript,
-                btnRemoveScript,
                 btnRunScript,
                 btnStopScript,
                 btnKillScript,
                 btnClearOutput,
                 rtBoxOutput,
-                pnlScriptEditor,
-                splitContainerTabEditor);
+                pnlScriptEditor);
 
             editorCtrl.Run(api, settings, luaServer);
 
@@ -85,12 +82,13 @@ namespace Luna.Views.WinForms
             this.KeyDown += (s, a) => editorCtrl?.KeyBoardShortcutHandler(a);
         }
 
+        #region private methods
         void InitSplitPanel()
         {
             splitContainerTabEditor.SplitterDistance = this.Width * 6 / 10;
-            splitContainerTabEditor.Panel2Collapsed = true;
-        }
+            SetOutputPanelCollapseState(true);
 
+        }
         private void FormClosingHandler(object sender, FormClosingEventArgs e)
         {
             if (settings.IsShutdown())
@@ -103,7 +101,19 @@ namespace Luna.Views.WinForms
                 e.Cancel = !VgcApis.Misc.UI.Confirm(I18N.DiscardUnsavedChanges);
             }
         }
+        #endregion
 
+        #region public methods
+        public void SetOutputPanelCollapseState(bool isCollapsed)
+        {
+            splitContainerTabEditor.Panel2Collapsed = isCollapsed;
+            showOutputPanelToolStripMenuItem.Checked = !isCollapsed;
+            hideOutputPanelToolStripMenuItem.Checked = isCollapsed;
+        }
+        #endregion
+
+
+        #region UI event handlers
         private void flyScriptUIContainer_Scroll(object sender, ScrollEventArgs e)
         {
             flyScriptUIContainer.Refresh();
@@ -111,16 +121,15 @@ namespace Luna.Views.WinForms
 
         private void hideOutputPanelToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
-            splitContainerTabEditor.Panel2Collapsed = true;
+            SetOutputPanelCollapseState(true);
         }
 
         private void showOutputPanelToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
-            splitContainerTabEditor.Panel2Collapsed = false;
+            SetOutputPanelCollapseState(false);
         }
-
-        #region private methods
-
         #endregion
+
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutocompleteMenuNS;
 using Luna.Resources.Langs;
+using Luna.Views.WinForms;
 using ScintillaNET;
 using System;
 using System.Linq;
@@ -15,24 +16,25 @@ namespace Luna.Controllers
 
         LuaCoreCtrl luaCoreCtrl;
         VgcApis.WinForms.FormSearch formSearch = null;
-        VgcApis.Libs.Views.RepaintCtrl repaintCtrl;
+        VgcApis.Libs.Views.RepaintController rtboxFreezer;
         VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
 
         Scintilla luaEditor = null;
         AutocompleteMenu luaAcm = null;
+        private readonly FormMain formMain;
 
         #region controls
         ComboBox cboxScriptName;
         Button btnNewScript,
             btnSaveScript,
-            btnDeleteScript,
             btnRunScript,
             btnStopScript,
             btnKillScript,
             btnClearOutput;
 
         RichTextBox rtboxOutput;
-        Panel pnlEditorContainer;
+        private readonly Panel pnlEditorContainer;
+
         #endregion
 
         string preScriptName = string.Empty;
@@ -41,29 +43,27 @@ namespace Luna.Controllers
         VgcApis.Libs.Tasks.Routine logUpdater;
 
         public TabEditorCtrl(
+            Views.WinForms.FormMain formMain,
             ComboBox cboxScriptName,
             Button btnNewScript,
             Button btnSaveScript,
-            Button btnDeleteScript,
             Button btnRunScript,
             Button btnStopScript,
             Button btnKillScript,
             Button btnClearOutput,
             RichTextBox rtboxOutput,
-            Panel pnlEditorContainer,
-            SplitContainer splitContainer)
+            Panel pnlEditorContainer)
         {
+            this.formMain = formMain;
             this.cboxScriptName = cboxScriptName;
             this.btnNewScript = btnNewScript;
             this.btnSaveScript = btnSaveScript;
-            this.btnDeleteScript = btnDeleteScript;
             this.btnRunScript = btnRunScript;
             this.btnStopScript = btnStopScript;
             this.btnKillScript = btnKillScript;
             this.btnClearOutput = btnClearOutput;
             this.rtboxOutput = rtboxOutput;
             this.pnlEditorContainer = pnlEditorContainer;
-            this.splitContainer = splitContainer;
 
             logUpdater = new VgcApis.Libs.Tasks.Routine(
                UpdateOutput,
@@ -82,10 +82,9 @@ namespace Luna.Controllers
 
             InitControls();
             BindEvents();
-
             ReloadScriptName();
 
-            repaintCtrl = new VgcApis.Libs.Views.RepaintCtrl(rtboxOutput);
+            rtboxFreezer = new VgcApis.Libs.Views.RepaintController(rtboxOutput);
             logUpdater.Run();
         }
 
@@ -127,15 +126,8 @@ namespace Luna.Controllers
             }
         }
 
-        public bool IsChanged()
-        {
-            var script = luaEditor.Text;
-            if (script == preScriptContent)
-            {
-                return false;
-            }
-            return true;
-        }
+        public bool IsChanged() =>
+            luaEditor.Text != preScriptContent;
 
         LuaCoreCtrl CreateLuaCoreCtrl(
             Services.Settings settings,
@@ -146,7 +138,6 @@ namespace Luna.Controllers
             luaApis.SetRedirectLogWorker(Log);
 
             var coreSettings = new Models.Data.LuaCoreSetting();
-
             var ctrl = new LuaCoreCtrl();
             ctrl.Run(settings, coreSettings, luaApis);
             return ctrl;
@@ -169,7 +160,7 @@ namespace Luna.Controllers
         public string GetCurrentEditorContent() => luaEditor.Text;
 
         public void SetCurrentEditorContent(string content) =>
-            VgcApis.Misc.UI.RunInUiThread(
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
                 luaEditor, () => luaEditor.Text = content);
 
         public bool SaveScript()
@@ -284,7 +275,6 @@ namespace Luna.Controllers
 
         long updateOutputTimeStamp = 0;
         VgcApis.Libs.Tasks.Bar bar = new VgcApis.Libs.Tasks.Bar();
-        private readonly SplitContainer splitContainer;
 
         void UpdateOutput()
         {
@@ -300,23 +290,14 @@ namespace Luna.Controllers
                 return;
             }
 
-            VgcApis.Misc.UI.RunInUiThread(rtboxOutput, () =>
+            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(rtboxOutput, () =>
             {
-                // form maybe closed
-                try
-                {
-                    repaintCtrl.Disable();
-                    rtboxOutput.Text = qLogger.GetLogAsString(true);
-                    VgcApis.Misc.UI.ScrollToBottom(rtboxOutput);
-                    repaintCtrl.Enable();
-                    updateOutputTimeStamp = timestamp;
-                }
-                catch { }
-                finally
-                {
-                    bar.Remove();
-                }
-            });
+                rtboxFreezer.DisableRepaintEvent();
+                rtboxOutput.Text = qLogger.GetLogAsString(true);
+                VgcApis.Misc.UI.ScrollToBottom(rtboxOutput);
+                rtboxFreezer.EnableRepaintEvent();
+                updateOutputTimeStamp = timestamp;
+            }, () => bar.Remove());
         }
 
         private void BindEvents()
@@ -333,16 +314,12 @@ namespace Luna.Controllers
 
             btnRunScript.Click += (s, a) =>
             {
-                splitContainer.Panel2Collapsed = false;
+                formMain.SetOutputPanelCollapseState(false);
 
                 var name = cboxScriptName.Text;
 
                 luaCoreCtrl.Kill();
-
-                luaCoreCtrl.SetScriptName(
-                    string.IsNullOrEmpty(name)
-                    ? $"({I18N.Empty})" : name);
-
+                luaCoreCtrl.SetScriptName(string.IsNullOrEmpty(name) ? $"({I18N.Empty})" : name);
                 luaCoreCtrl.ReplaceScript(luaEditor.Text);
                 luaCoreCtrl.Start();
             };
@@ -352,20 +329,6 @@ namespace Luna.Controllers
                 qLogger?.Reset();
             };
 
-            btnDeleteScript.Click += (s, a) =>
-            {
-                var scriptName = cboxScriptName.Text;
-                if (string.IsNullOrEmpty(scriptName)
-                || !VgcApis.Misc.UI.Confirm(I18N.ConfirmRemoveScript))
-                {
-                    return;
-                }
-
-                if (!luaServer.RemoveScriptByName(scriptName))
-                {
-                    VgcApis.Misc.UI.MsgBoxAsync("", I18N.ScriptNotFound);
-                }
-            };
 
             btnSaveScript.Click += (s, a) => OnBtnSaveScriptClickHandler(true);
 
@@ -380,14 +343,14 @@ namespace Luna.Controllers
             var scriptName = cboxScriptName.Text;
             if (string.IsNullOrEmpty(scriptName))
             {
-                VgcApis.Misc.UI.MsgBoxAsync("", I18N.ScriptNameNotSet);
+                VgcApis.Misc.UI.MsgBoxAsync(I18N.ScriptNameNotSet);
                 return;
             }
 
             var success = SaveScript();
             if (showResult)
             {
-                VgcApis.Misc.UI.MsgBoxAsync("", success ? I18N.Done : I18N.Fail);
+                VgcApis.Misc.UI.MsgBoxAsync(success ? I18N.Done : I18N.Fail);
             }
         }
 
@@ -439,17 +402,13 @@ namespace Luna.Controllers
 
         void ReloadScriptName()
         {
+            var scriptsName = luaServer
+                .GetAllLuaCoreCtrls()
+                .Select(c => c.name)
+                .ToArray();
+
             cboxScriptName.Items.Clear();
-
-            var cores = settings
-                .GetLuaCoreSettings()
-                .OrderBy(c => c.name)
-                .ToList();
-
-            foreach (var coreState in cores)
-            {
-                cboxScriptName.Items.Add(coreState.name);
-            }
+            cboxScriptName.Items.AddRange(scriptsName);
         }
 
 

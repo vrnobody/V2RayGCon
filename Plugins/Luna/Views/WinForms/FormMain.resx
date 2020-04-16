@@ -178,7 +178,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnExportToFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 189</value>
+    <value>2, 253</value>
   </data>
   <data name="btnExportToFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 22</value>
@@ -214,7 +214,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnImportFromFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 161</value>
+    <value>2, 225</value>
   </data>
   <data name="btnImportFromFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 22</value>
@@ -244,7 +244,7 @@
     <value>Bottom, Right</value>
   </data>
   <data name="btnDeleteAllScripts.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 133</value>
+    <value>2, 197</value>
   </data>
   <data name="btnDeleteAllScripts.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 22</value>
@@ -340,7 +340,7 @@
     <value>443, 5</value>
   </data>
   <data name="panel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 218</value>
+    <value>78, 282</value>
   </data>
   <data name="panel2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -370,7 +370,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="flyScriptUIContainer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 222</value>
+    <value>434, 286</value>
   </data>
   <data name="flyScriptUIContainer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -397,7 +397,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="tabGeneral.Size" type="System.Drawing.Size, System.Drawing">
-    <value>524, 223</value>
+    <value>524, 287</value>
   </data>
   <data name="tabGeneral.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -429,8 +429,35 @@
   <data name="tableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="btnNewScript.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="cboxScriptName.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="cboxScriptName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>47, 2</value>
+  </data>
+  <data name="cboxScriptName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="cboxScriptName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 20</value>
+  </data>
+  <data name="cboxScriptName.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="cboxScriptName.ToolTip" xml:space="preserve">
+    <value>Load script or set name for new script.</value>
+  </data>
+  <data name="&gt;&gt;cboxScriptName.Name" xml:space="preserve">
+    <value>cboxScriptName</value>
+  </data>
+  <data name="&gt;&gt;cboxScriptName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboxScriptName.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;cboxScriptName.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="btnNewScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -447,7 +474,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnNewScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>163, 2</value>
+    <value>2, 2</value>
   </data>
   <data name="btnNewScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -471,36 +498,6 @@
     <value>panel1</value>
   </data>
   <data name="&gt;&gt;btnNewScript.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="cboxScriptName.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="cboxScriptName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 2</value>
-  </data>
-  <data name="cboxScriptName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="cboxScriptName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 20</value>
-  </data>
-  <data name="cboxScriptName.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="cboxScriptName.ToolTip" xml:space="preserve">
-    <value>Load script or set name for new script.</value>
-  </data>
-  <data name="&gt;&gt;cboxScriptName.Name" xml:space="preserve">
-    <value>cboxScriptName</value>
-  </data>
-  <data name="&gt;&gt;cboxScriptName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboxScriptName.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;cboxScriptName.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="btnClearOutput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -674,51 +671,6 @@
   <data name="&gt;&gt;btnRunScript.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="btnRemoveScript.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="btnRemoveScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAALZJREFUOE9jQAbfvn0zgDJxApxqgBIVQPwfiDOhQhgAJAdVUwEVggCQwKubV/9v
-        i3T///b+HayGgMRAcltCHP4/v3gWYQiQYQDEYM0L1Xj/r3XWxTAEphkkB1IDMgSkB6QXqwJkQ/DJgTXD
-        AC6FRGmGAWyGEK0ZBtANIUkzCFBkALpmEI3MxmsINs0gPjYxDENwaQaJ45ODaaZKQiI/KcMASACIsWqG
-        AZAcVA2qZhgASpCYnRkYAKjTuVoFkX4yAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="btnRemoveScript.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="btnRemoveScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>203, 2</value>
-  </data>
-  <data name="btnRemoveScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnRemoveScript.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
-  </data>
-  <data name="btnRemoveScript.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="btnRemoveScript.ToolTip" xml:space="preserve">
-    <value>Delete script.</value>
-  </data>
-  <data name="&gt;&gt;btnRemoveScript.Name" xml:space="preserve">
-    <value>btnRemoveScript</value>
-  </data>
-  <data name="&gt;&gt;btnRemoveScript.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnRemoveScript.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;btnRemoveScript.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="btnSaveScript.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
   <data name="btnSaveScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -731,7 +683,7 @@
     <value>Zoom</value>
   </data>
   <data name="btnSaveScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>183, 2</value>
+    <value>23, 2</value>
   </data>
   <data name="btnSaveScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -755,7 +707,7 @@
     <value>panel1</value>
   </data>
   <data name="&gt;&gt;btnSaveScript.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -800,7 +752,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="pnlScriptEditor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>305, 172</value>
+    <value>305, 236</value>
   </data>
   <data name="pnlScriptEditor.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -830,7 +782,7 @@
     <value>2</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>309, 201</value>
+    <value>309, 265</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -860,7 +812,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="panel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>309, 201</value>
+    <value>309, 265</value>
   </data>
   <data name="panel3.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -890,7 +842,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>313, 219</value>
+    <value>313, 283</value>
   </data>
   <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -938,7 +890,7 @@
     <value>Vertical</value>
   </data>
   <data name="rtBoxOutput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 201</value>
+    <value>200, 265</value>
   </data>
   <data name="rtBoxOutput.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -971,7 +923,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>204, 219</value>
+    <value>204, 283</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1007,7 +959,7 @@
     <value>150</value>
   </data>
   <data name="splitContainerTabEditor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>520, 219</value>
+    <value>520, 283</value>
   </data>
   <data name="splitContainerTabEditor.SplitterDistance" type="System.Int32, mscorlib">
     <value>313</value>
@@ -1040,7 +992,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="tabEditor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>524, 223</value>
+    <value>524, 287</value>
   </data>
   <data name="tabEditor.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1070,7 +1022,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>532, 249</value>
+    <value>532, 313</value>
   </data>
   <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1091,7 +1043,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="toolStripContainer1.ContentPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>532, 249</value>
+    <value>532, 313</value>
   </data>
   <data name="&gt;&gt;toolStripContainer1.ContentPanel.Name" xml:space="preserve">
     <value>toolStripContainer1.ContentPanel</value>
@@ -1139,7 +1091,7 @@
     <value>2</value>
   </data>
   <data name="toolStripContainer1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>532, 296</value>
+    <value>532, 360</value>
   </data>
   <data name="toolStripContainer1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1274,7 +1226,7 @@
     <value>6, 12</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>532, 296</value>
+    <value>532, 360</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>

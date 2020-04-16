@@ -54,27 +54,41 @@ namespace Luna.Models.Apis.SysCmpos
             Reply(mail, title, null);
 
         public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, string title, string content) =>
-            Reply(mail, 0, title, content);
+            Reply(mail, 0, title, false, content);
 
         public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, double code) =>
             Reply(mail, code, null);
 
         public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, double code, string content) =>
-            Reply(mail, code, null, content);
+            Reply(mail, code, null, false, content);
 
-        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, double code, string title, string content) =>
-            Send(mail.GetAddress(), code, title, content);
+        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, bool state) =>
+            Reply(mail, state, null);
+
+        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, bool state, string content) =>
+            Reply(mail, 0, null, state, content);
+
+        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, double code, string title, bool state, string content) =>
+            Send(mail.GetAddress(), code, title, state, content);
 
         public bool Send(string address, string title) =>
             Send(address, title, null);
 
         public bool Send(string address, string title, string content) =>
-            Send(address, 0, title, content);
+            Send(address, 0, title, false, content);
+
         public bool Send(string address, double code) =>
             Send(address, code, null);
         public bool Send(string address, double code, string content) =>
-            Send(address, code, null, content);
-        public bool Send(string address, double code, string title, string content)
+            Send(address, code, null, false, content);
+
+        public bool Send(string address, bool state) =>
+            Send(address, state, null);
+
+        public bool Send(string address, bool state, string content) =>
+            Send(address, 0, null, state, content);
+
+        public bool Send(string address, double code, string title, bool state, string content)
         {
             var mail = new VgcApis.Models.Datas.LuaMail
             {
@@ -82,6 +96,7 @@ namespace Luna.Models.Apis.SysCmpos
                 title = title,
                 content = content,
                 code = code,
+                state = state,
             };
 
             return postOffice.Send(address, mail);

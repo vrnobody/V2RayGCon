@@ -7,8 +7,12 @@
         public string content { get; set; }
         public double code { get; set; }
 
+        public bool state { get; set; }
+
         public LuaMail() { }
 
+
+        public bool GetState() => state;
         public string GetAddress() => from;
         public string GetTitle() => title;
         public string GetContent() => content;

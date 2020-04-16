@@ -13,6 +13,8 @@ namespace VgcApis.Interfaces.Lua
         bool CloseMainWindow(Process proc);
         bool HasExited(Process proc);
 
+        void Kill(Process proc);
+
         Process Run(string exePath);
 
         Process Run(string exePath, string args);

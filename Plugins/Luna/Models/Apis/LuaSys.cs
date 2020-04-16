@@ -85,6 +85,18 @@ namespace Luna.Models.Apis
 
         public void Cleanup(Process proc) => proc?.Close();
 
+        public void Kill(Process proc)
+        {
+            try
+            {
+                if (!HasExited(proc))
+                {
+                    VgcApis.Misc.Utils.KillProcessAndChildrens(proc.Id);
+                }
+            }
+            catch { }
+        }
+
         public bool CloseMainWindow(Process proc)
         {
             if (proc == null)
@@ -98,7 +110,7 @@ namespace Luna.Models.Apis
         {
             if (proc == null)
             {
-                return false;
+                return true;
             }
 
             try
@@ -241,6 +253,8 @@ namespace Luna.Models.Apis
         #endregion
 
         #region private methods
+
+
         private void KillAllProcesses()
         {
             List<Process> ps;

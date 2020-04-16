@@ -2,6 +2,8 @@
 {
     public interface ILuaMail
     {
+        bool GetState();
+
         string GetAddress();
         string GetTitle();
         string GetContent();

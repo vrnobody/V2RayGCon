@@ -233,6 +233,7 @@ namespace Luna.Controllers
             var indent = luaEditor.Lines[luaEditor.CurrentLine].Indentation;
             var text = Scintilla_TrimText(GetCurrentText(e.Position));
             if (text.StartsWith("function")
+                || text.StartsWith("local function")
                 || text.EndsWith("do")
                 || text.EndsWith("then")
                 || text.EndsWith("else")

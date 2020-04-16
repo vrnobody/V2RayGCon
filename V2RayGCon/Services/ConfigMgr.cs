@@ -19,6 +19,7 @@ namespace V2RayGCon.Services
         ConfigMgr() { }
 
         #region public methods
+
         public long RunCustomSpeedTest(string rawConfig, string testUrl, int testTimeout) =>
             QueuedSpeedTesting(rawConfig, "Custom speed-test", testUrl, testTimeout, false, false, false, null);
 
@@ -73,6 +74,10 @@ namespace V2RayGCon.Services
                 }
 
                 decodedConfig = ParseImport(injectedConfig);
+                if (setting.isSupportSelfSignedCert)
+                {
+                    EnableAllowInsecureStreamSetting(ref decodedConfig);
+                }
                 cache.core[coreConfig] = decodedConfig.ToString(Formatting.None);
             }
             catch { }
@@ -337,6 +342,26 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+        void EnableAllowInsecureStreamSetting(ref JObject config)
+        {
+            var outB = Misc.Utils.GetKey(config, "outbound") ??
+                Misc.Utils.GetKey(config, "outbounds.0");
+
+            if (outB == null)
+            {
+                return;
+            }
+
+            JObject streamSettings = Misc.Utils.GetKey(outB, "streamSettings") as JObject;
+            if (streamSettings == null)
+            {
+                return;
+            }
+
+            var mixIn = JObject.Parse(@"{tlsSettings: {allowInsecure: true}}");
+            Misc.Utils.MergeJson(ref streamSettings, mixIn);
+        }
+
         int GetDefaultTimeout()
         {
             var customTimeout = setting.CustomSpeedtestTimeout;

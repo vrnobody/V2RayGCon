@@ -150,6 +150,16 @@ namespace V2RayGCon.Services
             }
         }
 
+        public bool isSupportSelfSignedCert
+        {
+            get => userSettings.isSupportSelfSignedCert;
+            set
+            {
+                userSettings.isSupportSelfSignedCert = value;
+                LazySaveUserSettings();
+            }
+        }
+
         public bool CustomDefImportSsShareLink
         {
             get => userSettings.ImportOptions.IsImportSsShareLink;

@@ -23,6 +23,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         public TabDefaults(
             ComboBox cboxDefImportMode,
             TextBox tboxDefImportAddr,
+
             CheckBox chkImportSsShareLink,
             CheckBox chkImportBypassCnSite,
             CheckBox chkImportInjectGlobalImport,
@@ -41,7 +42,6 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.chkImportSsShareLink = chkImportSsShareLink;
             this.chkImportBypassCnSite = chkImportBypassCnSite;
             this.chkImportInjectGlobalImport = chkImportInjectGlobalImport;
-
             this.chkSetSpeedtestIsUse = chkSetSpeedtestIsUse;
             this.cboxDefSpeedtestUrl = cboxDefSpeedtestUrl;
             this.tboxSetSpeedtestCycles = tboxSetSpeedtestCycles;
@@ -57,6 +57,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             chkImportBypassCnSite.Checked = setting.CustomDefImportBypassCnSite;
             chkImportInjectGlobalImport.Checked = setting.CustomDefImportGlobalImport;
             chkImportSsShareLink.Checked = setting.CustomDefImportSsShareLink;
+
             cboxDefImportMode.SelectedIndex = setting.CustomDefImportMode;
             tboxDefImportAddr.TextChanged += OnTboxImportAddrTextChanged;
             tboxDefImportAddr.Text = string.Format(
@@ -87,6 +88,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                 setting.CustomDefImportPort = port;
             }
             setting.CustomDefImportMode = cboxDefImportMode.SelectedIndex;
+
             setting.CustomDefImportSsShareLink = chkImportSsShareLink.Checked;
             setting.CustomDefImportGlobalImport = chkImportInjectGlobalImport.Checked;
             setting.CustomDefImportBypassCnSite = chkImportBypassCnSite.Checked;

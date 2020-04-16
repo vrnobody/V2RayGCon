@@ -85,6 +85,7 @@ namespace V2RayGCon.Views.WinForms
                     cboxSettingsRandomSelectServerLatency,
                     chkSetSysPortable,
                     chkSetUseV4,
+                                        chkSetSelfSignedCert,
                     chkSetServStatistics,
                     chkSetUpgradeUseProxy,
                     chkSetCheckWhenStart));
@@ -95,6 +96,7 @@ namespace V2RayGCon.Views.WinForms
                     // def import share link mode
                     cboxDefImportMode,
                     tboxDefImportAddr,
+
                     chkDefImportSsShareLink,
                     chkDefImportBypassCnSite,
                     chkDefImportInjectGlobalImport,

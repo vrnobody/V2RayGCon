@@ -18,6 +18,8 @@ namespace V2RayGCon.Models.Datas
         public bool isDownloadWin32V2RayCore { get; set; } = true;
         public List<string> V2RayCoreDownloadVersionList = null;
 
+        public bool isSupportSelfSignedCert { get; set; }
+
         public int ServerPanelPageSize { get; set; }
         public bool isEnableStat { get; set; } = false;
         public bool isUseV4Format { get; set; }
@@ -52,6 +54,8 @@ namespace V2RayGCon.Models.Datas
             Normalized();
 
             QuickSwitchServerLatency = 0;
+
+            isSupportSelfSignedCert = false;
 
             isAutoPatchSubsInfo = false;
 

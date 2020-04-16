@@ -1,4 +1,4 @@
-local Utils = require "lua.Misc.Utils"
+local Utils = require "lua.libs.utils"
 local Set = require "lua.modules.set"
 
 local failCounter = 0
@@ -23,7 +23,6 @@ end
 
 local function UtilsTest()
     -- Test 1. how-to use Misc.Utils.lua
-    Utils.Echo("Hello")
 	local data = {"AbC123", "123BcD"}
 	Assert("Utils.IsInTable.True", true, Utils.IsInTable(data, "abc123"))
 	Assert("Utils.IsInTable.False", false, Utils.IsInTable(data, "ac"))

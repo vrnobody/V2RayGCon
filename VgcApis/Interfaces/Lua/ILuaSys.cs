@@ -1,13 +1,15 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace VgcApis.Interfaces.Lua
 {
     public interface ILuaSys
     {
         #region reflection
-        string GetPublicMethodsOfAssembly(string @namespace, string assemblyName);
-        string GetMembersOfNamespace(string @namespace);
-        string GetPublicMethodsOfInstance(object @object);
+        string GetPublicInfosOfType(Type type);
+        string GetPublicInfosOfObject(object @object);
+        string GetChildrenInfosOfNamespace(string @namespace);
+        string GetPublicInfosOfAssembly(string @namespace, string asm);
         #endregion
 
         #region post office

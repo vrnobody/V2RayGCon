@@ -198,7 +198,7 @@ namespace Luna.Controllers
             {
                 if (assemblies == null)
                 {
-                    assemblies = VgcApis.Misc.Utils.GetAllAssemblies();
+                    assemblies = VgcApis.Misc.Utils.GetAllAssembliesType();
                 }
             }
             return assemblies;

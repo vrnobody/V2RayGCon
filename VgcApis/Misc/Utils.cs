@@ -1117,6 +1117,20 @@ namespace VgcApis.Misc
         #endregion
 
         #region reflection
+        static public string GetPublicFieldsInfoOfType(Type type)
+        {
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
+                .Select(field =>
+                {
+                    var pf = field.IsStatic ? "Static " : "";
+                    var tn = GetFriendlyTypeName(field.FieldType);
+                    return $"{pf}{tn} {field.Name}";
+                })
+                .OrderBy(fn => fn);
+
+            return string.Join("\n", fields);
+        }
+
         static public string GetPublicMethodsInfoOfType(Type type)
         {
             List<string> staticMems = new List<string>();
@@ -1148,7 +1162,7 @@ namespace VgcApis.Misc
             return string.Join("\n", allMems);
         }
 
-        static public List<Type> GetAllAssemblies()
+        static public List<Type> GetAllAssembliesType()
         {
             return AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(t => t.GetTypes())

@@ -61,26 +61,32 @@ namespace Luna.Models.Apis
         #endregion
 
         #region ILuaSys.Reflection
-        public string GetPublicMethodsOfInstance(object @object)
+        public string GetPublicInfosOfType(Type type)
         {
-            var type = @object.GetType();
-            return VgcApis.Misc.Utils.GetPublicMethodsInfoOfType(type);
+            var pmi = VgcApis.Misc.Utils.GetPublicFieldsInfoOfType(type);
+            var pfi = VgcApis.Misc.Utils.GetPublicMethodsInfoOfType(type);
+            return $"{pmi}\n\n{pfi}";
         }
 
-        public string GetPublicMethodsOfAssembly(string @namespace, string assemblyName)
+        public string GetPublicInfosOfObject(object @object)
         {
-            var assemblies = getAllAssemblies();
-            foreach (var asm in assemblies)
+            return GetPublicInfosOfType(@object.GetType());
+        }
+
+        public string GetPublicInfosOfAssembly(string @namespace, string asm)
+        {
+            var types = getAllAssemblies();
+            foreach (var type in types)
             {
-                if (asm.Namespace == @namespace && asm.Name == assemblyName)
+                if (type.Namespace == @namespace && type.Name == asm)
                 {
-                    return VgcApis.Misc.Utils.GetPublicMethodsInfoOfType(asm);
+                    return GetPublicInfosOfType(type);
                 }
             }
             return null;
         }
 
-        public string GetMembersOfNamespace(string @namespace)
+        public string GetChildrenInfosOfNamespace(string @namespace)
         {
             List<string> mbs = new List<string>();
 

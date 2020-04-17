@@ -65,7 +65,40 @@ namespace Luna.Libs.LuaSnippet
             .Replace("then", "")
             .Replace("end", "");
 
-        List<string> GetAllAssembliesName() => VgcApis.Misc.Utils.GetAllAssemblies()
+        List<string> GetAllNameapaces() => VgcApis.Misc.Utils.GetAllAssembliesType()
+            .Select(t => t.Namespace)
+            .Distinct()
+            .Where(n => !(
+                string.IsNullOrEmpty(n)
+                || n.StartsWith("<")
+                || n.StartsWith("AutocompleteMenuNS")
+                || n.StartsWith("AutoUpdaterDotNET")
+                || n.StartsWith("Internal.Cryptography")
+                || n.StartsWith("Luna")
+                || n.StartsWith("Pacman")
+                || n.StartsWith("ProxySetter")
+                || n.StartsWith("ResourceEmbedderCompilerGenerated")
+                || n.StartsWith("Statistics")
+                || n.StartsWith("V2RayGCon")
+                || n.StartsWith("VgcApis")
+            ))
+            .ToList();
+
+        List<string> GetAllAssembliesName()
+        {
+            var nsps = GetAllNameapaces();
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .Select(asm => asm.FullName)
+                .Where(fn => !string.IsNullOrEmpty(fn) && nsps.Where(nsp => fn.StartsWith(nsp)).FirstOrDefault() != null)
+                .Union(nsps)
+                .OrderBy(n => n)
+                .Select(n => $"import('{n}')")
+                .ToList();
+        }
+
+        /*
+
+        List<string> GetAllAssembliesName() => VgcApis.Misc.Utils.GetAllAssembliesType()
             .Select(t => t.Namespace)
             .Distinct()
             .Where(n => !(
@@ -85,6 +118,7 @@ namespace Luna.Libs.LuaSnippet
             .Select(n => $"import('{n}')")
             .OrderBy(n => n)
             .ToList();
+            */
 
         List<LuaImportClrSnippets> GenLuaImportClrSnippet() =>
             GetAllAssembliesName()

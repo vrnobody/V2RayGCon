@@ -1123,9 +1123,6 @@ namespace VgcApis.Misc
             List<string> dynamicMems = new List<string>();
             List<string> allMems = new List<string>();
 
-            var title = $"Public methods of [{type.FullName}]:";
-            allMems.Add(title);
-
             var methods = type.GetMethods()
                 .Where(m => m.IsPublic)
                 .ToList();
@@ -1166,20 +1163,19 @@ namespace VgcApis.Misc
         /// <returns></returns>
         static public string GetFriendlyMethodDeclareInfo(MethodInfo method)
         {
+            var pms = method.GetParameters()
+                .Select(arg =>
+                {
+                    var tn = GetFriendlyTypeName(arg.ParameterType);
+                    var name = arg.Name;
+                    return $"{tn} {name}";
+                });
+
+            var head = method.IsStatic ? @"Static " : @"";
+            var rtt = GetFriendlyTypeName(method.ReturnType);
             var fn = GetFriendlyMethodName(method);
-            var rt = GetFriendlyTypeName(method.ReturnType);
-
-            var args = new List<string>();
-            foreach (var arg in method.GetParameters())
-            {
-                var tp = arg.ParameterType.Name;
-                var name = arg.Name;
-
-                args.Add($"{tp} {name}");
-            }
-
-            var stc = method.IsStatic ? @"static " : @"";
-            return $"{stc}{rt} {fn}({string.Join(", ", args)})";
+            var args = string.Join(@", ", pms);
+            return $"{head}{rtt} {fn}({args})";
         }
 
         static public string GetFriendlyMethodName(MethodInfo method)
@@ -1190,14 +1186,11 @@ namespace VgcApis.Misc
                 return name;
             }
 
-            List<string> pms = new List<string>();
-            foreach (var arg in method.GetGenericArguments())
-            {
-                var argName = VgcApis.Misc.Utils.GetFriendlyTypeName(arg);
-                pms.Add(argName);
-            }
-            var args = string.Join(@", ", pms);
-            return $"{name}<{args}>";
+            var args = method
+                .GetGenericArguments()
+                .Select(arg => GetFriendlyTypeName(arg));
+
+            return $"{name}<{string.Join(@", ", args)}>";
         }
 
         public static string GetFriendlyTypeName(Type type)

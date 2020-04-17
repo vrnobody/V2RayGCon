@@ -117,11 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="statusStrip1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="toolStripContainer1.BottomToolStripPanel.ToolTip" xml:space="preserve">
-    <value />
+  <data name="tabGeneral.Text" xml:space="preserve">
+    <value>概况</value>
   </data>
   <data name="btnExportToFile.Text" xml:space="preserve">
     <value>导出...</value>
@@ -153,17 +150,17 @@
   <data name="btnKillAllScript.ToolTip" xml:space="preserve">
     <value>强制停止所有脚本</value>
   </data>
-  <data name="panel2.ToolTip" xml:space="preserve">
-    <value />
+  <data name="tabEditor.Text" xml:space="preserve">
+    <value>编辑</value>
   </data>
-  <data name="flyScriptUIContainer.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>编辑器</value>
   </data>
-  <data name="tabGeneral.Text" xml:space="preserve">
-    <value>概况</value>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>输出</value>
   </data>
-  <data name="tabGeneral.ToolTip" xml:space="preserve">
-    <value />
+  <data name="cboxScriptName.ToolTip" xml:space="preserve">
+    <value>加载脚本或设置脚本名</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnNewScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -177,9 +174,6 @@
   <data name="btnNewScript.ToolTip" xml:space="preserve">
     <value>新脚本</value>
   </data>
-  <data name="cboxScriptName.ToolTip" xml:space="preserve">
-    <value>加载脚本或设置脚本名</value>
-  </data>
   <data name="btnClearOutput.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -192,7 +186,7 @@
 </value>
   </data>
   <data name="btnClearOutput.ToolTip" xml:space="preserve">
-    <value>清空(F8)</value>
+    <value>清除输出框(F8)</value>
   </data>
   <data name="btnKillScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -228,18 +222,6 @@
   <data name="btnRunScript.ToolTip" xml:space="preserve">
     <value>运行(F5)</value>
   </data>
-  <data name="btnRemoveScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAALZJREFUOE9jQAbfvn0zgDJxApxqgBIVQPwfiDOhQhgAJAdVUwEVggCQwKubV/9v
-        i3T///b+HayGgMRAcltCHP4/v3gWYQiQYQDEYM0L1Xj/r3XWxTAEphkkB1IDMgSkB6QXqwJkQ/DJgTXD
-        AC6FRGmGAWyGEK0ZBtANIUkzCFBkALpmEI3MxmsINs0gPjYxDENwaQaJ45ODaaZKQiI/KcMASACIsWqG
-        AZAcVA2qZhgASpCYnRkYAKjTuVoFkX4yAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="btnRemoveScript.ToolTip" xml:space="preserve">
-    <value>删除脚本</value>
-  </data>
   <data name="btnSaveScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -251,62 +233,8 @@
   <data name="btnSaveScript.ToolTip" xml:space="preserve">
     <value>保存脚本</value>
   </data>
-  <data name="panel1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlScriptEditor.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tableLayoutPanel1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="panel3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>编辑器</value>
-  </data>
-  <data name="groupBox2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="splitContainerTabEditor.Panel1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtBoxOutput.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>输出</value>
-  </data>
-  <data name="groupBox1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="splitContainerTabEditor.Panel2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="splitContainerTabEditor.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabEditor.Text" xml:space="preserve">
-    <value>编辑</value>
-  </data>
-  <data name="tabEditor.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabControl1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="toolStripContainer1.ContentPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="toolStripContainer1.LeftToolStripPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="toolStripContainer1.RightToolStripPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="toolStripContainer1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>文件</value>
   </data>
   <data name="newWindowToolStripMenuItem.Text" xml:space="preserve">
     <value>新窗口</value>
@@ -332,25 +260,13 @@
   <data name="exitToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>关闭窗口</value>
   </data>
-  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>文件</value>
+  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
+    <value>查看</value>
   </data>
   <data name="showOutputPanelToolStripMenuItem.Text" xml:space="preserve">
     <value>显示输出面板</value>
   </data>
   <data name="hideOutputPanelToolStripMenuItem.Text" xml:space="preserve">
     <value>隐藏输出面板</value>
-  </data>
-  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
-    <value>查看</value>
-  </data>
-  <data name="menuStrip1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="toolStripContainer1.TopToolStripPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>

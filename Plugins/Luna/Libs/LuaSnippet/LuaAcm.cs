@@ -17,6 +17,7 @@ namespace Luna.Libs.LuaSnippet
         List<LuaKeywordSnippets> keywordCache;
         List<LuaFuncSnippets> functionCache;
         List<LuaSubFuncSnippets> subFunctionCache;
+        List<LuaImportClrSnippets> importClrCache;
         List<ApiFunctionSnippets> apiFunctionCache;
 
         public LuaAcm()
@@ -49,7 +50,8 @@ namespace Luna.Libs.LuaSnippet
                     apiFunctionCache,
                     functionCache,
                     keywordCache,
-                    subFunctionCache));
+                    subFunctionCache,
+                    importClrCache));
 
             return acm;
         }
@@ -69,16 +71,35 @@ namespace Luna.Libs.LuaSnippet
             .Where(n => !(
                 string.IsNullOrEmpty(n)
                 || n.StartsWith("<")
-                || n.StartsWith("V2RayGCon")
+                || n.StartsWith("AutocompleteMenuNS")
+                || n.StartsWith("AutoUpdaterDotNET")
+                || n.StartsWith("Internal.Cryptography")
                 || n.StartsWith("Luna")
                 || n.StartsWith("Pacman")
                 || n.StartsWith("ProxySetter")
-                || n.StartsWith("VgcApis")
+                || n.StartsWith("ResourceEmbedderCompilerGenerated")
                 || n.StartsWith("Statistics")
-                || n.StartsWith("AutoUpdaterDotNET")
+                || n.StartsWith("V2RayGCon")
+                || n.StartsWith("VgcApis")
             ))
             .Select(n => $"import('{n}')")
+            .OrderBy(n => n)
             .ToList();
+
+        List<LuaImportClrSnippets> GenLuaImportClrSnippet() =>
+            GetAllAssembliesName()
+                .Select(e =>
+                {
+                    try
+                    {
+                        return new LuaImportClrSnippets(e);
+                    }
+                    catch { }
+                    return null;
+                })
+                .Where(e => e != null)
+                .ToList();
+
 
         List<string> GenKeywords(
             IEnumerable<string> initValues) =>
@@ -88,7 +109,6 @@ namespace Luna.Libs.LuaSnippet
             .ToString()
             .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
             .Union(initValues)
-            .Union(GetAllAssembliesName())
             .OrderBy(e => e)
             .ToList();
 
@@ -147,6 +167,7 @@ namespace Luna.Libs.LuaSnippet
             keywordCache = GenKeywordSnippetItems(GenKeywords(apis.Select(e => e.Item1)));
             functionCache = GenLuaFunctionSnippet();
             subFunctionCache = GenLuaSubFunctionSnippet();
+            importClrCache = GenLuaImportClrSnippet();
             apiFunctionCache = apis
                .SelectMany(api => GenApiFunctionSnippetItems(api.Item1, api.Item2))
                .ToList();

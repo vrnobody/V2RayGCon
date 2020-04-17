@@ -15,7 +15,6 @@ namespace Luna.Models.Apis
         readonly object procLocker = new object();
         private readonly LuaApis luaApis;
         private readonly Func<List<Type>> getAllAssemblies;
-        private readonly Components.Misc misc;
 
         List<Process> processes = new List<Process>();
         List<VgcApis.Interfaces.Lua.ILuaMailBox> mailboxs = new List<VgcApis.Interfaces.Lua.ILuaMailBox>();
@@ -26,11 +25,9 @@ namespace Luna.Models.Apis
         {
             this.luaApis = luaApis;
             this.getAllAssemblies = getAllAssemblies;
-            misc = luaApis.GetChild<Components.Misc>();
         }
 
         #region private methods
-        void Print(params object[] contents) => misc.Print(contents);
 
         void SendLogHandler(object sender, DataReceivedEventArgs args)
         {
@@ -70,7 +67,7 @@ namespace Luna.Models.Apis
             return VgcApis.Misc.Utils.GetPublicMethodsInfoOfType(type);
         }
 
-        public string GetPublicmethodsFromAssembly(string @namespace, string assemblyName)
+        public string GetPublicMethodsOfAssembly(string @namespace, string assemblyName)
         {
             var assemblies = getAllAssemblies();
             foreach (var asm in assemblies)
@@ -85,20 +82,18 @@ namespace Luna.Models.Apis
 
         public string GetMembersOfNamespace(string @namespace)
         {
-            List<string> mems = new List<string>() {
-                $"Members of [{@namespace}]:",
-            };
+            List<string> mbs = new List<string>();
 
-            var assemblies = getAllAssemblies();
-            foreach (var asm in assemblies)
+            var asms = getAllAssemblies();
+            foreach (var asm in asms)
             {
-                if (asm.Namespace != @namespace || mems.Contains(asm.Name))
+                if (asm.Namespace != @namespace || mbs.Contains(asm.Name))
                 {
                     continue;
                 }
-                mems.Add(asm.Name);
+                mbs.Add(asm.FullName);
             }
-            return string.Join("\n", mems);
+            return string.Join("\n", mbs);
         }
 
 

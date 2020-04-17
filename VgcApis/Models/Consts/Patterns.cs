@@ -9,7 +9,7 @@
 
         public const string JsonSnippetSearchPattern = @"[:/,_\.\-\\\*\$\w]";
 
-        public const string LuaSnippetSearchPattern = @"[\w\.:]";
+        public const string LuaSnippetSearchPattern = @"[\w\.:\(]";
 
         public const string NonAlphabets = @"[^0-9a-zA-Z]";
 

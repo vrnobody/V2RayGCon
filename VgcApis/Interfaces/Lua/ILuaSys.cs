@@ -5,7 +5,7 @@ namespace VgcApis.Interfaces.Lua
     public interface ILuaSys
     {
         #region reflection
-        string GetPublicmethodsFromAssembly(string @namespace, string assemblyName);
+        string GetPublicMethodsOfAssembly(string @namespace, string assemblyName);
         string GetMembersOfNamespace(string @namespace);
         string GetPublicMethodsOfInstance(object @object);
         #endregion

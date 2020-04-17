@@ -16,6 +16,7 @@ namespace Luna.Libs.LuaSnippet
         List<LuaFuncSnippets> luaFunctions;
         List<LuaKeywordSnippets> luaKeywords;
         List<LuaSubFuncSnippets> luaSubFunctions;
+        private readonly List<LuaImportClrSnippets> luaImportClrs;
 
         public BestMatchSnippets(
             Scintilla editor,
@@ -23,7 +24,8 @@ namespace Luna.Libs.LuaSnippet
             List<ApiFunctionSnippets> apiFunctions,
             List<LuaFuncSnippets> luaFunctions,
             List<LuaKeywordSnippets> luaKeywords,
-            List<LuaSubFuncSnippets> luaSubFunctions)
+            List<LuaSubFuncSnippets> luaSubFunctions,
+            List<LuaImportClrSnippets> luaImportClrs)
         {
             this.searchPattern = searchPattern;
             this.editor = editor;
@@ -31,6 +33,7 @@ namespace Luna.Libs.LuaSnippet
             this.luaFunctions = luaFunctions;
             this.luaKeywords = luaKeywords;
             this.luaSubFunctions = luaSubFunctions;
+            this.luaImportClrs = luaImportClrs;
         }
 
         #region private methods
@@ -74,12 +77,20 @@ namespace Luna.Libs.LuaSnippet
             }
             else if (fragment.Contains("."))
             {
+                if (fragment.Contains("("))
+                {
+                    items.AddRange(luaImportClrs);
+                }
                 items.AddRange(luaSubFunctions);
+            }
+            else if (fragment.Contains("("))
+            {
+                items.AddRange(luaImportClrs);
+                items.AddRange(luaFunctions);
             }
             else
             {
                 items.AddRange(luaKeywords);
-                items.AddRange(luaFunctions);
             }
 
             return items;

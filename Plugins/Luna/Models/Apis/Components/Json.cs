@@ -16,17 +16,29 @@ namespace Luna.Models.Apis.Components
         }
 
         #region ILuaJson thinggy
-        public void SetIntValue(JToken json, string path, int value) =>
-            vgcUtils.SetValue(json, path, value);
+        public bool TrySetValue(JToken json, string path, double value) =>
+            vgcUtils.TrySetValue(json, path, value);
 
-        public void SetBoolValue(JToken json, string path, bool value) =>
-            vgcUtils.SetValue(json, path, value);
+        public bool TrySetValue(JToken json, string path, int value) =>
+            vgcUtils.TrySetValue(json, path, value);
 
-        public void SetStringValue(JToken json, string path, string value) =>
-            vgcUtils.SetValue(json, path, value);
+        public bool TrySetValue(JToken json, string path, bool value) =>
+            vgcUtils.TrySetValue(json, path, value);
+
+        public bool TrySetValue(JToken json, string path, string value) =>
+            vgcUtils.TrySetValue(json, path, value);
 
         public string GetString(JToken json, string path) =>
-            vgcUtils.GetString(json, path);
+            vgcUtils.GetValue<string>(json, path);
+
+        public bool GetBool(JToken json, string path) =>
+            vgcUtils.GetValue<bool>(json, path);
+
+        public int GetInt(JToken json, string path) =>
+            vgcUtils.GetValue<int>(json, path);
+
+        public double GetDouble(JToken json, string path) =>
+            vgcUtils.GetValue<double>(json, path);
 
         public JToken GetKey(JToken json, string path) =>
            vgcUtils.GetKey(json, path);

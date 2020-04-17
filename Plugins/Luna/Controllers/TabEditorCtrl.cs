@@ -43,7 +43,7 @@ namespace Luna.Controllers
         VgcApis.Libs.Tasks.Routine logUpdater;
 
         public TabEditorCtrl(
-            Views.WinForms.FormMain formMain,
+            FormMain formMain,
             ComboBox cboxScriptName,
             Button btnNewScript,
             Button btnSaveScript,
@@ -86,6 +86,13 @@ namespace Luna.Controllers
 
             rtboxFreezer = new VgcApis.Libs.Views.RepaintController(rtboxOutput);
             logUpdater.Run();
+
+#if DEBUG
+            if (cboxScriptName.Items.Count > 0)
+            {
+                cboxScriptName.SelectedIndex = 0;
+            }
+#endif
         }
 
         #region public methods

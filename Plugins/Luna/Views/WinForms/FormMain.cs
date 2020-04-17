@@ -31,6 +31,10 @@ namespace Luna.Views.WinForms
 
         private void FormMain_Load(object sender, System.EventArgs e)
         {
+#if DEBUG
+            tabControl1.SelectTab(1);
+#endif
+
             InitSplitPanel();
             lbStatusBarMsg.Text = "";
 

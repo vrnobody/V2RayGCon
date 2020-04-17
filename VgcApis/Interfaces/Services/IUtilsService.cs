@@ -7,8 +7,8 @@ namespace VgcApis.Interfaces.Services
     public interface IUtilsService
     {
         #region json
-        void SetValue<T>(JToken json, string path, T value);
-        string GetString(JToken json, string path);
+        bool TrySetValue<T>(JToken json, string path, T value);
+        T GetValue<T>(JToken json, string path);
 
         void CombineWithRoutingInFront(JObject body, JObject mixin);
         void CombineWithRoutingInTheEnd(JObject body, JObject mixin);

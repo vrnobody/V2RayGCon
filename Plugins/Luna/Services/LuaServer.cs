@@ -7,7 +7,9 @@ namespace Luna.Services
     public class LuaServer :
         VgcApis.BaseClasses.Disposable
     {
-        public EventHandler OnLuaCoreCtrlListChanged, OnLuaCoreCtrlHiddenStateChanged;
+        public EventHandler
+            OnRequireFlyPanelUpdate,
+            OnRequireMenuUpdate;
 
         Settings settings;
         List<Controllers.LuaCoreCtrl> luaCoreCtrls = new List<Controllers.LuaCoreCtrl>();
@@ -50,7 +52,7 @@ namespace Luna.Services
             {
                 controls[i].index = i;
             }
-            InvokeOnLuaCoreCtrlListChangeIgnoreError();
+            InvokeOnRequireMenuUpdate();
         }
 
         public List<Controllers.LuaCoreCtrl> GetAllLuaCoreCtrls()
@@ -101,7 +103,7 @@ namespace Luna.Services
         void RemoveCoreCtrl(Controllers.LuaCoreCtrl coreCtrl)
         {
             var name = coreCtrl.name;
-            coreCtrl.OnIsHiddenChanged -= OnCoreCtrlIsHiddenPropertyChangedHandler;
+            coreCtrl.OnIsHiddenChanged -= OnRequireMenuUpdateHandler;
             coreCtrl.Kill();
             luaCoreCtrls.Remove(coreCtrl);
             settings.GetLuaCoreSettings().RemoveAll(s => s.name == name);
@@ -192,14 +194,18 @@ namespace Luna.Services
             var coreCtrl = new Controllers.LuaCoreCtrl();
             luaCoreCtrls.Add(coreCtrl);
             coreCtrl.Run(settings, coreState, luaApis);
-            coreCtrl.OnIsHiddenChanged += OnCoreCtrlIsHiddenPropertyChangedHandler;
+            coreCtrl.OnIsHiddenChanged += OnRequireMenuUpdateHandler;
         }
 
-        void OnCoreCtrlIsHiddenPropertyChangedHandler(object sender, EventArgs args)
+
+        void InvokeOnRequireMenuUpdate() =>
+            OnRequireMenuUpdateHandler(this, EventArgs.Empty);
+
+        void OnRequireMenuUpdateHandler(object sender, EventArgs args)
         {
             try
             {
-                OnLuaCoreCtrlHiddenStateChanged?.Invoke(this, EventArgs.Empty);
+                OnRequireMenuUpdate?.Invoke(this, EventArgs.Empty);
 
             }
             catch { }
@@ -210,9 +216,10 @@ namespace Luna.Services
         {
             try
             {
-                OnLuaCoreCtrlListChanged?.Invoke(this, EventArgs.Empty);
+                OnRequireFlyPanelUpdate?.Invoke(this, EventArgs.Empty);
             }
             catch { }
+            InvokeOnRequireMenuUpdate();
         }
 
         void Save() => settings.SaveUserSettingsNow();

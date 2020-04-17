@@ -11,6 +11,7 @@ using System.Linq;
 using System.Management;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1116,7 +1117,90 @@ namespace VgcApis.Misc
         #endregion
 
         #region reflection
-        public static string GetFriendlyName(Type type)
+        static public string GetPublicMethodsInfoOfType(Type type)
+        {
+            List<string> staticMems = new List<string>();
+            List<string> dynamicMems = new List<string>();
+            List<string> allMems = new List<string>();
+
+            var title = $"Public methods of [{type.FullName}]:";
+            allMems.Add(title);
+
+            var methods = type.GetMethods()
+                .Where(m => m.IsPublic)
+                .ToList();
+
+            foreach (var method in methods)
+            {
+                var fn = GetFriendlyMethodDeclareInfo(method);
+                if (method.IsStatic)
+                {
+                    staticMems.Add(fn);
+                }
+                else
+                {
+                    dynamicMems.Add(fn);
+                }
+            }
+
+            staticMems.Sort();
+            dynamicMems.Sort();
+            allMems.AddRange(staticMems);
+            allMems.AddRange(dynamicMems);
+
+            return string.Join("\n", allMems);
+        }
+
+        static public List<Type> GetAllAssemblies()
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(t => t.GetTypes())
+                .Where(t => t.IsClass)
+                .ToList();
+        }
+
+        /// <summary>
+        /// e.g. static void Sum&lt;int>(int a, int b)
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        static public string GetFriendlyMethodDeclareInfo(MethodInfo method)
+        {
+            var fn = GetFriendlyMethodName(method);
+            var rt = GetFriendlyTypeName(method.ReturnType);
+
+            var args = new List<string>();
+            foreach (var arg in method.GetParameters())
+            {
+                var tp = arg.ParameterType.Name;
+                var name = arg.Name;
+
+                args.Add($"{tp} {name}");
+            }
+
+            var stc = method.IsStatic ? @"static " : @"";
+            return $"{stc}{rt} {fn}({string.Join(", ", args)})";
+        }
+
+        static public string GetFriendlyMethodName(MethodInfo method)
+        {
+            var name = method.Name;
+            if (!method.IsGenericMethod)
+            {
+                return name;
+            }
+
+            List<string> pms = new List<string>();
+            foreach (var arg in method.GetGenericArguments())
+            {
+                var argName = VgcApis.Misc.Utils.GetFriendlyTypeName(arg);
+                pms.Add(argName);
+            }
+            var args = string.Join(@", ", pms);
+            return $"{name}<{args}>";
+        }
+
+        public static string GetFriendlyTypeName(Type type)
         {
             string friendlyName = type.Name;
             if (type.IsGenericType)
@@ -1130,7 +1214,7 @@ namespace VgcApis.Misc
                 Type[] typeParameters = type.GetGenericArguments();
                 for (int i = 0; i < typeParameters.Length; ++i)
                 {
-                    string typeParamName = GetFriendlyName(typeParameters[i]);
+                    string typeParamName = GetFriendlyTypeName(typeParameters[i]);
                     friendlyName += (i == 0 ? typeParamName : "," + typeParamName);
                 }
                 friendlyName += ">";
@@ -1154,13 +1238,13 @@ namespace VgcApis.Misc
 
             var fullNames = new List<Tuple<string, string, string, string>>();
             var methods = type.GetMethods();
-            foreach (var method in type.GetMethods())
+            foreach (var method in methods)
             {
                 var name = method.Name;
                 if (method.IsPublic && !exceptList.Contains(name))
                 {
                     var paramStrs = GenParamStr(method);
-                    var returnType = GetFriendlyName(method.ReturnType);
+                    var returnType = GetFriendlyTypeName(method.ReturnType);
                     fullNames.Add(
                         new Tuple<string, string, string, string>(
                             returnType, name, paramStrs.Item1, paramStrs.Item2));

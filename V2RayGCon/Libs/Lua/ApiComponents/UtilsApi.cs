@@ -10,11 +10,11 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
         VgcApis.Interfaces.Services.IUtilsService
     {
         #region json
-        public void SetValue<T>(JToken json, string path, T value) =>
-            Misc.Utils.SetValue<T>(json, path, value);
+        public bool TrySetValue<T>(JToken json, string path, T value) =>
+            Misc.Utils.TrySetValue<T>(json, path, value);
 
-        public string GetString(JToken json, string path) =>
-            Misc.Utils.GetValue<string>(json, path);
+        public T GetValue<T>(JToken json, string path) =>
+            Misc.Utils.GetValue<T>(json, path);
 
         public JToken GetKey(JToken json, string path) =>
             Misc.Utils.GetKey(json, path);

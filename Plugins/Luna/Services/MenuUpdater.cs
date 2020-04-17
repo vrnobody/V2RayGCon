@@ -90,14 +90,12 @@ namespace Luna.Services
 
         void BindEvents()
         {
-            luaServer.OnLuaCoreCtrlListChanged += LuaCoreCtrlListChangeHandler;
-            luaServer.OnLuaCoreCtrlHiddenStateChanged += LuaCoreCtrlListChangeHandler;
+            luaServer.OnRequireMenuUpdate += LuaCoreCtrlListChangeHandler;
         }
 
         void ReleaseEvents()
         {
-            luaServer.OnLuaCoreCtrlListChanged -= LuaCoreCtrlListChangeHandler;
-            luaServer.OnLuaCoreCtrlHiddenStateChanged -= LuaCoreCtrlListChangeHandler;
+            luaServer.OnRequireMenuUpdate -= LuaCoreCtrlListChangeHandler;
         }
         #endregion
 

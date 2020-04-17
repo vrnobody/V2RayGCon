@@ -63,13 +63,32 @@ namespace Luna.Libs.LuaSnippet
             .Replace("then", "")
             .Replace("end", "");
 
-        List<string> GenKeywords(IEnumerable<string> initValues) =>
+        List<string> GetAllAssembliesName() => VgcApis.Misc.Utils.GetAllAssemblies()
+            .Select(t => t.Namespace)
+            .Distinct()
+            .Where(n => !(
+                string.IsNullOrEmpty(n)
+                || n.StartsWith("<")
+                || n.StartsWith("V2RayGCon")
+                || n.StartsWith("Luna")
+                || n.StartsWith("Pacman")
+                || n.StartsWith("ProxySetter")
+                || n.StartsWith("VgcApis")
+                || n.StartsWith("Statistics")
+                || n.StartsWith("AutoUpdaterDotNET")
+            ))
+            .Select(n => $"import('{n}')")
+            .ToList();
+
+        List<string> GenKeywords(
+            IEnumerable<string> initValues) =>
             new StringBuilder(VgcApis.Models.Consts.Lua.LuaModules)
             .Append(@" ")
             .Append(GetFilteredLuaKeywords())
             .ToString()
             .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
             .Union(initValues)
+            .Union(GetAllAssembliesName())
             .OrderBy(e => e)
             .ToList();
 

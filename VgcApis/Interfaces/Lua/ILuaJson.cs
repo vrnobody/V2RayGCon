@@ -13,11 +13,15 @@ namespace VgcApis.Interfaces.Lua
          var s2 = GetString(jobj, "1.2")  // 报错，因为1解释为列表序号，但jobj不是列表
          */
 
-        void SetIntValue(JToken json, string path, int value);
-        void SetBoolValue(JToken json, string path, bool value);
-        void SetStringValue(JToken json, string path, string value);
+        bool TrySetValue(JToken json, string path, double value);
+        bool TrySetValue(JToken json, string path, int value);
+        bool TrySetValue(JToken json, string path, bool value);
+        bool TrySetValue(JToken json, string path, string value);
 
         string GetString(JToken json, string path);
+        bool GetBool(JToken json, string path);
+        int GetInt(JToken json, string path);
+        double GetDouble(JToken json, string path);
 
         void CombineWithRoutingInFront(JObject body, JObject mixin);
         void CombineWithRoutingInTheEnd(JObject body, JObject mixin);

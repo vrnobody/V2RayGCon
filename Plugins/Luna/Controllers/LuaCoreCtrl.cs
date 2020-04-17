@@ -1,6 +1,7 @@
 ﻿using Luna.Resources.Langs;
 using NLua;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -177,11 +178,8 @@ namespace Luna.Controllers
 
             isRunning = true;
 
-            luaSys?.Dispose();
-            luaSys = new Models.Apis.LuaSys(luaApis);
-
             SendLog($"{I18N.Start} {coreSetting.name}");
-            luaCoreTask = VgcApis.Misc.Utils.RunInBackground(() => RunLuaScript(luaSys));
+            luaCoreTask = VgcApis.Misc.Utils.RunInBackground(() => RunLuaScript());
         }
 
         public void Cleanup()
@@ -191,11 +189,29 @@ namespace Luna.Controllers
         #endregion
 
         #region private methods
+        List<Type> assemblies = null;
+        readonly object assemblisLocker = new object();
+        List<Type> GetAllAssemblies()
+        {
+            // cache until controller is destroyed
+            lock (assemblisLocker)
+            {
+                if (assemblies == null)
+                {
+                    assemblies = VgcApis.Misc.Utils.GetAllAssemblies();
+                }
+            }
+            return assemblies;
+        }
+
         void SendLog(string content)
             => luaApis.SendLog(content);
 
-        void RunLuaScript(Models.Apis.LuaSys luaSys)
+        void RunLuaScript()
         {
+            luaSys?.Dispose();
+            luaSys = new Models.Apis.LuaSys(luaApis, () => GetAllAssemblies());
+
             luaSignal.ResetAllSignals();
             luaCoreThread = Thread.CurrentThread;
 
@@ -217,6 +233,8 @@ namespace Luna.Controllers
         Lua CreateLuaCore(Models.Apis.LuaSys luaSys)
         {
             var lua = new Lua();
+
+            lua.LoadCLRPackage();
 
             lua.State.Encoding = Encoding.UTF8;
 

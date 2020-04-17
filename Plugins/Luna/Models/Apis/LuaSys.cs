@@ -14,18 +14,24 @@ namespace Luna.Models.Apis
     {
         readonly object procLocker = new object();
         private readonly LuaApis luaApis;
+        private readonly Func<List<Type>> getAllAssemblies;
+        private readonly Components.Misc misc;
 
         List<Process> processes = new List<Process>();
         List<VgcApis.Interfaces.Lua.ILuaMailBox> mailboxs = new List<VgcApis.Interfaces.Lua.ILuaMailBox>();
 
         static readonly SysCmpos.PostOffice postOffice = new SysCmpos.PostOffice();
 
-        public LuaSys(LuaApis luaApis)
+        public LuaSys(LuaApis luaApis, Func<List<Type>> getAllAssemblies)
         {
             this.luaApis = luaApis;
+            this.getAllAssemblies = getAllAssemblies;
+            misc = luaApis.GetChild<Components.Misc>();
         }
 
         #region private methods
+        void Print(params object[] contents) => misc.Print(contents);
+
         void SendLogHandler(object sender, DataReceivedEventArgs args)
         {
             string msg = null;
@@ -55,6 +61,47 @@ namespace Luna.Models.Apis
             }
             VgcApis.Libs.Sys.ChildProcessTracker.AddProcess(proc);
         }
+        #endregion
+
+        #region ILuaSys.Reflection
+        public string GetPublicMethodsOfInstance(object @object)
+        {
+            var type = @object.GetType();
+            return VgcApis.Misc.Utils.GetPublicMethodsInfoOfType(type);
+        }
+
+        public string GetPublicmethodsFromAssembly(string @namespace, string assemblyName)
+        {
+            var assemblies = getAllAssemblies();
+            foreach (var asm in assemblies)
+            {
+                if (asm.Namespace == @namespace && asm.Name == assemblyName)
+                {
+                    return VgcApis.Misc.Utils.GetPublicMethodsInfoOfType(asm);
+                }
+            }
+            return null;
+        }
+
+        public string GetMembersOfNamespace(string @namespace)
+        {
+            List<string> mems = new List<string>() {
+                $"Members of [{@namespace}]:",
+            };
+
+            var assemblies = getAllAssemblies();
+            foreach (var asm in assemblies)
+            {
+                if (asm.Namespace != @namespace || mems.Contains(asm.Name))
+                {
+                    continue;
+                }
+                mems.Add(asm.Name);
+            }
+            return string.Join("\n", mems);
+        }
+
+
         #endregion
 
         #region ILuaSys.PostOffice
@@ -253,7 +300,6 @@ namespace Luna.Models.Apis
         #endregion
 
         #region private methods
-
 
         private void KillAllProcesses()
         {

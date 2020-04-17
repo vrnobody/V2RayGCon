@@ -1,4 +1,7 @@
-﻿import = function () end
+﻿-- Enable import on 2020-04-17
+-- import = function () end
+
+
 print = function(...) Misc:Print(...) end
 os.exit = function() print("os.exit() is disabled") end
                 

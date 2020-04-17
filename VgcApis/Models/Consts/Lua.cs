@@ -5,7 +5,7 @@ namespace VgcApis.Models.Consts
 {
     public static class Lua
     {
-        public const string LuaModules = "require module";
+        public const string LuaModules = "require module import";
 
         public const string LuaKeywords =
             "Signal Json Misc Server Web Sys"

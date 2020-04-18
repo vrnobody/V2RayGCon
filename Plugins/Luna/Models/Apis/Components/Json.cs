@@ -16,16 +16,16 @@ namespace Luna.Models.Apis.Components
         }
 
         #region ILuaJson thinggy
-        public bool TrySetValue(JToken json, string path, double value) =>
+        public bool TrySetDoubleValue(JToken json, string path, double value) =>
             vgcUtils.TrySetValue(json, path, value);
 
-        public bool TrySetValue(JToken json, string path, int value) =>
+        public bool TrySetIntValue(JToken json, string path, int value) =>
             vgcUtils.TrySetValue(json, path, value);
 
-        public bool TrySetValue(JToken json, string path, bool value) =>
+        public bool TrySetBoolValue(JToken json, string path, bool value) =>
             vgcUtils.TrySetValue(json, path, value);
 
-        public bool TrySetValue(JToken json, string path, string value) =>
+        public bool TrySetStringValue(JToken json, string path, string value) =>
             vgcUtils.TrySetValue(json, path, value);
 
         public string GetString(JToken json, string path) =>

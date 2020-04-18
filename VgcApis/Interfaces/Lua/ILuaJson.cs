@@ -13,10 +13,11 @@ namespace VgcApis.Interfaces.Lua
          var s2 = GetString(jobj, "1.2")  // 报错，因为1解释为列表序号，但jobj不是列表
          */
 
-        bool TrySetValue(JToken json, string path, double value);
-        bool TrySetValue(JToken json, string path, int value);
-        bool TrySetValue(JToken json, string path, bool value);
-        bool TrySetValue(JToken json, string path, string value);
+        // lua 不能识别参数类型, 所以不可以用 SetValue(int v) SetValue(bool v)的重载形式来简化
+        bool TrySetDoubleValue(JToken json, string path, double value);
+        bool TrySetIntValue(JToken json, string path, int value);
+        bool TrySetBoolValue(JToken json, string path, bool value);
+        bool TrySetStringValue(JToken json, string path, string value);
 
         string GetString(JToken json, string path);
         bool GetBool(JToken json, string path);

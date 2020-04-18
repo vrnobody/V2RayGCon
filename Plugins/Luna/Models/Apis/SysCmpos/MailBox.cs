@@ -56,16 +56,16 @@ namespace Luna.Models.Apis.SysCmpos
         public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, string title, string content) =>
             Reply(mail, 0, title, false, content);
 
-        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, double code) =>
-            Reply(mail, code, null);
+        public bool ReplyCode(VgcApis.Interfaces.Lua.ILuaMail mail, double code) =>
+            ReplyCode(mail, code, null);
 
-        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, double code, string content) =>
+        public bool ReplyCode(VgcApis.Interfaces.Lua.ILuaMail mail, double code, string content) =>
             Reply(mail, code, null, false, content);
 
-        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, bool state) =>
-            Reply(mail, state, null);
+        public bool ReplyState(VgcApis.Interfaces.Lua.ILuaMail mail, bool state) =>
+            ReplyState(mail, state, null);
 
-        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, bool state, string content) =>
+        public bool ReplyState(VgcApis.Interfaces.Lua.ILuaMail mail, bool state, string content) =>
             Reply(mail, 0, null, state, content);
 
         public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, double code, string title, bool state, string content) =>
@@ -77,15 +77,15 @@ namespace Luna.Models.Apis.SysCmpos
         public bool Send(string address, string title, string content) =>
             Send(address, 0, title, false, content);
 
-        public bool Send(string address, double code) =>
-            Send(address, code, null);
-        public bool Send(string address, double code, string content) =>
+        public bool SendCode(string address, double code) =>
+            SendCode(address, code, null);
+        public bool SendCode(string address, double code, string content) =>
             Send(address, code, null, false, content);
 
-        public bool Send(string address, bool state) =>
-            Send(address, state, null);
+        public bool SendState(string address, bool state) =>
+            SendState(address, state, null);
 
-        public bool Send(string address, bool state, string content) =>
+        public bool SendState(string address, bool state, string content) =>
             Send(address, 0, null, state, content);
 
         public bool Send(string address, double code, string title, bool state, string content)

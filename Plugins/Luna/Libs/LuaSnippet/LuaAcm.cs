@@ -17,6 +17,7 @@ namespace Luna.Libs.LuaSnippet
         List<LuaKeywordSnippets> keywordCache;
         List<LuaFuncSnippets> functionCache;
         List<LuaSubFuncSnippets> subFunctionCache;
+        List<LuaImportClrSnippets> importClrCache;
         List<ApiFunctionSnippets> apiFunctionCache;
 
         public LuaAcm()
@@ -49,7 +50,8 @@ namespace Luna.Libs.LuaSnippet
                     apiFunctionCache,
                     functionCache,
                     keywordCache,
-                    subFunctionCache));
+                    subFunctionCache,
+                    importClrCache));
 
             return acm;
         }
@@ -63,7 +65,78 @@ namespace Luna.Libs.LuaSnippet
             .Replace("then", "")
             .Replace("end", "");
 
-        List<string> GenKeywords(IEnumerable<string> initValues) =>
+        List<string> GetAllNameapaces() => VgcApis.Misc.Utils.GetAllAssembliesType()
+            .Select(t => t.Namespace)
+            .Distinct()
+            .Where(n => !(
+                string.IsNullOrEmpty(n)
+                || n.StartsWith("<")
+                || n.StartsWith("AutocompleteMenuNS")
+                || n.StartsWith("AutoUpdaterDotNET")
+                || n.StartsWith("Internal.Cryptography")
+                || n.StartsWith("Luna")
+                || n.StartsWith("Pacman")
+                || n.StartsWith("ProxySetter")
+                || n.StartsWith("ResourceEmbedderCompilerGenerated")
+                || n.StartsWith("Statistics")
+                || n.StartsWith("V2RayGCon")
+                || n.StartsWith("VgcApis")
+            ))
+            .ToList();
+
+        List<string> GetAllAssembliesName()
+        {
+            var nsps = GetAllNameapaces();
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .Select(asm => asm.FullName)
+                .Where(fn => !string.IsNullOrEmpty(fn) && nsps.Where(nsp => fn.StartsWith(nsp)).FirstOrDefault() != null)
+                .Union(nsps)
+                .OrderBy(n => n)
+                .Select(n => $"import('{n}')")
+                .ToList();
+        }
+
+        /*
+
+        List<string> GetAllAssembliesName() => VgcApis.Misc.Utils.GetAllAssembliesType()
+            .Select(t => t.Namespace)
+            .Distinct()
+            .Where(n => !(
+                string.IsNullOrEmpty(n)
+                || n.StartsWith("<")
+                || n.StartsWith("AutocompleteMenuNS")
+                || n.StartsWith("AutoUpdaterDotNET")
+                || n.StartsWith("Internal.Cryptography")
+                || n.StartsWith("Luna")
+                || n.StartsWith("Pacman")
+                || n.StartsWith("ProxySetter")
+                || n.StartsWith("ResourceEmbedderCompilerGenerated")
+                || n.StartsWith("Statistics")
+                || n.StartsWith("V2RayGCon")
+                || n.StartsWith("VgcApis")
+            ))
+            .Select(n => $"import('{n}')")
+            .OrderBy(n => n)
+            .ToList();
+            */
+
+        List<LuaImportClrSnippets> GenLuaImportClrSnippet() =>
+            GetAllAssembliesName()
+                .Select(e =>
+                {
+                    try
+                    {
+                        return new LuaImportClrSnippets(e);
+                    }
+                    catch { }
+                    return null;
+                })
+                .Where(e => e != null)
+                .ToList();
+
+
+        List<string> GenKeywords(
+            IEnumerable<string> initValues) =>
             new StringBuilder(VgcApis.Models.Consts.Lua.LuaModules)
             .Append(@" ")
             .Append(GetFilteredLuaKeywords())
@@ -110,6 +183,9 @@ namespace Luna.Libs.LuaSnippet
         {
             var apis = new List<Tuple<string, Type>>
             {
+                new Tuple<string,Type>("mailbox", typeof(VgcApis.Interfaces.Lua.ILuaMailBox)),
+                new Tuple<string,Type>("mail", typeof(VgcApis.Interfaces.Lua.ILuaMail)),
+                new Tuple<string,Type>("Sys", typeof(VgcApis.Interfaces.Lua.ILuaSys)),
                 new Tuple<string,Type>("Json", typeof(VgcApis.Interfaces.Lua.ILuaJson)),
                 new Tuple<string,Type>("Misc", typeof(VgcApis.Interfaces.Lua.ILuaMisc)),
                 new Tuple<string,Type>("Server", typeof(VgcApis.Interfaces.Lua.ILuaServer)),
@@ -125,6 +201,7 @@ namespace Luna.Libs.LuaSnippet
             keywordCache = GenKeywordSnippetItems(GenKeywords(apis.Select(e => e.Item1)));
             functionCache = GenLuaFunctionSnippet();
             subFunctionCache = GenLuaSubFunctionSnippet();
+            importClrCache = GenLuaImportClrSnippet();
             apiFunctionCache = apis
                .SelectMany(api => GenApiFunctionSnippetItems(api.Item1, api.Item2))
                .ToList();

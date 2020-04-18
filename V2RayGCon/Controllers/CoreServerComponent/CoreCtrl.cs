@@ -115,7 +115,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             long curDelay = SpeedtestTimeout;
             var cycles = Math.Max(1, setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestCycles : 1);
 
-            coreStates.SetSpeedTestResult(-1);
+            coreStates.SetSpeedTestResult(0);
             coreStates.SetStatus(I18N.Testing);
 
             logger.Log(I18N.Testing);

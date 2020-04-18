@@ -110,19 +110,24 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         void BindEventFlyPanelDragDrop()
         {
+            this.flyPanel.DragEnter += (s, a) =>
+            {
+                a.Effect = DragDropEffects.Move;
+            };
+
             this.flyPanel.DragDrop += (s, a) =>
             {
                 // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
 
-                var data = a.Data.GetData(typeof(Views.UserControls.ImportUI))
+                var curItem = a.Data.GetData(typeof(Views.UserControls.ImportUI))
                     as Views.UserControls.ImportUI;
 
-                var _destination = s as FlowLayoutPanel;
-                Point p = _destination.PointToClient(new Point(a.X, a.Y));
-                var item = _destination.GetChildAtPoint(p);
-                int index = _destination.Controls.GetChildIndex(item, false);
-                _destination.Controls.SetChildIndex(data, index);
-                _destination.Invalidate();
+                var panel = s as FlowLayoutPanel;
+                Point p = panel.PointToClient(new Point(a.X, a.Y));
+                var destItem = panel.GetChildAtPoint(p);
+                int destIndex = panel.Controls.GetChildIndex(destItem, false);
+                panel.Controls.SetChildIndex(curItem, destIndex);
+                panel.Invalidate();
             };
         }
 
@@ -130,11 +135,6 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             BindEventBtnAddClick();
             BindEventFlyPanelDragDrop();
-
-            this.flyPanel.DragEnter += (s, a) =>
-            {
-                a.Effect = DragDropEffects.Move;
-            };
         }
 
         void UpdatePanelItemsIndex()

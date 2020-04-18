@@ -69,9 +69,27 @@ namespace V2RayGCon.Services
         #endregion
 
         #region debug
+        void ShowPlugin(string name)
+        {
+
+            var pluginsServ = PluginsServer.Instance;
+            var plugins = pluginsServ.GetAllEnabledPlugins();
+
+            foreach (var plugin in plugins)
+            {
+                if (name == plugin.Name)
+                {
+                    plugin.Show();
+                }
+            }
+
+        }
+
 #if DEBUG
         void This_Function_Is_Used_For_Debugging()
         {
+            ShowPlugin(@"Luna");
+
             //notifier.InjectDebugMenuItem(new ToolStripMenuItem(
             //    "Debug",
             //    null,
@@ -83,8 +101,8 @@ namespace V2RayGCon.Services
             // new Views.WinForms.FormConfiger(@"{}");
             // new Views.WinForms.FormConfigTester();
             // Views.WinForms.FormOption.GetForm();
-            Views.WinForms.FormMain.ShowForm();
-            Views.WinForms.FormLog.ShowForm();
+            // Views.WinForms.FormMain.ShowForm();
+            // Views.WinForms.FormLog.ShowForm();
             // setting.WakeupAutorunServer();
             // Views.WinForms.FormSimAddVmessClient.GetForm();
             // Views.WinForms.FormDownloadCore.GetForm();
@@ -122,6 +140,7 @@ namespace V2RayGCon.Services
             slinkMgr.Run(setting, servers, cache);
             notifier.Run(setting, servers, slinkMgr, updater);
             pluginsServ.Run(setting, servers, configMgr, slinkMgr, notifier);
+
 
         }
 

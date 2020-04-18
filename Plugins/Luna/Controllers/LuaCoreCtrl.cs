@@ -1,6 +1,7 @@
 ﻿using Luna.Resources.Langs;
 using NLua;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,17 +10,16 @@ namespace Luna.Controllers
 {
     public class LuaCoreCtrl
     {
-        public EventHandler OnStateChange;
+        public EventHandler OnStateChange, OnIsHiddenChanged;
 
         Services.Settings settings;
         Models.Data.LuaCoreSetting coreSetting;
         Models.Apis.LuaApis luaApis;
-        VgcApis.BaseClasses.LuaSignal luaSignal;
+        Models.Apis.LuaSignal luaSignal;
+        Models.Apis.LuaSys luaSys = null;
 
         Thread luaCoreThread;
         Task luaCoreTask;
-
-        readonly object coreStateLocker = new object();
 
         public LuaCoreCtrl() { }
 
@@ -31,11 +31,40 @@ namespace Luna.Controllers
             this.settings = settings;
             this.coreSetting = luaCoreState;
             this.luaApis = luaApis;
-            this.luaSignal = new VgcApis.BaseClasses.LuaSignal();
+            this.luaSignal = new Models.Apis.LuaSignal();
         }
 
         #region properties 
         public string name => coreSetting.name;
+
+        public double index
+        {
+            get => coreSetting.index;
+            set
+            {
+                if (coreSetting.index == value)
+                {
+                    return;
+                }
+                coreSetting.index = value;
+                Save();
+            }
+        }
+
+        public bool isHidden
+        {
+            get => coreSetting.isHidden;
+            set
+            {
+                if (coreSetting.isHidden == value)
+                {
+                    return;
+                }
+                coreSetting.isHidden = value;
+                Save();
+                InvokeOnIsHiddenChangeIgnoreError();
+            }
+        }
 
         public bool isAutoRun
         {
@@ -67,11 +96,18 @@ namespace Luna.Controllers
                 if (_isRunning == false)
                 {
                     SendLog($"{coreSetting.name} {I18N.Stopped}");
-                    luaCoreTask = null;
-                    luaCoreThread = null;
                 }
                 InvokeOnStateChangeIgnoreError();
             }
+        }
+
+        void InvokeOnIsHiddenChangeIgnoreError()
+        {
+            try
+            {
+                OnIsHiddenChanged?.Invoke(null, null);
+            }
+            catch { }
         }
 
         void InvokeOnStateChangeIgnoreError()
@@ -100,33 +136,31 @@ namespace Luna.Controllers
 
         public void Stop()
         {
-            lock (coreStateLocker)
+            if (!isRunning)
             {
-                if (!isRunning)
-                {
-                    return;
-                }
+                return;
             }
 
             SendLog($"{I18N.SendStopSignalTo} {coreSetting.name}");
             luaSignal.SetStopSignal(true);
+            luaSys?.CloseAllMailBox();
         }
 
         public void Kill()
         {
-            if (luaCoreTask == null)
+            if (!isRunning)
+            {
+                return;
+            }
+
+            Stop();
+            if (luaCoreTask?.Wait(2000) == true)
             {
                 return;
             }
 
             SendLog($"{I18N.Terminate} {coreSetting.name}");
-
-            luaSignal.SetStopSignal(true);
-            if (luaCoreTask.Wait(2000))
-            {
-                return;
-            }
-
+            luaSys?.Dispose();
             try
             {
                 luaCoreThread?.Abort();
@@ -137,18 +171,15 @@ namespace Luna.Controllers
 
         public void Start()
         {
-            lock (coreStateLocker)
+            if (isRunning)
             {
-                if (isRunning)
-                {
-                    return;
-                }
-                isRunning = true;
+                return;
             }
 
+            isRunning = true;
+
             SendLog($"{I18N.Start} {coreSetting.name}");
-            luaCoreTask = VgcApis.Misc.Utils.RunInBackground(
-                RunLuaScript);
+            luaCoreTask = VgcApis.Misc.Utils.RunInBackground(() => RunLuaScript());
         }
 
         public void Cleanup()
@@ -158,31 +189,52 @@ namespace Luna.Controllers
         #endregion
 
         #region private methods
+        List<Type> assemblies = null;
+        readonly object assemblisLocker = new object();
+        List<Type> GetAllAssemblies()
+        {
+            // cache until controller is destroyed
+            lock (assemblisLocker)
+            {
+                if (assemblies == null)
+                {
+                    assemblies = VgcApis.Misc.Utils.GetAllAssembliesType();
+                }
+            }
+            return assemblies;
+        }
+
         void SendLog(string content)
             => luaApis.SendLog(content);
 
         void RunLuaScript()
         {
+            luaSys?.Dispose();
+            luaSys = new Models.Apis.LuaSys(luaApis, () => GetAllAssemblies());
+
             luaSignal.ResetAllSignals();
             luaCoreThread = Thread.CurrentThread;
 
             try
             {
-                var core = CreateLuaCore();
+                var core = CreateLuaCore(luaSys);
                 var script = coreSetting.script;
-
                 core.DoString(script);
             }
             catch (Exception e)
             {
-                SendLog($"[{coreSetting.name}] {e.ToString()}");
+                SendLog($"[{coreSetting.name}] {e}");
             }
+
             isRunning = false;
+            luaSys?.Dispose();
         }
 
-        Lua CreateLuaCore()
+        Lua CreateLuaCore(Models.Apis.LuaSys luaSys)
         {
             var lua = new Lua();
+
+            lua.LoadCLRPackage();
 
             lua.State.Encoding = Encoding.UTF8;
 
@@ -190,6 +242,7 @@ namespace Luna.Controllers
             var misc = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaMisc>();
 
             lua["Signal"] = luaSignal;
+            lua["Sys"] = luaSys;
 
             lua["Json"] = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaJson>();
             lua["Misc"] = misc;

@@ -533,6 +533,20 @@
   <data name="toolStripMenuItemStopBatchSpeedTest.ToolTipText" xml:space="preserve">
     <value>停止当前速度测试</value>
   </data>
+  <data name="toolStripMenuItemClearSpeedTestResults.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAUVJREFUOE+VkbFOg3AQxkmcjGsfoU/CKxACKwNlcHNyIoUQ0rcohLRoIwmDGwT6
+        IgzqqLUYhPW8I0e11CJ+yYX87+77XbgT/qumaS4wvLIsAb+PnB4nNq/yPAdRFIEgXPpbfTN98e1xeVhn
+        zCvKc8u3MHmJoWP4GAHGDcZ6rHla13WRZRm4rgu2bUMcx5Cm6bAZExOMBS7l03EcUBQFfN+HMLwDXddb
+        c5IkZF6TGd/sRHXGMAxBkqS22TRNeN/todx/wNvrDmYzA6IoIsAtmY8AVVWBYRitcZtv4fnpBTRNg/nc
+        OkA295sWioCHEwBRi6IAWZZhufRaQx8SBAFYlkWAkG3HGoLQZFVVux1cs+VU5yD0a7RYug72XHH77+pD
+        aCe0WFoy1qbcNqyfEJpO18Hcgsvj1EHoOjx9wqXxIgideHi6IHwBbnWcjlb4gZwAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripMenuItemClearSpeedTestResults.Text" xml:space="preserve">
+    <value>清除测速数据</value>
+  </data>
   <data name="toolStripMenuItemModifySettings.Text" xml:space="preserve">
     <value>批量修改</value>
   </data>

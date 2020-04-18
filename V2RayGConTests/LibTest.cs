@@ -168,7 +168,7 @@ namespace V2RayGCon.Test
         {
             var r = JObject.Parse(json);
             var e = JObject.Parse(expect);
-            Misc.Utils.SetValue<string>(r, path, value);
+            Misc.Utils.TrySetValue<string>(r, path, value);
             Assert.AreEqual(true, JObject.DeepEquals(e, r));
         }
 
@@ -179,7 +179,7 @@ namespace V2RayGCon.Test
         {
             var r = JObject.Parse(json);
             var e = JObject.Parse(expect);
-            Misc.Utils.SetValue<int>(r, path, value);
+            Misc.Utils.TrySetValue<int>(r, path, value);
             Assert.AreEqual(true, JObject.DeepEquals(e, r));
         }
 

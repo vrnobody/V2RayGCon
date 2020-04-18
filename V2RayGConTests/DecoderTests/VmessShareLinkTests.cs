@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace V2RayGCon.Test.DecoderTests
 {
@@ -49,7 +47,8 @@ namespace V2RayGCon.Test.DecoderTests
             var subText = string.Join(Environment.NewLine, testLinks);
 
             var cache = V2RayGCon.Services.Cache.Instance;
-            var vmessDecoder = new V2RayGCon.Services.ShareLinkComponents.VmessDecoder(cache);
+            var setting = Services.Settings.Instance;
+            var vmessDecoder = new V2RayGCon.Services.ShareLinkComponents.VmessDecoder(cache, setting);
 
             var vmessLinks = vmessDecoder.ExtractLinksFromText(subText);
             foreach (var vmessLink in vmessLinks)

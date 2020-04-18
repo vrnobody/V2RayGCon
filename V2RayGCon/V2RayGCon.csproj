@@ -169,7 +169,6 @@
     <Compile Include="Libs\Lua\ApiComponents\UtilsApi.cs" />
     <Compile Include="Libs\Lua\ApiComponents\WebApi.cs" />
     <Compile Include="Libs\Lua\Apis.cs" />
-    <Compile Include="Libs\Sys\ChildProcessTracker.cs" />
     <Compile Include="Libs\Sys\DllLoader.cs" />
     <Compile Include="Libs\QRCode\HybridBinarizer.cs" />
     <Compile Include="Libs\QRCode\QRCode.cs" />

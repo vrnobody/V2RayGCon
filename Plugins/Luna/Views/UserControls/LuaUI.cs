@@ -22,14 +22,22 @@ namespace Luna.Views.UserControls
         private void LuaUI_Load(object sender, EventArgs e)
         {
             this.lbName.Text = luaCoreCtrl.name;
+            toolTip1.SetToolTip(lbName, luaCoreCtrl.name);
+
             this.chkIsAutoRun.Checked = luaCoreCtrl.isAutoRun;
+            chkIsHidden.Checked = luaCoreCtrl.isHidden;
 
             UpdateRunningState();
             luaCoreCtrl.OnStateChange += OnLuaCoreStateChangeHandler;
-
         }
 
         #region public methods
+        public void SetIndex(double index)
+        {
+            luaCoreCtrl.index = index;
+        }
+
+        public double GetIndex() => luaCoreCtrl.index;
 
         public void Cleanup()
         {
@@ -70,6 +78,8 @@ namespace Luna.Views.UserControls
         }
         #endregion
 
+        #region UI event handlers
+
         private void chkIsAutoRun_CheckedChanged(object sender, EventArgs e)
         {
             var isAutoRun = chkIsAutoRun.Checked;
@@ -108,5 +118,28 @@ namespace Luna.Views.UserControls
                 }
             });
         }
+
+        private void chkIsHidden_CheckedChanged(object sender, EventArgs e)
+        {
+            var isHidden = chkIsHidden.Checked;
+            luaCoreCtrl.isHidden = isHidden;
+        }
+
+        private void LuaUI_MouseDown(object sender, MouseEventArgs e)
+        {
+            DoDragDrop(this, DragDropEffects.Move);
+        }
+
+        private void lbName_MouseDown(object sender, MouseEventArgs e)
+        {
+            DoDragDrop(this, DragDropEffects.Move);
+        }
+
+        private void lbRunningState_MouseDown(object sender, MouseEventArgs e)
+        {
+            DoDragDrop(this, DragDropEffects.Move);
+        }
+
+        #endregion
     }
 }

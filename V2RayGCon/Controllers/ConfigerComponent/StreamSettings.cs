@@ -218,7 +218,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             var tpl = cache.tpl.LoadTemplate(s.options[key]) as JObject;
             if (!s.dropDownStyle)
             {
-                Misc.Utils.SetValue<string>(tpl, s.optionPath, streamParamText);
+                Misc.Utils.TrySetValue<string>(tpl, s.optionPath, streamParamText);
             }
 
             InsertTLSSettings(tpl);

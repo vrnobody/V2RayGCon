@@ -10,10 +10,14 @@ namespace V2RayGCon.Services.ShareLinkComponents
         VgcApis.Interfaces.IShareLinkDecoder
     {
         Cache cache;
+        private readonly Settings setting;
 
-        public VmessDecoder(Cache cache)
+        public VmessDecoder(
+            Cache cache,
+            Settings setting)
         {
             this.cache = cache;
+            this.setting = setting;
         }
         #region properties
 
@@ -193,6 +197,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             {
                 streamType = "tcp_http";
             }
+
             var streamToken = cache.tpl.LoadTemplate(streamType);
             try
             {
@@ -200,12 +205,12 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
             catch { }
 
+            var isUseTls = vmess.tls?.ToLower() == "tls";
             try
             {
-                streamToken["security"] = (vmess.tls?.ToLower() == "tls") ? "tls" : "none";
+                streamToken["security"] = isUseTls ? "tls" : "none";
             }
             catch { }
-
             return streamToken;
         }
 

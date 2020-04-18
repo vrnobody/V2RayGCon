@@ -48,6 +48,7 @@
             this.chkSetUseV4 = new System.Windows.Forms.CheckBox();
             this.chkSetSysPortable = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.chkSetSelfSignedCert = new System.Windows.Forms.CheckBox();
             this.cboxSettingsRandomSelectServerLatency = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.tboxSettingsMaxCoreNum = new System.Windows.Forms.TextBox();
@@ -258,17 +259,25 @@
             // groupBox5
             // 
             resources.ApplyResources(this.groupBox5, "groupBox5");
+            this.groupBox5.Controls.Add(this.chkSetServStatistics);
+            this.groupBox5.Controls.Add(this.chkSetSelfSignedCert);
             this.groupBox5.Controls.Add(this.cboxSettingsRandomSelectServerLatency);
             this.groupBox5.Controls.Add(this.label14);
             this.groupBox5.Controls.Add(this.tboxSettingsMaxCoreNum);
             this.groupBox5.Controls.Add(this.label15);
-            this.groupBox5.Controls.Add(this.chkSetServStatistics);
             this.groupBox5.Controls.Add(this.chkSetServAutotrack);
             this.groupBox5.Controls.Add(this.label13);
             this.groupBox5.Controls.Add(this.label12);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.TabStop = false;
             this.toolTip1.SetToolTip(this.groupBox5, resources.GetString("groupBox5.ToolTip"));
+            // 
+            // chkSettingSelfSignedCert
+            // 
+            resources.ApplyResources(this.chkSetSelfSignedCert, "chkSettingSelfSignedCert");
+            this.chkSetSelfSignedCert.Name = "chkSettingSelfSignedCert";
+            this.toolTip1.SetToolTip(this.chkSetSelfSignedCert, resources.GetString("chkSettingSelfSignedCert.ToolTip"));
+            this.chkSetSelfSignedCert.UseVisualStyleBackColor = true;
             // 
             // cboxSettingsRandomSelectServerLatency
             // 
@@ -279,7 +288,8 @@
             resources.GetString("cboxSettingsRandomSelectServerLatency.Items1"),
             resources.GetString("cboxSettingsRandomSelectServerLatency.Items2"),
             resources.GetString("cboxSettingsRandomSelectServerLatency.Items3"),
-            resources.GetString("cboxSettingsRandomSelectServerLatency.Items4")});
+            resources.GetString("cboxSettingsRandomSelectServerLatency.Items4"),
+            resources.GetString("cboxSettingsRandomSelectServerLatency.Items5")});
             this.cboxSettingsRandomSelectServerLatency.Name = "cboxSettingsRandomSelectServerLatency";
             this.toolTip1.SetToolTip(this.cboxSettingsRandomSelectServerLatency, resources.GetString("cboxSettingsRandomSelectServerLatency.ToolTip"));
             // 
@@ -765,5 +775,6 @@
         private System.Windows.Forms.ComboBox cboxSettingsRandomSelectServerLatency;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.CheckBox chkSetSelfSignedCert;
     }
 }

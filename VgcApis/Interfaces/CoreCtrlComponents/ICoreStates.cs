@@ -47,6 +47,7 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         void SetMark(string mark);
 
         void SetRemark(string remark);
+        void SetSpeedTestResult(long latency);
 
         void SetIsAutoRun(bool isAutoRun);
         void SetIsUntrack(bool isUntrack);

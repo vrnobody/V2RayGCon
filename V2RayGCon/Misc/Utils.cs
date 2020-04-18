@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Management;
 using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -413,30 +412,34 @@ namespace V2RayGCon.Misc
             return result as JObject;
         }
 
-        public static bool SetValue<T>(JToken json, string path, T value)
+        public static bool TrySetValue<T>(JToken json, string path, T value)
         {
             var parts = ParsePathIntoParentAndKey(path);
-            var r = json;
-
             var key = parts.Item2;
-            if (string.IsNullOrEmpty(key))
+            var parent = parts.Item1;
+
+            var node = string.IsNullOrEmpty(parent) ? json : GetKey(json, parent);
+            if (node == null)
             {
                 return false;
             }
 
-            var parent = parts.Item1;
-            if (!string.IsNullOrEmpty(parent))
+            try
             {
-                var p = GetKey(json, parent);
-                if (p == null || !(p is JObject))
+                switch (node)
                 {
-                    return false;
+                    case JObject o:
+                        o[key] = new JValue(value);
+                        return true;
+                    case JArray a:
+                        a[VgcApis.Misc.Utils.Str2Int(key)] = new JValue(value);
+                        return true;
+                    default:
+                        break;
                 }
-                r = p as JObject;
             }
-
-            r[key] = new JValue(value);
-            return true;
+            catch { }
+            return false;
         }
 
         public static bool TryExtractJObjectPart(
@@ -697,19 +700,13 @@ namespace V2RayGCon.Misc
         /// <returns></returns>
         public static T GetValue<T>(JToken json, string path)
         {
-            var key = GetKey(json, path);
-
             var def = default(T) == null && typeof(T) == typeof(string) ?
-                (T)(object)string.Empty :
-                default;
+                (T)(object)string.Empty : default;
 
-            if (key == null)
-            {
-                return def;
-            }
+            var node = GetKey(json, path);
             try
             {
-                return key.Value<T>();
+                return node == null ? def : node.Value<T>();
             }
             catch { }
             return def;
@@ -1661,36 +1658,7 @@ namespace V2RayGCon.Misc
             return string.Empty;
         }
 
-        public static void KillProcessAndChildrens(int pid)
-        {
-            ManagementObjectSearcher processSearcher = new ManagementObjectSearcher
-              ("Select * From Win32_Process Where ParentProcessID=" + pid);
-            ManagementObjectCollection processCollection = processSearcher.Get();
 
-            // We must kill child processes first!
-            if (processCollection != null)
-            {
-                foreach (ManagementObject mo in processCollection)
-                {
-                    KillProcessAndChildrens(Convert.ToInt32(mo["ProcessID"])); //kill child processes(also kills childrens of childrens etc.)
-                }
-            }
-
-            // Then kill parents.
-            try
-            {
-                Process proc = Process.GetProcessById(pid);
-                if (!proc.HasExited)
-                {
-                    proc.Kill();
-                    proc.WaitForExit(1000);
-                }
-            }
-            catch
-            {
-                // Process already exited.
-            }
-        }
         #endregion
 
         #region for Testing

@@ -7,10 +7,12 @@ namespace Luna.Services
     public class LuaServer :
         VgcApis.BaseClasses.Disposable
     {
-        public EventHandler OnLuaCoreCtrlListChange;
+        public EventHandler
+            OnRequireFlyPanelUpdate,
+            OnRequireMenuUpdate;
 
         Settings settings;
-        List<Controllers.LuaCoreCtrl> luaCoreCtrls;
+        List<Controllers.LuaCoreCtrl> luaCoreCtrls = new List<Controllers.LuaCoreCtrl>();
         Models.Apis.LuaApis luaApis;
 
         public LuaServer() { }
@@ -23,7 +25,7 @@ namespace Luna.Services
             this.luaApis = new Models.Apis.LuaApis(settings, api);
             this.luaApis.Prepare();
 
-            luaCoreCtrls = InitLuaCores(settings, luaApis);
+            InitLuaCores();
             WakeUpAutoRunScripts();
         }
 
@@ -32,7 +34,8 @@ namespace Luna.Services
         public List<string[]> GetAllScripts()
         {
             var scripts = new List<string[]>();
-            foreach (var luaCore in luaCoreCtrls)
+            var ctrls = GetAllLuaCoreCtrls();
+            foreach (var luaCore in ctrls)
             {
                 scripts.Add(new string[] {
                     luaCore.name,
@@ -42,20 +45,38 @@ namespace Luna.Services
             return scripts;
         }
 
+        public void ResetIndex()
+        {
+            var controls = GetAllLuaCoreCtrls();
+            for (int i = 0; i < controls.Count; i++)
+            {
+                controls[i].index = i;
+            }
+            InvokeOnRequireMenuUpdate();
+        }
+
         public List<Controllers.LuaCoreCtrl> GetAllLuaCoreCtrls()
         {
-            var list = luaCoreCtrls ?? new List<Controllers.LuaCoreCtrl>();
-            return list.OrderBy(c => c.name).ToList();
+            var list = luaCoreCtrls.ToList();
+            return list
+                .OrderBy(c => c.index)
+                .ToList();
+        }
+
+        public List<Controllers.LuaCoreCtrl> GetVisibleCoreCtrls()
+        {
+            return GetAllLuaCoreCtrls()
+                .Where(c => !c.isHidden)
+                .ToList();
         }
 
         public void RemoveAllScripts()
         {
-            foreach (var coreCtrl in luaCoreCtrls)
+            var coreCtrls = GetAllLuaCoreCtrls();
+            foreach (var coreCtrl in coreCtrls)
             {
-                coreCtrl.Kill();
+                RemoveCoreCtrl(coreCtrl);
             }
-            luaCoreCtrls.Clear();
-            settings.GetLuaCoreSettings().Clear();
             Save();
             InvokeOnLuaCoreCtrlListChangeIgnoreError();
         }
@@ -67,19 +88,25 @@ namespace Luna.Services
                 return false;
             }
 
-            var coreCtrl = luaCoreCtrls.FirstOrDefault(c => c.name == name);
+            var coreCtrl = GetAllLuaCoreCtrls().FirstOrDefault(c => c.name == name);
             if (coreCtrl == null)
             {
                 return false;
             }
 
-            coreCtrl.Kill();
-            luaCoreCtrls.Remove(coreCtrl);
-
-            settings.GetLuaCoreSettings().RemoveAll(s => s.name == name);
+            RemoveCoreCtrl(coreCtrl);
             Save();
             InvokeOnLuaCoreCtrlListChangeIgnoreError();
             return true;
+        }
+
+        void RemoveCoreCtrl(Controllers.LuaCoreCtrl coreCtrl)
+        {
+            var name = coreCtrl.name;
+            coreCtrl.OnIsHiddenChanged -= OnRequireMenuUpdateHandler;
+            coreCtrl.Kill();
+            luaCoreCtrls.Remove(coreCtrl);
+            settings.GetLuaCoreSettings().RemoveAll(s => s.name == name);
         }
 
         /// <summary>
@@ -127,12 +154,8 @@ namespace Luna.Services
         #region protected methods
         protected override void Cleanup()
         {
-            if (luaCoreCtrls == null)
-            {
-                return;
-            }
-
-            foreach (var ctrl in luaCoreCtrls)
+            var coreCtrls = GetAllLuaCoreCtrls();
+            foreach (var ctrl in coreCtrls)
             {
                 ctrl.Cleanup();
             }
@@ -148,7 +171,7 @@ namespace Luna.Services
         /// <returns></returns>
         bool AddOrReplaceScriptQuiet(string name, string script)
         {
-            var coreCtrl = luaCoreCtrls.FirstOrDefault(c => c.name == name);
+            var coreCtrl = GetAllLuaCoreCtrls().FirstOrDefault(c => c.name == name);
             if (coreCtrl != null)
             {
                 coreCtrl.ReplaceScript(script);
@@ -162,26 +185,48 @@ namespace Luna.Services
             };
 
             settings.GetLuaCoreSettings().Add(coreState);
-            coreCtrl = new Controllers.LuaCoreCtrl();
-            luaCoreCtrls.Add(coreCtrl);
-            coreCtrl.Run(settings, coreState, luaApis);
+            AddNewLuaCoreCtrl(coreState);
             return true;
         }
+
+        void AddNewLuaCoreCtrl(Models.Data.LuaCoreSetting coreState)
+        {
+            var coreCtrl = new Controllers.LuaCoreCtrl();
+            luaCoreCtrls.Add(coreCtrl);
+            coreCtrl.Run(settings, coreState, luaApis);
+            coreCtrl.OnIsHiddenChanged += OnRequireMenuUpdateHandler;
+        }
+
+
+        void InvokeOnRequireMenuUpdate() =>
+            OnRequireMenuUpdateHandler(this, EventArgs.Empty);
+
+        void OnRequireMenuUpdateHandler(object sender, EventArgs args)
+        {
+            try
+            {
+                OnRequireMenuUpdate?.Invoke(this, EventArgs.Empty);
+
+            }
+            catch { }
+        }
+
 
         void InvokeOnLuaCoreCtrlListChangeIgnoreError()
         {
             try
             {
-                OnLuaCoreCtrlListChange?.Invoke(null, null);
+                OnRequireFlyPanelUpdate?.Invoke(this, EventArgs.Empty);
             }
             catch { }
+            InvokeOnRequireMenuUpdate();
         }
 
         void Save() => settings.SaveUserSettingsNow();
 
         void WakeUpAutoRunScripts()
         {
-            var list = luaCoreCtrls.Where(c => c.isAutoRun).ToList();
+            var list = GetAllLuaCoreCtrls().Where(c => c.isAutoRun).ToList();
             if (list.Count() <= 0)
             {
                 return;
@@ -192,18 +237,13 @@ namespace Luna.Services
             }
         }
 
-        List<Controllers.LuaCoreCtrl> InitLuaCores(
-            Settings settings,
-            Models.Apis.LuaApis luaApis)
+        void InitLuaCores()
         {
-            var cores = new List<Controllers.LuaCoreCtrl>();
-            foreach (var luaCoreState in settings.GetLuaCoreSettings())
+            var coreStates = settings.GetLuaCoreSettings();
+            foreach (var coreState in coreStates)
             {
-                var luaCtrl = new Controllers.LuaCoreCtrl();
-                luaCtrl.Run(settings, luaCoreState, luaApis);
-                cores.Add(luaCtrl);
+                AddNewLuaCoreCtrl(coreState);
             }
-            return cores;
         }
         #endregion
     }

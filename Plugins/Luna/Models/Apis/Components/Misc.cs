@@ -112,7 +112,7 @@ namespace Luna.Models.Apis.Components
 
         public List<int> Choices(string title, NLua.LuaTable choices, bool isShowKey)
         {
-            var list = LuaTableToList(choices, isShowKey);
+            var list = global::Luna.Misc.Utils.LuaTableToList(choices, isShowKey);
             return GetResultFromChoicesDialog(title, list.ToArray());
         }
 
@@ -127,7 +127,7 @@ namespace Luna.Models.Apis.Components
 
         public int Choice(string title, NLua.LuaTable choices, bool isShowKey, int selected)
         {
-            var list = LuaTableToList(choices, isShowKey);
+            var list = global::Luna.Misc.Utils.LuaTableToList(choices, isShowKey);
             return GetResultFromChoiceDialog(title, list.ToArray(), selected);
         }
 
@@ -144,36 +144,8 @@ namespace Luna.Models.Apis.Components
 
         #region other ILuaMisc thinggy
 
-        public string GetOsVersion() => Environment.OSVersion.VersionString;
-
-        static string osReleaseId;
-        public string GetOsReleaseInfo()
-        {
-            if (string.IsNullOrEmpty(osReleaseId))
-            {
-                // https://stackoverflow.com/questions/39778525/how-to-get-windows-version-as-in-windows-10-version-1607/39778770
-                var root = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion";
-                var name = Microsoft.Win32.Registry.GetValue(root, @"ProductName", @"")?.ToString();
-                var arch = Environment.Is64BitOperatingSystem ? @"x64" : @"x86";
-                var id = Microsoft.Win32.Registry.GetValue(root, @"ReleaseId", "")?.ToString();
-                var build = Microsoft.Win32.Registry.GetValue(root, @"CurrentBuildNumber", @"")?.ToString();
-
-                osReleaseId = $"{name} {arch} {id} build {build}";
-            }
-            return osReleaseId;
-        }
-
         public string Replace(string text, string oldStr, string newStr) =>
             text?.Replace(oldStr, newStr);
-
-        public int SetWallpaper(string filename) =>
-            Libs.Sys.WinApis.SetWallpaper(filename);
-
-        public string GetImageResolution(string filename) =>
-            VgcApis.Misc.Utils.GetImageResolution(filename);
-
-        public string PickRandomLine(string filename) =>
-            VgcApis.Misc.Utils.PickRandomLine(filename);
 
         public string RandomHex(int len) => VgcApis.Misc.Utils.RandomHex(len);
 
@@ -244,7 +216,7 @@ namespace Luna.Models.Apis.Components
 
         public string GetAppDir() => VgcApis.Misc.Utils.GetAppDir();
 
-        public void Sleep(int milliseconds) => Task.Delay(milliseconds).Wait();
+        public void Sleep(int milSec) => Task.Delay(milSec).Wait();
 
         public void Print(params object[] contents)
         {
@@ -298,21 +270,6 @@ namespace Luna.Models.Apis.Components
                 }
             }
             return null;
-        }
-
-        List<string> LuaTableToList(NLua.LuaTable table, bool isShowKey)
-        {
-            var r = new List<string>();
-            foreach (KeyValuePair<object, object> de in table)
-            {
-                var v = de.Value.ToString();
-                if (isShowKey)
-                {
-                    v = de.Key.ToString() + @"." + v;
-                }
-                r.Add(v);
-            }
-            return r;
         }
 
         private static List<int> GetResultFromChoicesDialog(string title, string[] choices)

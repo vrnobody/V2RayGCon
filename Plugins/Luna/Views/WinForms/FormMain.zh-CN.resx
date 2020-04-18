@@ -159,6 +159,9 @@
   <data name="groupBox1.Text" xml:space="preserve">
     <value>输出</value>
   </data>
+  <data name="cboxScriptName.ToolTip" xml:space="preserve">
+    <value>加载脚本或设置脚本名</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnNewScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -170,9 +173,6 @@
   </data>
   <data name="btnNewScript.ToolTip" xml:space="preserve">
     <value>新脚本</value>
-  </data>
-  <data name="cboxScriptName.ToolTip" xml:space="preserve">
-    <value>加载脚本或设置脚本名</value>
   </data>
   <data name="btnClearOutput.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -186,7 +186,7 @@
 </value>
   </data>
   <data name="btnClearOutput.ToolTip" xml:space="preserve">
-    <value>清空(F8)</value>
+    <value>清除输出框(F8)</value>
   </data>
   <data name="btnKillScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -221,18 +221,6 @@
   </data>
   <data name="btnRunScript.ToolTip" xml:space="preserve">
     <value>运行(F5)</value>
-  </data>
-  <data name="btnRemoveScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAALZJREFUOE9jQAbfvn0zgDJxApxqgBIVQPwfiDOhQhgAJAdVUwEVggCQwKubV/9v
-        i3T///b+HayGgMRAcltCHP4/v3gWYQiQYQDEYM0L1Xj/r3XWxTAEphkkB1IDMgSkB6QXqwJkQ/DJgTXD
-        AC6FRGmGAWyGEK0ZBtANIUkzCFBkALpmEI3MxmsINs0gPjYxDENwaQaJ45ODaaZKQiI/KcMASACIsWqG
-        AZAcVA2qZhgASpCYnRkYAKjTuVoFkX4yAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="btnRemoveScript.ToolTip" xml:space="preserve">
-    <value>删除脚本</value>
   </data>
   <data name="btnSaveScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -271,5 +259,14 @@
   </data>
   <data name="exitToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>关闭窗口</value>
+  </data>
+  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
+    <value>查看</value>
+  </data>
+  <data name="showOutputPanelToolStripMenuItem.Text" xml:space="preserve">
+    <value>显示输出面板</value>
+  </data>
+  <data name="hideOutputPanelToolStripMenuItem.Text" xml:space="preserve">
+    <value>隐藏输出面板</value>
   </data>
 </root>

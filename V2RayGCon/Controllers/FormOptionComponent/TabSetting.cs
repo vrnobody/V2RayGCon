@@ -18,8 +18,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             chkSetUseV4 = null,
             chkSetEnableStat = null,
             chkSetUpdateUseProxy = null,
-            chkSetCheckWhenAppStart = null;
-
+            chkSetCheckWhenAppStart = null,
+            chkSetIsSupportSelfSignedCert = null;
         private readonly TextBox
             tboxMaxCoreNum = null;
 
@@ -31,6 +31,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             ComboBox cboxRandomSelectServerLatency,
             CheckBox chkPortableMode,
             CheckBox chkSetUseV4,
+            CheckBox chkSetIsSupportSelfSignedCert,
             CheckBox chkSetEnableStat,
             CheckBox chkSetUpdateUseProxy,
             CheckBox chkSetCheckWhenAppStart)
@@ -46,6 +47,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.cboxRandomSelectServerLatency = cboxRandomSelectServerLatency;
             this.chkPortableMode = chkPortableMode;
             this.chkSetUseV4 = chkSetUseV4;
+            this.chkSetIsSupportSelfSignedCert = chkSetIsSupportSelfSignedCert;
             this.chkSetEnableStat = chkSetEnableStat;
             this.chkSetCheckWhenAppStart = chkSetCheckWhenAppStart;
             this.chkSetUpdateUseProxy = chkSetUpdateUseProxy;
@@ -62,6 +64,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             chkSetEnableStat.Checked = setting.isEnableStatistics;
             chkSetUseV4.Checked = setting.isUseV4;
+            chkSetIsSupportSelfSignedCert.Checked = setting.isSupportSelfSignedCert;
             chkPortableMode.Checked = setting.isPortable;
             cboxLanguage.SelectedIndex = (int)setting.culture;
             cboxPageSize.Text = setting.serverPanelPageSize.ToString();
@@ -107,6 +110,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             setting.QuickSwitchServerLantency = VgcApis.Misc.Utils.Str2Int(cboxRandomSelectServerLatency.Text);
             setting.isUpdateUseProxy = chkSetUpdateUseProxy.Checked;
             setting.isCheckUpdateWhenAppStart = chkSetCheckWhenAppStart.Checked;
+            setting.isSupportSelfSignedCert = chkSetIsSupportSelfSignedCert.Checked;
             setting.isPortable = chkPortableMode.Checked;
             setting.isUseV4 = chkSetUseV4.Checked;
 
@@ -120,6 +124,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         public override bool IsOptionsChanged()
         {
             if (setting.isUseV4 != chkSetUseV4.Checked
+                || setting.isSupportSelfSignedCert != chkSetIsSupportSelfSignedCert.Checked
                 || setting.QuickSwitchServerLantency != VgcApis.Misc.Utils.Str2Int(cboxRandomSelectServerLatency.Text)
                 || setting.isUpdateUseProxy != chkSetUpdateUseProxy.Checked
                 || setting.isCheckUpdateWhenAppStart != chkSetCheckWhenAppStart.Checked

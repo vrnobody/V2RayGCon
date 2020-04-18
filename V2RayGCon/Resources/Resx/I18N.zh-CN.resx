@@ -738,4 +738,7 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="TheNthServer" xml:space="preserve">
     <value>第{0}个服务器</value>
   </data>
+  <data name="ConfirmClearSpeedTestResults" xml:space="preserve">
+    <value>清除速度测试数据?</value>
+  </data>
 </root>

@@ -4,11 +4,14 @@ using ScintillaNET;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -283,6 +286,84 @@ namespace VgcApis.Misc
         #endregion
 
         #region Task
+        public static void SetProcessEnvs(Process proc, Dictionary<string, string> envs)
+        {
+            if (envs == null || envs.Count <= 0)
+            {
+                return;
+            }
+
+            var procEnv = proc.StartInfo.EnvironmentVariables;
+            foreach (var env in envs)
+            {
+                procEnv[env.Key] = env.Value;
+            }
+        }
+
+        static readonly AutoResetEvent sendCtrlCLocker = new AutoResetEvent(true);
+        public static bool SendStopSignal(Process proc)
+        {
+            // https://stackoverflow.com/questions/283128/how-do-i-send-ctrlc-to-a-process-in-c
+
+            const int CTRL_C_EVENT = 0;
+
+            var success = false;
+            sendCtrlCLocker.WaitOne();
+            try
+            {
+                if (Libs.Sys.ConsoleCtrls.AttachConsole((uint)proc.Id))
+                {
+                    Libs.Sys.ConsoleCtrls.SetConsoleCtrlHandler(null, true);
+                    try
+                    {
+                        if (Libs.Sys.ConsoleCtrls.GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0)
+                            && proc.WaitForExit(Models.Consts.Core.SendCtrlCTimeout))
+                        {
+                            success = true;
+                        }
+                    }
+                    catch { }
+                    Libs.Sys.ConsoleCtrls.FreeConsole();
+                    Libs.Sys.ConsoleCtrls.SetConsoleCtrlHandler(null, false);
+                }
+            }
+            catch { }
+            sendCtrlCLocker.Set();
+
+            return success;
+        }
+
+        public static void KillProcessAndChildrens(int pid)
+        {
+            ManagementObjectSearcher processSearcher = new ManagementObjectSearcher
+              ("Select * From Win32_Process Where ParentProcessID=" + pid);
+            ManagementObjectCollection processCollection = processSearcher.Get();
+
+            // We must kill child processes first!
+            if (processCollection != null)
+            {
+                foreach (ManagementObject mo in processCollection)
+                {
+                    KillProcessAndChildrens(Convert.ToInt32(mo["ProcessID"])); //kill child processes(also kills childrens of childrens etc.)
+                }
+            }
+
+            // Then kill parents.
+            try
+            {
+                Process proc = Process.GetProcessById(pid);
+                if (!proc.HasExited)
+                {
+                    proc.Kill();
+                    proc.WaitForExit(1000);
+                }
+            }
+            catch
+            {
+                // Process already exited.
+            }
+        }
+
         public static void RunAsSTAThread(Action action)
         {
             // https://www.codeproject.com/Questions/727531/ThreadStateException-cant-handeled-in-ClipBoard-Se
@@ -1036,7 +1117,97 @@ namespace VgcApis.Misc
         #endregion
 
         #region reflection
-        public static string GetFriendlyName(Type type)
+        static public string GetPublicFieldsInfoOfType(Type type)
+        {
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
+                .Select(field =>
+                {
+                    var pf = field.IsStatic ? "Static " : "";
+                    var tn = GetFriendlyTypeName(field.FieldType);
+                    return $"{pf}{tn} {field.Name}";
+                })
+                .OrderBy(fn => fn);
+
+            return string.Join("\n", fields);
+        }
+
+        static public string GetPublicMethodsInfoOfType(Type type)
+        {
+            List<string> staticMems = new List<string>();
+            List<string> dynamicMems = new List<string>();
+            List<string> allMems = new List<string>();
+
+            var methods = type.GetMethods()
+                .Where(m => m.IsPublic)
+                .ToList();
+
+            foreach (var method in methods)
+            {
+                var fn = GetFriendlyMethodDeclareInfo(method);
+                if (method.IsStatic)
+                {
+                    staticMems.Add(fn);
+                }
+                else
+                {
+                    dynamicMems.Add(fn);
+                }
+            }
+
+            staticMems.Sort();
+            dynamicMems.Sort();
+            allMems.AddRange(staticMems);
+            allMems.AddRange(dynamicMems);
+
+            return string.Join("\n", allMems);
+        }
+
+        static public List<Type> GetAllAssembliesType()
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(t => t.GetTypes())
+                .Where(t => t.IsClass)
+                .ToList();
+        }
+
+        /// <summary>
+        /// e.g. static void Sum&lt;int>(int a, int b)
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        static public string GetFriendlyMethodDeclareInfo(MethodInfo method)
+        {
+            var pms = method.GetParameters()
+                .Select(arg =>
+                {
+                    var tn = GetFriendlyTypeName(arg.ParameterType);
+                    var name = arg.Name;
+                    return $"{tn} {name}";
+                });
+
+            var head = method.IsStatic ? @"Static " : @"";
+            var rtt = GetFriendlyTypeName(method.ReturnType);
+            var fn = GetFriendlyMethodName(method);
+            var args = string.Join(@", ", pms);
+            return $"{head}{rtt} {fn}({args})";
+        }
+
+        static public string GetFriendlyMethodName(MethodInfo method)
+        {
+            var name = method.Name;
+            if (!method.IsGenericMethod)
+            {
+                return name;
+            }
+
+            var args = method
+                .GetGenericArguments()
+                .Select(arg => GetFriendlyTypeName(arg));
+
+            return $"{name}<{string.Join(@", ", args)}>";
+        }
+
+        public static string GetFriendlyTypeName(Type type)
         {
             string friendlyName = type.Name;
             if (type.IsGenericType)
@@ -1050,7 +1221,7 @@ namespace VgcApis.Misc
                 Type[] typeParameters = type.GetGenericArguments();
                 for (int i = 0; i < typeParameters.Length; ++i)
                 {
-                    string typeParamName = GetFriendlyName(typeParameters[i]);
+                    string typeParamName = GetFriendlyTypeName(typeParameters[i]);
                     friendlyName += (i == 0 ? typeParamName : "," + typeParamName);
                 }
                 friendlyName += ">";
@@ -1074,13 +1245,13 @@ namespace VgcApis.Misc
 
             var fullNames = new List<Tuple<string, string, string, string>>();
             var methods = type.GetMethods();
-            foreach (var method in type.GetMethods())
+            foreach (var method in methods)
             {
                 var name = method.Name;
                 if (method.IsPublic && !exceptList.Contains(name))
                 {
                     var paramStrs = GenParamStr(method);
-                    var returnType = GetFriendlyName(method.ReturnType);
+                    var returnType = GetFriendlyTypeName(method.ReturnType);
                     fullNames.Add(
                         new Tuple<string, string, string, string>(
                             returnType, name, paramStrs.Item1, paramStrs.Item2));

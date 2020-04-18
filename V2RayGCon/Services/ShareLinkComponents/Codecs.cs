@@ -50,7 +50,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             var ssDecoder = new SsDecoder(cache);
             var v2cfgDecoder = new V2cfgDecoder();
-            var vmessDecoder = new VmessDecoder(cache);
+            var vmessDecoder = new VmessDecoder(cache, setting);
             var veeDecoder = new VeeDecoder(cache, setting);
 
             veeDecoder.Prepare();

@@ -4,16 +4,6 @@ namespace VgcApis.Interfaces.Lua
 {
     public interface ILuaMisc
     {
-        #region system
-        string GetOsVersion();
-
-        string GetOsReleaseInfo();
-
-        int SetWallpaper(string filename);
-
-        string GetAppDir();
-        #endregion
-
         #region vgc
         // timeout = long.MaxValue
         long GetTimeoutValue();
@@ -35,11 +25,13 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region utils
+        string GetAppDir();
+
         string PredefinedFunctions();
 
         void Print(params object[] contents);
 
-        void Sleep(int milliseconds);
+        void Sleep(int milSec);
 
         string Replace(string text, string oldStr, string newStr);
 
@@ -47,12 +39,6 @@ namespace VgcApis.Interfaces.Lua
 
         string NewGuid();
 
-        string GetImageResolution(string filename);
-
-        #endregion
-
-        #region file
-        string PickRandomLine(string filename);
         #endregion
 
         #region UI thing
@@ -97,8 +83,6 @@ namespace VgcApis.Interfaces.Lua
 
         #endregion
 
-
-
         #region encode decode
         // GetLinkBody("vmess://abcdefg") == "abcdefg"
         string GetLinkBody(string link);
@@ -124,9 +108,5 @@ namespace VgcApis.Interfaces.Lua
         // links = "vmess://... ss://...  (...)"
         int ImportLinks(string links, string mark);
         #endregion
-
-
-
-
     }
 }

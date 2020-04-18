@@ -1,0 +1,806 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Trojan示例 - V2RayGCon手册</title><meta name=generator content="Hugo 0.62.2"><link href=https://vrnobody.github.io/V2RayGConindex.xml rel=alternate type=application/rss+xml><link rel=canonical href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/06-trojan-gui-demo/><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/theme.min.css><script src=https://use.fontawesome.com/releases/v5.0.6/js/all.js></script><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/chroma.min.css><script src=https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js></script><script src=https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js></script><script src=https://vrnobody.github.io/V2RayGCon/js/bundle.js></script><style>:root{}.highlight{line-height:1.1}.highlight div{background-color:#eed!important}.highlight pre{background-color:#eed!important}</style><meta property="og:title" content="Trojan示例"><meta property="og:description" content="需要V2RayGCon v1.3.5.0或以后版本 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： （托盘区还会有个橙色的"><meta property="og:type" content="article"><meta property="og:url" content="https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/06-trojan-gui-demo/"><meta property="article:published_time" content="2020-04-14T17:35:52+08:00"><meta property="article:modified_time" content="2020-04-14T17:35:52+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Trojan示例"><meta name=twitter:description content="需要V2RayGCon v1.3.5.0或以后版本 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： （托盘区还会有个橙色的"><meta itemprop=name content="Trojan示例"><meta itemprop=description content="需要V2RayGCon v1.3.5.0或以后版本 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： （托盘区还会有个橙色的"><meta itemprop=datePublished content="2020-04-14T17:35:52+08:00"><meta itemprop=dateModified content="2020-04-14T17:35:52+08:00"><meta itemprop=wordCount content="1535"><meta itemprop=keywords content></head><body><div class=container><header><h1>V2RayGCon手册</h1><img src=https://img.shields.io/github/release/vrnobody/V2RayGCon.svg alt="Release Badge"></header><div class=content-container><main><h1>Trojan示例</h1><p>需要V2RayGCon <code>v1.3.5.0</code>或以后版本</p><p>这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样：<br>（托盘区还会有个橙色的小图标哦！）<br><figure><img src=../../../images/plugins/trojan_gui.png></figure></p><p>全部代码如下：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">114
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">115
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">116
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">117
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">118
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">119
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">120
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">121
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">122
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">123
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">124
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">125
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">126
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">127
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">128
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">129
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">130
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">131
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">132
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">133
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">134
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">135
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">136
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">137
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">138
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">139
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">140
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">141
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">142
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">143
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">144
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">145
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">146
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">147
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">148
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">149
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">150
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">151
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">152
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">153
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">154
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">155
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">156
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">157
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">158
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">159
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">160
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">161
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">162
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">163
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">164
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">165
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">166
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">167
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">168
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">169
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">170
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">171
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">172
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">173
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">174
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">175
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">176
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">177
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">178
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">179
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">180
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">181
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">182
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">183
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">184
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">185
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">186
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">187
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">188
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">189
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">190
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">191
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">192
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">193
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">194
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">195
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">196
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">197
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">198
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">199
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">200
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">201
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">202
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">203
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">204
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">205
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">206
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">207
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">208
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">209
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">210
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">211
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">212
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">213
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">214
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">215
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">216
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">217
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">218
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">219
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">220
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">221
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">222
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">223
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">224
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">225
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">226
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">227
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">228
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">229
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">230
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">231
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">232
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">233
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">234
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">235
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">236
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">237
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">238
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">239
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">240
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">241
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">242
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">243
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">244
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">245
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">246
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">247
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">248
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">249
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">250
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">251
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">252
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">253
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">254
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">255
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">256
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">257
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">258
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">259
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">260
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">261
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">262
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">263
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">264
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">265
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">266
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">267
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">268
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">269
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">270
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">271
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">272
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">273
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">274
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">275
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">276
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">277
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">278
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">279
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">280
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">281
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">282
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">283
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">284
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">285
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">286
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">287
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">288
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">289
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">290
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">291
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">292
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">293
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">294
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">295
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">296
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">297
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">298
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">299
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">300
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">301
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">302
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">303
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">304
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">305
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">306
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">307
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">308
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">309
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">310
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">311
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">312
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">313
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">314
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">315
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">316
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">317
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">318
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">319
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">320
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">321
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">322
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">323
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">324
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">325
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">326
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">327
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">328
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">329
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">330
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">331
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">332
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">333
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">334
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">335
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">336
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">337
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">338
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">339
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">340
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">341
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">342
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">343
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">344
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">345
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">346
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">347
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">348
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">349
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">350
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">351
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">352
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">353
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">354
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">355
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">356
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">357
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">358
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">359
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">360
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">361
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">362
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">363
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">364
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">365
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">366
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">367
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">368
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">369
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">370
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">371
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">372
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">373
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">374
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">375
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">376
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">377
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">378
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">379
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">380
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">381
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">382
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">383
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">384
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">385
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">386
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">387
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">388
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">389
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">390
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">391
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">392
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">393
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">394
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">395
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">396
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">397
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">398
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">399
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">400
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">401
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">402
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=color:green>-- 假设trojan的位置是V2RayGCon/trojan/trojan.exe</span>
+
+<span style=color:#00f>local</span> trExe = <span style=color:#a31515>&#34;</span><span style=color:#a31515>trojan/trojan.exe</span><span style=color:#a31515>&#34;</span>
+<span style=color:#00f>local</span> trConfigJson = <span style=color:#a31515>&#34;</span><span style=color:#a31515>trojan/config.json</span><span style=color:#a31515>&#34;</span>
+
+<span style=color:green>-- 代码</span>
+
+import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</span><span style=color:#a31515>&#39;</span>)
+import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</span><span style=color:#a31515>&#39;</span>)
+import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Windows.Forms</span><span style=color:#a31515>&#39;</span>)
+import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Drawing</span><span style=color:#a31515>&#39;</span>)
+import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Drawing.Drawing2D</span><span style=color:#a31515>&#39;</span>)
+
+<span style=color:#00f>local</span> Utils = require <span style=color:#a31515>&#34;</span><span style=color:#a31515>libs.utils</span><span style=color:#a31515>&#34;</span>
+
+<span style=color:#00f>local</span> trKey = <span style=color:#a31515>&#34;</span><span style=color:#a31515>trojan-settings</span><span style=color:#a31515>&#34;</span>
+
+<span style=color:#00f>local</span> chkSelfSignedCert
+<span style=color:#00f>local</span> tboxServAddr, tboxServPort, tboxServPassword, tboxLocalAddr, tboxLocalPort
+<span style=color:#00f>local</span> btnSave, btnStart, btnStop, btnExit
+
+<span style=color:#00f>local</span> form = <span style=color:#00f>nil</span>
+<span style=color:#00f>local</span> trojan = <span style=color:#00f>nil</span>
+<span style=color:#00f>local</span> isExit = <span style=color:#00f>false</span>
+
+<span style=color:#00f>function</span> Main()
+    
+    CreateNotifyIcon()
+    
+    ShowForm()
+    <span style=color:#00f>while</span> <span style=color:#00f>not</span> Signal:Stop() <span style=color:#00f>and</span> <span style=color:#00f>not</span> isExit <span style=color:#00f>do</span>
+        Misc:Sleep(100)
+        Application.DoEvents()
+    <span style=color:#00f>end</span>
+    Cleanup()
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> OnFormClosed()
+    form = <span style=color:#00f>nil</span>
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> ShowForm()
+    
+    <span style=color:#00f>if</span> form ~= <span style=color:#00f>nil</span> <span style=color:#00f>then</span>
+        form:Activate()
+        <span style=color:#00f>return</span>
+    <span style=color:#00f>end</span>
+    
+    CreateWinForm()
+    <span style=color:#00f>local</span> settings = LoadSettings()
+    SetControlsValue(settings)
+    BindEvents()
+    form:Show()
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> OnMouseClick()
+    ShowForm()
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> DrawAppIcon()
+    <span style=color:#00f>local</span> s = 96
+    <span style=color:#00f>local</span> icon = Bitmap(s, s);
+    <span style=color:#00f>local</span> g = Graphics.FromImage(icon)
+    g.InterpolationMode = InterpolationMode.High;
+    g.CompositingQuality = CompositingQuality.HighQuality;
+    g:FillEllipse(Brushes.Orange, 0,  0, s, s)
+    g:FillRectangle(Brushes.White, s * 0.2, s * 0.23, s*0.6, s*0.16);
+    g:FillRectangle(Brushes.White, s * 0.41, s * 0.3, s*0.18, s*0.55);
+    g:Dispose()
+    <span style=color:#00f>return</span> icon
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> CreateNotifyIcon()
+    ni = NotifyIcon()
+    <span style=color:#00f>local</span> icon = DrawAppIcon()
+    ni.Icon = Icon.FromHandle(icon:GetHicon())
+    ni.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>Trojan</span><span style=color:#a31515>&#34;</span>
+    ni.Visible = <span style=color:#00f>true</span>
+    ni.MouseClick:Add(OnMouseClick)
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> Cleanup()
+    ni.Visible = <span style=color:#00f>false</span>
+    ni:Dispose()
+    StopTrojan()
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> OnBtnExitClick()
+    isExit = <span style=color:#00f>true</span>
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> BindEvents()
+    btnSave.Click:Add(OnBtnSaveClick)
+    btnStart.Click:Add(OnBtnStartClick)
+    btnStop.Click:Add(OnBtnStopClick)
+    btnExit.Click:Add(OnBtnExitClick)
+    form.FormClosed:Add(OnFormClosed)
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> StartTrojan()
+    <span style=color:#00f>if</span> IsRunning() <span style=color:#00f>then</span>
+        StopTrojan()
+    <span style=color:#00f>end</span>
+    <span style=color:#00f>local</span> args = <span style=color:#a31515>&#34;</span><span style=color:#a31515>-c </span><span style=color:#a31515>&#34;</span> .. trConfigJson
+    trojan = Sys:Run(trExe, args, stdin, <span style=color:#00f>nil</span>, <span style=color:#00f>false</span>, <span style=color:#00f>true</span>)
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> StopTrojan()
+    <span style=color:#00f>if</span> <span style=color:#00f>not</span> IsRunning() <span style=color:#00f>then</span>
+        <span style=color:#00f>return</span>
+    <span style=color:#00f>end</span>
+    Sys:SendStopSignal(trojan)
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> IsRunning()
+    <span style=color:#00f>return</span> <span style=color:#00f>not</span> Sys:HasExited(trojan)
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> WriteToFile(filename, content)
+	<span style=color:#00f>local</span> file = io.open(filename, <span style=color:#a31515>&#34;</span><span style=color:#a31515>w+</span><span style=color:#a31515>&#34;</span>)
+    file:write(content)
+    file:close()
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> OnBtnStopClick()
+    StopTrojan()
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> OnBtnStartClick()
+    <span style=color:#00f>local</span> s = GetControlsValue()
+    <span style=color:#00f>local</span> cfg = GenConfigString(s)
+    <span style=color:green>-- print(cfg)</span>
+    WriteToFile(trConfigJson, cfg)
+    StartTrojan()
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> OnBtnSaveClick()
+    <span style=color:#00f>local</span> s = GetControlsValue()
+    print(<span style=color:#a31515>&#34;</span><span style=color:#a31515>save settings.</span><span style=color:#a31515>&#34;</span>)
+    <span style=color:green>-- print(s)</span>
+    Misc:WriteLocalStorage(trKey, s:ToString())
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> GetControlsValue()
+    <span style=color:#00f>local</span> tpl = LoadTemplate(<span style=color:#a31515>&#34;</span><span style=color:#a31515>settings</span><span style=color:#a31515>&#34;</span>)
+    <span style=color:#00f>local</span> s = Json:ParseJObject(tpl)
+    Json:TrySetBoolValue(s, <span style=color:#a31515>&#34;</span><span style=color:#a31515>ssl.verify</span><span style=color:#a31515>&#34;</span>,<span style=color:#00f>not</span> chkSelfSignedCert.Checked)
+    Json:TrySetStringValue(s, <span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_addr</span><span style=color:#a31515>&#34;</span>, tboxServAddr.Text)
+    <span style=color:#00f>local</span> remote_port = Utils.ToNumber(tboxServPort.Text)
+    Json:TrySetIntValue(s, <span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_port</span><span style=color:#a31515>&#34;</span>, remote_port)
+    Json:TrySetStringValue(s, <span style=color:#a31515>&#34;</span><span style=color:#a31515>password.0</span><span style=color:#a31515>&#34;</span>, tboxServPassword.Text)
+    Json:TrySetStringValue(s, <span style=color:#a31515>&#34;</span><span style=color:#a31515>local_addr</span><span style=color:#a31515>&#34;</span>, tboxLocalAddr.Text)
+    <span style=color:#00f>local</span> local_port = Utils.ToNumber(tboxLocalPort.Text)
+    Json:TrySetIntValue(s, <span style=color:#a31515>&#34;</span><span style=color:#a31515>local_port</span><span style=color:#a31515>&#34;</span>, local_port)
+    <span style=color:#00f>return</span> s
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> SetControlsValue(settings)
+    chkSelfSignedCert.Checked =<span style=color:#00f>not</span> Json:GetBool(settings, <span style=color:#a31515>&#34;</span><span style=color:#a31515>ssl.verify</span><span style=color:#a31515>&#34;</span>)
+    tboxServAddr.Text = Json:GetString(settings, <span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_addr</span><span style=color:#a31515>&#34;</span>)
+    tboxServPort.Text = Json:GetString(settings, <span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_port</span><span style=color:#a31515>&#34;</span>)
+    tboxServPassword.Text = Json:GetString(settings, <span style=color:#a31515>&#34;</span><span style=color:#a31515>password.0</span><span style=color:#a31515>&#34;</span>)
+    tboxLocalAddr.Text = Json:GetString(settings, <span style=color:#a31515>&#34;</span><span style=color:#a31515>local_addr</span><span style=color:#a31515>&#34;</span>)
+    tboxLocalPort.Text = Json:GetString(settings, <span style=color:#a31515>&#34;</span><span style=color:#a31515>local_port</span><span style=color:#a31515>&#34;</span>)    
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> LoadSettings()
+    <span style=color:#00f>local</span> rawData = Misc:ReadLocalStorage(trKey)
+    <span style=color:#00f>local</span> json = Json:ParseJObject(rawData)
+    <span style=color:#00f>if</span> json == <span style=color:#00f>nil</span> <span style=color:#00f>then</span>
+        rawData = LoadTemplate(<span style=color:#a31515>&#34;</span><span style=color:#a31515>settings</span><span style=color:#a31515>&#34;</span>)
+        <span style=color:#00f>return</span> Json:ParseJObject(rawData)
+    <span style=color:#00f>end</span>
+    <span style=color:#00f>return</span> json
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> GenConfigString(settings)
+    <span style=color:#00f>local</span> tpl = LoadTemplate(<span style=color:#a31515>&#34;</span><span style=color:#a31515>config</span><span style=color:#a31515>&#34;</span>)
+    <span style=color:#00f>local</span> config = Json:ParseJObject(tpl)
+    Json:Merge(config, settings)
+    <span style=color:#00f>return</span> config:ToString()
+<span style=color:#00f>end</span> 
+
+<span style=color:#00f>function</span> CreateWinForm()
+	form = Form()
+    chkSelfSignedCert =  CheckBox()
+
+	tboxServAddr =  TextBox()
+    tboxServPort =  TextBox()
+    tboxServPassword =  TextBox()
+    
+    tboxLocalPort =  TextBox()
+	tboxLocalAddr =  TextBox()
+    
+    btnSave =  Button()
+    btnStart =  Button()
+	btnStop =  Button()
+    btnExit =  Button()
+    
+	<span style=color:#00f>local</span> label1 =  Label()
+	<span style=color:#00f>local</span> groupBox1 =  GroupBox()
+	<span style=color:#00f>local</span> label3 =  Label()
+	<span style=color:#00f>local</span> groupBox2 =  GroupBox()
+	<span style=color:#00f>local</span> label4 =  Label()
+	
+	groupBox1:SuspendLayout()
+	groupBox2:SuspendLayout()
+	form:SuspendLayout()
+
+
+	tboxServAddr.Location = Point(39, 20)
+	tboxServAddr.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>tboxServAddr</span><span style=color:#a31515>&#34;</span>
+	tboxServAddr.Size = Size(172, 21)
+	tboxServAddr.TabIndex = 2
+	tboxServAddr.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>http://www.test.com</span><span style=color:#a31515>&#34;</span>
+
+	label1.AutoSize = <span style=color:#00f>true</span>
+	label1.Location = Point(6, 24)
+	label1.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>label1</span><span style=color:#a31515>&#34;</span>
+	label1.Size = Size(29, 12)
+	label1.TabIndex = 1
+	label1.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>地址</span><span style=color:#a31515>&#34;</span>
+
+	tboxServPort.Location = Point(217, 20)
+	tboxServPort.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>tboxServPort</span><span style=color:#a31515>&#34;</span>
+	tboxServPort.Size = Size(72, 21)
+	tboxServPort.TabIndex = 2
+	tboxServPort.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>65535</span><span style=color:#a31515>&#34;</span>
+
+	btnSave.Location = Point(59, 163)
+	btnSave.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>btnSave</span><span style=color:#a31515>&#34;</span>
+	btnSave.Size = Size(50, 23)
+	btnSave.TabIndex = 3
+	btnSave.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>保存</span><span style=color:#a31515>&#34;</span>
+	btnSave.UseVisualStyleBackColor = <span style=color:#00f>true</span>
+
+	chkSelfSignedCert.AutoSize = <span style=color:#00f>true</span>
+	chkSelfSignedCert.Location = Point(217, 52)
+	chkSelfSignedCert.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>chkSelfSignedCert</span><span style=color:#a31515>&#34;</span>
+	chkSelfSignedCert.Size = Size(72, 16)
+	chkSelfSignedCert.TabIndex = 4
+	chkSelfSignedCert.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>自签证书</span><span style=color:#a31515>&#34;</span>
+	chkSelfSignedCert.UseVisualStyleBackColor = <span style=color:#00f>true</span>
+
+	groupBox1.Controls:Add(label3)
+	groupBox1.Controls:Add(label1)
+	groupBox1.Controls:Add(tboxServPassword)
+	groupBox1.Controls:Add(tboxServAddr)
+	groupBox1.Controls:Add(chkSelfSignedCert)
+	groupBox1.Controls:Add(tboxServPort)
+	groupBox1.Location = Point(14, 12)
+	groupBox1.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>groupBox1</span><span style=color:#a31515>&#34;</span>
+	groupBox1.Size = Size(301, 84)
+	groupBox1.TabIndex = 6
+	groupBox1.TabStop = <span style=color:#00f>false</span>
+	groupBox1.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>服务器</span><span style=color:#a31515>&#34;</span>
+
+	label3.AutoSize = <span style=color:#00f>true</span>
+	label3.Location = Point(6, 54)
+	label3.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>label3</span><span style=color:#a31515>&#34;</span>
+	label3.Size = Size(29, 12)
+	label3.TabIndex = 1
+	label3.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>密码</span><span style=color:#a31515>&#34;</span>
+
+	tboxServPassword.Location = Point(39, 50)
+	tboxServPassword.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>tboxServPassword</span><span style=color:#a31515>&#34;</span>
+	tboxServPassword.Size = Size(172, 21)
+	tboxServPassword.TabIndex = 2
+	tboxServPassword.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>000000</span><span style=color:#a31515>&#34;</span>
+
+	groupBox2.Controls:Add(tboxLocalPort)
+	groupBox2.Controls:Add(tboxLocalAddr)
+	groupBox2.Controls:Add(label4)
+	groupBox2.Location = Point(14, 102)
+	groupBox2.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>groupBox2</span><span style=color:#a31515>&#34;</span>
+	groupBox2.Size = Size(301, 55)
+	groupBox2.TabIndex = 6
+	groupBox2.TabStop = <span style=color:#00f>false</span>
+	groupBox2.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>本地</span><span style=color:#a31515>&#34;</span>
+
+	tboxLocalPort.Location = Point(217, 20)
+	tboxLocalPort.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>tboxLocalPort</span><span style=color:#a31515>&#34;</span>
+	tboxLocalPort.Size = Size(72, 21)
+	tboxLocalPort.TabIndex = 2
+	tboxLocalPort.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>0</span><span style=color:#a31515>&#34;</span>
+
+	tboxLocalAddr.Location = Point(39, 20)
+	tboxLocalAddr.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>tboxLocalAddr</span><span style=color:#a31515>&#34;</span>
+	tboxLocalAddr.Size = Size(172, 21)
+	tboxLocalAddr.TabIndex = 2
+	tboxLocalAddr.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>192.168.0.1</span><span style=color:#a31515>&#34;</span>
+
+	label4.AutoSize = <span style=color:#00f>true</span>
+	label4.Location = Point(6, 23)
+	label4.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>label4</span><span style=color:#a31515>&#34;</span>
+	label4.Size = Size(29, 12)
+	label4.TabIndex = 1
+	label4.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>监听</span><span style=color:#a31515>&#34;</span>
+
+	btnStart.Location = Point(115, 163)
+	btnStart.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>btnStart</span><span style=color:#a31515>&#34;</span>
+	btnStart.Size = Size(50, 23)
+	btnStart.TabIndex = 3
+	btnStart.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>启动</span><span style=color:#a31515>&#34;</span>
+	btnStart.UseVisualStyleBackColor = <span style=color:#00f>true</span>
+
+	btnStop.Location = Point(171, 163)
+	btnStop.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>btnStop</span><span style=color:#a31515>&#34;</span>
+	btnStop.Size = Size(50, 23)
+	btnStop.TabIndex = 3
+	btnStop.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>停止</span><span style=color:#a31515>&#34;</span>
+	btnStop.UseVisualStyleBackColor = <span style=color:#00f>true</span>
+    
+    btnExit.Location = Point(226, 163)
+    btnExit.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>btnExit</span><span style=color:#a31515>&#34;</span>
+    btnExit.Size = Size(50, 23)
+    btnExit.TabIndex = 3
+    btnExit.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>退出</span><span style=color:#a31515>&#34;</span>
+    btnExit.UseVisualStyleBackColor = <span style=color:#00f>true</span>
+
+	form.AutoScaleDimensions = SizeF(6.0, 12.0)
+	form.AutoScaleMode = AutoScaleMode.Font
+	form.ClientSize = Size(334, 193)
+	form.Controls:Add(groupBox2)
+	form.Controls:Add(groupBox1)
+	form.Controls:Add(btnStop)
+	form.Controls:Add(btnStart)
+	form.Controls:Add(btnSave)
+    form.Controls:Add(btnExit)
+	form.FormBorderStyle = FormBorderStyle.FixedDialog
+	form.MaximizeBox = <span style=color:#00f>false</span>
+	form.MinimizeBox = <span style=color:#00f>false</span>
+	form.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>Form1</span><span style=color:#a31515>&#34;</span>
+	form.StartPosition = FormStartPosition.CenterScreen
+	form.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>🎠Trojan</span><span style=color:#a31515>&#34;</span>
+
+	groupBox1:ResumeLayout(<span style=color:#00f>false</span>)
+	groupBox1:PerformLayout()
+	groupBox2:ResumeLayout(<span style=color:#00f>false</span>)
+	groupBox2:PerformLayout()
+	form:ResumeLayout(<span style=color:#00f>false</span>)
+<span style=color:#00f>end</span>
+
+ 
+<span style=color:#00f>function</span> LoadTemplate(key)
+        <span style=color:#00f>local</span> defSettings = <span style=color:#a31515>[[
+</span><span style=color:#a31515>{
+</span><span style=color:#a31515>    &#34;remote_addr&#34;: &#34;www.baidu.com&#34;,
+</span><span style=color:#a31515>    &#34;remote_port&#34;: 80,
+</span><span style=color:#a31515>    &#34;password&#34;: [ &#34;123457&#34; ],
+</span><span style=color:#a31515>    &#34;ssl&#34;: {
+</span><span style=color:#a31515>        &#34;verify&#34;: true
+</span><span style=color:#a31515>    },
+</span><span style=color:#a31515>    &#34;local_addr&#34;: &#34;127.0.0.1&#34;,
+</span><span style=color:#a31515>    &#34;local_port&#34;: 1080
+</span><span style=color:#a31515>}
+</span><span style=color:#a31515>]]</span>
+
+    <span style=color:#00f>local</span> defConfig = <span style=color:#a31515>[[
+</span><span style=color:#a31515>{
+</span><span style=color:#a31515>    &#34;run_type&#34;: &#34;client&#34;,
+</span><span style=color:#a31515>    &#34;local_addr&#34;: &#34;0.0.0.0&#34;,
+</span><span style=color:#a31515>    &#34;local_port&#34;: 8080,
+</span><span style=color:#a31515>    &#34;remote_addr&#34;: &#34;www.bing.com&#34;,
+</span><span style=color:#a31515>    &#34;remote_port&#34;: 443,
+</span><span style=color:#a31515>    &#34;password&#34;: [],
+</span><span style=color:#a31515>    &#34;log_level&#34;: 1,
+</span><span style=color:#a31515>    &#34;ssl&#34;: {
+</span><span style=color:#a31515>        &#34;verify&#34;: false,
+</span><span style=color:#a31515>        &#34;verify_hostname&#34;: true,
+</span><span style=color:#a31515>        &#34;cert&#34;: &#34;&#34;,
+</span><span style=color:#a31515>        &#34;cipher&#34;: &#34;ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:AES128-SHA:AES256-SHA:DES-CBC3-SHA&#34;,
+</span><span style=color:#a31515>        &#34;cipher_tls13&#34;: &#34;TLS_AES_128_GCM_SHA256:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_256_GCM_SHA384&#34;,
+</span><span style=color:#a31515>        &#34;sni&#34;: &#34;&#34;,
+</span><span style=color:#a31515>        &#34;alpn&#34;: [
+</span><span style=color:#a31515>            &#34;h2&#34;,
+</span><span style=color:#a31515>            &#34;http/1.1&#34;
+</span><span style=color:#a31515>        ],
+</span><span style=color:#a31515>        &#34;reuse_session&#34;: true,
+</span><span style=color:#a31515>        &#34;session_ticket&#34;: false,
+</span><span style=color:#a31515>        &#34;curves&#34;: &#34;&#34;
+</span><span style=color:#a31515>    },
+</span><span style=color:#a31515>    &#34;tcp&#34;: {
+</span><span style=color:#a31515>        &#34;no_delay&#34;: true,
+</span><span style=color:#a31515>        &#34;keep_alive&#34;: true,
+</span><span style=color:#a31515>        &#34;reuse_port&#34;: false,
+</span><span style=color:#a31515>        &#34;fast_open&#34;: false,
+</span><span style=color:#a31515>        &#34;fast_open_qlen&#34;: 20
+</span><span style=color:#a31515>    }
+</span><span style=color:#a31515>}
+</span><span style=color:#a31515>    ]]</span>
+       
+    <span style=color:#00f>if</span> key == <span style=color:#a31515>&#34;</span><span style=color:#a31515>settings</span><span style=color:#a31515>&#34;</span> <span style=color:#00f>then</span>
+        <span style=color:#00f>return</span> defSettings
+    <span style=color:#00f>elseif</span> key == <span style=color:#a31515>&#34;</span><span style=color:#a31515>config</span><span style=color:#a31515>&#34;</span> <span style=color:#00f>then</span>
+        <span style=color:#00f>return</span> defConfig
+    <span style=color:#00f>else</span>
+        <span style=color:#00f>return</span> <span style=color:#00f>nil</span>
+    <span style=color:#00f>end</span>
+<span style=color:#00f>end</span>
+
+Main()
+</code></pre></td></tr></table></div></div><div class=edit-meta>Last updated on 14 Apr 2020<br>Published on 14 Apr 2020<br><a href=03-plugins/01-luna/06-trojan-gui-demo.md/edit/master/content/03-plugins/01-luna/06-trojan-gui-demo.md class=edit-page><i class="fas fa-pen-square"></i>Edit on GitHub</a></div><nav class=pagination><a class="nav nav-prev" href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/05-sysapi-demo/ title=Sys库示例><i class="fas fa-arrow-left" aria-hidden=true></i>Prev - Sys库示例</a>
+<a class="nav nav-next" href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/10-update-subscriptions/ title=每天更新订阅>Next - 每天更新订阅 <i class="fas fa-arrow-right" aria-hidden=true></i></a></nav><footer><p class=powered>Powered by <a href=https://gohugo.io>Hugo</a>. Theme by <a href=https://themes.gohugo.io/hugo-theme-techdoc/>TechDoc</a>. Designed by <a href=https://github.com/thingsym/hugo-theme-techdoc>Thingsym</a>.</p></footer></main><div class=sidebar><nav class=open-menu><ul><li><a href=https://vrnobody.github.io/V2RayGCon>Home</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/>使用说明</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/11-search-demo/>搜索及编辑</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/12-subs-demo/>订阅</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/13-autorun/>开机启动</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/14-update-v2ray-core/>更新v2ray-core</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/15-qrcode-demo/>二维码</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/16-share-links/>各种分享链接</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/17-global-import/>全局Import</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/18-options/>选项</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/19-http-socks-inbounds/>同时开启http和socks</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/20-mulitple-config-files/>多文件配置</a></li></ul></li><li class=parent><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/>插件</a><ul class=sub-menu><li class=parent><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/>Luna</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/01-toggle-first-server/>开关第一个服务器</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/02-download-bing-wallpaper/>下载bing壁纸</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/03-input-choices-demo/>输入控件演示</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/04-showdata-demo/>数据视图控件演示</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/05-sysapi-demo/>Sys库示例</a></li><li class=active><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/06-trojan-gui-demo/>Trojan示例</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/10-update-subscriptions/>每天更新订阅</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/20-select-timeout-and-dup-serv/>选中超时及重复的服务器</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/50-functions-you-can-use/>所有函数</a></li></ul></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/02-pacman/>Pacman</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/03-proxysetter/>ProxySetter</a></li></ul></li><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/>开发相关</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/01-release-log/>发布记录</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/02-services-relationship/>各服务调用关系</a></li></ul></li></ul></nav><div class=sidebar-footer></div></div></div><a href=# id=backtothetop-fixed class=backtothetop data-backtothetop-duration=600 data-backtothetop-easing=easeOutQuart data-backtothetop-fixed-fadein=1000 data-backtothetop-fixed-fadeout=1000 data-backtothetop-fixed-bottom=10 data-backtothetop-fixed-right=20><span class="fa-layers fa-fw"><i class="fas fa-circle"></i><i class="fas fa-arrow-circle-up"></i></span></a></div></body></html>

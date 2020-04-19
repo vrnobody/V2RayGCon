@@ -28,6 +28,7 @@ namespace V2RayGCon.Services
 
         ToolStripMenuItem pluginRootMenuItem = null;
         ToolStripMenuItem serversRootMenuItem = null;
+        ContextMenuStrip niMenu = null;
 
         readonly int notifyIconUpdateInterval = VgcApis.Models.Consts.Intervals.NotifierTextUpdateIntreval;
         VgcApis.Libs.Tasks.LazyGuy lazyNotifyIconUpdater;
@@ -98,14 +99,15 @@ namespace V2RayGCon.Services
             Libs.QRCode.QRCode.ScanQRCode(Success, Fail);
         }
 
+
         public void RunInUiThreadIgnoreErrorThen(Action updater, Action next) =>
-            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(ni.ContextMenuStrip, updater, next);
+            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(niMenu, updater, next);
 
 #if DEBUG
         public void InjectDebugMenuItem(ToolStripMenuItem menu)
         {
-            ni.ContextMenuStrip.Items.Insert(0, new ToolStripSeparator());
-            ni.ContextMenuStrip.Items.Insert(0, menu);
+            niMenu.Items.Insert(0, new ToolStripSeparator());
+            niMenu.Items.Insert(0, menu);
         }
 #endif
 
@@ -544,11 +546,11 @@ namespace V2RayGCon.Services
                 Text = I18N.Description,
                 Icon = VgcApis.Misc.UI.GetAppIcon(),
                 BalloonTipTitle = VgcApis.Misc.Utils.GetAppName(),
-
                 ContextMenuStrip = menu,
                 Visible = true
             };
 
+            niMenu = menu;
             orgIcon = ni.Icon.ToBitmap();
         }
 
@@ -650,10 +652,9 @@ namespace V2RayGCon.Services
         private ToolStripMenuItem CreatePluginRootMenuItem()
         {
             var mi = new ToolStripMenuItem(
-                                 I18N.Plugins,
-                                 Properties.Resources.Module_16x);
+                I18N.Plugins,
+                Properties.Resources.Module_16x);
             mi.Visible = false;
-
             return mi;
         }
 

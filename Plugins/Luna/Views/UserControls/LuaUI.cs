@@ -10,6 +10,8 @@ namespace Luna.Views.UserControls
         Controllers.LuaCoreCtrl luaCoreCtrl;
         Services.LuaServer luaServer;
 
+        VgcApis.Libs.Tasks.LazyGuy lazyUpdater;
+
         public LuaUI(
             Services.LuaServer luaServer,
             Controllers.LuaCoreCtrl luaCoreCtrl)
@@ -21,14 +23,10 @@ namespace Luna.Views.UserControls
 
         private void LuaUI_Load(object sender, EventArgs e)
         {
-            this.lbName.Text = luaCoreCtrl.name;
-            toolTip1.SetToolTip(lbName, luaCoreCtrl.name);
-
-            this.chkIsAutoRun.Checked = luaCoreCtrl.isAutoRun;
-            chkIsHidden.Checked = luaCoreCtrl.isHidden;
-
-            UpdateRunningState();
             luaCoreCtrl.OnStateChange += OnLuaCoreStateChangeHandler;
+            lazyUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiLater, 300);
+
+            UpdateUiLater();
         }
 
         #region public methods
@@ -42,50 +40,86 @@ namespace Luna.Views.UserControls
         public void Cleanup()
         {
             luaCoreCtrl.OnStateChange -= OnLuaCoreStateChangeHandler;
+            lazyUpdater?.Quit();
         }
-
 
         #endregion
 
         #region private methods
         void OnLuaCoreStateChangeHandler(object sender, EventArgs args)
         {
-            RunInUiThread(() =>
-            {
-                UpdateRunningState();
-            });
+            lazyUpdater.DoItLater();
         }
 
-        void RunInUiThread(Action updater)
+        readonly object uiUpdateLocker = new object();
+        bool isUpdating = false;
+        void UpdateUiLater()
         {
-            VgcApis.Misc.UI.RunInUiThread(lbName, () =>
+            lock (uiUpdateLocker)
             {
-                updater();
-            });
+                if (isUpdating)
+                {
+                    lazyUpdater?.DoItLater();
+                    return;
+                }
+                isUpdating = true;
+            }
+
+            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(lbName, () =>
+            {
+                UpdateNameLabel();
+                UpdateOptionsLabel();
+                UpdateRunningState();
+            }, () => isUpdating = false);
+        }
+
+
+        void UpdateNameLabel()
+        {
+            var n = luaCoreCtrl.name;
+            if (lbName.Text != n)
+            {
+                lbName.Text = n;
+                toolTip1.SetToolTip(lbName, n);
+            }
+        }
+
+        void UpdateOptionsLabel()
+        {
+            var a = luaCoreCtrl.isAutoRun ? "A" : @"";
+            var h = luaCoreCtrl.isHidden ? "H" : "";
+            var c = luaCoreCtrl.isLoadClr ? "C" : "";
+            var text = $"{a}{c}{h}";
+
+            if (string.IsNullOrEmpty(text))
+            {
+                text = "E";
+            }
+
+            if (rlbOptions.Text != text)
+            {
+                rlbOptions.Text = text;
+            }
         }
 
         void UpdateRunningState()
         {
             var isRunning = luaCoreCtrl.isRunning;
             var text = isRunning ? "ON" : "OFF";
-            if (lbRunningState.Text == text)
-            {
-                return;
-            }
+            var color = isRunning ? Color.DarkOrange : Color.Green;
 
-            lbRunningState.Text = text;
-            lbRunningState.ForeColor = isRunning ? Color.DarkOrange : Color.Green;
+            if (lbRunningState.Text != text)
+            {
+                lbRunningState.Text = text;
+            }
+            if (lbRunningState.ForeColor != color)
+            {
+                lbRunningState.ForeColor = color;
+            }
         }
         #endregion
 
         #region UI event handlers
-
-        private void chkIsAutoRun_CheckedChanged(object sender, EventArgs e)
-        {
-            var isAutoRun = chkIsAutoRun.Checked;
-            luaCoreCtrl.isAutoRun = isAutoRun;
-        }
-
         private void btnKill_Click(object sender, EventArgs e)
         {
             luaCoreCtrl.Kill();
@@ -119,12 +153,6 @@ namespace Luna.Views.UserControls
             });
         }
 
-        private void chkIsHidden_CheckedChanged(object sender, EventArgs e)
-        {
-            var isHidden = chkIsHidden.Checked;
-            luaCoreCtrl.isHidden = isHidden;
-        }
-
         private void LuaUI_MouseDown(object sender, MouseEventArgs e)
         {
             DoDragDrop(this, DragDropEffects.Move);
@@ -140,6 +168,13 @@ namespace Luna.Views.UserControls
             DoDragDrop(this, DragDropEffects.Move);
         }
 
+        private void rlbOptions_Click(object sender, EventArgs e)
+        {
+            Views.WinForms.FormLuaCoreSettings.ShowForm(luaCoreCtrl);
+        }
+
         #endregion
+
+
     }
 }

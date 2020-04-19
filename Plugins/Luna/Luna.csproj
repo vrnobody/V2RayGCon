@@ -140,6 +140,12 @@
     <Compile Include="Views\WinForms\FormChoice.Designer.cs">
       <DependentUpon>FormChoice.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\WinForms\FormLuaCoreSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormLuaCoreSettings.Designer.cs">
+      <DependentUpon>FormLuaCoreSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\WinForms\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,6 +203,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormChoice.zh-CN.resx">
       <DependentUpon>FormChoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormLuaCoreSettings.resx">
+      <DependentUpon>FormLuaCoreSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormLuaCoreSettings.zh-CN.resx">
+      <DependentUpon>FormLuaCoreSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

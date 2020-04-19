@@ -10,7 +10,7 @@ namespace Luna.Controllers
 {
     public class LuaCoreCtrl
     {
-        public EventHandler OnStateChange, OnIsHiddenChanged;
+        public EventHandler OnStateChange;
 
         Services.Settings settings;
         Models.Data.LuaCoreSetting coreSetting;
@@ -35,7 +35,20 @@ namespace Luna.Controllers
         }
 
         #region properties 
-        public string name => coreSetting.name;
+        public string name
+        {
+            get => coreSetting.name;
+            set
+            {
+                if (coreSetting.name == value)
+                {
+                    return;
+                }
+                coreSetting.name = value;
+                Save();
+                InvokeOnStateChangeIgnoreError();
+            }
+        }
 
         public double index
         {
@@ -51,6 +64,21 @@ namespace Luna.Controllers
             }
         }
 
+        public bool isLoadClr
+        {
+            get => coreSetting.isLoadClr;
+            set
+            {
+                if (value == coreSetting.isLoadClr)
+                {
+                    return;
+                }
+                coreSetting.isLoadClr = value;
+                Save();
+                InvokeOnStateChangeIgnoreError();
+            }
+        }
+
         public bool isHidden
         {
             get => coreSetting.isHidden;
@@ -62,7 +90,7 @@ namespace Luna.Controllers
                 }
                 coreSetting.isHidden = value;
                 Save();
-                InvokeOnIsHiddenChangeIgnoreError();
+                InvokeOnStateChangeIgnoreError();
             }
         }
 
@@ -78,6 +106,7 @@ namespace Luna.Controllers
 
                 coreSetting.isAutorun = value;
                 Save();
+                InvokeOnStateChangeIgnoreError();
             }
         }
 
@@ -101,14 +130,6 @@ namespace Luna.Controllers
             }
         }
 
-        void InvokeOnIsHiddenChangeIgnoreError()
-        {
-            try
-            {
-                OnIsHiddenChanged?.Invoke(null, null);
-            }
-            catch { }
-        }
 
         void InvokeOnStateChangeIgnoreError()
         {
@@ -234,7 +255,10 @@ namespace Luna.Controllers
         {
             var lua = new Lua();
 
-            lua.LoadCLRPackage();
+            if (settings.isEnableClrSupports && isLoadClr)
+            {
+                lua.LoadCLRPackage();
+            }
 
             lua.State.Encoding = Encoding.UTF8;
 

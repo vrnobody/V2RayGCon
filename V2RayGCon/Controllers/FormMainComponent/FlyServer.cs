@@ -88,10 +88,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             controls.Select(e =>
             {
-                VgcApis.Misc.UI.RunInUiThread(formMain, () =>
-                {
-                    operation(e);
-                });
+                VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, () => operation(e));
                 return true;
             })
             .ToList();  // make sure operation is executed
@@ -112,7 +109,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             var controlList = GetAllServerControls();
 
-            VgcApis.Misc.UI.RunInUiThread(formMain, () =>
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, () =>
             {
                 flyPanel.SuspendLayout();
                 flyPanel.Controls.Clear();
@@ -462,12 +459,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             cboxMarkFilter.DropDown += (s, e) =>
             {
-                // cboxMarkFilter has no Invoke method.
-                VgcApis.Misc.UI.RunInUiThread(formMain, () =>
-                {
-                    UpdateMarkFilterItemList(cboxMarkFilter);
-                    Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMarkFilter);
-                });
+                UpdateMarkFilterItemList(cboxMarkFilter);
+                Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMarkFilter);
             };
 
             cboxMarkFilter.TextChanged += (s, a) =>
@@ -480,8 +473,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void UpdateMarkFilterItemList(ToolStripComboBox marker)
         {
             marker.Items.Clear();
-            marker.Items.AddRange(
-                servers.GetMarkList().ToArray());
+            marker.Items.AddRange(servers.GetMarkList().ToArray());
         }
 
         void AddNewServerItems(List<VgcApis.Interfaces.ICoreServCtrl> serverList)
@@ -498,6 +490,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 control.Cleanup();
             }
+
+            /* let runtime handle dispose
             VgcApis.Misc.UI.RunInUiThread(formMain, () =>
             {
                 foreach (var control in controlList)
@@ -505,6 +499,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     control.Dispose();
                 }
             });
+            */
         }
 
         void RemoveDeletedServerItems(

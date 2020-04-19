@@ -7,6 +7,8 @@
         public bool isHidden { get; set; }
         public string name { get; set; }
         public string script { get; set; }
+
+        public bool isLoadClr { get; set; }
         public bool isAutorun { get; set; }
 
         public LuaCoreSetting()
@@ -16,6 +18,7 @@
             isAutorun = false;
             index = double.MaxValue;
             isHidden = false;
+            isLoadClr = false;
         }
     }
 }

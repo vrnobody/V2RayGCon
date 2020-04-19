@@ -7,8 +7,11 @@ namespace Luna.Models.Data
         public Dictionary<string, string> luaShareMemory;
         public List<LuaCoreSetting> luaServers;
 
+        public bool isEnableClrSupports;
+
         public UserSettings()
         {
+            isEnableClrSupports = false;
             NormalizeData();
         }
 

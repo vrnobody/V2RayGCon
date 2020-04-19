@@ -68,19 +68,9 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 replaceServMiList.Add(GenMenuItemReplace(name, org));
             }
 
-            VgcApis.Misc.UI.RunInUiThread(
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
                 formConfiger,
-                () =>
-                {
-                    try
-                    {
-                        ReplaceOldMenus(loadServMiList, replaceServMiList);
-                    }
-                    catch
-                    {
-                        // Do not hurt me.
-                    }
-                });
+                () => ReplaceOldMenus(loadServMiList, replaceServMiList));
         }
 
         private void ReplaceOldMenus(

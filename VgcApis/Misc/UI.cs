@@ -151,50 +151,25 @@ namespace VgcApis.Misc
             catch { }
         }
 
-        /// <summary>
-        /// If control==null return;
-        /// </summary>
-        /// <param name="control">invokeable control</param>
-        /// <param name="uiUpdater">UI updater</param>
-        public static void RunInUiThread(Control control, Action uiUpdater)
-        {
-            if (control == null || control.IsDisposed)
-            {
-                return;
-            }
-
-            if (!control.InvokeRequired)
-            {
-                uiUpdater?.Invoke();
-                return;
-            }
-
-            control.Invoke((MethodInvoker)delegate
-            {
-                uiUpdater?.Invoke();
-            });
-        }
-
         public static void RunInUiThreadIgnoreErrorThen(Control control, Action uiUpdater, Action next)
         {
-            if (control == null || control.IsDisposed)
+            void InvokeNextIgnoreError()
             {
-                return;
-            }
-
-            void done()
-            {
-                _ = Task.Run(() =>
+                try
                 {
-                    try
+                    _ = Task.Run(() =>
                     {
-                        next?.Invoke();
-                    }
-                    catch { }
-                });
+                        try
+                        {
+                            next?.Invoke();
+                        }
+                        catch { }
+                    });
+                }
+                catch { }
             }
 
-            void TryUpdateUi()
+            void UpdateUiIgnoreError()
             {
                 try
                 {
@@ -203,24 +178,36 @@ namespace VgcApis.Misc
                 catch { }
             }
 
-            if (!control.InvokeRequired)
-            {
-                TryUpdateUi();
-                done();
-                return;
-            }
-
+            bool invokeRequired = true;
             try
             {
-                control?.Invoke((MethodInvoker)delegate
+                if (control == null || control.IsDisposed)
                 {
-                    TryUpdateUi();
-                    done();
-                });
-                return;
+                    InvokeNextIgnoreError();
+                    return;
+                }
+                invokeRequired = control.InvokeRequired;
             }
             catch { }
-            done();
+
+            if (invokeRequired)
+            {
+                try
+                {
+                    control.Invoke((MethodInvoker)delegate
+                    {
+                        UpdateUiIgnoreError();
+                        InvokeNextIgnoreError();
+                    });
+                    return;
+                }
+                catch { }
+            }
+            else
+            {
+                UpdateUiIgnoreError();
+            }
+            InvokeNextIgnoreError();
         }
 
         public static void RunInUiThreadIgnoreError(Control control, Action uiUpdater)

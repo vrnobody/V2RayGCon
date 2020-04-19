@@ -152,12 +152,6 @@
   <data name="btnKill.ToolTip" xml:space="preserve">
     <value>强制终止此脚本</value>
   </data>
-  <data name="chkIsAutoRun.Text" xml:space="preserve">
-    <value>启</value>
-  </data>
-  <data name="chkIsAutoRun.ToolTip" xml:space="preserve">
-    <value>加载此插件时启动脚本</value>
-  </data>
   <data name="lbRunningState.ToolTip" xml:space="preserve">
     <value>脚本是否正在运行</value>
   </data>
@@ -176,11 +170,11 @@
   <data name="btnRemove.ToolTip" xml:space="preserve">
     <value>删除此脚本</value>
   </data>
-  <data name="chkIsHidden.Text" xml:space="preserve">
-    <value>隐</value>
-  </data>
-  <data name="chkIsHidden.ToolTip" xml:space="preserve">
-    <value>不在托盘菜单中显示</value>
+  <data name="rlbOptions.ToolTip" xml:space="preserve">
+    <value>(A)自启动
+(C)加载CLR库
+(E)无
+(H)不在托盘菜单显示</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value />

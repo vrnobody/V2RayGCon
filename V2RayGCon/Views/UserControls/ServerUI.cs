@@ -91,33 +91,35 @@ namespace V2RayGCon.Views.UserControls
 
         private void HighLightServerTitleWithKeywords()
         {
-            VgcApis.Misc.UI.RunInUiThread(rtboxServerTitle, () =>
+
+
+
+
+            var box = rtboxServerTitle;
+            var title = box.Text.ToLower();
+
+            if (string.IsNullOrEmpty(keyword)
+                || !VgcApis.Misc.Utils.PartialMatchCi(title, keyword))
             {
-                var box = rtboxServerTitle;
-                var title = box.Text.ToLower();
+                return;
+            }
 
-                if (string.IsNullOrEmpty(keyword)
-                    || !VgcApis.Misc.Utils.PartialMatchCi(title, keyword))
+            int idxTitle = 0, idxKeyword = 0;
+            while (idxTitle < title.Length && idxKeyword < keyword.Length)
+            {
+                if (title[idxTitle].CompareTo(keyword[idxKeyword]) == 0)
                 {
-                    return;
+                    box.SelectionStart = idxTitle;
+                    box.SelectionLength = 1;
+                    box.SelectionBackColor = Color.Yellow;
+                    idxKeyword++;
                 }
+                idxTitle++;
+            }
+            box.SelectionStart = 0;
+            box.SelectionLength = 0;
+            box.DeselectAll();
 
-                int idxTitle = 0, idxKeyword = 0;
-                while (idxTitle < title.Length && idxKeyword < keyword.Length)
-                {
-                    if (title[idxTitle].CompareTo(keyword[idxKeyword]) == 0)
-                    {
-                        box.SelectionStart = idxTitle;
-                        box.SelectionLength = 1;
-                        box.SelectionBackColor = Color.Yellow;
-                        idxKeyword++;
-                    }
-                    idxTitle++;
-                }
-                box.SelectionStart = 0;
-                box.SelectionLength = 0;
-                box.DeselectAll();
-            });
         }
 
         void StartThisServerOnlyThen(Action done = null)
@@ -134,7 +136,10 @@ namespace V2RayGCon.Views.UserControls
                 return;
             }
 
-            RefreshUiThen(() => uiUpdateLock.Remove());
+            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(
+               rtboxServerTitle,
+               RefreshUi,
+               () => uiUpdateLock.Remove());
         }
 
         void OnCorePropertyChangesHandler(object sender, EventArgs args) =>
@@ -309,38 +314,27 @@ namespace V2RayGCon.Views.UserControls
             }
         }
 
-        void RefreshUiThen(Action done)
+        void RefreshUi()
         {
-            VgcApis.Misc.UI.RunInUiThread(rtboxServerTitle, () =>
-            {
-                try
-                {
-                    var cs = coreServCtrl.GetCoreStates();
-                    var cc = coreServCtrl.GetCoreCtrl();
+            var cs = coreServCtrl.GetCoreStates();
+            var cc = coreServCtrl.GetCoreCtrl();
 
-                    // must update background first
-                    var isSelected = cs.IsSelected();
+            // must update background first
+            var isSelected = cs.IsSelected();
 
-                    // first line
-                    UpdateOnOffLabel(cc.IsCoreRunning());
-                    UpdateSelectCheckboxState(isSelected);
-                    UpdateTitleTextBox(cs);
+            // first line
+            UpdateOnOffLabel(cc.IsCoreRunning());
+            UpdateSelectCheckboxState(isSelected);
+            UpdateTitleTextBox(cs);
 
-                    // second line
-                    UpdateInboundModeLabel(cs);
-                    UpdateLastModifiedLable(cs.GetLastModifiedUtcTicks());
-                    UpdateMarkLabel(cs.GetMark());
-                    UpdateRemarkLabel(cs.GetRemark());
-                    UpdateStatusLable(cs);
-                    UpdateSettingsLable(cs);
-                    CompactRoundLables();
-                }
-                catch { }
-                finally
-                {
-                    done?.Invoke();
-                }
-            });
+            // second line
+            UpdateInboundModeLabel(cs);
+            UpdateLastModifiedLable(cs.GetLastModifiedUtcTicks());
+            UpdateMarkLabel(cs.GetMark());
+            UpdateRemarkLabel(cs.GetRemark());
+            UpdateStatusLable(cs);
+            UpdateSettingsLable(cs);
+            CompactRoundLables();
         }
 
         private void UpdateTitleTextBox(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
@@ -481,15 +475,9 @@ namespace V2RayGCon.Views.UserControls
                 return;
             }
 
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                // control may be desposed, the sun may explode while this function is running
-                try
-                {
-                    HighLightServerTitleWithKeywords();
-                }
-                catch { }
-            });
+            VgcApis.Misc.Utils.RunInBackground(
+                () => VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                    rtboxServerTitle, HighLightServerTitleWithKeywords));
         }
 
         public string GetConfig() => coreServCtrl.GetConfiger().GetConfig();

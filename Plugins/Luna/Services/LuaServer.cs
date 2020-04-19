@@ -103,7 +103,7 @@ namespace Luna.Services
         void RemoveCoreCtrl(Controllers.LuaCoreCtrl coreCtrl)
         {
             var name = coreCtrl.name;
-            coreCtrl.OnIsHiddenChanged -= OnRequireMenuUpdateHandler;
+            coreCtrl.OnStateChange -= OnRequireMenuUpdateHandler;
             coreCtrl.Kill();
             luaCoreCtrls.Remove(coreCtrl);
             settings.GetLuaCoreSettings().RemoveAll(s => s.name == name);
@@ -194,7 +194,7 @@ namespace Luna.Services
             var coreCtrl = new Controllers.LuaCoreCtrl();
             luaCoreCtrls.Add(coreCtrl);
             coreCtrl.Run(settings, coreState, luaApis);
-            coreCtrl.OnIsHiddenChanged += OnRequireMenuUpdateHandler;
+            coreCtrl.OnStateChange += OnRequireMenuUpdateHandler;
         }
 
 
@@ -206,7 +206,6 @@ namespace Luna.Services
             try
             {
                 OnRequireMenuUpdate?.Invoke(this, EventArgs.Empty);
-
             }
             catch { }
         }

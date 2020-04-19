@@ -145,10 +145,11 @@ namespace Luna.Controllers
         public void Cleanup()
         {
             luaServer.OnRequireFlyPanelUpdate -= OnLuaCoreCtrlListChangeHandler;
-            RunInUiThread(() =>
+            var list = flyLuaUiPanel.Controls;
+            foreach (Views.UserControls.LuaUI c in list)
             {
-                ClearFlyPanel();
-            });
+                c.Cleanup();
+            }
         }
         #endregion
 
@@ -158,21 +159,14 @@ namespace Luna.Controllers
             RefreshFlyPanel();
         }
 
-        void RunInUiThread(Action updater)
-        {
-            VgcApis.Misc.UI.RunInUiThread(flyLuaUiPanel, () =>
-            {
-                updater();
-            });
-        }
-
         void RefreshFlyPanel()
         {
-            RunInUiThread(() =>
-            {
-                ClearFlyPanel();
-                AddLuaCoreCtrlToPanel();
-            });
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                flyLuaUiPanel, () =>
+                {
+                    ClearFlyPanel();
+                    AddLuaCoreCtrlToPanel();
+                });
         }
 
         void AddLuaCoreCtrlToPanel()

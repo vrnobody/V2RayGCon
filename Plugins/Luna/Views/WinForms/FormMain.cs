@@ -31,6 +31,7 @@ namespace Luna.Views.WinForms
 
         private void FormMain_Load(object sender, System.EventArgs e)
         {
+            chkEnableClrSupports.Checked = settings.isEnableClrSupports;
 #if DEBUG
             tabControl1.SelectTab(1);
 #endif
@@ -132,8 +133,12 @@ namespace Luna.Views.WinForms
         {
             SetOutputPanelCollapseState(false);
         }
+        private void chkEnableClrSupports_CheckedChanged(object sender, System.EventArgs e)
+        {
+            settings.isEnableClrSupports = chkEnableClrSupports.Checked;
+        }
         #endregion
 
-
+       
     }
 }

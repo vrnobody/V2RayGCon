@@ -16,12 +16,29 @@ namespace Luna.Services
 
         public Settings() { }
 
+        #region properties
+        public bool isEnableClrSupports
+        {
+            get => userSettings.isEnableClrSupports;
+            set
+            {
+                if (userSettings.isEnableClrSupports == value)
+                {
+                    return;
+                }
+                userSettings.isEnableClrSupports = value;
+                SaveUserSettingsNow();
+            }
+        }
+        #endregion
+
         #region internal methods
         public AutocompleteMenu AttachSnippetsTo(Scintilla editor) =>
             luaAcm?.BindToEditor(editor);
         #endregion
 
         #region public methods
+
         public void SendLog(string contnet)
         {
             var name = Properties.Resources.Name;

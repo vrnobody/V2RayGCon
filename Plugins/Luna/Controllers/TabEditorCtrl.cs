@@ -144,7 +144,10 @@ namespace Luna.Controllers
             luaApis.Prepare();
             luaApis.SetRedirectLogWorker(Log);
 
-            var coreSettings = new Models.Data.LuaCoreSetting();
+            var coreSettings = new Models.Data.LuaCoreSetting()
+            {
+                isLoadClr = true,
+            };
             var ctrl = new LuaCoreCtrl();
             ctrl.Run(settings, coreSettings, luaApis);
             return ctrl;

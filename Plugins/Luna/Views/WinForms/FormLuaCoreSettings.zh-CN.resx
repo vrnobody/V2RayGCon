@@ -117,27 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Class_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\editor\Class_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>名称</value>
   </data>
-  <data name="KeyDown_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\editor\KeyDown_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="chkAutorun.Text" xml:space="preserve">
+    <value>(A)自启动</value>
   </data>
-  <data name="Lua_Logo_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\App\Lua-Logo_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="btnSave.Text" xml:space="preserve">
+    <value>保存</value>
   </data>
-  <data name="Method_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\editor\Method_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="chkHidden.Text" xml:space="preserve">
+    <value>(H)隐藏</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Luna</value>
+  <data name="chkClrSupports.Text" xml:space="preserve">
+    <value>(C)加载CLR库</value>
   </data>
-  <data name="StoredProcedureScript_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icons\App\StoredProcedureScript_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Version" xml:space="preserve">
-    <value>0.2.9</value>
-    <comment>optional clr</comment>
+  <data name="$this.Text" xml:space="preserve">
+    <value>修改脚本设定</value>
   </data>
 </root>

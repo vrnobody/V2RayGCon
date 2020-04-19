@@ -78,6 +78,7 @@ namespace Luna.Services
             {
                 var ctrl = luaCtrl; // capture
                 var mi = new ToolStripMenuItem(ctrl.name, null, (s, a) => ctrl.Start());
+                mi.Checked = luaCtrl.isRunning;
                 mis.Add(mi);
             }
 

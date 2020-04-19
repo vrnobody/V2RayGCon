@@ -8,7 +8,7 @@ namespace VgcApis.Models.Consts
         public const string LuaModules = "require module import";
 
         public const string LuaKeywords =
-            "Signal Json Misc Server Web Sys"
+            "Signal Misc Server Web Sys"
             // + " coreServ coreConfiger coreCtrl coreState coreLogger" 
             + " and break do else elseif end for function if in local nil not or repeat return then until while false true goto";
 
@@ -34,7 +34,8 @@ namespace VgcApis.Models.Consts
             " os.clock os.date os.difftime os.execute os.exit os.getenv os.remove os.rename os.setlocale os.time os.tmpname" +
             " package.loaders package.seeall package.config package.searchers package.searchpath package.cpath package.loaded package.loadlib package.path package.preload";
 
-        const string LuaPredefinedFunctionNames = @"string.startswith string.endswith string.isempty table.contains";
+        const string LuaPredefinedFunctionNames =
+            @"string.startswith string.endswith string.isempty table.contains  table.length table.tostring";
 
         static List<string> GetterApiFuncNames()
         {
@@ -44,7 +45,6 @@ namespace VgcApis.Models.Consts
             {
                 typeof(Interfaces.Lua.ILuaSys),
                 typeof(Interfaces.Lua.ILuaSignal),
-                typeof(Interfaces.Lua.ILuaJson),
                 typeof(Interfaces.Lua.ILuaMisc),
                 typeof(Interfaces.Lua.ILuaServer),
                 typeof(Interfaces.Lua.ILuaWeb),

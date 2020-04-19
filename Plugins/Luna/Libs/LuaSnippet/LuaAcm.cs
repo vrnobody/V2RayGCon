@@ -186,7 +186,6 @@ namespace Luna.Libs.LuaSnippet
                 new Tuple<string,Type>("mailbox", typeof(VgcApis.Interfaces.Lua.ILuaMailBox)),
                 new Tuple<string,Type>("mail", typeof(VgcApis.Interfaces.Lua.ILuaMail)),
                 new Tuple<string,Type>("Sys", typeof(VgcApis.Interfaces.Lua.ILuaSys)),
-                new Tuple<string,Type>("Json", typeof(VgcApis.Interfaces.Lua.ILuaJson)),
                 new Tuple<string,Type>("Misc", typeof(VgcApis.Interfaces.Lua.ILuaMisc)),
                 new Tuple<string,Type>("Server", typeof(VgcApis.Interfaces.Lua.ILuaServer)),
                 new Tuple<string,Type>("Web", typeof(VgcApis.Interfaces.Lua.ILuaWeb)),

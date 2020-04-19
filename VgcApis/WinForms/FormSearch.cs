@@ -1,5 +1,4 @@
 ﻿using ScintillaNET;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -67,9 +66,9 @@ namespace VgcApis.WinForms
             // Update indicator appearance
             scintilla.Indicators[NUM].Style = IndicatorStyle.StraightBox;
             scintilla.Indicators[NUM].Under = true;
-            scintilla.Indicators[NUM].ForeColor = Color.Green;
-            scintilla.Indicators[NUM].OutlineAlpha = 50;
-            scintilla.Indicators[NUM].Alpha = 30;
+            scintilla.Indicators[NUM].ForeColor = Color.Yellow;
+            scintilla.Indicators[NUM].OutlineAlpha = 220;
+            scintilla.Indicators[NUM].Alpha = 180;
         }
 
         void ClearIndicator()
@@ -102,12 +101,29 @@ namespace VgcApis.WinForms
             ShowResult(true);
         }
 
+        void UpdateLbResults(int curIdx, int total)
+        {
+            Misc.UI.RunInUiThreadIgnoreError(
+                lbResults, () =>
+                {
+                    if (total < 1)
+                    {
+                        lbResults.Text = "0";
+                        return;
+                    }
+
+                    var text = $"{curIdx}/{total}";
+                    lbResults.Text = text;
+                });
+        }
+
         void ShowResult(bool forward)
         {
             var count = result.Count;
 
             if (count < 1)
             {
+                UpdateLbResults(-1, count);
                 return;
             }
 
@@ -117,10 +133,19 @@ namespace VgcApis.WinForms
                 delta = -1;
             }
             curResult = (curResult + delta + count) % count;
-            scintilla.GotoPosition(result[curResult]);
-            scintilla.ScrollCaret();
+            UpdateLbResults(curResult + 1, count);
+
+            var pos = result[curResult];
+
             ClearIndicator();
             scintilla.IndicatorFillRange(result[curResult], keywordLength);
+
+            var linesOnScreen = scintilla.LinesOnScreen - 2; // Fudge factor
+            var line = scintilla.LineFromPosition(pos);
+            var start = scintilla.Lines[line - (linesOnScreen / 2)].Position;
+            var end = scintilla.Lines[line + (linesOnScreen / 2)].Position;
+            scintilla.ScrollRange(start, end);
+            scintilla.GotoPosition(result[curResult]);
         }
 
         private void btnNext_Click(object sender, System.EventArgs e)

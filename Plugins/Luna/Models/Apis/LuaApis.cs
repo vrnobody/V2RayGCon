@@ -22,12 +22,10 @@ namespace Luna.Models.Apis
         public override void Prepare()
         {
             var misc = new Components.Misc(settings, vgcApi);
-            var json = new Components.Json(vgcApi);
             var web = new Components.Web(vgcApi);
             var server = new Components.Server(vgcApi);
 
             AddChild(misc);
-            AddChild(json);
             AddChild(web);
             AddChild(server);
         }

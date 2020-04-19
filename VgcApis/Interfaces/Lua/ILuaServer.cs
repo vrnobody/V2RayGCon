@@ -26,5 +26,6 @@ namespace VgcApis.Interfaces.Lua
 
         // refresh servers' title in form main
         void UpdateAllSummary();
+
     }
 }

@@ -105,7 +105,6 @@
     <Compile Include="Interfaces\ComponentOf\IChildComponent.cs" />
     <Compile Include="Interfaces\ComponentOf\IParentComponent.cs" />
     <Compile Include="Interfaces\ComponentOf\IComponentOf.cs" />
-    <Compile Include="Interfaces\Lua\ILuaJson.cs" />
     <Compile Include="Interfaces\IShareLinkDecoder.cs" />
     <Compile Include="Interfaces\Lua\ILuaServer.cs" />
     <Compile Include="Interfaces\Lua\ILuaMisc.cs" />

@@ -191,7 +191,7 @@ namespace Luna.Services
 
         void AddNewLuaCoreCtrl(Models.Data.LuaCoreSetting coreState)
         {
-            var coreCtrl = new Controllers.LuaCoreCtrl();
+            var coreCtrl = new Controllers.LuaCoreCtrl(false);
             luaCoreCtrls.Add(coreCtrl);
             coreCtrl.Run(settings, coreState, luaApis);
             coreCtrl.OnStateChange += OnRequireMenuUpdateHandler;

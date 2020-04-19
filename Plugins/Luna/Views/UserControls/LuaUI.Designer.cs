@@ -98,7 +98,7 @@
             // 
             this.rlbOptions._BackColor = System.Drawing.Color.Khaki;
             this.rlbOptions.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rlbOptions.ForeColor = System.Drawing.Color.Gray;
+            this.rlbOptions.ForeColor = System.Drawing.Color.DimGray;
             resources.ApplyResources(this.rlbOptions, "rlbOptions");
             this.rlbOptions.Name = "rlbOptions";
             this.toolTip1.SetToolTip(this.rlbOptions, resources.GetString("rlbOptions.ToolTip"));

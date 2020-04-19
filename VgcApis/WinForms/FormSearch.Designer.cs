@@ -32,6 +32,8 @@
             this.tboxKeyword = new System.Windows.Forms.TextBox();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnPrevious = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lbResults = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tboxKeyword
@@ -54,10 +56,22 @@
             this.btnPrevious.UseVisualStyleBackColor = true;
             this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
             // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // lbResults
+            // 
+            resources.ApplyResources(this.lbResults, "lbResults");
+            this.lbResults.Name = "lbResults";
+            // 
             // FormSearch
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lbResults);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnPrevious);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.tboxKeyword);
@@ -77,5 +91,7 @@
         private System.Windows.Forms.TextBox tboxKeyword;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnPrevious;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbResults;
     }
 }

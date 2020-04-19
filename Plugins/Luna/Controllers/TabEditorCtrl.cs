@@ -148,7 +148,7 @@ namespace Luna.Controllers
             {
                 isLoadClr = true,
             };
-            var ctrl = new LuaCoreCtrl();
+            var ctrl = new LuaCoreCtrl(true);
             ctrl.Run(settings, coreSettings, luaApis);
             return ctrl;
         }

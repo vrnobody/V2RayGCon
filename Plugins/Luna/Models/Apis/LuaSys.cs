@@ -331,9 +331,6 @@ namespace Luna.Models.Apis
             KillAllProcesses();
         }
 
-
-
-
         #endregion
     }
 }

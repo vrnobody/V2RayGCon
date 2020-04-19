@@ -20,8 +20,12 @@ namespace Luna.Controllers
 
         Thread luaCoreThread;
         Task luaCoreTask;
+        private readonly bool enableTracebackFeature;
 
-        public LuaCoreCtrl() { }
+        public LuaCoreCtrl(bool enableTracebackFeature)
+        {
+            this.enableTracebackFeature = enableTracebackFeature;
+        }
 
         public void Run(
             Services.Settings settings,
@@ -212,6 +216,8 @@ namespace Luna.Controllers
         #region private methods
         List<Type> assemblies = null;
         readonly object assemblisLocker = new object();
+
+
         List<Type> GetAllAssemblies()
         {
             // cache until controller is destroyed
@@ -236,15 +242,18 @@ namespace Luna.Controllers
             luaSignal.ResetAllSignals();
             luaCoreThread = Thread.CurrentThread;
 
+            Lua core = CreateLuaCore(luaSys);
             try
             {
-                var core = CreateLuaCore(luaSys);
-                var script = coreSetting.script;
-                core.DoString(script);
+                core.DoString(coreSetting.script);
             }
             catch (Exception e)
             {
                 SendLog($"[{coreSetting.name}] {e}");
+                if (core.UseTraceback)
+                {
+                    SendLog(core.GetDebugTraceback());
+                }
             }
 
             isRunning = false;
@@ -253,7 +262,10 @@ namespace Luna.Controllers
 
         Lua CreateLuaCore(Models.Apis.LuaSys luaSys)
         {
-            var lua = new Lua();
+            var lua = new Lua()
+            {
+                UseTraceback = enableTracebackFeature,
+            };
 
             if (settings.isEnableClrSupports && isLoadClr)
             {
@@ -268,7 +280,6 @@ namespace Luna.Controllers
             lua["Signal"] = luaSignal;
             lua["Sys"] = luaSys;
 
-            lua["Json"] = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaJson>();
             lua["Misc"] = misc;
             lua["Server"] = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaServer>();
             lua["Web"] = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaWeb>();

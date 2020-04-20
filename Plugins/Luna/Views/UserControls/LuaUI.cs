@@ -93,7 +93,7 @@ namespace Luna.Views.UserControls
 
             if (string.IsNullOrEmpty(text))
             {
-                text = "E";
+                text = I18N.LuaCtrlOptionNone;
             }
 
             if (rlbOptions.Text != text)

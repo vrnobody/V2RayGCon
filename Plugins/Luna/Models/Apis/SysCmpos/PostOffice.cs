@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 
 namespace Luna.Models.Apis.SysCmpos
 {
@@ -14,6 +15,22 @@ namespace Luna.Models.Apis.SysCmpos
         #endregion
 
         #region public methods
+        public VgcApis.Interfaces.Lua.ILuaMailBox ApplyRandomMailBox()
+        {
+            for (int failsafe = 0; failsafe < 10000; failsafe++)
+            {
+                var name = Guid.NewGuid().ToString();
+                var mailbox = CreateMailBox(name);
+                if (mailbox != null)
+                {
+                    return mailbox;
+                }
+            }
+
+            // highly unlikely
+            return null;
+        }
+
         public bool RemoveMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailBox)
         {
             if (mailBox == null)

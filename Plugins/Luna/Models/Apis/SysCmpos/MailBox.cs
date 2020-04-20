@@ -21,9 +21,39 @@ namespace Luna.Models.Apis.SysCmpos
         #endregion
 
         #region public methods
+        public bool Clear()
+        {
+            var r = false;
+            try
+            {
+                while (mails.TryTake(out var _))
+                {
+                    r = true;
+                }
+            }
+            catch (System.ObjectDisposedException) { }
+            catch (System.InvalidOperationException) { }
+            return r;
+        }
+
         public string GetAddress() => myAddress;
 
         public int Count() => mails.Count;
+
+        public VgcApis.Models.Datas.LuaMail Wait(int milSecs)
+        {
+            try
+            {
+                if (mails.TryTake(out var m, milSecs))
+                {
+                    return m;
+                }
+            }
+            catch (System.ObjectDisposedException) { }
+            catch (System.InvalidOperationException) { }
+            catch (System.ArgumentOutOfRangeException) { }
+            return null;
+        }
 
         public VgcApis.Models.Datas.LuaMail Wait()
         {

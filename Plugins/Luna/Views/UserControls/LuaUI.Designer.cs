@@ -118,6 +118,7 @@
             this.Controls.Add(this.btnRun);
             this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Name = "LuaUI";
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.LuaUI_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LuaUI_MouseDown);
             this.ResumeLayout(false);

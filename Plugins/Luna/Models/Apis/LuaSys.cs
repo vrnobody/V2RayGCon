@@ -1,10 +1,13 @@
 ﻿using NLua;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
+using VgcApis.Libs.Sys;
 
 namespace Luna.Models.Apis
 {
@@ -17,7 +20,12 @@ namespace Luna.Models.Apis
         private readonly Func<List<Type>> getAllAssemblies;
 
         List<Process> processes = new List<Process>();
-        List<VgcApis.Interfaces.Lua.ILuaMailBox> mailboxs = new List<VgcApis.Interfaces.Lua.ILuaMailBox>();
+
+        List<VgcApis.Interfaces.Lua.ILuaMailBox>
+            mailboxs = new List<VgcApis.Interfaces.Lua.ILuaMailBox>();
+
+        ConcurrentDictionary<string, Tuple<KeyboardHook, VgcApis.Interfaces.Lua.ILuaMailBox>>
+            kbHooks = new ConcurrentDictionary<string, Tuple<KeyboardHook, VgcApis.Interfaces.Lua.ILuaMailBox>>();
 
         static readonly SysCmpos.PostOffice postOffice = new SysCmpos.PostOffice();
 
@@ -57,6 +65,70 @@ namespace Luna.Models.Apis
                 processes.Add(proc);
             }
             VgcApis.Libs.Sys.ChildProcessTracker.AddProcess(proc);
+        }
+        #endregion
+
+        #region ILluaSys.Hotkey
+        public string GetAllKeyNames()
+        {
+            return string.Join(@", ", Enum.GetNames(typeof(Keys)));
+        }
+
+        KeyboardHook CreateKeyboardHook(
+            string keyName, bool hasCtrl, bool hasShift, bool hasAlt, Action onKeyPressed)
+        {
+            if (!(hasCtrl || hasShift || hasAlt)
+                || !Enum.TryParse(keyName, out Keys hotkey))
+            {
+                return null;
+            }
+
+            ModifierKeys modifier = (hasCtrl ? ModifierKeys.Control : 0)
+                | (hasAlt ? ModifierKeys.Alt : 0)
+                | (hasShift ? ModifierKeys.Shift : 0);
+
+            var kbHook = new KeyboardHook();
+            kbHook.KeyPressed += new EventHandler<KeyPressedEventArgs>((s, a) => onKeyPressed());
+            try
+            {
+                kbHook.RegisterHotKey((uint)modifier, (uint)hotkey);
+                return kbHook;
+            }
+            catch { }
+            return null;
+        }
+
+        public bool UnregisterHotKey(VgcApis.Interfaces.Lua.ILuaMailBox mailbox)
+        {
+            var id = mailbox.GetAddress();
+            if (kbHooks.TryRemove(id, out var hm))
+            {
+                hm.Item1.Dispose();
+                postOffice.RemoveMailBox(hm.Item2);
+                return true;
+            }
+            return false;
+        }
+
+        public VgcApis.Interfaces.Lua.ILuaMailBox RegisterHotKey(
+            string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+        {
+            var mailbox = postOffice.ApplyRandomMailBox();
+            if (mailbox == null)
+            {
+                return null;
+            }
+
+            var id = mailbox.GetAddress();
+            Action onKeyPressed = () => mailbox.SendState(id, true);
+            var kbHook = CreateKeyboardHook(keyName, hasCtrl, hasShift, hasAlt, onKeyPressed);
+            if (kbHook != null
+                && kbHooks.TryAdd(id, new Tuple<KeyboardHook, VgcApis.Interfaces.Lua.ILuaMailBox>(kbHook, mailbox)))
+            {
+                return mailbox;
+            }
+            postOffice.RemoveMailBox(mailbox);
+            return null;
         }
         #endregion
 
@@ -129,6 +201,8 @@ namespace Luna.Models.Apis
         #endregion
 
         #region ILuaSys.Process
+        public void DoEvents() => Application.DoEvents();
+
         public void WaitForExit(Process proc) => proc?.WaitForExit();
 
         public void Cleanup(Process proc) => proc?.Close();
@@ -284,20 +358,13 @@ namespace Luna.Models.Apis
         #endregion
 
         #region public methods
-        public void CloseAllMailBox()
-        {
-            List<VgcApis.Interfaces.Lua.ILuaMailBox> boxes;
-            lock (procLocker)
-            {
-                boxes = mailboxs.ToList();
-                mailboxs.Clear();
-            }
 
-            foreach (var box in boxes)
-            {
-                postOffice.RemoveMailBox(box);
-            }
+        public void OnSignalStop()
+        {
+            RemoveAllKeyboardHooks();
+            CloseAllMailBox();
         }
+
         #endregion
 
         #region private methods
@@ -322,11 +389,41 @@ namespace Luna.Models.Apis
                 catch { }
             }
         }
+
+        void CloseAllMailBox()
+        {
+            List<VgcApis.Interfaces.Lua.ILuaMailBox> boxes;
+            lock (procLocker)
+            {
+                boxes = mailboxs.ToList();
+                mailboxs.Clear();
+            }
+
+            foreach (var box in boxes)
+            {
+                postOffice.RemoveMailBox(box);
+            }
+        }
+
+        void RemoveAllKeyboardHooks()
+        {
+            var keys = kbHooks.Keys;
+            foreach (var key in keys)
+            {
+                if (!kbHooks.TryRemove(key, out var kbHook))
+                {
+                    continue;
+                }
+                kbHook.Item1.Dispose();
+                postOffice.RemoveMailBox(kbHook.Item2);
+            }
+        }
         #endregion
 
         #region protected methods
         protected override void Cleanup()
         {
+            RemoveAllKeyboardHooks();
             CloseAllMailBox();
             KillAllProcesses();
         }

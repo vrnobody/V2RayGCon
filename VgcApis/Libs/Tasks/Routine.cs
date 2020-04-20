@@ -42,10 +42,7 @@ namespace VgcApis.Libs.Tasks
         protected override void Cleanup()
         {
             schedule.Stop();
-            lock (action)
-            {
-                schedule.Dispose();
-            }
+            schedule.Dispose();
         }
         #endregion
 
@@ -57,11 +54,14 @@ namespace VgcApis.Libs.Tasks
                 return;
             }
 
-            lock (action)
+            try
             {
                 action();
             }
-            bar.Remove();
+            finally
+            {
+                bar.Remove();
+            }
         }
 
         Timer MakeSchedule(int interval) =>

@@ -5,6 +5,12 @@ namespace VgcApis.Interfaces.Lua
 {
     public interface ILuaSys
     {
+        #region keyboard hotkey
+        string GetAllKeyNames();
+        bool UnregisterHotKey(VgcApis.Interfaces.Lua.ILuaMailBox mailbox);
+        ILuaMailBox RegisterHotKey(string keyName, bool hasAlt, bool hasCtrl, bool hasShift);
+        #endregion
+
         #region reflection
         string GetPublicInfosOfType(Type type);
         string GetPublicInfosOfObject(object @object);
@@ -17,6 +23,8 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region process
+        void DoEvents();
+
         void Cleanup(Process proc);
         bool CloseMainWindow(Process proc);
         bool HasExited(Process proc);

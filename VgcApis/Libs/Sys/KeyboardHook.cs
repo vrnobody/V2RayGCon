@@ -73,11 +73,6 @@ namespace VgcApis.Libs.Sys
             };
         }
 
-        public void RegisterHotKey(ModifierKeys modifierKeys, Keys f12)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Registers a hot key in the system.
         /// </summary>

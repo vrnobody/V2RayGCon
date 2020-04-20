@@ -88,7 +88,7 @@ namespace Luna.Models.Apis
                 | (hasShift ? ModifierKeys.Shift : 0);
 
             var kbHook = new KeyboardHook();
-            kbHook.KeyPressed += new EventHandler<KeyPressedEventArgs>((s, a) => onKeyPressed());
+            kbHook.KeyPressed += (s, a) => onKeyPressed();
             try
             {
                 kbHook.RegisterHotKey((uint)modifier, (uint)hotkey);
@@ -100,8 +100,12 @@ namespace Luna.Models.Apis
 
         public bool UnregisterHotKey(VgcApis.Interfaces.Lua.ILuaMailBox mailbox)
         {
-            var id = mailbox.GetAddress();
-            if (kbHooks.TryRemove(id, out var hm))
+            if (mailbox == null)
+            {
+                return false;
+            }
+
+            if (kbHooks.TryRemove(mailbox.GetAddress(), out var hm))
             {
                 hm.Item1.Dispose();
                 postOffice.RemoveMailBox(hm.Item2);
@@ -119,15 +123,29 @@ namespace Luna.Models.Apis
                 return null;
             }
 
-            var id = mailbox.GetAddress();
-            Action onKeyPressed = () => mailbox.SendState(id, true);
-            var kbHook = CreateKeyboardHook(keyName, hasCtrl, hasShift, hasAlt, onKeyPressed);
-            if (kbHook != null
-                && kbHooks.TryAdd(id, new Tuple<KeyboardHook, VgcApis.Interfaces.Lua.ILuaMailBox>(kbHook, mailbox)))
+            var addr = mailbox.GetAddress();
+            Action onKeyPressed = () => mailbox.SendState(addr, true);
+            KeyboardHook kbHook = null;
+            try
             {
-                return mailbox;
+                kbHook = CreateKeyboardHook(keyName, hasCtrl, hasShift, hasAlt, onKeyPressed);
+                if (kbHook != null)
+                {
+                    var item = new Tuple<KeyboardHook, VgcApis.Interfaces.Lua.ILuaMailBox>(kbHook, mailbox);
+                    if (kbHooks.TryAdd(addr, item))
+                    {
+                        return mailbox;
+                    }
+                }
             }
+            catch { }
+
             postOffice.RemoveMailBox(mailbox);
+
+            if (kbHooks != null && !kbHooks.Keys.Contains(addr))
+            {
+                kbHook.Dispose();
+            }
             return null;
         }
         #endregion

@@ -43,14 +43,13 @@ namespace Luna.Views.WinForms
 
         void UpdateUi()
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
-                tboxName, () =>
-                {
-                    tboxName.Text = luaCoreCtrl.name;
-                    chkAutorun.Checked = luaCoreCtrl.isAutoRun;
-                    chkHidden.Checked = luaCoreCtrl.isHidden;
-                    chkClrSupports.Checked = luaCoreCtrl.isLoadClr;
-                });
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(tboxName, () =>
+{
+    tboxName.Text = luaCoreCtrl.name;
+    chkAutorun.Checked = luaCoreCtrl.isAutoRun;
+    chkHidden.Checked = luaCoreCtrl.isHidden;
+    chkClrSupports.Checked = luaCoreCtrl.isLoadClr;
+});
         }
         #endregion
 

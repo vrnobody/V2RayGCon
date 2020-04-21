@@ -77,11 +77,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         #region public method
-        public override bool RefreshUI()
-        {
-            return false;
-        }
-
         public override void Cleanup()
         {
         }
@@ -283,7 +278,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             var panel = GetFlyPanel();
             panel.RemoveAllServersConrol();
-            panel.RefreshUI();
+            panel.RefreshFlyPanel();
         }
 
         void SetServerItemsIndex(double index)

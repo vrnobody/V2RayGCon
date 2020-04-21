@@ -15,7 +15,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         #endregion
 
         #region abstract method
-        public abstract bool RefreshUI();
         public abstract void Cleanup();
 
         #endregion

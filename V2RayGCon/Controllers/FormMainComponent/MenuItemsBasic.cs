@@ -84,7 +84,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             VgcApis.Misc.UI.SaveToFile(VgcApis.Models.Consts.Files.TxtExt, s);
         }
 
-        public override bool RefreshUI() { return false; }
         public override void Cleanup()
         {
             pluginServ.OnRequireMenuUpdate -= OnRequireMenuUpdateHandler;

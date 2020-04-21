@@ -65,12 +65,14 @@ namespace Luna.Views.UserControls
                 isUpdating = true;
             }
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(lbName, () =>
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(lbName, () =>
             {
                 UpdateNameLabel();
                 UpdateOptionsLabel();
                 UpdateRunningState();
-            }, () => isUpdating = false);
+            });
+
+            isUpdating = false;
         }
 
 

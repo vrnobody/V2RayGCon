@@ -38,7 +38,7 @@ namespace Luna.Services
                 return;
             }
 
-            _ = Task.Run(async () =>
+            Task.Run(async () =>
             {
                 await Task.Delay(delay);
                 foreach (var core in list)
@@ -46,7 +46,7 @@ namespace Luna.Services
                     core.Start();
                     await Task.Delay(TimeSpan.FromSeconds(1));
                 }
-            });
+            }).ConfigureAwait(false);
         }
 
         public List<string[]> GetAllScripts()

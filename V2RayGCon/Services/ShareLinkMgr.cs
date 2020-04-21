@@ -207,7 +207,7 @@ namespace V2RayGCon.Services
 
             var form = new Views.WinForms.FormImportLinksResult(list);
             form.Show();
-            Application.Run();
+            Application.Run(form);
         }
 
         private List<string[]> ImportShareLinks(

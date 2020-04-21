@@ -2,6 +2,7 @@
 using ScintillaNET;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -119,14 +120,13 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 plainText = configWithGlobalImports.ToString();
             }
 
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            Task.Run(() =>
             {
                 string result = ParseConfig(plainText);
                 setting.LazyGC();
 
-                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
-                    editor, () => content = result);
-            });
+                VgcApis.Misc.UI.RunInUiThreadIgnoreError(editor, () => content = result);
+            }).ConfigureAwait(false);
         }
 
         private string ParseConfig(string plainText)

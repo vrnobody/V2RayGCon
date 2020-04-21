@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -80,7 +81,7 @@ namespace V2RayGCon.Libs.Nets
                 }
             }
 
-            VgcApis.Misc.Utils.Sleep(2000);
+            Task.Delay(2000).Wait();
             try
             {
                 Misc.Utils.ZipFileDecompress(filename, path);
@@ -138,7 +139,7 @@ namespace V2RayGCon.Libs.Nets
             var pluginServ = Services.PluginsServer.Instance;
 
             pluginServ.StopAllPlugins();
-            VgcApis.Misc.Utils.Sleep(300);
+            Task.Delay(300).Wait();
 
             var activeServerList = servers.GetRunningServers();
             servers.StopAllServersThen(() =>

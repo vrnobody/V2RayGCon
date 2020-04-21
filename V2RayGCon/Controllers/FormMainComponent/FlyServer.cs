@@ -53,13 +53,13 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             this.welcomeItem = new Views.UserControls.WelcomeUI();
 
-            lazyFlyUpdater = new VgcApis.Libs.Tasks.LazyGuy(() => RefreshUI(), uiRefreshInterval);
+            lazyFlyUpdater = new VgcApis.Libs.Tasks.LazyGuy(() => RefreshFlyPanel(), uiRefreshInterval);
             lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarLater, statusBarUpdateInterval);
             lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(ShowSearchResultNow, 1000);
 
             InitFormControls(lbMarkFilter, miResizeFormMain);
             BindDragDropEvent();
-            RefreshUI();
+            RefreshFlyPanel();
             WatchServers();
         }
 
@@ -137,71 +137,74 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 return;
             }
 
-            HighLightSearchKeywordsNow();
-            var start = DateTime.Now;
-            Action finished = async () =>
+            Task.Run(async () =>
             {
-                var relex = statusBarUpdateInterval - (DateTime.Now - start).TotalMilliseconds;
-                if (relex > 0)
-                {
-                    await Task.Delay(TimeSpan.FromMilliseconds(relex));
-                }
-                updateStatusBarLock.Remove();
-            };
+                var start = DateTime.Now.Millisecond;
 
-            _ = Task.Run(() =>
-            {
-                UpdateStatusBarThen(finished);
-            });
+                HighLightSearchKeywordsNow();
+
+                int filteredListCount = GetFilteredList().Count;
+                int allServersCount = servers.CountAllServers();
+                int serverControlCount = GetAllServerControls().Count();
+
+                // may cause dead lock in UI thread
+                int selectedServersCount = servers.CountSelectedServers();
+
+                VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, () =>
+                {
+                    UpdateStatusBarText(filteredListCount, allServersCount, selectedServersCount, serverControlCount);
+                    UpdateStatusBarPageSelectorMenuItemsOndemand();
+                    UpdateStatusBarPagingButtons();
+
+                    // prevent formain lost focus after click next page
+                    if (isFocusOnFormMain)
+                    {
+                        formMain.Focus();
+                        isFocusOnFormMain = false;
+                    }
+                });
+
+                // throttle
+                var relex = statusBarUpdateInterval - (DateTime.Now.Millisecond - start);
+                await Task.Delay(Math.Max(0, relex));
+                updateStatusBarLock.Remove();
+            }).ConfigureAwait(false);
         }
 
         readonly VgcApis.Libs.Tasks.Bar flyUpdatelLock = new VgcApis.Libs.Tasks.Bar();
-        public override bool RefreshUI()
+        public void RefreshFlyPanel()
         {
             if (!flyUpdatelLock.Install())
             {
                 lazyFlyUpdater?.DoItLater();
-                return false;
             }
 
-            var start = DateTime.Now;
-            Action finished = async () =>
+            Task.Run(() =>
             {
-                var relex = uiRefreshInterval - (DateTime.Now - start).TotalMilliseconds;
-                if (relex > 0)
-                {
-                    await Task.Delay(TimeSpan.FromMilliseconds(relex));
-                }
-                flyUpdatelLock.Remove();
-            };
+                // var start = DateTime.Now.Millisecond;
 
-            _ = Task.Run(() =>
-            {
-                RefreshServersUiThen(() =>
+                servers.ResetIndex();
+                var flatList = this.GetFilteredList();
+                var pagedList = GenPagedServerList(flatList);
+
+                VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, () =>
                 {
-                    UpdateStatusBarLater();
-                    finished?.Invoke();
+                    ClearFlyPanel(pagedList);
+                    FillFlyPanelWith(ref pagedList);
                 });
-            });
+                UpdateStatusBarLater();
 
-            return true;
+                // why??
+                // int relex = uiRefreshInterval - (DateTime.Now.Millisecond - start);
+                // Task.Delay(Math.Max(0, relex)).Wait();
+
+                flyUpdatelLock.Remove();
+            }).ConfigureAwait(false);
         }
         #endregion
 
         #region private method
 
-        private void RefreshServersUiThen(Action next)
-        {
-            servers.ResetIndex();
-            var flatList = this.GetFilteredList();
-            var pagedList = GenPagedServerList(flatList);
-
-            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(formMain, () =>
-            {
-                ClearFlyPanel(pagedList);
-                FillFlyPanelWith(ref pagedList);
-            }, next);
-        }
 
         private void FillFlyPanelWith(ref List<VgcApis.Interfaces.ICoreServCtrl> pagedList)
         {
@@ -264,35 +267,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             UpdateStatusBarLater();
         }
-
-        void UpdateStatusBarThen(Action next)
-        {
-            int filteredListCount = GetFilteredList().Count;
-            int allServersCount = servers.CountAllServers();
-            int selectedServersCount = servers.CountSelectedServers(); // may cause dead lock in UI thread
-            int serverControlCount = GetAllServerControls().Count();
-
-            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(formMain, () =>
-            {
-                UpdateStatusBarText(
-                    filteredListCount,
-                    allServersCount,
-                    selectedServersCount,
-                    serverControlCount);
-
-                UpdateStatusBarPageSelectorMenuItemsOndemand();
-                UpdateStatusBarPagingButtons();
-
-                // prevent formain lost focus after click next page
-                if (isFocusOnFormMain)
-                {
-                    formMain.Focus();
-                    isFocusOnFormMain = false;
-                }
-            }, next);
-        }
-
-
 
         void HighLightSearchKeywordsNow()
         {
@@ -377,7 +351,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     {
                         curPageNumber = pn;
                         isFocusOnFormMain = true;
-                        RefreshUI();
+                        RefreshFlyPanel();
                     });
                 pagerMenuItemCache.Add(item);
             }
@@ -393,7 +367,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             // 修改搜索项时应该清除选择,否则会有可显示列表外的选中项
             servers.SetAllServerIsSelected(false);
 
-            RefreshUI();
+            RefreshFlyPanel();
         }
 
         void ShowSearchResultLater() => lazySearchResultDisplayer?.DoItLater();
@@ -407,14 +381,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 curPageNumber--;
                 isFocusOnFormMain = true;
-                RefreshUI();
+                RefreshFlyPanel();
             };
 
             tslbNextPage.Click += (s, a) =>
             {
                 curPageNumber++;
                 isFocusOnFormMain = true;
-                RefreshUI();
+                RefreshFlyPanel();
             };
 
             lbMarkFilter.Click += (s, a) => this.cboxMarkFilter.Text = string.Empty;
@@ -558,12 +532,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void ReloadFlyPanel()
         {
             RemoveAllServersConrol();
-            RefreshUI();
+            RefreshFlyPanel();
         }
 
         void OnRequireFlyPanelUpdateHandler(object sender, EventArgs args)
         {
-            RefreshUI();
+            RefreshFlyPanel();
         }
 
         private void LoadWelcomeItem()
@@ -623,7 +597,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 indexDest < indexMoving ?
                 indexDest - 0.5 :
                 indexDest + 0.5);
-            RefreshUI();
+            RefreshFlyPanel();
         }
         #endregion
     }

@@ -190,7 +190,14 @@ namespace Luna.Views.WinForms
                 return;
             }
 
-            UpdateUiThen(() => updating.Remove());
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(dgvData, () =>
+            {
+                var ds = GetFilteredDataTable();
+                lbTotal.Text = ds.Rows.Count.ToString();
+                dgvData.DataSource = ds;
+            });
+
+            updating.Remove();
         }
 
         DataTable GetFilteredDataTable()
@@ -223,15 +230,6 @@ namespace Luna.Views.WinForms
             return r;
         }
 
-        void UpdateUiThen(Action next)
-        {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(dgvData, () =>
-            {
-                var ds = GetFilteredDataTable();
-                lbTotal.Text = ds.Rows.Count.ToString();
-                dgvData.DataSource = ds;
-            }, next);
-        }
 
         void InitControls()
         {

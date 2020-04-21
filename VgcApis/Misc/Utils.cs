@@ -379,8 +379,6 @@ namespace VgcApis.Misc
             done.WaitOne();
         }
 
-        public static void Sleep(int milliseconds) => Task.Delay(milliseconds).Wait();
-
         public static Task RunInBackground(Action worker) =>
             Task.Factory.StartNew(worker, TaskCreationOptions.LongRunning);
         #endregion

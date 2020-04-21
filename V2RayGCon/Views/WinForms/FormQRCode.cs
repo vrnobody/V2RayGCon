@@ -142,24 +142,23 @@ namespace V2RayGCon.Views.WinForms
                 this.serverList.Add(config);
             }
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
-                cboxServList, () =>
- {
-     cboxServList.Items.Clear();
-     cboxServList.Items.AddRange(summaryList.ToArray());
-     Misc.UI.ResetComboBoxDropdownMenuWidth(cboxServList);
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(cboxServList, () =>
+            {
+                cboxServList.Items.Clear();
+                cboxServList.Items.AddRange(summaryList.ToArray());
+                Misc.UI.ResetComboBoxDropdownMenuWidth(cboxServList);
 
-     if (summaryList.Count <= 0)
-     {
-         cboxServList.SelectedIndex = -1;
-         return;
-     }
+                if (summaryList.Count <= 0)
+                {
+                    cboxServList.SelectedIndex = -1;
+                    return;
+                }
 
-     var oldIndex = servIndex;
-     servIndex = -1;
-     cboxServList.SelectedIndex = VgcApis.Misc.Utils.Clamp(
-         oldIndex, 0, summaryList.Count);
- });
+                var oldIndex = servIndex;
+                servIndex = -1;
+                cboxServList.SelectedIndex = VgcApis.Misc.Utils.Clamp(
+                    oldIndex, 0, summaryList.Count);
+            });
         }
 
         void UpdateTboxLink()

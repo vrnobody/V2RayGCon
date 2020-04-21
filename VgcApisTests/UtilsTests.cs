@@ -434,7 +434,7 @@ namespace VgcApisTests
                 using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
                 {
                     socket.Bind(ep);
-                    Sleep(500);
+                    Task.Delay(500).Wait();
                 }
             }
 

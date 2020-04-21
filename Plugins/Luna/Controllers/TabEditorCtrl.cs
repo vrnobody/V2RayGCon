@@ -300,14 +300,15 @@ namespace Luna.Controllers
                 return;
             }
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(rtboxOutput, () =>
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(rtboxOutput, () =>
             {
                 rtboxFreezer.DisableRepaintEvent();
                 rtboxOutput.Text = qLogger.GetLogAsString(true);
                 VgcApis.Misc.UI.ScrollToBottom(rtboxOutput);
                 rtboxFreezer.EnableRepaintEvent();
                 updateOutputTimeStamp = timestamp;
-            }, () => bar.Remove());
+            });
+            bar.Remove();
         }
 
         private void BindEvents()

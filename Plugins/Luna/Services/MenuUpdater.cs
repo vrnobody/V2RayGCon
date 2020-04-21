@@ -50,21 +50,20 @@ namespace Luna.Services
                 return;
             }
 
-            vgcNotifierService.RunInUiThreadIgnoreErrorThen(
-                UpdateMenuNow, () => menuUpdaterLock.Set());
-        }
-
-        void UpdateMenuNow()
-        {
-            var mis = GenSubMenuItems();
-            var root = miRoot.DropDownItems;
-            root.Clear();
-            root.Add(miShowWindow);
-            if (mis.Count > 0)
+            vgcNotifierService.RunInUiThreadIgnoreError(() =>
             {
-                root.Add(new ToolStripSeparator());
-                root.AddRange(mis.ToArray());
-            }
+                var mis = GenSubMenuItems();
+                var root = miRoot.DropDownItems;
+                root.Clear();
+                root.Add(miShowWindow);
+                if (mis.Count > 0)
+                {
+                    root.Add(new ToolStripSeparator());
+                    root.AddRange(mis.ToArray());
+                }
+            });
+
+            menuUpdaterLock.Set();
         }
 
         List<ToolStripMenuItem> GenSubMenuItems()

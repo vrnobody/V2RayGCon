@@ -164,23 +164,13 @@ namespace VgcApis.Misc
             return id != mainThreadId;
         }
 
-        public static void RunInUiThreadIgnoreErrorThen(Control control, Action updater, Action next)
+        public static void RunInUiThreadIgnoreError(Control control, Action updater)
         {
-
             Action updateIgnoreError = () =>
-             {
-                 try
-                 {
-                     updater?.Invoke();
-                 }
-                 catch { }
-             };
-
-            Action nextIgnoreError = () =>
             {
                 try
                 {
-                    next?.Invoke();
+                    updater?.Invoke();
                 }
                 catch { }
             };
@@ -198,43 +188,12 @@ namespace VgcApis.Misc
                         control?.Invoke((MethodInvoker)delegate
                         {
                             updateIgnoreError();
-                            nextIgnoreError();
                         });
-                        return;
                     }
                 }
             }
             catch { }
-            nextIgnoreError();
         }
-
-        public static void RunInUiThread(Control control, Action updater) =>
-            RunInUiThreadThen(control, updater, null);
-
-        public static void RunInUiThreadThen(Control control, Action updater, Action next)
-        {
-            if (control != null && !control.IsDisposed)
-            {
-                if (!IsInvokeRequired())
-                {
-                    updater?.Invoke();
-                }
-                else
-                {
-                    control?.Invoke((MethodInvoker)delegate
-                    {
-                        updater?.Invoke();
-                        next?.Invoke();
-                    });
-                    return;
-                }
-            }
-            next?.Invoke();
-        }
-
-        public static void RunInUiThreadIgnoreError(Control control, Action updater) =>
-            RunInUiThreadIgnoreErrorThen(control, updater, null);
-
 
         // https://stackoverflow.com/questions/87795/how-to-prevent-flickering-in-listview-when-updating-a-single-listviewitems-text
         public static void DoubleBuffered(this Control control, bool enable)

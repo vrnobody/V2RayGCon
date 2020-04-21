@@ -1,4 +1,5 @@
-﻿using NLua;
+﻿using Luna.Services;
+using NLua;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -6,8 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using VgcApis.Libs.Sys;
 
@@ -18,6 +17,7 @@ namespace Luna.Models.Apis
         VgcApis.Interfaces.Lua.ILuaSys
     {
         readonly object procLocker = new object();
+        private readonly Settings settings;
         private readonly LuaApis luaApis;
         private readonly Func<List<Type>> getAllAssemblies;
 
@@ -26,16 +26,17 @@ namespace Luna.Models.Apis
         List<VgcApis.Interfaces.Lua.ILuaMailBox>
             mailboxs = new List<VgcApis.Interfaces.Lua.ILuaMailBox>();
 
-        ConcurrentDictionary<string, Tuple<
-            ApplicationContext,
-            KeyboardHook,
-            VgcApis.Interfaces.Lua.ILuaMailBox>>
-                hkContexts = new ConcurrentDictionary<string, Tuple<ApplicationContext, KeyboardHook, VgcApis.Interfaces.Lua.ILuaMailBox>>();
+        ConcurrentDictionary<string, Tuple<VgcApis.Interfaces.Lua.ILuaMailBox, KeyboardHook>>
+            hotkeys = new ConcurrentDictionary<string, Tuple<VgcApis.Interfaces.Lua.ILuaMailBox, KeyboardHook>>();
 
         static readonly SysCmpos.PostOffice postOffice = new SysCmpos.PostOffice();
 
-        public LuaSys(LuaApis luaApis, Func<List<Type>> getAllAssemblies)
+        public LuaSys(
+            Settings settings,
+            LuaApis luaApis,
+            Func<List<Type>> getAllAssemblies)
         {
+            this.settings = settings;
             this.luaApis = luaApis;
             this.getAllAssemblies = getAllAssemblies;
         }
@@ -114,18 +115,14 @@ namespace Luna.Models.Apis
                 return false;
             }
 
-            if (!hkContexts.TryRemove(handle, out var hkContext))
+            if (!hotkeys.TryRemove(handle, out var hotkey)
+                && ReferenceEquals(hotkey.Item1, mailbox))
             {
-                return false;
-            }
-
-            try
-            {
-                hkContext.Item2.Dispose();  // hook
-                hkContext.Item1.ExitThread();  // thread
+                // hook
+                hotkey.Item2.Dispose();
                 return true;
             }
-            catch { }
+
             return false;
         }
 
@@ -140,53 +137,34 @@ namespace Luna.Models.Apis
             }
 
             var addr = mailbox.GetAddress();
-            Action onKeyPressed = () => mailbox.SendCode(addr, evCode);
-
-            KeyboardHook kbHook = null;
-            ApplicationContext context = new ApplicationContext();
-            AutoResetEvent onReady = new AutoResetEvent(false);
-
-            var createKbHookTask = new Task(() =>
-            {
-                try
-                {
-                    kbHook = CreateKeyboardHook(onKeyPressed, keyName, hasCtrl, hasShift, hasAlt);
-                    onReady.Set();
-                    if (kbHook == null)
-                    {
-                        return;
-                    }
-                    Application.Run(context);
-                }
-                catch { }
-            }, TaskCreationOptions.LongRunning);
-            createKbHookTask.ConfigureAwait(false);
+            KeyboardHook hook = null;
 
             try
             {
-                createKbHookTask.Start();
-                onReady.WaitOne();
-                if (kbHook != null)
+                settings.RunInUiThreadIgnoreError(() =>
                 {
-                    var item = new Tuple<ApplicationContext, KeyboardHook, VgcApis.Interfaces.Lua.ILuaMailBox>(
-                            context, kbHook, mailbox);
-
+                    hook = CreateKeyboardHook(
+                        () => mailbox.SendCode(addr, evCode),
+                        keyName, hasCtrl, hasShift, hasAlt);
+                });
+                if (hook != null)
+                {
+                    var hotkey = new Tuple<VgcApis.Interfaces.Lua.ILuaMailBox, KeyboardHook>(mailbox, hook);
                     for (int failsafe = 0; failsafe < 1000; failsafe++)
                     {
-                        var key = Guid.NewGuid().ToString();
-                        if (hkContexts.TryAdd(key, item))
+                        var handle = Guid.NewGuid().ToString();
+                        if (hotkeys.TryAdd(handle, hotkey))
                         {
-                            return key;
+                            return handle;
                         }
                     }
                 }
             }
             catch { }
 
-            if (kbHook != null)
+            if (hook != null)
             {
-                kbHook.Dispose();
-                context.ExitThread();
+                hook.Dispose();
             }
             return null;
         }
@@ -506,20 +484,16 @@ namespace Luna.Models.Apis
 
         void RemoveAllKeyboardHooks()
         {
-            var keys = hkContexts.Keys;
-            foreach (var key in keys)
+            var handles = hotkeys.Keys;
+            foreach (var handle in handles)
             {
-                if (!hkContexts.TryGetValue(key, out var kbHook))
+                if (!hotkeys.TryGetValue(handle, out var hotkey))
                 {
                     continue;
                 }
 
-                try
-                {
-                    kbHook.Item2.Dispose();
-                    kbHook.Item1.ExitThread();
-                }
-                catch { }
+                // hook
+                hotkey.Item2.Dispose();
             }
         }
         #endregion

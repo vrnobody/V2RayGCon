@@ -8,6 +8,5 @@ namespace VgcApis.Interfaces.Services
 
         void RunInUiThreadIgnoreError(Action updater);
 
-        void RunInUiThreadIgnoreErrorThen(Action updater, Action next);
     }
 }

@@ -107,10 +107,8 @@ namespace V2RayGCon.Services
         }
 
         public void RunInUiThreadIgnoreError(Action updater) =>
-            RunInUiThreadIgnoreErrorThen(updater, null);
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(niMenu, updater);
 
-        public void RunInUiThreadIgnoreErrorThen(Action updater, Action next) =>
-            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(niMenu, updater, next);
 
         /// <summary>
         /// null means delete menu
@@ -330,9 +328,11 @@ namespace V2RayGCon.Services
                 ServerList2MenuItems(serverList.Take(num).ToList()) :
                 new List<ToolStripMenuItem>();
 
-            RunInUiThreadIgnoreErrorThen(
-                () => ReplaceServersMenuWith(isGrouped, miGroupedServers, miTopNthServers),
-                next);
+            RunInUiThreadIgnoreError(
+                () => ReplaceServersMenuWith(
+                    isGrouped, miGroupedServers, miTopNthServers));
+
+            next?.Invoke();
         }
 
         VgcApis.Libs.Tasks.Bar niUpdateLocker = new VgcApis.Libs.Tasks.Bar();
@@ -344,24 +344,23 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            var start = DateTime.Now;
-            Action finished = () => Task.Run(async () =>
+            Task.Run(() =>
             {
-                var relex = UpdateInterval - (DateTime.Now - start).TotalMilliseconds;
-                await Task.Delay((int)Math.Max(relex, 0));
-                niUpdateLocker.Remove();
-            }).ConfigureAwait(false);
+                var start = DateTime.Now.Millisecond;
+                Action finished = () => Task.Run(async () =>
+                {
+                    var relex = UpdateInterval - (DateTime.Now.Millisecond - start);
+                    await Task.Delay(Math.Max(0, relex));
+                    niUpdateLocker.Remove();
+                });
 
-            var list = servers.GetAllServersOrderByIndex()
-                .Where(s => s.GetCoreCtrl().IsCoreRunning())
-                .ToList();
+                var list = servers.GetAllServersOrderByIndex()
+                    .Where(s => s.GetCoreCtrl().IsCoreRunning())
+                    .ToList();
 
-            _ = Task.Run(() =>
-            {
                 UpdateNotifyIconImage(list.Count());
-                UpdateNotifyIconTextThen(list,
-                    () => UpdateServersMenuThen(finished));
-            });
+                UpdateNotifyIconTextThen(list, () => UpdateServersMenuThen(finished));
+            }).ConfigureAwait(false);
         }
 
         private void UpdateNotifyIconImage(int activeServNum)

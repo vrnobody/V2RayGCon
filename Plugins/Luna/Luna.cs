@@ -54,7 +54,7 @@ namespace Luna
             formMgr = new Services.FormMgr();
             menuUpdater = new Services.MenuUpdater(vgcNotifier);
 
-            settings.Run(vgcSettings);
+            settings.Run(vgcSettings, vgcNotifier);
             luaServer.Run(settings, api);
             formMgr.Run(settings, luaServer, api);
             menuUpdater.Run(luaServer, miRoot, miShowWindow);

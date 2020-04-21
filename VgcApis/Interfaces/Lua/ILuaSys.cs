@@ -7,8 +7,10 @@ namespace VgcApis.Interfaces.Lua
     {
         #region keyboard hotkey
         string GetAllKeyNames();
-        bool UnregisterHotKey(VgcApis.Interfaces.Lua.ILuaMailBox mailbox);
-        ILuaMailBox RegisterHotKey(string keyName, bool hasAlt, bool hasCtrl, bool hasShift);
+        bool UnregisterHotKey(ILuaMailBox mailbox, string handle);
+
+        string RegisterHotKey(ILuaMailBox mailbox, int evCode,
+            string keyName, bool hasAlt, bool hasCtrl, bool hasShift);
         #endregion
 
         #region reflection
@@ -19,7 +21,12 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region post office
+        ILuaMailBox ApplyRandomMailBox();
+
+        bool ValidateMailBox(ILuaMailBox mailbox);
         ILuaMailBox CreateMailBox(string name);
+
+        bool RemoveMailBox(ILuaMailBox mailbox);
         #endregion
 
         #region process

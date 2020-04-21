@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Luna.Services
 {
@@ -26,10 +27,27 @@ namespace Luna.Services
             this.luaApis.Prepare();
 
             InitLuaCores();
-            WakeUpAutoRunScripts();
         }
 
         #region public methods
+        public void WakeUpAutoRunScripts(TimeSpan delay)
+        {
+            var list = GetAllLuaCoreCtrls().Where(c => c.isAutoRun).ToList();
+            if (list.Count() <= 0)
+            {
+                return;
+            }
+
+            _ = Task.Run(async () =>
+            {
+                await Task.Delay(delay);
+                foreach (var core in list)
+                {
+                    core.Start();
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                }
+            });
+        }
 
         public List<string[]> GetAllScripts()
         {
@@ -223,18 +241,7 @@ namespace Luna.Services
 
         void Save() => settings.SaveUserSettingsNow();
 
-        void WakeUpAutoRunScripts()
-        {
-            var list = GetAllLuaCoreCtrls().Where(c => c.isAutoRun).ToList();
-            if (list.Count() <= 0)
-            {
-                return;
-            }
-            foreach (var core in list)
-            {
-                core.Start();
-            }
-        }
+
 
         void InitLuaCores()
         {

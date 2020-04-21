@@ -22,22 +22,22 @@ namespace V2RayGCon.Services
         #region public method
         public bool Run()
         {
+            Misc.Utils.SupportProtocolTLS12();
+
             setting = Settings.Instance;
             if (setting.ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
             {
                 return false;
             }
+            SetCulture(setting.culture);
 
             servers = Servers.Instance;
             updater = Updater.Instance;
 
-            SetCulture(setting.culture);
-
             InitAllServices();
-
             BindEvents();
 
-            Misc.Utils.SupportProtocolTLS12();
+            PluginsServer.Instance.RestartAllPlugins();
 
             if (servers.IsEmpty())
             {
@@ -140,8 +140,6 @@ namespace V2RayGCon.Services
             slinkMgr.Run(setting, servers, cache);
             notifier.Run(setting, servers, slinkMgr, updater);
             pluginsServ.Run(setting, servers, configMgr, slinkMgr, notifier);
-
-
         }
 
         void BindEvents()

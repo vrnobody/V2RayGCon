@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VgcApis.Resources.Langs;
@@ -14,6 +15,12 @@ namespace VgcApis.Misc
 {
     public static class UI
     {
+        static readonly int mainThreadId;
+
+        static UI()
+        {
+            mainThreadId = Thread.CurrentThread.ManagedThreadId;
+        }
 
         #region Controls
         public static void ResetComboBoxDropdownMenuWidth(ComboBox cbox)
@@ -151,95 +158,83 @@ namespace VgcApis.Misc
             catch { }
         }
 
-        public static void RunInUiThreadIgnoreErrorThen(Control control, Action uiUpdater, Action next)
+        static bool IsInvokeRequired()
         {
-            void InvokeNextIgnoreError()
-            {
-                try
-                {
-                    _ = Task.Run(() =>
-                    {
-                        try
-                        {
-                            next?.Invoke();
-                        }
-                        catch { }
-                    });
-                }
-                catch { }
-            }
-
-            void UpdateUiIgnoreError()
-            {
-                try
-                {
-                    uiUpdater?.Invoke();
-                }
-                catch { }
-            }
-
-            bool invokeRequired = true;
-            try
-            {
-                if (control == null || control.IsDisposed)
-                {
-                    InvokeNextIgnoreError();
-                    return;
-                }
-                invokeRequired = control.InvokeRequired;
-            }
-            catch { }
-
-            if (invokeRequired)
-            {
-                try
-                {
-                    control.Invoke((MethodInvoker)delegate
-                    {
-                        UpdateUiIgnoreError();
-                        InvokeNextIgnoreError();
-                    });
-                    return;
-                }
-                catch { }
-            }
-            else
-            {
-                UpdateUiIgnoreError();
-            }
-            InvokeNextIgnoreError();
+            var id = Thread.CurrentThread.ManagedThreadId;
+            return id != mainThreadId;
         }
 
-        public static void RunInUiThreadIgnoreError(Control control, Action uiUpdater)
+        public static void RunInUiThreadIgnoreErrorThen(Control control, Action updater, Action next)
         {
-            if (control == null || control.IsDisposed)
-            {
-                return;
-            }
 
-            if (!control.InvokeRequired)
+            Action updateIgnoreError = () =>
+             {
+                 try
+                 {
+                     updater?.Invoke();
+                 }
+                 catch { }
+             };
+
+            Action nextIgnoreError = () =>
             {
                 try
                 {
-                    uiUpdater?.Invoke();
+                    next?.Invoke();
                 }
                 catch { }
-                return;
-            }
+            };
 
             try
             {
-                control.Invoke((MethodInvoker)delegate
+                if (control != null && !control.IsDisposed)
                 {
-                    try
+                    if (!IsInvokeRequired())
                     {
-                        uiUpdater?.Invoke();
+                        updateIgnoreError();
                     }
-                    catch { }
-                });
+                    else
+                    {
+                        control?.Invoke((MethodInvoker)delegate
+                        {
+                            updateIgnoreError();
+                            nextIgnoreError();
+                        });
+                        return;
+                    }
+                }
             }
             catch { }
+            nextIgnoreError();
         }
+
+        public static void RunInUiThread(Control control, Action updater) =>
+            RunInUiThreadThen(control, updater, null);
+
+        public static void RunInUiThreadThen(Control control, Action updater, Action next)
+        {
+            if (control != null && !control.IsDisposed)
+            {
+                if (!IsInvokeRequired())
+                {
+                    updater?.Invoke();
+                }
+                else
+                {
+                    control?.Invoke((MethodInvoker)delegate
+                    {
+                        updater?.Invoke();
+                        next?.Invoke();
+                    });
+                    return;
+                }
+            }
+            next?.Invoke();
+        }
+
+        public static void RunInUiThreadIgnoreError(Control control, Action updater) =>
+            RunInUiThreadIgnoreErrorThen(control, updater, null);
+
 
         // https://stackoverflow.com/questions/87795/how-to-prevent-flickering-in-listview-when-updating-a-single-listviewitems-text
         public static void DoubleBuffered(this Control control, bool enable)

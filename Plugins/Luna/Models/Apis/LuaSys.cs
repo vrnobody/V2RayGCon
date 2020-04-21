@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using VgcApis.Libs.Sys;
 
@@ -24,8 +26,11 @@ namespace Luna.Models.Apis
         List<VgcApis.Interfaces.Lua.ILuaMailBox>
             mailboxs = new List<VgcApis.Interfaces.Lua.ILuaMailBox>();
 
-        ConcurrentDictionary<string, Tuple<KeyboardHook, VgcApis.Interfaces.Lua.ILuaMailBox>>
-            kbHooks = new ConcurrentDictionary<string, Tuple<KeyboardHook, VgcApis.Interfaces.Lua.ILuaMailBox>>();
+        ConcurrentDictionary<string, Tuple<
+            ApplicationContext,
+            KeyboardHook,
+            VgcApis.Interfaces.Lua.ILuaMailBox>>
+                hkContexts = new ConcurrentDictionary<string, Tuple<ApplicationContext, KeyboardHook, VgcApis.Interfaces.Lua.ILuaMailBox>>();
 
         static readonly SysCmpos.PostOffice postOffice = new SysCmpos.PostOffice();
 
@@ -75,7 +80,9 @@ namespace Luna.Models.Apis
         }
 
         KeyboardHook CreateKeyboardHook(
-            string keyName, bool hasCtrl, bool hasShift, bool hasAlt, Action onKeyPressed)
+            Action onKeyPressed,
+            string keyName,
+            bool hasCtrl, bool hasShift, bool hasAlt)
         {
             if (!(hasCtrl || hasShift || hasAlt)
                 || !Enum.TryParse(keyName, out Keys hotkey))
@@ -98,53 +105,88 @@ namespace Luna.Models.Apis
             return null;
         }
 
-        public bool UnregisterHotKey(VgcApis.Interfaces.Lua.ILuaMailBox mailbox)
+        public bool UnregisterHotKey(
+            VgcApis.Interfaces.Lua.ILuaMailBox mailbox,
+            string handle)
         {
-            if (mailbox == null)
+            if (!postOffice.ValidateMailBox(mailbox))
             {
                 return false;
             }
 
-            if (kbHooks.TryRemove(mailbox.GetAddress(), out var hm))
+            if (!hkContexts.TryRemove(handle, out var hkContext))
             {
-                hm.Item1.Dispose();
-                postOffice.RemoveMailBox(hm.Item2);
+                return false;
+            }
+
+            try
+            {
+                hkContext.Item2.Dispose();  // hook
+                hkContext.Item1.ExitThread();  // thread
                 return true;
             }
+            catch { }
             return false;
         }
 
-        public VgcApis.Interfaces.Lua.ILuaMailBox RegisterHotKey(
+        public string RegisterHotKey(
+            VgcApis.Interfaces.Lua.ILuaMailBox mailbox, int evCode,
             string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
         {
-            var mailbox = postOffice.ApplyRandomMailBox();
-            if (mailbox == null)
+            // 无权访问
+            if (!postOffice.ValidateMailBox(mailbox))
             {
                 return null;
             }
 
             var addr = mailbox.GetAddress();
-            Action onKeyPressed = () => mailbox.SendState(addr, true);
+            Action onKeyPressed = () => mailbox.SendCode(addr, evCode);
+
             KeyboardHook kbHook = null;
+            ApplicationContext context = new ApplicationContext();
+            AutoResetEvent onReady = new AutoResetEvent(false);
+
+            var createKbHookTask = new Task(() =>
+            {
+                try
+                {
+                    kbHook = CreateKeyboardHook(onKeyPressed, keyName, hasCtrl, hasShift, hasAlt);
+                    onReady.Set();
+                    if (kbHook == null)
+                    {
+                        return;
+                    }
+                    Application.Run(context);
+                }
+                catch { }
+            }, TaskCreationOptions.LongRunning);
+            createKbHookTask.ConfigureAwait(false);
+
             try
             {
-                kbHook = CreateKeyboardHook(keyName, hasCtrl, hasShift, hasAlt, onKeyPressed);
+                createKbHookTask.Start();
+                onReady.WaitOne();
                 if (kbHook != null)
                 {
-                    var item = new Tuple<KeyboardHook, VgcApis.Interfaces.Lua.ILuaMailBox>(kbHook, mailbox);
-                    if (kbHooks.TryAdd(addr, item))
+                    var item = new Tuple<ApplicationContext, KeyboardHook, VgcApis.Interfaces.Lua.ILuaMailBox>(
+                            context, kbHook, mailbox);
+
+                    for (int failsafe = 0; failsafe < 1000; failsafe++)
                     {
-                        return mailbox;
+                        var key = Guid.NewGuid().ToString();
+                        if (hkContexts.TryAdd(key, item))
+                        {
+                            return key;
+                        }
                     }
                 }
             }
             catch { }
 
-            postOffice.RemoveMailBox(mailbox);
-
-            if (kbHooks != null && !kbHooks.Keys.Contains(addr))
+            if (kbHook != null)
             {
                 kbHook.Dispose();
+                context.ExitThread();
             }
             return null;
         }
@@ -196,6 +238,45 @@ namespace Luna.Models.Apis
         #endregion
 
         #region ILuaSys.PostOffice
+        public bool ValidateMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailbox) =>
+            postOffice.ValidateMailBox(mailbox);
+
+        public bool RemoveMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailbox)
+        {
+            if (!postOffice.ValidateMailBox(mailbox))
+            {
+                return false;
+            }
+
+            lock (procLocker)
+            {
+                if (mailboxs.Contains(mailbox))
+                {
+                    mailboxs.Remove(mailbox);
+                }
+            }
+
+            return postOffice.RemoveMailBox(mailbox);
+        }
+
+
+        public VgcApis.Interfaces.Lua.ILuaMailBox ApplyRandomMailBox()
+        {
+            for (int failsafe = 0; failsafe < 10000; failsafe++)
+            {
+                var name = Guid.NewGuid().ToString();
+                var mailbox = CreateMailBox(name);
+                if (mailbox != null)
+                {
+                    return mailbox;
+                }
+            }
+
+            // highly unlikely
+            return null;
+        }
+
+
         public VgcApis.Interfaces.Lua.ILuaMailBox CreateMailBox(string name)
         {
             var mailbox = postOffice.CreateMailBox(name);
@@ -425,15 +506,20 @@ namespace Luna.Models.Apis
 
         void RemoveAllKeyboardHooks()
         {
-            var keys = kbHooks.Keys;
+            var keys = hkContexts.Keys;
             foreach (var key in keys)
             {
-                if (!kbHooks.TryRemove(key, out var kbHook))
+                if (!hkContexts.TryGetValue(key, out var kbHook))
                 {
                     continue;
                 }
-                kbHook.Item1.Dispose();
-                postOffice.RemoveMailBox(kbHook.Item2);
+
+                try
+                {
+                    kbHook.Item2.Dispose();
+                    kbHook.Item1.ExitThread();
+                }
+                catch { }
             }
         }
         #endregion

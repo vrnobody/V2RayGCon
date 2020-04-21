@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Text;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -18,23 +16,22 @@ namespace V2RayGCon.Services
         VgcApis.Interfaces.Services.INotifierService
     {
         static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+        static readonly int UpdateInterval = VgcApis.Models.Consts.Intervals.NotifierTextUpdateIntreval;
 
-        NotifyIcon ni;
         Settings setting;
         Servers servers;
         ShareLinkMgr slinkMgr;
-        Bitmap orgIcon = null;
         Updater updater;
 
-        ToolStripMenuItem pluginRootMenuItem = null;
-        ToolStripMenuItem serversRootMenuItem = null;
-        ContextMenuStrip niMenu = null;
+        readonly ContextMenuStrip niMenu = null;
+        readonly NotifyIcon ni = null;
+        readonly Bitmap orgIcon = null;
 
-        readonly int notifyIconUpdateInterval = VgcApis.Models.Consts.Intervals.NotifierTextUpdateIntreval;
+
         VgcApis.Libs.Tasks.LazyGuy lazyNotifyIconUpdater;
         bool isMenuOpened = false;
 
-        enum qswmCompos
+        enum qsMenuNames
         {
             StopAllServer,
             QuickSwitchMenuRoot,
@@ -42,12 +39,27 @@ namespace V2RayGCon.Services
             SwitchToRandomTlsServer,
         }
 
-        Dictionary<qswmCompos, ToolStripMenuItem> quickSwitchMenuComponents;
+        readonly Dictionary<qsMenuNames, ToolStripMenuItem> qsMenuCompos = null;
+        readonly ToolStripMenuItem miPluginsRoot = null;
+        readonly ToolStripMenuItem miServersRoot = null;
 
         Notifier()
         {
-            lazyNotifyIconUpdater = new VgcApis.Libs.Tasks.LazyGuy(
-                UpdateNotifyIcon, notifyIconUpdateInterval);
+            lazyNotifyIconUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateNotifyIconLater, UpdateInterval);
+
+            // 其他组件有可能在初始化的时候引用菜单
+            qsMenuCompos = CreateQsMenuCompos();
+            miServersRoot = CreateRootMenuItem(I18N.Servers, Properties.Resources.RemoteServer_16x);
+            miPluginsRoot = CreateRootMenuItem(I18N.Plugins, Properties.Resources.Module_16x);
+
+            niMenu = CreateMenu(miServersRoot, miPluginsRoot);
+            ni = CreateNotifyIcon(niMenu);
+            orgIcon = ni.Icon.ToBitmap();
+
+            // ????
+            niMenu.CreateControl();
+            niMenu.Show();
+            niMenu.Close();
         }
 
         public void Run(
@@ -61,19 +73,14 @@ namespace V2RayGCon.Services
             this.slinkMgr = shareLinkMgr;
             this.updater = updater;
 
-            GenQuickSwitchMenuComponents();
-
-            CreateNotifyIcon();
-
+            BindMenuOpenCloseEvents();
             BindServerEvents();
-
             BindMouseClickEvent();
-
-            UpdateNotifyIcon();
+            UpdateNotifyIconLater();
         }
 
         #region public method
-        public void RefreshNotifyIcon() => UpdateNotifyIcon();
+        public void RefreshNotifyIcon() => UpdateNotifyIconLater();
 
         public void ScanQrcode()
         {
@@ -99,17 +106,11 @@ namespace V2RayGCon.Services
             Libs.QRCode.QRCode.ScanQRCode(Success, Fail);
         }
 
+        public void RunInUiThreadIgnoreError(Action updater) =>
+            RunInUiThreadIgnoreErrorThen(updater, null);
 
         public void RunInUiThreadIgnoreErrorThen(Action updater, Action next) =>
             VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(niMenu, updater, next);
-
-#if DEBUG
-        public void InjectDebugMenuItem(ToolStripMenuItem menu)
-        {
-            niMenu.Items.Insert(0, new ToolStripSeparator());
-            niMenu.Items.Insert(0, menu);
-        }
-#endif
 
         /// <summary>
         /// null means delete menu
@@ -117,18 +118,18 @@ namespace V2RayGCon.Services
         /// <param name="pluginMenu"></param>
         public void UpdatePluginMenu(IEnumerable<ToolStripMenuItem> children)
         {
-            RunInUiThreadIgnoreErrorThen(() =>
+            RunInUiThreadIgnoreError(() =>
             {
-                pluginRootMenuItem.DropDownItems.Clear();
+                miPluginsRoot.DropDownItems.Clear();
                 if (children == null || children.Count() < 1)
                 {
-                    pluginRootMenuItem.Visible = false;
+                    miPluginsRoot.Visible = false;
                     return;
                 }
 
-                pluginRootMenuItem.DropDownItems.AddRange(children.ToArray());
-                pluginRootMenuItem.Visible = true;
-            }, null);
+                miPluginsRoot.DropDownItems.AddRange(children.ToArray());
+                miPluginsRoot.Visible = true;
+            });
         }
 
         #endregion
@@ -205,30 +206,30 @@ namespace V2RayGCon.Services
             return item;
         }
 
-        void GenQuickSwitchMenuComponents()
+        Dictionary<qsMenuNames, ToolStripMenuItem> CreateQsMenuCompos()
         {
-            var qm = new Dictionary<qswmCompos, ToolStripMenuItem>();
+            var qm = new Dictionary<qsMenuNames, ToolStripMenuItem>();
 
-            qm[qswmCompos.QuickSwitchMenuRoot] = new ToolStripMenuItem(
+            qm[qsMenuNames.QuickSwitchMenuRoot] = new ToolStripMenuItem(
                 I18N.QuickSwitch, Properties.Resources.SwitchSourceOrTarget_16x);
 
-            qm[qswmCompos.StopAllServer] = new ToolStripMenuItem(
+            qm[qsMenuNames.StopAllServer] = new ToolStripMenuItem(
                     I18N.StopAllServers,
                     Properties.Resources.Stop_16x,
                     (s, a) => servers.StopAllServersThen());
 
-            qm[qswmCompos.SwitchToRandomServer] = new ToolStripMenuItem(
+            qm[qsMenuNames.SwitchToRandomServer] = new ToolStripMenuItem(
                     I18N.SwitchToRandomServer,
                     Properties.Resources.FTPConnection_16x,
                     (s, a) => SwitchToRandomServer());
 
-            qm[qswmCompos.SwitchToRandomTlsServer] =
+            qm[qsMenuNames.SwitchToRandomTlsServer] =
                 new ToolStripMenuItem(
                     I18N.SwitchToRandomTlsserver,
                     Properties.Resources.SFTPConnection_16x,
                     (s, a) => SwitchRandomTlsServer());
 
-            quickSwitchMenuComponents = qm;
+            return qm;
         }
 
         void SwitchRandomTlsServer()
@@ -280,39 +281,39 @@ namespace V2RayGCon.Services
             List<ToolStripMenuItem> miGroupedServers,
             List<ToolStripMenuItem> miTopNthServers)
         {
-            var root = serversRootMenuItem.DropDownItems;
+            var root = miServersRoot.DropDownItems;
             root.Clear();
 
             var count = miGroupedServers.Count;
             if (count < 1)
             {
-                serversRootMenuItem.Visible = false;
+                miServersRoot.Visible = false;
                 return;
             }
 
             List<ToolStripItem> mis = new List<ToolStripItem>();
-            mis.Add(quickSwitchMenuComponents[qswmCompos.StopAllServer]);
+            mis.Add(qsMenuCompos[qsMenuNames.StopAllServer]);
             if (isGrouped)
             {
-                var qs = quickSwitchMenuComponents[qswmCompos.QuickSwitchMenuRoot];
+                var qs = qsMenuCompos[qsMenuNames.QuickSwitchMenuRoot];
                 var items = qs.DropDownItems;
                 items.Clear();
-                items.Add(quickSwitchMenuComponents[qswmCompos.SwitchToRandomServer]);
-                items.Add(quickSwitchMenuComponents[qswmCompos.SwitchToRandomTlsServer]);
+                items.Add(qsMenuCompos[qsMenuNames.SwitchToRandomServer]);
+                items.Add(qsMenuCompos[qsMenuNames.SwitchToRandomTlsServer]);
                 items.Add(new ToolStripSeparator());
                 items.AddRange(miTopNthServers.ToArray());
                 mis.Add(qs);
             }
             else
             {
-                mis.Add(quickSwitchMenuComponents[qswmCompos.SwitchToRandomServer]);
-                mis.Add(quickSwitchMenuComponents[qswmCompos.SwitchToRandomTlsServer]);
+                mis.Add(qsMenuCompos[qsMenuNames.SwitchToRandomServer]);
+                mis.Add(qsMenuCompos[qsMenuNames.SwitchToRandomTlsServer]);
             }
             mis.Add(new ToolStripSeparator());
 
             root.AddRange(mis.ToArray());
             root.AddRange(miGroupedServers.ToArray());
-            serversRootMenuItem.Visible = true;
+            miServersRoot.Visible = true;
         }
 
         void UpdateServersMenuThen(Action next = null)
@@ -334,36 +335,32 @@ namespace V2RayGCon.Services
                 next);
         }
 
-        VgcApis.Libs.Tasks.Bar updateNotifyIconLock = new VgcApis.Libs.Tasks.Bar();
-        void UpdateNotifyIcon()
+        VgcApis.Libs.Tasks.Bar niUpdateLocker = new VgcApis.Libs.Tasks.Bar();
+        void UpdateNotifyIconLater()
         {
-            if (isMenuOpened || !updateNotifyIconLock.Install())
+            if (isMenuOpened || !niUpdateLocker.Install())
             {
                 lazyNotifyIconUpdater.DoItLater();
                 return;
             }
 
             var start = DateTime.Now;
-            Action finished = async () =>
+            Action finished = () => Task.Run(async () =>
             {
-                var relex = notifyIconUpdateInterval - (DateTime.Now - start).TotalMilliseconds;
-                if (relex > 0)
-                {
-                    await Task.Delay(TimeSpan.FromMilliseconds(relex));
-                }
-                updateNotifyIconLock.Remove();
-            };
+                var relex = UpdateInterval - (DateTime.Now - start).TotalMilliseconds;
+                await Task.Delay((int)Math.Max(relex, 0));
+                niUpdateLocker.Remove();
+            }).ConfigureAwait(false);
+
+            var list = servers.GetAllServersOrderByIndex()
+                .Where(s => s.GetCoreCtrl().IsCoreRunning())
+                .ToList();
 
             _ = Task.Run(() =>
             {
-                Action updateServersMenu = () => UpdateServersMenuThen(finished);
-
-                var list = servers.GetAllServersOrderByIndex()
-                    .Where(s => s.GetCoreCtrl().IsCoreRunning())
-                    .ToList();
-
                 UpdateNotifyIconImage(list.Count());
-                UpdateNotifyIconTextThen(list, updateServersMenu);
+                UpdateNotifyIconTextThen(list,
+                    () => UpdateServersMenuThen(finished));
             });
         }
 
@@ -461,7 +458,7 @@ namespace V2RayGCon.Services
         }
 
         void UpdateNotifyIconHandler(object sender, EventArgs args) =>
-            UpdateNotifyIcon();
+            UpdateNotifyIconLater();
 
         string GetterSysProxyInfo()
         {
@@ -535,13 +532,15 @@ namespace V2RayGCon.Services
                 t.GetMethod("UpdateIcon", hidden).Invoke(ni, new object[] { true });
         }
 
-        void CreateNotifyIcon()
+        void BindMenuOpenCloseEvents()
         {
-            var menu = CreateMenu();
-            menu.Opening += (s, a) => isMenuOpened = true;
-            menu.Closed += (s, a) => isMenuOpened = false;
+            niMenu.Opening += (s, a) => isMenuOpened = true;
+            niMenu.Closed += (s, a) => isMenuOpened = false;
+        }
 
-            ni = new NotifyIcon
+        NotifyIcon CreateNotifyIcon(ContextMenuStrip menu)
+        {
+            return new NotifyIcon
             {
                 Text = I18N.Description,
                 Icon = VgcApis.Misc.UI.GetAppIcon(),
@@ -549,12 +548,11 @@ namespace V2RayGCon.Services
                 ContextMenuStrip = menu,
                 Visible = true
             };
-
-            niMenu = menu;
-            orgIcon = ni.Icon.ToBitmap();
         }
 
-        ContextMenuStrip CreateMenu()
+        ContextMenuStrip CreateMenu(
+            ToolStripMenuItem serversRootMenuItem,
+            ToolStripMenuItem pluginRootMenuItem)
         {
             var menu = new ContextMenuStrip();
 
@@ -565,9 +563,6 @@ namespace V2RayGCon.Services
                     (int)(menu.ImageScalingSize.Width * factor),
                     (int)(menu.ImageScalingSize.Height * factor));
             }
-
-            pluginRootMenuItem = CreatePluginRootMenuItem();
-            serversRootMenuItem = CreateServersRootMenuItem();
 
             menu.Items.AddRange(new ToolStripMenuItem[] {
                 new ToolStripMenuItem(
@@ -640,20 +635,9 @@ namespace V2RayGCon.Services
             return menu;
         }
 
-        private ToolStripMenuItem CreateServersRootMenuItem()
+        private ToolStripMenuItem CreateRootMenuItem(string title, Bitmap icon)
         {
-            var mi = new ToolStripMenuItem(
-                I18N.Servers,
-                Properties.Resources.RemoteServer_16x);
-            mi.Visible = false;
-            return mi;
-        }
-
-        private ToolStripMenuItem CreatePluginRootMenuItem()
-        {
-            var mi = new ToolStripMenuItem(
-                I18N.Plugins,
-                Properties.Resources.Module_16x);
+            var mi = new ToolStripMenuItem(title, icon);
             mi.Visible = false;
             return mi;
         }

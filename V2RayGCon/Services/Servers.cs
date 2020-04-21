@@ -153,7 +153,6 @@ namespace V2RayGCon.Services
             server.OnCoreClosing += InvokeEventOnCoreClosingIgnoreError;
             server.OnCoreStart += OnTrackCoreStartHandler;
             server.OnCoreStop += OnTrackCoreStopHandler;
-
             server.OnPropertyChanged += InvokeEventOnServerPropertyChange;
         }
 

@@ -172,6 +172,9 @@
     <value>Try to parse hotkey fail!
 Please check hotkey settings in ProxySetter plug-in.</value>
   </data>
+  <data name="RegHotKeySuccess" xml:space="preserve">
+    <value>Register hot key success!</value>
+  </data>
   <data name="RegistHotkeyFail" xml:space="preserve">
     <value>Try to regist global hotkey fail!
 Please make sure hotkey is not taken by other application.</value>
@@ -191,6 +194,9 @@ Please check port setting.</value>
   </data>
   <data name="SystemProxySettingUpdated" xml:space="preserve">
     <value>System proxy setting updated.</value>
+  </data>
+  <data name="UnregisterHotKey" xml:space="preserve">
+    <value>Unregister hot key {0}</value>
   </data>
   <data name="UsageReadme" xml:space="preserve">
     <value>// this is a comment

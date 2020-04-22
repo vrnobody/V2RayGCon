@@ -94,6 +94,14 @@ namespace ProxySetter.Controllers.VGCPluginComponents
             var bs = GetterSettings();
             oldSetting = SerializeObject(bs);
             setting.SaveBasicSetting(bs);
+            if (bs.isUseHotkey)
+            {
+                servTracker.UpdateHotkey();
+            }
+            else
+            {
+                servTracker.ClearHotKey();
+            }
             return true;
         }
 

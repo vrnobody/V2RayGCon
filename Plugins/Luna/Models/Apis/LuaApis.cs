@@ -14,11 +14,25 @@ namespace Luna.Models.Apis
             VgcApis.Interfaces.Services.IApiService api)
         {
             this.settings = settings;
+
             this.redirectLogWorker = settings.SendLog;
             vgcApi = api;
         }
 
         #region public methods
+        public string RegisterHotKey(Action hotKeyHandler,
+              string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+        {
+            var vgcNotifier = vgcApi.GetNotifierService();
+            return vgcNotifier.RegisterHotKey(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
+        }
+
+        public bool UnregisterHotKey(string hotKeyHandle)
+        {
+            var vgcNotifier = vgcApi.GetNotifierService();
+            return vgcNotifier.UnregisterHotKey(hotKeyHandle);
+        }
+
         public override void Prepare()
         {
             var misc = new Components.Misc(settings, vgcApi);

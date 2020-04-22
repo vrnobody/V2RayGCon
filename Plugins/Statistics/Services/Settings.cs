@@ -58,7 +58,8 @@ namespace Statistics.Services
 
             userSettins = LoadUserSetting();
             bookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
-                SaveUserSetting, VgcApis.Models.Consts.Intervals.LazySaveStatisticsDatadelay);
+                SaveUserSetting,
+                VgcApis.Models.Consts.Intervals.LazySaveStatisticsDatadelay);
             StartBgStatsDataUpdateTimer();
             vgcServers.OnCoreClosing += SaveStatDataBeforeCoreClosed;
         }
@@ -74,10 +75,10 @@ namespace Statistics.Services
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Statistics: save data");
                 UpdateHistoryStatsDataWorker();
-                bookKeeper.DoItNow();
+                bookKeeper?.DoItNow();
             }
 
-            bookKeeper.Quit();
+            bookKeeper?.Dispose();
             VgcApis.Libs.Sys.FileLogger.Info("Statistics: done!");
         }
         #endregion
@@ -181,7 +182,7 @@ namespace Statistics.Services
                     MergeNewDataIntoHistoryData(historyDatas, d, uid);
                 }
 
-                bookKeeper.DoItLater();
+                bookKeeper?.Throttle();
                 isUpdating = false;
             }
         }

@@ -10,12 +10,12 @@ namespace VgcApis.Libs.Sys
         long updateTimestamp = DateTime.Now.Ticks;
         Queue<string> logCache = new Queue<string>();
         const int maxLogLineNumber = Models.Consts.Libs.MaxCacheLoggerLineNumber;
-        Tasks.LazyGuy logChopper;
+        Tasks.LazyGuy lazyLogChopper;
         object logWriteLocker = new object();
 
         public QueueLogger()
         {
-            logChopper = new Tasks.LazyGuy(
+            lazyLogChopper = new Tasks.LazyGuy(
                 TrimLogCache,
                 Models.Consts.Libs.TrimdownLogCacheDelay);
         }
@@ -28,7 +28,7 @@ namespace VgcApis.Libs.Sys
                 logCache = new Queue<string>();
                 listCacheUpdateTimestamp = -1;
                 stringCacheUpdateTimestamp = -1;
-                updateTimestamp = DateTime.Now.Ticks; 
+                updateTimestamp = DateTime.Now.Ticks;
             }
         }
 
@@ -38,15 +38,15 @@ namespace VgcApis.Libs.Sys
         {
             lock (logWriteLocker)
             {
-                logCache.Enqueue(message??@"");
+                logCache.Enqueue(message ?? @"");
                 updateTimestamp = DateTime.Now.Ticks;
                 if (logCache.Count() > 2 * maxLogLineNumber)
                 {
-                    logChopper.DoItNow();
+                    lazyLogChopper?.DoItNow();
                 }
                 else
                 {
-                    logChopper.DoItLater();
+                    lazyLogChopper?.Deadline();
                 }
             }
         }
@@ -115,7 +115,7 @@ namespace VgcApis.Libs.Sys
         #region protected methods
         protected override void Cleanup()
         {
-            logChopper.Quit();
+            lazyLogChopper?.Dispose();
             lock (logWriteLocker) { }
         }
         #endregion

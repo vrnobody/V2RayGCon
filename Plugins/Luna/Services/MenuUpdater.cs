@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Luna.Services
@@ -12,7 +11,6 @@ namespace Luna.Services
         ToolStripMenuItem miRoot, miShowWindow;
         VgcApis.Interfaces.Services.INotifierService vgcNotifierService;
         VgcApis.Libs.Tasks.LazyGuy lazyMenuUpdater;
-        AutoResetEvent menuUpdaterLock = new AutoResetEvent(true);
 
         public MenuUpdater(VgcApis.Interfaces.Services.INotifierService vgcNotifierService)
         {
@@ -29,7 +27,7 @@ namespace Luna.Services
             this.miRoot = miRoot;
             this.miShowWindow = miShowWindow;
 
-            lazyMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateMenuLater, 1000);
+            lazyMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateMenuWorker, 1000);
 
             BindEvents();
 
@@ -41,15 +39,8 @@ namespace Luna.Services
         #endregion
 
         #region private methods
-
-        void UpdateMenuLater()
+        void UpdateMenuWorker()
         {
-            if (!menuUpdaterLock.WaitOne(0))
-            {
-                lazyMenuUpdater?.DoItLater();
-                return;
-            }
-
             vgcNotifierService.RunInUiThreadIgnoreError(() =>
             {
                 var mis = GenSubMenuItems();
@@ -62,9 +53,9 @@ namespace Luna.Services
                     root.AddRange(mis.ToArray());
                 }
             });
-
-            menuUpdaterLock.Set();
         }
+
+        void UpdateMenuLater() => lazyMenuUpdater?.Postpone();
 
         List<ToolStripMenuItem> GenSubMenuItems()
         {

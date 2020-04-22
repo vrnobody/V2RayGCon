@@ -19,7 +19,7 @@ namespace Luna.Views.WinForms
         private string filterKeyword = string.Empty;
 
         public List<List<string>> results = new List<List<string>>();
-        VgcApis.Libs.Tasks.LazyGuy uiUpdater;
+        VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater;
 
         public FormDataGrid(string title, DataTable dataSource, int defColumn)
         {
@@ -34,8 +34,8 @@ namespace Luna.Views.WinForms
         private void FormDataGrid_Load(object sender, EventArgs e)
         {
             InitControls();
-            uiUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiLater, UPDATE_INTERVAL);
-            UpdateUiLater();
+            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiWorker, UPDATE_INTERVAL);
+            lazyUiUpdater.Throttle();
         }
 
         #region private methods
@@ -178,18 +178,11 @@ namespace Luna.Views.WinForms
 
         void Cleanup()
         {
-            uiUpdater?.Quit();
+            lazyUiUpdater?.Dispose();
         }
 
-        VgcApis.Libs.Tasks.Bar updating = new VgcApis.Libs.Tasks.Bar();
-        void UpdateUiLater()
+        void UpdateUiWorker()
         {
-            if (!updating.Install())
-            {
-                uiUpdater?.DoItLater();
-                return;
-            }
-
             VgcApis.Misc.UI.RunInUiThreadIgnoreError(dgvData, () =>
             {
                 var ds = GetFilteredDataTable();
@@ -197,7 +190,6 @@ namespace Luna.Views.WinForms
                 dgvData.DataSource = ds;
             });
 
-            updating.Remove();
         }
 
         DataTable GetFilteredDataTable()
@@ -313,13 +305,13 @@ namespace Luna.Views.WinForms
         private void tboxFilter_TextChanged(object sender, EventArgs e)
         {
             filterKeyword = tboxFilter.Text;
-            uiUpdater?.DoItLater();
+            lazyUiUpdater?.Postpone();
         }
 
         private void cboxColumnIdx_SelectedIndexChanged(object sender, EventArgs e)
         {
             tboxFilter.Text = @"";
-            UpdateUiLater();
+            lazyUiUpdater?.Throttle();
         }
 
         private void autosizeByHeaderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -354,7 +346,7 @@ namespace Luna.Views.WinForms
 
             this.dataSource = CsvToDataTable(text);
             tboxFilter.Text = @"";
-            UpdateUiLater();
+            lazyUiUpdater.Throttle();
         }
 
         private void exportAllToCsvToolStripMenuItem_Click(object sender, EventArgs e)

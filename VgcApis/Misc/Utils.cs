@@ -22,6 +22,35 @@ namespace VgcApis.Misc
     public static class Utils
     {
 
+        #region system
+        public static bool TryParseKeyMesssage(
+            string keyName, bool hasAlt, bool hasCtrl, bool hasShift,
+             out uint modifier,
+             out uint keyCode)
+        {
+            keyCode = 0;
+            modifier = 0;
+
+            if (!(hasCtrl || hasShift || hasAlt)
+               || !Enum.TryParse(keyName, out Keys key))
+            {
+                return false;
+            }
+
+            keyCode = (uint)key;
+
+            uint ctrl = hasCtrl ? (uint)Models.Datas.Enums.ModifierKeys.Control : 0;
+            uint alt = hasAlt ? (uint)Models.Datas.Enums.ModifierKeys.Alt : 0;
+            uint shift = hasShift ? (uint)Models.Datas.Enums.ModifierKeys.Shift : 0;
+
+            modifier = ctrl | alt | shift;
+
+
+            return true;
+        }
+
+        #endregion
+
         #region List
         static Random rngForShuffle = new Random();
 
@@ -379,8 +408,13 @@ namespace VgcApis.Misc
             done.WaitOne();
         }
 
-        public static Task RunInBackground(Action worker) =>
-            Task.Factory.StartNew(worker, TaskCreationOptions.LongRunning);
+        public static Task RunInBackground(Action worker)
+        {
+            var t = new Task(worker, TaskCreationOptions.LongRunning);
+            t.ConfigureAwait(false);
+            t.Start();
+            return t;
+        }
         #endregion
 
         #region Json

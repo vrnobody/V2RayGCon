@@ -278,7 +278,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             var panel = GetFlyPanel();
             panel.RemoveAllServersConrol();
-            panel.RefreshFlyPanel();
+            panel.RefreshFlyPanelLater();
         }
 
         void SetServerItemsIndex(double index)

@@ -224,6 +224,15 @@ namespace ProxySetter.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Register hot key success! 的本地化字符串。
+        /// </summary>
+        internal static string RegHotKeySuccess {
+            get {
+                return ResourceManager.GetString("RegHotKeySuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Try to regist global hotkey fail!
         ///Please make sure hotkey is not taken by other application. 的本地化字符串。
         /// </summary>
@@ -276,6 +285,15 @@ namespace ProxySetter.Resources.Langs {
         internal static string SystemProxySettingUpdated {
             get {
                 return ResourceManager.GetString("SystemProxySettingUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unregister hot key {0} 的本地化字符串。
+        /// </summary>
+        internal static string UnregisterHotKey {
+            get {
+                return ResourceManager.GetString("UnregisterHotKey", resourceCulture);
             }
         }
         

@@ -28,15 +28,15 @@ namespace V2RayGCon.Views.UserControls
             servers = Services.Servers.Instance;
             settings = Services.Settings.Instance;
 
-            lazyCounter = new VgcApis.Libs.Tasks.LazyGuy(UpdateServerTotalNow, 1000);
+            lazyCounter = new VgcApis.Libs.Tasks.LazyGuy(UpdateServerTotalWorker, 500);
 
             // tab page is lazy, do not call this in Load().
             InitControls(subscriptItem);
 
             BindEvent();
-            lazyCounter.DoItLater();
 
             Disposed += (s, a) => Cleanup();
+            UpdateServerTotalLater();
         }
 
         #region form thing
@@ -174,7 +174,7 @@ namespace V2RayGCon.Views.UserControls
         void OnCoreStateChangedHandler(object sender, EventArgs args) =>
             UpdateServerTotalLater();
 
-        void UpdateServerTotalLater() => lazyCounter.DoItLater();
+        void UpdateServerTotalLater() => lazyCounter.Deadline();
 
         void BindEvent()
         {
@@ -188,27 +188,24 @@ namespace V2RayGCon.Views.UserControls
             servers.OnServerPropertyChange -= OnCoreStateChangedHandler;
         }
 
-        void UpdateServerTotalNow()
+        void UpdateServerTotalWorker()
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
-                lbTotal,
-                () =>
-                {
-                    var alias = tboxAlias.Text;
-                    var coreNum = servers.GetAllServersOrderByIndex()
-                        .Select(s => s.GetCoreStates())
-                        .Where(cfg => cfg.GetMark() == alias)
-                        .Count();
-                    lbTotal.Text = $"{I18N.TotalNum}{coreNum}";
-                    lbTotal.ForeColor = coreNum == 0 ? Color.Red : Color.DarkGray;
-                });
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(lbTotal, () =>
+            {
+                var alias = tboxAlias.Text;
+                var coreNum = servers.GetAllServersOrderByIndex()
+                .Select(s => s.GetCoreStates())
+                .Where(cfg => cfg.GetMark() == alias)
+                .Count();
+                lbTotal.Text = $"{I18N.TotalNum}{coreNum}";
+                lbTotal.ForeColor = coreNum == 0 ? Color.Red : Color.DarkGray;
+            });
         }
 
         void Cleanup()
         {
             ReleaseEvent();
-            lazyCounter.ForgetIt();
-            lazyCounter.Quit();
+            lazyCounter.Dispose();
         }
 
         private void UrlListItem_MouseDown(object sender, MouseEventArgs e) =>

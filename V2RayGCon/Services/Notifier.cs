@@ -15,22 +15,22 @@ namespace V2RayGCon.Services
         BaseClasses.SingletonService<Notifier>,
         VgcApis.Interfaces.Services.INotifierService
     {
-        static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
-        static readonly int UpdateInterval = VgcApis.Models.Consts.Intervals.NotifierTextUpdateIntreval;
-
         Settings setting;
         Servers servers;
         ShareLinkMgr slinkMgr;
         Updater updater;
 
-        readonly ContextMenuStrip niMenu = null;
-        readonly NotifyIcon ni = null;
-        readonly Bitmap orgIcon = null;
+        public readonly NotifyIcon notifyIcon;
 
+        static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+        static readonly int UpdateInterval = VgcApis.Models.Consts.Intervals.NotifierTextUpdateIntreval;
 
-        VgcApis.Libs.Tasks.LazyGuy lazyNotifyIconUpdater;
+        readonly public ContextMenuStrip niMenu;
+        readonly VgcApis.WinForms.HotKeyWindow hkWin;
+        readonly Bitmap orgIcon;
         bool isMenuOpened = false;
 
+        VgcApis.Libs.Tasks.LazyGuy lazyNotifyIconUpdater;
         enum qsMenuNames
         {
             StopAllServer,
@@ -45,7 +45,7 @@ namespace V2RayGCon.Services
 
         Notifier()
         {
-            lazyNotifyIconUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateNotifyIconLater, UpdateInterval);
+            lazyNotifyIconUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateNotifyIconWorker, UpdateInterval);
 
             // 其他组件有可能在初始化的时候引用菜单
             qsMenuCompos = CreateQsMenuCompos();
@@ -53,13 +53,15 @@ namespace V2RayGCon.Services
             miPluginsRoot = CreateRootMenuItem(I18N.Plugins, Properties.Resources.Module_16x);
 
             niMenu = CreateMenu(miServersRoot, miPluginsRoot);
-            ni = CreateNotifyIcon(niMenu);
-            orgIcon = ni.Icon.ToBitmap();
+            notifyIcon = CreateNotifyIcon(niMenu);
+            orgIcon = notifyIcon.Icon.ToBitmap();
 
             // ????
             niMenu.CreateControl();
             niMenu.Show();
             niMenu.Close();
+
+            hkWin = new VgcApis.WinForms.HotKeyWindow();
         }
 
         public void Run(
@@ -73,13 +75,35 @@ namespace V2RayGCon.Services
             this.slinkMgr = shareLinkMgr;
             this.updater = updater;
 
-            BindMenuOpenCloseEvents();
+            BindMenuEvents();
             BindServerEvents();
-            BindMouseClickEvent();
             UpdateNotifyIconLater();
         }
 
         #region public method
+        public string RegisterHotKey(
+            Action hotKeyHandler,
+            string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+        {
+            var handle = "";
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(niMenu, () =>
+            {
+                handle = hkWin.RegisterHotKey(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
+            });
+            return handle;
+        }
+
+        public bool UnregisterHotKey(string hotKeyHandle)
+        {
+            var r = false;
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(niMenu, () =>
+            {
+                r = hkWin.UnregisterHotKey(hotKeyHandle);
+            });
+            return r;
+        }
+
+
         public void RefreshNotifyIcon() => UpdateNotifyIconLater();
 
         public void ScanQrcode()
@@ -133,20 +157,33 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
-        private void BindMouseClickEvent()
+
+
+        private void BindMenuEvents()
         {
-            ni.MouseClick += (s, a) =>
+            niMenu.Opening += (s, a) => isMenuOpened = true;
+            niMenu.Closed += (s, a) => isMenuOpened = false;
+
+            notifyIcon.MouseClick += (s, a) =>
             {
-                if (a.Button != MouseButtons.Left)
+                switch (a.Button)
                 {
-                    return;
+                    case MouseButtons.Left:
+                        // https://stackoverflow.com/questions/2208690/invoke-notifyicons-context-menu
+                        // MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
+                        // mi.Invoke(ni, null);
+                        Views.WinForms.FormMain.GetForm()?.Show();
+                        break;
+
+                        /*
+                    case MouseButtons.Right:
+                        RunInUiThreadIgnoreError(() =>
+                        {
+                            niMenu.Show(a.X - niMenu.Width, a.Y - niMenu.Height);
+                        });
+                        break;
+                        */
                 }
-
-                // https://stackoverflow.com/questions/2208690/invoke-notifyicons-context-menu
-                // MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
-                // mi.Invoke(ni, null);
-
-                Views.WinForms.FormMain.GetForm()?.Show();
             };
         }
 
@@ -335,32 +372,32 @@ namespace V2RayGCon.Services
             next?.Invoke();
         }
 
-        VgcApis.Libs.Tasks.Bar niUpdateLocker = new VgcApis.Libs.Tasks.Bar();
-        void UpdateNotifyIconLater()
+        void UpdateNotifyIconLater() => lazyNotifyIconUpdater?.Throttle();
+
+        void UpdateNotifyIconWorker(Action done)
         {
-            if (isMenuOpened || !niUpdateLocker.Install())
+            if (isMenuOpened)
             {
-                lazyNotifyIconUpdater.DoItLater();
+                lazyNotifyIconUpdater?.Postpone();
+                done();
                 return;
             }
 
-            Task.Run(() =>
+            var start = DateTime.Now.Millisecond;
+
+            Action finished = () => Task.Run(async () =>
             {
-                var start = DateTime.Now.Millisecond;
-                Action finished = () => Task.Run(async () =>
-                {
-                    var relex = UpdateInterval - (DateTime.Now.Millisecond - start);
-                    await Task.Delay(Math.Max(0, relex));
-                    niUpdateLocker.Remove();
-                });
+                var relex = UpdateInterval - (DateTime.Now.Millisecond - start);
+                await Task.Delay(Math.Max(0, relex));
+                done();
+            });
 
-                var list = servers.GetAllServersOrderByIndex()
-                    .Where(s => s.GetCoreCtrl().IsCoreRunning())
-                    .ToList();
+            var list = servers.GetAllServersOrderByIndex()
+                .Where(s => s.GetCoreCtrl().IsCoreRunning())
+                .ToList();
 
-                UpdateNotifyIconImage(list.Count());
-                UpdateNotifyIconTextThen(list, () => UpdateServersMenuThen(finished));
-            }).ConfigureAwait(false);
+            UpdateNotifyIconImage(list.Count());
+            UpdateNotifyIconTextThen(list, () => UpdateServersMenuThen(finished));
         }
 
         private void UpdateNotifyIconImage(int activeServNum)
@@ -377,8 +414,8 @@ namespace V2RayGCon.Services
                 DrawIsRunningCornerMark(g, size, activeServNum);
             }
 
-            ni.Icon?.Dispose();
-            ni.Icon = Icon.FromHandle(icon.GetHicon());
+            notifyIcon.Icon?.Dispose();
+            notifyIcon.Icon = Icon.FromHandle(icon.GetHicon());
         }
 
         void DrawProxyModeCornerCircle(
@@ -474,7 +511,7 @@ namespace V2RayGCon.Services
         }
 
         void UpdateNotifyIconTextThen(
-            List<VgcApis.Interfaces.ICoreServCtrl> list,
+            List<ICoreServCtrl> list,
             Action finished)
         {
             var count = list.Count;
@@ -482,23 +519,33 @@ namespace V2RayGCon.Services
 
             void done()
             {
-                var sysProxyInfo = GetterSysProxyInfo();
-                if (!string.IsNullOrEmpty(sysProxyInfo))
+                try
                 {
-                    int len = VgcApis.Models.Consts.AutoEllipsis.NotifierSysProxyInfoMaxLength;
-                    texts.Add(I18N.CurSysProxy + VgcApis.Misc.Utils.AutoEllipsis(sysProxyInfo, len));
+                    var sysProxyInfo = GetterSysProxyInfo();
+                    if (!string.IsNullOrEmpty(sysProxyInfo))
+                    {
+                        int len = VgcApis.Models.Consts.AutoEllipsis.NotifierSysProxyInfoMaxLength;
+                        texts.Add(I18N.CurSysProxy + VgcApis.Misc.Utils.AutoEllipsis(sysProxyInfo, len));
+                    }
+                    SetNotifyText(string.Join(Environment.NewLine, texts));
                 }
-                SetNotifyText(string.Join(Environment.NewLine, texts));
+                catch { }
                 finished?.Invoke();
             }
 
             void worker(int index, Action next)
             {
-                list[index].GetConfiger().GetterInfoForNotifyIconf(s =>
+                try
                 {
-                    texts.Add(s);
-                    next?.Invoke();
-                });
+                    list[index].GetConfiger().GetterInfoForNotifyIconf(s =>
+                    {
+                        texts.Add(s);
+                        next?.Invoke();
+                    });
+                    return;
+                }
+                catch { }
+                next?.Invoke();
             }
 
             if (count <= 0 || count > 2)
@@ -518,7 +565,7 @@ namespace V2RayGCon.Services
                 I18N.Description :
                 VgcApis.Misc.Utils.AutoEllipsis(rawText, VgcApis.Models.Consts.AutoEllipsis.NotifierTextMaxLength);
 
-            if (ni.Text == text)
+            if (notifyIcon.Text == text)
             {
                 return;
             }
@@ -526,15 +573,9 @@ namespace V2RayGCon.Services
             // https://stackoverflow.com/questions/579665/how-can-i-show-a-systray-tooltip-longer-than-63-chars
             Type t = typeof(NotifyIcon);
             BindingFlags hidden = BindingFlags.NonPublic | BindingFlags.Instance;
-            t.GetField("text", hidden).SetValue(ni, text);
-            if ((bool)t.GetField("added", hidden).GetValue(ni))
-                t.GetMethod("UpdateIcon", hidden).Invoke(ni, new object[] { true });
-        }
-
-        void BindMenuOpenCloseEvents()
-        {
-            niMenu.Opening += (s, a) => isMenuOpened = true;
-            niMenu.Closed += (s, a) => isMenuOpened = false;
+            t.GetField("text", hidden).SetValue(notifyIcon, text);
+            if ((bool)t.GetField("added", hidden).GetValue(notifyIcon))
+                t.GetMethod("UpdateIcon", hidden).Invoke(notifyIcon, new object[] { true });
         }
 
         NotifyIcon CreateNotifyIcon(ContextMenuStrip menu)
@@ -550,8 +591,8 @@ namespace V2RayGCon.Services
         }
 
         ContextMenuStrip CreateMenu(
-            ToolStripMenuItem serversRootMenuItem,
-            ToolStripMenuItem pluginRootMenuItem)
+           ToolStripMenuItem serversRootMenuItem,
+           ToolStripMenuItem pluginRootMenuItem)
         {
             var menu = new ContextMenuStrip();
 
@@ -680,12 +721,9 @@ namespace V2RayGCon.Services
         #region protected methods
         protected override void Cleanup()
         {
-            ni.Visible = false;
-
+            hkWin?.Dispose();
             ReleaseServerEvents();
-            lazyNotifyIconUpdater.Quit();
-
-            ni.Visible = false;
+            lazyNotifyIconUpdater?.Dispose();
         }
         #endregion
     }

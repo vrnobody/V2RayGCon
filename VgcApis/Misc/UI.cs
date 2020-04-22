@@ -15,13 +15,6 @@ namespace VgcApis.Misc
 {
     public static class UI
     {
-        static readonly int mainThreadId;
-
-        static UI()
-        {
-            mainThreadId = Thread.CurrentThread.ManagedThreadId;
-        }
-
         #region Controls
         public static void ResetComboBoxDropdownMenuWidth(ComboBox cbox)
         {
@@ -142,26 +135,12 @@ namespace VgcApis.Misc
         #endregion
 
         #region update ui
-        public static void CloseFormIgnoreError(Form form)
-        {
-            try
-            {
-                form?.Invoke((MethodInvoker)delegate
-                {
-                    try
-                    {
-                        form?.Close();
-                    }
-                    catch { }
-                });
-            }
-            catch { }
-        }
+        public static void CloseFormIgnoreError(Form form) =>
+            RunInUiThreadIgnoreError(form, () => form?.Close());
 
         static bool IsInvokeRequired()
         {
-            var id = Thread.CurrentThread.ManagedThreadId;
-            return id != mainThreadId;
+            return Thread.CurrentThread.Name != Models.Consts.Libs.UiThreadName;
         }
 
         public static void RunInUiThreadIgnoreError(Control control, Action updater)
@@ -179,7 +158,7 @@ namespace VgcApis.Misc
             {
                 if (control != null && !control.IsDisposed)
                 {
-                    if (!IsInvokeRequired())
+                    if (!control.InvokeRequired)
                     {
                         updateIgnoreError();
                     }

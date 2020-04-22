@@ -12,7 +12,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         Views.WinForms.FormConfiger formConfiger;
         ToolStripMenuItem miReplaceServer, miLoadServer;
 
-        VgcApis.Libs.Tasks.LazyGuy menuUpdater;
+        VgcApis.Libs.Tasks.LazyGuy lazyServerMenuItemsUpdater;
 
         public MenuUpdater(
             Views.WinForms.FormConfiger formConfiger,
@@ -25,47 +25,45 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             this.miReplaceServer = miReplaceServer;
             this.miLoadServer = miLoadServer;
 
-            menuUpdater = new VgcApis.Libs.Tasks.LazyGuy(
-               () =>
-               {
-                   try
-                   {
-                       VgcApis.Misc.Utils.RunInBackground(
-                           UpdateServerMenus);
-                   }
-                   catch
-                   {
-                       // Do not hurt me.
-                   }
-               },
-               VgcApis.Models.Consts.Intervals.FormConfigerMenuUpdateDelay);
+            lazyServerMenuItemsUpdater = new VgcApis.Libs.Tasks.LazyGuy(
+                ServerMenuItemsUpdateWorker,
+                VgcApis.Models.Consts.Intervals.FormConfigerMenuUpdateDelay);
         }
 
         #region properties
         #endregion
 
         #region private method
-        void UpdateServerMenus()
+        void ServerMenuItemsUpdateWorker()
         {
-            var serverList = servers.GetAllServersOrderByIndex();
-
             var loadServMiList = new List<ToolStripMenuItem>();
             var replaceServMiList = new List<ToolStripMenuItem>();
 
-            for (int i = 0; i < serverList.Count; i++)
+            try
             {
-                var coreServ = serverList[i];
-                var coreState = coreServ.GetCoreStates();
-
-                var name = string.Format(
-                    "{0}.{1}",
-                    coreState.GetIndex(),
-                    coreState.GetLongName());
+                var serverList = servers.GetAllServersOrderByIndex();
 
 
-                var org = coreServ.GetConfiger().GetConfig();
-                loadServMiList.Add(GenMenuItemLoad(name, org));
-                replaceServMiList.Add(GenMenuItemReplace(name, org));
+
+                for (int i = 0; i < serverList.Count; i++)
+                {
+                    var coreServ = serverList[i];
+                    var coreState = coreServ.GetCoreStates();
+
+                    var name = string.Format(
+                        "{0}.{1}",
+                        coreState.GetIndex(),
+                        coreState.GetLongName());
+
+
+                    var org = coreServ.GetConfiger().GetConfig();
+                    loadServMiList.Add(GenMenuItemLoad(name, org));
+                    replaceServMiList.Add(GenMenuItemReplace(name, org));
+                }
+            }
+            catch
+            {
+                return;
             }
 
             VgcApis.Misc.UI.RunInUiThreadIgnoreError(
@@ -141,12 +139,11 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         #region public method
         public void Cleanup()
         {
-            menuUpdater?.ForgetIt();
-            menuUpdater?.Quit();
+            lazyServerMenuItemsUpdater?.Dispose();
         }
 
         public void UpdateMenusLater() =>
-            menuUpdater?.DoItLater();
+            lazyServerMenuItemsUpdater?.Deadline();
 
         public override void Update(JObject config) { }
         #endregion

@@ -24,7 +24,7 @@ namespace Luna.Views.UserControls
         private void LuaUI_Load(object sender, EventArgs e)
         {
             luaCoreCtrl.OnStateChange += OnLuaCoreStateChangeHandler;
-            lazyUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiLater, 300);
+            lazyUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiWorker, 300);
 
             UpdateUiLater();
         }
@@ -40,7 +40,7 @@ namespace Luna.Views.UserControls
         public void Cleanup()
         {
             luaCoreCtrl.OnStateChange -= OnLuaCoreStateChangeHandler;
-            lazyUpdater?.Quit();
+            lazyUpdater?.Dispose();
         }
 
         #endregion
@@ -48,33 +48,20 @@ namespace Luna.Views.UserControls
         #region private methods
         void OnLuaCoreStateChangeHandler(object sender, EventArgs args)
         {
-            lazyUpdater.DoItLater();
+            lazyUpdater.Deadline();
         }
 
-        readonly object uiUpdateLocker = new object();
-        bool isUpdating = false;
-        void UpdateUiLater()
+        void UpdateUiWorker()
         {
-            lock (uiUpdateLocker)
-            {
-                if (isUpdating)
-                {
-                    lazyUpdater?.DoItLater();
-                    return;
-                }
-                isUpdating = true;
-            }
-
             VgcApis.Misc.UI.RunInUiThreadIgnoreError(lbName, () =>
             {
                 UpdateNameLabel();
                 UpdateOptionsLabel();
                 UpdateRunningState();
             });
-
-            isUpdating = false;
         }
 
+        void UpdateUiLater() => lazyUpdater?.Deadline();
 
         void UpdateNameLabel()
         {

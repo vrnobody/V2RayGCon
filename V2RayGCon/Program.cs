@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -29,6 +30,8 @@ namespace V2RayGCon
         [STAThread]
         static void Main()
         {
+            Thread.CurrentThread.Name = VgcApis.Models.Consts.Libs.UiThreadName;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -36,9 +39,11 @@ namespace V2RayGCon
             if (mutex.WaitOne(TimeSpan.Zero, true))
             {
                 var app = new Services.Launcher();
-                if (app.Run())
+                if (app.Warmup())
                 {
+                    app.Run();
                     Application.Run();
+                    Services.Notifier.Instance.notifyIcon.Visible = false;
                 }
                 mutex.ReleaseMutex();
             }

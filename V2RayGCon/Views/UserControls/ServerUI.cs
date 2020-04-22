@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -20,8 +20,7 @@ namespace V2RayGCon.Views.UserControls
 
         string keyword = null;
 
-        VgcApis.Libs.Tasks.Bar uiUpdateLock = new VgcApis.Libs.Tasks.Bar();
-        VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater;
+        VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater, lazyHighlighter;
 
         static readonly Bitmap[] btnBgCaches = new Bitmap[3];
 
@@ -51,7 +50,8 @@ namespace V2RayGCon.Views.UserControls
             rlbSpeedtest.Text = @"";
             rlbSpeedtest.Visible = false;
 
-            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiLater, 100);
+            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 150);
+            lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(HighLightServerTitleWithKeywords, 500);
 
             InitButtonBackgroundImage();
             BindCoreCtrlEvents();
@@ -90,32 +90,37 @@ namespace V2RayGCon.Views.UserControls
         #region private method
         void ShowModifyConfigsWinForm() => WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);
 
-        private void HighLightServerTitleWithKeywords()
+        void HighLightServerTitleWithKeywords()
         {
-            var box = rtboxServerTitle;
-            var title = box.Text.ToLower();
-
-            if (string.IsNullOrEmpty(keyword)
-                || !VgcApis.Misc.Utils.PartialMatchCi(title, keyword))
-            {
-                return;
-            }
-
-            int idxTitle = 0, idxKeyword = 0;
-            while (idxTitle < title.Length && idxKeyword < keyword.Length)
-            {
-                if (title[idxTitle].CompareTo(keyword[idxKeyword]) == 0)
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(rtboxServerTitle,
+                () =>
                 {
-                    box.SelectionStart = idxTitle;
-                    box.SelectionLength = 1;
-                    box.SelectionBackColor = Color.Yellow;
-                    idxKeyword++;
-                }
-                idxTitle++;
-            }
-            box.SelectionStart = 0;
-            box.SelectionLength = 0;
-            box.DeselectAll();
+
+                    var box = rtboxServerTitle;
+                    var title = box.Text.ToLower();
+
+                    if (string.IsNullOrEmpty(keyword)
+                        || !VgcApis.Misc.Utils.PartialMatchCi(title, keyword))
+                    {
+                        return;
+                    }
+
+                    int idxTitle = 0, idxKeyword = 0;
+                    while (idxTitle < title.Length && idxKeyword < keyword.Length)
+                    {
+                        if (title[idxTitle].CompareTo(keyword[idxKeyword]) == 0)
+                        {
+                            box.SelectionStart = idxTitle;
+                            box.SelectionLength = 1;
+                            box.SelectionBackColor = Color.Yellow;
+                            idxKeyword++;
+                        }
+                        idxTitle++;
+                    }
+                    box.SelectionStart = 0;
+                    box.SelectionLength = 0;
+                    box.DeselectAll();
+                });
         }
 
         void StartThisServerOnlyThen(Action done = null)
@@ -124,42 +129,33 @@ namespace V2RayGCon.Views.UserControls
             servers.StopAllServersThen(() => server.GetCoreCtrl().RestartCoreThen(done));
         }
 
-        void RefreshUiLater()
+        void RefreshUiLater() => lazyUiUpdater.Throttle();
+
+        void RefreshUiWorker()
         {
-            if (!uiUpdateLock.Install())
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(rtboxServerTitle, () =>
             {
-                lazyUiUpdater.DoItLater();
-                return;
-            }
+                var cs = coreServCtrl.GetCoreStates();
+                var cc = coreServCtrl.GetCoreCtrl();
 
-            Task.Run(() =>
-            {
-                VgcApis.Misc.UI.RunInUiThreadIgnoreError(rtboxServerTitle, () =>
-                {
-                    var cs = coreServCtrl.GetCoreStates();
-                    var cc = coreServCtrl.GetCoreCtrl();
+                // must update background first
+                var isSelected = cs.IsSelected();
 
-                    // must update background first
-                    var isSelected = cs.IsSelected();
+                // first line
+                UpdateOnOffLabel(cc.IsCoreRunning());
+                UpdateSelectCheckboxState(isSelected);
+                UpdateTitleTextBox(cs);
 
-                    // first line
-                    UpdateOnOffLabel(cc.IsCoreRunning());
-                    UpdateSelectCheckboxState(isSelected);
-                    UpdateTitleTextBox(cs);
-
-                    // second line
-                    UpdateInboundModeLabel(cs);
-                    UpdateLastModifiedLable(cs.GetLastModifiedUtcTicks());
-                    UpdateMarkLabel(cs.GetMark());
-                    UpdateRemarkLabel(cs.GetRemark());
-                    UpdateStatusLable(cs);
-                    UpdateSettingsLable(cs);
-                    CompactRoundLables();
-                });
-
-                // Task.Delay(10).Wait();
-                uiUpdateLock.Remove();
-            }).ConfigureAwait(false);
+                // second line
+                UpdateInboundModeLabel(cs);
+                UpdateLastModifiedLable(cs.GetLastModifiedUtcTicks());
+                UpdateMarkLabel(cs.GetMark());
+                UpdateRemarkLabel(cs.GetRemark());
+                UpdateStatusLable(cs);
+                UpdateSettingsLable(cs);
+                CompactRoundLables();
+                lazyHighlighter?.Postpone();
+            });
         }
 
         void OnCorePropertyChangesHandler(object sender, EventArgs args) =>
@@ -464,6 +460,8 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region public method
+        AutoResetEvent highlightLocker = new AutoResetEvent(true);
+
         public void SetKeywords(string keywords)
         {
             this.keyword = keywords?.Replace(@" ", "")?.ToLower();
@@ -472,9 +470,7 @@ namespace V2RayGCon.Views.UserControls
                 return;
             }
 
-            Task.Run(() => VgcApis.Misc.UI.RunInUiThreadIgnoreError(
-                rtboxServerTitle, HighLightServerTitleWithKeywords))
-                .ConfigureAwait(false);
+            lazyHighlighter?.Postpone();
         }
 
         public string GetConfig() => coreServCtrl.GetConfiger().GetConfig();
@@ -493,12 +489,10 @@ namespace V2RayGCon.Views.UserControls
 
         public void Cleanup()
         {
-            lazyUiUpdater?.Quit();
-
+            lazyUiUpdater?.Dispose();
+            lazyHighlighter?.Dispose();
             ReleaseCoreCtrlEvents();
         }
-
-
         #endregion
 
         #region UI event

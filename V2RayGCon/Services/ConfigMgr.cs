@@ -369,7 +369,7 @@ namespace V2RayGCon.Services
             {
                 return customTimeout;
             }
-            return VgcApis.Models.Consts.Intervals.SpeedTestTimeout;
+            return VgcApis.Models.Consts.Intervals.DefaultSpeedTestTimeout;
         }
 
         string GetDefaultSpeedtestUrl() =>

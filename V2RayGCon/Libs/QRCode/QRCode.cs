@@ -257,7 +257,7 @@ namespace V2RayGCon.Libs.QRCode
                 catch { }
             }
 
-            VgcApis.Misc.Utils.RunInBackground(() => ShowFormInBackground());
+            Task.Run(() => ShowFormInBackground()).ConfigureAwait(false);
         }
 
         static bool ScanWindow(Bitmap screenshot, Point screenLocation, Rectangle winRect, Rectangle screenRect, Action<string> success)

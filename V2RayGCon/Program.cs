@@ -10,7 +10,6 @@ namespace V2RayGCon
 {
     static class Program
     {
-
         #region single instance
         // https://stackoverflow.com/questions/19147/what-is-the-correct-way-to-create-a-single-instance-application
 

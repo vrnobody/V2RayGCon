@@ -397,7 +397,7 @@ namespace V2RayGCon.Services
         {
             // setting.SpeedTestPool may change while testing
             var pool = setting.SpeedTestPool;
-            pool.WaitOne();
+            VgcApis.Misc.Utils.BlockingWaitOne(pool, 15000);
 
             if (setting.isSpeedtestCancelled)
             {

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Luna.Controllers
 {
@@ -19,7 +18,6 @@ namespace Luna.Controllers
         Models.Apis.LuaSys luaSys = null;
 
         Thread luaCoreThread;
-        Task luaCoreTask;
         private readonly bool enableTracebackFeature;
 
         public LuaCoreCtrl(bool enableTracebackFeature)
@@ -179,18 +177,20 @@ namespace Luna.Controllers
             }
 
             Stop();
-            if (luaCoreTask?.Wait(2000) == true)
+
+            if (!luaCoreThread.Join(2000))
             {
-                return;
+                SendLog($"{I18N.Terminate} {coreSetting.name}");
+                try
+                {
+                    luaCoreThread.Abort();
+                }
+                catch { }
             }
 
-            SendLog($"{I18N.Terminate} {coreSetting.name}");
             luaSys?.Dispose();
-            try
-            {
-                luaCoreThread?.Abort();
-            }
-            catch { }
+            luaSys = null;
+
             isRunning = false;
         }
 
@@ -204,7 +204,9 @@ namespace Luna.Controllers
             isRunning = true;
 
             SendLog($"{I18N.Start} {coreSetting.name}");
-            luaCoreTask = VgcApis.Misc.Utils.RunInBackground(() => RunLuaScript());
+
+            luaCoreThread = new Thread(RunLuaScript);
+            luaCoreThread.Start();
         }
 
         public void Cleanup()
@@ -215,32 +217,23 @@ namespace Luna.Controllers
 
         #region private methods
         List<Type> assemblies = null;
-        readonly object assemblisLocker = new object();
-
-
         List<Type> GetAllAssemblies()
         {
-            // cache until controller is destroyed
-            lock (assemblisLocker)
+            if (assemblies == null)
             {
-                if (assemblies == null)
-                {
-                    assemblies = VgcApis.Misc.Utils.GetAllAssembliesType();
-                }
+                assemblies = VgcApis.Misc.Utils.GetAllAssembliesType();
             }
             return assemblies;
         }
 
-        void SendLog(string content)
-            => luaApis.SendLog(content);
+        void SendLog(string content) => luaApis.SendLog(content);
 
         void RunLuaScript()
         {
             luaSys?.Dispose();
-            luaSys = new Models.Apis.LuaSys(luaApis, () => GetAllAssemblies());
+            luaSys = new Models.Apis.LuaSys(luaApis, GetAllAssemblies);
 
             luaSignal.ResetAllSignals();
-            luaCoreThread = Thread.CurrentThread;
 
             Lua core = CreateLuaCore(luaSys);
             try
@@ -256,8 +249,10 @@ namespace Luna.Controllers
                 }
             }
 
-            isRunning = false;
             luaSys?.Dispose();
+            luaSys = null;
+
+            isRunning = false;
         }
 
         Lua CreateLuaCore(Models.Apis.LuaSys luaSys)

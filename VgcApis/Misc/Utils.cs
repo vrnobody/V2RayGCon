@@ -315,6 +315,22 @@ namespace VgcApis.Misc
         #endregion
 
         #region Task
+        public static void BlockingWaitOne(Semaphore smp, int milSec)
+        {
+            while (!smp.WaitOne(milSec))
+            {
+                Application.DoEvents();
+            }
+        }
+
+        public static void BlockingWaitOne(AutoResetEvent autoEv, int milSec)
+        {
+            while (!autoEv.WaitOne(milSec))
+            {
+                Application.DoEvents();
+            }
+        }
+
         public static void SetProcessEnvs(Process proc, Dictionary<string, string> envs)
         {
             if (envs == null || envs.Count <= 0)
@@ -337,7 +353,7 @@ namespace VgcApis.Misc
             const int CTRL_C_EVENT = 0;
 
             var success = false;
-            sendCtrlCLocker.WaitOne();
+            BlockingWaitOne(sendCtrlCLocker, 5000);
             try
             {
                 if (Libs.Sys.ConsoleCtrls.AttachConsole((uint)proc.Id))
@@ -405,15 +421,20 @@ namespace VgcApis.Misc
                 });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
-            done.WaitOne();
+            BlockingWaitOne(done, 5000);
         }
+
 
         public static Task RunInBackground(Action worker)
         {
-            var t = new Task(worker, TaskCreationOptions.LongRunning);
-            t.ConfigureAwait(false);
-            t.Start();
-            return t;
+            try
+            {
+                var t = Task.Run(worker);
+                t.ConfigureAwait(false);
+                return t;
+            }
+            catch { }
+            return Task.FromResult(false);
         }
         #endregion
 
@@ -876,7 +897,9 @@ namespace VgcApis.Misc
             MeasureSimilarity(source.ToLower(), partial.ToLower());
 
         /// <summary>
-        /// -1: not match 1: equal >=2: the smaller the value, the more similar
+        /// -1: not match
+        ///  1: equal
+        /// >1: the smaller the value, the more similar
         /// </summary>
         public static long MeasureSimilarity(string source, string partial)
         {

@@ -48,7 +48,10 @@ namespace V2RayGCon.Services
         {
             lazyServerSettingsRecorder = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveServersSettingsWorker,
-                VgcApis.Models.Consts.Intervals.LazySaveServerListIntreval);
+                VgcApis.Models.Consts.Intervals.LazySaveServerListIntreval)
+            {
+                Name = "Vgc.Servers.SaveSettings",
+            };
         }
 
         public void Run(
@@ -387,7 +390,7 @@ namespace V2RayGCon.Services
         {
             var evDone = new AutoResetEvent(false);
             var success = BatchSpeedTestWorkerThen(GetSelectedServer(), () => evDone.Set());
-            evDone.WaitOne();
+            VgcApis.Misc.Utils.BlockingWaitOne(evDone, 5000);
             return success;
         }
 
@@ -599,12 +602,12 @@ namespace V2RayGCon.Services
             }
 
             Misc.Utils.ChainActionHelper(list.Count, worker, done);
-            isFinished.WaitOne();
+            VgcApis.Misc.Utils.BlockingWaitOne(isFinished, 5000);
         }
 
         public void UpdateAllServersSummaryBg()
         {
-            VgcApis.Misc.Utils.RunInBackground(UpdateAllServersSummarySync);
+            Task.Run(() => UpdateAllServersSummarySync()).ConfigureAwait(false);
         }
 
         public void DeleteServerByConfig(string config)
@@ -931,7 +934,7 @@ namespace V2RayGCon.Services
                         {
                             server.GetCoreCtrl().RestartCoreThen(() => sayGoodbye.Set());
                         }
-                        sayGoodbye.WaitOne();
+                        VgcApis.Misc.Utils.BlockingWaitOne(sayGoodbye, 5000);
                     }, TaskCreationOptions.LongRunning);
 
                     taskList.Add(task);

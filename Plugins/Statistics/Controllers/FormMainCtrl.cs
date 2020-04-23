@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Statistics.Controllers
@@ -78,13 +79,13 @@ namespace Statistics.Controllers
         {
             miReset.Click += (s, a) =>
             {
-                VgcApis.Misc.Utils.RunInBackground(() =>
+                Task.Run(() =>
                 {
                     if (VgcApis.Misc.UI.Confirm(I18N.ConfirmResetStatsData))
                     {
                         settings.isRequireClearStatsData = true;
                     }
-                });
+                }).ConfigureAwait(false);
             };
 
             miResizeByContent.Click += (s, a) => ResizeDataViewByContent();

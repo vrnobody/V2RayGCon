@@ -57,7 +57,10 @@ namespace V2RayGCon.Views.WinForms
 
             lazyServerListUpdater = new VgcApis.Libs.Tasks.LazyGuy(
                 RefreshServerListWorker,
-                VgcApis.Models.Consts.Intervals.FormQrcodeMenuUpdateDelay);
+                VgcApis.Models.Consts.Intervals.FormQrcodeMenuUpdateDelay)
+            {
+                Name = "Vgc.Qrcode.ServersTitleList",
+            };
 
             BindServerEvents();
 

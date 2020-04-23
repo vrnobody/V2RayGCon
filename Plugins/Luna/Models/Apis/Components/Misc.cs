@@ -117,13 +117,14 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc.Forms
-        public List<List<string>> ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows, int defColumn)
+
+        public string ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows, int defColumn)
         {
             var dt = LuaTableToDataTable(columns, rows);
             return ShowDataGridDialog(title, dt, defColumn);
         }
 
-        public List<List<string>> ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows) =>
+        public string ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows) =>
             ShowData(title, columns, rows, -1);
 
         public string BrowseFolder()
@@ -303,36 +304,77 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region private methods
+        List<Type> GetTypesFromRows(NLua.LuaTable rows)
+        {
+            if (rows == null)
+            {
+                return null;
+            }
+
+            var ts = new List<Type>();
+            foreach (var row in rows.Values)
+            {
+                foreach (var cell in (row as NLua.LuaTable).Values)
+                {
+                    ts.Add(cell.GetType());
+                }
+                return ts;
+            }
+            return null;
+        }
+
         DataTable LuaTableToDataTable(NLua.LuaTable columns, NLua.LuaTable rows)
         {
             var d = new DataTable();
-            foreach (KeyValuePair<object, object> title in columns)
+
+            if (columns == null)
             {
-                d.Columns.Add(title.Value.ToString());
+                return d;
             }
 
-            foreach (KeyValuePair<object, object> row in rows)
+            var ts = GetTypesFromRows(rows);
+
+            var idx = 0;
+            foreach (var column in columns.Values)
             {
-                var cells = row.Value as NLua.LuaTable;
-                List<string> values = new List<string>();
-                foreach (KeyValuePair<object, object> cell in cells)
+                var name = column.ToString();
+                if (ts == null)
                 {
-                    values.Add(cell.Value.ToString());
+                    d.Columns.Add(name);
                 }
-                d.Rows.Add(values.ToArray());
+                else
+                {
+                    d.Columns.Add(name, ts[idx++]);
+                }
             }
 
+            if (rows == null)
+            {
+                return d;
+            }
+            var rowsKey = rows.Keys;
+            foreach (var rowkey in rowsKey)
+            {
+                var row = rows[rowkey] as NLua.LuaTable;
+                var items = new List<object>();
+                foreach (var item in row.Values)
+                {
+                    items.Add(item);
+                }
+
+                d.Rows.Add(items.ToArray());
+            }
             return d;
         }
 
-        List<List<string>> ShowDataGridDialog(string title, DataTable dataSource, int defColumn)
+        string ShowDataGridDialog(string title, DataTable dataSource, int defColumn)
         {
             using (var form = new Views.WinForms.FormDataGrid(title, dataSource, defColumn))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    return form.results;
+                    return form.jsonResult;
                 }
             }
             return null;

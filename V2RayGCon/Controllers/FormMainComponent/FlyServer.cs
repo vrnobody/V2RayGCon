@@ -56,10 +56,19 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             this.welcomeItem = new Views.UserControls.WelcomeUI();
 
-            lazyFlyPanelUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshFlyPanelWorker, flyPanelUpdateInterval);
+            lazyFlyPanelUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshFlyPanelWorker, flyPanelUpdateInterval)
+            {
+                Name = "Vgc.Panel.Refreasher",
+            };
 
-            lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarWorker, statusBarUpdateInterval);
-            lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(ShowSearchResultNow, 1300);
+            lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarWorker, statusBarUpdateInterval)
+            {
+                Name = "Vgc.StatusBar.Updater",
+            };
+            lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(ShowSearchResultNow, 1300)
+            {
+                Name = "Vgc.Search",
+            };
 
             InitFormControls(lbMarkFilter, miResizeFormMain);
             BindDragDropEvent();
@@ -126,9 +135,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             }
             else
             {
-                VgcApis.Misc.Utils.RunInBackground(
-                    () => DisposeFlyPanelControlByList(
-                        controlList));
+                Task.Run(() => DisposeFlyPanelControlByList(controlList)).ConfigureAwait(false);
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace VgcApis.Libs.Tasks
 {
@@ -14,6 +15,9 @@ namespace VgcApis.Libs.Tasks
         AutoResetEvent waitingToken = new AutoResetEvent(true);
 
         bool isCancelled = false;
+
+        public string Name = @"";
+
 
         /// <summary>
         ///
@@ -49,13 +53,13 @@ namespace VgcApis.Libs.Tasks
                 return;
             }
 
-            Task.Run(async () =>
+            Misc.Utils.RunInBackground(() =>
             {
-                await Task.Delay(timeout);
-                jobToken.WaitOne();
+                Task.Delay(timeout).Wait();
+                DebugAutoResetEvent(jobToken, "jobToken");
                 waitingToken.Set();
                 DoTheJob();
-            }).ConfigureAwait(false);
+            });
         }
 
         CancellationTokenSource cts = null;
@@ -74,13 +78,13 @@ namespace VgcApis.Libs.Tasks
                 tk = cts.Token;
             }
 
-            Task.Run(async () =>
+            Misc.Utils.RunInBackground(() =>
             {
                 try
                 {
-                    await Task.Delay(timeout, tk);
+                    Task.Delay(timeout, tk).Wait();
                 }
-                catch (TaskCanceledException)
+                catch
                 {
                     return;
                 }
@@ -90,11 +94,10 @@ namespace VgcApis.Libs.Tasks
                     return;
                 }
 
-                jobToken.WaitOne();
+                DebugAutoResetEvent(jobToken, "jobToken");
                 waitingToken.Set();
                 DoTheJob();
-
-            }).ConfigureAwait(false);
+            });
         }
 
         /// <summary>
@@ -123,20 +126,22 @@ namespace VgcApis.Libs.Tasks
                 return;
             }
 
-            Task.Run(() =>
+            Misc.Utils.RunInBackground(() =>
             {
-                jobToken.WaitOne();
+                DebugAutoResetEvent(jobToken, "jobToken");
                 waitingToken.Set();
                 DoTheJob();
-            }).ConfigureAwait(false);
+            });
         }
+
+
 
         /// <summary>
         /// blocking
         /// </summary>
         public void DoItNow()
         {
-            jobToken.WaitOne();
+            DebugAutoResetEvent(jobToken, "jobToken");
             DoTheJob();
         }
 
@@ -144,6 +149,18 @@ namespace VgcApis.Libs.Tasks
 
         #region private method
 
+        void DebugAutoResetEvent(AutoResetEvent arEv, string evName = @"")
+        {
+            while (!arEv.WaitOne(timeout + 2000))
+            {
+                var title = string.IsNullOrEmpty(evName) ?
+                    $"!suspectable deadlock! {Name}" :
+                    $"!suspectable deadlock! {Name} - {evName}";
+
+                Sys.FileLogger.DumpCallStack(title);
+                Application.DoEvents();
+            }
+        }
         void Done() => jobToken.Set();
 
         void DoTheJob()
@@ -160,7 +177,7 @@ namespace VgcApis.Libs.Tasks
                 {
                     AutoResetEvent chainEnd = new AutoResetEvent(false);
                     chainedTask?.Invoke(() => chainEnd.Set());
-                    chainEnd.WaitOne();
+                    DebugAutoResetEvent(chainEnd, "chainEnd");
                 }
                 else
                 {

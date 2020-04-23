@@ -1,6 +1,7 @@
 ﻿using Luna.Resources.Langs;
 using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Luna.Views.UserControls
@@ -24,7 +25,10 @@ namespace Luna.Views.UserControls
         private void LuaUI_Load(object sender, EventArgs e)
         {
             luaCoreCtrl.OnStateChange += OnLuaCoreStateChangeHandler;
-            lazyUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiWorker, 300);
+            lazyUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiWorker, 300)
+            {
+                Name = "Luna.UiPanelUpdater",
+            };
 
             UpdateUiLater();
         }
@@ -133,13 +137,13 @@ namespace Luna.Views.UserControls
                 return;
             }
 
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            Task.Run(() =>
             {
                 if (!luaServer.RemoveScriptByName(scriptName))
                 {
                     VgcApis.Misc.UI.MsgBoxAsync("", I18N.ScriptNotFound);
                 }
-            });
+            }).ConfigureAwait(false);
         }
 
         private void LuaUI_MouseDown(object sender, MouseEventArgs e)

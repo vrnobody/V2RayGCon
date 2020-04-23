@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Libs.Nets
@@ -187,8 +186,7 @@ namespace V2RayGCon.Libs.Nets
                 }
                 catch
                 {
-                    VgcApis.Misc.Utils.RunInBackground(
-                        () => MessageBox.Show(I18N.CreateFolderFail));
+                    VgcApis.Misc.UI.MsgBoxAsync(I18N.CreateFolderFail);
                     return null;
                 }
             }
@@ -227,7 +225,7 @@ namespace V2RayGCon.Libs.Nets
 
             lock (waitForDigest)
             {
-                VgcApis.Misc.Utils.RunInBackground(() =>
+                Task.Run(() =>
                 {
                     lock (waitForDigest)
                     {

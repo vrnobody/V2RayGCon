@@ -1,4 +1,5 @@
 ﻿using Luna.Resources.Langs;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,7 +19,7 @@ namespace Luna.Views.WinForms
         private readonly int defColumn;
         private string filterKeyword = string.Empty;
 
-        public List<List<string>> results = new List<List<string>>();
+        public string jsonResult = @"";
         VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater;
 
         public FormDataGrid(string title, DataTable dataSource, int defColumn)
@@ -34,7 +35,10 @@ namespace Luna.Views.WinForms
         private void FormDataGrid_Load(object sender, EventArgs e)
         {
             InitControls();
-            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiWorker, UPDATE_INTERVAL);
+            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiWorker, UPDATE_INTERVAL)
+            {
+                Name = "Luna.DataGridUpdater",
+            };
             lazyUiUpdater.Throttle();
         }
 
@@ -78,6 +82,32 @@ namespace Luna.Views.WinForms
                     dataTable.Add(RowToList(row));
                 }
             }
+        }
+
+        DataTable GetSelectDatas()
+        {
+            var r = (dgvData.DataSource as DataTable).Copy();
+
+            var idx = new List<int>();
+            foreach (DataGridViewRow row in dgvData.SelectedRows)
+            {
+                idx.Add(row.Index);
+            }
+
+            foreach (DataGridViewCell cell in dgvData.SelectedCells)
+            {
+                idx.Add(cell.RowIndex);
+            }
+
+            for (int i = r.Rows.Count - 1; i >= 0; i--)
+            {
+                if (!idx.Contains(i))
+                {
+                    r.Rows.RemoveAt(i);
+                }
+            }
+
+            return r;
         }
 
         private void AddSelectedRowsToDataTable(List<List<string>> dataTable)
@@ -194,31 +224,17 @@ namespace Luna.Views.WinForms
 
         DataTable GetFilteredDataTable()
         {
-            var ds = dataSource;
-            var r = new DataTable();
+            var r = dataSource.Copy();
             var idx = Math.Max(0, cboxColumnIdx.SelectedIndex);
 
-            foreach (DataColumn column in ds.Columns)
+            for (int i = r.Rows.Count - 1; i >= 0; i--)
             {
-                r.Columns.Add(column.ToString());
-            }
-
-            foreach (DataRow row in ds.Rows)
-            {
-                var text = row[idx].ToString();
-                if (VgcApis.Misc.Utils.MeasureSimilarityCi(text, filterKeyword) <= 0)
+                var text = r.Rows[i].ItemArray[idx].ToString();
+                if (VgcApis.Misc.Utils.MeasureSimilarityCi(text, filterKeyword) < 1)
                 {
-                    continue;
+                    r.Rows.RemoveAt(i);
                 }
-
-                var vs = new List<string>();
-                foreach (string v in row.ItemArray)
-                {
-                    vs.Add(v);
-                }
-                r.Rows.Add(vs.ToArray());
             }
-
             return r;
         }
 
@@ -252,7 +268,17 @@ namespace Luna.Views.WinForms
 
         void SetResult()
         {
-            results = GetColumns(false, true);
+            try
+            {
+                jsonResult = null;
+                var idxs = JsonConvert.SerializeObject(GetSelectDatas(), Formatting.Indented);
+                var datas = JsonConvert.SerializeObject(dgvData.DataSource as DataTable, Formatting.Indented);
+                jsonResult = "{\n"
+                            + $"\"selected\":{idxs},\n"
+                            + $"\"all\":{datas}"
+                            + "\n}";
+            }
+            catch { }
         }
 
         private void SaveColumnsToFile(bool isSelectedOnly)
@@ -283,8 +309,7 @@ namespace Luna.Views.WinForms
             var content = GetColumns(true, true);
             var text = List2Csv(content);
             var success = false;
-            VgcApis.Misc.Utils.RunAsSTAThread(
-                () => success = VgcApis.Misc.Utils.CopyToClipboard(text));
+            VgcApis.Misc.Utils.RunAsSTAThread(() => success = VgcApis.Misc.Utils.CopyToClipboard(text));
             VgcApis.Misc.UI.MsgBoxAsync(success ? I18N.Done : I18N.Fail);
         }
 

@@ -5,6 +5,9 @@ namespace V2RayGCon.Models.Datas
     class UserSettings
     {
         #region public properties
+        public string DebugLogFilePath { get; set; }
+        public bool isEnableDebugFile { get; set; }
+
         public int QuickSwitchServerLatency { get; set; }
         public bool isAutoPatchSubsInfo { get; set; }
 
@@ -52,6 +55,9 @@ namespace V2RayGCon.Models.Datas
         public UserSettings()
         {
             Normalized();
+
+            DebugLogFilePath = @"";
+            isEnableDebugFile = false;
 
             QuickSwitchServerLatency = 0;
 

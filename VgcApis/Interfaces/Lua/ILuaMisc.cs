@@ -93,8 +93,8 @@ namespace VgcApis.Interfaces.Lua
 
         string Input(string title, string content, int lines);
 
-        List<List<string>> ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows);
-        List<List<string>> ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows, int defColumn);
+        string ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows);
+        string ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows, int defColumn);
 
         // 18 choices max
         List<int> Choices(string title, params string[] choices);

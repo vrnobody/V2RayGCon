@@ -45,7 +45,10 @@ namespace V2RayGCon.Services
 
         Notifier()
         {
-            lazyNotifyIconUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateNotifyIconWorker, UpdateInterval);
+            lazyNotifyIconUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateNotifyIconWorker, UpdateInterval)
+            {
+                Name = "notifyIconUpdater",
+            };
 
             // 其他组件有可能在初始化的时候引用菜单
             qsMenuCompos = CreateQsMenuCompos();

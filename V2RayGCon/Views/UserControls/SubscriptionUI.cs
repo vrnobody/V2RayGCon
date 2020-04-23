@@ -28,7 +28,10 @@ namespace V2RayGCon.Views.UserControls
             servers = Services.Servers.Instance;
             settings = Services.Settings.Instance;
 
-            lazyCounter = new VgcApis.Libs.Tasks.LazyGuy(UpdateServerTotalWorker, 500);
+            lazyCounter = new VgcApis.Libs.Tasks.LazyGuy(UpdateServerTotalWorker, 500)
+            {
+                Name = "Vgc.SubsUi.Total",
+            };
 
             // tab page is lazy, do not call this in Load().
             InitControls(subscriptItem);

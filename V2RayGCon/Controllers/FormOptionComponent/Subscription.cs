@@ -380,9 +380,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                 return port;
             }
 
-            VgcApis.Misc.Utils.RunInBackground(
-                () => MessageBox.Show(
-                    I18N.NoQualifyProxyServer));
+            VgcApis.Misc.UI.MsgBoxAsync(I18N.NoQualifyProxyServer);
 
             return -1;
         }

@@ -29,17 +29,55 @@ namespace V2RayGCon.Services
             userSettings = LoadUserSettings();
             userSettings.Normalized();  // replace null with empty object.
             UpdateSpeedTestPool();
+            UpdateFileLoggerSetting();
 
             janitor = new VgcApis.Libs.Tasks.LazyGuy(
                 () => GC.Collect(),
-                VgcApis.Models.Consts.Intervals.LazyGcDelay);
+                VgcApis.Models.Consts.Intervals.LazyGcDelay)
+            {
+                Name = "Vgc.Settings.GC",
+            };
 
             lazyBookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveUserSettingsWorker,
-                VgcApis.Models.Consts.Intervals.LazySaveUserSettingsDelay);
+                VgcApis.Models.Consts.Intervals.LazySaveUserSettingsDelay)
+            {
+                Name = "Vgc.Settings.SaveSettings",
+            };
         }
 
         #region Properties
+        public string DebugLogFilePath
+        {
+            get => userSettings.DebugLogFilePath;
+            set
+            {
+                UpdateFileLoggerSetting();
+                if (userSettings.DebugLogFilePath == value)
+                {
+                    return;
+                }
+                userSettings.DebugLogFilePath = value;
+                SaveSettingsLater();
+            }
+        }
+
+        public bool isEnableDebugLogFile
+        {
+            get => userSettings.isEnableDebugFile;
+            set
+            {
+                UpdateFileLoggerSetting();
+
+                if (userSettings.isEnableDebugFile == value)
+                {
+                    return;
+                }
+                userSettings.isEnableDebugFile = value;
+                SaveSettingsLater();
+            }
+        }
+
         public int QuickSwitchServerLantency
         {
             get
@@ -634,6 +672,14 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
+        void UpdateFileLoggerSetting()
+        {
+            if (userSettings.isEnableDebugFile)
+            {
+                VgcApis.Libs.Sys.FileLogger.LogFilename = userSettings.DebugLogFilePath;
+            }
+        }
+
         void SaveUserSettingsWorker()
         {
             string serializedUserSettings = "";

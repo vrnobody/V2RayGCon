@@ -138,9 +138,9 @@ namespace VgcApis.Misc
         public static void CloseFormIgnoreError(Form form) =>
             RunInUiThreadIgnoreError(form, () => form?.Close());
 
-        static bool IsInvokeRequired()
+        static bool IsInUiThread()
         {
-            return Thread.CurrentThread.Name != Models.Consts.Libs.UiThreadName;
+            return Thread.CurrentThread.Name == Models.Consts.Libs.UiThreadName;
         }
 
         public static void RunInUiThreadIgnoreError(Control control, Action updater)
@@ -160,11 +160,15 @@ namespace VgcApis.Misc
                 {
                     if (!control.InvokeRequired)
                     {
+                        if (!IsInUiThread())
+                        {
+                            Libs.Sys.FileLogger.DumpCallStack("!invoke error!");
+                        }
                         updateIgnoreError();
                     }
                     else
                     {
-                        control?.Invoke((MethodInvoker)delegate
+                        control.Invoke((MethodInvoker)delegate
                         {
                             updateIgnoreError();
                         });
@@ -337,7 +341,7 @@ namespace VgcApis.Misc
             var text = string.Format("{0}\n{1}", msg, url);
             if (Confirm(text))
             {
-                Utils.RunInBackground(() => System.Diagnostics.Process.Start(url));
+                Task.Run(() => System.Diagnostics.Process.Start(url)).ConfigureAwait(false);
             }
         }
 
@@ -348,10 +352,10 @@ namespace VgcApis.Misc
             MessageBox.Show(content ?? string.Empty, title ?? string.Empty);
 
         public static void MsgBoxAsync(string content) =>
-            Utils.RunInBackground(() => MsgBox("", content));
+            Task.Run(() => MsgBox("", content)).ConfigureAwait(false);
 
         public static void MsgBoxAsync(string title, string content) =>
-            Utils.RunInBackground(() => MsgBox(title, content));
+            Task.Run(() => MsgBox(title, content)).ConfigureAwait(false);
 
         public static bool Confirm(string content)
         {

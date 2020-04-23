@@ -50,8 +50,14 @@ namespace V2RayGCon.Views.UserControls
             rlbSpeedtest.Text = @"";
             rlbSpeedtest.Visible = false;
 
-            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 150);
-            lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(HighLightServerTitleWithKeywords, 500);
+            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 150)
+            {
+                Name = "Vgc.ServerUi.RefreshPanel",
+            };
+            lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(HighLightServerTitleWithKeywords, 500)
+            {
+                Name = "vgc.ServerUi.HighLight",
+            };
 
             InitButtonBackgroundImage();
             BindCoreCtrlEvents();

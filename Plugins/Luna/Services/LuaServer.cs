@@ -38,15 +38,15 @@ namespace Luna.Services
                 return;
             }
 
-            Task.Run(async () =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                await Task.Delay(delay);
+                Task.Delay(1000).Wait();
                 foreach (var core in list)
                 {
                     core.Start();
-                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    Task.Delay(TimeSpan.FromSeconds(1)).Wait();
                 }
-            }).ConfigureAwait(false);
+            });
         }
 
         public List<string[]> GetAllScripts()

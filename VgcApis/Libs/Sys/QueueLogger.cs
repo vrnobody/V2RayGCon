@@ -17,7 +17,10 @@ namespace VgcApis.Libs.Sys
         {
             lazyLogChopper = new Tasks.LazyGuy(
                 TrimLogCache,
-                Models.Consts.Libs.TrimdownLogCacheDelay);
+                Models.Consts.Libs.TrimdownLogCacheDelay)
+            {
+                Name = "QueueLogger.Chopper",
+            };
         }
 
         #region public methods

@@ -27,7 +27,10 @@ namespace Luna.Services
             this.miRoot = miRoot;
             this.miShowWindow = miShowWindow;
 
-            lazyMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateMenuWorker, 1000);
+            lazyMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateMenuWorker, 1000)
+            {
+                Name = "Luna.MenuUpdater",
+            };
 
             BindEvents();
 

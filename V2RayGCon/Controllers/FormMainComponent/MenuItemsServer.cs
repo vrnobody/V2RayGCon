@@ -103,7 +103,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 if (!servers.IsSelecteAnyServer())
                 {
-                    VgcApis.Misc.Utils.RunInBackground(() => MessageBox.Show(I18N.SelectServerFirst));
+                    VgcApis.Misc.UI.MsgBoxAsync(I18N.SelectServerFirst);
                     return;
                 }
                 action();

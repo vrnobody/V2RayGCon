@@ -73,7 +73,7 @@ namespace Luna.Services
 
         public string GetLuaShareMemory(string key)
         {
-            if (!userSettings.luaShareMemory.ContainsKey(key))
+            if (string.IsNullOrEmpty(key) || !userSettings.luaShareMemory.ContainsKey(key))
             {
                 return @"";
             }
@@ -83,6 +83,12 @@ namespace Luna.Services
         readonly object shareMemoryLocker = new object();
         public bool RemoveShareMemory(string key)
         {
+            if (string.IsNullOrEmpty(key)
+                || !userSettings.luaShareMemory.ContainsKey(key))
+            {
+                return false;
+            }
+
             bool success;
             lock (shareMemoryLocker)
             {
@@ -102,6 +108,11 @@ namespace Luna.Services
 
         public void SetLuaShareMemory(string key, string value)
         {
+            if (string.IsNullOrEmpty(key))
+            {
+                return;
+            }
+
             lock (shareMemoryLocker)
             {
                 userSettings.luaShareMemory[key] = value;

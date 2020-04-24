@@ -607,7 +607,7 @@ namespace V2RayGCon.Services
 
         public void UpdateAllServersSummaryBg()
         {
-            Task.Run(() => UpdateAllServersSummarySync()).ConfigureAwait(false);
+            VgcApis.Misc.Utils.RunInBackground(() => UpdateAllServersSummarySync());
         }
 
         public void DeleteServerByConfig(string config)

@@ -341,7 +341,7 @@ namespace VgcApis.Misc
             var text = string.Format("{0}\n{1}", msg, url);
             if (Confirm(text))
             {
-                Task.Run(() => System.Diagnostics.Process.Start(url)).ConfigureAwait(false);
+                Utils.RunInBackground(() => System.Diagnostics.Process.Start(url));
             }
         }
 
@@ -352,10 +352,10 @@ namespace VgcApis.Misc
             MessageBox.Show(content ?? string.Empty, title ?? string.Empty);
 
         public static void MsgBoxAsync(string content) =>
-            Task.Run(() => MsgBox("", content)).ConfigureAwait(false);
+            Utils.RunInBackground(() => MsgBox("", content));
 
         public static void MsgBoxAsync(string title, string content) =>
-            Task.Run(() => MsgBox(title, content)).ConfigureAwait(false);
+            Utils.RunInBackground(() => MsgBox(title, content));
 
         public static bool Confirm(string content)
         {

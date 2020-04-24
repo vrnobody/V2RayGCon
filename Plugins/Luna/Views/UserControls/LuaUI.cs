@@ -1,7 +1,6 @@
 ﻿using Luna.Resources.Langs;
 using System;
 using System.Drawing;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Luna.Views.UserControls
@@ -137,13 +136,13 @@ namespace Luna.Views.UserControls
                 return;
             }
 
-            Task.Run(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 if (!luaServer.RemoveScriptByName(scriptName))
                 {
                     VgcApis.Misc.UI.MsgBoxAsync("", I18N.ScriptNotFound);
                 }
-            }).ConfigureAwait(false);
+            });
         }
 
         private void LuaUI_MouseDown(object sender, MouseEventArgs e)

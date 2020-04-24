@@ -388,10 +388,10 @@ namespace V2RayGCon.Services
 
             var start = DateTime.Now.Millisecond;
 
-            Action finished = () => Task.Run(async () =>
+            Action finished = () => VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 var relex = UpdateInterval - (DateTime.Now.Millisecond - start);
-                await Task.Delay(Math.Max(0, relex));
+                Task.Delay(Math.Max(0, relex)).Wait();
                 done();
             });
 

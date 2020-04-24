@@ -69,14 +69,14 @@ namespace V2RayGCon.Services
 
             if (setting.isCheckUpdateWhenAppStart)
             {
-                Task.Run(() =>
+                VgcApis.Misc.Utils.RunInBackground(() =>
                 {
 #if DEBUG
 #else
                     Task.Delay(VgcApis.Models.Consts.Webs.CheckForUpdateDelay).Wait();
 #endif
                     updater.CheckForUpdate(false);
-                }).ConfigureAwait(false);
+                });
             }
         }
 

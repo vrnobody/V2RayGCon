@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace Statistics.Services
@@ -99,7 +98,7 @@ namespace Statistics.Services
             var uid = coreCtrl.GetCoreStates().GetUid();
             var sample = coreCtrl.GetCoreCtrl().TakeStatisticsSample();
             var title = coreCtrl.GetCoreStates().GetTitle();
-            Task.Run(() => AddToHistoryStatsData(uid, title, sample)).ConfigureAwait(false);
+            VgcApis.Misc.Utils.RunInBackground(() => AddToHistoryStatsData(uid, title, sample));
         }
 
         void AddToHistoryStatsData(

@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Threading.Tasks;
 using VgcApis.Interfaces.CoreCtrlComponents;
 using VgcApis.Models.Datas;
 
@@ -149,7 +148,7 @@ namespace V2RayGCon.Controllers
             ci.isInjectImport = cs.isGlobalImport;
             ci.isInjectSkipCNSite = cs.isBypassCnSite;
 
-            Task.Run(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 GetConfiger().UpdateSummaryThen(() =>
                 {
@@ -158,7 +157,7 @@ namespace V2RayGCon.Controllers
                         GetCoreCtrl().RestartCore();
                     }
                 });
-            }).ConfigureAwait(false);
+            });
         }
 
         public ICoreStates GetCoreStates() => states;

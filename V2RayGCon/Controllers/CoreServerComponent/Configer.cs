@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Threading.Tasks;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
@@ -70,7 +69,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public void UpdateSummaryThen(Action next = null)
         {
-            Task.Run(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 var configString = coreInfo.isInjectImport ?
                     configMgr.InjectImportTpls(coreInfo.config, false, true) :
@@ -145,7 +144,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             var cs = GetParent().GetCoreStates();
             var servInfo = $"{cs.GetIndex()}.[{cs.GetShortName()}]";
 
-            Task.Run(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 var inInfo = GetterParsedInboundInfo(GetConfig());
                 if (inInfo == null)
@@ -163,7 +162,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     inInfo.Item1,
                     inInfo.Item2,
                     inInfo.Item3));
-            }).ConfigureAwait(false);
+            });
         }
 
         #endregion

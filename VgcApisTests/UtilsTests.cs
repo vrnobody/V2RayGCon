@@ -18,20 +18,16 @@ namespace VgcApisTests
     {
 
         [DataTestMethod]
-        [DataRow("D1", true, true, false, true, 3u, 53u)]
+        [DataRow("D1", true, true, false, true, 3u, 49u)]
         public void TryParseKeyMessageTests(
             string keyName, bool hasAlt, bool hasCtrl, bool hasShift,
             bool ok, uint modifier, uint keyCode)
         {
-
-
-            var result = VgcApis.Misc.Utils.TryParseKeyMesssage(keyName, hasAlt, hasCtrl, hasShift,
+            var result = TryParseKeyMesssage(keyName, hasAlt, hasCtrl, hasShift,
                 out var m, out var c);
             Assert.AreEqual(ok, result);
             Assert.AreEqual(modifier, m);
             Assert.AreEqual(keyCode, c);
-
-
         }
 
         [DataTestMethod]

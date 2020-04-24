@@ -345,10 +345,8 @@ namespace V2RayGCon.Views.WinForms
             var width = toolsPanelController.panel.Width;
             if (pnlTools.Width != width)
             {
-                VgcApis.Misc.UI.RunInUiThread(pnlTools, () =>
-                {
-                    pnlTools.Width = width;
-                });
+                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                    pnlTools, () => pnlTools.Width = width);
             }
         }
 
@@ -470,10 +468,8 @@ namespace V2RayGCon.Views.WinForms
 
             if (pnlTools.Width != width)
             {
-                VgcApis.Misc.UI.RunInUiThread(pnlTools, () =>
-                {
-                    pnlTools.Width = width;
-                });
+                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                    pnlTools, () => pnlTools.Width = width);
             }
         }
 

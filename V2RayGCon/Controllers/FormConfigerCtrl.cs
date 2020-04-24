@@ -209,9 +209,7 @@ namespace V2RayGCon.Controllers
             if (o == null)
             {
                 o = Services.Cache.Instance.tpl.LoadMinConfig();
-                VgcApis.Misc.Utils.RunInBackground(
-                    () => MessageBox.Show(
-                        I18N.EditorCannotLoadServerConfig));
+                VgcApis.Misc.UI.MsgBoxAsync(I18N.EditorCannotLoadServerConfig);
             }
 
             config = o;

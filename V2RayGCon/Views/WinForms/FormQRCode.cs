@@ -24,7 +24,7 @@ namespace V2RayGCon.Views.WinForms
         VgcApis.Models.Datas.Enums.LinkTypes linkType;
         List<string> serverList;
 
-        VgcApis.Libs.Tasks.LazyGuy servListUpdater;
+        VgcApis.Libs.Tasks.LazyGuy lazyServerListUpdater;
 
         public FormQRCode()
         {
@@ -52,24 +52,19 @@ namespace V2RayGCon.Views.WinForms
             this.FormClosed += (s, a) =>
             {
                 ReleaseServerEvents();
-                servListUpdater?.ForgetIt();
-                servListUpdater?.Quit();
+                lazyServerListUpdater?.Dispose();
             };
 
-            servListUpdater = new VgcApis.Libs.Tasks.LazyGuy(
-                () =>
-                {
-                    try
-                    {
-                        VgcApis.Misc.Utils.RunInBackground(RefreshServerList);
-                    }
-                    catch { }
-                },
-                VgcApis.Models.Consts.Intervals.FormQrcodeMenuUpdateDelay);
+            lazyServerListUpdater = new VgcApis.Libs.Tasks.LazyGuy(
+                RefreshServerListWorker,
+                VgcApis.Models.Consts.Intervals.FormQrcodeMenuUpdateDelay)
+            {
+                Name = "Vgc.Qrcode.ServersTitleList",
+            };
 
             BindServerEvents();
 
-            servListUpdater.DoItLater();
+            lazyServerListUpdater.Postpone();
         }
 
         #region private methods
@@ -127,39 +122,46 @@ namespace V2RayGCon.Views.WinForms
         }
 
         void OnSettingChangeHandler(object sender, EventArgs args) =>
-            servListUpdater?.DoItLater();
+            lazyServerListUpdater?.Postpone();
 
-        void RefreshServerList()
+        void RefreshServerListWorker()
         {
-            ClearServerList();
             var summaryList = new List<string>();
-            var allServers = servers.GetAllServersOrderByIndex();
-            foreach (var serv in allServers)
+            try
             {
-                var summary = serv.GetCoreStates().GetTitle();
-                var config = serv.GetConfiger().GetConfig();
-                summaryList.Add(summary);
-                this.serverList.Add(config);
+                ClearServerList();
+
+                var allServers = servers.GetAllServersOrderByIndex();
+                foreach (var serv in allServers)
+                {
+                    var summary = serv.GetCoreStates().GetTitle();
+                    var config = serv.GetConfiger().GetConfig();
+                    summaryList.Add(summary);
+                    this.serverList.Add(config);
+                }
+            }
+            catch
+            {
+                return;
             }
 
-            VgcApis.Misc.UI.RunInUiThread(cboxServList,
-                () =>
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(cboxServList, () =>
+            {
+                cboxServList.Items.Clear();
+                cboxServList.Items.AddRange(summaryList.ToArray());
+                Misc.UI.ResetComboBoxDropdownMenuWidth(cboxServList);
+
+                if (summaryList.Count <= 0)
                 {
-                    cboxServList.Items.Clear();
-                    cboxServList.Items.AddRange(summaryList.ToArray());
-                    Misc.UI.ResetComboBoxDropdownMenuWidth(cboxServList);
+                    cboxServList.SelectedIndex = -1;
+                    return;
+                }
 
-                    if (summaryList.Count <= 0)
-                    {
-                        cboxServList.SelectedIndex = -1;
-                        return;
-                    }
-
-                    var oldIndex = servIndex;
-                    servIndex = -1;
-                    cboxServList.SelectedIndex = VgcApis.Misc.Utils.Clamp(
-                        oldIndex, 0, summaryList.Count);
-                });
+                var oldIndex = servIndex;
+                servIndex = -1;
+                cboxServList.SelectedIndex = VgcApis.Misc.Utils.Clamp(
+                    oldIndex, 0, summaryList.Count);
+            });
         }
 
         void UpdateTboxLink()

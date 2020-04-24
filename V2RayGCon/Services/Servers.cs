@@ -40,15 +40,18 @@ namespace V2RayGCon.Services
 
         List<string> markList = new List<string>();
 
-        VgcApis.Libs.Tasks.LazyGuy serverSaver;
+        VgcApis.Libs.Tasks.LazyGuy lazyServerSettingsRecorder;
         readonly object serverListWriteLock = new object();
         VgcApis.Libs.Tasks.Bar speedTestingBar = new VgcApis.Libs.Tasks.Bar();
 
         Servers()
         {
-            serverSaver = new VgcApis.Libs.Tasks.LazyGuy(
-                SaveServersSettingsNow,
-                VgcApis.Models.Consts.Intervals.LazySaveServerListIntreval);
+            lazyServerSettingsRecorder = new VgcApis.Libs.Tasks.LazyGuy(
+                SaveServersSettingsWorker,
+                VgcApis.Models.Consts.Intervals.LazySaveServerListIntreval)
+            {
+                Name = "Vgc.Servers.SaveSettings",
+            };
         }
 
         public void Run(
@@ -138,7 +141,7 @@ namespace V2RayGCon.Services
 
         void InvokeEventOnServerPropertyChange(object sender, EventArgs arg)
         {
-            serverSaver.DoItLater();
+            lazyServerSettingsRecorder.Deadline();
             InvokeEventHandlerIgnoreError(OnServerPropertyChange, null, EventArgs.Empty);
         }
 
@@ -153,7 +156,6 @@ namespace V2RayGCon.Services
             server.OnCoreClosing += InvokeEventOnCoreClosingIgnoreError;
             server.OnCoreStart += OnTrackCoreStartHandler;
             server.OnCoreStop += OnTrackCoreStopHandler;
-
             server.OnPropertyChanged += InvokeEventOnServerPropertyChange;
         }
 
@@ -226,7 +228,7 @@ namespace V2RayGCon.Services
         #region public method
 
         // expose to launcher for shutdown
-        public void SaveServersSettingsNow()
+        public void SaveServersSettingsWorker()
         {
             List<VgcApis.Models.Datas.CoreInfo> coreInfoList;
             lock (serverListWriteLock)
@@ -388,7 +390,7 @@ namespace V2RayGCon.Services
         {
             var evDone = new AutoResetEvent(false);
             var success = BatchSpeedTestWorkerThen(GetSelectedServer(), () => evDone.Set());
-            evDone.WaitOne();
+            VgcApis.Misc.Utils.BlockingWaitOne(evDone, 5000);
             return success;
         }
 
@@ -513,7 +515,7 @@ namespace V2RayGCon.Services
 
             void finish()
             {
-                serverSaver.DoItLater();
+                lazyServerSettingsRecorder.Deadline();
                 UpdateMarkList();
                 RequireFormMainUpdate();
                 InvokeEventOnServerCountChange(this, EventArgs.Empty);
@@ -535,7 +537,7 @@ namespace V2RayGCon.Services
 
             void finish()
             {
-                serverSaver.DoItLater();
+                lazyServerSettingsRecorder.Deadline();
                 UpdateMarkList();
                 RequireFormMainUpdate();
                 InvokeEventOnServerCountChange(this, EventArgs.Empty);
@@ -593,19 +595,19 @@ namespace V2RayGCon.Services
             void done()
             {
                 setting.LazyGC();
-                serverSaver.DoItLater();
+                lazyServerSettingsRecorder.Deadline();
                 RequireFormMainUpdate();
                 InvokeEventOnServerPropertyChange(this, EventArgs.Empty);
                 isFinished.Set();
             }
 
             Misc.Utils.ChainActionHelper(list.Count, worker, done);
-            isFinished.WaitOne();
+            VgcApis.Misc.Utils.BlockingWaitOne(isFinished, 5000);
         }
 
         public void UpdateAllServersSummaryBg()
         {
-            VgcApis.Misc.Utils.RunInBackground(UpdateAllServersSummarySync);
+            Task.Run(() => UpdateAllServersSummarySync()).ConfigureAwait(false);
         }
 
         public void DeleteServerByConfig(string config)
@@ -636,7 +638,7 @@ namespace V2RayGCon.Services
             DisposeCoreServThen(coreServ, () =>
             {
                 InvokeEventOnServerCountChange(this, EventArgs.Empty);
-                serverSaver.DoItLater();
+                lazyServerSettingsRecorder.Deadline();
                 UpdateMarkList();
                 RequireFormMainUpdate();
                 speedTestingBar.Remove();
@@ -705,7 +707,7 @@ namespace V2RayGCon.Services
                 });
             }
             setting.LazyGC();
-            serverSaver.DoItLater();
+            lazyServerSettingsRecorder.Deadline();
             return true;
         }
 
@@ -886,8 +888,8 @@ namespace V2RayGCon.Services
             lazyServerTrackingTimer?.Release();
 
             VgcApis.Libs.Sys.FileLogger.Info("Services.SaveSettings");
-            serverSaver.DoItNow();
-            serverSaver.Quit();
+            lazyServerSettingsRecorder?.DoItNow();
+            lazyServerSettingsRecorder.Dispose();
 
             // let it go
             var cores = coreServList;
@@ -932,7 +934,7 @@ namespace V2RayGCon.Services
                         {
                             server.GetCoreCtrl().RestartCoreThen(() => sayGoodbye.Set());
                         }
-                        sayGoodbye.WaitOne();
+                        VgcApis.Misc.Utils.BlockingWaitOne(sayGoodbye, 5000);
                     }, TaskCreationOptions.LongRunning);
 
                     taskList.Add(task);

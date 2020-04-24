@@ -117,89 +117,131 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="tboxKeyword.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
-  </data>
-  <data name="tboxKeyword.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 21</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="tboxKeyword.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
-  <data name="&gt;&gt;tboxKeyword.Name" xml:space="preserve">
-    <value>tboxKeyword</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Results:</value>
   </data>
-  <data name="&gt;&gt;tboxKeyword.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxKeyword.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tboxKeyword.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Search</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnNext.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="btnNext.Location" type="System.Drawing.Point, System.Drawing">
-    <value>115, 39</value>
+  <data name="lbResults.Text" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="btnNext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 21</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tboxKeyword.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 21</value>
   </data>
-  <data name="btnNext.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="btnPrevious.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
+  </data>
+  <data name="&gt;&gt;btnPrevious.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnPrevious.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tboxKeyword.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="btnNext.Text" xml:space="preserve">
     <value>Next (F3)</value>
   </data>
-  <data name="&gt;&gt;btnNext.Name" xml:space="preserve">
-    <value>btnNext</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>225, 89</value>
   </data>
-  <data name="&gt;&gt;btnNext.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnNext.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lbResults.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;btnNext.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="btnPrevious.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 39</value>
-  </data>
-  <data name="btnPrevious.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="btnNext.Size" type="System.Drawing.Size, System.Drawing">
     <value>97, 21</value>
   </data>
-  <data name="btnPrevious.TabIndex" type="System.Int32, mscorlib">
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 9</value>
+  </data>
+  <data name="btnNext.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="btnPrevious.Text" xml:space="preserve">
     <value>Previous (F2)</value>
   </data>
+  <data name="&gt;&gt;lbResults.Name" xml:space="preserve">
+    <value>lbResults</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 12</value>
+  </data>
+  <data name="&gt;&gt;tboxKeyword.Name" xml:space="preserve">
+    <value>tboxKeyword</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
+  </data>
+  <data name="btnPrevious.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 56</value>
+  </data>
+  <data name="&gt;&gt;tboxKeyword.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
   <data name="&gt;&gt;btnPrevious.Name" xml:space="preserve">
     <value>btnPrevious</value>
   </data>
-  <data name="&gt;&gt;btnPrevious.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tboxKeyword.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 24</value>
   </data>
   <data name="&gt;&gt;btnPrevious.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;btnPrevious.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;btnNext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <data name="lbResults.Location" type="System.Drawing.Point, System.Drawing">
+    <value>76, 9</value>
+  </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 12</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>225, 68</value>
+  <data name="lbResults.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormSearch</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;btnNext.Name" xml:space="preserve">
+    <value>btnNext</value>
+  </data>
+  <data name="&gt;&gt;tboxKeyword.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnNext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>115, 56</value>
+  </data>
+  <data name="&gt;&gt;lbResults.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnPrevious.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -6373,16 +6415,34 @@
         //////////////////////////////////////////////////////////////////8=
 </value>
   </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
+  <data name="lbResults.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Search</value>
+  <data name="&gt;&gt;btnNext.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FormSearch</value>
+  <data name="lbResults.Size" type="System.Drawing.Size, System.Drawing">
+    <value>11, 12</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tboxKeyword.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
+  <data name="&gt;&gt;btnNext.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="btnNext.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="&gt;&gt;lbResults.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnPrevious.Size" type="System.Drawing.Size, System.Drawing">
+    <value>97, 21</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

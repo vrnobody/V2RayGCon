@@ -151,6 +151,15 @@ namespace Luna.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 E 的本地化字符串。
+        /// </summary>
+        internal static string LuaCtrlOptionNone {
+            get {
+                return ResourceManager.GetString("LuaCtrlOptionNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Open script manager 的本地化字符串。
         /// </summary>
         internal static string OpenScriptManger {

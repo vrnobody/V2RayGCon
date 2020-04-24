@@ -38,7 +38,7 @@ string.isempty = function(text)
 end
 
 table.contains = function(haystack, needle)
-    assert(type(haystack) == "table")
+    assert(type(haystack) == "table", 'table.contains(haystack, needle): param type error')
 	for _, item in pairs(haystack)
     do
         if needle == item then
@@ -46,4 +46,28 @@ table.contains = function(haystack, needle)
         end
     end
     return false
+end
+
+table.length = function(T)
+    if T == nil or type(T) ~= "table" then
+        return -1
+    end
+    local count = 0
+    for _ in pairs(T) do count = count + 1 end
+    return count
+end
+
+table.tostring = function(T)
+
+    assert(type(T) == "table", 'table.tostring(): param type error')    
+    if T == nil then
+        return nil
+    end
+
+    local j = Json
+    if j == nil then
+        j = require 'libs.json'
+    end
+    local s = j.encode(T)
+    return Misc:ParseJToken(s)
 end

@@ -13,6 +13,7 @@ namespace V2RayGCon.Services
         Settings setting;
         Servers servers;
         Updater updater;
+        Notifier notifier;
 
         bool isDisposing = false;
         List<IDisposable> services = new List<IDisposable>();
@@ -20,24 +21,42 @@ namespace V2RayGCon.Services
         public Launcher() { }
 
         #region public method
-        public bool Run()
+        public bool Warmup()
         {
+            Misc.Utils.SupportProtocolTLS12();
+
             setting = Settings.Instance;
             if (setting.ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
             {
                 return false;
             }
+            SetCulture(setting.culture);
+            return true;
+        }
 
+        public void Run()
+        {
+            notifier = Notifier.Instance;
             servers = Servers.Instance;
             updater = Updater.Instance;
 
-            SetCulture(setting.culture);
+            var nm = notifier.niMenu;
+            nm.CreateControl();
+            nm.Show();
+            nm.Close();
 
             InitAllServices();
-
             BindEvents();
+            Boot();
 
-            Misc.Utils.SupportProtocolTLS12();
+#if DEBUG
+            This_Function_Is_Used_For_Debugging();
+#endif
+        }
+
+        private void Boot()
+        {
+            PluginsServer.Instance.RestartAllPlugins();
 
             if (servers.IsEmpty())
             {
@@ -50,20 +69,15 @@ namespace V2RayGCon.Services
 
             if (setting.isCheckUpdateWhenAppStart)
             {
-                VgcApis.Misc.Utils.RunInBackground(() =>
+                Task.Run(() =>
                 {
 #if DEBUG
 #else
                     Task.Delay(VgcApis.Models.Consts.Webs.CheckForUpdateDelay).Wait();
 #endif
                     updater.CheckForUpdate(false);
-                });
+                }).ConfigureAwait(false);
             }
-
-#if DEBUG
-            This_Function_Is_Used_For_Debugging();
-#endif
-            return true;
         }
 
         #endregion
@@ -118,7 +132,6 @@ namespace V2RayGCon.Services
             var cache = Cache.Instance;
             var configMgr = ConfigMgr.Instance;
             var slinkMgr = ShareLinkMgr.Instance;
-            var notifier = Notifier.Instance;
             var pluginsServ = PluginsServer.Instance;
 
             // by dispose order
@@ -140,8 +153,6 @@ namespace V2RayGCon.Services
             slinkMgr.Run(setting, servers, cache);
             notifier.Run(setting, servers, slinkMgr, updater);
             pluginsServ.Run(setting, servers, configMgr, slinkMgr, notifier);
-
-
         }
 
         void BindEvents()

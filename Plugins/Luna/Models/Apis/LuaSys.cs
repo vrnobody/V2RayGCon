@@ -1,10 +1,12 @@
 ﻿using NLua;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Luna.Models.Apis
 {
@@ -17,11 +19,18 @@ namespace Luna.Models.Apis
         private readonly Func<List<Type>> getAllAssemblies;
 
         List<Process> processes = new List<Process>();
-        List<VgcApis.Interfaces.Lua.ILuaMailBox> mailboxs = new List<VgcApis.Interfaces.Lua.ILuaMailBox>();
+
+        List<VgcApis.Interfaces.Lua.ILuaMailBox>
+            mailboxs = new List<VgcApis.Interfaces.Lua.ILuaMailBox>();
+
+        ConcurrentDictionary<string, VgcApis.Interfaces.Lua.ILuaMailBox>
+            hotkeys = new ConcurrentDictionary<string, VgcApis.Interfaces.Lua.ILuaMailBox>();
 
         static readonly SysCmpos.PostOffice postOffice = new SysCmpos.PostOffice();
 
-        public LuaSys(LuaApis luaApis, Func<List<Type>> getAllAssemblies)
+        public LuaSys(
+            LuaApis luaApis,
+            Func<List<Type>> getAllAssemblies)
         {
             this.luaApis = luaApis;
             this.getAllAssemblies = getAllAssemblies;
@@ -57,6 +66,48 @@ namespace Luna.Models.Apis
                 processes.Add(proc);
             }
             VgcApis.Libs.Sys.ChildProcessTracker.AddProcess(proc);
+        }
+        #endregion
+
+        #region ILluaSys.Hotkey
+        public string GetAllKeyNames()
+        {
+            return string.Join(@", ", Enum.GetNames(typeof(Keys)));
+        }
+
+        public bool UnregisterHotKey(VgcApis.Interfaces.Lua.ILuaMailBox mailbox, string handle)
+        {
+            if (postOffice.ValidateMailBox(mailbox)
+                && hotkeys.TryGetValue(handle, out var mb)
+                && ReferenceEquals(mb, mailbox)
+                && hotkeys.TryRemove(handle, out _))
+            {
+                return luaApis.UnregisterHotKey(handle);
+            }
+            return false;
+        }
+
+        public string RegisterHotKey(
+            VgcApis.Interfaces.Lua.ILuaMailBox mailbox, int evCode,
+            string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+        {
+            // 无权访问
+            if (!postOffice.ValidateMailBox(mailbox))
+            {
+                return null;
+            }
+
+            var addr = mailbox.GetAddress();
+            Action handler = () => mailbox.SendCode(addr, evCode);
+
+            var hkHandle = luaApis.RegisterHotKey(handler, keyName, hasAlt, hasCtrl, hasShift);
+            if (!string.IsNullOrEmpty(hkHandle))
+            {
+                hotkeys.TryAdd(hkHandle, mailbox);
+                return hkHandle;
+            }
+
+            return null;
         }
         #endregion
 
@@ -106,6 +157,45 @@ namespace Luna.Models.Apis
         #endregion
 
         #region ILuaSys.PostOffice
+        public bool ValidateMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailbox) =>
+            postOffice.ValidateMailBox(mailbox);
+
+        public bool RemoveMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailbox)
+        {
+            if (!postOffice.ValidateMailBox(mailbox))
+            {
+                return false;
+            }
+
+            lock (procLocker)
+            {
+                if (mailboxs.Contains(mailbox))
+                {
+                    mailboxs.Remove(mailbox);
+                }
+            }
+
+            return postOffice.RemoveMailBox(mailbox);
+        }
+
+
+        public VgcApis.Interfaces.Lua.ILuaMailBox ApplyRandomMailBox()
+        {
+            for (int failsafe = 0; failsafe < 10000; failsafe++)
+            {
+                var name = Guid.NewGuid().ToString();
+                var mailbox = CreateMailBox(name);
+                if (mailbox != null)
+                {
+                    return mailbox;
+                }
+            }
+
+            // highly unlikely
+            return null;
+        }
+
+
         public VgcApis.Interfaces.Lua.ILuaMailBox CreateMailBox(string name)
         {
             var mailbox = postOffice.CreateMailBox(name);
@@ -129,6 +219,8 @@ namespace Luna.Models.Apis
         #endregion
 
         #region ILuaSys.Process
+        public void DoEvents() => Application.DoEvents();
+
         public void WaitForExit(Process proc) => proc?.WaitForExit();
 
         public void Cleanup(Process proc) => proc?.Close();
@@ -284,20 +376,13 @@ namespace Luna.Models.Apis
         #endregion
 
         #region public methods
-        public void CloseAllMailBox()
-        {
-            List<VgcApis.Interfaces.Lua.ILuaMailBox> boxes;
-            lock (procLocker)
-            {
-                boxes = mailboxs.ToList();
-                mailboxs.Clear();
-            }
 
-            foreach (var box in boxes)
-            {
-                postOffice.RemoveMailBox(box);
-            }
+        public void OnSignalStop()
+        {
+            RemoveAllKeyboardHooks();
+            CloseAllMailBox();
         }
+
         #endregion
 
         #region private methods
@@ -322,17 +407,42 @@ namespace Luna.Models.Apis
                 catch { }
             }
         }
+
+        void CloseAllMailBox()
+        {
+            List<VgcApis.Interfaces.Lua.ILuaMailBox> boxes;
+            lock (procLocker)
+            {
+                boxes = mailboxs.ToList();
+                mailboxs.Clear();
+            }
+
+            foreach (var box in boxes)
+            {
+                postOffice.RemoveMailBox(box);
+            }
+        }
+
+        void RemoveAllKeyboardHooks()
+        {
+            var handles = hotkeys.Keys;
+            foreach (var handle in handles)
+            {
+                if (hotkeys.TryRemove(handle, out _))
+                {
+                    luaApis.UnregisterHotKey(handle);
+                }
+            }
+        }
         #endregion
 
         #region protected methods
         protected override void Cleanup()
         {
+            RemoveAllKeyboardHooks();
             CloseAllMailBox();
             KillAllProcesses();
         }
-
-
-
 
         #endregion
     }

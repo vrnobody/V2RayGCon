@@ -369,7 +369,7 @@ namespace V2RayGCon.Services
             {
                 return customTimeout;
             }
-            return VgcApis.Models.Consts.Intervals.SpeedTestTimeout;
+            return VgcApis.Models.Consts.Intervals.DefaultSpeedTestTimeout;
         }
 
         string GetDefaultSpeedtestUrl() =>
@@ -397,7 +397,7 @@ namespace V2RayGCon.Services
         {
             // setting.SpeedTestPool may change while testing
             var pool = setting.SpeedTestPool;
-            pool.WaitOne();
+            VgcApis.Misc.Utils.BlockingWaitOne(pool, 15000);
 
             if (setting.isSpeedtestCancelled)
             {

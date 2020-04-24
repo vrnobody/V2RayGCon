@@ -88,14 +88,5 @@ namespace VgcApis.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
-        
-        /// <summary>
-        ///   查找类似  的本地化字符串。
-        /// </summary>
-        internal static string LogFileName {
-            get {
-                return ResourceManager.GetString("LogFileName", resourceCulture);
-            }
-        }
     }
 }

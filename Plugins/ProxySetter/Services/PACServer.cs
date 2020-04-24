@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Windows.Forms;
 
 namespace ProxySetter.Services
 {
@@ -237,8 +236,7 @@ namespace ProxySetter.Services
             }
             catch
             {
-                VgcApis.Misc.Utils.RunInBackground(
-                    () => MessageBox.Show(I18N.StartPacServFail));
+                VgcApis.Misc.UI.MsgBoxAsync(I18N.StartPacServFail);
                 return false;
             }
 

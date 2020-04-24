@@ -33,10 +33,22 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.5.0")]
+[assembly: AssemblyVersion("1.3.6.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-/*
+/* 
+ * -----------------------------------------------
+ * v1.3.5.11 Misc:ShowData() return a json string.
+ * v1.3.5.10 Add debug log file option.
+ * v1.3.5.9 Fix bugs.
+ * v1.3.5.8 Refactoring.
+ * v1.3.5.7 Try to fix a UI freezing bug.(failed)
+ * v1.3.5.6 Refactoring.
+ * v1.3.5.5 Refactoring.
+ * v1.3.5.4 Fix a bug.
+ * v1.3.5.3 Add hotkey supports in Luna plug-in.
+ * v1.3.5.2 Move ILuaJson into ILuaMisc.
+ * v1.3.5.1 Optional CLR loading in Luna plug-in.
  * ----------------------------------------------
  * v1.3.4.14 Refactoring.
  * v1.3.4.13 Luna enable clr support.

@@ -4,13 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Luna.Controllers
 {
     public class LuaCoreCtrl
     {
-        public EventHandler OnStateChange, OnIsHiddenChanged;
+        public EventHandler OnStateChange;
 
         Services.Settings settings;
         Models.Data.LuaCoreSetting coreSetting;
@@ -19,9 +18,12 @@ namespace Luna.Controllers
         Models.Apis.LuaSys luaSys = null;
 
         Thread luaCoreThread;
-        Task luaCoreTask;
+        private readonly bool enableTracebackFeature;
 
-        public LuaCoreCtrl() { }
+        public LuaCoreCtrl(bool enableTracebackFeature)
+        {
+            this.enableTracebackFeature = enableTracebackFeature;
+        }
 
         public void Run(
             Services.Settings settings,
@@ -35,7 +37,20 @@ namespace Luna.Controllers
         }
 
         #region properties 
-        public string name => coreSetting.name;
+        public string name
+        {
+            get => coreSetting.name;
+            set
+            {
+                if (coreSetting.name == value)
+                {
+                    return;
+                }
+                coreSetting.name = value;
+                Save();
+                InvokeOnStateChangeIgnoreError();
+            }
+        }
 
         public double index
         {
@@ -51,6 +66,21 @@ namespace Luna.Controllers
             }
         }
 
+        public bool isLoadClr
+        {
+            get => coreSetting.isLoadClr;
+            set
+            {
+                if (value == coreSetting.isLoadClr)
+                {
+                    return;
+                }
+                coreSetting.isLoadClr = value;
+                Save();
+                InvokeOnStateChangeIgnoreError();
+            }
+        }
+
         public bool isHidden
         {
             get => coreSetting.isHidden;
@@ -62,7 +92,7 @@ namespace Luna.Controllers
                 }
                 coreSetting.isHidden = value;
                 Save();
-                InvokeOnIsHiddenChangeIgnoreError();
+                InvokeOnStateChangeIgnoreError();
             }
         }
 
@@ -78,6 +108,7 @@ namespace Luna.Controllers
 
                 coreSetting.isAutorun = value;
                 Save();
+                InvokeOnStateChangeIgnoreError();
             }
         }
 
@@ -101,14 +132,6 @@ namespace Luna.Controllers
             }
         }
 
-        void InvokeOnIsHiddenChangeIgnoreError()
-        {
-            try
-            {
-                OnIsHiddenChanged?.Invoke(null, null);
-            }
-            catch { }
-        }
 
         void InvokeOnStateChangeIgnoreError()
         {
@@ -143,7 +166,7 @@ namespace Luna.Controllers
 
             SendLog($"{I18N.SendStopSignalTo} {coreSetting.name}");
             luaSignal.SetStopSignal(true);
-            luaSys?.CloseAllMailBox();
+            luaSys?.OnSignalStop();
         }
 
         public void Kill()
@@ -154,18 +177,20 @@ namespace Luna.Controllers
             }
 
             Stop();
-            if (luaCoreTask?.Wait(2000) == true)
+
+            if (!luaCoreThread.Join(2000))
             {
-                return;
+                SendLog($"{I18N.Terminate} {coreSetting.name}");
+                try
+                {
+                    luaCoreThread.Abort();
+                }
+                catch { }
             }
 
-            SendLog($"{I18N.Terminate} {coreSetting.name}");
             luaSys?.Dispose();
-            try
-            {
-                luaCoreThread?.Abort();
-            }
-            catch { }
+            luaSys = null;
+
             isRunning = false;
         }
 
@@ -179,7 +204,9 @@ namespace Luna.Controllers
             isRunning = true;
 
             SendLog($"{I18N.Start} {coreSetting.name}");
-            luaCoreTask = VgcApis.Misc.Utils.RunInBackground(() => RunLuaScript());
+
+            luaCoreThread = new Thread(RunLuaScript);
+            luaCoreThread.Start();
         }
 
         public void Cleanup()
@@ -190,51 +217,55 @@ namespace Luna.Controllers
 
         #region private methods
         List<Type> assemblies = null;
-        readonly object assemblisLocker = new object();
         List<Type> GetAllAssemblies()
         {
-            // cache until controller is destroyed
-            lock (assemblisLocker)
+            if (assemblies == null)
             {
-                if (assemblies == null)
-                {
-                    assemblies = VgcApis.Misc.Utils.GetAllAssembliesType();
-                }
+                assemblies = VgcApis.Misc.Utils.GetAllAssembliesType();
             }
             return assemblies;
         }
 
-        void SendLog(string content)
-            => luaApis.SendLog(content);
+        void SendLog(string content) => luaApis.SendLog(content);
 
         void RunLuaScript()
         {
             luaSys?.Dispose();
-            luaSys = new Models.Apis.LuaSys(luaApis, () => GetAllAssemblies());
+            luaSys = new Models.Apis.LuaSys(luaApis, GetAllAssemblies);
 
             luaSignal.ResetAllSignals();
-            luaCoreThread = Thread.CurrentThread;
 
+            Lua core = CreateLuaCore(luaSys);
             try
             {
-                var core = CreateLuaCore(luaSys);
-                var script = coreSetting.script;
-                core.DoString(script);
+                core.DoString(coreSetting.script);
             }
             catch (Exception e)
             {
                 SendLog($"[{coreSetting.name}] {e}");
+                if (core.UseTraceback)
+                {
+                    SendLog(core.GetDebugTraceback());
+                }
             }
 
-            isRunning = false;
             luaSys?.Dispose();
+            luaSys = null;
+
+            isRunning = false;
         }
 
         Lua CreateLuaCore(Models.Apis.LuaSys luaSys)
         {
-            var lua = new Lua();
+            var lua = new Lua()
+            {
+                UseTraceback = enableTracebackFeature,
+            };
 
-            lua.LoadCLRPackage();
+            if (settings.isEnableClrSupports && isLoadClr)
+            {
+                lua.LoadCLRPackage();
+            }
 
             lua.State.Encoding = Encoding.UTF8;
 
@@ -244,7 +275,6 @@ namespace Luna.Controllers
             lua["Signal"] = luaSignal;
             lua["Sys"] = luaSys;
 
-            lua["Json"] = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaJson>();
             lua["Misc"] = misc;
             lua["Server"] = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaServer>();
             lua["Web"] = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaWeb>();

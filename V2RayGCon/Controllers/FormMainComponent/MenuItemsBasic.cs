@@ -84,7 +84,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             VgcApis.Misc.UI.SaveToFile(VgcApis.Models.Consts.Files.TxtExt, s);
         }
 
-        public override bool RefreshUI() { return false; }
         public override void Cleanup()
         {
             pluginServ.OnRequireMenuUpdate -= OnRequireMenuUpdateHandler;
@@ -114,7 +113,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void OnRequireMenuUpdateHandler(object sender, EventArgs evs)
         {
-            VgcApis.Misc.UI.RunInUiThread(formMain, UpdatePluginMenu);
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, UpdatePluginMenu);
         }
 
         void InitMenuPlugin(ToolStripMenuItem pluginToolStrip)

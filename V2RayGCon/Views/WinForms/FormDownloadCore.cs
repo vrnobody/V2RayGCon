@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -60,38 +59,27 @@ namespace V2RayGCon.Views.WinForms
                 var msg = string.IsNullOrEmpty(version) ?
                     I18N.GetCoreVerFail :
                     string.Format(I18N.CurrentCoreVerIs, version);
-                try
-                {
-                    VgcApis.Misc.UI.RunInUiThread(
-                        el, () => { el.Text = msg; });
-                }
-                catch { }
+
+                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                    el, () => el.Text = msg);
+
             });
         }
 
         void UpdateProgressBar(int percentage)
         {
             // window may closed before this function is called
-            try
-            {
-                VgcApis.Misc.UI.RunInUiThread(pgBarDownload, () =>
-                {
-                    pgBarDownload.Value = Misc.Utils.Clamp(percentage, 0, 101);
-                });
-            }
-            catch { }
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                pgBarDownload,
+                () => pgBarDownload.Value = Misc.Utils.Clamp(percentage, 0, 101));
         }
 
         void EnableBtnDownload()
         {
-            try
-            {
-                VgcApis.Misc.UI.RunInUiThread(btnDownload, () =>
-                {
-                    btnDownload.Enabled = true;
-                });
-            }
-            catch { }
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                btnDownload,
+                () => btnDownload.Enabled = true);
+
         }
 
         void DownloadV2RayCore(int proxyPort)
@@ -175,26 +163,24 @@ namespace V2RayGCon.Views.WinForms
                 {
                     setting.SaveV2RayCoreVersionList(versions);
                 }
-                try
-                {
-                    VgcApis.Misc.UI.RunInUiThread(elRefresh, () =>
-                    {
-                        elRefresh.Enabled = true;
-                    });
 
-                    VgcApis.Misc.UI.RunInUiThread(elCboxVer, () =>
-                    {
-                        if (versions.Count > 0)
-                        {
-                            Misc.UI.FillComboBox(elCboxVer, versions);
-                        }
-                        else
-                        {
-                            MessageBox.Show(I18N.GetVersionListFail);
-                        }
-                    });
-                }
-                catch { }
+                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                    elRefresh,
+                    () => elRefresh.Enabled = true);
+
+                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                    elCboxVer, () =>
+ {
+     if (versions.Count > 0)
+     {
+         Misc.UI.FillComboBox(elCboxVer, versions);
+     }
+     else
+     {
+         MessageBox.Show(I18N.GetVersionListFail);
+     }
+ });
+
             });
         }
 

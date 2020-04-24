@@ -158,7 +158,7 @@ namespace V2RayGCon.Controllers
                         GetCoreCtrl().RestartCore();
                     }
                 });
-            });
+            }).ConfigureAwait(false);
         }
 
         public ICoreStates GetCoreStates() => states;

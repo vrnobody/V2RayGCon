@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Luna.Services
@@ -12,7 +11,6 @@ namespace Luna.Services
         ToolStripMenuItem miRoot, miShowWindow;
         VgcApis.Interfaces.Services.INotifierService vgcNotifierService;
         VgcApis.Libs.Tasks.LazyGuy lazyMenuUpdater;
-        AutoResetEvent menuUpdaterLock = new AutoResetEvent(true);
 
         public MenuUpdater(VgcApis.Interfaces.Services.INotifierService vgcNotifierService)
         {
@@ -29,7 +27,10 @@ namespace Luna.Services
             this.miRoot = miRoot;
             this.miShowWindow = miShowWindow;
 
-            lazyMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateMenuLater, 1000);
+            lazyMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateMenuWorker, 1000)
+            {
+                Name = "Luna.MenuUpdater",
+            };
 
             BindEvents();
 
@@ -41,22 +42,9 @@ namespace Luna.Services
         #endregion
 
         #region private methods
-
-        void UpdateMenuLater()
+        void UpdateMenuWorker()
         {
-            if (!menuUpdaterLock.WaitOne(0))
-            {
-                lazyMenuUpdater?.DoItLater();
-                return;
-            }
-
-            Action next = () => menuUpdaterLock.Set();
-            UpdateMenuNow(next);
-        }
-
-        void UpdateMenuNow(Action next)
-        {
-            vgcNotifierService.RunInUiThreadIgnoreErrorThen(() =>
+            vgcNotifierService.RunInUiThreadIgnoreError(() =>
             {
                 var mis = GenSubMenuItems();
                 var root = miRoot.DropDownItems;
@@ -67,8 +55,10 @@ namespace Luna.Services
                     root.Add(new ToolStripSeparator());
                     root.AddRange(mis.ToArray());
                 }
-            }, next);
+            });
         }
+
+        void UpdateMenuLater() => lazyMenuUpdater?.Postpone();
 
         List<ToolStripMenuItem> GenSubMenuItems()
         {
@@ -78,6 +68,7 @@ namespace Luna.Services
             {
                 var ctrl = luaCtrl; // capture
                 var mi = new ToolStripMenuItem(ctrl.name, null, (s, a) => ctrl.Start());
+                mi.Checked = luaCtrl.isRunning;
                 mis.Add(mi);
             }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Luna.Services
 {
@@ -26,10 +27,27 @@ namespace Luna.Services
             this.luaApis.Prepare();
 
             InitLuaCores();
-            WakeUpAutoRunScripts();
         }
 
         #region public methods
+        public void WakeUpAutoRunScripts(TimeSpan delay)
+        {
+            var list = GetAllLuaCoreCtrls().Where(c => c.isAutoRun).ToList();
+            if (list.Count() <= 0)
+            {
+                return;
+            }
+
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                Task.Delay(1000).Wait();
+                foreach (var core in list)
+                {
+                    core.Start();
+                    Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+                }
+            });
+        }
 
         public List<string[]> GetAllScripts()
         {
@@ -103,7 +121,7 @@ namespace Luna.Services
         void RemoveCoreCtrl(Controllers.LuaCoreCtrl coreCtrl)
         {
             var name = coreCtrl.name;
-            coreCtrl.OnIsHiddenChanged -= OnRequireMenuUpdateHandler;
+            coreCtrl.OnStateChange -= OnRequireMenuUpdateHandler;
             coreCtrl.Kill();
             luaCoreCtrls.Remove(coreCtrl);
             settings.GetLuaCoreSettings().RemoveAll(s => s.name == name);
@@ -191,10 +209,10 @@ namespace Luna.Services
 
         void AddNewLuaCoreCtrl(Models.Data.LuaCoreSetting coreState)
         {
-            var coreCtrl = new Controllers.LuaCoreCtrl();
+            var coreCtrl = new Controllers.LuaCoreCtrl(false);
             luaCoreCtrls.Add(coreCtrl);
             coreCtrl.Run(settings, coreState, luaApis);
-            coreCtrl.OnIsHiddenChanged += OnRequireMenuUpdateHandler;
+            coreCtrl.OnStateChange += OnRequireMenuUpdateHandler;
         }
 
 
@@ -206,7 +224,6 @@ namespace Luna.Services
             try
             {
                 OnRequireMenuUpdate?.Invoke(this, EventArgs.Empty);
-
             }
             catch { }
         }
@@ -224,18 +241,7 @@ namespace Luna.Services
 
         void Save() => settings.SaveUserSettingsNow();
 
-        void WakeUpAutoRunScripts()
-        {
-            var list = GetAllLuaCoreCtrls().Where(c => c.isAutoRun).ToList();
-            if (list.Count() <= 0)
-            {
-                return;
-            }
-            foreach (var core in list)
-            {
-                core.Start();
-            }
-        }
+
 
         void InitLuaCores()
         {

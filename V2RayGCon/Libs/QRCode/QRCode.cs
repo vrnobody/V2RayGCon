@@ -181,30 +181,33 @@ namespace V2RayGCon.Libs.QRCode
 
         public static void ScanQRCode(Action<string> success, Action fail)
         {
-            Task.Delay(100).Wait();
-
-            foreach (var screen in Screen.AllScreens)
+            Task.Run(async () =>
             {
-                var parts = 8;
-                var scanSize = (int)(0.5 * parts);
+                await Task.Delay(100);
 
-                // Debug.WriteLine("res: {0}x{1}", screen.Bounds.Width, screen.Bounds.Height);
-
-                var scanRectList = GenSquareScanWinList(new Point(
-                    screen.Bounds.Width,
-                    screen.Bounds.Height),
-                    parts, scanSize);
-
-                scanRectList.AddRange(GenZoomScanWinList(new Point(
-                    screen.Bounds.Width,
-                    screen.Bounds.Height)));
-
-                if (ScanScreen(screen, scanRectList, success))
+                foreach (var screen in Screen.AllScreens)
                 {
-                    return;
+                    var parts = 8;
+                    var scanSize = (int)(0.5 * parts);
+
+                    // Debug.WriteLine("res: {0}x{1}", screen.Bounds.Width, screen.Bounds.Height);
+
+                    var scanRectList = GenSquareScanWinList(new Point(
+                        screen.Bounds.Width,
+                        screen.Bounds.Height),
+                        parts, scanSize);
+
+                    scanRectList.AddRange(GenZoomScanWinList(new Point(
+                        screen.Bounds.Width,
+                        screen.Bounds.Height)));
+
+                    if (ScanScreen(screen, scanRectList, success))
+                    {
+                        return;
+                    }
                 }
-            }
-            fail?.Invoke();
+                fail?.Invoke();
+            });
         }
 
         static Rectangle GetQRCodeRect(Result result, Rectangle winRect, Rectangle screenRect)
@@ -249,12 +252,12 @@ namespace V2RayGCon.Libs.QRCode
                 try
                 {
                     qrSplash.Show();
+                    Application.Run(qrSplash);
                 }
                 catch { }
-                Application.Run();
             }
 
-            VgcApis.Misc.Utils.RunInBackground(() => ShowFormInBackground());
+            Task.Run(() => ShowFormInBackground()).ConfigureAwait(false);
         }
 
         static bool ScanWindow(Bitmap screenshot, Point screenLocation, Rectangle winRect, Rectangle screenRect, Action<string> success)

@@ -23,7 +23,8 @@ namespace V2RayGCon.Misc
     {
         static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
-        #region copy from vgc
+
+
 
         #region strings
         static string appNameAndVersion = null;
@@ -1020,7 +1021,7 @@ namespace V2RayGCon.Misc
                 throw new ArgumentNullException("URL must not null!");
             }
 
-            var maxTimeout = timeout > 0 ? timeout : VgcApis.Models.Consts.Intervals.SpeedTestTimeout;
+            var maxTimeout = timeout > 0 ? timeout : VgcApis.Models.Consts.Intervals.DefaultSpeedTestTimeout;
 
             WebClient wc = new WebClient
             {
@@ -1085,7 +1086,7 @@ namespace V2RayGCon.Misc
             var success = true;
             if (timeout <= 0)
             {
-                timeout = VgcApis.Models.Consts.Intervals.FetchDefaultTimeout;
+                timeout = VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
             }
 
             WebClient wc = new WebClient();
@@ -1150,7 +1151,7 @@ namespace V2RayGCon.Misc
 
             if (timeout <= 0)
             {
-                timeout = VgcApis.Models.Consts.Intervals.FetchDefaultTimeout;
+                timeout = VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
             }
 
             WebClient wc = new WebClient
@@ -1344,8 +1345,8 @@ namespace V2RayGCon.Misc
 
         public static string SHA256(string randomString)
         {
-            var crypt = new System.Security.Cryptography.SHA256Managed();
-            var hash = new System.Text.StringBuilder();
+            var crypt = new SHA256Managed();
+            var hash = new StringBuilder();
             byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(randomString ?? string.Empty));
             foreach (byte theByte in crypto)
             {
@@ -1674,6 +1675,5 @@ namespace V2RayGCon.Misc
         }
         #endregion
 
-        #endregion
     }
 }

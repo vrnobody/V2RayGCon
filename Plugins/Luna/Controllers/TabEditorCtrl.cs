@@ -144,8 +144,11 @@ namespace Luna.Controllers
             luaApis.Prepare();
             luaApis.SetRedirectLogWorker(Log);
 
-            var coreSettings = new Models.Data.LuaCoreSetting();
-            var ctrl = new LuaCoreCtrl();
+            var coreSettings = new Models.Data.LuaCoreSetting()
+            {
+                isLoadClr = true,
+            };
+            var ctrl = new LuaCoreCtrl(true);
             ctrl.Run(settings, coreSettings, luaApis);
             return ctrl;
         }
@@ -297,14 +300,15 @@ namespace Luna.Controllers
                 return;
             }
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(rtboxOutput, () =>
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(rtboxOutput, () =>
             {
                 rtboxFreezer.DisableRepaintEvent();
                 rtboxOutput.Text = qLogger.GetLogAsString(true);
                 VgcApis.Misc.UI.ScrollToBottom(rtboxOutput);
                 rtboxFreezer.EnableRepaintEvent();
                 updateOutputTimeStamp = timestamp;
-            }, () => bar.Remove());
+            });
+            bar.Remove();
         }
 
         private void BindEvents()

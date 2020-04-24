@@ -281,7 +281,8 @@ namespace V2RayGCon.Controllers.OptionComponent
                     slinkMgr.ImportLinkWithOutV2cfgLinksBatchMode(
                         links.Where(l => !string.IsNullOrEmpty(l[0])).ToList());
 
-                    EnableBtnUpdate();
+                    VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                        btnUpdate, () => this.btnUpdate.Enabled = true);
                 });
             };
         }
@@ -379,23 +380,9 @@ namespace V2RayGCon.Controllers.OptionComponent
                 return port;
             }
 
-            VgcApis.Misc.Utils.RunInBackground(
-                () => MessageBox.Show(
-                    I18N.NoQualifyProxyServer));
+            VgcApis.Misc.UI.MsgBoxAsync(I18N.NoQualifyProxyServer);
 
             return -1;
-        }
-
-        private void EnableBtnUpdate()
-        {
-            try
-            {
-                VgcApis.Misc.UI.RunInUiThread(btnUpdate, () =>
-                {
-                    this.btnUpdate.Enabled = true;
-                });
-            }
-            catch { }
         }
         #endregion
     }

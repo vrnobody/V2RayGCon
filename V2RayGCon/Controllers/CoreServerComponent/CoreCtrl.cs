@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
@@ -68,7 +69,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             AutoResetEvent done = new AutoResetEvent(false);
             RestartCoreThen(() => done.Set());
-            done.WaitOne();
+            VgcApis.Misc.Utils.BlockingWaitOne(done, 5000);
         }
 
         public void StopCoreQuiet() => v2rayCore.StopCoreThen(null);
@@ -77,18 +78,18 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             AutoResetEvent done = new AutoResetEvent(false);
             StopCoreThen(() => done.Set());
-            done.WaitOne();
+            VgcApis.Misc.Utils.BlockingWaitOne(done, 5000);
         }
 
         public void StopCoreThen() =>
-            VgcApis.Misc.Utils.RunInBackground(() => StopCoreWorker(null));
+            Task.Run(() => StopCoreWorker(null)).ConfigureAwait(false);
 
         public void StopCoreThen(Action next) =>
-            VgcApis.Misc.Utils.RunInBackground(() => StopCoreWorker(next));
+            Task.Run(() => StopCoreWorker(next)).ConfigureAwait(false);
 
         public void RestartCoreThen() => RestartCoreThen(null);
         public void RestartCoreThen(Action next) =>
-            VgcApis.Misc.Utils.RunInBackground(() => RestartCoreWorker(next));
+            Task.Run(() => RestartCoreWorker(next)).ConfigureAwait(false);
 
         public bool IsCoreRunning() => v2rayCore.isRunning;
 

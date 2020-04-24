@@ -1,5 +1,6 @@
 ﻿using AutocompleteMenuNS;
 using ScintillaNET;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,11 +11,29 @@ namespace Luna.Services
 
     {
         VgcApis.Interfaces.Services.ISettingsService vgcSetting;
+        VgcApis.Interfaces.Services.INotifierService vgcNotifier;
+
         readonly string pluginName = Properties.Resources.Name;
         Models.Data.UserSettings userSettings;
         Libs.LuaSnippet.LuaAcm luaAcm;
 
         public Settings() { }
+
+        #region properties
+        public bool isEnableClrSupports
+        {
+            get => userSettings.isEnableClrSupports;
+            set
+            {
+                if (userSettings.isEnableClrSupports == value)
+                {
+                    return;
+                }
+                userSettings.isEnableClrSupports = value;
+                SaveUserSettingsNow();
+            }
+        }
+        #endregion
 
         #region internal methods
         public AutocompleteMenu AttachSnippetsTo(Scintilla editor) =>
@@ -22,6 +41,9 @@ namespace Luna.Services
         #endregion
 
         #region public methods
+        public void RunInUiThreadIgnoreError(Action updater) =>
+            vgcNotifier.RunInUiThreadIgnoreError(updater);
+
         public void SendLog(string contnet)
         {
             var name = Properties.Resources.Name;
@@ -34,9 +56,12 @@ namespace Luna.Services
         public void SetIsDisposing(bool value) => isDisposing = value;
 
         public void Run(
-            VgcApis.Interfaces.Services.ISettingsService vgcSetting)
+            VgcApis.Interfaces.Services.ISettingsService vgcSetting,
+            VgcApis.Interfaces.Services.INotifierService vgcNotifier)
         {
             this.vgcSetting = vgcSetting;
+            this.vgcNotifier = vgcNotifier;
+
             this.luaAcm = new Libs.LuaSnippet.LuaAcm();
 
             userSettings = VgcApis.Misc.Utils
@@ -48,7 +73,7 @@ namespace Luna.Services
 
         public string GetLuaShareMemory(string key)
         {
-            if (!userSettings.luaShareMemory.ContainsKey(key))
+            if (string.IsNullOrEmpty(key) || !userSettings.luaShareMemory.ContainsKey(key))
             {
                 return @"";
             }
@@ -58,6 +83,12 @@ namespace Luna.Services
         readonly object shareMemoryLocker = new object();
         public bool RemoveShareMemory(string key)
         {
+            if (string.IsNullOrEmpty(key)
+                || !userSettings.luaShareMemory.ContainsKey(key))
+            {
+                return false;
+            }
+
             bool success;
             lock (shareMemoryLocker)
             {
@@ -77,6 +108,11 @@ namespace Luna.Services
 
         public void SetLuaShareMemory(string key, string value)
         {
+            if (string.IsNullOrEmpty(key))
+            {
+                return;
+            }
+
             lock (shareMemoryLocker)
             {
                 userSettings.luaShareMemory[key] = value;

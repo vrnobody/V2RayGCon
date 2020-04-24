@@ -85,10 +85,14 @@ namespace V2RayGCon.Views.WinForms
                     cboxSettingsRandomSelectServerLatency,
                     chkSetSysPortable,
                     chkSetUseV4,
-                                        chkSetSelfSignedCert,
+                    chkSetSelfSignedCert,
                     chkSetServStatistics,
                     chkSetUpgradeUseProxy,
-                    chkSetCheckWhenStart));
+                    chkSetCheckWhenStart,
+
+                    btnSetBrowseDebugFile,
+                    tboxSetDebugFilePath,
+                    chkSetEnableDebugFile));
 
             ctrl.Plug(
                 new Controllers.OptionComponent.TabDefaults(

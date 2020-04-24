@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VgcApis.Resources.Langs;
@@ -14,7 +15,6 @@ namespace VgcApis.Misc
 {
     public static class UI
     {
-
         #region Controls
         public static void ResetComboBoxDropdownMenuWidth(ComboBox cbox)
         {
@@ -135,121 +135,45 @@ namespace VgcApis.Misc
         #endregion
 
         #region update ui
-        public static void CloseFormIgnoreError(Form form)
+        public static void CloseFormIgnoreError(Form form) =>
+            RunInUiThreadIgnoreError(form, () => form?.Close());
+
+        static bool IsInUiThread()
         {
-            try
-            {
-                form?.Invoke((MethodInvoker)delegate
-                {
-                    try
-                    {
-                        form?.Close();
-                    }
-                    catch { }
-                });
-            }
-            catch { }
+            return Thread.CurrentThread.Name == Models.Consts.Libs.UiThreadName;
         }
 
-        /// <summary>
-        /// If control==null return;
-        /// </summary>
-        /// <param name="control">invokeable control</param>
-        /// <param name="uiUpdater">UI updater</param>
-        public static void RunInUiThread(Control control, Action uiUpdater)
+        public static void RunInUiThreadIgnoreError(Control control, Action updater)
         {
-            if (control == null || control.IsDisposed)
-            {
-                return;
-            }
-
-            if (!control.InvokeRequired)
-            {
-                uiUpdater?.Invoke();
-                return;
-            }
-
-            control.Invoke((MethodInvoker)delegate
-            {
-                uiUpdater?.Invoke();
-            });
-        }
-
-        public static void RunInUiThreadIgnoreErrorThen(Control control, Action uiUpdater, Action next)
-        {
-            if (control == null || control.IsDisposed)
-            {
-                return;
-            }
-
-            void done()
-            {
-                _ = Task.Run(() =>
-                {
-                    try
-                    {
-                        next?.Invoke();
-                    }
-                    catch { }
-                });
-            }
-
-            void TryUpdateUi()
+            Action updateIgnoreError = () =>
             {
                 try
                 {
-                    uiUpdater?.Invoke();
+                    updater?.Invoke();
                 }
                 catch { }
-            }
-
-            if (!control.InvokeRequired)
-            {
-                TryUpdateUi();
-                done();
-                return;
-            }
+            };
 
             try
             {
-                control?.Invoke((MethodInvoker)delegate
+                if (control != null && !control.IsDisposed)
                 {
-                    TryUpdateUi();
-                    done();
-                });
-                return;
-            }
-            catch { }
-            done();
-        }
-
-        public static void RunInUiThreadIgnoreError(Control control, Action uiUpdater)
-        {
-            if (control == null || control.IsDisposed)
-            {
-                return;
-            }
-
-            if (!control.InvokeRequired)
-            {
-                try
-                {
-                    uiUpdater?.Invoke();
-                }
-                catch { }
-                return;
-            }
-
-            try
-            {
-                control.Invoke((MethodInvoker)delegate
-                {
-                    try
+                    if (!control.InvokeRequired)
                     {
-                        uiUpdater?.Invoke();
+                        if (!IsInUiThread())
+                        {
+                            Libs.Sys.FileLogger.DumpCallStack("!invoke error!");
+                        }
+                        updateIgnoreError();
                     }
-                    catch { }
-                });
+                    else
+                    {
+                        control.Invoke((MethodInvoker)delegate
+                        {
+                            updateIgnoreError();
+                        });
+                    }
+                }
             }
             catch { }
         }
@@ -417,7 +341,7 @@ namespace VgcApis.Misc
             var text = string.Format("{0}\n{1}", msg, url);
             if (Confirm(text))
             {
-                Utils.RunInBackground(() => System.Diagnostics.Process.Start(url));
+                Task.Run(() => System.Diagnostics.Process.Start(url)).ConfigureAwait(false);
             }
         }
 
@@ -428,10 +352,10 @@ namespace VgcApis.Misc
             MessageBox.Show(content ?? string.Empty, title ?? string.Empty);
 
         public static void MsgBoxAsync(string content) =>
-            Utils.RunInBackground(() => MsgBox("", content));
+            Task.Run(() => MsgBox("", content)).ConfigureAwait(false);
 
         public static void MsgBoxAsync(string title, string content) =>
-            Utils.RunInBackground(() => MsgBox(title, content));
+            Task.Run(() => MsgBox(title, content)).ConfigureAwait(false);
 
         public static bool Confirm(string content)
         {

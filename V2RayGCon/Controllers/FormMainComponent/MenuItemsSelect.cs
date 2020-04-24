@@ -48,10 +48,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
 
         #region public method
-        public override bool RefreshUI()
-        {
-            return false;
-        }
 
         public override void Cleanup()
         {
@@ -90,7 +86,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     el => el.GetCoreStates().GetSpeedTestResult() == SpeedtestTimeout);
 
             selectNoSpeedTestAllPages.Click +=
-                (s, a) => SelectAllPagesWhere(el => el.GetCoreStates().GetSpeedTestResult() < 0);
+                (s, a) => SelectAllPagesWhere(el => el.GetCoreStates().GetSpeedTestResult() <= 0);
 
             selectNoMarkAllPages.Click +=
                 (s, a) => SelectAllPagesWhere(
@@ -126,7 +122,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     el => string.IsNullOrEmpty(el.GetCoreStates().GetMark()));
 
             selectNoSpeedTestAllServers.Click +=
-                (s, a) => SelectAllServersWhere(el => el.GetCoreStates().GetSpeedTestResult() < 0);
+                (s, a) => SelectAllServersWhere(el => el.GetCoreStates().GetSpeedTestResult() <= 0);
 
             selectTimeoutAllServers.Click +=
                 (s, a) => SelectAllServersWhere(el => el.GetCoreStates().GetSpeedTestResult() == SpeedtestTimeout);

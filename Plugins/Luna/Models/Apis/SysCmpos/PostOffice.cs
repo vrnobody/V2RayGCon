@@ -4,7 +4,7 @@ namespace Luna.Models.Apis.SysCmpos
 {
     public class PostOffice
     {
-        ConcurrentDictionary<string, MailBox> mailboxs = new ConcurrentDictionary<string, MailBox>();
+        ConcurrentDictionary<string, MailBox> mailboxes = new ConcurrentDictionary<string, MailBox>();
 
         public PostOffice()
         { }
@@ -14,20 +14,31 @@ namespace Luna.Models.Apis.SysCmpos
         #endregion
 
         #region public methods
-        public bool RemoveMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailBox)
+        public bool RemoveMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailbox)
         {
-            if (mailBox == null)
-            {
-                return false;
-            }
-
-            var address = mailBox.GetAddress();
-            if (mailboxs.TryRemove(address, out var box))
+            if (mailboxes.TryRemove(mailbox.GetAddress(), out var box))
             {
                 box.Close();
                 return true;
             }
             return false;
+        }
+
+        public bool ValidateMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailbox)
+        {
+            if (mailbox == null)
+            {
+                return false;
+            }
+
+            var addr = mailbox.GetAddress();
+            if (string.IsNullOrEmpty(addr)
+                || !mailboxes.TryGetValue(addr, out var mb)
+                || !ReferenceEquals(mb, mailbox))
+            {
+                return false;
+            }
+            return true;
         }
 
         public VgcApis.Interfaces.Lua.ILuaMailBox CreateMailBox(string address)
@@ -38,7 +49,7 @@ namespace Luna.Models.Apis.SysCmpos
             }
 
             var mailbox = new MailBox(address, this);
-            if (mailboxs.TryAdd(address, mailbox))
+            if (mailboxes.TryAdd(address, mailbox))
             {
                 return mailbox;
             }
@@ -53,7 +64,7 @@ namespace Luna.Models.Apis.SysCmpos
                 return false;
             }
 
-            if (!mailboxs.TryGetValue(address, out var mailbox))
+            if (!mailboxes.TryGetValue(address, out var mailbox))
             {
                 return false;
             }

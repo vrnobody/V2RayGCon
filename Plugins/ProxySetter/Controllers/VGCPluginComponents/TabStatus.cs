@@ -82,12 +82,10 @@ namespace ProxySetter.Controllers.VGCPluginComponents
 
         void OnPacServerStateChangedHandler(object sender, EventArgs args)
         {
-            VgcApis.Misc.UI.RunInUiThread(lbPacServerStatus, () =>
-            {
-                lbPacServerStatus.Text =
-                    pacServer.isRunning ?
-                    I18N.PacServerIsOn : I18N.PacServerIsOff;
-            });
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                lbPacServerStatus,
+                () => lbPacServerStatus.Text = pacServer.isRunning ?
+                    I18N.PacServerIsOn : I18N.PacServerIsOff);
         }
 
         private void BindControls(Label lbPacServerStatus, Label lbPacUrl)

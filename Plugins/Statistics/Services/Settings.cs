@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace Statistics.Services
@@ -58,7 +59,11 @@ namespace Statistics.Services
 
             userSettins = LoadUserSetting();
             bookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
-                SaveUserSetting, VgcApis.Models.Consts.Intervals.LazySaveStatisticsDatadelay);
+                SaveUserSetting,
+                VgcApis.Models.Consts.Intervals.LazySaveStatisticsDatadelay)
+            {
+                Name = "Statistic.SaveUserSetting",
+            };
             StartBgStatsDataUpdateTimer();
             vgcServers.OnCoreClosing += SaveStatDataBeforeCoreClosed;
         }
@@ -74,10 +79,10 @@ namespace Statistics.Services
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Statistics: save data");
                 UpdateHistoryStatsDataWorker();
-                bookKeeper.DoItNow();
+                bookKeeper?.DoItNow();
             }
 
-            bookKeeper.Quit();
+            bookKeeper?.Dispose();
             VgcApis.Libs.Sys.FileLogger.Info("Statistics: done!");
         }
         #endregion
@@ -94,8 +99,7 @@ namespace Statistics.Services
             var uid = coreCtrl.GetCoreStates().GetUid();
             var sample = coreCtrl.GetCoreCtrl().TakeStatisticsSample();
             var title = coreCtrl.GetCoreStates().GetTitle();
-            VgcApis.Misc.Utils.RunInBackground(
-                () => AddToHistoryStatsData(uid, title, sample));
+            Task.Run(() => AddToHistoryStatsData(uid, title, sample)).ConfigureAwait(false);
         }
 
         void AddToHistoryStatsData(
@@ -181,7 +185,7 @@ namespace Statistics.Services
                     MergeNewDataIntoHistoryData(historyDatas, d, uid);
                 }
 
-                bookKeeper.DoItLater();
+                bookKeeper?.Throttle();
                 isUpdating = false;
             }
         }

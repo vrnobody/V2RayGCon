@@ -77,11 +77,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         #region public method
-        public override bool RefreshUI()
-        {
-            return false;
-        }
-
         public override void Cleanup()
         {
         }
@@ -108,7 +103,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 if (!servers.IsSelecteAnyServer())
                 {
-                    VgcApis.Misc.Utils.RunInBackground(() => MessageBox.Show(I18N.SelectServerFirst));
+                    VgcApis.Misc.UI.MsgBoxAsync(I18N.SelectServerFirst);
                     return;
                 }
                 action();
@@ -283,7 +278,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             var panel = GetFlyPanel();
             panel.RemoveAllServersConrol();
-            panel.RefreshUI();
+            panel.RefreshFlyPanelLater();
         }
 
         void SetServerItemsIndex(double index)

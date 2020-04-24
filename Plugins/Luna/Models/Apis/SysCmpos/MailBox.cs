@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Windows.Forms;
 
 namespace Luna.Models.Apis.SysCmpos
 {
@@ -21,18 +22,44 @@ namespace Luna.Models.Apis.SysCmpos
         #endregion
 
         #region public methods
+        public bool Clear()
+        {
+            var r = false;
+            try
+            {
+                while (mails.TryTake(out var _))
+                {
+                    r = true;
+                }
+            }
+            catch (System.ObjectDisposedException) { }
+            catch (System.InvalidOperationException) { }
+            return r;
+        }
+
         public string GetAddress() => myAddress;
 
         public int Count() => mails.Count;
 
+        public VgcApis.Models.Datas.LuaMail Wait(int milSecs)
+        {
+            if (TryTakeIgnoreError(mails, milSecs, out var mail))
+            {
+                return mail;
+            }
+            return null;
+        }
+
         public VgcApis.Models.Datas.LuaMail Wait()
         {
-            try
+            do
             {
-                return mails.Take();
-            }
-            catch (System.ObjectDisposedException) { }
-            catch (System.InvalidOperationException) { }
+                if (TryTakeIgnoreError(mails, 5000, out var mail))
+                {
+                    return mail;
+                }
+                Application.DoEvents();
+            } while (!mails.IsCompleted);
             return null;
         }
 
@@ -120,7 +147,19 @@ namespace Luna.Models.Apis.SysCmpos
         #endregion
 
         #region private methods
+        bool TryTakeIgnoreError<T>(BlockingCollection<T> collection, int timeout, out T item)
+        {
+            try
+            {
+                return collection.TryTake(out item, timeout);
+            }
+            catch (System.ObjectDisposedException) { }
+            catch (System.InvalidOperationException) { }
+            catch (System.ArgumentOutOfRangeException) { }
 
+            item = default;
+            return false;
+        }
         #endregion
 
         #region protected methods

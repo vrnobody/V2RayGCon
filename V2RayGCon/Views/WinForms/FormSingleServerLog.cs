@@ -37,7 +37,7 @@ namespace V2RayGCon.Views.WinForms
             }
 
             updateTimestamp = timestamp;
-            VgcApis.Misc.UI.RunInUiThread(this, UpdateLogBox);
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(this, UpdateLogBox);
         }
 
         void UpdateLogBox()

@@ -171,6 +171,9 @@
   <data name="ParseKeyCodeFail" xml:space="preserve">
     <value>尝试解释热键名失败！请检查ProxySetter的热键设置。</value>
   </data>
+  <data name="RegHotKeySuccess" xml:space="preserve">
+    <value>热键设置成功！</value>
+  </data>
   <data name="RegistHotkeyFail" xml:space="preserve">
     <value>尝试注册全局热键失败，请检查热键是否已被其他软件占用。</value>
   </data>
@@ -188,6 +191,9 @@
   </data>
   <data name="SystemProxySettingUpdated" xml:space="preserve">
     <value>系统代理设置已更新</value>
+  </data>
+  <data name="UnregisterHotKey" xml:space="preserve">
+    <value>清除热键{0}</value>
   </data>
   <data name="UsageReadme" xml:space="preserve">
     <value>// 这是一行注释

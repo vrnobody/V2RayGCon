@@ -132,7 +132,7 @@
     <value>Zoom</value>
   </data>
   <data name="btnRun.Location" type="System.Drawing.Point, System.Drawing">
-    <value>232, 4</value>
+    <value>272, 4</value>
   </data>
   <data name="btnRun.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -163,7 +163,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnRun.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <data name="btnStop.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -179,7 +179,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnStop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>252, 4</value>
+    <value>292, 4</value>
   </data>
   <data name="btnStop.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -203,7 +203,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnStop.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>5</value>
   </data>
   <data name="btnKill.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -218,7 +218,7 @@
     <value>Zoom</value>
   </data>
   <data name="btnKill.Location" type="System.Drawing.Point, System.Drawing">
-    <value>272, 4</value>
+    <value>312, 4</value>
   </data>
   <data name="btnKill.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -242,36 +242,6 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnKill.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="chkIsAutoRun.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkIsAutoRun.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 6</value>
-  </data>
-  <data name="chkIsAutoRun.Size" type="System.Drawing.Size, System.Drawing">
-    <value>30, 16</value>
-  </data>
-  <data name="chkIsAutoRun.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="chkIsAutoRun.Text" xml:space="preserve">
-    <value>A</value>
-  </data>
-  <data name="chkIsAutoRun.ToolTip" xml:space="preserve">
-    <value>Run this script after this plugin is loaded.</value>
-  </data>
-  <data name="&gt;&gt;chkIsAutoRun.Name" xml:space="preserve">
-    <value>chkIsAutoRun</value>
-  </data>
-  <data name="&gt;&gt;chkIsAutoRun.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkIsAutoRun.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;chkIsAutoRun.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="lbRunningState.Font" type="System.Drawing.Font, System.Drawing">
@@ -308,13 +278,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbRunningState.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="lbName.Location" type="System.Drawing.Point, System.Drawing">
     <value>35, 8</value>
   </data>
   <data name="lbName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 13</value>
+    <value>232, 13</value>
   </data>
   <data name="lbName.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -338,7 +308,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbName.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="btnRemove.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -356,7 +326,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnRemove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>292, 4</value>
+    <value>332, 4</value>
   </data>
   <data name="btnRemove.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -380,40 +350,43 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnRemove.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
-  <data name="chkIsHidden.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="rlbOptions.Location" type="System.Drawing.Point, System.Drawing">
+    <value>357, 6</value>
   </data>
-  <data name="chkIsHidden.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="rlbOptions.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="chkIsHidden.Location" type="System.Drawing.Point, System.Drawing">
-    <value>359, 6</value>
+  <data name="rlbOptions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 17</value>
   </data>
-  <data name="chkIsHidden.Size" type="System.Drawing.Size, System.Drawing">
-    <value>30, 16</value>
+  <data name="rlbOptions.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
   </data>
-  <data name="chkIsHidden.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="rlbOptions.Text" xml:space="preserve">
+    <value>ACH</value>
   </data>
-  <data name="chkIsHidden.Text" xml:space="preserve">
-    <value>H</value>
+  <data name="rlbOptions.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
-  <data name="chkIsHidden.ToolTip" xml:space="preserve">
-    <value>Do not show up in systray menu.</value>
+  <data name="rlbOptions.ToolTip" xml:space="preserve">
+    <value>(A)utorun
+(C)LR support
+(E)mpty
+(H)idden in systray menu</value>
   </data>
-  <data name="&gt;&gt;chkIsHidden.Name" xml:space="preserve">
-    <value>chkIsHidden</value>
+  <data name="&gt;&gt;rlbOptions.Name" xml:space="preserve">
+    <value>rlbOptions</value>
   </data>
-  <data name="&gt;&gt;chkIsHidden.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;rlbOptions.Type" xml:space="preserve">
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;chkIsHidden.Parent" xml:space="preserve">
+  <data name="&gt;&gt;rlbOptions.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;chkIsHidden.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;rlbOptions.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -423,6 +396,9 @@
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>400, 30</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value>Try drag n drop.</value>
   </data>
   <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
     <value>toolTip1</value>

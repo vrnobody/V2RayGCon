@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -27,6 +28,71 @@ namespace Luna.Models.Apis.Components
             vgcSettings = api.GetSettingService();
         }
 
+        #region ILuaMisc.Json
+        public bool TrySetDoubleValue(JToken json, string path, double value) =>
+            vgcUtils.TrySetValue(json, path, value);
+
+        public bool TrySetIntValue(JToken json, string path, int value) =>
+            vgcUtils.TrySetValue(json, path, value);
+
+        public bool TrySetBoolValue(JToken json, string path, bool value) =>
+            vgcUtils.TrySetValue(json, path, value);
+
+        public bool TrySetStringValue(JToken json, string path, string value) =>
+            vgcUtils.TrySetValue(json, path, value);
+
+        public string GetString(JToken json, string path) =>
+            vgcUtils.GetValue<string>(json, path);
+
+        public bool GetBool(JToken json, string path) =>
+            vgcUtils.GetValue<bool>(json, path);
+
+        public int GetInt(JToken json, string path) =>
+            vgcUtils.GetValue<int>(json, path);
+
+        public double GetDouble(JToken json, string path) =>
+            vgcUtils.GetValue<double>(json, path);
+
+        public JToken GetKey(JToken json, string path) =>
+           vgcUtils.GetKey(json, path);
+
+        public string GetProtocol(JObject config) =>
+            vgcUtils.GetProtocol(config);
+
+        public void CombineWithRoutingInFront(JObject body, JObject mixin) =>
+            vgcUtils.CombineWithRoutingInFront(body, mixin);
+
+        public void CombineWithRoutingInTheEnd(JObject body, JObject mixin) =>
+            vgcUtils.CombineWithRoutingInTheEnd(body, mixin);
+
+        public void Merge(JObject body, JObject mixin) =>
+            vgcUtils.Merge(body, mixin);
+
+        public JArray ParseJArray(string json) =>
+            vgcUtils.ParseJArray(json);
+
+        public JObject ParseJObject(string json) =>
+            vgcUtils.ParseJObject(json);
+
+        public JToken ParseJToken(string json) =>
+            vgcUtils.ParseJToken(json);
+
+        public void Replace(JToken node, JToken value) =>
+            vgcUtils.Replace(node, value);
+
+        public JArray ToJArray(JToken jtoken) =>
+            vgcUtils.ToJArray(jtoken);
+
+        public JObject ToJObject(JToken jtoken) =>
+            vgcUtils.ToJObject(jtoken);
+
+        public void Union(JObject body, JObject mixin) =>
+            vgcUtils.Union(body, mixin);
+
+        public string JTokenToString(JToken jtoken) =>
+            vgcUtils.JTokenToString(jtoken);
+        #endregion
+
         #region ILuaMisc.ImportLinks     
         public int ImportLinks(string links, string mark)
         {
@@ -51,13 +117,14 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc.Forms
-        public List<List<string>> ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows, int defColumn)
+
+        public string ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows, int defColumn)
         {
             var dt = LuaTableToDataTable(columns, rows);
             return ShowDataGridDialog(title, dt, defColumn);
         }
 
-        public List<List<string>> ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows) =>
+        public string ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows) =>
             ShowData(title, columns, rows, -1);
 
         public string BrowseFolder()
@@ -237,36 +304,77 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region private methods
+        List<Type> GetTypesFromRows(NLua.LuaTable rows)
+        {
+            if (rows == null)
+            {
+                return null;
+            }
+
+            var ts = new List<Type>();
+            foreach (var row in rows.Values)
+            {
+                foreach (var cell in (row as NLua.LuaTable).Values)
+                {
+                    ts.Add(cell.GetType());
+                }
+                return ts;
+            }
+            return null;
+        }
+
         DataTable LuaTableToDataTable(NLua.LuaTable columns, NLua.LuaTable rows)
         {
             var d = new DataTable();
-            foreach (KeyValuePair<object, object> title in columns)
+
+            if (columns == null)
             {
-                d.Columns.Add(title.Value.ToString());
+                return d;
             }
 
-            foreach (KeyValuePair<object, object> row in rows)
+            var ts = GetTypesFromRows(rows);
+
+            var idx = 0;
+            foreach (var column in columns.Values)
             {
-                var cells = row.Value as NLua.LuaTable;
-                List<string> values = new List<string>();
-                foreach (KeyValuePair<object, object> cell in cells)
+                var name = column.ToString();
+                if (ts == null)
                 {
-                    values.Add(cell.Value.ToString());
+                    d.Columns.Add(name);
                 }
-                d.Rows.Add(values.ToArray());
+                else
+                {
+                    d.Columns.Add(name, ts[idx++]);
+                }
             }
 
+            if (rows == null)
+            {
+                return d;
+            }
+            var rowsKey = rows.Keys;
+            foreach (var rowkey in rowsKey)
+            {
+                var row = rows[rowkey] as NLua.LuaTable;
+                var items = new List<object>();
+                foreach (var item in row.Values)
+                {
+                    items.Add(item);
+                }
+
+                d.Rows.Add(items.ToArray());
+            }
             return d;
         }
 
-        List<List<string>> ShowDataGridDialog(string title, DataTable dataSource, int defColumn)
+        string ShowDataGridDialog(string title, DataTable dataSource, int defColumn)
         {
             using (var form = new Views.WinForms.FormDataGrid(title, dataSource, defColumn))
             {
                 var result = form.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    return form.results;
+                    return form.jsonResult;
                 }
             }
             return null;

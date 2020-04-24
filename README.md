@@ -10,15 +10,15 @@
 [8]: https://github.com/vrnobody/V2RayGCon/blob/master/LICENSE "Licence"
 [9]: https://github.com/vrnobody/V2RayGCon/releases/latest "Latest release"
 
-V2RayGCon是windows下[v2ray-core](https://v2ray.com)的第三方图形界面客户端。  
+V2RayGCon是windows下[v2ray-core](https://v2ray.com)的图形(graphic)配置器(configer)。  
 
 [\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]](https://vrnobody.github.io/V2RayGCon/)&nbsp;&nbsp;[\[唯一联系方式 issue\]](https://github.com/vrnobody/V2RayGCon/issues)  
 
 ### 安装 Install
-系统需要先装.net framework 4.5或以上（通常已经装了）。  
+需要先装.net framework 4.5或以上（通常已经装了）。  
 接着下载[V2RayGCon-box.zip][9]并解压到任意目录，然后，，，没有然后了。  
 
-Download and extract [V2RayGCon-box.zip][9] to any directory you like. That's it.  
+Download and unzip [V2RayGCon-box.zip][9] to any directory you like. That's it.  
 Require .net framework 4.5 or higher.  
 
 ### 演示 Demo
@@ -35,6 +35,7 @@ Require .net framework 4.5 or higher.
 [NLua/NLua](https://github.com/NLua/NLua) Luna插件中的lua解释器  
 [PoseidonM4A4/v2rayP](https://github.com/PoseidonM4A4/v2rayP) Launcher等多处代码参(抄)考(习)来源  
 [ravibpatel/AutoUpdater.NET](https://github.com/ravibpatel/AutoUpdater.NET) 自动更新功能  
+[rxi/json.lua](https://github.com/rxi/json.lua) Luna插件中的json解释器  
 [shadowsocksr-backup/shadowsocksr-csharp](https://github.com/shadowsocksr-backup/shadowsocksr-csharp) 屏幕扫码实现代码  
 [txthinking/blackwhite](https://github.com/txthinking/blackwhite) ProxySetter插件中的默认PAC  
 [v2ray/v2ray-core](https://github.com/v2ray/v2ray-core) v2ray-core服务端  

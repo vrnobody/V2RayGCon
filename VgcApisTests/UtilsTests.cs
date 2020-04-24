@@ -16,6 +16,20 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+
+        [DataTestMethod]
+        [DataRow("D1", true, true, false, true, 3u, 49u)]
+        public void TryParseKeyMessageTests(
+            string keyName, bool hasAlt, bool hasCtrl, bool hasShift,
+            bool ok, uint modifier, uint keyCode)
+        {
+            var result = TryParseKeyMesssage(keyName, hasAlt, hasCtrl, hasShift,
+                out var m, out var c);
+            Assert.AreEqual(ok, result);
+            Assert.AreEqual(modifier, m);
+            Assert.AreEqual(keyCode, c);
+        }
+
         [DataTestMethod]
         [DataRow("中iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii试", 34, true, "中iiiiiiiiiiiiiiiiiiiiiiiiiiiiii")]
         [DataRow("中aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa文", 34, true, "中aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
@@ -409,6 +423,7 @@ namespace VgcApisTests
             Assert.AreEqual(expect, len);
         }
 
+        /* this test takes about 3min in github action
         [TestMethod]
         public void GetFreePortMultipleThreadsTest()
         {
@@ -434,18 +449,19 @@ namespace VgcApisTests
                 using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
                 {
                     socket.Bind(ep);
-                    Sleep(500);
+                    Task.Delay(10).Wait();
                 }
             }
 
             List<Task> tasks = new List<Task>();
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 10; i++)
             {
                 tasks.Add(RunInBackground(worker));
             }
 
             Task.WaitAll(tasks.ToArray());
         }
+        */
 
         [TestMethod]
         public void GetFreePortSingleThreadTest()
@@ -460,38 +476,171 @@ namespace VgcApisTests
             }
         }
 
+#if DEBUG
         [TestMethod]
-        public void LazyGuyTest()
+        public void LazyGuyChainedTaskTest()
+        {
+            var str = "";
+
+            Action<Action> secTask = (done) =>
+             {
+                 Task.Delay(200).Wait();
+                 str += "2";
+                 done();
+             };
+
+            Action<Action> firstTask = (done) =>
+            {
+                Task.Delay(200).Wait();
+                str += "1";
+                secTask(done);
+            };
+
+            var alex = new VgcApis.Libs.Tasks.LazyGuy(firstTask, 1000);
+
+            str = "";
+            alex.Postpone();
+            Task.Delay(500).Wait();
+            alex.Postpone();
+            Task.Delay(500).Wait();
+            alex.Postpone();
+            Task.Delay(500).Wait();
+            alex.Postpone();
+            Task.Delay(500).Wait();
+            alex.Postpone();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("12", str);
+
+            str = "";
+            alex.Deadline();
+            alex.Deadline();
+            alex.Deadline();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("12", str);
+
+            str = "";
+            alex.Deadline();
+            alex.Deadline();
+            alex.Deadline();
+            alex.ForgetIt();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("", str);
+            alex.PickItUp();
+
+            str = "";
+            alex.Throttle();
+            alex.Throttle();
+            alex.Throttle();
+            alex.ForgetIt();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("", str);
+            alex.PickItUp();
+
+            str = "";
+            alex.Throttle();
+            Task.Delay(100).Wait();
+            alex.Throttle();
+            alex.Throttle();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("1212", str);
+
+            str = "";
+            alex.DoItNow();
+            alex.DoItNow();
+            alex.DoItNow();
+            Assert.AreEqual("121212", str);
+        }
+#endif
+
+#if DEBUG
+        [TestMethod]
+        public void LazyGuySingleTaskTest()
         {
             var str = "";
 
             void task()
             {
+                Task.Delay(200).Wait();
                 str += ".";
             }
-            var adam = new VgcApis.Libs.Tasks.LazyGuy(task, 100);
+
+            var adam = new VgcApis.Libs.Tasks.LazyGuy(task, 1000);
+
+            str = "";
+            adam.Postpone();
+            Task.Delay(500).Wait();
+            adam.Postpone();
+            Task.Delay(500).Wait();
+            adam.Postpone();
+            Task.Delay(500).Wait();
+            adam.Postpone();
+            Task.Delay(500).Wait();
+            adam.Postpone();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual(".", str);
+
+            str = "";
+            adam.Deadline();
+            adam.Deadline();
+            adam.Deadline();
+            adam.Deadline();
+            adam.Deadline();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual(".", str);
+
+            str = "";
+            adam.Deadline();
+            Task.Delay(3000).Wait();
+            Assert.AreEqual(".", str);
+
+            str = "";
+            adam.Deadline();
+            adam.ForgetIt();
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("", str);
+            adam.PickItUp();
+
+
+            str = "";
             adam.DoItNow();
             Assert.AreEqual(".", str);
 
             str = "";
-            adam.DoItLater();
-            adam.ForgetIt();
-            Assert.AreEqual("", str);
+            adam.DoItNow();
+            adam.DoItNow();
+            Assert.AreEqual("..", str);
 
-#if DEBUG
             str = "";
-            adam.DoItLater();
-            adam.DoItLater();
-            adam.DoItLater();
+            adam.Throttle();
+            adam.ForgetIt();
+            Task.Delay(1000).Wait();
+            Assert.AreEqual("", str);
+            adam.PickItUp();
+
+            str = "";
+            adam.Throttle();
+            adam.Throttle();
+            adam.Throttle();
+            adam.Throttle();
+            adam.Throttle();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("..", str);
+
+            str = "";
+            adam.Throttle();
             Task.Delay(1000).Wait();
             Assert.AreEqual(".", str);
-
-            str = "";
-            adam.DoItLater();
-            Task.Delay(300).Wait();
-            Assert.AreEqual(".", str);
-#endif
         }
+
+#endif
 
         [DataTestMethod]
         [DataRow(null)]

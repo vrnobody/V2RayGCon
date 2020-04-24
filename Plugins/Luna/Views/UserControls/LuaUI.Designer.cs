@@ -33,12 +33,11 @@
             this.btnRun = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnKill = new System.Windows.Forms.Button();
-            this.chkIsAutoRun = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.lbRunningState = new System.Windows.Forms.Label();
             this.lbName = new System.Windows.Forms.Label();
             this.btnRemove = new System.Windows.Forms.Button();
-            this.chkIsHidden = new System.Windows.Forms.CheckBox();
+            this.rlbOptions = new VgcApis.UserControls.RoundLabel();
             this.SuspendLayout();
             // 
             // btnRun
@@ -68,15 +67,6 @@
             this.btnKill.UseVisualStyleBackColor = true;
             this.btnKill.Click += new System.EventHandler(this.btnKill_Click);
             // 
-            // chkIsAutoRun
-            // 
-            resources.ApplyResources(this.chkIsAutoRun, "chkIsAutoRun");
-            this.chkIsAutoRun.Cursor = System.Windows.Forms.Cursors.Default;
-            this.chkIsAutoRun.Name = "chkIsAutoRun";
-            this.toolTip1.SetToolTip(this.chkIsAutoRun, resources.GetString("chkIsAutoRun.ToolTip"));
-            this.chkIsAutoRun.UseVisualStyleBackColor = true;
-            this.chkIsAutoRun.CheckedChanged += new System.EventHandler(this.chkIsAutoRun_CheckedChanged);
-            // 
             // lbRunningState
             // 
             this.lbRunningState.Cursor = System.Windows.Forms.Cursors.SizeAll;
@@ -104,34 +94,34 @@
             this.btnRemove.UseVisualStyleBackColor = true;
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
-            // chkIsHidden
+            // rlbOptions
             // 
-            resources.ApplyResources(this.chkIsHidden, "chkIsHidden");
-            this.chkIsHidden.Cursor = System.Windows.Forms.Cursors.Default;
-            this.chkIsHidden.Name = "chkIsHidden";
-            this.toolTip1.SetToolTip(this.chkIsHidden, resources.GetString("chkIsHidden.ToolTip"));
-            this.chkIsHidden.UseVisualStyleBackColor = true;
-            this.chkIsHidden.CheckedChanged += new System.EventHandler(this.chkIsHidden_CheckedChanged);
+            this.rlbOptions._BackColor = System.Drawing.Color.Khaki;
+            this.rlbOptions.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbOptions.ForeColor = System.Drawing.Color.DimGray;
+            resources.ApplyResources(this.rlbOptions, "rlbOptions");
+            this.rlbOptions.Name = "rlbOptions";
+            this.toolTip1.SetToolTip(this.rlbOptions, resources.GetString("rlbOptions.ToolTip"));
+            this.rlbOptions.Click += new System.EventHandler(this.rlbOptions_Click);
             // 
             // LuaUI
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.rlbOptions);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.lbName);
             this.Controls.Add(this.lbRunningState);
-            this.Controls.Add(this.chkIsHidden);
-            this.Controls.Add(this.chkIsAutoRun);
             this.Controls.Add(this.btnKill);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnRun);
             this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Name = "LuaUI";
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.LuaUI_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LuaUI_MouseDown);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -140,11 +130,10 @@
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnKill;
-        private System.Windows.Forms.CheckBox chkIsAutoRun;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label lbRunningState;
         private System.Windows.Forms.Label lbName;
         private System.Windows.Forms.Button btnRemove;
-        private System.Windows.Forms.CheckBox chkIsHidden;
+        private VgcApis.UserControls.RoundLabel rlbOptions;
     }
 }

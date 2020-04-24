@@ -142,10 +142,8 @@ namespace V2RayGCon.Views.WinForms
             Action done = () =>
             {
                 servers.UpdateMarkList();
-                VgcApis.Misc.UI.RunInUiThread(btnModify, () =>
-                {
-                    that.Close();
-                });
+                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                    btnModify, () => that.Close());
             };
 
             Misc.Utils.ChainActionHelperAsync(list.Count, worker, done);

@@ -75,7 +75,6 @@
     <Compile Include="Libs\Streams\RawBitStream\Uuids.cs" />
     <Compile Include="Libs\Sys\ChildProcessTracker.cs" />
     <Compile Include="Libs\Sys\ConsoleCtrls.cs" />
-    <Compile Include="Libs\Sys\KeyboardHook.cs" />
     <Compile Include="Libs\Sys\NotepadHelper.cs" />
     <Compile Include="Libs\Tasks\Bar.cs" />
     <Compile Include="Libs\Tasks\Routine.cs" />
@@ -105,7 +104,6 @@
     <Compile Include="Interfaces\ComponentOf\IChildComponent.cs" />
     <Compile Include="Interfaces\ComponentOf\IParentComponent.cs" />
     <Compile Include="Interfaces\ComponentOf\IComponentOf.cs" />
-    <Compile Include="Interfaces\Lua\ILuaJson.cs" />
     <Compile Include="Interfaces\IShareLinkDecoder.cs" />
     <Compile Include="Interfaces\Lua\ILuaServer.cs" />
     <Compile Include="Interfaces\Lua\ILuaMisc.cs" />
@@ -145,6 +143,7 @@
     <Compile Include="UserControls\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="WinForms\HotKeyWindow.cs" />
     <Compile Include="UserControls\RoundLabel.cs">
       <SubType>Component</SubType>
     </Compile>

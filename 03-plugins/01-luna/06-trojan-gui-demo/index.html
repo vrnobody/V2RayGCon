@@ -1,4 +1,4 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Trojan示例 - V2RayGCon手册</title><meta name=generator content="Hugo 0.62.2"><link href=https://vrnobody.github.io/V2RayGConindex.xml rel=alternate type=application/rss+xml><link rel=canonical href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/06-trojan-gui-demo/><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/theme.min.css><script src=https://use.fontawesome.com/releases/v5.0.6/js/all.js></script><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/chroma.min.css><script src=https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js></script><script src=https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js></script><script src=https://vrnobody.github.io/V2RayGCon/js/bundle.js></script><style>:root{}.highlight{line-height:1.1}.highlight div{background-color:#eed!important}.highlight pre{background-color:#eed!important}</style><meta property="og:title" content="Trojan示例"><meta property="og:description" content="需要V2RayGCon v1.3.5.0或以后版本 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： （托盘区还会有个橙色的"><meta property="og:type" content="article"><meta property="og:url" content="https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/06-trojan-gui-demo/"><meta property="article:published_time" content="2020-04-14T17:35:52+08:00"><meta property="article:modified_time" content="2020-04-14T17:35:52+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Trojan示例"><meta name=twitter:description content="需要V2RayGCon v1.3.5.0或以后版本 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： （托盘区还会有个橙色的"><meta itemprop=name content="Trojan示例"><meta itemprop=description content="需要V2RayGCon v1.3.5.0或以后版本 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： （托盘区还会有个橙色的"><meta itemprop=datePublished content="2020-04-14T17:35:52+08:00"><meta itemprop=dateModified content="2020-04-14T17:35:52+08:00"><meta itemprop=wordCount content="1535"><meta itemprop=keywords content></head><body><div class=container><header><h1>V2RayGCon手册</h1><img src=https://img.shields.io/github/release/vrnobody/V2RayGCon.svg alt="Release Badge"></header><div class=content-container><main><h1>Trojan示例</h1><p>需要V2RayGCon <code>v1.3.5.0</code>或以后版本</p><p>这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样：<br>（托盘区还会有个橙色的小图标哦！）<br><figure><img src=../../../images/plugins/trojan_gui.png></figure></p><p>全部代码如下：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Trojan示例 - V2RayGCon手册</title><meta name=generator content="Hugo 0.62.2"><link href=https://vrnobody.github.io/V2RayGConindex.xml rel=alternate type=application/rss+xml><link rel=canonical href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/06-trojan-gui-demo/><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/theme.min.css><script src=https://use.fontawesome.com/releases/v5.0.6/js/all.js></script><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/chroma.min.css><script src=https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js></script><script src=https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js></script><script src=https://vrnobody.github.io/V2RayGCon/js/bundle.js></script><style>:root{}.highlight{line-height:1.1}.highlight div{background-color:#eed!important}.highlight pre{background-color:#eed!important}</style><meta property="og:title" content="Trojan示例"><meta property="og:description" content="需要V2RayGCon v1.3.6.0+ 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： （运行之后托盘区会多出个的小图标哦！） 全部代码"><meta property="og:type" content="article"><meta property="og:url" content="https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/06-trojan-gui-demo/"><meta property="article:published_time" content="2020-04-14T17:35:52+08:00"><meta property="article:modified_time" content="2020-04-14T17:35:52+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Trojan示例"><meta name=twitter:description content="需要V2RayGCon v1.3.6.0+ 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： （运行之后托盘区会多出个的小图标哦！） 全部代码"><meta itemprop=name content="Trojan示例"><meta itemprop=description content="需要V2RayGCon v1.3.6.0+ 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： （运行之后托盘区会多出个的小图标哦！） 全部代码"><meta itemprop=datePublished content="2020-04-14T17:35:52+08:00"><meta itemprop=dateModified content="2020-04-14T17:35:52+08:00"><meta itemprop=wordCount content="2405"><meta itemprop=keywords content></head><body><div class=container><header><h1>V2RayGCon手册</h1><img src=https://img.shields.io/github/release/vrnobody/V2RayGCon.svg alt="Release Badge"></header><div class=content-container><main><h1>Trojan示例</h1><p>需要V2RayGCon <code>v1.3.6.0+</code></p><p>这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样：<br>（运行之后托盘区会多出个的小图标哦！）<br><figure><img src=../../../images/plugins/trojan_gui.png></figure></p><p>全部代码如下：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
@@ -400,12 +400,218 @@
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">400
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">401
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">402
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">403
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">404
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">405
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">406
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">407
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">408
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">409
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">410
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">411
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">412
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">413
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">414
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">415
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">416
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">417
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">418
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">419
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">420
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">421
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">422
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">423
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">424
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">425
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">426
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">427
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">428
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">429
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">430
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">431
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">432
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">433
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">434
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">435
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">436
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">437
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">438
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">439
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">440
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">441
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">442
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">443
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">444
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">445
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">446
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">447
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">448
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">449
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">450
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">451
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">452
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">453
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">454
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">455
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">456
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">457
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">458
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">459
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">460
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">461
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">462
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">463
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">464
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">465
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">466
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">467
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">468
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">469
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">470
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">471
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">472
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">473
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">474
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">475
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">476
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">477
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">478
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">479
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">480
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">481
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">482
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">483
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">484
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">485
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">486
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">487
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">488
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">489
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">490
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">491
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">492
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">493
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">494
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">495
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">496
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">497
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">498
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">499
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">500
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">501
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">502
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">503
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">504
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">505
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">506
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">507
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">508
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">509
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">510
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">511
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">512
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">513
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">514
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">515
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">516
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">517
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">518
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">519
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">520
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">521
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">522
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">523
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">524
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">525
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">526
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">527
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">528
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">529
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">530
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">531
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">532
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">533
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">534
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">535
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">536
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">537
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">538
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">539
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">540
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">541
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">542
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">543
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">544
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">545
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">546
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">547
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">548
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">549
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">550
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">551
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">552
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">553
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">554
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">555
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">556
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">557
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">558
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">559
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">560
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">561
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">562
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">563
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">564
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">565
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">566
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">567
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">568
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">569
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">570
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">571
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">572
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">573
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">574
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">575
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">576
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">577
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">578
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">579
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">580
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">581
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">582
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">583
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">584
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">585
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">586
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">587
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">588
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">589
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">590
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">591
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">592
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">593
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">594
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">595
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">596
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">597
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">598
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">599
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">600
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">601
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">602
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">603
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">604
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">605
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">606
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">607
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">608
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=color:green>-- 假设trojan的位置是V2RayGCon/trojan/trojan.exe</span>
-
 <span style=color:#00f>local</span> trExe = <span style=color:#a31515>&#34;</span><span style=color:#a31515>trojan/trojan.exe</span><span style=color:#a31515>&#34;</span>
 <span style=color:#00f>local</span> trConfigJson = <span style=color:#a31515>&#34;</span><span style=color:#a31515>trojan/config.json</span><span style=color:#a31515>&#34;</span>
 
 <span style=color:green>-- 代码</span>
+<span style=color:#00f>local</span> trKey = <span style=color:#a31515>&#34;</span><span style=color:#a31515>local-storage-key-trojan-settings</span><span style=color:#a31515>&#34;</span>
 
 import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</span><span style=color:#a31515>&#39;</span>)
 import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</span><span style=color:#a31515>&#39;</span>)
@@ -414,27 +620,109 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
 import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Drawing.Drawing2D</span><span style=color:#a31515>&#39;</span>)
 
 <span style=color:#00f>local</span> Utils = require <span style=color:#a31515>&#34;</span><span style=color:#a31515>libs.utils</span><span style=color:#a31515>&#34;</span>
-
-<span style=color:#00f>local</span> trKey = <span style=color:#a31515>&#34;</span><span style=color:#a31515>trojan-settings</span><span style=color:#a31515>&#34;</span>
+<span style=color:#00f>local</span> libJson = require <span style=color:#a31515>&#34;</span><span style=color:#a31515>libs.json</span><span style=color:#a31515>&#34;</span>
 
 <span style=color:#00f>local</span> chkSelfSignedCert
 <span style=color:#00f>local</span> tboxServAddr, tboxServPort, tboxServPassword, tboxLocalAddr, tboxLocalPort
-<span style=color:#00f>local</span> btnSave, btnStart, btnStop, btnExit
+<span style=color:#00f>local</span> cboxName
+<span style=color:#00f>local</span> btnSave, btnStart, btnStop, btnExit, btnRemove
 
+<span style=color:#00f>local</span> servSettings = <span style=color:#00f>nil</span>;
 <span style=color:#00f>local</span> form = <span style=color:#00f>nil</span>
 <span style=color:#00f>local</span> trojan = <span style=color:#00f>nil</span>
 <span style=color:#00f>local</span> isExit = <span style=color:#00f>false</span>
+<span style=color:#00f>local</span> lastIsRunning = <span style=color:#00f>true</span>
 
 <span style=color:#00f>function</span> Main()
     
+    servSettings = LoadSettings()
     CreateNotifyIcon()
-    
     ShowForm()
+    
+    <span style=color:#00f>local</span> count = 0
+    <span style=color:#00f>local</span> tick = 100
+    <span style=color:#00f>local</span> num = 2000 / tick
     <span style=color:#00f>while</span> <span style=color:#00f>not</span> Signal:Stop() <span style=color:#00f>and</span> <span style=color:#00f>not</span> isExit <span style=color:#00f>do</span>
-        Misc:Sleep(100)
+        Misc:Sleep(tick)
         Application.DoEvents()
+        count = count + 1
+        <span style=color:#00f>if</span> count &gt; num <span style=color:#00f>then</span>
+            count = 0
+            UpdateIcon()
+        <span style=color:#00f>end</span>
     <span style=color:#00f>end</span>
+    
     Cleanup()
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> GetCurServ()
+    <span style=color:#00f>local</span> n = servSettings[<span style=color:#a31515>&#34;</span><span style=color:#a31515>curServ</span><span style=color:#a31515>&#34;</span>]
+    <span style=color:#00f>if</span> n ~= <span style=color:#00f>nil</span> <span style=color:#00f>then</span> 
+        <span style=color:#00f>return</span> n
+    <span style=color:#00f>end</span>
+    <span style=color:#00f>return</span> FirstKey(servSettings[<span style=color:#a31515>&#34;</span><span style=color:#a31515>servers</span><span style=color:#a31515>&#34;</span>])
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> OnBtnRemoveClick()
+    <span style=color:#00f>local</span> name = cboxName.Text
+    <span style=color:#00f>if</span> name == <span style=color:#00f>nil</span> <span style=color:#00f>or</span> string.isempty(name) <span style=color:#00f>then</span>
+        Misc:Alert(<span style=color:#a31515>&#34;</span><span style=color:#a31515>错误:没设置名字</span><span style=color:#a31515>&#34;</span>)
+        <span style=color:#00f>return</span>
+    <span style=color:#00f>end</span>
+    <span style=color:#00f>if</span> <span style=color:#00f>not</span> Misc:Confirm(<span style=color:#a31515>&#34;</span><span style=color:#a31515>确定要删除[</span><span style=color:#a31515>&#34;</span> .. name .. <span style=color:#a31515>&#34;</span><span style=color:#a31515>]?</span><span style=color:#a31515>&#34;</span>) <span style=color:#00f>then</span>
+        <span style=color:#00f>return</span>
+    <span style=color:#00f>end</span>
+    print(<span style=color:#a31515>&#34;</span><span style=color:#a31515>Remove server [</span><span style=color:#a31515>&#34;</span>, name, <span style=color:#a31515>&#34;</span><span style=color:#a31515>]</span><span style=color:#a31515>&#34;</span>)
+    servSettings[<span style=color:#a31515>&#34;</span><span style=color:#a31515>servers</span><span style=color:#a31515>&#34;</span>][name] = <span style=color:#00f>nil</span>
+    SaveSettings()
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> FirstKey(t)
+    <span style=color:#00f>if</span> t == <span style=color:#00f>nil</span> <span style=color:#00f>or</span> type(t) ~= <span style=color:#a31515>&#34;</span><span style=color:#a31515>table</span><span style=color:#a31515>&#34;</span> <span style=color:#00f>then</span>
+        <span style=color:#00f>return</span> <span style=color:#00f>nil</span>
+    <span style=color:#00f>end</span>
+    <span style=color:#00f>for</span> k, v <span style=color:#00f>in</span> pairs(t) <span style=color:#00f>do</span>
+      <span style=color:#00f>return</span> k
+    <span style=color:#00f>end</span>
+    <span style=color:#00f>return</span> <span style=color:#00f>nil</span>
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> GetServSetting(name)
+    <span style=color:#00f>if</span> name == <span style=color:#00f>nil</span> <span style=color:#00f>or</span> string.isempty(name) 
+    <span style=color:#00f>then</span>
+        <span style=color:#00f>return</span> <span style=color:#00f>nil</span>
+    <span style=color:#00f>end</span>
+    
+    <span style=color:#00f>local</span> v = servSettings[<span style=color:#a31515>&#34;</span><span style=color:#a31515>servers</span><span style=color:#a31515>&#34;</span>][name]
+    <span style=color:#00f>return</span> Clone(v)
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> AddServSetting(name, setting)
+    <span style=color:#00f>if</span> name == <span style=color:#00f>nil</span> <span style=color:#00f>or</span> setting == <span style=color:#00f>nil</span> <span style=color:#00f>or</span> string.isempty(name) <span style=color:#00f>then</span>
+        Misc:Alert(<span style=color:#a31515>&#34;</span><span style=color:#a31515>错误:没有设置名字!</span><span style=color:#a31515>&#34;</span>)
+        <span style=color:#00f>return</span>
+    <span style=color:#00f>end</span>
+    print(<span style=color:#a31515>&#34;</span><span style=color:#a31515>Save server [</span><span style=color:#a31515>&#34;</span>, name, <span style=color:#a31515>&#34;</span><span style=color:#a31515>] settings.</span><span style=color:#a31515>&#34;</span>)
+    servSettings[<span style=color:#a31515>&#34;</span><span style=color:#a31515>servers</span><span style=color:#a31515>&#34;</span>][name] = Clone(setting)
+    SaveSettings()
+    Misc:Alert(<span style=color:#a31515>&#34;</span><span style=color:#a31515>完成</span><span style=color:#a31515>&#34;</span>)
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> Clone(json)
+    <span style=color:#00f>if</span> json == <span style=color:#00f>nil</span> <span style=color:#00f>then</span>
+        <span style=color:#00f>return</span> <span style=color:#00f>nil</span>
+    <span style=color:#00f>end</span>
+    <span style=color:#00f>local</span> str = libJson.encode(json)
+    <span style=color:#00f>return</span> libJson.decode(str)
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> SaveSettings()
+    <span style=color:#00f>if</span> servSettings == <span style=color:#00f>nil</span> <span style=color:#00f>then</span>
+        print(<span style=color:#a31515>&#34;</span><span style=color:#a31515>Error: server setting object is empty</span><span style=color:#a31515>&#34;</span>)
+        <span style=color:#00f>return</span>
+    <span style=color:#00f>end</span>
+    <span style=color:#00f>local</span> s = libJson.encode(servSettings)
+    Misc:WriteLocalStorage(trKey, s)
 <span style=color:#00f>end</span>
 
 <span style=color:#00f>function</span> OnFormClosed()
@@ -448,35 +736,73 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
         <span style=color:#00f>return</span>
     <span style=color:#00f>end</span>
     
+    <span style=color:green>-- print(&#34;create form&#34;)</span>
     CreateWinForm()
-    <span style=color:#00f>local</span> settings = LoadSettings()
-    SetControlsValue(settings)
+    <span style=color:green>-- print(&#34;Show record: &#34;, GetCurServ()) </span>
+    ShowRecord(GetCurServ())
+    <span style=color:green>-- print(&#34;bind events&#34;)</span>
     BindEvents()
     form:Show()
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> ShowRecord(name)
+    <span style=color:#00f>local</span> s = GetServSetting(name)
+    <span style=color:#00f>if</span> s ~= <span style=color:#00f>nil</span> <span style=color:#00f>then</span>
+        servSettings[<span style=color:#a31515>&#34;</span><span style=color:#a31515>curServ</span><span style=color:#a31515>&#34;</span>] = name
+        SaveSettings()
+        SetControlsValue(name, s)
+    <span style=color:#00f>else</span>
+        MessageBox.Show(<span style=color:#a31515>&#34;</span><span style=color:#a31515>找不到相关服务器信息</span><span style=color:#a31515>&#34;</span>)
+    <span style=color:#00f>end</span>
 <span style=color:#00f>end</span>
 
 <span style=color:#00f>function</span> OnMouseClick()
     ShowForm()
 <span style=color:#00f>end</span>
 
-<span style=color:#00f>function</span> DrawAppIcon()
+<span style=color:#00f>function</span> DrawAppIcon(isOn)
+    
     <span style=color:#00f>local</span> s = 96
-    <span style=color:#00f>local</span> icon = Bitmap(s, s);
+    <span style=color:#00f>local</span> brBack = isOn <span style=color:#00f>and</span> Brushes.DarkOrange <span style=color:#00f>or</span> Brushes.ForestGreen
+    <span style=color:#00f>local</span> brFont = Brushes.White
+    
+    <span style=color:#00f>local</span> icon = Bitmap(s, s)
     <span style=color:#00f>local</span> g = Graphics.FromImage(icon)
-    g.InterpolationMode = InterpolationMode.High;
-    g.CompositingQuality = CompositingQuality.HighQuality;
-    g:FillEllipse(Brushes.Orange, 0,  0, s, s)
-    g:FillRectangle(Brushes.White, s * 0.2, s * 0.23, s*0.6, s*0.16);
-    g:FillRectangle(Brushes.White, s * 0.41, s * 0.3, s*0.18, s*0.55);
+    <span style=color:green>-- Circle</span>
+    g:FillEllipse(brBack, 0,  0, s, s)
+    
+    <span style=color:green>-- T</span>
+    g:FillRectangle(brFont, s*0.05, s*0.16, s*0.6,s*0.15)
+    g:FillRectangle(brFont, s*0.29, s*0.2, s*0.15, s*0.7)
+    
+    <span style=color:green>-- r</span>
+    g:FillRectangle(brFont, s*0.6, s*0.47, s*0.16, s* 0.4);
+    <span style=color:#00f>local</span> rect = Rectangle(s*0.73, s*0.55, s*0.5, s*0.5)
+    <span style=color:#00f>local</span> pen = Pen(brFont, s*0.1)
+    g:DrawArc(pen, rect, 210, 53)
     g:Dispose()
     <span style=color:#00f>return</span> icon
 <span style=color:#00f>end</span>
 
+<span style=color:#00f>function</span> UpdateIcon()
+    <span style=color:#00f>if</span> lastIsRunning == IsRunning() <span style=color:#00f>then</span>
+        <span style=color:#00f>return</span>
+    <span style=color:#00f>end</span>
+    
+    lastIsRunning = <span style=color:#00f>not</span> lastIsRunning
+    <span style=color:#00f>if</span> ni.Icon ~= <span style=color:#00f>nil</span> <span style=color:#00f>then</span>
+        ni.Icon:Dispose()
+    <span style=color:#00f>end</span>
+    
+    <span style=color:#00f>local</span> icon = DrawAppIcon(lastIsRunning)
+    <span style=color:#00f>local</span> text = lastIsRunning <span style=color:#00f>and</span> <span style=color:#a31515>&#34;</span><span style=color:#a31515>ON</span><span style=color:#a31515>&#34;</span> <span style=color:#00f>or</span> <span style=color:#a31515>&#34;</span><span style=color:#a31515>OFF</span><span style=color:#a31515>&#34;</span>
+    ni.Icon =Icon.FromHandle(icon:GetHicon())
+    ni.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>Trojan </span><span style=color:#a31515>&#34;</span> .. text
+<span style=color:#00f>end</span>
+
 <span style=color:#00f>function</span> CreateNotifyIcon()
     ni = NotifyIcon()
-    <span style=color:#00f>local</span> icon = DrawAppIcon()
-    ni.Icon = Icon.FromHandle(icon:GetHicon())
-    ni.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>Trojan</span><span style=color:#a31515>&#34;</span>
+    UpdateIcon()
     ni.Visible = <span style=color:#00f>true</span>
     ni.MouseClick:Add(OnMouseClick)
 <span style=color:#00f>end</span>
@@ -491,12 +817,20 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
     isExit = <span style=color:#00f>true</span>
 <span style=color:#00f>end</span>
 
+<span style=color:#00f>function</span> OnCboxNameSelectedValueChanged()
+    <span style=color:#00f>local</span> name = cboxName.Text
+    ShowRecord(name)    
+<span style=color:#00f>end</span>
+
 <span style=color:#00f>function</span> BindEvents()
     btnSave.Click:Add(OnBtnSaveClick)
     btnStart.Click:Add(OnBtnStartClick)
     btnStop.Click:Add(OnBtnStopClick)
     btnExit.Click:Add(OnBtnExitClick)
+    btnRemove.Click:Add(OnBtnRemoveClick)
     form.FormClosed:Add(OnFormClosed)
+    cboxName.DropDown:Add(OnCboxNameDropDown)
+    cboxName.SelectedValueChanged:Add(OnCboxNameSelectedValueChanged)
 <span style=color:#00f>end</span>
 
 <span style=color:#00f>function</span> StartTrojan()
@@ -504,7 +838,7 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
         StopTrojan()
     <span style=color:#00f>end</span>
     <span style=color:#00f>local</span> args = <span style=color:#a31515>&#34;</span><span style=color:#a31515>-c </span><span style=color:#a31515>&#34;</span> .. trConfigJson
-    trojan = Sys:Run(trExe, args, stdin, <span style=color:#00f>nil</span>, <span style=color:#00f>false</span>, <span style=color:#00f>true</span>)
+    trojan = Sys:Run(trExe, args, <span style=color:#00f>nil</span>, <span style=color:#00f>nil</span>, <span style=color:#00f>false</span>, <span style=color:#00f>true</span>)
 <span style=color:#00f>end</span>
 
 <span style=color:#00f>function</span> StopTrojan()
@@ -529,86 +863,133 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
 <span style=color:#00f>end</span>
 
 <span style=color:#00f>function</span> OnBtnStartClick()
-    <span style=color:#00f>local</span> s = GetControlsValue()
+    <span style=color:#00f>local</span> n, s = GetControlsValue()
     <span style=color:#00f>local</span> cfg = GenConfigString(s)
-    <span style=color:green>-- print(cfg)</span>
     WriteToFile(trConfigJson, cfg)
     StartTrojan()
 <span style=color:#00f>end</span>
 
 <span style=color:#00f>function</span> OnBtnSaveClick()
-    <span style=color:#00f>local</span> s = GetControlsValue()
-    print(<span style=color:#a31515>&#34;</span><span style=color:#a31515>save settings.</span><span style=color:#a31515>&#34;</span>)
-    <span style=color:green>-- print(s)</span>
-    Misc:WriteLocalStorage(trKey, s:ToString())
+    <span style=color:#00f>local</span> n, s = GetControlsValue()
+    AddServSetting(n, s)
 <span style=color:#00f>end</span>
 
 <span style=color:#00f>function</span> GetControlsValue()
-    <span style=color:#00f>local</span> tpl = LoadTemplate(<span style=color:#a31515>&#34;</span><span style=color:#a31515>settings</span><span style=color:#a31515>&#34;</span>)
-    <span style=color:#00f>local</span> s = Json:ParseJObject(tpl)
-    Json:TrySetBoolValue(s, <span style=color:#a31515>&#34;</span><span style=color:#a31515>ssl.verify</span><span style=color:#a31515>&#34;</span>,<span style=color:#00f>not</span> chkSelfSignedCert.Checked)
-    Json:TrySetStringValue(s, <span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_addr</span><span style=color:#a31515>&#34;</span>, tboxServAddr.Text)
-    <span style=color:#00f>local</span> remote_port = Utils.ToNumber(tboxServPort.Text)
-    Json:TrySetIntValue(s, <span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_port</span><span style=color:#a31515>&#34;</span>, remote_port)
-    Json:TrySetStringValue(s, <span style=color:#a31515>&#34;</span><span style=color:#a31515>password.0</span><span style=color:#a31515>&#34;</span>, tboxServPassword.Text)
-    Json:TrySetStringValue(s, <span style=color:#a31515>&#34;</span><span style=color:#a31515>local_addr</span><span style=color:#a31515>&#34;</span>, tboxLocalAddr.Text)
-    <span style=color:#00f>local</span> local_port = Utils.ToNumber(tboxLocalPort.Text)
-    Json:TrySetIntValue(s, <span style=color:#a31515>&#34;</span><span style=color:#a31515>local_port</span><span style=color:#a31515>&#34;</span>, local_port)
-    <span style=color:#00f>return</span> s
+    <span style=color:#00f>local</span> name = cboxName.Text
+    <span style=color:#00f>local</span> tpl = LoadTemplate(<span style=color:#a31515>&#34;</span><span style=color:#a31515>setting</span><span style=color:#a31515>&#34;</span>)
+    <span style=color:#00f>local</span> s = libJson.decode(tpl)
+    s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>verify</span><span style=color:#a31515>&#34;</span>] = <span style=color:#00f>not</span> chkSelfSignedCert.Checked
+    s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_addr</span><span style=color:#a31515>&#34;</span>] = tboxServAddr.Text
+    s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_port</span><span style=color:#a31515>&#34;</span>] = Utils.ToNumber(tboxServPort.Text)
+    s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>password</span><span style=color:#a31515>&#34;</span>] = tostring(tboxServPassword.Text)
+    s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>local_addr</span><span style=color:#a31515>&#34;</span>] = tboxLocalAddr.Text
+    s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>local_port</span><span style=color:#a31515>&#34;</span>] = Utils.ToNumber(tboxLocalPort.Text)
+    <span style=color:#00f>return</span> name, s
 <span style=color:#00f>end</span>
 
-<span style=color:#00f>function</span> SetControlsValue(settings)
-    chkSelfSignedCert.Checked =<span style=color:#00f>not</span> Json:GetBool(settings, <span style=color:#a31515>&#34;</span><span style=color:#a31515>ssl.verify</span><span style=color:#a31515>&#34;</span>)
-    tboxServAddr.Text = Json:GetString(settings, <span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_addr</span><span style=color:#a31515>&#34;</span>)
-    tboxServPort.Text = Json:GetString(settings, <span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_port</span><span style=color:#a31515>&#34;</span>)
-    tboxServPassword.Text = Json:GetString(settings, <span style=color:#a31515>&#34;</span><span style=color:#a31515>password.0</span><span style=color:#a31515>&#34;</span>)
-    tboxLocalAddr.Text = Json:GetString(settings, <span style=color:#a31515>&#34;</span><span style=color:#a31515>local_addr</span><span style=color:#a31515>&#34;</span>)
-    tboxLocalPort.Text = Json:GetString(settings, <span style=color:#a31515>&#34;</span><span style=color:#a31515>local_port</span><span style=color:#a31515>&#34;</span>)    
+<span style=color:#00f>function</span> SetControlsValue(name, s)
+    cboxName.Text = name
+    chkSelfSignedCert.Checked = <span style=color:#00f>not</span> s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>verify</span><span style=color:#a31515>&#34;</span>]
+    tboxServAddr.Text = s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_addr</span><span style=color:#a31515>&#34;</span>]
+    tboxServPort.Text = tostring(s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_port</span><span style=color:#a31515>&#34;</span>])
+    tboxServPassword.Text = tostring(s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>password</span><span style=color:#a31515>&#34;</span>])
+    tboxLocalAddr.Text = s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>local_addr</span><span style=color:#a31515>&#34;</span>]
+    tboxLocalPort.Text = tostring(s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>local_port</span><span style=color:#a31515>&#34;</span>])
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> CreateDefSettings()
+    <span style=color:#00f>local</span> tpl = LoadTemplate(<span style=color:#a31515>&#34;</span><span style=color:#a31515>defSettings</span><span style=color:#a31515>&#34;</span>)
+    <span style=color:#00f>return</span> libJson.decode(tpl)
 <span style=color:#00f>end</span>
 
 <span style=color:#00f>function</span> LoadSettings()
+    
     <span style=color:#00f>local</span> rawData = Misc:ReadLocalStorage(trKey)
-    <span style=color:#00f>local</span> json = Json:ParseJObject(rawData)
-    <span style=color:#00f>if</span> json == <span style=color:#00f>nil</span> <span style=color:#00f>then</span>
-        rawData = LoadTemplate(<span style=color:#a31515>&#34;</span><span style=color:#a31515>settings</span><span style=color:#a31515>&#34;</span>)
-        <span style=color:#00f>return</span> Json:ParseJObject(rawData)
+    <span style=color:#00f>if</span> rawData == <span style=color:#00f>nil</span> <span style=color:#00f>or</span> string.isempty(rawData) <span style=color:#00f>then</span>
+        print(<span style=color:#a31515>&#34;</span><span style=color:#a31515>create default setting</span><span style=color:#a31515>&#34;</span>)
+        <span style=color:#00f>return</span> CreateDefSettings()
+    <span style=color:#00f>end</span>
+    
+    <span style=color:#00f>local</span> json = libJson.decode(rawData)
+    <span style=color:#00f>if</span> json == <span style=color:#00f>nil</span> 
+       <span style=color:#00f>or</span> json[<span style=color:#a31515>&#34;</span><span style=color:#a31515>servers</span><span style=color:#a31515>&#34;</span>] == <span style=color:#00f>nil</span>
+    <span style=color:#00f>then</span>
+        <span style=color:#00f>return</span> CreateDefSettings()
     <span style=color:#00f>end</span>
     <span style=color:#00f>return</span> json
 <span style=color:#00f>end</span>
 
-<span style=color:#00f>function</span> GenConfigString(settings)
+<span style=color:#00f>function</span> OnCboxNameDropDown()
+    cboxName.Items:Clear()
+    <span style=color:#00f>local</span> t = servSettings[<span style=color:#a31515>&#34;</span><span style=color:#a31515>servers</span><span style=color:#a31515>&#34;</span>]
+    <span style=color:#00f>if</span> t == <span style=color:#00f>nil</span> <span style=color:#00f>then</span> 
+        print(<span style=color:#a31515>&#34;</span><span style=color:#a31515>DB is empty!</span><span style=color:#a31515>&#34;</span>)
+        <span style=color:#00f>return</span>
+    <span style=color:#00f>end</span>
+    <span style=color:#00f>for</span> k, v <span style=color:#00f>in</span> pairs(t) <span style=color:#00f>do</span>
+        cboxName.Items:Add(k)
+    <span style=color:#00f>end</span>
+<span style=color:#00f>end</span>    
+
+<span style=color:#00f>function</span> GenConfigString(s)
+    
     <span style=color:#00f>local</span> tpl = LoadTemplate(<span style=color:#a31515>&#34;</span><span style=color:#a31515>config</span><span style=color:#a31515>&#34;</span>)
-    <span style=color:#00f>local</span> config = Json:ParseJObject(tpl)
-    Json:Merge(config, settings)
-    <span style=color:#00f>return</span> config:ToString()
+    <span style=color:#00f>local</span> config = libJson.decode(tpl)
+    
+    <span style=color:green>-- 切记Lua从1开始编号!!!</span>
+    config[<span style=color:#a31515>&#34;</span><span style=color:#a31515>password</span><span style=color:#a31515>&#34;</span>][1] = tostring(s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>password</span><span style=color:#a31515>&#34;</span>])
+    
+    config[<span style=color:#a31515>&#34;</span><span style=color:#a31515>ssl</span><span style=color:#a31515>&#34;</span>][<span style=color:#a31515>&#34;</span><span style=color:#a31515>verify</span><span style=color:#a31515>&#34;</span>] = s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>verify</span><span style=color:#a31515>&#34;</span>]
+    config[<span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_addr</span><span style=color:#a31515>&#34;</span>] = s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_addr</span><span style=color:#a31515>&#34;</span>]
+    config[<span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_port</span><span style=color:#a31515>&#34;</span>] = s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>remote_port</span><span style=color:#a31515>&#34;</span>]
+    config[<span style=color:#a31515>&#34;</span><span style=color:#a31515>local_addr</span><span style=color:#a31515>&#34;</span>] = s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>local_addr</span><span style=color:#a31515>&#34;</span>]
+    config[<span style=color:#a31515>&#34;</span><span style=color:#a31515>local_port</span><span style=color:#a31515>&#34;</span>] = s[<span style=color:#a31515>&#34;</span><span style=color:#a31515>local_port</span><span style=color:#a31515>&#34;</span>]
+    
+    <span style=color:#00f>local</span> encoded = libJson.encode(config)
+    <span style=color:#00f>return</span> encoded
 <span style=color:#00f>end</span> 
 
 <span style=color:#00f>function</span> CreateWinForm()
+    
 	form = Form()
-    chkSelfSignedCert =  CheckBox()
-
+    
+    cboxName = ComboBox()
+    btnRemove = Button()
 	tboxServAddr =  TextBox()
     tboxServPort =  TextBox()
     tboxServPassword =  TextBox()
-    
+    chkSelfSignedCert =  CheckBox()
     tboxLocalPort =  TextBox()
 	tboxLocalAddr =  TextBox()
-    
     btnSave =  Button()
     btnStart =  Button()
 	btnStop =  Button()
     btnExit =  Button()
+    
+    cboxName.TabIndex = 0
+    btnRemove.TabIndex = 1
+    tboxServAddr.TabIndex = 2
+    tboxServPort.TabIndex = 3
+    tboxServPassword.TabIndex = 4
+    chkSelfSignedCert.TabIndex = 5
+    tboxLocalPort.TabIndex = 6
+    tboxLocalAddr.TabIndex = 7
+    
+    btnSave.TabIndex = 8
+    btnStart.TabIndex = 9
+    btnStop.TabIndex = 10
+    btnExit.TabIndex = 11
     
 	<span style=color:#00f>local</span> label1 =  Label()
 	<span style=color:#00f>local</span> groupBox1 =  GroupBox()
 	<span style=color:#00f>local</span> label3 =  Label()
 	<span style=color:#00f>local</span> groupBox2 =  GroupBox()
 	<span style=color:#00f>local</span> label4 =  Label()
+    <span style=color:#00f>local</span> label5 = Label()
 	
 	groupBox1:SuspendLayout()
 	groupBox2:SuspendLayout()
 	form:SuspendLayout()
-
 
 	tboxServAddr.Location = Point(39, 20)
 	tboxServAddr.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>tboxServAddr</span><span style=color:#a31515>&#34;</span>
@@ -629,7 +1010,7 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
 	tboxServPort.TabIndex = 2
 	tboxServPort.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>65535</span><span style=color:#a31515>&#34;</span>
 
-	btnSave.Location = Point(59, 163)
+	btnSave.Location = Point(59, 189)
 	btnSave.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>btnSave</span><span style=color:#a31515>&#34;</span>
 	btnSave.Size = Size(50, 23)
 	btnSave.TabIndex = 3
@@ -644,13 +1025,14 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
 	chkSelfSignedCert.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>自签证书</span><span style=color:#a31515>&#34;</span>
 	chkSelfSignedCert.UseVisualStyleBackColor = <span style=color:#00f>true</span>
 
+    groupBox1.Controls:Add(label1)
 	groupBox1.Controls:Add(label3)
-	groupBox1.Controls:Add(label1)
-	groupBox1.Controls:Add(tboxServPassword)
 	groupBox1.Controls:Add(tboxServAddr)
+    groupBox1.Controls:Add(tboxServPort)
+    groupBox1.Controls:Add(tboxServPassword)
 	groupBox1.Controls:Add(chkSelfSignedCert)
-	groupBox1.Controls:Add(tboxServPort)
-	groupBox1.Location = Point(14, 12)
+	
+	groupBox1.Location = Point(14, 38)
 	groupBox1.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>groupBox1</span><span style=color:#a31515>&#34;</span>
 	groupBox1.Size = Size(301, 84)
 	groupBox1.TabIndex = 6
@@ -670,10 +1052,11 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
 	tboxServPassword.TabIndex = 2
 	tboxServPassword.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>000000</span><span style=color:#a31515>&#34;</span>
 
+    groupBox2.Controls:Add(label4)
+    groupBox2.Controls:Add(tboxLocalAddr)
 	groupBox2.Controls:Add(tboxLocalPort)
-	groupBox2.Controls:Add(tboxLocalAddr)
-	groupBox2.Controls:Add(label4)
-	groupBox2.Location = Point(14, 102)
+		
+	groupBox2.Location = Point(14, 128)
 	groupBox2.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>groupBox2</span><span style=color:#a31515>&#34;</span>
 	groupBox2.Size = Size(301, 55)
 	groupBox2.TabIndex = 6
@@ -699,35 +1082,59 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
 	label4.TabIndex = 1
 	label4.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>监听</span><span style=color:#a31515>&#34;</span>
 
-	btnStart.Location = Point(115, 163)
+	btnStart.Location = Point(115, 189)
 	btnStart.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>btnStart</span><span style=color:#a31515>&#34;</span>
 	btnStart.Size = Size(50, 23)
 	btnStart.TabIndex = 3
 	btnStart.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>启动</span><span style=color:#a31515>&#34;</span>
 	btnStart.UseVisualStyleBackColor = <span style=color:#00f>true</span>
 
-	btnStop.Location = Point(171, 163)
+	btnStop.Location = Point(171, 189)
 	btnStop.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>btnStop</span><span style=color:#a31515>&#34;</span>
 	btnStop.Size = Size(50, 23)
 	btnStop.TabIndex = 3
 	btnStop.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>停止</span><span style=color:#a31515>&#34;</span>
 	btnStop.UseVisualStyleBackColor = <span style=color:#00f>true</span>
     
-    btnExit.Location = Point(226, 163)
+    btnExit.Location = Point(226, 189)
     btnExit.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>btnExit</span><span style=color:#a31515>&#34;</span>
     btnExit.Size = Size(50, 23)
     btnExit.TabIndex = 3
     btnExit.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>退出</span><span style=color:#a31515>&#34;</span>
     btnExit.UseVisualStyleBackColor = <span style=color:#00f>true</span>
 
+    <span style=color:green>-- top</span>
+    cboxName.FormattingEnabled = <span style=color:#00f>true</span>
+    cboxName.Location = Point(53, 12)
+    cboxName.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>cboxName</span><span style=color:#a31515>&#34;</span>
+    cboxName.Size = Size(172, 20)
+    cboxName.TabIndex = 0
+
+    btnRemove.Location = Point(231, 9)
+    btnRemove.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>btnRemove</span><span style=color:#a31515>&#34;</span>
+    btnRemove.Size = Size(72, 23)
+    btnRemove.TabIndex = 1
+    btnRemove.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>删除</span><span style=color:#a31515>&#34;</span>
+    btnRemove.UseVisualStyleBackColor = <span style=color:#00f>true</span>
+
+    label5.AutoSize = <span style=color:#00f>true</span>;
+    label5.Location = Point(20, 15);
+    label5.Name = <span style=color:#a31515>&#34;</span><span style=color:#a31515>label1</span><span style=color:#a31515>&#34;</span>;
+    label5.Size = Size(29, 12);
+    label5.TabIndex = 2;
+    label5.Text = <span style=color:#a31515>&#34;</span><span style=color:#a31515>名称</span><span style=color:#a31515>&#34;</span>;
+
 	form.AutoScaleDimensions = SizeF(6.0, 12.0)
 	form.AutoScaleMode = AutoScaleMode.Font
-	form.ClientSize = Size(334, 193)
-	form.Controls:Add(groupBox2)
+	form.ClientSize = Size(334, 219)
+    form.Controls:Add(label5)
+    form.Controls:Add(cboxName)
+    form.Controls:Add(btnRemove)
 	form.Controls:Add(groupBox1)
+	form.Controls:Add(groupBox2)
+    form.Controls:Add(btnSave)
 	form.Controls:Add(btnStop)
 	form.Controls:Add(btnStart)
-	form.Controls:Add(btnSave)
     form.Controls:Add(btnExit)
 	form.FormBorderStyle = FormBorderStyle.FixedDialog
 	form.MaximizeBox = <span style=color:#00f>false</span>
@@ -745,18 +1152,21 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
 
  
 <span style=color:#00f>function</span> LoadTemplate(key)
-        <span style=color:#00f>local</span> defSettings = <span style=color:#a31515>[[
+    <span style=color:#00f>local</span> defSettings = <span style=color:#a31515>[[
+</span><span style=color:#a31515>{
+</span><span style=color:#a31515>    &#34;curServ&#34;: &#34;&#34;,
+</span><span style=color:#a31515>    &#34;servers&#34;: [],
+</span><span style=color:#a31515>}]]</span>
+        
+    <span style=color:#00f>local</span> setting = <span style=color:#a31515>[[
 </span><span style=color:#a31515>{
 </span><span style=color:#a31515>    &#34;remote_addr&#34;: &#34;www.baidu.com&#34;,
 </span><span style=color:#a31515>    &#34;remote_port&#34;: 80,
-</span><span style=color:#a31515>    &#34;password&#34;: [ &#34;123457&#34; ],
-</span><span style=color:#a31515>    &#34;ssl&#34;: {
-</span><span style=color:#a31515>        &#34;verify&#34;: true
-</span><span style=color:#a31515>    },
+</span><span style=color:#a31515>    &#34;password&#34;: &#34;123457&#34;,
+</span><span style=color:#a31515>    &#34;verify&#34;: true,
 </span><span style=color:#a31515>    &#34;local_addr&#34;: &#34;127.0.0.1&#34;,
 </span><span style=color:#a31515>    &#34;local_port&#34;: 1080
-</span><span style=color:#a31515>}
-</span><span style=color:#a31515>]]</span>
+</span><span style=color:#a31515>}]]</span>
 
     <span style=color:#00f>local</span> defConfig = <span style=color:#a31515>[[
 </span><span style=color:#a31515>{
@@ -765,7 +1175,7 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
 </span><span style=color:#a31515>    &#34;local_port&#34;: 8080,
 </span><span style=color:#a31515>    &#34;remote_addr&#34;: &#34;www.bing.com&#34;,
 </span><span style=color:#a31515>    &#34;remote_port&#34;: 443,
-</span><span style=color:#a31515>    &#34;password&#34;: [],
+</span><span style=color:#a31515>    &#34;password&#34;: [&#34;none&#34;],
 </span><span style=color:#a31515>    &#34;log_level&#34;: 1,
 </span><span style=color:#a31515>    &#34;ssl&#34;: {
 </span><span style=color:#a31515>        &#34;verify&#34;: false,
@@ -789,18 +1199,20 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
 </span><span style=color:#a31515>        &#34;fast_open&#34;: false,
 </span><span style=color:#a31515>        &#34;fast_open_qlen&#34;: 20
 </span><span style=color:#a31515>    }
-</span><span style=color:#a31515>}
-</span><span style=color:#a31515>    ]]</span>
+</span><span style=color:#a31515>}]]</span>
        
-    <span style=color:#00f>if</span> key == <span style=color:#a31515>&#34;</span><span style=color:#a31515>settings</span><span style=color:#a31515>&#34;</span> <span style=color:#00f>then</span>
-        <span style=color:#00f>return</span> defSettings
+    <span style=color:#00f>if</span> key == <span style=color:#a31515>&#34;</span><span style=color:#a31515>setting</span><span style=color:#a31515>&#34;</span> <span style=color:#00f>then</span>
+        <span style=color:#00f>return</span> setting
     <span style=color:#00f>elseif</span> key == <span style=color:#a31515>&#34;</span><span style=color:#a31515>config</span><span style=color:#a31515>&#34;</span> <span style=color:#00f>then</span>
         <span style=color:#00f>return</span> defConfig
-    <span style=color:#00f>else</span>
-        <span style=color:#00f>return</span> <span style=color:#00f>nil</span>
+    <span style=color:#00f>elseif</span> key == <span style=color:#a31515>&#34;</span><span style=color:#a31515>defSettings</span><span style=color:#a31515>&#34;</span> <span style=color:#00f>then</span>
+        <span style=color:#00f>return</span> defSettings
     <span style=color:#00f>end</span>
+    
+    <span style=color:#00f>return</span> <span style=color:#00f>nil</span>
 <span style=color:#00f>end</span>
+
 
 Main()
 </code></pre></td></tr></table></div></div><div class=edit-meta>Last updated on 14 Apr 2020<br>Published on 14 Apr 2020<br><a href=03-plugins/01-luna/06-trojan-gui-demo.md/edit/master/content/03-plugins/01-luna/06-trojan-gui-demo.md class=edit-page><i class="fas fa-pen-square"></i>Edit on GitHub</a></div><nav class=pagination><a class="nav nav-prev" href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/05-sysapi-demo/ title=Sys库示例><i class="fas fa-arrow-left" aria-hidden=true></i>Prev - Sys库示例</a>
-<a class="nav nav-next" href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/10-update-subscriptions/ title=每天更新订阅>Next - 每天更新订阅 <i class="fas fa-arrow-right" aria-hidden=true></i></a></nav><footer><p class=powered>Powered by <a href=https://gohugo.io>Hugo</a>. Theme by <a href=https://themes.gohugo.io/hugo-theme-techdoc/>TechDoc</a>. Designed by <a href=https://github.com/thingsym/hugo-theme-techdoc>Thingsym</a>.</p></footer></main><div class=sidebar><nav class=open-menu><ul><li><a href=https://vrnobody.github.io/V2RayGCon>Home</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/>使用说明</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/11-search-demo/>搜索及编辑</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/12-subs-demo/>订阅</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/13-autorun/>开机启动</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/14-update-v2ray-core/>更新v2ray-core</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/15-qrcode-demo/>二维码</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/16-share-links/>各种分享链接</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/17-global-import/>全局Import</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/18-options/>选项</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/19-http-socks-inbounds/>同时开启http和socks</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/20-mulitple-config-files/>多文件配置</a></li></ul></li><li class=parent><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/>插件</a><ul class=sub-menu><li class=parent><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/>Luna</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/01-toggle-first-server/>开关第一个服务器</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/02-download-bing-wallpaper/>下载bing壁纸</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/03-input-choices-demo/>输入控件演示</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/04-showdata-demo/>数据视图控件演示</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/05-sysapi-demo/>Sys库示例</a></li><li class=active><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/06-trojan-gui-demo/>Trojan示例</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/10-update-subscriptions/>每天更新订阅</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/20-select-timeout-and-dup-serv/>选中超时及重复的服务器</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/50-functions-you-can-use/>所有函数</a></li></ul></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/02-pacman/>Pacman</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/03-proxysetter/>ProxySetter</a></li></ul></li><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/>开发相关</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/01-release-log/>发布记录</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/02-services-relationship/>各服务调用关系</a></li></ul></li></ul></nav><div class=sidebar-footer></div></div></div><a href=# id=backtothetop-fixed class=backtothetop data-backtothetop-duration=600 data-backtothetop-easing=easeOutQuart data-backtothetop-fixed-fadein=1000 data-backtothetop-fixed-fadeout=1000 data-backtothetop-fixed-bottom=10 data-backtothetop-fixed-right=20><span class="fa-layers fa-fw"><i class="fas fa-circle"></i><i class="fas fa-arrow-circle-up"></i></span></a></div></body></html>
+<a class="nav nav-next" href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/10-update-subscriptions/ title=每天更新订阅>Next - 每天更新订阅 <i class="fas fa-arrow-right" aria-hidden=true></i></a></nav><footer><p class=powered>Powered by <a href=https://gohugo.io>Hugo</a>. Theme by <a href=https://themes.gohugo.io/hugo-theme-techdoc/>TechDoc</a>. Designed by <a href=https://github.com/thingsym/hugo-theme-techdoc>Thingsym</a>.</p></footer></main><div class=sidebar><nav class=open-menu><ul><li><a href=https://vrnobody.github.io/V2RayGCon>Home</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/>使用说明</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/11-search-demo/>搜索及编辑</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/12-subs-demo/>订阅</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/13-autorun/>开机启动</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/14-update-v2ray-core/>更新v2ray-core</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/15-qrcode-demo/>二维码</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/16-share-links/>各种分享链接</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/17-global-import/>全局Import</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/18-options/>选项</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/19-http-socks-inbounds/>同时开启http和socks</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/20-mulitple-config-files/>多文件配置</a></li></ul></li><li class=parent><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/>插件</a><ul class=sub-menu><li class=parent><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/>Luna</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/01-toggle-first-server/>开关第一个服务器</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/02-download-bing-wallpaper/>下载bing壁纸</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/03-input-output-controls-demo/>输入输出控件演示</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/05-sysapi-demo/>Sys库示例</a></li><li class=active><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/06-trojan-gui-demo/>Trojan示例</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/10-update-subscriptions/>每天更新订阅</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/20-select-timeout-and-dup-serv/>选中重复服务器</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/50-functions-you-can-use/>所有函数</a></li></ul></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/02-pacman/>Pacman</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/03-proxysetter/>ProxySetter</a></li></ul></li><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/>开发相关</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/01-release-log/>发布记录</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/02-services-relationship/>各服务调用关系</a></li></ul></li></ul></nav><div class=sidebar-footer></div></div></div><a href=# id=backtothetop-fixed class=backtothetop data-backtothetop-duration=600 data-backtothetop-easing=easeOutQuart data-backtothetop-fixed-fadein=1000 data-backtothetop-fixed-fadeout=1000 data-backtothetop-fixed-bottom=10 data-backtothetop-fixed-right=20><span class="fa-layers fa-fw"><i class="fas fa-circle"></i><i class="fas fa-arrow-circle-up"></i></span></a></div></body></html>

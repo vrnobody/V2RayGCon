@@ -135,7 +135,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             }
             else
             {
-                Task.Run(() => DisposeFlyPanelControlByList(controlList)).ConfigureAwait(false);
+                VgcApis.Misc.Utils.RunInBackground(() => DisposeFlyPanelControlByList(controlList));
             }
         }
 
@@ -248,10 +248,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             // bug
             var controls = GetAllServerControls();
-            Task.Run(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 controls.ForEach(c => c.SetKeywords(searchKeywords));
-            }).ConfigureAwait(false);
+            });
         }
 
         private void UpdateStatusBarText(

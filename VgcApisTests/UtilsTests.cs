@@ -185,7 +185,7 @@ namespace VgcApisTests
 
             var cts = new CancellationTokenSource(1000);
             Task.WaitAll(
-                Task.Run(() =>
+                RunInBackground(() =>
                 {
                     while (!cts.Token.IsCancellationRequested)
                     {
@@ -200,8 +200,8 @@ namespace VgcApisTests
                             failCounter++;
                         };
                     }
-                }),
-                Task.Run(() =>
+                }, true),
+                RunInBackground(() =>
                 {
                     while (!cts.Token.IsCancellationRequested)
                     {
@@ -212,7 +212,7 @@ namespace VgcApisTests
                         }
                         catch { }
                     }
-                }));
+                }, true));
 
             Console.WriteLine($"success: {successCounter}, fail: {failCounter}");
             var read = File.ReadAllText(bakFile);

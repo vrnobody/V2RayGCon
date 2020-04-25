@@ -18,8 +18,8 @@ namespace VgcApis.WinForms
         #endregion
 
 
-        ConcurrentDictionary<uint, Action> handlers = new ConcurrentDictionary<uint, Action>();
-        ConcurrentDictionary<string, Tuple<int, uint>> contexts = new ConcurrentDictionary<string, Tuple<int, uint>>();
+        ConcurrentDictionary<long, Action> handlers = new ConcurrentDictionary<long, Action>();
+        ConcurrentDictionary<string, Tuple<int, long>> contexts = new ConcurrentDictionary<string, Tuple<int, long>>();
         int currentEvCode = 0;
 
 
@@ -40,72 +40,81 @@ namespace VgcApis.WinForms
             Action hotKeyHandler,
             string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
         {
-            var evCode = currentEvCode++;
-
-            if (!Misc.Utils.TryParseKeyMesssage(keyName, hasAlt, hasCtrl, hasShift,
-                out uint modifier, out uint key))
+            try
             {
-                return null;
-            }
+                var evCode = currentEvCode++;
 
-            var hkMsg = (uint)((key << 16) | modifier);
-
-            if (handlers.Keys.Contains(hkMsg))
-            {
-                return null;
-            }
-
-            if (!RegisterHotKey(Handle, evCode, (uint)modifier, (uint)key))
-            {
-                return null;
-            }
-
-            do
-            {
-                var hkHandle = Guid.NewGuid().ToString();
-                if (!contexts.Keys.Contains(hkHandle))
+                if (!Misc.Utils.TryParseKeyMesssage(keyName, hasAlt, hasCtrl, hasShift,
+                    out uint modifier, out uint key))
                 {
-                    var hkParma = new Tuple<int, uint>(evCode, hkMsg);
-                    contexts.TryAdd(hkHandle, hkParma);
-                    handlers.TryAdd(hkMsg, hotKeyHandler);
-                    return hkHandle;
+                    return null;
                 }
-            } while (true);
+
+                long hkMsg = (key << 16) | modifier;
+                var handlerKeys = handlers.Keys;
+                if (handlerKeys.Contains(hkMsg)
+                    || !RegisterHotKey(Handle, evCode, modifier, key))
+                {
+                    return null;
+                }
+
+                do
+                {
+                    var hkHandle = Guid.NewGuid().ToString();
+                    var keys = contexts.Keys;
+                    if (!keys.Contains(hkHandle))
+                    {
+                        var hkParma = new Tuple<int, long>(evCode, hkMsg);
+                        contexts.TryAdd(hkHandle, hkParma);
+                        handlers.TryAdd(hkMsg, hotKeyHandler);
+                        return hkHandle;
+                    }
+                } while (true);
+            }
+            catch { }
+            return null;
         }
 
         public bool UnregisterHotKey(string hotKeyHandle)
         {
-            if (!string.IsNullOrEmpty(hotKeyHandle)
-                && contexts.TryRemove(hotKeyHandle, out var context))
+            try
             {
-                var evCode = context.Item1;
-                var keyMsg = context.Item2;
-                handlers.TryRemove(keyMsg, out var _);
-                return UnregisterHotKey(this.Handle, evCode);
+                if (!string.IsNullOrEmpty(hotKeyHandle)
+                    && contexts.TryRemove(hotKeyHandle, out var context))
+                {
+                    var evCode = context.Item1;
+                    var keyMsg = context.Item2;
+                    var ok = UnregisterHotKey(this.Handle, evCode);
+                    handlers.TryRemove(keyMsg, out _);
+                    return ok;
+                }
             }
+            catch { }
 
             return false;
         }
 
         protected override void WndProc(ref Message m)
         {
-            // check if we got a hot key pressed.
-            if (m.Msg == WM_HOTKEY
-                && handlers.TryGetValue((uint)m.LParam, out var handler))
+            try
             {
-                try
+                // check if we got a hot key pressed.
+                if (m.Msg == WM_HOTKEY)
                 {
-                    handler?.Invoke();
+                    var key = (uint)m.LParam & 0xffffffff;
+                    if (handlers.TryGetValue(key, out var handler))
+                    {
+                        handler?.Invoke();
+                    }
                 }
-                catch { }
             }
+            catch { }
 
             base.WndProc(ref m);
         }
         #endregion
 
         #region IDisposable Support
-        bool isDisposed = false;
         private bool disposedValue = false; // 要检测冗余调用
 
         protected virtual void Dispose(bool disposing)
@@ -114,10 +123,6 @@ namespace VgcApis.WinForms
             {
                 if (disposing)
                 {
-                    if (isDisposed)
-                    {
-                        return;
-                    }
                     var handles = contexts.Keys;
                     foreach (var handle in handles)
                     {

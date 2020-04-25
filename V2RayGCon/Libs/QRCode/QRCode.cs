@@ -181,9 +181,9 @@ namespace V2RayGCon.Libs.QRCode
 
         public static void ScanQRCode(Action<string> success, Action fail)
         {
-            Task.Run(async () =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                await Task.Delay(100);
+                Task.Delay(100).Wait();
 
                 foreach (var screen in Screen.AllScreens)
                 {
@@ -257,7 +257,7 @@ namespace V2RayGCon.Libs.QRCode
                 catch { }
             }
 
-            Task.Run(() => ShowFormInBackground()).ConfigureAwait(false);
+            VgcApis.Misc.Utils.RunInBackground(() => ShowFormInBackground());
         }
 
         static bool ScanWindow(Bitmap screenshot, Point screenLocation, Rectangle winRect, Rectangle screenRect, Action<string> success)

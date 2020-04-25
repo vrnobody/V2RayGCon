@@ -225,7 +225,7 @@ namespace V2RayGCon.Libs.Nets
 
             lock (waitForDigest)
             {
-                Task.Run(() =>
+                VgcApis.Misc.Utils.RunInBackground(() =>
                 {
                     lock (waitForDigest)
                     {

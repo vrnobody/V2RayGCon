@@ -24,8 +24,8 @@ namespace V2RayGCon.Services
         public bool Warmup()
         {
             Misc.Utils.SupportProtocolTLS12();
-
             setting = Settings.Instance;
+            notifier = Notifier.Instance; // show icon
             if (setting.ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
             {
                 return false;
@@ -36,7 +36,7 @@ namespace V2RayGCon.Services
 
         public void Run()
         {
-            notifier = Notifier.Instance;
+
             servers = Servers.Instance;
             updater = Updater.Instance;
 
@@ -69,14 +69,14 @@ namespace V2RayGCon.Services
 
             if (setting.isCheckUpdateWhenAppStart)
             {
-                Task.Run(() =>
+                VgcApis.Misc.Utils.RunInBackground(() =>
                 {
 #if DEBUG
 #else
                     Task.Delay(VgcApis.Models.Consts.Webs.CheckForUpdateDelay).Wait();
 #endif
                     updater.CheckForUpdate(false);
-                }).ConfigureAwait(false);
+                });
             }
         }
 
@@ -173,10 +173,10 @@ namespace V2RayGCon.Services
         void DisposeAllServices()
         {
             // throw new NullReferenceException("for debugging");
-
+            VgcApis.Libs.Sys.FileLogger.Info("Luancher.DisposeAllServices() begin");
             if (setting.ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
             {
-                // shutdown directly
+                VgcApis.Libs.Sys.FileLogger.Info("Luancher.DisposeAllServices() abort");
                 return;
             }
 
@@ -194,7 +194,7 @@ namespace V2RayGCon.Services
             {
                 service.Dispose();
             }
-
+            VgcApis.Libs.Sys.FileLogger.Info("Luancher.DisposeAllServices() done");
         }
 
         void SetCulture(Models.Datas.Enums.Cultures culture)

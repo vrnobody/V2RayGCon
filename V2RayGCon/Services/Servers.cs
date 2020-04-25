@@ -607,7 +607,7 @@ namespace V2RayGCon.Services
 
         public void UpdateAllServersSummaryBg()
         {
-            Task.Run(() => UpdateAllServersSummarySync()).ConfigureAwait(false);
+            VgcApis.Misc.Utils.RunInBackground(() => UpdateAllServersSummarySync());
         }
 
         public void DeleteServerByConfig(string config)
@@ -874,20 +874,21 @@ namespace V2RayGCon.Services
         #region protected methods
         protected override void Cleanup()
         {
-            setting.isServerTrackerOn = false;
+            VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() begin");
 
+            setting.isServerTrackerOn = false;
             if (setting.ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
             {
+                VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() abort");
                 return;
             }
 
-            VgcApis.Libs.Sys.FileLogger.Info("Services.Servers.Cleanup");
-            VgcApis.Libs.Sys.FileLogger.Info("Services.StopTracking");
 
+            VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() stop tracking");
             lazyServerTrackingTimer?.Timeout();
             lazyServerTrackingTimer?.Release();
 
-            VgcApis.Libs.Sys.FileLogger.Info("Services.SaveSettings");
+            VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() save data");
             lazyServerSettingsRecorder?.DoItNow();
             lazyServerSettingsRecorder.Dispose();
 
@@ -895,12 +896,12 @@ namespace V2RayGCon.Services
             var cores = coreServList;
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                VgcApis.Libs.Sys.FileLogger.Info("Stop cores quiet begin.");
+                VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() stop cores in background begin");
                 foreach (var core in cores)
                 {
                     core.GetCoreCtrl().StopCoreQuiet();
                 }
-                VgcApis.Libs.Sys.FileLogger.Info("Stop cores quiet done.");
+                VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() stop cores in background done");
             });
         }
 

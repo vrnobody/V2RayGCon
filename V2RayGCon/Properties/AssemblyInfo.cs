@@ -33,10 +33,13 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.6.0")]
+[assembly: AssemblyVersion("1.3.6.2")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-/* 
+/*
+ * v1.3.6.2 Add Sys:RunAndForgot().
+ *          Log more detail in debug logs.
+ * v1.3.6.1 Fix bugs.
  * -----------------------------------------------
  * v1.3.5.11 Misc:ShowData() return a json string.
  * v1.3.5.10 Add debug log file option.

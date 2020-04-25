@@ -38,6 +38,15 @@ namespace VgcApis.Interfaces.Lua
 
         void Kill(Process proc);
 
+        Process RunAndForgot(string exePath);
+
+        Process RunAndForgot(string exePath, string args);
+
+        Process RunAndForgot(string exePath, string args, string stdin);
+
+        Process RunAndForgot(string exePath, string args, string stdin,
+            NLua.LuaTable envs, bool hasWindow, bool redirectOutput);
+
         Process Run(string exePath);
 
         Process Run(string exePath, string args);

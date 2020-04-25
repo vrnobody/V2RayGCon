@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Libs.V2Ray
@@ -180,7 +179,7 @@ namespace V2RayGCon.Libs.V2Ray
                     VgcApis.Misc.UI.MsgBoxAsync(I18N.ExeNotFound);
                 }
             }
-            Task.Run(() => InvokeEventOnCoreStatusChanged()).ConfigureAwait(false);
+            VgcApis.Misc.Utils.RunInBackground(() => InvokeEventOnCoreStatusChanged());
         }
 
         // non-blocking 

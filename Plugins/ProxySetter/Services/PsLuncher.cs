@@ -21,7 +21,8 @@ namespace ProxySetter.Services
         public void Run(VgcApis.Interfaces.Services.IApiService api)
         {
             orgSysProxySetting = Libs.Sys.ProxySetter.GetProxySetting();
-            FileLogger.Info("ProxySetter: save sys proxy settings");
+
+            FileLogger.Info("ProxySetter: remember current sys proxy settings");
 
             this.vgcApi = api;
 

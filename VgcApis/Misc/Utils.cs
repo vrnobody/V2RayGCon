@@ -424,13 +424,16 @@ namespace VgcApis.Misc
             BlockingWaitOne(done, 5000);
         }
 
-
-        public static Task RunInBackground(Action worker)
+        public static Task RunInBackground(Action worker, bool isEnableConfigAwait = false)
         {
             try
             {
-                var t = Task.Run(worker);
-                t.ConfigureAwait(false);
+                var t = new Task(worker, TaskCreationOptions.LongRunning);
+                if (!isEnableConfigAwait)
+                {
+                    t.ConfigureAwait(false);
+                }
+                t.Start();
                 return t;
             }
             catch { }

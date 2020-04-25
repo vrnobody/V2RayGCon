@@ -13,6 +13,22 @@ namespace VgcApis.Libs.Sys
         static readonly object writeLogLocker = new object();
 
         #region public method
+        static public void Raw(string message)
+        {
+            if (string.IsNullOrEmpty(LogFilename))
+            {
+                return;
+            }
+
+            lock (writeLogLocker)
+            {
+                using (StreamWriter w = File.AppendText(LogFilename))
+                {
+                    w.WriteLine(message);
+                }
+            }
+        }
+
         public static void Debug(string message)
         {
             AppendLog("Debug", message);
@@ -50,10 +66,14 @@ namespace VgcApis.Libs.Sys
         static readonly object dumpCsLocker = new object();
         static public void DumpCallStack(string message)
         {
-            Debug(message);
-            // frame 1, true for source info
+            if (string.IsNullOrEmpty(LogFilename))
+            {
+                return;
+            }
+
             lock (dumpCsLocker)
             {
+                Debug(message);
                 StackTrace stack = new StackTrace();
                 foreach (var frame in stack.GetFrames())
                 {
@@ -68,23 +88,16 @@ namespace VgcApis.Libs.Sys
         #region private method
 
 
+
         static void AppendLog(string prefix, string message)
         {
-            if (string.IsNullOrEmpty(LogFilename))
-            {
-                return;
-            }
+            var text = string.Format(
+                "[{0}] {1} {2}",
+                prefix,
+                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                message);
 
-            lock (writeLogLocker)
-            {
-                using (StreamWriter w = File.AppendText(LogFilename))
-                {
-                    w.WriteLine("[{0}] {1} {2}",
-                        prefix,
-                        DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
-                        message);
-                }
-            }
+            Raw(text);
         }
         #endregion
     }

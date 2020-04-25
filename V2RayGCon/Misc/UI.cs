@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -77,7 +76,7 @@ namespace V2RayGCon.Misc
 
         public static void ShowMessageBoxDoneAsync()
         {
-            Task.Run(() => MessageBox.Show(I18N.Done)).ConfigureAwait(false);
+            VgcApis.Misc.Utils.RunInBackground(() => MessageBox.Show(I18N.Done));
         }
 
         public static bool UpdateControlOnDemand(Control control, int value)
@@ -333,7 +332,7 @@ namespace V2RayGCon.Misc
             var text = string.Format("{0}\n{1}", msg, url);
             if (Confirm(text))
             {
-                Task.Run(() => Process.Start(url)).ConfigureAwait(false);
+                VgcApis.Misc.Utils.RunInBackground(() => Process.Start(url));
             }
         }
 

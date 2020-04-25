@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace Statistics.Services
@@ -70,6 +69,7 @@ namespace Statistics.Services
 
         public void Cleanup()
         {
+            VgcApis.Libs.Sys.FileLogger.Info("Statistics.Cleanup() begin");
             vgcServers.OnCoreClosing -= SaveStatDataBeforeCoreClosed;
             ReleaseBgStatsDataUpdateTimer();
 
@@ -77,13 +77,13 @@ namespace Statistics.Services
             // So losing 5 minutes of statistics data is an acceptable loss.
             if (!IsShutdown())
             {
-                VgcApis.Libs.Sys.FileLogger.Info("Statistics: save data");
+                VgcApis.Libs.Sys.FileLogger.Info("Statistics.Cleanup() save data");
                 UpdateHistoryStatsDataWorker();
                 bookKeeper?.DoItNow();
             }
 
             bookKeeper?.Dispose();
-            VgcApis.Libs.Sys.FileLogger.Info("Statistics: done!");
+            VgcApis.Libs.Sys.FileLogger.Info("Statistics.Cleanup() done");
         }
         #endregion
 
@@ -99,7 +99,7 @@ namespace Statistics.Services
             var uid = coreCtrl.GetCoreStates().GetUid();
             var sample = coreCtrl.GetCoreCtrl().TakeStatisticsSample();
             var title = coreCtrl.GetCoreStates().GetTitle();
-            Task.Run(() => AddToHistoryStatsData(uid, title, sample)).ConfigureAwait(false);
+            VgcApis.Misc.Utils.RunInBackground(() => AddToHistoryStatsData(uid, title, sample));
         }
 
         void AddToHistoryStatsData(

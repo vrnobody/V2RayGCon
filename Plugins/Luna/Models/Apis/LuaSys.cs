@@ -263,6 +263,20 @@ namespace Luna.Models.Apis
 
         public bool SendStopSignal(Process proc) => VgcApis.Misc.Utils.SendStopSignal(proc);
 
+        public Process RunAndForgot(string exePath) =>
+          RunAndForgot(exePath, null);
+
+        public Process RunAndForgot(string exePath, string args) =>
+            RunAndForgot(exePath, args, null);
+
+        public Process RunAndForgot(string exePath, string args, string stdin) =>
+            RunAndForgot(exePath, args, stdin, null, true, false);
+
+
+        public Process RunAndForgot(string exePath, string args, string stdin,
+            LuaTable envs, bool hasWindow, bool redirectOutput) =>
+            RunProcWorker(false, exePath, args, stdin, envs, hasWindow, redirectOutput);
+
         public Process Run(string exePath) =>
             Run(exePath, null);
 
@@ -272,62 +286,10 @@ namespace Luna.Models.Apis
         public Process Run(string exePath, string args, string stdin) =>
             Run(exePath, args, stdin, null, true, false);
 
-
         public Process Run(string exePath, string args, string stdin,
-            LuaTable envs, bool hasWindow, bool redirectOutput)
-        {
-            var useStdIn = !string.IsNullOrEmpty(stdin);
-            var p = new Process
-            {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = exePath,
-                    Arguments = args,
-                    CreateNoWindow = !hasWindow,
-                    UseShellExecute = false,
-                    RedirectStandardInput = useStdIn,
-                    RedirectStandardError = redirectOutput,
-                    RedirectStandardOutput = redirectOutput,
-                }
-            };
+            LuaTable envs, bool hasWindow, bool redirectOutput) =>
+            RunProcWorker(true, exePath, args, stdin, envs, hasWindow, redirectOutput);
 
-            if (redirectOutput)
-            {
-                p.Exited += (s, a) =>
-                {
-                    p.ErrorDataReceived -= SendLogHandler;
-                    p.OutputDataReceived -= SendLogHandler;
-                };
-
-                p.ErrorDataReceived += SendLogHandler;
-                p.OutputDataReceived += SendLogHandler;
-            }
-
-            if (envs != null)
-            {
-                VgcApis.Misc.Utils.SetProcessEnvs(p, Misc.Utils.LuaTableToDictionary(envs));
-            }
-
-            p.Start();
-            TrackdownProcess(p);
-
-            if (redirectOutput)
-            {
-                p.BeginErrorReadLine();
-                p.BeginOutputReadLine();
-            }
-
-            if (useStdIn)
-            {
-                var input = p.StandardInput;
-                var buff = Encoding.UTF8.GetBytes(stdin);
-                input.BaseStream.Write(buff, 0, buff.Length);
-                input.WriteLine();
-                input.Close();
-            }
-
-            return p;
-        }
         #endregion
 
         #region ILuaSys.System
@@ -386,6 +348,65 @@ namespace Luna.Models.Apis
         #endregion
 
         #region private methods
+        Process RunProcWorker(bool isTracking, string exePath, string args, string stdin,
+           LuaTable envs, bool hasWindow, bool redirectOutput)
+        {
+            var useStdIn = !string.IsNullOrEmpty(stdin);
+            var p = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = exePath,
+                    Arguments = args,
+                    CreateNoWindow = !hasWindow,
+                    UseShellExecute = false,
+                    RedirectStandardInput = useStdIn,
+                    RedirectStandardError = redirectOutput,
+                    RedirectStandardOutput = redirectOutput,
+                }
+            };
+
+            if (redirectOutput)
+            {
+                p.Exited += (s, a) =>
+                {
+                    p.ErrorDataReceived -= SendLogHandler;
+                    p.OutputDataReceived -= SendLogHandler;
+                };
+
+                p.ErrorDataReceived += SendLogHandler;
+                p.OutputDataReceived += SendLogHandler;
+            }
+
+            if (envs != null)
+            {
+                VgcApis.Misc.Utils.SetProcessEnvs(p, Misc.Utils.LuaTableToDictionary(envs));
+            }
+
+            p.Start();
+
+            if (isTracking)
+            {
+                TrackdownProcess(p);
+            }
+
+            if (redirectOutput)
+            {
+                p.BeginErrorReadLine();
+                p.BeginOutputReadLine();
+            }
+
+            if (useStdIn)
+            {
+                var input = p.StandardInput;
+                var buff = Encoding.UTF8.GetBytes(stdin);
+                input.BaseStream.Write(buff, 0, buff.Length);
+                input.WriteLine();
+                input.Close();
+            }
+
+            return p;
+        }
 
         private void KillAllProcesses()
         {

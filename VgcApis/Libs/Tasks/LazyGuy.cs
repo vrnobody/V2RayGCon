@@ -161,6 +161,7 @@ namespace VgcApis.Libs.Tasks
                 Application.DoEvents();
             }
         }
+
         void Done() => jobToken.Set();
 
         void DoTheJob()

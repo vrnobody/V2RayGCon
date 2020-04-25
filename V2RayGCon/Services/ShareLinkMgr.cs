@@ -285,7 +285,9 @@ namespace V2RayGCon.Services
         #region protected methods
         protected override void Cleanup()
         {
+            VgcApis.Libs.Sys.FileLogger.Info("ShareLinkMgr.Cleanup() begin");
             codecs?.Dispose();
+            VgcApis.Libs.Sys.FileLogger.Info("ShareLinkMgr.Cleanup() done");
         }
         #endregion
     }

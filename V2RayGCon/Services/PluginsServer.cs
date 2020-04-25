@@ -207,9 +207,11 @@ namespace V2RayGCon.Services
         #region protected methods
         protected override void Cleanup()
         {
+            VgcApis.Libs.Sys.FileLogger.Info("PluginsServer.Cleanup() begin");
             CleanupPlugins(plugins.Keys.ToList());
             plugins.Clear();
             vgcApis.Dispose();
+            VgcApis.Libs.Sys.FileLogger.Info("PluginsServer.Cleanup() done");
         }
         #endregion
     }

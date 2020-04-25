@@ -23,14 +23,14 @@ namespace V2RayGCon.Services
         public readonly NotifyIcon notifyIcon;
 
         static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
-        static readonly int UpdateInterval = VgcApis.Models.Consts.Intervals.NotifierTextUpdateIntreval;
+        static readonly int UpdateInterval = VgcApis.Models.Consts.Intervals.NotifierMenuUpdateIntreval;
 
         readonly public ContextMenuStrip niMenu;
         readonly VgcApis.WinForms.HotKeyWindow hkWin;
         readonly Bitmap orgIcon;
         bool isMenuOpened = false;
 
-        VgcApis.Libs.Tasks.LazyGuy lazyNotifyIconUpdater;
+        VgcApis.Libs.Tasks.LazyGuy lazyNotifierMenuUpdater;
         enum qsMenuNames
         {
             StopAllServer,
@@ -45,9 +45,9 @@ namespace V2RayGCon.Services
 
         Notifier()
         {
-            lazyNotifyIconUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateNotifyIconWorker, UpdateInterval)
+            lazyNotifierMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateNotifyIconWorker, UpdateInterval)
             {
-                Name = "notifyIconUpdater",
+                Name = "notifierMenuUpdater",
             };
 
             // 其他组件有可能在初始化的时候引用菜单
@@ -375,13 +375,13 @@ namespace V2RayGCon.Services
             next?.Invoke();
         }
 
-        void UpdateNotifyIconLater() => lazyNotifyIconUpdater?.Throttle();
+        void UpdateNotifyIconLater() => lazyNotifierMenuUpdater?.Deadline();
 
         void UpdateNotifyIconWorker(Action done)
         {
             if (isMenuOpened)
             {
-                lazyNotifyIconUpdater?.Postpone();
+                lazyNotifierMenuUpdater?.Postpone();
                 done();
                 return;
             }
@@ -726,7 +726,7 @@ namespace V2RayGCon.Services
         {
             hkWin?.Dispose();
             ReleaseServerEvents();
-            lazyNotifyIconUpdater?.Dispose();
+            lazyNotifierMenuUpdater?.Dispose();
         }
         #endregion
     }

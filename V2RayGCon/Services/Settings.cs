@@ -682,6 +682,7 @@ namespace V2RayGCon.Services
 
         void SaveUserSettingsWorker()
         {
+            VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() begin");
             string serializedUserSettings = "";
             try
             {
@@ -699,11 +700,13 @@ namespace V2RayGCon.Services
                         SetUserSettingFileIsPortableToFalse();
                         SaveUserSettingsToProperties(serializedUserSettings);
                     }
+                    VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() done");
                     return;
                 }
             }
             catch { }
 
+            VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() error");
             if (ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
             {
                 SendLog("UserSettings: " + Environment.NewLine + serializedUserSettings);
@@ -806,11 +809,11 @@ namespace V2RayGCon.Services
         {
             if (content.Equals(serializedUserSettingsCache))
             {
-                VgcApis.Libs.Sys.FileLogger.Info("User settings equal to cache, skip.");
+                VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() no change, skip");
                 return;
             }
 
-            VgcApis.Libs.Sys.FileLogger.Info("Write user settings to file.");
+            VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() write file");
             if (VgcApis.Misc.Utils.ClumsyWriter(
                 content,
                 Constants.Strings.MainUserSettingsFilename,
@@ -820,11 +823,12 @@ namespace V2RayGCon.Services
                 return;
             }
 
+            VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() failed");
             // main file or bak file write fail, clear cache
             serializedUserSettingsCache = @"";
-
             if (ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
             {
+                VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() notice user");
                 WarnUserSaveSettingsFailed(content);
             }
         }
@@ -933,10 +937,12 @@ namespace V2RayGCon.Services
         #region protected methods
         protected override void Cleanup()
         {
+            VgcApis.Libs.Sys.FileLogger.Info("Settings.Cleanup() begin");
             lazyBookKeeper?.DoItNow();
             lazyBookKeeper?.Dispose();
             janitor?.Dispose();
             qLogger.Dispose();
+            VgcApis.Libs.Sys.FileLogger.Info("Settings.Cleanup() done");
         }
         #endregion
 

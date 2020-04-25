@@ -40,9 +40,16 @@ namespace V2RayGCon
                 var app = new Services.Launcher();
                 if (app.Warmup())
                 {
+                    // settings and notify icon is ready
+                    var name = Misc.Utils.GetAppNameAndVer();
+                    VgcApis.Libs.Sys.FileLogger.Raw("\n");
+                    VgcApis.Libs.Sys.FileLogger.Info($"{name} start");
+
                     app.Run();
                     Application.Run();
                     Services.Notifier.Instance.notifyIcon.Visible = false;
+
+                    VgcApis.Libs.Sys.FileLogger.Info($"{name} end");
                 }
                 mutex.ReleaseMutex();
             }

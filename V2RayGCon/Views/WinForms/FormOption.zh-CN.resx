@@ -219,6 +219,12 @@
   <data name="chkSetServStatistics.ToolTip" xml:space="preserve">
     <value>开启统计支持。会导致旧配置格式服务器无法启动！</value>
   </data>
+  <data name="chkSetSelfSignedCert.Text" xml:space="preserve">
+    <value>自签名证书(不安全)</value>
+  </data>
+  <data name="chkSetSelfSignedCert.ToolTip" xml:space="preserve">
+    <value>是否允许使用自签名证书</value>
+  </data>
   <data name="cboxSettingsRandomSelectServerLatency.ToolTip" xml:space="preserve">
     <value />
   </data>

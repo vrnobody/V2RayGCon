@@ -559,7 +559,7 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="btnSetOpenStartupFolder.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 15</value>
+    <value>265, 15</value>
   </data>
   <data name="btnSetOpenStartupFolder.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 23</value>
@@ -691,7 +691,7 @@
     <value>NoControl</value>
   </data>
   <data name="chkSetServStatistics.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 66</value>
+    <value>265, 66</value>
   </data>
   <data name="chkSetServStatistics.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>

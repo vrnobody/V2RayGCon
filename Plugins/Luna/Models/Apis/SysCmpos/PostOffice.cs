@@ -7,13 +7,16 @@ namespace Luna.Models.Apis.SysCmpos
         ConcurrentDictionary<string, MailBox> mailboxes = new ConcurrentDictionary<string, MailBox>();
 
         public PostOffice()
-        { }
+        {
+
+        }
 
         #region properties
 
         #endregion
 
         #region public methods
+
         public bool RemoveMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailbox)
         {
             if (mailboxes.TryRemove(mailbox.GetAddress(), out var box))

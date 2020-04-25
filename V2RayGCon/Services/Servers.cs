@@ -390,7 +390,7 @@ namespace V2RayGCon.Services
         {
             var evDone = new AutoResetEvent(false);
             var success = BatchSpeedTestWorkerThen(GetSelectedServer(), () => evDone.Set());
-            VgcApis.Misc.Utils.BlockingWaitOne(evDone, 5000);
+            VgcApis.Misc.Utils.BlockingWaitOne(evDone);
             return success;
         }
 
@@ -602,7 +602,7 @@ namespace V2RayGCon.Services
             }
 
             Misc.Utils.ChainActionHelper(list.Count, worker, done);
-            VgcApis.Misc.Utils.BlockingWaitOne(isFinished, 5000);
+            VgcApis.Misc.Utils.BlockingWaitOne(isFinished);
         }
 
         public void UpdateAllServersSummaryBg()
@@ -936,7 +936,7 @@ namespace V2RayGCon.Services
                         {
                             server.GetCoreCtrl().RestartCoreThen(() => sayGoodbye.Set());
                         }
-                        VgcApis.Misc.Utils.BlockingWaitOne(sayGoodbye, 5000);
+                        VgcApis.Misc.Utils.BlockingWaitOne(sayGoodbye);
                     }, TaskCreationOptions.LongRunning);
 
                     taskList.Add(task);

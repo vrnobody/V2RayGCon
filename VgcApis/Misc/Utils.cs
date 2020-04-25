@@ -315,19 +315,15 @@ namespace VgcApis.Misc
         #endregion
 
         #region Task
-        public static void BlockingWaitOne(Semaphore smp, int milSec)
-        {
-            while (!smp.WaitOne(milSec))
-            {
-                Application.DoEvents();
-            }
-        }
+
+        public static void BlockingWaitOne(AutoResetEvent autoEv) =>
+            BlockingWaitOne(autoEv, 1000);
 
         public static void BlockingWaitOne(AutoResetEvent autoEv, int milSec)
         {
             while (!autoEv.WaitOne(milSec))
             {
-                Application.DoEvents();
+                Task.Delay(100).Wait();
             }
         }
 
@@ -353,7 +349,7 @@ namespace VgcApis.Misc
             const int CTRL_C_EVENT = 0;
 
             var success = false;
-            BlockingWaitOne(sendCtrlCLocker, 5000);
+            BlockingWaitOne(sendCtrlCLocker);
             try
             {
                 if (Libs.Sys.ConsoleCtrls.AttachConsole((uint)proc.Id))
@@ -421,7 +417,7 @@ namespace VgcApis.Misc
                 });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
-            BlockingWaitOne(done, 5000);
+            BlockingWaitOne(done);
         }
 
         public static Task RunInBackground(Action worker, bool isEnableConfigAwait = false)

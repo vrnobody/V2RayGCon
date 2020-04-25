@@ -7,7 +7,9 @@ namespace Luna.Models.Apis
     {
         Services.Settings settings;
         VgcApis.Interfaces.Services.IApiService vgcApi;
+        VgcApis.Interfaces.Services.INotifierService vgcNotifier;
         Action<string> redirectLogWorker;
+        readonly SysCmpos.PostOffice postOffice;
 
         public LuaApis(
             Services.Settings settings,
@@ -15,17 +17,24 @@ namespace Luna.Models.Apis
         {
             this.settings = settings;
 
-            this.redirectLogWorker = settings.SendLog;
+            vgcNotifier = api.GetNotifierService();
+            redirectLogWorker = settings.SendLog;
             vgcApi = api;
+
+            postOffice = new SysCmpos.PostOffice();
         }
 
         #region public methods
+        public SysCmpos.PostOffice GetPostOffice() => postOffice;
+
         public string RegisterHotKey(Action hotKeyHandler,
               string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
         {
             var vgcNotifier = vgcApi.GetNotifierService();
             return vgcNotifier.RegisterHotKey(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
         }
+
+        public void DoEvents() => vgcNotifier.DoEvents();
 
         public bool UnregisterHotKey(string hotKeyHandle)
         {

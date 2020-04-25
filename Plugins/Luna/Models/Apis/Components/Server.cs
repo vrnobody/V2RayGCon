@@ -50,7 +50,7 @@ namespace Luna.Models.Apis.Components
         {
             var evDone = new AutoResetEvent(false);
             vgcServers.StopAllServersThen(() => evDone.Set());
-            VgcApis.Misc.Utils.BlockingWaitOne(evDone, 5000);
+            VgcApis.Misc.Utils.BlockingWaitOne(evDone);
         }
 
         public bool RunSpeedTestOnSelectedServers() =>

@@ -84,6 +84,10 @@ namespace V2RayGCon.Services
         }
 
         #region public method
+        public void DoEvents() =>
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                niMenu, () => Application.DoEvents());
+
         public string RegisterHotKey(
             Action hotKeyHandler,
             string keyName, bool hasAlt, bool hasCtrl, bool hasShift)

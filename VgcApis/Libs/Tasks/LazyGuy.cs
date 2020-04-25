@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace VgcApis.Libs.Tasks
 {
@@ -156,7 +155,7 @@ namespace VgcApis.Libs.Tasks
                     $"!suspectable deadlock! {Name} - {evName}";
 
                 Sys.FileLogger.DumpCallStack(title);
-                Application.DoEvents();
+                Task.Delay(100).Wait();
             }
         }
 

@@ -96,7 +96,6 @@ namespace V2RayGCon.Services
             }
         }
 
-
         Semaphore _speedTestPool = null;
         public Semaphore SpeedTestPool
         {

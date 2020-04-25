@@ -890,10 +890,11 @@ namespace V2RayGCon.Services
 
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() save data");
             lazyServerSettingsRecorder?.DoItNow();
-            lazyServerSettingsRecorder.Dispose();
+            lazyServerSettingsRecorder?.Dispose();
 
             // let it go
-            var cores = coreServList;
+            /*
+            var cores = coreServList.ToList();
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() stop cores in background begin");
@@ -902,7 +903,7 @@ namespace V2RayGCon.Services
                     core.GetCoreCtrl().StopCoreQuiet();
                 }
                 VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() stop cores in background done");
-            });
+            });*/
         }
 
         #endregion

@@ -379,6 +379,11 @@ namespace V2RayGCon.Services
 
         void UpdateNotifyIconWorker(Action done)
         {
+            if (setting.IsClosing())
+            {
+                done();
+            }
+
             if (isMenuOpened)
             {
                 lazyNotifierMenuUpdater?.Postpone();
@@ -386,8 +391,9 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            var start = DateTime.Now.Millisecond;
+            var cores = servers.GetAllServersOrderByIndex().ToList();
 
+            var start = DateTime.Now.Millisecond;
             Action finished = () => VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 var relex = UpdateInterval - (DateTime.Now.Millisecond - start);
@@ -395,7 +401,7 @@ namespace V2RayGCon.Services
                 done();
             });
 
-            var list = servers.GetAllServersOrderByIndex()
+            var list = cores
                 .Where(s => s.GetCoreCtrl().IsCoreRunning())
                 .ToList();
 

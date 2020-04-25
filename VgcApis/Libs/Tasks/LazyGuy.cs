@@ -134,8 +134,6 @@ namespace VgcApis.Libs.Tasks
             });
         }
 
-
-
         /// <summary>
         /// blocking
         /// </summary>

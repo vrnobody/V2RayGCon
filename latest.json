@@ -1,11 +1,10 @@
 {
-  "version": "1.3.6.2",
-  "md5": "FA01F905A8B3A74544AA50656DB42731",
-  "warnings": [],
+  "version": "1.3.6.7",
+  "md5": "F3712C586419B7F3CABEF8DAD9F0C036",
+  "warnings": ["紧急更新"],
   "changes": [
-    "Luna添加是否允许加载CLR库选项",
-    "Sys库添加绑定热键功能(详见手册Sys库最底)",
-    "原Json库移进Misc并添加modules.json模块",
-    "Misc:ShowData()改为返回Json字符串"
+    "尝试修复v1.3.6.2的概率性界面卡住不动问题",
+    "发生此情况时请耐心等待20秒",
+    "如果还是没有响应则需要结束任务"
   ]
 }

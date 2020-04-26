@@ -58,7 +58,7 @@ namespace Luna.Models.Apis.SysCmpos
                 {
                     return mail;
                 }
-                Task.Delay(100).Wait();
+                Task.Delay(10).Wait();
             } while (!mails.IsCompleted);
             return null;
         }

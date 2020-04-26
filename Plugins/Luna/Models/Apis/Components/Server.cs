@@ -9,13 +9,11 @@ namespace Luna.Models.Apis.Components
         VgcApis.Interfaces.Lua.ILuaServer
     {
         VgcApis.Interfaces.Services.IServersService vgcServers;
-        VgcApis.Interfaces.Services.INotifierService vgcNotifier;
         VgcApis.Interfaces.Services.IConfigMgrService vgcConfigMgr;
 
         public Server(
              VgcApis.Interfaces.Services.IApiService api)
         {
-            vgcNotifier = api.GetNotifierService();
             vgcServers = api.GetServersService();
             vgcConfigMgr = api.GetConfigMgrService();
         }
@@ -52,7 +50,7 @@ namespace Luna.Models.Apis.Components
         {
             var evDone = new AutoResetEvent(false);
             vgcServers.StopAllServersThen(() => evDone.Set());
-            vgcNotifier.BlockingWaitOne(evDone);
+            evDone.WaitOne();
         }
 
         public bool RunSpeedTestOnSelectedServers() =>

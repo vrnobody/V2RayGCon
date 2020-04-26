@@ -626,6 +626,7 @@ namespace VgcApisTests
 
             str = "";
             adam.Throttle();
+            Task.Delay(50).Wait(); // wait for task spin up
             adam.Throttle();
             adam.Throttle();
             adam.Throttle();

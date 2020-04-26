@@ -9,12 +9,12 @@ namespace Luna.Services
     {
         LuaServer luaServer;
         ToolStripMenuItem miRoot, miShowWindow;
-        VgcApis.Interfaces.Services.INotifierService vgcNotifierService;
         VgcApis.Libs.Tasks.LazyGuy lazyMenuUpdater;
+        private readonly Settings settings;
 
-        public MenuUpdater(VgcApis.Interfaces.Services.INotifierService vgcNotifierService)
+        public MenuUpdater(Settings settings)
         {
-            this.vgcNotifierService = vgcNotifierService;
+            this.settings = settings;
         }
 
         public void Run(
@@ -44,7 +44,7 @@ namespace Luna.Services
         #region private methods
         void UpdateMenuWorker()
         {
-            vgcNotifierService.RunInUiThreadIgnoreError(() =>
+            settings.RunInUiThreadIgnoreError(() =>
             {
                 var mis = GenSubMenuItems();
                 var root = miRoot.DropDownItems;

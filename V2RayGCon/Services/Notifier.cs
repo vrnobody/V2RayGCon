@@ -80,41 +80,14 @@ namespace V2RayGCon.Services
 
         #region public method
         public void BlockingWaitOne(AutoResetEvent autoEv) =>
-           BlockingWaitOne(autoEv, 1000);
-
-        public void BlockingWaitOne(AutoResetEvent autoEv, int milSec)
-        {
-            while (!autoEv.WaitOne(milSec))
-            {
-                DoEvents();
-            }
-        }
-
-        public void DoEvents() =>
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
-                niMenu, () => Application.DoEvents());
+            autoEv.WaitOne();
 
         public string RegisterHotKey(
-            Action hotKeyHandler,
-            string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
-        {
-            var handle = "";
-            RunInUiThreadIgnoreError(() =>
-           {
-               handle = formMain.RegisterHotKey(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
-           });
-            return handle;
-        }
+            Action hotKeyHandler, string keyName, bool hasAlt, bool hasCtrl, bool hasShift) =>
+            formMain.RegisterHotKey(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
 
-        public bool UnregisterHotKey(string hotKeyHandle)
-        {
-            var r = false;
-            RunInUiThreadIgnoreError(() =>
-           {
-               r = formMain.UnregisterHotKey(hotKeyHandle);
-           });
-            return r;
-        }
+        public bool UnregisterHotKey(string hotKeyHandle) =>
+            formMain.UnregisterHotKey(hotKeyHandle);
 
         public void RefreshNotifyIconLater() => lazyNotifierMenuUpdater?.Deadline();
 

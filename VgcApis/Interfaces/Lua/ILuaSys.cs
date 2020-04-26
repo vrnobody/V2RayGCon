@@ -30,6 +30,7 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region process
+
         void DoEvents();
 
         void Cleanup(Process proc);

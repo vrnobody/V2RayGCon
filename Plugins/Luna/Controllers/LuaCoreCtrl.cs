@@ -184,7 +184,12 @@ namespace Luna.Controllers
 
             SendLog($"{I18N.Start} {coreSetting.name}");
 
-            luaCoreThread = new Thread(RunLuaScript);
+            luaCoreThread = new Thread(RunLuaScript)
+            {
+                IsBackground = true,
+                Name = "LuaStateContainer",
+            };
+
             luaCoreThread.Start();
         }
 

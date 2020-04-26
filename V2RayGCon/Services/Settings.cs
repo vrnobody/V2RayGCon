@@ -97,8 +97,8 @@ namespace V2RayGCon.Services
             }
         }
 
-        Semaphore _speedTestPool = null;
-        public Semaphore SpeedTestPool
+        SemaphoreSlim _speedTestPool = null;
+        public SemaphoreSlim SpeedTestPool
         {
             get => _speedTestPool;
             private set { }
@@ -716,7 +716,7 @@ namespace V2RayGCon.Services
         void UpdateSpeedTestPool()
         {
             var poolSize = userSettings.MaxConcurrentV2RayCoreNum;
-            _speedTestPool = new Semaphore(poolSize, poolSize);
+            _speedTestPool = new SemaphoreSlim(poolSize, poolSize);
         }
 
         bool IsValid(string serializedUserSettings)

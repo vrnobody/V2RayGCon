@@ -52,9 +52,9 @@ namespace VgcApis.Libs.Tasks
                 return;
             }
 
-            Misc.Utils.RunInBackground(() =>
+            Misc.Utils.RunInBackground(async () =>
             {
-                Task.Delay(timeout).Wait();
+                await Task.Delay(timeout);
                 TryDoTheJob(Deadline);
             });
         }
@@ -75,11 +75,11 @@ namespace VgcApis.Libs.Tasks
                 tk = cts.Token;
             }
 
-            Misc.Utils.RunInBackground(() =>
+            Misc.Utils.RunInBackground(async () =>
             {
                 try
                 {
-                    Task.Delay(timeout, tk).Wait();
+                    await Task.Delay(timeout, tk);
                 }
                 catch
                 {
@@ -123,7 +123,7 @@ namespace VgcApis.Libs.Tasks
 
             Misc.Utils.RunInBackground(() =>
             {
-                TryDoTheJob(Throttle);
+                TryDoTheJob(Deadline);
             });
         }
 
@@ -142,6 +142,7 @@ namespace VgcApis.Libs.Tasks
         void TryDoTheJob(Action retry)
         {
             var ready = jobToken.WaitOne(timeout);
+            // Console.WriteLine($"ready; {ready}");
             waitingToken.Set();
             if (ready)
             {
@@ -149,19 +150,25 @@ namespace VgcApis.Libs.Tasks
             }
             else
             {
+                DumpCurCallStack("TryDoTheJob");
                 retry?.Invoke();
+            }
+        }
+
+        void DumpCurCallStack(string evName)
+        {
+            if (!string.IsNullOrEmpty(Name))
+            {
+                var title = $"!suspectable deadlock! {Name} - {evName}";
+                Sys.FileLogger.DumpCallStack(title);
             }
         }
 
         void DebugAutoResetEvent(AutoResetEvent arEv, string evName)
         {
-            while (!arEv.WaitOne(timeout + 2000))
+            while (!arEv.WaitOne(timeout + 100))
             {
-                if (!string.IsNullOrEmpty(Name))
-                {
-                    var title = $"!suspectable deadlock! {Name} - {evName}";
-                    Sys.FileLogger.DumpCallStack(title);
-                }
+                DumpCurCallStack(evName);
                 Task.Delay(100).Wait();
             }
         }

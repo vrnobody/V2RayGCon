@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -16,6 +14,7 @@ namespace V2RayGCon.Views.WinForms
         string formTitle = "";
 
         public NotifyIcon notifyIcon => this.ni;
+        readonly VgcApis.WinForms.HotKeyWindow hkWindow;
 
         public FormMain()
         {
@@ -24,6 +23,7 @@ namespace V2RayGCon.Views.WinForms
             Misc.UI.AutoScaleToolStripControls(this, 16);
             formTitle = Misc.Utils.GetAppNameAndVer();
 
+            hkWindow = new VgcApis.WinForms.HotKeyWindow();
             setting = Services.Settings.Instance;
             launcher = new Services.Launcher(setting, this);
 
@@ -62,7 +62,7 @@ namespace V2RayGCon.Views.WinForms
         void Cleanup()
         {
             VgcApis.Libs.Sys.FileLogger.Info("");
-            CleanupHotKeys();
+            hkWindow?.Dispose();
             formMainCtrl?.Cleanup();
             launcher?.Dispose();
             VgcApis.Libs.Sys.FileLogger.Info($"{formTitle} end");
@@ -121,6 +121,39 @@ namespace V2RayGCon.Views.WinForms
         }
         #endregion
 
+        #region hotkey window
+        public string RegisterHotKey(
+             Action hotKeyHandler,
+             string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+        {
+            string handle = null;
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(this, () =>
+            {
+                try
+                {
+                    handle = hkWindow.RegisterHotKey(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
+                }
+                catch { }
+            });
+            return handle;
+        }
+        public bool UnregisterHotKey(string hotKeyHandle)
+        {
+            var r = false;
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(this, () =>
+            {
+                try
+                {
+                    r = hkWindow.UnregisterHotKey(hotKeyHandle);
+                }
+                catch { }
+            });
+            return r;
+        }
+
+        #endregion
+
+        /*
         #region HotKey thinggy
 
         const int WM_HOTKEY = 0x0312;
@@ -136,41 +169,67 @@ namespace V2RayGCon.Views.WinForms
         int currentEvCode = 0;
 
         public string RegisterHotKey(
-        Action hotKeyHandler,
-        string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+            Action hotKeyHandler,
+            string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
         {
-            try
+            string handle = null;
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(this, () =>
             {
-                var evCode = currentEvCode++;
-
-                if (!VgcApis.Misc.Utils.TryParseKeyMesssage(keyName, hasAlt, hasCtrl, hasShift,
-                    out uint modifier, out uint key))
+                try
                 {
-                    return null;
+                    handle = RegisterHotKeyWorker(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
                 }
-
-                long hkMsg = (key << 16) | modifier;
-                var handlerKeys = handlers.Keys;
-                if (handlerKeys.Contains(hkMsg)
-                    || !RegisterHotKey(Handle, evCode, modifier, key))
+                catch { }
+            });
+            return handle;
+        }
+        public bool UnregisterHotKey(string hotKeyHandle)
+        {
+            var r = false;
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(this, () =>
+            {
+                try
                 {
-                    return null;
+                    r = UnregisterHotKeyWorker(hotKeyHandle);
                 }
+                catch { }
+            });
+            return r;
+        }
 
-                do
-                {
-                    var hkHandle = Guid.NewGuid().ToString();
-                    var keys = contexts.Keys;
-                    if (!keys.Contains(hkHandle))
-                    {
-                        var hkParma = new Tuple<int, long>(evCode, hkMsg);
-                        contexts.TryAdd(hkHandle, hkParma);
-                        handlers.TryAdd(hkMsg, hotKeyHandler);
-                        return hkHandle;
-                    }
-                } while (true);
+        string RegisterHotKeyWorker(
+            Action hotKeyHandler,
+            string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+        {
+
+            var evCode = currentEvCode++;
+
+            if (!VgcApis.Misc.Utils.TryParseKeyMesssage(keyName, hasAlt, hasCtrl, hasShift,
+                out uint modifier, out uint key))
+            {
+                return null;
             }
-            catch { }
+
+            long hkMsg = (key << 16) | modifier;
+            var handlerKeys = handlers.Keys;
+            if (handlerKeys.Contains(hkMsg) || !RegisterHotKey(Handle, evCode, modifier, key))
+            {
+                return null;
+            }
+
+            for (int failsafe = 0; failsafe < 1000; failsafe++)
+            {
+                var hkHandle = Guid.NewGuid().ToString();
+                var keys = contexts.Keys;
+                if (!keys.Contains(hkHandle))
+                {
+                    var hkParma = new Tuple<int, long>(evCode, hkMsg);
+                    contexts.TryAdd(hkHandle, hkParma);
+                    handlers.TryAdd(hkMsg, hotKeyHandler);
+                    return hkHandle;
+                }
+            }
+
             return null;
         }
 
@@ -183,7 +242,7 @@ namespace V2RayGCon.Views.WinForms
             }
         }
 
-        public bool UnregisterHotKey(string hotKeyHandle)
+        bool UnregisterHotKeyWorker(string hotKeyHandle)
         {
             try
             {
@@ -198,30 +257,40 @@ namespace V2RayGCon.Views.WinForms
                 }
             }
             catch { }
-
             return false;
         }
 
-        protected override void WndProc(ref Message m)
+        void HotkeyEventHandler(long key)
         {
-            try
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                // check if we got a hot key pressed.
-                if (m.Msg == WM_HOTKEY)
+                try
                 {
-                    var key = (uint)m.LParam & 0xffffffff;
                     if (handlers.TryGetValue(key, out var handler))
                     {
                         handler?.Invoke();
                     }
                 }
+                catch (Exception e)
+                {
+                    VgcApis.Libs.Sys.FileLogger.Error($"Handle wnd event error\n key code:{key} \n {e}");
+                }
+            });
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            // check if we got a hot key pressed.
+            if (m.Msg == WM_HOTKEY)
+            {
+                long key = (uint)m.LParam & 0xffffffff;
+                HotkeyEventHandler(key);
             }
-            catch { }
 
             base.WndProc(ref m);
         }
         #endregion
-
+            */
         #region private method
 
 

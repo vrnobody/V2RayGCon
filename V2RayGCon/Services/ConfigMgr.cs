@@ -397,10 +397,7 @@ namespace V2RayGCon.Services
         {
             // setting.SpeedTestPool may change while testing
             var pool = setting.SpeedTestPool;
-            while (!pool.WaitOne(3000))
-            {
-                Notifier.Instance.DoEvents();
-            }
+            pool.Wait();
 
             if (setting.isSpeedtestCancelled)
             {

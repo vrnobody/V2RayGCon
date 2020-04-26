@@ -5,27 +5,29 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
+using V2RayGCon.Views.WinForms;
 
 namespace V2RayGCon.Services
 {
-    class Launcher
+    class Launcher : VgcApis.BaseClasses.Disposable
     {
         Settings setting;
         Servers servers;
         Updater updater;
-        Notifier notifier;
 
         bool isDisposing = false;
         List<IDisposable> services = new List<IDisposable>();
 
-        public Launcher() { }
+        public Launcher(Settings setting, FormMain formMain)
+        {
+            this.setting = setting;
+            this.formMain = formMain;
+        }
 
         #region public method
         public bool Warmup()
         {
             Misc.Utils.SupportProtocolTLS12();
-            setting = Settings.Instance;
-            notifier = Notifier.Instance; // show icon
             if (setting.ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
             {
                 return false;
@@ -36,17 +38,10 @@ namespace V2RayGCon.Services
 
         public void Run()
         {
-
             servers = Servers.Instance;
             updater = Updater.Instance;
 
-            var nm = notifier.niMenu;
-            nm.CreateControl();
-            nm.Show();
-            nm.Close();
-
             InitAllServices();
-            BindEvents();
             Boot();
 
 #if DEBUG
@@ -60,10 +55,11 @@ namespace V2RayGCon.Services
 
             if (servers.IsEmpty())
             {
-                Views.WinForms.FormMain.ShowForm();
+                formMain.Show();
             }
             else
             {
+                formMain.HideToSystray();
                 servers.WakeupServersInBootList();
             }
 
@@ -85,7 +81,6 @@ namespace V2RayGCon.Services
         #region debug
         void ShowPlugin(string name)
         {
-
             var pluginsServ = PluginsServer.Instance;
             var plugins = pluginsServ.GetAllEnabledPlugins();
 
@@ -96,7 +91,6 @@ namespace V2RayGCon.Services
                     plugin.Show();
                 }
             }
-
         }
 
 #if DEBUG
@@ -133,6 +127,7 @@ namespace V2RayGCon.Services
             var configMgr = ConfigMgr.Instance;
             var slinkMgr = ShareLinkMgr.Instance;
             var pluginsServ = PluginsServer.Instance;
+            var notifier = Notifier.Instance;
 
             // by dispose order
             services = new List<IDisposable> {
@@ -148,28 +143,16 @@ namespace V2RayGCon.Services
             // dependency injection
             cache.Run(setting);
             configMgr.Run(setting, cache);
-            servers.Run(setting, cache, configMgr);
-            updater.Run(setting, servers);
+            servers.Run(setting, cache, configMgr, notifier);
+            updater.Run(setting, servers, notifier);
             slinkMgr.Run(setting, servers, cache);
-            notifier.Run(setting, servers, slinkMgr, updater);
+            notifier.Run(setting, servers, slinkMgr, updater, formMain);
             pluginsServ.Run(setting, servers, configMgr, slinkMgr, notifier);
         }
 
-        void BindEvents()
-        {
-            Application.ApplicationExit += (s, a) => DisposeAllServices();
-
-            Microsoft.Win32.SystemEvents.SessionEnding += (s, a) =>
-            {
-                setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff;
-                DisposeAllServices();
-            };
-
-            Application.ThreadException += (s, a) => ShowExceptionDetailAndExit(a.Exception);
-            AppDomain.CurrentDomain.UnhandledException += (s, a) => ShowExceptionDetailAndExit(a.ExceptionObject as Exception);
-        }
-
         readonly object disposeLocker = new object();
+        private readonly FormMain formMain;
+
         void DisposeAllServices()
         {
             // throw new NullReferenceException("for debugging");
@@ -225,33 +208,13 @@ namespace V2RayGCon.Services
         }
         #endregion
 
-        #region unhandle exception
-        void ShowExceptionDetailAndExit(Exception exception)
+        #region protected override
+        protected override void Cleanup()
         {
-            if (setting.ShutdownReason != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
-            {
-                ShowExceptionDetails(exception);
-            }
-            Application.Exit();
+            DisposeAllServices();
         }
-
-        private void ShowExceptionDetails(Exception exception)
-        {
-            var nl = Environment.NewLine;
-            var verInfo = Misc.Utils.GetAppNameAndVer();
-            var log = $"{I18N.LooksLikeABug}{nl}{nl}{verInfo}";
-
-            try
-            {
-
-                log += nl + nl + exception.ToString();
-                log += nl + nl + setting.GetLogContent();
-            }
-            catch { }
-
-            VgcApis.Libs.Sys.NotepadHelper.ShowMessage(log, "V2RayGCon bug report");
-        }
-
         #endregion
+
+
     }
 }

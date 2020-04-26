@@ -19,6 +19,7 @@ namespace V2RayGCon.Services
         Settings setting = null;
         Cache cache = null;
         ConfigMgr configMgr;
+        Notifier notifier;
 
         ServersComponents.QueryHandler queryHandler;
         ServersComponents.IndexHandler indexHandler;
@@ -57,8 +58,10 @@ namespace V2RayGCon.Services
         public void Run(
            Settings setting,
            Cache cache,
-           ConfigMgr configMgr)
+           ConfigMgr configMgr,
+           Notifier notifier)
         {
+            this.notifier = notifier;
             this.configMgr = configMgr;
             this.cache = cache;
             this.setting = setting;
@@ -390,7 +393,7 @@ namespace V2RayGCon.Services
         {
             var evDone = new AutoResetEvent(false);
             var success = BatchSpeedTestWorkerThen(GetSelectedServer(), () => evDone.Set());
-            VgcApis.Misc.Utils.BlockingWaitOne(evDone);
+            notifier.BlockingWaitOne(evDone);
             return success;
         }
 
@@ -602,7 +605,7 @@ namespace V2RayGCon.Services
             }
 
             Misc.Utils.ChainActionHelper(list.Count, worker, done);
-            VgcApis.Misc.Utils.BlockingWaitOne(isFinished);
+            notifier.BlockingWaitOne(isFinished);
         }
 
         public void UpdateAllServersSummaryBg()
@@ -936,7 +939,7 @@ namespace V2RayGCon.Services
                         {
                             server.GetCoreCtrl().RestartCoreThen(() => sayGoodbye.Set());
                         }
-                        VgcApis.Misc.Utils.BlockingWaitOne(sayGoodbye);
+                        notifier.BlockingWaitOne(sayGoodbye);
                     }, TaskCreationOptions.LongRunning);
 
                     taskList.Add(task);

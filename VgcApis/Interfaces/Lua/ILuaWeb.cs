@@ -29,6 +29,13 @@ namespace VgcApis.Interfaces.Lua
         // using bing.com to search sth.
         string Search(string keywords, int first, int proxyPort);
 
+        bool Tcping(string url, int milSec);
+
+        bool Tcping(string url, int milSec, int proxyPort);
+
+        long TimedDownloadTesting(string url, int timeout, int kib);
+        long TimedDownloadTesting(string url, int timeout, int kib, int proxyPort);
+
         // direct connect
         int UpdateSubscriptions();
 

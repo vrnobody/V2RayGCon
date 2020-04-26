@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Threading;
 
 namespace VgcApis.Interfaces.Services
 {
     public interface INotifierService
     {
+        void BlockingWaitOne(AutoResetEvent autoEv);
+
+        void BlockingWaitOne(AutoResetEvent autoEv, int milSec);
+
         void DoEvents();
 
         string RegisterHotKey(Action hotKeyHandler,

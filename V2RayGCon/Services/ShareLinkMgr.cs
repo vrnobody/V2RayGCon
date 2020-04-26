@@ -6,7 +6,7 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
 {
-    internal sealed class ShareLinkMgr :
+    public sealed class ShareLinkMgr :
         BaseClasses.SingletonService<ShareLinkMgr>,
         VgcApis.Interfaces.Services.IShareLinkMgrService
     {

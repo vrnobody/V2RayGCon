@@ -8,11 +8,12 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
 {
-    internal sealed class Updater :
+    public sealed class Updater :
         BaseClasses.SingletonService<Updater>
     {
         Settings setting;
         Servers servers;
+        Notifier notifier;
 
         VgcApis.Libs.Tasks.Bar updateBar = new VgcApis.Libs.Tasks.Bar();
         readonly string LoopBackIP = VgcApis.Models.Consts.Webs.LoopBackIP;
@@ -36,8 +37,10 @@ namespace V2RayGCon.Services
 
         public void Run(
             Settings setting,
-            Servers servers)
+            Servers servers,
+            Notifier notifier)
         {
+            this.notifier = notifier;
             this.setting = setting;
             this.servers = servers;
             InitAutoUpdater();
@@ -94,7 +97,7 @@ namespace V2RayGCon.Services
                 if (AutoUpdater.DownloadUpdate())
                 {
                     setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;
-                    Application.Exit();
+                    notifier.RunInUiThreadIgnoreError(() => Application.Exit());
                 }
             }
             catch (Exception exception)

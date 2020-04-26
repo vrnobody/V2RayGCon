@@ -397,7 +397,7 @@ namespace V2RayGCon.Services
         {
             // setting.SpeedTestPool may change while testing
             var pool = setting.SpeedTestPool;
-            while (!pool.WaitOne(1000))
+            while (!pool.WaitOne(3000))
             {
                 Notifier.Instance.DoEvents();
             }
@@ -444,7 +444,7 @@ namespace V2RayGCon.Services
             {
                 speedTester.RestartCore(config);
                 var expectedSizeInKib = setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestExpectedSizeInKib : -1;
-                latency = Misc.Utils.TimedDownloadTesting(testUrl, port, expectedSizeInKib, testTimeout);
+                latency = VgcApis.Misc.Utils.TimedDownloadTesting(testUrl, port, expectedSizeInKib, testTimeout);
                 speedTester.StopCore();
                 if (logDeliever != null)
                 {

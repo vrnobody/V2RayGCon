@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
@@ -11,23 +12,22 @@ using VgcApis.Interfaces;
 
 namespace V2RayGCon.Services
 {
-    class Notifier :
-        BaseClasses.SingletonService<Notifier>,
-        VgcApis.Interfaces.Services.INotifierService
+    public class Notifier :
+         BaseClasses.SingletonService<Notifier>,
+         VgcApis.Interfaces.Services.INotifierService
     {
         Settings setting;
         Servers servers;
         ShareLinkMgr slinkMgr;
         Updater updater;
 
-        public readonly NotifyIcon notifyIcon;
+        NotifyIcon notifyIcon;
 
         static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
         static readonly int UpdateInterval = VgcApis.Models.Consts.Intervals.NotifierMenuUpdateIntreval;
 
-        readonly public ContextMenuStrip niMenu;
-        readonly VgcApis.WinForms.HotKeyWindow hkWin;
-        readonly Bitmap orgIcon;
+        ContextMenuStrip niMenu;
+        Bitmap orgIcon;
         bool isMenuOpened = false;
 
         VgcApis.Libs.Tasks.LazyGuy lazyNotifierMenuUpdater;
@@ -39,52 +39,56 @@ namespace V2RayGCon.Services
             SwitchToRandomTlsServer,
         }
 
-        readonly Dictionary<qsMenuNames, ToolStripMenuItem> qsMenuCompos = null;
-        readonly ToolStripMenuItem miPluginsRoot = null;
-        readonly ToolStripMenuItem miServersRoot = null;
+        Dictionary<qsMenuNames, ToolStripMenuItem> qsMenuCompos = null;
+        ToolStripMenuItem miPluginsRoot = null;
+        ToolStripMenuItem miServersRoot = null;
 
         Notifier()
         {
-            lazyNotifierMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateNotifyIconWorker, UpdateInterval)
-            {
-                Name = "", // disable debug logging
-            };
-
             // 其他组件有可能在初始化的时候引用菜单
             qsMenuCompos = CreateQsMenuCompos();
             miServersRoot = CreateRootMenuItem(I18N.Servers, Properties.Resources.RemoteServer_16x);
             miPluginsRoot = CreateRootMenuItem(I18N.Plugins, Properties.Resources.Module_16x);
 
-            niMenu = CreateMenu(miServersRoot, miPluginsRoot);
-            notifyIcon = CreateNotifyIcon(niMenu);
-            orgIcon = notifyIcon.Icon.ToBitmap();
-
-            // ????
-            niMenu.CreateControl();
-            niMenu.Show();
-            niMenu.Close();
-
-            hkWin = new VgcApis.WinForms.HotKeyWindow();
+            lazyNotifierMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateNotifyIconWorker, UpdateInterval)
+            {
+                Name = "", // disable debug logging
+            };
         }
 
+        Views.WinForms.FormMain formMain;
         public void Run(
             Settings setting,
             Servers servers,
             ShareLinkMgr shareLinkMgr,
-            Updater updater)
+            Updater updater,
+            Views.WinForms.FormMain formMain)
         {
+            this.formMain = formMain;
             this.setting = setting;
             this.servers = servers;
             this.slinkMgr = shareLinkMgr;
             this.updater = updater;
 
+            InitNotifyIcon();
             BindMenuEvents();
             BindServerEvents();
             RefreshNotifyIconLater();
         }
 
-        #region public method
 
+
+        #region public method
+        public void BlockingWaitOne(AutoResetEvent autoEv) =>
+           BlockingWaitOne(autoEv, 1000);
+
+        public void BlockingWaitOne(AutoResetEvent autoEv, int milSec)
+        {
+            while (!autoEv.WaitOne(milSec))
+            {
+                DoEvents();
+            }
+        }
 
         public void DoEvents() =>
             VgcApis.Misc.UI.RunInUiThreadIgnoreError(
@@ -95,20 +99,20 @@ namespace V2RayGCon.Services
             string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
         {
             var handle = "";
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(niMenu, () =>
-            {
-                handle = hkWin.RegisterHotKey(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
-            });
+            RunInUiThreadIgnoreError(() =>
+           {
+               handle = formMain.RegisterHotKey(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
+           });
             return handle;
         }
 
         public bool UnregisterHotKey(string hotKeyHandle)
         {
             var r = false;
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(niMenu, () =>
-            {
-                r = hkWin.UnregisterHotKey(hotKeyHandle);
-            });
+            RunInUiThreadIgnoreError(() =>
+           {
+               r = formMain.UnregisterHotKey(hotKeyHandle);
+           });
             return r;
         }
 
@@ -139,7 +143,7 @@ namespace V2RayGCon.Services
         }
 
         public void RunInUiThreadIgnoreError(Action updater) =>
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(niMenu, updater);
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, updater);
 
 
         /// <summary>
@@ -165,6 +169,13 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
+        void InitNotifyIcon()
+        {
+            niMenu = CreateMenu(miServersRoot, miPluginsRoot);
+            notifyIcon = formMain.notifyIcon;
+            InitNotifyIcon(niMenu);
+            orgIcon = notifyIcon.Icon.ToBitmap();
+        }
 
         private void BindMenuEvents()
         {
@@ -179,7 +190,7 @@ namespace V2RayGCon.Services
                         // https://stackoverflow.com/questions/2208690/invoke-notifyicons-context-menu
                         // MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
                         // mi.Invoke(ni, null);
-                        Views.WinForms.FormMain.GetForm()?.Show();
+                        formMain.Restore();
                         break;
 
                         /*
@@ -589,16 +600,13 @@ namespace V2RayGCon.Services
                 t.GetMethod("UpdateIcon", hidden).Invoke(notifyIcon, new object[] { true });
         }
 
-        NotifyIcon CreateNotifyIcon(ContextMenuStrip menu)
+        void InitNotifyIcon(ContextMenuStrip menu)
         {
-            return new NotifyIcon
-            {
-                Text = I18N.Description,
-                Icon = VgcApis.Misc.UI.GetAppIcon(),
-                BalloonTipTitle = VgcApis.Misc.Utils.GetAppName(),
-                ContextMenuStrip = menu,
-                Visible = true
-            };
+            notifyIcon.Text = I18N.Description;
+            notifyIcon.Icon = VgcApis.Misc.UI.GetAppIcon();
+            notifyIcon.BalloonTipTitle = VgcApis.Misc.Utils.GetAppName();
+            notifyIcon.ContextMenuStrip = menu;
+            notifyIcon.Visible = true;
         }
 
         ContextMenuStrip CreateMenu(
@@ -623,7 +631,7 @@ namespace V2RayGCon.Services
                         new ToolStripMenuItem(
                             I18N.MainWin,
                             Properties.Resources.WindowsForm_16x,
-                            (s,a)=> Views.WinForms.FormMain.ShowForm()),
+                            (s,a)=> formMain.Restore()),
                         new ToolStripMenuItem(
                             I18N.ConfigEditor,
                             Properties.Resources.EditWindow_16x,
@@ -678,7 +686,7 @@ namespace V2RayGCon.Services
                             if (Misc.UI.Confirm(I18N.ConfirmExitApp))
                             {
                                 setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;
-                                Application.Exit();
+                                RunInUiThreadIgnoreError(()=> Application.Exit());
                             }
                         }),
                 });
@@ -732,7 +740,6 @@ namespace V2RayGCon.Services
         #region protected methods
         protected override void Cleanup()
         {
-            hkWin?.Dispose();
             ReleaseServerEvents();
             lazyNotifierMenuUpdater?.Dispose();
         }

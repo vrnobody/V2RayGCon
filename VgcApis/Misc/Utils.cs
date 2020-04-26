@@ -12,6 +12,7 @@ using System.Management;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -263,6 +264,81 @@ namespace VgcApis.Misc
         #endregion
 
         #region net
+
+        public static long TimedDownloadTesting(
+            string url,
+            int port,
+            int expectedSizeInKiB,
+            int timeout)
+        {
+            if (string.IsNullOrEmpty(url))
+            {
+                throw new ArgumentNullException("URL must not null!");
+            }
+
+            var maxTimeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
+
+            WebClient wc = new WebClient
+            {
+                Encoding = Encoding.UTF8,
+            };
+            wc.Headers.Add(Models.Consts.Webs.UserAgent);
+
+            if (port > 0 && port < 65536)
+            {
+                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, port);
+            }
+
+            Stopwatch sw = new Stopwatch();
+            AutoResetEvent dlCompleted = new AutoResetEvent(false);
+            long totalReceived = 0;
+            var expectedBytes = expectedSizeInKiB * 1024;
+
+            if (expectedSizeInKiB >= 0)
+            {
+                wc.DownloadProgressChanged += (s, a) =>
+                {
+                    Interlocked.Add(ref totalReceived, a.BytesReceived);
+                    if (totalReceived > expectedBytes)
+                    {
+                        sw.Stop();
+                        wc.CancelAsync();
+                    }
+                };
+            }
+
+            wc.DownloadStringCompleted += (s, a) =>
+            {
+                sw.Stop();
+                dlCompleted.Set();
+                wc.Dispose();
+            };
+
+            var speedtestTimeout = Models.Consts.Core.SpeedtestTimeout;
+
+            try
+            {
+                var patchedUrl = IsHttpLink(url) ? url : RelativePath2FullPath(url);
+                sw.Start();
+                wc.DownloadStringAsync(new Uri(patchedUrl));
+                // 收到信号为True
+                if (!dlCompleted.WaitOne(maxTimeout))
+                {
+                    wc.CancelAsync();
+                    return speedtestTimeout;
+                }
+            }
+            catch
+            {
+                // network operation always buggy.
+                wc.CancelAsync();
+                return speedtestTimeout;
+            }
+
+            return totalReceived <= expectedBytes ? speedtestTimeout : sw.ElapsedMilliseconds;
+        }
+
+
         public static bool IsValidPort(string port)
         {
             return IsValidPort(Str2Int(port));
@@ -316,16 +392,6 @@ namespace VgcApis.Misc
 
         #region Task
 
-        public static void BlockingWaitOne(AutoResetEvent autoEv) =>
-            BlockingWaitOne(autoEv, 1000);
-
-        public static void BlockingWaitOne(AutoResetEvent autoEv, int milSec)
-        {
-            while (!autoEv.WaitOne(milSec))
-            {
-                Task.Delay(100).Wait();
-            }
-        }
 
         public static void SetProcessEnvs(Process proc, Dictionary<string, string> envs)
         {
@@ -349,7 +415,10 @@ namespace VgcApis.Misc
             const int CTRL_C_EVENT = 0;
 
             var success = false;
-            BlockingWaitOne(sendCtrlCLocker);
+            if (!sendCtrlCLocker.WaitOne(5000))
+            {
+                return false;
+            }
             try
             {
                 if (Libs.Sys.ConsoleCtrls.AttachConsole((uint)proc.Id))
@@ -417,15 +486,15 @@ namespace VgcApis.Misc
                 });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
-            BlockingWaitOne(done);
+            done.WaitOne();
         }
 
-        public static Task RunInBackground(Action worker, bool isEnableConfigAwait = false)
+        public static Task RunInBackground(Action worker, bool configAwait = false)
         {
             try
             {
                 var t = new Task(worker, TaskCreationOptions.LongRunning);
-                if (!isEnableConfigAwait)
+                if (!configAwait)
                 {
                     t.ConfigureAwait(false);
                 }

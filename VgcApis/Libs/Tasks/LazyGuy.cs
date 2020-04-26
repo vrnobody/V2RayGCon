@@ -55,9 +55,7 @@ namespace VgcApis.Libs.Tasks
             Misc.Utils.RunInBackground(() =>
             {
                 Task.Delay(timeout).Wait();
-                DebugAutoResetEvent(jobToken, nameof(jobToken));
-                waitingToken.Set();
-                DoTheJob();
+                TryDoTheJob(Deadline);
             });
         }
 
@@ -88,14 +86,12 @@ namespace VgcApis.Libs.Tasks
                     return;
                 }
 
-                if (tk.IsCancellationRequested || !waitingToken.WaitOne(0))
+                if (isCancelled || tk.IsCancellationRequested || !waitingToken.WaitOne(0))
                 {
                     return;
                 }
 
-                DebugAutoResetEvent(jobToken, nameof(jobToken));
-                waitingToken.Set();
-                DoTheJob();
+                TryDoTheJob(Postpone);
             });
         }
 
@@ -127,9 +123,7 @@ namespace VgcApis.Libs.Tasks
 
             Misc.Utils.RunInBackground(() =>
             {
-                DebugAutoResetEvent(jobToken, nameof(jobToken));
-                waitingToken.Set();
-                DoTheJob();
+                TryDoTheJob(Throttle);
             });
         }
 
@@ -145,6 +139,19 @@ namespace VgcApis.Libs.Tasks
         #endregion
 
         #region private method
+        void TryDoTheJob(Action retry)
+        {
+            var ready = jobToken.WaitOne(timeout);
+            waitingToken.Set();
+            if (ready)
+            {
+                DoTheJob();
+            }
+            else
+            {
+                retry?.Invoke();
+            }
+        }
 
         void DebugAutoResetEvent(AutoResetEvent arEv, string evName)
         {

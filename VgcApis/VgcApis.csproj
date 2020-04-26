@@ -143,7 +143,6 @@
     <Compile Include="UserControls\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="WinForms\HotKeyWindow.cs" />
     <Compile Include="UserControls\RoundLabel.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -22,6 +22,7 @@ namespace V2RayGCon.Services
         VgcApis.Libs.Tasks.LazyGuy janitor, lazyBookKeeper;
 
         string serializedUserSettingsCache = @"";
+        public event EventHandler OnPortableModeChanged;
 
         // Singleton need this private ctor.
         Settings()
@@ -113,12 +114,6 @@ namespace V2RayGCon.Services
                 userSettings.PluginsSetting = value;
                 SaveSettingsLater();
             }
-        }
-
-        public void ExitApp()
-        {
-            ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;
-            Application.Exit();
         }
 
         public VgcApis.Models.Datas.Enums.ShutdownReasons ShutdownReason { get; set; } =
@@ -327,6 +322,11 @@ namespace V2RayGCon.Services
             {
                 userSettings.isPortable = value;
                 SaveSettingsLater();
+                try
+                {
+                    OnPortableModeChanged?.Invoke(this, EventArgs.Empty);
+                }
+                catch { }
             }
         }
 

@@ -55,7 +55,7 @@ namespace VgcApis.Libs.Tasks
             Misc.Utils.RunInBackground(() =>
             {
                 Task.Delay(timeout).Wait();
-                DebugAutoResetEvent(jobToken, "jobToken");
+                DebugAutoResetEvent(jobToken, nameof(jobToken));
                 waitingToken.Set();
                 DoTheJob();
             });
@@ -93,7 +93,7 @@ namespace VgcApis.Libs.Tasks
                     return;
                 }
 
-                DebugAutoResetEvent(jobToken, "jobToken");
+                DebugAutoResetEvent(jobToken, nameof(jobToken));
                 waitingToken.Set();
                 DoTheJob();
             });
@@ -127,7 +127,7 @@ namespace VgcApis.Libs.Tasks
 
             Misc.Utils.RunInBackground(() =>
             {
-                DebugAutoResetEvent(jobToken, "jobToken");
+                DebugAutoResetEvent(jobToken, nameof(jobToken));
                 waitingToken.Set();
                 DoTheJob();
             });
@@ -138,7 +138,7 @@ namespace VgcApis.Libs.Tasks
         /// </summary>
         public void DoItNow()
         {
-            DebugAutoResetEvent(jobToken, "jobToken");
+            DebugAutoResetEvent(jobToken, nameof(jobToken));
             DoTheJob();
         }
 
@@ -146,15 +146,15 @@ namespace VgcApis.Libs.Tasks
 
         #region private method
 
-        void DebugAutoResetEvent(AutoResetEvent arEv, string evName = @"")
+        void DebugAutoResetEvent(AutoResetEvent arEv, string evName)
         {
             while (!arEv.WaitOne(timeout + 2000))
             {
-                var title = string.IsNullOrEmpty(evName) ?
-                    $"!suspectable deadlock! {Name}" :
-                    $"!suspectable deadlock! {Name} - {evName}";
-
-                Sys.FileLogger.DumpCallStack(title);
+                if (!string.IsNullOrEmpty(Name))
+                {
+                    var title = $"!suspectable deadlock! {Name} - {evName}";
+                    Sys.FileLogger.DumpCallStack(title);
+                }
                 Task.Delay(100).Wait();
             }
         }
@@ -175,7 +175,7 @@ namespace VgcApis.Libs.Tasks
                 {
                     AutoResetEvent chainEnd = new AutoResetEvent(false);
                     chainedTask?.Invoke(() => chainEnd.Set());
-                    DebugAutoResetEvent(chainEnd, "chainEnd");
+                    DebugAutoResetEvent(chainEnd, nameof(chainEnd));
                 }
                 else
                 {

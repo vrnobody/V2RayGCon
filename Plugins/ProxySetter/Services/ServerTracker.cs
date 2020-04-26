@@ -156,7 +156,7 @@ namespace ProxySetter.Services
             try
             {
                 OnSysProxyChanged?.Invoke(null, EventArgs.Empty);
-                notifier?.RefreshNotifyIcon();
+                notifier?.RefreshNotifyIconLater();
             }
             catch { }
         }

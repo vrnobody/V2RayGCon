@@ -11,7 +11,7 @@ namespace VgcApis.Interfaces.Services
 
         bool UnregisterHotKey(string hotKeyHandle);
 
-        void RefreshNotifyIcon();
+        void RefreshNotifyIconLater();
 
         void RunInUiThreadIgnoreError(Action updater);
 

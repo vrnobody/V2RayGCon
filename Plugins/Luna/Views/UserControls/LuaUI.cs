@@ -114,7 +114,7 @@ namespace Luna.Views.UserControls
         #region UI event handlers
         private void btnKill_Click(object sender, EventArgs e)
         {
-            luaCoreCtrl.Kill();
+            luaCoreCtrl.Abort();
         }
 
         private void btnStop_Click(object sender, EventArgs e)

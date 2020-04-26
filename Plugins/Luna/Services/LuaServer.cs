@@ -122,7 +122,7 @@ namespace Luna.Services
         {
             var name = coreCtrl.name;
             coreCtrl.OnStateChange -= OnRequireMenuUpdateHandler;
-            coreCtrl.Kill();
+            coreCtrl.Abort();
             luaCoreCtrls.Remove(coreCtrl);
             settings.GetLuaCoreSettings().RemoveAll(s => s.name == name);
         }

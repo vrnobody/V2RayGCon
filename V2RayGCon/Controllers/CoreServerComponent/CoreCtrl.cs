@@ -68,7 +68,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             AutoResetEvent done = new AutoResetEvent(false);
             RestartCoreThen(() => done.Set());
-            VgcApis.Misc.Utils.BlockingWaitOne(done, 5000);
+            VgcApis.Misc.Utils.BlockingWaitOne(done);
         }
 
         public void StopCoreQuiet() => v2rayCore.StopCoreThen(null);
@@ -77,7 +77,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             AutoResetEvent done = new AutoResetEvent(false);
             StopCoreThen(() => done.Set());
-            VgcApis.Misc.Utils.BlockingWaitOne(done, 5000);
+            VgcApis.Misc.Utils.BlockingWaitOne(done);
         }
 
         public void StopCoreThen() =>

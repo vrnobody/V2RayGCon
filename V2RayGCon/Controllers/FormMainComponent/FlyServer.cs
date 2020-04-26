@@ -10,8 +10,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 {
     class FlyServer : FormMainComponentController
     {
-        int statusBarUpdateInterval = 400;
-        int flyPanelUpdateInterval = 800;
+        int statusBarUpdateInterval = 300;
+        int flyPanelUpdateInterval = 300;
 
         readonly Form formMain;
         readonly FlowLayoutPanel flyPanel;
@@ -63,8 +63,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarWorker, statusBarUpdateInterval)
             {
-                Name = "Vgc.StatusBar.Updater",
+                Name = "", // disable debug logging
             };
+
             lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(ShowSearchResultNow, 1300)
             {
                 Name = "Vgc.Search",
@@ -170,7 +171,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             Task.Delay(Math.Max(0, relex)).Wait();
         }
 
-        public void RefreshFlyPanelLater() => lazyFlyPanelUpdater?.Throttle();
+        public void RefreshFlyPanelLater() => lazyFlyPanelUpdater?.Deadline();
 
         #endregion
 
@@ -241,7 +242,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void OnServerPropertyChangeHandler(object sender, EventArgs args)
         {
-            lazyStatusBarUpdater?.Throttle();
+            lazyStatusBarUpdater?.Deadline();
         }
 
         void SetSearchKeywords()
@@ -491,7 +492,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void OnRequireFlyPanelUpdateHandler(object sender, EventArgs args)
         {
-            lazyFlyPanelUpdater?.Throttle();
+            lazyFlyPanelUpdater?.Deadline();
         }
 
         private void LoadWelcomeItem()

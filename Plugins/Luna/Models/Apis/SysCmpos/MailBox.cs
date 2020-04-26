@@ -1,5 +1,5 @@
 ﻿using System.Collections.Concurrent;
-using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace Luna.Models.Apis.SysCmpos
 {
@@ -54,11 +54,11 @@ namespace Luna.Models.Apis.SysCmpos
         {
             do
             {
-                if (TryTakeIgnoreError(mails, 5000, out var mail))
+                if (TryTakeIgnoreError(mails, 1000, out var mail))
                 {
                     return mail;
                 }
-                Application.DoEvents();
+                Task.Delay(100).Wait();
             } while (!mails.IsCompleted);
             return null;
         }

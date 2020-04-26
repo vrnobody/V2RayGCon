@@ -59,17 +59,17 @@ namespace ProxySetter.Services
 
         public void Cleanup()
         {
+            FileLogger.Info("ProxySetting.Cleanup() begin");
             setting.DebugLog("call Luncher.cleanup");
             setting.isCleaning = true;
-
             serverTracker.OnSysProxyChanged -= UpdateMenuItemCheckedStatHandler;
             VgcApis.Misc.UI.CloseFormIgnoreError(formMain);
             serverTracker.Cleanup();
             pacServer.Cleanup();
             setting.Cleanup();
-            Libs.Sys.ProxySetter.UpdateProxySettingOnDemand(orgSysProxySetting);
             FileLogger.Info("ProxySetter: restore sys proxy settings");
-
+            Libs.Sys.ProxySetter.UpdateProxySettingOnDemand(orgSysProxySetting);
+            FileLogger.Info("ProxySetter.Cleanup() done");
         }
 
         public ToolStripMenuItem[] GetSubMenu() => GenSubMenu();

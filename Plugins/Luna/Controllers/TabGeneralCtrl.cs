@@ -137,7 +137,7 @@ namespace Luna.Controllers
                 var ctrls = luaServer.GetAllLuaCoreCtrls();
                 foreach (var c in ctrls)
                 {
-                    c.Kill();
+                    c.Abort();
                 }
             };
         }

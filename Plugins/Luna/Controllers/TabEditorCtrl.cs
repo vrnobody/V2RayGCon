@@ -157,7 +157,7 @@ namespace Luna.Controllers
         {
             logUpdater?.Dispose();
             formSearch?.Close();
-            luaCoreCtrl?.Kill();
+            luaCoreCtrl?.AbortNow();
             qLogger?.Dispose();
 
             if (luaAcm != null)
@@ -319,7 +319,7 @@ namespace Luna.Controllers
 
             btnNewScript.Click += (s, a) => ClearEditor();
 
-            btnKillScript.Click += (s, a) => luaCoreCtrl.Kill();
+            btnKillScript.Click += (s, a) => luaCoreCtrl.Abort();
 
             btnStopScript.Click += (s, a) => luaCoreCtrl.Stop();
 
@@ -329,7 +329,7 @@ namespace Luna.Controllers
 
                 var name = cboxScriptName.Text;
 
-                luaCoreCtrl.Kill();
+                luaCoreCtrl.Abort();
                 luaCoreCtrl.SetScriptName(string.IsNullOrEmpty(name) ? $"({I18N.Empty})" : name);
                 luaCoreCtrl.ReplaceScript(luaEditor.Text);
                 luaCoreCtrl.Start();

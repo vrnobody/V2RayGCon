@@ -26,7 +26,7 @@ namespace Luna.Models.Apis
         ConcurrentDictionary<string, VgcApis.Interfaces.Lua.ILuaMailBox>
             hotkeys = new ConcurrentDictionary<string, VgcApis.Interfaces.Lua.ILuaMailBox>();
 
-        static readonly SysCmpos.PostOffice postOffice = new SysCmpos.PostOffice();
+        SysCmpos.PostOffice postOffice;
 
         public LuaSys(
             LuaApis luaApis,
@@ -34,6 +34,7 @@ namespace Luna.Models.Apis
         {
             this.luaApis = luaApis;
             this.getAllAssemblies = getAllAssemblies;
+            this.postOffice = luaApis.GetPostOffice();
         }
 
         #region private methods
@@ -219,7 +220,7 @@ namespace Luna.Models.Apis
         #endregion
 
         #region ILuaSys.Process
-        public void DoEvents() => Application.DoEvents();
+        public void DoEvents() => luaApis.DoEvents();
 
         public void WaitForExit(Process proc) => proc?.WaitForExit();
 

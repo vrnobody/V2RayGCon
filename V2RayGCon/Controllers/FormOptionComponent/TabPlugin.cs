@@ -40,6 +40,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             MarkdownCurOption();
             setting.SavePluginInfoItems(curPluginInfos);
             pluginServ.RestartAllPlugins();
+            Services.Notifier.Instance.RefreshNotifyIconLater();
             return true;
         }
 

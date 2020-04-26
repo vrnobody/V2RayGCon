@@ -64,11 +64,13 @@ namespace Luna
 
         protected override void Stop()
         {
+            VgcApis.Libs.Sys.FileLogger.Info("Luna.Cleanup() begin");
             settings?.SetIsDisposing(true);
             menuUpdater?.Dispose();
             formMgr?.Dispose();
             luaServer?.Dispose();
             settings?.Dispose();
+            VgcApis.Libs.Sys.FileLogger.Info("Luna.Cleanup() end");
         }
         #endregion
     }

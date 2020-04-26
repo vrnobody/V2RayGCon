@@ -169,30 +169,9 @@ namespace Luna.Controllers
             luaSys?.OnSignalStop();
         }
 
-        public void Kill()
-        {
-            if (!isRunning)
-            {
-                return;
-            }
+        public void Abort() => Killer(2000);
 
-            Stop();
-
-            if (!luaCoreThread.Join(2000))
-            {
-                SendLog($"{I18N.Terminate} {coreSetting.name}");
-                try
-                {
-                    luaCoreThread.Abort();
-                }
-                catch { }
-            }
-
-            luaSys?.Dispose();
-            luaSys = null;
-
-            isRunning = false;
-        }
+        public void AbortNow() => Killer(1);
 
         public void Start()
         {
@@ -211,11 +190,36 @@ namespace Luna.Controllers
 
         public void Cleanup()
         {
-            Kill();
+            AbortNow();
         }
         #endregion
 
         #region private methods
+        void Killer(int timeout)
+        {
+            if (!isRunning)
+            {
+                return;
+            }
+
+            Stop();
+
+            if (!luaCoreThread.Join(timeout))
+            {
+                SendLog($"{I18N.Terminate} {coreSetting.name}");
+                try
+                {
+                    luaCoreThread.Abort();
+                }
+                catch { }
+            }
+
+            luaSys?.Dispose();
+            luaSys = null;
+
+            isRunning = false;
+        }
+
         List<Type> assemblies = null;
         List<Type> GetAllAssemblies()
         {

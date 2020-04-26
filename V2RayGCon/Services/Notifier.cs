@@ -47,7 +47,7 @@ namespace V2RayGCon.Services
         {
             lazyNotifierMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateNotifyIconWorker, UpdateInterval)
             {
-                Name = "notifierMenuUpdater",
+                Name = "", // disable debug logging
             };
 
             // 其他组件有可能在初始化的时候引用菜单
@@ -80,10 +80,16 @@ namespace V2RayGCon.Services
 
             BindMenuEvents();
             BindServerEvents();
-            UpdateNotifyIconLater();
+            RefreshNotifyIconLater();
         }
 
         #region public method
+
+
+        public void DoEvents() =>
+            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                niMenu, () => Application.DoEvents());
+
         public string RegisterHotKey(
             Action hotKeyHandler,
             string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
@@ -106,8 +112,7 @@ namespace V2RayGCon.Services
             return r;
         }
 
-
-        public void RefreshNotifyIcon() => UpdateNotifyIconLater();
+        public void RefreshNotifyIconLater() => lazyNotifierMenuUpdater?.Deadline();
 
         public void ScanQrcode()
         {
@@ -160,7 +165,6 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
-
 
         private void BindMenuEvents()
         {
@@ -375,10 +379,13 @@ namespace V2RayGCon.Services
             next?.Invoke();
         }
 
-        void UpdateNotifyIconLater() => lazyNotifierMenuUpdater?.Deadline();
-
         void UpdateNotifyIconWorker(Action done)
         {
+            if (setting.IsClosing())
+            {
+                done();
+            }
+
             if (isMenuOpened)
             {
                 lazyNotifierMenuUpdater?.Postpone();
@@ -386,8 +393,9 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            var start = DateTime.Now.Millisecond;
+            var cores = servers.GetAllServersOrderByIndex().ToList();
 
+            var start = DateTime.Now.Millisecond;
             Action finished = () => VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 var relex = UpdateInterval - (DateTime.Now.Millisecond - start);
@@ -395,7 +403,7 @@ namespace V2RayGCon.Services
                 done();
             });
 
-            var list = servers.GetAllServersOrderByIndex()
+            var list = cores
                 .Where(s => s.GetCoreCtrl().IsCoreRunning())
                 .ToList();
 
@@ -497,7 +505,7 @@ namespace V2RayGCon.Services
         }
 
         void UpdateNotifyIconHandler(object sender, EventArgs args) =>
-            UpdateNotifyIconLater();
+            RefreshNotifyIconLater();
 
         string GetterSysProxyInfo()
         {

@@ -50,7 +50,7 @@ namespace V2RayGCon.Services
             miPluginsRoot = CreateRootMenuItem(I18N.Plugins, Properties.Resources.Module_16x);
 
             lazyNotifierMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(
-                UpdateNotifyIconWorker, UpdateInterval, 3000)
+                UpdateNotifyIconWorker, UpdateInterval, 5000)
             {
                 Name = "Notifier.MenuUpdater", // disable debug logging
             };
@@ -298,8 +298,8 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            var picked = list[new Random().Next(len)];
-            servers.StopAllServersThen(() => picked.GetCoreCtrl().RestartCore());
+            var picked = list[new Random().Next(len)].GetCoreCtrl();
+            servers.StopAllServersThen(() => picked.RestartCore());
         }
 
         void ReplaceServersMenuWith(
@@ -342,25 +342,32 @@ namespace V2RayGCon.Services
             miServersRoot.Visible = true;
         }
 
-        void UpdateServersMenuThen(Action next = null)
+        void UpdateServersMenuThen(Action done = null)
         {
-            var serverList = servers.GetAllServersOrderByIndex();
-            var miAllServers = ServerList2MenuItems(serverList);
+            try
+            {
+                var serverList = servers.GetAllServersOrderByIndex();
+                var miAllServers = ServerList2MenuItems(serverList);
 
-            var num = VgcApis.Models.Consts.Config.QuickSwitchMenuItemNum;
-            var groupSize = VgcApis.Models.Consts.Config.MenuItemGroupSize;
-            var isGrouped = miAllServers.Count > groupSize;
+                var num = VgcApis.Models.Consts.Config.QuickSwitchMenuItemNum;
+                var groupSize = VgcApis.Models.Consts.Config.MenuItemGroupSize;
+                var isGrouped = miAllServers.Count > groupSize;
 
-            var miGroupedServers = VgcApis.Misc.UI.AutoGroupMenuItems(miAllServers, groupSize);
-            var miTopNthServers = isGrouped ?
-                ServerList2MenuItems(serverList.Take(num).ToList()) :
-                new List<ToolStripMenuItem>();
+                var miGroupedServers = VgcApis.Misc.UI.AutoGroupMenuItems(miAllServers, groupSize);
+                var miTopNthServers = isGrouped ?
+                    ServerList2MenuItems(serverList.Take(num).ToList()) :
+                    new List<ToolStripMenuItem>();
 
-            RunInUiThreadIgnoreError(
-                () => ReplaceServersMenuWith(
-                    isGrouped, miGroupedServers, miTopNthServers));
+                RunInUiThreadIgnoreError(
+                    () => ReplaceServersMenuWith(
+                        isGrouped, miGroupedServers, miTopNthServers));
+            }
+            catch (Exception e)
+            {
+                VgcApis.Libs.Sys.FileLogger.Error($"Notifier.UpdateServersMenuThen() \n {e}");
+            }
 
-            next?.Invoke();
+            done?.Invoke();
         }
 
         void UpdateNotifyIconWorker(Action done)
@@ -378,12 +385,15 @@ namespace V2RayGCon.Services
             }
 
             var start = DateTime.Now.Millisecond;
+
             Action finished = () => VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 var relex = UpdateInterval - (DateTime.Now.Millisecond - start);
                 VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
                 done();
             });
+
+            Action next = () => UpdateServersMenuThen(finished);
 
             try
             {
@@ -394,12 +404,11 @@ namespace V2RayGCon.Services
                 var icon = CreateNotifyIconImage(list);
                 notifyIcon.Icon?.Dispose();
                 notifyIcon.Icon = Icon.FromHandle(icon.GetHicon());
-                UpdateNotifyIconTextThen(list, () => UpdateServersMenuThen(finished));
+                UpdateNotifyIconTextThen(list, next);
             }
             catch (Exception e)
             {
-                VgcApis.Libs.Sys.FileLogger.Error(
-                    $"Notifier update icon text error!\n{e}");
+                VgcApis.Libs.Sys.FileLogger.Error($"Notifier update icon error!\n{e}");
             }
             done();
         }
@@ -541,9 +550,7 @@ namespace V2RayGCon.Services
             return null;
         }
 
-        void UpdateNotifyIconTextThen(
-            List<ICoreServCtrl> list,
-            Action finished)
+        void UpdateNotifyIconTextThen(List<ICoreServCtrl> list, Action finished)
         {
             var count = list.Count;
             var texts = new List<string>();

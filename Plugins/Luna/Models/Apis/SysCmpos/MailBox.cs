@@ -40,6 +40,19 @@ namespace Luna.Models.Apis.SysCmpos
 
         public int Count() => mails.Count;
 
+        public VgcApis.Models.Datas.LuaMail Wait()
+        {
+            do
+            {
+                if (TryTakeIgnoreError(mails, 3000, out var mail))
+                {
+                    return mail;
+                }
+                VgcApis.Misc.Utils.Sleep(100);
+            } while (!mails.IsCompleted);
+            return null;
+        }
+
         public VgcApis.Models.Datas.LuaMail Wait(int milSecs)
         {
             if (TryTakeIgnoreError(mails, milSecs, out var mail))

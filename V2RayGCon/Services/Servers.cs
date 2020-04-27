@@ -463,6 +463,21 @@ namespace V2RayGCon.Services
             Misc.Utils.ChainActionHelperAsync(list.Count, worker, lambda);
         }
 
+        public void StopAllServers()
+        {
+            List<Controllers.CoreServerCtrl> list;
+
+            lock (serverListWriteLock)
+            {
+                list = coreServList.Where(c => c.GetCoreCtrl().IsCoreRunning()).ToList();
+            }
+
+            foreach (var serv in list)
+            {
+                serv.GetCoreCtrl().StopCore();
+            }
+        }
+
         public void StopAllServersThen(Action lambda = null)
         {
             List<Controllers.CoreServerCtrl> list;

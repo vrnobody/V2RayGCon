@@ -96,7 +96,9 @@ namespace V2RayGCon.Services
 #if DEBUG
         void This_Function_Is_Used_For_Debugging()
         {
-            ShowPlugin(@"Luna");
+            // ShowPlugin(@"Luna");
+
+            formMain.Restore();
 
             //notifier.InjectDebugMenuItem(new ToolStripMenuItem(
             //    "Debug",
@@ -180,7 +182,11 @@ namespace V2RayGCon.Services
                 service.Dispose();
             }
 
-            servers.StopAllServersThen();
+            if (setting.ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
+            {
+                servers.StopAllServers();
+            }
+
             VgcApis.Libs.Sys.FileLogger.Info("Luancher.DisposeAllServices() done");
         }
 

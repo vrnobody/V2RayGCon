@@ -13,6 +13,8 @@
 
         Models.Datas.LuaMail Check();
 
+        Models.Datas.LuaMail Wait();
+
         Models.Datas.LuaMail Wait(int milSecs);
 
         string GetAddress();

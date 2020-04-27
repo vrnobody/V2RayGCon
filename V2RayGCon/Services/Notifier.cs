@@ -391,7 +391,7 @@ namespace V2RayGCon.Services
                     .Where(s => s.GetCoreCtrl().IsCoreRunning())
                     .ToList();
 
-                var icon = CreateNotifyIconImage(list.Count());
+                var icon = CreateNotifyIconImage(list);
                 notifyIcon.Icon?.Dispose();
                 notifyIcon.Icon = Icon.FromHandle(icon.GetHicon());
                 UpdateNotifyIconTextThen(list, () => UpdateServersMenuThen(finished));
@@ -404,8 +404,20 @@ namespace V2RayGCon.Services
             done();
         }
 
-        private Bitmap CreateNotifyIconImage(int activeServNum)
+        private Bitmap CreateNotifyIconImage(List<ICoreServCtrl> coreCtrls)
         {
+            var activeServNum = coreCtrls.Count;
+            var isFirstServ = false;
+
+            if (activeServNum == 1)
+            {
+                var idx = coreCtrls.First().GetCoreStates().GetIndex();
+                if ((int)idx == 1)
+                {
+                    isFirstServ = true;
+                }
+            }
+
             var icon = orgIcon.Clone() as Bitmap;
             var size = icon.Size;
 
@@ -415,7 +427,7 @@ namespace V2RayGCon.Services
                 g.CompositingQuality = CompositingQuality.HighQuality;
 
                 DrawProxyModeCornerCircle(g, size);
-                DrawIsRunningCornerMark(g, size, activeServNum);
+                DrawIsRunningCornerMark(g, size, activeServNum, isFirstServ);
             }
 
             return icon;
@@ -446,7 +458,7 @@ namespace V2RayGCon.Services
         }
 
         private void DrawIsRunningCornerMark(
-            Graphics graphics, Size size, int activeServNum)
+            Graphics graphics, Size size, int activeServNum, bool isFirstServ)
         {
             var w = size.Width;
             var cx = w * 0.7f;
@@ -457,7 +469,7 @@ namespace V2RayGCon.Services
                     DrawOneLine(graphics, w, cx, false);
                     break;
                 case 1:
-                    DrawTriangle(graphics, w, cx);
+                    DrawTriangle(graphics, w, cx, isFirstServ);
                     break;
                 default:
                     DrawOneLine(graphics, w, cx, false);
@@ -466,16 +478,32 @@ namespace V2RayGCon.Services
             }
         }
 
-        private static void DrawTriangle(Graphics graphics, int w, float cx)
+        private static void DrawTriangle(
+            Graphics graphics, int w, float cx, bool isFirstServ)
         {
+            var lw = w * 0.07f;
             var cr = w * 0.22f;
+            if (isFirstServ)
+            {
+                cr -= lw / 2;
+            }
             var dh = Math.Sqrt(3) * cr / 2f;
             var tri = new Point[] {
                     new Point((int)(cx - cr / 2f),(int)(cx - dh)),
                     new Point((int)(cx + cr),(int)cx),
                     new Point((int)(cx - cr / 2f),(int)(cx + dh)),
                 };
-            graphics.FillPolygon(Brushes.White, tri);
+
+            if (!isFirstServ)
+            {
+                graphics.FillPolygon(Brushes.White, tri);
+            }
+            else
+            {
+                var pen = new Pen(Brushes.White, lw);
+                graphics.DrawPolygon(pen, tri);
+            }
+
         }
 
         private static void DrawOneLine(

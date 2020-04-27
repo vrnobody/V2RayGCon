@@ -38,15 +38,7 @@ end
 local function Wait(self, milSec)
     local mail = nil
     if milSec == nil then
-        while true do
-            mail = self.mailbox:Wait(5000)
-            if mail ~= nil then
-                return ExecMail(self, mail)
-            end
-            if self.mailbox:IsCompleted() then
-                return false
-            end
-        end
+        mail = self.mailbox:Wait()
     else
         mail = self.mailbox:Wait(milSec)
     end

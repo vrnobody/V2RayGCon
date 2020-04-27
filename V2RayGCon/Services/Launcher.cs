@@ -173,10 +173,14 @@ namespace V2RayGCon.Services
             }
 
             setting.SetIsShutdown(true);
+            setting.isSpeedtestCancelled = true;
+
             foreach (var service in services)
             {
                 service.Dispose();
             }
+
+            servers.StopAllServersThen();
             VgcApis.Libs.Sys.FileLogger.Info("Luancher.DisposeAllServices() done");
         }
 

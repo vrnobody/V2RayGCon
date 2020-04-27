@@ -33,7 +33,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            BindExitEvents();
+            BindEvents();
 
             if (!launcher.Warmup())
             {
@@ -68,9 +68,20 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Libs.Sys.FileLogger.Info($"{formTitle} end");
         }
 
-
-        void BindExitEvents()
+        void BindEvents()
         {
+            Microsoft.Win32.SystemEvents.PowerModeChanged += (s, a) =>
+            {
+                switch (a.Mode)
+                {
+                    case Microsoft.Win32.PowerModes.Suspend:
+                        setting.SetScreenLockingState(true);
+                        break;
+                    default:
+                        break;
+                }
+            };
+
             Microsoft.Win32.SystemEvents.SessionSwitch += (s, a) =>
             {
                 switch (a.Reason)

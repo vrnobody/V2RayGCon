@@ -230,18 +230,6 @@ namespace V2RayGCon.Services
 
         #region public method
 
-        // expose to launcher for shutdown
-        public void SaveServersSettingsWorker()
-        {
-            List<VgcApis.Models.Datas.CoreInfo> coreInfoList;
-            lock (serverListWriteLock)
-            {
-                coreInfoList = coreServList
-                   .Select(s => s.GetCoreStates().GetAllRawCoreInfo())
-                   .ToList();
-            }
-            setting.SaveServerList(coreInfoList);
-        }
 
         /// <summary>
         /// Add new only.
@@ -770,6 +758,18 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+        void SaveServersSettingsWorker()
+        {
+            List<VgcApis.Models.Datas.CoreInfo> coreInfoList;
+            lock (serverListWriteLock)
+            {
+                coreInfoList = coreServList
+                   .Select(s => s.GetCoreStates().GetAllRawCoreInfo())
+                   .ToList();
+            }
+            setting.SaveServerList(coreInfoList);
+        }
+
         void SortSelectedServers(Action<List<ICoreServCtrl>> sorter)
         {
             lock (serverListWriteLock)
@@ -894,19 +894,6 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() save data");
             lazyServerSettingsRecorder?.DoItNow();
             lazyServerSettingsRecorder?.Dispose();
-
-            // let it go
-            /*
-            var cores = coreServList.ToList();
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() stop cores in background begin");
-                foreach (var core in cores)
-                {
-                    core.GetCoreCtrl().StopCoreQuiet();
-                }
-                VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() stop cores in background done");
-            });*/
         }
 
         #endregion

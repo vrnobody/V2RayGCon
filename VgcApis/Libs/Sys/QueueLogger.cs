@@ -10,18 +10,9 @@ namespace VgcApis.Libs.Sys
         long updateTimestamp = DateTime.Now.Ticks;
         Queue<string> logCache = new Queue<string>();
         const int maxLogLineNumber = Models.Consts.Libs.MaxCacheLoggerLineNumber;
-        Tasks.LazyGuy lazyLogChopper;
         object logWriteLocker = new object();
 
-        public QueueLogger()
-        {
-            lazyLogChopper = new Tasks.LazyGuy(
-                TrimLogCache,
-                Models.Consts.Libs.TrimdownLogCacheDelay)
-            {
-                Name = "QueueLogger.Chopper",
-            };
-        }
+        public QueueLogger() { }
 
         #region public methods
         public void Reset()
@@ -43,19 +34,9 @@ namespace VgcApis.Libs.Sys
             {
                 logCache.Enqueue(message ?? @"");
                 updateTimestamp = DateTime.Now.Ticks;
-                if (logCache.Count() > 2 * maxLogLineNumber)
-                {
-                    lazyLogChopper?.DoItNow();
-                }
-                else
-                {
-                    lazyLogChopper?.Deadline();
-                }
+                TrimLogCache();
             }
         }
-
-        public bool IsHasNewLog(long timestamp) =>
-            updateTimestamp != timestamp;
 
         long stringCacheUpdateTimestamp = -1;
         string stringCache = "";
@@ -97,30 +78,23 @@ namespace VgcApis.Libs.Sys
         #region private methods
         void TrimLogCache()
         {
-            const int minLogLineNumber = Models.Consts.Libs.MinCacheLoggerLineNumber;
-            lock (logWriteLocker)
+            var count = logCache.Count();
+            if (count < Models.Consts.Libs.MaxCacheLoggerLineNumber)
             {
-                var count = logCache.Count();
-                if (count < maxLogLineNumber)
-                {
-                    return;
-                }
+                return;
+            }
 
-                for (int i = 0; i < count - minLogLineNumber; i++)
-                {
-                    logCache.Dequeue();
-                }
+            var len = count - Models.Consts.Libs.MinCacheLoggerLineNumber;
+            for (int i = 0; i < len; i++)
+            {
+                logCache.Dequeue();
             }
         }
 
         #endregion
 
         #region protected methods
-        protected override void Cleanup()
-        {
-            lazyLogChopper?.Dispose();
-            lock (logWriteLocker) { }
-        }
+        protected override void Cleanup() { }
         #endregion
 
     }

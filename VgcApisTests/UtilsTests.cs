@@ -496,7 +496,7 @@ namespace VgcApisTests
                 secTask(done);
             };
 
-            var alex = new VgcApis.Libs.Tasks.LazyGuy(firstTask, 1000);
+            var alex = new VgcApis.Libs.Tasks.LazyGuy(firstTask, 1000, 1000);
 
             str = "";
             alex.Postpone();

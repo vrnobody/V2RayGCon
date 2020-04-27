@@ -49,9 +49,10 @@ namespace V2RayGCon.Services
             miServersRoot = CreateRootMenuItem(I18N.Servers, Properties.Resources.RemoteServer_16x);
             miPluginsRoot = CreateRootMenuItem(I18N.Plugins, Properties.Resources.Module_16x);
 
-            lazyNotifierMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateNotifyIconWorker, UpdateInterval)
+            lazyNotifierMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(
+                UpdateNotifyIconWorker, UpdateInterval, 3000)
             {
-                Name = "", // disable debug logging
+                Name = "Notifier.MenuUpdater", // disable debug logging
             };
         }
 
@@ -376,8 +377,6 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            var cores = servers.GetAllServersOrderByIndex().ToList();
-
             var start = DateTime.Now.Millisecond;
             Action finished = () => VgcApis.Misc.Utils.RunInBackground(() =>
             {
@@ -386,15 +385,26 @@ namespace V2RayGCon.Services
                 done();
             });
 
-            var list = cores
-                .Where(s => s.GetCoreCtrl().IsCoreRunning())
-                .ToList();
+            try
+            {
+                var list = servers.GetAllServersOrderByIndex()
+                    .Where(s => s.GetCoreCtrl().IsCoreRunning())
+                    .ToList();
 
-            UpdateNotifyIconImage(list.Count());
-            UpdateNotifyIconTextThen(list, () => UpdateServersMenuThen(finished));
+                var icon = CreateNotifyIconImage(list.Count());
+                notifyIcon.Icon?.Dispose();
+                notifyIcon.Icon = Icon.FromHandle(icon.GetHicon());
+                UpdateNotifyIconTextThen(list, () => UpdateServersMenuThen(finished));
+            }
+            catch (Exception e)
+            {
+                VgcApis.Libs.Sys.FileLogger.Error(
+                    $"Notifier update icon text error!\n{e}");
+            }
+            done();
         }
 
-        private void UpdateNotifyIconImage(int activeServNum)
+        private Bitmap CreateNotifyIconImage(int activeServNum)
         {
             var icon = orgIcon.Clone() as Bitmap;
             var size = icon.Size;
@@ -408,8 +418,7 @@ namespace V2RayGCon.Services
                 DrawIsRunningCornerMark(g, size, activeServNum);
             }
 
-            notifyIcon.Icon?.Dispose();
-            notifyIcon.Icon = Icon.FromHandle(icon.GetHicon());
+            return icon;
         }
 
         void DrawProxyModeCornerCircle(

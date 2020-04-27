@@ -53,6 +53,7 @@ namespace V2RayGCon.Views.UserControls
             {
                 Name = "Vgc.ServerUi.RefreshPanel",
             };
+
             lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(HighLightServerTitleWithKeywords, 500)
             {
                 Name = "vgc.ServerUi.HighLight",

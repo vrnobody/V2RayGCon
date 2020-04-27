@@ -9,7 +9,7 @@ namespace VgcApis.Libs.Tasks
         private Action singleTask;
         private Action<Action> chainedTask;
         private readonly int timeout;
-
+        private readonly int expectedWorkTime;
         AutoResetEvent jobToken = new AutoResetEvent(true);
         AutoResetEvent waitingToken = new AutoResetEvent(true);
 
@@ -17,16 +17,16 @@ namespace VgcApis.Libs.Tasks
 
         public string Name = @"";
 
-
         /// <summary>
         ///
         /// </summary>
         /// <param name="chainedTask">(done)=>{... done();}</param>
         /// <param name="timeout">millisecond</param>
-        public LazyGuy(Action<Action> chainedTask, int timeout)
+        public LazyGuy(Action<Action> chainedTask, int timeout, int expectedWorkTime)
         {
             this.chainedTask = chainedTask;
             this.timeout = timeout;
+            this.expectedWorkTime = expectedWorkTime;
         }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace VgcApis.Libs.Tasks
                 return;
             }
 
-            Misc.Utils.RunInBackground(async () =>
+            Misc.Utils.RunInBackground(() =>
             {
-                VgcApis.Misc.Utils.Sleep(timeout);
+                Misc.Utils.Sleep(timeout);
                 TryDoTheJob(Deadline);
             });
         }
@@ -141,7 +141,7 @@ namespace VgcApis.Libs.Tasks
         #region private method
         void TryDoTheJob(Action retry)
         {
-            var ready = jobToken.WaitOne(timeout);
+            var ready = jobToken.WaitOne(timeout + expectedWorkTime);
             // Console.WriteLine($"ready; {ready}");
             waitingToken.Set();
             if (ready)
@@ -166,7 +166,7 @@ namespace VgcApis.Libs.Tasks
 
         void DebugAutoResetEvent(AutoResetEvent arEv, string evName)
         {
-            while (!arEv.WaitOne(timeout + 100))
+            while (!arEv.WaitOne(timeout + expectedWorkTime))
             {
                 DumpCurCallStack(evName);
                 VgcApis.Misc.Utils.Sleep(100);
@@ -183,24 +183,27 @@ namespace VgcApis.Libs.Tasks
                 return;
             }
 
-            try
+            if (chainedTask == null)
             {
-                if (chainedTask != null)
-                {
-                    AutoResetEvent chainEnd = new AutoResetEvent(false);
-                    chainedTask?.Invoke(() => chainEnd.Set());
-                    DebugAutoResetEvent(chainEnd, nameof(chainEnd));
-                }
-                else
+                try
                 {
                     singleTask?.Invoke();
                 }
+                finally
+                {
+                    Done();
+                }
+                return;
             }
-            finally
+
+            try
+            {
+                Misc.Utils.RunInBackground(() => chainedTask?.Invoke(Done));
+            }
+            catch
             {
                 Done();
             }
-            return;
         }
 
         #endregion

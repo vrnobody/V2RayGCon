@@ -69,7 +69,7 @@ namespace V2RayGCon.Services
                 {
 #if DEBUG
 #else
-                    Task.Delay(VgcApis.Models.Consts.Webs.CheckForUpdateDelay).Wait();
+                    VgcApis.Misc.Utils.Sleep(VgcApis.Models.Consts.Webs.CheckForUpdateDelay);
 #endif
                     updater.CheckForUpdate(false);
                 });

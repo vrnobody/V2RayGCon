@@ -33,7 +33,7 @@ namespace Luna.Controllers
             this.settings = settings;
             this.coreSetting = luaCoreState;
             this.luaApis = luaApis;
-            this.luaSignal = new Models.Apis.LuaSignal();
+            this.luaSignal = new Models.Apis.LuaSignal(settings);
         }
 
         #region properties 

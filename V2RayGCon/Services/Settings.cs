@@ -48,6 +48,7 @@ namespace V2RayGCon.Services
         }
 
         #region Properties
+
         public string DebugLogFilePath
         {
             get => userSettings.DebugLogFilePath;
@@ -414,6 +415,13 @@ namespace V2RayGCon.Services
         #endregion
 
         #region public methods
+        bool _isScreenLocked = false;
+        public bool IsScreenLocked() => _isScreenLocked;
+
+        public void SetScreenLockingState(bool isLocked)
+        {
+            _isScreenLocked = isLocked;
+        }
         public void SaveV2RayCoreVersionList(List<string> versions)
         {
             // clone version list

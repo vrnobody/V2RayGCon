@@ -5,11 +5,13 @@
         int Count();
         bool Clear();
 
+        bool IsCompleted();
+
+        bool IsAddingCompleted();
+
         void Close();
 
         Models.Datas.LuaMail Check();
-
-        Models.Datas.LuaMail Wait();
 
         Models.Datas.LuaMail Wait(int milSecs);
 

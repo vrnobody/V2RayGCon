@@ -67,8 +67,25 @@ namespace V2RayGCon.Views.WinForms
             launcher?.Dispose();
             VgcApis.Libs.Sys.FileLogger.Info($"{formTitle} end");
         }
+
+
         void BindExitEvents()
         {
+            Microsoft.Win32.SystemEvents.SessionSwitch += (s, a) =>
+            {
+                switch (a.Reason)
+                {
+                    case Microsoft.Win32.SessionSwitchReason.SessionLock:
+                        setting.SetScreenLockingState(true);
+                        break;
+                    case Microsoft.Win32.SessionSwitchReason.SessionUnlock:
+                        setting.SetScreenLockingState(false);
+                        break;
+                    default:
+                        break;
+                }
+            };
+
             Application.ApplicationExit += (s, a) => Cleanup();
 
             Microsoft.Win32.SystemEvents.SessionEnding += (s, a) =>

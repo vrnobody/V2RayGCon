@@ -391,7 +391,14 @@ namespace VgcApis.Misc
         #endregion
 
         #region Task
-
+        public static void Sleep(int milSec)
+        {
+            try
+            {
+                Thread.Sleep(milSec);
+            }
+            catch { }
+        }
 
         public static void SetProcessEnvs(Process proc, Dictionary<string, string> envs)
         {

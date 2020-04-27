@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Luna.Models.Apis.Components
@@ -283,7 +282,7 @@ namespace Luna.Models.Apis.Components
 
         public string GetAppDir() => VgcApis.Misc.Utils.GetAppDir();
 
-        public void Sleep(int milSec) => Task.Delay(milSec).Wait();
+        public void Sleep(int milSec) => VgcApis.Misc.Utils.Sleep(milSec);
 
         public void Print(params object[] contents)
         {

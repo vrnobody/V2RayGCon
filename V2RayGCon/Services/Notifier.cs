@@ -5,7 +5,6 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Interfaces;
@@ -383,7 +382,7 @@ namespace V2RayGCon.Services
             Action finished = () => VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 var relex = UpdateInterval - (DateTime.Now.Millisecond - start);
-                Task.Delay(Math.Max(0, relex)).Wait();
+                VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
                 done();
             });
 

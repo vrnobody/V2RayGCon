@@ -20,6 +20,8 @@ namespace Luna.Services
         public Settings() { }
 
         #region properties
+        public bool isScreenLocked => vgcSetting.IsScreenLocked();
+
         public bool isEnableClrSupports
         {
             get => userSettings.isEnableClrSupports;

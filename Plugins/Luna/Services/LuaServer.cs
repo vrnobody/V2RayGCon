@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Luna.Services
 {
@@ -40,11 +39,11 @@ namespace Luna.Services
 
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                Task.Delay(1000).Wait();
+                VgcApis.Misc.Utils.Sleep(1000);
                 foreach (var core in list)
                 {
                     core.Start();
-                    Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+                    VgcApis.Misc.Utils.Sleep(1000);
                 }
             });
         }

@@ -54,7 +54,7 @@ namespace VgcApis.Libs.Tasks
 
             Misc.Utils.RunInBackground(async () =>
             {
-                await Task.Delay(timeout);
+                VgcApis.Misc.Utils.Sleep(timeout);
                 TryDoTheJob(Deadline);
             });
         }
@@ -169,7 +169,7 @@ namespace VgcApis.Libs.Tasks
             while (!arEv.WaitOne(timeout + 100))
             {
                 DumpCurCallStack(evName);
-                Task.Delay(100).Wait();
+                VgcApis.Misc.Utils.Sleep(100);
             }
         }
 

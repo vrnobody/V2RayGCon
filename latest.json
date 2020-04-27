@@ -1,12 +1,11 @@
 {
-  "version": "1.3.7.0",
-  "md5": "8BB520976D73A9E6FBAC3C3497B703A3",
+  "version": "1.3.5.0",
+  "md5": "7883A0024B9CDB1C4290ABC5F5F2A37E",
   "warnings": [],
   "changes": [
-    "Luna添加是否允许加载CLR库选项",
-    "Sys库添加热键功能(详见手册Sys库最底)",
-    "原Json库移进Misc并添加modules.json模块",
-    "Signal添加ScreenLocked()指示屏幕锁定状态",
-    "Misc:ShowData()改为返回Json字符串"
+    "快速切换功能的迟延要求改为可选",
+    "添加允许自签名证书选项",
+    "Luna支持加载CLR库（详见手册中的Trojan示例）",
+    "Luan添加ILuaSys接口及其他少量调整"
   ]
 }

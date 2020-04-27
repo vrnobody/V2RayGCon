@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZXing;
 using ZXing.QrCode;
@@ -183,7 +182,7 @@ namespace V2RayGCon.Libs.QRCode
         {
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                Task.Delay(100).Wait();
+                VgcApis.Misc.Utils.Sleep(100);
 
                 foreach (var screen in Screen.AllScreens)
                 {

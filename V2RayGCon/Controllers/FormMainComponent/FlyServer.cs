@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -168,7 +167,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             // throttle
             var relex = statusBarUpdateInterval - (DateTime.Now.Millisecond - start);
-            Task.Delay(Math.Max(0, relex)).Wait();
+            VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
         }
 
         public void RefreshFlyPanelLater() => lazyFlyPanelUpdater?.Deadline();
@@ -205,7 +204,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             lazyStatusBarUpdater?.Postpone();
             var relex = flyPanelUpdateInterval - (DateTime.Now.Millisecond - start);
-            Task.Delay(Math.Max(0, relex)).Wait();
+            VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
         }
 
         private void WatchServers()

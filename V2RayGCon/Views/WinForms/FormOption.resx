@@ -385,7 +385,7 @@
     <value>True</value>
   </data>
   <data name="chkSetEnableDebugFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>359, 41</value>
+    <value>374, 41</value>
   </data>
   <data name="chkSetEnableDebugFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 16</value>
@@ -415,7 +415,7 @@
     <value>80, 39</value>
   </data>
   <data name="tboxSetDebugFilePath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>273, 21</value>
+    <value>288, 21</value>
   </data>
   <data name="tboxSetDebugFilePath.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>

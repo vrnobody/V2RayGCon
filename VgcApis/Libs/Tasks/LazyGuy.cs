@@ -9,7 +9,7 @@ namespace VgcApis.Libs.Tasks
         private Action singleTask;
         private Action<Action> chainedTask;
         private readonly int timeout;
-
+        private readonly int expectedWorkTime;
         AutoResetEvent jobToken = new AutoResetEvent(true);
         AutoResetEvent waitingToken = new AutoResetEvent(true);
 
@@ -17,16 +17,16 @@ namespace VgcApis.Libs.Tasks
 
         public string Name = @"";
 
-
         /// <summary>
         ///
         /// </summary>
         /// <param name="chainedTask">(done)=>{... done();}</param>
         /// <param name="timeout">millisecond</param>
-        public LazyGuy(Action<Action> chainedTask, int timeout)
+        public LazyGuy(Action<Action> chainedTask, int timeout, int expectedWorkTime)
         {
             this.chainedTask = chainedTask;
             this.timeout = timeout;
+            this.expectedWorkTime = expectedWorkTime;
         }
 
         /// <summary>
@@ -54,10 +54,8 @@ namespace VgcApis.Libs.Tasks
 
             Misc.Utils.RunInBackground(() =>
             {
-                Task.Delay(timeout).Wait();
-                DebugAutoResetEvent(jobToken, nameof(jobToken));
-                waitingToken.Set();
-                DoTheJob();
+                Misc.Utils.Sleep(timeout);
+                TryDoTheJob(Deadline);
             });
         }
 
@@ -77,25 +75,23 @@ namespace VgcApis.Libs.Tasks
                 tk = cts.Token;
             }
 
-            Misc.Utils.RunInBackground(() =>
+            Misc.Utils.RunInBackground(async () =>
             {
                 try
                 {
-                    Task.Delay(timeout, tk).Wait();
+                    await Task.Delay(timeout, tk);
                 }
                 catch
                 {
                     return;
                 }
 
-                if (tk.IsCancellationRequested || !waitingToken.WaitOne(0))
+                if (isCancelled || tk.IsCancellationRequested || !waitingToken.WaitOne(0))
                 {
                     return;
                 }
 
-                DebugAutoResetEvent(jobToken, nameof(jobToken));
-                waitingToken.Set();
-                DoTheJob();
+                TryDoTheJob(Postpone);
             });
         }
 
@@ -127,9 +123,7 @@ namespace VgcApis.Libs.Tasks
 
             Misc.Utils.RunInBackground(() =>
             {
-                DebugAutoResetEvent(jobToken, nameof(jobToken));
-                waitingToken.Set();
-                DoTheJob();
+                TryDoTheJob(Deadline);
             });
         }
 
@@ -145,17 +139,37 @@ namespace VgcApis.Libs.Tasks
         #endregion
 
         #region private method
+        void TryDoTheJob(Action retry)
+        {
+            var ready = jobToken.WaitOne(timeout + expectedWorkTime);
+            // Console.WriteLine($"ready; {ready}");
+            waitingToken.Set();
+            if (ready)
+            {
+                DoTheJob();
+            }
+            else
+            {
+                DumpCurCallStack("TryDoTheJob");
+                retry?.Invoke();
+            }
+        }
+
+        void DumpCurCallStack(string evName)
+        {
+            if (!string.IsNullOrEmpty(Name))
+            {
+                var title = $"!suspectable deadlock! {Name} - {evName}";
+                Sys.FileLogger.DumpCallStack(title);
+            }
+        }
 
         void DebugAutoResetEvent(AutoResetEvent arEv, string evName)
         {
-            while (!arEv.WaitOne(timeout + 2000))
+            while (!arEv.WaitOne(timeout + expectedWorkTime))
             {
-                if (!string.IsNullOrEmpty(Name))
-                {
-                    var title = $"!suspectable deadlock! {Name} - {evName}";
-                    Sys.FileLogger.DumpCallStack(title);
-                }
-                Task.Delay(100).Wait();
+                DumpCurCallStack(evName);
+                VgcApis.Misc.Utils.Sleep(100);
             }
         }
 
@@ -169,24 +183,27 @@ namespace VgcApis.Libs.Tasks
                 return;
             }
 
-            try
+            if (chainedTask == null)
             {
-                if (chainedTask != null)
-                {
-                    AutoResetEvent chainEnd = new AutoResetEvent(false);
-                    chainedTask?.Invoke(() => chainEnd.Set());
-                    DebugAutoResetEvent(chainEnd, nameof(chainEnd));
-                }
-                else
+                try
                 {
                     singleTask?.Invoke();
                 }
+                finally
+                {
+                    Done();
+                }
+                return;
             }
-            finally
+
+            try
+            {
+                Misc.Utils.RunInBackground(() => chainedTask?.Invoke(Done));
+            }
+            catch
             {
                 Done();
             }
-            return;
         }
 
         #endregion

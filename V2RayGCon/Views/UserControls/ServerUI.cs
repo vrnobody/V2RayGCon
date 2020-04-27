@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -54,6 +53,7 @@ namespace V2RayGCon.Views.UserControls
             {
                 Name = "Vgc.ServerUi.RefreshPanel",
             };
+
             lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(HighLightServerTitleWithKeywords, 500)
             {
                 Name = "vgc.ServerUi.HighLight",
@@ -466,8 +466,6 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region public method
-        AutoResetEvent highlightLocker = new AutoResetEvent(true);
-
         public void SetKeywords(string keywords)
         {
             this.keyword = keywords?.Replace(@" ", "")?.ToLower();

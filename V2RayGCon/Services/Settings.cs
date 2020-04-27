@@ -22,6 +22,7 @@ namespace V2RayGCon.Services
         VgcApis.Libs.Tasks.LazyGuy janitor, lazyBookKeeper;
 
         string serializedUserSettingsCache = @"";
+        public event EventHandler OnPortableModeChanged;
 
         // Singleton need this private ctor.
         Settings()
@@ -47,6 +48,7 @@ namespace V2RayGCon.Services
         }
 
         #region Properties
+
         public string DebugLogFilePath
         {
             get => userSettings.DebugLogFilePath;
@@ -96,8 +98,8 @@ namespace V2RayGCon.Services
             }
         }
 
-        Semaphore _speedTestPool = null;
-        public Semaphore SpeedTestPool
+        SemaphoreSlim _speedTestPool = null;
+        public SemaphoreSlim SpeedTestPool
         {
             get => _speedTestPool;
             private set { }
@@ -113,12 +115,6 @@ namespace V2RayGCon.Services
                 userSettings.PluginsSetting = value;
                 SaveSettingsLater();
             }
-        }
-
-        public void ExitApp()
-        {
-            ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;
-            Application.Exit();
         }
 
         public VgcApis.Models.Datas.Enums.ShutdownReasons ShutdownReason { get; set; } =
@@ -327,6 +323,11 @@ namespace V2RayGCon.Services
             {
                 userSettings.isPortable = value;
                 SaveSettingsLater();
+                try
+                {
+                    OnPortableModeChanged?.Invoke(this, EventArgs.Empty);
+                }
+                catch { }
             }
         }
 
@@ -414,6 +415,13 @@ namespace V2RayGCon.Services
         #endregion
 
         #region public methods
+        bool _isScreenLocked = false;
+        public bool IsScreenLocked() => _isScreenLocked;
+
+        public void SetScreenLockingState(bool isLocked)
+        {
+            _isScreenLocked = isLocked;
+        }
         public void SaveV2RayCoreVersionList(List<string> versions)
         {
             // clone version list
@@ -716,7 +724,7 @@ namespace V2RayGCon.Services
         void UpdateSpeedTestPool()
         {
             var poolSize = userSettings.MaxConcurrentV2RayCoreNum;
-            _speedTestPool = new Semaphore(poolSize, poolSize);
+            _speedTestPool = new SemaphoreSlim(poolSize, poolSize);
         }
 
         bool IsValid(string serializedUserSettings)

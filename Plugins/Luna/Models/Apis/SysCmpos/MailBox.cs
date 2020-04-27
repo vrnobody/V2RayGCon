@@ -1,5 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using System.Threading.Tasks;
 
 namespace Luna.Models.Apis.SysCmpos
 {
@@ -41,25 +40,25 @@ namespace Luna.Models.Apis.SysCmpos
 
         public int Count() => mails.Count;
 
+        public VgcApis.Models.Datas.LuaMail Wait()
+        {
+            do
+            {
+                if (TryTakeIgnoreError(mails, 3000, out var mail))
+                {
+                    return mail;
+                }
+                VgcApis.Misc.Utils.Sleep(100);
+            } while (!mails.IsCompleted);
+            return null;
+        }
+
         public VgcApis.Models.Datas.LuaMail Wait(int milSecs)
         {
             if (TryTakeIgnoreError(mails, milSecs, out var mail))
             {
                 return mail;
             }
-            return null;
-        }
-
-        public VgcApis.Models.Datas.LuaMail Wait()
-        {
-            do
-            {
-                if (TryTakeIgnoreError(mails, 1000, out var mail))
-                {
-                    return mail;
-                }
-                Task.Delay(100).Wait();
-            } while (!mails.IsCompleted);
             return null;
         }
 
@@ -127,6 +126,26 @@ namespace Luna.Models.Apis.SysCmpos
             };
 
             return postOffice.Send(address, mail);
+        }
+
+        public bool IsCompleted()
+        {
+            try
+            {
+                return mails.IsCompleted;
+            }
+            catch { }
+            return true;
+        }
+
+        public bool IsAddingCompleted()
+        {
+            try
+            {
+                return mails.IsAddingCompleted;
+            }
+            catch { }
+            return true;
         }
 
         public void Close()

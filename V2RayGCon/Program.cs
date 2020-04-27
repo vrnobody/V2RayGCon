@@ -37,20 +37,8 @@ namespace V2RayGCon
             IntPtr pShcoreDll = HiResSupport();
             if (mutex.WaitOne(TimeSpan.Zero, true))
             {
-                var app = new Services.Launcher();
-                if (app.Warmup())
-                {
-                    // settings and notify icon is ready
-                    var name = Misc.Utils.GetAppNameAndVer();
-                    VgcApis.Libs.Sys.FileLogger.Raw("\n");
-                    VgcApis.Libs.Sys.FileLogger.Info($"{name} start");
-
-                    app.Run();
-                    Application.Run();
-                    Services.Notifier.Instance.notifyIcon.Visible = false;
-
-                    VgcApis.Libs.Sys.FileLogger.Info($"{name} end");
-                }
+                var form = new Views.WinForms.FormMain();
+                Application.Run(form);
                 mutex.ReleaseMutex();
             }
             else

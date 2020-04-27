@@ -1,15 +1,21 @@
-﻿namespace Luna.Models.Apis
+﻿using Luna.Services;
+
+namespace Luna.Models.Apis
 {
     public class LuaSignal : VgcApis.Interfaces.Lua.ILuaSignal
     {
         bool signalStop;
+        private readonly Settings settings;
 
-        public LuaSignal()
+        public LuaSignal(Services.Settings settings)
         {
             ResetAllSignals();
+            this.settings = settings;
         }
 
         #region interface things
+        public bool ScreenLocked() => settings.isScreenLocked;
+
         public bool Stop()
         {
             return signalStop;

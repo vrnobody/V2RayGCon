@@ -34,45 +34,49 @@ namespace VgcApis.WinForms
         #endregion
 
         #region public methods
-
-
         public string RegisterHotKey(
             Action hotKeyHandler,
             string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
         {
-            try
+
+            var evCode = currentEvCode++;
+
+            if (!VgcApis.Misc.Utils.TryParseKeyMesssage(keyName, hasAlt, hasCtrl, hasShift,
+                out uint modifier, out uint key))
             {
-                var evCode = currentEvCode++;
-
-                if (!Misc.Utils.TryParseKeyMesssage(keyName, hasAlt, hasCtrl, hasShift,
-                    out uint modifier, out uint key))
-                {
-                    return null;
-                }
-
-                long hkMsg = (key << 16) | modifier;
-                var handlerKeys = handlers.Keys;
-                if (handlerKeys.Contains(hkMsg)
-                    || !RegisterHotKey(Handle, evCode, modifier, key))
-                {
-                    return null;
-                }
-
-                do
-                {
-                    var hkHandle = Guid.NewGuid().ToString();
-                    var keys = contexts.Keys;
-                    if (!keys.Contains(hkHandle))
-                    {
-                        var hkParma = new Tuple<int, long>(evCode, hkMsg);
-                        contexts.TryAdd(hkHandle, hkParma);
-                        handlers.TryAdd(hkMsg, hotKeyHandler);
-                        return hkHandle;
-                    }
-                } while (true);
+                return null;
             }
-            catch { }
+
+            long hkMsg = (key << 16) | modifier;
+            var handlerKeys = handlers.Keys;
+            if (handlerKeys.Contains(hkMsg) || !RegisterHotKey(Handle, evCode, modifier, key))
+            {
+                return null;
+            }
+
+            for (int failsafe = 0; failsafe < 1000; failsafe++)
+            {
+                var hkHandle = Guid.NewGuid().ToString();
+                var keys = contexts.Keys;
+                if (!keys.Contains(hkHandle))
+                {
+                    var hkParma = new Tuple<int, long>(evCode, hkMsg);
+                    contexts.TryAdd(hkHandle, hkParma);
+                    handlers.TryAdd(hkMsg, hotKeyHandler);
+                    return hkHandle;
+                }
+            }
+
             return null;
+        }
+
+        void RemoveAllHotKeys()
+        {
+            var handles = contexts.Keys;
+            foreach (var handle in handles)
+            {
+                UnregisterHotKey(handle);
+            }
         }
 
         public bool UnregisterHotKey(string hotKeyHandle)
@@ -90,27 +94,41 @@ namespace VgcApis.WinForms
                 }
             }
             catch { }
-
             return false;
         }
 
-        protected override void WndProc(ref Message m)
+        void HotkeyEventHandler(long key)
         {
-            try
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                // check if we got a hot key pressed.
-                if (m.Msg == WM_HOTKEY)
+                try
                 {
-                    var key = (uint)m.LParam & 0xffffffff;
                     if (handlers.TryGetValue(key, out var handler))
                     {
                         handler?.Invoke();
                     }
                 }
+                catch (Exception e)
+                {
+                    VgcApis.Libs.Sys.FileLogger.Error($"Handle wnd event error\n key code:{key} \n {e}");
+                }
+            });
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+
+            try
+            {
+                // check if we got a hot key pressed.
+                if (m.Msg == WM_HOTKEY)
+                {
+                    long key = (uint)m.LParam & 0xffffffff;
+                    Misc.Utils.RunInBackground(() => HotkeyEventHandler(key));
+                }
             }
             catch { }
-
-            base.WndProc(ref m);
         }
         #endregion
 
@@ -123,11 +141,7 @@ namespace VgcApis.WinForms
             {
                 if (disposing)
                 {
-                    var handles = contexts.Keys;
-                    foreach (var handle in handles)
-                    {
-                        UnregisterHotKey(handle);
-                    }
+                    RemoveAllHotKeys();
                 }
 
                 // TODO: 释放未托管的资源(未托管的对象)并在以下内容中替代终结器。

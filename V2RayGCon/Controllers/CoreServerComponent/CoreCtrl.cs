@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
@@ -64,27 +63,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return new VgcApis.Models.Datas.StatsSample(up, down);
         }
 
-        public void RestartCore()
-        {
-            AutoResetEvent done = new AutoResetEvent(false);
-            RestartCoreThen(() => done.Set());
-            VgcApis.Misc.Utils.BlockingWaitOne(done);
-        }
+        public void StopCore() => StopCoreWorker(null);
 
-        public void StopCoreQuiet() => v2rayCore.StopCoreThen(null);
-
-        public void StopCore()
-        {
-            AutoResetEvent done = new AutoResetEvent(false);
-            StopCoreThen(() => done.Set());
-            VgcApis.Misc.Utils.BlockingWaitOne(done);
-        }
-
-        public void StopCoreThen() =>
-            VgcApis.Misc.Utils.RunInBackground(() => StopCoreWorker(null));
+        public void StopCoreThen() => StopCoreThen(null);
 
         public void StopCoreThen(Action next) =>
             VgcApis.Misc.Utils.RunInBackground(() => StopCoreWorker(next));
+
+        public void RestartCore() => RestartCoreWorker(null);
 
         public void RestartCoreThen() => RestartCoreThen(null);
         public void RestartCoreThen(Action next) =>
@@ -156,30 +142,37 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         void StopCoreWorker(Action next)
         {
-            GetParent().InvokeEventOnCoreClosing();
-            v2rayCore.StopCoreThen(
-                () =>
-                {
-                    // Libs.V2Ray.Core will fire OnCoreStop
-                    // container.InvokeEventOnCoreStop();
-                    next?.Invoke();
-                });
+            try
+            {
+                GetParent().InvokeEventOnCoreClosing();
+                v2rayCore.StopCore();
+            }
+            finally
+            {
+                next?.Invoke();
+            }
         }
 
         void RestartCoreWorker(Action next)
         {
-            var finalConfig = configer.GetFinalConfig();
-            if (finalConfig == null)
+            try
             {
-                StopCoreThen(next);
-                return;
-            }
+                var finalConfig = configer.GetFinalConfig();
+                if (finalConfig == null)
+                {
+                    StopCore();
+                    return;
+                }
 
-            v2rayCore.title = coreStates.GetTitle();
-            v2rayCore.RestartCoreThen(
-                finalConfig.ToString(),
-                () => next?.Invoke(),
-                Misc.Utils.GetEnvVarsFromConfig(finalConfig));
+                v2rayCore.title = coreStates.GetTitle();
+                v2rayCore.RestartCore(
+                    finalConfig.ToString(),
+                    Misc.Utils.GetEnvVarsFromConfig(finalConfig));
+            }
+            finally
+            {
+                next?.Invoke();
+            }
         }
         #endregion
     }

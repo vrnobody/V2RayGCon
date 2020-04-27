@@ -108,7 +108,7 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
             }
 
             Libs.QRCode.QRCode.ScanQRCode(Success, Fail);
-            VgcApis.Misc.Utils.BlockingWaitOne(are);
+            are.WaitOne(10000);
             return shareLink;
         }
 

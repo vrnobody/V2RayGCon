@@ -33,7 +33,7 @@ namespace Luna.Controllers
             this.settings = settings;
             this.coreSetting = luaCoreState;
             this.luaApis = luaApis;
-            this.luaSignal = new Models.Apis.LuaSignal();
+            this.luaSignal = new Models.Apis.LuaSignal(settings);
         }
 
         #region properties 
@@ -184,7 +184,12 @@ namespace Luna.Controllers
 
             SendLog($"{I18N.Start} {coreSetting.name}");
 
-            luaCoreThread = new Thread(RunLuaScript);
+            luaCoreThread = new Thread(RunLuaScript)
+            {
+                IsBackground = true,
+                Name = "LuaStateContainer",
+            };
+
             luaCoreThread.Start();
         }
 

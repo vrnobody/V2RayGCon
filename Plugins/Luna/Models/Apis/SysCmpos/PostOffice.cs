@@ -7,9 +7,7 @@ namespace Luna.Models.Apis.SysCmpos
         ConcurrentDictionary<string, MailBox> mailboxes = new ConcurrentDictionary<string, MailBox>();
 
         public PostOffice()
-        {
-
-        }
+        { }
 
         #region properties
 

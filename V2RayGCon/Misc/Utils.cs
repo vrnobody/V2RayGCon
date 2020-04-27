@@ -21,10 +21,6 @@ namespace V2RayGCon.Misc
 {
     public static class Utils
     {
-        static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
-
-
-
 
         #region strings
         static string appNameAndVersion = null;
@@ -1009,77 +1005,6 @@ namespace V2RayGCon.Misc
         }
 
         public static string UrlEncode(string value) => HttpUtility.UrlEncode(value);
-
-        public static long TimedDownloadTesting(
-            string url,
-            int port,
-            int expectedSizeInKiB,
-            int timeout)
-        {
-            if (string.IsNullOrEmpty(url))
-            {
-                throw new ArgumentNullException("URL must not null!");
-            }
-
-            var maxTimeout = timeout > 0 ? timeout : VgcApis.Models.Consts.Intervals.DefaultSpeedTestTimeout;
-
-            WebClient wc = new WebClient
-            {
-                Encoding = Encoding.UTF8,
-            };
-            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
-
-            if (port > 0 && port < 65536)
-            {
-                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, port);
-            }
-
-            Stopwatch sw = new Stopwatch();
-            AutoResetEvent dlCompleted = new AutoResetEvent(false);
-            long totalReceived = 0;
-            var expectedBytes = expectedSizeInKiB * 1024;
-
-            if (expectedSizeInKiB >= 0)
-            {
-                wc.DownloadProgressChanged += (s, a) =>
-                {
-                    Interlocked.Add(ref totalReceived, a.BytesReceived);
-                    if (totalReceived > expectedBytes)
-                    {
-                        sw.Stop();
-                        wc.CancelAsync();
-                    }
-                };
-            }
-
-            wc.DownloadStringCompleted += (s, a) =>
-            {
-                sw.Stop();
-                dlCompleted.Set();
-                wc.Dispose();
-            };
-
-            try
-            {
-                var patchedUrl = VgcApis.Misc.Utils.IsHttpLink(url) ? url : VgcApis.Misc.Utils.RelativePath2FullPath(url);
-                sw.Start();
-                wc.DownloadStringAsync(new Uri(patchedUrl));
-                // 收到信号为True
-                if (!dlCompleted.WaitOne(maxTimeout))
-                {
-                    wc.CancelAsync();
-                    return SpeedtestTimeout;
-                }
-            }
-            catch
-            {
-                // network operation always buggy.
-                wc.CancelAsync();
-                return SpeedtestTimeout;
-            }
-
-            return totalReceived <= expectedBytes ? SpeedtestTimeout : sw.ElapsedMilliseconds;
-        }
 
         static bool DownloadFileWorker(string url, string filename, int proxyPort, int timeout)
         {

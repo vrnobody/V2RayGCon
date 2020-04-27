@@ -220,7 +220,7 @@ namespace Luna.Models.Apis
         #endregion
 
         #region ILuaSys.Process
-        public void DoEvents() => luaApis.DoEvents();
+        public void DoEvents() => Application.DoEvents();
 
         public void WaitForExit(Process proc) => proc?.WaitForExit();
 

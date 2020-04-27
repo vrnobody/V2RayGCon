@@ -7,7 +7,6 @@ namespace Luna.Models.Apis
     {
         Services.Settings settings;
         VgcApis.Interfaces.Services.IApiService vgcApi;
-        VgcApis.Interfaces.Services.INotifierService vgcNotifier;
         Action<string> redirectLogWorker;
         readonly SysCmpos.PostOffice postOffice;
 
@@ -17,7 +16,7 @@ namespace Luna.Models.Apis
         {
             this.settings = settings;
 
-            vgcNotifier = api.GetNotifierService();
+
             redirectLogWorker = settings.SendLog;
             vgcApi = api;
 
@@ -33,8 +32,6 @@ namespace Luna.Models.Apis
             var vgcNotifier = vgcApi.GetNotifierService();
             return vgcNotifier.RegisterHotKey(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
         }
-
-        public void DoEvents() => vgcNotifier.DoEvents();
 
         public bool UnregisterHotKey(string hotKeyHandle)
         {

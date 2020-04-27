@@ -182,19 +182,6 @@ namespace V2RayGCon.Libs.V2Ray
             VgcApis.Misc.Utils.RunInBackground(() => InvokeEventOnCoreStatusChanged());
         }
 
-        // non-blocking 
-        public void RestartCoreThen(
-            string config,
-            Action next = null,
-            Dictionary<string, string> env = null)
-        {
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                RestartCore(config, env);
-                InvokeActionIgnoreError(next);
-            });
-        }
-
         // blocking
         public void StopCore()
         {
@@ -204,15 +191,6 @@ namespace V2RayGCon.Libs.V2Ray
             }
         }
 
-        // non-blocking
-        public void StopCoreThen(Action next = null)
-        {
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                StopCore();
-                InvokeActionIgnoreError(next);
-            });
-        }
         #endregion
 
         #region private method

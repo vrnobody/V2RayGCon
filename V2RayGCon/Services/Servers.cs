@@ -19,6 +19,7 @@ namespace V2RayGCon.Services
         Settings setting = null;
         Cache cache = null;
         ConfigMgr configMgr;
+        Notifier notifier;
 
         ServersComponents.QueryHandler queryHandler;
         ServersComponents.IndexHandler indexHandler;
@@ -57,8 +58,10 @@ namespace V2RayGCon.Services
         public void Run(
            Settings setting,
            Cache cache,
-           ConfigMgr configMgr)
+           ConfigMgr configMgr,
+           Notifier notifier)
         {
+            this.notifier = notifier;
             this.configMgr = configMgr;
             this.cache = cache;
             this.setting = setting;
@@ -227,18 +230,6 @@ namespace V2RayGCon.Services
 
         #region public method
 
-        // expose to launcher for shutdown
-        public void SaveServersSettingsWorker()
-        {
-            List<VgcApis.Models.Datas.CoreInfo> coreInfoList;
-            lock (serverListWriteLock)
-            {
-                coreInfoList = coreServList
-                   .Select(s => s.GetCoreStates().GetAllRawCoreInfo())
-                   .ToList();
-            }
-            setting.SaveServerList(coreInfoList);
-        }
 
         /// <summary>
         /// Add new only.
@@ -390,7 +381,7 @@ namespace V2RayGCon.Services
         {
             var evDone = new AutoResetEvent(false);
             var success = BatchSpeedTestWorkerThen(GetSelectedServer(), () => evDone.Set());
-            VgcApis.Misc.Utils.BlockingWaitOne(evDone);
+            notifier.BlockingWaitOne(evDone);
             return success;
         }
 
@@ -470,6 +461,21 @@ namespace V2RayGCon.Services
             }
 
             Misc.Utils.ChainActionHelperAsync(list.Count, worker, lambda);
+        }
+
+        public void StopAllServers()
+        {
+            List<Controllers.CoreServerCtrl> list;
+
+            lock (serverListWriteLock)
+            {
+                list = coreServList.Where(c => c.GetCoreCtrl().IsCoreRunning()).ToList();
+            }
+
+            foreach (var serv in list)
+            {
+                serv.GetCoreCtrl().StopCore();
+            }
         }
 
         public void StopAllServersThen(Action lambda = null)
@@ -602,7 +608,7 @@ namespace V2RayGCon.Services
             }
 
             Misc.Utils.ChainActionHelper(list.Count, worker, done);
-            VgcApis.Misc.Utils.BlockingWaitOne(isFinished);
+            notifier.BlockingWaitOne(isFinished);
         }
 
         public void UpdateAllServersSummaryBg()
@@ -767,6 +773,18 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+        void SaveServersSettingsWorker()
+        {
+            List<VgcApis.Models.Datas.CoreInfo> coreInfoList;
+            lock (serverListWriteLock)
+            {
+                coreInfoList = coreServList
+                   .Select(s => s.GetCoreStates().GetAllRawCoreInfo())
+                   .ToList();
+            }
+            setting.SaveServerList(coreInfoList);
+        }
+
         void SortSelectedServers(Action<List<ICoreServCtrl>> sorter)
         {
             lock (serverListWriteLock)
@@ -891,19 +909,6 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() save data");
             lazyServerSettingsRecorder?.DoItNow();
             lazyServerSettingsRecorder?.Dispose();
-
-            // let it go
-            /*
-            var cores = coreServList.ToList();
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() stop cores in background begin");
-                foreach (var core in cores)
-                {
-                    core.GetCoreCtrl().StopCoreQuiet();
-                }
-                VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() stop cores in background done");
-            });*/
         }
 
         #endregion
@@ -936,7 +941,7 @@ namespace V2RayGCon.Services
                         {
                             server.GetCoreCtrl().RestartCoreThen(() => sayGoodbye.Set());
                         }
-                        VgcApis.Misc.Utils.BlockingWaitOne(sayGoodbye);
+                        notifier.BlockingWaitOne(sayGoodbye);
                     }, TaskCreationOptions.LongRunning);
 
                     taskList.Add(task);

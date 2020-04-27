@@ -52,7 +52,7 @@ namespace Luna
             settings = new Services.Settings();
             luaServer = new Services.LuaServer();
             formMgr = new Services.FormMgr();
-            menuUpdater = new Services.MenuUpdater(vgcNotifier);
+            menuUpdater = new Services.MenuUpdater(settings);
 
             settings.Run(vgcSettings, vgcNotifier);
             luaServer.Run(settings, api);

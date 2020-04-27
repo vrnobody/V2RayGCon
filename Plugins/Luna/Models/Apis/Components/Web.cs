@@ -18,6 +18,28 @@ namespace Luna.Models.Apis.Components
         }
 
         #region ILuaWeb thinggy
+        public bool Tcping(string url, int milSec) =>
+            Tcping(url, milSec, -1);
+
+        public bool Tcping(string url, int milSec, int proxyPort)
+        {
+            var timeout = TimedDownloadTesting(url, milSec, 0, proxyPort);
+            return timeout > 0 && timeout <= milSec;
+        }
+
+        public long TimedDownloadTesting(string url, int timeout, int kib) =>
+            TimedDownloadTesting(url, timeout, kib, -1);
+
+        public long TimedDownloadTesting(string url, int timeout, int kib, int proxyPort)
+        {
+            try
+            {
+                return VgcApis.Misc.Utils.TimedDownloadTesting(url, proxyPort, kib, timeout);
+            }
+            catch { }
+            return -1;
+        }
+
         public List<string> ExtractBase64String(string text) =>
             VgcApis.Misc.Utils.ExtractBase64Strings(text);
 

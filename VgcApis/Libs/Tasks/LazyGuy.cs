@@ -8,10 +8,10 @@ namespace VgcApis.Libs.Tasks
     {
         private Action singleTask;
         private Action<Action> chainedTask;
-        private readonly int timeout;
+        private readonly int interval;
         private readonly int expectedWorkTime;
         AutoResetEvent jobToken = new AutoResetEvent(true);
-        AutoResetEvent waitingToken = new AutoResetEvent(true);
+        AutoResetEvent waitToken = new AutoResetEvent(true);
 
         bool isCancelled = false;
 
@@ -21,11 +21,12 @@ namespace VgcApis.Libs.Tasks
         ///
         /// </summary>
         /// <param name="chainedTask">(done)=>{... done();}</param>
-        /// <param name="timeout">millisecond</param>
-        public LazyGuy(Action<Action> chainedTask, int timeout, int expectedWorkTime)
+        /// <param name="interval">millisecond</param>
+        /// <param name="expectedWorkTime">millisecond</param>
+        public LazyGuy(Action<Action> chainedTask, int interval, int expectedWorkTime)
         {
             this.chainedTask = chainedTask;
-            this.timeout = timeout;
+            this.interval = interval;
             this.expectedWorkTime = expectedWorkTime;
         }
 
@@ -33,11 +34,13 @@ namespace VgcApis.Libs.Tasks
         /// 
         /// </summary>
         /// <param name="singleTask">()=>{ ... }</param>
-        /// <param name="timeout">millisecond</param>
-        public LazyGuy(Action singleTask, int timeout)
+        /// <param name="interval">millisecond</param>
+        /// <param name="expectedWorkTime">millisecond</param>
+        public LazyGuy(Action singleTask, int interval, int expectedWorkTime)
         {
             this.singleTask = singleTask;
-            this.timeout = timeout;
+            this.interval = interval;
+            this.expectedWorkTime = expectedWorkTime;
         }
 
         #region public method
@@ -47,14 +50,14 @@ namespace VgcApis.Libs.Tasks
         /// </summary>
         public void Deadline()
         {
-            if (isCancelled || !waitingToken.WaitOne(0))
+            if (isCancelled || !waitToken.WaitOne(0))
             {
                 return;
             }
 
             Misc.Utils.RunInBackground(() =>
             {
-                Misc.Utils.Sleep(timeout);
+                Misc.Utils.Sleep(interval);
                 TryDoTheJob(Deadline);
             });
         }
@@ -79,20 +82,45 @@ namespace VgcApis.Libs.Tasks
             {
                 try
                 {
-                    await Task.Delay(timeout, tk);
+                    await Task.Delay(interval, tk);
                 }
                 catch
                 {
                     return;
                 }
 
-                if (isCancelled || tk.IsCancellationRequested || !waitingToken.WaitOne(0))
+                if (isCancelled || tk.IsCancellationRequested || !waitToken.WaitOne(0))
                 {
                     return;
                 }
 
                 TryDoTheJob(Postpone);
             });
+        }
+
+        /// <summary>
+        /// |...|...|...|...|
+        /// </summary>
+        public void Throttle()
+        {
+            if (isCancelled || !waitToken.WaitOne(0))
+            {
+                return;
+            }
+
+            Misc.Utils.RunInBackground(() =>
+            {
+                TryDoTheJob(Deadline);
+            });
+        }
+
+        /// <summary>
+        /// blocking
+        /// </summary>
+        public void DoItNow()
+        {
+            LogJobTokenWaitTime(jobToken, nameof(jobToken));
+            DoTheJob();
         }
 
         /// <summary>
@@ -110,70 +138,48 @@ namespace VgcApis.Libs.Tasks
         {
             isCancelled = false;
         }
-
-        /// <summary>
-        /// |...|...|...|...|
-        /// </summary>
-        public void Throttle()
-        {
-            if (isCancelled || !waitingToken.WaitOne(0))
-            {
-                return;
-            }
-
-            Misc.Utils.RunInBackground(() =>
-            {
-                TryDoTheJob(Deadline);
-            });
-        }
-
-        /// <summary>
-        /// blocking
-        /// </summary>
-        public void DoItNow()
-        {
-            DebugAutoResetEvent(jobToken, nameof(jobToken));
-            DoTheJob();
-        }
-
         #endregion
 
         #region private method
         void TryDoTheJob(Action retry)
         {
-            var ready = jobToken.WaitOne(timeout + expectedWorkTime);
+            var ready = jobToken.WaitOne(expectedWorkTime);
             // Console.WriteLine($"ready; {ready}");
-            waitingToken.Set();
+            waitToken.Set();
             if (ready)
             {
                 DoTheJob();
             }
             else
             {
-                DumpCurCallStack("TryDoTheJob");
+                LogSuspectableDeadLock("TryDoTheJob");
                 retry?.Invoke();
             }
         }
 
-        void DumpCurCallStack(string evName)
+        void LogSuspectableDeadLock(string evName)
         {
             if (!string.IsNullOrEmpty(Name))
             {
-                var title = $"!suspectable deadlock! {Name} - {evName}";
-                Sys.FileLogger.DumpCallStack(title);
+                var text = $"!suspectable deadlock! {Name} - {evName}";
+                Sys.FileLogger.Error(text);
             }
         }
 
-        void DebugAutoResetEvent(AutoResetEvent arEv, string evName)
+        void LogJobTokenWaitTime(AutoResetEvent arEv, string evName)
         {
-            while (!arEv.WaitOne(timeout + expectedWorkTime))
+            while (!arEv.WaitOne(expectedWorkTime))
             {
-                DumpCurCallStack(evName);
-                VgcApis.Misc.Utils.Sleep(100);
+                LogSuspectableDeadLock(evName);
+                Misc.Utils.Sleep(100);
             }
         }
 
-        void Done() => jobToken.Set();
+        void Done()
+        {
+            jobToken.Set();
+            Sys.FileLogger.Info($"{Name} job finished");
+        }
 
         void DoTheJob()
         {
@@ -182,6 +188,8 @@ namespace VgcApis.Libs.Tasks
                 Done();
                 return;
             }
+
+            Sys.FileLogger.Info($"{Name} job begin");
 
             if (chainedTask == null)
             {

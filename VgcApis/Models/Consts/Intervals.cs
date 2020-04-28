@@ -8,7 +8,7 @@
         public const int LazyGcDelay = 10 * 60 * 1000; // 10 minutes
         public const int LazySaveUserSettingsDelay = 10 * 60 * 1000;
         public const int LazySaveServerListIntreval = 3 * 1000;
-        public const int LazySaveStatisticsDatadelay = 1000 * 60 * 5;
+        public const int LazySaveStatisticsDatadelay = 5 * 60 * 1000;
 
         public const int DefaultSpeedTestTimeout = 20 * 1000;
         public const int DefaultFetchTimeout = 30 * 1000;

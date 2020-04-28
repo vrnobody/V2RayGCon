@@ -24,7 +24,7 @@ namespace Luna.Views.UserControls
         private void LuaUI_Load(object sender, EventArgs e)
         {
             luaCoreCtrl.OnStateChange += OnLuaCoreStateChangeHandler;
-            lazyUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiWorker, 300)
+            lazyUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiWorker, 300, 1000)
             {
                 Name = "Luna.UiPanelUpdater",
             };

@@ -38,7 +38,7 @@ namespace V2RayGCon
             if (mutex.WaitOne(TimeSpan.Zero, true))
             {
                 var form = new Views.WinForms.FormMain();
-                Application.Run(form);
+                Application.Run(new ApplicationContext(form));
                 mutex.ReleaseMutex();
             }
             else

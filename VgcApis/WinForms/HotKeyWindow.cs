@@ -5,10 +5,17 @@ using System.Windows.Forms;
 
 namespace VgcApis.WinForms
 {
+
+    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
     public class HotKeyWindow : NativeWindow, IDisposable
     {
+
+        public delegate void OnMessageEventHandle(Message m);
+        public event OnMessageEventHandle OnMessage;
+
         #region WinAPI
         const int WM_HOTKEY = 0x0312;
+
 
         [DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
@@ -17,15 +24,18 @@ namespace VgcApis.WinForms
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
         #endregion
 
-
         ConcurrentDictionary<long, Action> handlers = new ConcurrentDictionary<long, Action>();
         ConcurrentDictionary<string, Tuple<int, long>> contexts = new ConcurrentDictionary<string, Tuple<int, long>>();
         int currentEvCode = 0;
 
-
-        public HotKeyWindow()
+        public HotKeyWindow(Control control)
         {
-            this.CreateHandle(new CreateParams());
+            var cp = new CreateParams()
+            {
+                Parent = control.Handle,
+            };
+
+            CreateHandle(cp);
         }
 
         #region private methods
@@ -41,7 +51,7 @@ namespace VgcApis.WinForms
 
             var evCode = currentEvCode++;
 
-            if (!VgcApis.Misc.Utils.TryParseKeyMesssage(keyName, hasAlt, hasCtrl, hasShift,
+            if (!Misc.Utils.TryParseKeyMesssage(keyName, hasAlt, hasCtrl, hasShift,
                 out uint modifier, out uint key))
             {
                 return null;
@@ -72,11 +82,13 @@ namespace VgcApis.WinForms
 
         void RemoveAllHotKeys()
         {
+            Libs.Sys.FileLogger.Info("HotKey window remove all hotkey begin");
             var handles = contexts.Keys;
             foreach (var handle in handles)
             {
                 UnregisterHotKey(handle);
             }
+            Libs.Sys.FileLogger.Info("HotKey window remove all hotkey end");
         }
 
         public bool UnregisterHotKey(string hotKeyHandle)
@@ -97,38 +109,51 @@ namespace VgcApis.WinForms
             return false;
         }
 
-        void HotkeyEventHandler(long key)
+        bool HandleHotKey(uint keyCode)
         {
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                try
-                {
-                    if (handlers.TryGetValue(key, out var handler))
-                    {
-                        handler?.Invoke();
-                    }
-                }
-                catch (Exception e)
-                {
-                    VgcApis.Libs.Sys.FileLogger.Error($"Handle wnd event error\n key code:{key} \n {e}");
-                }
-            });
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            base.WndProc(ref m);
-
+            long key = keyCode & 0xffffffff;
             try
             {
-                // check if we got a hot key pressed.
-                if (m.Msg == WM_HOTKEY)
+                if (handlers.TryGetValue(key, out var handler))
                 {
-                    long key = (uint)m.LParam & 0xffffffff;
-                    Misc.Utils.RunInBackground(() => HotkeyEventHandler(key));
+                    Misc.Utils.RunInBackground(() =>
+                    {
+                        try
+                        {
+                            handler?.Invoke();
+                        }
+                        catch (Exception e)
+                        {
+                            Libs.Sys.FileLogger.Error($"Handle hotkey event error\n key code:{key} \n {e}");
+                        }
+                    });
+                    return true;
                 }
             }
-            catch { }
+            catch (Exception e)
+            {
+                Libs.Sys.FileLogger.Error($"Handle wnd event error\n key code:{key} \n {e}");
+            }
+            return false;
+        }
+
+        [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
+        protected override void WndProc(ref Message m)
+        {
+            // check if we got a hot key pressed.
+            if (m.Msg == WM_HOTKEY
+                && HandleHotKey((uint)m.LParam))
+            {
+                return;
+            }
+
+            if (OnMessage != null)
+            {
+                OnMessage.Invoke(m);
+                return;
+            }
+
+            base.WndProc(ref m);
         }
         #endregion
 
@@ -141,6 +166,7 @@ namespace VgcApis.WinForms
             {
                 if (disposing)
                 {
+                    base.ReleaseHandle();
                     RemoveAllHotKeys();
                 }
 

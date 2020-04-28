@@ -35,7 +35,7 @@ namespace Luna.Views.WinForms
         private void FormDataGrid_Load(object sender, EventArgs e)
         {
             InitControls();
-            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiWorker, UPDATE_INTERVAL)
+            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiWorker, UPDATE_INTERVAL, 1500)
             {
                 Name = "Luna.DataGridUpdater",
             };

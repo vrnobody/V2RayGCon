@@ -496,7 +496,26 @@ namespace VgcApisTests
                 secTask(done);
             };
 
-            var alex = new VgcApis.Libs.Tasks.LazyGuy(firstTask, 1000, 1000);
+            var alex = new VgcApis.Libs.Tasks.LazyGuy(firstTask, 1000, 300);
+
+            str = "";
+            alex.Deadline();
+            alex.Throttle();
+            alex.Deadline();
+            alex.Throttle();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("1212", str);
+
+            str = "";
+            alex.Postpone();
+            alex.Deadline();
+            alex.Postpone();
+            alex.Throttle();
+            Task.Delay(500).Wait();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("1212", str);
 
             str = "";
             alex.Postpone();
@@ -517,8 +536,8 @@ namespace VgcApisTests
             alex.Deadline();
             alex.Deadline();
             Assert.AreEqual("", str);
-            Task.Delay(3000).Wait();
-            Assert.AreEqual("12", str);
+            Task.Delay(5000).Wait();
+            Assert.AreEqual("1212", str);
 
             str = "";
             alex.Deadline();
@@ -546,14 +565,11 @@ namespace VgcApisTests
             alex.Throttle();
             alex.Throttle();
             Assert.AreEqual("", str);
-            Task.Delay(3000).Wait();
+            Task.Delay(5000).Wait();
             Assert.AreEqual("1212", str);
 
-            str = "";
-            alex.DoItNow();
-            alex.DoItNow();
-            alex.DoItNow();
-            Assert.AreEqual("121212", str);
+
+
         }
 #endif
 
@@ -569,7 +585,7 @@ namespace VgcApisTests
                 str += ".";
             }
 
-            var adam = new VgcApis.Libs.Tasks.LazyGuy(task, 1000);
+            var adam = new VgcApis.Libs.Tasks.LazyGuy(task, 1000, 300);
 
             str = "";
             adam.Postpone();
@@ -593,7 +609,7 @@ namespace VgcApisTests
             adam.Deadline();
             Assert.AreEqual("", str);
             Task.Delay(3000).Wait();
-            Assert.AreEqual(".", str);
+            Assert.AreEqual("..", str);
 
             str = "";
             adam.Deadline();
@@ -606,16 +622,6 @@ namespace VgcApisTests
             Task.Delay(3000).Wait();
             Assert.AreEqual("", str);
             adam.PickItUp();
-
-
-            str = "";
-            adam.DoItNow();
-            Assert.AreEqual(".", str);
-
-            str = "";
-            adam.DoItNow();
-            adam.DoItNow();
-            Assert.AreEqual("..", str);
 
             str = "";
             adam.Throttle();

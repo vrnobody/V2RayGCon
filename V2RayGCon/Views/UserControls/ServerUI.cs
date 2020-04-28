@@ -49,14 +49,15 @@ namespace V2RayGCon.Views.UserControls
             rlbSpeedtest.Text = @"";
             rlbSpeedtest.Visible = false;
 
-            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 150)
+            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 200, 800)
             {
-                Name = "Vgc.ServerUi.RefreshPanel",
+                Name = "ServerUi.RefreshPanel",
             };
 
-            lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(HighLightServerTitleWithKeywords, 500)
+            lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(
+                HighLightServerTitleWithKeywords, 500, 1000)
             {
-                Name = "vgc.ServerUi.HighLight",
+                Name = "ServerUi.HighLight",
             };
 
             InitButtonBackgroundImage();
@@ -137,9 +138,9 @@ namespace V2RayGCon.Views.UserControls
 
         void RefreshUiLater() => lazyUiUpdater.Throttle();
 
-        void RefreshUiWorker()
+        void RefreshUiWorker(Action done)
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(rtboxServerTitle, () =>
+            Action worker = () =>
             {
                 var cs = coreServCtrl.GetCoreStates();
                 var cc = coreServCtrl.GetCoreCtrl();
@@ -160,8 +161,15 @@ namespace V2RayGCon.Views.UserControls
                 UpdateStatusLable(cs);
                 UpdateSettingsLable(cs);
                 CompactRoundLables();
-                lazyHighlighter?.Postpone();
-            });
+            };
+
+            Action next = () =>
+            {
+                lazyHighlighter?.Deadline();
+                done();
+            };
+
+            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(rtboxServerTitle, worker, next);
         }
 
         void OnCorePropertyChangesHandler(object sender, EventArgs args) =>

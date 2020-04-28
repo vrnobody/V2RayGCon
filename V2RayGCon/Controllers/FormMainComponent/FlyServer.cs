@@ -55,19 +55,22 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             this.welcomeItem = new Views.UserControls.WelcomeUI();
 
-            lazyFlyPanelUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshFlyPanelWorker, flyPanelUpdateInterval)
+            lazyFlyPanelUpdater = new VgcApis.Libs.Tasks.LazyGuy(
+                RefreshFlyPanelWorker, flyPanelUpdateInterval, 2000)
             {
-                Name = "Vgc.Panel.Refreasher",
+                Name = "FormMain.RefreshFlyPanelWorker()",
             };
 
-            lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarWorker, statusBarUpdateInterval)
+            lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(
+                UpdateStatusBarWorker, statusBarUpdateInterval, 2000)
             {
-                Name = "", // disable debug logging
+                Name = "FormMain.UpdateStatusBarWorker()", // disable debug logging
             };
 
-            lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(ShowSearchResultNow, 1300)
+            lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(
+                ShowSearchResultNow, 1300, 1000)
             {
-                Name = "Vgc.Search",
+                Name = "FormMain.ShowSearchResultNow()",
             };
 
             InitFormControls(lbMarkFilter, miResizeFormMain);
@@ -139,7 +142,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             }
         }
 
-        void UpdateStatusBarWorker()
+        void UpdateStatusBarWorker(Action done)
         {
             SetSearchKeywords();
 
@@ -151,7 +154,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             // may cause dead lock in UI thread
             int selectedServersCount = servers.CountSelectedServers();
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, () =>
+            Action worker = () =>
             {
                 UpdateStatusBarText(filteredListCount, allServersCount, selectedServersCount, serverControlCount);
                 UpdateStatusBarPageSelectorMenuItemsOndemand();
@@ -163,11 +166,16 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     formMain.Focus();
                     isFocusOnFormMain = false;
                 }
-            });
+            };
 
-            // throttle
-            var relex = statusBarUpdateInterval - (DateTime.Now.Millisecond - start);
-            VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
+            Action next = () =>
+            {
+                var relex = statusBarUpdateInterval - (DateTime.Now.Millisecond - start);
+                VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
+                done();
+            };
+
+            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(formMain, worker, done);
         }
 
         public void RefreshFlyPanelLater() => lazyFlyPanelUpdater?.Deadline();
@@ -175,7 +183,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         #endregion
 
         #region private method
-        void RefreshFlyPanelWorker()
+        void RefreshFlyPanelWorker(Action done)
         {
             var start = DateTime.Now.Millisecond;
             servers.ResetIndex();
@@ -183,7 +191,15 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var pagedList = GenPagedServerList(flatList);
             var showWelcome = servers.CountAllServers() == 0;
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, () =>
+            Action next = () =>
+            {
+                lazyStatusBarUpdater?.Deadline();
+                var relex = flyPanelUpdateInterval - (DateTime.Now.Millisecond - start);
+                VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
+                done();
+            };
+
+            Action worker = () =>
             {
                 RemoveAllServersConrol();
                 if (showWelcome)
@@ -192,7 +208,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     LoadWelcomeItem();
                     return;
                 }
-
                 flyPanel.SuspendLayout();
                 foreach (var serv in pagedList)
                 {
@@ -200,11 +215,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     flyPanel.Controls.Add(ui);
                 }
                 flyPanel.ResumeLayout();
-            });
+            };
 
-            lazyStatusBarUpdater?.Postpone();
-            var relex = flyPanelUpdateInterval - (DateTime.Now.Millisecond - start);
-            VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
+            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(formMain, worker, next);
         }
 
         private void WatchServers()

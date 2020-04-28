@@ -34,16 +34,18 @@ namespace V2RayGCon.Services
 
             janitor = new VgcApis.Libs.Tasks.LazyGuy(
                 () => GC.Collect(),
-                VgcApis.Models.Consts.Intervals.LazyGcDelay)
+                VgcApis.Models.Consts.Intervals.LazyGcDelay,
+                5000)
             {
-                Name = "Vgc.Settings.GC",
+                Name = "Settings.GC()",
             };
 
             lazyBookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveUserSettingsWorker,
-                VgcApis.Models.Consts.Intervals.LazySaveUserSettingsDelay)
+                VgcApis.Models.Consts.Intervals.LazySaveUserSettingsDelay,
+                500)
             {
-                Name = "Vgc.Settings.SaveSettings",
+                Name = "Settings.SaveSettings",
             };
         }
 
@@ -477,7 +479,7 @@ namespace V2RayGCon.Services
             SaveSettingsLater();
         }
 
-        public void SaveUserSettingsNow() => lazyBookKeeper?.DoItNow();
+        public void SaveUserSettingsNow() => SaveUserSettingsWorker();
 
         public void LazyGC() => janitor?.Postpone();
 
@@ -945,8 +947,8 @@ namespace V2RayGCon.Services
         protected override void Cleanup()
         {
             VgcApis.Libs.Sys.FileLogger.Info("Settings.Cleanup() begin");
-            lazyBookKeeper?.DoItNow();
             lazyBookKeeper?.Dispose();
+            SaveUserSettingsNow();
             janitor?.Dispose();
             qLogger.Dispose();
             VgcApis.Libs.Sys.FileLogger.Info("Settings.Cleanup() done");

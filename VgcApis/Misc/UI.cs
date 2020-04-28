@@ -138,9 +138,24 @@ namespace VgcApis.Misc
         public static void CloseFormIgnoreError(Form form) =>
             RunInUiThreadIgnoreError(form, () => form?.Close());
 
-        static bool IsInUiThread()
+        public static bool IsInUiThread()
         {
             return Thread.CurrentThread.Name == Models.Consts.Libs.UiThreadName;
+        }
+
+        public static void RunInUiThreadIgnoreErrorThen(
+            Control control, Action updater, Action next)
+        {
+            Action action = () =>
+            {
+                updater?.Invoke();
+                Utils.RunInBackground(() =>
+                {
+                    next?.Invoke();
+                });
+            };
+
+            RunInUiThreadIgnoreError(control, action);
         }
 
         public static void RunInUiThreadIgnoreError(Control control, Action updater)
@@ -151,7 +166,14 @@ namespace VgcApis.Misc
                 {
                     updater?.Invoke();
                 }
-                catch { }
+                catch (Exception e)
+                {
+                    var id = Thread.CurrentThread.ManagedThreadId;
+                    Libs.Sys.FileLogger.Error(
+                        $"Invoke updater() error by control {control.Name}\n" +
+                        $"Current thread id: {id}\n" +
+                        $"{e}");
+                }
             };
 
             try
@@ -175,7 +197,14 @@ namespace VgcApis.Misc
                     }
                 }
             }
-            catch { }
+            catch (Exception e)
+            {
+                var id = Thread.CurrentThread.ManagedThreadId;
+                Libs.Sys.FileLogger.Error(
+                    $"Create invker error from control {control.Name}\n" +
+                    $"Current thread id: {id}\n" +
+                    $"{e}");
+            }
         }
 
         // https://stackoverflow.com/questions/87795/how-to-prevent-flickering-in-listview-when-updating-a-single-listviewitems-text

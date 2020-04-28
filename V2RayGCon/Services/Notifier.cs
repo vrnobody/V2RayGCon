@@ -25,7 +25,6 @@ namespace V2RayGCon.Services
         static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
         static readonly int UpdateInterval = VgcApis.Models.Consts.Intervals.NotifierMenuUpdateIntreval;
 
-        ContextMenuStrip niMenu;
         Bitmap orgIcon;
         bool isMenuOpened = false;
 
@@ -42,18 +41,29 @@ namespace V2RayGCon.Services
         ToolStripMenuItem miPluginsRoot = null;
         ToolStripMenuItem miServersRoot = null;
 
-        Notifier()
+        Notifier() { }
+
+        public void InitNotifyIconFor(Views.WinForms.FormMain formMain)
         {
+            this.formMain = formMain;
+            this.notifyIcon = formMain.notifyIcon;
+
+            var ni = formMain.notifyIcon;
+            ni.Text = I18N.Description;
+            ni.Icon = VgcApis.Misc.UI.GetAppIcon();
+            ni.BalloonTipTitle = VgcApis.Misc.Utils.GetAppName();
+            ni.ContextMenuStrip = new ContextMenuStrip();
+            ni.Visible = true;
+
+            orgIcon = ni.Icon.ToBitmap();
+
             // 其他组件有可能在初始化的时候引用菜单
             qsMenuCompos = CreateQsMenuCompos();
             miServersRoot = CreateRootMenuItem(I18N.Servers, Properties.Resources.RemoteServer_16x);
             miPluginsRoot = CreateRootMenuItem(I18N.Plugins, Properties.Resources.Module_16x);
 
-            lazyNotifierMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(
-                UpdateNotifyIconWorker, UpdateInterval, 5000)
-            {
-                Name = "Notifier.MenuUpdater", // disable debug logging
-            };
+            CreateNotifyIconContextMenuStrip(ni.ContextMenuStrip, miServersRoot, miPluginsRoot);
+            BindMenuEvents(ni);
         }
 
         Views.WinForms.FormMain formMain;
@@ -61,22 +71,23 @@ namespace V2RayGCon.Services
             Settings setting,
             Servers servers,
             ShareLinkMgr shareLinkMgr,
-            Updater updater,
-            Views.WinForms.FormMain formMain)
+            Updater updater)
         {
-            this.formMain = formMain;
             this.setting = setting;
             this.servers = servers;
             this.slinkMgr = shareLinkMgr;
             this.updater = updater;
 
-            InitNotifyIcon();
-            BindMenuEvents();
+            lazyNotifierMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(
+                UpdateNotifyIconWorker, UpdateInterval, 2000)
+            {
+                Name = "Notifier.MenuUpdater", // disable debug logging
+            };
+
+
             BindServerEvents();
             RefreshNotifyIconLater();
         }
-
-
 
         #region public method
         public void BlockingWaitOne(AutoResetEvent autoEv) =>
@@ -142,20 +153,14 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
-        void InitNotifyIcon()
-        {
-            niMenu = CreateMenu(miServersRoot, miPluginsRoot);
-            notifyIcon = formMain.notifyIcon;
-            InitNotifyIcon(niMenu);
-            orgIcon = notifyIcon.Icon.ToBitmap();
-        }
 
-        private void BindMenuEvents()
-        {
-            niMenu.Opening += (s, a) => isMenuOpened = true;
-            niMenu.Closed += (s, a) => isMenuOpened = false;
 
-            notifyIcon.MouseClick += (s, a) =>
+        private void BindMenuEvents(NotifyIcon ni)
+        {
+            ni.ContextMenuStrip.Opening += (s, a) => isMenuOpened = true;
+            ni.ContextMenuStrip.Closed += (s, a) => isMenuOpened = false;
+
+            ni.MouseClick += (s, a) =>
             {
                 switch (a.Button)
                 {
@@ -379,7 +384,7 @@ namespace V2RayGCon.Services
 
             if (isMenuOpened)
             {
-                lazyNotifierMenuUpdater?.Postpone();
+                lazyNotifierMenuUpdater?.Deadline();
                 done();
                 return;
             }
@@ -616,21 +621,11 @@ namespace V2RayGCon.Services
                 t.GetMethod("UpdateIcon", hidden).Invoke(notifyIcon, new object[] { true });
         }
 
-        void InitNotifyIcon(ContextMenuStrip menu)
-        {
-            notifyIcon.Text = I18N.Description;
-            notifyIcon.Icon = VgcApis.Misc.UI.GetAppIcon();
-            notifyIcon.BalloonTipTitle = VgcApis.Misc.Utils.GetAppName();
-            notifyIcon.ContextMenuStrip = menu;
-            notifyIcon.Visible = true;
-        }
-
-        ContextMenuStrip CreateMenu(
+        void CreateNotifyIconContextMenuStrip(
+            ContextMenuStrip menu,
            ToolStripMenuItem serversRootMenuItem,
            ToolStripMenuItem pluginRootMenuItem)
         {
-            var menu = new ContextMenuStrip();
-
             var factor = Misc.UI.GetScreenScalingFactor();
             if (factor > 1)
             {
@@ -707,7 +702,7 @@ namespace V2RayGCon.Services
                         }),
                 });
 
-            return menu;
+
         }
 
         private ToolStripMenuItem CreateRootMenuItem(string title, Bitmap icon)

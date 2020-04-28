@@ -11,16 +11,18 @@ namespace V2RayGCon.Services
 {
     class Launcher : VgcApis.BaseClasses.Disposable
     {
-        Settings setting;
+        private readonly Settings setting;
+        private readonly Notifier notifier;
         Servers servers;
         Updater updater;
 
         bool isDisposing = false;
         List<IDisposable> services = new List<IDisposable>();
 
-        public Launcher(Settings setting, FormMain formMain)
+        public Launcher(Settings setting, Notifier notifier, FormMain formMain)
         {
             this.setting = setting;
+            this.notifier = notifier;
             this.formMain = formMain;
         }
 
@@ -129,7 +131,6 @@ namespace V2RayGCon.Services
             var configMgr = ConfigMgr.Instance;
             var slinkMgr = ShareLinkMgr.Instance;
             var pluginsServ = PluginsServer.Instance;
-            var notifier = Notifier.Instance;
 
             // by dispose order
             services = new List<IDisposable> {
@@ -148,7 +149,7 @@ namespace V2RayGCon.Services
             servers.Run(setting, cache, configMgr, notifier);
             updater.Run(setting, servers, notifier);
             slinkMgr.Run(setting, servers, cache);
-            notifier.Run(setting, servers, slinkMgr, updater, formMain);
+            notifier.Run(setting, servers, slinkMgr, updater);
             pluginsServ.Run(setting, servers, configMgr, slinkMgr, notifier);
         }
 
@@ -159,6 +160,8 @@ namespace V2RayGCon.Services
         {
             // throw new NullReferenceException("for debugging");
             VgcApis.Libs.Sys.FileLogger.Info("Luancher.DisposeAllServices() begin");
+            VgcApis.Libs.Sys.FileLogger.Info($"Close reason: {setting.ShutdownReason}");
+
             if (setting.ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Luancher.DisposeAllServices() abort");

@@ -498,9 +498,32 @@ namespace VgcApis.Misc
 
         public static Task RunInBackground(Action worker, bool configAwait = false)
         {
+            Action job = () =>
+            {
+                try
+                {
+                    var missionId = Utils.RandomHex(8);
+                    if (UI.IsInUiThread())
+                    {
+                        Libs.Sys.FileLogger.Warn($"Task [{missionId}] running in UI thread");
+                        Libs.Sys.FileLogger.DumpCallStack("Caller stack:");
+                    }
+                    worker?.Invoke();
+                    if (UI.IsInUiThread())
+                    {
+                        Libs.Sys.FileLogger.Warn($"task [{missionId}] finished");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Libs.Sys.FileLogger.Error($"Background task error:\n{e}");
+                    throw;
+                }
+            };
+
             try
             {
-                var t = new Task(worker, TaskCreationOptions.LongRunning);
+                var t = new Task(job, TaskCreationOptions.LongRunning);
                 if (!configAwait)
                 {
                     t.ConfigureAwait(false);
@@ -508,7 +531,10 @@ namespace VgcApis.Misc
                 t.Start();
                 return t;
             }
-            catch { }
+            catch (Exception e)
+            {
+                Libs.Sys.FileLogger.Error($"Create background task error:\n{e}");
+            }
             return Task.FromResult(false);
         }
         #endregion

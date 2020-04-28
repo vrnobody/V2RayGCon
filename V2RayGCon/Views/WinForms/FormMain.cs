@@ -9,12 +9,13 @@ namespace V2RayGCon.Views.WinForms
         Services.Settings setting;
         Services.ShareLinkMgr slinkMgr;
         Services.Launcher launcher;
+        Services.Notifier notifier;
 
         Controllers.FormMainCtrl formMainCtrl;
         string formTitle = "";
 
         public NotifyIcon notifyIcon => this.ni;
-        readonly VgcApis.WinForms.HotKeyWindow hkWindow;
+        VgcApis.WinForms.HotKeyWindow hkWindow;
 
         public FormMain()
         {
@@ -23,9 +24,11 @@ namespace V2RayGCon.Views.WinForms
             Misc.UI.AutoScaleToolStripControls(this, 16);
             formTitle = Misc.Utils.GetAppNameAndVer();
 
-            hkWindow = new VgcApis.WinForms.HotKeyWindow();
             setting = Services.Settings.Instance;
-            launcher = new Services.Launcher(setting, this);
+            notifier = Services.Notifier.Instance;
+            notifier.InitNotifyIconFor(this);
+
+            launcher = new Services.Launcher(setting, notifier, this);
 
             VgcApis.Libs.Sys.FileLogger.Raw("\n");
             VgcApis.Libs.Sys.FileLogger.Info($"{formTitle} start");
@@ -42,14 +45,12 @@ namespace V2RayGCon.Views.WinForms
                 return;
             }
 
-            launcher.Run();
+            hkWindow = new VgcApis.WinForms.HotKeyWindow(this);
+            hkWindow.OnMessage += (m) => WndProc(ref m);
 
+            launcher.Run();
             slinkMgr = Services.ShareLinkMgr.Instance;
             setting.RestoreFormRect(this);
-
-            // https://alexpkent.wordpress.com/2011/05/11/25/
-            // 添加新控件的时候会有bug,不显示新控件
-            // ToolStripManager.LoadSettings(this); 
 
             formMainCtrl = InitFormMainCtrl();
             BindToolStripButtonToMenuItem();
@@ -181,146 +182,7 @@ namespace V2RayGCon.Views.WinForms
 
         #endregion
 
-        /*
-        #region HotKey thinggy
-
-        const int WM_HOTKEY = 0x0312;
-
-        [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
-
-        [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-
-        ConcurrentDictionary<long, Action> handlers = new ConcurrentDictionary<long, Action>();
-        ConcurrentDictionary<string, Tuple<int, long>> contexts = new ConcurrentDictionary<string, Tuple<int, long>>();
-        int currentEvCode = 0;
-
-        public string RegisterHotKey(
-            Action hotKeyHandler,
-            string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
-        {
-            string handle = null;
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(this, () =>
-            {
-                try
-                {
-                    handle = RegisterHotKeyWorker(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
-                }
-                catch { }
-            });
-            return handle;
-        }
-        public bool UnregisterHotKey(string hotKeyHandle)
-        {
-            var r = false;
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(this, () =>
-            {
-                try
-                {
-                    r = UnregisterHotKeyWorker(hotKeyHandle);
-                }
-                catch { }
-            });
-            return r;
-        }
-
-        string RegisterHotKeyWorker(
-            Action hotKeyHandler,
-            string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
-        {
-
-            var evCode = currentEvCode++;
-
-            if (!VgcApis.Misc.Utils.TryParseKeyMesssage(keyName, hasAlt, hasCtrl, hasShift,
-                out uint modifier, out uint key))
-            {
-                return null;
-            }
-
-            long hkMsg = (key << 16) | modifier;
-            var handlerKeys = handlers.Keys;
-            if (handlerKeys.Contains(hkMsg) || !RegisterHotKey(Handle, evCode, modifier, key))
-            {
-                return null;
-            }
-
-            for (int failsafe = 0; failsafe < 1000; failsafe++)
-            {
-                var hkHandle = Guid.NewGuid().ToString();
-                var keys = contexts.Keys;
-                if (!keys.Contains(hkHandle))
-                {
-                    var hkParma = new Tuple<int, long>(evCode, hkMsg);
-                    contexts.TryAdd(hkHandle, hkParma);
-                    handlers.TryAdd(hkMsg, hotKeyHandler);
-                    return hkHandle;
-                }
-            }
-
-            return null;
-        }
-
-        void CleanupHotKeys()
-        {
-            var handles = contexts.Keys;
-            foreach (var handle in handles)
-            {
-                UnregisterHotKey(handle);
-            }
-        }
-
-        bool UnregisterHotKeyWorker(string hotKeyHandle)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(hotKeyHandle)
-                    && contexts.TryRemove(hotKeyHandle, out var context))
-                {
-                    var evCode = context.Item1;
-                    var keyMsg = context.Item2;
-                    var ok = UnregisterHotKey(this.Handle, evCode);
-                    handlers.TryRemove(keyMsg, out _);
-                    return ok;
-                }
-            }
-            catch { }
-            return false;
-        }
-
-        void HotkeyEventHandler(long key)
-        {
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                try
-                {
-                    if (handlers.TryGetValue(key, out var handler))
-                    {
-                        handler?.Invoke();
-                    }
-                }
-                catch (Exception e)
-                {
-                    VgcApis.Libs.Sys.FileLogger.Error($"Handle wnd event error\n key code:{key} \n {e}");
-                }
-            });
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            // check if we got a hot key pressed.
-            if (m.Msg == WM_HOTKEY)
-            {
-                long key = (uint)m.LParam & 0xffffffff;
-                HotkeyEventHandler(key);
-            }
-
-            base.WndProc(ref m);
-        }
-        #endregion
-            */
         #region private method
-
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -374,8 +236,6 @@ namespace V2RayGCon.Views.WinForms
                 }
             }
 
-            // for security 
-            // bind(toolStripButtonImportFromClipboard, toolMenuItemImportLinkFromClipboard, false);
             toolStripButtonImportFromClipboard.Click += (s, a) =>
             {
                 string text = Misc.Utils.GetClipboardText();
@@ -556,9 +416,6 @@ namespace V2RayGCon.Views.WinForms
                 return;
             }
         }
-
         #endregion
-
-
     }
 }

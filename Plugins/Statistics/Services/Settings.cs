@@ -59,7 +59,8 @@ namespace Statistics.Services
             userSettins = LoadUserSetting();
             bookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveUserSetting,
-                VgcApis.Models.Consts.Intervals.LazySaveStatisticsDatadelay)
+                VgcApis.Models.Consts.Intervals.LazySaveStatisticsDatadelay,
+                500)
             {
                 Name = "Statistic.SaveUserSetting",
             };
@@ -79,7 +80,7 @@ namespace Statistics.Services
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Statistics.Cleanup() save data");
                 UpdateHistoryStatsDataWorker();
-                bookKeeper?.DoItNow();
+                SaveUserSetting();
             }
 
             bookKeeper?.Dispose();

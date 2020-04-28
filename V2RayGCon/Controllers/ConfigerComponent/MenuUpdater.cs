@@ -27,7 +27,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
             lazyServerMenuItemsUpdater = new VgcApis.Libs.Tasks.LazyGuy(
                 ServerMenuItemsUpdateWorker,
-                VgcApis.Models.Consts.Intervals.FormConfigerMenuUpdateDelay)
+                VgcApis.Models.Consts.Intervals.FormConfigerMenuUpdateDelay,
+                1500)
             {
                 Name = "Vgc.Configer.MenuUpdater",
             };

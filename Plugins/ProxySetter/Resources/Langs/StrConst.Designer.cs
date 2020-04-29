@@ -19,7 +19,7 @@ namespace ProxySetter.Resources.Langs {
     // 类通过类似于 ResGen 或 Visual Studio 的工具自动生成的。
     // 若要添加或移除成员，请编辑 .ResX 文件，然后重新运行 ResGen
     // (以 /str 作为命令选项)，或重新生成 VS 项目。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class StrConst {
@@ -217,6 +217,7 @@ namespace ProxySetter.Resources.Langs {
         ///007swz.com
         ///00817.com
         ///0086gd.com
+        ///00cdn.com
         ///01-123.com
         ///010lf.com
         ///01dai.com
@@ -249,8 +250,7 @@ namespace ProxySetter.Resources.Langs {
         ///0316.cc
         ///0352fang.com
         ///0356f.com
-        ///0357hz.com
-        ///0371gao [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///0357hz.c [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string white {
             get {

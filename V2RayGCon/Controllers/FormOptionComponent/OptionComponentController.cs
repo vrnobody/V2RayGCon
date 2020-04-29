@@ -13,6 +13,11 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             auxComponentController.Bind(container);
         }
+
+        public virtual void Cleanup()
+        {
+
+        }
         #endregion
 
         #region abstract method
@@ -26,6 +31,8 @@ namespace V2RayGCon.Controllers.OptionComponent
         #endregion
 
         #region protected method
+
+
         protected FormOptionCtrl GetContainer()
         {
             return auxComponentController.GetContainer<FormOptionCtrl>();

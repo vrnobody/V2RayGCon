@@ -66,7 +66,7 @@ namespace ProxySetter.Controllers.VGCPluginComponents
         public void Reload()
         {
             oldCustomPacList = setting.GetCustomPacSetting();
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+            VgcApis.Misc.UI.Invoke(
                 rtboxWhiteList, () => InitControls());
         }
 

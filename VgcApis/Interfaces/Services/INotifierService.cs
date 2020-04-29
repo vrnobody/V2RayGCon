@@ -11,7 +11,9 @@ namespace VgcApis.Interfaces.Services
 
         void RefreshNotifyIconLater();
 
-        void RunInUiThreadIgnoreError(Action updater);
+        void BeginInvoke(Action updater);
+
+        void BeginInvokeThen(Action updater, Action next);
 
     }
 }

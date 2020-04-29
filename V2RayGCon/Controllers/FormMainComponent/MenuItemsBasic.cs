@@ -113,7 +113,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void OnRequireMenuUpdateHandler(object sender, EventArgs evs)
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, UpdatePluginMenu);
+            VgcApis.Misc.UI.Invoke(formMain, UpdatePluginMenu);
         }
 
         void InitMenuPlugin(ToolStripMenuItem pluginToolStrip)

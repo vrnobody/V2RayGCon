@@ -37,8 +37,7 @@ namespace V2RayGCon
             IntPtr pShcoreDll = HiResSupport();
             if (mutex.WaitOne(TimeSpan.Zero, true))
             {
-                var form = new Views.WinForms.FormMain();
-                Application.Run(new ApplicationContext(form));
+                Application.Run(new Views.FormRoot());
                 mutex.ReleaseMutex();
             }
             else

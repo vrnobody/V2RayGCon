@@ -161,7 +161,7 @@ namespace Luna.Controllers
 
         void RefreshFlyPanel()
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(flyLuaUiPanel, () =>
+            VgcApis.Misc.UI.Invoke(flyLuaUiPanel, () =>
             {
                 ClearFlyPanel();
                 AddLuaCoreCtrlToPanel();

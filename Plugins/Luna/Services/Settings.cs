@@ -43,8 +43,8 @@ namespace Luna.Services
         #endregion
 
         #region public methods
-        public void RunInUiThreadIgnoreError(Action updater) =>
-            vgcNotifier.RunInUiThreadIgnoreError(updater);
+        public void BeginInvokeThen(Action updater, Action next) =>
+            vgcNotifier.BeginInvokeThen(updater, next);
 
         public void SendLog(string contnet)
         {

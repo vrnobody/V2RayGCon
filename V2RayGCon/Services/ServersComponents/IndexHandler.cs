@@ -61,20 +61,32 @@ namespace V2RayGCon.Services.ServersComponents
 
         public void ResetIndex()
         {
-            var sortedServers = coreServList
+            List<VgcApis.Interfaces.CoreCtrlComponents.ICoreStates> coreStates = coreServList
                 .OrderBy(c => c.GetCoreStates().GetIndex())
+                .Select(c => c.GetCoreStates())
                 .ToList();
+
+            var pkgs = new List<Tuple<double, VgcApis.Interfaces.CoreCtrlComponents.ICoreStates>>();
 
             lock (writeLocker)
             {
-                for (int i = 0; i < sortedServers.Count(); i++)
+                double idx = 0;
+                foreach (var coreState in coreStates)
                 {
-                    var index = i + 1.0; // closure
-                    sortedServers[i]
-                        .GetCoreStates()
-                        .SetIndex(index);
+                    var pkg = new Tuple<double, VgcApis.Interfaces.CoreCtrlComponents.ICoreStates>(++idx, coreState);
+                    pkgs.Add(pkg);
                 }
             }
+
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                foreach (var pkg in pkgs)
+                {
+                    var coreState = pkg.Item2;
+                    var idx = pkg.Item1;
+                    coreState.SetIndex(idx);
+                }
+            });
         }
 
         public void ResetIndexQuiet()

@@ -103,7 +103,7 @@ namespace VgcApis.WinForms
 
         void UpdateLbResults(int curIdx, int total)
         {
-            Misc.UI.RunInUiThreadIgnoreError(
+            Misc.UI.Invoke(
                 lbResults, () =>
                 {
                     if (total < 1)

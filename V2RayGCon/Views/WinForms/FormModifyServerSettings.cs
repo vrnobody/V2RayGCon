@@ -76,7 +76,7 @@ namespace V2RayGCon.Views.WinForms
             orgCoreServSettings = new VgcApis.Models.Datas.CoreServSettings(coreServ);
             var marks = servers.GetMarkList();
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(this, () =>
+            VgcApis.Misc.UI.Invoke(this, () =>
             {
                 tboxTitle.Text = coreServ.GetCoreStates().GetTitle();
                 cboxMark.Items.Clear();

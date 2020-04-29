@@ -6,50 +6,35 @@ namespace V2RayGCon.Views.WinForms
 {
     public partial class FormMain : Form
     {
+        #region Sigleton
+        static readonly VgcApis.BaseClasses.AuxSiWinForm<FormMain> auxSiForm =
+            new VgcApis.BaseClasses.AuxSiWinForm<FormMain>();
+        static public FormMain GetForm() => auxSiForm.GetForm();
+        static public void ShowForm() => auxSiForm.ShowForm();
+        #endregion
+
         Services.Settings setting;
         Services.ShareLinkMgr slinkMgr;
-        Services.Launcher launcher;
-        Services.Notifier notifier;
 
         Controllers.FormMainCtrl formMainCtrl;
-        string formTitle = "";
 
-        public NotifyIcon notifyIcon => this.ni;
-        VgcApis.WinForms.HotKeyWindow hkWindow;
+        string formTitle = "";
 
         public FormMain()
         {
+            CreateHandle();
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             Misc.UI.AutoScaleToolStripControls(this, 16);
+
             formTitle = Misc.Utils.GetAppNameAndVer();
-
-            setting = Services.Settings.Instance;
-            notifier = Services.Notifier.Instance;
-            notifier.InitNotifyIconFor(this);
-
-            launcher = new Services.Launcher(setting, notifier, this);
-
-            VgcApis.Libs.Sys.FileLogger.Raw("\n");
-            VgcApis.Libs.Sys.FileLogger.Info($"{formTitle} start");
         }
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            BindEvents();
-
-            if (!launcher.Warmup())
-            {
-                setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;
-                VgcApis.Misc.UI.RunInUiThreadIgnoreError(this, () => Application.Exit());
-                return;
-            }
-
-            hkWindow = new VgcApis.WinForms.HotKeyWindow(this);
-            hkWindow.OnMessage += (m) => WndProc(ref m);
-
-            launcher.Run();
             slinkMgr = Services.ShareLinkMgr.Instance;
+            setting = Services.Settings.Instance;
+
             setting.RestoreFormRect(this);
 
             formMainCtrl = InitFormMainCtrl();
@@ -62,122 +47,7 @@ namespace V2RayGCon.Views.WinForms
         #region exit 
         void Cleanup()
         {
-            VgcApis.Libs.Sys.FileLogger.Info("");
-            hkWindow?.Dispose();
             formMainCtrl?.Cleanup();
-            launcher?.Dispose();
-            VgcApis.Libs.Sys.FileLogger.Info($"{formTitle} end");
-        }
-
-        void BindEvents()
-        {
-            Microsoft.Win32.SystemEvents.PowerModeChanged += (s, a) =>
-            {
-                switch (a.Mode)
-                {
-                    case Microsoft.Win32.PowerModes.Suspend:
-                        setting.SetScreenLockingState(true);
-                        break;
-                    default:
-                        break;
-                }
-            };
-
-            Microsoft.Win32.SystemEvents.SessionSwitch += (s, a) =>
-            {
-                switch (a.Reason)
-                {
-                    case Microsoft.Win32.SessionSwitchReason.SessionLock:
-                        setting.SetScreenLockingState(true);
-                        break;
-                    case Microsoft.Win32.SessionSwitchReason.SessionUnlock:
-                        setting.SetScreenLockingState(false);
-                        break;
-                    default:
-                        break;
-                }
-            };
-
-            Application.ApplicationExit += (s, a) => Cleanup();
-
-            Microsoft.Win32.SystemEvents.SessionEnding += (s, a) =>
-            {
-                setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff;
-                Close();
-            };
-
-            Application.ThreadException += (s, a) => ShowExceptionDetailAndExit(a.Exception);
-            AppDomain.CurrentDomain.UnhandledException += (s, a) => ShowExceptionDetailAndExit(a.ExceptionObject as Exception);
-        }
-
-        void ShowExceptionDetailAndExit(Exception exception)
-        {
-            if (setting.ShutdownReason != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
-            {
-                ShowExceptionDetails(exception);
-            }
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(this, () => Application.Exit());
-        }
-
-        private void ShowExceptionDetails(Exception exception)
-        {
-            var nl = Environment.NewLine;
-            var verInfo = Misc.Utils.GetAppNameAndVer();
-            var log = $"{I18N.LooksLikeABug}{nl}{nl}{verInfo}";
-
-            try
-            {
-                log += nl + nl + exception.ToString();
-                log += nl + nl + setting.GetLogContent();
-            }
-            catch { }
-
-            VgcApis.Libs.Sys.NotepadHelper.ShowMessage(log, "V2RayGCon bug report");
-        }
-        #endregion
-        #region public methods
-        public void Restore()
-        {
-            ShowInTaskbar = true;
-            Show();
-            Activate();
-        }
-
-        public void HideToSystray()
-        {
-            this.Hide();
-            ShowInTaskbar = false;
-        }
-        #endregion
-
-        #region hotkey window
-        public string RegisterHotKey(
-             Action hotKeyHandler,
-             string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
-        {
-            string handle = null;
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(this, () =>
-            {
-                try
-                {
-                    handle = hkWindow.RegisterHotKey(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
-                }
-                catch { }
-            });
-            return handle;
-        }
-        public bool UnregisterHotKey(string hotKeyHandle)
-        {
-            var r = false;
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(this, () =>
-            {
-                try
-                {
-                    r = hkWindow.UnregisterHotKey(hotKeyHandle);
-                }
-                catch { }
-            });
-            return r;
         }
 
         #endregion
@@ -189,7 +59,7 @@ namespace V2RayGCon.Views.WinForms
             if (Misc.UI.Confirm(I18N.ConfirmExitApp))
             {
                 setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;
-                VgcApis.Misc.UI.RunInUiThreadIgnoreError(this, () => Application.Exit());
+                Application.Exit();
             }
         }
 
@@ -207,7 +77,7 @@ namespace V2RayGCon.Views.WinForms
                 title += " - " + I18N.Portable;
             }
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(this, () =>
+            VgcApis.Misc.UI.BeginInvoke(this, () =>
             {
                 if (this.Text != title)
                 {
@@ -408,13 +278,7 @@ namespace V2RayGCon.Views.WinForms
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             setting.SaveFormRect(this);
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = true;
-                HideToSystray();
-                setting.LazyGC();
-                return;
-            }
+            setting.LazyGC();
         }
         #endregion
     }

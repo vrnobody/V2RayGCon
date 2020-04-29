@@ -101,13 +101,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
         public void LoopThroughAllServerUI(Action<Views.UserControls.ServerUI> operation)
         {
             var controls = GetAllServerControls();
-
-            controls.Select(e =>
+            foreach (var control in controls)
             {
-                VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, () => operation(e));
-                return true;
-            })
-            .ToList();  // make sure operation is executed
+                VgcApis.Misc.UI.BeginInvoke(formMain, () => operation?.Invoke(control));
+            }
         }
 
         public override void Cleanup()
@@ -118,28 +115,21 @@ namespace V2RayGCon.Controllers.FormMainComponent
             lazyStatusBarUpdater?.Dispose();
             lazySearchResultDisplayer?.Dispose();
 
-            RemoveAllServersConrol(true);
+            RemoveAllServersConrol();
         }
 
-        public void RemoveAllServersConrol(bool blocking = false)
+        public void RemoveAllServersConrol()
         {
-            var controlList = GetAllServerControls();
-
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, () =>
+            Action worker = () =>
             {
+                var controlList = GetAllServerControls();
                 flyPanel.SuspendLayout();
                 flyPanel.Controls.Clear();
                 flyPanel.ResumeLayout();
-            });
-
-            if (blocking)
-            {
-                DisposeFlyPanelControlByList(controlList);
-            }
-            else
-            {
-                VgcApis.Misc.Utils.RunInBackground(() => DisposeFlyPanelControlByList(controlList));
-            }
+                VgcApis.Misc.Utils.RunInBackground(
+                    () => DisposeFlyPanelControlByList(controlList));
+            };
+            VgcApis.Misc.UI.Invoke(flyPanel, worker);
         }
 
         void UpdateStatusBarWorker(Action done)
@@ -175,7 +165,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 done();
             };
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(formMain, worker, done);
+            VgcApis.Misc.UI.BeginInvokeThen(formMain, worker, done);
         }
 
         public void RefreshFlyPanelLater() => lazyFlyPanelUpdater?.Deadline();
@@ -217,7 +207,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 flyPanel.ResumeLayout();
             };
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(formMain, worker, next);
+            VgcApis.Misc.UI.BeginInvokeThen(formMain, worker, next);
         }
 
         private void WatchServers()
@@ -477,15 +467,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             }
 
             return result;
-        }
-
-        void RemoveWelcomeItem()
-        {
-            var controls = flyPanel.Controls.OfType<Views.UserControls.WelcomeUI>();
-            foreach (var item in controls)
-            {
-                flyPanel.Controls.Remove(item);
-            }
         }
 
         List<Views.UserControls.ServerUI> GetAllServerControls() => flyPanel.Controls

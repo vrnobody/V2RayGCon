@@ -146,7 +146,7 @@ namespace V2RayGCon.Views.WinForms
                 return;
             }
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(cboxServList, () =>
+            VgcApis.Misc.UI.Invoke(cboxServList, () =>
             {
                 cboxServList.Items.Clear();
                 cboxServList.Items.AddRange(summaryList.ToArray());

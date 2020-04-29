@@ -43,7 +43,7 @@ namespace Luna.Views.WinForms
 
         void UpdateUi()
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(tboxName, () =>
+            VgcApis.Misc.UI.Invoke(tboxName, () =>
 {
     tboxName.Text = luaCoreCtrl.name;
     chkAutorun.Checked = luaCoreCtrl.isAutoRun;

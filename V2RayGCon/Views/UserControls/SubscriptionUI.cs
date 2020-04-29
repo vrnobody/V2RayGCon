@@ -39,7 +39,6 @@ namespace V2RayGCon.Views.UserControls
 
             BindEvent();
 
-            Disposed += (s, a) => Cleanup();
             UpdateServerTotalLater();
         }
 
@@ -67,6 +66,12 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region public method
+        public void Cleanup()
+        {
+            lazyCounter?.Dispose();
+            ReleaseEvent();
+        }
+
         public bool IsEmpty() =>
             string.IsNullOrWhiteSpace(tboxAlias.Text)
             && string.IsNullOrWhiteSpace(tboxUrl.Text);
@@ -192,24 +197,19 @@ namespace V2RayGCon.Views.UserControls
             servers.OnServerPropertyChange -= OnCoreStateChangedHandler;
         }
 
-        void UpdateServerTotalWorker()
+        void UpdateServerTotalWorker(Action done)
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(lbTotal, () =>
+            var coreStates = servers.GetAllServersOrderByIndex()
+                .Select(s => s.GetCoreStates())
+                .ToList();
+
+            VgcApis.Misc.UI.BeginInvokeThen(lbTotal, () =>
             {
                 var alias = tboxAlias.Text;
-                var coreNum = servers.GetAllServersOrderByIndex()
-                .Select(s => s.GetCoreStates())
-                .Where(cfg => cfg.GetMark() == alias)
-                .Count();
+                var coreNum = coreStates.Where(cfg => cfg.GetMark() == alias).Count();
                 lbTotal.Text = $"{I18N.TotalNum}{coreNum}";
                 lbTotal.ForeColor = coreNum == 0 ? Color.Red : Color.DarkGray;
-            });
-        }
-
-        void Cleanup()
-        {
-            ReleaseEvent();
-            lazyCounter.Dispose();
+            }, done);
         }
 
         private void UrlListItem_MouseDown(object sender, MouseEventArgs e) =>

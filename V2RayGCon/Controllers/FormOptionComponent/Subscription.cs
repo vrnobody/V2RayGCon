@@ -50,6 +50,16 @@ namespace V2RayGCon.Controllers.OptionComponent
         }
 
         #region public method
+        public override void Cleanup()
+        {
+            var subsUis = flyPanel.Controls.OfType<Views.UserControls.SubscriptionUI>();
+
+            foreach (var subsUi in subsUis)
+            {
+                subsUi.Cleanup();
+            }
+        }
+
         public override bool SaveOptions()
         {
             string curOptions = GetCurOptions();
@@ -78,7 +88,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         public void MarkDuplicatedSubsInfo()
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(flyPanel, MarkDuplicatedSubsInfoWorker);
+            VgcApis.Misc.UI.Invoke(flyPanel, MarkDuplicatedSubsInfoWorker);
         }
 
         public void RemoveSubsUi(Views.UserControls.SubscriptionUI subsUi)
@@ -88,7 +98,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             {
                 if (sub == subsUi)
                 {
-                    VgcApis.Misc.UI.RunInUiThreadIgnoreError(flyPanel, () => Remove(subsUi));
+                    VgcApis.Misc.UI.Invoke(flyPanel, () => Remove(subsUi));
                 }
             }
 
@@ -281,7 +291,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                     slinkMgr.ImportLinkWithOutV2cfgLinksBatchMode(
                         links.Where(l => !string.IsNullOrEmpty(l[0])).ToList());
 
-                    VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                    VgcApis.Misc.UI.Invoke(
                         btnUpdate, () => this.btnUpdate.Enabled = true);
                 });
             };

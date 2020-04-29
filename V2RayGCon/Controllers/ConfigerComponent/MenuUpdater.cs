@@ -70,7 +70,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 return;
             }
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+            VgcApis.Misc.UI.Invoke(
                 formConfiger,
                 () => ReplaceOldMenus(loadServMiList, replaceServMiList));
         }

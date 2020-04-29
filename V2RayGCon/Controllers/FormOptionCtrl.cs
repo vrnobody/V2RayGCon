@@ -22,6 +22,15 @@ namespace V2RayGCon.Controllers
             pluginServ = Services.PluginsServer.Instance;
         }
 
+        public void Cleanup()
+        {
+            foreach (var kv in GetAllComponents())
+            {
+                var ctrl = kv.Value as OptionComponent.OptionComponentController;
+                ctrl.Cleanup();
+            }
+        }
+
         public bool IsOptionsSaved()
         {
             foreach (var component in GetAllComponents())

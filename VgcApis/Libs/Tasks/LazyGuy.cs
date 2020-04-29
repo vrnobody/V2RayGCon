@@ -115,15 +115,6 @@ namespace VgcApis.Libs.Tasks
         }
 
         /// <summary>
-        /// blocking
-        /// </summary>
-        public void DoItNow()
-        {
-            LogJobTokenWaitTime(jobToken, nameof(jobToken));
-            DoTheJob();
-        }
-
-        /// <summary>
         /// set isCancelled = true only
         /// </summary>
         public void ForgetIt()
@@ -144,7 +135,6 @@ namespace VgcApis.Libs.Tasks
         void TryDoTheJob(Action retry)
         {
             var ready = jobToken.WaitOne(expectedWorkTime);
-            // Console.WriteLine($"ready; {ready}");
             waitToken.Set();
             if (ready)
             {
@@ -152,7 +142,10 @@ namespace VgcApis.Libs.Tasks
             }
             else
             {
-                LogSuspectableDeadLock("TryDoTheJob");
+                if (expectedWorkTime > 1000)
+                {
+                    // LogSuspectableDeadLock("TryDoTheJob");
+                }
                 retry?.Invoke();
             }
         }
@@ -166,30 +159,45 @@ namespace VgcApis.Libs.Tasks
             }
         }
 
-        void LogJobTokenWaitTime(AutoResetEvent arEv, string evName)
-        {
-            while (!arEv.WaitOne(expectedWorkTime))
-            {
-                LogSuspectableDeadLock(evName);
-                Misc.Utils.Sleep(100);
-            }
-        }
-
-        void Done()
-        {
-            jobToken.Set();
-            Sys.FileLogger.Info($"{Name} job finished");
-        }
-
         void DoTheJob()
         {
+            string errMsg = $"DoTheJob() timeout {Name}\n";
+
+            var ok = false;
+            var start = DateTime.Now.Ticks;
+
+            Task.Run(async () =>
+            {
+                var delay = Math.Max(3000, expectedWorkTime * 3);
+                await Task.Delay(delay);
+                if (!ok)
+                {
+                    // jobToken.Set();
+                    Sys.FileLogger.Error(errMsg);
+                }
+            });
+
+            Action done = () =>
+            {
+                ok = true;
+                jobToken.Set();
+                var end = DateTime.Now.Ticks;
+
+                var workTime = TimeSpan.FromTicks(end - start).TotalMilliseconds;
+                if (workTime > 2 * expectedWorkTime)
+                {
+                    Sys.FileLogger.Warn($"DoTheJob() overtime {Name}\n" +
+                        $"exp: {expectedWorkTime}ms, act: {workTime}ms");
+                }
+            };
+
             if (isCancelled)
             {
-                Done();
+                done();
                 return;
             }
 
-            Sys.FileLogger.Info($"{Name} job begin");
+            // Sys.FileLogger.Info($"{Name} job begin");
 
             if (chainedTask == null)
             {
@@ -197,20 +205,23 @@ namespace VgcApis.Libs.Tasks
                 {
                     singleTask?.Invoke();
                 }
-                finally
+                catch (Exception ex)
                 {
-                    Done();
+                    Sys.FileLogger.DumpCallStack(
+                        $"DoTheJob() {Name} do single task error\n" +
+                        $"{ex}");
                 }
+                done();
                 return;
             }
 
             try
             {
-                Misc.Utils.RunInBackground(() => chainedTask?.Invoke(Done));
+                Misc.Utils.RunInBackground(() => chainedTask?.Invoke(done));
             }
             catch
             {
-                Done();
+                done();
             }
         }
 
@@ -220,8 +231,6 @@ namespace VgcApis.Libs.Tasks
         protected override void Cleanup()
         {
             isCancelled = true;
-            singleTask = null;
-            chainedTask = null;
         }
         #endregion
 

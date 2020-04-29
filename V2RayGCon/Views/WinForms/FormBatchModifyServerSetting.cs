@@ -142,7 +142,7 @@ namespace V2RayGCon.Views.WinForms
             Action done = () =>
             {
                 servers.UpdateMarkList();
-                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                VgcApis.Misc.UI.Invoke(
                     btnModify, () => that.Close());
             };
 

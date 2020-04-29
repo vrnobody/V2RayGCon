@@ -24,6 +24,21 @@ namespace VgcApis.Misc
     {
 
         #region system
+        public static string GetCurCallStack()
+        {
+            var s = new List<string>();
+
+            StackTrace stack = new StackTrace();
+            foreach (var frame in stack.GetFrames())
+            {
+                var method = frame.GetMethod();
+                var mn = Misc.Utils.GetFriendlyMethodDeclareInfo(method as MethodInfo);
+                s.Add($" -> {mn}");
+            }
+
+            return string.Join("\n", s);
+        }
+
         public static bool TryParseKeyMesssage(
             string keyName, bool hasAlt, bool hasCtrl, bool hasShift,
              out uint modifier,

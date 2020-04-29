@@ -170,7 +170,7 @@ namespace Luna.Controllers
         public string GetCurrentEditorContent() => luaEditor.Text;
 
         public void SetCurrentEditorContent(string content) =>
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+            VgcApis.Misc.UI.Invoke(
                 luaEditor, () => luaEditor.Text = content);
 
         public bool SaveScript()
@@ -300,7 +300,7 @@ namespace Luna.Controllers
                 return;
             }
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(rtboxOutput, () =>
+            VgcApis.Misc.UI.Invoke(rtboxOutput, () =>
             {
                 rtboxFreezer.DisableRepaintEvent();
                 rtboxOutput.Text = qLogger.GetLogAsString(true);

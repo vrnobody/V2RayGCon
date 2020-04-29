@@ -74,7 +74,7 @@ namespace ProxySetter.Controllers.VGCPluginComponents
             basicSettings = setting.GetBasicSetting();
             oldSetting = SerializeObject(basicSettings);
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+            VgcApis.Misc.UI.Invoke(
                 chkBasicAutoUpdateSysProxy,
                 () => InitControls());
         }

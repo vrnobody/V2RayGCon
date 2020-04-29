@@ -213,7 +213,7 @@ namespace Luna.Views.WinForms
 
         void UpdateUiWorker()
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(dgvData, () =>
+            VgcApis.Misc.UI.Invoke(dgvData, () =>
             {
                 var ds = GetFilteredDataTable();
                 lbTotal.Text = ds.Rows.Count.ToString();

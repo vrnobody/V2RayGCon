@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 
 namespace VgcApis.Libs.Sys
 {
@@ -74,20 +72,14 @@ namespace VgcApis.Libs.Sys
             lock (dumpCsLocker)
             {
                 Debug(message);
-                StackTrace stack = new StackTrace();
-                foreach (var frame in stack.GetFrames())
-                {
-                    var method = frame.GetMethod();
-                    var mn = Misc.Utils.GetFriendlyMethodDeclareInfo(method as MethodInfo);
-                    Debug($" -> {mn}");
-                }
+                Debug(Misc.Utils.GetCurCallStack());
             }
         }
+
+
         #endregion
 
         #region private method
-
-
 
         static void AppendLog(string prefix, string message)
         {

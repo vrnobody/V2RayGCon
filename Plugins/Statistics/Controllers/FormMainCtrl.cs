@@ -212,7 +212,7 @@ namespace Statistics.Controllers
 
         void BatchUpdateDataView(Action action)
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(dataView, () =>
+            VgcApis.Misc.UI.Invoke(dataView, () =>
             {
                 dataView.BeginUpdate();
                 try

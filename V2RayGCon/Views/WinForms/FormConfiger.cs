@@ -345,7 +345,7 @@ namespace V2RayGCon.Views.WinForms
             var width = toolsPanelController.panel.Width;
             if (pnlTools.Width != width)
             {
-                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                VgcApis.Misc.UI.Invoke(
                     pnlTools, () => pnlTools.Width = width);
             }
         }
@@ -468,7 +468,7 @@ namespace V2RayGCon.Views.WinForms
 
             if (pnlTools.Width != width)
             {
-                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                VgcApis.Misc.UI.Invoke(
                     pnlTools, () => pnlTools.Width = width);
             }
         }

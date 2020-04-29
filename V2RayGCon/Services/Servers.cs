@@ -50,7 +50,7 @@ namespace V2RayGCon.Services
             lazyServerSettingsRecorder = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveServersSettingsWorker,
                 VgcApis.Models.Consts.Intervals.LazySaveServerListIntreval,
-                500)
+                1000)
             {
                 Name = "Servers.SaveSettings()",
             };

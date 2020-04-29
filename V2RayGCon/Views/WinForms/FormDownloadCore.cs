@@ -60,7 +60,7 @@ namespace V2RayGCon.Views.WinForms
                     I18N.GetCoreVerFail :
                     string.Format(I18N.CurrentCoreVerIs, version);
 
-                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                VgcApis.Misc.UI.Invoke(
                     el, () => el.Text = msg);
 
             });
@@ -69,14 +69,14 @@ namespace V2RayGCon.Views.WinForms
         void UpdateProgressBar(int percentage)
         {
             // window may closed before this function is called
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+            VgcApis.Misc.UI.Invoke(
                 pgBarDownload,
                 () => pgBarDownload.Value = Misc.Utils.Clamp(percentage, 0, 101));
         }
 
         void EnableBtnDownload()
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+            VgcApis.Misc.UI.Invoke(
                 btnDownload,
                 () => btnDownload.Enabled = true);
 
@@ -164,11 +164,11 @@ namespace V2RayGCon.Views.WinForms
                     setting.SaveV2RayCoreVersionList(versions);
                 }
 
-                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                VgcApis.Misc.UI.Invoke(
                     elRefresh,
                     () => elRefresh.Enabled = true);
 
-                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
+                VgcApis.Misc.UI.Invoke(
                     elCboxVer, () =>
  {
      if (versions.Count > 0)

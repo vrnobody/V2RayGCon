@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using V2RayGCon.Resources.Resx;
-using V2RayGCon.Views.WinForms;
 
 namespace V2RayGCon.Services
 {
@@ -19,11 +15,10 @@ namespace V2RayGCon.Services
         bool isDisposing = false;
         List<IDisposable> services = new List<IDisposable>();
 
-        public Launcher(Settings setting, Notifier notifier, FormMain formMain)
+        public Launcher(Settings setting, Notifier notifier)
         {
             this.setting = setting;
             this.notifier = notifier;
-            this.formMain = formMain;
         }
 
         #region public method
@@ -57,11 +52,10 @@ namespace V2RayGCon.Services
 
             if (servers.IsEmpty())
             {
-                formMain.Show();
+                Views.WinForms.FormMain.ShowForm();
             }
             else
             {
-                formMain.HideToSystray();
                 servers.WakeupServersInBootList();
             }
 
@@ -98,9 +92,7 @@ namespace V2RayGCon.Services
 #if DEBUG
         void This_Function_Is_Used_For_Debugging()
         {
-            // ShowPlugin(@"Luna");
-
-            formMain.Restore();
+            ShowPlugin(@"Luna");
 
             //notifier.InjectDebugMenuItem(new ToolStripMenuItem(
             //    "Debug",
@@ -154,7 +146,6 @@ namespace V2RayGCon.Services
         }
 
         readonly object disposeLocker = new object();
-        private readonly FormMain formMain;
 
         void DisposeAllServices()
         {

@@ -136,29 +136,14 @@ namespace VgcApis.Misc
 
         #region update ui
         public static void CloseFormIgnoreError(Form form) =>
-            RunInUiThreadIgnoreError(form, () => form?.Close());
+            Invoke(form, () => form?.Close());
 
         public static bool IsInUiThread()
         {
             return Thread.CurrentThread.Name == Models.Consts.Libs.UiThreadName;
         }
 
-        public static void RunInUiThreadIgnoreErrorThen(
-            Control control, Action updater, Action next)
-        {
-            Action action = () =>
-            {
-                updater?.Invoke();
-                Utils.RunInBackground(() =>
-                {
-                    next?.Invoke();
-                });
-            };
-
-            RunInUiThreadIgnoreError(control, action);
-        }
-
-        public static void RunInUiThreadIgnoreError(Control control, Action updater)
+        public static void BeginInvokeThen(Control control, Action updater, Action next)
         {
             Action updateIgnoreError = () =>
             {
@@ -166,44 +151,165 @@ namespace VgcApis.Misc
                 {
                     updater?.Invoke();
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    var id = Thread.CurrentThread.ManagedThreadId;
-                    Libs.Sys.FileLogger.Error(
-                        $"Invoke updater() error by control {control.Name}\n" +
-                        $"Current thread id: {id}\n" +
-                        $"{e}");
+                    LogContrlExAndCs(control, ex);
                 }
             };
 
             try
             {
-                if (control != null && !control.IsDisposed)
+                if (control == null || control.IsDisposed)
                 {
-                    if (!control.InvokeRequired)
-                    {
-                        if (!IsInUiThread())
-                        {
-                            Libs.Sys.FileLogger.DumpCallStack("!invoke error!");
-                        }
-                        updateIgnoreError();
-                    }
-                    else
-                    {
-                        control.Invoke((MethodInvoker)delegate
-                        {
-                            updateIgnoreError();
-                        });
-                    }
+                    next?.Invoke();
+                    return;
                 }
+
+                control.BeginInvoke((MethodInvoker)delegate
+                {
+                    updateIgnoreError();
+                    next?.Invoke();
+                });
+                return;
+
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                var id = Thread.CurrentThread.ManagedThreadId;
-                Libs.Sys.FileLogger.Error(
-                    $"Create invker error from control {control.Name}\n" +
-                    $"Current thread id: {id}\n" +
-                    $"{e}");
+                LogContrlExAndCs(control, ex);
+            }
+            next?.Invoke();
+        }
+
+        public static void BeginInvoke(Control control, Action updater)
+        {
+            Action updateIgnoreError = () =>
+            {
+                try
+                {
+                    updater?.Invoke();
+                }
+                catch (Exception ex)
+                {
+                    LogContrlExAndCs(control, ex);
+                }
+            };
+
+            try
+            {
+                if (control == null || control.IsDisposed)
+                {
+                    return;
+                }
+
+                control.BeginInvoke((MethodInvoker)delegate
+                {
+                    updateIgnoreError();
+                });
+            }
+            catch (Exception ex)
+            {
+                LogContrlExAndCs(control, ex);
+            }
+        }
+
+        public static void InvokeThen(
+            Control control, Action updater, Action next)
+        {
+            Action updaterIe = () =>
+            {
+                try
+                {
+                    updater?.Invoke();
+                }
+                catch (Exception ex)
+                {
+                    LogContrlExAndCs(control, ex);
+                }
+            };
+
+            try
+            {
+                if (control == null || control.IsDisposed)
+                {
+                    next?.Invoke();
+                    return;
+                }
+
+                if (control.InvokeRequired)
+                {
+                    control.Invoke((MethodInvoker)delegate
+                    {
+                        updaterIe();
+                        next?.Invoke();
+                    });
+                    return;
+                }
+
+                if (!IsInUiThread())
+                {
+                    Libs.Sys.FileLogger.DumpCallStack("!invoke error!");
+                }
+                updaterIe();
+                next?.Invoke();
+                return;
+            }
+            catch (Exception ex)
+            {
+                LogContrlExAndCs(control, ex);
+            }
+            next?.Invoke();
+        }
+
+        static void LogContrlExAndCs(Control control, Exception ex)
+        {
+            var th = Thread.CurrentThread;
+
+            Libs.Sys.FileLogger.Error(
+                $"Invoke updater() error by control {control.Name}\n" +
+                $"Current thread info: [{th.ManagedThreadId}] {th.Name}\n" +
+                $"{ex}\n" +
+                $"{Utils.GetCurCallStack()}");
+        }
+
+        public static void Invoke(Control control, Action updater)
+        {
+            Action updateIgnoreError = () =>
+            {
+                try
+                {
+                    updater?.Invoke();
+                }
+                catch (Exception ex)
+                {
+                    LogContrlExAndCs(control, ex);
+                }
+            };
+
+            try
+            {
+                if (control == null || control.IsDisposed)
+                {
+                    return;
+                }
+
+                if (control.InvokeRequired)
+                {
+                    control.Invoke((MethodInvoker)delegate
+                    {
+                        updateIgnoreError();
+                    });
+                    return;
+                }
+
+                if (!IsInUiThread())
+                {
+                    Libs.Sys.FileLogger.DumpCallStack("!invoke error!");
+                }
+                updateIgnoreError();
+            }
+            catch (Exception ex)
+            {
+                LogContrlExAndCs(control, ex);
             }
         }
 

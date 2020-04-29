@@ -49,13 +49,13 @@ namespace V2RayGCon.Views.UserControls
             rlbSpeedtest.Text = @"";
             rlbSpeedtest.Visible = false;
 
-            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 200, 800)
+            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 200, 3000)
             {
                 Name = "ServerUi.RefreshPanel",
             };
 
             lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(
-                HighLightServerTitleWithKeywords, 500, 1000)
+                HighLightServerTitleWithKeywords, 500, 2000)
             {
                 Name = "ServerUi.HighLight",
             };
@@ -97,12 +97,11 @@ namespace V2RayGCon.Views.UserControls
         #region private method
         void ShowModifyConfigsWinForm() => WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);
 
-        void HighLightServerTitleWithKeywords()
+        void HighLightServerTitleWithKeywords(Action done)
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(rtboxServerTitle,
+            VgcApis.Misc.UI.BeginInvokeThen(rtboxServerTitle,
                 () =>
                 {
-
                     var box = rtboxServerTitle;
                     var title = box.Text.ToLower();
 
@@ -127,7 +126,7 @@ namespace V2RayGCon.Views.UserControls
                     box.SelectionStart = 0;
                     box.SelectionLength = 0;
                     box.DeselectAll();
-                });
+                }, done);
         }
 
         void StartThisServerOnlyThen(Action done = null)
@@ -169,7 +168,7 @@ namespace V2RayGCon.Views.UserControls
                 done();
             };
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreErrorThen(rtboxServerTitle, worker, next);
+            VgcApis.Misc.UI.BeginInvokeThen(rtboxServerTitle, worker, next);
         }
 
         void OnCorePropertyChangesHandler(object sender, EventArgs args) =>

@@ -11,9 +11,22 @@ namespace ProxySetter.Views.WinForms
         Services.ServerTracker servTracker;
 
         Controllers.FormVGCPluginCtrl formVGCPluginCtrl;
-        System.Windows.Forms.Timer updateSysProxyInfoTimer = null;
+        Timer updateSysProxyInfoTimer = null;
 
-        public FormMain(
+        public static FormMain CreateForm(
+            Services.PsSettings setting,
+            Services.PacServer pacServer,
+            Services.ServerTracker servTracker)
+        {
+            FormMain r = null;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                r = new FormMain(setting, pacServer, servTracker);
+            });
+            return r;
+        }
+
+        FormMain(
             Services.PsSettings setting,
             Services.PacServer pacServer,
             Services.ServerTracker servTracker)

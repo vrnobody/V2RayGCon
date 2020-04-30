@@ -406,10 +406,19 @@ namespace VgcApis.Misc
         #endregion
 
         #region Task
+        public static void Sleep(TimeSpan timespan)
+        {
+            try
+            {
+                Thread.Sleep(timespan);
+            }
+            catch { }
+        }
         public static void Sleep(int milSec)
         {
             try
             {
+                // Task.Delay(milSec).Wait();
                 Thread.Sleep(milSec);
             }
             catch { }
@@ -494,21 +503,6 @@ namespace VgcApis.Misc
             {
                 // Process already exited.
             }
-        }
-
-        public static void RunAsSTAThread(Action action)
-        {
-            // https://www.codeproject.com/Questions/727531/ThreadStateException-cant-handeled-in-ClipBoard-Se
-            AutoResetEvent done = new AutoResetEvent(false);
-            Thread thread = new Thread(
-                () =>
-                {
-                    action?.Invoke();
-                    done.Set();
-                });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            done.WaitOne();
         }
 
         public static Task RunInBackground(Action worker, bool configAwait = false)

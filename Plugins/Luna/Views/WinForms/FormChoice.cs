@@ -13,7 +13,17 @@ namespace Luna.Views.WinForms
         private readonly string[] choices;
         private readonly int defChoice;
 
-        public FormChoice(string title, string[] choices, int defChoice)
+        public static FormChoice CreateForm(string title, string[] choices, int defChoice)
+        {
+            FormChoice r = null;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                r = new FormChoice(title, choices, defChoice);
+            });
+            return r;
+        }
+
+        FormChoice(string title, string[] choices, int defChoice)
         {
             InitializeComponent();
             this.title = title;

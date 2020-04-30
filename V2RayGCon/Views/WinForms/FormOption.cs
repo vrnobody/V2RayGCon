@@ -35,12 +35,11 @@ namespace V2RayGCon.Views.WinForms
                     a.Cancel = !Misc.UI.Confirm(I18N.ConfirmCloseWinWithoutSave);
                     return;
                 }
-
-                optionCtrl.Cleanup();
             };
 
             this.FormClosed += (s, a) =>
             {
+                optionCtrl.Cleanup();
                 Services.Settings.Instance.LazyGC();
             };
         }

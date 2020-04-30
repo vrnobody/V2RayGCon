@@ -6,6 +6,17 @@ namespace V2RayGCon.Views.WinForms
 {
     public partial class FormSingleServerLog : Form
     {
+        public static FormSingleServerLog CreateLogForm(string title, VgcApis.Libs.Sys.QueueLogger logger)
+        {
+            FormSingleServerLog logForm = null;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                logForm = new FormSingleServerLog(title, logger);
+                logForm.Show();
+            });
+            return logForm;
+        }
+
         long updateTimestamp = -1;
         VgcApis.Libs.Tasks.Routine logUpdater;
         VgcApis.Libs.Sys.QueueLogger qLogger;
@@ -13,7 +24,7 @@ namespace V2RayGCon.Views.WinForms
 
         bool isPaused = false;
 
-        public FormSingleServerLog(
+        FormSingleServerLog(
             string title,
             VgcApis.Libs.Sys.QueueLogger logger)
         {
@@ -37,7 +48,7 @@ namespace V2RayGCon.Views.WinForms
             }
 
             updateTimestamp = timestamp;
-            VgcApis.Misc.UI.Invoke(this, UpdateLogBox);
+            VgcApis.Misc.UI.Invoke(UpdateLogBox);
         }
 
         void UpdateLogBox()

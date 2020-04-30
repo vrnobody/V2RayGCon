@@ -505,7 +505,7 @@ namespace VgcApisTests
             alex.Throttle();
             Assert.AreEqual("", str);
             Task.Delay(3000).Wait();
-            Assert.AreEqual("1212", str);
+            Assert.AreEqual("12", str);
 
             str = "";
             alex.Postpone();
@@ -515,7 +515,7 @@ namespace VgcApisTests
             Task.Delay(500).Wait();
             Assert.AreEqual("", str);
             Task.Delay(3000).Wait();
-            Assert.AreEqual("1212", str);
+            Assert.AreEqual("12", str);
 
             str = "";
             alex.Postpone();
@@ -537,7 +537,7 @@ namespace VgcApisTests
             alex.Deadline();
             Assert.AreEqual("", str);
             Task.Delay(5000).Wait();
-            Assert.AreEqual("1212", str);
+            Assert.AreEqual("12", str);
 
             str = "";
             alex.Deadline();
@@ -568,8 +568,6 @@ namespace VgcApisTests
             Task.Delay(5000).Wait();
             Assert.AreEqual("1212", str);
 
-
-
         }
 #endif
 
@@ -590,12 +588,16 @@ namespace VgcApisTests
             str = "";
             adam.Postpone();
             Task.Delay(500).Wait();
+            Console.WriteLine("500 x 1");
             adam.Postpone();
             Task.Delay(500).Wait();
+            Console.WriteLine("500 x 2");
             adam.Postpone();
             Task.Delay(500).Wait();
+            Console.WriteLine("500 x 3");
             adam.Postpone();
             Task.Delay(500).Wait();
+            Console.WriteLine("500 x 4");
             adam.Postpone();
             Assert.AreEqual("", str);
             Task.Delay(3000).Wait();
@@ -603,13 +605,17 @@ namespace VgcApisTests
 
             str = "";
             adam.Deadline();
+            Task.Delay(10).Wait();
             adam.Deadline();
+            Task.Delay(10).Wait();
             adam.Deadline();
+            Task.Delay(10).Wait();
             adam.Deadline();
+            Task.Delay(10).Wait();
             adam.Deadline();
             Assert.AreEqual("", str);
             Task.Delay(3000).Wait();
-            Assert.AreEqual("..", str);
+            Assert.AreEqual(".", str);
 
             str = "";
             adam.Deadline();

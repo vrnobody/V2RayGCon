@@ -11,7 +11,20 @@ namespace VgcApis.WinForms
         List<int> result;
         int curResult, keywordLength;
 
-        public FormSearch(Scintilla editor)
+        public static FormSearch CreateForm(Scintilla editor)
+        {
+            FormSearch r = null;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                r = new FormSearch(editor);
+                r.Show();
+            });
+
+            return r;
+        }
+
+
+        FormSearch(Scintilla editor)
         {
             InitializeComponent();
             scintilla = editor;
@@ -24,7 +37,6 @@ namespace VgcApis.WinForms
             VgcApis.Misc.UI.AutoSetFormIcon(this);
 
             this.KeyDown += KeyBoardShortcutHandler;
-            this.Show();
         }
 
         void KeyBoardShortcutHandler(object sender, KeyEventArgs e)
@@ -103,18 +115,17 @@ namespace VgcApis.WinForms
 
         void UpdateLbResults(int curIdx, int total)
         {
-            Misc.UI.Invoke(
-                lbResults, () =>
+            Misc.UI.Invoke(() =>
+            {
+                if (total < 1)
                 {
-                    if (total < 1)
-                    {
-                        lbResults.Text = "0";
-                        return;
-                    }
+                    lbResults.Text = "0";
+                    return;
+                }
 
-                    var text = $"{curIdx}/{total}";
-                    lbResults.Text = text;
-                });
+                var text = $"{curIdx}/{total}";
+                lbResults.Text = text;
+            });
         }
 
         void ShowResult(bool forward)

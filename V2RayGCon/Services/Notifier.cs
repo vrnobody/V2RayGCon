@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -19,8 +20,7 @@ namespace V2RayGCon.Services
         Servers servers;
         ShareLinkMgr slinkMgr;
         Updater updater;
-
-        NotifyIcon notifyIcon;
+        NotifyIcon ni;
 
         static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
         static readonly int UpdateInterval = VgcApis.Models.Consts.Intervals.NotifierMenuUpdateIntreval;
@@ -30,7 +30,6 @@ namespace V2RayGCon.Services
 
         VgcApis.Libs.Tasks.LazyGuy lazyNotifierMenuUpdater;
 
-        Views.FormRoot formRoot;
         enum qsMenuNames
         {
             StopAllServer,
@@ -39,33 +38,36 @@ namespace V2RayGCon.Services
             SwitchToRandomTlsServer,
         }
 
-        Dictionary<qsMenuNames, ToolStripMenuItem> qsMenuCompos = null;
-        ToolStripMenuItem miPluginsRoot = null;
-        ToolStripMenuItem miServersRoot = null;
+        readonly Dictionary<qsMenuNames, ToolStripMenuItem> qsMenuCompos = null;
+        readonly ToolStripMenuItem miPluginsRoot = null;
+        readonly ToolStripMenuItem miServersRoot = null;
+        readonly ContextMenuStrip niMenuRoot = null;
 
-        Notifier() { }
-
-        public void InitNotifyIconFor(Views.FormRoot formRoot)
+        Notifier()
         {
-            this.formRoot = formRoot;
-            this.notifyIcon = formRoot.notifyIcon;
-
-            var ni = formRoot.notifyIcon;
-            ni.Text = I18N.Description;
-            ni.Icon = VgcApis.Misc.UI.GetAppIcon();
-            ni.BalloonTipTitle = VgcApis.Misc.Utils.GetAppName();
-            ni.ContextMenuStrip = new ContextMenuStrip();
-            ni.Visible = true;
-
-            orgIcon = ni.Icon.ToBitmap();
-
-            // 其他组件有可能在初始化的时候引用菜单
             qsMenuCompos = CreateQsMenuCompos();
             miServersRoot = CreateRootMenuItem(I18N.Servers, Properties.Resources.RemoteServer_16x);
             miPluginsRoot = CreateRootMenuItem(I18N.Plugins, Properties.Resources.Module_16x);
 
-            CreateNotifyIconContextMenuStrip(ni.ContextMenuStrip, miServersRoot, miPluginsRoot);
-            BindMenuEvents(ni);
+            ni = new NotifyIcon()
+            {
+                Text = I18N.Description,
+                Icon = VgcApis.Misc.UI.GetAppIcon(),
+                BalloonTipTitle = VgcApis.Misc.Utils.GetAppName(),
+                ContextMenuStrip = new ContextMenuStrip(),
+                Visible = true,
+            };
+
+            orgIcon = ni.Icon.ToBitmap();
+            niMenuRoot = ni.ContextMenuStrip;
+            niMenuRoot.CreateControl();
+            var handle = niMenuRoot.Handle;
+            VgcApis.Libs.Sys.FileLogger.Info($"Create notify icon {handle}");
+
+            CreateContextMenuStrip(niMenuRoot, miServersRoot, miPluginsRoot);
+
+            VgcApis.Misc.UI.Invoke = Invoke;
+            VgcApis.Misc.UI.InvokeThen = InvokeThen;
         }
 
         public void Run(
@@ -85,23 +87,190 @@ namespace V2RayGCon.Services
                 Name = "Notifier.MenuUpdater", // disable debug logging
             };
 
-
+            BindNiMenuEvents(ni);
             BindServerEvents();
             RefreshNotifyIconLater();
+
         }
+
+        #region hotkey window
+
+        VgcApis.WinForms.HotKeyWindow hkWindow = null;
+
+        ConcurrentDictionary<string, VgcApis.Models.Datas.HotKeyContext> hkContexts =
+            new ConcurrentDictionary<string, VgcApis.Models.Datas.HotKeyContext>();
+
+        int currentEvCode = 0;
+
+        void DestroyHotKeyWindow()
+        {
+            if (hkWindow == null)
+            {
+                return;
+            }
+
+            VgcApis.Libs.Sys.FileLogger.Info("Destroy hot key window.");
+            var wnd = hkWindow;
+            hkWindow = null;
+            wnd.ReleaseHandle();
+            wnd.OnHotKeyMessage -= HandleHotKeyEvent;
+            var handles = hkContexts.Keys;
+            foreach (var handle in handles)
+            {
+                if (hkContexts.TryGetValue(handle, out var context))
+                {
+                    try
+                    {
+                        wnd.UnregisterHotKey(context);
+                    }
+                    catch { }
+                }
+            }
+        }
+
+        void CreateHotKeyWindow()
+        {
+            if (hkWindow != null)
+            {
+                return;
+            }
+
+            hkWindow = new VgcApis.WinForms.HotKeyWindow(niMenuRoot);
+            var wndHandle = hkWindow.Handle;
+            VgcApis.Libs.Sys.FileLogger.Info($"Create hot key window {wndHandle}.");
+            var handles = hkContexts.Keys;
+            foreach (var handle in handles)
+            {
+                if (hkContexts.TryGetValue(handle, out var context))
+                {
+                    try
+                    {
+                        hkWindow.RegisterHotKey(context);
+                    }
+                    catch { }
+                }
+            }
+
+            hkWindow.OnHotKeyMessage += HandleHotKeyEvent;
+        }
+
+        void HandleHotKeyEvent(string keyMsg)
+        {
+            try
+            {
+                if (hkContexts.TryGetValue(keyMsg, out var context))
+                {
+                    VgcApis.Misc.Utils.RunInBackground(() =>
+                    {
+                        try
+                        {
+                            context.handler?.Invoke();
+                        }
+                        catch (Exception ex)
+                        {
+                            VgcApis.Libs.Sys.FileLogger.Error($"Handle hotkey error!\n{ex}");
+                        }
+                    });
+                }
+            }
+            catch { }
+        }
+
+        string RegisterHotKeyWorker(
+            Action hotKeyHandler, string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+        {
+            if (hkWindow == null)
+            {
+                CreateHotKeyWindow();
+            }
+
+            var context = VgcApis.Models.Datas.HotKeyContext.Create(
+                hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
+
+            if (context == null)
+            {
+                return null;
+            }
+
+            context.evCode = currentEvCode++;
+            var keyMsg = context.KeyMessage;
+            var handle = keyMsg.ToString();
+            if (hkContexts.ContainsKey(handle)
+                || !hkWindow.RegisterHotKey(context))
+            {
+                return null;
+            }
+
+            if (hkContexts.TryAdd(handle, context))
+            {
+                return handle;
+            }
+            return null;
+        }
+
+        bool UnregisterHotKeyWorker(string handle)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(handle)
+                    && hkContexts.TryRemove(handle, out var context)
+                    && hkWindow != null)
+                {
+                    return hkWindow.UnregisterHotKey(context);
+                }
+            }
+            catch { }
+            return false;
+        }
+
+
+        public string RegisterHotKey(
+             Action hotKeyHandler,
+             string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+        {
+            string handle = null;
+            Invoke(() =>
+           {
+               try
+               {
+                   handle = RegisterHotKeyWorker(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
+               }
+               catch { }
+           });
+            return handle;
+        }
+        public bool UnregisterHotKey(string hotKeyHandle)
+        {
+            var r = false;
+            Invoke(() =>
+            {
+                try
+                {
+                    r = UnregisterHotKeyWorker(hotKeyHandle);
+                }
+                catch { }
+            });
+            return r;
+        }
+
+        #endregion
+
+
+        #region INotifier.WinForms
+        public void ShowFormMain() => Views.WinForms.FormMain.ShowForm();
+
+        public void ShowFormLog() => Views.WinForms.FormLog.ShowForm();
+
+        public void ShowFormQrcode() => Views.WinForms.FormQRCode.ShowForm();
+
+        #endregion
+
 
         #region public method
         public void BlockingWaitOne(AutoResetEvent autoEv) =>
             autoEv.WaitOne();
 
-        public string RegisterHotKey(
-            Action hotKeyHandler, string keyName, bool hasAlt, bool hasCtrl, bool hasShift) =>
-            formRoot.RegisterHotKey(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
-
-        public bool UnregisterHotKey(string hotKeyHandle) =>
-            formRoot.UnregisterHotKey(hotKeyHandle);
-
-        public void RefreshNotifyIconLater() => lazyNotifierMenuUpdater?.Deadline();
+        public void RefreshNotifyIconLater() => lazyNotifierMenuUpdater?.Postpone();
 
         public void ScanQrcode()
         {
@@ -127,12 +296,10 @@ namespace V2RayGCon.Services
             Libs.QRCode.QRCode.ScanQRCode(Success, Fail);
         }
 
-        public void BeginInvokeThen(Action updater, Action next) =>
-            VgcApis.Misc.UI.BeginInvokeThen(formRoot, updater, next);
+        public void Invoke(Action updater) => InvokeThen(updater, null);
 
-        public void BeginInvoke(Action updater) =>
-            VgcApis.Misc.UI.BeginInvoke(formRoot, updater);
-
+        public void InvokeThen(Action updater, Action next) =>
+            InvokeThenWorker(niMenuRoot, updater, next);
 
         /// <summary>
         /// null means delete menu
@@ -140,7 +307,7 @@ namespace V2RayGCon.Services
         /// <param name="pluginMenu"></param>
         public void UpdatePluginMenu(IEnumerable<ToolStripMenuItem> children)
         {
-            BeginInvoke(() =>
+            Invoke(() =>
             {
                 miPluginsRoot.DropDownItems.Clear();
                 if (children == null || children.Count() < 1)
@@ -157,10 +324,89 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
-
-
-        private void BindMenuEvents(NotifyIcon ni)
+        static void LogContrlExAndCs(Control control, Exception ex)
         {
+            var th = Thread.CurrentThread;
+
+            VgcApis.Libs.Sys.FileLogger.Error(
+                $"Invoke updater() error by control {control.Name}\n" +
+                $"Current thread info: [{th.ManagedThreadId}] {th.Name}\n" +
+                $"{ex}\n" +
+
+                $"{VgcApis.Misc.Utils.GetCurCallStack()}");
+        }
+
+        static void InvokeThenWorker(
+           Control control, Action updater, Action next)
+        {
+            Action worker = () =>
+            {
+                try
+                {
+                    updater?.Invoke();
+                }
+                catch (Exception ex)
+                {
+                    LogContrlExAndCs(control, ex);
+                }
+            };
+
+            Action tail = () =>
+            {
+                if (next != null)
+                {
+                    VgcApis.Misc.Utils.RunInBackground(next);
+                }
+            };
+
+            try
+            {
+                if (control == null || control.IsDisposed)
+                {
+                    tail();
+                    return;
+                }
+
+                control.Invoke((MethodInvoker)delegate
+                {
+                    if (!VgcApis.Misc.UI.IsInUiThread())
+                    {
+                        VgcApis.Libs.Sys.FileLogger.DumpCallStack("!invoke error!");
+                    }
+                    worker();
+                    tail();
+                });
+            }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (Exception ex)
+            {
+                LogContrlExAndCs(control, ex);
+            }
+            tail();
+        }
+
+        private void BindNiMenuEvents(NotifyIcon ni)
+        {
+            Microsoft.Win32.SystemEvents.SessionSwitch += (s, a) =>
+            {
+                switch (a.Reason)
+                {
+                    case Microsoft.Win32.SessionSwitchReason.SessionLogoff:
+                    case Microsoft.Win32.SessionSwitchReason.SessionLock:
+                        // Invoke(DestroyHotKeyWindow);
+                        setting.SetScreenLockingState(true);
+                        break;
+                    case Microsoft.Win32.SessionSwitchReason.SessionLogon:
+                    case Microsoft.Win32.SessionSwitchReason.SessionUnlock:
+                        // Invoke(CreateHotKeyWindow);
+                        setting.SetScreenLockingState(false);
+                        break;
+                    default:
+                        break;
+                }
+            };
+
             ni.ContextMenuStrip.Opening += (s, a) => isMenuOpened = true;
             ni.ContextMenuStrip.Closed += (s, a) => isMenuOpened = false;
 
@@ -174,15 +420,6 @@ namespace V2RayGCon.Services
                         // mi.Invoke(ni, null);
                         Views.WinForms.FormMain.ShowForm();
                         break;
-
-                        /*
-                    case MouseButtons.Right:
-                        RunInUiThreadIgnoreError(() =>
-                        {
-                            niMenu.Show(a.X - niMenu.Width, a.Y - niMenu.Height);
-                        });
-                        break;
-                        */
                 }
             };
         }
@@ -367,7 +604,7 @@ namespace V2RayGCon.Services
                     ServerList2MenuItems(serverList.Take(num).ToList()) :
                     new List<ToolStripMenuItem>();
 
-                BeginInvokeThen(
+                InvokeThen(
                     () => ReplaceServersMenuWith(isGrouped, miGroupedServers, miTopNthServers),
                     done);
             }
@@ -383,12 +620,19 @@ namespace V2RayGCon.Services
             if (setting.IsClosing())
             {
                 done();
+                return;
             }
 
-            if (isMenuOpened)
+            if (isMenuOpened || setting.IsScreenLocked())
             {
-                lazyNotifierMenuUpdater?.Deadline();
-                done();
+                VgcApis.Misc.Utils.RunInBackground(() =>
+                {
+                    VgcApis.Misc.Utils.Sleep(1000);
+                    done();
+                    VgcApis.Misc.Utils.Sleep(1000);
+                    lazyNotifierMenuUpdater?.Postpone();
+                    // VgcApis.Libs.Sys.FileLogger.Info("Notifier.UpdateNotifyIconWorker() menu is opened update later");
+                });
                 return;
             }
 
@@ -408,10 +652,17 @@ namespace V2RayGCon.Services
                 var list = servers.GetAllServersOrderByIndex()
                     .Where(s => s.GetCoreCtrl().IsCoreRunning())
                     .ToList();
-
                 var icon = CreateNotifyIconImage(list);
-                notifyIcon.Icon?.Dispose();
-                notifyIcon.Icon = Icon.FromHandle(icon.GetHicon());
+
+                InvokeThen(() =>
+                {
+                    if (icon != null)
+                    {
+                        var org = ni.Icon;
+                        ni.Icon = Icon.FromHandle(icon.GetHicon());
+                        org?.Dispose();
+                    }
+                }, null);
                 UpdateNotifyIconTextThen(list, next);
             }
             catch (Exception e)
@@ -611,7 +862,7 @@ namespace V2RayGCon.Services
                 I18N.Description :
                 VgcApis.Misc.Utils.AutoEllipsis(rawText, VgcApis.Models.Consts.AutoEllipsis.NotifierTextMaxLength);
 
-            if (notifyIcon.Text == text)
+            if (ni.Text == text)
             {
                 return;
             }
@@ -619,15 +870,15 @@ namespace V2RayGCon.Services
             // https://stackoverflow.com/questions/579665/how-can-i-show-a-systray-tooltip-longer-than-63-chars
             Type t = typeof(NotifyIcon);
             BindingFlags hidden = BindingFlags.NonPublic | BindingFlags.Instance;
-            t.GetField("text", hidden).SetValue(notifyIcon, text);
-            if ((bool)t.GetField("added", hidden).GetValue(notifyIcon))
-                t.GetMethod("UpdateIcon", hidden).Invoke(notifyIcon, new object[] { true });
+            t.GetField("text", hidden).SetValue(ni, text);
+            if ((bool)t.GetField("added", hidden).GetValue(ni))
+                t.GetMethod("UpdateIcon", hidden).Invoke(ni, new object[] { true });
         }
 
-        void CreateNotifyIconContextMenuStrip(
+        void CreateContextMenuStrip(
             ContextMenuStrip menu,
-           ToolStripMenuItem serversRootMenuItem,
-           ToolStripMenuItem pluginRootMenuItem)
+            ToolStripMenuItem serversRootMenuItem,
+            ToolStripMenuItem pluginRootMenuItem)
         {
             var factor = Misc.UI.GetScreenScalingFactor();
             if (factor > 1)
@@ -645,15 +896,15 @@ namespace V2RayGCon.Services
                         new ToolStripMenuItem(
                             I18N.MainWin,
                             Properties.Resources.WindowsForm_16x,
-                            (s,a)=> Views.WinForms.FormMain.ShowForm()),
+                            (s,a)=>Views.WinForms.FormMain.ShowForm()),
                         new ToolStripMenuItem(
                             I18N.ConfigEditor,
                             Properties.Resources.EditWindow_16x,
-                            (s,a)=>new Views.WinForms.FormConfiger() ),
+                            (s,a)=>Views.WinForms.FormConfiger.ShowConfig()),
                         new ToolStripMenuItem(
                             I18N.GenQRCode,
                             Properties.Resources.AzureVirtualMachineExtension_16x,
-                            (s,a)=> Views.WinForms.FormQRCode.ShowForm()),
+                            (s,a)=>Views.WinForms.FormQRCode.ShowForm()),
                         new ToolStripMenuItem(
                             I18N.Log,
                             Properties.Resources.FSInteractiveWindow_16x,
@@ -661,7 +912,7 @@ namespace V2RayGCon.Services
                          new ToolStripMenuItem(
                             I18N.DownloadV2rayCore,
                             Properties.Resources.ASX_TransferDownload_blue_16x,
-                            (s,a)=> Views.WinForms.FormDownloadCore.GetForm()),
+                            (s,a)=>Views.WinForms.FormDownloadCore.ShowForm()),
                     }),
 
                 serversRootMenuItem,
@@ -684,7 +935,7 @@ namespace V2RayGCon.Services
                 new ToolStripMenuItem(
                         I18N.Options,
                         Properties.Resources.Settings_16x,
-                        (s,a)=> Views.WinForms.FormOption.ShowForm()),
+                        (s,a)=>Invoke(()=> Views.WinForms.FormOption.ShowForm())),
             });
 
             menu.Items.Add(new ToolStripSeparator());
@@ -752,8 +1003,10 @@ namespace V2RayGCon.Services
         #region protected methods
         protected override void Cleanup()
         {
-            ReleaseServerEvents();
             lazyNotifierMenuUpdater?.Dispose();
+            DestroyHotKeyWindow();
+            ReleaseServerEvents();
+            ni.Visible = false;
         }
         #endregion
     }

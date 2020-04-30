@@ -14,7 +14,21 @@ namespace Luna.Views.WinForms
         Services.FormMgr formMgr;
         VgcApis.Interfaces.Services.IApiService api;
 
-        public FormMain(
+        public static FormMain CreateForm(
+            VgcApis.Interfaces.Services.IApiService api,
+            Services.Settings settings,
+            Services.LuaServer luaServer,
+            Services.FormMgr formMgr)
+        {
+            FormMain r = null;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                r = new FormMain(api, settings, luaServer, formMgr);
+            });
+            return r;
+        }
+
+        FormMain(
             VgcApis.Interfaces.Services.IApiService api,
             Services.Settings settings,
             Services.LuaServer luaServer,
@@ -139,6 +153,6 @@ namespace Luna.Views.WinForms
         }
         #endregion
 
-       
+
     }
 }

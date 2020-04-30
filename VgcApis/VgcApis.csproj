@@ -123,6 +123,7 @@
     <Compile Include="Interfaces\Services\IConfigMgr.cs" />
     <Compile Include="Interfaces\Services\IServersService.cs" />
     <Compile Include="Interfaces\Services\ISettingsService.cs" />
+    <Compile Include="Models\Datas\HotKeyContext.cs" />
     <Compile Include="Models\Datas\LuaMail.cs" />
     <Compile Include="Models\Datas\StatsSample.cs" />
     <Compile Include="Interfaces\Services\IUtilsService.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="WinForms\FormSearch.Designer.cs">
       <DependentUpon>FormSearch.cs</DependentUpon>
     </Compile>
+    <Compile Include="WinForms\HotKeyWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

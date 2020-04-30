@@ -20,6 +20,8 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         string oldOptions;
 
+        VgcApis.Libs.Tasks.LazyGuy lazyCounter;
+
         public Subscription(
             FlowLayoutPanel flyPanel,
             Button btnAdd,
@@ -43,21 +45,24 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             chkSubsIsUseProxy.Checked = setting.isUpdateUseProxy;
 
+            lazyCounter = new VgcApis.Libs.Tasks.LazyGuy(UpdateServUiTotalWorker, 500, 5000)
+            {
+                Name = "SubsCtrl.CountTotal()",
+            };
+
             InitPanel();
             BindEvent();
 
             MarkDuplicatedSubsInfo();
+
+            lazyCounter?.Postpone();
         }
 
         #region public method
         public override void Cleanup()
         {
-            var subsUis = flyPanel.Controls.OfType<Views.UserControls.SubscriptionUI>();
-
-            foreach (var subsUi in subsUis)
-            {
-                subsUi.Cleanup();
-            }
+            ReleaseEvent();
+            lazyCounter?.Dispose();
         }
 
         public override bool SaveOptions()
@@ -88,7 +93,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         public void MarkDuplicatedSubsInfo()
         {
-            VgcApis.Misc.UI.Invoke(flyPanel, MarkDuplicatedSubsInfoWorker);
+            VgcApis.Misc.UI.Invoke(MarkDuplicatedSubsInfoWorker);
         }
 
         public void RemoveSubsUi(Views.UserControls.SubscriptionUI subsUi)
@@ -98,7 +103,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             {
                 if (sub == subsUi)
                 {
-                    VgcApis.Misc.UI.Invoke(flyPanel, () => Remove(subsUi));
+                    VgcApis.Misc.UI.Invoke(() => Remove(subsUi));
                 }
             }
 
@@ -122,6 +127,50 @@ namespace V2RayGCon.Controllers.OptionComponent
         #endregion
 
         #region private method
+        void UpdateServUiTotal(object sender, EventArgs args) =>
+            lazyCounter?.Postpone();
+
+        void UpdateServUiTotalWorker(Action done)
+        {
+            try
+            {
+                var markCounts = CountServMarks();
+                var servUis = GetAllSubsUi();
+                foreach (var servUi in servUis)
+                {
+                    var key = servUi.GetAlias();
+                    var total = markCounts.ContainsKey(key) ? markCounts[key] : 0;
+                    servUi.SetTotal(total);
+                }
+            }
+            catch { }
+            done?.Invoke();
+        }
+
+        Dictionary<string, int> CountServMarks()
+        {
+            var r = new Dictionary<string, int>();
+
+            var servs = servers.GetAllServersOrderByIndex();
+            foreach (var serv in servs)
+            {
+                var cst = serv.GetCoreStates();
+                var mark = cst.GetMark();
+                if (string.IsNullOrEmpty(mark))
+                {
+                    continue;
+                }
+                if (!r.ContainsKey(mark))
+                {
+                    r[mark] = 0;
+                }
+
+                r[mark]++;
+            }
+
+            return r;
+        }
+
         List<Views.UserControls.SubscriptionUI> GetAllSubsUi() =>
             flyPanel.Controls.OfType<Views.UserControls.SubscriptionUI>().ToList();
 
@@ -291,8 +340,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                     slinkMgr.ImportLinkWithOutV2cfgLinksBatchMode(
                         links.Where(l => !string.IsNullOrEmpty(l[0])).ToList());
 
-                    VgcApis.Misc.UI.Invoke(
-                        btnUpdate, () => this.btnUpdate.Enabled = true);
+                    VgcApis.Misc.UI.Invoke(() => this.btnUpdate.Enabled = true);
                 });
             };
         }
@@ -358,12 +406,21 @@ namespace V2RayGCon.Controllers.OptionComponent
             BindEventBtnSelections();
             BindEventFlyPanelDragDrop();
 
+            servers.OnServerCountChange += UpdateServUiTotal;
+            servers.OnServerPropertyChange += UpdateServUiTotal;
+
             chkSubsIsAutoPatch.CheckedChanged += (s, a) => setting.isAutoPatchSubsInfo = chkSubsIsAutoPatch.Checked;
 
             this.flyPanel.DragEnter += (s, a) =>
             {
                 a.Effect = DragDropEffects.Move;
             };
+        }
+
+        void ReleaseEvent()
+        {
+            servers.OnServerCountChange -= UpdateServUiTotal;
+            servers.OnServerPropertyChange -= UpdateServUiTotal;
         }
 
         void UpdatePanelItemsIndex()

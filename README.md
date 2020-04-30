@@ -12,7 +12,7 @@
 
 V2RayGCon是windows下[v2ray-core](https://v2ray.com)的图形(graphic)配置器(configer)。  
 
-[\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]](https://vrnobody.github.io/V2RayGCon/)&nbsp;&nbsp;[\[唯一联系方式 issue\]](https://github.com/vrnobody/V2RayGCon/issues)  
+[\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]](https://vrnobody.github.io/V2RayGCon/)&nbsp;&nbsp;[\[唯一联系方式 issue\]](https://github.com/vrnobody/V2RayGCon/issues)&nbsp;&nbsp;[\[脚本共享 scripts\]](https://github.com/vrnobody/luna-scripts)  
 
 ### 安装 Install
 需要先装.net framework 4.5或理高版本。  

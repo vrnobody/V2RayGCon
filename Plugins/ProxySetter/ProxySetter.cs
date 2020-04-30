@@ -22,16 +22,19 @@ namespace ProxySetter
                 return menuItemCache;
             }
 
-            menuItemCache = new ToolStripMenuItem(Name, Icon);
-            menuItemCache.ToolTipText = Description;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                menuItemCache = new ToolStripMenuItem(Name, Icon);
+                menuItemCache.ToolTipText = Description;
 
-            var children = menuItemCache.DropDownItems;
-            children.Add(new ToolStripMenuItem(
-                I18N.Options,
-                Properties.Resources.WebConfiguration_16x,
-                (s, a) => Show()));
-            children.Add(new ToolStripSeparator());
-            children.AddRange(luncher?.GetSubMenu());
+                var children = menuItemCache.DropDownItems;
+                children.Add(new ToolStripMenuItem(
+                    I18N.Options,
+                    Properties.Resources.WebConfiguration_16x,
+                    (s, a) => Show()));
+                children.Add(new ToolStripSeparator());
+                children.AddRange(luncher?.GetSubMenu());
+            });
 
             return menuItemCache;
         }
@@ -53,7 +56,7 @@ namespace ProxySetter
 
         protected override void Popup()
         {
-            luncher?.Show();
+            VgcApis.Misc.UI.Invoke(() => luncher?.Show());
         }
 
         protected override void Stop()

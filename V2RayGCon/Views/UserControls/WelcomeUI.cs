@@ -42,7 +42,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbDownloadV2rayCore_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Views.WinForms.FormDownloadCore.GetForm();
+            Views.WinForms.FormDownloadCore.ShowForm();
         }
 
         private void lbV2rayCoreGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -90,7 +90,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbConfigEditor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            new Views.WinForms.FormConfiger();
+            Views.WinForms.FormConfiger.ShowConfig();
         }
     }
 }

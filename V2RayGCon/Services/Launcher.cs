@@ -2,23 +2,35 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
+using System.Windows.Forms;
+using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
 {
     class Launcher : VgcApis.BaseClasses.Disposable
     {
         private readonly Settings setting;
-        private readonly Notifier notifier;
+
+        public ApplicationContext context { get; private set; }
+
         Servers servers;
         Updater updater;
+        Notifier notifier;
 
         bool isDisposing = false;
         List<IDisposable> services = new List<IDisposable>();
+        string appName;
 
-        public Launcher(Settings setting, Notifier notifier)
+        public Launcher()
         {
-            this.setting = setting;
-            this.notifier = notifier;
+            this.context = new ApplicationContext();
+            this.setting = Settings.Instance;
+
+            appName = Misc.Utils.GetAppNameAndVer();
+            VgcApis.Libs.Sys.FileLogger.Raw("\n");
+            VgcApis.Libs.Sys.FileLogger.Info($"{appName} start");
+
+            notifier = Notifier.Instance;
         }
 
         #region public method
@@ -35,42 +47,15 @@ namespace V2RayGCon.Services
 
         public void Run()
         {
-            servers = Servers.Instance;
-            updater = Updater.Instance;
-
+            BindAppExitEvents();
             InitAllServices();
-            Boot();
+            BootUp();
 
 #if DEBUG
             This_Function_Is_Used_For_Debugging();
 #endif
         }
 
-        private void Boot()
-        {
-            PluginsServer.Instance.RestartAllPlugins();
-
-            if (servers.IsEmpty())
-            {
-                Views.WinForms.FormMain.ShowForm();
-            }
-            else
-            {
-                servers.WakeupServersInBootList();
-            }
-
-            if (setting.isCheckUpdateWhenAppStart)
-            {
-                VgcApis.Misc.Utils.RunInBackground(() =>
-                {
-#if DEBUG
-#else
-                    VgcApis.Misc.Utils.Sleep(VgcApis.Models.Consts.Webs.CheckForUpdateDelay);
-#endif
-                    updater.CheckForUpdate(false);
-                });
-            }
-        }
 
         #endregion
 
@@ -84,7 +69,7 @@ namespace V2RayGCon.Services
             {
                 if (name == plugin.Name)
                 {
-                    plugin.Show();
+                    VgcApis.Misc.UI.Invoke(() => plugin.Show());
                 }
             }
         }
@@ -116,8 +101,80 @@ namespace V2RayGCon.Services
 
         #region private method
 
+
+        void ShowExceptionDetailAndExit(Exception exception)
+        {
+            VgcApis.Libs.Sys.FileLogger.Error($"unhandled exception:\n{exception}");
+
+            if (setting.ShutdownReason != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
+            {
+                ShowExceptionDetails(exception);
+            }
+            context.ExitThread();
+        }
+
+        private void ShowExceptionDetails(Exception exception)
+        {
+            var nl = Environment.NewLine;
+            var verInfo = Misc.Utils.GetAppNameAndVer();
+            var log = $"{I18N.LooksLikeABug}{nl}{nl}{verInfo}";
+
+            try
+            {
+                log += nl + nl + exception.ToString();
+                log += nl + nl + setting.GetLogContent();
+            }
+            catch { }
+
+            VgcApis.Libs.Sys.NotepadHelper.ShowMessage(log, "V2RayGCon bug report");
+        }
+
+
+        private void BootUp()
+        {
+            PluginsServer.Instance.RestartAllPlugins();
+
+            if (servers.IsEmpty())
+            {
+                Views.WinForms.FormMain.ShowForm();
+            }
+            else
+            {
+                servers.WakeupServersInBootList();
+            }
+
+            if (setting.isCheckUpdateWhenAppStart)
+            {
+                VgcApis.Misc.Utils.RunInBackground(() =>
+                {
+#if DEBUG
+#else
+                    VgcApis.Misc.Utils.Sleep(VgcApis.Models.Consts.Webs.CheckForUpdateDelay);
+#endif
+                    updater.CheckForUpdate(false);
+                });
+            }
+        }
+
+        void BindAppExitEvents()
+        {
+            Application.ApplicationExit += (s, a) => context.ExitThread();
+
+            Microsoft.Win32.SystemEvents.SessionEnding += (s, a) =>
+            {
+                setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff;
+                context.ExitThread();
+            };
+
+            Application.ThreadException += (s, a) => ShowExceptionDetailAndExit(a.Exception);
+            AppDomain.CurrentDomain.UnhandledException += (s, a) => ShowExceptionDetailAndExit(a.ExceptionObject as Exception);
+        }
+
         void InitAllServices()
         {
+            servers = Servers.Instance;
+            updater = Updater.Instance;
+
             // warn-up
             var cache = Cache.Instance;
             var configMgr = ConfigMgr.Instance;
@@ -215,7 +272,9 @@ namespace V2RayGCon.Services
         #region protected override
         protected override void Cleanup()
         {
+            VgcApis.Libs.Sys.FileLogger.Raw("");
             DisposeAllServices();
+            VgcApis.Libs.Sys.FileLogger.Info($"{appName} exited");
         }
         #endregion
 

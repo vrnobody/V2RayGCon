@@ -71,7 +71,6 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             }
 
             VgcApis.Misc.UI.Invoke(
-                formConfiger,
                 () => ReplaceOldMenus(loadServMiList, replaceServMiList));
         }
 

@@ -4,6 +4,13 @@ namespace VgcApis.Interfaces.Services
 {
     public interface INotifierService
     {
+        void ShowFormMain();
+
+        void ShowFormLog();
+
+        void ShowFormQrcode();
+
+
         string RegisterHotKey(Action hotKeyHandler,
             string keyName, bool hasAlt, bool hasCtrl, bool hasShift);
 
@@ -11,9 +18,9 @@ namespace VgcApis.Interfaces.Services
 
         void RefreshNotifyIconLater();
 
-        void BeginInvoke(Action updater);
+        void Invoke(Action updater);
 
-        void BeginInvokeThen(Action updater, Action next);
+        void InvokeThen(Action updater, Action next);
 
     }
 }

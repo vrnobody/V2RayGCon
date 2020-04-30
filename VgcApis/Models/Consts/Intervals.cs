@@ -14,7 +14,7 @@
         public const int DefaultFetchTimeout = 30 * 1000;
 
 
-        public const int NotifierMenuUpdateIntreval = 600;
+        public const int NotifierMenuUpdateIntreval = 1000;
 
         public const int SiFormLogRefreshInterval = 500;
         public const int LuaPluginLogRefreshInterval = 500;

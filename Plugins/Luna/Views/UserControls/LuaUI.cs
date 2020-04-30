@@ -56,12 +56,12 @@ namespace Luna.Views.UserControls
 
         void UpdateUiWorker()
         {
-            VgcApis.Misc.UI.Invoke(lbName, () =>
-            {
-                UpdateNameLabel();
-                UpdateOptionsLabel();
-                UpdateRunningState();
-            });
+            VgcApis.Misc.UI.Invoke(() =>
+           {
+               UpdateNameLabel();
+               UpdateOptionsLabel();
+               UpdateRunningState();
+           });
         }
 
         void UpdateUiLater() => lazyUpdater?.Deadline();

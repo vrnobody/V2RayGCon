@@ -207,9 +207,7 @@ namespace V2RayGCon.Services
 
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                var form = new Views.WinForms.FormImportLinksResult(list);
-                form.Show();
-                Application.Run(form);
+                Views.WinForms.FormImportLinksResult.ShowResult(list);
             });
         }
 

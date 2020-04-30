@@ -44,7 +44,7 @@ namespace Luna.Services
         #region private methods
         void UpdateMenuWorker(Action done)
         {
-            settings.BeginInvokeThen(() =>
+            VgcApis.Misc.UI.Invoke(() =>
             {
                 var mis = GenSubMenuItems();
                 var root = miRoot.DropDownItems;
@@ -55,7 +55,7 @@ namespace Luna.Services
                     root.Add(new ToolStripSeparator());
                     root.AddRange(mis.ToArray());
                 }
-            }, done);
+            });
         }
 
         void UpdateMenuLater() => lazyMenuUpdater?.Postpone();

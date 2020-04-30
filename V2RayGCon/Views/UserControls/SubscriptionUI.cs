@@ -14,7 +14,6 @@ namespace V2RayGCon.Views.UserControls
 
         Services.Servers servers;
         Services.Settings settings;
-        VgcApis.Libs.Tasks.LazyGuy lazyCounter;
         private readonly Subscription subsCtrl;
 
         public SubscriptionUI(
@@ -28,18 +27,9 @@ namespace V2RayGCon.Views.UserControls
             servers = Services.Servers.Instance;
             settings = Services.Settings.Instance;
 
-            lazyCounter = new VgcApis.Libs.Tasks.LazyGuy(
-                UpdateServerTotalWorker, 500, 1000)
-            {
-                Name = "SubscriptionUi.Total()",
-            };
-
             // tab page is lazy, do not call this in Load().
             InitControls(subscriptItem);
 
-            BindEvent();
-
-            UpdateServerTotalLater();
         }
 
         #region form thing
@@ -66,10 +56,18 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region public method
-        public void Cleanup()
+
+        public string GetAlias() => tboxAlias.Text;
+
+        public void SetTotal(int total)
         {
-            lazyCounter?.Dispose();
-            ReleaseEvent();
+            var color = total > 0 ? Color.DarkGray : Color.Red;
+            var text = $"{I18N.TotalNum}{total}";
+            VgcApis.Misc.UI.Invoke(() =>
+           {
+               lbTotal.ForeColor = color;
+               lbTotal.Text = text;
+           });
         }
 
         public bool IsEmpty() =>
@@ -110,7 +108,6 @@ namespace V2RayGCon.Views.UserControls
             subsCtrl.MarkDuplicatedSubsInfo();
             SetBtnDeleteStat();
             subsCtrl.AutoAddEmptyUi();
-            UpdateServerTotalLater();
         }
 
         private void tboxUrl_TextChanged(object sender, EventArgs e)
@@ -178,38 +175,6 @@ namespace V2RayGCon.Views.UserControls
             }
 
             textBox.BackColor = color;
-        }
-
-        void OnCoreStateChangedHandler(object sender, EventArgs args) =>
-            UpdateServerTotalLater();
-
-        void UpdateServerTotalLater() => lazyCounter.Deadline();
-
-        void BindEvent()
-        {
-            servers.OnServerCountChange += OnCoreStateChangedHandler;
-            servers.OnServerPropertyChange += OnCoreStateChangedHandler;
-        }
-
-        void ReleaseEvent()
-        {
-            servers.OnServerCountChange -= OnCoreStateChangedHandler;
-            servers.OnServerPropertyChange -= OnCoreStateChangedHandler;
-        }
-
-        void UpdateServerTotalWorker(Action done)
-        {
-            var coreStates = servers.GetAllServersOrderByIndex()
-                .Select(s => s.GetCoreStates())
-                .ToList();
-
-            VgcApis.Misc.UI.BeginInvokeThen(lbTotal, () =>
-            {
-                var alias = tboxAlias.Text;
-                var coreNum = coreStates.Where(cfg => cfg.GetMark() == alias).Count();
-                lbTotal.Text = $"{I18N.TotalNum}{coreNum}";
-                lbTotal.ForeColor = coreNum == 0 ? Color.Red : Color.DarkGray;
-            }, done);
         }
 
         private void UrlListItem_MouseDown(object sender, MouseEventArgs e) =>

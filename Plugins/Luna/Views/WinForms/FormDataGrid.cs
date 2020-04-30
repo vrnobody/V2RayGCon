@@ -22,7 +22,17 @@ namespace Luna.Views.WinForms
         public string jsonResult = @"";
         VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater;
 
-        public FormDataGrid(string title, DataTable dataSource, int defColumn)
+        public static FormDataGrid CreateForm(string title, DataTable dataSource, int defColumn)
+        {
+            FormDataGrid r = null;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                r = new FormDataGrid(title, dataSource, defColumn);
+            });
+            return r;
+        }
+
+        FormDataGrid(string title, DataTable dataSource, int defColumn)
         {
             InitializeComponent();
             this.title = title;
@@ -39,7 +49,8 @@ namespace Luna.Views.WinForms
             {
                 Name = "Luna.DataGridUpdater",
             };
-            lazyUiUpdater.Throttle();
+            UpdateUiWorker();
+            dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
         }
 
         #region private methods
@@ -213,13 +224,12 @@ namespace Luna.Views.WinForms
 
         void UpdateUiWorker()
         {
-            VgcApis.Misc.UI.Invoke(dgvData, () =>
-            {
-                var ds = GetFilteredDataTable();
-                lbTotal.Text = ds.Rows.Count.ToString();
-                dgvData.DataSource = ds;
-            });
-
+            VgcApis.Misc.UI.Invoke(() =>
+           {
+               var ds = GetFilteredDataTable();
+               lbTotal.Text = ds.Rows.Count.ToString();
+               dgvData.DataSource = ds;
+           });
         }
 
         DataTable GetFilteredDataTable()
@@ -286,9 +296,7 @@ namespace Luna.Views.WinForms
             var content = GetColumns(true, isSelectedOnly);
             var text = List2Csv(content);
             VgcApis.Models.Datas.Enums.SaveFileErrorCode ok = VgcApis.Models.Datas.Enums.SaveFileErrorCode.Cancel;
-            VgcApis.Misc.Utils.RunAsSTAThread(
-                () => ok = VgcApis.Misc.UI.ShowSaveFileDialog(
-                    VgcApis.Models.Consts.Files.CsvExt, text, out _));
+            ok = VgcApis.Misc.UI.ShowSaveFileDialog(VgcApis.Models.Consts.Files.CsvExt, text, out _);
             switch (ok)
             {
                 case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Fail:
@@ -309,7 +317,7 @@ namespace Luna.Views.WinForms
             var content = GetColumns(true, true);
             var text = List2Csv(content);
             var success = false;
-            VgcApis.Misc.Utils.RunAsSTAThread(() => success = VgcApis.Misc.Utils.CopyToClipboard(text));
+            success = VgcApis.Misc.Utils.CopyToClipboard(text);
             VgcApis.Misc.UI.MsgBoxAsync(success ? I18N.Done : I18N.Fail);
         }
 
@@ -358,20 +366,19 @@ namespace Luna.Views.WinForms
         {
             string text = null;
 
-            VgcApis.Misc.Utils.RunAsSTAThread(() =>
-            {
-                text = VgcApis.Misc.UI.ReadFileContentFromDialog(
-                    VgcApis.Models.Consts.Files.CsvExt);
-            });
+            text = VgcApis.Misc.UI.ReadFileContentFromDialog(VgcApis.Models.Consts.Files.CsvExt);
 
             if (text == null)
             {
                 return;
             }
 
-            this.dataSource = CsvToDataTable(text);
-            tboxFilter.Text = @"";
-            lazyUiUpdater.Throttle();
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                this.dataSource = CsvToDataTable(text);
+                tboxFilter.Text = @"";
+                lazyUiUpdater.Throttle();
+            });
         }
 
         private void exportAllToCsvToolStripMenuItem_Click(object sender, EventArgs e)

@@ -9,6 +9,7 @@ namespace VgcApis.Libs.Tasks
         private Action singleTask;
         private Action<Action> chainedTask;
         private readonly int interval;
+        private readonly long ticks;
         private readonly int expectedWorkTime;
         AutoResetEvent jobToken = new AutoResetEvent(true);
         AutoResetEvent waitToken = new AutoResetEvent(true);
@@ -23,11 +24,10 @@ namespace VgcApis.Libs.Tasks
         /// <param name="chainedTask">(done)=>{... done();}</param>
         /// <param name="interval">millisecond</param>
         /// <param name="expectedWorkTime">millisecond</param>
-        public LazyGuy(Action<Action> chainedTask, int interval, int expectedWorkTime)
+        public LazyGuy(Action<Action> chainedTask, int interval, int expectedWorkTime) :
+            this(interval, expectedWorkTime)
         {
             this.chainedTask = chainedTask;
-            this.interval = interval;
-            this.expectedWorkTime = expectedWorkTime;
         }
 
         /// <summary>
@@ -36,10 +36,16 @@ namespace VgcApis.Libs.Tasks
         /// <param name="singleTask">()=>{ ... }</param>
         /// <param name="interval">millisecond</param>
         /// <param name="expectedWorkTime">millisecond</param>
-        public LazyGuy(Action singleTask, int interval, int expectedWorkTime)
+        public LazyGuy(Action singleTask, int interval, int expectedWorkTime) :
+            this(interval, expectedWorkTime)
         {
             this.singleTask = singleTask;
+        }
+
+        LazyGuy(int interval, int expectedWorkTime)
+        {
             this.interval = interval;
+            this.ticks = interval * TimeSpan.TicksPerMillisecond;
             this.expectedWorkTime = expectedWorkTime;
         }
 
@@ -62,38 +68,35 @@ namespace VgcApis.Libs.Tasks
             });
         }
 
-        CancellationTokenSource cts = null;
-        readonly object cancelLocker = new object();
+        private long checkpoint;
+
+        void PostponeWorker()
+        {
+            while (true)
+            {
+                var delay = checkpoint - DateTime.Now.Ticks;
+                if (delay < 1)
+                {
+                    break;
+                }
+                Misc.Utils.Sleep(TimeSpan.FromTicks(delay));
+            }
+        }
 
         /// <summary>
         /// ...~...~...~...|
         /// </summary>
         public void Postpone()
         {
-            CancellationToken tk;
-            lock (cancelLocker)
+            checkpoint = DateTime.Now.Ticks + ticks;
+            if (isCancelled || !waitToken.WaitOne(0))
             {
-                cts?.Cancel();
-                cts = new CancellationTokenSource();
-                tk = cts.Token;
+                return;
             }
 
-            Misc.Utils.RunInBackground(async () =>
+            Misc.Utils.RunInBackground(() =>
             {
-                try
-                {
-                    await Task.Delay(interval, tk);
-                }
-                catch
-                {
-                    return;
-                }
-
-                if (isCancelled || tk.IsCancellationRequested || !waitToken.WaitOne(0))
-                {
-                    return;
-                }
-
+                PostponeWorker();
                 TryDoTheJob(Postpone);
             });
         }

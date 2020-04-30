@@ -77,7 +77,7 @@ namespace V2RayGCon.Views.WinForms
                 title += " - " + I18N.Portable;
             }
 
-            VgcApis.Misc.UI.BeginInvoke(this, () =>
+            VgcApis.Misc.UI.Invoke(() =>
             {
                 if (this.Text != title)
                 {

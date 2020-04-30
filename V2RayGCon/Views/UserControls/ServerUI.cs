@@ -49,13 +49,13 @@ namespace V2RayGCon.Views.UserControls
             rlbSpeedtest.Text = @"";
             rlbSpeedtest.Visible = false;
 
-            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 200, 3000)
+            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 250, 3000)
             {
                 Name = "ServerUi.RefreshPanel",
             };
 
             lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(
-                HighLightServerTitleWithKeywords, 500, 2000)
+                HighLightKeywordsThen, 400, 1000)
             {
                 Name = "ServerUi.HighLight",
             };
@@ -97,36 +97,37 @@ namespace V2RayGCon.Views.UserControls
         #region private method
         void ShowModifyConfigsWinForm() => WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);
 
-        void HighLightServerTitleWithKeywords(Action done)
+        void HighLightKeyWords()
         {
-            VgcApis.Misc.UI.BeginInvokeThen(rtboxServerTitle,
-                () =>
+            var box = rtboxServerTitle;
+            var title = box.Text.ToLower();
+
+            if (string.IsNullOrEmpty(keyword)
+                || !VgcApis.Misc.Utils.PartialMatchCi(title, keyword))
+            {
+                return;
+            }
+
+            int idxTitle = 0, idxKeyword = 0;
+            while (idxTitle < title.Length && idxKeyword < keyword.Length)
+            {
+                if (title[idxTitle].CompareTo(keyword[idxKeyword]) == 0)
                 {
-                    var box = rtboxServerTitle;
-                    var title = box.Text.ToLower();
+                    box.SelectionStart = idxTitle;
+                    box.SelectionLength = 1;
+                    box.SelectionBackColor = Color.Yellow;
+                    idxKeyword++;
+                }
+                idxTitle++;
+            }
+            box.SelectionStart = 0;
+            box.SelectionLength = 0;
+            box.DeselectAll();
+        }
 
-                    if (string.IsNullOrEmpty(keyword)
-                        || !VgcApis.Misc.Utils.PartialMatchCi(title, keyword))
-                    {
-                        return;
-                    }
-
-                    int idxTitle = 0, idxKeyword = 0;
-                    while (idxTitle < title.Length && idxKeyword < keyword.Length)
-                    {
-                        if (title[idxTitle].CompareTo(keyword[idxKeyword]) == 0)
-                        {
-                            box.SelectionStart = idxTitle;
-                            box.SelectionLength = 1;
-                            box.SelectionBackColor = Color.Yellow;
-                            idxKeyword++;
-                        }
-                        idxTitle++;
-                    }
-                    box.SelectionStart = 0;
-                    box.SelectionLength = 0;
-                    box.DeselectAll();
-                }, done);
+        void HighLightKeywordsThen()
+        {
+            VgcApis.Misc.UI.Invoke(HighLightKeyWords);
         }
 
         void StartThisServerOnlyThen(Action done = null)
@@ -135,7 +136,7 @@ namespace V2RayGCon.Views.UserControls
             servers.StopAllServersThen(() => server.GetCoreCtrl().RestartCoreThen(done));
         }
 
-        void RefreshUiLater() => lazyUiUpdater.Throttle();
+        void RefreshUiLater() => lazyUiUpdater.Postpone();
 
         void RefreshUiWorker(Action done)
         {
@@ -164,11 +165,11 @@ namespace V2RayGCon.Views.UserControls
 
             Action next = () =>
             {
-                lazyHighlighter?.Deadline();
-                done();
+                lazyHighlighter?.Postpone();
+                done?.Invoke();
             };
 
-            VgcApis.Misc.UI.BeginInvokeThen(rtboxServerTitle, worker, next);
+            VgcApis.Misc.UI.InvokeThen(worker, next);
         }
 
         void OnCorePropertyChangesHandler(object sender, EventArgs args) =>
@@ -481,7 +482,7 @@ namespace V2RayGCon.Views.UserControls
                 return;
             }
 
-            lazyHighlighter?.Postpone();
+            lazyHighlighter?.Deadline();
         }
 
         public string GetConfig() => coreServCtrl.GetConfiger().GetConfig();
@@ -528,7 +529,7 @@ namespace V2RayGCon.Views.UserControls
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var config = coreServCtrl.GetConfiger().GetConfig();
-            new Views.WinForms.FormConfiger(config);
+            WinForms.FormConfiger.ShowConfig(config);
         }
 
         private void vmessToolStripMenuItem_Click(object sender, EventArgs e)
@@ -608,7 +609,7 @@ namespace V2RayGCon.Views.UserControls
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var finalConfig = coreServCtrl.GetConfiger().GetFinalConfig();
-            new WinForms.FormConfiger(finalConfig.ToString(Formatting.Indented));
+            WinForms.FormConfiger.ShowConfig(finalConfig.ToString(Formatting.Indented));
         }
 
         private void vToolStripMenuItem_Click(object sender, EventArgs e)

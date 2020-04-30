@@ -41,6 +41,15 @@ namespace VgcApis.Interfaces.Lua
         void Union(JObject body, JObject mixin);
         #endregion
 
+        #region vgc.Forms
+        void ShowFormMain();
+
+        void ShowFormLog();
+
+        void ShowFormQrcode();
+
+        #endregion
+
         #region vgc
         // timeout = long.MaxValue
         long GetTimeoutValue();

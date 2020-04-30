@@ -1,6 +1,5 @@
 ﻿using AutocompleteMenuNS;
 using ScintillaNET;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -43,9 +42,6 @@ namespace Luna.Services
         #endregion
 
         #region public methods
-        public void BeginInvokeThen(Action updater, Action next) =>
-            vgcNotifier.BeginInvokeThen(updater, next);
-
         public void SendLog(string contnet)
         {
             var name = Properties.Resources.Name;

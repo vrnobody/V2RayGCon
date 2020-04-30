@@ -8,12 +8,16 @@ namespace V2RayGCon.Views.WinForms
     {
         #region Sigleton
         static FormDownloadCore _instant;
-        public static FormDownloadCore GetForm()
+        public static FormDownloadCore ShowForm()
         {
             if (_instant == null || _instant.IsDisposed)
             {
-                _instant = new FormDownloadCore();
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    _instant = new FormDownloadCore();
+                });
             }
+            VgcApis.Misc.UI.Invoke(() => _instant.Show());
             return _instant;
         }
         #endregion
@@ -37,8 +41,6 @@ namespace V2RayGCon.Views.WinForms
             };
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);
-
-            this.Show();
         }
 
         private void FormDownloadCore_Shown(object sender, System.EventArgs e)
@@ -60,26 +62,20 @@ namespace V2RayGCon.Views.WinForms
                     I18N.GetCoreVerFail :
                     string.Format(I18N.CurrentCoreVerIs, version);
 
-                VgcApis.Misc.UI.Invoke(
-                    el, () => el.Text = msg);
+                VgcApis.Misc.UI.Invoke(() => el.Text = msg);
 
             });
         }
 
         void UpdateProgressBar(int percentage)
         {
-            // window may closed before this function is called
-            VgcApis.Misc.UI.Invoke(
-                pgBarDownload,
-                () => pgBarDownload.Value = Misc.Utils.Clamp(percentage, 0, 101));
+            var v = Misc.Utils.Clamp(percentage, 0, 101);
+            VgcApis.Misc.UI.Invoke(() => pgBarDownload.Value = v);
         }
 
         void EnableBtnDownload()
         {
-            VgcApis.Misc.UI.Invoke(
-                btnDownload,
-                () => btnDownload.Enabled = true);
-
+            VgcApis.Misc.UI.Invoke(() => btnDownload.Enabled = true);
         }
 
         void DownloadV2RayCore(int proxyPort)
@@ -164,22 +160,19 @@ namespace V2RayGCon.Views.WinForms
                     setting.SaveV2RayCoreVersionList(versions);
                 }
 
-                VgcApis.Misc.UI.Invoke(
-                    elRefresh,
-                    () => elRefresh.Enabled = true);
+                VgcApis.Misc.UI.Invoke(() => elRefresh.Enabled = true);
 
-                VgcApis.Misc.UI.Invoke(
-                    elCboxVer, () =>
- {
-     if (versions.Count > 0)
-     {
-         Misc.UI.FillComboBox(elCboxVer, versions);
-     }
-     else
-     {
-         MessageBox.Show(I18N.GetVersionListFail);
-     }
- });
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    if (versions.Count > 0)
+                    {
+                        Misc.UI.FillComboBox(elCboxVer, versions);
+                    }
+                    else
+                    {
+                        MessageBox.Show(I18N.GetVersionListFail);
+                    }
+                });
 
             });
         }

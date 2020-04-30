@@ -93,27 +93,30 @@ namespace V2RayGCon.Controllers.FormMainComponent
         #region private method
         void UpdatePluginMenu()
         {
-            var plugins = pluginServ.GetAllEnabledPlugins();
-            pluginToolStrip.DropDownItems.Clear();
-
-            if (plugins.Count <= 0)
+            VgcApis.Misc.UI.Invoke(() =>
             {
-                pluginToolStrip.Visible = false;
-                return;
-            }
+                var plugins = pluginServ.GetAllEnabledPlugins();
+                pluginToolStrip.DropDownItems.Clear();
 
-            foreach (var plugin in plugins)
-            {
-                var mi = new ToolStripMenuItem(plugin.Name, plugin.Icon, (s, a) => plugin.Show());
-                pluginToolStrip.DropDownItems.Add(mi);
-                mi.ToolTipText = plugin.Description;
-            }
-            pluginToolStrip.Visible = true;
+                if (plugins.Count <= 0)
+                {
+                    pluginToolStrip.Visible = false;
+                    return;
+                }
+
+                foreach (var plugin in plugins)
+                {
+                    var mi = new ToolStripMenuItem(plugin.Name, plugin.Icon, (s, a) => plugin.Show());
+                    pluginToolStrip.DropDownItems.Add(mi);
+                    mi.ToolTipText = plugin.Description;
+                }
+                pluginToolStrip.Visible = true;
+            });
         }
 
         void OnRequireMenuUpdateHandler(object sender, EventArgs evs)
         {
-            VgcApis.Misc.UI.Invoke(formMain, UpdatePluginMenu);
+            VgcApis.Misc.UI.Invoke(UpdatePluginMenu);
         }
 
         void InitMenuPlugin(ToolStripMenuItem pluginToolStrip)
@@ -131,7 +134,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem miCheckVgcUpdate)
         {
             // menu about
-            downloadV2rayCore.Click += (s, a) => Views.WinForms.FormDownloadCore.GetForm();
+            downloadV2rayCore.Click += (s, a) => Views.WinForms.FormDownloadCore.ShowForm();
 
             removeV2rayCore.Click += (s, a) => RemoveV2RayCore();
 
@@ -164,7 +167,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
         private static void InitMenuWindows(ToolStripMenuItem miFormConfigEditor, ToolStripMenuItem miFormQRCode, ToolStripMenuItem miFormLog, ToolStripMenuItem miFormOptions)
         {
             // menu window
-            miFormConfigEditor.Click += (s, a) => new Views.WinForms.FormConfiger();
+            miFormConfigEditor.Click += (s, a) => Views.WinForms.FormConfiger.ShowConfig();
+
 
             miFormQRCode.Click += (s, a) => Views.WinForms.FormQRCode.ShowForm();
 

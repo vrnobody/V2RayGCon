@@ -14,11 +14,17 @@ namespace V2RayGCon.Views.WinForms
             {
                 if (_instant == null || _instant.IsDisposed)
                 {
-                    _instant = new FormModifyServerSettings();
+                    VgcApis.Misc.UI.Invoke(() =>
+                    {
+                        _instant = new FormModifyServerSettings();
+                    });
                 }
-                _instant.InitControls(coreServ);
-                _instant.Show();
-                _instant.Activate();
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    _instant.InitControls(coreServ);
+                    _instant.Show();
+                    _instant.Activate();
+                });
             }
         }
         #endregion
@@ -76,7 +82,7 @@ namespace V2RayGCon.Views.WinForms
             orgCoreServSettings = new VgcApis.Models.Datas.CoreServSettings(coreServ);
             var marks = servers.GetMarkList();
 
-            VgcApis.Misc.UI.Invoke(this, () =>
+            VgcApis.Misc.UI.Invoke(() =>
             {
                 tboxTitle.Text = coreServ.GetCoreStates().GetTitle();
                 cboxMark.Items.Clear();

@@ -31,16 +31,19 @@ namespace Luna.Services
         {
             lock (formLocker)
             {
-                var newForm = new Views.WinForms.FormMain(api, settings, luaServer, this);
-
-                newForm.FormClosed += (s, a) =>
+                VgcApis.Misc.UI.Invoke(() =>
                 {
-                    var form = newForm; // capture
-                    RemoveFormFromList(form);
-                };
+                    var newForm = Views.WinForms.FormMain.CreateForm(api, settings, luaServer, this);
 
-                forms.Add(newForm);
-                newForm.Show();
+                    newForm.FormClosed += (s, a) =>
+                    {
+                        var form = newForm; // capture
+                        RemoveFormFromList(form);
+                    };
+
+                    forms.Add(newForm);
+                    newForm.Show();
+                });
             }
         }
 
@@ -48,10 +51,9 @@ namespace Luna.Services
         {
             if (forms.Count() > 0)
             {
-                forms[0].Activate();
+                VgcApis.Misc.UI.Invoke(() => forms[0].Activate());
                 return;
             }
-
             CreateNewForm();
         }
 

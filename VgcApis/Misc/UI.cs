@@ -82,8 +82,7 @@ namespace VgcApis.Misc
 
             bool isClipboardHasText()
             {
-                var r = false;
-                Utils.RunAsSTAThread(() => r = Clipboard.ContainsText());
+                var r = Clipboard.ContainsText();
                 return r;
             }
 
@@ -136,182 +135,16 @@ namespace VgcApis.Misc
 
         #region update ui
         public static void CloseFormIgnoreError(Form form) =>
-            Invoke(form, () => form?.Close());
+            Invoke(() => form?.Close());
 
         public static bool IsInUiThread()
         {
             return Thread.CurrentThread.Name == Models.Consts.Libs.UiThreadName;
         }
 
-        public static void BeginInvokeThen(Control control, Action updater, Action next)
-        {
-            Action updateIgnoreError = () =>
-            {
-                try
-                {
-                    updater?.Invoke();
-                }
-                catch (Exception ex)
-                {
-                    LogContrlExAndCs(control, ex);
-                }
-            };
+        public static Action<Action> Invoke;
 
-            try
-            {
-                if (control == null || control.IsDisposed)
-                {
-                    next?.Invoke();
-                    return;
-                }
-
-                control.BeginInvoke((MethodInvoker)delegate
-                {
-                    updateIgnoreError();
-                    next?.Invoke();
-                });
-                return;
-
-            }
-            catch (Exception ex)
-            {
-                LogContrlExAndCs(control, ex);
-            }
-            next?.Invoke();
-        }
-
-        public static void BeginInvoke(Control control, Action updater)
-        {
-            Action updateIgnoreError = () =>
-            {
-                try
-                {
-                    updater?.Invoke();
-                }
-                catch (Exception ex)
-                {
-                    LogContrlExAndCs(control, ex);
-                }
-            };
-
-            try
-            {
-                if (control == null || control.IsDisposed)
-                {
-                    return;
-                }
-
-                control.BeginInvoke((MethodInvoker)delegate
-                {
-                    updateIgnoreError();
-                });
-            }
-            catch (Exception ex)
-            {
-                LogContrlExAndCs(control, ex);
-            }
-        }
-
-        public static void InvokeThen(
-            Control control, Action updater, Action next)
-        {
-            Action updaterIe = () =>
-            {
-                try
-                {
-                    updater?.Invoke();
-                }
-                catch (Exception ex)
-                {
-                    LogContrlExAndCs(control, ex);
-                }
-            };
-
-            try
-            {
-                if (control == null || control.IsDisposed)
-                {
-                    next?.Invoke();
-                    return;
-                }
-
-                if (control.InvokeRequired)
-                {
-                    control.Invoke((MethodInvoker)delegate
-                    {
-                        updaterIe();
-                        next?.Invoke();
-                    });
-                    return;
-                }
-
-                if (!IsInUiThread())
-                {
-                    Libs.Sys.FileLogger.DumpCallStack("!invoke error!");
-                }
-                updaterIe();
-                next?.Invoke();
-                return;
-            }
-            catch (Exception ex)
-            {
-                LogContrlExAndCs(control, ex);
-            }
-            next?.Invoke();
-        }
-
-        static void LogContrlExAndCs(Control control, Exception ex)
-        {
-            var th = Thread.CurrentThread;
-
-            Libs.Sys.FileLogger.Error(
-                $"Invoke updater() error by control {control.Name}\n" +
-                $"Current thread info: [{th.ManagedThreadId}] {th.Name}\n" +
-                $"{ex}\n" +
-                $"{Utils.GetCurCallStack()}");
-        }
-
-        public static void Invoke(Control control, Action updater)
-        {
-            Action updateIgnoreError = () =>
-            {
-                try
-                {
-                    updater?.Invoke();
-                }
-                catch (Exception ex)
-                {
-                    LogContrlExAndCs(control, ex);
-                }
-            };
-
-            try
-            {
-                if (control == null || control.IsDisposed)
-                {
-                    return;
-                }
-
-                if (control.InvokeRequired)
-                {
-                    control.Invoke((MethodInvoker)delegate
-                    {
-                        updateIgnoreError();
-                    });
-                    return;
-                }
-
-                if (!IsInUiThread())
-                {
-                    Libs.Sys.FileLogger.DumpCallStack("!invoke error!");
-                }
-                updateIgnoreError();
-            }
-            catch (Exception ex)
-            {
-                LogContrlExAndCs(control, ex);
-            }
-        }
+        public static Action<Action, Action> InvokeThen;
 
         // https://stackoverflow.com/questions/87795/how-to-prevent-flickering-in-listview-when-updating-a-single-listviewitems-text
         public static void DoubleBuffered(this Control control, bool enable)
@@ -342,6 +175,16 @@ namespace VgcApis.Misc
         /// <param name="fileName"></param>
         /// <returns></returns>
         static public Tuple<string, string> ReadFileFromDialog(string extension)
+        {
+            Tuple<string, string> r = null;
+            Invoke(() =>
+            {
+                r = ReadFileFromDialogWorker(extension);
+            });
+            return r;
+        }
+
+        static public Tuple<string, string> ReadFileFromDialogWorker(string extension)
         {
             OpenFileDialog readFileDialog = new OpenFileDialog
             {
@@ -401,6 +244,19 @@ namespace VgcApis.Misc
         public static Models.Datas.Enums.SaveFileErrorCode ShowSaveFileDialog(
             string extension, string content, out string fileName)
         {
+            Models.Datas.Enums.SaveFileErrorCode r = Models.Datas.Enums.SaveFileErrorCode.Cancel;
+            string fn = null;
+            Invoke(() =>
+            {
+                r = ShowSaveFileDialogWorker(extension, content, out fn);
+            });
+            fileName = fn;
+            return r;
+        }
+
+        static Models.Datas.Enums.SaveFileErrorCode ShowSaveFileDialogWorker(
+            string extension, string content, out string fileName)
+        {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog
             {
                 Filter = extension,
@@ -429,6 +285,16 @@ namespace VgcApis.Misc
 
         public static string ShowSelectFolderDialog()
         {
+            string r = null;
+            Invoke(() =>
+            {
+                r = ShowSelectFolderDialogWorker();
+            });
+            return r;
+        }
+
+        static string ShowSelectFolderDialogWorker()
+        {
             using (var fbd = new FolderBrowserDialog())
             {
                 DialogResult result = fbd.ShowDialog();
@@ -448,6 +314,16 @@ namespace VgcApis.Misc
         /// <param name="extension"></param>
         /// <returns></returns>
         public static string ShowSelectFileDialog(string extension)
+        {
+            string r = null;
+            Invoke(() =>
+            {
+                r = ShowSelectFileDialogWorker(extension);
+            });
+            return r;
+        }
+
+        static string ShowSelectFileDialogWorker(string extension)
         {
             using (OpenFileDialog readFileDialog = new OpenFileDialog
             {
@@ -507,6 +383,7 @@ namespace VgcApis.Misc
         #endregion
 
         #region winform
+
         static List<Color> colorTable = new List<Color> {
             Color.AntiqueWhite,
             Color.Aqua,

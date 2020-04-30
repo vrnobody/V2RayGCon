@@ -211,12 +211,6 @@
     <Compile Include="Services\ShareLinkComponents\V2cfgDecoder.cs" />
     <Compile Include="Services\ShareLinkMgr.cs" />
     <Compile Include="Services\Updater.cs" />
-    <Compile Include="Views\FormRoot.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\FormRoot.Designer.cs">
-      <DependentUpon>FormRoot.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\UserControls\MultiConfUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -358,9 +352,6 @@
     <Compile Include="Views\WinForms\FormSimAddVmessClient.Designer.cs">
       <DependentUpon>FormSimAddVmessClient.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Views\FormRoot.resx">
-      <DependentUpon>FormRoot.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\MultiConfUI.resx">
       <DependentUpon>MultiConfUI.cs</DependentUpon>
     </EmbeddedResource>

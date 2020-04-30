@@ -13,13 +13,17 @@ namespace V2RayGCon.Views.WinForms
         {
             if (_instant == null || _instant.IsDisposed)
             {
-                _instant = new FormSimAddVmessClient();
+                VgcApis.Misc.UI.Invoke(
+                    () =>
+                    {
+                        _instant = new FormSimAddVmessClient();
+                        _instant.Show();
+                    });
             }
             return _instant;
         }
         #endregion
 
-        Services.Servers servers;
         Services.Settings setting;
         Services.ShareLinkMgr slinkMgr;
 
@@ -28,12 +32,10 @@ namespace V2RayGCon.Views.WinForms
             InitializeComponent();
             Fill(cboxKCP, Models.Datas.Table.kcpTypes);
 
-            servers = Services.Servers.Instance;
             setting = Services.Settings.Instance;
             slinkMgr = Services.ShareLinkMgr.Instance;
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);
-            this.Show();
 
             this.FormClosed += (s, a) =>
             {
@@ -96,7 +98,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void linkConfigEditor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            new FormConfiger();
+            FormConfiger.ShowConfig();
         }
 
         private void btnGenUserID_Click(object sender, EventArgs e)

@@ -49,9 +49,10 @@ namespace V2RayGCon.Services
         {
             lazyServerSettingsRecorder = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveServersSettingsWorker,
-                VgcApis.Models.Consts.Intervals.LazySaveServerListIntreval)
+                VgcApis.Models.Consts.Intervals.LazySaveServerListIntreval,
+                1000)
             {
-                Name = "Vgc.Servers.SaveSettings",
+                Name = "Servers.SaveSettings()",
             };
         }
 
@@ -907,8 +908,9 @@ namespace V2RayGCon.Services
             lazyServerTrackingTimer?.Release();
 
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() save data");
-            lazyServerSettingsRecorder?.DoItNow();
             lazyServerSettingsRecorder?.Dispose();
+            SaveServersSettingsWorker();
+
         }
 
         #endregion

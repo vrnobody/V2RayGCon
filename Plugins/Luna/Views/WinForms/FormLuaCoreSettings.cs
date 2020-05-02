@@ -13,18 +13,25 @@ namespace Luna.Views.WinForms
             {
                 if (_instant == null || _instant.IsDisposed)
                 {
-                    _instant = new FormLuaCoreSettings();
+                    VgcApis.Misc.UI.Invoke(() =>
+                    {
+                        _instant = new FormLuaCoreSettings();
+                    });
                 }
-                _instant.InitControls(luaCoreCtrl);
-                _instant.Show();
-                _instant.Activate();
+
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    _instant.InitControls(luaCoreCtrl);
+                    _instant.Show();
+                    _instant.Activate();
+                });
             }
         }
         #endregion
 
         Controllers.LuaCoreCtrl luaCoreCtrl = null;
 
-        public FormLuaCoreSettings()
+        FormLuaCoreSettings()
         {
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
@@ -43,13 +50,13 @@ namespace Luna.Views.WinForms
 
         void UpdateUi()
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(tboxName, () =>
-{
-    tboxName.Text = luaCoreCtrl.name;
-    chkAutorun.Checked = luaCoreCtrl.isAutoRun;
-    chkHidden.Checked = luaCoreCtrl.isHidden;
-    chkClrSupports.Checked = luaCoreCtrl.isLoadClr;
-});
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                tboxName.Text = luaCoreCtrl.name;
+                chkAutorun.Checked = luaCoreCtrl.isAutoRun;
+                chkHidden.Checked = luaCoreCtrl.isHidden;
+                chkClrSupports.Checked = luaCoreCtrl.isLoadClr;
+            });
         }
         #endregion
 

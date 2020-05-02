@@ -107,11 +107,11 @@
             // 
             // rlbIsRunning
             // 
-            this.rlbIsRunning._BackColor = System.Drawing.Color.DarkOrange;
+            this.rlbIsRunning._BackColor = System.Drawing.Color.Transparent;
             this.rlbIsRunning.AutoEllipsis = true;
             this.rlbIsRunning.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.rlbIsRunning, "rlbIsRunning");
-            this.rlbIsRunning.ForeColor = System.Drawing.SystemColors.Control;
+            this.rlbIsRunning.ForeColor = System.Drawing.Color.ForestGreen;
             this.rlbIsRunning.Name = "rlbIsRunning";
             this.toolTip1.SetToolTip(this.rlbIsRunning, resources.GetString("rlbIsRunning.ToolTip"));
             this.rlbIsRunning.UseCompatibleTextRendering = true;

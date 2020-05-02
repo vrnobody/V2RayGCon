@@ -13,6 +13,7 @@ namespace Luna.Models.Apis.Components
         Services.Settings settings;
         VgcApis.Interfaces.Services.IUtilsService vgcUtils;
         VgcApis.Interfaces.Services.IShareLinkMgrService vgcSlinkMgr;
+        VgcApis.Interfaces.Services.INotifierService vgcNotifier;
         VgcApis.Interfaces.Services.IServersService vgcServer;
         VgcApis.Interfaces.Services.ISettingsService vgcSettings;
 
@@ -21,11 +22,22 @@ namespace Luna.Models.Apis.Components
             VgcApis.Interfaces.Services.IApiService api)
         {
             this.settings = settings;
+            vgcNotifier = api.GetNotifierService();
             vgcUtils = api.GetUtilsService();
             vgcSlinkMgr = api.GetShareLinkMgrService();
             vgcServer = api.GetServersService();
             vgcSettings = api.GetSettingService();
         }
+
+
+        #region ILuaMisc.WinForms
+        public void ShowFormMain() => vgcNotifier.ShowFormMain();
+
+        public void ShowFormLog() => vgcNotifier.ShowFormLog();
+
+        public void ShowFormQrcode() => vgcNotifier.ShowFormQrcode();
+
+        #endregion
 
         #region ILuaMisc.Json
         public bool TrySetDoubleValue(JToken json, string path, double value) =>
@@ -126,35 +138,14 @@ namespace Luna.Models.Apis.Components
         public string ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows) =>
             ShowData(title, columns, rows, -1);
 
-        public string BrowseFolder()
-        {
-            string r = null;
-            VgcApis.Misc.Utils.RunAsSTAThread(() =>
-            {
-                r = VgcApis.Misc.UI.ShowSelectFolderDialog();
-            });
-            return r;
-        }
+        public string BrowseFolder() => VgcApis.Misc.UI.ShowSelectFolderDialog();
 
-        public string BrowseFile()
-        {
-            string r = null;
-            VgcApis.Misc.Utils.RunAsSTAThread(() =>
-            {
-                r = VgcApis.Misc.UI.ShowSelectFileDialog(VgcApis.Models.Consts.Files.AllExt);
-            });
-            return r;
-        }
+        public string BrowseFile() =>
+            VgcApis.Misc.UI.ShowSelectFileDialog(
+                VgcApis.Models.Consts.Files.AllExt);
 
-        public string BrowseFile(string filter)
-        {
-            string r = null;
-            VgcApis.Misc.Utils.RunAsSTAThread(() =>
-            {
-                r = VgcApis.Misc.UI.ShowSelectFileDialog(filter);
-            });
-            return r;
-        }
+        public string BrowseFile(string filter) =>
+                VgcApis.Misc.UI.ShowSelectFileDialog(filter);
 
         public string Input(string title) => Input(title, 3);
 
@@ -162,15 +153,17 @@ namespace Luna.Models.Apis.Components
 
         public string Input(string title, string content, int lines)
         {
-            using (var form = new Views.WinForms.FormInput(title, content, lines))
+            DialogResult ok = DialogResult.Cancel;
+            string r = null;
+            using (var form = Views.WinForms.FormInput.CreateForm(title, content, lines))
             {
-                var result = form.ShowDialog();
-                if (result == DialogResult.OK)
+                VgcApis.Misc.UI.Invoke(() =>
                 {
-                    return form.result;
-                }
+                    ok = form.ShowDialog();
+                    r = form.result;
+                });
             }
-            return null;
+            return ok == DialogResult.OK ? r : null;
         }
 
         public List<int> Choices(string title, NLua.LuaTable choices) =>
@@ -235,20 +228,48 @@ namespace Luna.Models.Apis.Components
         public List<string> LocalStorageKeys() =>
             settings.ShareMemoryKeys();
 
-        public string Config2VeeLink(string config) =>
-            vgcSlinkMgr.EncodeConfigToShareLink(
+        public string Config2VeeLink(string config)
+        {
+            try
+            {
+                return vgcSlinkMgr.EncodeConfigToShareLink(
                 config, VgcApis.Models.Datas.Enums.LinkTypes.v);
+            }
+            catch { }
+            return null;
+        }
 
-        public string Config2VmessLink(string config) =>
-            vgcSlinkMgr.EncodeConfigToShareLink(
+        public string Config2VmessLink(string config)
+        {
+            try
+            {
+                return vgcSlinkMgr.EncodeConfigToShareLink(
                 config, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
+            }
+            catch { }
+            return null;
+        }
 
-        public string Config2V2cfg(string config) =>
-            vgcSlinkMgr.EncodeConfigToShareLink(
+        public string Config2V2cfg(string config)
+        {
+            try
+            {
+                return vgcSlinkMgr.EncodeConfigToShareLink(
                 config, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
+            }
+            catch { }
+            return null;
+        }
 
-        public string ShareLink2ConfigString(string shareLink) =>
-          vgcSlinkMgr.DecodeShareLinkToConfig(shareLink) ?? @"";
+        public string ShareLink2ConfigString(string shareLink)
+        {
+            try
+            {
+                return vgcSlinkMgr.DecodeShareLinkToConfig(shareLink) ?? @"";
+            }
+            catch { }
+            return null;
+        }
 
         public string AddVeePrefix(string b64Str) =>
            vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.v);
@@ -368,41 +389,47 @@ namespace Luna.Models.Apis.Components
 
         string ShowDataGridDialog(string title, DataTable dataSource, int defColumn)
         {
-            using (var form = new Views.WinForms.FormDataGrid(title, dataSource, defColumn))
+            DialogResult result = DialogResult.Cancel;
+            string r = null;
+            using (var form = Views.WinForms.FormDataGrid.CreateForm(title, dataSource, defColumn))
             {
-                var result = form.ShowDialog();
-                if (result == DialogResult.OK)
+                VgcApis.Misc.UI.Invoke(() =>
                 {
-                    return form.jsonResult;
-                }
+                    result = form.ShowDialog();
+                    r = form.jsonResult;
+                });
             }
-            return null;
+            return result == DialogResult.OK ? r : null;
         }
 
         private static List<int> GetResultFromChoicesDialog(string title, string[] choices)
         {
-            using (var form = new Views.WinForms.FormChoices(title, choices))
+            DialogResult ok = DialogResult.Cancel;
+            List<int> r = null;
+            using (var form = Views.WinForms.FormChoices.CreateForm(title, choices))
             {
-                var result = form.ShowDialog();
-                if (result == DialogResult.OK)
+                VgcApis.Misc.UI.Invoke(() =>
                 {
-                    return form.results;
-                }
+                    ok = form.ShowDialog();
+                    r = form.results;
+                });
             }
-            return new List<int>();
+            return ok == DialogResult.OK ? r : new List<int>();
         }
 
         private static int GetResultFromChoiceDialog(string title, string[] choices, int selected)
         {
-            using (var form = new Views.WinForms.FormChoice(title, choices, selected))
+            DialogResult ok = DialogResult.Cancel;
+            int idx = 0;
+            using (var form = Views.WinForms.FormChoice.CreateForm(title, choices, selected))
             {
-                var result = form.ShowDialog();
-                if (result == DialogResult.OK)
+                VgcApis.Misc.UI.Invoke(() =>
                 {
-                    return form.result;
-                }
+                    ok = form.ShowDialog();
+                    idx = form.result;
+                });
             }
-            return -1;
+            return ok == DialogResult.OK ? idx : -1;
         }
 
         #endregion

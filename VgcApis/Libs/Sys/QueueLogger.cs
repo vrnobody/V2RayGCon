@@ -9,7 +9,6 @@ namespace VgcApis.Libs.Sys
     {
         long updateTimestamp = DateTime.Now.Ticks;
         Queue<string> logCache = new Queue<string>();
-        const int maxLogLineNumber = Models.Consts.Libs.MaxCacheLoggerLineNumber;
         object logWriteLocker = new object();
 
         public QueueLogger() { }

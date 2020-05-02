@@ -170,8 +170,7 @@ namespace Luna.Controllers
         public string GetCurrentEditorContent() => luaEditor.Text;
 
         public void SetCurrentEditorContent(string content) =>
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
-                luaEditor, () => luaEditor.Text = content);
+            VgcApis.Misc.UI.Invoke(() => luaEditor.Text = content);
 
         public bool SaveScript()
         {
@@ -277,7 +276,7 @@ namespace Luna.Controllers
                 return;
             }
 
-            formSearch = new VgcApis.WinForms.FormSearch(luaEditor);
+            formSearch = VgcApis.WinForms.FormSearch.CreateForm(luaEditor);
             formSearch.FormClosed += (s, a) => formSearch = null;
         }
 
@@ -300,14 +299,14 @@ namespace Luna.Controllers
                 return;
             }
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(rtboxOutput, () =>
-            {
-                rtboxFreezer.DisableRepaintEvent();
-                rtboxOutput.Text = qLogger.GetLogAsString(true);
-                VgcApis.Misc.UI.ScrollToBottom(rtboxOutput);
-                rtboxFreezer.EnableRepaintEvent();
-                updateOutputTimeStamp = timestamp;
-            });
+            VgcApis.Misc.UI.Invoke(() =>
+           {
+               rtboxFreezer.DisableRepaintEvent();
+               rtboxOutput.Text = qLogger.GetLogAsString(true);
+               VgcApis.Misc.UI.ScrollToBottom(rtboxOutput);
+               rtboxFreezer.EnableRepaintEvent();
+               updateOutputTimeStamp = timestamp;
+           });
             bar.Remove();
         }
 

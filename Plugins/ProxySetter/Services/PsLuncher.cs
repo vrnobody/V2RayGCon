@@ -49,12 +49,13 @@ namespace ProxySetter.Services
                 return;
             }
 
-            formMain = new Views.WinForms.FormMain(
-                setting,
-                pacServer,
-                serverTracker);
-            formMain.FormClosed += (s, a) => formMain = null;
-            formMain.Show();
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                formMain = Views.WinForms.FormMain.CreateForm(
+                    setting, pacServer, serverTracker);
+                formMain.FormClosed += (s, a) => formMain = null;
+                formMain.Show();
+            });
         }
 
         public void Cleanup()

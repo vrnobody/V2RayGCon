@@ -9,7 +9,20 @@ namespace Statistics.Views.WinForms
         VgcApis.Interfaces.Services.IServersService vgcServers;
         Controllers.FormMainCtrl formMainCtrl;
 
-        public FormMain(
+        public static FormMain CreateForm(
+            Services.Settings settings,
+            VgcApis.Interfaces.Services.IServersService vgcServers)
+        {
+            FormMain form = null;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                form = new FormMain(settings, vgcServers);
+            });
+
+            return form;
+        }
+
+        FormMain(
             Services.Settings settings,
             VgcApis.Interfaces.Services.IServersService vgcServers)
         {

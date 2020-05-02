@@ -34,16 +34,18 @@ namespace V2RayGCon.Services
 
             janitor = new VgcApis.Libs.Tasks.LazyGuy(
                 () => GC.Collect(),
-                VgcApis.Models.Consts.Intervals.LazyGcDelay)
+                VgcApis.Models.Consts.Intervals.LazyGcDelay,
+                5000)
             {
-                Name = "Vgc.Settings.GC",
+                Name = "Settings.GC()",
             };
 
             lazyBookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveUserSettingsWorker,
-                VgcApis.Models.Consts.Intervals.LazySaveUserSettingsDelay)
+                VgcApis.Models.Consts.Intervals.LazySaveUserSettingsDelay,
+                500)
             {
-                Name = "Vgc.Settings.SaveSettings",
+                Name = "Settings.SaveSettings",
             };
         }
 
@@ -477,7 +479,7 @@ namespace V2RayGCon.Services
             SaveSettingsLater();
         }
 
-        public void SaveUserSettingsNow() => lazyBookKeeper?.DoItNow();
+        public void SaveUserSettingsNow() => SaveUserSettingsWorker();
 
         public void LazyGC() => janitor?.Postpone();
 
@@ -689,7 +691,7 @@ namespace V2RayGCon.Services
 
         void SaveUserSettingsWorker()
         {
-            VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() begin");
+            // VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() begin");
             string serializedUserSettings = "";
             try
             {
@@ -706,8 +708,9 @@ namespace V2RayGCon.Services
                         // DebugSendLog("Try save settings to properties");
                         SetUserSettingFileIsPortableToFalse();
                         SaveUserSettingsToProperties(serializedUserSettings);
+                        VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsToProperties() done");
                     }
-                    VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() done");
+                    // VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() done");
                     return;
                 }
             }
@@ -793,9 +796,9 @@ namespace V2RayGCon.Services
 
             if (ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
             {
-                // this is important do not use task
                 var msg = string.Format(I18N.UnsetPortableModeFail, mainUsFilename);
-                MessageBox.Show(msg);
+                // do not block any function in background service
+                VgcApis.Misc.UI.MsgBoxAsync(msg);
             }
         }
 
@@ -850,9 +853,10 @@ namespace V2RayGCon.Services
                 msg += Environment.NewLine + string.Format(I18N.AndThenSaveThisFileAs, Properties.Resources.PortableUserSettingsFilename);
             }
 
-            // this is important do not use task!
+
             msg += Environment.NewLine + I18N.OrDisablePortableMode;
-            MessageBox.Show(msg);
+            // do not block any function in background service
+            VgcApis.Misc.UI.MsgBoxAsync(msg);
         }
 
         Models.Datas.UserSettings LoadUserSettingsFromPorperties()
@@ -945,8 +949,8 @@ namespace V2RayGCon.Services
         protected override void Cleanup()
         {
             VgcApis.Libs.Sys.FileLogger.Info("Settings.Cleanup() begin");
-            lazyBookKeeper?.DoItNow();
             lazyBookKeeper?.Dispose();
+            SaveUserSettingsNow();
             janitor?.Dispose();
             qLogger.Dispose();
             VgcApis.Libs.Sys.FileLogger.Info("Settings.Cleanup() done");

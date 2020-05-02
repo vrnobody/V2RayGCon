@@ -57,9 +57,10 @@ namespace V2RayGCon.Views.WinForms
 
             lazyServerListUpdater = new VgcApis.Libs.Tasks.LazyGuy(
                 RefreshServerListWorker,
-                VgcApis.Models.Consts.Intervals.FormQrcodeMenuUpdateDelay)
+                VgcApis.Models.Consts.Intervals.FormQrcodeMenuUpdateDelay,
+                1000)
             {
-                Name = "Vgc.Qrcode.ServersTitleList",
+                Name = "Qrcode.RefreshServerListWorker()",
             };
 
             BindServerEvents();
@@ -145,7 +146,7 @@ namespace V2RayGCon.Views.WinForms
                 return;
             }
 
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(cboxServList, () =>
+            VgcApis.Misc.UI.Invoke(() =>
             {
                 cboxServList.Items.Clear();
                 cboxServList.Items.AddRange(summaryList.ToArray());
@@ -236,22 +237,25 @@ namespace V2RayGCon.Views.WinForms
 
         private void btnSavePic_Click(object sender, EventArgs e)
         {
-            Stream myStream;
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog
+            VgcApis.Misc.UI.Invoke(() =>
             {
-                Filter = StrConst.ExtPng,
-                FilterIndex = 1,
-                RestoreDirectory = true,
-            };
-
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                if ((myStream = saveFileDialog1.OpenFile()) != null)
+                Stream myStream;
+                SaveFileDialog saveFileDialog1 = new SaveFileDialog
                 {
-                    picQRCode.Image.Save(myStream, System.Drawing.Imaging.ImageFormat.Png);
-                    myStream.Close();
+                    Filter = StrConst.ExtPng,
+                    FilterIndex = 1,
+                    RestoreDirectory = true,
+                };
+
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    if ((myStream = saveFileDialog1.OpenFile()) != null)
+                    {
+                        picQRCode.Image.Save(myStream, System.Drawing.Imaging.ImageFormat.Png);
+                        myStream.Close();
+                    }
                 }
-            }
+            });
         }
 
         private void tboxLink_TextChanged(object sender, EventArgs e)

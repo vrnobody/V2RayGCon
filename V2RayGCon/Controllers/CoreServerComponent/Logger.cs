@@ -38,12 +38,14 @@
                 if (logForm == null)
                 {
                     var title = coreInfo.GetSummary();
-                    logForm = new Views.WinForms.FormSingleServerLog(title, qLogger);
-                    logForm.FormClosed += (s, a) => logForm = null;
-                    logForm.Show();
+                    VgcApis.Misc.UI.Invoke(() =>
+                    {
+                        logForm = Views.WinForms.FormSingleServerLog.CreateLogForm(title, qLogger);
+                        logForm.FormClosed += (s, a) => logForm = null;
+                        logForm.Show();
+                    });
                 }
-
-                logForm.Activate();
+                VgcApis.Misc.UI.Invoke(() => logForm.Activate());
             }
         }
         #endregion

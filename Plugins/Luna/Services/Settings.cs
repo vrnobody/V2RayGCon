@@ -1,6 +1,5 @@
 ﻿using AutocompleteMenuNS;
 using ScintillaNET;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -43,9 +42,6 @@ namespace Luna.Services
         #endregion
 
         #region public methods
-        public void RunInUiThreadIgnoreError(Action updater) =>
-            vgcNotifier.RunInUiThreadIgnoreError(updater);
-
         public void SendLog(string contnet)
         {
             var name = Properties.Resources.Name;

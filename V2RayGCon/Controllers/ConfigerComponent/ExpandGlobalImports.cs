@@ -124,7 +124,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 string result = ParseConfig(plainText);
                 setting.LazyGC();
 
-                VgcApis.Misc.UI.RunInUiThreadIgnoreError(editor, () => content = result);
+                VgcApis.Misc.UI.Invoke(() => content = result);
             });
         }
 

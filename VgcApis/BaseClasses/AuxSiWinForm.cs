@@ -23,7 +23,10 @@ namespace VgcApis.BaseClasses
             {
                 if (instance == null || instance.IsDisposed)
                 {
-                    instance = new TForm();
+                    Misc.UI.Invoke(() =>
+                    {
+                        instance = new TForm();
+                    });
                 }
                 else
                 {
@@ -36,7 +39,7 @@ namespace VgcApis.BaseClasses
         public TForm ShowForm()
         {
             var form = GetForm();
-            form.Show();
+            Misc.UI.Invoke(() => form.Show());
             return form;
         }
     }

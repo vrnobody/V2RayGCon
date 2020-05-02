@@ -38,7 +38,7 @@ namespace Statistics
                 return;
             }
 
-            formMain = new Views.WinForms.FormMain(
+            formMain = Views.WinForms.FormMain.CreateForm(
                 settings,
                 vgcServers);
             formMain.FormClosed += (s, a) => formMain = null;

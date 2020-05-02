@@ -23,15 +23,18 @@ namespace Pacman
         #region protected overrides
         protected override void Popup()
         {
-            if (formMain != null)
+            VgcApis.Misc.UI.Invoke(() =>
             {
-                formMain.Activate();
-                return;
-            }
+                if (formMain != null)
+                {
+                    formMain.Activate();
+                    return;
+                }
 
-            formMain = new Views.WinForms.FormMain(settings);
-            formMain.FormClosed += (s, a) => formMain = null;
-            formMain.Show();
+                formMain = Views.WinForms.FormMain.CreateForm(settings);
+                formMain.FormClosed += (s, a) => formMain = null;
+                formMain.Show();
+            });
         }
 
         protected override void Start(VgcApis.Interfaces.Services.IApiService api)

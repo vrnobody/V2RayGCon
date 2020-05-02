@@ -12,8 +12,17 @@ namespace Luna.Views.WinForms
         private readonly string content;
         private readonly int lines;
 
+        public static FormInput CreateForm(string title, string content, int lines)
+        {
+            FormInput r = null;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                r = new FormInput(title, content, lines);
+            });
+            return r;
+        }
 
-        public FormInput(string title, string content, int lines)
+        FormInput(string title, string content, int lines)
         {
             InitializeComponent();
             this.title = title;

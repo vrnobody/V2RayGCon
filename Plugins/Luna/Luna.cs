@@ -16,12 +16,19 @@ namespace Luna
         readonly ToolStripMenuItem miRoot, miShowWindow;
         public Luna()
         {
-            miRoot = new ToolStripMenuItem(this.Name, this.Icon);
+            ToolStripMenuItem mr = null, msw = null;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                mr = new ToolStripMenuItem(this.Name, this.Icon);
 
-            miShowWindow = new ToolStripMenuItem(
-                I18N.OpenScriptManger,
-                Properties.Resources.StoredProcedureScript_16x,
-                (s, a) => Show());
+                msw = new ToolStripMenuItem(
+                    I18N.OpenScriptManger,
+                    Properties.Resources.StoredProcedureScript_16x,
+                    (s, a) => Show());
+            });
+
+            miRoot = mr;
+            miShowWindow = msw;
         }
 
         #region properties

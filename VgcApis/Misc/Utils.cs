@@ -24,6 +24,21 @@ namespace VgcApis.Misc
     {
 
         #region system
+        public static string GetCurCallStack()
+        {
+            var s = new List<string>();
+
+            StackTrace stack = new StackTrace();
+            foreach (var frame in stack.GetFrames())
+            {
+                var method = frame.GetMethod();
+                var mn = Misc.Utils.GetFriendlyMethodDeclareInfo(method as MethodInfo);
+                s.Add($" -> {mn}");
+            }
+
+            return string.Join("\n", s);
+        }
+
         public static bool TryParseKeyMesssage(
             string keyName, bool hasAlt, bool hasCtrl, bool hasShift,
              out uint modifier,
@@ -391,10 +406,19 @@ namespace VgcApis.Misc
         #endregion
 
         #region Task
+        public static void Sleep(TimeSpan timespan)
+        {
+            try
+            {
+                Thread.Sleep(timespan);
+            }
+            catch { }
+        }
         public static void Sleep(int milSec)
         {
             try
             {
+                // Task.Delay(milSec).Wait();
                 Thread.Sleep(milSec);
             }
             catch { }
@@ -481,26 +505,34 @@ namespace VgcApis.Misc
             }
         }
 
-        public static void RunAsSTAThread(Action action)
-        {
-            // https://www.codeproject.com/Questions/727531/ThreadStateException-cant-handeled-in-ClipBoard-Se
-            AutoResetEvent done = new AutoResetEvent(false);
-            Thread thread = new Thread(
-                () =>
-                {
-                    action?.Invoke();
-                    done.Set();
-                });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            done.WaitOne();
-        }
-
         public static Task RunInBackground(Action worker, bool configAwait = false)
         {
+            Action job = () =>
+            {
+                try
+                {
+                    var missionId = Utils.RandomHex(8);
+                    if (UI.IsInUiThread())
+                    {
+                        Libs.Sys.FileLogger.Warn($"Task [{missionId}] running in UI thread");
+                        Libs.Sys.FileLogger.DumpCallStack("Caller stack:");
+                    }
+                    worker?.Invoke();
+                    if (UI.IsInUiThread())
+                    {
+                        Libs.Sys.FileLogger.Warn($"task [{missionId}] finished");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Libs.Sys.FileLogger.Error($"Background task error:\n{e}");
+                    throw;
+                }
+            };
+
             try
             {
-                var t = new Task(worker, TaskCreationOptions.LongRunning);
+                var t = new Task(job, TaskCreationOptions.LongRunning);
                 if (!configAwait)
                 {
                     t.ConfigureAwait(false);
@@ -508,7 +540,10 @@ namespace VgcApis.Misc
                 t.Start();
                 return t;
             }
-            catch { }
+            catch (Exception e)
+            {
+                Libs.Sys.FileLogger.Error($"Create background task error:\n{e}");
+            }
             return Task.FromResult(false);
         }
         #endregion

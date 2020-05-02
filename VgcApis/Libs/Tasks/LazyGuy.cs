@@ -8,10 +8,11 @@ namespace VgcApis.Libs.Tasks
     {
         private Action singleTask;
         private Action<Action> chainedTask;
-        private readonly int timeout;
+        private readonly int interval;
+        private readonly long ticks;
         private readonly int expectedWorkTime;
         AutoResetEvent jobToken = new AutoResetEvent(true);
-        AutoResetEvent waitingToken = new AutoResetEvent(true);
+        AutoResetEvent waitToken = new AutoResetEvent(true);
 
         bool isCancelled = false;
 
@@ -21,23 +22,31 @@ namespace VgcApis.Libs.Tasks
         ///
         /// </summary>
         /// <param name="chainedTask">(done)=>{... done();}</param>
-        /// <param name="timeout">millisecond</param>
-        public LazyGuy(Action<Action> chainedTask, int timeout, int expectedWorkTime)
+        /// <param name="interval">millisecond</param>
+        /// <param name="expectedWorkTime">millisecond</param>
+        public LazyGuy(Action<Action> chainedTask, int interval, int expectedWorkTime) :
+            this(interval, expectedWorkTime)
         {
             this.chainedTask = chainedTask;
-            this.timeout = timeout;
-            this.expectedWorkTime = expectedWorkTime;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="singleTask">()=>{ ... }</param>
-        /// <param name="timeout">millisecond</param>
-        public LazyGuy(Action singleTask, int timeout)
+        /// <param name="interval">millisecond</param>
+        /// <param name="expectedWorkTime">millisecond</param>
+        public LazyGuy(Action singleTask, int interval, int expectedWorkTime) :
+            this(interval, expectedWorkTime)
         {
             this.singleTask = singleTask;
-            this.timeout = timeout;
+        }
+
+        LazyGuy(int interval, int expectedWorkTime)
+        {
+            this.interval = interval;
+            this.ticks = interval * TimeSpan.TicksPerMillisecond;
+            this.expectedWorkTime = expectedWorkTime;
         }
 
         #region public method
@@ -47,51 +56,64 @@ namespace VgcApis.Libs.Tasks
         /// </summary>
         public void Deadline()
         {
-            if (isCancelled || !waitingToken.WaitOne(0))
+            if (isCancelled || !waitToken.WaitOne(0))
             {
                 return;
             }
 
             Misc.Utils.RunInBackground(() =>
             {
-                Misc.Utils.Sleep(timeout);
+                Misc.Utils.Sleep(interval);
                 TryDoTheJob(Deadline);
             });
         }
 
-        CancellationTokenSource cts = null;
-        readonly object cancelLocker = new object();
+        private long checkpoint;
+
+        void PostponeWorker()
+        {
+            while (true)
+            {
+                var delay = checkpoint - DateTime.Now.Ticks;
+                if (delay < 1)
+                {
+                    break;
+                }
+                Misc.Utils.Sleep(TimeSpan.FromTicks(delay));
+            }
+        }
 
         /// <summary>
         /// ...~...~...~...|
         /// </summary>
         public void Postpone()
         {
-            CancellationToken tk;
-            lock (cancelLocker)
+            checkpoint = DateTime.Now.Ticks + ticks;
+            if (isCancelled || !waitToken.WaitOne(0))
             {
-                cts?.Cancel();
-                cts = new CancellationTokenSource();
-                tk = cts.Token;
+                return;
             }
 
-            Misc.Utils.RunInBackground(async () =>
+            Misc.Utils.RunInBackground(() =>
             {
-                try
-                {
-                    await Task.Delay(timeout, tk);
-                }
-                catch
-                {
-                    return;
-                }
-
-                if (isCancelled || tk.IsCancellationRequested || !waitingToken.WaitOne(0))
-                {
-                    return;
-                }
-
+                PostponeWorker();
                 TryDoTheJob(Postpone);
+            });
+        }
+
+        /// <summary>
+        /// |...|...|...|...|
+        /// </summary>
+        public void Throttle()
+        {
+            if (isCancelled || !waitToken.WaitOne(0))
+            {
+                return;
+            }
+
+            Misc.Utils.RunInBackground(() =>
+            {
+                TryDoTheJob(Deadline);
             });
         }
 
@@ -110,78 +132,75 @@ namespace VgcApis.Libs.Tasks
         {
             isCancelled = false;
         }
-
-        /// <summary>
-        /// |...|...|...|...|
-        /// </summary>
-        public void Throttle()
-        {
-            if (isCancelled || !waitingToken.WaitOne(0))
-            {
-                return;
-            }
-
-            Misc.Utils.RunInBackground(() =>
-            {
-                TryDoTheJob(Deadline);
-            });
-        }
-
-        /// <summary>
-        /// blocking
-        /// </summary>
-        public void DoItNow()
-        {
-            DebugAutoResetEvent(jobToken, nameof(jobToken));
-            DoTheJob();
-        }
-
         #endregion
 
         #region private method
         void TryDoTheJob(Action retry)
         {
-            var ready = jobToken.WaitOne(timeout + expectedWorkTime);
-            // Console.WriteLine($"ready; {ready}");
-            waitingToken.Set();
+            var ready = jobToken.WaitOne(expectedWorkTime);
+            waitToken.Set();
             if (ready)
             {
                 DoTheJob();
             }
             else
             {
-                DumpCurCallStack("TryDoTheJob");
+                if (expectedWorkTime > 1000)
+                {
+                    // LogSuspectableDeadLock("TryDoTheJob");
+                }
                 retry?.Invoke();
             }
         }
 
-        void DumpCurCallStack(string evName)
+        void LogSuspectableDeadLock(string evName)
         {
             if (!string.IsNullOrEmpty(Name))
             {
-                var title = $"!suspectable deadlock! {Name} - {evName}";
-                Sys.FileLogger.DumpCallStack(title);
+                var text = $"!suspectable deadlock! {Name} - {evName}";
+                Sys.FileLogger.Error(text);
             }
         }
-
-        void DebugAutoResetEvent(AutoResetEvent arEv, string evName)
-        {
-            while (!arEv.WaitOne(timeout + expectedWorkTime))
-            {
-                DumpCurCallStack(evName);
-                VgcApis.Misc.Utils.Sleep(100);
-            }
-        }
-
-        void Done() => jobToken.Set();
 
         void DoTheJob()
         {
+            string errMsg = $"DoTheJob() timeout {Name}\n";
+
+            var ok = false;
+            var start = DateTime.Now.Ticks;
+
+            Task.Run(async () =>
+            {
+                var delay = Math.Max(3000, expectedWorkTime * 3);
+                await Task.Delay(delay);
+                if (!ok)
+                {
+                    // jobToken.Set();
+                    Sys.FileLogger.Error(errMsg);
+                }
+            });
+
+            Action done = () =>
+            {
+                ok = true;
+                jobToken.Set();
+                var end = DateTime.Now.Ticks;
+
+                var workTime = TimeSpan.FromTicks(end - start).TotalMilliseconds;
+                if (workTime > 2 * expectedWorkTime)
+                {
+                    Sys.FileLogger.Warn($"DoTheJob() overtime {Name}\n" +
+                        $"exp: {expectedWorkTime}ms, act: {workTime}ms");
+                }
+            };
+
             if (isCancelled)
             {
-                Done();
+                done();
                 return;
             }
+
+            // Sys.FileLogger.Info($"{Name} job begin");
 
             if (chainedTask == null)
             {
@@ -189,20 +208,23 @@ namespace VgcApis.Libs.Tasks
                 {
                     singleTask?.Invoke();
                 }
-                finally
+                catch (Exception ex)
                 {
-                    Done();
+                    Sys.FileLogger.DumpCallStack(
+                        $"DoTheJob() {Name} do single task error\n" +
+                        $"{ex}");
                 }
+                done();
                 return;
             }
 
             try
             {
-                Misc.Utils.RunInBackground(() => chainedTask?.Invoke(Done));
+                Misc.Utils.RunInBackground(() => chainedTask?.Invoke(done));
             }
             catch
             {
-                Done();
+                done();
             }
         }
 
@@ -212,8 +234,6 @@ namespace VgcApis.Libs.Tasks
         protected override void Cleanup()
         {
             isCancelled = true;
-            singleTask = null;
-            chainedTask = null;
         }
         #endregion
 

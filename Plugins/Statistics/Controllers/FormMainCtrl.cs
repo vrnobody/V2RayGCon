@@ -212,16 +212,16 @@ namespace Statistics.Controllers
 
         void BatchUpdateDataView(Action action)
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(dataView, () =>
-            {
-                dataView.BeginUpdate();
-                try
-                {
-                    action?.Invoke();
-                }
-                catch { }
-                dataView.EndUpdate();
-            });
+            VgcApis.Misc.UI.Invoke(() =>
+           {
+               dataView.BeginUpdate();
+               try
+               {
+                   action?.Invoke();
+               }
+               catch { }
+               dataView.EndUpdate();
+           });
         }
 
         void ResizeDataViewColumn(bool byTitle)

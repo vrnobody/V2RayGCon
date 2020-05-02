@@ -143,7 +143,6 @@ namespace V2RayGCon.Views.WinForms
             this.toolStripStatusLabelPrePage = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelNextPage = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.ni = new System.Windows.Forms.NotifyIcon(this.components);
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
@@ -863,10 +862,6 @@ namespace V2RayGCon.Views.WinForms
             resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             // 
-            // notifyIcon1
-            // 
-            resources.ApplyResources(this.ni, "notifyIcon1");
-            // 
             // FormMain
             // 
             resources.ApplyResources(this, "$this");
@@ -1009,6 +1004,5 @@ namespace V2RayGCon.Views.WinForms
         private ToolStripMenuItem toolStripMenuItemReverseByIndex;
         private ToolStripMenuItem toolStripMenuItemModifySettings;
         private ToolStripMenuItem toolStripMenuItemClearSpeedTestResults;
-        private NotifyIcon ni;
     }
 }

@@ -37,14 +37,21 @@ namespace V2RayGCon
             IntPtr pShcoreDll = HiResSupport();
             if (mutex.WaitOne(TimeSpan.Zero, true))
             {
-                var form = new Views.WinForms.FormMain();
-                Application.Run(form);
+                var app = new Services.Launcher();
+                if (app.Warmup())
+                {
+                    app.Run();
+                    Application.Run(app.context);
+                    app.Dispose();
+                }
                 mutex.ReleaseMutex();
             }
             else
             {
                 MessageBox.Show(I18N.ExitOtherVGCFirst);
             }
+
+
             Libs.Sys.SafeNativeMethods.FreeLibrary(pShcoreDll);
         }
 

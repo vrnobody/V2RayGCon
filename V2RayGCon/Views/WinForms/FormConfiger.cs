@@ -27,6 +27,14 @@ namespace V2RayGCon.Views.WinForms
 
     public partial class FormConfiger : Form
     {
+
+        public static void ShowConfig() => ShowConfig(null);
+        public static void ShowConfig(string orgConfig) =>
+             VgcApis.Misc.UI.Invoke(() =>
+             {
+                 new FormConfiger(orgConfig).Show();
+             });
+
         Controllers.FormConfigerCtrl configer;
         Services.Settings setting;
         Services.Servers servers;
@@ -39,7 +47,7 @@ namespace V2RayGCon.Views.WinForms
 
         ScintillaNET.Scintilla editor;
 
-        public FormConfiger(string originalConfigString = null)
+        FormConfiger(string originalConfigString)
         {
             setting = Services.Settings.Instance;
             servers = Services.Servers.Instance;
@@ -51,7 +59,6 @@ namespace V2RayGCon.Views.WinForms
             this.originalConfigString = originalConfigString;
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);
-            this.Show();
         }
 
         private void FormConfiger_Load(object sender, EventArgs e)
@@ -194,7 +201,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void NewWinToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            new FormConfiger();
+            FormConfiger.ShowConfig();
         }
 
         private void SearchBoxToolStripMenuItem_Click(object sender, EventArgs e)
@@ -345,8 +352,7 @@ namespace V2RayGCon.Views.WinForms
             var width = toolsPanelController.panel.Width;
             if (pnlTools.Width != width)
             {
-                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
-                    pnlTools, () => pnlTools.Width = width);
+                VgcApis.Misc.UI.Invoke(() => pnlTools.Width = width);
             }
         }
 
@@ -468,8 +474,7 @@ namespace V2RayGCon.Views.WinForms
 
             if (pnlTools.Width != width)
             {
-                VgcApis.Misc.UI.RunInUiThreadIgnoreError(
-                    pnlTools, () => pnlTools.Width = width);
+                VgcApis.Misc.UI.Invoke(() => pnlTools.Width = width);
             }
         }
 
@@ -486,7 +491,7 @@ namespace V2RayGCon.Views.WinForms
                 return;
             }
             var editor = configer.GetComponent<Controllers.ConfigerComponet.Editor>();
-            formSearch = new VgcApis.WinForms.FormSearch(editor.GetEditor());
+            formSearch = VgcApis.WinForms.FormSearch.CreateForm(editor.GetEditor());
             formSearch.FormClosed += (s, a) => formSearch = null;
         }
 

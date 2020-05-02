@@ -97,7 +97,7 @@ namespace V2RayGCon.Services
                 if (AutoUpdater.DownloadUpdate())
                 {
                     setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;
-                    notifier.RunInUiThreadIgnoreError(() => Application.Exit());
+                    Application.Exit();
                 }
             }
             catch (Exception exception)

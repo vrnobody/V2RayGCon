@@ -240,23 +240,15 @@ namespace V2RayGCon.Libs.QRCode
 
         static void ShowSplashForm(Rectangle win, Rectangle target, Action done)
         {
-            void ShowFormInBackground()
+            VgcApis.Misc.UI.Invoke(() =>
             {
                 var qrSplash = new QRCodeSplashForm();
                 qrSplash.Location = win.Location;
                 qrSplash.Size = win.Size;
                 qrSplash.TargetRect = target;
                 qrSplash.FormClosed += (s, a) => done();
-
-                try
-                {
-                    qrSplash.Show();
-                    Application.Run(qrSplash);
-                }
-                catch { }
-            }
-
-            VgcApis.Misc.Utils.RunInBackground(() => ShowFormInBackground());
+                qrSplash.Show();
+            });
         }
 
         static bool ScanWindow(Bitmap screenshot, Point screenLocation, Rectangle winRect, Rectangle screenRect, Action<string> success)

@@ -82,8 +82,7 @@ namespace VgcApis.Misc
 
             bool isClipboardHasText()
             {
-                var r = false;
-                Utils.RunAsSTAThread(() => r = Clipboard.ContainsText());
+                var r = Clipboard.ContainsText();
                 return r;
             }
 
@@ -136,47 +135,16 @@ namespace VgcApis.Misc
 
         #region update ui
         public static void CloseFormIgnoreError(Form form) =>
-            RunInUiThreadIgnoreError(form, () => form?.Close());
+            Invoke(() => form?.Close());
 
-        static bool IsInUiThread()
+        public static bool IsInUiThread()
         {
             return Thread.CurrentThread.Name == Models.Consts.Libs.UiThreadName;
         }
 
-        public static void RunInUiThreadIgnoreError(Control control, Action updater)
-        {
-            Action updateIgnoreError = () =>
-            {
-                try
-                {
-                    updater?.Invoke();
-                }
-                catch { }
-            };
+        public static Action<Action> Invoke;
 
-            try
-            {
-                if (control != null && !control.IsDisposed)
-                {
-                    if (!control.InvokeRequired)
-                    {
-                        if (!IsInUiThread())
-                        {
-                            Libs.Sys.FileLogger.DumpCallStack("!invoke error!");
-                        }
-                        updateIgnoreError();
-                    }
-                    else
-                    {
-                        control.Invoke((MethodInvoker)delegate
-                        {
-                            updateIgnoreError();
-                        });
-                    }
-                }
-            }
-            catch { }
-        }
+        public static Action<Action, Action> InvokeThen;
 
         // https://stackoverflow.com/questions/87795/how-to-prevent-flickering-in-listview-when-updating-a-single-listviewitems-text
         public static void DoubleBuffered(this Control control, bool enable)
@@ -207,6 +175,16 @@ namespace VgcApis.Misc
         /// <param name="fileName"></param>
         /// <returns></returns>
         static public Tuple<string, string> ReadFileFromDialog(string extension)
+        {
+            Tuple<string, string> r = null;
+            Invoke(() =>
+            {
+                r = ReadFileFromDialogWorker(extension);
+            });
+            return r;
+        }
+
+        static public Tuple<string, string> ReadFileFromDialogWorker(string extension)
         {
             OpenFileDialog readFileDialog = new OpenFileDialog
             {
@@ -266,6 +244,19 @@ namespace VgcApis.Misc
         public static Models.Datas.Enums.SaveFileErrorCode ShowSaveFileDialog(
             string extension, string content, out string fileName)
         {
+            Models.Datas.Enums.SaveFileErrorCode r = Models.Datas.Enums.SaveFileErrorCode.Cancel;
+            string fn = null;
+            Invoke(() =>
+            {
+                r = ShowSaveFileDialogWorker(extension, content, out fn);
+            });
+            fileName = fn;
+            return r;
+        }
+
+        static Models.Datas.Enums.SaveFileErrorCode ShowSaveFileDialogWorker(
+            string extension, string content, out string fileName)
+        {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog
             {
                 Filter = extension,
@@ -294,6 +285,16 @@ namespace VgcApis.Misc
 
         public static string ShowSelectFolderDialog()
         {
+            string r = null;
+            Invoke(() =>
+            {
+                r = ShowSelectFolderDialogWorker();
+            });
+            return r;
+        }
+
+        static string ShowSelectFolderDialogWorker()
+        {
             using (var fbd = new FolderBrowserDialog())
             {
                 DialogResult result = fbd.ShowDialog();
@@ -313,6 +314,16 @@ namespace VgcApis.Misc
         /// <param name="extension"></param>
         /// <returns></returns>
         public static string ShowSelectFileDialog(string extension)
+        {
+            string r = null;
+            Invoke(() =>
+            {
+                r = ShowSelectFileDialogWorker(extension);
+            });
+            return r;
+        }
+
+        static string ShowSelectFileDialogWorker(string extension)
         {
             using (OpenFileDialog readFileDialog = new OpenFileDialog
             {
@@ -372,6 +383,7 @@ namespace VgcApis.Misc
         #endregion
 
         #region winform
+
         static List<Color> colorTable = new List<Color> {
             Color.AntiqueWhite,
             Color.Aqua,

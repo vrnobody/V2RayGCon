@@ -48,15 +48,19 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelScriptName = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.cboxScriptName = new System.Windows.Forms.ComboBox();
             this.btnNewScript = new System.Windows.Forms.Button();
-            this.btnClearOutput = new System.Windows.Forms.Button();
-            this.btnKillScript = new System.Windows.Forms.Button();
-            this.btnStopScript = new System.Windows.Forms.Button();
-            this.btnRunScript = new System.Windows.Forms.Button();
             this.btnSaveScript = new System.Windows.Forms.Button();
             this.pnlScriptEditor = new System.Windows.Forms.Panel();
+            this.panelScriptDebugTools = new System.Windows.Forms.Panel();
+            this.cboxFunctionList = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnKillScript = new System.Windows.Forms.Button();
+            this.btnClearOutput = new System.Windows.Forms.Button();
+            this.btnStopScript = new System.Windows.Forms.Button();
+            this.btnRunScript = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rtBoxOutput = new VgcApis.UserControls.ExRichTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -87,7 +91,8 @@
             this.groupBox2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.panelScriptName.SuspendLayout();
+            this.panelScriptDebugTools.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -237,21 +242,25 @@
             // tableLayoutPanel1
             // 
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.pnlScriptEditor, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panelScriptName, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pnlScriptEditor, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.panelScriptDebugTools, 0, 1);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
-            // panel1
+            // panelScriptName
             // 
-            this.panel1.Controls.Add(this.cboxScriptName);
-            this.panel1.Controls.Add(this.btnNewScript);
-            this.panel1.Controls.Add(this.btnClearOutput);
-            this.panel1.Controls.Add(this.btnKillScript);
-            this.panel1.Controls.Add(this.btnStopScript);
-            this.panel1.Controls.Add(this.btnRunScript);
-            this.panel1.Controls.Add(this.btnSaveScript);
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Name = "panel1";
+            this.panelScriptName.Controls.Add(this.label1);
+            this.panelScriptName.Controls.Add(this.cboxScriptName);
+            this.panelScriptName.Controls.Add(this.btnNewScript);
+            this.panelScriptName.Controls.Add(this.btnSaveScript);
+            resources.ApplyResources(this.panelScriptName, "panelScriptName");
+            this.panelScriptName.Name = "panelScriptName";
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // cboxScriptName
             // 
@@ -267,12 +276,41 @@
             this.toolTip1.SetToolTip(this.btnNewScript, resources.GetString("btnNewScript.ToolTip"));
             this.btnNewScript.UseVisualStyleBackColor = true;
             // 
-            // btnClearOutput
+            // btnSaveScript
             // 
-            resources.ApplyResources(this.btnClearOutput, "btnClearOutput");
-            this.btnClearOutput.Name = "btnClearOutput";
-            this.toolTip1.SetToolTip(this.btnClearOutput, resources.GetString("btnClearOutput.ToolTip"));
-            this.btnClearOutput.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.btnSaveScript, "btnSaveScript");
+            this.btnSaveScript.Name = "btnSaveScript";
+            this.toolTip1.SetToolTip(this.btnSaveScript, resources.GetString("btnSaveScript.ToolTip"));
+            this.btnSaveScript.UseVisualStyleBackColor = true;
+            // 
+            // pnlScriptEditor
+            // 
+            resources.ApplyResources(this.pnlScriptEditor, "pnlScriptEditor");
+            this.pnlScriptEditor.Name = "pnlScriptEditor";
+            // 
+            // panelScriptDebugTools
+            // 
+            this.panelScriptDebugTools.Controls.Add(this.cboxFunctionList);
+            this.panelScriptDebugTools.Controls.Add(this.label2);
+            this.panelScriptDebugTools.Controls.Add(this.btnKillScript);
+            this.panelScriptDebugTools.Controls.Add(this.btnClearOutput);
+            this.panelScriptDebugTools.Controls.Add(this.btnStopScript);
+            this.panelScriptDebugTools.Controls.Add(this.btnRunScript);
+            resources.ApplyResources(this.panelScriptDebugTools, "panelScriptDebugTools");
+            this.panelScriptDebugTools.Name = "panelScriptDebugTools";
+            // 
+            // cboxFunctionList
+            // 
+            resources.ApplyResources(this.cboxFunctionList, "cboxFunctionList");
+            this.cboxFunctionList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxFunctionList.FormattingEnabled = true;
+            this.cboxFunctionList.Name = "cboxFunctionList";
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            this.toolTip1.SetToolTip(this.label2, resources.GetString("label2.ToolTip"));
             // 
             // btnKillScript
             // 
@@ -280,6 +318,13 @@
             this.btnKillScript.Name = "btnKillScript";
             this.toolTip1.SetToolTip(this.btnKillScript, resources.GetString("btnKillScript.ToolTip"));
             this.btnKillScript.UseVisualStyleBackColor = true;
+            // 
+            // btnClearOutput
+            // 
+            resources.ApplyResources(this.btnClearOutput, "btnClearOutput");
+            this.btnClearOutput.Name = "btnClearOutput";
+            this.toolTip1.SetToolTip(this.btnClearOutput, resources.GetString("btnClearOutput.ToolTip"));
+            this.btnClearOutput.UseVisualStyleBackColor = true;
             // 
             // btnStopScript
             // 
@@ -294,18 +339,6 @@
             this.btnRunScript.Name = "btnRunScript";
             this.toolTip1.SetToolTip(this.btnRunScript, resources.GetString("btnRunScript.ToolTip"));
             this.btnRunScript.UseVisualStyleBackColor = true;
-            // 
-            // btnSaveScript
-            // 
-            resources.ApplyResources(this.btnSaveScript, "btnSaveScript");
-            this.btnSaveScript.Name = "btnSaveScript";
-            this.toolTip1.SetToolTip(this.btnSaveScript, resources.GetString("btnSaveScript.ToolTip"));
-            this.btnSaveScript.UseVisualStyleBackColor = true;
-            // 
-            // pnlScriptEditor
-            // 
-            resources.ApplyResources(this.pnlScriptEditor, "pnlScriptEditor");
-            this.pnlScriptEditor.Name = "pnlScriptEditor";
             // 
             // groupBox1
             // 
@@ -424,7 +457,10 @@
             this.panel3.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.panel1.ResumeLayout(false);
+            this.panelScriptName.ResumeLayout(false);
+            this.panelScriptName.PerformLayout();
+            this.panelScriptDebugTools.ResumeLayout(false);
+            this.panelScriptDebugTools.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -446,7 +482,7 @@
         private System.Windows.Forms.SplitContainer splitContainerTabEditor;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panelScriptName;
         private System.Windows.Forms.ComboBox cboxScriptName;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnKillScript;
@@ -475,5 +511,9 @@
         private System.Windows.Forms.ToolStripMenuItem showOutputPanelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hideOutputPanelToolStripMenuItem;
         private System.Windows.Forms.CheckBox chkEnableClrSupports;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panelScriptDebugTools;
+        private System.Windows.Forms.ComboBox cboxFunctionList;
+        private System.Windows.Forms.Label label2;
     }
 }

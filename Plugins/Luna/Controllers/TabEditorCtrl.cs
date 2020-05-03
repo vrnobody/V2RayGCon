@@ -3,6 +3,7 @@ using Luna.Resources.Langs;
 using Luna.Views.WinForms;
 using ScintillaNET;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -31,7 +32,7 @@ namespace Luna.Controllers
             btnStopScript,
             btnKillScript,
             btnClearOutput;
-
+        private readonly ComboBox cboxFunctionList;
         RichTextBox rtboxOutput;
         private readonly Panel pnlEditorContainer;
 
@@ -47,6 +48,8 @@ namespace Luna.Controllers
             ComboBox cboxScriptName,
             Button btnNewScript,
             Button btnSaveScript,
+
+            ComboBox cboxFunctionList,
             Button btnRunScript,
             Button btnStopScript,
             Button btnKillScript,
@@ -58,6 +61,7 @@ namespace Luna.Controllers
             this.cboxScriptName = cboxScriptName;
             this.btnNewScript = btnNewScript;
             this.btnSaveScript = btnSaveScript;
+            this.cboxFunctionList = cboxFunctionList;
             this.btnRunScript = btnRunScript;
             this.btnStopScript = btnStopScript;
             this.btnKillScript = btnKillScript;
@@ -310,8 +314,80 @@ namespace Luna.Controllers
             bar.Remove();
         }
 
+        string[] ExtractFunctionsFrom(string text)
+        {
+            var kws = new string[] { "function", "local function" };
+            List<string> fns = new List<string>();
+            List<string> vs = new List<string>();
+
+            var lines = text.Replace("\r", "").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                if (line.StartsWith("function "))
+                {
+                    fns.Add(line);
+                }
+                else if (line.StartsWith("local function "))
+                {
+                    fns.Add(line.Substring("local ".Length));
+                }
+                else if (line.StartsWith("local"))
+                {
+                    var parts = line.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (parts.Length > 0)
+                    {
+                        vs.Add(parts[0].Trim());
+                    }
+                }
+            }
+
+            var sortedFns = fns.Distinct().OrderBy(x => x).ToArray();
+            return vs.Distinct().OrderBy(x => x).Concat(sortedFns).ToArray();
+        }
+
+        void ScrollToText(string text)
+        {
+            foreach (var line in luaEditor.Lines)
+            {
+                var t = line.Text;
+                if (t.StartsWith("local ") || t.StartsWith("function "))
+                {
+                    if (t.Contains(text))
+                    {
+                        line.Goto();
+                        luaEditor.FirstVisibleLine = line.Index;
+                        return;
+                    }
+                }
+            }
+        }
+
         private void BindEvents()
         {
+            cboxFunctionList.DropDownClosed += (s, a) =>
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    var kw = cboxFunctionList.Text;
+                    if (string.IsNullOrWhiteSpace(kw))
+                    {
+                        return;
+                    }
+                    ScrollToText(kw);
+                });
+
+            cboxFunctionList.DropDown += (s, a) =>
+            {
+                var content = luaEditor.Text;
+                var list = ExtractFunctionsFrom(content);
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    var items = cboxFunctionList.Items;
+                    items.Clear();
+                    items.AddRange(list);
+                    VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxFunctionList);
+                });
+            };
+
             luaEditor.InsertCheck += Scintilla_InsertCheck;
             luaEditor.CharAdded += Scintilla_CharAdded;
             luaEditor.TextChanged += Scintilla_TextChanged;

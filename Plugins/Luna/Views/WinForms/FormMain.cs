@@ -69,6 +69,7 @@ namespace Luna.Views.WinForms
                 cboxScriptName,
                 btnNewScript,
                 btnSaveScript,
+                cboxFunctionList,
                 btnRunScript,
                 btnStopScript,
                 btnKillScript,

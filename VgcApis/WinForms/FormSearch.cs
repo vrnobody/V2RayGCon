@@ -146,17 +146,16 @@ namespace VgcApis.WinForms
             curResult = (curResult + delta + count) % count;
             UpdateLbResults(curResult + 1, count);
 
-            var pos = result[curResult];
+            var kwPos = result[curResult];
+            var kwLine = scintilla.LineFromPosition(kwPos);
+            var linesOnScreen = scintilla.LinesOnScreen - 2; // Fudge factor            
+            var topLine = kwLine - (linesOnScreen / 2);
+
+            scintilla.GotoPosition(kwPos);
+            scintilla.FirstVisibleLine = topLine;
 
             ClearIndicator();
-            scintilla.IndicatorFillRange(result[curResult], keywordLength);
-
-            var linesOnScreen = scintilla.LinesOnScreen - 2; // Fudge factor
-            var line = scintilla.LineFromPosition(pos);
-            var start = scintilla.Lines[line - (linesOnScreen / 2)].Position;
-            var end = scintilla.Lines[line + (linesOnScreen / 2)].Position;
-            scintilla.ScrollRange(start, end);
-            scintilla.GotoPosition(result[curResult]);
+            scintilla.IndicatorFillRange(kwPos, keywordLength);
         }
 
         private void btnNext_Click(object sender, System.EventArgs e)

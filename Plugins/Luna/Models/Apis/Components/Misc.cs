@@ -35,7 +35,7 @@ namespace Luna.Models.Apis.Components
 
 
         #region ILuaMisc.WinForms
-        public void ShowFromOption() => vgcNotifier.ShowFormOption();
+        public void ShowFormOption() => vgcNotifier.ShowFormOption();
 
         public void ShowFormLuna() => formMgr.ShowOrCreateFirstForm();
 

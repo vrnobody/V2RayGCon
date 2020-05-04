@@ -42,7 +42,7 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region vgc.Forms
-        void ShowFromOption();
+        void ShowFormOption();
 
         void ShowFormLuna();
 

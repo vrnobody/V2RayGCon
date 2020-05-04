@@ -195,6 +195,9 @@ namespace Luna.Controllers
 
         public string GetCurrentEditorContent() => luaEditor.Text;
 
+        public void SetScriptCache(string content) =>
+            preScriptContent = content;
+
         public void SetCurrentEditorContent(string content) =>
             VgcApis.Misc.UI.Invoke(() => luaEditor.Text = content);
 

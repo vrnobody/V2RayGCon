@@ -11,6 +11,7 @@ namespace Luna.Controllers
         private readonly ToolStripMenuItem miSaveAs;
         private readonly ToolStripMenuItem miExit;
         private readonly TabControl tabControlMain;
+        private readonly ComboBox cboxScriptName;
         Views.WinForms.FormMain formMain;
         Services.FormMgr formMgrService;
 
@@ -23,7 +24,8 @@ namespace Luna.Controllers
             ToolStripMenuItem miSaveAs,
             ToolStripMenuItem miExit,
 
-            TabControl tabControlMain)
+            TabControl tabControlMain,
+            ComboBox cboxScriptName)
         {
             this.formMgrService = formMgrService;
 
@@ -33,6 +35,7 @@ namespace Luna.Controllers
             this.miSaveAs = miSaveAs;
             this.miExit = miExit;
             this.tabControlMain = tabControlMain;
+            this.cboxScriptName = cboxScriptName;
             this.formMain = formMain;
         }
 
@@ -68,14 +71,29 @@ namespace Luna.Controllers
                 }
 
                 tabControlMain.SelectTab(1);
+                cboxScriptName.Text = @"";
                 editorCtrl.SetCurrentEditorContent(script);
+                editorCtrl.SetScriptCache(script);
             };
 
             miSaveAs.Click += (s, a) =>
             {
-                VgcApis.Misc.UI.SaveToFile(
+                var script = editorCtrl.GetCurrentEditorContent();
+                var err = VgcApis.Misc.UI.ShowSaveFileDialog(
                     VgcApis.Models.Consts.Files.LuaExt,
-                    editorCtrl.GetCurrentEditorContent());
+                    script,
+                    out var filenaem);
+
+                switch (err)
+                {
+                    case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Success:
+                        editorCtrl.SetScriptCache(script);
+                        MessageBox.Show(I18N.Done);
+                        break;
+                    case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Fail:
+                        MessageBox.Show(I18N.WriteFileFail);
+                        break;
+                }
             };
         }
 

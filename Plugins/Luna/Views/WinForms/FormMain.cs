@@ -69,7 +69,10 @@ namespace Luna.Views.WinForms
                 cboxScriptName,
                 btnNewScript,
                 btnSaveScript,
+
+                cboxVarList,
                 cboxFunctionList,
+
                 btnRunScript,
                 btnStopScript,
                 btnKillScript,
@@ -77,7 +80,7 @@ namespace Luna.Views.WinForms
                 rtBoxOutput,
                 pnlScriptEditor);
 
-            editorCtrl.Run(api, settings, luaServer);
+            editorCtrl.Run(api, settings, formMgr, luaServer);
 
             menuCtrl = new Controllers.MenuCtrl(
                 formMgr,

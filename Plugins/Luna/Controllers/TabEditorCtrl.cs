@@ -13,16 +13,19 @@ namespace Luna.Controllers
     internal sealed class TabEditorCtrl
     {
         Services.Settings settings;
+        Services.FormMgr formMgr;
         Services.LuaServer luaServer;
 
         LuaCoreCtrl luaCoreCtrl;
         VgcApis.WinForms.FormSearch formSearch = null;
-        VgcApis.Libs.Views.RepaintController rtboxFreezer;
+        VgcApis.UserControls.RepaintController rtboxFreezer;
         VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
 
         Scintilla luaEditor = null;
         AutocompleteMenu luaAcm = null;
         private readonly FormMain formMain;
+
+        VgcApis.Libs.Infr.Recorder history = new VgcApis.Libs.Infr.Recorder();
 
         #region controls
         ComboBox cboxScriptName;
@@ -32,6 +35,7 @@ namespace Luna.Controllers
             btnStopScript,
             btnKillScript,
             btnClearOutput;
+        private readonly ComboBox cboxVarList;
         private readonly ComboBox cboxFunctionList;
         RichTextBox rtboxOutput;
         private readonly Panel pnlEditorContainer;
@@ -49,7 +53,9 @@ namespace Luna.Controllers
             Button btnNewScript,
             Button btnSaveScript,
 
+            ComboBox cboxVarList,
             ComboBox cboxFunctionList,
+
             Button btnRunScript,
             Button btnStopScript,
             Button btnKillScript,
@@ -61,6 +67,7 @@ namespace Luna.Controllers
             this.cboxScriptName = cboxScriptName;
             this.btnNewScript = btnNewScript;
             this.btnSaveScript = btnSaveScript;
+            this.cboxVarList = cboxVarList;
             this.cboxFunctionList = cboxFunctionList;
             this.btnRunScript = btnRunScript;
             this.btnStopScript = btnStopScript;
@@ -78,8 +85,10 @@ namespace Luna.Controllers
         public void Run(
           VgcApis.Interfaces.Services.IApiService api,
           Services.Settings settings,
+          Services.FormMgr formMgr,
           Services.LuaServer luaServer)
         {
+            this.formMgr = formMgr;
             this.settings = settings;
             this.luaServer = luaServer;
             this.luaCoreCtrl = CreateLuaCoreCtrl(settings, api);
@@ -88,7 +97,7 @@ namespace Luna.Controllers
             BindEvents();
             ReloadScriptName();
 
-            rtboxFreezer = new VgcApis.Libs.Views.RepaintController(rtboxOutput);
+            rtboxFreezer = new VgcApis.UserControls.RepaintController(rtboxOutput);
             logUpdater.Run();
 
 #if DEBUG
@@ -107,6 +116,14 @@ namespace Luna.Controllers
             {
                 switch (keyCode)
                 {
+                    case Keys.OemMinus:
+                        history.Backward();
+                        VgcApis.Misc.UI.Invoke(() => ScrollToLine(history.Current()));
+                        break;
+                    case Keys.Oemplus:
+                        history.Forward();
+                        VgcApis.Misc.UI.Invoke(() => ScrollToLine(history.Current()));
+                        break;
                     case Keys.F:
                         ShowFormSearch();
                         break;
@@ -122,6 +139,11 @@ namespace Luna.Controllers
 
             switch (keyCode)
             {
+                case Keys.F12:
+                    history.Add(luaEditor.CurrentLine);
+                    var w = luaEditor.GetWordFromPosition(luaEditor.CurrentPosition);
+                    VgcApis.Misc.UI.Invoke(() => ScrollToDefinition(w));
+                    break;
                 case Keys.F5:
                     btnRunScript.PerformClick();
                     break;
@@ -144,7 +166,7 @@ namespace Luna.Controllers
             Services.Settings settings,
             VgcApis.Interfaces.Services.IApiService api)
         {
-            var luaApis = new Models.Apis.LuaApis(settings, api);
+            var luaApis = new Models.Apis.LuaApis(api, settings, formMgr);
             luaApis.Prepare();
             luaApis.SetRedirectLogWorker(Log);
 
@@ -318,7 +340,6 @@ namespace Luna.Controllers
         {
             var kws = new string[] { "function", "local function" };
             List<string> fns = new List<string>();
-            List<string> vs = new List<string>();
 
             var lines = text.Replace("\r", "").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var line in lines)
@@ -331,39 +352,146 @@ namespace Luna.Controllers
                 {
                     fns.Add(line.Substring("local ".Length));
                 }
-                else if (line.StartsWith("local"))
-                {
-                    var parts = line.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (parts.Length > 0)
-                    {
-                        vs.Add(parts[0].Trim());
-                    }
-                }
             }
 
-            var sortedFns = fns.Distinct().OrderBy(x => x).ToArray();
-            return vs.Distinct().OrderBy(x => x).Concat(sortedFns).ToArray();
+            return fns.Distinct().OrderBy(x => x).ToArray();
         }
 
-        void ScrollToText(string text)
+        void ScrollToFunction(string text)
         {
             foreach (var line in luaEditor.Lines)
             {
                 var t = line.Text;
-                if (t.StartsWith("local ") || t.StartsWith("function "))
+                if (t.StartsWith("local function ") || t.StartsWith("function "))
                 {
                     if (t.Contains(text))
                     {
                         line.Goto();
                         luaEditor.FirstVisibleLine = line.Index;
+                        history.Add(line.Index);
                         return;
                     }
                 }
             }
         }
 
+        string[] ExtractVariablesFrom(string text)
+        {
+            List<string> vs = new List<string>();
+            var kw = "local ";
+
+            var lines = text.Replace("\r", "").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                if (line.StartsWith("local function "))
+                {
+                    continue;
+                }
+
+                if (!line.StartsWith(kw))
+                {
+                    continue;
+                }
+
+                var parts = line.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length < 1 || parts[0].Length < kw.Length)
+                {
+                    continue;
+                }
+
+                var v = parts[0].Substring(kw.Length).Trim();
+                if (v.Length > 0)
+                {
+                    vs.Add(v);
+                }
+            }
+
+            return vs.Distinct().OrderBy(x => x).ToArray();
+        }
+
+        void ScrollToVariable(string text)
+        {
+            foreach (var line in luaEditor.Lines)
+            {
+                var t = line.Text;
+                if (t.StartsWith("local ") && t.Contains(text))
+                {
+                    line.Goto();
+                    luaEditor.FirstVisibleLine = line.Index;
+                    history.Add(line.Index);
+                    return;
+                }
+            }
+        }
+
+        void ScrollToLine(int index)
+        {
+            var max = luaEditor.Lines.Count;
+            if (index >= max)
+            {
+                return;
+            }
+            var line = luaEditor.Lines[index];
+            line.Goto();
+            var text = line.Text;
+            if (text.StartsWith("local function ") || text.StartsWith("function "))
+            {
+                luaEditor.FirstVisibleLine = line.Index;
+            }
+            else
+            {
+                line.EnsureVisible();
+            }
+        }
+
+        void ScrollToDefinition(string text)
+        {
+            foreach (var line in luaEditor.Lines)
+            {
+                var t = line.Text;
+                if (!t.StartsWith("local ") && !t.StartsWith("function "))
+                {
+                    continue;
+                }
+
+                if (t.Contains(text))
+                {
+                    line.Goto();
+                    luaEditor.FirstVisibleLine = line.Index;
+                    history.Add(line.Index);
+                    return;
+                }
+            }
+        }
+
         private void BindEvents()
         {
+            cboxVarList.DropDownClosed += (s, a) =>
+               VgcApis.Misc.UI.Invoke(() =>
+               {
+                   var kw = cboxVarList.Text;
+                   if (string.IsNullOrWhiteSpace(kw))
+                   {
+                       return;
+                   }
+                   ScrollToVariable(kw);
+                   luaEditor.Focus();
+               });
+
+            cboxVarList.DropDown += (s, a) =>
+            {
+                history.Add(luaEditor.CurrentLine);
+                var content = luaEditor.Text;
+                var list = ExtractVariablesFrom(content);
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    var items = cboxVarList.Items;
+                    items.Clear();
+                    items.AddRange(list);
+                    VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxVarList);
+                });
+            };
+
             cboxFunctionList.DropDownClosed += (s, a) =>
                 VgcApis.Misc.UI.Invoke(() =>
                 {
@@ -372,11 +500,13 @@ namespace Luna.Controllers
                     {
                         return;
                     }
-                    ScrollToText(kw);
+                    ScrollToFunction(kw);
+                    luaEditor.Focus();
                 });
 
             cboxFunctionList.DropDown += (s, a) =>
             {
+                history.Add(luaEditor.CurrentLine);
                 var content = luaEditor.Text;
                 var list = ExtractFunctionsFrom(content);
                 VgcApis.Misc.UI.Invoke(() =>

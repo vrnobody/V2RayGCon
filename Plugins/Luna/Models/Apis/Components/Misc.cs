@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Luna.Services;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,6 +12,7 @@ namespace Luna.Models.Apis.Components
         VgcApis.Interfaces.Lua.ILuaMisc
     {
         Services.Settings settings;
+        private readonly FormMgr formMgr;
         VgcApis.Interfaces.Services.IUtilsService vgcUtils;
         VgcApis.Interfaces.Services.IShareLinkMgrService vgcSlinkMgr;
         VgcApis.Interfaces.Services.INotifierService vgcNotifier;
@@ -18,10 +20,12 @@ namespace Luna.Models.Apis.Components
         VgcApis.Interfaces.Services.ISettingsService vgcSettings;
 
         public Misc(
+            VgcApis.Interfaces.Services.IApiService api,
             Services.Settings settings,
-            VgcApis.Interfaces.Services.IApiService api)
+            Services.FormMgr formMgr)
         {
             this.settings = settings;
+            this.formMgr = formMgr;
             vgcNotifier = api.GetNotifierService();
             vgcUtils = api.GetUtilsService();
             vgcSlinkMgr = api.GetShareLinkMgrService();
@@ -31,6 +35,10 @@ namespace Luna.Models.Apis.Components
 
 
         #region ILuaMisc.WinForms
+        public void ShowFromOption() => vgcNotifier.ShowFormOption();
+
+        public void ShowFormLuna() => formMgr.ShowOrCreateFirstForm();
+
         public void ShowFormMain() => vgcNotifier.ShowFormMain();
 
         public void ShowFormLog() => vgcNotifier.ShowFormLog();
@@ -107,6 +115,11 @@ namespace Luna.Models.Apis.Components
         #region ILuaMisc.ImportLinks     
         public int ImportLinks(string links, string mark)
         {
+            if (string.IsNullOrEmpty(links))
+            {
+                return 0;
+            }
+
             var pair = new string[] { links, mark ?? "" };
             var linkList = new List<string[]> { pair };
             var decoders = vgcSlinkMgr.GenDecoderList(false);

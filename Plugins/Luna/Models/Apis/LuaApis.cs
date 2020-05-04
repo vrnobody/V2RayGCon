@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Luna.Services;
+using System;
 
 namespace Luna.Models.Apis
 {
@@ -7,19 +8,20 @@ namespace Luna.Models.Apis
     {
         Services.Settings settings;
         VgcApis.Interfaces.Services.IApiService vgcApi;
+        private readonly FormMgr formMgr;
         Action<string> redirectLogWorker;
         readonly SysCmpos.PostOffice postOffice;
 
         public LuaApis(
+            VgcApis.Interfaces.Services.IApiService api,
             Services.Settings settings,
-            VgcApis.Interfaces.Services.IApiService api)
+            Services.FormMgr formMgr)
         {
             this.settings = settings;
-
-
             redirectLogWorker = settings.SendLog;
-            vgcApi = api;
 
+            vgcApi = api;
+            this.formMgr = formMgr;
             postOffice = new SysCmpos.PostOffice();
         }
 
@@ -41,7 +43,7 @@ namespace Luna.Models.Apis
 
         public override void Prepare()
         {
-            var misc = new Components.Misc(settings, vgcApi);
+            var misc = new Components.Misc(vgcApi, settings, formMgr);
             var web = new Components.Web(vgcApi);
             var server = new Components.Server(vgcApi);
 

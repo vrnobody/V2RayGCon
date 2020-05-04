@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace VgcApis.Libs.Views
+namespace VgcApis.UserControls
 {
     // https://stackoverflow.com/questions/192413/how-do-you-prevent-a-richtextbox-from-refreshing-its-display
     public sealed class RepaintController

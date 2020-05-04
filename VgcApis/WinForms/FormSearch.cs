@@ -14,7 +14,7 @@ namespace VgcApis.WinForms
         public static FormSearch CreateForm(Scintilla editor)
         {
             FormSearch r = null;
-            VgcApis.Misc.UI.Invoke(() =>
+            Misc.UI.Invoke(() =>
             {
                 r = new FormSearch(editor);
                 r.Show();
@@ -34,7 +34,7 @@ namespace VgcApis.WinForms
 
             this.FormClosed += (s, a) => ClearIndicator();
 
-            VgcApis.Misc.UI.AutoSetFormIcon(this);
+            Misc.UI.AutoSetFormIcon(this);
 
             this.KeyDown += KeyBoardShortcutHandler;
         }
@@ -87,7 +87,6 @@ namespace VgcApis.WinForms
         {
             scintilla.IndicatorClearRange(0, scintilla.TextLength);
         }
-
 
         private void SearchAll()
         {

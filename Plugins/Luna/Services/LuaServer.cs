@@ -18,11 +18,13 @@ namespace Luna.Services
         public LuaServer() { }
 
         public void Run(
+            VgcApis.Interfaces.Services.IApiService api,
            Settings settings,
-           VgcApis.Interfaces.Services.IApiService api)
+           FormMgr formMgr)
         {
             this.settings = settings;
-            this.luaApis = new Models.Apis.LuaApis(settings, api);
+
+            this.luaApis = new Models.Apis.LuaApis(api, settings, formMgr);
             this.luaApis.Prepare();
 
             InitLuaCores();

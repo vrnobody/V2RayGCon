@@ -257,6 +257,8 @@ namespace V2RayGCon.Services
 
 
         #region INotifier.WinForms
+        public void ShowFormOption() => Views.WinForms.FormOption.ShowForm();
+
         public void ShowFormMain() => Views.WinForms.FormMain.ShowForm();
 
         public void ShowFormLog() => Views.WinForms.FormLog.ShowForm();

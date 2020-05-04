@@ -55,7 +55,10 @@
             this.btnSaveScript = new System.Windows.Forms.Button();
             this.pnlScriptEditor = new System.Windows.Forms.Panel();
             this.panelScriptDebugTools = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.cboxFunctionList = new System.Windows.Forms.ComboBox();
+            this.cboxVarList = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnKillScript = new System.Windows.Forms.Button();
             this.btnClearOutput = new System.Windows.Forms.Button();
@@ -93,6 +96,8 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.panelScriptName.SuspendLayout();
             this.panelScriptDebugTools.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -290,7 +295,7 @@
             // 
             // panelScriptDebugTools
             // 
-            this.panelScriptDebugTools.Controls.Add(this.cboxFunctionList);
+            this.panelScriptDebugTools.Controls.Add(this.panel1);
             this.panelScriptDebugTools.Controls.Add(this.label2);
             this.panelScriptDebugTools.Controls.Add(this.btnKillScript);
             this.panelScriptDebugTools.Controls.Add(this.btnClearOutput);
@@ -299,12 +304,34 @@
             resources.ApplyResources(this.panelScriptDebugTools, "panelScriptDebugTools");
             this.panelScriptDebugTools.Name = "panelScriptDebugTools";
             // 
+            // panel1
+            // 
+            resources.ApplyResources(this.panel1, "panel1");
+            this.panel1.Controls.Add(this.tableLayoutPanel2);
+            this.panel1.Name = "panel1";
+            // 
+            // tableLayoutPanel2
+            // 
+            resources.ApplyResources(this.tableLayoutPanel2, "tableLayoutPanel2");
+            this.tableLayoutPanel2.Controls.Add(this.cboxFunctionList, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.cboxVarList, 0, 0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            // 
             // cboxFunctionList
             // 
             resources.ApplyResources(this.cboxFunctionList, "cboxFunctionList");
             this.cboxFunctionList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxFunctionList.FormattingEnabled = true;
             this.cboxFunctionList.Name = "cboxFunctionList";
+            this.toolTip1.SetToolTip(this.cboxFunctionList, resources.GetString("cboxFunctionList.ToolTip"));
+            // 
+            // cboxVarList
+            // 
+            resources.ApplyResources(this.cboxVarList, "cboxVarList");
+            this.cboxVarList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxVarList.FormattingEnabled = true;
+            this.cboxVarList.Name = "cboxVarList";
+            this.toolTip1.SetToolTip(this.cboxVarList, resources.GetString("cboxVarList.ToolTip"));
             // 
             // label2
             // 
@@ -461,6 +488,8 @@
             this.panelScriptName.PerformLayout();
             this.panelScriptDebugTools.ResumeLayout(false);
             this.panelScriptDebugTools.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -515,5 +544,8 @@
         private System.Windows.Forms.Panel panelScriptDebugTools;
         private System.Windows.Forms.ComboBox cboxFunctionList;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cboxVarList;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }

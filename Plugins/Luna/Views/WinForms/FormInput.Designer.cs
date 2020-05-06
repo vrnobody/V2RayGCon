@@ -71,7 +71,7 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Name = "FormInput";
-            this.Load += new System.EventHandler(this.FormChoice_Load);
+            this.Load += new System.EventHandler(this.FormInput_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

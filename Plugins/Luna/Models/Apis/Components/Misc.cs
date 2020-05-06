@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Luna.Models.Apis.Components
@@ -166,17 +167,9 @@ namespace Luna.Models.Apis.Components
 
         public string Input(string title, string content, int lines)
         {
-            DialogResult ok = DialogResult.Cancel;
-            string r = null;
-            using (var form = Views.WinForms.FormInput.CreateForm(title, content, lines))
-            {
-                VgcApis.Misc.UI.Invoke(() =>
-                {
-                    ok = form.ShowDialog();
-                    r = form.result;
-                });
-            }
-            return ok == DialogResult.OK ? r : null;
+            Func<AutoResetEvent, Views.WinForms.FormInput> creater =
+                 (done) => new Views.WinForms.FormInput(done, title, content, lines);
+            return GetResult<Views.WinForms.FormInput, string>(creater);
         }
 
         public List<int> Choices(string title, NLua.LuaTable choices) =>
@@ -402,47 +395,45 @@ namespace Luna.Models.Apis.Components
 
         string ShowDataGridDialog(string title, DataTable dataSource, int defColumn)
         {
-            DialogResult result = DialogResult.Cancel;
-            string r = null;
-            using (var form = Views.WinForms.FormDataGrid.CreateForm(title, dataSource, defColumn))
-            {
-                VgcApis.Misc.UI.Invoke(() =>
-                {
-                    result = form.ShowDialog();
-                    r = form.jsonResult;
-                });
-            }
-            return result == DialogResult.OK ? r : null;
+            Func<AutoResetEvent, Views.WinForms.FormDataGrid> creater =
+                  (done) => new Views.WinForms.FormDataGrid(done, title, dataSource, defColumn);
+            return GetResult<Views.WinForms.FormDataGrid, string>(creater);
         }
 
         private static List<int> GetResultFromChoicesDialog(string title, string[] choices)
         {
-            DialogResult ok = DialogResult.Cancel;
-            List<int> r = null;
-            using (var form = Views.WinForms.FormChoices.CreateForm(title, choices))
+            Func<AutoResetEvent, Views.WinForms.FormChoices> creater =
+                (done) => new Views.WinForms.FormChoices(done, title, choices);
+            return GetResult<Views.WinForms.FormChoices, List<int>>(creater);
+        }
+
+        static TResult GetResult<TForm, TResult>(Func<AutoResetEvent, TForm> creater)
+             where TForm : Form, VgcApis.Interfaces.Lua.IWinFormControl<TResult>
+        {
+            AutoResetEvent done = new AutoResetEvent(false);
+            TResult r = default;
+            TForm form = null;
+            VgcApis.Misc.UI.Invoke(() =>
             {
-                VgcApis.Misc.UI.Invoke(() =>
-                {
-                    ok = form.ShowDialog();
-                    r = form.results;
-                });
-            }
-            return ok == DialogResult.OK ? r : new List<int>();
+                form = creater.Invoke(done);
+                form.Show();
+                form.Activate();
+            });
+            done.WaitOne();
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                r = form.GetResult();
+                form.Dispose();
+            });
+            return r;
         }
 
         private static int GetResultFromChoiceDialog(string title, string[] choices, int selected)
         {
-            DialogResult ok = DialogResult.Cancel;
-            int idx = 0;
-            using (var form = Views.WinForms.FormChoice.CreateForm(title, choices, selected))
-            {
-                VgcApis.Misc.UI.Invoke(() =>
-                {
-                    ok = form.ShowDialog();
-                    idx = form.result;
-                });
-            }
-            return ok == DialogResult.OK ? idx : -1;
+            Func<AutoResetEvent, Views.WinForms.FormChoice> creater =
+                (done) => new Views.WinForms.FormChoice(done, title, choices, selected);
+
+            return GetResult<Views.WinForms.FormChoice, int>(creater);
         }
 
         #endregion

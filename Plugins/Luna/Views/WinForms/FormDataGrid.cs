@@ -5,15 +5,19 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Luna.Views.WinForms
 {
-    public partial class FormDataGrid : Form
+    public partial class FormDataGrid :
+        Form,
+        VgcApis.Interfaces.Lua.IWinFormControl<string>
+
     {
         readonly int MAX_TITLE_LEN = 60;
         readonly int UPDATE_INTERVAL = 500;
-
+        private readonly AutoResetEvent done;
         private readonly string title;
         private DataTable dataSource;
         private readonly int defColumn;
@@ -22,19 +26,13 @@ namespace Luna.Views.WinForms
         public string jsonResult = @"";
         VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater;
 
-        public static FormDataGrid CreateForm(string title, DataTable dataSource, int defColumn)
-        {
-            FormDataGrid r = null;
-            VgcApis.Misc.UI.Invoke(() =>
-            {
-                r = new FormDataGrid(title, dataSource, defColumn);
-            });
-            return r;
-        }
 
-        FormDataGrid(string title, DataTable dataSource, int defColumn)
+        public FormDataGrid(
+            AutoResetEvent done,
+            string title, DataTable dataSource, int defColumn)
         {
             InitializeComponent();
+            this.done = done;
             this.title = title;
             this.dataSource = dataSource;
             this.defColumn = defColumn;
@@ -52,6 +50,10 @@ namespace Luna.Views.WinForms
             UpdateUiWorker();
             dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
         }
+
+        #region public methods
+        public string GetResult() => jsonResult;
+        #endregion
 
         #region private methods
         List<string> GetHeaders(DataGridView dataGrid)
@@ -324,15 +326,16 @@ namespace Luna.Views.WinForms
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
+            jsonResult = null;
             this.Close();
+            done.Set();
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
             SetResult();
-            this.DialogResult = DialogResult.OK;
             this.Close();
+            done.Set();
         }
 
         private void tboxFilter_TextChanged(object sender, EventArgs e)

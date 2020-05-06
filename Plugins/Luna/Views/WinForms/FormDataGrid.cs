@@ -23,7 +23,7 @@ namespace Luna.Views.WinForms
         private readonly int defColumn;
         private string filterKeyword = string.Empty;
 
-        public string jsonResult = @"";
+        string jsonResult = null;
         VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater;
 
 
@@ -37,7 +37,6 @@ namespace Luna.Views.WinForms
             this.dataSource = dataSource;
             this.defColumn = defColumn;
             VgcApis.Misc.UI.AutoSetFormIcon(this);
-            Disposed += (s, a) => Cleanup();
         }
 
         private void FormDataGrid_Load(object sender, EventArgs e)
@@ -47,6 +46,10 @@ namespace Luna.Views.WinForms
             {
                 Name = "Luna.DataGridUpdater",
             };
+
+            this.FormClosing += (s, a) => Cleanup();
+            this.FormClosed += (s, a) => done.Set();
+
             UpdateUiWorker();
             dgvData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
         }
@@ -326,16 +329,13 @@ namespace Luna.Views.WinForms
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            jsonResult = null;
             this.Close();
-            done.Set();
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
             SetResult();
             this.Close();
-            done.Set();
         }
 
         private void tboxFilter_TextChanged(object sender, EventArgs e)

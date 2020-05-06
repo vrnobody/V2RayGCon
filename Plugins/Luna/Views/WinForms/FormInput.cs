@@ -31,6 +31,7 @@ namespace Luna.Views.WinForms
         private void FormInput_Load(object sender, EventArgs e)
         {
             InitControls();
+            this.FormClosed += (s, a) => done.Set();
         }
 
         #region public methods
@@ -65,14 +66,11 @@ namespace Luna.Views.WinForms
         {
             SetResult();
             Close();
-            done.Set();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            result = null;
             Close();
-            done.Set();
         }
         #endregion
 

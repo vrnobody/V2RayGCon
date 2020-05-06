@@ -13,8 +13,7 @@ namespace Luna.Views.WinForms
         readonly int MAX_CHOICE_LEN = 50;
         readonly int MAX_CHOICES_NUM = 18;
 
-        const int cancelled = -1;
-        int result = cancelled;
+        int result = -1;
         private readonly AutoResetEvent done;
         private readonly string title;
         private readonly string[] choices;
@@ -35,6 +34,7 @@ namespace Luna.Views.WinForms
         private void FormChoice_Load(object sender, EventArgs e)
         {
             InitControls();
+            this.FormClosed += (s, a) => done.Set();
         }
 
         #region public methods
@@ -53,7 +53,6 @@ namespace Luna.Views.WinForms
                     return;
                 }
             }
-            result = cancelled;
         }
 
         List<RadioButton> radioButtons = new List<RadioButton>();
@@ -101,14 +100,11 @@ namespace Luna.Views.WinForms
         {
             SetResult();
             this.Close();
-            done.Set();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            result = cancelled;
             this.Close();
-            done.Set();
         }
 
         #endregion

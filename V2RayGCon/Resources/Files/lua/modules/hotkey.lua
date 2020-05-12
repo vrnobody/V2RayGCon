@@ -1,4 +1,6 @@
-local function Reg(self, keyName, fn, hasAlt, hasCtrl, hasShift)
+local hotkey = {}
+
+function hotkey:Reg(keyName, fn, hasAlt, hasCtrl, hasShift)
     local evCode = table.length(self.handles) + 1
     local handle = Sys:RegisterHotKey(self.mailbox, evCode, keyName, hasAlt, hasCtrl, hasShift)
     if handle ~= nil then
@@ -9,19 +11,19 @@ local function Reg(self, keyName, fn, hasAlt, hasCtrl, hasShift)
     return false
 end
 
-local function ClearEvents(self)
+function hotkey:ClearEvents()
     self.mailbox:Clear()
 end
 
-local function Destroy(self)
+function hotkey:Destroy()
     for idx, handle in ipairs(self.handles) do
         Sys:UnregisterHotKey(self.mailbox, handle)
     end
-    ClearEvents(self)
+    self:ClearEvents()
     self.mailbox:Close()
 end
 
-local function ExecMail(self, mail)
+function hotkey:ExecMail(mail)
     if mail ~= nil then
         local evCode = mail:GetCode()
         self.fns[evCode]()
@@ -30,39 +32,34 @@ local function ExecMail(self, mail)
     return false
 end
 
-local function Check(self)
+function hotkey:Check()
     local mail = self.mailbox:Check()
-    return ExecMail(self, mail)
+    return self:ExecMail(mail)
 end
 
-local function Wait(self, milSec)
+function hotkey:Wait(milSec)
     local mail = nil
     if milSec == nil then
         mail = self.mailbox:Wait()
     else
         mail = self.mailbox:Wait(milSec)
     end
-    return ExecMail(self, mail)
+    return self:ExecMail(mail)
 end
 
-local function Create()
+function hotkey.new()
+    
     local mailbox = Sys:ApplyRandomMailBox()
     assert(mailbox ~= nil, "apply mailbox fail!")
     
-    local hotkey = {}
+    local o = {
+        mailbox = mailbox,
+        fns = {},
+        handles = {},
+    }
     
-    hotkey.mailbox = mailbox
-    
-    hotkey.fns = {}
-    hotkey.handles = {}
-    
-    hotkey.Reg = Reg
-    hotkey.ClearEvents = ClearEvents
-    hotkey.Destroy = Destroy
-    hotkey.Check = Check
-    hotkey.Wait = Wait
-        
-    return hotkey
+    setmetatable(o, {__index = hotkey})
+    return o
 end
 
-return Create
+return hotkey

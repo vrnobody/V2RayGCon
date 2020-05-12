@@ -6,7 +6,7 @@
 
         // Service.Setting 
         public const int LazyGcDelay = 10 * 60 * 1000; // 10 minutes
-        public const int LazySaveUserSettingsDelay = 10 * 60 * 1000;
+        public const int LazySaveUserSettingsDelay = 2 * 60 * 1000;
         public const int LazySaveServerListIntreval = 3 * 1000;
         public const int LazySaveStatisticsDatadelay = 5 * 60 * 1000;
 

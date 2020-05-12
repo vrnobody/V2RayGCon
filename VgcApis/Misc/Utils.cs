@@ -1179,6 +1179,33 @@ namespace VgcApis.Misc
         #endregion
 
         #region Misc
+        public static string GetLuaModuleName(string fullPath)
+        {
+            if (string.IsNullOrWhiteSpace(fullPath))
+            {
+                return null;
+            }
+
+            var appDir = GetAppDir();
+            if (fullPath.StartsWith(appDir))
+            {
+                fullPath = fullPath.Substring(appDir.Length);
+            }
+
+            var mn = fullPath.Replace("\\", ".").Replace("/", ".");
+            while (mn != null && mn.StartsWith("."))
+            {
+                mn = mn.Substring(1);
+            }
+
+            if (mn != null && mn.ToLower().EndsWith(".lua"))
+            {
+                mn = mn.Substring(0, mn.Length - ".lua".Length);
+            }
+
+            return mn;
+        }
+
         public static bool IsImportResultSuccess(string[] result) =>
            result[3] == VgcApis.Models.Consts.Import.MarkImportSuccess;
 

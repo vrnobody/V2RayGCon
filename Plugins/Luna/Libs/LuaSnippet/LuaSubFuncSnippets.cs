@@ -2,21 +2,25 @@
 
 namespace Luna.Libs.LuaSnippet
 {
-    internal sealed class LuaSubFuncSnippets : MatchItemBase
+    internal class LuaSubFuncSnippets : MatchItemBase
     {
-        const string seperator = @".";
+        protected string seperator = @".";
 
         string lowerText;
 
-        public LuaSubFuncSnippets(string luaSubFuncStr)
+        public LuaSubFuncSnippets(string luaSubFuncStr, string seperator)
             : base(luaSubFuncStr)
         {
-            if (!luaSubFuncStr.Contains(seperator))
+            if (string.IsNullOrEmpty(seperator)
+                || seperator.Length != 1
+                || !":.".Contains(seperator)
+                || !luaSubFuncStr.Contains(seperator))
             {
                 throw new System.ArgumentException(
                     $"luaSubFuncStr must contains {seperator}");
             }
 
+            this.seperator = seperator;
             var pairs = luaSubFuncStr.Split(seperator[0]);
 
             if (pairs == null || pairs.Length != 2)
@@ -43,10 +47,10 @@ namespace Luna.Libs.LuaSnippet
         }
 
         string GenTitle(string fnName) =>
-            $"{fnName}()";
+            $"{fnName}";
 
         string GenText(string parent, string fnName) =>
-            $"{parent}{seperator}{fnName}()";
+            $"{parent}{seperator}{fnName}";
 
         public override CompareResult Compare(string fragmentText)
         {

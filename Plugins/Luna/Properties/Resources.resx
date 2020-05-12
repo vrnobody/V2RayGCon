@@ -137,7 +137,7 @@
     <value>..\Resources\Icons\App\StoredProcedureScript_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>0.3.4</value>
-    <comment>notify menu not update bug</comment>
+    <value>0.3.5</value>
+    <comment>auto-complete modules</comment>
   </data>
 </root>

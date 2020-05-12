@@ -32,7 +32,7 @@ end
 
 local function SetTest()
     -- Test 3. how-to use set
-    local cache = Set()
+    local cache = Set.new()
     Assert("Set.Init.Count", 0, cache:Count())
 
     cache:Reset({1,2,3})

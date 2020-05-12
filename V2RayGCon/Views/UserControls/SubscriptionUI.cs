@@ -108,6 +108,7 @@ namespace V2RayGCon.Views.UserControls
             subsCtrl.MarkDuplicatedSubsInfo();
             SetBtnDeleteStat();
             subsCtrl.AutoAddEmptyUi();
+            subsCtrl.UpdateServUiTotal(this, EventArgs.Empty);
         }
 
         private void tboxUrl_TextChanged(object sender, EventArgs e)

@@ -33,10 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.7.5")]
+[assembly: AssemblyVersion("1.3.7.7")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.3.7.7 Fix total of subs. not update bug.
+ * v1.3.7.6 Auto-complete in Luna editor.
  * v1.3.7.5 Non-blocking input/output controls in Luna.
  * v1.3.7.4 Luna editor supports history.
  * v1.3.7.3 Add navigation bar in Luna editor.

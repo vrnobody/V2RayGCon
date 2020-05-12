@@ -171,7 +171,7 @@ namespace Luna.Libs.LuaSnippet
             {
                 try
                 {
-                    return new LuaSubFuncSnippets(e);
+                    return new LuaSubFuncSnippets($"{e}()", ".");
                 }
                 catch { }
                 return null;

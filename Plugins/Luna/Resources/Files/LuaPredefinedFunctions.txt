@@ -58,16 +58,7 @@ table.length = function(T)
 end
 
 table.tostring = function(T)
-
     assert(type(T) == "table", 'table.tostring(): param type error')    
-    if T == nil then
-        return nil
-    end
-
-    local j = Json
-    if j == nil then
-        j = require 'libs.json'
-    end
-    local s = j.encode(T)
-    return Misc:ParseJToken(s)
+    local insp = Inspect or require 'libs.inspect'
+    return insp(T)
 end

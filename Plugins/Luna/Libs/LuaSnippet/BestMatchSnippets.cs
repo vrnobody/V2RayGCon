@@ -18,14 +18,18 @@ namespace Luna.Libs.LuaSnippet
         Scintilla editor;
         string searchPattern = @"";
 
+
         List<ApiFunctionSnippets> apiFunctions;
         List<LuaFuncSnippets> luaFunctions;
         List<LuaKeywordSnippets> luaKeywords;
         List<LuaSubFuncSnippets> luaSubFunctions;
-        private readonly List<LuaImportClrSnippets> luaImportClrs;
+
+        List<LuaImportClrSnippets> luaImportClrs;
+        List<LuaImportClrSnippets> luaRequireModules;
 
         ConcurrentDictionary<string, List<string>> luaModulesCache =
             new ConcurrentDictionary<string, List<string>>();
+
         List<MatchItemBase> luaScriptCache = new List<MatchItemBase>();
 
         public BestMatchSnippets(
@@ -44,9 +48,24 @@ namespace Luna.Libs.LuaSnippet
             this.luaKeywords = luaKeywords;
             this.luaSubFunctions = luaSubFunctions;
             this.luaImportClrs = luaImportClrs;
+            luaRequireModules = new List<LuaImportClrSnippets>();
 
             BindEvents();
+            UpdateLuaRequireModuleSnippets();
         }
+
+        #region public methods
+        bool isEnableCodeAnalyze;
+        public void SetIsEnableCodeAnalyze(bool enable)
+        {
+            isEnableCodeAnalyze = enable;
+            if (!enable)
+            {
+                luaScriptCache.Clear();
+            }
+        }
+
+        #endregion
 
         #region private methods
         FileSystemWatcher fsWatcher;
@@ -78,14 +97,39 @@ namespace Luna.Libs.LuaSnippet
             fsw.Changed += FileSystemEventHandler;
             fsw.Created += FileSystemEventHandler;
             fsw.Deleted += FileSystemEventHandler;
+            fsw.Renamed += FileSystemEventHandler;
 
             fsw.EnableRaisingEvents = true;
 
             return fsw;
         }
 
+        void UpdateLuaRequireModuleSnippets()
+        {
+            try
+            {
+                List<LuaImportClrSnippets> snps = new List<LuaImportClrSnippets>();
+                string[] fileArray = Directory.GetFiles(@"lua", "*.lua", SearchOption.AllDirectories);
+                foreach (var file in fileArray)
+                {
+                    if (!string.IsNullOrEmpty(file) || !file.ToLower().EndsWith(".lua"))
+                    {
+                        var mn = file.Replace("\\", ".")
+                            .Replace("/", ".")
+                            .Substring(0, file.Length - ".lua".Length);
+
+                        var scr = $"require('{mn}')";
+                        snps.Add(new LuaImportClrSnippets(scr));
+                    }
+                }
+                luaRequireModules = snps;
+            }
+            catch { }
+        }
+
         void FileSystemEventHandler(object sender, FileSystemEventArgs e)
         {
+            UpdateLuaRequireModuleSnippets();
             var mn = VgcApis.Misc.Utils.GetLuaModuleName(e.FullPath);
             if (string.IsNullOrWhiteSpace(mn))
             {
@@ -106,7 +150,7 @@ namespace Luna.Libs.LuaSnippet
 
         void InvokeScriptAnalyser(object sender, EventArgs e) => lazyAnalyser?.Deadline();
 
-        void AnalyseScript(LuaTable metaData)
+        List<MatchItemBase> AnalyseScript(LuaTable metaData)
         {
             List<MatchItemBase> snp = new List<MatchItemBase>();
             var keys = new string[] { "modules", "variables", "instances" };
@@ -127,7 +171,8 @@ namespace Luna.Libs.LuaSnippet
                         break;
                 }
             }
-            luaScriptCache = snp;
+
+            return snp;
         }
 
         void AddInstanceSnippets(LuaTable insts, List<MatchItemBase> snp)
@@ -159,7 +204,10 @@ namespace Luna.Libs.LuaSnippet
                 }
 
                 var mi = ExtractOneMemberInfo(v, vs[v] as LuaTable);
-                snp.Add(new LuaKeywordSnippets(mi.Substring(1)));
+                if (!string.IsNullOrEmpty(mi) && mi.Length > 1)
+                {
+                    snp.Add(new LuaKeywordSnippets(mi.Substring(1)));
+                }
             }
         }
 
@@ -294,6 +342,11 @@ namespace Luna.Libs.LuaSnippet
 
         void AnalizeScriptWorker()
         {
+            if (!isEnableCodeAnalyze)
+            {
+                return;
+            }
+
             Lua state = CreateAnalyser();
             try
             {
@@ -307,15 +360,14 @@ namespace Luna.Libs.LuaSnippet
                 var result = CallLuaFunction(state, "analyzeSource", "code");
                 if (result != null)
                 {
-                    AnalyseScript(result);
+                    var snps = AnalyseScript(result);
+                    if (snps != null && snps.Count() > 0)
+                    {
+                        luaScriptCache = snps;
+                    }
                 }
             }
-            catch (Exception e)
-            {
-                // debug
-                var ex = e.ToString();
-                var err = state?.GetDebugTraceback();
-            }
+            catch { }
         }
 
         void Cleanup()
@@ -330,7 +382,9 @@ namespace Luna.Libs.LuaSnippet
                 editor, searchPattern);
 
             var cache = luaScriptCache;
-            List<MatchItemBase> candidates = cache.Concat(GenCandidateList(fragment)).ToList();
+            List<MatchItemBase> candidates = cache
+                .Concat(GenCandidateList(fragment))
+                .ToList();
 
             var table = new Dictionary<MatchItemBase, long>();
             foreach (var candidate in candidates)
@@ -353,9 +407,6 @@ namespace Luna.Libs.LuaSnippet
                 yield return item;
         }
 
-        #endregion
-
-        #region private methods
         List<MatchItemBase> GenCandidateList(string fragment)
         {
             var items = new List<MatchItemBase>();
@@ -373,6 +424,7 @@ namespace Luna.Libs.LuaSnippet
             }
             else if (fragment.Contains("("))
             {
+                items.AddRange(luaRequireModules);
                 items.AddRange(luaImportClrs);
                 items.AddRange(luaFunctions);
             }

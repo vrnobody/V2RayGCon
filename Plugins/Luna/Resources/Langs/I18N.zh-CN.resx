@@ -150,6 +150,9 @@
   <data name="LuaCtrlOptionNone" xml:space="preserve">
     <value>无</value>
   </data>
+  <data name="OpenScriptEditor" xml:space="preserve">
+    <value>打开脚本编辑器</value>
+  </data>
   <data name="OpenScriptManger" xml:space="preserve">
     <value>打开脚本管理器</value>
   </data>

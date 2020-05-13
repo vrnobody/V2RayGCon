@@ -77,18 +77,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Numbers.cs" />
-    <Compile Include="Controllers\MenuCtrl.cs" />
-    <Compile Include="Controllers\TabEditorCtrl.cs" />
+    <Compile Include="Controllers\FormEditor\MenuCtrl.cs" />
+    <Compile Include="Controllers\FormEditor\TabEditorCtrl.cs" />
     <Compile Include="Controllers\LuaCoreCtrl.cs" />
-    <Compile Include="Controllers\TabGeneralCtrl.cs" />
+    <Compile Include="Controllers\FormMain\TabGeneralCtrl.cs" />
+    <Compile Include="Controllers\FormMain\TabOptionsCtrl.cs" />
     <Compile Include="Libs\LuaSnippet\BestMatchSnippets.cs" />
+    <Compile Include="Libs\LuaSnippet\LuaAcm.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Libs\LuaSnippet\LuaImportClrSnippets.cs" />
     <Compile Include="Libs\LuaSnippet\MatchItemBase.cs" />
     <Compile Include="Libs\LuaSnippet\LuaKeywordSnippets.cs" />
     <Compile Include="Libs\LuaSnippet\LuaFuncSnippets.cs" />
     <Compile Include="Libs\LuaSnippet\LuaSubFuncSnippets.cs" />
     <Compile Include="Libs\LuaSnippet\ApiFunctionSnippets.cs" />
-    <Compile Include="Libs\LuaSnippet\LuaAcm.cs" />
+    <Compile Include="Libs\LuaSnippet\SnippetsCache.cs" />
     <Compile Include="Libs\Sys\WinApis.cs" />
     <Compile Include="Misc\UI.cs" />
     <Compile Include="Luna.cs" />
@@ -159,6 +163,12 @@
     <Compile Include="Views\WinForms\FormLuaCoreSettings.Designer.cs">
       <DependentUpon>FormLuaCoreSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\WinForms\FormEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormEditor.Designer.cs">
+      <DependentUpon>FormEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\WinForms\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -223,6 +233,12 @@
     <EmbeddedResource Include="Views\WinForms\FormLuaCoreSettings.zh-CN.resx">
       <DependentUpon>FormLuaCoreSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormEditor.resx">
+      <DependentUpon>FormEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormEditor.zh-CN.resx">
+      <DependentUpon>FormEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -236,6 +252,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Files\LuaPredefinedFunctions.txt" />
+    <Content Include="Resources\Icons\App\EditWindow_16x.png" />
     <Content Include="Resources\Icons\App\Lua-Logo_32x32.png" />
     <None Include="Resources\Icons\App\StoredProcedureScript_16x.png" />
     <None Include="Resources\Icons\editor\Method_16x.png" />

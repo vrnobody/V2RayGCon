@@ -3,10 +3,12 @@ using System.Linq;
 
 namespace Luna.Services
 {
-    public class FormMgr :
+    internal class FormMgr :
         VgcApis.BaseClasses.Disposable
     {
-        List<Views.WinForms.FormMain> forms = new List<Views.WinForms.FormMain>();
+
+        Views.WinForms.FormMain formMain = null;
+        List<Views.WinForms.FormEditor> editors = new List<Views.WinForms.FormEditor>();
         readonly object formLocker = new object();
 
         Settings settings;
@@ -27,44 +29,64 @@ namespace Luna.Services
         }
 
         #region public methods
-        public void CreateNewForm()
+
+        public void CreateNewEditor()
         {
             lock (formLocker)
             {
                 VgcApis.Misc.UI.Invoke(() =>
                 {
-                    var newForm = Views.WinForms.FormMain.CreateForm(api, settings, luaServer, this);
-
+                    var newForm = Views.WinForms.FormEditor.CreateForm(api, settings, luaServer, this);
                     newForm.FormClosed += (s, a) =>
                     {
                         var form = newForm; // capture
                         RemoveFormFromList(form);
                     };
 
-                    forms.Add(newForm);
+                    editors.Add(newForm);
                     newForm.Show();
                 });
             }
         }
 
-        public void ShowOrCreateFirstForm()
+        public void ShowFormMain()
         {
-            if (forms.Count() > 0)
+            lock (formLocker)
             {
-                VgcApis.Misc.UI.Invoke(() => forms[0].Activate());
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    if (formMain == null)
+                    {
+                        var form = Views.WinForms.FormMain.CreateForm(settings, luaServer, this);
+                        form.FormClosed += (s, a) =>
+                        {
+                            formMain = null;
+                        };
+                        formMain = form;
+                        formMain.Show();
+                    }
+                    formMain.Activate();
+                });
+            }
+        }
+        public void ShowOrCreateFirstEditor()
+        {
+            if (editors.Count() > 0)
+            {
+                VgcApis.Misc.UI.Invoke(() => editors[0].Activate());
                 return;
             }
-            CreateNewForm();
+            CreateNewEditor();
         }
 
         #endregion
 
         #region private methods
-        void RemoveFormFromList(Views.WinForms.FormMain form)
+        void RemoveFormFromList(Views.WinForms.FormEditor form)
         {
             lock (formLocker)
             {
-                forms.RemoveAll(f => f == form);
+                editors.RemoveAll(f => f == form);
             }
         }
 
@@ -73,10 +95,12 @@ namespace Luna.Services
         #region protected methods
         protected override void Cleanup()
         {
-            List<Views.WinForms.FormMain> formList;
+            VgcApis.Misc.UI.CloseFormIgnoreError(formMain);
+
+            List<Views.WinForms.FormEditor> formList;
             lock (formLocker)
             {
-                formList = forms.ToList();
+                formList = editors.ToList();
             }
 
             foreach (var form in formList)

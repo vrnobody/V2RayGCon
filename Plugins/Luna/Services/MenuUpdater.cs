@@ -4,11 +4,11 @@ using System.Windows.Forms;
 
 namespace Luna.Services
 {
-    public class MenuUpdater :
+    internal class MenuUpdater :
         VgcApis.BaseClasses.Disposable
     {
         LuaServer luaServer;
-        ToolStripMenuItem miRoot, miShowWindow;
+        ToolStripMenuItem miRoot, miShowMgr, miShowEditor;
         VgcApis.Libs.Tasks.LazyGuy lazyMenuUpdater;
         private readonly Settings settings;
 
@@ -20,12 +20,14 @@ namespace Luna.Services
         public void Run(
             LuaServer luaServer,
             ToolStripMenuItem miRoot,
-            ToolStripMenuItem miShowWindow)
+            ToolStripMenuItem miShowMgr,
+            ToolStripMenuItem miShowEditor)
         {
             this.luaServer = luaServer;
 
             this.miRoot = miRoot;
-            this.miShowWindow = miShowWindow;
+            this.miShowMgr = miShowMgr;
+            this.miShowEditor = miShowEditor;
 
             lazyMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateMenuWorker, 500, 3000)
             {
@@ -49,7 +51,8 @@ namespace Luna.Services
                 var mis = GenSubMenuItems();
                 var root = miRoot.DropDownItems;
                 root.Clear();
-                root.Add(miShowWindow);
+                root.Add(miShowMgr);
+                root.Add(miShowEditor);
                 if (mis.Count > 0)
                 {
                     root.Add(new ToolStripSeparator());

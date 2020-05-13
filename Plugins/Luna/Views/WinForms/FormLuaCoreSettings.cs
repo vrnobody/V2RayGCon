@@ -2,7 +2,7 @@
 
 namespace Luna.Views.WinForms
 {
-    public partial class FormLuaCoreSettings : Form
+    internal partial class FormLuaCoreSettings : Form
     {
         #region Sigleton
         static FormLuaCoreSettings _instant;

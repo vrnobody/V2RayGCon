@@ -294,11 +294,28 @@ function analyze.analyzeSource(src)
     -- print(src)
     -- print(type(src))
 
-    -- lua 5.1 compat...
+--[[
+    - lua 5.1 compat...
     local function parserParse()
         -- local text = decoder.decode(src)
         local ast = parser.parse(src)
         -- print("ast: ", table.tostring(ast) )
+        return ast
+    end
+--]] 
+    local function parserParse()
+        local s = src
+        local ast
+        local index
+        repeat
+            local ok
+            ok, ast = pcall(function () return parser.parse(s) end)
+            index = string.find(s, "[\n\r%s]*\n[^\n]*$")
+            if index == nil then
+                return nil
+            end
+            s = string.sub(s, 1, index - 1)
+        until ok
         return ast
     end
 

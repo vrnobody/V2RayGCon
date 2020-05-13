@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Luna.Models.Apis.Components
 {
-    public sealed class Server :
+    internal sealed class Server :
         VgcApis.BaseClasses.ComponentOf<LuaApis>,
         VgcApis.Interfaces.Lua.ILuaServer
     {

@@ -2,7 +2,7 @@
 
 namespace Luna.Models.Apis.Components
 {
-    public sealed class Web :
+    internal sealed class Web :
         VgcApis.BaseClasses.ComponentOf<LuaApis>,
         VgcApis.Interfaces.Lua.ILuaWeb
     {

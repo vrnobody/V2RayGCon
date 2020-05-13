@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Luna.Services
 {
-    public class LuaServer :
+    internal class LuaServer :
         VgcApis.BaseClasses.Disposable
     {
         public EventHandler

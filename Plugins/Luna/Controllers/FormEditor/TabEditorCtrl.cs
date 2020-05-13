@@ -22,8 +22,8 @@ namespace Luna.Controllers
         VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
 
         Scintilla luaEditor = null;
-        AutocompleteMenu luaAcm = null;
-        private readonly FormMain formMain;
+        Libs.LuaSnippet.LuaAcm luaAcm = null;
+        private readonly FormEditor formEditor;
 
         VgcApis.Libs.Infr.Recorder history = new VgcApis.Libs.Infr.Recorder();
 
@@ -48,7 +48,7 @@ namespace Luna.Controllers
         VgcApis.Libs.Tasks.Routine logUpdater;
 
         public TabEditorCtrl(
-            FormMain formMain,
+            FormEditor formEditor,
             ComboBox cboxScriptName,
             Button btnNewScript,
             Button btnSaveScript,
@@ -63,7 +63,7 @@ namespace Luna.Controllers
             RichTextBox rtboxOutput,
             Panel pnlEditorContainer)
         {
-            this.formMain = formMain;
+            this.formEditor = formEditor;
             this.cboxScriptName = cboxScriptName;
             this.btnNewScript = btnNewScript;
             this.btnSaveScript = btnSaveScript;
@@ -93,6 +93,9 @@ namespace Luna.Controllers
             this.luaServer = luaServer;
             this.luaCoreCtrl = CreateLuaCoreCtrl(settings, api);
 
+            isEnableCodeAnalyze = settings.isEnableCodeAnalyze;
+            isLoadClrLib = settings.isLoadClrLib;
+
             InitControls();
             BindEvents();
             ReloadScriptName();
@@ -109,6 +112,15 @@ namespace Luna.Controllers
         }
 
         #region public methods
+        public bool isLoadClrLib;
+        bool isEnableCodeAnalyze;
+
+        public void SetIsEnableCodeAnalyze(bool isEnable)
+        {
+            isEnableCodeAnalyze = isEnable;
+            luaAcm?.SetIsEnableCodeAnalyze(isEnable);
+        }
+
         public void KeyBoardShortcutHandler(KeyEventArgs keyEvent)
         {
             var keyCode = keyEvent.KeyCode;
@@ -533,13 +545,14 @@ namespace Luna.Controllers
 
             btnRunScript.Click += (s, a) =>
             {
-                formMain.SetOutputPanelCollapseState(false);
+                formEditor.SetOutputPanelCollapseState(false);
 
                 var name = cboxScriptName.Text;
 
                 luaCoreCtrl.Abort();
                 luaCoreCtrl.SetScriptName(string.IsNullOrEmpty(name) ? $"({I18N.Empty})" : name);
                 luaCoreCtrl.ReplaceScript(luaEditor.Text);
+                luaCoreCtrl.isLoadClr = isLoadClrLib;
                 luaCoreCtrl.Start();
             };
 
@@ -617,6 +630,7 @@ namespace Luna.Controllers
             // script editor
             luaEditor = Misc.UI.CreateLuaEditor(pnlEditorContainer);
             luaAcm = settings.AttachSnippetsTo(luaEditor);
+            luaAcm.SetIsEnableCodeAnalyze(isEnableCodeAnalyze);
         }
 
         void ReloadScriptName()

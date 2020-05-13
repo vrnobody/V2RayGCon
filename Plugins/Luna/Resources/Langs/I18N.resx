@@ -150,6 +150,9 @@
   <data name="LuaCtrlOptionNone" xml:space="preserve">
     <value>E</value>
   </data>
+  <data name="OpenScriptEditor" xml:space="preserve">
+    <value>Open script editor</value>
+  </data>
   <data name="OpenScriptManger" xml:space="preserve">
     <value>Open script manager</value>
   </data>

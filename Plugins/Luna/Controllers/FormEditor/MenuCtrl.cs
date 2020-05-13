@@ -5,53 +5,81 @@ namespace Luna.Controllers
 {
     internal sealed class MenuCtrl
     {
+        Services.FormMgr formMgrService;
+
+        Views.WinForms.FormEditor formEditor;
         TabEditorCtrl editorCtrl;
         private readonly ToolStripMenuItem miNewWindow;
+        private readonly ToolStripMenuItem miShowMgr;
         private readonly ToolStripMenuItem miLoad;
         private readonly ToolStripMenuItem miSaveAs;
         private readonly ToolStripMenuItem miExit;
-        private readonly TabControl tabControlMain;
+        private readonly ToolStripMenuItem miLoadClrLib;
+        private readonly ToolStripMenuItem miEanbleCodeAnalyze;
         private readonly ComboBox cboxScriptName;
-        Views.WinForms.FormMain formMain;
-        Services.FormMgr formMgrService;
 
         public MenuCtrl(
-            Services.FormMgr formMgrService,
-            Views.WinForms.FormMain formMain,
+            Views.WinForms.FormEditor formEditor,
+
             TabEditorCtrl editorCtrl,
             ToolStripMenuItem miNewWindow,
+            ToolStripMenuItem miShowMgr,
             ToolStripMenuItem miLoad,
             ToolStripMenuItem miSaveAs,
             ToolStripMenuItem miExit,
 
-            TabControl tabControlMain,
+            ToolStripMenuItem miLoadClrLib,
+            ToolStripMenuItem miEanbleCodeAnalyze,
+
             ComboBox cboxScriptName)
         {
-            this.formMgrService = formMgrService;
-
             this.editorCtrl = editorCtrl;
             this.miNewWindow = miNewWindow;
+            this.miShowMgr = miShowMgr;
             this.miLoad = miLoad;
             this.miSaveAs = miSaveAs;
             this.miExit = miExit;
-            this.tabControlMain = tabControlMain;
+            this.miLoadClrLib = miLoadClrLib;
+            this.miEanbleCodeAnalyze = miEanbleCodeAnalyze;
             this.cboxScriptName = cboxScriptName;
-            this.formMain = formMain;
+            this.formEditor = formEditor;
         }
 
-        public void Run()
+        public void Run(
+            Services.FormMgr formMgrService,
+            Services.Settings settings)
         {
+            this.formMgrService = formMgrService;
+            miLoadClrLib.Checked = settings.isLoadClrLib;
+            miEanbleCodeAnalyze.Checked = settings.isEnableCodeAnalyze;
+
             BindEvents();
         }
 
         private void BindEvents()
         {
+            miShowMgr.Click += (s, a) => formMgrService.ShowFormMain();
+
+            miLoadClrLib.Click += (s, a) =>
+            {
+                var enable = !miLoadClrLib.Checked;
+                miLoadClrLib.Checked = enable;
+                editorCtrl.isLoadClrLib = enable;
+            };
+
+            miEanbleCodeAnalyze.Click += (s, a) =>
+            {
+                var enable = !miEanbleCodeAnalyze.Checked;
+                miEanbleCodeAnalyze.Checked = enable;
+                editorCtrl.SetIsEnableCodeAnalyze(enable);
+            };
+
             miNewWindow.Click += (s, a) =>
-                formMgrService.CreateNewForm();
+                formMgrService.CreateNewEditor();
 
             // event handling
             miExit.Click += (s, a) =>
-                VgcApis.Misc.UI.CloseFormIgnoreError(formMain);
+                VgcApis.Misc.UI.CloseFormIgnoreError(formEditor);
 
             miLoad.Click += (s, a) =>
             {
@@ -70,7 +98,6 @@ namespace Luna.Controllers
                     return;
                 }
 
-                tabControlMain.SelectTab(1);
                 cboxScriptName.Text = @"";
                 editorCtrl.SetCurrentEditorContent(script);
                 editorCtrl.SetScriptCache(script);

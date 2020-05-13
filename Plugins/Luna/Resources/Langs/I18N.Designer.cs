@@ -160,6 +160,15 @@ namespace Luna.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Open script editor 的本地化字符串。
+        /// </summary>
+        internal static string OpenScriptEditor {
+            get {
+                return ResourceManager.GetString("OpenScriptEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Open script manager 的本地化字符串。
         /// </summary>
         internal static string OpenScriptManger {

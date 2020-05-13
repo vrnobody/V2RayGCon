@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Luna.Models.Apis.Components
 {
-    public sealed class Misc :
+    internal sealed class Misc :
         VgcApis.BaseClasses.ComponentOf<LuaApis>,
         VgcApis.Interfaces.Lua.ILuaMisc
     {
@@ -38,7 +38,9 @@ namespace Luna.Models.Apis.Components
         #region ILuaMisc.WinForms
         public void ShowFormOption() => vgcNotifier.ShowFormOption();
 
-        public void ShowFormLuna() => formMgr.ShowOrCreateFirstForm();
+        public void ShowFormLunaMgr() => formMgr.ShowFormMain();
+
+        public void ShowFormLunaEditor() => formMgr.ShowOrCreateFirstEditor();
 
         public void ShowFormMain() => vgcNotifier.ShowFormMain();
 

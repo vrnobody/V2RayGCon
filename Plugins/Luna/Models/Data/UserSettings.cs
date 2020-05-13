@@ -7,11 +7,13 @@ namespace Luna.Models.Data
         public Dictionary<string, string> luaShareMemory;
         public List<LuaCoreSetting> luaServers;
 
-        public bool isEnableClrSupports;
+        public bool isLoadClr;
+        public bool isEnableCodeAnalyze;
 
         public UserSettings()
         {
-            isEnableClrSupports = false;
+            isLoadClr = false;
+            isEnableCodeAnalyze = false;
             NormalizeData();
         }
 

@@ -3,7 +3,7 @@ using System;
 
 namespace Luna.Models.Apis
 {
-    public class LuaApis :
+    internal class LuaApis :
         VgcApis.BaseClasses.ComponentOf<LuaApis>
     {
         Services.Settings settings;

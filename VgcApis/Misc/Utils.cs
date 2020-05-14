@@ -334,7 +334,7 @@ namespace VgcApis.Misc
 
         #region net
 
-        public static long TimedDownloadTesting(
+        public static long TimedDownloadTest(
             string url,
             int port,
             int expectedSizeInKiB,
@@ -500,7 +500,7 @@ namespace VgcApis.Misc
             const int CTRL_C_EVENT = 0;
 
             var success = false;
-            if (!sendCtrlCLocker.WaitOne(5000))
+            if (!sendCtrlCLocker.WaitOne(Models.Consts.Core.SendCtrlCTimeout))
             {
                 return false;
             }

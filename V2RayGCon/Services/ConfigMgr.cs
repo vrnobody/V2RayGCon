@@ -14,7 +14,7 @@ namespace V2RayGCon.Services
         Settings setting;
         Cache cache;
 
-        static long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+        static long TIMEOUT = VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
         ConfigMgr() { }
 
@@ -412,6 +412,22 @@ namespace V2RayGCon.Services
             return result;
         }
 
+        bool WaitUntilCoreReady(Libs.V2Ray.Core core)
+        {
+            const int jiff = 300;
+            int cycle = 30 * 1000 / jiff;
+            int i;
+            for (i = 0; i < cycle && !core.isReady; i++)
+            {
+                VgcApis.Misc.Utils.Sleep(jiff);
+            }
+            if (i < cycle)
+            {
+                return true;
+            }
+            return false;
+        }
+
         long DoSpeedTesting(
             string title,
             string testUrl,
@@ -426,7 +442,7 @@ namespace V2RayGCon.Services
             if (string.IsNullOrEmpty(config))
             {
                 log(I18N.DecodeImportFail);
-                return SpeedtestTimeout;
+                return TIMEOUT;
             }
 
             var speedTester = new Libs.V2Ray.Core(setting) { title = title };
@@ -435,13 +451,15 @@ namespace V2RayGCon.Services
                 speedTester.OnLog += logDeliever;
             }
 
-            long latency = VgcApis.Models.Consts.Core.SpeedtestTimeout;
-
+            long latency = TIMEOUT;
             try
             {
                 speedTester.RestartCore(config);
-                var expectedSizeInKib = setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestExpectedSizeInKib : -1;
-                latency = VgcApis.Misc.Utils.TimedDownloadTesting(testUrl, port, expectedSizeInKib, testTimeout);
+                if (WaitUntilCoreReady(speedTester))
+                {
+                    var expectedSizeInKib = setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestExpectedSizeInKib : -1;
+                    latency = VgcApis.Misc.Utils.TimedDownloadTest(testUrl, port, expectedSizeInKib, testTimeout);
+                }
                 speedTester.StopCore();
                 if (logDeliever != null)
                 {

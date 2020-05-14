@@ -20,16 +20,16 @@ namespace Luna.Services
         #region properties
         public bool isScreenLocked => vgcSetting.IsScreenLocked();
 
-        public bool isEnableCodeAnalyze
+        public bool isEnableAdvanceAutoComplete
         {
-            get => userSettings.isEnableCodeAnalyze;
+            get => userSettings.isEnableAdvanceAutoComplete;
             set
             {
-                if (userSettings.isEnableCodeAnalyze == value)
+                if (userSettings.isEnableAdvanceAutoComplete == value)
                 {
                     return;
                 }
-                userSettings.isEnableCodeAnalyze = value;
+                userSettings.isEnableAdvanceAutoComplete = value;
                 SaveUserSettingsNow();
             }
         }

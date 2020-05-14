@@ -4,16 +4,17 @@ using Luna.Views.WinForms;
 using ScintillaNET;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace Luna.Controllers
+namespace Luna.Controllers.FormEditorCtrl
 {
     internal sealed class TabEditorCtrl
     {
         Services.Settings settings;
-        Services.FormMgr formMgr;
+        Services.FormMgrSvc formMgr;
         Services.LuaServer luaServer;
 
         LuaCoreCtrl luaCoreCtrl;
@@ -23,7 +24,7 @@ namespace Luna.Controllers
 
         Scintilla luaEditor = null;
         Libs.LuaSnippet.LuaAcm luaAcm = null;
-        private readonly FormEditor formEditor;
+        private readonly Views.WinForms.FormEditor formEditor;
 
         VgcApis.Libs.Infr.Recorder history = new VgcApis.Libs.Infr.Recorder();
 
@@ -85,7 +86,7 @@ namespace Luna.Controllers
         public void Run(
           VgcApis.Interfaces.Services.IApiService api,
           Services.Settings settings,
-          Services.FormMgr formMgr,
+          Services.FormMgrSvc formMgr,
           Services.LuaServer luaServer)
         {
             this.formMgr = formMgr;
@@ -93,7 +94,7 @@ namespace Luna.Controllers
             this.luaServer = luaServer;
             this.luaCoreCtrl = CreateLuaCoreCtrl(settings, api);
 
-            isEnableCodeAnalyze = settings.isEnableCodeAnalyze;
+            isEnableCodeAnalyze = settings.isEnableAdvanceAutoComplete;
             isLoadClrLib = settings.isLoadClrLib;
 
             InitControls();
@@ -210,25 +211,25 @@ namespace Luna.Controllers
         public void SetScriptCache(string content) =>
             preScriptContent = content;
 
+        string curFileName = null;
+        public void SetCurFileName(string filename)
+        {
+            this.curFileName = filename;
+            formEditor.SetTitleTail(filename);
+        }
+
         public void SetCurrentEditorContent(string content) =>
             VgcApis.Misc.UI.Invoke(() => luaEditor.Text = content);
 
-        public bool SaveScript()
-        {
-            var scriptName = cboxScriptName.Text;
-            var content = luaEditor.Text;
-            var success = luaServer.AddOrReplaceScript(scriptName, content);
-
-            if (success)
-            {
-                preScriptContent = content;
-            }
-
-            return success;
-        }
         #endregion
 
         #region Scintilla
+
+        private void Scintilla_MouseClicked(object sender, EventArgs e)
+        {
+            history.Add(luaEditor.CurrentLine);
+        }
+
         private int maxLineNumberCharLength;
         private void Scintilla_TextChanged(object sender, EventArgs e)
         {
@@ -351,26 +352,7 @@ namespace Luna.Controllers
             bar.Remove();
         }
 
-        string[] ExtractFunctionsFrom(string text)
-        {
-            var kws = new string[] { "function", "local function" };
-            List<string> fns = new List<string>();
 
-            var lines = text.Replace("\r", "").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var line in lines)
-            {
-                if (line.StartsWith("function "))
-                {
-                    fns.Add(line);
-                }
-                else if (line.StartsWith("local function "))
-                {
-                    fns.Add(line.Substring("local ".Length));
-                }
-            }
-
-            return fns.Distinct().OrderBy(x => x).ToArray();
-        }
 
         void ScrollToFunction(string text)
         {
@@ -390,39 +372,7 @@ namespace Luna.Controllers
             }
         }
 
-        string[] ExtractVariablesFrom(string text)
-        {
-            List<string> vs = new List<string>();
-            var kw = "local ";
 
-            var lines = text.Replace("\r", "").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var line in lines)
-            {
-                if (line.StartsWith("local function "))
-                {
-                    continue;
-                }
-
-                if (!line.StartsWith(kw))
-                {
-                    continue;
-                }
-
-                var parts = line.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-                if (parts.Length < 1 || parts[0].Length < kw.Length)
-                {
-                    continue;
-                }
-
-                var v = parts[0].Substring(kw.Length).Trim();
-                if (v.Length > 0)
-                {
-                    vs.Add(v);
-                }
-            }
-
-            return vs.Distinct().OrderBy(x => x).ToArray();
-        }
 
         void ScrollToVariable(string text)
         {
@@ -497,7 +447,7 @@ namespace Luna.Controllers
             {
                 history.Add(luaEditor.CurrentLine);
                 var content = luaEditor.Text;
-                var list = ExtractVariablesFrom(content);
+                var list = VgcApis.Misc.Utils.ExtractGlobalVarsFromLuaScript(content);
                 VgcApis.Misc.UI.Invoke(() =>
                 {
                     var items = cboxVarList.Items;
@@ -523,7 +473,7 @@ namespace Luna.Controllers
             {
                 history.Add(luaEditor.CurrentLine);
                 var content = luaEditor.Text;
-                var list = ExtractFunctionsFrom(content);
+                var list = VgcApis.Misc.Utils.ExtractFunctionsFromLuaScript(content);
                 VgcApis.Misc.UI.Invoke(() =>
                 {
                     var items = cboxFunctionList.Items;
@@ -536,6 +486,7 @@ namespace Luna.Controllers
             luaEditor.InsertCheck += Scintilla_InsertCheck;
             luaEditor.CharAdded += Scintilla_CharAdded;
             luaEditor.TextChanged += Scintilla_TextChanged;
+            luaEditor.MouseClick += Scintilla_MouseClicked;
 
             btnNewScript.Click += (s, a) => ClearEditor();
 
@@ -572,14 +523,38 @@ namespace Luna.Controllers
 
         private void OnBtnSaveScriptClickHandler(bool showResult)
         {
-            var scriptName = cboxScriptName.Text;
-            if (string.IsNullOrEmpty(scriptName))
+            var name = cboxScriptName.Text;
+            if (string.IsNullOrWhiteSpace(name)
+                && string.IsNullOrWhiteSpace(curFileName))
             {
                 VgcApis.Misc.UI.MsgBoxAsync(I18N.ScriptNameNotSet);
                 return;
             }
 
-            var success = SaveScript();
+            var success = false;
+            var curScript = luaEditor.Text;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                success = luaServer.AddOrReplaceScript(name, curScript);
+                SetCurFileName("");
+            }
+            else
+            {
+                // save to file
+                try
+                {
+                    File.WriteAllText(curFileName, curScript);
+                    success = true;
+                }
+                catch { }
+            }
+
+            if (success)
+            {
+                preScriptContent = curScript;
+            }
+
             if (showResult)
             {
                 VgcApis.Misc.UI.MsgBoxAsync(success ? I18N.Done : I18N.Fail);
@@ -616,6 +591,7 @@ namespace Luna.Controllers
             preScriptName = name;
             preScriptContent = LoadScriptByName(name);
             luaEditor.Text = preScriptContent;
+            SetCurFileName("");
         }
 
         string LoadScriptByName(string name) =>

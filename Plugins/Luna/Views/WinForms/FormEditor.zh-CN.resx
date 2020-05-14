@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="lbStatusBarMsg.Text" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="toolStripStatusCodeAnalyze.Text" xml:space="preserve">
+    <value>增强补全</value>
+  </data>
+  <data name="toolStripStatusCodeAnalyze.ToolTipText" xml:space="preserve">
+    <value>代码分析</value>
+  </data>
+  <data name="toolStripStatusClrLib.Text" xml:space="preserve">
+    <value>CLR库</value>
+  </data>
+  <data name="toolStripStatusClrLib.ToolTipText" xml:space="preserve">
+    <value>CLR库支持</value>
+  </data>
   <data name="statusStrip1.ToolTip" xml:space="preserve">
     <value />
   </data>
@@ -279,6 +294,9 @@
     <value>创建新窗口</value>
   </data>
   <data name="showScriptManagerToolStripMenuItem.Text" xml:space="preserve">
+    <value>脚本管理器</value>
+  </data>
+  <data name="showScriptManagerToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>打开脚本管理器</value>
   </data>
   <data name="loadFileToolStripMenuItem.Text" xml:space="preserve">
@@ -306,22 +324,19 @@
     <value>加载CLR库</value>
   </data>
   <data name="enableCodeAnalyzeToolStripMenuItem.Text" xml:space="preserve">
-    <value>代码分析（危险）</value>
+    <value>增强代码补全（危险）</value>
   </data>
   <data name="enableCodeAnalyzeToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>可能执行恶意代码</value>
   </data>
+  <data name="outputPanelToolStripMenuItem.Text" xml:space="preserve">
+    <value>输出面板</value>
+  </data>
+  <data name="outputPanelToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>显示/隐藏输出面板</value>
+  </data>
   <data name="optionToolStripMenuItem.Text" xml:space="preserve">
     <value>选项</value>
-  </data>
-  <data name="showOutputPanelToolStripMenuItem.Text" xml:space="preserve">
-    <value>显示输出面板</value>
-  </data>
-  <data name="hideOutputPanelToolStripMenuItem.Text" xml:space="preserve">
-    <value>隐藏输出面板</value>
-  </data>
-  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
-    <value>查看</value>
   </data>
   <data name="menuStrip1.ToolTip" xml:space="preserve">
     <value />

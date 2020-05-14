@@ -129,7 +129,7 @@ namespace Luna.Libs.LuaSnippet
             {
                 try
                 {
-                    return new LuaFuncSnippets(e);
+                    return new LuaFuncSnippets($"{e}()");
                 }
                 catch { }
                 return null;

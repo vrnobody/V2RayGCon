@@ -5,19 +5,21 @@ namespace Luna.Views.WinForms
 {
     internal partial class FormEditor : Form
     {
-        Controllers.TabEditorCtrl editorCtrl;
-        Controllers.MenuCtrl menuCtrl;
+        Controllers.FormEditorCtrl.TabEditorCtrl editorCtrl;
+        Controllers.FormEditorCtrl.MenuCtrl menuCtrl;
 
         Services.LuaServer luaServer;
         Services.Settings settings;
-        Services.FormMgr formMgr;
+        Services.FormMgrSvc formMgr;
         VgcApis.Interfaces.Services.IApiService api;
+
+        string title = "";
 
         public static FormEditor CreateForm(
             VgcApis.Interfaces.Services.IApiService api,
             Services.Settings settings,
             Services.LuaServer luaServer,
-            Services.FormMgr formMgr)
+            Services.FormMgrSvc formMgr)
         {
             FormEditor r = null;
             VgcApis.Misc.UI.Invoke(() =>
@@ -31,7 +33,7 @@ namespace Luna.Views.WinForms
             VgcApis.Interfaces.Services.IApiService api,
             Services.Settings settings,
             Services.LuaServer luaServer,
-            Services.FormMgr formMgr)
+            Services.FormMgrSvc formMgr)
         {
             this.api = api;
             this.formMgr = formMgr;
@@ -39,7 +41,8 @@ namespace Luna.Views.WinForms
             this.luaServer = luaServer;
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
-            this.Text = Properties.Resources.Name + " v" + Properties.Resources.Version;
+            title = string.Format(I18N.LunaScrEditor, Properties.Resources.Version);
+            this.Text = title;
         }
 
         private void FormEditor_Load(object sender, System.EventArgs e)
@@ -48,7 +51,7 @@ namespace Luna.Views.WinForms
             InitSplitPanel();
             lbStatusBarMsg.Text = "";
 
-            editorCtrl = new Controllers.TabEditorCtrl(
+            editorCtrl = new Controllers.FormEditorCtrl.TabEditorCtrl(
                 this,
                 cboxScriptName,
                 btnNewScript,
@@ -66,7 +69,7 @@ namespace Luna.Views.WinForms
 
             editorCtrl.Run(api, settings, formMgr, luaServer);
 
-            menuCtrl = new Controllers.MenuCtrl(
+            menuCtrl = new Controllers.FormEditorCtrl.MenuCtrl(
                 this,
                 editorCtrl,
                 newWindowToolStripMenuItem,
@@ -77,6 +80,9 @@ namespace Luna.Views.WinForms
 
                 loadCLRLibraryToolStripMenuItem,
                 enableCodeAnalyzeToolStripMenuItem,
+
+                toolStripStatusClrLib,
+                toolStripStatusCodeAnalyze,
 
                 cboxScriptName);
 
@@ -114,28 +120,37 @@ namespace Luna.Views.WinForms
         #endregion
 
         #region public methods
+        public void SetTitleTail(string text)
+        {
+            var t = $"{title} {text}";
+            if (t == this.Text)
+            {
+                return;
+            }
+
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                this.Text = t;
+                this.toolTip1.SetToolTip(this, text ?? "");
+            });
+        }
+
         public void SetOutputPanelCollapseState(bool isCollapsed)
         {
             splitContainerTabEditor.Panel2Collapsed = isCollapsed;
-            showOutputPanelToolStripMenuItem.Checked = !isCollapsed;
-            hideOutputPanelToolStripMenuItem.Checked = isCollapsed;
+            outputPanelToolStripMenuItem.Checked = !isCollapsed;
         }
         #endregion
 
 
         #region UI event handlers
-
-
-        private void hideOutputPanelToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void outputPanelToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
-            SetOutputPanelCollapseState(true);
+            var isCollapsed = !splitContainerTabEditor.Panel2Collapsed;
+            SetOutputPanelCollapseState(isCollapsed);
         }
-
-        private void showOutputPanelToolStripMenuItem_Click(object sender, System.EventArgs e)
-        {
-            SetOutputPanelCollapseState(false);
-        }
-
         #endregion
+
+
     }
 }

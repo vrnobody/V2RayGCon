@@ -131,6 +131,27 @@
   <data name="lbStatusBarMsg.Text" xml:space="preserve">
     <value>0 task running</value>
   </data>
+  <data name="toolStripSpring.Size" type="System.Drawing.Size, System.Drawing">
+    <value>516, 17</value>
+  </data>
+  <data name="toolStripStatusCodeAnalyze.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 17</value>
+  </data>
+  <data name="toolStripStatusCodeAnalyze.Text" xml:space="preserve">
+    <value>AAC</value>
+  </data>
+  <data name="toolStripStatusCodeAnalyze.ToolTipText" xml:space="preserve">
+    <value>Advance auto-complete.</value>
+  </data>
+  <data name="toolStripStatusClrLib.Size" type="System.Drawing.Size, System.Drawing">
+    <value>30, 17</value>
+  </data>
+  <data name="toolStripStatusClrLib.Text" xml:space="preserve">
+    <value>CLR</value>
+  </data>
+  <data name="toolStripStatusClrLib.ToolTipText" xml:space="preserve">
+    <value>CLR library support</value>
+  </data>
   <data name="statusStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
@@ -365,7 +386,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="pnlScriptEditor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>399, 336</value>
+    <value>399, 294</value>
   </data>
   <data name="pnlScriptEditor.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -752,7 +773,7 @@
     <value>3</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>403, 390</value>
+    <value>403, 348</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -782,7 +803,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="panel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>403, 390</value>
+    <value>403, 348</value>
   </data>
   <data name="panel3.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -812,7 +833,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>407, 408</value>
+    <value>407, 366</value>
   </data>
   <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -860,7 +881,7 @@
     <value>Vertical</value>
   </data>
   <data name="rtBoxOutput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>264, 390</value>
+    <value>264, 348</value>
   </data>
   <data name="rtBoxOutput.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -893,7 +914,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>268, 408</value>
+    <value>268, 366</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -929,7 +950,7 @@
     <value>150</value>
   </data>
   <data name="splitContainerTabEditor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>678, 408</value>
+    <value>678, 366</value>
   </data>
   <data name="splitContainerTabEditor.SplitterDistance" type="System.Int32, mscorlib">
     <value>407</value>
@@ -956,7 +977,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="toolStripContainer1.ContentPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>684, 414</value>
+    <value>684, 372</value>
   </data>
   <data name="&gt;&gt;toolStripContainer1.ContentPanel.Name" xml:space="preserve">
     <value>toolStripContainer1.ContentPanel</value>
@@ -1004,7 +1025,7 @@
     <value>2</value>
   </data>
   <data name="toolStripContainer1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>684, 461</value>
+    <value>684, 419</value>
   </data>
   <data name="toolStripContainer1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1019,7 +1040,7 @@
     <value>None</value>
   </data>
   <data name="newWindowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
+    <value>165, 22</value>
   </data>
   <data name="newWindowToolStripMenuItem.Text" xml:space="preserve">
     <value>New window</value>
@@ -1028,16 +1049,16 @@
     <value>Create a new window.</value>
   </data>
   <data name="showScriptManagerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
+    <value>165, 22</value>
   </data>
   <data name="showScriptManagerToolStripMenuItem.Text" xml:space="preserve">
-    <value>Show script manager</value>
+    <value>Script manager</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 6</value>
+    <value>162, 6</value>
   </data>
   <data name="loadFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
+    <value>165, 22</value>
   </data>
   <data name="loadFileToolStripMenuItem.Text" xml:space="preserve">
     <value>Load</value>
@@ -1046,7 +1067,7 @@
     <value>Load lua script into editor.</value>
   </data>
   <data name="saveAsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
+    <value>165, 22</value>
   </data>
   <data name="saveAsToolStripMenuItem.Text" xml:space="preserve">
     <value>Save as</value>
@@ -1055,10 +1076,10 @@
     <value>Save current editing script to file.</value>
   </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 6</value>
+    <value>162, 6</value>
   </data>
   <data name="exitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>199, 22</value>
+    <value>165, 22</value>
   </data>
   <data name="exitToolStripMenuItem.Text" xml:space="preserve">
     <value>Exit</value>
@@ -1073,43 +1094,31 @@
     <value>File</value>
   </data>
   <data name="loadCLRLibraryToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 22</value>
+    <value>268, 22</value>
   </data>
   <data name="loadCLRLibraryToolStripMenuItem.Text" xml:space="preserve">
     <value>Load CLR library</value>
   </data>
   <data name="enableCodeAnalyzeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 22</value>
+    <value>268, 22</value>
   </data>
   <data name="enableCodeAnalyzeToolStripMenuItem.Text" xml:space="preserve">
-    <value>Code analyze (danger)</value>
+    <value>Advance auto-complete (danger)</value>
   </data>
   <data name="enableCodeAnalyzeToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>May execute malicious code.</value>
+  </data>
+  <data name="outputPanelToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>268, 22</value>
+  </data>
+  <data name="outputPanelToolStripMenuItem.Text" xml:space="preserve">
+    <value>Output panel</value>
   </data>
   <data name="optionToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 21</value>
   </data>
   <data name="optionToolStripMenuItem.Text" xml:space="preserve">
     <value>Option</value>
-  </data>
-  <data name="showOutputPanelToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 22</value>
-  </data>
-  <data name="showOutputPanelToolStripMenuItem.Text" xml:space="preserve">
-    <value>Show output panel</value>
-  </data>
-  <data name="hideOutputPanelToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 22</value>
-  </data>
-  <data name="hideOutputPanelToolStripMenuItem.Text" xml:space="preserve">
-    <value>Hide output panel</value>
-  </data>
-  <data name="viewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>47, 21</value>
-  </data>
-  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
-    <value>View</value>
   </data>
   <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -1169,7 +1178,7 @@
     <value>6, 12</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>684, 461</value>
+    <value>684, 419</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -1178,12 +1187,30 @@
     <value>268, 268</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>FormMain</value>
+    <value>FormEditor</value>
   </data>
   <data name="&gt;&gt;lbStatusBarMsg.Name" xml:space="preserve">
     <value>lbStatusBarMsg</value>
   </data>
   <data name="&gt;&gt;lbStatusBarMsg.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSpring.Name" xml:space="preserve">
+    <value>toolStripSpring</value>
+  </data>
+  <data name="&gt;&gt;toolStripSpring.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripStatusCodeAnalyze.Name" xml:space="preserve">
+    <value>toolStripStatusCodeAnalyze</value>
+  </data>
+  <data name="&gt;&gt;toolStripStatusCodeAnalyze.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripStatusClrLib.Name" xml:space="preserve">
+    <value>toolStripStatusClrLib</value>
+  </data>
+  <data name="&gt;&gt;toolStripStatusClrLib.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;fileToolStripMenuItem.Name" xml:space="preserve">
@@ -1252,22 +1279,10 @@
   <data name="&gt;&gt;enableCodeAnalyzeToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;viewToolStripMenuItem.Name" xml:space="preserve">
-    <value>viewToolStripMenuItem</value>
+  <data name="&gt;&gt;outputPanelToolStripMenuItem.Name" xml:space="preserve">
+    <value>outputPanelToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;viewToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;showOutputPanelToolStripMenuItem.Name" xml:space="preserve">
-    <value>showOutputPanelToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;showOutputPanelToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;hideOutputPanelToolStripMenuItem.Name" xml:space="preserve">
-    <value>hideOutputPanelToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;hideOutputPanelToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;outputPanelToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">

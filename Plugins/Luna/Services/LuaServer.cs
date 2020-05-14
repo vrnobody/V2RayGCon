@@ -20,7 +20,7 @@ namespace Luna.Services
         public void Run(
             VgcApis.Interfaces.Services.IApiService api,
            Settings settings,
-           FormMgr formMgr)
+           FormMgrSvc formMgr)
         {
             this.settings = settings;
 

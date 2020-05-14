@@ -13,7 +13,7 @@ namespace Luna.Models.Apis.Components
         VgcApis.Interfaces.Lua.ILuaMisc
     {
         Services.Settings settings;
-        private readonly FormMgr formMgr;
+        private readonly FormMgrSvc formMgr;
         VgcApis.Interfaces.Services.IUtilsService vgcUtils;
         VgcApis.Interfaces.Services.IShareLinkMgrService vgcSlinkMgr;
         VgcApis.Interfaces.Services.INotifierService vgcNotifier;
@@ -23,7 +23,7 @@ namespace Luna.Models.Apis.Components
         public Misc(
             VgcApis.Interfaces.Services.IApiService api,
             Services.Settings settings,
-            Services.FormMgr formMgr)
+            Services.FormMgrSvc formMgr)
         {
             this.settings = settings;
             this.formMgr = formMgr;

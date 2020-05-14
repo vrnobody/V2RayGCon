@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Luna.Controllers
+namespace Luna.Controllers.FormMainCtrl
 {
     internal class TabGeneralCtrl
     {
@@ -16,28 +16,18 @@ namespace Luna.Controllers
             FlowLayoutPanel flyLuaUiPanel,
             Button btnStopAll,
             Button btnKillAll,
-
-            Button btnShowEditor,
-
             Button btnDelAll,
             Button btnImport,
             Button btnExport)
         {
-            this.btnShowEditor = btnShowEditor;
             BindControls(flyLuaUiPanel, btnStopAll, btnKillAll, btnDelAll, btnImport, btnExport);
-
         }
 
         #region public methods
         Services.LuaServer luaServer;
-        private readonly Button btnShowEditor;
 
-        Services.FormMgr formMgr;
-        public void Run(
-            Services.FormMgr formMgr,
-            Services.LuaServer luaServer)
+        public void Run(Services.LuaServer luaServer)
         {
-            this.formMgr = formMgr;
             this.luaServer = luaServer;
             BindEvents(luaServer);
             BindDragDropEvent();
@@ -82,8 +72,6 @@ namespace Luna.Controllers
 
         private void BindEvents(Services.LuaServer luaServer)
         {
-            btnShowEditor.Click += (s, a) => formMgr.ShowOrCreateFirstEditor();
-
             btnDelAll.Click += (s, a) =>
             {
                 if (!VgcApis.Misc.UI.Confirm(I18N.ConfirmDeleteAllScripts))

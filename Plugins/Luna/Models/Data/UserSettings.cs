@@ -8,12 +8,12 @@ namespace Luna.Models.Data
         public List<LuaCoreSetting> luaServers;
 
         public bool isLoadClr;
-        public bool isEnableCodeAnalyze;
+        public bool isEnableAdvanceAutoComplete;
 
         public UserSettings()
         {
             isLoadClr = false;
-            isEnableCodeAnalyze = false;
+            isEnableAdvanceAutoComplete = false;
             NormalizeData();
         }
 

@@ -221,6 +221,10 @@ local function findEquals(fullTable, output, line)
             end
             -- print("\n")
         end
+    end
+    
+    -- use c# to handle function
+    --[[
     elseif t.tag == "Function" then
         if fullTable[line-1] ~= nil then
             local functionName = fullTable[line-1][1]
@@ -237,6 +241,7 @@ local function findEquals(fullTable, output, line)
             end
         end
     end
+    --]]
     -- return output
 end
 
@@ -253,11 +258,10 @@ local function analyzeAST(t, output)
     -- iterate through ALL the tables!
     if type(t) == "table" then
         for line = 1, #t do
-            -- print("analyzing: ", inspect(t[line]))
             -- mergeTable(output, findEquals(t[line]))
             findEquals(t, output, line)
             -- print(inspect(output))
-            analyzeAST(t[line], output)
+            analyzeAST(t[line], output)        
         end
     end
     return output

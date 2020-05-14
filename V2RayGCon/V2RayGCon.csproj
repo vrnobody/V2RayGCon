@@ -517,11 +517,6 @@
     <None Include="Resources\Files\lua\modules\reader.lua" />
     <None Include="Resources\Files\lua\modules\set.lua" />
     <None Include="Resources\Files\lua\modules\writer.lua" />
-    <None Include="Resources\Files\lua\tests\hotkeyTest.lua" />
-    <None Include="Resources\Files\lua\tests\loggerTest.lua" />
-    <None Include="Resources\Files\lua\tests\readerTest.lua" />
-    <None Include="Resources\Files\lua\tests\UnitTests.lua" />
-    <None Include="Resources\Files\lua\tests\writerTest.lua" />
     <None Include="Resources\Files\templates\basic\basic.json" />
     <None Include="Resources\Files\templates\routing\whitelist.json" />
     <None Include="V2RayGCon.ruleset" />

@@ -5,17 +5,17 @@ namespace Luna.Views.WinForms
 {
     internal partial class FormMain : Form
     {
-        Controllers.TabGeneralCtrl genCtrl;
-        Controllers.TabOptionsCtrl optionsCtrl;
+        Controllers.FormMainCtrl.TabGeneralCtrl genCtrl;
+        Controllers.FormMainCtrl.TabOptionsCtrl optionsCtrl;
 
         Services.LuaServer luaServer;
         Services.Settings settings;
-        Services.FormMgr formMgr;
+        Services.FormMgrSvc formMgr;
 
         public static FormMain CreateForm(
             Services.Settings settings,
             Services.LuaServer luaServer,
-            Services.FormMgr formMgr)
+            Services.FormMgrSvc formMgr)
         {
             FormMain r = null;
             VgcApis.Misc.UI.Invoke(() =>
@@ -28,7 +28,7 @@ namespace Luna.Views.WinForms
         FormMain(
             Services.Settings settings,
             Services.LuaServer luaServer,
-            Services.FormMgr formMgr)
+            Services.FormMgrSvc formMgr)
         {
             this.settings = settings;
             this.luaServer = luaServer;
@@ -36,7 +36,7 @@ namespace Luna.Views.WinForms
 
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
-            this.Text = Properties.Resources.Name + " v" + Properties.Resources.Version;
+            this.Text = string.Format(I18N.LunaScrMgr, Properties.Resources.Version);
         }
 
         private void FormMain_Load(object sender, System.EventArgs e)
@@ -44,23 +44,20 @@ namespace Luna.Views.WinForms
             lbStatusBarMsg.Text = "";
 
             // TabGeneral should initialize before TabEditor.
-            genCtrl = new Controllers.TabGeneralCtrl(
+            genCtrl = new Controllers.FormMainCtrl.TabGeneralCtrl(
                 flyScriptUIContainer,
                 btnStopAllScript,
                 btnKillAllScript,
-                btnShowEditor,
                 btnDeleteAllScripts,
                 btnImportFromFile,
                 btnExportToFile);
 
-            optionsCtrl = new Controllers.TabOptionsCtrl(
-                this,
+            optionsCtrl = new Controllers.FormMainCtrl.TabOptionsCtrl(
                 chkLoadClrLib,
                 chkEnableCodeAnalyze,
-                btnSaveOptions,
-                btnExit);
+                btnSaveOptions);
 
-            genCtrl.Run(formMgr, luaServer);
+            genCtrl.Run(luaServer);
             optionsCtrl.Run(settings);
 
             this.FormClosing += FormClosingHandler;
@@ -90,6 +87,16 @@ namespace Luna.Views.WinForms
         private void flyScriptUIContainer_Scroll(object sender, ScrollEventArgs e)
         {
             flyScriptUIContainer.Refresh();
+        }
+
+        private void showEditorToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            formMgr.ShowOrCreateFirstEditor();
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            this.Close();
         }
         #endregion
     }

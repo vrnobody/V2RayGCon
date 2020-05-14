@@ -77,11 +77,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Numbers.cs" />
-    <Compile Include="Controllers\FormEditor\MenuCtrl.cs" />
-    <Compile Include="Controllers\FormEditor\TabEditorCtrl.cs" />
+    <Compile Include="Controllers\FormEditorCtrl\MenuCtrl.cs" />
+    <Compile Include="Controllers\FormEditorCtrl\TabEditorCtrl.cs" />
     <Compile Include="Controllers\LuaCoreCtrl.cs" />
-    <Compile Include="Controllers\FormMain\TabGeneralCtrl.cs" />
-    <Compile Include="Controllers\FormMain\TabOptionsCtrl.cs" />
+    <Compile Include="Controllers\FormMainCtrl\TabGeneralCtrl.cs" />
+    <Compile Include="Controllers\FormMainCtrl\TabOptionsCtrl.cs" />
     <Compile Include="Libs\LuaSnippet\BestMatchSnippets.cs" />
     <Compile Include="Libs\LuaSnippet\LuaAcm.cs">
       <SubType>Component</SubType>
@@ -123,7 +123,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>I18N.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\FormMgr.cs" />
+    <Compile Include="Services\FormMgrSvc.cs" />
     <Compile Include="Services\LuaServer.cs" />
     <Compile Include="Services\MenuUpdater.cs" />
     <Compile Include="Services\Settings.cs" />

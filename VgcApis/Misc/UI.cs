@@ -184,11 +184,10 @@ namespace VgcApis.Misc
             return r;
         }
 
-        static public Tuple<string, string> ReadFileFromDialogWorker(string extension)
+        static Tuple<string, string> ReadFileFromDialogWorker(string extension)
         {
             OpenFileDialog readFileDialog = new OpenFileDialog
             {
-                InitialDirectory = "c:\\",
                 Filter = extension,
                 RestoreDirectory = true,
                 CheckFileExists = true,

@@ -8,14 +8,14 @@ namespace Luna.Models.Apis
     {
         Services.Settings settings;
         VgcApis.Interfaces.Services.IApiService vgcApi;
-        private readonly FormMgr formMgr;
+        private readonly FormMgrSvc formMgr;
         Action<string> redirectLogWorker;
         readonly SysCmpos.PostOffice postOffice;
 
         public LuaApis(
             VgcApis.Interfaces.Services.IApiService api,
             Services.Settings settings,
-            Services.FormMgr formMgr)
+            Services.FormMgrSvc formMgr)
         {
             this.settings = settings;
             redirectLogWorker = settings.SendLog;

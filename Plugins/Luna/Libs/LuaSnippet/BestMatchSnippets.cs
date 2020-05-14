@@ -18,19 +18,21 @@ namespace Luna.Libs.LuaSnippet
         Scintilla editor;
         string searchPattern = @"";
 
-
         List<ApiFunctionSnippets> apiFunctions;
         List<LuaFuncSnippets> luaFunctions;
         List<LuaKeywordSnippets> luaKeywords;
         List<LuaSubFuncSnippets> luaSubFunctions;
 
+        List<MatchItemBase> autoCompleteVarSnippets = new List<MatchItemBase>();
+        List<MatchItemBase> autoCompleteFuncSnippets = new List<MatchItemBase>();
+        List<MatchItemBase> autoCompleteEquationSnippets = new List<MatchItemBase>();
+
+        ConcurrentDictionary<string, List<string>> autoCompleteModulesCache = new ConcurrentDictionary<string, List<string>>();
+
         List<LuaImportClrSnippets> luaImportClrs;
         List<LuaImportClrSnippets> luaRequireModules;
 
-        ConcurrentDictionary<string, List<string>> luaModulesCache =
-            new ConcurrentDictionary<string, List<string>>();
-
-        List<MatchItemBase> luaScriptCache = new List<MatchItemBase>();
+        VgcApis.Libs.Tasks.LazyGuy lazyAnalyser;
 
         public BestMatchSnippets(
             Scintilla editor,
@@ -61,7 +63,11 @@ namespace Luna.Libs.LuaSnippet
             isEnableCodeAnalyze = enable;
             if (!enable)
             {
-                luaScriptCache.Clear();
+                autoCompleteEquationSnippets.Clear();
+            }
+            else
+            {
+                AnalyzeScriptLater(this, EventArgs.Empty);
             }
         }
 
@@ -135,20 +141,24 @@ namespace Luna.Libs.LuaSnippet
             {
                 return;
             }
-            luaModulesCache.TryRemove(mn, out _);
+            autoCompleteModulesCache.TryRemove(mn, out _);
         }
-
-        VgcApis.Libs.Tasks.LazyGuy lazyAnalyser;
 
         void BindEvents()
         {
             lazyAnalyser = new VgcApis.Libs.Tasks.LazyGuy(AnalizeScriptWorker, 1000, 3000);
             this.editor.Disposed += (s, a) => Cleanup();
             fsWatcher = CreateFileSystemWatcher(@"lua");
-            editor.TextChanged += InvokeScriptAnalyser;
+            editor.TextChanged += AnalyzeScriptLater;
         }
 
-        void InvokeScriptAnalyser(object sender, EventArgs e) => lazyAnalyser?.Deadline();
+        void AnalyzeScriptLater(object sender, EventArgs e)
+        {
+            if (isEnableCodeAnalyze)
+            {
+                lazyAnalyser?.Deadline();
+            }
+        }
 
         List<MatchItemBase> AnalyseScript(LuaTable metaData)
         {
@@ -280,7 +290,7 @@ namespace Luna.Libs.LuaSnippet
 
         void AddModulesMembers(List<MatchItemBase> members, string varName, string moduleName)
         {
-            if (!luaModulesCache.TryGetValue(moduleName, out var moduleCache))
+            if (!autoCompleteModulesCache.TryGetValue(moduleName, out var moduleCache))
             {
                 Lua anz = CreateAnalyser();
                 var metaData = CallLuaFunction(anz, "analyzeModule", $"'{moduleName}'");
@@ -290,7 +300,7 @@ namespace Luna.Libs.LuaSnippet
                 }
 
                 moduleCache = ExtractMembersInfo(metaData["table"] as LuaTable);
-                luaModulesCache.TryAdd(moduleName, moduleCache);
+                autoCompleteModulesCache.TryAdd(moduleName, moduleCache);
             }
 
             foreach (var member in moduleCache)
@@ -340,35 +350,144 @@ namespace Luna.Libs.LuaSnippet
             return anz;
         }
 
+        string GetAllTextExceptCurLine()
+        {
+            StringBuilder sb = new StringBuilder();
+            var curLine = editor.CurrentLine;
+            foreach (var line in editor.Lines)
+            {
+                if (line.Index == curLine)
+                {
+                    continue;
+                }
+                sb.Append(line.Text);
+            }
+            return sb.ToString();
+        }
+
         void AnalizeScriptWorker()
         {
-            if (!isEnableCodeAnalyze)
+            string src = "";
+            VgcApis.Misc.UI.Invoke(() =>
             {
-                return;
-            }
+                src = GetAllTextExceptCurLine();
+            });
 
-            Lua state = CreateAnalyser();
+            autoCompleteVarSnippets = GenAutoCompleteVarSnippets(src);
+            autoCompleteFuncSnippets = GenAutoCompleteFuncSnippets(src);
+
+            List<MatchItemBase> snps = GenAutoCompleteEquationSnippets(src);
+            if (snps != null && snps.Count() > 0)
+            {
+                autoCompleteEquationSnippets = snps;
+            }
+        }
+
+        ConcurrentDictionary<string, List<MatchItemBase>> acmEqCache = new ConcurrentDictionary<string, List<MatchItemBase>>();
+        private List<MatchItemBase> GenAutoCompleteEquationSnippets(string src)
+        {
+            if (!acmEqCache.TryGetValue(src, out var snps))
+            {
+                CheckCacheSize(acmEqCache);
+                Lua state = CreateAnalyser();
+                state["code"] = src;
+                var result = CallLuaFunction(state, "analyzeSource", "code");
+                if (result == null)
+                {
+                    acmEqCache.TryAdd(src, null);
+                }
+                else
+                {
+                    snps = AnalyseScript(result);
+                    acmEqCache.TryAdd(src, snps);
+                }
+            }
+            return snps;
+        }
+
+        ConcurrentDictionary<string, List<MatchItemBase>> acmFunCache = new ConcurrentDictionary<string, List<MatchItemBase>>();
+        List<MatchItemBase> GenAutoCompleteFuncSnippets(string src)
+        {
+            if (!acmFunCache.TryGetValue(src, out var snps))
+            {
+                CheckCacheSize(acmFunCache);
+                snps = GenAutoCompleteFuncSnippetsWorker(src);
+            }
+            return snps;
+        }
+
+        List<MatchItemBase> GenAutoCompleteFuncSnippetsWorker(string src)
+        {
+            var gvs = VgcApis.Misc.Utils.ExtractFunctionsFromLuaScript(src);
+            var gvsnps = new List<MatchItemBase>();
+            foreach (var gv in gvs)
+            {
+                if (string.IsNullOrWhiteSpace(gv))
+                {
+                    continue;
+                }
+
+                if (gv.Contains(":"))
+                {
+                    gvsnps.Add(new LuaSubFuncSnippets(gv, ":"));
+                }
+                else if (gv.Contains("."))
+                {
+                    gvsnps.Add(new LuaSubFuncSnippets(gv, "."));
+                }
+                else
+                {
+                    gvsnps.Add(new LuaFuncSnippets(gv));
+                }
+
+            }
+            return gvsnps;
+        }
+
+        ConcurrentDictionary<string, List<MatchItemBase>> acmVarCache = new ConcurrentDictionary<string, List<MatchItemBase>>();
+        List<MatchItemBase> GenAutoCompleteVarSnippets(string src)
+        {
+            if (!acmVarCache.TryGetValue(src, out var snps))
+            {
+                CheckCacheSize(acmVarCache);
+                snps = GenAutoCompleteVarSnippetsWorker(src);
+            }
+            return snps;
+        }
+
+        List<MatchItemBase> GenAutoCompleteVarSnippetsWorker(string src)
+        {
+            var gvs = VgcApis.Misc.Utils.ExtractGlobalVarsFromLuaScript(src);
+            var gvsnps = new List<MatchItemBase>();
+            foreach (var gv in gvs)
+            {
+                if (string.IsNullOrWhiteSpace(gv))
+                {
+                    continue;
+                }
+                gvsnps.Add(new LuaKeywordSnippets(gv));
+            }
+            return gvsnps;
+        }
+
+        void CheckCacheSize(ConcurrentDictionary<string, List<MatchItemBase>> cache)
+        {
             try
             {
-                string text = "";
-                VgcApis.Misc.UI.Invoke(() =>
+                var keep = 100;
+                var keys = cache.Keys.ToList();
+                if (keys.Count > keep * 2)
                 {
-                    text = editor.Text;
-                });
-
-                state["code"] = text;
-                var result = CallLuaFunction(state, "analyzeSource", "code");
-                if (result != null)
-                {
-                    var snps = AnalyseScript(result);
-                    if (snps != null && snps.Count() > 0)
+                    var cut = keys.Count - keep;
+                    for (int i = 0; i < cut; i++)
                     {
-                        luaScriptCache = snps;
+                        cache.TryRemove(keys[i], out _);
                     }
                 }
             }
             catch { }
         }
+
 
         void Cleanup()
         {
@@ -381,8 +500,9 @@ namespace Luna.Libs.LuaSnippet
             var fragment = VgcApis.Misc.Utils.GetFragment(
                 editor, searchPattern);
 
-            var cache = luaScriptCache;
+            var cache = autoCompleteEquationSnippets;
             List<MatchItemBase> candidates = cache
+                .Concat(autoCompleteFuncSnippets)
                 .Concat(GenCandidateList(fragment))
                 .ToList();
 
@@ -430,6 +550,7 @@ namespace Luna.Libs.LuaSnippet
             }
             else
             {
+                items.AddRange(autoCompleteVarSnippets);
                 items.AddRange(luaKeywords);
             }
 

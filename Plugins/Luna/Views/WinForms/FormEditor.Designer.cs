@@ -33,6 +33,9 @@
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lbStatusBarMsg = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSpring = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusCodeAnalyze = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusClrLib = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainerTabEditor = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -67,9 +70,7 @@
             this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadCLRLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableCodeAnalyzeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showOutputPanelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hideOutputPanelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.outputPanelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -114,13 +115,32 @@
             resources.ApplyResources(this.statusStrip1, "statusStrip1");
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lbStatusBarMsg});
+            this.lbStatusBarMsg,
+            this.toolStripSpring,
+            this.toolStripStatusCodeAnalyze,
+            this.toolStripStatusClrLib});
             this.statusStrip1.Name = "statusStrip1";
             // 
             // lbStatusBarMsg
             // 
             this.lbStatusBarMsg.Name = "lbStatusBarMsg";
             resources.ApplyResources(this.lbStatusBarMsg, "lbStatusBarMsg");
+            // 
+            // toolStripSpring
+            // 
+            this.toolStripSpring.Name = "toolStripSpring";
+            resources.ApplyResources(this.toolStripSpring, "toolStripSpring");
+            this.toolStripSpring.Spring = true;
+            // 
+            // toolStripStatusCodeAnalyze
+            // 
+            this.toolStripStatusCodeAnalyze.Name = "toolStripStatusCodeAnalyze";
+            resources.ApplyResources(this.toolStripStatusCodeAnalyze, "toolStripStatusCodeAnalyze");
+            // 
+            // toolStripStatusClrLib
+            // 
+            this.toolStripStatusClrLib.Name = "toolStripStatusClrLib";
+            resources.ApplyResources(this.toolStripStatusClrLib, "toolStripStatusClrLib");
             // 
             // splitContainerTabEditor
             // 
@@ -292,8 +312,7 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.optionToolStripMenuItem,
-            this.viewToolStripMenuItem});
+            this.optionToolStripMenuItem});
             this.menuStrip1.Name = "menuStrip1";
             // 
             // fileToolStripMenuItem
@@ -348,7 +367,8 @@
             // 
             this.optionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadCLRLibraryToolStripMenuItem,
-            this.enableCodeAnalyzeToolStripMenuItem});
+            this.enableCodeAnalyzeToolStripMenuItem,
+            this.outputPanelToolStripMenuItem});
             this.optionToolStripMenuItem.Name = "optionToolStripMenuItem";
             resources.ApplyResources(this.optionToolStripMenuItem, "optionToolStripMenuItem");
             // 
@@ -362,25 +382,11 @@
             this.enableCodeAnalyzeToolStripMenuItem.Name = "enableCodeAnalyzeToolStripMenuItem";
             resources.ApplyResources(this.enableCodeAnalyzeToolStripMenuItem, "enableCodeAnalyzeToolStripMenuItem");
             // 
-            // viewToolStripMenuItem
+            // outputPanelToolStripMenuItem
             // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showOutputPanelToolStripMenuItem,
-            this.hideOutputPanelToolStripMenuItem});
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            resources.ApplyResources(this.viewToolStripMenuItem, "viewToolStripMenuItem");
-            // 
-            // showOutputPanelToolStripMenuItem
-            // 
-            this.showOutputPanelToolStripMenuItem.Name = "showOutputPanelToolStripMenuItem";
-            resources.ApplyResources(this.showOutputPanelToolStripMenuItem, "showOutputPanelToolStripMenuItem");
-            this.showOutputPanelToolStripMenuItem.Click += new System.EventHandler(this.showOutputPanelToolStripMenuItem_Click);
-            // 
-            // hideOutputPanelToolStripMenuItem
-            // 
-            this.hideOutputPanelToolStripMenuItem.Name = "hideOutputPanelToolStripMenuItem";
-            resources.ApplyResources(this.hideOutputPanelToolStripMenuItem, "hideOutputPanelToolStripMenuItem");
-            this.hideOutputPanelToolStripMenuItem.Click += new System.EventHandler(this.hideOutputPanelToolStripMenuItem_Click);
+            this.outputPanelToolStripMenuItem.Name = "outputPanelToolStripMenuItem";
+            resources.ApplyResources(this.outputPanelToolStripMenuItem, "outputPanelToolStripMenuItem");
+            this.outputPanelToolStripMenuItem.Click += new System.EventHandler(this.outputPanelToolStripMenuItem_Click);
             // 
             // FormEditor
             // 
@@ -450,9 +456,6 @@
         private System.Windows.Forms.ToolStripMenuItem newWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showOutputPanelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem hideOutputPanelToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panelScriptDebugTools;
         private System.Windows.Forms.ComboBox cboxFunctionList;
@@ -464,5 +467,9 @@
         private System.Windows.Forms.ToolStripMenuItem loadCLRLibraryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableCodeAnalyzeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showScriptManagerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripSpring;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusCodeAnalyze;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusClrLib;
+        private System.Windows.Forms.ToolStripMenuItem outputPanelToolStripMenuItem;
     }
 }

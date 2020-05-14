@@ -10,7 +10,7 @@ namespace Luna
     {
         Services.Settings settings;
         Services.LuaServer luaServer;
-        Services.FormMgr formMgr;
+        Services.FormMgrSvc formMgr;
         Services.MenuUpdater menuUpdater;
 
         readonly ToolStripMenuItem miRoot, miShowMgr, miShowEditor;
@@ -65,7 +65,7 @@ namespace Luna
 
             settings = new Services.Settings();
             luaServer = new Services.LuaServer();
-            formMgr = new Services.FormMgr();
+            formMgr = new Services.FormMgrSvc();
             menuUpdater = new Services.MenuUpdater(settings);
 
             settings.Run(vgcSettings, vgcNotifier);

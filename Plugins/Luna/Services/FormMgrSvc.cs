@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Luna.Services
 {
-    internal class FormMgr :
+    internal class FormMgrSvc :
         VgcApis.BaseClasses.Disposable
     {
 
@@ -15,7 +15,7 @@ namespace Luna.Services
         LuaServer luaServer;
         VgcApis.Interfaces.Services.IApiService api;
 
-        public FormMgr() { }
+        public FormMgrSvc() { }
 
         public void Run(
             Settings settings,

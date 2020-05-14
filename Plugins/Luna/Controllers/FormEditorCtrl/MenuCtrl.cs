@@ -1,12 +1,11 @@
 ﻿using Luna.Resources.Langs;
+using Luna.Services;
 using System.Windows.Forms;
 
-namespace Luna.Controllers
+namespace Luna.Controllers.FormEditorCtrl
 {
     internal sealed class MenuCtrl
     {
-        Services.FormMgr formMgrService;
-
         Views.WinForms.FormEditor formEditor;
         TabEditorCtrl editorCtrl;
         private readonly ToolStripMenuItem miNewWindow;
@@ -16,6 +15,8 @@ namespace Luna.Controllers
         private readonly ToolStripMenuItem miExit;
         private readonly ToolStripMenuItem miLoadClrLib;
         private readonly ToolStripMenuItem miEanbleCodeAnalyze;
+        private readonly ToolStripStatusLabel smiLbClrLib;
+        private readonly ToolStripStatusLabel smiLbCodeanalyze;
         private readonly ComboBox cboxScriptName;
 
         public MenuCtrl(
@@ -31,6 +32,9 @@ namespace Luna.Controllers
             ToolStripMenuItem miLoadClrLib,
             ToolStripMenuItem miEanbleCodeAnalyze,
 
+            ToolStripStatusLabel smiLbClrLib,
+            ToolStripStatusLabel smiLbCodeanalyze,
+
             ComboBox cboxScriptName)
         {
             this.editorCtrl = editorCtrl;
@@ -41,22 +45,31 @@ namespace Luna.Controllers
             this.miExit = miExit;
             this.miLoadClrLib = miLoadClrLib;
             this.miEanbleCodeAnalyze = miEanbleCodeAnalyze;
+            this.smiLbClrLib = smiLbClrLib;
+            this.smiLbCodeanalyze = smiLbCodeanalyze;
             this.cboxScriptName = cboxScriptName;
             this.formEditor = formEditor;
         }
 
         public void Run(
-            Services.FormMgr formMgrService,
+            Services.FormMgrSvc formMgrService,
             Services.Settings settings)
         {
-            this.formMgrService = formMgrService;
-            miLoadClrLib.Checked = settings.isLoadClrLib;
-            miEanbleCodeAnalyze.Checked = settings.isEnableCodeAnalyze;
-
-            BindEvents();
+            InitControls(settings);
+            BindEvents(formMgrService);
         }
 
-        private void BindEvents()
+        #region private method
+        private void InitControls(Settings settings)
+        {
+            miLoadClrLib.Checked = settings.isLoadClrLib;
+            smiLbClrLib.Enabled = settings.isLoadClrLib;
+
+            miEanbleCodeAnalyze.Checked = settings.isEnableAdvanceAutoComplete;
+            smiLbCodeanalyze.Enabled = settings.isEnableAdvanceAutoComplete;
+        }
+
+        private void BindEvents(FormMgrSvc formMgrService)
         {
             miShowMgr.Click += (s, a) => formMgrService.ShowFormMain();
 
@@ -64,6 +77,7 @@ namespace Luna.Controllers
             {
                 var enable = !miLoadClrLib.Checked;
                 miLoadClrLib.Checked = enable;
+                smiLbClrLib.Enabled = enable;
                 editorCtrl.isLoadClrLib = enable;
             };
 
@@ -71,6 +85,7 @@ namespace Luna.Controllers
             {
                 var enable = !miEanbleCodeAnalyze.Checked;
                 miEanbleCodeAnalyze.Checked = enable;
+                smiLbCodeanalyze.Enabled = enable;
                 editorCtrl.SetIsEnableCodeAnalyze(enable);
             };
 
@@ -89,16 +104,17 @@ namespace Luna.Controllers
                     return;
                 }
 
-                string script = VgcApis.Misc.UI.ReadFileContentFromDialog(
-                    VgcApis.Models.Consts.Files.LuaExt);
+                var cf = VgcApis.Misc.UI.ReadFileFromDialog(VgcApis.Models.Consts.Files.LuaExt);
+                var script = cf.Item1;
+                var filename = cf.Item2;
 
-                // user cancelled.
                 if (script == null)
                 {
                     return;
                 }
 
                 cboxScriptName.Text = @"";
+                editorCtrl.SetCurFileName(filename);
                 editorCtrl.SetCurrentEditorContent(script);
                 editorCtrl.SetScriptCache(script);
             };
@@ -109,20 +125,24 @@ namespace Luna.Controllers
                 var err = VgcApis.Misc.UI.ShowSaveFileDialog(
                     VgcApis.Models.Consts.Files.LuaExt,
                     script,
-                    out var filenaem);
+                    out var filename);
 
                 switch (err)
                 {
                     case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Success:
-                        editorCtrl.SetScriptCache(script);
-                        MessageBox.Show(I18N.Done);
+                        if (string.IsNullOrEmpty(cboxScriptName.Text))
+                        {
+                            editorCtrl.SetCurFileName(filename);
+                            editorCtrl.SetScriptCache(script);
+                        }
+                        VgcApis.Misc.UI.MsgBoxAsync(I18N.Done);
                         break;
                     case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Fail:
-                        MessageBox.Show(I18N.WriteFileFail);
+                        VgcApis.Misc.UI.MsgBoxAsync(I18N.WriteFileFail);
                         break;
                 }
             };
         }
-
+        #endregion
     }
 }

@@ -1,28 +1,22 @@
 ﻿using Luna.Resources.Langs;
 using System.Windows.Forms;
 
-namespace Luna.Controllers
+namespace Luna.Controllers.FormMainCtrl
 {
     internal class TabOptionsCtrl
     {
-        private readonly Form formMgr;
         private readonly CheckBox chkLoadClrLib;
         private readonly CheckBox chkEnableCodeAnalyze;
         private readonly Button btnSaveOptions;
-        private readonly Button btnExit;
 
         public TabOptionsCtrl(
-            Form formMgr,
             CheckBox chkLoadClrLib,
             CheckBox chkEnableCodeAnalyze,
-            Button btnSaveOptions,
-            Button btnExit)
+            Button btnSaveOptions)
         {
-            this.formMgr = formMgr;
             this.chkLoadClrLib = chkLoadClrLib;
             this.chkEnableCodeAnalyze = chkEnableCodeAnalyze;
             this.btnSaveOptions = btnSaveOptions;
-            this.btnExit = btnExit;
         }
 
         Services.Settings settings;
@@ -36,7 +30,7 @@ namespace Luna.Controllers
         public bool IsChanged()
         {
             if (chkLoadClrLib.Checked != settings.isLoadClrLib
-                || chkEnableCodeAnalyze.Checked != settings.isEnableCodeAnalyze)
+                || chkEnableCodeAnalyze.Checked != settings.isEnableAdvanceAutoComplete)
             {
                 return true;
             }
@@ -51,18 +45,16 @@ namespace Luna.Controllers
                 if (IsChanged())
                 {
                     settings.isLoadClrLib = chkLoadClrLib.Checked;
-                    settings.isEnableCodeAnalyze = chkEnableCodeAnalyze.Checked;
+                    settings.isEnableAdvanceAutoComplete = chkEnableCodeAnalyze.Checked;
                 }
                 VgcApis.Misc.UI.MsgBox(I18N.Done);
             };
-
-            btnExit.Click += (s, a) => formMgr.Close();
         }
 
         void InitControls()
         {
             chkLoadClrLib.Checked = settings.isLoadClrLib;
-            chkEnableCodeAnalyze.Checked = settings.isEnableCodeAnalyze;
+            chkEnableCodeAnalyze.Checked = settings.isEnableAdvanceAutoComplete;
         }
         #endregion
 

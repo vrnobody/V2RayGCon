@@ -107,6 +107,14 @@ namespace Luna.Views.WinForms
             this.Close();
         }
 
+        private void FormChoice_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+        }
+
         #endregion
 
 

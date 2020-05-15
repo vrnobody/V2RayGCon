@@ -132,12 +132,6 @@
   <data name="toolStripStatusClrLib.ToolTipText" xml:space="preserve">
     <value>CLR库支持</value>
   </data>
-  <data name="statusStrip1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="toolStripContainer1.BottomToolStripPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="label1.Text" xml:space="preserve">
     <value>名字</value>
   </data>
@@ -148,52 +142,6 @@
     <value>加载脚本或设置脚本名</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnNewScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAJRJREFUOE/t
-        kMsNgCAQRKnDKqyBvrzSlolV2IIn9cIVHWTX5SMSz27yRGTmaVRyrLWOCI+q41yIyeI0dHwPrkR5IgEV
-        0/VKlMcLEALLPPoSgT2dhXw2LJDF0l6wnvShH38BeCpqrT3GGOxZ0vQPtnVnUkkkINK3pwIpYQGNLCIo
-        yxKcIZMJaH7BLajxKmjBC3D5jlMHobhVGh8R3fQAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="btnNewScript.ToolTip" xml:space="preserve">
-    <value>新脚本</value>
-  </data>
-  <data name="btnSaveScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAHhJREFUOE9j+PbtWzgQvwHi/yRikJ5wkAFvtAvW/GcInkMSBukB6QUZgFUBMRis
-        F9mAD+8/EoWHswGk4kFqADY/I2NktbQ1AJ2PLg7CMAPuFM8/hqEBnY8uDsIwA2SQDUFXiKwZWRyEwQaA
-        AMwQkABIEYgmDn/7DwBpTOrUXkrGYgAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="btnSaveScript.ToolTip" xml:space="preserve">
-    <value>保存脚本</value>
-  </data>
-  <data name="panelScriptName.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pnlScriptEditor.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxFunctionList.ToolTip" xml:space="preserve">
-    <value>函数</value>
-  </data>
-  <data name="cboxVarList.ToolTip" xml:space="preserve">
-    <value>变量</value>
-  </data>
-  <data name="tableLayoutPanel2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="panel1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>导航</value>
-  </data>
-  <data name="label2.ToolTip" xml:space="preserve">
-    <value>导航栏</value>
-  </data>
   <data name="btnKillScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -220,6 +168,17 @@
   <data name="btnClearOutput.ToolTip" xml:space="preserve">
     <value>清除输出框(F8)</value>
   </data>
+  <data name="btnNewScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAJRJREFUOE/t
+        kMsNgCAQRKnDKqyBvrzSlolV2IIn9cIVHWTX5SMSz27yRGTmaVRyrLWOCI+q41yIyeI0dHwPrkR5IgEV
+        0/VKlMcLEALLPPoSgT2dhXw2LJDF0l6wnvShH38BeCpqrT3GGOxZ0vQPtnVnUkkkINK3pwIpYQGNLCIo
+        yxKcIZMJaH7BLajxKmjBC3D5jlMHobhVGh8R3fQAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="btnNewScript.ToolTip" xml:space="preserve">
+    <value>新脚本</value>
+  </data>
   <data name="btnStopScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -229,6 +188,17 @@
   </data>
   <data name="btnStopScript.ToolTip" xml:space="preserve">
     <value>停止(F6)</value>
+  </data>
+  <data name="btnSaveScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAHhJREFUOE9j+PbtWzgQvwHi/yRikJ5wkAFvtAvW/GcInkMSBukB6QUZgFUBMRis
+        F9mAD+8/EoWHswGk4kFqADY/I2NktbQ1AJ2PLg7CMAPuFM8/hqEBnY8uDsIwA2SQDUFXiKwZWRyEwQaA
+        AMwQkABIEYgmDn/7DwBpTOrUXkrGYgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="btnSaveScript.ToolTip" xml:space="preserve">
+    <value>保存脚本</value>
   </data>
   <data name="btnRunScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -242,50 +212,29 @@
   <data name="btnRunScript.ToolTip" xml:space="preserve">
     <value>运行(F5)</value>
   </data>
-  <data name="panelScriptDebugTools.ToolTip" xml:space="preserve">
-    <value />
+  <data name="label3.Text" xml:space="preserve">
+    <value>跳转:</value>
   </data>
-  <data name="tableLayoutPanel1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value>跳转至指定行</value>
   </data>
-  <data name="panel3.ToolTip" xml:space="preserve">
-    <value />
+  <data name="cboxFunctionList.ToolTip" xml:space="preserve">
+    <value>函数</value>
+  </data>
+  <data name="cboxVarList.ToolTip" xml:space="preserve">
+    <value>变量</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>导航</value>
+  </data>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value>导航栏</value>
   </data>
   <data name="groupBox2.Text" xml:space="preserve">
     <value>编辑器</value>
   </data>
-  <data name="groupBox2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="splitContainerTabEditor.Panel1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtBoxOutput.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>输出</value>
-  </data>
-  <data name="groupBox1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="splitContainerTabEditor.Panel2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="splitContainerTabEditor.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="toolStripContainer1.ContentPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="toolStripContainer1.LeftToolStripPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="toolStripContainer1.RightToolStripPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="toolStripContainer1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="newWindowToolStripMenuItem.Text" xml:space="preserve">
     <value>新窗口</value>
@@ -337,14 +286,5 @@
   </data>
   <data name="optionToolStripMenuItem.Text" xml:space="preserve">
     <value>选项</value>
-  </data>
-  <data name="menuStrip1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="toolStripContainer1.TopToolStripPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>

@@ -64,6 +64,9 @@ namespace Luna.Views.WinForms
                 btnStopScript,
                 btnKillScript,
                 btnClearOutput,
+
+                tboxGoToLine,
+
                 rtBoxOutput,
                 pnlScriptEditor);
 
@@ -128,10 +131,21 @@ namespace Luna.Views.WinForms
                 return;
             }
 
+            var len = t.Length;
+            var max = 100;
+            if (len > max)
+            {
+                var head = 60;
+                var tail = max - head;
+                t = t.Substring(0, head) + " ... " + t.Substring(len - tail, tail);
+            }
+
             VgcApis.Misc.UI.Invoke(() =>
             {
                 this.Text = t;
-                this.toolTip1.SetToolTip(this, text ?? "");
+
+                // tooltip would not work in form title
+                // this.toolTip1.SetToolTip(this, text ?? "");
             });
         }
 
@@ -149,8 +163,7 @@ namespace Luna.Views.WinForms
             var isCollapsed = !splitContainerTabEditor.Panel2Collapsed;
             SetOutputPanelCollapseState(isCollapsed);
         }
+
         #endregion
-
-
     }
 }

@@ -24,7 +24,7 @@ namespace Luna.Controllers.FormEditorCtrl
 
         Scintilla luaEditor = null;
         Libs.LuaSnippet.LuaAcm luaAcm = null;
-        private readonly Views.WinForms.FormEditor formEditor;
+        private readonly FormEditor formEditor;
 
         VgcApis.Libs.Infr.Recorder history = new VgcApis.Libs.Infr.Recorder();
 
@@ -36,6 +36,7 @@ namespace Luna.Controllers.FormEditorCtrl
             btnStopScript,
             btnKillScript,
             btnClearOutput;
+        private readonly TextBox tboxGoto;
         private readonly ComboBox cboxVarList;
         private readonly ComboBox cboxFunctionList;
         RichTextBox rtboxOutput;
@@ -61,6 +62,9 @@ namespace Luna.Controllers.FormEditorCtrl
             Button btnStopScript,
             Button btnKillScript,
             Button btnClearOutput,
+
+            TextBox tboxGoto,
+
             RichTextBox rtboxOutput,
             Panel pnlEditorContainer)
         {
@@ -74,6 +78,7 @@ namespace Luna.Controllers.FormEditorCtrl
             this.btnStopScript = btnStopScript;
             this.btnKillScript = btnKillScript;
             this.btnClearOutput = btnClearOutput;
+            this.tboxGoto = tboxGoto;
             this.rtboxOutput = rtboxOutput;
             this.pnlEditorContainer = pnlEditorContainer;
 
@@ -129,6 +134,12 @@ namespace Luna.Controllers.FormEditorCtrl
             {
                 switch (keyCode)
                 {
+                    case Keys.OemOpenBrackets:
+                        luaEditor.ZoomOut();
+                        break;
+                    case Keys.Oem6:
+                        luaEditor.ZoomIn();
+                        break;
                     case Keys.OemMinus:
                         history.Backward();
                         VgcApis.Misc.UI.Invoke(() => ScrollToLine(history.Current()));
@@ -136,6 +147,10 @@ namespace Luna.Controllers.FormEditorCtrl
                     case Keys.Oemplus:
                         history.Forward();
                         VgcApis.Misc.UI.Invoke(() => ScrollToLine(history.Current()));
+                        break;
+                    case Keys.G:
+                        tboxGoto.Focus();
+                        tboxGoto.SelectAll();
                         break;
                     case Keys.F:
                         ShowFormSearch();
@@ -150,8 +165,21 @@ namespace Luna.Controllers.FormEditorCtrl
                 return;
             }
 
+
             switch (keyCode)
             {
+                case Keys.Escape:
+                    formSearch?.Close();
+                    break;
+                case Keys.F2:
+                    formSearch?.SearchPrevious();
+                    break;
+                case Keys.F3:
+                    formSearch?.SearchNext();
+                    break;
+                case Keys.F4:
+                    formSearch?.SearchFirst(true);
+                    break;
                 case Keys.F12:
                     history.Add(luaEditor.CurrentLine);
                     var w = luaEditor.GetWordFromPosition(luaEditor.CurrentPosition);
@@ -170,6 +198,7 @@ namespace Luna.Controllers.FormEditorCtrl
                     btnClearOutput.PerformClick();
                     break;
             }
+
         }
 
         public bool IsChanged() =>
@@ -382,8 +411,6 @@ namespace Luna.Controllers.FormEditorCtrl
             bar.Remove();
         }
 
-
-
         void ScrollToFunction(string text)
         {
             foreach (var line in luaEditor.Lines)
@@ -401,8 +428,6 @@ namespace Luna.Controllers.FormEditorCtrl
                 }
             }
         }
-
-
 
         void ScrollToVariable(string text)
         {
@@ -461,6 +486,22 @@ namespace Luna.Controllers.FormEditorCtrl
 
         private void BindEvents()
         {
+            tboxGoto.Click += (s, a) => tboxGoto.SelectAll();
+
+            tboxGoto.KeyDown += (s, a) =>
+            {
+                if (a.KeyCode == Keys.Enter
+                    && int.TryParse(tboxGoto.Text, out int lineNumber))
+                {
+                    var line = luaEditor.Lines[lineNumber - 1];
+                    var linesOnScreen = luaEditor.LinesOnScreen - 2; // Fudge factor            
+                    var top = line.Index - (linesOnScreen / 2);
+                    line.Goto();
+                    luaEditor.FirstVisibleLine = Math.Max(0, top);
+                    luaEditor.Focus();
+                }
+            };
+
             cboxVarList.DropDownClosed += (s, a) =>
                VgcApis.Misc.UI.Invoke(() =>
                {

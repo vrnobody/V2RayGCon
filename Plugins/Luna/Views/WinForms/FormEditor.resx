@@ -241,7 +241,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="cboxScriptName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>318, 20</value>
+    <value>230, 20</value>
   </data>
   <data name="cboxScriptName.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -261,6 +261,98 @@
   <data name="&gt;&gt;cboxScriptName.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="btnKillScript.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btnKillScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAKpJREFUOE/dU0sOQDAU7CEcwIWcgEW3Entns+EIPYUNEolFt/WGJ9GnxGdnklm0
+        b2bSMlUS1lpNbIhOEHuaZUfQMCaaqa5clyaujZRH7GEGDbRsW8Hmsc+zg1FyKAuEjF4ILQwGIUOIHGI2
+        s8bRQsIr8nU0Ahp55zPsNfDAiwBvAJ5B6uD9ScDnj/jtN3IXzJ0WbvSKBNBiqfKdNgarDHDIu8e0Bw0f
+        PGelZoKjbA1QHzFCAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnKillScript.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="btnKillScript.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnKillScript.Location" type="System.Drawing.Point, System.Drawing">
+    <value>358, 2</value>
+  </data>
+  <data name="btnKillScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="btnKillScript.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="btnKillScript.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="btnKillScript.ToolTip" xml:space="preserve">
+    <value>Terminate (F7)</value>
+  </data>
+  <data name="&gt;&gt;btnKillScript.Name" xml:space="preserve">
+    <value>btnKillScript</value>
+  </data>
+  <data name="&gt;&gt;btnKillScript.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnKillScript.Parent" xml:space="preserve">
+    <value>panelScriptName</value>
+  </data>
+  <data name="&gt;&gt;btnKillScript.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="btnClearOutput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btnClearOutput.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAUVJREFUOE+VkbFOg3AQxkmcjGsfoU/CKxACKwNlcHNyIoUQ0rcohLRoIwmDGwT6
+        IgzqqLUYhPW8I0e11CJ+yYX87+77XbgT/qumaS4wvLIsAb+PnB4nNq/yPAdRFIEgXPpbfTN98e1xeVhn
+        zCvKc8u3MHmJoWP4GAHGDcZ6rHla13WRZRm4rgu2bUMcx5Cm6bAZExOMBS7l03EcUBQFfN+HMLwDXddb
+        c5IkZF6TGd/sRHXGMAxBkqS22TRNeN/todx/wNvrDmYzA6IoIsAtmY8AVVWBYRitcZtv4fnpBTRNg/nc
+        OkA295sWioCHEwBRi6IAWZZhufRaQx8SBAFYlkWAkG3HGoLQZFVVux1cs+VU5yD0a7RYug72XHH77+pD
+        aCe0WFoy1qbcNqyfEJpO18Hcgsvj1EHoOjx9wqXxIgideHi6IHwBbnWcjlb4gZwAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="btnClearOutput.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="btnClearOutput.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnClearOutput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>379, 2</value>
+  </data>
+  <data name="btnClearOutput.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="btnClearOutput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="btnClearOutput.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="btnClearOutput.ToolTip" xml:space="preserve">
+    <value>Clear output (F8)</value>
+  </data>
+  <data name="&gt;&gt;btnClearOutput.Name" xml:space="preserve">
+    <value>btnClearOutput</value>
+  </data>
+  <data name="&gt;&gt;btnClearOutput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnClearOutput.Parent" xml:space="preserve">
+    <value>panelScriptName</value>
+  </data>
+  <data name="&gt;&gt;btnClearOutput.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="btnNewScript.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
@@ -279,7 +371,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnNewScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>360, 2</value>
+    <value>272, 2</value>
   </data>
   <data name="btnNewScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -303,7 +395,47 @@
     <value>panelScriptName</value>
   </data>
   <data name="&gt;&gt;btnNewScript.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
+  </data>
+  <data name="btnStopScript.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btnStopScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
+        jpx4AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnStopScript.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="btnStopScript.Location" type="System.Drawing.Point, System.Drawing">
+    <value>337, 2</value>
+  </data>
+  <data name="btnStopScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="btnStopScript.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="btnStopScript.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="btnStopScript.ToolTip" xml:space="preserve">
+    <value>Stop (F6)</value>
+  </data>
+  <data name="&gt;&gt;btnStopScript.Name" xml:space="preserve">
+    <value>btnStopScript</value>
+  </data>
+  <data name="&gt;&gt;btnStopScript.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnStopScript.Parent" xml:space="preserve">
+    <value>panelScriptName</value>
+  </data>
+  <data name="&gt;&gt;btnStopScript.ZOrder" xml:space="preserve">
+    <value>5</value>
   </data>
   <data name="btnSaveScript.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -320,7 +452,7 @@
     <value>Zoom</value>
   </data>
   <data name="btnSaveScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>381, 2</value>
+    <value>293, 2</value>
   </data>
   <data name="btnSaveScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -344,7 +476,49 @@
     <value>panelScriptName</value>
   </data>
   <data name="&gt;&gt;btnSaveScript.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>6</value>
+  </data>
+  <data name="btnRunScript.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btnRunScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
+        0IjIJ1eHT8xBVUrp4RFudUQihgKk8JJzFpxTrYQYG7DcwXMIQZxzEmOslliGA4TlIaUk3vvDEmIoqK5K
+        iKFgdFZCDAWjTwVn8HZPDIUb8CZibMDSL8/4/iPt0pLnX/mNq8P7lmYFTOJvU/foAJoAAAAASUVORK5C
+        YII=
+</value>
+  </data>
+  <data name="btnRunScript.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="btnRunScript.Location" type="System.Drawing.Point, System.Drawing">
+    <value>316, 2</value>
+  </data>
+  <data name="btnRunScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="btnRunScript.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="btnRunScript.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="btnRunScript.ToolTip" xml:space="preserve">
+    <value>Run (F5)</value>
+  </data>
+  <data name="&gt;&gt;btnRunScript.Name" xml:space="preserve">
+    <value>btnRunScript</value>
+  </data>
+  <data name="&gt;&gt;btnRunScript.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnRunScript.Parent" xml:space="preserve">
+    <value>panelScriptName</value>
+  </data>
+  <data name="&gt;&gt;btnRunScript.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <data name="panelScriptName.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -401,6 +575,72 @@
     <value>tableLayoutPanel1</value>
   </data>
   <data name="&gt;&gt;pnlScriptEditor.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>318, 6</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 12</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Goto:</value>
+  </data>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value>Go to line number</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>panelScriptDebugTools</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tboxGoToLine.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="tboxGoToLine.Location" type="System.Drawing.Point, System.Drawing">
+    <value>358, 2</value>
+  </data>
+  <data name="tboxGoToLine.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 21</value>
+  </data>
+  <data name="tboxGoToLine.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="tboxGoToLine.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tboxGoToLine.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Center</value>
+  </data>
+  <data name="tboxGoToLine.ToolTip" xml:space="preserve">
+    <value>Go to line</value>
+  </data>
+  <data name="&gt;&gt;tboxGoToLine.Name" xml:space="preserve">
+    <value>tboxGoToLine</value>
+  </data>
+  <data name="&gt;&gt;tboxGoToLine.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxGoToLine.Parent" xml:space="preserve">
+    <value>panelScriptDebugTools</value>
+  </data>
+  <data name="&gt;&gt;tboxGoToLine.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="panel1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -524,7 +764,7 @@
     <value>panelScriptDebugTools</value>
   </data>
   <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -557,181 +797,7 @@
     <value>panelScriptDebugTools</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="btnKillScript.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="btnKillScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAKpJREFUOE/dU0sOQDAU7CEcwIWcgEW3Entns+EIPYUNEolFt/WGJ9GnxGdnklm0
-        b2bSMlUS1lpNbIhOEHuaZUfQMCaaqa5clyaujZRH7GEGDbRsW8Hmsc+zg1FyKAuEjF4ILQwGIUOIHGI2
-        s8bRQsIr8nU0Ahp55zPsNfDAiwBvAJ5B6uD9ScDnj/jtN3IXzJ0WbvSKBNBiqfKdNgarDHDIu8e0Bw0f
-        PGelZoKjbA1QHzFCAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="btnKillScript.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="btnKillScript.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnKillScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>360, 2</value>
-  </data>
-  <data name="btnKillScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnKillScript.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
-  </data>
-  <data name="btnKillScript.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="btnKillScript.ToolTip" xml:space="preserve">
-    <value>Terminate (F7)</value>
-  </data>
-  <data name="&gt;&gt;btnKillScript.Name" xml:space="preserve">
-    <value>btnKillScript</value>
-  </data>
-  <data name="&gt;&gt;btnKillScript.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnKillScript.Parent" xml:space="preserve">
-    <value>panelScriptDebugTools</value>
-  </data>
-  <data name="&gt;&gt;btnKillScript.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="btnClearOutput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="btnClearOutput.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAUVJREFUOE+VkbFOg3AQxkmcjGsfoU/CKxACKwNlcHNyIoUQ0rcohLRoIwmDGwT6
-        IgzqqLUYhPW8I0e11CJ+yYX87+77XbgT/qumaS4wvLIsAb+PnB4nNq/yPAdRFIEgXPpbfTN98e1xeVhn
-        zCvKc8u3MHmJoWP4GAHGDcZ6rHla13WRZRm4rgu2bUMcx5Cm6bAZExOMBS7l03EcUBQFfN+HMLwDXddb
-        c5IkZF6TGd/sRHXGMAxBkqS22TRNeN/todx/wNvrDmYzA6IoIsAtmY8AVVWBYRitcZtv4fnpBTRNg/nc
-        OkA295sWioCHEwBRi6IAWZZhufRaQx8SBAFYlkWAkG3HGoLQZFVVux1cs+VU5yD0a7RYug72XHH77+pD
-        aCe0WFoy1qbcNqyfEJpO18Hcgsvj1EHoOjx9wqXxIgideHi6IHwBbnWcjlb4gZwAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="btnClearOutput.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="btnClearOutput.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnClearOutput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>381, 2</value>
-  </data>
-  <data name="btnClearOutput.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnClearOutput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
-  </data>
-  <data name="btnClearOutput.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="btnClearOutput.ToolTip" xml:space="preserve">
-    <value>Clear output (F8)</value>
-  </data>
-  <data name="&gt;&gt;btnClearOutput.Name" xml:space="preserve">
-    <value>btnClearOutput</value>
-  </data>
-  <data name="&gt;&gt;btnClearOutput.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnClearOutput.Parent" xml:space="preserve">
-    <value>panelScriptDebugTools</value>
-  </data>
-  <data name="&gt;&gt;btnClearOutput.ZOrder" xml:space="preserve">
     <value>3</value>
-  </data>
-  <data name="btnStopScript.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="btnStopScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
-        jpx4AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="btnStopScript.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="btnStopScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>339, 2</value>
-  </data>
-  <data name="btnStopScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnStopScript.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
-  </data>
-  <data name="btnStopScript.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="btnStopScript.ToolTip" xml:space="preserve">
-    <value>Stop (F6)</value>
-  </data>
-  <data name="&gt;&gt;btnStopScript.Name" xml:space="preserve">
-    <value>btnStopScript</value>
-  </data>
-  <data name="&gt;&gt;btnStopScript.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnStopScript.Parent" xml:space="preserve">
-    <value>panelScriptDebugTools</value>
-  </data>
-  <data name="&gt;&gt;btnStopScript.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="btnRunScript.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="btnRunScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
-        0IjIJ1eHT8xBVUrp4RFudUQihgKk8JJzFpxTrYQYG7DcwXMIQZxzEmOslliGA4TlIaUk3vvDEmIoqK5K
-        iKFgdFZCDAWjTwVn8HZPDIUb8CZibMDSL8/4/iPt0pLnX/mNq8P7lmYFTOJvU/foAJoAAAAASUVORK5C
-        YII=
-</value>
-  </data>
-  <data name="btnRunScript.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="btnRunScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>318, 2</value>
-  </data>
-  <data name="btnRunScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnRunScript.Size" type="System.Drawing.Size, System.Drawing">
-    <value>20, 20</value>
-  </data>
-  <data name="btnRunScript.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="btnRunScript.ToolTip" xml:space="preserve">
-    <value>Run (F5)</value>
-  </data>
-  <data name="&gt;&gt;btnRunScript.Name" xml:space="preserve">
-    <value>btnRunScript</value>
-  </data>
-  <data name="&gt;&gt;btnRunScript.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnRunScript.Parent" xml:space="preserve">
-    <value>panelScriptDebugTools</value>
-  </data>
-  <data name="&gt;&gt;btnRunScript.ZOrder" xml:space="preserve">
-    <value>5</value>
   </data>
   <data name="panelScriptDebugTools.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>

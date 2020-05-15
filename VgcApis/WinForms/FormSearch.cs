@@ -37,6 +37,77 @@ namespace VgcApis.WinForms
             BindEvents();
         }
 
+        #region public methods
+        public void SearchPrevious()
+        {
+            var curPos = editor.CurrentPosition;
+            var matches = SearchAllMatch(searchFlag);
+            var count = matches.Count;
+
+            for (int i = count - 1; i >= 0; i--)
+            {
+                var match = matches[i];
+                if (curPos > match.X)
+                {
+                    ShowSearchResult(count, i + 1, match);
+                    return;
+                }
+            }
+
+            if (count > 0)
+            {
+                ShowSearchResult(count, count, matches.Last());
+                return;
+            }
+
+            ShowSearchResult(-1, -1, new Point());
+            WarnNoMatch();
+        }
+
+        public void SearchNext()
+        {
+            var curPos = editor.CurrentPosition;
+            var matches = SearchAllMatch(searchFlag);
+            var count = matches.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                var match = matches[i];
+                if (match.X > curPos)
+                {
+                    ShowSearchResult(count, i + 1, match);
+                    return;
+                }
+            }
+
+            if (count > 0)
+            {
+                ShowSearchResult(count, 1, matches.First());
+                return;
+            }
+
+            ShowSearchResult(-1, -1, new Point());
+            WarnNoMatch();
+        }
+
+        public void SearchFirst(bool quiet)
+        {
+            var matches = SearchAllMatch(searchFlag);
+            var count = matches.Count;
+            if (count > 0)
+            {
+                ShowSearchResult(count, 1, matches.First());
+                return;
+            }
+
+            ShowSearchResult(-1, -1, new Point());
+            if (!quiet)
+            {
+                WarnNoMatch();
+            }
+        }
+        #endregion
+
         #region private methods
         void SetTitle(int total, int index)
         {
@@ -85,74 +156,7 @@ namespace VgcApis.WinForms
             editor.IndicatorClearRange(0, editor.TextLength);
         }
 
-        void SearchPrevious()
-        {
-            var curPos = editor.CurrentPosition;
-            var matches = SearchAllMatch(searchFlag);
-            var count = matches.Count;
 
-            for (int i = count - 1; i >= 0; i--)
-            {
-                var match = matches[i];
-                if (curPos > match.X)
-                {
-                    ShowSearchResult(count, i + 1, match);
-                    return;
-                }
-            }
-
-            if (count > 0)
-            {
-                ShowSearchResult(count, count, matches.Last());
-                return;
-            }
-
-            ShowSearchResult(-1, -1, new Point());
-            WarnNoMatch();
-        }
-
-        void SearchNext()
-        {
-            var curPos = editor.CurrentPosition;
-            var matches = SearchAllMatch(searchFlag);
-            var count = matches.Count;
-
-            for (int i = 0; i < count; i++)
-            {
-                var match = matches[i];
-                if (match.X > curPos)
-                {
-                    ShowSearchResult(count, i + 1, match);
-                    return;
-                }
-            }
-
-            if (count > 0)
-            {
-                ShowSearchResult(count, 1, matches.First());
-                return;
-            }
-
-            ShowSearchResult(-1, -1, new Point());
-            WarnNoMatch();
-        }
-
-        void SearchFirst(bool quiet)
-        {
-            var matches = SearchAllMatch(searchFlag);
-            var count = matches.Count;
-            if (count > 0)
-            {
-                ShowSearchResult(count, 1, matches.First());
-                return;
-            }
-
-            ShowSearchResult(-1, -1, new Point());
-            if (!quiet)
-            {
-                WarnNoMatch();
-            }
-        }
 
         void WarnNoMatch()
         {
@@ -204,8 +208,6 @@ namespace VgcApis.WinForms
             }
             return results;
         }
-
-
 
         void ScrollTo(int pos)
         {

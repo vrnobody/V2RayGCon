@@ -62,10 +62,12 @@
             this.Controls.Add(this.lbTitle);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormChoices";
             this.Load += new System.EventHandler(this.FormChoice_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormChoices_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

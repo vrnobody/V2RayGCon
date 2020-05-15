@@ -399,7 +399,10 @@ namespace Luna.Libs.LuaSnippet
                 else
                 {
                     snps = AnalyseScript(result);
-                    acmEqCache.TryAdd(src, snps);
+
+                    // 不要在这cache！！
+                    // 如果module修改了，acmEqCache会保留旧module的信息
+                    // acmEqCache.TryAdd(src, snps);
                 }
             }
             return snps;

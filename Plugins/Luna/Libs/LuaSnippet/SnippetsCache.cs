@@ -117,6 +117,7 @@ namespace Luna.Libs.LuaSnippet
             .ToString()
             .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
             .Union(initValues)
+            .Union(new string[] { "setmetatable(o, {__index = mn})" })
             .OrderBy(e => e)
             .ToList();
 

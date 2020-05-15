@@ -191,6 +191,16 @@ local function VarEqInstance(t, i, output, line)
     end
 end
 
+local function VarEqReqNew(t, i, output, line)
+    local tag = t[1][i][1]
+    local mn = t[2][i][1][1][2][1]
+    if mn then 
+        output["instances"][tag] = {
+            ["module"] = mn,
+            ["location"] = line,
+        }
+    end
+end
 -- a basic findEquals. Could one day do a lot more, but starting small for now.
 local function findEquals(fullTable, output, line)
     -- for analyzing the current line
@@ -202,14 +212,21 @@ local function findEquals(fullTable, output, line)
                 TableEqFunction(t, i, output, line)
             -- if there's a module assignment
             elseif t[1][i].tag == "Id" and t[2][i] and t[2][i].tag then
+                
                 if t[2][i][1] and t[2][i][2] and t[2][i][1].tag == "Id" 
                     and t[2][i][1][1] == "require" 
                     and t[2][i][2].tag == "String" 
                 then
                     -- print("hello")
                     VarEqRequire(t, i, output, line)
-                elseif t[2][i][1][1] and t[2][i][1][1].tag == "Id"
-                      and t[2][i][1][2][1] == "new"
+                elseif t[2][i][1] and t[2][i][1][1] and t[2][i][1][1] 
+                    and t[2][i][1][1][1] and t[2][i][1][1][1][1] == "require"
+                    and t[2][i][1][2] and t[2][i][1][2][1] == "new"
+                then
+                    VarEqReqNew(t, i, output, line)
+                elseif t[2][i][1] and t[2][i][1][1] and t[2][i][1][2]
+                    and t[2][i][1][1].tag == "Id"
+                    and t[2][i][1][2][1] == "new"
                 then
                     -- print("world")
                     VarEqInstance(t, i, output, line)

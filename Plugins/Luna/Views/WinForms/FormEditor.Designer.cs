@@ -43,19 +43,21 @@
             this.panelScriptName = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.cboxScriptName = new System.Windows.Forms.ComboBox();
+            this.btnKillScript = new System.Windows.Forms.Button();
+            this.btnClearOutput = new System.Windows.Forms.Button();
             this.btnNewScript = new System.Windows.Forms.Button();
+            this.btnStopScript = new System.Windows.Forms.Button();
             this.btnSaveScript = new System.Windows.Forms.Button();
+            this.btnRunScript = new System.Windows.Forms.Button();
             this.pnlScriptEditor = new System.Windows.Forms.Panel();
             this.panelScriptDebugTools = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tboxGoToLine = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.cboxFunctionList = new System.Windows.Forms.ComboBox();
             this.cboxVarList = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnKillScript = new System.Windows.Forms.Button();
-            this.btnClearOutput = new System.Windows.Forms.Button();
-            this.btnStopScript = new System.Windows.Forms.Button();
-            this.btnRunScript = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rtBoxOutput = new VgcApis.UserControls.ExRichTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -180,8 +182,12 @@
             // 
             this.panelScriptName.Controls.Add(this.label1);
             this.panelScriptName.Controls.Add(this.cboxScriptName);
+            this.panelScriptName.Controls.Add(this.btnKillScript);
+            this.panelScriptName.Controls.Add(this.btnClearOutput);
             this.panelScriptName.Controls.Add(this.btnNewScript);
+            this.panelScriptName.Controls.Add(this.btnStopScript);
             this.panelScriptName.Controls.Add(this.btnSaveScript);
+            this.panelScriptName.Controls.Add(this.btnRunScript);
             resources.ApplyResources(this.panelScriptName, "panelScriptName");
             this.panelScriptName.Name = "panelScriptName";
             // 
@@ -198,12 +204,33 @@
             this.cboxScriptName.Name = "cboxScriptName";
             this.toolTip1.SetToolTip(this.cboxScriptName, resources.GetString("cboxScriptName.ToolTip"));
             // 
+            // btnKillScript
+            // 
+            resources.ApplyResources(this.btnKillScript, "btnKillScript");
+            this.btnKillScript.Name = "btnKillScript";
+            this.toolTip1.SetToolTip(this.btnKillScript, resources.GetString("btnKillScript.ToolTip"));
+            this.btnKillScript.UseVisualStyleBackColor = true;
+            // 
+            // btnClearOutput
+            // 
+            resources.ApplyResources(this.btnClearOutput, "btnClearOutput");
+            this.btnClearOutput.Name = "btnClearOutput";
+            this.toolTip1.SetToolTip(this.btnClearOutput, resources.GetString("btnClearOutput.ToolTip"));
+            this.btnClearOutput.UseVisualStyleBackColor = true;
+            // 
             // btnNewScript
             // 
             resources.ApplyResources(this.btnNewScript, "btnNewScript");
             this.btnNewScript.Name = "btnNewScript";
             this.toolTip1.SetToolTip(this.btnNewScript, resources.GetString("btnNewScript.ToolTip"));
             this.btnNewScript.UseVisualStyleBackColor = true;
+            // 
+            // btnStopScript
+            // 
+            resources.ApplyResources(this.btnStopScript, "btnStopScript");
+            this.btnStopScript.Name = "btnStopScript";
+            this.toolTip1.SetToolTip(this.btnStopScript, resources.GetString("btnStopScript.ToolTip"));
+            this.btnStopScript.UseVisualStyleBackColor = true;
             // 
             // btnSaveScript
             // 
@@ -212,6 +239,13 @@
             this.toolTip1.SetToolTip(this.btnSaveScript, resources.GetString("btnSaveScript.ToolTip"));
             this.btnSaveScript.UseVisualStyleBackColor = true;
             // 
+            // btnRunScript
+            // 
+            resources.ApplyResources(this.btnRunScript, "btnRunScript");
+            this.btnRunScript.Name = "btnRunScript";
+            this.toolTip1.SetToolTip(this.btnRunScript, resources.GetString("btnRunScript.ToolTip"));
+            this.btnRunScript.UseVisualStyleBackColor = true;
+            // 
             // pnlScriptEditor
             // 
             resources.ApplyResources(this.pnlScriptEditor, "pnlScriptEditor");
@@ -219,14 +253,24 @@
             // 
             // panelScriptDebugTools
             // 
+            this.panelScriptDebugTools.Controls.Add(this.label3);
+            this.panelScriptDebugTools.Controls.Add(this.tboxGoToLine);
             this.panelScriptDebugTools.Controls.Add(this.panel1);
             this.panelScriptDebugTools.Controls.Add(this.label2);
-            this.panelScriptDebugTools.Controls.Add(this.btnKillScript);
-            this.panelScriptDebugTools.Controls.Add(this.btnClearOutput);
-            this.panelScriptDebugTools.Controls.Add(this.btnStopScript);
-            this.panelScriptDebugTools.Controls.Add(this.btnRunScript);
             resources.ApplyResources(this.panelScriptDebugTools, "panelScriptDebugTools");
             this.panelScriptDebugTools.Name = "panelScriptDebugTools";
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
+            // 
+            // tboxGoToLine
+            // 
+            resources.ApplyResources(this.tboxGoToLine, "tboxGoToLine");
+            this.tboxGoToLine.Name = "tboxGoToLine";
+            this.toolTip1.SetToolTip(this.tboxGoToLine, resources.GetString("tboxGoToLine.ToolTip"));
             // 
             // panel1
             // 
@@ -262,34 +306,6 @@
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
             this.toolTip1.SetToolTip(this.label2, resources.GetString("label2.ToolTip"));
-            // 
-            // btnKillScript
-            // 
-            resources.ApplyResources(this.btnKillScript, "btnKillScript");
-            this.btnKillScript.Name = "btnKillScript";
-            this.toolTip1.SetToolTip(this.btnKillScript, resources.GetString("btnKillScript.ToolTip"));
-            this.btnKillScript.UseVisualStyleBackColor = true;
-            // 
-            // btnClearOutput
-            // 
-            resources.ApplyResources(this.btnClearOutput, "btnClearOutput");
-            this.btnClearOutput.Name = "btnClearOutput";
-            this.toolTip1.SetToolTip(this.btnClearOutput, resources.GetString("btnClearOutput.ToolTip"));
-            this.btnClearOutput.UseVisualStyleBackColor = true;
-            // 
-            // btnStopScript
-            // 
-            resources.ApplyResources(this.btnStopScript, "btnStopScript");
-            this.btnStopScript.Name = "btnStopScript";
-            this.toolTip1.SetToolTip(this.btnStopScript, resources.GetString("btnStopScript.ToolTip"));
-            this.btnStopScript.UseVisualStyleBackColor = true;
-            // 
-            // btnRunScript
-            // 
-            resources.ApplyResources(this.btnRunScript, "btnRunScript");
-            this.btnRunScript.Name = "btnRunScript";
-            this.toolTip1.SetToolTip(this.btnRunScript, resources.GetString("btnRunScript.ToolTip"));
-            this.btnRunScript.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
@@ -471,5 +487,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusCodeAnalyze;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusClrLib;
         private System.Windows.Forms.ToolStripMenuItem outputPanelToolStripMenuItem;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tboxGoToLine;
     }
 }

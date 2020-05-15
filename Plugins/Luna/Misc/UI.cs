@@ -106,6 +106,19 @@ namespace Luna.Misc
             scintilla.Margins[0].Width = 16;
             scintilla.Styles[Style.LineNumber].ForeColor = Color.DarkGray;
 
+            // indicator for search
+            const int INDICATOR_NUM = 8;
+
+            // Remove all uses of our indicator
+            scintilla.IndicatorCurrent = INDICATOR_NUM;
+
+            // Update indicator appearance
+            scintilla.Indicators[INDICATOR_NUM].Style = IndicatorStyle.StraightBox;
+            scintilla.Indicators[INDICATOR_NUM].Under = true;
+            scintilla.Indicators[INDICATOR_NUM].ForeColor = Color.Yellow;
+            scintilla.Indicators[INDICATOR_NUM].OutlineAlpha = 220;
+            scintilla.Indicators[INDICATOR_NUM].Alpha = 180;
+
             return scintilla;
         }
 

@@ -224,9 +224,39 @@ namespace Luna.Controllers.FormEditorCtrl
         #endregion
 
         #region Scintilla
+        void Scintilla_DoubleClick(object sender, EventArgs e)
+        {
+            var pos = luaEditor.CurrentPosition;
+            var keyword = luaEditor.GetWordFromPosition(pos);
+
+            if (string.IsNullOrEmpty(keyword) || keyword.Length < 2)
+            {
+                return;
+            }
+
+            var orgFlag = luaEditor.SearchFlags;
+
+            luaEditor.SearchFlags = SearchFlags.MatchCase | SearchFlags.WholeWord;
+            luaEditor.TargetStart = 0;
+            luaEditor.TargetEnd = luaEditor.TextLength;
+
+            while (luaEditor.SearchInTarget(keyword) != -1)
+            {
+                var end = luaEditor.TargetEnd;
+                var start = luaEditor.TargetStart;
+                luaEditor.IndicatorFillRange(start, end - start);
+                luaEditor.TargetStart = end;
+                luaEditor.TargetEnd = luaEditor.TextLength;
+            }
+
+            luaEditor.TargetStart = 0;
+            luaEditor.TargetEnd = 0;
+            luaEditor.SearchFlags = orgFlag;
+        }
 
         private void Scintilla_MouseClicked(object sender, EventArgs e)
         {
+            luaEditor.IndicatorClearRange(0, luaEditor.TextLength);
             history.Add(luaEditor.CurrentLine);
         }
 
@@ -487,6 +517,8 @@ namespace Luna.Controllers.FormEditorCtrl
             luaEditor.CharAdded += Scintilla_CharAdded;
             luaEditor.TextChanged += Scintilla_TextChanged;
             luaEditor.MouseClick += Scintilla_MouseClicked;
+
+            luaEditor.DoubleClick += Scintilla_DoubleClick;
 
             btnNewScript.Click += (s, a) => ClearEditor();
 

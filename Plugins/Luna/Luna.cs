@@ -55,7 +55,11 @@ namespace Luna
         #region protected overrides
         protected override void Popup()
         {
+#if DEBUG
+            formMgr.ShowOrCreateFirstEditor();
+#else
             formMgr.ShowFormMain();
+#endif
         }
 
         protected override void Start(VgcApis.Interfaces.Services.IApiService api)

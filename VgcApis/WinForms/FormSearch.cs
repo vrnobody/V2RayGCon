@@ -1,15 +1,17 @@
 ﻿using ScintillaNET;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
+using VgcApis.Resources.Langs;
 
 namespace VgcApis.WinForms
 {
     public partial class FormSearch : Form
     {
-        Scintilla scintilla;
-        List<int> result;
-        int curResult, keywordLength;
+        Scintilla editor;
+        string title = "";
+        SearchFlags searchFlag = SearchFlags.None;
 
         public static FormSearch CreateForm(Scintilla editor)
         {
@@ -18,24 +20,42 @@ namespace VgcApis.WinForms
             {
                 r = new FormSearch(editor);
                 r.Show();
+                r.Activate();
+                r.cboxSearchKeyword.Focus();
             });
 
             return r;
         }
 
-
         FormSearch(Scintilla editor)
         {
             InitializeComponent();
-            scintilla = editor;
-            result = new List<int>();
-            curResult = 0;
-            InitIndicator();
-
-            this.FormClosed += (s, a) => ClearIndicator();
-
             Misc.UI.AutoSetFormIcon(this);
+            title = this.Text;
 
+            this.editor = editor;
+            BindEvents();
+        }
+
+        #region private methods
+        void SetTitle(int total, int index)
+        {
+            var tail = "";
+            if (total > 0)
+            {
+                tail = $" - {index}/{total}";
+            }
+
+            var t = $"{title}{tail}";
+            if (this.Text != t)
+            {
+                this.Text = t;
+            }
+        }
+
+        private void BindEvents()
+        {
+            this.FormClosed += (s, a) => ClearIndicator();
             this.KeyDown += KeyBoardShortcutHandler;
         }
 
@@ -46,13 +66,13 @@ namespace VgcApis.WinForms
             switch (keyCode)
             {
                 case Keys.F2:
-                    ShowResult(false);
+                    SearchPrevious();
                     break;
                 case Keys.F3:
-                    ShowResult(true);
+                    SearchNext();
                     break;
                 case Keys.F4:
-                    SearchAll();
+                    SearchFirst(false);
                     break;
                 case Keys.Escape:
                     this.Close();
@@ -60,116 +80,255 @@ namespace VgcApis.WinForms
             }
         }
 
-        string GetKeyword()
-        {
-            return tboxKeyword.Text;
-        }
-
-        void InitIndicator()
-        {
-            // Indicators 0-7 could be in use by a lexer
-            // so we'll use indicator 8 to highlight words.
-            int NUM = 8;
-
-            // Remove all uses of our indicator
-            scintilla.IndicatorCurrent = NUM;
-            // scintilla.IndicatorClearRange(0, scintilla.TextLength);
-
-            // Update indicator appearance
-            scintilla.Indicators[NUM].Style = IndicatorStyle.StraightBox;
-            scintilla.Indicators[NUM].Under = true;
-            scintilla.Indicators[NUM].ForeColor = Color.Yellow;
-            scintilla.Indicators[NUM].OutlineAlpha = 220;
-            scintilla.Indicators[NUM].Alpha = 180;
-        }
-
         void ClearIndicator()
         {
-            scintilla.IndicatorClearRange(0, scintilla.TextLength);
+            editor.IndicatorClearRange(0, editor.TextLength);
         }
 
-        private void SearchAll()
+        void SearchPrevious()
         {
-            var key = GetKeyword();
-            if (string.IsNullOrEmpty(key) || key.Length < 2)
-            {
-                return;
-            }
+            var curPos = editor.CurrentPosition;
+            var matches = SearchAllMatch(searchFlag);
+            var count = matches.Count;
 
-            keywordLength = key.Length;
-
-            result.Clear();
-            ClearIndicator();
-            scintilla.TargetStart = 0;
-            scintilla.TargetEnd = scintilla.TextLength;
-            while (scintilla.SearchInTarget(key) != -1)
+            for (int i = count - 1; i >= 0; i--)
             {
-                result.Add(scintilla.TargetStart);
-                scintilla.TargetStart = scintilla.TargetEnd;
-                scintilla.TargetEnd = scintilla.TextLength;
-            }
-            curResult = -1;
-            ShowResult(true);
-        }
-
-        void UpdateLbResults(int curIdx, int total)
-        {
-            Misc.UI.Invoke(() =>
-            {
-                if (total < 1)
+                var match = matches[i];
+                if (curPos > match.X)
                 {
-                    lbResults.Text = "0";
+                    ShowSearchResult(count, i + 1, match);
                     return;
                 }
+            }
 
-                var text = $"{curIdx}/{total}";
-                lbResults.Text = text;
-            });
-        }
-
-        void ShowResult(bool forward)
-        {
-            var count = result.Count;
-
-            if (count < 1)
+            if (count > 0)
             {
-                UpdateLbResults(-1, count);
+                ShowSearchResult(count, count, matches.Last());
                 return;
             }
 
-            int delta = 1;
-            if (!forward)
+            ShowSearchResult(-1, -1, new Point());
+            WarnNoMatch();
+        }
+
+        void SearchNext()
+        {
+            var curPos = editor.CurrentPosition;
+            var matches = SearchAllMatch(searchFlag);
+            var count = matches.Count;
+
+            for (int i = 0; i < count; i++)
             {
-                delta = -1;
+                var match = matches[i];
+                if (match.X > curPos)
+                {
+                    ShowSearchResult(count, i + 1, match);
+                    return;
+                }
             }
-            curResult = (curResult + delta + count) % count;
-            UpdateLbResults(curResult + 1, count);
 
-            var kwPos = result[curResult];
-            var kwLine = scintilla.LineFromPosition(kwPos);
-            var linesOnScreen = scintilla.LinesOnScreen - 2; // Fudge factor            
-            var topLine = kwLine - (linesOnScreen / 2);
+            if (count > 0)
+            {
+                ShowSearchResult(count, 1, matches.First());
+                return;
+            }
 
-            scintilla.GotoPosition(kwPos);
-            scintilla.FirstVisibleLine = topLine;
+            ShowSearchResult(-1, -1, new Point());
+            WarnNoMatch();
+        }
 
+        void SearchFirst(bool quiet)
+        {
+            var matches = SearchAllMatch(searchFlag);
+            var count = matches.Count;
+            if (count > 0)
+            {
+                ShowSearchResult(count, 1, matches.First());
+                return;
+            }
+
+            ShowSearchResult(-1, -1, new Point());
+            if (!quiet)
+            {
+                WarnNoMatch();
+            }
+        }
+
+        void WarnNoMatch()
+        {
+            Misc.UI.MsgBox(I18N.NoMatchResult);
+        }
+
+        void ShowSearchResult(int total, int index, Point p)
+        {
+            SetTitle(total, index);
             ClearIndicator();
-            scintilla.IndicatorFillRange(kwPos, keywordLength);
+            editor.TargetStart = p.X;
+            editor.TargetEnd = p.Y;
+
+            if (total < 0)
+            {
+                return;
+            }
+            var len = cboxSearchKeyword.Text.Length;
+            ScrollTo(p.X);
+            editor.IndicatorFillRange(p.X, p.Y - p.X);
+        }
+
+        List<Point> SearchAllMatch(SearchFlags flag)
+        {
+            List<Point> results = new List<Point>();
+            var keyword = cboxSearchKeyword.Text;
+            if (string.IsNullOrEmpty(keyword))
+            {
+                return results;
+            }
+
+            if (keyword.Length > 100)
+            {
+                Misc.UI.MsgBoxAsync(I18N.KeywordIsTooLong);
+                cboxSearchKeyword.Text = keyword.Substring(0, 100);
+                return results;
+            }
+
+            editor.SearchFlags = flag;
+            editor.TargetStart = 0;
+            editor.TargetEnd = editor.TextLength;
+
+            while (editor.SearchInTarget(keyword) != -1)
+            {
+                var r = new Point(editor.TargetStart, editor.TargetEnd);
+                results.Add(r);
+                editor.TargetStart = editor.TargetEnd;
+                editor.TargetEnd = editor.TextLength;
+            }
+            return results;
+        }
+
+
+
+        void ScrollTo(int pos)
+        {
+            var target = editor.LineFromPosition(pos);
+            var linesOnScreen = editor.LinesOnScreen - 2; // Fudge factor            
+            var top = target - (linesOnScreen / 2);
+            editor.GotoPosition(pos);
+            editor.FirstVisibleLine = top;
+        }
+
+        private void PerformSearchIfKeywordIsLongerThanTwoCharacters()
+        {
+            var text = cboxSearchKeyword.Text;
+            if (string.IsNullOrEmpty(text) || text.Length < 2)
+            {
+                return;
+            }
+            SearchFirst(true);
+        }
+        #endregion
+
+        #region UI events
+
+        private void btnNewSearch_Click(object sender, System.EventArgs e)
+        {
+            SearchFirst(false);
         }
 
         private void btnNext_Click(object sender, System.EventArgs e)
         {
-            ShowResult(true);
-        }
-
-        private void tboxKeyword_TextChanged(object sender, System.EventArgs e)
-        {
-            SearchAll();
+            SearchNext();
         }
 
         private void btnPrevious_Click(object sender, System.EventArgs e)
         {
-            ShowResult(false);
+            SearchPrevious();
         }
+
+        private void cboxSearchKeyword_TextChanged(object sender, System.EventArgs e)
+        {
+            PerformSearchIfKeywordIsLongerThanTwoCharacters();
+        }
+
+        private void btnReplaceOne_Click(object sender, System.EventArgs e)
+        {
+            var kw = cboxSearchKeyword.Text;
+            if (string.IsNullOrEmpty(kw))
+            {
+                return;
+            }
+
+            var record = new Point(editor.TargetStart, editor.TargetEnd);
+            if (editor.SearchInTarget(kw) == -1)
+            {
+                Misc.UI.MsgBoxAsync(I18N.PlsDoSearchFirst);
+                editor.TargetStart = record.X;
+                editor.TargetEnd = record.Y;
+                return;
+            }
+
+            editor.ReplaceTarget(cboxReplaceKeyword.Text);
+            SearchNext();
+        }
+
+        private void btnReplaceAll_Click(object sender, System.EventArgs e)
+        {
+            var kw = cboxSearchKeyword.Text;
+
+            if (string.IsNullOrEmpty(kw))
+            {
+                return;
+            }
+
+            var rpl = cboxReplaceKeyword.Text;
+
+            var count = 0;
+            // https://github.com/jacobslusser/ScintillaNET/issues/352
+            editor.TargetStart = 0;
+            editor.TargetEnd = editor.TextLength;
+            while (editor.SearchInTarget(kw) != -1)
+            {
+                count++;
+                editor.ReplaceTarget(rpl);
+                editor.TargetStart = editor.TargetEnd;
+                editor.TargetEnd = editor.TextLength;
+            }
+
+            editor.TargetEnd = 0;
+            editor.TargetStart = 0;
+            Misc.UI.MsgBoxAsync(string.Format(I18N.ReplacedCount, count));
+        }
+
+        void UpdateOptions()
+        {
+            searchFlag =
+                (chkOptionMatchCase.Checked ? SearchFlags.MatchCase : SearchFlags.None)
+                | (chkOptionRegex.Checked ? SearchFlags.Regex : SearchFlags.None)
+                | (chkOptionWholeWord.Checked ? SearchFlags.WholeWord : SearchFlags.None)
+                | (chkOptionWordStart.Checked ? SearchFlags.WordStart : SearchFlags.None);
+
+            PerformSearchIfKeywordIsLongerThanTwoCharacters();
+        }
+
+        private void chkOptionRegex_CheckedChanged(object sender, System.EventArgs e)
+        {
+            UpdateOptions();
+        }
+
+        private void chkOptionMatchCase_CheckedChanged(object sender, System.EventArgs e)
+        {
+            UpdateOptions();
+        }
+
+        private void chkOptionWholeWord_CheckedChanged(object sender, System.EventArgs e)
+        {
+            UpdateOptions();
+        }
+
+        private void chkOptionWordStart_CheckedChanged(object sender, System.EventArgs e)
+        {
+            UpdateOptions();
+        }
+
+        #endregion
     }
 }

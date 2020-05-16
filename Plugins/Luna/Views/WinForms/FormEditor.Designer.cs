@@ -51,12 +51,17 @@
             this.btnRunScript = new System.Windows.Forms.Button();
             this.pnlScriptEditor = new System.Windows.Forms.Panel();
             this.panelScriptDebugTools = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tboxGoToLine = new System.Windows.Forms.TextBox();
+            this.tboxQuickSearch = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.panelSelectMethods = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
             this.cboxFunctionList = new System.Windows.Forms.ComboBox();
+            this.panelSelectVariable = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.cboxVarList = new System.Windows.Forms.ComboBox();
+            this.btnGotoLine = new System.Windows.Forms.Button();
+            this.btnShowFormSearch = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rtBoxOutput = new VgcApis.UserControls.ExRichTextBox();
@@ -74,6 +79,7 @@
             this.enableCodeAnalyzeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.outputPanelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.panel2 = new System.Windows.Forms.Panel();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -90,8 +96,11 @@
             this.panelScriptDebugTools.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.panelSelectMethods.SuspendLayout();
+            this.panelSelectVariable.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripContainer1
@@ -253,24 +262,17 @@
             // 
             // panelScriptDebugTools
             // 
-            this.panelScriptDebugTools.Controls.Add(this.label3);
-            this.panelScriptDebugTools.Controls.Add(this.tboxGoToLine);
+            this.panelScriptDebugTools.Controls.Add(this.panel2);
             this.panelScriptDebugTools.Controls.Add(this.panel1);
             this.panelScriptDebugTools.Controls.Add(this.label2);
             resources.ApplyResources(this.panelScriptDebugTools, "panelScriptDebugTools");
             this.panelScriptDebugTools.Name = "panelScriptDebugTools";
             // 
-            // label3
+            // tboxQuickSearch
             // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
-            this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
-            // 
-            // tboxGoToLine
-            // 
-            resources.ApplyResources(this.tboxGoToLine, "tboxGoToLine");
-            this.tboxGoToLine.Name = "tboxGoToLine";
-            this.toolTip1.SetToolTip(this.tboxGoToLine, resources.GetString("tboxGoToLine.ToolTip"));
+            resources.ApplyResources(this.tboxQuickSearch, "tboxQuickSearch");
+            this.tboxQuickSearch.Name = "tboxQuickSearch";
+            this.toolTip1.SetToolTip(this.tboxQuickSearch, resources.GetString("tboxQuickSearch.ToolTip"));
             // 
             // panel1
             // 
@@ -281,9 +283,22 @@
             // tableLayoutPanel2
             // 
             resources.ApplyResources(this.tableLayoutPanel2, "tableLayoutPanel2");
-            this.tableLayoutPanel2.Controls.Add(this.cboxFunctionList, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.cboxVarList, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.panelSelectMethods, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.panelSelectVariable, 0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            // 
+            // panelSelectMethods
+            // 
+            this.panelSelectMethods.Controls.Add(this.label4);
+            this.panelSelectMethods.Controls.Add(this.cboxFunctionList);
+            resources.ApplyResources(this.panelSelectMethods, "panelSelectMethods");
+            this.panelSelectMethods.Name = "panelSelectMethods";
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            this.toolTip1.SetToolTip(this.label4, resources.GetString("label4.ToolTip"));
             // 
             // cboxFunctionList
             // 
@@ -293,6 +308,19 @@
             this.cboxFunctionList.Name = "cboxFunctionList";
             this.toolTip1.SetToolTip(this.cboxFunctionList, resources.GetString("cboxFunctionList.ToolTip"));
             // 
+            // panelSelectVariable
+            // 
+            this.panelSelectVariable.Controls.Add(this.label3);
+            this.panelSelectVariable.Controls.Add(this.cboxVarList);
+            resources.ApplyResources(this.panelSelectVariable, "panelSelectVariable");
+            this.panelSelectVariable.Name = "panelSelectVariable";
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
+            // 
             // cboxVarList
             // 
             resources.ApplyResources(this.cboxVarList, "cboxVarList");
@@ -300,6 +328,20 @@
             this.cboxVarList.FormattingEnabled = true;
             this.cboxVarList.Name = "cboxVarList";
             this.toolTip1.SetToolTip(this.cboxVarList, resources.GetString("cboxVarList.ToolTip"));
+            // 
+            // btnGotoLine
+            // 
+            resources.ApplyResources(this.btnGotoLine, "btnGotoLine");
+            this.btnGotoLine.Name = "btnGotoLine";
+            this.toolTip1.SetToolTip(this.btnGotoLine, resources.GetString("btnGotoLine.ToolTip"));
+            this.btnGotoLine.UseVisualStyleBackColor = true;
+            // 
+            // btnShowFormSearch
+            // 
+            resources.ApplyResources(this.btnShowFormSearch, "btnShowFormSearch");
+            this.btnShowFormSearch.Name = "btnShowFormSearch";
+            this.toolTip1.SetToolTip(this.btnShowFormSearch, resources.GetString("btnShowFormSearch.ToolTip"));
+            this.btnShowFormSearch.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -404,6 +446,14 @@
             resources.ApplyResources(this.outputPanelToolStripMenuItem, "outputPanelToolStripMenuItem");
             this.outputPanelToolStripMenuItem.Click += new System.EventHandler(this.outputPanelToolStripMenuItem_Click);
             // 
+            // panel2
+            // 
+            resources.ApplyResources(this.panel2, "panel2");
+            this.panel2.Controls.Add(this.tboxQuickSearch);
+            this.panel2.Controls.Add(this.btnGotoLine);
+            this.panel2.Controls.Add(this.btnShowFormSearch);
+            this.panel2.Name = "panel2";
+            // 
             // FormEditor
             // 
             resources.ApplyResources(this, "$this");
@@ -436,9 +486,13 @@
             this.panelScriptDebugTools.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.panelSelectMethods.ResumeLayout(false);
+            this.panelSelectVariable.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -487,7 +541,13 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusCodeAnalyze;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusClrLib;
         private System.Windows.Forms.ToolStripMenuItem outputPanelToolStripMenuItem;
+        private System.Windows.Forms.TextBox tboxQuickSearch;
+        private System.Windows.Forms.Button btnGotoLine;
+        private System.Windows.Forms.Button btnShowFormSearch;
+        private System.Windows.Forms.Panel panelSelectMethods;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel panelSelectVariable;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tboxGoToLine;
+        private System.Windows.Forms.Panel panel2;
     }
 }

@@ -5,7 +5,8 @@ namespace Luna.Views.WinForms
 {
     internal partial class FormEditor : Form
     {
-        Controllers.FormEditorCtrl.TabEditorCtrl editorCtrl;
+        Controllers.FormEditorCtrl.ButtonCtrl editorCtrl;
+        Controllers.FormEditorCtrl.AutoCompleteCtrl acmCtrl;
         Controllers.FormEditorCtrl.MenuCtrl menuCtrl;
 
         Services.LuaServer luaServer;
@@ -13,6 +14,7 @@ namespace Luna.Views.WinForms
         Services.FormMgrSvc formMgr;
         VgcApis.Interfaces.Services.IApiService api;
 
+        ScintillaNET.Scintilla editor;
         string title = "";
 
         public static FormEditor CreateForm(
@@ -42,33 +44,45 @@ namespace Luna.Views.WinForms
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             title = string.Format(I18N.LunaScrEditor, Properties.Resources.Version);
+
+            editor = Misc.UI.CreateLuaEditor(pnlScriptEditor);
             this.Text = title;
         }
+
 
         private void FormEditor_Load(object sender, System.EventArgs e)
         {
 
             InitSplitPanel();
+
             lbStatusBarMsg.Text = "";
 
-            editorCtrl = new Controllers.FormEditorCtrl.TabEditorCtrl(
+            editorCtrl = new Controllers.FormEditorCtrl.ButtonCtrl(
                 this,
+                editor,
                 cboxScriptName,
                 btnNewScript,
                 btnSaveScript,
-
-                cboxVarList,
-                cboxFunctionList,
 
                 btnRunScript,
                 btnStopScript,
                 btnKillScript,
                 btnClearOutput,
 
-                tboxGoToLine,
+                btnShowFormSearch,
+                btnGotoLine,
+                tboxQuickSearch,
 
-                rtBoxOutput,
-                pnlScriptEditor);
+                rtBoxOutput);
+
+            acmCtrl = new Controllers.FormEditorCtrl.AutoCompleteCtrl(
+                editor,
+                cboxVarList,
+                cboxFunctionList,
+                 enableCodeAnalyzeToolStripMenuItem,
+                 toolStripStatusCodeAnalyze);
+
+            acmCtrl.Run(settings);
 
             editorCtrl.Run(api, settings, formMgr, luaServer);
 
@@ -80,13 +94,8 @@ namespace Luna.Views.WinForms
                 loadFileToolStripMenuItem,
                 saveAsToolStripMenuItem,
                 exitToolStripMenuItem,
-
                 loadCLRLibraryToolStripMenuItem,
-                enableCodeAnalyzeToolStripMenuItem,
-
                 toolStripStatusClrLib,
-                toolStripStatusCodeAnalyze,
-
                 cboxScriptName);
 
             menuCtrl.Run(formMgr, settings);
@@ -94,11 +103,15 @@ namespace Luna.Views.WinForms
             this.FormClosing += FormClosingHandler;
             this.FormClosed += (s, a) =>
             {
-                // reverse order 
+                acmCtrl.Cleanup();
                 editorCtrl.Cleanup();
             };
 
-            this.KeyDown += (s, a) => editorCtrl?.KeyBoardShortcutHandler(a);
+            this.KeyDown += (s, a) =>
+            {
+                editorCtrl?.KeyBoardShortcutHandler(a);
+                acmCtrl?.KeyBoardShortcutHandler(a);
+            };
         }
 
         #region private methods

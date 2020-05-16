@@ -505,12 +505,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\Files\lua\libs\ast\analyze.lua" />
-    <None Include="Resources\Files\lua\libs\ast\lexer.lua" />
-    <None Include="Resources\Files\lua\libs\ast\parser.lua" />
-    <None Include="Resources\Files\lua\libs\ast\utils.lua" />
-    <None Include="Resources\Files\lua\libs\inspect.lua" />
     <None Include="Resources\Files\lua\libs\json.lua" />
+    <None Include="Resources\Files\lua\libs\luacheck\analyzer.lua" />
+    <None Include="Resources\Files\lua\libs\luacheck\decoder.lua" />
+    <None Include="Resources\Files\lua\libs\luacheck\lexer.lua" />
+    <None Include="Resources\Files\lua\libs\luacheck\parser.lua" />
+    <None Include="Resources\Files\lua\libs\luacheck\unicode.lua" />
+    <None Include="Resources\Files\lua\libs\luacheck\unicode_prntbnd.lua" />
+    <None Include="Resources\Files\lua\libs\luacheck\utils.lua" />
     <None Include="Resources\Files\lua\libs\utils.lua" />
     <None Include="Resources\Files\lua\modules\hotkey.lua" />
     <None Include="Resources\Files\lua\modules\logger.lua" />

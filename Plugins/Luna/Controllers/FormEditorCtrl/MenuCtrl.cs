@@ -7,22 +7,21 @@ namespace Luna.Controllers.FormEditorCtrl
     internal sealed class MenuCtrl
     {
         Views.WinForms.FormEditor formEditor;
-        TabEditorCtrl editorCtrl;
+        ButtonCtrl editorCtrl;
         private readonly ToolStripMenuItem miNewWindow;
         private readonly ToolStripMenuItem miShowMgr;
         private readonly ToolStripMenuItem miLoad;
         private readonly ToolStripMenuItem miSaveAs;
         private readonly ToolStripMenuItem miExit;
         private readonly ToolStripMenuItem miLoadClrLib;
-        private readonly ToolStripMenuItem miEanbleCodeAnalyze;
+
         private readonly ToolStripStatusLabel smiLbClrLib;
-        private readonly ToolStripStatusLabel smiLbCodeanalyze;
         private readonly ComboBox cboxScriptName;
 
         public MenuCtrl(
             Views.WinForms.FormEditor formEditor,
 
-            TabEditorCtrl editorCtrl,
+            ButtonCtrl editorCtrl,
             ToolStripMenuItem miNewWindow,
             ToolStripMenuItem miShowMgr,
             ToolStripMenuItem miLoad,
@@ -30,10 +29,10 @@ namespace Luna.Controllers.FormEditorCtrl
             ToolStripMenuItem miExit,
 
             ToolStripMenuItem miLoadClrLib,
-            ToolStripMenuItem miEanbleCodeAnalyze,
+
 
             ToolStripStatusLabel smiLbClrLib,
-            ToolStripStatusLabel smiLbCodeanalyze,
+
 
             ComboBox cboxScriptName)
         {
@@ -44,9 +43,9 @@ namespace Luna.Controllers.FormEditorCtrl
             this.miSaveAs = miSaveAs;
             this.miExit = miExit;
             this.miLoadClrLib = miLoadClrLib;
-            this.miEanbleCodeAnalyze = miEanbleCodeAnalyze;
+
             this.smiLbClrLib = smiLbClrLib;
-            this.smiLbCodeanalyze = smiLbCodeanalyze;
+
             this.cboxScriptName = cboxScriptName;
             this.formEditor = formEditor;
         }
@@ -64,9 +63,6 @@ namespace Luna.Controllers.FormEditorCtrl
         {
             miLoadClrLib.Checked = settings.isLoadClrLib;
             smiLbClrLib.Enabled = settings.isLoadClrLib;
-
-            miEanbleCodeAnalyze.Checked = settings.isEnableAdvanceAutoComplete;
-            smiLbCodeanalyze.Enabled = settings.isEnableAdvanceAutoComplete;
         }
 
         private void BindEvents(FormMgrSvc formMgrService)
@@ -79,14 +75,6 @@ namespace Luna.Controllers.FormEditorCtrl
                 miLoadClrLib.Checked = enable;
                 smiLbClrLib.Enabled = enable;
                 editorCtrl.isLoadClrLib = enable;
-            };
-
-            miEanbleCodeAnalyze.Click += (s, a) =>
-            {
-                var enable = !miEanbleCodeAnalyze.Checked;
-                miEanbleCodeAnalyze.Checked = enable;
-                smiLbCodeanalyze.Enabled = enable;
-                editorCtrl.SetIsEnableCodeAnalyze(enable);
             };
 
             miNewWindow.Click += (s, a) =>

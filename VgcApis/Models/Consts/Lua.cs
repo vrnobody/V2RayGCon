@@ -20,7 +20,6 @@ namespace VgcApis.Models.Consts
             " getfenv gcinfo load loadlib loadstring select setfenv unpack _LOADED LUA_PATH _REQUIREDNAME package rawlen package bit32 utf8 _ENV";
 
         public const string LuaSubFunctions =
-            LuaPredefinedFunctionNames +
             " string.byte string.char string.dump string.find string.format string.gsub string.len string.lower string.rep string.sub string.upper" +
             " table.concat table.insert table.remove table.sort" +
             " math.abs math.acos math.asin math.atan math.atan2 math.ceil math.cos math.deg math.exp math.floor math.frexp math.ldexp math.log math.max math.min math.pi math.pow math.rad math.random math.randomseed math.sin math.sqrt math.tan" +
@@ -34,8 +33,20 @@ namespace VgcApis.Models.Consts
             " os.clock os.date os.difftime os.execute os.exit os.getenv os.remove os.rename os.setlocale os.time os.tmpname" +
             " package.loaders package.seeall package.config package.searchers package.searchpath package.cpath package.loaded package.loadlib package.path package.preload";
 
-        const string LuaPredefinedFunctionNames =
-            @"string.startswith string.endswith string.isempty table.contains  table.length table.tostring";
+        public static List<string> LuaPredefinedFunctionNames = new List<string>(){
+            "string.endswith(text, keyword)",
+            "string.isempty(text)",
+            "string.startswith(text, keyword)",
+
+            "table.contains(haystack, needle)",
+            "table.keys(t)",
+            "table.length(t)",
+
+            "table.load(str)",
+            "table.dump(t)",
+            "table.dump(t, indent)",
+            "table.dump(t, indent, header)",
+        };
 
         static List<string> GetterApiFuncNames()
         {

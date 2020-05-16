@@ -77,15 +77,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Numbers.cs" />
+    <Compile Include="Controllers\FormEditorCtrl\AutoCompleteCtrl.cs" />
     <Compile Include="Controllers\FormEditorCtrl\MenuCtrl.cs" />
-    <Compile Include="Controllers\FormEditorCtrl\TabEditorCtrl.cs" />
+    <Compile Include="Controllers\FormEditorCtrl\ButtonCtrl.cs" />
     <Compile Include="Controllers\LuaCoreCtrl.cs" />
     <Compile Include="Controllers\FormMainCtrl\TabGeneralCtrl.cs" />
     <Compile Include="Controllers\FormMainCtrl\TabOptionsCtrl.cs" />
     <Compile Include="Libs\LuaSnippet\BestMatchSnippets.cs" />
-    <Compile Include="Libs\LuaSnippet\LuaAcm.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Libs\LuaSnippet\LuaImportClrSnippets.cs" />
     <Compile Include="Libs\LuaSnippet\MatchItemBase.cs" />
     <Compile Include="Libs\LuaSnippet\LuaKeywordSnippets.cs" />

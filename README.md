@@ -26,12 +26,11 @@ Require .net framework 4.5+.
 ### 引用按字母排序 Credits (in alphabetical order)  
 [2dust/v2rayN](https://github.com/2dust/v2rayN) vmess分享链接及订阅格式  
 [Ahmad45123/AutoCompleteMenu-ScintillaNET](https://github.com/Ahmad45123/AutoCompleteMenu-ScintillaNET) 自动补全  
-[FourierTransformer/lua-complete](https://github.com/FourierTransformer/lua-complete.git) lua模块被全  
+[FourierTransformer/lua-complete](https://github.com/FourierTransformer/lua-complete.git) lua模块补全  
 [haf/DotNetZip.Semverd](https://github.com/haf/DotNetZip.Semverd) .net 4.0解压zip文件  
 [HtmlAgilityPack](https://html-agility-pack.net/) HTML解释器  
 [jacobslusser/ScintillaNET](https://github.com/jacobslusser/ScintillaNET) 编辑器  
 [JamesNK/Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) 处理json  
-[kikito/inspect](https://github.com/kikito/inspect.lua) lua表格输出  
 [micjahn/ZXing.Net](https://github.com/micjahn/ZXing.Net/) 处理二维码  
 [mpeterv/luacheck](https://github.com/mpeterv/luacheck.git) lua语义解释  
 [NLua/NLua](https://github.com/NLua/NLua) Luna插件中的lua解释器  

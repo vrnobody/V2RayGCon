@@ -1,5 +1,4 @@
-﻿using ScintillaNET;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Luna.Services
@@ -50,8 +49,10 @@ namespace Luna.Services
         #endregion
 
         #region internal methods
-        public Libs.LuaSnippet.LuaAcm AttachSnippetsTo(Scintilla editor) =>
-            snpCache?.BindToEditor(editor);
+
+        public Libs.LuaSnippet.BestMatchSnippets CreateBestMatchSnippet(ScintillaNET.Scintilla editor)
+            => snpCache?.CreateBestMatchSnippets(editor);
+
         #endregion
 
         #region public methods

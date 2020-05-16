@@ -111,7 +111,7 @@ namespace Luna.Views.WinForms
         {
             if (e.KeyCode == Keys.Escape)
             {
-                this.Close();
+                VgcApis.Misc.UI.CloseFormIgnoreError(this);
             }
         }
 

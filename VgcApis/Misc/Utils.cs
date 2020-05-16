@@ -128,60 +128,6 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
-        public static string[] ExtractFunctionsFromLuaScript(string text)
-        {
-            var kws = new string[] { "function", "local function" };
-            List<string> fns = new List<string>();
-
-            var lines = text.Replace("\r", "").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var line in lines)
-            {
-                if (line.StartsWith("function "))
-                {
-                    fns.Add(line.Substring("function ".Length));
-                }
-                else if (line.StartsWith("local function "))
-                {
-                    fns.Add(line.Substring("local function ".Length));
-                }
-            }
-
-            return fns.Distinct().OrderBy(x => x).ToArray();
-        }
-
-        static public string[] ExtractGlobalVarsFromLuaScript(string text)
-        {
-            List<string> vs = new List<string>();
-            var kw = "local ";
-
-            var lines = text.Replace("\r", "").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var line in lines)
-            {
-                if (line.StartsWith("local function "))
-                {
-                    continue;
-                }
-
-                if (!line.StartsWith(kw))
-                {
-                    continue;
-                }
-
-                var parts = line.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-                if (parts.Length < 1 || parts[0].Length < kw.Length)
-                {
-                    continue;
-                }
-
-                var v = parts[0].Substring(kw.Length).Trim();
-                if (v.Length > 0)
-                {
-                    vs.Add(v);
-                }
-            }
-
-            return vs.Distinct().OrderBy(x => x).ToArray();
-        }
 
         public static string GetAppName() => Properties.Resources.AppName;
 

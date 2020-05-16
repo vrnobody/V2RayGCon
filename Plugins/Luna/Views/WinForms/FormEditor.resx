@@ -241,7 +241,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="cboxScriptName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>230, 20</value>
+    <value>264, 20</value>
   </data>
   <data name="cboxScriptName.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -280,7 +280,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnKillScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>358, 2</value>
+    <value>392, 2</value>
   </data>
   <data name="btnKillScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -327,7 +327,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnClearOutput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>379, 2</value>
+    <value>413, 2</value>
   </data>
   <data name="btnClearOutput.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -371,7 +371,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnNewScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>272, 2</value>
+    <value>306, 2</value>
   </data>
   <data name="btnNewScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -411,7 +411,7 @@
     <value>Zoom</value>
   </data>
   <data name="btnStopScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>337, 2</value>
+    <value>371, 2</value>
   </data>
   <data name="btnStopScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -452,7 +452,7 @@
     <value>Zoom</value>
   </data>
   <data name="btnSaveScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>293, 2</value>
+    <value>327, 2</value>
   </data>
   <data name="btnSaveScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -494,7 +494,7 @@
     <value>Zoom</value>
   </data>
   <data name="btnRunScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>316, 2</value>
+    <value>350, 2</value>
   </data>
   <data name="btnRunScript.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -530,7 +530,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panelScriptName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>403, 25</value>
+    <value>437, 25</value>
   </data>
   <data name="panelScriptName.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -560,7 +560,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="pnlScriptEditor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>399, 294</value>
+    <value>433, 294</value>
   </data>
   <data name="pnlScriptEditor.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -577,71 +577,160 @@
   <data name="&gt;&gt;pnlScriptEditor.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="label3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="panel2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>318, 6</value>
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 12</value>
-  </data>
-  <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>Goto:</value>
-  </data>
-  <data name="label3.ToolTip" xml:space="preserve">
-    <value>Go to line number</value>
-  </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>panelScriptDebugTools</value>
-  </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tboxGoToLine.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="tboxQuickSearch.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="tboxGoToLine.Location" type="System.Drawing.Point, System.Drawing">
-    <value>358, 2</value>
+  <data name="tboxQuickSearch.Location" type="System.Drawing.Point, System.Drawing">
+    <value>65, 0</value>
   </data>
-  <data name="tboxGoToLine.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 21</value>
+  <data name="tboxQuickSearch.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="tboxGoToLine.TabIndex" type="System.Int32, mscorlib">
+  <data name="tboxQuickSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 21</value>
+  </data>
+  <data name="tboxQuickSearch.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
-  <data name="tboxGoToLine.Text" xml:space="preserve">
+  <data name="tboxQuickSearch.Text" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="tboxGoToLine.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+  <data name="tboxQuickSearch.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Center</value>
   </data>
-  <data name="tboxGoToLine.ToolTip" xml:space="preserve">
-    <value>Go to line</value>
+  <data name="tboxQuickSearch.ToolTip" xml:space="preserve">
+    <value>Goto</value>
   </data>
-  <data name="&gt;&gt;tboxGoToLine.Name" xml:space="preserve">
-    <value>tboxGoToLine</value>
+  <data name="&gt;&gt;tboxQuickSearch.Name" xml:space="preserve">
+    <value>tboxQuickSearch</value>
   </data>
-  <data name="&gt;&gt;tboxGoToLine.Type" xml:space="preserve">
+  <data name="&gt;&gt;tboxQuickSearch.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tboxGoToLine.Parent" xml:space="preserve">
+  <data name="&gt;&gt;tboxQuickSearch.Parent" xml:space="preserve">
+    <value>panel2</value>
+  </data>
+  <data name="&gt;&gt;tboxQuickSearch.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnGotoLine.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btnGotoLine.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAHpJREFUOE9joAr4+vXr/G/fvv1HxyBxqBLCAGZIzIR9/xmC54Bpog1BtpUsQ0CK
+        QBqwYaIMoYoByBjdC7gwVDsEAAX6QYLomtva2v47OTlhYBQDYDFAKoZqRwCQIDbbsGHaGUAKhmpDAJAg
+        NtuwYZwGkIKh2gYUMDAAAGbutJT12UwwAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnGotoLine.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="btnGotoLine.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnGotoLine.Location" type="System.Drawing.Point, System.Drawing">
+    <value>44, 1</value>
+  </data>
+  <data name="btnGotoLine.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="btnGotoLine.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="btnGotoLine.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="btnGotoLine.ToolTip" xml:space="preserve">
+    <value>Goto line</value>
+  </data>
+  <data name="&gt;&gt;btnGotoLine.Name" xml:space="preserve">
+    <value>btnGotoLine</value>
+  </data>
+  <data name="&gt;&gt;btnGotoLine.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnGotoLine.Parent" xml:space="preserve">
+    <value>panel2</value>
+  </data>
+  <data name="&gt;&gt;btnGotoLine.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnShowFormSearch.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btnShowFormSearch.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAXZJREFUOE+dkrFqwmAUhYNurh18jA4+QhbR3SVDMmYVXJUUAj5AB5csBurwt5Og
+        gx2cpO3gEzRLWrBbtUHEoXJ7TvwllMRCPfARvDnn+v/3xjin3W5XAjZYgD04gAj0wZW2FQuGCpgul0vp
+        dDpSr9fFNE1xHEeUUrLdbld4f63teeFlOJlMpNlsShiGEr1G8ha/y2z2KLZtS7fbPTXJnwTFWhzH0mg0
+        5PnpRTbrr1+sVh9pE54E3r6OZWIxCALxPC8XPsGT8DrwRjqWCUXV6/XkXj0Uhgmvw5nAe9CxTCiOfN+X
+        4TAsDBPOhIOFd69jmVBsj8djcV1X1p+bwgYcLLcD70LHMqFYTZLkYFmWDAaDXBMOltvhiuG1dewoFMrg
+        bj6fp1tgE56E/8iZeN5NWueK4ZuCko7mw3zyJLwOZ8LBcjtcMXwhqOhocZi/QRW0wQgowM+4pmNHoXAu
+        XNaWvwVjcHGYgvm71WpdFqYQuGUTEPw7bBjGD/7P/+8HiloYAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnShowFormSearch.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="btnShowFormSearch.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnShowFormSearch.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 1</value>
+  </data>
+  <data name="btnShowFormSearch.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="btnShowFormSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="btnShowFormSearch.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="btnShowFormSearch.ToolTip" xml:space="preserve">
+    <value>Show search window. (Ctrl + F)</value>
+  </data>
+  <data name="&gt;&gt;btnShowFormSearch.Name" xml:space="preserve">
+    <value>btnShowFormSearch</value>
+  </data>
+  <data name="&gt;&gt;btnShowFormSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnShowFormSearch.Parent" xml:space="preserve">
+    <value>panel2</value>
+  </data>
+  <data name="&gt;&gt;btnShowFormSearch.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="panel2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>306, 0</value>
+  </data>
+  <data name="panel2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="panel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 22</value>
+  </data>
+  <data name="panel2.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;panel2.Name" xml:space="preserve">
+    <value>panel2</value>
+  </data>
+  <data name="&gt;&gt;panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel2.Parent" xml:space="preserve">
     <value>panelScriptDebugTools</value>
   </data>
-  <data name="&gt;&gt;tboxGoToLine.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;panel2.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="panel1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -649,17 +738,54 @@
   <data name="tableLayoutPanel2.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="cboxFunctionList.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="label4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAP5JREFUOE+dUzsSgjAQzVE4gmegZ8YZW+k4ACXWegBbnHRyCSnkEjRqYaO2aEO7
+        7osJEzB8dGceO7vZ93ZDElHXdcUgC4hnYqqhGKTl9khiIQn+JxEubLr/J8IEFyyROaNgIIb3NFObgwxo
+        AQUpJfm+rzzHEI01e3ALVJYlRVFESbKi8+miPGLkef0zDX/wE69dMroFQUD5Iadn9WqAGHkzTd8xqpHT
+        dNciGyCPddTpjbTNCGT7jMIwVOODCI8Y+UkCNmm93rTEJgsYuOJRgfvt4RRAfkyg6p6CEfg6BZfxgsco
+        7HsAAec9GDIuiBlqGgiYrsjrknFDF0bPWxDiDc1aFcK9rmMgAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 2</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label4.ToolTip" xml:space="preserve">
+    <value>Goto method</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>panelSelectMethods</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cboxFunctionList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="cboxFunctionList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>142, 2</value>
+    <value>29, 2</value>
   </data>
   <data name="cboxFunctionList.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
   </data>
   <data name="cboxFunctionList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 20</value>
+    <value>100, 20</value>
   </data>
   <data name="cboxFunctionList.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -674,22 +800,81 @@
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cboxFunctionList.Parent" xml:space="preserve">
-    <value>tableLayoutPanel2</value>
+    <value>panelSelectMethods</value>
   </data>
   <data name="&gt;&gt;cboxFunctionList.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="panelSelectMethods.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="panelSelectMethods.Location" type="System.Drawing.Point, System.Drawing">
+    <value>132, 0</value>
+  </data>
+  <data name="panelSelectMethods.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="panelSelectMethods.Size" type="System.Drawing.Size, System.Drawing">
+    <value>132, 25</value>
+  </data>
+  <data name="panelSelectMethods.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;panelSelectMethods.Name" xml:space="preserve">
+    <value>panelSelectMethods</value>
+  </data>
+  <data name="&gt;&gt;panelSelectMethods.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panelSelectMethods.Parent" xml:space="preserve">
+    <value>tableLayoutPanel2</value>
+  </data>
+  <data name="&gt;&gt;panelSelectMethods.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAGRJREFUOE9j+Pr16/xv3779R8cgcQZiAcyQmAn7/jMEzwHTRBuCbCtZhoAUgTRg
+        w0QZQhUDkHHOrMPEa4YBoMJ+kGKS/Q8CIEUgxaRgqFbsAKTAyckJJx41YMgYQAhDlQIBAwMAFgSXtfZW
+        CQsAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 2</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>20, 20</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value>Goto variable</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>panelSelectVariable</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="cboxVarList.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="cboxVarList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 2</value>
+    <value>29, 2</value>
   </data>
   <data name="cboxVarList.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 0</value>
+    <value>3, 2, 3, 2</value>
   </data>
   <data name="cboxVarList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 20</value>
+    <value>100, 20</value>
   </data>
   <data name="cboxVarList.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -704,9 +889,36 @@
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cboxVarList.Parent" xml:space="preserve">
-    <value>tableLayoutPanel2</value>
+    <value>panelSelectVariable</value>
   </data>
   <data name="&gt;&gt;cboxVarList.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="panelSelectVariable.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="panelSelectVariable.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="panelSelectVariable.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="panelSelectVariable.Size" type="System.Drawing.Size, System.Drawing">
+    <value>132, 25</value>
+  </data>
+  <data name="panelSelectVariable.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;panelSelectVariable.Name" xml:space="preserve">
+    <value>panelSelectVariable</value>
+  </data>
+  <data name="&gt;&gt;panelSelectVariable.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panelSelectVariable.Parent" xml:space="preserve">
+    <value>tableLayoutPanel2</value>
+  </data>
+  <data name="&gt;&gt;panelSelectVariable.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="tableLayoutPanel2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -722,7 +934,7 @@
     <value>1</value>
   </data>
   <data name="tableLayoutPanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>278, 25</value>
+    <value>264, 25</value>
   </data>
   <data name="tableLayoutPanel2.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -740,7 +952,7 @@
     <value>0</value>
   </data>
   <data name="tableLayoutPanel2.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="cboxFunctionList" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="cboxVarList" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,100,Absolute,25" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="panelSelectMethods" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panelSelectVariable" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,100,Absolute,25" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>38, 0</value>
@@ -749,7 +961,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>278, 25</value>
+    <value>264, 25</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -764,7 +976,7 @@
     <value>panelScriptDebugTools</value>
   </data>
   <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -797,7 +1009,7 @@
     <value>panelScriptDebugTools</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="panelScriptDebugTools.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -809,7 +1021,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panelScriptDebugTools.Size" type="System.Drawing.Size, System.Drawing">
-    <value>403, 25</value>
+    <value>437, 25</value>
   </data>
   <data name="panelScriptDebugTools.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -839,7 +1051,7 @@
     <value>3</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>403, 348</value>
+    <value>437, 348</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -869,7 +1081,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="panel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>403, 348</value>
+    <value>437, 348</value>
   </data>
   <data name="panel3.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -899,7 +1111,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>407, 366</value>
+    <value>441, 366</value>
   </data>
   <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -947,7 +1159,7 @@
     <value>Vertical</value>
   </data>
   <data name="rtBoxOutput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>264, 348</value>
+    <value>230, 348</value>
   </data>
   <data name="rtBoxOutput.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -980,7 +1192,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>268, 366</value>
+    <value>234, 366</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1019,7 +1231,7 @@
     <value>678, 366</value>
   </data>
   <data name="splitContainerTabEditor.SplitterDistance" type="System.Int32, mscorlib">
-    <value>407</value>
+    <value>441</value>
   </data>
   <data name="splitContainerTabEditor.SplitterWidth" type="System.Int32, mscorlib">
     <value>3</value>

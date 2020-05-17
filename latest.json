@@ -1,12 +1,9 @@
 {
-  "version": "1.3.7.2",
-  "md5": "F9CA69A73A47F78CBF6D0E3E33FAC406",
-  "warnings": ["代码改动较多，如果出BUG请注意记录复现步骤。"],
+  "version": "1.3.8.0",
+  "md5": "0F2E6E9DAB43525F0E48365B1E9AE77C",
+  "warnings": [],
   "changes": [
-    "Luna添加是否允许加载CLR库选项",
-    "Sys库添加热键功能(详见手册Sys库最底)",
-    "原Json库移进Misc并添加modules.json模块",
-    "Signal添加ScreenLocked()查询屏幕是否处于锁定状态",
-    "Misc:ShowData()改为返回`Json`字符串"
+    "Luna插件少量更新",
+    "手册中的部分脚本可能不可用"
   ]
 }

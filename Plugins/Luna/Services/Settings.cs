@@ -1,11 +1,9 @@
-﻿using AutocompleteMenuNS;
-using ScintillaNET;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Luna.Services
 {
-    public class Settings :
+    internal class Settings :
         VgcApis.BaseClasses.Disposable
 
     {
@@ -14,31 +12,47 @@ namespace Luna.Services
 
         readonly string pluginName = Properties.Resources.Name;
         Models.Data.UserSettings userSettings;
-        Libs.LuaSnippet.LuaAcm luaAcm;
+        Libs.LuaSnippet.SnippetsCache snpCache;
 
         public Settings() { }
 
         #region properties
         public bool isScreenLocked => vgcSetting.IsScreenLocked();
 
-        public bool isEnableClrSupports
+        public bool isEnableAdvanceAutoComplete
         {
-            get => userSettings.isEnableClrSupports;
+            get => userSettings.isEnableAdvanceAutoComplete;
             set
             {
-                if (userSettings.isEnableClrSupports == value)
+                if (userSettings.isEnableAdvanceAutoComplete == value)
                 {
                     return;
                 }
-                userSettings.isEnableClrSupports = value;
+                userSettings.isEnableAdvanceAutoComplete = value;
+                SaveUserSettingsNow();
+            }
+        }
+
+        public bool isLoadClrLib
+        {
+            get => userSettings.isLoadClr;
+            set
+            {
+                if (userSettings.isLoadClr == value)
+                {
+                    return;
+                }
+                userSettings.isLoadClr = value;
                 SaveUserSettingsNow();
             }
         }
         #endregion
 
         #region internal methods
-        public AutocompleteMenu AttachSnippetsTo(Scintilla editor) =>
-            luaAcm?.BindToEditor(editor);
+
+        public Libs.LuaSnippet.BestMatchSnippets CreateBestMatchSnippet(ScintillaNET.Scintilla editor)
+            => snpCache?.CreateBestMatchSnippets(editor);
+
         #endregion
 
         #region public methods
@@ -60,7 +74,7 @@ namespace Luna.Services
             this.vgcSetting = vgcSetting;
             this.vgcNotifier = vgcNotifier;
 
-            this.luaAcm = new Libs.LuaSnippet.LuaAcm();
+            this.snpCache = new Libs.LuaSnippet.SnippetsCache();
 
             userSettings = VgcApis.Misc.Utils
                 .LoadPluginSetting<Models.Data.UserSettings>(
@@ -126,7 +140,7 @@ namespace Luna.Services
         #region protected methods
         protected override void Cleanup()
         {
-            luaAcm?.Dispose();
+            snpCache?.Dispose();
         }
 
         public void SaveUserSettingsNow() =>

@@ -3,58 +3,48 @@ using System.Windows.Forms;
 
 namespace Luna.Views.WinForms
 {
-    public partial class FormMain : Form
+    internal partial class FormMain : Form
     {
-        Controllers.TabEditorCtrl editorCtrl;
-        Controllers.TabGeneralCtrl genCtrl;
-        Controllers.MenuCtrl menuCtrl;
+        Controllers.FormMainCtrl.TabGeneralCtrl genCtrl;
+        Controllers.FormMainCtrl.TabOptionsCtrl optionsCtrl;
 
         Services.LuaServer luaServer;
         Services.Settings settings;
-        Services.FormMgr formMgr;
-        VgcApis.Interfaces.Services.IApiService api;
+        Services.FormMgrSvc formMgr;
 
         public static FormMain CreateForm(
-            VgcApis.Interfaces.Services.IApiService api,
             Services.Settings settings,
             Services.LuaServer luaServer,
-            Services.FormMgr formMgr)
+            Services.FormMgrSvc formMgr)
         {
             FormMain r = null;
             VgcApis.Misc.UI.Invoke(() =>
             {
-                r = new FormMain(api, settings, luaServer, formMgr);
+                r = new FormMain(settings, luaServer, formMgr);
             });
             return r;
         }
 
         FormMain(
-            VgcApis.Interfaces.Services.IApiService api,
             Services.Settings settings,
             Services.LuaServer luaServer,
-            Services.FormMgr formMgr)
+            Services.FormMgrSvc formMgr)
         {
-            this.api = api;
-            this.formMgr = formMgr;
             this.settings = settings;
             this.luaServer = luaServer;
+            this.formMgr = formMgr;
+
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
-            this.Text = Properties.Resources.Name + " v" + Properties.Resources.Version;
+            this.Text = string.Format(I18N.LunaScrMgr, Properties.Resources.Version);
         }
 
         private void FormMain_Load(object sender, System.EventArgs e)
         {
-            chkEnableClrSupports.Checked = settings.isEnableClrSupports;
-#if DEBUG
-            tabControl1.SelectTab(1);
-#endif
-
-            InitSplitPanel();
             lbStatusBarMsg.Text = "";
 
             // TabGeneral should initialize before TabEditor.
-            genCtrl = new Controllers.TabGeneralCtrl(
+            genCtrl = new Controllers.FormMainCtrl.TabGeneralCtrl(
                 flyScriptUIContainer,
                 btnStopAllScript,
                 btnKillAllScript,
@@ -62,53 +52,23 @@ namespace Luna.Views.WinForms
                 btnImportFromFile,
                 btnExportToFile);
 
-            genCtrl.Run(settings, luaServer);
+            optionsCtrl = new Controllers.FormMainCtrl.TabOptionsCtrl(
+                chkLoadClrLib,
+                chkEnableCodeAnalyze,
+                btnSaveOptions);
 
-            editorCtrl = new Controllers.TabEditorCtrl(
-                this,
-                cboxScriptName,
-                btnNewScript,
-                btnSaveScript,
-                cboxFunctionList,
-                btnRunScript,
-                btnStopScript,
-                btnKillScript,
-                btnClearOutput,
-                rtBoxOutput,
-                pnlScriptEditor);
-
-            editorCtrl.Run(api, settings, luaServer);
-
-            menuCtrl = new Controllers.MenuCtrl(
-                formMgr,
-                this,
-                editorCtrl,
-                newWindowToolStripMenuItem,
-                loadFileToolStripMenuItem,
-                saveAsToolStripMenuItem,
-                exitToolStripMenuItem,
-                tabControl1);
-
-            menuCtrl.Run();
+            genCtrl.Run(luaServer);
+            optionsCtrl.Run(settings);
 
             this.FormClosing += FormClosingHandler;
             this.FormClosed += (s, a) =>
             {
                 // reverse order 
-                editorCtrl.Cleanup();
                 genCtrl.Cleanup();
             };
-
-            this.KeyDown += (s, a) => editorCtrl?.KeyBoardShortcutHandler(a);
         }
 
         #region private methods
-        void InitSplitPanel()
-        {
-            splitContainerTabEditor.SplitterDistance = this.Width * 6 / 10;
-            SetOutputPanelCollapseState(true);
-
-        }
         private void FormClosingHandler(object sender, FormClosingEventArgs e)
         {
             if (settings.IsShutdown())
@@ -116,22 +76,12 @@ namespace Luna.Views.WinForms
                 return;
             }
 
-            if (editorCtrl.IsChanged())
+            if (optionsCtrl.IsChanged())
             {
                 e.Cancel = !VgcApis.Misc.UI.Confirm(I18N.DiscardUnsavedChanges);
             }
         }
         #endregion
-
-        #region public methods
-        public void SetOutputPanelCollapseState(bool isCollapsed)
-        {
-            splitContainerTabEditor.Panel2Collapsed = isCollapsed;
-            showOutputPanelToolStripMenuItem.Checked = !isCollapsed;
-            hideOutputPanelToolStripMenuItem.Checked = isCollapsed;
-        }
-        #endregion
-
 
         #region UI event handlers
         private void flyScriptUIContainer_Scroll(object sender, ScrollEventArgs e)
@@ -139,21 +89,15 @@ namespace Luna.Views.WinForms
             flyScriptUIContainer.Refresh();
         }
 
-        private void hideOutputPanelToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void showEditorToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
-            SetOutputPanelCollapseState(true);
+            formMgr.ShowOrCreateFirstEditor();
         }
 
-        private void showOutputPanelToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void closeToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
-            SetOutputPanelCollapseState(false);
-        }
-        private void chkEnableClrSupports_CheckedChanged(object sender, System.EventArgs e)
-        {
-            settings.isEnableClrSupports = chkEnableClrSupports.Checked;
+            this.Close();
         }
         #endregion
-
-
     }
 }

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Luna.Models.Apis
 {
-    public class LuaSys :
+    internal class LuaSys :
         VgcApis.BaseClasses.Disposable,
         VgcApis.Interfaces.Lua.ILuaSys
     {

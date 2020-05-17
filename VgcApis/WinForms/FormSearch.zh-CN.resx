@@ -123,8 +123,35 @@
   <data name="btnPrevious.Text" xml:space="preserve">
     <value>上一个 (F2)</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>结果:</value>
+  <data name="label2.Text" xml:space="preserve">
+    <value>目标</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>替换为</value>
+  </data>
+  <data name="btnReplaceOne.Text" xml:space="preserve">
+    <value>替换</value>
+  </data>
+  <data name="btnReplaceAll.Text" xml:space="preserve">
+    <value>全部替换</value>
+  </data>
+  <data name="chkOptionWordStart.Text" xml:space="preserve">
+    <value>匹配单词开头</value>
+  </data>
+  <data name="chkOptionMatchCase.Text" xml:space="preserve">
+    <value>区分大小写</value>
+  </data>
+  <data name="chkOptionWholeWord.Text" xml:space="preserve">
+    <value>整个单词匹配</value>
+  </data>
+  <data name="chkOptionRegex.Text" xml:space="preserve">
+    <value>正则表达式</value>
+  </data>
+  <data name="groupBoxOptions.Text" xml:space="preserve">
+    <value>选项</value>
+  </data>
+  <data name="btnNewSearch.Text" xml:space="preserve">
+    <value>第一个 (F4)</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

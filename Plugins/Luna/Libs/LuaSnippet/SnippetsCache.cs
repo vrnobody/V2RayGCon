@@ -1,18 +1,13 @@
-﻿using AutocompleteMenuNS;
-using ScintillaNET;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 
 namespace Luna.Libs.LuaSnippet
 {
-    internal sealed class LuaAcm :
+    internal sealed class SnippetsCache :
         VgcApis.BaseClasses.Disposable
     {
-        const string SearchPattern =
-            VgcApis.Models.Consts.Patterns.LuaSnippetSearchPattern;
 
         List<LuaKeywordSnippets> keywordCache;
         List<LuaFuncSnippets> functionCache;
@@ -20,40 +15,23 @@ namespace Luna.Libs.LuaSnippet
         List<LuaImportClrSnippets> importClrCache;
         List<ApiFunctionSnippets> apiFunctionCache;
 
-        public LuaAcm()
+        public SnippetsCache()
         {
             GenSnippetCaches();
         }
 
         #region public methods
-        public AutocompleteMenu BindToEditor(Scintilla editor)
+
+        public BestMatchSnippets CreateBestMatchSnippets(ScintillaNET.Scintilla editor)
         {
-            var imageList = new System.Windows.Forms.ImageList();
-            imageList.Images.Add(Properties.Resources.KeyDown_16x);
-            imageList.Images.Add(Properties.Resources.Method_16x);
-            imageList.Images.Add(Properties.Resources.Class_16x);
+            return new BestMatchSnippets(
+                editor,
 
-            var acm = new AutocompleteMenu()
-            {
-                SearchPattern = SearchPattern,
-                MaximumSize = new Size(300, 200),
-                ToolTipDuration = 20000,
-                ImageList = imageList,
-            };
-
-            acm.TargetControlWrapper = new ScintillaWrapper(editor);
-
-            acm.SetAutocompleteItems(
-                new BestMatchSnippets(
-                    editor,
-                    SearchPattern,
-                    apiFunctionCache,
-                    functionCache,
-                    keywordCache,
-                    subFunctionCache,
-                    importClrCache));
-
-            return acm;
+                apiFunctionCache,
+                functionCache,
+                keywordCache,
+                subFunctionCache,
+                importClrCache);
         }
 
         #endregion
@@ -96,30 +74,6 @@ namespace Luna.Libs.LuaSnippet
                 .ToList();
         }
 
-        /*
-
-        List<string> GetAllAssembliesName() => VgcApis.Misc.Utils.GetAllAssembliesType()
-            .Select(t => t.Namespace)
-            .Distinct()
-            .Where(n => !(
-                string.IsNullOrEmpty(n)
-                || n.StartsWith("<")
-                || n.StartsWith("AutocompleteMenuNS")
-                || n.StartsWith("AutoUpdaterDotNET")
-                || n.StartsWith("Internal.Cryptography")
-                || n.StartsWith("Luna")
-                || n.StartsWith("Pacman")
-                || n.StartsWith("ProxySetter")
-                || n.StartsWith("ResourceEmbedderCompilerGenerated")
-                || n.StartsWith("Statistics")
-                || n.StartsWith("V2RayGCon")
-                || n.StartsWith("VgcApis")
-            ))
-            .Select(n => $"import('{n}')")
-            .OrderBy(n => n)
-            .ToList();
-            */
-
         List<LuaImportClrSnippets> GenLuaImportClrSnippet() =>
             GetAllAssembliesName()
                 .Select(e =>
@@ -143,6 +97,7 @@ namespace Luna.Libs.LuaSnippet
             .ToString()
             .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
             .Union(initValues)
+            .Union(new string[] { "setmetatable(o, {__index = mn})" })
             .OrderBy(e => e)
             .ToList();
 
@@ -155,12 +110,18 @@ namespace Luna.Libs.LuaSnippet
             {
                 try
                 {
-                    return new LuaFuncSnippets(e);
+                    return new LuaFuncSnippets($"{e}()");
                 }
                 catch { }
                 return null;
             })
             .Where(e => e != null)
+            .ToList();
+
+        List<LuaSubFuncSnippets> GenLuaPredefinedFuncSnippets(IEnumerable<LuaSubFuncSnippets> append) =>
+            VgcApis.Models.Consts.Lua.LuaPredefinedFunctionNames
+            .Select(fn => new LuaSubFuncSnippets(fn, "."))
+            .Union(append)
             .ToList();
 
         List<LuaSubFuncSnippets> GenLuaSubFunctionSnippet() =>
@@ -171,7 +132,7 @@ namespace Luna.Libs.LuaSnippet
             {
                 try
                 {
-                    return new LuaSubFuncSnippets(e);
+                    return new LuaSubFuncSnippets($"{e}()", ".");
                 }
                 catch { }
                 return null;
@@ -199,7 +160,9 @@ namespace Luna.Libs.LuaSnippet
 
             keywordCache = GenKeywordSnippetItems(GenKeywords(apis.Select(e => e.Item1)));
             functionCache = GenLuaFunctionSnippet();
-            subFunctionCache = GenLuaSubFunctionSnippet();
+
+            var orgLuaSubFuncSnippet = GenLuaSubFunctionSnippet();
+            subFunctionCache = GenLuaPredefinedFuncSnippets(orgLuaSubFuncSnippet);
             importClrCache = GenLuaImportClrSnippet();
             apiFunctionCache = apis
                .SelectMany(api => GenApiFunctionSnippetItems(api.Item1, api.Item2))

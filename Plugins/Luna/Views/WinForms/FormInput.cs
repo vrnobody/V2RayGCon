@@ -1,30 +1,26 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Luna.Views.WinForms
 {
-    public partial class FormInput : Form
+    public partial class FormInput :
+        Form,
+        VgcApis.Interfaces.Lua.IWinFormControl<string>
+
     {
         readonly int MAX_TITLE_LEN = 60;
         readonly int MAX_LINE_NUM = 25;
-
+        private readonly AutoResetEvent done;
         private readonly string title;
         private readonly string content;
         private readonly int lines;
 
-        public static FormInput CreateForm(string title, string content, int lines)
-        {
-            FormInput r = null;
-            VgcApis.Misc.UI.Invoke(() =>
-            {
-                r = new FormInput(title, content, lines);
-            });
-            return r;
-        }
 
-        FormInput(string title, string content, int lines)
+        public FormInput(AutoResetEvent done, string title, string content, int lines)
         {
             InitializeComponent();
+            this.done = done;
             this.title = title;
             this.content = content;
             this.lines = lines;
@@ -32,13 +28,15 @@ namespace Luna.Views.WinForms
             AutosetFormHeight();
         }
 
-        private void FormChoice_Load(object sender, EventArgs e)
+        private void FormInput_Load(object sender, EventArgs e)
         {
             InitControls();
+            this.FormClosed += (s, a) => done.Set();
         }
 
         #region public methods
-        public string result = null;
+        string result = null;
+        public string GetResult() => result;
         #endregion
 
         #region private methods
@@ -67,13 +65,11 @@ namespace Luna.Views.WinForms
         private void btnOk_Click(object sender, EventArgs e)
         {
             SetResult();
-            DialogResult = DialogResult.OK;
             Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
             Close();
         }
         #endregion

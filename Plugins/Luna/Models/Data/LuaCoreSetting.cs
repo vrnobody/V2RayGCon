@@ -17,7 +17,7 @@
             script = string.Empty;
             isAutorun = false;
             index = double.MaxValue;
-            isHidden = false;
+            isHidden = true;
             isLoadClr = false;
         }
     }

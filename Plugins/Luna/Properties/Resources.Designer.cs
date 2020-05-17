@@ -73,6 +73,16 @@ namespace Luna.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap EditWindow_16x {
+            get {
+                object obj = ResourceManager.GetObject("EditWindow_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap KeyDown_16x {
             get {
                 object obj = ResourceManager.GetObject("KeyDown_16x", resourceCulture);
@@ -120,7 +130,7 @@ namespace Luna.Properties {
         }
         
         /// <summary>
-        ///   查找类似 0.3.4 的本地化字符串。
+        ///   查找类似 0.3.7 的本地化字符串。
         /// </summary>
         internal static string Version {
             get {

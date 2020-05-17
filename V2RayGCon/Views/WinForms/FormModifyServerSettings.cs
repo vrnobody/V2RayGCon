@@ -86,10 +86,7 @@ namespace V2RayGCon.Views.WinForms
             {
                 tboxTitle.Text = coreServ.GetCoreStates().GetTitle();
                 cboxMark.Items.Clear();
-                foreach (var mark in marks)
-                {
-                    cboxMark.Items.Add(mark);
-                }
+                cboxMark.Items.AddRange(marks);
                 Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMark);
                 UpdateControls(orgCoreServSettings);
             });

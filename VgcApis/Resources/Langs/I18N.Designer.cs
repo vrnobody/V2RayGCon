@@ -106,6 +106,24 @@ namespace VgcApis.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Max keyword length is 100 character. 的本地化字符串。
+        /// </summary>
+        internal static string KeywordIsTooLong {
+            get {
+                return ResourceManager.GetString("KeywordIsTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 No match result! 的本地化字符串。
+        /// </summary>
+        internal static string NoMatchResult {
+            get {
+                return ResourceManager.GetString("NoMatchResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Paste 的本地化字符串。
         /// </summary>
         internal static string Paste {
@@ -115,11 +133,29 @@ namespace VgcApis.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Please do search first. 的本地化字符串。
+        /// </summary>
+        internal static string PlsDoSearchFirst {
+            get {
+                return ResourceManager.GetString("PlsDoSearchFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Redo 的本地化字符串。
         /// </summary>
         internal static string Redo {
             get {
                 return ResourceManager.GetString("Redo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Replaced {0} times. 的本地化字符串。
+        /// </summary>
+        internal static string ReplacedCount {
+            get {
+                return ResourceManager.GetString("ReplacedCount", resourceCulture);
             }
         }
         

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Luna.Controllers
+namespace Luna.Controllers.FormMainCtrl
 {
-    public class TabGeneralCtrl
+    internal class TabGeneralCtrl
     {
         Button btnStopAll, btnKillAll, btnDelAll, btnImport, btnExport;
         FlowLayoutPanel flyLuaUiPanel;
@@ -25,12 +25,9 @@ namespace Luna.Controllers
 
         #region public methods
         Services.LuaServer luaServer;
-        Services.Settings settings;
-        public void Run(
-            Services.Settings settings,
-            Services.LuaServer luaServer)
+
+        public void Run(Services.LuaServer luaServer)
         {
-            this.settings = settings;
             this.luaServer = luaServer;
             BindEvents(luaServer);
             BindDragDropEvent();

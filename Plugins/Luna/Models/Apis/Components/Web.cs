@@ -2,7 +2,7 @@
 
 namespace Luna.Models.Apis.Components
 {
-    public sealed class Web :
+    internal sealed class Web :
         VgcApis.BaseClasses.ComponentOf<LuaApis>,
         VgcApis.Interfaces.Lua.ILuaWeb
     {
@@ -34,7 +34,7 @@ namespace Luna.Models.Apis.Components
         {
             try
             {
-                return VgcApis.Misc.Utils.TimedDownloadTesting(url, proxyPort, kib, timeout);
+                return VgcApis.Misc.Utils.TimedDownloadTest(url, proxyPort, kib, timeout);
             }
             catch { }
             return -1;

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -22,12 +21,11 @@ namespace V2RayGCon.Libs.V2Ray
         static object coreLock = new object();
         static int curConcurrentV2RayCoreNum = 0;
         bool isForcedExit = false;
-        AutoResetEvent isCoreReadyEvent = new AutoResetEvent(false);
 
         public Core(Services.Settings setting)
         {
+            isReady = false;
             isRunning = false;
-            isWatchCoreReadyLog = false;
             v2rayCore = null;
             this.setting = setting;
         }
@@ -61,17 +59,18 @@ namespace V2RayGCon.Libs.V2Ray
             }
         }
 
+        public bool isReady
+        {
+            get;
+            private set;
+        }
+
         public bool isRunning
         {
             get;
             private set;
         }
 
-        bool isWatchCoreReadyLog
-        {
-            get;
-            set;
-        }
         #endregion
 
         #region public method
@@ -172,7 +171,7 @@ namespace V2RayGCon.Libs.V2Ray
 
                 if (IsExecutableExist())
                 {
-                    StartCore(config, env);
+                    StartCoreWorker(config, env);
                 }
                 else
                 {
@@ -243,15 +242,6 @@ namespace V2RayGCon.Libs.V2Ray
             catch { }
         }
 
-        static void InvokeActionIgnoreError(Action lambda)
-        {
-            try
-            {
-                lambda?.Invoke();
-            }
-            catch { }
-        }
-
         Process CreateV2RayCoreProcess(string config)
         {
             var args = Misc.Utils.GenCmdArgFromConfig(config);
@@ -318,8 +308,9 @@ namespace V2RayGCon.Libs.V2Ray
 
         void OnCoreExited(object sender, EventArgs args)
         {
+            isReady = false;
+
             Interlocked.Decrement(ref curConcurrentV2RayCoreNum);
-            isCoreReadyEvent.Set();
             SendLog($"{I18N.ConcurrentV2RayCoreNum}{curConcurrentV2RayCoreNum}");
 
             SendLog(I18N.CoreExit);
@@ -360,35 +351,28 @@ namespace V2RayGCon.Libs.V2Ray
             proc.OutputDataReceived -= SendLogHandler;
         }
 
-        void StartCore(string config, Dictionary<string, string> envs = null)
+        void StartCoreWorker(string config, Dictionary<string, string> envs = null)
         {
+            isReady = false;
             isForcedExit = false;
-            isCoreReadyEvent.Reset();
-            isWatchCoreReadyLog = IsConfigWaitable(config);
 
             v2rayCore = CreateV2RayCoreProcess(config);
             VgcApis.Misc.Utils.SetProcessEnvs(v2rayCore, envs);
+
             BindEvents(v2rayCore);
 
-            isRunning = true;
             v2rayCore.Start();
             Interlocked.Increment(ref curConcurrentV2RayCoreNum);
 
             // Add to JOB object require win8+.
             VgcApis.Libs.Sys.ChildProcessTracker.AddProcess(v2rayCore);
+            isRunning = true;
 
             WriteConfigToStandardInput(config);
 
             v2rayCore.PriorityClass = ProcessPriorityClass.AboveNormal;
             v2rayCore.BeginErrorReadLine();
             v2rayCore.BeginOutputReadLine();
-
-            if (isWatchCoreReadyLog)
-            {
-                // Assume core ready after 5 seconds, in case log set to none.
-                isCoreReadyEvent.WaitOne(VgcApis.Models.Consts.Core.WaitUntilReadyTimeout);
-            }
-            isWatchCoreReadyLog = false;
 
             SendLog($"{I18N.ConcurrentV2RayCoreNum}{curConcurrentV2RayCoreNum}");
         }
@@ -402,31 +386,18 @@ namespace V2RayGCon.Libs.V2Ray
             input.Close();
         }
 
-        bool IsConfigWaitable(string config)
-        {
-            List<string> levels = new List<string> { "none", "error" };
-            try
-            {
-                var json = JObject.Parse(config);
-                var loglevel = Misc.Utils.GetValue<string>(json, "log.loglevel")?.ToLower();
-                return !levels.Contains(loglevel);
-            }
-            catch { }
-            return true;
-        }
-
         void SendLogHandler(object sender, DataReceivedEventArgs args)
         {
             var msg = args.Data;
 
-            if (msg == null)
+            if (string.IsNullOrEmpty(msg))
             {
                 return;
             }
 
-            if (isWatchCoreReadyLog && MatchAllReadyMarks(msg))
+            if (!isReady && MatchAllReadyMarks(msg))
             {
-                isCoreReadyEvent.Set();
+                isReady = true;
             }
 
             SendLog(msg);

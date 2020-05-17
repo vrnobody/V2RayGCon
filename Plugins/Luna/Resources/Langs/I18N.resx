@@ -150,6 +150,15 @@
   <data name="LuaCtrlOptionNone" xml:space="preserve">
     <value>E</value>
   </data>
+  <data name="LunaScrEditor" xml:space="preserve">
+    <value>Luna v{0} - script editor</value>
+  </data>
+  <data name="LunaScrMgr" xml:space="preserve">
+    <value>Luna v{0} - script manager</value>
+  </data>
+  <data name="OpenScriptEditor" xml:space="preserve">
+    <value>Open script editor</value>
+  </data>
   <data name="OpenScriptManger" xml:space="preserve">
     <value>Open script manager</value>
   </data>

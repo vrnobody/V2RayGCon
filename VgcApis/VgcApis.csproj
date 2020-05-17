@@ -65,6 +65,8 @@
     <Compile Include="Interfaces\Lua\ILuaSys.cs" />
     <Compile Include="Interfaces\Lua\ILuaMail.cs" />
     <Compile Include="Interfaces\Lua\ILuaMailBox.cs" />
+    <Compile Include="Interfaces\Lua\IWinFormControl.cs" />
+    <Compile Include="Libs\Infr\Recorder.cs" />
     <Compile Include="Libs\Streams\BitStream.cs" />
     <Compile Include="Libs\Streams\Crc8.cs" />
     <Compile Include="Libs\Streams\RawBitStream\Bytes.cs" />
@@ -78,7 +80,7 @@
     <Compile Include="Libs\Sys\NotepadHelper.cs" />
     <Compile Include="Libs\Tasks\Bar.cs" />
     <Compile Include="Libs\Tasks\Routine.cs" />
-    <Compile Include="Libs\Views\RepaintController.cs" />
+    <Compile Include="UserControls\RepaintController.cs" />
     <Compile Include="BaseClasses\Disposable.cs" />
     <Compile Include="BaseClasses\AuxSiWinForm.cs" />
     <Compile Include="Libs\Sys\QueueLogger.cs" />

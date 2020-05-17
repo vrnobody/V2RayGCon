@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Luna.Services
 {
-    public class LuaServer :
+    internal class LuaServer :
         VgcApis.BaseClasses.Disposable
     {
         public EventHandler
@@ -18,11 +18,13 @@ namespace Luna.Services
         public LuaServer() { }
 
         public void Run(
+            VgcApis.Interfaces.Services.IApiService api,
            Settings settings,
-           VgcApis.Interfaces.Services.IApiService api)
+           FormMgrSvc formMgr)
         {
             this.settings = settings;
-            this.luaApis = new Models.Apis.LuaApis(settings, api);
+
+            this.luaApis = new Models.Apis.LuaApis(api, settings, formMgr);
             this.luaApis.Prepare();
 
             InitLuaCores();

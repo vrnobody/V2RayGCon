@@ -436,7 +436,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void UpdateMarkFilterItemList(ToolStripComboBox marker)
         {
             marker.Items.Clear();
-            marker.Items.AddRange(servers.GetMarkList().ToArray());
+            marker.Items.AddRange(servers.GetMarkList());
         }
 
         void DisposeFlyPanelControlByList(List<Views.UserControls.ServerUI> controlList)

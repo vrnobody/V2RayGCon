@@ -125,10 +125,10 @@ namespace V2RayGCon.Test
         [DataRow("http://www.baidu.com")]
         public void VisitWebPageSpeedTestTest(string url)
         {
-            var time = VgcApis.Misc.Utils.TimedDownloadTesting(url, -1, 1024 * 1024, -1);
+            var time = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, 1024 * 1024, -1);
             Assert.AreEqual(SpeedtestTimeout, time);
 
-            time = VgcApis.Misc.Utils.TimedDownloadTesting(url, -1, -1, -1);
+            time = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, -1, -1);
             Assert.AreEqual(true, time < SpeedtestTimeout);
         }
 

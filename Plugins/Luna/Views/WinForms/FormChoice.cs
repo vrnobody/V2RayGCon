@@ -1,31 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Luna.Views.WinForms
 {
-    public partial class FormChoice : Form
+    public partial class FormChoice :
+        Form,
+        VgcApis.Interfaces.Lua.IWinFormControl<int>
     {
         readonly int MAX_TITLE_LEN = 60;
         readonly int MAX_CHOICE_LEN = 50;
         readonly int MAX_CHOICES_NUM = 18;
+
+        int result = -1;
+        private readonly AutoResetEvent done;
         private readonly string title;
         private readonly string[] choices;
         private readonly int defChoice;
 
-        public static FormChoice CreateForm(string title, string[] choices, int defChoice)
-        {
-            FormChoice r = null;
-            VgcApis.Misc.UI.Invoke(() =>
-            {
-                r = new FormChoice(title, choices, defChoice);
-            });
-            return r;
-        }
-
-        FormChoice(string title, string[] choices, int defChoice)
+        public FormChoice(
+            AutoResetEvent done,
+            string title, string[] choices, int defChoice)
         {
             InitializeComponent();
+            this.done = done;
             this.title = title;
             this.choices = choices;
             this.defChoice = defChoice;
@@ -35,10 +34,12 @@ namespace Luna.Views.WinForms
         private void FormChoice_Load(object sender, EventArgs e)
         {
             InitControls();
+            this.FormClosed += (s, a) => done.Set();
         }
 
         #region public methods
-        public int result = 0;
+        public int GetResult() => result;
+
         #endregion
 
         #region private methods
@@ -49,6 +50,7 @@ namespace Luna.Views.WinForms
                 if (radioButtons[i].Checked)
                 {
                     result = i + 1;
+                    return;
                 }
             }
         }
@@ -97,15 +99,22 @@ namespace Luna.Views.WinForms
         private void btnOk_Click(object sender, EventArgs e)
         {
             SetResult();
-            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
+        private void FormChoice_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                VgcApis.Misc.UI.CloseFormIgnoreError(this);
+            }
+        }
+
         #endregion
 
 

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace V2RayGCon.Services
         List<Controllers.CoreServerCtrl> coreServList =
             new List<Controllers.CoreServerCtrl>();
 
-        List<string> markList = new List<string>();
+        ConcurrentDictionary<string, bool> markList = new ConcurrentDictionary<string, bool>();
 
         VgcApis.Libs.Tasks.LazyGuy lazyServerSettingsRecorder;
         readonly object serverListWriteLock = new object();
@@ -302,27 +303,36 @@ namespace V2RayGCon.Services
             }
         }
 
-        public ReadOnlyCollection<string> GetMarkList() =>
-             markList.AsReadOnly();
+        public string[] GetMarkList() =>
+            markList.Keys.OrderBy(x => x).ToArray();
 
         public void AddNewMark(string newMark)
         {
-            if (!markList.Contains(newMark))
+            if (string.IsNullOrEmpty(newMark) || markList.ContainsKey(newMark))
             {
-                UpdateMarkList();
+                return;
             }
+            markList.TryAdd(newMark, true);
         }
 
         public void UpdateMarkList()
         {
+            List<string> marks = null;
             lock (serverListWriteLock)
             {
-                markList = coreServList
-                    .Select(s => s.GetCoreStates().GetMark())
-                    .Distinct()
-                    .Where(s => !string.IsNullOrEmpty(s))
-                    .OrderBy(s => s)
-                    .ToList();
+                marks = coreServList.Select(s => s.GetCoreStates().GetMark()).ToList();
+            }
+
+            markList.Clear();
+            if (marks == null)
+            {
+                return;
+            }
+
+            var filtered = marks.Distinct().ToList();
+            foreach (var mark in filtered)
+            {
+                AddNewMark(mark);
             }
         }
 

@@ -4,6 +4,7 @@ namespace VgcApis.Interfaces.Services
 {
     public interface INotifierService
     {
+        void ShowFormOption();
         void ShowFormMain();
 
         void ShowFormLog();

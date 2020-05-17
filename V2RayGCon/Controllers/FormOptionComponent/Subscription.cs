@@ -45,7 +45,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             chkSubsIsUseProxy.Checked = setting.isUpdateUseProxy;
 
-            lazyCounter = new VgcApis.Libs.Tasks.LazyGuy(UpdateServUiTotalWorker, 500, 5000)
+            lazyCounter = new VgcApis.Libs.Tasks.LazyGuy(UpdateServUiTotalWorker, 1000, 2000)
             {
                 Name = "SubsCtrl.CountTotal()",
             };
@@ -55,10 +55,13 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             MarkDuplicatedSubsInfo();
 
-            lazyCounter?.Postpone();
+            UpdateServUiTotal(this, EventArgs.Empty);
         }
 
         #region public method
+        public void UpdateServUiTotal(object sender, EventArgs args) =>
+            lazyCounter?.Deadline();
+
         public override void Cleanup()
         {
             ReleaseEvent();
@@ -127,8 +130,6 @@ namespace V2RayGCon.Controllers.OptionComponent
         #endregion
 
         #region private method
-        void UpdateServUiTotal(object sender, EventArgs args) =>
-            lazyCounter?.Postpone();
 
         void UpdateServUiTotalWorker(Action done)
         {
@@ -152,14 +153,15 @@ namespace V2RayGCon.Controllers.OptionComponent
             var r = new Dictionary<string, int>();
 
             var servs = servers.GetAllServersOrderByIndex();
-            foreach (var serv in servs)
+            var marks = servs.Select(serv => serv.GetCoreStates().GetMark()).ToList();
+
+            foreach (var mark in marks)
             {
-                var cst = serv.GetCoreStates();
-                var mark = cst.GetMark();
                 if (string.IsNullOrEmpty(mark))
                 {
                     continue;
                 }
+
                 if (!r.ContainsKey(mark))
                 {
                     r[mark] = 0;
@@ -167,7 +169,6 @@ namespace V2RayGCon.Controllers.OptionComponent
 
                 r[mark]++;
             }
-
             return r;
         }
 
@@ -281,6 +282,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             var subsUi = new Views.UserControls.SubscriptionUI(this, data);
             flyPanel.Controls.Add(subsUi);
             flyPanel.ScrollControlIntoView(subsUi);
+            UpdateServUiTotal(this, EventArgs.Empty);
         }
 
         void BindEventBtnAddClick()

@@ -280,7 +280,7 @@ namespace VgcApis.Misc
 
         #region net
 
-        public static long TimedDownloadTesting(
+        public static long TimedDownloadTest(
             string url,
             int port,
             int expectedSizeInKiB,
@@ -446,7 +446,7 @@ namespace VgcApis.Misc
             const int CTRL_C_EVENT = 0;
 
             var success = false;
-            if (!sendCtrlCLocker.WaitOne(5000))
+            if (!sendCtrlCLocker.WaitOne(Models.Consts.Core.SendCtrlCTimeout))
             {
                 return false;
             }
@@ -1179,6 +1179,33 @@ namespace VgcApis.Misc
         #endregion
 
         #region Misc
+        public static string GetLuaModuleName(string fullPath)
+        {
+            if (string.IsNullOrWhiteSpace(fullPath))
+            {
+                return null;
+            }
+
+            var appDir = GetAppDir();
+            if (fullPath.StartsWith(appDir))
+            {
+                fullPath = fullPath.Substring(appDir.Length);
+            }
+
+            var mn = fullPath.Replace("\\", ".").Replace("/", ".");
+            while (mn != null && mn.StartsWith("."))
+            {
+                mn = mn.Substring(1);
+            }
+
+            if (mn != null && mn.ToLower().EndsWith(".lua"))
+            {
+                mn = mn.Substring(0, mn.Length - ".lua".Length);
+            }
+
+            return mn;
+        }
+
         public static bool IsImportResultSuccess(string[] result) =>
            result[3] == VgcApis.Models.Consts.Import.MarkImportSuccess;
 

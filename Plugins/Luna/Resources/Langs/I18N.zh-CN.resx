@@ -150,6 +150,15 @@
   <data name="LuaCtrlOptionNone" xml:space="preserve">
     <value>无</value>
   </data>
+  <data name="LunaScrEditor" xml:space="preserve">
+    <value>Luna v{0} - 脚本编辑器</value>
+  </data>
+  <data name="LunaScrMgr" xml:space="preserve">
+    <value>Luna v{0} - 脚本管理器</value>
+  </data>
+  <data name="OpenScriptEditor" xml:space="preserve">
+    <value>打开脚本编辑器</value>
+  </data>
   <data name="OpenScriptManger" xml:space="preserve">
     <value>打开脚本管理器</value>
   </data>

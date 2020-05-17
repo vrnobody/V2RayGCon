@@ -10,13 +10,13 @@ namespace Luna
     {
         Services.Settings settings;
         Services.LuaServer luaServer;
-        Services.FormMgr formMgr;
+        Services.FormMgrSvc formMgr;
         Services.MenuUpdater menuUpdater;
 
-        readonly ToolStripMenuItem miRoot, miShowWindow;
+        readonly ToolStripMenuItem miRoot, miShowMgr, miShowEditor;
         public Luna()
         {
-            ToolStripMenuItem mr = null, msw = null;
+            ToolStripMenuItem mr = null, msw = null, mse = null;
             VgcApis.Misc.UI.Invoke(() =>
             {
                 mr = new ToolStripMenuItem(this.Name, this.Icon);
@@ -25,10 +25,17 @@ namespace Luna
                     I18N.OpenScriptManger,
                     Properties.Resources.StoredProcedureScript_16x,
                     (s, a) => Show());
+
+                mse = new ToolStripMenuItem(
+                    I18N.OpenScriptEditor,
+                    Properties.Resources.EditWindow_16x,
+                    (s, a) => formMgr?.ShowOrCreateFirstEditor());
+
             });
 
             miRoot = mr;
-            miShowWindow = msw;
+            miShowMgr = msw;
+            miShowEditor = mse;
         }
 
         #region properties
@@ -48,7 +55,11 @@ namespace Luna
         #region protected overrides
         protected override void Popup()
         {
-            formMgr.ShowOrCreateFirstForm();
+#if DEBUG
+            formMgr.ShowOrCreateFirstEditor();
+#else
+            formMgr.ShowFormMain();
+#endif
         }
 
         protected override void Start(VgcApis.Interfaces.Services.IApiService api)
@@ -58,13 +69,13 @@ namespace Luna
 
             settings = new Services.Settings();
             luaServer = new Services.LuaServer();
-            formMgr = new Services.FormMgr();
+            formMgr = new Services.FormMgrSvc();
             menuUpdater = new Services.MenuUpdater(settings);
 
             settings.Run(vgcSettings, vgcNotifier);
-            luaServer.Run(settings, api);
+            luaServer.Run(api, settings, formMgr);
             formMgr.Run(settings, luaServer, api);
-            menuUpdater.Run(luaServer, miRoot, miShowWindow);
+            menuUpdater.Run(luaServer, miRoot, miShowMgr, miShowEditor);
 
             luaServer.WakeUpAutoRunScripts(TimeSpan.FromSeconds(2));
         }

@@ -2,7 +2,7 @@
 
 namespace Luna.Models.Apis
 {
-    public class LuaSignal : VgcApis.Interfaces.Lua.ILuaSignal
+    internal class LuaSignal : VgcApis.Interfaces.Lua.ILuaSignal
     {
         bool signalStop;
         private readonly Settings settings;

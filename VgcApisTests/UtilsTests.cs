@@ -16,6 +16,19 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+        [DataTestMethod]
+        [DataRow("lua", "lua")]
+        [DataRow("lua\\hello", "lua.hello")]
+        [DataRow("lua/hello.lua", "lua.hello")]
+        [DataRow("", "")]
+        public void GetLuaModuleNameTest(string relativePath, string expect)
+        {
+            var root = GetAppDir();
+            var fullPath = Path.Combine(root, relativePath);
+            var result = GetLuaModuleName(fullPath);
+            Assert.AreEqual(expect, result);
+        }
+
 
         [DataTestMethod]
         [DataRow("D1", true, true, false, true, 3u, 49u)]

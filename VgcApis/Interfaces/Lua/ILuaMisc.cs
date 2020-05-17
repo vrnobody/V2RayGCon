@@ -42,6 +42,11 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region vgc.Forms
+        void ShowFormOption();
+
+        void ShowFormLunaMgr();
+        void ShowFormLunaEditor();
+
         void ShowFormMain();
 
         void ShowFormLog();

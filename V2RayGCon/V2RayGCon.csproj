@@ -91,6 +91,9 @@
     <Reference Include="AutoUpdater.NET, Version=1.5.8.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Autoupdater.NET.Official.1.5.8\lib\net40\AutoUpdater.NET.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetZip, Version=1.13.5.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.13.5\lib\net40\DotNetZip.dll</HintPath>
     </Reference>
@@ -99,6 +102,9 @@
     </Reference>
     <Reference Include="KeraLua, Version=1.0.26.0, Culture=neutral, PublicKeyToken=6a194c04b9c89217, processorArchitecture=MSIL">
       <HintPath>..\packages\KeraLua.1.0.26\lib\net45\KeraLua.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq, Version=4.14.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.14.1\lib\net45\Moq.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -110,8 +116,15 @@
       <HintPath>..\packages\jacobslusser.ScintillaNET.3.6.3\lib\net40\ScintillaNET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -492,13 +505,20 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\Files\lua\Example.lua" />
+    <None Include="Resources\Files\lua\libs\json.lua" />
+    <None Include="Resources\Files\lua\libs\luacheck\analyzer.lua" />
+    <None Include="Resources\Files\lua\libs\luacheck\decoder.lua" />
+    <None Include="Resources\Files\lua\libs\luacheck\lexer.lua" />
+    <None Include="Resources\Files\lua\libs\luacheck\parser.lua" />
+    <None Include="Resources\Files\lua\libs\luacheck\unicode.lua" />
+    <None Include="Resources\Files\lua\libs\luacheck\unicode_prntbnd.lua" />
+    <None Include="Resources\Files\lua\libs\luacheck\utils.lua" />
     <None Include="Resources\Files\lua\libs\utils.lua" />
+    <None Include="Resources\Files\lua\modules\hotkey.lua" />
     <None Include="Resources\Files\lua\modules\logger.lua" />
     <None Include="Resources\Files\lua\modules\reader.lua" />
     <None Include="Resources\Files\lua\modules\set.lua" />
     <None Include="Resources\Files\lua\modules\writer.lua" />
-    <None Include="Resources\Files\lua\UnitTests.lua" />
     <None Include="Resources\Files\templates\basic\basic.json" />
     <None Include="Resources\Files\templates\routing\whitelist.json" />
     <None Include="V2RayGCon.ruleset" />
@@ -568,7 +588,7 @@
   <PropertyGroup>
     <PostBuildEvent>set "libsDir=libs\"
 set "copyFolderList=lua templates"
-set "allDlls=KeraLua liblua53 lua53 Nlua AutocompleteMenu-ScintillaNET Luna ProxySetter Statistics Pacman HtmlAgilityPack DotNetZip Newtonsoft ScintillaNET VgcApis zxing AutoUpdater.NET"
+set "allDlls=KeraLua liblua53 lua53 Nlua AutocompleteMenu-ScintillaNET Luna ProxySetter Statistics Pacman HtmlAgilityPack DotNetZip Newtonsoft ScintillaNET VgcApis zxing AutoUpdater.NET Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
 
 call:CreateFoldersOnDemand "%25libsDir%25 %25copyFolderList%25"
 call:MoveFilesByList "%25allDlls%25"

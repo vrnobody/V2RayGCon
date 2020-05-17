@@ -38,10 +38,7 @@ namespace V2RayGCon.Views.WinForms
         private void FormBatchModifyServerInfo_Shown(object sender, EventArgs e)
         {
             this.cboxMark.Items.Clear();
-            foreach (var mark in servers.GetMarkList())
-            {
-                this.cboxMark.Items.Add(mark);
-            }
+            cboxMark.Items.AddRange(servers.GetMarkList());
 
             var firstCtrl = servers
                 .GetAllServersOrderByIndex()

@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Luna.Controllers
 {
-    public class LuaCoreCtrl
+    internal class LuaCoreCtrl
     {
         public EventHandler OnStateChange;
 
@@ -271,7 +271,7 @@ namespace Luna.Controllers
                 UseTraceback = enableTracebackFeature,
             };
 
-            if (settings.isEnableClrSupports && isLoadClr)
+            if (settings.isLoadClrLib && isLoadClr)
             {
                 lua.LoadCLRPackage();
             }

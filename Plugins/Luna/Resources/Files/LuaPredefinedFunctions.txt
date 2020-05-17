@@ -48,6 +48,25 @@ table.contains = function(haystack, needle)
     return false
 end
 
+table.keys = function(t)
+    assert(type(t) == "table", "param t must be table")
+    local numKeys = {}
+    local strKeys = {}
+    for k, v in pairs(t) do
+        if type(k) == "number" then
+            table.insert(numKeys, k)
+        else
+            table.insert(strKeys, tostring(k))
+        end
+    end
+    table.sort(numKeys)
+    table.sort(strKeys)
+    for k, v in pairs(strKeys) do
+        table.insert(numKeys, v)
+    end
+    return numKeys
+end
+
 table.length = function(T)
     if T == nil or type(T) ~= "table" then
         return -1
@@ -57,17 +76,56 @@ table.length = function(T)
     return count
 end
 
-table.tostring = function(T)
+table.dump = function(t, indent, header, level)
 
-    assert(type(T) == "table", 'table.tostring(): param type error')    
-    if T == nil then
-        return nil
+    level = level or 0
+    indent = indent or "    "
+    
+    local tailIndent = string.rep(indent, level)
+    local keyIndent = tailIndent .. indent
+    
+    local tt = type(t)
+    if tt ~= "table" then
+        if tt == "string" then
+            return '"' .. t .. '"'
+        else
+            return tostring(t)
+        end
     end
+    
+    if table.length(t) == 0 then
+        return "{}"
+    end
+        
+    local str ='{' .. (header and header or "") .. "\n"
+    
+    local sorted = table.keys(t)
+    
+    for _, idx in pairs(sorted) do
+        local val = t[idx]
+        local it = type(idx)
+        local is = ""
+        if it == "number" then
+            is = tostring(idx)
+        elseif it == "string" then
+            is = '"' .. idx .. '"'
+        end
+        
+        local np = header and header .. '[' .. is .. ']' or header
+        local vs = table.dump(val, indent, np, level + 1)
+        
+        str = str .. keyIndent  .. '[' .. is .. '] = ' .. vs .. ",\n" 
+    end
+    return str .. tailIndent .. "}"
+end
 
-    local j = Json
-    if j == nil then
-        j = require 'libs.json'
+table.load = function(str)
+    local func, err = load("return " .. str)
+    if func then
+        local ok, t = pcall(func)
+        if ok then
+            return t
+        end
     end
-    local s = j.encode(T)
-    return Misc:ParseJToken(s)
+    return nil
 end

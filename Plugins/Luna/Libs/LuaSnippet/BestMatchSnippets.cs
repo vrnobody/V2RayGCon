@@ -9,26 +9,30 @@ namespace Luna.Libs.LuaSnippet
     internal sealed class BestMatchSnippets :
         IEnumerable<AutocompleteItem>
     {
-        Scintilla editor;
-        string searchPattern = @"";
+        private readonly Scintilla editor;
+        string searchPattern = VgcApis.Models.Consts.Patterns.LuaSnippetSearchPattern;
 
         List<ApiFunctionSnippets> apiFunctions;
         List<LuaFuncSnippets> luaFunctions;
         List<LuaKeywordSnippets> luaKeywords;
         List<LuaSubFuncSnippets> luaSubFunctions;
-        private readonly List<LuaImportClrSnippets> luaImportClrs;
+
+        List<LuaImportClrSnippets> luaImportClrs;
+
+        List<LuaImportClrSnippets> customRequireModuleSnippets = new List<LuaImportClrSnippets>();
+        List<MatchItemBase> customScriptSnippets = new List<MatchItemBase>();
 
         public BestMatchSnippets(
             Scintilla editor,
-            string searchPattern,
+
             List<ApiFunctionSnippets> apiFunctions,
             List<LuaFuncSnippets> luaFunctions,
             List<LuaKeywordSnippets> luaKeywords,
             List<LuaSubFuncSnippets> luaSubFunctions,
             List<LuaImportClrSnippets> luaImportClrs)
         {
-            this.searchPattern = searchPattern;
             this.editor = editor;
+
             this.apiFunctions = apiFunctions;
             this.luaFunctions = luaFunctions;
             this.luaKeywords = luaKeywords;
@@ -36,21 +40,48 @@ namespace Luna.Libs.LuaSnippet
             this.luaImportClrs = luaImportClrs;
         }
 
+        #region public methods
+        public void UpdateCustomScriptSnippets(List<MatchItemBase> snippets)
+        {
+            if (snippets != null)
+            {
+                this.customScriptSnippets = snippets;
+            }
+        }
+
+        public void UpdateRequireModuleSnippets(List<LuaImportClrSnippets> snippets)
+        {
+            if (snippets != null)
+            {
+                this.customRequireModuleSnippets = snippets;
+            }
+        }
+
+        #endregion
+
         #region private methods
+
         private IEnumerable<AutocompleteItem> BuildList()
         {
-            var fragment = VgcApis.Misc.Utils.GetFragment(
-                editor, searchPattern);
+            var fragment = "";
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                fragment = VgcApis.Misc.Utils.GetFragment(editor, searchPattern);
+            });
 
-            List<MatchItemBase> items = GenMatchItemList(fragment);
+            var cache = customScriptSnippets;
+
+            List<MatchItemBase> candidates = cache
+                .Concat(GenCandidateList(fragment))
+                .ToList();
 
             var table = new Dictionary<MatchItemBase, long>();
-            foreach (var item in items)
+            foreach (var candidate in candidates)
             {
-                var marks = item.MeasureSimilarityCi(fragment);
+                var marks = candidate.MeasureSimilarityCi(fragment);
                 if (marks > 0)
                 {
-                    table.Add(item, marks);
+                    table.Add(candidate, marks);
                 }
             }
 
@@ -65,10 +96,7 @@ namespace Luna.Libs.LuaSnippet
                 yield return item;
         }
 
-        #endregion
-
-        #region private methods
-        List<MatchItemBase> GenMatchItemList(string fragment)
+        List<MatchItemBase> GenCandidateList(string fragment)
         {
             var items = new List<MatchItemBase>();
             if (fragment.Contains(":"))
@@ -85,6 +113,7 @@ namespace Luna.Libs.LuaSnippet
             }
             else if (fragment.Contains("("))
             {
+                items.AddRange(customRequireModuleSnippets);
                 items.AddRange(luaImportClrs);
                 items.AddRange(luaFunctions);
             }

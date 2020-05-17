@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Luna.Views.UserControls
 {
-    public partial class LuaUI : UserControl
+    internal partial class LuaUI : UserControl
     {
         Controllers.LuaCoreCtrl luaCoreCtrl;
         Services.LuaServer luaServer;

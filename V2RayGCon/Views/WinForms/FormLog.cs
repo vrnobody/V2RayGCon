@@ -14,7 +14,7 @@ namespace V2RayGCon.Views.WinForms
 
         Services.Settings setting;
 
-        VgcApis.Libs.Views.RepaintController repaintCtrl;
+        VgcApis.UserControls.RepaintController repaintCtrl;
         long updateTimeStamp = DateTime.Now.Ticks;
         Timer updateLogTimer = new Timer { Interval = 500 };
         VgcApis.Libs.Tasks.Bar bar = new VgcApis.Libs.Tasks.Bar();
@@ -41,7 +41,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void FormLog_Load(object sender, EventArgs e)
         {
-            repaintCtrl = new VgcApis.Libs.Views.RepaintController(rtBoxLogger);
+            repaintCtrl = new VgcApis.UserControls.RepaintController(rtBoxLogger);
             updateLogTimer.Tick += UpdateLog;
             updateLogTimer.Start();
 

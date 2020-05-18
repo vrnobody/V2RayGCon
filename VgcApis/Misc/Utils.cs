@@ -22,6 +22,47 @@ namespace VgcApis.Misc
 {
     public static class Utils
     {
+        #region editor
+        public static string GetWordFromCurPos(Scintilla editor)
+        {
+            var line = editor.Lines[editor.CurrentLine];
+            var text = line.Text;
+
+            if (string.IsNullOrEmpty(text))
+            {
+                return "";
+            }
+
+            var start = editor.CurrentPosition - line.Position - 1;
+            var end = start;
+            for (; start >= 0; start--)
+            {
+                var c = text[start];
+                if (!char.IsLetterOrDigit(c) && c != '_')
+                {
+                    break;
+                }
+            }
+
+            for (; end < text.Length; end++)
+            {
+                var c = text[end];
+                if (!char.IsLetterOrDigit(c) && c != '_')
+                {
+                    break;
+                }
+            }
+
+            var len = end - start - 1;
+            if (len < 1)
+            {
+                return "";
+            }
+
+            return text.Substring(start + 1, len);
+        }
+        #endregion
+
 
         #region system
         public static string GetCurCallStack()

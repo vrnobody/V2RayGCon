@@ -8,7 +8,6 @@ namespace Luna.Services
 
     {
         VgcApis.Interfaces.Services.ISettingsService vgcSetting;
-        VgcApis.Interfaces.Services.INotifierService vgcNotifier;
 
         readonly string pluginName = Properties.Resources.Name;
         Models.Data.UserSettings userSettings;
@@ -19,33 +18,7 @@ namespace Luna.Services
         #region properties
         public bool isScreenLocked => vgcSetting.IsScreenLocked();
 
-        public bool isEnableAdvanceAutoComplete
-        {
-            get => userSettings.isEnableAdvanceAutoComplete;
-            set
-            {
-                if (userSettings.isEnableAdvanceAutoComplete == value)
-                {
-                    return;
-                }
-                userSettings.isEnableAdvanceAutoComplete = value;
-                SaveUserSettingsNow();
-            }
-        }
 
-        public bool isLoadClrLib
-        {
-            get => userSettings.isLoadClr;
-            set
-            {
-                if (userSettings.isLoadClr == value)
-                {
-                    return;
-                }
-                userSettings.isLoadClr = value;
-                SaveUserSettingsNow();
-            }
-        }
         #endregion
 
         #region internal methods
@@ -56,6 +29,7 @@ namespace Luna.Services
         #endregion
 
         #region public methods
+
         public void SendLog(string contnet)
         {
             var name = Properties.Resources.Name;
@@ -63,16 +37,14 @@ namespace Luna.Services
         }
 
         bool isDisposing = false;
-        public bool IsShutdown() => isDisposing || vgcSetting.IsClosing();
+        public bool IsClosing() => isDisposing || vgcSetting.IsClosing();
 
         public void SetIsDisposing(bool value) => isDisposing = value;
 
         public void Run(
-            VgcApis.Interfaces.Services.ISettingsService vgcSetting,
-            VgcApis.Interfaces.Services.INotifierService vgcNotifier)
+            VgcApis.Interfaces.Services.ISettingsService vgcSetting)
         {
             this.vgcSetting = vgcSetting;
-            this.vgcNotifier = vgcNotifier;
 
             this.snpCache = new Libs.LuaSnippet.SnippetsCache();
 

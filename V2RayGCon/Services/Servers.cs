@@ -906,7 +906,7 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() begin");
 
             setting.isServerTrackerOn = false;
-            if (setting.ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
+            if (setting.GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() abort");
                 return;
@@ -920,7 +920,6 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() save data");
             lazyServerSettingsRecorder?.Dispose();
             SaveServersSettingsWorker();
-
         }
 
         #endregion

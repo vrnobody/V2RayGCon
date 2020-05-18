@@ -95,6 +95,11 @@ namespace Luna.Services
         #region protected methods
         protected override void Cleanup()
         {
+            if (settings.IsClosing())
+            {
+                return;
+            }
+
             VgcApis.Misc.UI.CloseFormIgnoreError(formMain);
 
             List<Views.WinForms.FormEditor> formList;

@@ -37,7 +37,7 @@ namespace V2RayGCon.Services
         public bool Warmup()
         {
             Misc.Utils.SupportProtocolTLS12();
-            if (setting.ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
+            if (setting.GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
             {
                 return false;
             }
@@ -106,7 +106,7 @@ namespace V2RayGCon.Services
         {
             VgcApis.Libs.Sys.FileLogger.Error($"unhandled exception:\n{exception}");
 
-            if (setting.ShutdownReason != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
+            if (setting.GetShutdownReason() != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
             {
                 ShowExceptionDetails(exception);
             }
@@ -162,7 +162,7 @@ namespace V2RayGCon.Services
 
             Microsoft.Win32.SystemEvents.SessionEnding += (s, a) =>
             {
-                setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff;
+                setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff);
                 context.ExitThread();
             };
 
@@ -208,9 +208,9 @@ namespace V2RayGCon.Services
         {
             // throw new NullReferenceException("for debugging");
             VgcApis.Libs.Sys.FileLogger.Info("Luancher.DisposeAllServices() begin");
-            VgcApis.Libs.Sys.FileLogger.Info($"Close reason: {setting.ShutdownReason}");
+            VgcApis.Libs.Sys.FileLogger.Info($"Close reason: {setting.GetShutdownReason()}");
 
-            if (setting.ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
+            if (setting.GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Luancher.DisposeAllServices() abort");
                 return;
@@ -233,7 +233,7 @@ namespace V2RayGCon.Services
                 service.Dispose();
             }
 
-            if (setting.ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
+            if (setting.GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
             {
                 servers.StopAllServers();
             }

@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="tabGeneral.Text" xml:space="preserve">
-    <value>概况</value>
-  </data>
   <data name="btnExportToFile.Text" xml:space="preserve">
     <value>导出...</value>
   </data>
@@ -144,29 +141,17 @@
   <data name="btnStopAllScript.ToolTip" xml:space="preserve">
     <value>给所有脚本发送停止信号</value>
   </data>
+  <data name="btnOpenEditor.Text" xml:space="preserve">
+    <value>编辑器</value>
+  </data>
+  <data name="btnOpenEditor.ToolTip" xml:space="preserve">
+    <value>打开脚本编辑器</value>
+  </data>
   <data name="btnKillAllScript.Text" xml:space="preserve">
     <value>全部终止</value>
   </data>
   <data name="btnKillAllScript.ToolTip" xml:space="preserve">
     <value>强制停止所有脚本</value>
-  </data>
-  <data name="tabOption.Text" xml:space="preserve">
-    <value>选项</value>
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>脚本</value>
-  </data>
-  <data name="chkEnableCodeAnalyze.Text" xml:space="preserve">
-    <value>增强代码补全（危险）</value>
-  </data>
-  <data name="chkEnableCodeAnalyze.ToolTip" xml:space="preserve">
-    <value>有可能执行恶意代码</value>
-  </data>
-  <data name="chkLoadClrLib.Text" xml:space="preserve">
-    <value>加载CLR库</value>
-  </data>
-  <data name="btnSaveOptions.Text" xml:space="preserve">
-    <value>保存</value>
   </data>
   <data name="windowToolStripMenuItem.Text" xml:space="preserve">
     <value>窗口</value>

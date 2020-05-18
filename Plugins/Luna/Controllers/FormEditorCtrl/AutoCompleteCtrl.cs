@@ -24,7 +24,7 @@ namespace Luna.Controllers.FormEditorCtrl
         string KEY_FUNCTION = "funcs";
         string KEY_VARS = "vars";
         string KEY_MODULES = "modules";
-        string KEY_LINE_NUM = "line";  // line number
+        // string KEY_LINE_NUM = "line";  // line number
         string KEY_METHODS = "methods";
         string KEY_SUB_FUNCS = "subs";
         #endregion
@@ -71,7 +71,7 @@ namespace Luna.Controllers.FormEditorCtrl
             InitControls(settings);
             BindEvents();
 
-            SetIsEnableCodeAnalyze(settings.isEnableAdvanceAutoComplete);
+            SetIsEnableCodeAnalyze(false);
             UpdateLuaRequireModuleNameSnippets();
         }
 
@@ -79,7 +79,6 @@ namespace Luna.Controllers.FormEditorCtrl
 
         public void KeyBoardShortcutHandler(KeyEventArgs keyEvent)
         {
-
             var keyCode = keyEvent.KeyCode;
             if (keyEvent.Control)
             {
@@ -87,26 +86,25 @@ namespace Luna.Controllers.FormEditorCtrl
                 {
                     case Keys.OemOpenBrackets:
                         history.Backward();
-                        Invoke(() => ScrollToLine(history.Current()));
+                        ScrollLineToTheMiddle(history.Current());
                         break;
                     case Keys.Oem6:
                         history.Forward();
-                        Invoke(() => ScrollToLine(history.Current()));
+                        ScrollLineToTheMiddle(history.Current());
                         break;
                 }
-
-                switch (keyCode)
-                {
-                    case Keys.F12:
-                        history.Add(editor.CurrentLine);
-                        Invoke(() =>
-                        {
-                            var w = editor.GetWordFromPosition(editor.CurrentPosition);
-                            VgcApis.Misc.UI.Invoke(() => ScrollToDefinition(w));
-                        });
-                        break;
-                }
+                return;
             }
+
+            switch (keyCode)
+            {
+                case Keys.F12:
+                    history.Add(editor.CurrentLine);
+                    var w = VgcApis.Misc.Utils.GetWordFromCurPos(editor);
+                    ScrollToDefinition(w);
+                    break;
+            }
+
         }
 
 
@@ -518,27 +516,63 @@ namespace Luna.Controllers.FormEditorCtrl
 
         void Invoke(Action action) => VgcApis.Misc.UI.Invoke(action);
 
-        void ScrollToFunction(string text)
+        string RemoveLocalPrefix(string text, bool trimFunctionPrefix)
         {
-            text = text?.Replace(".", "")?.Split('(')?.FirstOrDefault();
+            if (string.IsNullOrEmpty(text))
+            {
+                return text;
+            }
+
+            string[] kws = new string[] { "local ", "function " };
+            if (text.StartsWith(kws[0]))
+            {
+                text = text.Substring(kws[0].Length);
+            }
+
+            if (trimFunctionPrefix && text.StartsWith(kws[1]))
+            {
+                text = text.Substring(kws[1].Length);
+            }
+            return text;
+        }
+
+        bool ScrollToFunction(string text)
+        {
+            text = text?.Replace(":", ".")?.Replace(" ", "")
+                ?.Split('(')?.FirstOrDefault();
 
             if (string.IsNullOrWhiteSpace(text))
             {
-                return;
+                return false;
             }
 
             foreach (var line in editor.Lines)
             {
                 var t = line.Text;
-                if (t.StartsWith("local function ") || t.StartsWith("function "))
+                if (string.IsNullOrWhiteSpace(t) || !t.Contains("function"))
                 {
-                    if (t.Replace(".", "").Contains(text))
-                    {
-                        ScrollToLine(line.Index);
-                        return;
-                    }
+                    continue;
+                }
+
+                var trimed = RemoveLocalPrefix(t, true)
+                    ?.Replace(" ", "")
+                    ?.Replace(":", ".")
+                    ?.Replace("[\"", ".")
+                    ?.Replace("['", ".")
+                    ?.Replace("\"]", "")
+                    ?.Replace("']", "")
+                    ?.Replace("=function(", "(")
+                    ?.Split('(')
+                    ?.FirstOrDefault();
+
+                if (trimed == text)
+                {
+                    ScrollToLine(line.Index);
+                    return true;
                 }
             }
+
+            return false;
         }
 
         void ScrollToLine(int index)
@@ -551,19 +585,44 @@ namespace Luna.Controllers.FormEditorCtrl
             editor.FirstVisibleLine = line.Index;
         }
 
+        void ScrollLineToTheMiddle(int index)
+        {
+            history.Add(index);
+            editor.Lines[index].Goto();
+            var first = index - editor.LinesOnScreen / 2 + 1;
+            editor.FirstVisibleLine = first;
+        }
+
         void ScrollToDefinition(string text)
         {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return;
+            }
+
+            if (ScrollToFunction(text) || ScrollToVariable(text))
+            {
+                return;
+            }
+
             foreach (var line in editor.Lines)
             {
-                var t = line.Text;
-                if (!t.StartsWith("local ") && !t.StartsWith("function "))
+                var t = line.Text?.Trim();
+
+                if (string.IsNullOrWhiteSpace(t) || !t.StartsWith("local "))
                 {
                     continue;
                 }
 
-                if (t.Contains(text))
+                var trimed = RemoveLocalPrefix(t, true);
+                var first = trimed?.Split(new char[] { ' ', '.', '=', ',', '\r', '\n', '(' })
+                    ?.FirstOrDefault(s => s == text);
+
+                if (first != null)
                 {
-                    ScrollToLine(line.Index);
+                    line.Goto();
+                    line.EnsureVisible();
+                    // ScrollToLine(line.Index);
                     return;
                 }
             }
@@ -597,8 +656,8 @@ namespace Luna.Controllers.FormEditorCtrl
         private void InitControls(Settings settings)
         {
             luaAcm = CreateAcm(editor);
-            miEanbleCodeAnalyze.Checked = settings.isEnableAdvanceAutoComplete;
-            smiLbCodeanalyze.Enabled = settings.isEnableAdvanceAutoComplete;
+            miEanbleCodeAnalyze.Checked = false;
+            smiLbCodeanalyze.Enabled = false;
         }
 
         void BindEvents()
@@ -672,11 +731,11 @@ namespace Luna.Controllers.FormEditorCtrl
             });
         }
 
-        void ScrollToVariable(string text)
+        bool ScrollToVariable(string v)
         {
-            if (string.IsNullOrWhiteSpace(text))
+            if (string.IsNullOrWhiteSpace(v))
             {
-                return;
+                return false;
             }
 
             var ast = currentCodeAst;
@@ -684,11 +743,11 @@ namespace Luna.Controllers.FormEditorCtrl
             {
                 foreach (var kv in ast[KEY_VARS] as JObject)
                 {
-                    if (kv.Key == text)
+                    if (kv.Key == v)
                     {
-                        // lua index starts from 1
+                        // index starts from 1 in lua
                         ScrollToLine((int)kv.Value - 1);
-                        return;
+                        return true;
                     }
                 }
             }
@@ -696,13 +755,19 @@ namespace Luna.Controllers.FormEditorCtrl
             // fallback
             foreach (var line in editor.Lines)
             {
-                var t = line.Text;
-                if (t.StartsWith("local ") && t.Contains(text))
+                var text = line.Text;
+                if (text.Contains(v))
                 {
-                    ScrollToLine(line.Index);
-                    return;
+                    var trimed = RemoveLocalPrefix(text, false);
+                    var first = trimed?.Split(new char[] { ' ', '=', ',', '\r', '\n' }).FirstOrDefault();
+                    if (first == v)
+                    {
+                        ScrollToLine(line.Index);
+                        return true;
+                    }
                 }
             }
+            return false;
         }
 
         private void OnCboxVarListDropDownHandler(object sender, EventArgs args)

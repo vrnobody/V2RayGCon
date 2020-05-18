@@ -58,7 +58,7 @@ namespace V2RayGCon.Views.WinForms
         {
             if (Misc.UI.Confirm(I18N.ConfirmExitApp))
             {
-                setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;
+                setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser);
                 Application.Exit();
             }
         }

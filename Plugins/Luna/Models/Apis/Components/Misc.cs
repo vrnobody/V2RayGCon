@@ -1,5 +1,6 @@
 ﻿using Luna.Services;
 using Newtonsoft.Json.Linq;
+using NLua;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -36,6 +37,8 @@ namespace Luna.Models.Apis.Components
 
 
         #region ILuaMisc.WinForms
+        public void Invoke(LuaFunction func) => VgcApis.Misc.UI.Invoke(() => func.Call());
+
         public void ShowFormOption() => vgcNotifier.ShowFormOption();
 
         public void ShowFormLunaMgr() => formMgr.ShowFormMain();

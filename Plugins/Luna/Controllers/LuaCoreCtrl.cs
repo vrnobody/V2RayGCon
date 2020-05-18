@@ -271,7 +271,7 @@ namespace Luna.Controllers
                 UseTraceback = enableTracebackFeature,
             };
 
-            if (settings.isLoadClrLib && isLoadClr)
+            if (isLoadClr)
             {
                 lua.LoadCLRPackage();
             }

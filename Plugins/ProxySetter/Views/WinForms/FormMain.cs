@@ -38,7 +38,7 @@ namespace ProxySetter.Views.WinForms
             this.FormClosing += (s, a) =>
             {
                 var confirm = true;
-                if (!setting.isCleaning && !this.formVGCPluginCtrl.IsOptionsSaved())
+                if (!setting.IsClosing() && !this.formVGCPluginCtrl.IsOptionsSaved())
                 {
                     confirm = VgcApis.Misc.UI.Confirm(I18N.ConfirmCloseWinWithoutSave);
                 }

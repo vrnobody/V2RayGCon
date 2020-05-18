@@ -14,8 +14,10 @@ namespace Luna.Controllers.FormMainCtrl
 
         public TabGeneralCtrl(
             FlowLayoutPanel flyLuaUiPanel,
+
             Button btnStopAll,
             Button btnKillAll,
+
             Button btnDelAll,
             Button btnImport,
             Button btnExport)

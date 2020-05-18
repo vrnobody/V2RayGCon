@@ -338,8 +338,7 @@ namespace V2RayGCon.Services
                 $"{VgcApis.Misc.Utils.GetCurCallStack()}");
         }
 
-        static void InvokeThenWorker(
-           Control control, Action updater, Action next)
+        static void InvokeThenWorker(Control control, Action updater, Action next)
         {
             Action worker = () =>
             {
@@ -551,7 +550,6 @@ namespace V2RayGCon.Services
         }
 
         void ReplaceServersMenuWith(
-            bool isGrouped,
             List<ToolStripMenuItem> miGroupedServers,
             List<ToolStripMenuItem> miTopNthServers)
         {
@@ -567,7 +565,7 @@ namespace V2RayGCon.Services
 
             List<ToolStripItem> mis = new List<ToolStripItem>();
             mis.Add(qsMenuCompos[qsMenuNames.StopAllServer]);
-            if (isGrouped)
+            if (miTopNthServers != null && miTopNthServers.Count > 0)
             {
                 var qs = qsMenuCompos[qsMenuNames.QuickSwitchMenuRoot];
                 var items = qs.DropDownItems;
@@ -592,29 +590,19 @@ namespace V2RayGCon.Services
 
         void UpdateServersMenuThen(Action done = null)
         {
-            try
+            var serverList = servers.GetAllServersOrderByIndex();
+            var num = VgcApis.Models.Consts.Config.QuickSwitchMenuItemNum;
+            var groupSize = VgcApis.Models.Consts.Config.MenuItemGroupSize;
+
+            InvokeThen(() =>
             {
-                var serverList = servers.GetAllServersOrderByIndex();
                 var miAllServers = ServerList2MenuItems(serverList);
-
-                var num = VgcApis.Models.Consts.Config.QuickSwitchMenuItemNum;
-                var groupSize = VgcApis.Models.Consts.Config.MenuItemGroupSize;
-                var isGrouped = miAllServers.Count > groupSize;
-
                 var miGroupedServers = VgcApis.Misc.UI.AutoGroupMenuItems(miAllServers, groupSize);
-                var miTopNthServers = isGrouped ?
+                var miTopNthServers = miAllServers.Count > groupSize ?
                     ServerList2MenuItems(serverList.Take(num).ToList()) :
                     new List<ToolStripMenuItem>();
-
-                InvokeThen(
-                    () => ReplaceServersMenuWith(isGrouped, miGroupedServers, miTopNthServers),
-                    done);
-            }
-            catch (Exception e)
-            {
-                VgcApis.Libs.Sys.FileLogger.Error($"Notifier.UpdateServersMenuThen() \n {e}");
-                done?.Invoke();
-            }
+                ReplaceServersMenuWith(miGroupedServers, miTopNthServers);
+            }, done);
         }
 
         void UpdateNotifyIconWorker(Action done)
@@ -633,13 +621,11 @@ namespace V2RayGCon.Services
                     done();
                     VgcApis.Misc.Utils.Sleep(1000);
                     lazyNotifierMenuUpdater?.Postpone();
-                    // VgcApis.Libs.Sys.FileLogger.Info("Notifier.UpdateNotifyIconWorker() menu is opened update later");
                 });
                 return;
             }
 
             var start = DateTime.Now.Millisecond;
-
             Action finished = () => VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 var relex = UpdateInterval - (DateTime.Now.Millisecond - start);
@@ -648,23 +634,22 @@ namespace V2RayGCon.Services
             });
 
             Action next = () => UpdateServersMenuThen(finished);
-
             try
             {
                 var list = servers.GetAllServersOrderByIndex()
                     .Where(s => s.GetCoreCtrl().IsCoreRunning())
                     .ToList();
-                var icon = CreateNotifyIconImage(list);
 
-                InvokeThen(() =>
+                Invoke(() =>
                 {
+                    var icon = CreateNotifyIconImage(list);
                     if (icon != null)
                     {
                         var org = ni.Icon;
                         ni.Icon = Icon.FromHandle(icon.GetHicon());
                         org?.Dispose();
                     }
-                }, null);
+                });
                 UpdateNotifyIconTextThen(list, next);
             }
             catch (Exception e)
@@ -826,7 +811,7 @@ namespace V2RayGCon.Services
                         int len = VgcApis.Models.Consts.AutoEllipsis.NotifierSysProxyInfoMaxLength;
                         texts.Add(I18N.CurSysProxy + VgcApis.Misc.Utils.AutoEllipsis(sysProxyInfo, len));
                     }
-                    SetNotifyText(string.Join(Environment.NewLine, texts));
+                    SetNotifyIconText(string.Join(Environment.NewLine, texts));
                 }
                 catch { }
                 finished?.Invoke();
@@ -858,23 +843,29 @@ namespace V2RayGCon.Services
             Misc.Utils.ChainActionHelperAsync(count, worker, done);
         }
 
-        private void SetNotifyText(string rawText)
+        private void SetNotifyIconText(string rawText)
         {
+            var maxLen = VgcApis.Models.Consts.AutoEllipsis.NotifierTextMaxLength;
             var text = string.IsNullOrEmpty(rawText) ?
                 I18N.Description :
-                VgcApis.Misc.Utils.AutoEllipsis(rawText, VgcApis.Models.Consts.AutoEllipsis.NotifierTextMaxLength);
+                VgcApis.Misc.Utils.AutoEllipsis(rawText, maxLen);
 
             if (ni.Text == text)
             {
                 return;
             }
 
-            // https://stackoverflow.com/questions/579665/how-can-i-show-a-systray-tooltip-longer-than-63-chars
-            Type t = typeof(NotifyIcon);
-            BindingFlags hidden = BindingFlags.NonPublic | BindingFlags.Instance;
-            t.GetField("text", hidden).SetValue(ni, text);
-            if ((bool)t.GetField("added", hidden).GetValue(ni))
-                t.GetMethod("UpdateIcon", hidden).Invoke(ni, new object[] { true });
+            Invoke(() =>
+            {
+                // https://stackoverflow.com/questions/579665/how-can-i-show-a-systray-tooltip-longer-than-63-chars
+                Type t = typeof(NotifyIcon);
+                BindingFlags hidden = BindingFlags.NonPublic | BindingFlags.Instance;
+                t.GetField("text", hidden).SetValue(ni, text);
+                if ((bool)t.GetField("added", hidden).GetValue(ni))
+                {
+                    t.GetMethod("UpdateIcon", hidden).Invoke(ni, new object[] { true });
+                }
+            });
         }
 
         void CreateContextMenuStrip(
@@ -952,7 +943,7 @@ namespace V2RayGCon.Services
                         (s, a) => {
                             if (Misc.UI.Confirm(I18N.ConfirmExitApp))
                             {
-                                setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;
+                                setting.SetShutdownReason( VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser);
                                 Application.Exit();
                             }
                         }),

@@ -224,48 +224,6 @@
   <data name="pnlScriptEditor.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="label4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAP5JREFUOE+dUzsSgjAQzVE4gmegZ8YZW+k4ACXWegBbnHRyCSnkEjRqYaO2aEO7
-        7osJEzB8dGceO7vZ93ZDElHXdcUgC4hnYqqhGKTl9khiIQn+JxEubLr/J8IEFyyROaNgIIb3NFObgwxo
-        AQUpJfm+rzzHEI01e3ALVJYlRVFESbKi8+miPGLkef0zDX/wE69dMroFQUD5Iadn9WqAGHkzTd8xqpHT
-        dNciGyCPddTpjbTNCGT7jMIwVOODCI8Y+UkCNmm93rTEJgsYuOJRgfvt4RRAfkyg6p6CEfg6BZfxgsco
-        7HsAAec9GDIuiBlqGgiYrsjrknFDF0bPWxDiDc1aFcK9rmMgAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="label4.ToolTip" xml:space="preserve">
-    <value>跳转到方法</value>
-  </data>
-  <data name="cboxFunctionList.ToolTip" xml:space="preserve">
-    <value>函数</value>
-  </data>
-  <data name="panelSelectMethods.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAGRJREFUOE9j+Pr16/xv3779R8cgcQZiAcyQmAn7/jMEzwHTRBuCbCtZhoAUgTRg
-        w0QZQhUDkHHOrMPEa4YBoMJ+kGKS/Q8CIEUgxaRgqFbsAKTAyckJJx41YMgYQAhDlQIBAwMAFgSXtfZW
-        CQsAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="label3.ToolTip" xml:space="preserve">
-    <value>跳转到变量</value>
-  </data>
-  <data name="cboxVarList.ToolTip" xml:space="preserve">
-    <value>变量</value>
-  </data>
-  <data name="panelSelectVariable.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tableLayoutPanel2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="panel1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnGotoLine.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -291,6 +249,51 @@
   </data>
   <data name="btnShowFormSearch.ToolTip" xml:space="preserve">
     <value>打开搜索窗口 (Ctrl + F)</value>
+  </data>
+  <data name="panel2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel4.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAP5JREFUOE+dUzsSgjAQzVE4gmegZ8YZW+k4ACXWegBbnHRyCSnkEjRqYaO2aEO7
+        7osJEzB8dGceO7vZ93ZDElHXdcUgC4hnYqqhGKTl9khiIQn+JxEubLr/J8IEFyyROaNgIIb3NFObgwxo
+        AQUpJfm+rzzHEI01e3ALVJYlRVFESbKi8+miPGLkef0zDX/wE69dMroFQUD5Iadn9WqAGHkzTd8xqpHT
+        dNciGyCPddTpjbTNCGT7jMIwVOODCI8Y+UkCNmm93rTEJgsYuOJRgfvt4RRAfkyg6p6CEfg6BZfxgsco
+        7HsAAec9GDIuiBlqGgiYrsjrknFDF0bPWxDiDc1aFcK9rmMgAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="panel4.ToolTip" xml:space="preserve">
+    <value>跳转到方法</value>
+  </data>
+  <data name="cboxFunctionList.ToolTip" xml:space="preserve">
+    <value>函数</value>
+  </data>
+  <data name="panelSelectMethods.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel5.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAGRJREFUOE9j+Pr16/xv3779R8cgcQZiAcyQmAn7/jMEzwHTRBuCbCtZhoAUgTRg
+        w0QZQhUDkHHOrMPEa4YBoMJ+kGKS/Q8CIEUgxaRgqFbsAKTAyckJJx41YMgYQAhDlQIBAwMAFgSXtfZW
+        CQsAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="panel5.ToolTip" xml:space="preserve">
+    <value>跳转到变量</value>
+  </data>
+  <data name="cboxVarList.ToolTip" xml:space="preserve">
+    <value>变量</value>
+  </data>
+  <data name="panelSelectVariable.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tableLayoutPanel2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>导航</value>

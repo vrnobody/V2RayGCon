@@ -282,6 +282,8 @@ namespace V2RayGCon.Misc
                 scintilla.Styles[Style.LineNumber].ForeColor = Color.DarkGray;
             }
 
+            VgcApis.Misc.UI.SetSearchIndicator(scintilla);
+
             return scintilla;
         }
 

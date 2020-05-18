@@ -98,7 +98,7 @@ namespace Luna.Views.WinForms
                 toolStripStatusClrLib,
                 cboxScriptName);
 
-            menuCtrl.Run(formMgr, settings);
+            menuCtrl.Run(formMgr);
 
             this.FormClosing += FormClosingHandler;
             this.FormClosed += (s, a) =>
@@ -109,8 +109,12 @@ namespace Luna.Views.WinForms
 
             this.KeyDown += (s, a) =>
             {
-                editorCtrl?.KeyBoardShortcutHandler(a);
-                acmCtrl?.KeyBoardShortcutHandler(a);
+                VgcApis.Misc.Utils.RunInBackground(
+                    () => VgcApis.Misc.UI.Invoke(() =>
+                    {
+                        editorCtrl?.KeyBoardShortcutHandler(a);
+                        acmCtrl?.KeyBoardShortcutHandler(a);
+                    }));
             };
         }
 
@@ -123,7 +127,7 @@ namespace Luna.Views.WinForms
         }
         private void FormClosingHandler(object sender, FormClosingEventArgs e)
         {
-            if (settings.IsShutdown())
+            if (settings.IsClosing())
             {
                 return;
             }

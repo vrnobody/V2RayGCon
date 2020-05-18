@@ -201,7 +201,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void NewWinToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            FormConfiger.ShowConfig();
+            ShowConfig();
         }
 
         private void SearchBoxToolStripMenuItem_Click(object sender, EventArgs e)
@@ -249,18 +249,22 @@ namespace V2RayGCon.Views.WinForms
         #region bind hotkey
         protected override bool ProcessCmdKey(ref Message msg, Keys keyCode)
         {
-            switch (keyCode)
-            {
-                case (Keys.Control | Keys.P):
-                    ToggleToolsPanel(!isShowPanel);
-                    break;
-                case (Keys.Control | Keys.F):
-                    ShowSearchBox();
-                    break;
-                case (Keys.Control | Keys.S):
-                    configer.InjectConfigHelper(null);
-                    break;
-            }
+            VgcApis.Misc.Utils.RunInBackground(
+                () => VgcApis.Misc.UI.Invoke(() =>
+                {
+                    switch (keyCode)
+                    {
+                        case (Keys.Control | Keys.P):
+                            ToggleToolsPanel(!isShowPanel);
+                            break;
+                        case (Keys.Control | Keys.F):
+                            ShowSearchBox();
+                            break;
+                        case (Keys.Control | Keys.S):
+                            configer.InjectConfigHelper(null);
+                            break;
+                    }
+                }));
             return base.ProcessCmdKey(ref msg, keyCode);
         }
         #endregion

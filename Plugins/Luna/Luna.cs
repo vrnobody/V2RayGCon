@@ -55,24 +55,20 @@ namespace Luna
         #region protected overrides
         protected override void Popup()
         {
-#if DEBUG
-            formMgr.ShowOrCreateFirstEditor();
-#else
+            // formMgr.ShowOrCreateFirstEditor();
             formMgr.ShowFormMain();
-#endif
         }
 
         protected override void Start(VgcApis.Interfaces.Services.IApiService api)
         {
             var vgcSettings = api.GetSettingService();
-            var vgcNotifier = api.GetNotifierService();
 
             settings = new Services.Settings();
             luaServer = new Services.LuaServer();
             formMgr = new Services.FormMgrSvc();
             menuUpdater = new Services.MenuUpdater(settings);
 
-            settings.Run(vgcSettings, vgcNotifier);
+            settings.Run(vgcSettings);
             luaServer.Run(api, settings, formMgr);
             formMgr.Run(settings, luaServer, api);
             menuUpdater.Run(luaServer, miRoot, miShowMgr, miShowEditor);

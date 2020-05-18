@@ -131,7 +131,7 @@
             // 
             // rlbMark
             // 
-            this.rlbMark._BackColor = System.Drawing.Color.Chartreuse;
+            this.rlbMark._BackColor = System.Drawing.Color.LightGreen;
             this.rlbMark.AutoEllipsis = true;
             resources.ApplyResources(this.rlbMark, "rlbMark");
             this.rlbMark.BackColor = System.Drawing.SystemColors.Control;
@@ -143,7 +143,7 @@
             // 
             // rlbRemark
             // 
-            this.rlbRemark._BackColor = System.Drawing.Color.LightSkyBlue;
+            this.rlbRemark._BackColor = System.Drawing.Color.SkyBlue;
             this.rlbRemark.AutoEllipsis = true;
             resources.ApplyResources(this.rlbRemark, "rlbRemark");
             this.rlbRemark.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -154,7 +154,7 @@
             // 
             // rlbLastModify
             // 
-            this.rlbLastModify._BackColor = System.Drawing.Color.LightSalmon;
+            this.rlbLastModify._BackColor = System.Drawing.Color.SandyBrown;
             this.rlbLastModify.AutoEllipsis = true;
             resources.ApplyResources(this.rlbLastModify, "rlbLastModify");
             this.rlbLastModify.Cursor = System.Windows.Forms.Cursors.SizeAll;

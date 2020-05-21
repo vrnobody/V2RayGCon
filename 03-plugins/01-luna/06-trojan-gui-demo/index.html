@@ -1,4 +1,4 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Trojan示例 - V2RayGCon手册</title><meta name=generator content="Hugo 0.62.2"><link href=https://vrnobody.github.io/V2RayGConindex.xml rel=alternate type=application/rss+xml><link rel=canonical href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/06-trojan-gui-demo/><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/theme.min.css><script src=https://use.fontawesome.com/releases/v5.0.6/js/all.js></script><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/chroma.min.css><script src=https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js></script><script src=https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js></script><script src=https://vrnobody.github.io/V2RayGCon/js/bundle.js></script><style>:root{}.highlight{line-height:1.1}.highlight div{background-color:#eed!important}.highlight pre{background-color:#eed!important}</style><meta property="og:title" content="Trojan示例"><meta property="og:description" content="需要V2RayGCon v1.3.6.0+ 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： （运行之后托盘区会多出个的小图标哦！） 全部代码"><meta property="og:type" content="article"><meta property="og:url" content="https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/06-trojan-gui-demo/"><meta property="article:published_time" content="2020-04-14T17:35:52+08:00"><meta property="article:modified_time" content="2020-04-14T17:35:52+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Trojan示例"><meta name=twitter:description content="需要V2RayGCon v1.3.6.0+ 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： （运行之后托盘区会多出个的小图标哦！） 全部代码"><meta itemprop=name content="Trojan示例"><meta itemprop=description content="需要V2RayGCon v1.3.6.0+ 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： （运行之后托盘区会多出个的小图标哦！） 全部代码"><meta itemprop=datePublished content="2020-04-14T17:35:52+08:00"><meta itemprop=dateModified content="2020-04-14T17:35:52+08:00"><meta itemprop=wordCount content="2405"><meta itemprop=keywords content></head><body><div class=container><header><h1>V2RayGCon手册</h1><img src=https://img.shields.io/github/release/vrnobody/V2RayGCon.svg alt="Release Badge"></header><div class=content-container><main><h1>Trojan示例</h1><p>需要V2RayGCon <code>v1.3.6.0+</code></p><p>这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样：<br>（运行之后托盘区会多出个的小图标哦！）<br><figure><img src=../../../images/plugins/trojan_gui.png></figure></p><p>全部代码如下：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Trojan示例 - V2RayGCon手册</title><meta name=generator content="Hugo 0.62.2"><link href=https://vrnobody.github.io/V2RayGConindex.xml rel=alternate type=application/rss+xml><link rel=canonical href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/06-trojan-gui-demo/><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/theme.min.css><script src=https://use.fontawesome.com/releases/v5.0.6/js/all.js></script><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/chroma.min.css><script src=https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js></script><script src=https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js></script><script src=https://vrnobody.github.io/V2RayGCon/js/bundle.js></script><style>:root{}.highlight{line-height:1.1}.highlight div{background-color:#eed!important}.highlight pre{background-color:#eed!important}</style><meta property="og:title" content="Trojan示例"><meta property="og:description" content="需要V2RayGCon v1.3.8.4+ 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： 注意要钩上加载CLR库选项，运行之后托盘区会出"><meta property="og:type" content="article"><meta property="og:url" content="https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/06-trojan-gui-demo/"><meta property="article:published_time" content="2020-04-14T17:35:52+08:00"><meta property="article:modified_time" content="2020-04-14T17:35:52+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Trojan示例"><meta name=twitter:description content="需要V2RayGCon v1.3.8.4+ 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： 注意要钩上加载CLR库选项，运行之后托盘区会出"><meta itemprop=name content="Trojan示例"><meta itemprop=description content="需要V2RayGCon v1.3.8.4+ 这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样： 注意要钩上加载CLR库选项，运行之后托盘区会出"><meta itemprop=datePublished content="2020-04-14T17:35:52+08:00"><meta itemprop=dateModified content="2020-04-14T17:35:52+08:00"><meta itemprop=wordCount content="2362"><meta itemprop=keywords content></head><body><div class=container><header><h1>V2RayGCon手册</h1><img src=https://img.shields.io/github/release/vrnobody/V2RayGCon.svg alt="Release Badge"></header><div class=content-container><main><h1>Trojan示例</h1><p>需要V2RayGCon <code>v1.3.8.4+</code></p><p>这个脚本主要演示怎么调用CLR里的Winform库，运行效果大概这样：<br><figure><img src=../../../images/plugins/trojan_gui.png></figure><br>注意要钩上<code>加载CLR库</code>选项，运行之后托盘区会出现一个的小图标。</p><p>全部代码如下：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
@@ -605,13 +605,11 @@
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">605
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">606
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">607
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">608
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=color:green>-- 假设trojan的位置是V2RayGCon/trojan/trojan.exe</span>
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=color:green>-- 设置</span>
 <span style=color:#00f>local</span> trExe = <span style=color:#a31515>&#34;</span><span style=color:#a31515>trojan/trojan.exe</span><span style=color:#a31515>&#34;</span>
 <span style=color:#00f>local</span> trConfigJson = <span style=color:#a31515>&#34;</span><span style=color:#a31515>trojan/config.json</span><span style=color:#a31515>&#34;</span>
 
 <span style=color:green>-- 代码</span>
-<span style=color:#00f>local</span> trKey = <span style=color:#a31515>&#34;</span><span style=color:#a31515>local-storage-key-trojan-settings</span><span style=color:#a31515>&#34;</span>
 
 import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</span><span style=color:#a31515>&#39;</span>)
 import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</span><span style=color:#a31515>&#39;</span>)
@@ -622,12 +620,15 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
 <span style=color:#00f>local</span> Utils = require <span style=color:#a31515>&#34;</span><span style=color:#a31515>libs.utils</span><span style=color:#a31515>&#34;</span>
 <span style=color:#00f>local</span> libJson = require <span style=color:#a31515>&#34;</span><span style=color:#a31515>libs.json</span><span style=color:#a31515>&#34;</span>
 
+<span style=color:#00f>local</span> trKey = <span style=color:#a31515>&#34;</span><span style=color:#a31515>trojan-settings</span><span style=color:#a31515>&#34;</span>
+
 <span style=color:#00f>local</span> chkSelfSignedCert
 <span style=color:#00f>local</span> tboxServAddr, tboxServPort, tboxServPassword, tboxLocalAddr, tboxLocalPort
 <span style=color:#00f>local</span> cboxName
 <span style=color:#00f>local</span> btnSave, btnStart, btnStop, btnExit, btnRemove
 
 <span style=color:#00f>local</span> servSettings = <span style=color:#00f>nil</span>;
+
 <span style=color:#00f>local</span> form = <span style=color:#00f>nil</span>
 <span style=color:#00f>local</span> trojan = <span style=color:#00f>nil</span>
 <span style=color:#00f>local</span> isExit = <span style=color:#00f>false</span>
@@ -639,17 +640,11 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
     CreateNotifyIcon()
     ShowForm()
     
-    <span style=color:#00f>local</span> count = 0
     <span style=color:#00f>local</span> tick = 100
-    <span style=color:#00f>local</span> num = 2000 / tick
     <span style=color:#00f>while</span> <span style=color:#00f>not</span> Signal:Stop() <span style=color:#00f>and</span> <span style=color:#00f>not</span> isExit <span style=color:#00f>do</span>
         Misc:Sleep(tick)
         Application.DoEvents()
-        count = count + 1
-        <span style=color:#00f>if</span> count &gt; num <span style=color:#00f>then</span>
-            count = 0
-            UpdateIcon()
-        <span style=color:#00f>end</span>
+        UpdateIcon()
     <span style=color:#00f>end</span>
     
     Cleanup()
@@ -808,6 +803,9 @@ import(<span style=color:#a31515>&#39;</span><span style=color:#a31515>System.Dr
 <span style=color:#00f>end</span>
 
 <span style=color:#00f>function</span> Cleanup()
+    <span style=color:#00f>if</span> form ~= <span style=color:#00f>nil</span> <span style=color:#00f>then</span>
+        form:Close()
+    <span style=color:#00f>end</span>
     ni.Visible = <span style=color:#00f>false</span>
     ni:Dispose()
     StopTrojan()

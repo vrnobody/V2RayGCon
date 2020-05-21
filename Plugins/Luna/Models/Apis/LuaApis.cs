@@ -6,23 +6,24 @@ namespace Luna.Models.Apis
     internal class LuaApis :
         VgcApis.BaseClasses.ComponentOf<LuaApis>
     {
-        Services.Settings settings;
+        // this must be static!
+        static SysCmpos.PostOffice postOffice = new SysCmpos.PostOffice();
+
+        Settings settings;
         VgcApis.Interfaces.Services.IApiService vgcApi;
         private readonly FormMgrSvc formMgr;
         Action<string> redirectLogWorker;
-        readonly SysCmpos.PostOffice postOffice;
 
         public LuaApis(
             VgcApis.Interfaces.Services.IApiService api,
-            Services.Settings settings,
-            Services.FormMgrSvc formMgr)
+            Settings settings,
+            FormMgrSvc formMgr)
         {
             this.settings = settings;
             redirectLogWorker = settings.SendLog;
 
             vgcApi = api;
             this.formMgr = formMgr;
-            postOffice = new SysCmpos.PostOffice();
         }
 
         #region public methods

@@ -66,7 +66,7 @@ function Set:Reset(data)
 	end
 end
 
-function Set:new(initData)
+function Set.new(initData)
 	
     local o = {
         datas = {},

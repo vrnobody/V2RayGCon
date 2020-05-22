@@ -224,18 +224,18 @@ end
 -- anz codes start
 
 local function analyzeName(n, sep)
+    
     if type(n) ~= "table" then
-        return false, n
+        return false, ""
     end
     
-    if n.tag == "Id" then
-        return false, n[1]
-    elseif n.tag == "Index" and n[1] and n[1][1] and n[2] then
-        return true, n[1][1] .. sep .. n[2][1]
+    if n.tag == "Index" and n[1] and n[2] then
+        local itl, left = analyzeName(n[1], ".")
+        local itr, right = analyzeName(n[2], ".")
+        return true, left .. sep .. right
     end
-    
-    -- unknow error
-    return false, ""
+
+    return false, n[1] or ""
 end
 
 local function analyzeRequirePath(v, r)
@@ -265,7 +265,7 @@ local function analyzeRequirePath(v, r)
     return "", ""
 end
     
-local function anlyzeValue(v, r)
+local function analyzeValue(v, r)
     if type(v) ~= "table" then
         return "vars", nil
     end
@@ -309,7 +309,7 @@ end
 
 local function analyzeEqual(n, v, r, ln)
     
-    local vt, vv = anlyzeValue(v, r)
+    local vt, vv = analyzeValue(v, r)
     
     -- print( table.dump(v) )
     -- print("vt: ", vt)

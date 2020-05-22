@@ -107,11 +107,11 @@
             // 
             // rlbIsRunning
             // 
-            this.rlbIsRunning._BackColor = System.Drawing.Color.Transparent;
+            this.rlbIsRunning._BackColor = System.Drawing.Color.DarkOrange;
             this.rlbIsRunning.AutoEllipsis = true;
             this.rlbIsRunning.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.rlbIsRunning, "rlbIsRunning");
-            this.rlbIsRunning.ForeColor = System.Drawing.Color.ForestGreen;
+            this.rlbIsRunning.ForeColor = System.Drawing.Color.Ivory;
             this.rlbIsRunning.Name = "rlbIsRunning";
             this.toolTip1.SetToolTip(this.rlbIsRunning, resources.GetString("rlbIsRunning.ToolTip"));
             this.rlbIsRunning.UseCompatibleTextRendering = true;
@@ -143,7 +143,7 @@
             // 
             // rlbRemark
             // 
-            this.rlbRemark._BackColor = System.Drawing.Color.SkyBlue;
+            this.rlbRemark._BackColor = System.Drawing.Color.LightSkyBlue;
             this.rlbRemark.AutoEllipsis = true;
             resources.ApplyResources(this.rlbRemark, "rlbRemark");
             this.rlbRemark.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -165,7 +165,7 @@
             // 
             // rlbSpeedtest
             // 
-            this.rlbSpeedtest._BackColor = System.Drawing.Color.Khaki;
+            this.rlbSpeedtest._BackColor = System.Drawing.Color.Wheat;
             this.rlbSpeedtest.AutoEllipsis = true;
             resources.ApplyResources(this.rlbSpeedtest, "rlbSpeedtest");
             this.rlbSpeedtest.BackColor = System.Drawing.SystemColors.Control;
@@ -177,7 +177,7 @@
             // 
             // rlbInboundMode
             // 
-            this.rlbInboundMode._BackColor = System.Drawing.Color.Turquoise;
+            this.rlbInboundMode._BackColor = System.Drawing.Color.MediumTurquoise;
             this.rlbInboundMode.AutoEllipsis = true;
             resources.ApplyResources(this.rlbInboundMode, "rlbInboundMode");
             this.rlbInboundMode.BackColor = System.Drawing.SystemColors.Control;

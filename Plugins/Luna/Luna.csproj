@@ -82,7 +82,6 @@
     <Compile Include="Controllers\FormEditorCtrl\ButtonCtrl.cs" />
     <Compile Include="Controllers\LuaCoreCtrl.cs" />
     <Compile Include="Controllers\FormMainCtrl\TabGeneralCtrl.cs" />
-    <Compile Include="Controllers\FormMainCtrl\TabOptionsCtrl.cs" />
     <Compile Include="Libs\LuaSnippet\BestMatchSnippets.cs" />
     <Compile Include="Libs\LuaSnippet\LuaImportClrSnippets.cs" />
     <Compile Include="Libs\LuaSnippet\MatchItemBase.cs" />

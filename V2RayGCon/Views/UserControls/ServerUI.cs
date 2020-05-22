@@ -37,6 +37,8 @@ namespace V2RayGCon.Views.UserControls
 
         private void ServerUI_Load(object sender, EventArgs e)
         {
+            UpdateOnOffLabel(false);
+
             roundLables = new List<Control>
             {
                 rlbLastModify,
@@ -436,7 +438,7 @@ namespace V2RayGCon.Views.UserControls
                 rlbIsRunning.Text = text;
             }
             var bc = isServerOn ? Color.DarkOrange : BackColor;
-            var fc = isServerOn ? Color.White : Color.ForestGreen;
+            var fc = isServerOn ? Color.Ivory : Color.ForestGreen;
 
             if (rlbIsRunning._BackColor != bc)
             {

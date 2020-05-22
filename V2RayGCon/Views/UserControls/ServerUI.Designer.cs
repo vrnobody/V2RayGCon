@@ -107,11 +107,11 @@
             // 
             // rlbIsRunning
             // 
-            this.rlbIsRunning._BackColor = System.Drawing.Color.Transparent;
+            this.rlbIsRunning._BackColor = System.Drawing.Color.DarkOrange;
             this.rlbIsRunning.AutoEllipsis = true;
             this.rlbIsRunning.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.rlbIsRunning, "rlbIsRunning");
-            this.rlbIsRunning.ForeColor = System.Drawing.Color.ForestGreen;
+            this.rlbIsRunning.ForeColor = System.Drawing.Color.Ivory;
             this.rlbIsRunning.Name = "rlbIsRunning";
             this.toolTip1.SetToolTip(this.rlbIsRunning, resources.GetString("rlbIsRunning.ToolTip"));
             this.rlbIsRunning.UseCompatibleTextRendering = true;
@@ -131,7 +131,7 @@
             // 
             // rlbMark
             // 
-            this.rlbMark._BackColor = System.Drawing.Color.Chartreuse;
+            this.rlbMark._BackColor = System.Drawing.Color.LightGreen;
             this.rlbMark.AutoEllipsis = true;
             resources.ApplyResources(this.rlbMark, "rlbMark");
             this.rlbMark.BackColor = System.Drawing.SystemColors.Control;
@@ -154,7 +154,7 @@
             // 
             // rlbLastModify
             // 
-            this.rlbLastModify._BackColor = System.Drawing.Color.LightSalmon;
+            this.rlbLastModify._BackColor = System.Drawing.Color.SandyBrown;
             this.rlbLastModify.AutoEllipsis = true;
             resources.ApplyResources(this.rlbLastModify, "rlbLastModify");
             this.rlbLastModify.Cursor = System.Windows.Forms.Cursors.SizeAll;
@@ -165,7 +165,7 @@
             // 
             // rlbSpeedtest
             // 
-            this.rlbSpeedtest._BackColor = System.Drawing.Color.Khaki;
+            this.rlbSpeedtest._BackColor = System.Drawing.Color.Wheat;
             this.rlbSpeedtest.AutoEllipsis = true;
             resources.ApplyResources(this.rlbSpeedtest, "rlbSpeedtest");
             this.rlbSpeedtest.BackColor = System.Drawing.SystemColors.Control;
@@ -177,7 +177,7 @@
             // 
             // rlbInboundMode
             // 
-            this.rlbInboundMode._BackColor = System.Drawing.Color.Turquoise;
+            this.rlbInboundMode._BackColor = System.Drawing.Color.MediumTurquoise;
             this.rlbInboundMode.AutoEllipsis = true;
             resources.ApplyResources(this.rlbInboundMode, "rlbInboundMode");
             this.rlbInboundMode.BackColor = System.Drawing.SystemColors.Control;

@@ -173,6 +173,11 @@ namespace Luna.Services
         #region protected methods
         protected override void Cleanup()
         {
+            if (settings.IsClosing())
+            {
+                return;
+            }
+
             var coreCtrls = GetAllLuaCoreCtrls();
             foreach (var ctrl in coreCtrls)
             {

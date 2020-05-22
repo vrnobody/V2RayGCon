@@ -2,6 +2,7 @@
 {
     public interface ISettingsService
     {
+
         bool IsScreenLocked();
 
         bool IsClosing();

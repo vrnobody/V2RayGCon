@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ScintillaNET;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -16,6 +17,22 @@ namespace VgcApis.Misc
     public static class UI
     {
         #region Controls
+        public static void SetSearchIndicator(Scintilla scintilla)
+        {
+            // indicator for search
+            const int INDICATOR_NUM = 8;
+
+            // Remove all uses of our indicator
+            scintilla.IndicatorCurrent = INDICATOR_NUM;
+
+            // Update indicator appearance
+            scintilla.Indicators[INDICATOR_NUM].Style = IndicatorStyle.StraightBox;
+            scintilla.Indicators[INDICATOR_NUM].Under = true;
+            scintilla.Indicators[INDICATOR_NUM].ForeColor = Color.Yellow;
+            scintilla.Indicators[INDICATOR_NUM].OutlineAlpha = 220;
+            scintilla.Indicators[INDICATOR_NUM].Alpha = 180;
+        }
+
         public static void ResetComboBoxDropdownMenuWidth(ComboBox cbox)
         {
             int maxWidth = 0, tempWidth = 0;

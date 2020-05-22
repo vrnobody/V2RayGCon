@@ -1,4 +1,4 @@
-local json = require('lua.libs.json')
+
 
 --[[
 credits:
@@ -6,24 +6,63 @@ credits:
     lua-complete https://github.com/FourierTransformer/lua-complete.git
 --]]
 
+local json = require('lua.libs.json')
 local parser = require('lua.libs.luacheck.parser')
 
-local analyzer = {}
+local anz = {}
  
-local function DebugTable(t)
+local function DumpTable(t)
     print( table.dump(t, "    ", " >(((@> ") )
 end
 
-local function GetModuleName(ast)
-    for i = #ast, 1, -1 do
-        local v = ast[i]
-        if v and v.tag == "Return" and v[1] then
-            return v[1][1]
-        end
+local function InsertOnce(t, v)
+    if not table.contains(t, v) then
+        table.insert(t, v)
     end
-    return nil
 end
 
+
+local function analyzeFuncParams(f)
+    
+    local ft = "funcs"
+    local ps = {}
+    
+    if type(f) ~= "table" then
+        return ft, ps
+    end
+   
+    for k,v in pairs(f) do
+        local pn = v[1]
+        if pn == "self" then
+            ft = "methods"
+        else
+            table.insert(ps, pn)
+        end
+    end
+    
+    return ft, ps
+end
+
+function anz.parse(s)
+    if s == nil or type(s) ~= "string" then
+        return nil
+    end
+    
+    local ast
+    local index
+    repeat
+        local ok
+        ok, ast = pcall(function () return parser.parse(s) end)
+        index = string.find(s, "[\n\r%s]*\n[^\n]*$")
+        if index == nil then
+            return nil
+        end
+        s = string.sub(s, 1, index - 1)
+    until ok
+    return ast
+end 
+
+-- anz module start
 local function GetModuleObjName(src)
     for i = #src, 1, -1 do
         local v = src[i]
@@ -32,12 +71,6 @@ local function GetModuleObjName(src)
         end
     end
     return nil
-end
-
-local function InsertOnce(t, v)
-    if not table.contains(t, v) then
-        table.insert(t, v)
-    end
 end
 
 local function GetModuleProps(src, r)
@@ -66,19 +99,6 @@ local function GetModuleProps(src, r)
     end
 end
 
-local function GetFunctionParams(t)
-    local isMember = false
-    local ps = {}
-    for k,v in pairs(t) do
-        if v[1] == "self" then
-            isMember = true
-        else
-            table.insert(ps, v[1])
-        end
-    end
-    return isMember, ps
-end
-
 local function GetModuleInfo(ast, mName)
     
     local r = {
@@ -88,9 +108,20 @@ local function GetModuleInfo(ast, mName)
     }
     
     for k, v in pairs(ast) do
-        local ps = {}
-        local isMemberFuncs = false
-        if v.tag == "Set" 
+        if v.tag == "Local"
+            and v[1] and v[1][1] and v[1][1][1] == mName
+            and v[2] and type(v[2][1]) == "table"
+        then
+            -- print( DumpTable(v) )
+            for sk, sv in pairs(v[2][1]) do
+                if type(sv) == "table" and sv.tag == "Pair"
+                    and type(sv[1]) == "table" and type(sv[1][1]) == "string"
+                then
+                    -- print( DumpTable(sv) )
+                    InsertOnce(r["props"], sv[1][1])
+                end
+            end
+        elseif v.tag == "Set"
             and v[1] and v[1][1] and v[1][1][1] and v[1][1][1][1] == mName
             and v[1][1][2] and type(v[1][1][2][1]) == "string"
             and v[2] and v[2][1] and v[2][1].tag
@@ -106,12 +137,8 @@ local function GetModuleInfo(ast, mName)
                 if lfn == "new" or lfn == "create" then
                     GetModuleProps(v[2][1][2], r) -- src of new()
                 end 
-                isMemberFuncs, ps = GetFunctionParams(v[2][1][1])
-                if isMemberFuncs then
-                    r["methods"][fn] = ps
-                else
-                    r["funcs"][fn] = ps
-                end 
+                local ft, ps = analyzeFuncParams(v[2][1][1])
+                r[ft][fn] = ps
             end
         end
     end
@@ -119,110 +146,18 @@ local function GetModuleInfo(ast, mName)
     return r 
 end
 
-local function AnalyzeRequire(ast, r)
-    for k,v in pairs(ast) do
-        if type(v) ~= "table" then
-            -- continute
-        elseif v[2] and v[2][1] and v[2][1][1] and v[2][1][1][1] == "require"
-            and v[1] and v[1][1] and v[2][1][2]
-        then
-            local mn = v[1][1][1]
-            if not r["modules"][mn] then
-                r["modules"][mn] = v[2][1][2][1]
-            end
-        elseif v[2] and v[2][1] and v[2][1][1] and v[2][1][1][1] and v[2][1][1][1][1]
-            and v[2][1][1][1][1][1] == "require" 
-            and v[1] and v[1][1] and v[2][1][1][1][2]
-        then
-            local mn = v[1][1][1]
-            if not r["modules"][mn] then
-                r["modules"][mn] = v[2][1][1][1][2][1]
-            end
-        end
-        if type(v) == "table" then
-            AnalyzeRequire(v, r)
+local function GetModuleName(ast)
+    for i = #ast, 1, -1 do
+        local v = ast[i]
+        if v and v.tag == "Return" and v[1] then
+            return v[1][1]
         end
     end
+    return nil
 end
 
-local function GetFunctionInfo(v, r)
-    
-    if type(v[1][1][1]) == "string" and type(v[2][1][1]) == "table" then
-        -- add(a, b)
-        local fn = v[1][1][1]
-        local isMember, params = GetFunctionParams(v[2][1][1])
-        r["funcs"][fn] = {
-            ["line"] = v[1][1]["line"],
-            ["params"] = params,
-        }
-    elseif type(v[1][1][1]) == "table" and type(v[2][1][1]) == "table"
-        and type(v[1][1][1][1]) == "string" and type(v[1][1][2][1]) == "string"
-    then
-        -- utils.add(a, b) or utils.add(self, a, b)
-        local isMember, params = GetFunctionParams(v[2][1][1])
-        local fn = v[1][1][1][1] .. (isMember and ":" or ".") .. v[1][1][2][1]
-        local key = isMember and "methods" or "subs"
-        r[key][fn] = {
-            ["line"] = v[1][1]["line"],
-            ["params"] = params,
-        }
-    end        
-end
-
-local function AnalyzeAst(ast, r)
-    for k,v in pairs(ast) do
-        -- print( table.dump(v, "    ", " >(((@> ") )
-        -- require (work but not robust)
-        if v[2] and v[2][1] and v[2][1][1] and v[2][1][1][1] == "require"        
-        then
-            -- continue
-        elseif v[2] and v[2][1] and v[2][1][1] and v[2][1][1][1] and v[2][1][1][1][1]
-            and v[2][1][1][1][1][1] == "require" 
-        then
-            -- continue
-        elseif v[2] and v[2][1] and v[2][1].tag == "Function"
-            and v[1] and v[1][1] and v[1][1][1] -- fn
-            and v[2][1][1] and type(v[2][1][1]) == "table"  -- params
-        then
-            -- functions
-            GetFunctionInfo(v, r)
-        elseif v[1] and v[1][1] and type(v[1][1][1]) == "string"
-            and (v.tag == "Set" or v.tag == "Local")  
-        then
-            -- variables
-            local vn = v[1][1][1]
-            if v[2] and v[2][1] and v[2][1][1] and v[2][1][1][1] 
-                and r["modules"][ v[2][1][1][1][1] ]
-            then
-                r["modules"][vn] = r["modules"][ v[2][1][1][1][1] ]
-            elseif not r["vars"][vn] then
-                r["vars"][vn] =  v[1][1]["line"]
-            end
-        end
-    end
-end 
-
-function analyzer.parse(s)
-    if s == nil or type(s) ~= "string" then
-        return nil
-    end
-    
-    local ast
-    local index
-    repeat
-        local ok
-        ok, ast = pcall(function () return parser.parse(s) end)
-        index = string.find(s, "[\n\r%s]*\n[^\n]*$")
-        if index == nil then
-            return nil
-        end
-        s = string.sub(s, 1, index - 1)
-    until ok
-    return ast
-end
-
-function analyzer.analyzeModule(src)
-    local ast = analyzer.parse(src)
+function anz.analyzeModule(src)
+    local ast = anz.parse(src)
     if ast == nil then
         return nil
     end
@@ -230,11 +165,15 @@ function analyzer.analyzeModule(src)
     if mn == nil then
         return nil
     end
+    -- print( table.dump(ast) )
     local r = GetModuleInfo(ast, mn)
     return json.encode(r)
 end
 
-local function analyzeFunction(n, f, r)
+-- anz module end
+
+-- anz module ex start
+local function analyzeModuleFunction(n, f, r)
     local info = debug.getinfo(f, "uS")
     
     if info.what == "C" then
@@ -256,7 +195,7 @@ local function analyzeFunction(n, f, r)
     r[target][n] = info.isvararg and {"..."} or ps
 end
 
-function analyzer.analyzeModuleEx(src)
+function anz.analyzeModuleEx(src)
 
     local ok, m = pcall(load(src))
     if not ok or type(m) ~= "table" then
@@ -273,16 +212,165 @@ function analyzer.analyzeModuleEx(src)
         if type(v) ~= "function" then
             table.insert(r["props"], k)
         else
-            analyzeFunction(k, v, r)
+            analyzeModuleFunction(k, v, r)
         end
     end
     
     return json.encode(r)
 end
+-- anz module ex end
 
-function analyzer.analyzeCode(src)
-       
-    local r = {
+
+-- anz codes start
+
+local function analyzeName(n, sep)
+    if type(n) ~= "table" then
+        return false, n
+    end
+    
+    if n.tag == "Id" then
+        return false, n[1]
+    elseif n.tag == "Index" and n[1] and n[1][1] and n[2] then
+        return true, n[1][1] .. sep .. n[2][1]
+    end
+    
+    -- unknow error
+    return false, ""
+end
+
+local function analyzeRequirePath(v, r)
+    if type(v) ~= "table" then
+        return "", ""
+    end
+    
+    if v[1] and v[1][1] == "require" and v[2][1] then
+        return "modules", v[2][1]
+    elseif v.tag == "Call" and v[1] and v[1][1] and v[1][1][1] 
+        and v[1][1][1][1] == "require" 
+        and v[1][1][2] 
+    then
+        return "modules", v[1][1][2][1]
+    end
+    
+    if v[1] and v[1][1] and type(v[1][1][1]) == "string" 
+        and v[1][2] and type(v[1][2][1]) == "string"
+    then
+        local mm = string.lower(v[1][2][1])
+        local mn = v[1][1][1]
+        local mp = r["modules"][mn]
+        if mp ~= nil and (mm == "new" or mm == "create") then
+            return "modules", mp
+        end
+    end
+    return "", ""
+end
+    
+local function anlyzeValue(v, r)
+    if type(v) ~= "table" then
+        return "vars", nil
+    end
+    
+    if v.tag == "Call" then 
+        return "vars", nil
+    elseif v.tag == "Function" then
+        return analyzeFuncParams(v[1])
+    end   
+    return "vars", nil
+end
+
+local function analyzeOneRequire(n, v, r)
+    local vt, vv = analyzeRequirePath(v, r)
+    if vt == "modules" then
+        local isTable, nv = analyzeName(n, ".")
+        if nv ~= nil and nv ~= "" then
+            r[vt][nv] = vv
+        end
+    end
+end
+
+local function analyzeRequire(ast, r)
+    for n, line in pairs(ast) do
+        if type(line) == "table" and line["line"] 
+            and line[1] and line[2] 
+            and type(line[1]) == "table"
+            and type(line[2]) == "table"
+        then
+            local ln = line["line"]
+            local len = table.length(line[1]) 
+            for n = 1, len do
+                analyzeOneRequire(line[1][n], line[2][n], r)
+            end
+        end
+        if type(line) == "table" then
+            analyzeRequire(line, r)
+        end
+    end
+end
+
+local function analyzeEqual(n, v, r, ln)
+    
+    local vt, vv = anlyzeValue(v, r)
+    
+    -- print( table.dump(v) )
+    -- print("vt: ", vt)
+    -- print("vv: ", table.dump(vv))
+    
+    if vt ~= "vars" and (vv == nil or vv == "") then
+        return
+    end
+        
+    local sep = vt == "methods" and ":" or "."
+    local isTable, name = analyzeName(n, sep)
+    
+    -- print( table.dump(n) )
+    -- print("isTable: ", isTable)
+    -- print("name: ", name)
+    
+    if name == nil or name == "" then
+        return
+    end
+    
+    if isTable and vt == "funcs" then
+        vt = "subs"
+    end
+    
+    local el = nil
+    if vt == "vars" then
+        el = ln
+    elseif vt == "modules" then
+        el = vv
+    else
+        el = {
+            ["line"] = ln,
+            ["params"] = vv,
+        }
+    end
+    
+    if not r[vt][name] then
+        r[vt][name] = el
+    end
+end
+
+local function analyzeLines(ast, r)
+    for n, line in ipairs(ast) do
+        local ln = line["line"]            
+        local len = table.length(line[1]) 
+        for n = 1, len do
+            if line[2] and line[2][n] then
+                -- print( "analyzing: ", table.dump(line))
+                analyzeEqual(line[1][n], line[2][n], r, ln)
+            else
+                local isTable, name = analyzeName(line[1][n], ".")
+                if name ~= nil and name ~= "" and r["vars"][name] == nil then
+                    r["vars"][name] = ln
+                end
+            end
+        end
+    end
+end    
+
+function anz.analyzeCode(src)
+     local r = {
         ["modules"] = {},
         ["vars"] = {},
         ["funcs"] = {},
@@ -290,35 +378,37 @@ function analyzer.analyzeCode(src)
         ["methods"] = {},
     }
     
-    local ast = analyzer.parse(src)
-    -- print( table.dump(ast, "    ", " >(((@> ") )
+    local ast = anz.parse(src)
     if ast ~= nil then
-        AnalyzeRequire(ast, r)
-        AnalyzeAst(ast, r)
+        analyzeRequire(ast, r)
+        analyzeLines(ast, r)
     end
     
+    -- print("results:")
     -- print( table.dump(r) )
     return json.encode(r)
-end 
-
-function analyzer.new()
-    local o = {}
-    setmetatable(o, {__index = analyzer})
-    return o
 end
 
-local code = [[
+-- anz codes end
+
+
+-- debug codes start
+local testCode = [[
 local json = require('lua.libs.json')
 local hkmgr = require('lua.modules.hotkey').new()
 local utils = require('lua.libs.utils')
 local ut = utils.new()
 
 local v
-
 v = 10
+gv = true
+
+local BYTE_0, BYTE_9, BYTE_f, BYTE_F = sbyte("0"), sbyte("9"), sbyte("f"), sbyte("F")
 
 local t = { 1, 2, 3}
-gv = true
+t["a"] = true
+t[1], v = false, 11
+local worker, err = function(a) return a end, nil
 
 while true do
     print(1)
@@ -326,7 +416,7 @@ end
 
 repeat
     print(2)
-until trrue
+until trrue  -- oopsy!
 
 local function Add(a, b)
     local c = a + b
@@ -335,14 +425,21 @@ end
 
 function Main(ps)
     print("hello!")
-    retrrrurn true
+    return true
+end
+
+function ThisFunctionWillNotShowUpInAst()
+    because this line is not parsable!
+    return nothing
 end
 
 ]]
 
-local modSrc = [[
+
+local testModule = [[
 local m = {
-    ["smem"] = "hello"
+    ["v1"] = "hello",
+    ["v2"] = true,
 }
 
 function m:GetName()
@@ -369,30 +466,48 @@ end
 return m
 ]]
 
-local function DumpCodeAst(src)
-    local ast = analyzer.parse(src)
+
+
+local function testCodeToAst(src)
+    local ast = anz.parse(src)
     local s = table.dump(ast, "    ", " --> ")
     print(s)
 end
 
-local function TestModuleAnalyzer()
-    local r = analyzer.analyzeModule(modSrc)
+local function testAnalyzeCode()
+    local r = anz.analyzeCode(testCode)
+    local o = json.decode(r)
+    print( DumpTable(o) )
     print(r)
 end
 
-local function TestCodeAnalyzer()
-    local r = analyzer.analyzeCode(code)
+local function testAnalyzeModule()
+    local r = anz.analyzeModule(testModule)
+    local o = json.decode(r)
+    print( DumpTable(o) )
     print(r)
 end
 
-local function TestModuleExAnalyzer()
-    local r = analyzer.analyzeModuleEx(modSrc)
+local function testAnalyzeModuleEx()
+    local r = anz.analyzeModuleEx(testModule)
+    local o = json.decode(r)
+    print( DumpTable(o) )
     print(r)
 end
 
--- DumpCodeAst(code)
--- TestModuleAnalyzer()
--- TestCodeAnalyzer()
--- TestModuleExAnalyzer()
 
-return analyzer
+
+-- testCodeToAst(testCode)
+-- testAnalyzeCode()
+-- testAnalyzeModule()
+-- testAnalyzeModuleEx()
+
+-- debug codes end
+
+function anz.new()
+    local o = {}
+    setmetatable(o, {__index = anz})
+    return o
+end
+
+return anz

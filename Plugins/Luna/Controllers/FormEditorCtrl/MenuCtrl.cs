@@ -51,18 +51,17 @@ namespace Luna.Controllers.FormEditorCtrl
         }
 
         public void Run(
-            Services.FormMgrSvc formMgrService,
-            Services.Settings settings)
+            Services.FormMgrSvc formMgrService)
         {
-            InitControls(settings);
+            InitControls();
             BindEvents(formMgrService);
         }
 
         #region private method
-        private void InitControls(Settings settings)
+        private void InitControls()
         {
-            miLoadClrLib.Checked = settings.isLoadClrLib;
-            smiLbClrLib.Enabled = settings.isLoadClrLib;
+            miLoadClrLib.Checked = false;
+            smiLbClrLib.Enabled = false;
         }
 
         private void BindEvents(FormMgrSvc formMgrService)

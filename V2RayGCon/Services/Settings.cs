@@ -23,6 +23,7 @@ namespace V2RayGCon.Services
 
         string serializedUserSettingsCache = @"";
         public event EventHandler OnPortableModeChanged;
+        VgcApis.Models.Datas.Enums.ShutdownReasons shutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.Undefined;
 
         // Singleton need this private ctor.
         Settings()
@@ -119,8 +120,13 @@ namespace V2RayGCon.Services
             }
         }
 
-        public VgcApis.Models.Datas.Enums.ShutdownReasons ShutdownReason { get; set; } =
-            VgcApis.Models.Datas.Enums.ShutdownReasons.Undefined;
+        public VgcApis.Models.Datas.Enums.ShutdownReasons GetShutdownReason() => shutdownReason;
+
+        public void SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons reason)
+        {
+            this.shutdownReason = reason;
+        }
+
 
         public bool isDownloadWin32V2RayCore
         {
@@ -717,7 +723,7 @@ namespace V2RayGCon.Services
             catch { }
 
             VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() error");
-            if (ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
+            if (GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
             {
                 SendLog("UserSettings: " + Environment.NewLine + serializedUserSettings);
                 throw new ArgumentException("Validate serialized user settings fail!");
@@ -794,7 +800,7 @@ namespace V2RayGCon.Services
             }
             catch { }
 
-            if (ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
+            if (GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
             {
                 var msg = string.Format(I18N.UnsetPortableModeFail, mainUsFilename);
                 // do not block any function in background service
@@ -836,7 +842,7 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() failed");
             // main file or bak file write fail, clear cache
             serializedUserSettingsCache = @"";
-            if (ShutdownReason == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
+            if (GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() notice user");
                 WarnUserSaveSettingsFailed(content);
@@ -912,7 +918,7 @@ namespace V2RayGCon.Services
                 && (File.Exists(mainUsFile) || File.Exists(bakUsFile))
                 && !Misc.UI.Confirm(I18N.ConfirmLoadDefaultUserSettings))
             {
-                ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.Abort;
+                SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.Abort);
             }
 
             return result ?? new Models.Datas.UserSettings();

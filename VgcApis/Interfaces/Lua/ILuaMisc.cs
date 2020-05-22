@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using NLua;
 using System.Collections.Generic;
 
 namespace VgcApis.Interfaces.Lua
@@ -42,6 +43,7 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region vgc.Forms
+        void Invoke(LuaFunction func);
         void ShowFormOption();
 
         void ShowFormLunaMgr();

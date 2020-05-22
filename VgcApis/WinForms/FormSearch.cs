@@ -127,13 +127,11 @@ namespace VgcApis.WinForms
         private void BindEvents()
         {
             this.FormClosed += (s, a) => ClearIndicator();
-            this.KeyDown += KeyBoardShortcutHandler;
+            this.KeyDown += (s, a) => Misc.UI.Invoke(() => KeyBoardShortcutHandler(a.KeyCode));
         }
 
-        void KeyBoardShortcutHandler(object sender, KeyEventArgs e)
+        void KeyBoardShortcutHandler(Keys keyCode)
         {
-            var keyCode = e.KeyCode;
-
             switch (keyCode)
             {
                 case Keys.F2:
@@ -155,8 +153,6 @@ namespace VgcApis.WinForms
         {
             editor.IndicatorClearRange(0, editor.TextLength);
         }
-
-
 
         void WarnNoMatch()
         {

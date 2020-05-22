@@ -7,13 +7,9 @@ namespace Luna.Models.Data
         public Dictionary<string, string> luaShareMemory;
         public List<LuaCoreSetting> luaServers;
 
-        public bool isLoadClr;
-        public bool isEnableAdvanceAutoComplete;
 
         public UserSettings()
         {
-            isLoadClr = false;
-            isEnableAdvanceAutoComplete = false;
             NormalizeData();
         }
 

@@ -2,6 +2,7 @@
 using Luna.Views.WinForms;
 using ScintillaNET;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -93,7 +94,9 @@ namespace Luna.Controllers.FormEditorCtrl
             this.luaServer = luaServer;
 
             this.luaCoreCtrl = CreateLuaCoreCtrl(settings, api);
-            isLoadClrLib = settings.isLoadClrLib;
+
+
+            isLoadClrLib = false;
 
             BindEvents();
             ReloadScriptName();
@@ -101,18 +104,18 @@ namespace Luna.Controllers.FormEditorCtrl
             rtboxFreezer = new VgcApis.UserControls.RepaintController(rtboxOutput);
             logUpdater.Run();
 
-#if DEBUG
-            if (cboxScriptName.Items.Count > 0)
-            {
-                cboxScriptName.SelectedIndex = 0;
-            }
-#endif
+            /*
+            #if DEBUG
+                        if (cboxScriptName.Items.Count > 0)
+                        {
+                            cboxScriptName.SelectedIndex = 0;
+                        }
+            #endif
+            */
         }
 
         #region public methods
         public bool isLoadClrLib;
-
-
 
         public void KeyBoardShortcutHandler(KeyEventArgs keyEvent)
         {
@@ -122,26 +125,23 @@ namespace Luna.Controllers.FormEditorCtrl
                 switch (keyCode)
                 {
                     case Keys.OemMinus:
-                        Invoke(editor.ZoomOut);
+                        editor.ZoomOut();
                         break;
                     case Keys.Oemplus:
-                        Invoke(editor.ZoomIn);
+                        editor.ZoomIn();
                         break;
                     case Keys.G:
-                        Invoke(() =>
-                        {
-                            tboxGoto.Focus();
-                            tboxGoto.SelectAll();
-                        });
+                        tboxGoto.Focus();
+                        tboxGoto.SelectAll();
                         break;
                     case Keys.F:
-                        Invoke(ShowFormSearch);
+                        ShowFormSearch();
                         break;
                     case Keys.S:
-                        Invoke(() => OnBtnSaveScriptClickHandler(false));
+                        OnBtnSaveScriptClickHandler(false);
                         break;
                     case Keys.N:
-                        Invoke(ClearEditor);
+                        ClearEditor();
                         break;
                 }
                 return;
@@ -153,28 +153,27 @@ namespace Luna.Controllers.FormEditorCtrl
                     VgcApis.Misc.UI.CloseFormIgnoreError(formSearch);
                     break;
                 case Keys.F2:
-                    Invoke(() => formSearch?.SearchPrevious());
+                    formSearch?.SearchPrevious();
                     break;
                 case Keys.F3:
-                    Invoke(() => formSearch?.SearchNext());
+                    formSearch?.SearchNext();
                     break;
                 case Keys.F4:
-                    Invoke(() => formSearch?.SearchFirst(true));
+                    formSearch?.SearchFirst(true);
                     break;
                 case Keys.F5:
-                    Invoke(btnRunScript.PerformClick);
+                    btnRunScript.PerformClick();
                     break;
                 case Keys.F6:
-                    Invoke(btnStopLuaCore.PerformClick);
+                    btnStopLuaCore.PerformClick();
                     break;
                 case Keys.F7:
-                    Invoke(btnKillLuaCore.PerformClick);
+                    btnKillLuaCore.PerformClick();
                     break;
                 case Keys.F8:
-                    Invoke(btnClearOutput.PerformClick);
+                    btnClearOutput.PerformClick();
                     break;
             }
-
         }
 
         public bool IsChanged() =>
@@ -190,7 +189,7 @@ namespace Luna.Controllers.FormEditorCtrl
 
             var coreSettings = new Models.Data.LuaCoreSetting()
             {
-                isLoadClr = true,
+                isLoadClr = isLoadClrLib,
             };
             var ctrl = new LuaCoreCtrl(true);
             ctrl.Run(settings, coreSettings, luaApis);
@@ -224,10 +223,11 @@ namespace Luna.Controllers.FormEditorCtrl
         #endregion
 
         #region Scintilla
+
+
         void Scintilla_DoubleClick(object sender, EventArgs e)
         {
-            var pos = editor.CurrentPosition;
-            var keyword = editor.GetWordFromPosition(pos);
+            var keyword = VgcApis.Misc.Utils.GetWordFromCurPos(editor);
 
             if (string.IsNullOrEmpty(keyword) || keyword.Length < 2)
             {
@@ -408,7 +408,7 @@ namespace Luna.Controllers.FormEditorCtrl
             {
                 if (a.KeyCode == Keys.Enter)
                 {
-                    GotoLine();
+                    Invoke(GotoLine);
                 }
             };
 

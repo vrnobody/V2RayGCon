@@ -15,11 +15,9 @@
             userSettings = LoadUserSettings();
         }
 
-        #region properties
-        public bool isCleaning { get; set; } = false;
-        #endregion
 
         #region public methods
+        public bool IsClosing() => setting.IsClosing();
         public void DebugLog(string content)
         {
 #if DEBUG

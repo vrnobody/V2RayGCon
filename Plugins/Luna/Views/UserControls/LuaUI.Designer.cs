@@ -96,7 +96,7 @@
             // 
             // rlbOptions
             // 
-            this.rlbOptions._BackColor = System.Drawing.Color.Khaki;
+            this.rlbOptions._BackColor = System.Drawing.Color.Wheat;
             this.rlbOptions.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rlbOptions.ForeColor = System.Drawing.Color.DimGray;
             resources.ApplyResources(this.rlbOptions, "rlbOptions");

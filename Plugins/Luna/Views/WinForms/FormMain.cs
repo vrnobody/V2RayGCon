@@ -6,7 +6,6 @@ namespace Luna.Views.WinForms
     internal partial class FormMain : Form
     {
         Controllers.FormMainCtrl.TabGeneralCtrl genCtrl;
-        Controllers.FormMainCtrl.TabOptionsCtrl optionsCtrl;
 
         Services.LuaServer luaServer;
         Services.Settings settings;
@@ -52,13 +51,7 @@ namespace Luna.Views.WinForms
                 btnImportFromFile,
                 btnExportToFile);
 
-            optionsCtrl = new Controllers.FormMainCtrl.TabOptionsCtrl(
-                chkLoadClrLib,
-                chkEnableCodeAnalyze,
-                btnSaveOptions);
-
             genCtrl.Run(luaServer);
-            optionsCtrl.Run(settings);
 
             this.FormClosing += FormClosingHandler;
             this.FormClosed += (s, a) =>
@@ -71,14 +64,9 @@ namespace Luna.Views.WinForms
         #region private methods
         private void FormClosingHandler(object sender, FormClosingEventArgs e)
         {
-            if (settings.IsShutdown())
+            if (settings.IsClosing())
             {
                 return;
-            }
-
-            if (optionsCtrl.IsChanged())
-            {
-                e.Cancel = !VgcApis.Misc.UI.Confirm(I18N.DiscardUnsavedChanges);
             }
         }
         #endregion
@@ -98,6 +86,12 @@ namespace Luna.Views.WinForms
         {
             this.Close();
         }
+        private void btnOpenEditor_Click(object sender, System.EventArgs e)
+        {
+            formMgr.ShowOrCreateFirstEditor();
+        }
         #endregion
+
+
     }
 }

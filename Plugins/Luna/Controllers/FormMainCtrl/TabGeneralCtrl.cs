@@ -1,8 +1,10 @@
 ﻿using Luna.Resources.Langs;
+using Luna.Views.UserControls;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Luna.Controllers.FormMainCtrl
@@ -14,8 +16,10 @@ namespace Luna.Controllers.FormMainCtrl
 
         public TabGeneralCtrl(
             FlowLayoutPanel flyLuaUiPanel,
+
             Button btnStopAll,
             Button btnKillAll,
+
             Button btnDelAll,
             Button btnImport,
             Button btnExport)
@@ -45,29 +49,76 @@ namespace Luna.Controllers.FormMainCtrl
 
             flyLuaUiPanel.DragDrop += (s, a) =>
             {
-                // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
-
-                var panel = s as FlowLayoutPanel;
-                var curItem = a.Data.GetData(typeof(Views.UserControls.LuaUI)) as Views.UserControls.LuaUI;
-                Point p = panel.PointToClient(new Point(a.X, a.Y));
-                var destItem = panel.GetChildAtPoint(p) as Views.UserControls.LuaUI;
-                if (curItem == null || destItem == null || curItem == destItem)
+                var data = a.Data;
+                if (data.GetDataPresent(typeof(LuaUI)))
                 {
-                    return;
+                    SwapFlyControls(s, a);
+                }
+                else if (data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    HandleFileDrop(a);
+                }
+            };
+        }
+
+        void HandleFileDrop(DragEventArgs args)
+        {
+            var filenames = args.Data.GetData(DataFormats.FileDrop) as string[];
+            if (filenames == null)
+            {
+                return;
+            }
+
+            foreach (var filename in filenames)
+            {
+                if (!File.Exists(filename))
+                {
+                    continue;
                 }
 
-                // swap index
-                var destIdx = destItem.GetIndex() + 0.5;
-                var curIdx = (curItem.GetIndex() > destIdx) ? destIdx - 0.1 : destIdx + 0.1;
-                destItem.SetIndex(destIdx);
-                curItem.SetIndex(curIdx);
-                luaServer.ResetIndex();  // this will invoke menu update event
+                string content;
+                string scriptName;
 
-                // refresh panel
-                var destPos = panel.Controls.GetChildIndex(destItem, false);
-                panel.Controls.SetChildIndex(curItem, destPos);
-                panel.Invalidate();
-            };
+                try
+                {
+                    content = File.ReadAllText(filename);
+                    scriptName = Path.GetFileName(filename);
+                }
+                catch
+                {
+                    continue;
+                }
+
+                if (!string.IsNullOrWhiteSpace(content) && !string.IsNullOrWhiteSpace(scriptName))
+                {
+                    luaServer.AddOrReplaceScript(scriptName, content);
+                }
+            }
+        }
+
+        private void SwapFlyControls(object sender, DragEventArgs args)
+        {
+            // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
+            var panel = sender as FlowLayoutPanel;
+            var curItem = args.Data.GetData(typeof(LuaUI)) as LuaUI;
+            Point p = panel.PointToClient(new Point(args.X, args.Y));
+            var destItem = panel.GetChildAtPoint(p) as Views.UserControls.LuaUI;
+            if (curItem == null || destItem == null || curItem == destItem)
+            {
+                return;
+            }
+
+            // swap index
+            var destIdx = destItem.GetIndex() + 0.5;
+            var curIdx = (curItem.GetIndex() > destIdx) ? destIdx - 0.1 : destIdx + 0.1;
+            destItem.SetIndex(destIdx);
+            curItem.SetIndex(curIdx);
+            luaServer.ResetIndex();  // this will invoke menu update event
+
+            // refresh panel
+            var destPos = panel.Controls.GetChildIndex(destItem, false);
+            panel.Controls.SetChildIndex(curItem, destPos);
+            panel.Invalidate();
         }
 
         private void BindEvents(Services.LuaServer luaServer)

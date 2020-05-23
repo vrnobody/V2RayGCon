@@ -14,26 +14,25 @@ local anz = {}
 local function DumpTable(t)
     print( table.dump(t, "    ", " >(((@> ") )
 end
-
-local function EscapeIndex(s)
-    s = tostring(s)
+    
+local function ParseVarName(name)
+    
+    if type(name) == "string" 
+        and string.match(name, "[^%w^_]") == nil 
+    then
+        if string.match(name, "[^%d^.]") == nil then
+            -- pure numbers 
+            return "[" .. name .. "]"
+        else
+            return name
+        end
+    end
+    
+    local s = tostring(name)
     if string.match(s, '"') ~= nil then
         return "['" .. s .. "']"
     end
     return '["' .. s .. '"]'
-end
-    
-local function ParseVarName(name)
-    
-    if type(name) ~= "string" then
-        return EscapeIndex(name)
-    end
-    
-    if string.match(name, "[^%w^_]") == nil then
-        return name
-    end
-        
-    return EscapeIndex(name)
 end
 
 local function InsertOnce(t, v)

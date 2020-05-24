@@ -61,6 +61,12 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region system
+        void VolumeUp();
+
+        void VolumeDown();
+
+        void VolumeMute();
+
         string GetOsVersion();
 
         string GetOsReleaseInfo();

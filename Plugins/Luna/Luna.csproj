@@ -90,6 +90,7 @@
     <Compile Include="Libs\LuaSnippet\LuaSubFuncSnippets.cs" />
     <Compile Include="Libs\LuaSnippet\ApiFunctionSnippets.cs" />
     <Compile Include="Libs\LuaSnippet\SnippetsCache.cs" />
+    <Compile Include="Libs\Sys\VolumeChanger.cs" />
     <Compile Include="Libs\Sys\WinApis.cs" />
     <Compile Include="Misc\UI.cs" />
     <Compile Include="Luna.cs" />

@@ -294,6 +294,12 @@ namespace Luna.Models.Apis
         #endregion
 
         #region ILuaSys.System
+        public void VolumeUp() => Libs.Sys.VolumeChanger.VolumeUp();
+
+        public void VolumeDown() => Libs.Sys.VolumeChanger.VolumeDown();
+
+        public void VolumeMute() => Libs.Sys.VolumeChanger.Mute();
+
         static string osReleaseId;
         public string GetOsReleaseInfo()
         {

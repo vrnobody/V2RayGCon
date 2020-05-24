@@ -39,6 +39,7 @@ using System.Runtime.InteropServices;
 /*
  * v1.3.9.4 Add feature, stop script from systray menu.
  *          Add Sys:Volume*().
+ *          Fix index out of range again.
  * v1.3.9.3 Add edit button in LuaUI.
  * v1.3.9.2 Fix index out of range bug.
  *          Choice support double click.

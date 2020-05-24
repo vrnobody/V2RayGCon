@@ -33,7 +33,8 @@ namespace VgcApis.Misc
                 return "";
             }
 
-            var start = Math.Min(editor.CurrentPosition - line.Position, text.Length) - 1;
+            var start = editor.CurrentPosition - line.Position - 1;
+            start = Clamp(start, 0, text.Length);
             var end = start;
             for (; start >= 0; start--)
             {

@@ -176,6 +176,9 @@
 (H)不在托盘菜单显示
 无 - 这不用解释了吧</value>
   </data>
+  <data name="btnEdit.ToolTip" xml:space="preserve">
+    <value>打开编辑器</value>
+  </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value>拖放调整顺序</value>
   </data>

@@ -29,14 +29,16 @@ namespace Luna.Services
         }
 
         #region public methods
+        public void CreateNewEditor() => CreateNewEditor("");
 
-        public void CreateNewEditor()
+        public void CreateNewEditor(string scriptName)
         {
             lock (formLocker)
             {
                 VgcApis.Misc.UI.Invoke(() =>
                 {
-                    var newForm = Views.WinForms.FormEditor.CreateForm(api, settings, luaServer, this);
+                    var newForm = Views.WinForms.FormEditor.CreateForm(
+                        api, settings, luaServer, this, scriptName);
                     newForm.FormClosed += (s, a) =>
                     {
                         var form = newForm; // capture

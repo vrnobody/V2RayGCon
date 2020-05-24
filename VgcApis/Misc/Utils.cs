@@ -1293,6 +1293,16 @@ namespace VgcApis.Misc
             return Path.Combine(appDir, path);
         }
 
+        public static string CopyFromClipboard()
+        {
+            try
+            {
+                return Clipboard.GetText();
+            }
+            catch { }
+            return string.Empty;
+        }
+
         public static bool CopyToClipboard(string content)
         {
             try

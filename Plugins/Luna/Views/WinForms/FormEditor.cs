@@ -12,6 +12,7 @@ namespace Luna.Views.WinForms
         Services.LuaServer luaServer;
         Services.Settings settings;
         Services.FormMgrSvc formMgr;
+        private readonly string loadScriptName;
         VgcApis.Interfaces.Services.IApiService api;
 
         ScintillaNET.Scintilla editor;
@@ -21,12 +22,15 @@ namespace Luna.Views.WinForms
             VgcApis.Interfaces.Services.IApiService api,
             Services.Settings settings,
             Services.LuaServer luaServer,
-            Services.FormMgrSvc formMgr)
+            Services.FormMgrSvc formMgr,
+            string loadScriptName)
         {
             FormEditor r = null;
             VgcApis.Misc.UI.Invoke(() =>
             {
-                r = new FormEditor(api, settings, luaServer, formMgr);
+                r = new FormEditor(
+                    api, settings, luaServer, formMgr,
+                    loadScriptName);
             });
             return r;
         }
@@ -35,10 +39,12 @@ namespace Luna.Views.WinForms
             VgcApis.Interfaces.Services.IApiService api,
             Services.Settings settings,
             Services.LuaServer luaServer,
-            Services.FormMgrSvc formMgr)
+            Services.FormMgrSvc formMgr,
+            string loadScriptName)
         {
             this.api = api;
             this.formMgr = formMgr;
+            this.loadScriptName = loadScriptName;
             this.settings = settings;
             this.luaServer = luaServer;
             InitializeComponent();
@@ -116,6 +122,11 @@ namespace Luna.Views.WinForms
                         acmCtrl?.KeyBoardShortcutHandler(a);
                     }));
             };
+
+            if (!string.IsNullOrEmpty(loadScriptName))
+            {
+                editorCtrl.LoadScript(loadScriptName);
+            }
         }
 
         #region private methods

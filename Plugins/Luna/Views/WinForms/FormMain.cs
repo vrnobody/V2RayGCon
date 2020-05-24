@@ -51,7 +51,7 @@ namespace Luna.Views.WinForms
                 btnImportFromFile,
                 btnExportToFile);
 
-            genCtrl.Run(luaServer);
+            genCtrl.Run(luaServer, formMgr);
 
             this.FormClosing += FormClosingHandler;
             this.FormClosed += (s, a) =>

@@ -38,6 +38,7 @@
             this.lbName = new System.Windows.Forms.Label();
             this.btnRemove = new System.Windows.Forms.Button();
             this.rlbOptions = new VgcApis.UserControls.RoundLabel();
+            this.btnEdit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnRun
@@ -104,6 +105,16 @@
             this.toolTip1.SetToolTip(this.rlbOptions, resources.GetString("rlbOptions.ToolTip"));
             this.rlbOptions.Click += new System.EventHandler(this.rlbOptions_Click);
             // 
+            // btnEdit
+            // 
+            this.btnEdit.BackgroundImage = global::Luna.Properties.Resources.EditWindow_16x;
+            resources.ApplyResources(this.btnEdit, "btnEdit");
+            this.btnEdit.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnEdit.Name = "btnEdit";
+            this.toolTip1.SetToolTip(this.btnEdit, resources.GetString("btnEdit.ToolTip"));
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
             // LuaUI
             // 
             resources.ApplyResources(this, "$this");
@@ -115,6 +126,7 @@
             this.Controls.Add(this.lbRunningState);
             this.Controls.Add(this.btnKill);
             this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnRun);
             this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Name = "LuaUI";
@@ -135,5 +147,6 @@
         private System.Windows.Forms.Label lbName;
         private System.Windows.Forms.Button btnRemove;
         private VgcApis.UserControls.RoundLabel rlbOptions;
+        private System.Windows.Forms.Button btnEdit;
     }
 }

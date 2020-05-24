@@ -1,4 +1,5 @@
 ﻿using Luna.Resources.Langs;
+using Luna.Services;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,15 +10,17 @@ namespace Luna.Views.UserControls
     {
         Controllers.LuaCoreCtrl luaCoreCtrl;
         Services.LuaServer luaServer;
-
+        private readonly FormMgrSvc formMgrSvc;
         VgcApis.Libs.Tasks.LazyGuy lazyUpdater;
 
         public LuaUI(
             Services.LuaServer luaServer,
+            Services.FormMgrSvc formMgrSvc,
             Controllers.LuaCoreCtrl luaCoreCtrl)
         {
             this.luaCoreCtrl = luaCoreCtrl;
             this.luaServer = luaServer;
+            this.formMgrSvc = formMgrSvc;
             InitializeComponent();
         }
 
@@ -165,6 +168,11 @@ namespace Luna.Views.UserControls
             Views.WinForms.FormLuaCoreSettings.ShowForm(luaCoreCtrl);
         }
 
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            var sn = luaCoreCtrl.name;
+            formMgrSvc.CreateNewEditor(sn);
+        }
         #endregion
 
 

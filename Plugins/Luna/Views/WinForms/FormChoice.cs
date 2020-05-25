@@ -44,6 +44,42 @@ namespace Luna.Views.WinForms
         #endregion
 
         #region private methods
+        void Choose(Keys key)
+        {
+            var kts = new Dictionary<Keys, int> {
+                { Keys.D1, 0 },
+                { Keys.D2, 1 },
+                { Keys.D3, 2 },
+                { Keys.D4, 3 },
+                { Keys.D5, 4 },
+                { Keys.D6, 5 },
+                { Keys.D7, 6 },
+                { Keys.D8, 7 },
+                { Keys.D9, 8 },
+                { Keys.D0, 9 },
+            };
+
+            if (!kts.ContainsKey(key))
+            {
+                return;
+            }
+
+            var idx = kts[key];
+            var len = radioButtons.Count;
+            if (idx >= len)
+            {
+                return;
+            }
+
+            var btn = radioButtons[idx];
+
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                btn.Focus();
+                btn.PerformClick();
+            });
+        }
+
         void SetResult()
         {
             for (int i = 0; i < radioButtons.Count; i++)
@@ -125,7 +161,8 @@ namespace Luna.Views.WinForms
 
         private void FormChoice_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
+            var kc = e.KeyCode;
+            switch (kc)
             {
                 case Keys.Escape:
                     VgcApis.Misc.UI.CloseFormIgnoreError(this);
@@ -134,6 +171,7 @@ namespace Luna.Views.WinForms
                     VgcApis.Misc.UI.Invoke(btnOk.PerformClick);
                     break;
                 default:
+                    Choose(kc);
                     break;
             }
         }

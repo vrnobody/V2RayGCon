@@ -37,7 +37,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
- * v1.3.9.4 Add feature, stop script from systray menu.
+ * v1.3.9.4 Selection hotkeys support in Misc:Choice().
+ *          Add feature, stop script from systray menu.
  *          Add Sys:Volume*().
  *          Fix index out of range again.
  * v1.3.9.3 Add edit button in LuaUI.

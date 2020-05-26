@@ -88,7 +88,7 @@ namespace Luna.Views.WinForms
         }
         private void btnOpenEditor_Click(object sender, System.EventArgs e)
         {
-            formMgr.ShowOrCreateFirstEditor();
+            formMgr.CreateNewEditor();
         }
         #endregion
 

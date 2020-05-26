@@ -26,6 +26,10 @@ namespace VgcApis.Interfaces.Lua
         // e.g. url = "http://baidu.com/" href = "/index.html" result = "http://baidu.com/index.html"
         string PatchHref(string url, string href);
 
+        string Post(string url, string text);
+
+        string Post(string url, string text, int timeout);
+
         // using bing.com to search sth.
         string Search(string keywords, int first, int proxyPort);
 

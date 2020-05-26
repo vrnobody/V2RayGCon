@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Luna.Models.Apis.Components
 {
@@ -18,6 +22,31 @@ namespace Luna.Models.Apis.Components
         }
 
         #region ILuaWeb thinggy
+        public string Post(string url, string text) => Post(url, text, 20000);
+
+        public string Post(string url, string text, int timeout)
+        {
+            timeout = Math.Max(1, timeout);
+
+            try
+            {
+                var t = Task.Run(async () =>
+                {
+                    using (var client = new HttpClient())
+                    {
+                        var token = new CancellationTokenSource(timeout).Token;
+                        var content = new StringContent(text);
+                        var resp = await client.PostAsync(url, content, token);
+                        return await resp.Content.ReadAsStringAsync();
+                    }
+                });
+
+                return t.GetAwaiter().GetResult();
+            }
+            catch { }
+            return null;
+        }
+
         public bool Tcping(string url, int milSec) =>
             Tcping(url, milSec, -1);
 

@@ -59,6 +59,8 @@ namespace VgcApis.Models.Consts
                 typeof(Interfaces.Lua.ILuaMisc),
                 typeof(Interfaces.Lua.ILuaServer),
                 typeof(Interfaces.Lua.ILuaWeb),
+                typeof(Interfaces.Lua.ILuaMailBox),
+                typeof(Interfaces.Lua.ILuaMail),
                 typeof(Interfaces.ICoreServCtrl),
                 typeof(Interfaces.CoreCtrlComponents.IConfiger),
                 typeof(Interfaces.CoreCtrlComponents.ICoreCtrl),

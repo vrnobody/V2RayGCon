@@ -70,6 +70,30 @@ namespace Luna.Models.Apis
         }
         #endregion
 
+        #region ILuaSys.Net
+        List<SysCmpos.HttpServer> httpServs = new List<SysCmpos.HttpServer>();
+
+        public bool CreateHttpServer(
+            string url,
+            VgcApis.Interfaces.Lua.ILuaMailBox inbox,
+            VgcApis.Interfaces.Lua.ILuaMailBox outbox)
+        {
+            try
+            {
+                var serv = new SysCmpos.HttpServer(url, inbox, outbox);
+                serv.Start();
+                lock (httpServs)
+                {
+                    httpServs.Add(serv);
+                }
+                return true;
+            }
+            catch { }
+            return false;
+        }
+
+        #endregion
+
         #region ILluaSys.Hotkey
         public string GetAllKeyNames()
         {
@@ -436,6 +460,21 @@ namespace Luna.Models.Apis
             }
         }
 
+        void CloseAllHttpServers()
+        {
+            List<SysCmpos.HttpServer> servs;
+            lock (httpServs)
+            {
+                servs = httpServs.ToList();
+                httpServs.Clear();
+            }
+
+            foreach (var s in servs)
+            {
+                s.Stop();
+            }
+        }
+
         void CloseAllMailBox()
         {
             List<VgcApis.Interfaces.Lua.ILuaMailBox> boxes;
@@ -468,6 +507,7 @@ namespace Luna.Models.Apis
         protected override void Cleanup()
         {
             RemoveAllKeyboardHooks();
+            CloseAllHttpServers();
             CloseAllMailBox();
             KillAllProcesses();
         }

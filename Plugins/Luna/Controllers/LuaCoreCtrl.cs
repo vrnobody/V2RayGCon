@@ -132,7 +132,6 @@ namespace Luna.Controllers
             }
         }
 
-
         void InvokeOnStateChangeIgnoreError()
         {
             try
@@ -144,7 +143,8 @@ namespace Luna.Controllers
         #endregion
 
         #region public methods
-        public string GetScript() => coreSetting.script;
+        public Models.Data.LuaCoreSetting GetCoreSettings() =>
+            coreSetting;
 
         public void SetScriptName(string name)
         {

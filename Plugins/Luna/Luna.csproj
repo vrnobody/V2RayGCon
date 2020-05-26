@@ -101,6 +101,7 @@
     <Compile Include="Models\Apis\Components\Web.cs" />
     <Compile Include="Models\Apis\LuaApis.cs" />
     <Compile Include="Models\Apis\LuaSys.cs" />
+    <Compile Include="Models\Apis\SysCmpos\HttpServer.cs" />
     <Compile Include="Models\Apis\SysCmpos\MailBox.cs" />
     <Compile Include="Models\Apis\SysCmpos\PostOffice.cs" />
     <Compile Include="Models\Data\LuaCoreSetting.cs" />

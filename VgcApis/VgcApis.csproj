@@ -65,6 +65,7 @@
     <Compile Include="Interfaces\Lua\ILuaSys.cs" />
     <Compile Include="Interfaces\Lua\ILuaMail.cs" />
     <Compile Include="Interfaces\Lua\ILuaMailBox.cs" />
+    <Compile Include="Interfaces\Lua\IRunnable.cs" />
     <Compile Include="Interfaces\Lua\IWinFormControl.cs" />
     <Compile Include="Libs\Infr\Recorder.cs" />
     <Compile Include="Libs\Streams\BitStream.cs" />

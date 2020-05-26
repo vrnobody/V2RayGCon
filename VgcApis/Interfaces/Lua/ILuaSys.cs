@@ -6,7 +6,7 @@ namespace VgcApis.Interfaces.Lua
     public interface ILuaSys
     {
         #region Net
-        bool CreateHttpServer(string url, ILuaMailBox inbox, ILuaMailBox outbox);
+        IRunnable CreateHttpServer(string url, ILuaMailBox inbox, ILuaMailBox outbox);
         #endregion
 
         #region keyboard hotkey

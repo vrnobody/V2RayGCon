@@ -73,7 +73,7 @@ namespace Luna.Models.Apis
         #region ILuaSys.Net
         List<SysCmpos.HttpServer> httpServs = new List<SysCmpos.HttpServer>();
 
-        public bool CreateHttpServer(
+        public VgcApis.Interfaces.Lua.IRunnable CreateHttpServer(
             string url,
             VgcApis.Interfaces.Lua.ILuaMailBox inbox,
             VgcApis.Interfaces.Lua.ILuaMailBox outbox)
@@ -81,15 +81,17 @@ namespace Luna.Models.Apis
             try
             {
                 var serv = new SysCmpos.HttpServer(url, inbox, outbox);
-                serv.Start();
                 lock (httpServs)
                 {
                     httpServs.Add(serv);
                 }
-                return true;
+                return serv;
             }
-            catch { }
-            return false;
+            catch (Exception ex)
+            {
+                luaApis.SendLog(ex.ToString());
+                throw;
+            }
         }
 
         #endregion

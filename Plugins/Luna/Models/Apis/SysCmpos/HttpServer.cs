@@ -5,11 +5,11 @@ using System.Net;
 
 namespace Luna.Models.Apis.SysCmpos
 {
-    public class HttpServer : VgcApis.BaseClasses.Disposable
+    public class HttpServer :
+        VgcApis.BaseClasses.Disposable,
+        VgcApis.Interfaces.Lua.IRunnable
     {
-
         HttpListener serv;
-
 
         private readonly VgcApis.Interfaces.Lua.ILuaMailBox inbox;
         private readonly VgcApis.Interfaces.Lua.ILuaMailBox outbox;
@@ -26,7 +26,7 @@ namespace Luna.Models.Apis.SysCmpos
         }
 
         #region public methods
-        public bool Start()
+        public void Start()
         {
             try
             {
@@ -34,10 +34,8 @@ namespace Luna.Models.Apis.SysCmpos
                 serv.Start();
                 HandleConnOut();
                 HandleConnIn();
-                return true;
             }
             catch { }
-            return false;
         }
 
         public void Stop()

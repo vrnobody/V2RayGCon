@@ -98,8 +98,10 @@ table.dump = function(t, indent, header, level)
     if tt ~= "table" then
         if tt == "string" then
             return '"' .. t .. '"'
-        else
+        elseif tt == "nil" or tt == "boolean" or tt == "number" then
             return tostring(t)
+        else
+            return tt
         end
     end
     

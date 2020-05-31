@@ -282,6 +282,8 @@ namespace V2RayGCon.Misc
                 scintilla.Styles[Style.LineNumber].ForeColor = Color.DarkGray;
             }
 
+            VgcApis.Misc.UI.SetSearchIndicator(scintilla);
+
             return scintilla;
         }
 
@@ -332,7 +334,7 @@ namespace V2RayGCon.Misc
             var text = string.Format("{0}\n{1}", msg, url);
             if (Confirm(text))
             {
-                VgcApis.Misc.Utils.RunInBackground(() => System.Diagnostics.Process.Start(url));
+                VgcApis.Misc.Utils.RunInBackground(() => Process.Start(url));
             }
         }
 

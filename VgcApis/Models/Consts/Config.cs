@@ -4,16 +4,17 @@ namespace VgcApis.Models.Consts
 {
     public static class Config
     {
+        public static int QuickSwitchMenuItemNum = 9;
+
         public static double CustomSpeedtestMeanWeight = 0.6;
         public static double FloatPointNumberTolerance = 0.000001;
 
-        public static int ConfigEditorServerMenuGroupSize = 30;
-        public static int NotifyIconServerMenuGroupSize = 25;
-        public static int FormMainStatusPagerMenuGroupSize = 25;
+        public static int MenuItemGroupSize = 16;
 
         public const string ProtocolNameVmess = @"vmess";
-        public const string ProtocolNameSocks = @"socks";
         public const string ProtocolNameSs = @"shadowsocks";
+        public const string ProtocolNameSocks = @"socks";
+        public const string ProtocolNameHttp = @"http";
 
         public const string JsonArray = @"[]";
         public const string JsonObject = @"{}";

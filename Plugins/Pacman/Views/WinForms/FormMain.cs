@@ -8,7 +8,17 @@ namespace Pacman.Views.WinForms
         Services.Settings settings;
         Controllers.FormMainCtrl formMainCtrl;
 
-        public FormMain(Services.Settings settings)
+        public static FormMain CreateForm(Services.Settings setting)
+        {
+            FormMain r = null;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                r = new FormMain(setting);
+            });
+            return r;
+        }
+
+        FormMain(Services.Settings settings)
         {
             this.settings = settings;
             InitializeComponent();
@@ -51,6 +61,13 @@ namespace Pacman.Views.WinForms
                 btnSelectNone,
                 btnDeleteSelected,
                 btnRefreshSelected);
+        }
+        #endregion
+        #region UI events
+
+        private void flyContents_Scroll(object sender, ScrollEventArgs e)
+        {
+            flyContents.Refresh();
         }
         #endregion
     }

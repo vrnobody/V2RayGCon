@@ -11,9 +11,22 @@ namespace ProxySetter.Views.WinForms
         Services.ServerTracker servTracker;
 
         Controllers.FormVGCPluginCtrl formVGCPluginCtrl;
-        System.Windows.Forms.Timer updateSysProxyInfoTimer = null;
+        Timer updateSysProxyInfoTimer = null;
 
-        public FormMain(
+        public static FormMain CreateForm(
+            Services.PsSettings setting,
+            Services.PacServer pacServer,
+            Services.ServerTracker servTracker)
+        {
+            FormMain r = null;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                r = new FormMain(setting, pacServer, servTracker);
+            });
+            return r;
+        }
+
+        FormMain(
             Services.PsSettings setting,
             Services.PacServer pacServer,
             Services.ServerTracker servTracker)
@@ -25,7 +38,7 @@ namespace ProxySetter.Views.WinForms
             this.FormClosing += (s, a) =>
             {
                 var confirm = true;
-                if (!setting.isCleaning && !this.formVGCPluginCtrl.IsOptionsSaved())
+                if (!setting.IsClosing() && !this.formVGCPluginCtrl.IsOptionsSaved())
                 {
                     confirm = VgcApis.Misc.UI.Confirm(I18N.ConfirmCloseWinWithoutSave);
                 }

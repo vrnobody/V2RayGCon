@@ -9,6 +9,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
 {
     class FlyServer : FormMainComponentController
     {
+        int statusBarUpdateInterval = 250;
+        int flyPanelUpdateInterval = 250;
+
         readonly Form formMain;
         readonly FlowLayoutPanel flyPanel;
         readonly Services.Servers servers;
@@ -17,7 +20,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
         readonly ToolStripStatusLabel tslbTotal, tslbPrePage, tslbNextPage;
         readonly ToolStripDropDownButton tsdbtnPager;
 
-        readonly VgcApis.Libs.Tasks.LazyGuy lazyStatusBarUpdater, lazySearchResultDisplayer, lazyUiRefresher;
+        readonly VgcApis.Libs.Tasks.LazyGuy
+            lazyStatusBarUpdater,
+            lazySearchResultDisplayer,
+            lazyFlyPanelUpdater;
 
         readonly Views.UserControls.WelcomeUI welcomeItem = null;
 
@@ -49,13 +55,27 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             this.welcomeItem = new Views.UserControls.WelcomeUI();
 
-            lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateStatusBarNow, 300);
-            lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(ShowSearchResultNow, 1000);
-            lazyUiRefresher = new VgcApis.Libs.Tasks.LazyGuy(() => RefreshUI(), 300);
+            lazyFlyPanelUpdater = new VgcApis.Libs.Tasks.LazyGuy(
+                RefreshFlyPanelWorker, flyPanelUpdateInterval, 2000)
+            {
+                Name = "FormMain.RefreshFlyPanelWorker()",
+            };
+
+            lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(
+                UpdateStatusBarWorker, statusBarUpdateInterval, 3000)
+            {
+                Name = "FormMain.UpdateStatusBarWorker()", // disable debug logging
+            };
+
+            lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(
+                ShowSearchResultNow, 1300, 1000)
+            {
+                Name = "FormMain.ShowSearchResultNow()",
+            };
 
             InitFormControls(lbMarkFilter, miResizeFormMain);
             BindDragDropEvent();
-            RefreshUI();
+            RefreshFlyPanelLater();
             WatchServers();
         }
 
@@ -81,121 +101,120 @@ namespace V2RayGCon.Controllers.FormMainComponent
         public void LoopThroughAllServerUI(Action<Views.UserControls.ServerUI> operation)
         {
             var controls = GetAllServerControls();
-
-            controls.Select(e =>
+            foreach (var control in controls)
             {
-                VgcApis.Misc.UI.RunInUiThread(formMain, () =>
-                {
-                    operation(e);
-                });
-                return true;
-            })
-            .ToList();  // make sure operation is executed
+                VgcApis.Misc.UI.Invoke(() => operation?.Invoke(control));
+            }
         }
 
         public override void Cleanup()
         {
             UnwatchServers();
 
-            lazyUiRefresher?.Quit();
-            lazyStatusBarUpdater?.Quit();
-            lazySearchResultDisplayer?.Quit();
+            lazyFlyPanelUpdater?.Dispose();
+            lazyStatusBarUpdater?.Dispose();
+            lazySearchResultDisplayer?.Dispose();
 
-            RemoveAllServersConrol(true);
+            RemoveAllServersConrol();
         }
 
-        public void RemoveAllServersConrol(bool blocking = false)
+        public void RemoveAllServersConrol()
         {
-            var controlList = GetAllServerControls();
-
-            VgcApis.Misc.UI.RunInUiThread(formMain, () =>
+            Action worker = () =>
             {
+                var controlList = GetAllServerControls();
                 flyPanel.SuspendLayout();
                 flyPanel.Controls.Clear();
                 flyPanel.ResumeLayout();
-            });
-
-            if (blocking)
-            {
-                DisposeFlyPanelControlByList(controlList);
-            }
-            else
-            {
                 VgcApis.Misc.Utils.RunInBackground(
-                    () => DisposeFlyPanelControlByList(
-                        controlList));
-            }
+                    () => DisposeFlyPanelControlByList(controlList));
+            };
+            VgcApis.Misc.UI.Invoke(worker);
         }
 
-        public void UpdateStatusBarLater() =>
-            lazyStatusBarUpdater?.DoItLater();
-
-        readonly VgcApis.Libs.Tasks.Bar refreshUiLock = new VgcApis.Libs.Tasks.Bar();
-        public override bool RefreshUI()
+        void UpdateStatusBarWorker(Action done)
         {
-            if (!refreshUiLock.Install())
-            {
-                lazyUiRefresher?.DoItLater();
-                return false;
-            }
+            SetSearchKeywords();
 
-            RefreshUiThen(() => refreshUiLock.Remove());
-            return true;
+            var start = DateTime.Now.Millisecond;
+            int filteredListCount = GetFilteredList().Count;
+            int allServersCount = servers.CountAllServers();
+            int serverControlCount = GetAllServerControls().Count();
+
+            // may cause dead lock in UI thread
+            int selectedServersCount = servers.CountSelectedServers();
+
+            Action worker = () =>
+            {
+                UpdateStatusBarText(filteredListCount, allServersCount, selectedServersCount, serverControlCount);
+                UpdateStatusBarPageSelectorMenuItemsOndemand();
+                UpdateStatusBarPagingButtons();
+
+                // prevent formain lost focus after click next page
+                if (isFocusOnFormMain)
+                {
+                    formMain.Focus();
+                    isFocusOnFormMain = false;
+                }
+            };
+
+            Action next = () =>
+            {
+                var relex = statusBarUpdateInterval - (DateTime.Now.Millisecond - start);
+                VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
+                done();
+            };
+
+            VgcApis.Misc.UI.InvokeThen(worker, next);
         }
+
+        public void RefreshFlyPanelLater() => lazyFlyPanelUpdater?.Postpone();
+
         #endregion
 
         #region private method
-        void RefreshUiThen(Action next = null)
+        void RefreshFlyPanelWorker(Action done)
         {
-            RefreshServersUiThen(next);
-            UpdateStatusBarLater();
-        }
-
-        private void RefreshServersUiThen(Action next = null)
-        {
+            var start = DateTime.Now.Millisecond;
             servers.ResetIndex();
-
-            var flatList = this.GetFilteredList();
+            var flatList = GetFilteredList();
             var pagedList = GenPagedServerList(flatList);
+            var showWelcome = servers.CountAllServers() == 0;
+            List<Views.UserControls.ServerUI> removed = null;
 
-            VgcApis.Misc.UI.RunInUiThread(formMain, () =>
+            Action next = () =>
             {
-                try
+                lazyStatusBarUpdater?.Postpone();
+                if (removed != null)
                 {
-                    ClearFlyPanel(pagedList);
-                    FillFlyPanelWith(ref pagedList);
+                    DisposeFlyPanelControlByList(removed);
                 }
-                catch { }
-                finally
+                var relex = flyPanelUpdateInterval - (DateTime.Now.Millisecond - start);
+                VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
+                done();
+            };
+
+            Action worker = () =>
+            {
+                flyPanel.SuspendLayout();
+                removed = GetAllServerControls();
+                flyPanel.Controls.Clear();
+                if (showWelcome)
                 {
-                    next?.Invoke();
+                    flyPanel.Controls.Add(welcomeItem);
                 }
-            });
-        }
+                else
+                {
+                    foreach (var serv in pagedList)
+                    {
+                        var ui = new Views.UserControls.ServerUI(serv);
+                        flyPanel.Controls.Add(ui);
+                    }
+                }
+                flyPanel.ResumeLayout();
+            };
 
-        private void FillFlyPanelWith(ref List<VgcApis.Interfaces.ICoreServCtrl> pagedList)
-        {
-            if (pagedList.Count <= 0 && string.IsNullOrWhiteSpace(this.searchKeywords))
-            {
-                LoadWelcomeItem();
-            }
-            else
-            {
-                RemoveDeletedServerItems(ref pagedList);
-                AddNewServerItems(pagedList);
-            }
-        }
-
-        private void ClearFlyPanel(List<VgcApis.Interfaces.ICoreServCtrl> pagedList)
-        {
-            if (pagedList.Count > 0)
-            {
-                RemoveWelcomeItem();
-            }
-            else
-            {
-                RemoveAllServersConrol();
-            }
+            VgcApis.Misc.UI.InvokeThen(worker, next);
         }
 
         private void WatchServers()
@@ -232,45 +251,17 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void OnServerPropertyChangeHandler(object sender, EventArgs args)
         {
-            UpdateStatusBarLater();
+            lazyStatusBarUpdater?.Postpone();
         }
 
-        void UpdateStatusBarNow()
-        {
-            int filteredListCount = GetFilteredList().Count;
-            int allServersCount = servers.CountAllServers();
-            int selectedServersCount = servers.CountSelectedServers(); // may cause dead lock in UI thread
-            int serverControlCount = GetAllServerControls().Count();
-
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(formMain, () =>
-            {
-                UpdateStatusBarText(
-                    filteredListCount,
-                    allServersCount,
-                    selectedServersCount,
-                    serverControlCount);
-
-                UpdateStatusBarPageSelectorMenuItemsOndemand();
-                UpdateStatusBarPagingButtons();
-
-                // prevent formain lost focus after click next page
-                if (isFocusOnFormMain)
-                {
-                    formMain.Focus();
-                    isFocusOnFormMain = false;
-                }
-            });
-
-            HighLightSearchKeywordsNow();
-        }
-
-
-
-        void HighLightSearchKeywordsNow()
+        void SetSearchKeywords()
         {
             // bug
             var controls = GetAllServerControls();
-            controls.ForEach(c => c.SetKeywords(searchKeywords));
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                controls.ForEach(c => c.SetKeywords(searchKeywords));
+            });
         }
 
         private void UpdateStatusBarText(
@@ -304,13 +295,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
             UpdateStatusBarPagerMenuCache();
             var groupedMenu = VgcApis.Misc.UI.AutoGroupMenuItems(
                 pagerMenuItemCache,
-                VgcApis.Models.Consts.Config.FormMainStatusPagerMenuGroupSize);
+                VgcApis.Models.Consts.Config.MenuItemGroupSize);
             pagerMenu.AddRange(groupedMenu.ToArray());
         }
 
         private void UpdateStatusBarPagingButtons()
         {
             var showPager = totalPageNumber > 1;
+            var cpn = VgcApis.Misc.Utils.Clamp(curPageNumber, 0, totalPageNumber);
 
             if (tsdbtnPager.Visible != showPager)
             {
@@ -319,17 +311,13 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 tslbPrePage.Visible = showPager;
             }
 
-            tslbPrePage.Enabled = curPageNumber != 0;
-            tslbNextPage.Enabled = totalPageNumber > 1 && curPageNumber != totalPageNumber - 1;
-
-            tsdbtnPager.Text = string.Format(
-                    I18N.StatusBarPagerInfoTpl,
-                    curPageNumber + 1,
-                    totalPageNumber);
+            tslbPrePage.Enabled = cpn > 0;
+            tslbNextPage.Enabled = totalPageNumber > 1 && cpn < totalPageNumber - 1;
+            tsdbtnPager.Text = string.Format(I18N.StatusBarPagerInfoTpl, cpn + 1, totalPageNumber);
 
             for (int i = 0; i < pagerMenuItemCache.Count; i++)
             {
-                pagerMenuItemCache[i].Checked = curPageNumber == i;
+                pagerMenuItemCache[i].Checked = cpn == i;
             }
         }
 
@@ -352,7 +340,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     {
                         curPageNumber = pn;
                         isFocusOnFormMain = true;
-                        RefreshUI();
+                        RefreshFlyPanelLater();
                     });
                 pagerMenuItemCache.Add(item);
             }
@@ -368,10 +356,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
             // 修改搜索项时应该清除选择,否则会有可显示列表外的选中项
             servers.SetAllServerIsSelected(false);
 
-            RefreshUI();
+            lazyFlyPanelUpdater?.Postpone();
         }
 
-        void ShowSearchResultLater() => lazySearchResultDisplayer?.DoItLater();
+        void ShowSearchResultLater() => lazySearchResultDisplayer?.Postpone();
 
         private void InitFormControls(
             ToolStripLabel lbMarkFilter,
@@ -382,14 +370,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 curPageNumber--;
                 isFocusOnFormMain = true;
-                RefreshUI();
+                lazyFlyPanelUpdater?.Postpone();
             };
 
             tslbNextPage.Click += (s, a) =>
             {
                 curPageNumber++;
                 isFocusOnFormMain = true;
-                RefreshUI();
+                lazyFlyPanelUpdater?.Postpone();
             };
 
             lbMarkFilter.Click += (s, a) => this.cboxMarkFilter.Text = string.Empty;
@@ -434,17 +422,13 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             cboxMarkFilter.DropDown += (s, e) =>
             {
-                // cboxMarkFilter has no Invoke method.
-                VgcApis.Misc.UI.RunInUiThread(formMain, () =>
-                {
-                    UpdateMarkFilterItemList(cboxMarkFilter);
-                    Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMarkFilter);
-                });
+                UpdateMarkFilterItemList(cboxMarkFilter);
+                Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMarkFilter);
             };
 
             cboxMarkFilter.TextChanged += (s, a) =>
             {
-                this.searchKeywords = cboxMarkFilter.Text;
+                searchKeywords = cboxMarkFilter.Text;
                 ShowSearchResultLater();
             };
         }
@@ -452,16 +436,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void UpdateMarkFilterItemList(ToolStripComboBox marker)
         {
             marker.Items.Clear();
-            marker.Items.AddRange(
-                servers.GetMarkList().ToArray());
-        }
-
-        void AddNewServerItems(List<VgcApis.Interfaces.ICoreServCtrl> serverList)
-        {
-            flyPanel.Controls.AddRange(
-                serverList
-                    .Select(s => new Views.UserControls.ServerUI(s))
-                    .ToArray());
+            marker.Items.AddRange(servers.GetMarkList());
         }
 
         void DisposeFlyPanelControlByList(List<Views.UserControls.ServerUI> controlList)
@@ -470,6 +445,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 control.Cleanup();
             }
+
+            /* let runtime handle dispose
             VgcApis.Misc.UI.RunInUiThread(formMain, () =>
             {
                 foreach (var control in controlList)
@@ -477,21 +454,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     control.Dispose();
                 }
             });
-        }
-
-        void RemoveDeletedServerItems(
-            ref List<VgcApis.Interfaces.ICoreServCtrl> serverList)
-        {
-            var deletedControlList = GetDeletedControlList(serverList);
-
-            flyPanel.SuspendLayout();
-            foreach (var control in deletedControlList)
-            {
-                flyPanel.Controls.Remove(control);
-            }
-
-            flyPanel.ResumeLayout();
-            VgcApis.Misc.Utils.RunInBackground(() => DisposeFlyPanelControlByList(deletedControlList));
+            */
         }
 
         List<Views.UserControls.ServerUI> GetDeletedControlList(
@@ -513,18 +476,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             return result;
         }
 
-        void RemoveWelcomeItem()
-        {
-            var list = flyPanel.Controls
-                .OfType<Views.UserControls.WelcomeUI>()
-                .Select(e =>
-                {
-                    flyPanel.Controls.Remove(e);
-                    return true;
-                })
-                .ToList();
-        }
-
         List<Views.UserControls.ServerUI> GetAllServerControls() => flyPanel.Controls
                 .OfType<Views.UserControls.ServerUI>()
                 .ToList();
@@ -532,27 +483,16 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void OnRequireFlyPanelReloadHandler(object sender, EventArgs args) =>
             ReloadFlyPanel();
+
         void ReloadFlyPanel()
         {
             RemoveAllServersConrol();
-            RefreshUI();
+            RefreshFlyPanelLater();
         }
 
         void OnRequireFlyPanelUpdateHandler(object sender, EventArgs args)
         {
-            RefreshUI();
-        }
-
-        private void LoadWelcomeItem()
-        {
-            var welcome = flyPanel.Controls
-                .OfType<Views.UserControls.WelcomeUI>()
-                .FirstOrDefault();
-
-            if (welcome == null)
-            {
-                flyPanel.Controls.Add(welcomeItem);
-            }
+            lazyFlyPanelUpdater?.Postpone();
         }
 
         private void BindDragDropEvent()
@@ -565,42 +505,32 @@ namespace V2RayGCon.Controllers.FormMainComponent
             flyPanel.DragDrop += (s, a) =>
             {
                 // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
-
-                if (!(a.Data.GetData(typeof(Views.UserControls.ServerUI)) is Views.UserControls.ServerUI serverItemMoving))
+                if (!(a.Data.GetData(typeof(Views.UserControls.ServerUI)) is Views.UserControls.ServerUI curItem))
                 {
                     return;
                 }
 
                 var panel = s as FlowLayoutPanel;
-                Point p = panel.PointToClient(new Point(a.X, a.Y));
-                var controlDest = panel.GetChildAtPoint(p);
-                int index = panel.Controls.GetChildIndex(controlDest, false);
-                panel.Controls.SetChildIndex(serverItemMoving, index);
-                var serverItemDest = controlDest as Views.UserControls.ServerUI;
-                MoveServerListItem(ref serverItemMoving, ref serverItemDest);
+                Point cursor = panel.PointToClient(new Point(a.X, a.Y));
+                var destItem = panel.GetChildAtPoint(cursor) as Views.UserControls.ServerUI;
+                if (destItem == null)
+                {
+                    return;
+                }
+
+                var destIdx = destItem.GetIndex();
+                var curIdx = curItem.GetIndex();
+                destIdx = destIdx - 0.5;
+                curIdx = curIdx < destIdx ? destIdx + 0.2 : destIdx - 0.2;
+                destItem.SetIndex(destIdx);
+                curItem.SetIndex(curIdx);
+                servers.ResetIndex();
+
+                // refresh panel
+                var destPos = panel.Controls.GetChildIndex(destItem, false);
+                panel.Controls.SetChildIndex(curItem, destPos);
+                panel.Invalidate();
             };
-        }
-
-        void MoveServerListItem(ref Views.UserControls.ServerUI moving, ref Views.UserControls.ServerUI destination)
-        {
-            if (moving == null || destination == null)
-            {
-                ReloadFlyPanel();
-                return;
-            }
-
-            var indexDest = destination.GetIndex();
-            var indexMoving = moving.GetIndex();
-            if (indexDest == indexMoving)
-            {
-                return;
-            }
-
-            moving.SetIndex(
-                indexDest < indexMoving ?
-                indexDest - 0.5 :
-                indexDest + 0.5);
-            RefreshUI();
         }
         #endregion
     }

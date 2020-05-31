@@ -147,6 +147,9 @@
   <data name="rlbInboundMode.ToolTip" xml:space="preserve">
     <value>Inbound信息</value>
   </data>
+  <data name="rlbRemark.ToolTip" xml:space="preserve">
+    <value>备注</value>
+  </data>
   <data name="startToolStripMenuItem.Text" xml:space="preserve">
     <value>开启</value>
   </data>
@@ -196,7 +199,7 @@
     <value>复制</value>
   </data>
   <data name="showSettingWindowToolStripMenuItem.Text" xml:space="preserve">
-    <value>修改设置</value>
+    <value>设定</value>
   </data>
   <data name="showSettingWindowToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>调出修改设置窗口</value>
@@ -205,7 +208,7 @@
     <value>编辑配置</value>
   </data>
   <data name="debugToolStripMenuItem.Text" xml:space="preserve">
-    <value>最终配置</value>
+    <value>查看最终配置</value>
   </data>
   <data name="debugToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>传给v2ray-core的最终配置</value>
@@ -220,7 +223,7 @@
     <value>速度测试</value>
   </data>
   <data name="runSpeedTestToolStripMenuItem1.ToolTipText" xml:space="preserve">
-    <value>下载google主页所需时间</value>
+    <value>下载测试网页所需的时间</value>
   </data>
   <data name="ctxMenuStripMore.ToolTip" xml:space="preserve">
     <value />

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZXing;
 using ZXing.QrCode;
@@ -132,7 +131,7 @@ namespace V2RayGCon.Libs.QRCode
         static void ShowResult(Result result, Point screenLocation, Rectangle winRect, Rectangle screenRect, Action<string> success)
         {
             var link = result.Text;
-            Debug.WriteLine("Read: " + Misc.Utils.CutStr(link, 32));
+            Debug.WriteLine("Read: " + VgcApis.Misc.Utils.AutoEllipsis(link, 32));
 
             var qrcodeRect = GetQRCodeRect(result, winRect, screenRect);
 
@@ -181,30 +180,33 @@ namespace V2RayGCon.Libs.QRCode
 
         public static void ScanQRCode(Action<string> success, Action fail)
         {
-            Task.Delay(100).Wait();
-
-            foreach (var screen in Screen.AllScreens)
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                var parts = 8;
-                var scanSize = (int)(0.5 * parts);
+                VgcApis.Misc.Utils.Sleep(100);
 
-                // Debug.WriteLine("res: {0}x{1}", screen.Bounds.Width, screen.Bounds.Height);
-
-                var scanRectList = GenSquareScanWinList(new Point(
-                    screen.Bounds.Width,
-                    screen.Bounds.Height),
-                    parts, scanSize);
-
-                scanRectList.AddRange(GenZoomScanWinList(new Point(
-                    screen.Bounds.Width,
-                    screen.Bounds.Height)));
-
-                if (ScanScreen(screen, scanRectList, success))
+                foreach (var screen in Screen.AllScreens)
                 {
-                    return;
+                    var parts = 8;
+                    var scanSize = (int)(0.5 * parts);
+
+                    // Debug.WriteLine("res: {0}x{1}", screen.Bounds.Width, screen.Bounds.Height);
+
+                    var scanRectList = GenSquareScanWinList(new Point(
+                        screen.Bounds.Width,
+                        screen.Bounds.Height),
+                        parts, scanSize);
+
+                    scanRectList.AddRange(GenZoomScanWinList(new Point(
+                        screen.Bounds.Width,
+                        screen.Bounds.Height)));
+
+                    if (ScanScreen(screen, scanRectList, success))
+                    {
+                        return;
+                    }
                 }
-            }
-            fail?.Invoke();
+                fail?.Invoke();
+            });
         }
 
         static Rectangle GetQRCodeRect(Result result, Rectangle winRect, Rectangle screenRect)
@@ -238,23 +240,15 @@ namespace V2RayGCon.Libs.QRCode
 
         static void ShowSplashForm(Rectangle win, Rectangle target, Action done)
         {
-            void ShowFormInBackground()
+            VgcApis.Misc.UI.Invoke(() =>
             {
                 var qrSplash = new QRCodeSplashForm();
                 qrSplash.Location = win.Location;
                 qrSplash.Size = win.Size;
                 qrSplash.TargetRect = target;
                 qrSplash.FormClosed += (s, a) => done();
-
-                try
-                {
-                    qrSplash.Show();
-                }
-                catch { }
-                Application.Run();
-            }
-
-            VgcApis.Misc.Utils.RunInBackground(() => ShowFormInBackground());
+                qrSplash.Show();
+            });
         }
 
         static bool ScanWindow(Bitmap screenshot, Point screenLocation, Rectangle winRect, Rectangle screenRect, Action<string> success)

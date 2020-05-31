@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Libs.Nets
@@ -138,7 +137,7 @@ namespace V2RayGCon.Libs.Nets
             var pluginServ = Services.PluginsServer.Instance;
 
             pluginServ.StopAllPlugins();
-            VgcApis.Misc.Utils.Sleep(300);
+            VgcApis.Misc.Utils.Sleep(3000);
 
             var activeServerList = servers.GetRunningServers();
             servers.StopAllServersThen(() =>
@@ -186,8 +185,7 @@ namespace V2RayGCon.Libs.Nets
                 }
                 catch
                 {
-                    VgcApis.Misc.Utils.RunInBackground(
-                        () => MessageBox.Show(I18N.CreateFolderFail));
+                    VgcApis.Misc.UI.MsgBoxAsync(I18N.CreateFolderFail);
                     return null;
                 }
             }
@@ -242,6 +240,7 @@ namespace V2RayGCon.Libs.Nets
             }
 
             webClient = new WebClient();
+            webClient.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
 
             if (proxyPort > 0)
             {

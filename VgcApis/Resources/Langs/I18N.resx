@@ -120,11 +120,44 @@
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Cut" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="Done" xml:space="preserve">
     <value>Done.</value>
   </data>
+  <data name="KeywordIsTooLong" xml:space="preserve">
+    <value>Max keyword length is 100 character.</value>
+  </data>
+  <data name="NoMatchResult" xml:space="preserve">
+    <value>No match result!</value>
+  </data>
+  <data name="Paste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="PlsDoSearchFirst" xml:space="preserve">
+    <value>Please do search first.</value>
+  </data>
+  <data name="Redo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="ReplacedCount" xml:space="preserve">
+    <value>Replaced {0} times.</value>
+  </data>
   <data name="SaveAs" xml:space="preserve">
     <value>Save as</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>Undo</value>
   </data>
   <data name="WriteFileFail" xml:space="preserve">
     <value>Write to file fail!</value>

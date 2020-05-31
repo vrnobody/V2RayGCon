@@ -7,15 +7,25 @@ namespace V2RayGCon.Views.WinForms
     {
         #region Sigleton
         static FormModifyServerSettings _instant;
+        static readonly object formInstanLocker = new object();
         public static void ShowForm(ICoreServCtrl coreServ)
         {
-            if (_instant == null || _instant.IsDisposed)
+            lock (formInstanLocker)
             {
-                _instant = new FormModifyServerSettings();
+                if (_instant == null || _instant.IsDisposed)
+                {
+                    VgcApis.Misc.UI.Invoke(() =>
+                    {
+                        _instant = new FormModifyServerSettings();
+                    });
+                }
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    _instant.InitControls(coreServ);
+                    _instant.Show();
+                    _instant.Activate();
+                });
             }
-            _instant.InitControls(coreServ);
-            _instant.Show();
-            _instant.Activate();
         }
         #endregion
 
@@ -43,6 +53,7 @@ namespace V2RayGCon.Views.WinForms
             result.inboundMode = cboxInboundMode.SelectedIndex;
             result.inboundAddress = cboxInboundAddress.Text;
             result.mark = cboxMark.Text;
+            result.remark = tboxRemark.Text;
             result.isAutorun = chkAutoRun.Checked;
             result.isBypassCnSite = chkBypassCnSite.Checked;
             result.isGlobalImport = chkGlobalImport.Checked;
@@ -58,6 +69,7 @@ namespace V2RayGCon.Views.WinForms
             cboxInboundMode.SelectedIndex = s.inboundMode;
             cboxInboundAddress.Text = s.inboundAddress;
             cboxMark.Text = s.mark;
+            tboxRemark.Text = s.remark;
             chkAutoRun.Checked = s.isAutorun;
             chkBypassCnSite.Checked = s.isBypassCnSite;
             chkGlobalImport.Checked = s.isGlobalImport;
@@ -70,14 +82,11 @@ namespace V2RayGCon.Views.WinForms
             orgCoreServSettings = new VgcApis.Models.Datas.CoreServSettings(coreServ);
             var marks = servers.GetMarkList();
 
-            VgcApis.Misc.UI.RunInUiThread(this, () =>
+            VgcApis.Misc.UI.Invoke(() =>
             {
-                this.Text = coreServ.GetCoreStates().GetTitle();
+                tboxTitle.Text = coreServ.GetCoreStates().GetTitle();
                 cboxMark.Items.Clear();
-                foreach (var mark in marks)
-                {
-                    cboxMark.Items.Add(mark);
-                }
+                cboxMark.Items.AddRange(marks);
                 Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMark);
                 UpdateControls(orgCoreServSettings);
             });

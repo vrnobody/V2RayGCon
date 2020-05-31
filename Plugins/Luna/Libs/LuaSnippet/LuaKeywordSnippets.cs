@@ -1,9 +1,14 @@
 ﻿using AutocompleteMenuNS;
+using System.Collections.Generic;
 
 namespace Luna.Libs.LuaSnippet
 {
     internal sealed class LuaKeywordSnippets : MatchItemBase
     {
+        static readonly List<string> hiddenList = new List<string>() {
+            "end",
+        };
+
         string lowerText;
 
         public LuaKeywordSnippets(string luaKeyword)
@@ -20,11 +25,23 @@ namespace Luna.Libs.LuaSnippet
 
         public override CompareResult Compare(string fragmentText)
         {
+            if (hiddenList.Contains(fragmentText))
+            {
+                return CompareResult.Hidden;
+            }
+
             if (fragmentText == Text)
+            {
                 return CompareResult.VisibleAndSelected;
+            }
+
             if (VgcApis.Misc.Utils.PartialMatch(lowerText, fragmentText.ToLower()))
+            {
                 return CompareResult.Visible;
+            }
             return CompareResult.Hidden;
         }
+
+
     }
 }

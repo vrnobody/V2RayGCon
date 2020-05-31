@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static VgcApis.Misc.Utils;
 
 namespace VgcApisTests
@@ -15,6 +16,111 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+        [DataTestMethod]
+        [DataRow("lua", "lua")]
+        [DataRow("lua\\hello", "lua.hello")]
+        [DataRow("lua/hello.lua", "lua.hello")]
+        [DataRow("", "")]
+        public void GetLuaModuleNameTest(string relativePath, string expect)
+        {
+            var root = GetAppDir();
+            var fullPath = Path.Combine(root, relativePath);
+            var result = GetLuaModuleName(fullPath);
+            Assert.AreEqual(expect, result);
+        }
+
+
+        [DataTestMethod]
+        [DataRow("D1", true, true, false, true, 3u, 49u)]
+        public void TryParseKeyMessageTests(
+            string keyName, bool hasAlt, bool hasCtrl, bool hasShift,
+            bool ok, uint modifier, uint keyCode)
+        {
+            var result = TryParseKeyMesssage(keyName, hasAlt, hasCtrl, hasShift,
+                out var m, out var c);
+            Assert.AreEqual(ok, result);
+            Assert.AreEqual(modifier, m);
+            Assert.AreEqual(keyCode, c);
+        }
+
+        [DataTestMethod]
+        [DataRow("中iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii试", 34, true, "中iiiiiiiiiiiiiiiiiiiiiiiiiiiiii")]
+        [DataRow("中aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa文", 34, true, "中aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        [DataRow("中iiiii试", 6, true, "中ii")]
+        [DataRow("中文aa测试", 8, true, "中文aa")]
+        [DataRow("中文aa测试", 7, true, "中文a")]
+        [DataRow("中文aa测试", 6, true, "中文")]
+        [DataRow("中aaa文测试", 6, true, "中aa")]
+        [DataRow("中aaa文测试", 5, true, "中a")]
+        [DataRow("中文测试", 4, true, "中")]
+        [DataRow("中文测试", 3, true, "")]
+        [DataRow("a中文测试", 9, false, "a中文测试")]
+        [DataRow("a中文测试", 7, true, "a中文")]
+        [DataRow("a中文测试", 6, true, "a中")]
+        [DataRow("a中文测试", 5, true, "a中")]
+        [DataRow("a中文测试", 4, true, "a")]
+        [DataRow("a中文测试", 3, true, "a")]
+        [DataRow("a中文测试", 2, true, "")]
+        [DataRow("a中文测试", 1, true, "")]
+        [DataRow("a中文测试", 0, false, "")]
+        [DataRow("a中文测试", -1, false, "")]
+        [DataRow("aaaaaaaaa", 5, true, "aaa")]
+        [DataRow("", 100, false, "")]
+        public void AutoEllipsisTest(string org, int len, bool isEllipsised, string expect)
+        {
+            var defFont = VgcApis.Models.Consts.AutoEllipsis.defFont;
+            var orgLen = org.Length;
+            var result = AutoEllipsis(org, len);
+
+            if (orgLen <= 0 || len <= 0)
+            {
+                Assert.AreEqual(string.Empty, result);
+                return;
+            }
+
+            var orgWidth = TextRenderer.MeasureText(org, defFont).Width;
+            var resultWidth = TextRenderer.MeasureText(result, defFont).Width;
+            var expectedWidth = TextRenderer.MeasureText(new string('a', len), defFont).Width;
+
+            if (orgWidth <= expectedWidth)
+            {
+                Assert.AreEqual(org, result);
+                return;
+            }
+
+            var ellipsis = VgcApis.Models.Consts.AutoEllipsis.ellipsis;
+            Assert.AreEqual(ellipsis.Last(), result.Last());
+
+            var d = TextRenderer.MeasureText(ellipsis, defFont).Width;
+
+            if (resultWidth <= d)
+            {
+                return;
+            }
+
+            Assert.IsTrue(resultWidth <= expectedWidth);
+            Assert.IsTrue(resultWidth >= expectedWidth - d);
+
+            /* 以下代码只对特定字体有效
+            string ellipsis = VgcApis.Models.Consts.AutoEllipsis.ellipsis;
+            var cut = AutoEllipsis(org, len);
+            var exp = expect + (isEllipsised ? ellipsis : "");
+            Assert.AreEqual(exp, cut);
+            */
+        }
+
+        [DataTestMethod]
+        [DataRow(
+            @"https://github.com/user/reponame/blob/master/README.md",
+            true,
+            @"https://raw.githubusercontent.com/user/reponame/master/README.md")]
+        public void TryPatchGitHubUrlTest(string url, bool expectedResult, string expectedPatched)
+        {
+            var result = TryPatchGitHubUrl(url, out var patched);
+            Assert.AreEqual(expectedResult, result);
+            Assert.AreEqual(expectedPatched, patched);
+        }
+
         [DataTestMethod]
         [DataRow(@"abc", @"http://baidu.com/abc/a/b/c/d.html")]
         [DataRow(@"a1中b2文", @"http://baidu.com/a1中b2文/a/b/c/d.html")]
@@ -92,7 +198,7 @@ namespace VgcApisTests
 
             var cts = new CancellationTokenSource(1000);
             Task.WaitAll(
-                Task.Run(() =>
+                RunInBackground(() =>
                 {
                     while (!cts.Token.IsCancellationRequested)
                     {
@@ -107,8 +213,8 @@ namespace VgcApisTests
                             failCounter++;
                         };
                     }
-                }),
-                Task.Run(() =>
+                }, true),
+                RunInBackground(() =>
                 {
                     while (!cts.Token.IsCancellationRequested)
                     {
@@ -119,7 +225,7 @@ namespace VgcApisTests
                         }
                         catch { }
                     }
-                }));
+                }, true));
 
             Console.WriteLine($"success: {successCounter}, fail: {failCounter}");
             var read = File.ReadAllText(bakFile);
@@ -330,6 +436,7 @@ namespace VgcApisTests
             Assert.AreEqual(expect, len);
         }
 
+        /* this test takes about 3min in github action
         [TestMethod]
         public void GetFreePortMultipleThreadsTest()
         {
@@ -355,18 +462,19 @@ namespace VgcApisTests
                 using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
                 {
                     socket.Bind(ep);
-                    Sleep(500);
+                    Task.Delay(10).Wait();
                 }
             }
 
             List<Task> tasks = new List<Task>();
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 10; i++)
             {
                 tasks.Add(RunInBackground(worker));
             }
 
             Task.WaitAll(tasks.ToArray());
         }
+        */
 
         [TestMethod]
         public void GetFreePortSingleThreadTest()
@@ -381,38 +489,184 @@ namespace VgcApisTests
             }
         }
 
+#if DEBUG
         [TestMethod]
-        public void LazyGuyTest()
+        public void LazyGuyChainedTaskTest()
+        {
+            var str = "";
+
+            Action<Action> secTask = (done) =>
+             {
+                 Task.Delay(200).Wait();
+                 str += "2";
+                 done();
+             };
+
+            Action<Action> firstTask = (done) =>
+            {
+                Task.Delay(200).Wait();
+                str += "1";
+                secTask(done);
+            };
+
+            var alex = new VgcApis.Libs.Tasks.LazyGuy(firstTask, 1000, 300);
+
+            str = "";
+            alex.Deadline();
+            alex.Throttle();
+            alex.Deadline();
+            alex.Throttle();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("12", str);
+
+            str = "";
+            alex.Postpone();
+            alex.Deadline();
+            alex.Postpone();
+            alex.Throttle();
+            Task.Delay(500).Wait();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("12", str);
+
+            str = "";
+            alex.Postpone();
+            Task.Delay(500).Wait();
+            alex.Postpone();
+            Task.Delay(500).Wait();
+            alex.Postpone();
+            Task.Delay(500).Wait();
+            alex.Postpone();
+            Task.Delay(500).Wait();
+            alex.Postpone();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("12", str);
+
+            str = "";
+            alex.Deadline();
+            alex.Deadline();
+            alex.Deadline();
+            Assert.AreEqual("", str);
+            Task.Delay(5000).Wait();
+            Assert.AreEqual("12", str);
+
+            str = "";
+            alex.Deadline();
+            alex.Deadline();
+            alex.Deadline();
+            alex.ForgetIt();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("", str);
+            alex.PickItUp();
+
+            str = "";
+            alex.Throttle();
+            alex.Throttle();
+            alex.Throttle();
+            alex.ForgetIt();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("", str);
+            alex.PickItUp();
+
+            str = "";
+            alex.Throttle();
+            Task.Delay(100).Wait();
+            alex.Throttle();
+            alex.Throttle();
+            Assert.AreEqual("", str);
+            Task.Delay(5000).Wait();
+            Assert.AreEqual("1212", str);
+
+        }
+#endif
+
+#if DEBUG
+        [TestMethod]
+        public void LazyGuySingleTaskTest()
         {
             var str = "";
 
             void task()
             {
+                Task.Delay(200).Wait();
                 str += ".";
             }
-            var adam = new VgcApis.Libs.Tasks.LazyGuy(task, 100);
-            adam.DoItNow();
+
+            var adam = new VgcApis.Libs.Tasks.LazyGuy(task, 1000, 300);
+
+            str = "";
+            adam.Postpone();
+            Task.Delay(500).Wait();
+            Console.WriteLine("500 x 1");
+            adam.Postpone();
+            Task.Delay(500).Wait();
+            Console.WriteLine("500 x 2");
+            adam.Postpone();
+            Task.Delay(500).Wait();
+            Console.WriteLine("500 x 3");
+            adam.Postpone();
+            Task.Delay(500).Wait();
+            Console.WriteLine("500 x 4");
+            adam.Postpone();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
             Assert.AreEqual(".", str);
 
             str = "";
-            adam.DoItLater();
-            adam.ForgetIt();
+            adam.Deadline();
+            Task.Delay(10).Wait();
+            adam.Deadline();
+            Task.Delay(10).Wait();
+            adam.Deadline();
+            Task.Delay(10).Wait();
+            adam.Deadline();
+            Task.Delay(10).Wait();
+            adam.Deadline();
             Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual(".", str);
 
-#if DEBUG
             str = "";
-            adam.DoItLater();
-            adam.DoItLater();
-            adam.DoItLater();
+            adam.Deadline();
+            Task.Delay(3000).Wait();
+            Assert.AreEqual(".", str);
+
+            str = "";
+            adam.Deadline();
+            adam.ForgetIt();
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("", str);
+            adam.PickItUp();
+
+            str = "";
+            adam.Throttle();
+            adam.ForgetIt();
+            Task.Delay(1000).Wait();
+            Assert.AreEqual("", str);
+            adam.PickItUp();
+
+            str = "";
+            adam.Throttle();
+            Task.Delay(50).Wait(); // wait for task spin up
+            adam.Throttle();
+            adam.Throttle();
+            adam.Throttle();
+            adam.Throttle();
+            Assert.AreEqual("", str);
+            Task.Delay(3000).Wait();
+            Assert.AreEqual("..", str);
+
+            str = "";
+            adam.Throttle();
             Task.Delay(1000).Wait();
             Assert.AreEqual(".", str);
-
-            str = "";
-            adam.DoItLater();
-            Task.Delay(300).Wait();
-            Assert.AreEqual(".", str);
-#endif
         }
+
+#endif
 
         [DataTestMethod]
         [DataRow(null)]

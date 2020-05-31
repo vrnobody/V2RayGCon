@@ -246,6 +246,36 @@
   <data name="tabPageProtocol.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="tboxMultiConfPath.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>路径</value>
+  </data>
+  <data name="label6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnInsertMultiConf.Text" xml:space="preserve">
+    <value>插入→</value>
+  </data>
+  <data name="btnInsertMultiConf.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxMultiConfAlias.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>别名</value>
+  </data>
+  <data name="label8.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>多配置文件</value>
+  </data>
+  <data name="groupBox3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="tboxEnvValue.ToolTip" xml:space="preserve">
     <value />
   </data>

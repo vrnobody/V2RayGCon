@@ -13,18 +13,21 @@ namespace V2RayGCon.Controllers.OptionComponent
         readonly FlowLayoutPanel flyPanel;
         readonly Button btnAdd, btnUpdate, btnUseAll, btnInvertSelection;
         readonly CheckBox chkSubsIsUseProxy;
-
+        private readonly CheckBox chkSubsIsAutoPatch;
         readonly Services.Settings setting;
         readonly Services.Servers servers;
         readonly Services.ShareLinkMgr slinkMgr;
 
         string oldOptions;
 
+        VgcApis.Libs.Tasks.LazyGuy lazyCounter;
+
         public Subscription(
             FlowLayoutPanel flyPanel,
             Button btnAdd,
             Button btnUpdate,
             CheckBox chkSubsIsUseProxy,
+            CheckBox chkSubsIsAutoPatch,
             Button btnUseAll,
             Button btnInvertSelection)
         {
@@ -36,18 +39,35 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.btnAdd = btnAdd;
             this.btnUpdate = btnUpdate;
             this.chkSubsIsUseProxy = chkSubsIsUseProxy;
+            this.chkSubsIsAutoPatch = chkSubsIsAutoPatch;
             this.btnUseAll = btnUseAll;
             this.btnInvertSelection = btnInvertSelection;
 
             chkSubsIsUseProxy.Checked = setting.isUpdateUseProxy;
 
+            lazyCounter = new VgcApis.Libs.Tasks.LazyGuy(UpdateServUiTotalWorker, 1000, 2000)
+            {
+                Name = "SubsCtrl.CountTotal()",
+            };
+
             InitPanel();
             BindEvent();
 
             MarkDuplicatedSubsInfo();
+
+            UpdateServUiTotal(this, EventArgs.Empty);
         }
 
         #region public method
+        public void UpdateServUiTotal(object sender, EventArgs args) =>
+            lazyCounter?.Deadline();
+
+        public override void Cleanup()
+        {
+            ReleaseEvent();
+            lazyCounter?.Dispose();
+        }
+
         public override bool SaveOptions()
         {
             string curOptions = GetCurOptions();
@@ -76,16 +96,106 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         public void MarkDuplicatedSubsInfo()
         {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(flyPanel, MarkDuplicatedSubsInfoWorker);
+            VgcApis.Misc.UI.Invoke(MarkDuplicatedSubsInfoWorker);
+        }
+
+        public void RemoveSubsUi(Views.UserControls.SubscriptionUI subsUi)
+        {
+            var subs = GetAllSubsUi();
+            foreach (var sub in subs)
+            {
+                if (sub == subsUi)
+                {
+                    VgcApis.Misc.UI.Invoke(() => Remove(subsUi));
+                }
+            }
+
+            UpdatePanelItemsIndex();
+        }
+
+        public void AutoAddEmptyUi()
+        {
+            var controls = GetAllSubsUi();
+            foreach (Views.UserControls.SubscriptionUI ctrl in controls)
+            {
+                if (ctrl.IsEmpty())
+                {
+                    return;
+                }
+            }
+
+            AddSubsUiItem(new Models.Datas.SubscriptionItem());
+            UpdatePanelItemsIndex();
         }
         #endregion
 
         #region private method
 
+        void UpdateServUiTotalWorker(Action done)
+        {
+            try
+            {
+                var markCounts = CountServMarks();
+                var servUis = GetAllSubsUi();
+                foreach (var servUi in servUis)
+                {
+                    var key = servUi.GetAlias();
+                    var total = markCounts.ContainsKey(key) ? markCounts[key] : 0;
+                    servUi.SetTotal(total);
+                }
+            }
+            catch { }
+            done?.Invoke();
+        }
+
+        Dictionary<string, int> CountServMarks()
+        {
+            var r = new Dictionary<string, int>();
+
+            var servs = servers.GetAllServersOrderByIndex();
+            var marks = servs.Select(serv => serv.GetCoreStates().GetMark()).ToList();
+
+            foreach (var mark in marks)
+            {
+                if (string.IsNullOrEmpty(mark))
+                {
+                    continue;
+                }
+
+                if (!r.ContainsKey(mark))
+                {
+                    r[mark] = 0;
+                }
+
+                r[mark]++;
+            }
+            return r;
+        }
+
+        List<Views.UserControls.SubscriptionUI> GetAllSubsUi() =>
+            flyPanel.Controls.OfType<Views.UserControls.SubscriptionUI>().ToList();
+
+        void RemoveEmptyUi()
+        {
+            var controls = GetAllSubsUi();
+            foreach (var control in controls)
+            {
+                if (control.IsEmpty())
+                {
+                    flyPanel.Controls.Remove(control);
+                }
+            }
+        }
+
+        void Remove(Views.UserControls.SubscriptionUI subsUi)
+        {
+            flyPanel.Controls.Remove(subsUi);
+            AutoAddEmptyUi();
+        }
 
         void MarkDuplicatedSubsInfoWorker()
         {
-            var subsUis = flyPanel.Controls.OfType<Views.UserControls.SubscriptionUI>().ToList();
+            var subsUis = GetAllSubsUi();
             var subs = subsUis.Select(ctrl => ctrl.GetValue()).ToList();
 
             var urls = subs.Select(item => item.url).ToList();
@@ -119,15 +229,15 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         string GetCurOptions()
         {
-            return JsonConvert.SerializeObject(
-                CollectSubscriptionItems());
+            return JsonConvert.SerializeObject(CollectSubscriptionItems());
         }
 
         List<Models.Datas.SubscriptionItem> CollectSubscriptionItems()
         {
             var itemList = new List<Models.Datas.SubscriptionItem>();
             var urlCache = new List<string>();
-            foreach (Views.UserControls.SubscriptionUI item in this.flyPanel.Controls)
+            var subsUi = GetAllSubsUi();
+            foreach (var item in subsUi)
             {
                 var v = item.GetValue(); // capture
 
@@ -148,6 +258,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         void InitPanel()
         {
             var subItemList = setting.GetSubscriptionItems();
+            chkSubsIsAutoPatch.Checked = setting.isAutoPatchSubsInfo;
 
             this.oldOptions = JsonConvert.SerializeObject(subItemList);
 
@@ -161,14 +272,17 @@ namespace V2RayGCon.Controllers.OptionComponent
                 AddSubsUiItem(item);
             }
 
-            UpdatePanelItemsIndex();
+            // 因tboxAlias.Changed事件引起一个空的subsUi在顶部,所以要先删除
+            RemoveEmptyUi();
+            AutoAddEmptyUi();
         }
 
         void AddSubsUiItem(Models.Datas.SubscriptionItem data)
         {
             var subsUi = new Views.UserControls.SubscriptionUI(this, data);
-            subsUi.OnDelete += UpdatePanelItemsIndex;
             flyPanel.Controls.Add(subsUi);
+            flyPanel.ScrollControlIntoView(subsUi);
+            UpdateServUiTotal(this, EventArgs.Empty);
         }
 
         void BindEventBtnAddClick()
@@ -184,7 +298,8 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             this.btnUseAll.Click += (s, a) =>
             {
-                foreach (Views.UserControls.SubscriptionUI subUi in this.flyPanel.Controls)
+                var subsUi = GetAllSubsUi();
+                foreach (var subUi in subsUi)
                 {
                     subUi.SetIsUse(true);
                 }
@@ -192,7 +307,8 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             this.btnInvertSelection.Click += (s, a) =>
             {
-                foreach (Views.UserControls.SubscriptionUI subUi in this.flyPanel.Controls)
+                var subsUi = GetAllSubsUi();
+                foreach (var subUi in subsUi)
                 {
                     var selected = subUi.IsUse();
                     subUi.SetIsUse(!selected);
@@ -226,7 +342,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                     slinkMgr.ImportLinkWithOutV2cfgLinksBatchMode(
                         links.Where(l => !string.IsNullOrEmpty(l[0])).ToList());
 
-                    EnableBtnUpdate();
+                    VgcApis.Misc.UI.Invoke(() => this.btnUpdate.Enabled = true);
                 });
             };
         }
@@ -249,8 +365,9 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             var subs = new List<Models.Datas.SubscriptionItem>();
             var urlCache = new List<string>();
+            var subsUi = GetAllSubsUi();
 
-            foreach (Views.UserControls.SubscriptionUI subUi in this.flyPanel.Controls)
+            foreach (var subUi in subsUi)
             {
                 var subItem = subUi.GetValue();
                 if (!subItem.isUse
@@ -291,16 +408,28 @@ namespace V2RayGCon.Controllers.OptionComponent
             BindEventBtnSelections();
             BindEventFlyPanelDragDrop();
 
+            servers.OnServerCountChange += UpdateServUiTotal;
+            servers.OnServerPropertyChange += UpdateServUiTotal;
+
+            chkSubsIsAutoPatch.CheckedChanged += (s, a) => setting.isAutoPatchSubsInfo = chkSubsIsAutoPatch.Checked;
+
             this.flyPanel.DragEnter += (s, a) =>
             {
                 a.Effect = DragDropEffects.Move;
             };
         }
 
+        void ReleaseEvent()
+        {
+            servers.OnServerCountChange -= UpdateServUiTotal;
+            servers.OnServerPropertyChange -= UpdateServUiTotal;
+        }
+
         void UpdatePanelItemsIndex()
         {
             var index = 1;
-            foreach (Views.UserControls.SubscriptionUI item in this.flyPanel.Controls)
+            var subsUi = GetAllSubsUi();
+            foreach (var item in subsUi)
             {
                 item.SetIndex(index++);
             }
@@ -320,23 +449,9 @@ namespace V2RayGCon.Controllers.OptionComponent
                 return port;
             }
 
-            VgcApis.Misc.Utils.RunInBackground(
-                () => MessageBox.Show(
-                    I18N.NoQualifyProxyServer));
+            VgcApis.Misc.UI.MsgBoxAsync(I18N.NoQualifyProxyServer);
 
             return -1;
-        }
-
-        private void EnableBtnUpdate()
-        {
-            try
-            {
-                VgcApis.Misc.UI.RunInUiThread(btnUpdate, () =>
-                {
-                    this.btnUpdate.Enabled = true;
-                });
-            }
-            catch { }
         }
         #endregion
     }

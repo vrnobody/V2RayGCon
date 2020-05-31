@@ -1,27 +1,29 @@
 ﻿using Luna.Resources.Langs;
 using NLua;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Luna.Controllers
 {
-    public class LuaCoreCtrl
+    internal class LuaCoreCtrl
     {
         public EventHandler OnStateChange;
 
         Services.Settings settings;
         Models.Data.LuaCoreSetting coreSetting;
         Models.Apis.LuaApis luaApis;
-        VgcApis.BaseClasses.LuaSignal luaSignal;
+        Models.Apis.LuaSignal luaSignal;
+        Models.Apis.LuaSys luaSys = null;
 
         Thread luaCoreThread;
-        Task luaCoreTask;
+        private readonly bool enableTracebackFeature;
 
-        readonly object coreStateLocker = new object();
-
-        public LuaCoreCtrl() { }
+        public LuaCoreCtrl(bool enableTracebackFeature)
+        {
+            this.enableTracebackFeature = enableTracebackFeature;
+        }
 
         public void Run(
             Services.Settings settings,
@@ -31,11 +33,68 @@ namespace Luna.Controllers
             this.settings = settings;
             this.coreSetting = luaCoreState;
             this.luaApis = luaApis;
-            this.luaSignal = new VgcApis.BaseClasses.LuaSignal();
+            this.luaSignal = new Models.Apis.LuaSignal(settings);
         }
 
         #region properties 
-        public string name => coreSetting.name;
+        public string name
+        {
+            get => coreSetting.name;
+            set
+            {
+                if (coreSetting.name == value)
+                {
+                    return;
+                }
+                coreSetting.name = value;
+                Save();
+                InvokeOnStateChangeIgnoreError();
+            }
+        }
+
+        public double index
+        {
+            get => coreSetting.index;
+            set
+            {
+                if (coreSetting.index == value)
+                {
+                    return;
+                }
+                coreSetting.index = value;
+                Save();
+            }
+        }
+
+        public bool isLoadClr
+        {
+            get => coreSetting.isLoadClr;
+            set
+            {
+                if (value == coreSetting.isLoadClr)
+                {
+                    return;
+                }
+                coreSetting.isLoadClr = value;
+                Save();
+                InvokeOnStateChangeIgnoreError();
+            }
+        }
+
+        public bool isHidden
+        {
+            get => coreSetting.isHidden;
+            set
+            {
+                if (coreSetting.isHidden == value)
+                {
+                    return;
+                }
+                coreSetting.isHidden = value;
+                Save();
+                InvokeOnStateChangeIgnoreError();
+            }
+        }
 
         public bool isAutoRun
         {
@@ -49,6 +108,7 @@ namespace Luna.Controllers
 
                 coreSetting.isAutorun = value;
                 Save();
+                InvokeOnStateChangeIgnoreError();
             }
         }
 
@@ -67,8 +127,6 @@ namespace Luna.Controllers
                 if (_isRunning == false)
                 {
                     SendLog($"{coreSetting.name} {I18N.Stopped}");
-                    luaCoreTask = null;
-                    luaCoreThread = null;
                 }
                 InvokeOnStateChangeIgnoreError();
             }
@@ -85,7 +143,8 @@ namespace Luna.Controllers
         #endregion
 
         #region public methods
-        public string GetScript() => coreSetting.script;
+        public Models.Data.LuaCoreSetting GetCoreSettings() =>
+            coreSetting;
 
         public void SetScriptName(string name)
         {
@@ -100,89 +159,122 @@ namespace Luna.Controllers
 
         public void Stop()
         {
-            lock (coreStateLocker)
+            if (!isRunning)
             {
-                if (!isRunning)
-                {
-                    return;
-                }
+                return;
             }
 
             SendLog($"{I18N.SendStopSignalTo} {coreSetting.name}");
             luaSignal.SetStopSignal(true);
+            luaSys?.OnSignalStop();
         }
 
-        public void Kill()
-        {
-            if (luaCoreTask == null)
-            {
-                return;
-            }
+        public void Abort() => KillCore(2000);
 
-            SendLog($"{I18N.Terminate} {coreSetting.name}");
-
-            luaSignal.SetStopSignal(true);
-            if (luaCoreTask.Wait(2000))
-            {
-                return;
-            }
-
-            try
-            {
-                luaCoreThread?.Abort();
-            }
-            catch { }
-            isRunning = false;
-        }
+        public void AbortNow() => KillCore(1);
 
         public void Start()
         {
-            lock (coreStateLocker)
+            if (isRunning)
             {
-                if (isRunning)
-                {
-                    return;
-                }
-                isRunning = true;
+                return;
             }
 
+            isRunning = true;
+
             SendLog($"{I18N.Start} {coreSetting.name}");
-            luaCoreTask = VgcApis.Misc.Utils.RunInBackground(
-                RunLuaScript);
+
+            luaCoreThread = new Thread(RunLuaScript)
+            {
+                IsBackground = true,
+                Name = "LuaStateContainer",
+            };
+
+            luaCoreThread.Start();
         }
 
         public void Cleanup()
         {
-            Kill();
+            AbortNow();
         }
         #endregion
 
         #region private methods
-        void SendLog(string content)
-            => luaApis.SendLog(content);
-
-        void RunLuaScript()
+        void KillCore(int timeout)
         {
-            luaSignal.ResetAllSignals();
-            luaCoreThread = Thread.CurrentThread;
-
-            try
+            if (!isRunning)
             {
-                var core = CreateLuaCore();
-                var script = coreSetting.script;
+                return;
+            }
 
-                core.DoString(script);
-            }
-            catch (Exception e)
+            Stop();
+
+            if (!luaCoreThread.Join(timeout))
             {
-                SendLog($"[{coreSetting.name}] {e.ToString()}");
+                SendLog($"{I18N.Terminate} {coreSetting.name}");
+                try
+                {
+                    luaCoreThread.Abort();
+                }
+                catch { }
             }
+
+            luaSys?.Dispose();
+            luaSys = null;
+
             isRunning = false;
         }
 
-        Lua CreateLuaCore()
+        List<Type> assemblies = null;
+        List<Type> GetAllAssemblies()
         {
-            var lua = new Lua();
+            if (assemblies == null)
+            {
+                assemblies = VgcApis.Misc.Utils.GetAllAssembliesType();
+            }
+            return assemblies;
+        }
+
+        void SendLog(string content) => luaApis.SendLog(content);
+
+        void RunLuaScript()
+        {
+            luaSys?.Dispose();
+            luaSys = new Models.Apis.LuaSys(luaApis, GetAllAssemblies);
+
+            luaSignal.ResetAllSignals();
+
+            Lua core = CreateLuaCore(luaSys);
+            try
+            {
+                core.DoString(coreSetting.script);
+            }
+            catch (Exception e)
+            {
+                SendLog($"[{coreSetting.name}] {e}");
+                if (core.UseTraceback)
+                {
+                    SendLog(core.GetDebugTraceback());
+                }
+            }
+
+            luaSys?.Dispose();
+            luaSys = null;
+
+            isRunning = false;
+        }
+
+        Lua CreateLuaCore(Models.Apis.LuaSys luaSys)
+        {
+            var lua = new Lua()
+            {
+                UseTraceback = enableTracebackFeature,
+            };
+
+            if (isLoadClr)
+            {
+                lua.LoadCLRPackage();
+            }
 
             lua.State.Encoding = Encoding.UTF8;
 
@@ -190,8 +282,8 @@ namespace Luna.Controllers
             var misc = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaMisc>();
 
             lua["Signal"] = luaSignal;
+            lua["Sys"] = luaSys;
 
-            lua["Json"] = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaJson>();
             lua["Misc"] = misc;
             lua["Server"] = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaServer>();
             lua["Web"] = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaWeb>();

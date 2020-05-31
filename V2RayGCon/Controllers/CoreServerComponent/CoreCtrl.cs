@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
@@ -64,27 +63,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return new VgcApis.Models.Datas.StatsSample(up, down);
         }
 
-        public void RestartCore()
-        {
-            AutoResetEvent done = new AutoResetEvent(false);
-            RestartCoreThen(() => done.Set());
-            done.WaitOne();
-        }
+        public void StopCore() => StopCoreWorker(null);
 
-        public void StopCoreQuiet() => v2rayCore.StopCoreThen(null);
-
-        public void StopCore()
-        {
-            AutoResetEvent done = new AutoResetEvent(false);
-            StopCoreThen(() => done.Set());
-            done.WaitOne();
-        }
-
-        public void StopCoreThen() =>
-            VgcApis.Misc.Utils.RunInBackground(() => StopCoreWorker(null));
+        public void StopCoreThen() => StopCoreThen(null);
 
         public void StopCoreThen(Action next) =>
             VgcApis.Misc.Utils.RunInBackground(() => StopCoreWorker(next));
+
+        public void RestartCore() => RestartCoreWorker(null);
 
         public void RestartCoreThen() => RestartCoreThen(null);
         public void RestartCoreThen(Action next) =>
@@ -109,31 +95,25 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
         }
 
-        string TranslateSpeedTestResult(long speedtestDelay)
-        {
-            if (speedtestDelay == SpeedtestTimeout)
-            {
-                return I18N.Timeout;
-            }
-            return $"{speedtestDelay}ms";
-        }
-
         void SpeedTestWorker(string rawConfig)
         {
             long avgDelay = -1;
             long curDelay = SpeedtestTimeout;
             var cycles = Math.Max(1, setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestCycles : 1);
 
+            coreStates.SetSpeedTestResult(0);
             coreStates.SetStatus(I18N.Testing);
+
             logger.Log(I18N.Testing);
             for (int i = 0; i < cycles && !setting.isSpeedtestCancelled; i++)
             {
                 curDelay = configMgr.RunDefaultSpeedTest(rawConfig, coreStates.GetTitle(), (s, a) => logger.Log(a.Data));
-                logger.Log(I18N.CurSpeedtestResult + TranslateSpeedTestResult(curDelay));
+                ShowCurrentSpeedtestResult(I18N.CurSpeedtestResult, curDelay);
                 if (curDelay == SpeedtestTimeout)
                 {
                     continue;
                 }
+
                 avgDelay = VgcApis.Misc.Utils.SpeedtestMean(avgDelay, curDelay, VgcApis.Models.Consts.Config.CustomSpeedtestMeanWeight);
             }
 
@@ -142,10 +122,19 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             {
                 avgDelay = SpeedtestTimeout;
             }
-            var speedtestResult = TranslateSpeedTestResult(avgDelay);
-            coreStates.SetStatus(speedtestResult);
-            coreStates.SetSpeedTestResult(avgDelay);
-            logger.Log(I18N.AvgSpeedtestResult + speedtestResult);
+            ShowCurrentSpeedtestResult(I18N.AvgSpeedtestResult, avgDelay);
+        }
+
+        void ShowCurrentSpeedtestResult(string prefix, long delay)
+        {
+            if (delay <= 0)
+            {
+                delay = SpeedtestTimeout;
+            }
+            var text = delay == SpeedtestTimeout ? I18N.Timeout : $"{delay}ms";
+            coreStates.SetStatus(text);
+            coreStates.SetSpeedTestResult(delay);
+            logger.Log($"{prefix}{text}");
         }
 
         void OnLogHandler(object sender, VgcApis.Models.Datas.StrEvent arg) =>
@@ -153,30 +142,37 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         void StopCoreWorker(Action next)
         {
-            GetParent().InvokeEventOnCoreClosing();
-            v2rayCore.StopCoreThen(
-                () =>
-                {
-                    // Libs.V2Ray.Core will fire OnCoreStop
-                    // container.InvokeEventOnCoreStop();
-                    next?.Invoke();
-                });
+            try
+            {
+                GetParent().InvokeEventOnCoreClosing();
+                v2rayCore.StopCore();
+            }
+            finally
+            {
+                next?.Invoke();
+            }
         }
 
         void RestartCoreWorker(Action next)
         {
-            var finalConfig = configer.GetFinalConfig();
-            if (finalConfig == null)
+            try
             {
-                StopCoreThen(next);
-                return;
-            }
+                var finalConfig = configer.GetFinalConfig();
+                if (finalConfig == null)
+                {
+                    StopCore();
+                    return;
+                }
 
-            v2rayCore.title = coreStates.GetTitle();
-            v2rayCore.RestartCoreThen(
-                finalConfig.ToString(),
-                () => next?.Invoke(),
-                Misc.Utils.GetEnvVarsFromConfig(finalConfig));
+                v2rayCore.title = coreStates.GetTitle();
+                v2rayCore.RestartCore(
+                    finalConfig.ToString(),
+                    Misc.Utils.GetEnvVarsFromConfig(finalConfig));
+            }
+            finally
+            {
+                next?.Invoke();
+            }
         }
         #endregion
     }

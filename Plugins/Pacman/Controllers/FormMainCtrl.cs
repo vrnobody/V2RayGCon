@@ -97,9 +97,12 @@ namespace Pacman.Controllers
             {
                 Views.UserControls.BeanUI beanUI = null;
                 // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
-                if (a.Data.GetDataPresent("V2RayGCon.Views.UserControls.ServerUI"))
+
+                var objName = "V2RayGCon.Views.UserControls.ServerUI";
+
+                if (a.Data.GetDataPresent(objName))
                 {
-                    var item = (VgcApis.Interfaces.IDropableControl)a.Data.GetData("V2RayGCon.Views.UserControls.ServerUI");
+                    var item = (VgcApis.Interfaces.IDropableControl)a.Data.GetData(objName);
                     var bean = new Models.Data.Bean
                     {
                         title = item.GetTitle(),
@@ -204,9 +207,9 @@ namespace Pacman.Controllers
                         return;
                     }
 
-                    var states = c.GetCoreStates();
-                    b.SetStatus(states.GetStatus());
-                    b.SetTitle(states.GetTitle());
+                    var coreStates = c.GetCoreStates();
+                    b.SetStatus(coreStates.GetStatus());
+                    b.SetTitle(coreStates.GetTitle());
                 });
 
             };
@@ -214,12 +217,14 @@ namespace Pacman.Controllers
 
         void LoopThroughFlyContentItems(Action<Views.UserControls.BeanUI> action)
         {
+            flyContent.SuspendLayout();
             var controls = flyContent.Controls.OfType<Views.UserControls.BeanUI>().ToList();
 
             foreach (Views.UserControls.BeanUI control in controls)
             {
                 action(control);
             }
+            flyContent.ResumeLayout();
         }
 
         void Pack()
@@ -292,15 +297,15 @@ namespace Pacman.Controllers
                 return;
             }
 
-            var sortedList = beanList
+            var beans = beanList
                 .OrderBy(b => b.index)
-                .ToList();
+                .Select(el => new Views.UserControls.BeanUI(el))
+                .ToArray();
 
-            foreach (var bean in sortedList)
-            {
-                flyContent.Controls.Add(
-                    new Views.UserControls.BeanUI(bean));
-            }
+            flyContent.SuspendLayout();
+            flyContent.Controls.AddRange(beans);
+            flyContent.ResumeLayout();
+
         }
 
         void PackageListSelectedIndexChanged()

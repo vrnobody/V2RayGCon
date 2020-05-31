@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Luna.Models.Apis.Components
 {
-    public sealed class Server :
+    internal sealed class Server :
         VgcApis.BaseClasses.ComponentOf<LuaApis>,
         VgcApis.Interfaces.Lua.ILuaServer
     {
@@ -20,7 +21,7 @@ namespace Luna.Models.Apis.Components
         public void UpdateAllSummary() =>
             vgcServers.UpdateAllServersSummarySync();
 
-        public void ResetIndexQuiet() =>
+        public void ResetIndexes() =>
             vgcServers.ResetIndexQuiet();
 
         // expose for ILuaServer
@@ -33,8 +34,8 @@ namespace Luna.Models.Apis.Components
         public List<VgcApis.Interfaces.ICoreServCtrl> GetAllServers() =>
             vgcServers.GetAllServersOrderByIndex().ToList();
 
-        public void RequireFormMainReload() =>
-            vgcServers.RequireFormMainReload();
+        public void ReverseSelectedByIndex() =>
+            vgcServers.ReverseSelectedByIndex();
 
         public void SortSelectedServersByLastModifiedDate() =>
             vgcServers.SortSelectedByLastModifiedDate();
@@ -45,13 +46,18 @@ namespace Luna.Models.Apis.Components
         public void SortSelectedServersBySpeedTest() =>
             vgcServers.SortSelectedBySpeedTest();
 
+        public void StopAllServers()
+        {
+            var evDone = new AutoResetEvent(false);
+            vgcServers.StopAllServersThen(() => evDone.Set());
+            evDone.WaitOne();
+        }
+
         public bool RunSpeedTestOnSelectedServers() =>
             vgcServers.RunSpeedTestOnSelectedServers();
 
         public string PackSelectedServers(
             string orgUid, string pkgName) =>
             vgcServers.PackSelectedServersIntoV4Package(orgUid, pkgName);
-
-
     }
 }

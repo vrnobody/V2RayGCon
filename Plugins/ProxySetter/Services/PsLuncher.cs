@@ -21,7 +21,8 @@ namespace ProxySetter.Services
         public void Run(VgcApis.Interfaces.Services.IApiService api)
         {
             orgSysProxySetting = Libs.Sys.ProxySetter.GetProxySetting();
-            FileLogger.Info("ProxySetter: save sys proxy settings");
+
+            FileLogger.Info("ProxySetter: remember current sys proxy settings");
 
             this.vgcApi = api;
 
@@ -48,27 +49,28 @@ namespace ProxySetter.Services
                 return;
             }
 
-            formMain = new Views.WinForms.FormMain(
-                setting,
-                pacServer,
-                serverTracker);
-            formMain.FormClosed += (s, a) => formMain = null;
-            formMain.Show();
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                formMain = Views.WinForms.FormMain.CreateForm(
+                    setting, pacServer, serverTracker);
+                formMain.FormClosed += (s, a) => formMain = null;
+                formMain.Show();
+            });
         }
 
         public void Cleanup()
         {
+            FileLogger.Info("ProxySetting.Cleanup() begin");
+            setting.SetIsDisposing(true);
             setting.DebugLog("call Luncher.cleanup");
-            setting.isCleaning = true;
-
             serverTracker.OnSysProxyChanged -= UpdateMenuItemCheckedStatHandler;
             VgcApis.Misc.UI.CloseFormIgnoreError(formMain);
             serverTracker.Cleanup();
             pacServer.Cleanup();
             setting.Cleanup();
-            Libs.Sys.ProxySetter.UpdateProxySettingOnDemand(orgSysProxySetting);
             FileLogger.Info("ProxySetter: restore sys proxy settings");
-
+            Libs.Sys.ProxySetter.UpdateProxySettingOnDemand(orgSysProxySetting);
+            FileLogger.Info("ProxySetter.Cleanup() done");
         }
 
         public ToolStripMenuItem[] GetSubMenu() => GenSubMenu();

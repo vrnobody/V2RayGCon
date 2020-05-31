@@ -147,6 +147,21 @@
   <data name="ImportScriptsSuccess" xml:space="preserve">
     <value>Import scripts success!</value>
   </data>
+  <data name="LuaCtrlOptionNone" xml:space="preserve">
+    <value>E</value>
+  </data>
+  <data name="LunaScrEditor" xml:space="preserve">
+    <value>Luna v{0} - script editor</value>
+  </data>
+  <data name="LunaScrMgr" xml:space="preserve">
+    <value>Luna v{0} - script manager</value>
+  </data>
+  <data name="OpenScriptEditor" xml:space="preserve">
+    <value>Open script editor</value>
+  </data>
+  <data name="OpenScriptManger" xml:space="preserve">
+    <value>Open script manager</value>
+  </data>
   <data name="ScriptNameNotSet" xml:space="preserve">
     <value>Script name not set!</value>
   </data>
@@ -155,9 +170,6 @@
   </data>
   <data name="SendStopSignalTo" xml:space="preserve">
     <value>send stop signal to </value>
-  </data>
-  <data name="ShowWindow" xml:space="preserve">
-    <value>Show window</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>start</value>

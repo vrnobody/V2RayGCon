@@ -51,6 +51,22 @@
     "protocol": "socks",
     "settings": {}
   },
+  "outbVeeHttp": {
+    "tag": "agentout",
+    "protocol": "http",
+    "settings": {
+      "servers": [
+        {
+          "address": "",
+          "port": 1234
+        }
+      ]
+    },
+    "streamSettings": {},
+    "mux": {
+      "enabled": true
+    }
+  },
   "outbVeeSocks": {
     "tag": "agentout",
     "protocol": "socks",

@@ -6,10 +6,9 @@ namespace VgcApis.Interfaces.Lua
     {
         List<ICoreServCtrl> GetAllServers();
         string PackSelectedServers(string orgUid, string pkgName);
-        void RequireFormMainReload();
 
         // wont refresh form main
-        void ResetIndexQuiet();
+        void ResetIndexes();
 
         // download (testUrl)
         long RunCustomSpeedTest(string rawConfig, string testUrl, int testTimeout);
@@ -18,11 +17,15 @@ namespace VgcApis.Interfaces.Lua
         long RunSpeedTest(string rawConfig);
         bool RunSpeedTestOnSelectedServers();
 
+        void ReverseSelectedByIndex();
         void SortSelectedServersByLastModifiedDate();
         void SortSelectedServersBySpeedTest();
         void SortSelectedServersBySummary();
 
+        void StopAllServers();
+
         // refresh servers' title in form main
         void UpdateAllSummary();
+
     }
 }

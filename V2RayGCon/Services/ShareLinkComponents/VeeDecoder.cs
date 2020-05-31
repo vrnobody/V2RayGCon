@@ -11,7 +11,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
         Cache cache;
         Settings setting;
 
-
         public VeeDecoder(
             Cache cache,
             Settings setting)
@@ -30,11 +29,12 @@ namespace V2RayGCon.Services.ShareLinkComponents
             AddChild(new VeeCodecs.Vmess0a(cache));
             AddChild(new VeeCodecs.Ss1a(cache));
             AddChild(new VeeCodecs.Socks2a(cache));
+            AddChild(new VeeCodecs.Http3a(cache));
         }
 
         public Tuple<JObject, JToken> Decode(string shareLink)
         {
-            string message = null;
+            string message;
             try
             {
                 return DecodeWorker(shareLink);
@@ -85,8 +85,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 }
             }
 
-            throw new NotSupportedException(
-                $"Not supported vee share link version {linkVersion}");
+            throw new NotSupportedException($"Not supported vee share link version {linkVersion}");
         }
 
         string EncodeWorker(string config)
@@ -109,6 +108,9 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 case VgcApis.Models.Consts.Config.ProtocolNameSocks:
                     encoder = GetChild<VeeCodecs.Socks2a>();
+                    break;
+                case VgcApis.Models.Consts.Config.ProtocolNameHttp:
+                    encoder = GetChild<VeeCodecs.Http3a>();
                     break;
                 default:
                     return null;

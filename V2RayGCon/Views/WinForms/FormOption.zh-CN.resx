@@ -117,20 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnImportAdd.Text" xml:space="preserve">
-    <value>添加</value>
+  <data name="chkSubsIsAutoPatch.Text" xml:space="preserve">
+    <value>自动修整</value>
   </data>
-  <data name="btnImportAdd.ToolTip" xml:space="preserve">
-    <value>添加import URL</value>
-  </data>
-  <data name="flyImportPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPageImport.Text" xml:space="preserve">
-    <value>全局import</value>
-  </data>
-  <data name="tabPageImport.ToolTip" xml:space="preserve">
-    <value />
+  <data name="chkSubsIsAutoPatch.ToolTip" xml:space="preserve">
+    <value>自动修整GitHub链接</value>
   </data>
   <data name="btnSubsInvertSelection.Text" xml:space="preserve">
     <value>反选</value>
@@ -171,6 +162,18 @@
   <data name="tabPageSubscribe.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="chkSetEnableDebugFile.Text" xml:space="preserve">
+    <value>启用</value>
+  </data>
+  <data name="chkSetEnableDebugFile.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxSetDebugFilePath.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnSetBrowseDebugFile.ToolTip" xml:space="preserve">
+    <value>浏览debug文件位置</value>
+  </data>
   <data name="chkSetCheckWhenStart.Text" xml:space="preserve">
     <value>启动时检查</value>
   </data>
@@ -210,14 +213,35 @@
   <data name="groupBox6.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="tboxSettingsMaxCoreNum.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="chkSetServStatistics.Text" xml:space="preserve">
     <value>统计支持(仅v4格式)</value>
   </data>
   <data name="chkSetServStatistics.ToolTip" xml:space="preserve">
     <value>开启统计支持。会导致旧配置格式服务器无法启动！</value>
+  </data>
+  <data name="chkSetSelfSignedCert.Text" xml:space="preserve">
+    <value>自签名证书(不安全)</value>
+  </data>
+  <data name="chkSetSelfSignedCert.ToolTip" xml:space="preserve">
+    <value>是否允许使用自签名证书</value>
+  </data>
+  <data name="cboxSettingsRandomSelectServerLatency.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label14.Text" xml:space="preserve">
+    <value>ms (零表示忽略延迟)</value>
+  </data>
+  <data name="label14.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxSettingsMaxCoreNum.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label15.Text" xml:space="preserve">
+    <value>快速切换</value>
+  </data>
+  <data name="label15.ToolTip" xml:space="preserve">
+    <value>使用托盘图标快速切换功能时，随机选取的服务器的最大延迟</value>
   </data>
   <data name="chkSetServAutotrack.Text" xml:space="preserve">
     <value>自动追踪</value>
@@ -273,12 +297,6 @@
   <data name="tabPageSetting.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="chkDefImportIsFold.Text" xml:space="preserve">
-    <value>折叠</value>
-  </data>
-  <data name="chkDefImportIsFold.ToolTip" xml:space="preserve">
-    <value>将服务器面板折叠成单行模式</value>
-  </data>
   <data name="chkDefImportInjectGlobalImport.Text" xml:space="preserve">
     <value>全局import</value>
   </data>
@@ -315,6 +333,12 @@
   <data name="groupBox4.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="cboxDefSpeedTestExpectedSize.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxDefSpeedTestUrl.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="tboxDefSpeedtestTimeout.ToolTip" xml:space="preserve">
     <value>20000（20秒）</value>
   </data>
@@ -328,7 +352,9 @@
     <value>大小(KiB)</value>
   </data>
   <data name="label7.ToolTip" xml:space="preserve">
-    <value>实际下载数据小于预期时，当成测速超时处理。</value>
+    <value>实际下载数据小于预期时，当成测速超时处理。
+-1：下载整个页面
+0：相当于tcp ping</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
     <value>测试次数</value>
@@ -358,6 +384,36 @@
     <value>默认值</value>
   </data>
   <data name="tabPageDefaults.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnImportAdd.Text" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="btnImportAdd.ToolTip" xml:space="preserve">
+    <value>添加import URL</value>
+  </data>
+  <data name="flyImportPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPageImport.Text" xml:space="preserve">
+    <value>全局import</value>
+  </data>
+  <data name="tabPageImport.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnMultiConfAdd.Text" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="btnMultiConfAdd.ToolTip" xml:space="preserve">
+    <value>添加配置文件</value>
+  </data>
+  <data name="flyMultiConfPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPageMultiConf.Text" xml:space="preserve">
+    <value>多文件配置</value>
+  </data>
+  <data name="tabPageMultiConf.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="label4.Text" xml:space="preserve">

@@ -58,13 +58,19 @@ namespace Statistics.Services
 
             userSettins = LoadUserSetting();
             bookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
-                SaveUserSetting, VgcApis.Models.Consts.Intervals.LazySaveStatisticsDatadelay);
+                SaveUserSetting,
+                VgcApis.Models.Consts.Intervals.LazySaveStatisticsDatadelay,
+                500)
+            {
+                Name = "Statistic.SaveUserSetting",
+            };
             StartBgStatsDataUpdateTimer();
             vgcServers.OnCoreClosing += SaveStatDataBeforeCoreClosed;
         }
 
         public void Cleanup()
         {
+            VgcApis.Libs.Sys.FileLogger.Info("Statistics.Cleanup() begin");
             vgcServers.OnCoreClosing -= SaveStatDataBeforeCoreClosed;
             ReleaseBgStatsDataUpdateTimer();
 
@@ -72,13 +78,13 @@ namespace Statistics.Services
             // So losing 5 minutes of statistics data is an acceptable loss.
             if (!IsShutdown())
             {
-                VgcApis.Libs.Sys.FileLogger.Info("Statistics: save data");
+                VgcApis.Libs.Sys.FileLogger.Info("Statistics.Cleanup() save data");
                 UpdateHistoryStatsDataWorker();
-                bookKeeper.DoItNow();
+                SaveUserSetting();
             }
 
-            bookKeeper.Quit();
-            VgcApis.Libs.Sys.FileLogger.Info("Statistics: done!");
+            bookKeeper?.Dispose();
+            VgcApis.Libs.Sys.FileLogger.Info("Statistics.Cleanup() done");
         }
         #endregion
 
@@ -94,8 +100,7 @@ namespace Statistics.Services
             var uid = coreCtrl.GetCoreStates().GetUid();
             var sample = coreCtrl.GetCoreCtrl().TakeStatisticsSample();
             var title = coreCtrl.GetCoreStates().GetTitle();
-            VgcApis.Misc.Utils.RunInBackground(
-                () => AddToHistoryStatsData(uid, title, sample));
+            VgcApis.Misc.Utils.RunInBackground(() => AddToHistoryStatsData(uid, title, sample));
         }
 
         void AddToHistoryStatsData(
@@ -160,8 +165,7 @@ namespace Statistics.Services
             lock (updateHistoryStatsDataLocker)
             {
                 isUpdating = true;
-                var newDatas = vgcServers
-                    .GetAllServersOrderByIndex()
+                var newDatas = vgcServers.GetAllServersOrderByIndex()
                     .Where(s => s.GetCoreCtrl().IsCoreRunning())
                     .Select(s => GetterCoreInfo(s))
                     .ToList();
@@ -182,7 +186,7 @@ namespace Statistics.Services
                     MergeNewDataIntoHistoryData(historyDatas, d, uid);
                 }
 
-                bookKeeper.DoItLater();
+                bookKeeper?.Throttle();
                 isUpdating = false;
             }
         }

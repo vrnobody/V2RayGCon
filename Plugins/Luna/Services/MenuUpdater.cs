@@ -4,31 +4,35 @@ using System.Windows.Forms;
 
 namespace Luna.Services
 {
-    public class MenuUpdater :
+    internal class MenuUpdater :
         VgcApis.BaseClasses.Disposable
     {
         LuaServer luaServer;
-        ToolStripMenuItem miRoot, miShowWindow;
-        VgcApis.Interfaces.Services.INotifierService vgcNotifierService;
+        ToolStripMenuItem miRoot, miShowMgr, miShowEditor;
         VgcApis.Libs.Tasks.LazyGuy lazyMenuUpdater;
-        VgcApis.Libs.Tasks.Bar menuUpdaterLock = new VgcApis.Libs.Tasks.Bar();
+        private readonly Settings settings;
 
-        public MenuUpdater(VgcApis.Interfaces.Services.INotifierService vgcNotifierService)
+        public MenuUpdater(Settings settings)
         {
-            this.vgcNotifierService = vgcNotifierService;
+            this.settings = settings;
         }
 
         public void Run(
             LuaServer luaServer,
             ToolStripMenuItem miRoot,
-            ToolStripMenuItem miShowWindow)
+            ToolStripMenuItem miShowMgr,
+            ToolStripMenuItem miShowEditor)
         {
             this.luaServer = luaServer;
 
             this.miRoot = miRoot;
-            this.miShowWindow = miShowWindow;
+            this.miShowMgr = miShowMgr;
+            this.miShowEditor = miShowEditor;
 
-            lazyMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateMenuLater, 1000);
+            lazyMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateMenuWorker, 500, 3000)
+            {
+                Name = "Luna.MenuUpdater",
+            };
 
             BindEvents();
 
@@ -40,51 +44,46 @@ namespace Luna.Services
         #endregion
 
         #region private methods
-
-        void UpdateMenuLater()
+        void UpdateMenuWorker(Action done)
         {
-            if (!menuUpdaterLock.Install())
+            VgcApis.Misc.UI.InvokeThen(() =>
             {
-                lazyMenuUpdater?.DoItLater();
-                return;
-            }
-
-            Action next = () => menuUpdaterLock.Remove();
-            UpdateMenuNow(next);
+                var mis = GenSubMenuItems();
+                var root = miRoot.DropDownItems;
+                root.Clear();
+                root.Add(miShowMgr);
+                root.Add(miShowEditor);
+                if (mis.Count > 0)
+                {
+                    root.Add(new ToolStripSeparator());
+                    root.AddRange(mis.ToArray());
+                }
+            }, done);
         }
 
-        void UpdateMenuNow(Action next)
-        {
-            var mis = GenSubMenuItems();
-            vgcNotifierService.RunInUiThread(() =>
-            {
-                try
-                {
-                    var root = miRoot.DropDownItems;
-                    root.Clear();
-                    root.Add(miShowWindow);
-                    if (mis.Count > 0)
-                    {
-                        root.Add(new ToolStripSeparator());
-                        root.AddRange(mis.ToArray());
-                    }
-                }
-                catch { }
-                finally
-                {
-                    next();
-                }
-            });
-        }
+        void UpdateMenuLater() => lazyMenuUpdater?.Postpone();
 
         List<ToolStripMenuItem> GenSubMenuItems()
         {
             var mis = new List<ToolStripMenuItem>();
-            var luaCtrls = luaServer.GetAllLuaCoreCtrls();
+            var luaCtrls = luaServer.GetVisibleCoreCtrls();
             foreach (var luaCtrl in luaCtrls)
             {
                 var ctrl = luaCtrl; // capture
-                var mi = new ToolStripMenuItem(ctrl.name, null, (s, a) => ctrl.Start());
+                Action onClick = () =>
+                {
+                    if (ctrl.isRunning)
+                    {
+                        ctrl.Stop();
+                    }
+                    else
+                    {
+                        ctrl.Start();
+                    }
+                };
+
+                var mi = new ToolStripMenuItem(ctrl.name, null, (s, a) => onClick());
+                mi.Checked = luaCtrl.isRunning;
                 mis.Add(mi);
             }
 
@@ -97,12 +96,12 @@ namespace Luna.Services
 
         void BindEvents()
         {
-            luaServer.OnLuaCoreCtrlListChange += LuaCoreCtrlListChangeHandler;
+            luaServer.OnRequireMenuUpdate += LuaCoreCtrlListChangeHandler;
         }
 
         void ReleaseEvents()
         {
-            luaServer.OnLuaCoreCtrlListChange -= LuaCoreCtrlListChangeHandler;
+            luaServer.OnRequireMenuUpdate -= LuaCoreCtrlListChangeHandler;
         }
         #endregion
 

@@ -14,18 +14,19 @@ namespace V2RayGCon.Services
         Settings setting;
         Cache cache;
 
-        static long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+        static long TIMEOUT = VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
         ConfigMgr() { }
 
         #region public methods
+
         public long RunCustomSpeedTest(string rawConfig, string testUrl, int testTimeout) =>
-            RunSpeedTestWorker(rawConfig, "Custom speed-test", testUrl, testTimeout, false, false, false, null);
+            QueuedSpeedTesting(rawConfig, "Custom speed-test", testUrl, testTimeout, false, false, false, null);
 
         public long RunSpeedTest(string rawConfig)
         {
             var url = GetDefaultSpeedtestUrl();
-            return RunSpeedTestWorker(rawConfig, "Default speed-test", "", GetDefaultTimeout(), false, false, false, null);
+            return QueuedSpeedTesting(rawConfig, "Default speed-test", "", GetDefaultTimeout(), false, false, false, null);
         }
 
         public long RunDefaultSpeedTest(
@@ -34,7 +35,7 @@ namespace V2RayGCon.Services
             EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever)
         {
             var url = GetDefaultSpeedtestUrl();
-            return RunSpeedTestWorker(rawConfig, title, url, GetDefaultTimeout(), true, true, false, logDeliever);
+            return QueuedSpeedTesting(rawConfig, title, url, GetDefaultTimeout(), true, true, false, logDeliever);
         }
 
         public string InjectImportTpls(
@@ -73,6 +74,10 @@ namespace V2RayGCon.Services
                 }
 
                 decodedConfig = ParseImport(injectedConfig);
+                if (setting.isSupportSelfSignedCert)
+                {
+                    EnableAllowInsecureStreamSetting(ref decodedConfig);
+                }
                 cache.core[coreConfig] = decodedConfig.ToString(Formatting.None);
             }
             catch { }
@@ -337,6 +342,26 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+        void EnableAllowInsecureStreamSetting(ref JObject config)
+        {
+            var outB = Misc.Utils.GetKey(config, "outbound") ??
+                Misc.Utils.GetKey(config, "outbounds.0");
+
+            if (outB == null)
+            {
+                return;
+            }
+
+            JObject streamSettings = Misc.Utils.GetKey(outB, "streamSettings") as JObject;
+            if (streamSettings == null)
+            {
+                return;
+            }
+
+            var mixIn = JObject.Parse(@"{tlsSettings: {allowInsecure: true}}");
+            Misc.Utils.MergeJson(ref streamSettings, mixIn);
+        }
+
         int GetDefaultTimeout()
         {
             var customTimeout = setting.CustomSpeedtestTimeout;
@@ -344,7 +369,7 @@ namespace V2RayGCon.Services
             {
                 return customTimeout;
             }
-            return VgcApis.Models.Consts.Intervals.SpeedTestTimeout;
+            return VgcApis.Models.Consts.Intervals.DefaultSpeedTestTimeout;
         }
 
         string GetDefaultSpeedtestUrl() =>
@@ -360,7 +385,7 @@ namespace V2RayGCon.Services
             return ParseImport(imports.ToString());
         }
 
-        long RunSpeedTestWorker(
+        long QueuedSpeedTesting(
             string rawConfig,
             string title,
             string testUrl,
@@ -370,59 +395,80 @@ namespace V2RayGCon.Services
             bool isInjectActivateTpl,
             EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever)
         {
-            var port = VgcApis.Misc.Utils.GetFreeTcpPort();
+            // setting.SpeedTestPool may change while testing
+            var pool = setting.SpeedTestPool;
+            pool.Wait();
 
-            // for debugging 
-            logDeliever?.Invoke(this, new VgcApis.Models.Datas.StrEvent(
-                I18N.SpeedtestPortNum + port.ToString()));
-
-            var speedTestConfig = CreateSpeedTestConfig(
-                rawConfig, port, isUseCache, isInjectSpeedTestTpl, isInjectActivateTpl);
-
-            if (string.IsNullOrEmpty(speedTestConfig))
-            {
-                logDeliever?.Invoke(this, new VgcApis.Models.Datas.StrEvent(I18N.DecodeImportFail));
-                return SpeedtestTimeout;
-            }
-
-            var speedTester = new Libs.V2Ray.Core(setting)
-            {
-                title = title
-            };
-
-            speedTester.WaitForStartCoreToken();
             if (setting.isSpeedtestCancelled)
             {
-                speedTester.ReleaseToken();
+                pool.Release();
                 return VgcApis.Models.Consts.Core.SpeedtestAbort;
             }
 
+            var port = VgcApis.Misc.Utils.GetFreeTcpPort();
+            var cfg = CreateSpeedTestConfig(rawConfig, port, isUseCache, isInjectSpeedTestTpl, isInjectActivateTpl);
+            var result = DoSpeedTesting(title, testUrl, testTimeout, port, cfg, logDeliever);
+            pool.Release();
+            return result;
+        }
+
+        bool WaitUntilCoreReady(Libs.V2Ray.Core core)
+        {
+            const int jiff = 300;
+            int cycle = 30 * 1000 / jiff;
+            int i;
+            for (i = 0; i < cycle && !core.isReady; i++)
+            {
+                VgcApis.Misc.Utils.Sleep(jiff);
+            }
+            if (i < cycle)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        long DoSpeedTesting(
+            string title,
+            string testUrl,
+            int testTimeout,
+            int port,
+            string config,
+            EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever)
+        {
+            void log(string content) => logDeliever?.Invoke(this, new VgcApis.Models.Datas.StrEvent(content));
+
+            log($"{I18N.SpeedtestPortNum}{port}");
+            if (string.IsNullOrEmpty(config))
+            {
+                log(I18N.DecodeImportFail);
+                return TIMEOUT;
+            }
+
+            var speedTester = new Libs.V2Ray.Core(setting) { title = title };
             if (logDeliever != null)
             {
                 speedTester.OnLog += logDeliever;
             }
 
+            long latency = TIMEOUT;
             try
             {
-                speedTester.RestartCore(speedTestConfig);
+                speedTester.RestartCore(config);
+                if (WaitUntilCoreReady(speedTester))
+                {
+                    var expectedSizeInKib = setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestExpectedSizeInKib : -1;
+                    latency = VgcApis.Misc.Utils.TimedDownloadTest(testUrl, port, expectedSizeInKib, testTimeout);
+                }
+                speedTester.StopCore();
+                if (logDeliever != null)
+                {
+                    speedTester.OnLog -= logDeliever;
+                }
             }
-            finally
-            {
-                speedTester.ReleaseToken();
-            }
+            catch { }
 
-            var expectedSizeInKib = setting.isUseCustomSpeedtestSettings ?
-                setting.CustomSpeedtestExpectedSizeInKib : 0;
-
-            long testResult = Misc.Utils.VisitWebPageSpeedTest(testUrl, port, expectedSizeInKib, testTimeout);
-
-            speedTester.StopCore();
-
-            if (logDeliever != null)
-            {
-                speedTester.OnLog -= logDeliever;
-            }
-            return testResult;
+            return latency;
         }
 
         List<string> GetHtmlContentFromCache(IEnumerable<string> urls)

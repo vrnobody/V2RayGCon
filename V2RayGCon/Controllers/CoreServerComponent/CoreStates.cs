@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
 {
@@ -25,6 +26,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             coreCtrl = GetSibling<CoreCtrl>();
             configer = GetSibling<Configer>();
+
+            UpdateStatusWithSpeedTestResult();
         }
 
         #region properties
@@ -52,6 +55,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
 
             coreInfo.index = index;
+            coreInfo.title = string.Empty;
             coreCtrl.SetTitle(GetTitle());
             if (!quiet)
             {
@@ -74,7 +78,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 + ci.inbIp + @":" + ci.inbPort.ToString(),
 
                 // index 2
-                ci.customMark??"",
+                ci.customMark??@"",
+
+                ci.customRemark??@"",
             });
         }
 
@@ -104,8 +110,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             {
                 if (string.IsNullOrEmpty(coreInfo.uid))
                 {
-                    var uidList = servers
-                        .GetAllServersOrderByIndex()
+                    var uidList = servers.GetAllServersOrderByIndex()
                         .Select(s => s.GetCoreStates().GetRawUid())
                         .ToList();
 
@@ -199,6 +204,19 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             GetParent().InvokeEventOnPropertyChange();
         }
 
+        public void SetRemark(string remark)
+        {
+            if (coreInfo.customRemark == remark)
+            {
+                return;
+            }
+
+            coreInfo.customRemark = remark;
+            GetParent().InvokeEventOnPropertyChange();
+        }
+
+        public string GetRemark() => coreInfo.customRemark;
+
         public string GetInboundIp() => coreInfo.inbIp;
         public int GetInboundPort() => coreInfo.inbPort;
 
@@ -213,17 +231,39 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public string GetTitle()
         {
             var ci = coreInfo;
-            var result = $"{ci.index}.[{ci.name}] {ci.summary}";
-            return Misc.Utils.CutStr(result, 60);
+            if (string.IsNullOrEmpty(ci.title))
+            {
+                var result = $"{ci.index}.[{GetShortName()}] {ci.summary}";
+                ci.title = VgcApis.Misc.Utils.AutoEllipsis(result, VgcApis.Models.Consts.AutoEllipsis.ServerTitleMaxLength);
+            }
+            return ci.title;
         }
 
         public VgcApis.Models.Datas.CoreInfo GetAllInfo() => coreInfo;
 
-        public string GetName() => coreInfo.name;
-        public void SetName(string value)
+        public string GetLongName()
         {
-            coreInfo.name = value;
+            if (string.IsNullOrEmpty(coreInfo.longName)
+                && !string.IsNullOrEmpty(coreInfo.name))
+            {
+                coreInfo.longName = VgcApis.Misc.Utils.AutoEllipsis(
+                    coreInfo.name, VgcApis.Models.Consts.AutoEllipsis.ServerLongNameMaxLength);
+            }
+            return coreInfo.longName;
         }
+
+        public string GetShortName()
+        {
+            if (string.IsNullOrEmpty(coreInfo.shortName)
+                && !string.IsNullOrEmpty(coreInfo.name))
+            {
+                coreInfo.shortName = VgcApis.Misc.Utils.AutoEllipsis(
+                    coreInfo.name, VgcApis.Models.Consts.AutoEllipsis.ServerShortNameMaxLength);
+            }
+            return coreInfo.shortName;
+        }
+
+        public string GetName() => coreInfo.name;
 
         int statPort = -1;
         public int GetStatPort() => statPort;
@@ -233,20 +273,53 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         /// </summary>
         public void SetStatPort(int port) => statPort = port;
 
-        string status = "";
+        string status = @"";
         public string GetStatus() => status;
-        public void SetStatus(string value) =>
-            SetPropertyOnDemand(ref status, value);
 
-        long speedTestResult = -1;
-        public long GetSpeedTestResult() => speedTestResult;
-        public void SetSpeedTestResult(long value) =>
-            speedTestResult = value;
+        public void SetStatus(string text)
+        {
+            if (status == text)
+            {
+                return;
+            }
+
+            status = text;
+            GetParent().InvokeEventOnPropertyChange();
+        }
+
+        public long GetLastSpeedTestUtcTicks() => coreInfo.lastSpeedTestUtcTicks;
+
+        public long GetSpeedTestResult() => coreInfo.speedTestResult;
+        public void SetSpeedTestResult(long latency)
+        {
+            // 0: testing <0: none long.max: timeout >0: ???ms
+            if (coreInfo.speedTestResult == latency)
+            {
+                return;
+            }
+
+            coreInfo.speedTestResult = latency;
+            coreInfo.lastSpeedTestUtcTicks = DateTime.UtcNow.Ticks;
+            UpdateStatusWithSpeedTestResult();
+            GetParent().InvokeEventOnPropertyChange();
+        }
 
         public string GetRawUid() => coreInfo.uid;
         #endregion
 
         #region private methods
+        void UpdateStatusWithSpeedTestResult()
+        {
+            var latency = GetSpeedTestResult();
+
+            var status = @"";
+            if (latency > 0)
+            {
+                status = latency == long.MaxValue ? I18N.Timeout : $"{latency}ms";
+            }
+            SetStatus(status);
+        }
+
         void SetSettingsPropertyOnDemand(ref bool property, bool value, bool requireRestart = false)
         {
             if (property == value)

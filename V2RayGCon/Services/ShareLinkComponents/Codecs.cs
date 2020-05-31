@@ -22,9 +22,14 @@ namespace V2RayGCon.Services.ShareLinkComponents
             string shareLink,
             VgcApis.Interfaces.IShareLinkDecoder decoder)
         {
-            var tuple = decoder.Decode(shareLink);
-            return GenerateConfing(tuple);
+            try
+            {
+                var tuple = decoder.Decode(shareLink);
+                return GenerateConfing(tuple);
+            }
+            catch { }
 
+            return null;
         }
 
         public string Decode<TDecoder>(string shareLink)
@@ -45,7 +50,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             var ssDecoder = new SsDecoder(cache);
             var v2cfgDecoder = new V2cfgDecoder();
-            var vmessDecoder = new VmessDecoder(cache);
+            var vmessDecoder = new VmessDecoder(cache, setting);
             var veeDecoder = new VeeDecoder(cache, setting);
 
             veeDecoder.Prepare();

@@ -22,7 +22,7 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.AutoSetFormIcon(this);
         }
 
-        private void FormOption_Shown(object sender, System.EventArgs e)
+        private void FormOption_Load(object sender, System.EventArgs e)
         {
             // throw new System.ArgumentException("for debug");
 
@@ -33,15 +33,16 @@ namespace V2RayGCon.Views.WinForms
                 if (!this.optionCtrl.IsOptionsSaved())
                 {
                     a.Cancel = !Misc.UI.Confirm(I18N.ConfirmCloseWinWithoutSave);
+                    return;
                 }
             };
 
             this.FormClosed += (s, a) =>
             {
+                optionCtrl.Cleanup();
                 Services.Settings.Instance.LazyGC();
             };
         }
-
 
         #region public method
 
@@ -54,7 +55,12 @@ namespace V2RayGCon.Views.WinForms
             var ctrl = new Controllers.FormOptionCtrl();
 
             ctrl.Plug(
-                new Controllers.OptionComponent.Import(
+                new Controllers.OptionComponent.TabMultiConf(
+                    flyMultiConfPanel,
+                    btnMultiConfAdd));
+
+            ctrl.Plug(
+                new Controllers.OptionComponent.TabImport(
                     flyImportPanel,
                     btnImportAdd));
 
@@ -64,6 +70,7 @@ namespace V2RayGCon.Views.WinForms
                     btnAddSubsUrl,
                     btnUpdateViaSubscription,
                     chkSubsIsUseProxy,
+                    chkSubsIsAutoPatch,
                     btnSubsUseAll,
                     btnSubsInvertSelection));
 
@@ -77,26 +84,34 @@ namespace V2RayGCon.Views.WinForms
                     cboxSettingPageSize,
                     chkSetServAutotrack,
                     tboxSettingsMaxCoreNum,
+                    cboxSettingsRandomSelectServerLatency,
                     chkSetSysPortable,
                     chkSetUseV4,
+                    chkSetSelfSignedCert,
                     chkSetServStatistics,
                     chkSetUpgradeUseProxy,
-                    chkSetCheckWhenStart));
+                    chkSetCheckWhenStart,
+
+                    btnSetBrowseDebugFile,
+                    tboxSetDebugFilePath,
+                    chkSetEnableDebugFile));
+
             ctrl.Plug(
                 new Controllers.OptionComponent.TabDefaults(
 
                     // def import share link mode
                     cboxDefImportMode,
                     tboxDefImportAddr,
+
                     chkDefImportSsShareLink,
                     chkDefImportBypassCnSite,
                     chkDefImportInjectGlobalImport,
 
                     // speedtest 
                     chkDefSpeedtestIsUse,
-                    tboxDefSpeedtestUrl,
+                    cboxDefSpeedTestUrl,
                     tboxDefSpeedtestCycles,
-                    tboxDefSpeedtestExpectedSize,
+                    cboxDefSpeedTestExpectedSize,
                     tboxDefSpeedtestTimeout)
             );
 
@@ -131,8 +146,22 @@ namespace V2RayGCon.Views.WinForms
         {
             optionCtrl.RestoreOptions();
         }
-        #endregion
 
+        private void flySubsUrlContainer_Scroll(object sender, ScrollEventArgs e)
+        {
+            flySubsUrlContainer.Refresh();
+        }
+
+        private void flyImportPanel_Scroll(object sender, ScrollEventArgs e)
+        {
+            flyImportPanel.Refresh();
+        }
+
+        private void flyPluginsItemsContainer_Scroll(object sender, ScrollEventArgs e)
+        {
+            flyPluginsItemsContainer.Refresh();
+        }
+        #endregion
 
     }
 }

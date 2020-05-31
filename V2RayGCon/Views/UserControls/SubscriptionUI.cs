@@ -11,10 +11,9 @@ namespace V2RayGCon.Views.UserControls
     public partial class SubscriptionUI : UserControl
     {
         public delegate void OnDeleteHandler();
-        public event OnDeleteHandler OnDelete; // add empty delegate
 
         Services.Servers servers;
-        VgcApis.Libs.Tasks.LazyGuy lazyCounter;
+        Services.Settings settings;
         private readonly Subscription subsCtrl;
 
         public SubscriptionUI(
@@ -24,16 +23,13 @@ namespace V2RayGCon.Views.UserControls
             InitializeComponent();
 
             this.subsCtrl = subsCtrl;
+
             servers = Services.Servers.Instance;
-            lazyCounter = new VgcApis.Libs.Tasks.LazyGuy(UpdateServerTotalNow, 1000);
+            settings = Services.Settings.Instance;
 
             // tab page is lazy, do not call this in Load().
             InitControls(subscriptItem);
 
-            BindEvent();
-            lazyCounter.DoItLater();
-
-            Disposed += (s, a) => Cleanup();
         }
 
         #region form thing
@@ -45,15 +41,41 @@ namespace V2RayGCon.Views.UserControls
             tboxAlias.Text = subscriptItem.alias;
             chkIsUse.Checked = subscriptItem.isUse;
             chkIsSetMark.Checked = subscriptItem.isSetMark;
+            SetBtnDeleteStat();
+        }
+
+        void SetBtnDeleteStat()
+        {
+            var isEnable = !IsEmpty();
+
+            if (btnDelete.Enabled != isEnable)
+            {
+                btnDelete.Enabled = isEnable;
+            }
         }
         #endregion
 
         #region public method
 
+        public string GetAlias() => tboxAlias.Text;
 
-        public void UpdateTextBoxColor(
-            IEnumerable<string> alias,
-            IEnumerable<string> urls)
+        public void SetTotal(int total)
+        {
+            var color = total > 0 ? Color.DarkGray : Color.Red;
+            var text = $"{I18N.TotalNum}{total}";
+            VgcApis.Misc.UI.Invoke(() =>
+           {
+               lbTotal.ForeColor = color;
+               lbTotal.Text = text;
+           });
+        }
+
+        public bool IsEmpty() =>
+            string.IsNullOrWhiteSpace(tboxAlias.Text)
+            && string.IsNullOrWhiteSpace(tboxUrl.Text);
+
+
+        public void UpdateTextBoxColor(IEnumerable<string> alias, IEnumerable<string> urls)
         {
             UpdateTextBoxColorWorker(tboxUrl, urls);
             UpdateTextBoxColorWorker(tboxAlias, alias);
@@ -84,17 +106,31 @@ namespace V2RayGCon.Views.UserControls
         private void tboxAlias_TextChanged(object sender, EventArgs e)
         {
             subsCtrl.MarkDuplicatedSubsInfo();
-            UpdateServerTotalLater();
+            SetBtnDeleteStat();
+            subsCtrl.AutoAddEmptyUi();
+            subsCtrl.UpdateServUiTotal(this, EventArgs.Empty);
         }
 
         private void tboxUrl_TextChanged(object sender, EventArgs e)
         {
+            var url = tboxUrl.Text;
+
+            if (settings.isAutoPatchSubsInfo
+                && !string.IsNullOrEmpty(url)
+                && VgcApis.Misc.Utils.TryPatchGitHubUrl(url, out var patched))
+            {
+                tboxUrl.Text = patched;
+                return;
+            }
+
             if (string.IsNullOrEmpty(tboxAlias.Text)
-                && VgcApis.Misc.Utils.TryExtractAliasFromSubscriptionUrl(tboxUrl.Text, out var alias))
+                && VgcApis.Misc.Utils.TryExtractAliasFromSubscriptionUrl(url, out var alias))
             {
                 tboxAlias.Text = alias;
             }
 
+            SetBtnDeleteStat();
+            subsCtrl.AutoAddEmptyUi();
             subsCtrl.MarkDuplicatedSubsInfo();
         }
 
@@ -105,14 +141,35 @@ namespace V2RayGCon.Views.UserControls
                 return;
             }
 
-            var flyPanel = this.Parent as FlowLayoutPanel;
-            flyPanel.Controls.Remove(this);
+            subsCtrl.RemoveSubsUi(this);
+        }
 
-            try
+        private void lbAlias_Click(object sender, EventArgs e)
+        {
+            tboxAlias.Focus();
+            var msg = VgcApis.Misc.Utils.CopyToClipboard(tboxAlias.Text) ?
+                 I18N.CopySuccess : I18N.CopyFail;
+            VgcApis.Misc.UI.MsgBoxAsync(msg);
+        }
+
+        private void lbUrl_Click(object sender, EventArgs e)
+        {
+            var url = tboxUrl.Text;
+            if (string.IsNullOrEmpty(url))
             {
-                OnDelete?.Invoke();
+                var clipboard = VgcApis.Misc.Utils.CopyFromClipboard();
+                if (!string.IsNullOrEmpty(clipboard))
+                {
+                    tboxUrl.Text = clipboard;
+                }
             }
-            catch { }
+            else
+            {
+                tboxUrl.Focus();
+                var msg = VgcApis.Misc.Utils.CopyToClipboard(tboxUrl.Text) ?
+                     I18N.CopySuccess : I18N.CopyFail;
+                VgcApis.Misc.UI.MsgBoxAsync(msg);
+            }
         }
         #endregion
 
@@ -132,46 +189,6 @@ namespace V2RayGCon.Views.UserControls
             textBox.BackColor = color;
         }
 
-        void OnCoreStateChangedHandler(object sender, EventArgs args) =>
-            UpdateServerTotalLater();
-
-        void UpdateServerTotalLater() => lazyCounter.DoItLater();
-
-        void BindEvent()
-        {
-            servers.OnServerCountChange += OnCoreStateChangedHandler;
-            servers.OnServerPropertyChange += OnCoreStateChangedHandler;
-        }
-
-        void ReleaseEvent()
-        {
-            servers.OnServerCountChange -= OnCoreStateChangedHandler;
-            servers.OnServerPropertyChange -= OnCoreStateChangedHandler;
-        }
-
-        void UpdateServerTotalNow()
-        {
-            VgcApis.Misc.UI.RunInUiThreadIgnoreError(
-                lbTotal,
-                () =>
-                {
-                    var alias = tboxAlias.Text;
-                    var coreNum = servers.GetAllServersOrderByIndex()
-                        .Select(s => s.GetCoreStates())
-                        .Where(cfg => cfg.GetMark() == alias)
-                        .Count();
-                    lbTotal.Text = $"{I18N.TotalNum}{coreNum}";
-                    lbTotal.ForeColor = coreNum == 0 ? Color.Red : Color.DarkGray;
-                });
-        }
-
-        void Cleanup()
-        {
-            ReleaseEvent();
-            lazyCounter.ForgetIt();
-            lazyCounter.Quit();
-        }
-
         private void UrlListItem_MouseDown(object sender, MouseEventArgs e) =>
             DoDragDrop(this, DragDropEffects.Move);
 
@@ -181,5 +198,7 @@ namespace V2RayGCon.Views.UserControls
 
         #region protected
         #endregion
+
+
     }
 }

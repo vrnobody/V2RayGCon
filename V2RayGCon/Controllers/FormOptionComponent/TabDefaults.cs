@@ -7,29 +7,31 @@ namespace V2RayGCon.Controllers.OptionComponent
     {
         Services.Settings setting;
 
-        ComboBox cboxDefImportMode = null;
+        ComboBox cboxDefImportMode = null,
+            cboxDefSpeedtestUrl = null,
+            cboxDefSpeedtestExpectedSize = null;
+
         CheckBox chkSetSpeedtestIsUse = null,
             chkImportSsShareLink = null,
             chkImportBypassCnSite = null,
             chkImportInjectGlobalImport = null;
 
         TextBox tboxDefImportAddr = null,
-            tboxSetSpeedtestUrl = null,
             tboxSetSpeedtestCycles = null,
-            tboxSetSpeedtestExpectedSize = null,
             tboxSetSpeedtestTimeout = null;
 
         public TabDefaults(
             ComboBox cboxDefImportMode,
             TextBox tboxDefImportAddr,
+
             CheckBox chkImportSsShareLink,
             CheckBox chkImportBypassCnSite,
             CheckBox chkImportInjectGlobalImport,
 
             CheckBox chkSetSpeedtestIsUse,
-            TextBox tboxSetSpeedtestUrl,
+            ComboBox cboxDefSpeedtestUrl,
             TextBox tboxSetSpeedtestCycles,
-            TextBox tboxSetSpeedtestExpectedSize,
+            ComboBox cboxDefSpeedtestExpectedSize,
             TextBox tboxSetSpeedtestTimeout)
         {
             this.setting = Services.Settings.Instance;
@@ -40,11 +42,10 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.chkImportSsShareLink = chkImportSsShareLink;
             this.chkImportBypassCnSite = chkImportBypassCnSite;
             this.chkImportInjectGlobalImport = chkImportInjectGlobalImport;
-
             this.chkSetSpeedtestIsUse = chkSetSpeedtestIsUse;
-            this.tboxSetSpeedtestUrl = tboxSetSpeedtestUrl;
+            this.cboxDefSpeedtestUrl = cboxDefSpeedtestUrl;
             this.tboxSetSpeedtestCycles = tboxSetSpeedtestCycles;
-            this.tboxSetSpeedtestExpectedSize = tboxSetSpeedtestExpectedSize;
+            this.cboxDefSpeedtestExpectedSize = cboxDefSpeedtestExpectedSize;
             this.tboxSetSpeedtestTimeout = tboxSetSpeedtestTimeout;
 
             InitElement();
@@ -56,6 +57,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             chkImportBypassCnSite.Checked = setting.CustomDefImportBypassCnSite;
             chkImportInjectGlobalImport.Checked = setting.CustomDefImportGlobalImport;
             chkImportSsShareLink.Checked = setting.CustomDefImportSsShareLink;
+
             cboxDefImportMode.SelectedIndex = setting.CustomDefImportMode;
             tboxDefImportAddr.TextChanged += OnTboxImportAddrTextChanged;
             tboxDefImportAddr.Text = string.Format(
@@ -66,8 +68,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             // speedtest
             chkSetSpeedtestIsUse.Checked = setting.isUseCustomSpeedtestSettings;
             tboxSetSpeedtestCycles.Text = setting.CustomSpeedtestCycles.ToString();
-            tboxSetSpeedtestUrl.Text = setting.CustomSpeedtestUrl;
-            tboxSetSpeedtestExpectedSize.Text = setting.CustomSpeedtestExpectedSizeInKib.ToString();
+            cboxDefSpeedtestUrl.Text = setting.CustomSpeedtestUrl;
+            cboxDefSpeedtestExpectedSize.Text = setting.CustomSpeedtestExpectedSizeInKib.ToString();
             tboxSetSpeedtestTimeout.Text = setting.CustomSpeedtestTimeout.ToString();
         }
 
@@ -86,15 +88,16 @@ namespace V2RayGCon.Controllers.OptionComponent
                 setting.CustomDefImportPort = port;
             }
             setting.CustomDefImportMode = cboxDefImportMode.SelectedIndex;
+
             setting.CustomDefImportSsShareLink = chkImportSsShareLink.Checked;
             setting.CustomDefImportGlobalImport = chkImportInjectGlobalImport.Checked;
             setting.CustomDefImportBypassCnSite = chkImportBypassCnSite.Checked;
 
             // speedtest
             setting.isUseCustomSpeedtestSettings = chkSetSpeedtestIsUse.Checked;
-            setting.CustomSpeedtestUrl = tboxSetSpeedtestUrl.Text;
+            setting.CustomSpeedtestUrl = cboxDefSpeedtestUrl.Text;
             setting.CustomSpeedtestCycles = VgcApis.Misc.Utils.Str2Int(tboxSetSpeedtestCycles.Text);
-            setting.CustomSpeedtestExpectedSizeInKib = VgcApis.Misc.Utils.Str2Int(tboxSetSpeedtestExpectedSize.Text);
+            setting.CustomSpeedtestExpectedSizeInKib = VgcApis.Misc.Utils.Str2Int(cboxDefSpeedtestExpectedSize.Text);
             setting.CustomSpeedtestTimeout = VgcApis.Misc.Utils.Str2Int(tboxSetSpeedtestTimeout.Text);
 
             setting.SaveUserSettingsNow();
@@ -113,8 +116,8 @@ namespace V2RayGCon.Controllers.OptionComponent
                 || setting.CustomDefImportMode != cboxDefImportMode.SelectedIndex
 
                 || setting.isUseCustomSpeedtestSettings != chkSetSpeedtestIsUse.Checked
-                || setting.CustomSpeedtestUrl != tboxSetSpeedtestUrl.Text
-                || setting.CustomSpeedtestExpectedSizeInKib != VgcApis.Misc.Utils.Str2Int(tboxSetSpeedtestExpectedSize.Text)
+                || setting.CustomSpeedtestUrl != cboxDefSpeedtestUrl.Text
+                || setting.CustomSpeedtestExpectedSizeInKib != VgcApis.Misc.Utils.Str2Int(cboxDefSpeedtestExpectedSize.Text)
                 || setting.CustomSpeedtestCycles != VgcApis.Misc.Utils.Str2Int(tboxSetSpeedtestCycles.Text)
                 || setting.CustomSpeedtestTimeout != VgcApis.Misc.Utils.Str2Int(tboxSetSpeedtestTimeout.Text))
             {

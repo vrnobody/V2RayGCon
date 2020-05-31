@@ -15,17 +15,20 @@
             isInjectSkipCNSite,
             isUntrack;
 
-        public string name, summary, inbIp, customMark, uid;
+        public string name, longName, shortName, summary, title, inbIp, customMark, uid, customRemark;
 
         public int customInbType, inbPort;
 
         public double index;
 
-        public long lastModifiedUtcTicks;
+        public long lastModifiedUtcTicks, lastSpeedTestUtcTicks, speedTestResult;
 
         public CoreInfo()
         {
             lastModifiedUtcTicks = System.DateTime.UtcNow.Ticks;
+            lastSpeedTestUtcTicks = System.DateTime.UtcNow.Ticks;
+
+            speedTestResult = -1;
 
             // new server will displays at the bottom
             index = double.MaxValue;
@@ -37,8 +40,12 @@
             isInjectImport = false;
 
             customMark = string.Empty;
+            customRemark = string.Empty;
 
             name = string.Empty;
+            longName = string.Empty;
+            shortName = string.Empty;
+            title = string.Empty;
             summary = string.Empty;
             config = string.Empty;
             uid = string.Empty;
@@ -47,6 +54,13 @@
             customInbType = (int)Enums.ProxyTypes.HTTP;
             inbIp = Consts.Webs.LoopBackIP;
             inbPort = Consts.Webs.DefaultProxyPort;
+        }
+
+        public void ClearCachedString()
+        {
+            shortName = string.Empty;
+            longName = string.Empty;
+            title = string.Empty;
         }
     }
 }

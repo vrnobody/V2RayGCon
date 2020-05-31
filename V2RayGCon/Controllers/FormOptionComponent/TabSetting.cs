@@ -7,25 +7,41 @@ namespace V2RayGCon.Controllers.OptionComponent
         Services.Settings setting;
         Services.Servers servers;
 
-        ComboBox cboxLanguage = null, cboxPageSize = null;
-        CheckBox chkServAutoTrack = null,
+        private readonly ComboBox
+            cboxLanguage = null,
+            cboxPageSize = null,
+            cboxRandomSelectServerLatency = null;
+
+        private readonly CheckBox
+            chkServAutoTrack = null,
             chkPortableMode = null,
             chkSetUseV4 = null,
             chkSetEnableStat = null,
             chkSetUpdateUseProxy = null,
-            chkSetCheckWhenAppStart = null;
-        TextBox tboxMaxCoreNum;
+            chkSetCheckWhenAppStart = null,
+            chkSetIsSupportSelfSignedCert = null;
+
+        private readonly Button btnBrowseDebugLogFile;
+        private readonly TextBox tboxDebugLogFilePath;
+        private readonly CheckBox chkIsEnableDebugLogFile;
+        private readonly TextBox tboxMaxCoreNum = null;
 
         public TabSetting(
             ComboBox cboxLanguage,
             ComboBox cboxPageSize,
             CheckBox chkServAutoTrack,
             TextBox tboxMaxCoreNum,
+            ComboBox cboxRandomSelectServerLatency,
             CheckBox chkPortableMode,
             CheckBox chkSetUseV4,
+            CheckBox chkSetIsSupportSelfSignedCert,
             CheckBox chkSetEnableStat,
             CheckBox chkSetUpdateUseProxy,
-            CheckBox chkSetCheckWhenAppStart)
+            CheckBox chkSetCheckWhenAppStart,
+
+            Button btnBrowseDebugLogFile,
+            TextBox tboxDebugLogFilePath,
+            CheckBox chkIsEnableDebugLogFile)
         {
             this.setting = Services.Settings.Instance;
             this.servers = Services.Servers.Instance;
@@ -35,22 +51,34 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.cboxPageSize = cboxPageSize;
             this.chkServAutoTrack = chkServAutoTrack;
             this.tboxMaxCoreNum = tboxMaxCoreNum;
+            this.cboxRandomSelectServerLatency = cboxRandomSelectServerLatency;
             this.chkPortableMode = chkPortableMode;
             this.chkSetUseV4 = chkSetUseV4;
+            this.chkSetIsSupportSelfSignedCert = chkSetIsSupportSelfSignedCert;
             this.chkSetEnableStat = chkSetEnableStat;
             this.chkSetCheckWhenAppStart = chkSetCheckWhenAppStart;
+            this.btnBrowseDebugLogFile = btnBrowseDebugLogFile;
+            this.tboxDebugLogFilePath = tboxDebugLogFilePath;
+            this.chkIsEnableDebugLogFile = chkIsEnableDebugLogFile;
             this.chkSetUpdateUseProxy = chkSetUpdateUseProxy;
 
             InitElement();
+            BindEvents();
         }
 
         private void InitElement()
         {
+            tboxDebugLogFilePath.Text = setting.DebugLogFilePath;
+            chkIsEnableDebugLogFile.Checked = setting.isEnableDebugLogFile;
+
+            cboxRandomSelectServerLatency.Text = setting.QuickSwitchServerLantency.ToString();
+
             chkSetUpdateUseProxy.Checked = setting.isUpdateUseProxy;
             chkSetCheckWhenAppStart.Checked = setting.isCheckUpdateWhenAppStart;
 
             chkSetEnableStat.Checked = setting.isEnableStatistics;
             chkSetUseV4.Checked = setting.isUseV4;
+            chkSetIsSupportSelfSignedCert.Checked = setting.isSupportSelfSignedCert;
             chkPortableMode.Checked = setting.isPortable;
             cboxLanguage.SelectedIndex = (int)setting.culture;
             cboxPageSize.Text = setting.serverPanelPageSize.ToString();
@@ -75,6 +103,9 @@ namespace V2RayGCon.Controllers.OptionComponent
                 Services.Servers.Instance.RequireFormMainUpdate();
             }
 
+            setting.isEnableDebugLogFile = chkIsEnableDebugLogFile.Checked;
+            setting.DebugLogFilePath = tboxDebugLogFilePath.Text;
+
             setting.maxConcurrentV2RayCoreNum = VgcApis.Misc.Utils.Str2Int(tboxMaxCoreNum.Text);
 
             var index = cboxLanguage.SelectedIndex;
@@ -93,14 +124,15 @@ namespace V2RayGCon.Controllers.OptionComponent
                 servers.OnAutoTrackingOptionChanged();
             }
 
+            setting.QuickSwitchServerLantency = VgcApis.Misc.Utils.Str2Int(cboxRandomSelectServerLatency.Text);
             setting.isUpdateUseProxy = chkSetUpdateUseProxy.Checked;
             setting.isCheckUpdateWhenAppStart = chkSetCheckWhenAppStart.Checked;
+            setting.isSupportSelfSignedCert = chkSetIsSupportSelfSignedCert.Checked;
             setting.isPortable = chkPortableMode.Checked;
             setting.isUseV4 = chkSetUseV4.Checked;
 
             // Must enable v4 mode first.
-            setting.isEnableStatistics =
-                setting.isUseV4 && chkSetEnableStat.Checked;
+            setting.isEnableStatistics = setting.isUseV4 && chkSetEnableStat.Checked;
 
             setting.SaveUserSettingsNow();
             return true;
@@ -109,6 +141,10 @@ namespace V2RayGCon.Controllers.OptionComponent
         public override bool IsOptionsChanged()
         {
             if (setting.isUseV4 != chkSetUseV4.Checked
+                || setting.isEnableDebugLogFile != chkIsEnableDebugLogFile.Checked
+                || setting.DebugLogFilePath != tboxDebugLogFilePath.Text
+                || setting.isSupportSelfSignedCert != chkSetIsSupportSelfSignedCert.Checked
+                || setting.QuickSwitchServerLantency != VgcApis.Misc.Utils.Str2Int(cboxRandomSelectServerLatency.Text)
                 || setting.isUpdateUseProxy != chkSetUpdateUseProxy.Checked
                 || setting.isCheckUpdateWhenAppStart != chkSetCheckWhenAppStart.Checked
                 || setting.isEnableStatistics != chkSetEnableStat.Checked
@@ -136,6 +172,19 @@ namespace V2RayGCon.Controllers.OptionComponent
         #endregion
 
         #region private method
+        void BindEvents()
+        {
+            btnBrowseDebugLogFile.Click += (s, a) =>
+            {
+                var path = VgcApis.Misc.UI.ShowSelectFileDialog(VgcApis.Models.Consts.Files.TxtExt);
+                if (!string.IsNullOrWhiteSpace(path))
+                {
+                    tboxDebugLogFilePath.Text = path;
+                }
+            };
+        }
+
+
         bool IsIndexValide(int index)
         {
             if (index < 0 || index > 2)

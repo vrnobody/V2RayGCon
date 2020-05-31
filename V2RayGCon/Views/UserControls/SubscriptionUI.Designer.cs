@@ -56,15 +56,17 @@
             // 
             // label2
             // 
+            this.label2.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.label2, "label2");
-            this.label2.Cursor = System.Windows.Forms.Cursors.Default;
             this.label2.Name = "label2";
+            this.label2.Click += new System.EventHandler(this.lbAlias_Click);
             // 
             // label3
             // 
+            this.label3.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.label3, "label3");
-            this.label3.Cursor = System.Windows.Forms.Cursors.Default;
             this.label3.Name = "label3";
+            this.label3.Click += new System.EventHandler(this.lbUrl_Click);
             // 
             // tboxUrl
             // 

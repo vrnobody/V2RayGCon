@@ -150,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Icons\App\VBDynamicWeb_16x.png" />
+    <None Include="Resources\Icons\App\WebConfiguration_16x.png" />
     <Content Include="Resources\PAC\PacDebuggerTpl.txt" />
     <Content Include="Resources\PAC\PacJsTpl.txt" />
     <None Include="Resources\PAC\white_cidr.txt" />

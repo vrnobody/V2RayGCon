@@ -1,85 +1,121 @@
 ﻿using Luna.Resources.Langs;
+using Luna.Services;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace Luna.Views.UserControls
 {
-    public partial class LuaUI : UserControl
+    internal partial class LuaUI : UserControl
     {
         Controllers.LuaCoreCtrl luaCoreCtrl;
         Services.LuaServer luaServer;
+        private readonly FormMgrSvc formMgrSvc;
+        VgcApis.Libs.Tasks.LazyGuy lazyUpdater;
 
         public LuaUI(
             Services.LuaServer luaServer,
+            Services.FormMgrSvc formMgrSvc,
             Controllers.LuaCoreCtrl luaCoreCtrl)
         {
             this.luaCoreCtrl = luaCoreCtrl;
             this.luaServer = luaServer;
+            this.formMgrSvc = formMgrSvc;
             InitializeComponent();
         }
 
         private void LuaUI_Load(object sender, EventArgs e)
         {
-            this.lbName.Text = luaCoreCtrl.name;
-            this.chkIsAutoRun.Checked = luaCoreCtrl.isAutoRun;
-
-            UpdateRunningState();
             luaCoreCtrl.OnStateChange += OnLuaCoreStateChangeHandler;
+            lazyUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiWorker, 300, 2000)
+            {
+                Name = "Luna.UiPanelUpdater",
+            };
 
+            UpdateUiLater();
         }
 
         #region public methods
+        public void SetIndex(double index)
+        {
+            luaCoreCtrl.index = index;
+        }
+
+        public double GetIndex() => luaCoreCtrl.index;
 
         public void Cleanup()
         {
             luaCoreCtrl.OnStateChange -= OnLuaCoreStateChangeHandler;
+            lazyUpdater?.Dispose();
         }
-
 
         #endregion
 
         #region private methods
         void OnLuaCoreStateChangeHandler(object sender, EventArgs args)
         {
-            RunInUiThread(() =>
-            {
-                UpdateRunningState();
-            });
+            lazyUpdater.Deadline();
         }
 
-        void RunInUiThread(Action updater)
+        void UpdateUiWorker()
         {
-            VgcApis.Misc.UI.RunInUiThread(lbName, () =>
+            VgcApis.Misc.UI.Invoke(() =>
+           {
+               UpdateNameLabel();
+               UpdateOptionsLabel();
+               UpdateRunningState();
+           });
+        }
+
+        void UpdateUiLater() => lazyUpdater?.Deadline();
+
+        void UpdateNameLabel()
+        {
+            var n = luaCoreCtrl.name;
+            if (lbName.Text != n)
             {
-                updater();
-            });
+                lbName.Text = n;
+                toolTip1.SetToolTip(lbName, n);
+            }
+        }
+
+        void UpdateOptionsLabel()
+        {
+            var a = luaCoreCtrl.isAutoRun ? "A" : @"";
+            var h = luaCoreCtrl.isHidden ? "H" : "";
+            var c = luaCoreCtrl.isLoadClr ? "C" : "";
+            var text = $"{a}{c}{h}";
+
+            if (string.IsNullOrEmpty(text))
+            {
+                text = I18N.LuaCtrlOptionNone;
+            }
+
+            if (rlbOptions.Text != text)
+            {
+                rlbOptions.Text = text;
+            }
         }
 
         void UpdateRunningState()
         {
             var isRunning = luaCoreCtrl.isRunning;
             var text = isRunning ? "ON" : "OFF";
-            if (lbRunningState.Text == text)
-            {
-                return;
-            }
+            var color = isRunning ? Color.DarkOrange : Color.Green;
 
-            lbRunningState.Text = text;
-            lbRunningState.ForeColor = isRunning ? Color.DarkOrange : Color.Green;
+            if (lbRunningState.Text != text)
+            {
+                lbRunningState.Text = text;
+            }
+            if (lbRunningState.ForeColor != color)
+            {
+                lbRunningState.ForeColor = color;
+            }
         }
         #endregion
 
-        private void chkIsAutoRun_CheckedChanged(object sender, EventArgs e)
-        {
-            var isAutoRun = chkIsAutoRun.Checked;
-            luaCoreCtrl.isAutoRun = isAutoRun;
-        }
+        #region UI event handlers
 
-        private void btnKill_Click(object sender, EventArgs e)
-        {
-            luaCoreCtrl.Kill();
-        }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
@@ -91,7 +127,57 @@ namespace Luna.Views.UserControls
             luaCoreCtrl.Start();
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
+
+        private void LuaUI_MouseDown(object sender, MouseEventArgs e)
+        {
+            DoDragDrop(this, DragDropEffects.Move);
+        }
+
+        private void lbName_MouseDown(object sender, MouseEventArgs e)
+        {
+            DoDragDrop(this, DragDropEffects.Move);
+        }
+
+        private void lbRunningState_MouseDown(object sender, MouseEventArgs e)
+        {
+            DoDragDrop(this, DragDropEffects.Move);
+        }
+
+        private void rlbOptions_Click(object sender, EventArgs e)
+        {
+            Views.WinForms.FormLuaCoreSettings.ShowForm(luaCoreCtrl);
+        }
+
+
+
+        private void restartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            luaCoreCtrl.Start();
+        }
+
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            luaCoreCtrl.Stop();
+        }
+
+        private void terminateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            luaCoreCtrl.Abort();
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var cs = luaCoreCtrl.GetCoreSettings();
+            formMgrSvc.CreateNewEditor(cs);
+        }
+
+        private void optionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Views.WinForms.FormLuaCoreSettings.ShowForm(luaCoreCtrl);
+
+        }
+
+        private void removeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var scriptName = luaCoreCtrl.name;
             if (string.IsNullOrEmpty(scriptName)
@@ -107,6 +193,17 @@ namespace Luna.Views.UserControls
                     VgcApis.Misc.UI.MsgBoxAsync("", I18N.ScriptNotFound);
                 }
             });
+
         }
+
+        private void btnMenuMore_Click(object sender, EventArgs e)
+        {
+            var control = sender as Control;
+            Point pos = new Point(control.Left, control.Top + control.Height);
+            contextMenuStripMore.Show(this, pos);
+        }
+
+
+        #endregion
     }
 }

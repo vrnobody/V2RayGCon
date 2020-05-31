@@ -112,7 +112,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         {
             // insert stream type
             string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic" };
-            string st = streamSettings.streamType.ToLower();
+            string st = streamSettings?.streamType?.ToLower();
 
             if (!streamTypes.Contains(st))
             {

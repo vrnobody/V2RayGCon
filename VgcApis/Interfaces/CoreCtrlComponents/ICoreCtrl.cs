@@ -9,7 +9,7 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         void RunSpeedTest();
 
         void StopCore();
-        void StopCoreQuiet(); // for cleanup do not use this in lua script
+
         void StopCoreThen();
         void StopCoreThen(Action next);
 

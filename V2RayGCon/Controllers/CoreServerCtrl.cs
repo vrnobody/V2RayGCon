@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Threading.Tasks;
 using VgcApis.Interfaces.CoreCtrlComponents;
 using VgcApis.Models.Datas;
 
@@ -41,7 +40,7 @@ namespace V2RayGCon.Controllers
             states = new CoreServerComponent.CoreStates(servers, coreInfo);
             logger = new CoreServerComponent.Logger(setting);
             configer = new CoreServerComponent.Configer(
-                setting, cache, configMgr, servers, coreInfo);
+                setting, cache, configMgr, coreInfo);
 
             AddChild(coreCtrl);
             AddChild(states);
@@ -89,6 +88,7 @@ namespace V2RayGCon.Controllers
                 json.Merge(node);
                 coreInfo.config = json.ToString(Formatting.None);
                 coreInfo.name = name;
+                coreInfo.ClearCachedString();
             }
             catch { }
         }
@@ -134,6 +134,7 @@ namespace V2RayGCon.Controllers
 
             SetServerNameAndDescription(cs.serverName, cs.serverDescription);
             ci.customMark = cs.mark;
+            ci.customRemark = cs.remark;
             ci.isAutoRun = cs.isAutorun;
             ci.isUntrack = cs.isUntrack;
 
@@ -147,13 +148,15 @@ namespace V2RayGCon.Controllers
             ci.isInjectImport = cs.isGlobalImport;
             ci.isInjectSkipCNSite = cs.isBypassCnSite;
 
-            Task.Run(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                if (restartCore && GetCoreCtrl().IsCoreRunning())
+                GetConfiger().UpdateSummaryThen(() =>
                 {
-                    GetCoreCtrl().RestartCore();
-                }
-                GetConfiger().UpdateSummaryThen();
+                    if (restartCore && GetCoreCtrl().IsCoreRunning())
+                    {
+                        GetCoreCtrl().RestartCore();
+                    }
+                });
             });
         }
 
@@ -180,8 +183,6 @@ namespace V2RayGCon.Controllers
         #endregion
 
         #region protected methods
-
-
         protected override void CleanupBeforeChildrenDispose()
         {
             isDisposed = true;

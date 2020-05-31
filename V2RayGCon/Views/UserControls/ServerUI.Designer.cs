@@ -35,12 +35,13 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnMenu = new System.Windows.Forms.Button();
-            this.rlbIsRunning = new V2RayGCon.Views.UserControls.RoundLabel();
-            this.rlbSetting = new V2RayGCon.Views.UserControls.RoundLabel();
-            this.rlbMark = new V2RayGCon.Views.UserControls.RoundLabel();
-            this.rlbLastModify = new V2RayGCon.Views.UserControls.RoundLabel();
-            this.rlbSpeedtest = new V2RayGCon.Views.UserControls.RoundLabel();
-            this.rlbInboundMode = new V2RayGCon.Views.UserControls.RoundLabel();
+            this.rlbIsRunning = new VgcApis.UserControls.RoundLabel();
+            this.rlbSetting = new VgcApis.UserControls.RoundLabel();
+            this.rlbMark = new VgcApis.UserControls.RoundLabel();
+            this.rlbRemark = new VgcApis.UserControls.RoundLabel();
+            this.rlbLastModify = new VgcApis.UserControls.RoundLabel();
+            this.rlbSpeedtest = new VgcApis.UserControls.RoundLabel();
+            this.rlbInboundMode = new VgcApis.UserControls.RoundLabel();
             this.ctxMenuStripMore = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,14 +62,14 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.logOfThisServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runSpeedTestToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.rtboxServerTitle = new System.Windows.Forms.RichTextBox();
+            this.rtboxServerTitle = new VgcApis.UserControls.ExRichTextBox();
             this.ctxMenuStripMore.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkSelected
             // 
             resources.ApplyResources(this.chkSelected, "chkSelected");
-            this.chkSelected.Cursor = System.Windows.Forms.Cursors.Default;
+            this.chkSelected.Cursor = System.Windows.Forms.Cursors.Hand;
             this.chkSelected.Name = "chkSelected";
             this.toolTip1.SetToolTip(this.chkSelected, resources.GetString("chkSelected.ToolTip"));
             this.chkSelected.UseVisualStyleBackColor = true;
@@ -106,11 +107,11 @@
             // 
             // rlbIsRunning
             // 
-            this.rlbIsRunning._BackColor = System.Drawing.Color.ForestGreen;
+            this.rlbIsRunning._BackColor = System.Drawing.Color.DarkOrange;
             this.rlbIsRunning.AutoEllipsis = true;
-            this.rlbIsRunning.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rlbIsRunning.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.rlbIsRunning, "rlbIsRunning");
-            this.rlbIsRunning.ForeColor = System.Drawing.SystemColors.Control;
+            this.rlbIsRunning.ForeColor = System.Drawing.Color.Ivory;
             this.rlbIsRunning.Name = "rlbIsRunning";
             this.toolTip1.SetToolTip(this.rlbIsRunning, resources.GetString("rlbIsRunning.ToolTip"));
             this.rlbIsRunning.UseCompatibleTextRendering = true;
@@ -118,62 +119,73 @@
             // 
             // rlbSetting
             // 
-            this.rlbSetting._BackColor = System.Drawing.Color.Gainsboro;
+            this.rlbSetting._BackColor = System.Drawing.Color.Silver;
             this.rlbSetting.AutoEllipsis = true;
-            this.rlbSetting.BackColor = System.Drawing.SystemColors.Control;
-            this.rlbSetting.ForeColor = System.Drawing.Color.DimGray;
             resources.ApplyResources(this.rlbSetting, "rlbSetting");
+            this.rlbSetting.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbSetting.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbSetting.ForeColor = System.Drawing.Color.DimGray;
             this.rlbSetting.Name = "rlbSetting";
             this.toolTip1.SetToolTip(this.rlbSetting, resources.GetString("rlbSetting.ToolTip"));
-            this.rlbSetting.UseCompatibleTextRendering = true;
-            this.rlbSetting.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbSetting_MouseDown);
+            this.rlbSetting.Click += new System.EventHandler(this.rlbSetting_Click);
             // 
             // rlbMark
             // 
-            this.rlbMark._BackColor = System.Drawing.Color.Gainsboro;
+            this.rlbMark._BackColor = System.Drawing.Color.LightGreen;
             this.rlbMark.AutoEllipsis = true;
-            this.rlbMark.BackColor = System.Drawing.SystemColors.Control;
-            this.rlbMark.ForeColor = System.Drawing.Color.DimGray;
             resources.ApplyResources(this.rlbMark, "rlbMark");
+            this.rlbMark.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbMark.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbMark.ForeColor = System.Drawing.Color.DimGray;
             this.rlbMark.Name = "rlbMark";
             this.toolTip1.SetToolTip(this.rlbMark, resources.GetString("rlbMark.ToolTip"));
-            this.rlbMark.UseCompatibleTextRendering = true;
-            this.rlbMark.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbMark_MouseDown);
+            this.rlbMark.Click += new System.EventHandler(this.rlbMark_Click);
+            // 
+            // rlbRemark
+            // 
+            this.rlbRemark._BackColor = System.Drawing.Color.LightSkyBlue;
+            this.rlbRemark.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbRemark, "rlbRemark");
+            this.rlbRemark.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbRemark.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbRemark.Name = "rlbRemark";
+            this.toolTip1.SetToolTip(this.rlbRemark, resources.GetString("rlbRemark.ToolTip"));
+            this.rlbRemark.Click += new System.EventHandler(this.rlbRemark_Click);
             // 
             // rlbLastModify
             // 
-            this.rlbLastModify._BackColor = System.Drawing.Color.Gainsboro;
+            this.rlbLastModify._BackColor = System.Drawing.Color.SandyBrown;
             this.rlbLastModify.AutoEllipsis = true;
-            this.rlbLastModify.ForeColor = System.Drawing.Color.DimGray;
             resources.ApplyResources(this.rlbLastModify, "rlbLastModify");
+            this.rlbLastModify.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.rlbLastModify.ForeColor = System.Drawing.Color.DimGray;
             this.rlbLastModify.Name = "rlbLastModify";
             this.toolTip1.SetToolTip(this.rlbLastModify, resources.GetString("rlbLastModify.ToolTip"));
-            this.rlbLastModify.UseCompatibleTextRendering = true;
             this.rlbLastModify.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbLastModify_MouseDown);
             // 
             // rlbSpeedtest
             // 
-            this.rlbSpeedtest._BackColor = System.Drawing.Color.Gainsboro;
+            this.rlbSpeedtest._BackColor = System.Drawing.Color.Wheat;
             this.rlbSpeedtest.AutoEllipsis = true;
-            this.rlbSpeedtest.BackColor = System.Drawing.SystemColors.Control;
-            this.rlbSpeedtest.ForeColor = System.Drawing.Color.DimGray;
             resources.ApplyResources(this.rlbSpeedtest, "rlbSpeedtest");
+            this.rlbSpeedtest.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbSpeedtest.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.rlbSpeedtest.ForeColor = System.Drawing.Color.Red;
             this.rlbSpeedtest.Name = "rlbSpeedtest";
             this.toolTip1.SetToolTip(this.rlbSpeedtest, resources.GetString("rlbSpeedtest.ToolTip"));
-            this.rlbSpeedtest.UseCompatibleTextRendering = true;
             this.rlbSpeedtest.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbSpeedtest_MouseDown);
             // 
             // rlbInboundMode
             // 
-            this.rlbInboundMode._BackColor = System.Drawing.Color.Gainsboro;
+            this.rlbInboundMode._BackColor = System.Drawing.Color.MediumTurquoise;
             this.rlbInboundMode.AutoEllipsis = true;
-            this.rlbInboundMode.BackColor = System.Drawing.SystemColors.Control;
-            this.rlbInboundMode.ForeColor = System.Drawing.Color.DimGray;
             resources.ApplyResources(this.rlbInboundMode, "rlbInboundMode");
+            this.rlbInboundMode.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbInboundMode.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbInboundMode.ForeColor = System.Drawing.Color.DimGray;
             this.rlbInboundMode.Name = "rlbInboundMode";
             this.toolTip1.SetToolTip(this.rlbInboundMode, resources.GetString("rlbInboundMode.ToolTip"));
-            this.rlbInboundMode.UseCompatibleTextRendering = true;
-            this.rlbInboundMode.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbInboundMode_MouseDown);
+            this.rlbInboundMode.Click += new System.EventHandler(this.rlbInboundMode_Click);
             // 
             // ctxMenuStripMore
             // 
@@ -316,7 +328,7 @@
             // rtboxServerTitle
             // 
             this.rtboxServerTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtboxServerTitle.Cursor = System.Windows.Forms.Cursors.Default;
+            this.rtboxServerTitle.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rtboxServerTitle.DetectUrls = false;
             resources.ApplyResources(this.rtboxServerTitle, "rtboxServerTitle");
             this.rtboxServerTitle.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -335,6 +347,7 @@
             this.Controls.Add(this.rlbIsRunning);
             this.Controls.Add(this.rlbSetting);
             this.Controls.Add(this.rlbMark);
+            this.Controls.Add(this.rlbRemark);
             this.Controls.Add(this.rlbLastModify);
             this.Controls.Add(this.rlbSpeedtest);
             this.Controls.Add(this.rlbInboundMode);
@@ -363,7 +376,7 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem logOfThisServerToolStripMenuItem;
-        private System.Windows.Forms.RichTextBox rtboxServerTitle;
+        private VgcApis.UserControls.ExRichTextBox rtboxServerTitle;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem multiboxingToolStripMenuItem1;
@@ -375,14 +388,15 @@
         private System.Windows.Forms.ToolStripMenuItem moveToBottomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vToolStripMenuItem;
-        private RoundLabel rlbInboundMode;
-        private RoundLabel rlbSpeedtest;
-        private RoundLabel rlbLastModify;
-        private RoundLabel rlbMark;
-        private RoundLabel rlbSetting;
-        private RoundLabel rlbIsRunning;
+        private VgcApis.UserControls.RoundLabel rlbInboundMode;
+        private VgcApis.UserControls.RoundLabel rlbSpeedtest;
+        private VgcApis.UserControls.RoundLabel rlbLastModify;
+        private VgcApis.UserControls.RoundLabel rlbMark;
+        private VgcApis.UserControls.RoundLabel rlbSetting;
+        private VgcApis.UserControls.RoundLabel rlbIsRunning;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnMenu;
+        private VgcApis.UserControls.RoundLabel rlbRemark;
     }
 }

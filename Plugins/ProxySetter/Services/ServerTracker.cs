@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using VgcApis.Libs.Sys;
 
 namespace ProxySetter.Services
 {
@@ -17,7 +16,8 @@ namespace ProxySetter.Services
 
         public event EventHandler OnSysProxyChanged;
         bool isTracking { get; set; }
-        KeyboardHook kbHook = null;
+
+        string hotKeyHandle = null;
 
         public ServerTracker()
         {
@@ -36,6 +36,7 @@ namespace ProxySetter.Services
             this.servers = servers;
             this.notifier = notifier;
 
+            UpdateHotkey();
             Restart();
         }
 
@@ -84,7 +85,6 @@ namespace ProxySetter.Services
                 StopTracking();
             }
 
-            RegistHotKey();
             InvokeOnSysProxyChange();
         }
 
@@ -94,18 +94,12 @@ namespace ProxySetter.Services
             lazyProxyUpdateTimer?.Release();
             StopTracking();
         }
+
+
         #endregion
 
         #region hotkey
-
-        // https://stackoverflow.com/questions/2450373/set-global-hotkeys-using-c-sharp
-        void ClearHotKey()
-        {
-            kbHook?.Dispose();
-            kbHook = null;
-        }
-
-        void RegistHotKey()
+        public void UpdateHotkey()
         {
             ClearHotKey();
 
@@ -122,37 +116,38 @@ namespace ProxySetter.Services
                 return;
             }
 
-            kbHook = new KeyboardHook();
-            kbHook.KeyPressed += new EventHandler<KeyPressedEventArgs>(HotkeyHandler);
-            ModifierKeys modifier = ModifierKeys.Control;
-            if (bs.isUseAlt)
+            Action handler = () =>
             {
-                modifier |= ModifierKeys.Alt;
-            }
-            if (bs.isUseShift)
-            {
-                modifier |= ModifierKeys.Shift;
-            }
+                bs.sysProxyMode = (bs.sysProxyMode % 3) + 1;
+                setting.SaveBasicSetting(bs);
+                Restart();
+            };
 
-            try
-            {
-                kbHook.RegisterHotKey((uint)modifier, (uint)hotkey);
-                return;
-            }
-            catch { }
+            hotKeyHandle = notifier.RegisterHotKey(handler, bs.hotkeyStr, bs.isUseAlt, true, bs.isUseShift);
 
-            setting.SendLog(I18N.RegistHotkeyFail);
-            VgcApis.Misc.UI.MsgBoxAsync(I18N.RegistHotkeyFail);
+            if (string.IsNullOrEmpty(hotKeyHandle))
+            {
+                setting.SendLog(I18N.RegistHotkeyFail);
+                VgcApis.Misc.UI.MsgBoxAsync(I18N.RegistHotkeyFail);
+            }
+            else
+            {
+                setting.SendLog(I18N.RegHotKeySuccess);
+            }
         }
 
-        void HotkeyHandler(object sender, KeyPressedEventArgs e)
+        // https://stackoverflow.com/questions/2450373/set-global-hotkeys-using-c-sharp
+        public void ClearHotKey()
         {
-            var bs = setting.GetBasicSetting();
-            bs.sysProxyMode = (bs.sysProxyMode % 3) + 1;
-            setting.SaveBasicSetting(bs);
-            Restart();
+            if (!string.IsNullOrEmpty(hotKeyHandle))
+            {
+                var ok = notifier.UnregisterHotKey(hotKeyHandle);
+                hotKeyHandle = null;
+                setting.SendLog(string.Format(
+                    I18N.UnregisterHotKey,
+                    ok ? I18N.Done : I18N.Failed));
+            }
         }
-
         #endregion
 
         #region private method
@@ -161,7 +156,7 @@ namespace ProxySetter.Services
             try
             {
                 OnSysProxyChanged?.Invoke(null, EventArgs.Empty);
-                notifier?.RefreshNotifyIcon();
+                notifier?.RefreshNotifyIconLater();
             }
             catch { }
         }

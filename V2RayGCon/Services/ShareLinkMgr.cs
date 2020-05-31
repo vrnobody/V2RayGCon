@@ -6,7 +6,7 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
 {
-    internal sealed class ShareLinkMgr :
+    public sealed class ShareLinkMgr :
         BaseClasses.SingletonService<ShareLinkMgr>,
         VgcApis.Interfaces.Services.IShareLinkMgrService
     {
@@ -205,9 +205,10 @@ namespace V2RayGCon.Services
                 servers.UpdateAllServersSummaryBg();
             }
 
-            var form = new Views.WinForms.FormImportLinksResult(list);
-            form.Show();
-            Application.Run();
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                Views.WinForms.FormImportLinksResult.ShowResult(list);
+            });
         }
 
         private List<string[]> ImportShareLinks(
@@ -282,7 +283,9 @@ namespace V2RayGCon.Services
         #region protected methods
         protected override void Cleanup()
         {
+            VgcApis.Libs.Sys.FileLogger.Info("ShareLinkMgr.Cleanup() begin");
             codecs?.Dispose();
+            VgcApis.Libs.Sys.FileLogger.Info("ShareLinkMgr.Cleanup() done");
         }
         #endregion
     }

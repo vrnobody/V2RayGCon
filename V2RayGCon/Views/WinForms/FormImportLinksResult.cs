@@ -6,9 +6,14 @@ namespace V2RayGCon.Views.WinForms
 {
     public partial class FormImportLinksResult : Form
     {
+        public static void ShowResult(List<string[]> importResults) =>
+            VgcApis.Misc.UI.Invoke(
+                () => new FormImportLinksResult(importResults).Show());
+
+
         List<string[]> results;
         List<string> linksCache;
-        public FormImportLinksResult(List<string[]> importResults)
+        FormImportLinksResult(List<string[]> importResults)
         {
             InitializeComponent();
             results = importResults;
@@ -59,14 +64,9 @@ namespace V2RayGCon.Views.WinForms
             }
         }
 
-        void CopyToClipboard(List<string> links)
-        {
-            Misc.Utils.RunAsSTAThread(() =>
-            {
+        void CopyToClipboard(List<string> links) =>
                 Misc.Utils.CopyToClipboardAndPrompt(
                     string.Join(Environment.NewLine, links));
-            });
-        }
 
         private void btnCopyAll_Click(object sender, EventArgs e)
         {

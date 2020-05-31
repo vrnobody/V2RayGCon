@@ -14,7 +14,7 @@ namespace V2RayGCon.Views.WinForms
 
         Services.Settings setting;
 
-        VgcApis.Libs.Views.RepaintCtrl repaintCtrl;
+        VgcApis.UserControls.RepaintController repaintCtrl;
         long updateTimeStamp = DateTime.Now.Ticks;
         Timer updateLogTimer = new Timer { Interval = 500 };
         VgcApis.Libs.Tasks.Bar bar = new VgcApis.Libs.Tasks.Bar();
@@ -39,13 +39,13 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.AutoSetFormIcon(this);
         }
 
-        private void FormLog_Load(object sender, System.EventArgs e)
+        private void FormLog_Load(object sender, EventArgs e)
         {
-            // throw new NullReferenceException("for debugging");
-
-            repaintCtrl = new VgcApis.Libs.Views.RepaintCtrl(rtBoxLogger);
+            repaintCtrl = new VgcApis.UserControls.RepaintController(rtBoxLogger);
             updateLogTimer.Tick += UpdateLog;
             updateLogTimer.Start();
+
+            // throw new NullReferenceException("for debugging");
         }
 
         #region private methods
@@ -73,11 +73,11 @@ namespace V2RayGCon.Views.WinForms
 
             try
             {
-                repaintCtrl.Disable();
+                repaintCtrl.DisableRepaintEvent();
                 rtBoxLogger.Text = setting.GetLogContent();
                 ScrollToBottom();
                 updateTimeStamp = timestamp;
-                repaintCtrl.Enable();
+                repaintCtrl.EnableRepaintEvent();
             }
             catch { }
             finally

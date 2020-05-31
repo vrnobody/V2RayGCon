@@ -80,11 +80,21 @@ namespace ProxySetter.Properties {
         }
         
         /// <summary>
-        ///   查找类似 0.1.3 的本地化字符串。
+        ///   查找类似 0.1.4 的本地化字符串。
         /// </summary>
         internal static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap WebConfiguration_16x {
+            get {
+                object obj = ResourceManager.GetObject("WebConfiguration_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

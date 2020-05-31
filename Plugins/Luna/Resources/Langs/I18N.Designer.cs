@@ -151,6 +151,51 @@ namespace Luna.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 E 的本地化字符串。
+        /// </summary>
+        internal static string LuaCtrlOptionNone {
+            get {
+                return ResourceManager.GetString("LuaCtrlOptionNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Luna v{0} - script editor 的本地化字符串。
+        /// </summary>
+        internal static string LunaScrEditor {
+            get {
+                return ResourceManager.GetString("LunaScrEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Luna v{0} - script manager 的本地化字符串。
+        /// </summary>
+        internal static string LunaScrMgr {
+            get {
+                return ResourceManager.GetString("LunaScrMgr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Open script editor 的本地化字符串。
+        /// </summary>
+        internal static string OpenScriptEditor {
+            get {
+                return ResourceManager.GetString("OpenScriptEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Open script manager 的本地化字符串。
+        /// </summary>
+        internal static string OpenScriptManger {
+            get {
+                return ResourceManager.GetString("OpenScriptManger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Script name not set! 的本地化字符串。
         /// </summary>
         internal static string ScriptNameNotSet {
@@ -174,15 +219,6 @@ namespace Luna.Resources.Langs {
         internal static string SendStopSignalTo {
             get {
                 return ResourceManager.GetString("SendStopSignalTo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Show window 的本地化字符串。
-        /// </summary>
-        internal static string ShowWindow {
-            get {
-                return ResourceManager.GetString("ShowWindow", resourceCulture);
             }
         }
         

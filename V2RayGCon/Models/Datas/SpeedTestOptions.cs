@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace V2RayGCon.Models.Datas
+﻿namespace V2RayGCon.Models.Datas
 {
     public class SpeedTestOptions
     {
@@ -21,7 +15,7 @@ namespace V2RayGCon.Models.Datas
             IsUse = false;
             Cycles = 3;
             ExpectedSize = 0;
-            Timeout = VgcApis.Models.Consts.Intervals.SpeedTestTimeout;
+            Timeout = VgcApis.Models.Consts.Intervals.DefaultSpeedTestTimeout;
         }
 
         public bool Equals(SpeedTestOptions target)

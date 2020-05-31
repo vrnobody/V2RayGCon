@@ -29,22 +29,23 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLog));
-            this.rtBoxLogger = new System.Windows.Forms.RichTextBox();
+            this.rtBoxLogger = new VgcApis.UserControls.ExRichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // rtBoxLogger
             // 
-            resources.ApplyResources(this.rtBoxLogger, "rtBoxLogger");
             this.rtBoxLogger.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtBoxLogger.DetectUrls = false;
+            resources.ApplyResources(this.rtBoxLogger, "rtBoxLogger");
             this.rtBoxLogger.Name = "rtBoxLogger";
             this.rtBoxLogger.ReadOnly = true;
             // 
             // panel1
             // 
-            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Controls.Add(this.rtBoxLogger);
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             // 
             // FormLog
@@ -60,7 +61,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.RichTextBox rtBoxLogger;
+        private VgcApis.UserControls.ExRichTextBox rtBoxLogger;
         private System.Windows.Forms.Panel panel1;
     }
 }

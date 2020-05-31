@@ -32,12 +32,21 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LuaUI));
             this.btnRun = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
-            this.btnKill = new System.Windows.Forms.Button();
-            this.chkIsAutoRun = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.lbRunningState = new System.Windows.Forms.Label();
             this.lbName = new System.Windows.Forms.Label();
-            this.btnRemove = new System.Windows.Forms.Button();
+            this.rlbOptions = new VgcApis.UserControls.RoundLabel();
+            this.btnMenuMore = new System.Windows.Forms.Button();
+            this.contextMenuStripMore = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.actionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.terminateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripMore.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnRun
@@ -58,65 +67,122 @@
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
-            // btnKill
-            // 
-            resources.ApplyResources(this.btnKill, "btnKill");
-            this.btnKill.Cursor = System.Windows.Forms.Cursors.Default;
-            this.btnKill.Name = "btnKill";
-            this.toolTip1.SetToolTip(this.btnKill, resources.GetString("btnKill.ToolTip"));
-            this.btnKill.UseVisualStyleBackColor = true;
-            this.btnKill.Click += new System.EventHandler(this.btnKill_Click);
-            // 
-            // chkIsAutoRun
-            // 
-            resources.ApplyResources(this.chkIsAutoRun, "chkIsAutoRun");
-            this.chkIsAutoRun.Cursor = System.Windows.Forms.Cursors.Default;
-            this.chkIsAutoRun.Name = "chkIsAutoRun";
-            this.toolTip1.SetToolTip(this.chkIsAutoRun, resources.GetString("chkIsAutoRun.ToolTip"));
-            this.chkIsAutoRun.UseVisualStyleBackColor = true;
-            this.chkIsAutoRun.CheckedChanged += new System.EventHandler(this.chkIsAutoRun_CheckedChanged);
-            // 
             // lbRunningState
             // 
-            this.lbRunningState.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lbRunningState.Cursor = System.Windows.Forms.Cursors.SizeAll;
             resources.ApplyResources(this.lbRunningState, "lbRunningState");
             this.lbRunningState.ForeColor = System.Drawing.Color.Green;
             this.lbRunningState.Name = "lbRunningState";
             this.toolTip1.SetToolTip(this.lbRunningState, resources.GetString("lbRunningState.ToolTip"));
+            this.lbRunningState.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbRunningState_MouseDown);
             // 
             // lbName
             // 
             this.lbName.AutoEllipsis = true;
-            this.lbName.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lbName.Cursor = System.Windows.Forms.Cursors.SizeAll;
             resources.ApplyResources(this.lbName, "lbName");
             this.lbName.Name = "lbName";
             this.toolTip1.SetToolTip(this.lbName, resources.GetString("lbName.ToolTip"));
+            this.lbName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbName_MouseDown);
             // 
-            // btnRemove
+            // rlbOptions
             // 
-            resources.ApplyResources(this.btnRemove, "btnRemove");
-            this.btnRemove.Name = "btnRemove";
-            this.toolTip1.SetToolTip(this.btnRemove, resources.GetString("btnRemove.ToolTip"));
-            this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            this.rlbOptions._BackColor = System.Drawing.Color.Wheat;
+            this.rlbOptions.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbOptions.ForeColor = System.Drawing.Color.DimGray;
+            resources.ApplyResources(this.rlbOptions, "rlbOptions");
+            this.rlbOptions.Name = "rlbOptions";
+            this.toolTip1.SetToolTip(this.rlbOptions, resources.GetString("rlbOptions.ToolTip"));
+            this.rlbOptions.Click += new System.EventHandler(this.rlbOptions_Click);
+            // 
+            // btnMenuMore
+            // 
+            resources.ApplyResources(this.btnMenuMore, "btnMenuMore");
+            this.btnMenuMore.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnMenuMore.Name = "btnMenuMore";
+            this.toolTip1.SetToolTip(this.btnMenuMore, resources.GetString("btnMenuMore.ToolTip"));
+            this.btnMenuMore.UseVisualStyleBackColor = true;
+            this.btnMenuMore.Click += new System.EventHandler(this.btnMenuMore_Click);
+            // 
+            // contextMenuStripMore
+            // 
+            this.contextMenuStripMore.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.actionToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.editToolStripMenuItem,
+            this.optionToolStripMenuItem,
+            this.removeToolStripMenuItem});
+            this.contextMenuStripMore.Name = "contextMenuStripMore";
+            resources.ApplyResources(this.contextMenuStripMore, "contextMenuStripMore");
+            // 
+            // actionToolStripMenuItem
+            // 
+            this.actionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.restartToolStripMenuItem,
+            this.stopToolStripMenuItem,
+            this.terminateToolStripMenuItem});
+            this.actionToolStripMenuItem.Name = "actionToolStripMenuItem";
+            resources.ApplyResources(this.actionToolStripMenuItem, "actionToolStripMenuItem");
+            // 
+            // restartToolStripMenuItem
+            // 
+            this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
+            resources.ApplyResources(this.restartToolStripMenuItem, "restartToolStripMenuItem");
+            this.restartToolStripMenuItem.Click += new System.EventHandler(this.restartToolStripMenuItem_Click);
+            // 
+            // stopToolStripMenuItem
+            // 
+            this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+            resources.ApplyResources(this.stopToolStripMenuItem, "stopToolStripMenuItem");
+            this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
+            // 
+            // terminateToolStripMenuItem
+            // 
+            this.terminateToolStripMenuItem.Name = "terminateToolStripMenuItem";
+            resources.ApplyResources(this.terminateToolStripMenuItem, "terminateToolStripMenuItem");
+            this.terminateToolStripMenuItem.Click += new System.EventHandler(this.terminateToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            // 
+            // optionToolStripMenuItem
+            // 
+            this.optionToolStripMenuItem.Name = "optionToolStripMenuItem";
+            resources.ApplyResources(this.optionToolStripMenuItem, "optionToolStripMenuItem");
+            this.optionToolStripMenuItem.Click += new System.EventHandler(this.optionToolStripMenuItem_Click);
+            // 
+            // removeToolStripMenuItem
+            // 
+            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            resources.ApplyResources(this.removeToolStripMenuItem, "removeToolStripMenuItem");
+            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
             // LuaUI
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Controls.Add(this.btnRemove);
+            this.Controls.Add(this.rlbOptions);
+            this.Controls.Add(this.btnMenuMore);
             this.Controls.Add(this.lbName);
             this.Controls.Add(this.lbRunningState);
-            this.Controls.Add(this.chkIsAutoRun);
-            this.Controls.Add(this.btnKill);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnRun);
-            this.Cursor = System.Windows.Forms.Cursors.Default;
+            this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Name = "LuaUI";
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.LuaUI_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LuaUI_MouseDown);
+            this.contextMenuStripMore.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -124,11 +190,19 @@
 
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.Button btnKill;
-        private System.Windows.Forms.CheckBox chkIsAutoRun;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label lbRunningState;
         private System.Windows.Forms.Label lbName;
-        private System.Windows.Forms.Button btnRemove;
+        private VgcApis.UserControls.RoundLabel rlbOptions;
+        private System.Windows.Forms.Button btnMenuMore;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripMore;
+        private System.Windows.Forms.ToolStripMenuItem actionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem restartToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem terminateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
     }
 }

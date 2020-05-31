@@ -120,11 +120,44 @@
   <data name="Confirm" xml:space="preserve">
     <value>确认</value>
   </data>
+  <data name="Copy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="Cut" xml:space="preserve">
+    <value>剪切</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
   <data name="Done" xml:space="preserve">
     <value>完成</value>
   </data>
+  <data name="KeywordIsTooLong" xml:space="preserve">
+    <value>搜索内容太长了!</value>
+  </data>
+  <data name="NoMatchResult" xml:space="preserve">
+    <value>你确定没手滑打错字?</value>
+  </data>
+  <data name="Paste" xml:space="preserve">
+    <value>粘贴</value>
+  </data>
+  <data name="PlsDoSearchFirst" xml:space="preserve">
+    <value>请先搜索再使用替换功能</value>
+  </data>
+  <data name="Redo" xml:space="preserve">
+    <value>重做</value>
+  </data>
+  <data name="ReplacedCount" xml:space="preserve">
+    <value>共替换 {0} 处</value>
+  </data>
   <data name="SaveAs" xml:space="preserve">
     <value>另存为</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>全选</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>撤消</value>
   </data>
   <data name="WriteFileFail" xml:space="preserve">
     <value>写入文件失败!</value>

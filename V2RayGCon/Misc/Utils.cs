@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Management;
 using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -22,9 +21,22 @@ namespace V2RayGCon.Misc
 {
     public static class Utils
     {
-        static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
-        #region copy from vgc
+        #region strings
+        static string appNameAndVersion = null;
+        public static string GetAppNameAndVer()
+        {
+            if (string.IsNullOrEmpty(appNameAndVersion))
+            {
+                var rawVer = GetAssemblyVersion();
+                var ver = TrimVersionString(rawVer);
+                var name = VgcApis.Misc.Utils.GetAppName();
+                appNameAndVersion = $"{name} v{ver}";
+            }
+            return appNameAndVersion;
+        }
+
+        #endregion
 
         #region Json
         public static JArray ExtractOutboundsFromConfig(string config)
@@ -129,6 +141,41 @@ namespace V2RayGCon.Misc
             return urls ?? new List<string>();
         }
 
+        public static string GenCmdArgFromConfig(string config)
+        {
+            // "-config=stdin: -format=json",
+            var stdIn = VgcApis.Models.Consts.Core.StdIn;
+            var confArg = VgcApis.Models.Consts.Core.ConfigArg;
+
+            var jsonFormat = @"-format=json";
+
+            var r = $"{jsonFormat} -{confArg}={stdIn}";
+            try
+            {
+                var jobj = JObject.Parse(config);
+                var confs = GetKey(jobj, "v2raygcon.configs")?.ToObject<Dictionary<string, string>>()?.Keys;
+                if (confs == null)
+                {
+                    return r;
+                }
+
+                var hasStdIn = false;
+                var args = string.Empty;
+                foreach (var conf in confs)
+                {
+                    if (stdIn == conf)
+                    {
+                        hasStdIn = true;
+                    }
+                    args = $"{args} -{confArg}={conf}";
+                }
+
+                return hasStdIn ? $"{jsonFormat} {args}" : $"{jsonFormat} -{confArg}={stdIn} {args}";
+            }
+            catch { }
+            return r;
+        }
+
         public static Dictionary<string, string> GetEnvVarsFromConfig(JObject config)
         {
             var empty = new Dictionary<string, string>();
@@ -152,7 +199,7 @@ namespace V2RayGCon.Misc
         public static string GetAliasFromConfig(JObject config)
         {
             var name = GetValue<string>(config, "v2raygcon.alias");
-            return string.IsNullOrEmpty(name) ? I18N.Empty : CutStr(name, 12);
+            return string.IsNullOrEmpty(name) ? I18N.Empty : name;
         }
 
         public static string GetSummaryFromConfig(JObject config)
@@ -212,6 +259,7 @@ namespace V2RayGCon.Misc
                     ipKey += ".settings.servers.0.address";
                     break;
                 case "socks":
+                case "http":
                     ipKey += ".settings.servers.0.address";
                     break;
             }
@@ -361,30 +409,34 @@ namespace V2RayGCon.Misc
             return result as JObject;
         }
 
-        public static bool SetValue<T>(JToken json, string path, T value)
+        public static bool TrySetValue<T>(JToken json, string path, T value)
         {
             var parts = ParsePathIntoParentAndKey(path);
-            var r = json;
-
             var key = parts.Item2;
-            if (string.IsNullOrEmpty(key))
+            var parent = parts.Item1;
+
+            var node = string.IsNullOrEmpty(parent) ? json : GetKey(json, parent);
+            if (node == null)
             {
                 return false;
             }
 
-            var parent = parts.Item1;
-            if (!string.IsNullOrEmpty(parent))
+            try
             {
-                var p = GetKey(json, parent);
-                if (p == null || !(p is JObject))
+                switch (node)
                 {
-                    return false;
+                    case JObject o:
+                        o[key] = new JValue(value);
+                        return true;
+                    case JArray a:
+                        a[VgcApis.Misc.Utils.Str2Int(key)] = new JValue(value);
+                        return true;
+                    default:
+                        break;
                 }
-                r = p as JObject;
             }
-
-            r[key] = new JValue(value);
-            return true;
+            catch { }
+            return false;
         }
 
         public static bool TryExtractJObjectPart(
@@ -645,19 +697,13 @@ namespace V2RayGCon.Misc
         /// <returns></returns>
         public static T GetValue<T>(JToken json, string path)
         {
-            var key = GetKey(json, path);
-
             var def = default(T) == null && typeof(T) == typeof(string) ?
-                (T)(object)string.Empty :
-                default;
+                (T)(object)string.Empty : default;
 
-            if (key == null)
-            {
-                return def;
-            }
+            var node = GetKey(json, path);
             try
             {
-                return key.Value<T>();
+                return node == null ? def : node.Value<T>();
             }
             catch { }
             return def;
@@ -750,6 +796,7 @@ namespace V2RayGCon.Misc
                 if (!string.IsNullOrEmpty(vmess.add)
                     && !string.IsNullOrEmpty(vmess.port)
                     && !string.IsNullOrEmpty(vmess.id)
+                    && VgcApis.Misc.Utils.IsValidPort(vmess.port)
                     && new Guid(vmess.id) != new Guid())
                 {
                     return vmess;
@@ -959,30 +1006,62 @@ namespace V2RayGCon.Misc
 
         public static string UrlEncode(string value) => HttpUtility.UrlEncode(value);
 
-        public static long VisitWebPageSpeedTest(
-            string url,
-            int port,
-            int expectedSizeInKiB,
-            int timeout)
+        static bool DownloadFileWorker(string url, string filename, int proxyPort, int timeout)
         {
-            if (string.IsNullOrEmpty(url))
+            var success = true;
+            if (timeout <= 0)
             {
-                throw new ArgumentNullException("URL must not null!");
+                timeout = VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
             }
 
-            var maxTimeout = timeout > 0 ? timeout : VgcApis.Models.Consts.Intervals.SpeedTestTimeout;
-            long elasped = SpeedtestTimeout;
-            Stopwatch sw = new Stopwatch();
-            sw.Reset();
-            sw.Start();
-            var html = Fetch(url, port, maxTimeout);
-            sw.Stop();
-            if (!string.IsNullOrEmpty(html) && html.Length >= Math.Max(0, expectedSizeInKiB * 1024))
+            WebClient wc = new WebClient();
+            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
+
+            if (proxyPort > 0 && proxyPort < 65536)
             {
-                elasped = sw.ElapsedMilliseconds;
+                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, proxyPort);
             }
-            return elasped;
+
+            AutoResetEvent dlCompleted = new AutoResetEvent(false);
+            wc.DownloadFileCompleted += (s, a) =>
+            {
+                if (a.Cancelled)
+                {
+                    success = false;
+                }
+                dlCompleted.Set();
+            };
+
+            try
+            {
+                if (!VgcApis.Misc.Utils.IsHttpLink(url))
+                {
+                    url = VgcApis.Misc.Utils.RelativePath2FullPath(url);
+                }
+
+                wc.DownloadFileAsync(new Uri(url), filename);
+
+                // 收到信号为True
+                if (!dlCompleted.WaitOne(timeout))
+                {
+                    success = false;
+                    wc.CancelAsync();
+                }
+            }
+            catch
+            {
+                success = false;
+            }
+            finally
+            {
+                wc.Dispose();
+            }
+
+            return success;
         }
+
+        public static bool DownloadFile(string url, string filename, int proxyPort, int timeout) =>
+            DownloadFileWorker(url, filename, proxyPort, timeout);
 
         /// <summary>
         /// Download through http://127.0.0.1:proxyPort. Return string.Empty if sth. goes wrong.
@@ -995,9 +1074,9 @@ namespace V2RayGCon.Misc
         {
             var html = string.Empty;
 
-            if (timeout <= 1)
+            if (timeout <= 0)
             {
-                timeout = VgcApis.Models.Consts.Intervals.FetchDefaultTimeout;
+                timeout = VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
             }
 
             WebClient wc = new WebClient
@@ -1005,26 +1084,27 @@ namespace V2RayGCon.Misc
                 Encoding = Encoding.UTF8,
             };
 
+            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
+
             if (proxyPort > 0 && proxyPort < 65536)
             {
                 wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, proxyPort);
             }
 
             AutoResetEvent dlCompleted = new AutoResetEvent(false);
-
             wc.DownloadStringCompleted += (s, a) =>
             {
                 try
                 {
-                    html = a.Result;
+                    if (!a.Cancelled)
+                    {
+                        html = a.Result;
+                    }
                 }
                 catch { }
 
-                try
-                {
-                    dlCompleted.Set();
-                }
-                catch { }
+                dlCompleted.Set();
+                wc.Dispose();
             };
 
             try
@@ -1035,7 +1115,6 @@ namespace V2RayGCon.Misc
                 }
 
                 wc.DownloadStringAsync(new Uri(url));
-
                 // 收到信号为True
                 if (!dlCompleted.WaitOne(timeout))
                 {
@@ -1045,13 +1124,8 @@ namespace V2RayGCon.Misc
             catch
             {
                 // network operation always buggy.
+                wc.CancelAsync();
             }
-
-            try
-            {
-                wc.Dispose();
-            }
-            catch { }
 
             return html;
         }
@@ -1060,10 +1134,10 @@ namespace V2RayGCon.Misc
             FetchWorker(url, proxyPort, timeout);
 
         public static string Fetch(string url) =>
-            FetchWorker(url, -1, -1);
+            Fetch(url, -1, -1);
 
         public static string Fetch(string url, int timeout) =>
-            FetchWorker(url, -1, timeout);
+            Fetch(url, -1, timeout);
 
         public static string GetLatestVgcVersion()
         {
@@ -1136,7 +1210,8 @@ namespace V2RayGCon.Misc
         {
             var appData = System.Environment.GetFolderPath(
                 Environment.SpecialFolder.CommonApplicationData);
-            return Path.Combine(appData, Properties.Resources.AppName);
+            var appName = VgcApis.Misc.Utils.GetAppName();
+            return Path.Combine(appData, appName);
         }
 
         public static void CreateAppDataFolder()
@@ -1195,8 +1270,8 @@ namespace V2RayGCon.Misc
 
         public static string SHA256(string randomString)
         {
-            var crypt = new System.Security.Cryptography.SHA256Managed();
-            var hash = new System.Text.StringBuilder();
+            var crypt = new SHA256Managed();
+            var hash = new StringBuilder();
             byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(randomString ?? string.Empty));
             foreach (byte theByte in crypto)
             {
@@ -1248,26 +1323,6 @@ namespace V2RayGCon.Misc
             }
             return -1;
         }
-
-        public static string CutStr(string s, int len)
-        {
-
-            if (len >= s.Length)
-            {
-                return s;
-            }
-
-            var ellipsis = "...";
-
-            if (len <= 3)
-            {
-                return ellipsis;
-            }
-
-            return s.Substring(0, len - 3) + ellipsis;
-        }
-
-
 
         static string GenLinkPrefix(
             VgcApis.Models.Datas.Enums.LinkTypes linkType) =>
@@ -1361,9 +1416,12 @@ namespace V2RayGCon.Misc
         {
             try
             {
-                ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+                ServicePointManager.SecurityProtocol =
+                    SecurityProtocolType.Tls12
+                    | SecurityProtocolType.Tls11
+                    | SecurityProtocolType.Tls;
             }
-            catch (System.NotSupportedException)
+            catch (NotSupportedException)
             {
                 MessageBox.Show(I18N.SysNotSupportTLS12);
             }
@@ -1466,10 +1524,7 @@ namespace V2RayGCon.Misc
             var taskList = new List<Task<TResult>>();
             foreach (var value in param)
             {
-                var task = new Task<TResult>(
-                    () => worker(value),
-                    TaskCreationOptions.LongRunning);
-
+                var task = new Task<TResult>(() => worker(value), TaskCreationOptions.LongRunning);
                 taskList.Add(task);
                 task.Start();
             }
@@ -1483,21 +1538,6 @@ namespace V2RayGCon.Misc
             }
 
             return result;
-        }
-
-        public static void RunAsSTAThread(Action lambda)
-        {
-            // https://www.codeproject.com/Questions/727531/ThreadStateException-cant-handeled-in-ClipBoard-Se
-            AutoResetEvent @event = new AutoResetEvent(false);
-            Thread thread = new Thread(
-                () =>
-                {
-                    lambda();
-                    @event.Set();
-                });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            @event.WaitOne();
         }
 
         /// <summary>
@@ -1544,36 +1584,7 @@ namespace V2RayGCon.Misc
             return string.Empty;
         }
 
-        public static void KillProcessAndChildrens(int pid)
-        {
-            ManagementObjectSearcher processSearcher = new ManagementObjectSearcher
-              ("Select * From Win32_Process Where ParentProcessID=" + pid);
-            ManagementObjectCollection processCollection = processSearcher.Get();
 
-            // We must kill child processes first!
-            if (processCollection != null)
-            {
-                foreach (ManagementObject mo in processCollection)
-                {
-                    KillProcessAndChildrens(Convert.ToInt32(mo["ProcessID"])); //kill child processes(also kills childrens of childrens etc.)
-                }
-            }
-
-            // Then kill parents.
-            try
-            {
-                Process proc = Process.GetProcessById(pid);
-                if (!proc.HasExited)
-                {
-                    proc.Kill();
-                    proc.WaitForExit(1000);
-                }
-            }
-            catch
-            {
-                // Process already exited.
-            }
-        }
         #endregion
 
         #region for Testing
@@ -1589,6 +1600,5 @@ namespace V2RayGCon.Misc
         }
         #endregion
 
-        #endregion
     }
 }

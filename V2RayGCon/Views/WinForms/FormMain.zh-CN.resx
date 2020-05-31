@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="toolStripContainer2.BottomToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="flyServerListContainer.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer2.ContentPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer2.LeftToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer2.RightToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripButtonAddServerSimple.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -284,11 +302,32 @@
   <data name="toolStripLabelMarkFilter.ToolTipText" xml:space="preserve">
     <value>过滤服务器列表，点击清除过滤参数</value>
   </data>
-  <data name="operationToolStripMenuItem.Text" xml:space="preserve">
-    <value>文件</value>
+  <data name="toolStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer2.TopToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolMenuItemSimAddVmessServer.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAGhJREFUOE/dkbEKgDAMRPNRDs75PH9Wu2RVIr1S4pVmcBAP3tLjHpQIYmZnT33O
+        x0frttxE2Yg2BEygqhTvmgDDiHfHXh68LwD9EEwFCBPgvwwqiLAh8L5OeX4kSF8h5juCESnBDBGRC970
+        BiafF3NUAAAAAElFTkSuQmCC
+</value>
   </data>
   <data name="toolMenuItemSimAddVmessServer.Text" xml:space="preserve">
     <value>添加vmess客户端</value>
+  </data>
+  <data name="toolMenuItemImportLinkFromClipboard.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAOBJREFUOE+dkTsOgzAMhukNKlW9EMw8zsTKxMLepXdgYOvQk5Qg1NJXWF3HjVFK
+        SZTW0jeQ+P9imQAACLPGcdwgO+SJSGSPbPX1VJSzCA5N00CappAkCdR1DXh2RFa6hWpRgE2qGbIsA9EK
+        EKIjkZSSzpG1bv0UcFARhiHRngR0KIiiiL77vp96kG8BB004bOIUXIebEy9BHMeLeAtc6LDfBGVZ0var
+        qqK7oijMv2EXKC7nwRUmrAL1uhlewim43x7U8LdATcAjsyTP82l0xipg5pN4LXHOfHlOwS+8cxC8AGSu
+        1f1HelaCAAAAAElFTkSuQmCC
+</value>
   </data>
   <data name="toolMenuItemImportLinkFromClipboard.Text" xml:space="preserve">
     <value>从剪切板导入</value>
@@ -317,14 +356,8 @@
   <data name="exitToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>退出V2RayGCon程序</value>
   </data>
-  <data name="selectToolStripMenuItem.Text" xml:space="preserve">
-    <value>选择</value>
-  </data>
-  <data name="currentPageToolStripMenuItem.Text" xml:space="preserve">
-    <value>当前页面</value>
-  </data>
-  <data name="currentPageToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>仅对当前分页有效</value>
+  <data name="operationToolStripMenuItem.Text" xml:space="preserve">
+    <value>文件</value>
   </data>
   <data name="selectAllCurPageToolStripMenuItem.Text" xml:space="preserve">
     <value>全选</value>
@@ -335,11 +368,11 @@
   <data name="selectNoneCurPageToolStripMenuItem1.Text" xml:space="preserve">
     <value>清除选择</value>
   </data>
-  <data name="allPagesToolStripMenuItem.Text" xml:space="preserve">
-    <value>全部页面</value>
+  <data name="currentPageToolStripMenuItem.Text" xml:space="preserve">
+    <value>当前页面</value>
   </data>
-  <data name="allPagesToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>对全部分页有效</value>
+  <data name="currentPageToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>仅对当前分页有效</value>
   </data>
   <data name="selectAllAllPagesToolStripMenuItem.Text" xml:space="preserve">
     <value>全选</value>
@@ -368,11 +401,11 @@
   <data name="selectUntrackAllPagesToolStripMenuItem.Text" xml:space="preserve">
     <value>选中不追踪</value>
   </data>
-  <data name="allServersToolStripMenuItem.Text" xml:space="preserve">
-    <value>全部服务器</value>
+  <data name="allPagesToolStripMenuItem.Text" xml:space="preserve">
+    <value>全部页面</value>
   </data>
-  <data name="allServersToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>对全部服务器有效</value>
+  <data name="allPagesToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>对全部分页有效</value>
   </data>
   <data name="selectAllAllServersToolStripMenuItem.Text" xml:space="preserve">
     <value>全选</value>
@@ -401,47 +434,14 @@
   <data name="selectUntrackAllServersToolStripMenuItem.Text" xml:space="preserve">
     <value>选中不追踪</value>
   </data>
-  <data name="toolMenuItemServer.Text" xml:space="preserve">
-    <value>服务器</value>
+  <data name="allServersToolStripMenuItem.Text" xml:space="preserve">
+    <value>全部服务器</value>
   </data>
-  <data name="toolStripMenuItemModifySelected.Text" xml:space="preserve">
-    <value>调整选中</value>
+  <data name="allServersToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>对全部服务器有效</value>
   </data>
-  <data name="toolStripMenuItemModifySettings.Text" xml:space="preserve">
-    <value>修改设置</value>
-  </data>
-  <data name="toolStripMenuItemModifySettings.ToolTipText" xml:space="preserve">
-    <value>批量修改服务器信息，运行中的服务器会重启</value>
-  </data>
-  <data name="toolStripMenuItemSortBySpeedTest.Text" xml:space="preserve">
-    <value>按测速排序</value>
-  </data>
-  <data name="toolStripMenuItemSortByDateT.Text" xml:space="preserve">
-    <value>按日期排序</value>
-  </data>
-  <data name="toolStripMenuItemSortBySummary.Text" xml:space="preserve">
-    <value>按摘要排序</value>
-  </data>
-  <data name="toolStripMenuItemMoveToTop.Text" xml:space="preserve">
-    <value>置顶</value>
-  </data>
-  <data name="toolStripMenuItemMoveToBottom.Text" xml:space="preserve">
-    <value>置底</value>
-  </data>
-  <data name="toolStripMenuItemFoldingPanel.Text" xml:space="preserve">
-    <value>折叠面板</value>
-  </data>
-  <data name="toolStripMenuItemFoldingPanel.ToolTipText" xml:space="preserve">
-    <value>单行服务器面板模式</value>
-  </data>
-  <data name="toolStripMenuItemExpansePanel.Text" xml:space="preserve">
-    <value>展开面板</value>
-  </data>
-  <data name="toolStripMenuItemExpansePanel.ToolTipText" xml:space="preserve">
-    <value>完整的服务器面板</value>
-  </data>
-  <data name="toolStripMenuItem1.Text" xml:space="preserve">
-    <value>复制选中</value>
+  <data name="selectToolStripMenuItem.Text" xml:space="preserve">
+    <value>选择</value>
   </data>
   <data name="toolStripMenuItemCopyAsV2cfgLink.ToolTipText" xml:space="preserve">
     <value>包含全部配置信息</value>
@@ -464,6 +464,40 @@
   <data name="toolStripMenuItemCopyAsVeeSubscription.ToolTipText" xml:space="preserve">
     <value>将选中的服务器编码为订阅内容（支持vmess及shadowsocks服务器）</value>
   </data>
+  <data name="toolStripMenuItem1.Text" xml:space="preserve">
+    <value>复制选中</value>
+  </data>
+  <data name="toolStripMenuItemMoveToTop.Text" xml:space="preserve">
+    <value>置顶</value>
+  </data>
+  <data name="toolStripMenuItemMoveToBottom.Text" xml:space="preserve">
+    <value>置底</value>
+  </data>
+  <data name="toolStripMenuItemSortBySpeedTest.Text" xml:space="preserve">
+    <value>按测速排序</value>
+  </data>
+  <data name="toolStripMenuItemSortByDateT.Text" xml:space="preserve">
+    <value>按日期排序</value>
+  </data>
+  <data name="toolStripMenuItemSortBySummary.Text" xml:space="preserve">
+    <value>按摘要排序</value>
+  </data>
+  <data name="toolStripMenuItemReverseByIndex.Text" xml:space="preserve">
+    <value>按序号逆序</value>
+  </data>
+  <data name="toolStripMenuItemModifySelected.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAANRJREFUOE+dkDESgjAURHM2rmBDYUkrl8Ch9gB2cg4ruYnaqg1tZHfYzE8gMLoz
+        O5//8/dNghuGwW/ZrQkLRVFk/ROgaY7+/fqw/gXobz0BqCkA1ZphCA0Wy7JkuD7UrOhTgNud6UVAd+kY
+        lNFvAbwfiwCP+zO8HRW9AFhMAWEmQM44ly0gzGyT8/50ZbWAMNP71owQAgLom2cCrF3fhi0kAsht2zJc
+        VRV7/az0BjqjtJSGR0fnCM7CUCZMTysBAkdhCEO929oCIARnYUjkJU8rGTn3BZ1cWLtWGSqyAAAAAElF
+        TkSuQmCC
+</value>
+  </data>
+  <data name="toolStripMenuItemModifySelected.Text" xml:space="preserve">
+    <value>排序</value>
+  </data>
   <data name="toolStripMenuItemRestartSelected.Text" xml:space="preserve">
     <value>重启选中</value>
   </data>
@@ -475,6 +509,17 @@
   </data>
   <data name="toolStripMenuItemStopSelected.ToolTipText" xml:space="preserve">
     <value>停止选中的服务器</value>
+  </data>
+  <data name="toolStripMenuItemRunBatchSpeedTest.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAS5JREFUOE+dkb9OhEAQh6l9D9/ARBM7CIlgaEgIBTWJ9OcLQGyOw85XsOfOwsTW
+        67x4NFoKehc9vbDYkFj93N3cEvAPoJN82cnO7pedWaksS1Ayiin9J5jg6NzF/eKOiS4p25tSv2CCveEO
+        9ke7OL0aYV2sP+jeCWVrc6Q9hEBweHaAi2RStQVAaqNN0ItvLWTLDFEUQVEUyLLcSiUQQ4zjGIQUKMh7
+        Jw0BhfXLN1nRtm0YhtEgHIYIw5DnXwV84nUBO8Rygeu6IHmBPCdwHKcpENOsCyzLou2MoaoqNE3Dy/MK
+        yTzB7GaG9CHtFiyelnydXk8xv024gIl0Xcfr6q1bkKWP8DyPPpvwp7MWWI0xGBx3C0zT5Lnv+wiCoLos
+        6BT04VdB/eva+FHwd0p8Ah36mkAeeM3iAAAAAElFTkSuQmCC
+</value>
   </data>
   <data name="toolStripMenuItemRunBatchSpeedTest.Text" xml:space="preserve">
     <value>运行速度测试</value>
@@ -488,6 +533,26 @@
   <data name="toolStripMenuItemStopBatchSpeedTest.ToolTipText" xml:space="preserve">
     <value>停止当前速度测试</value>
   </data>
+  <data name="toolStripMenuItemClearSpeedTestResults.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAUVJREFUOE+VkbFOg3AQxkmcjGsfoU/CKxACKwNlcHNyIoUQ0rcohLRoIwmDGwT6
+        IgzqqLUYhPW8I0e11CJ+yYX87+77XbgT/qumaS4wvLIsAb+PnB4nNq/yPAdRFIEgXPpbfTN98e1xeVhn
+        zCvKc8u3MHmJoWP4GAHGDcZ6rHla13WRZRm4rgu2bUMcx5Cm6bAZExOMBS7l03EcUBQFfN+HMLwDXddb
+        c5IkZF6TGd/sRHXGMAxBkqS22TRNeN/todx/wNvrDmYzA6IoIsAtmY8AVVWBYRitcZtv4fnpBTRNg/nc
+        OkA295sWioCHEwBRi6IAWZZhufRaQx8SBAFYlkWAkG3HGoLQZFVVux1cs+VU5yD0a7RYug72XHH77+pD
+        aCe0WFoy1qbcNqyfEJpO18Hcgsvj1EHoOjx9wqXxIgideHi6IHwBbnWcjlb4gZwAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripMenuItemClearSpeedTestResults.Text" xml:space="preserve">
+    <value>清除测速数据</value>
+  </data>
+  <data name="toolStripMenuItemModifySettings.Text" xml:space="preserve">
+    <value>批量修改</value>
+  </data>
+  <data name="toolStripMenuItemModifySettings.ToolTipText" xml:space="preserve">
+    <value>批量修改服务器信息，运行中的服务器会重启</value>
+  </data>
   <data name="refreshSummaryToolStripMenuItem.Text" xml:space="preserve">
     <value>刷新摘要</value>
   </data>
@@ -500,8 +565,8 @@
   <data name="deleteSelectedServersToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>删除选中的服务器</value>
   </data>
-  <data name="windowToolStripMenuItem.Text" xml:space="preserve">
-    <value>窗口</value>
+  <data name="toolMenuItemServer.Text" xml:space="preserve">
+    <value>服务器</value>
   </data>
   <data name="toolMenuItemConfigEditor.Text" xml:space="preserve">
     <value>配置编辑器</value>
@@ -521,20 +586,33 @@
   <data name="toolStripMenuItemResize.ToolTipText" xml:space="preserve">
     <value>调整主窗口大小</value>
   </data>
+  <data name="windowToolStripMenuItem.Text" xml:space="preserve">
+    <value>窗口</value>
+  </data>
   <data name="pluginToolStripMenuItem.Text" xml:space="preserve">
     <value>插件</value>
   </data>
-  <data name="aboutToolStripMenuItem1.Text" xml:space="preserve">
-    <value>关于</value>
-  </data>
   <data name="toolStripMenuItemDownLoadV2rayCore.Text" xml:space="preserve">
     <value>下载v2ray-core</value>
+  </data>
+  <data name="toolMenuItemCheckUpdate.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAbhJREFUOE+lkk9LAlEUxY2WbVtG2zZt+gqiCJKYguLKVeKmReLejSSJGw104b4v
+        YBbE9AXGCFtYIg4IUlGW48z4JyjidO9rpvJfFF348Xj3nXPenac2AP9iZvMvjNVoNFokdokmAUInDolV
+        UzK/SLTAYlmWEYlEYLfb4fP5UCwWMRgMhnTWJerEDmtN21dR01+r1RAIBKA0FWg9HY+dJ6T30wiHw/B6
+        vYhGo6hWqzzZnmn7KGqsEZfJZBKVyrkwW/RUDaXSEdRuD9dXdTGVqqovpF+2zOuGYej5fB5utxu3N3dj
+        AZMkEglIksRTnBJLHFDKZrM4yB2QQMNwOORDsRpGfypAks4QCoVQLpdZl+OAvsfjga4baDQanw/IK+9n
+        hTzcd+D3+zlA44BXl8slbmSTLFeEiFfec38ygHE6nRRugANOU6mUEPLN30W8p/OxHj/qyfEJYrEYn9U4
+        YEPTtGdd1xEMBqcmaLVaIsjC4XAgHo+j3W5zwBYHrNDt7UwmIwQcwqv1BjzBBG/EBbFp/YyKZeaVwp75
+        c6jfIraF6KfigEKhYJkV2q8Q03/VeWUa2CjMZvuXZbO9A1zYjuZOJngmAAAAAElFTkSuQmCC
+</value>
   </data>
   <data name="toolMenuItemCheckUpdate.Text" xml:space="preserve">
     <value>检查V2RayGCon更新</value>
   </data>
   <data name="toolMenuItemAbout.Text" xml:space="preserve">
-    <value>关于</value>
+    <value>项目主页</value>
   </data>
   <data name="toolMenuItemHelp.Text" xml:space="preserve">
     <value>帮助</value>
@@ -550,6 +628,12 @@
   </data>
   <data name="deleteAllServersToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>删除所有服务器</value>
+  </data>
+  <data name="aboutToolStripMenuItem1.Text" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="mainMneuStrip.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="toolStripDropDownButtonPager.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -597,7 +681,16 @@
   <data name="toolStripStatusLabelNextPage.ToolTipText" xml:space="preserve">
     <value>后一页</value>
   </data>
+  <data name="statusStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>主窗口</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

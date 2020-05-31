@@ -6,6 +6,7 @@ namespace Luna.Misc
 {
     public static class UI
     {
+
         public static Scintilla CreateLuaEditor(Panel container)
         {
             var scintilla = new Scintilla();
@@ -47,6 +48,7 @@ namespace Luna.Misc
             scintilla.Styles[Style.Lua.Operator].ForeColor = Color.Purple;
             scintilla.Styles[Style.Lua.Preprocessor].ForeColor = Color.Maroon;
             scintilla.Lexer = Lexer.Lua;
+
             scintilla.WordChars = alphaChars + numericChars + accentedChars;
 
             // Console.WriteLine(scintilla.DescribeKeywordSets());
@@ -97,6 +99,11 @@ namespace Luna.Misc
             scintilla.AutomaticFold = (AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change);
 
             // Disable cmd
+            scintilla.ClearCmdKey(Keys.Control | Keys.G);
+            scintilla.ClearCmdKey(Keys.Control | Keys.OemOpenBrackets);
+            scintilla.ClearCmdKey(Keys.Control | Keys.Oem6);
+            scintilla.ClearCmdKey(Keys.Control | Keys.OemMinus);
+            scintilla.ClearCmdKey(Keys.Control | Keys.Oemplus);
             scintilla.ClearCmdKey(Keys.Control | Keys.F);
             scintilla.ClearCmdKey(Keys.Control | Keys.S);
             scintilla.ClearCmdKey(Keys.Control | Keys.N);
@@ -106,8 +113,13 @@ namespace Luna.Misc
             scintilla.Margins[0].Width = 16;
             scintilla.Styles[Style.LineNumber].ForeColor = Color.DarkGray;
 
+            VgcApis.Misc.UI.SetSearchIndicator(scintilla);
+
             return scintilla;
         }
+
+
+
 
     }
 }

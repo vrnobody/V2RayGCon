@@ -30,6 +30,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             // batch op
             ToolStripMenuItem stopBatchSpeedtest,
             ToolStripMenuItem runBatchSpeedtest,
+            ToolStripMenuItem clearSpeedtestResults,
 
             ToolStripMenuItem modifySelected,
             ToolStripMenuItem stopSelected,
@@ -40,14 +41,16 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem moveToBottom,
             ToolStripMenuItem sortBySpeed,
             ToolStripMenuItem sortByDate,
-            ToolStripMenuItem sortBySummary)
+            ToolStripMenuItem sortBySummary,
+            ToolStripMenuItem reverseByIndex)
         {
             cache = Services.Cache.Instance;
             servers = Services.Servers.Instance;
             slinkMgr = Services.ShareLinkMgr.Instance;
             settings = Services.Settings.Instance;
 
-            InitCtrlSorting(sortBySpeed, sortByDate, sortBySummary);
+            InitCtrlSorting(sortBySpeed, sortByDate, sortBySummary, reverseByIndex);
+
             InitCtrlView(moveToTop, moveToBottom);
 
             InitCtrlCopyToClipboard(
@@ -65,30 +68,42 @@ namespace V2RayGCon.Controllers.FormMainComponent
             InitCtrlBatchOperation(
                 stopSelected,
                 restartSelected,
+
                 runBatchSpeedtest,
                 stopBatchSpeedtest,
+                clearSpeedtestResults,
+
                 modifySelected);
         }
 
         #region public method
-        public override bool RefreshUI()
-        {
-            return false;
-        }
-
         public override void Cleanup()
         {
         }
         #endregion
 
         #region private method
-        EventHandler ApplyActionOnSelectedServers(Action action)
+        void ClearSelectedServersSpeedTestResults()
+        {
+            var servs = servers
+                .GetAllServersOrderByIndex()
+                .Where(s => s.GetCoreStates().IsSelected())
+                .ToList();
+
+            foreach (var serv in servs)
+            {
+                var cst = serv.GetCoreStates();
+                cst.SetSpeedTestResult(0);
+            }
+        }
+
+        EventHandler RunWhenSelectionIsNotEmptyHandler(Action action)
         {
             return (s, a) =>
             {
                 if (!servers.IsSelecteAnyServer())
                 {
-                    VgcApis.Misc.Utils.RunInBackground(() => MessageBox.Show(I18N.SelectServerFirst));
+                    VgcApis.Misc.UI.MsgBoxAsync(I18N.SelectServerFirst);
                     return;
                 }
                 action();
@@ -98,14 +113,25 @@ namespace V2RayGCon.Controllers.FormMainComponent
         private void InitCtrlBatchOperation(
             ToolStripMenuItem stopSelected,
             ToolStripMenuItem restartSelected,
+
             ToolStripMenuItem runBatchSpeedtest,
             ToolStripMenuItem stopBatchSpeedtest,
+            ToolStripMenuItem clearSpeedtestResults,
+
             ToolStripMenuItem modifySelected)
         {
-            modifySelected.Click += ApplyActionOnSelectedServers(
+            clearSpeedtestResults.Click += RunWhenSelectionIsNotEmptyHandler(() =>
+            {
+                if (Misc.UI.Confirm(I18N.ConfirmClearSpeedTestResults))
+                {
+                    ClearSelectedServersSpeedTestResults();
+                }
+            });
+
+            modifySelected.Click += RunWhenSelectionIsNotEmptyHandler(
                 () => Views.WinForms.FormBatchModifyServerSetting.GetForm());
 
-            runBatchSpeedtest.Click += ApplyActionOnSelectedServers(() =>
+            runBatchSpeedtest.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 if (!Misc.UI.Confirm(I18N.TestWillTakeALongTime))
                 {
@@ -121,7 +147,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 settings.isSpeedtestCancelled = true;
             };
 
-            stopSelected.Click += ApplyActionOnSelectedServers(() =>
+            stopSelected.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 if (Misc.UI.Confirm(I18N.ConfirmStopAllSelectedServers))
                 {
@@ -129,7 +155,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 }
             });
 
-            restartSelected.Click += ApplyActionOnSelectedServers(() =>
+            restartSelected.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 if (Misc.UI.Confirm(I18N.ConfirmRestartAllSelectedServers))
                 {
@@ -159,7 +185,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 Services.Cache.Instance.core.Clear();
             };
 
-            deleteSelected.Click += ApplyActionOnSelectedServers(() =>
+            deleteSelected.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 if (!Misc.UI.Confirm(I18N.ConfirmDeleteSelectedServers))
                 {
@@ -176,7 +202,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem copyAsVmessSubscriptions,
             ToolStripMenuItem copyAsVeeSubscriptions)
         {
-            copyAsVeeSubscriptions.Click += ApplyActionOnSelectedServers(() =>
+            copyAsVeeSubscriptions.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 var links = EncodeAllServersIntoShareLinks(
                     VgcApis.Models.Datas.Enums.LinkTypes.v);
@@ -184,7 +210,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 Misc.Utils.CopyToClipboardAndPrompt(b64Links);
             });
 
-            copyAsVmessSubscriptions.Click += ApplyActionOnSelectedServers(() =>
+            copyAsVmessSubscriptions.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 var links = EncodeAllServersIntoShareLinks(
                     VgcApis.Models.Datas.Enums.LinkTypes.vmess);
@@ -192,24 +218,24 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 Misc.Utils.CopyToClipboardAndPrompt(b64Links);
             });
 
-            copyAsV2cfgLinks.Click += ApplyActionOnSelectedServers(() =>
+            copyAsV2cfgLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 var links = EncodeAllServersIntoShareLinks(
                     VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
-
                 Misc.Utils.CopyToClipboardAndPrompt(links);
             });
 
-            copyAsVmessLinks.Click += ApplyActionOnSelectedServers(() =>
+            copyAsVmessLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 var links = EncodeAllServersIntoShareLinks(
-                           VgcApis.Models.Datas.Enums.LinkTypes.vmess);
+                    VgcApis.Models.Datas.Enums.LinkTypes.vmess);
                 Misc.Utils.CopyToClipboardAndPrompt(links);
             });
 
-            copyAsVeeLinks.Click += ApplyActionOnSelectedServers(() =>
+            copyAsVeeLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                var links = EncodeAllServersIntoShareLinks(VgcApis.Models.Datas.Enums.LinkTypes.v);
+                var links = EncodeAllServersIntoShareLinks(
+                    VgcApis.Models.Datas.Enums.LinkTypes.v);
                 Misc.Utils.CopyToClipboardAndPrompt(links);
             });
         }
@@ -218,12 +244,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem moveToTop,
             ToolStripMenuItem moveToBottom)
         {
-            moveToTop.Click += ApplyActionOnSelectedServers(() =>
+            moveToTop.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 SetServerItemsIndex(0);
             });
 
-            moveToBottom.Click += ApplyActionOnSelectedServers(() =>
+            moveToBottom.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 SetServerItemsIndex(double.MaxValue);
             });
@@ -232,15 +258,19 @@ namespace V2RayGCon.Controllers.FormMainComponent
         private void InitCtrlSorting(
             ToolStripMenuItem sortBySpeed,
             ToolStripMenuItem sortByDate,
-            ToolStripMenuItem sortBySummary)
+            ToolStripMenuItem sortBySummary,
+            ToolStripMenuItem reverseByIndex)
         {
-            sortByDate.Click += ApplyActionOnSelectedServers(
+            reverseByIndex.Click += RunWhenSelectionIsNotEmptyHandler(
+                () => servers.ReverseSelectedByIndex());
+
+            sortByDate.Click += RunWhenSelectionIsNotEmptyHandler(
                 () => servers.SortSelectedByLastModifiedDate());
 
-            sortBySummary.Click += ApplyActionOnSelectedServers(
+            sortBySummary.Click += RunWhenSelectionIsNotEmptyHandler(
                 () => servers.SortSelectedBySummary());
 
-            sortBySpeed.Click += ApplyActionOnSelectedServers(
+            sortBySpeed.Click += RunWhenSelectionIsNotEmptyHandler(
                 () => servers.SortSelectedBySpeedTest());
         }
 
@@ -248,7 +278,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             var panel = GetFlyPanel();
             panel.RemoveAllServersConrol();
-            panel.RefreshUI();
+            panel.RefreshFlyPanelLater();
         }
 
         void SetServerItemsIndex(double index)

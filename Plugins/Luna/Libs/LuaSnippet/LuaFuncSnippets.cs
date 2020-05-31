@@ -16,15 +16,12 @@ namespace Luna.Libs.LuaSnippet
             }
 
             ImageIndex = 1;
-            ToolTipTitle = GenTitle(luaFuncStr);
+            ToolTipTitle = luaFuncStr;
             ToolTipText = @"";
-            Text = GenTitle(luaFuncStr);
+            Text = luaFuncStr;
 
             lowerText = Text.ToLower();
         }
-
-        string GenTitle(string fnName) =>
-            $"{fnName}()";
 
         public override CompareResult Compare(string fragmentText)
         {

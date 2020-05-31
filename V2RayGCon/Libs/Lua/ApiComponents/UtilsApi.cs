@@ -10,11 +10,11 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
         VgcApis.Interfaces.Services.IUtilsService
     {
         #region json
-        public void SetValue<T>(JToken json, string path, T value) =>
-            Misc.Utils.SetValue<T>(json, path, value);
+        public bool TrySetValue<T>(JToken json, string path, T value) =>
+            Misc.Utils.TrySetValue<T>(json, path, value);
 
-        public string GetString(JToken json, string path) =>
-            Misc.Utils.GetValue<string>(json, path);
+        public T GetValue<T>(JToken json, string path) =>
+            Misc.Utils.GetValue<T>(json, path);
 
         public JToken GetKey(JToken json, string path) =>
             Misc.Utils.GetKey(json, path);
@@ -68,11 +68,25 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
         public string AddLinkPrefix(string linkBody, VgcApis.Models.Datas.Enums.LinkTypes type) =>
             Misc.Utils.AddLinkPrefix(linkBody, type);
 
-        public string Base64Encode(string plainText) =>
-            Misc.Utils.Base64Encode(plainText);
+        public string Base64Encode(string plainText)
+        {
+            try
+            {
+                return Misc.Utils.Base64Encode(plainText);
+            }
+            catch { }
+            return null;
+        }
 
-        public string Base64Decode(string b64String) =>
-            Misc.Utils.Base64Decode(b64String);
+        public string Base64Decode(string b64String)
+        {
+            try
+            {
+                return Misc.Utils.Base64Decode(b64String);
+            }
+            catch { }
+            return null;
+        }
 
         public string GetLinkBody(string link) =>
             Misc.Utils.GetLinkBody(link);
@@ -94,7 +108,7 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
             }
 
             Libs.QRCode.QRCode.ScanQRCode(Success, Fail);
-            are.WaitOne();
+            are.WaitOne(10000);
             return shareLink;
         }
 

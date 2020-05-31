@@ -6,14 +6,25 @@ namespace V2RayGCon.Views.WinForms
 {
     public partial class FormSingleServerLog : Form
     {
+        public static FormSingleServerLog CreateLogForm(string title, VgcApis.Libs.Sys.QueueLogger logger)
+        {
+            FormSingleServerLog logForm = null;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                logForm = new FormSingleServerLog(title, logger);
+                logForm.Show();
+            });
+            return logForm;
+        }
+
         long updateTimestamp = -1;
         VgcApis.Libs.Tasks.Routine logUpdater;
         VgcApis.Libs.Sys.QueueLogger qLogger;
-        VgcApis.Libs.Views.RepaintCtrl repaintCtrl;
+        VgcApis.UserControls.RepaintController repaintCtrl;
 
         bool isPaused = false;
 
-        public FormSingleServerLog(
+        FormSingleServerLog(
             string title,
             VgcApis.Libs.Sys.QueueLogger logger)
         {
@@ -37,22 +48,22 @@ namespace V2RayGCon.Views.WinForms
             }
 
             updateTimestamp = timestamp;
-            VgcApis.Misc.UI.RunInUiThread(this, UpdateLogBox);
+            VgcApis.Misc.UI.Invoke(UpdateLogBox);
         }
 
         void UpdateLogBox()
         {
-            repaintCtrl.Disable();
+            repaintCtrl.DisableRepaintEvent();
             rtBoxLogger.Text = qLogger.GetLogAsString(true);
             rtBoxLogger.SelectionStart = rtBoxLogger.Text.Length;
             rtBoxLogger.ScrollToCaret();
-            repaintCtrl.Enable();
+            repaintCtrl.EnableRepaintEvent();
         }
 
         private void FormSingleServerLog_Load(object sender, EventArgs e)
         {
             logUpdater.Run();
-            repaintCtrl = new VgcApis.Libs.Views.RepaintCtrl(rtBoxLogger);
+            repaintCtrl = new VgcApis.UserControls.RepaintController(rtBoxLogger);
         }
 
         private void FormSingleServerLog_FormClosed(object sender, FormClosedEventArgs e)

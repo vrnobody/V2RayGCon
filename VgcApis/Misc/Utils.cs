@@ -4,11 +4,17 @@ using ScintillaNET;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,7 +22,241 @@ namespace VgcApis.Misc
 {
     public static class Utils
     {
+        #region editor
+        public static string GetWordFromCurPos(Scintilla editor)
+        {
+            var line = editor.Lines[editor.CurrentLine];
+            var text = line.Text;
+
+            if (string.IsNullOrEmpty(text))
+            {
+                return "";
+            }
+
+            var start = editor.CurrentPosition - line.Position - 1;
+            start = Clamp(start, 0, text.Length);
+            var end = start;
+            for (; start >= 0; start--)
+            {
+                var c = text[start];
+                if (!char.IsLetterOrDigit(c) && c != '_')
+                {
+                    break;
+                }
+            }
+
+            for (; end < text.Length; end++)
+            {
+                var c = text[end];
+                if (!char.IsLetterOrDigit(c) && c != '_')
+                {
+                    break;
+                }
+            }
+
+            var len = end - start - 1;
+            if (len < 1)
+            {
+                return "";
+            }
+
+            return text.Substring(start + 1, len);
+        }
+        #endregion
+
+
+        #region system
+        public static string GetCurCallStack()
+        {
+            var s = new List<string>();
+
+            StackTrace stack = new StackTrace();
+            foreach (var frame in stack.GetFrames())
+            {
+                var method = frame.GetMethod();
+                var mn = Misc.Utils.GetFriendlyMethodDeclareInfo(method as MethodInfo);
+                s.Add($" -> {mn}");
+            }
+
+            return string.Join("\n", s);
+        }
+
+        public static bool TryParseKeyMesssage(
+            string keyName, bool hasAlt, bool hasCtrl, bool hasShift,
+             out uint modifier,
+             out uint keyCode)
+        {
+            keyCode = 0;
+            modifier = 0;
+
+            if (!(hasCtrl || hasShift || hasAlt)
+               || !Enum.TryParse(keyName, out Keys key))
+            {
+                return false;
+            }
+
+            keyCode = (uint)key;
+
+            uint ctrl = hasCtrl ? (uint)Models.Datas.Enums.ModifierKeys.Control : 0;
+            uint alt = hasAlt ? (uint)Models.Datas.Enums.ModifierKeys.Alt : 0;
+            uint shift = hasShift ? (uint)Models.Datas.Enums.ModifierKeys.Shift : 0;
+
+            modifier = ctrl | alt | shift;
+
+
+            return true;
+        }
+
+        #endregion
+
+        #region List
+        static Random rngForShuffle = new Random();
+
+        public static List<T> Shuffle<T>(IEnumerable<T> source)
+        {
+            var list = source.ToList();
+
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rngForShuffle.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+
+            return list;
+        }
+        #endregion
+
+        #region files
+        public static string GetImageResolution(string filename)
+        {
+            try
+            {
+                var img = Image.FromFile(filename);
+                return $"{img.Width}x{img.Height}";
+            }
+            catch { }
+            return null;
+        }
+
+        public static string PickRandomLine(string filename)
+        {
+            string url = string.Empty;
+
+            if (!File.Exists(filename))
+            {
+                return url;
+            }
+
+            using (var file = File.OpenText(filename))
+            {
+                int numberSeen = 0;
+                var rng = new Random();
+                var lines = File.ReadLines(filename);
+                foreach (var line in lines)
+                {
+                    if (!string.IsNullOrEmpty(line) && rng.Next(++numberSeen) == 0)
+                    {
+                        url = line;
+                    }
+                }
+            }
+
+            return url.Replace("\r", "").Replace("\n", "");
+        }
+        #endregion
+
         #region string
+
+        public static string GetAppName() => Properties.Resources.AppName;
+
+        public static string AutoEllipsis(string text, int lenInAscii)
+        {
+            var ellipsis = Models.Consts.AutoEllipsis.ellipsis;
+            var defFont = Models.Consts.AutoEllipsis.defFont;
+
+            if (string.IsNullOrEmpty(text) || lenInAscii <= 0)
+            {
+                return string.Empty;
+            }
+
+            var width = TextRenderer.MeasureText(text, defFont).Width;
+            var baseline = TextRenderer.MeasureText(new string('a', lenInAscii), defFont).Width;
+
+            if (width <= baseline)
+            {
+                return text;
+            }
+
+            int end = Math.Min(text.Length, lenInAscii);
+            int pos = BinarySearchForEllipsisPos(text, 0, end, baseline);
+            return text.Substring(0, pos) + ellipsis;
+        }
+
+        static int BinarySearchForEllipsisPos(string text, int start, int end, int baseline)
+        {
+            int mid = (start + end) / 2;
+            while (mid != start && mid != end)
+            {
+                var s = text.Substring(0, mid) + Models.Consts.AutoEllipsis.ellipsis;
+                var w = TextRenderer.MeasureText(s, Models.Consts.AutoEllipsis.defFont).Width;
+                if (w == baseline)
+                {
+                    return mid;
+                }
+
+                if (w < baseline)
+                {
+                    start = mid;
+                }
+                else
+                {
+                    end = mid;
+                }
+                mid = (start + end) / 2;
+            }
+            return mid;
+        }
+
+
+        public static bool TryPatchGitHubUrl(string url, out string patched)
+        {
+            patched = string.Empty;
+
+            try
+            {
+                var groups = Regex.Match(url, Models.Consts.Patterns.GitHuhFileUrl).Groups;
+                if (groups != null && groups.Count == 3)
+                {
+                    var repo = groups[1];
+                    var tail = groups[2];
+                    patched = $"https://raw.githubusercontent.com{repo}{tail}";
+                    return true;
+                }
+            }
+            catch (ArgumentException) { }
+            catch (RegexMatchTimeoutException) { }
+
+            try
+            {
+                var groups = Regex.Match(url, Models.Consts.Patterns.GitHuhFileUrl).Groups;
+                if (groups != null && groups.Count == 3)
+                {
+                    var repo = groups[1];
+                    var tail = groups[2];
+                    patched = $"https://raw.githubusercontent.com{repo}{tail}";
+                    return true;
+                }
+            }
+            catch (ArgumentException) { }
+            catch (RegexMatchTimeoutException) { }
+
+            return false;
+        }
+
         public static bool TryExtractAliasFromSubscriptionUrl(
             string url, out string alias)
         {
@@ -81,6 +321,91 @@ namespace VgcApis.Misc
         #endregion
 
         #region net
+
+        public static long TimedDownloadTest(
+            string url,
+            int port,
+            int expectedSizeInKiB,
+            int timeout)
+        {
+            if (string.IsNullOrEmpty(url))
+            {
+                throw new ArgumentNullException("URL must not null!");
+            }
+
+            var maxTimeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
+
+            WebClient wc = new WebClient
+            {
+                Encoding = Encoding.UTF8,
+            };
+            wc.Headers.Add(Models.Consts.Webs.UserAgent);
+
+            if (port > 0 && port < 65536)
+            {
+                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, port);
+            }
+
+            Stopwatch sw = new Stopwatch();
+            AutoResetEvent dlCompleted = new AutoResetEvent(false);
+            long totalReceived = 0;
+            var expectedBytes = expectedSizeInKiB * 1024;
+
+            if (expectedSizeInKiB >= 0)
+            {
+                wc.DownloadProgressChanged += (s, a) =>
+                {
+                    Interlocked.Add(ref totalReceived, a.BytesReceived);
+                    if (totalReceived > expectedBytes)
+                    {
+                        sw.Stop();
+                        wc.CancelAsync();
+                    }
+                };
+            }
+
+            wc.DownloadStringCompleted += (s, a) =>
+            {
+                sw.Stop();
+                dlCompleted.Set();
+                wc.Dispose();
+            };
+
+            var speedtestTimeout = Models.Consts.Core.SpeedtestTimeout;
+
+            try
+            {
+                var patchedUrl = IsHttpLink(url) ? url : RelativePath2FullPath(url);
+                sw.Start();
+                wc.DownloadStringAsync(new Uri(patchedUrl));
+                // 收到信号为True
+                if (!dlCompleted.WaitOne(maxTimeout))
+                {
+                    wc.CancelAsync();
+                    return speedtestTimeout;
+                }
+            }
+            catch
+            {
+                // network operation always buggy.
+                wc.CancelAsync();
+                return speedtestTimeout;
+            }
+
+            return totalReceived <= expectedBytes ? speedtestTimeout : sw.ElapsedMilliseconds;
+        }
+
+
+        public static bool IsValidPort(string port)
+        {
+            return IsValidPort(Str2Int(port));
+        }
+
+        public static bool IsValidPort(int port)
+        {
+            return port > 0 && port < 65536;
+        }
+
         public static bool TryParseAddress(string address, out string ip, out int port)
         {
             ip = Models.Consts.Webs.LoopBackIP;
@@ -123,10 +448,146 @@ namespace VgcApis.Misc
         #endregion
 
         #region Task
-        public static void Sleep(int milliseconds) => Task.Delay(milliseconds).Wait();
+        public static void Sleep(TimeSpan timespan)
+        {
+            try
+            {
+                Thread.Sleep(timespan);
+            }
+            catch { }
+        }
+        public static void Sleep(int milSec)
+        {
+            try
+            {
+                // Task.Delay(milSec).Wait();
+                Thread.Sleep(milSec);
+            }
+            catch { }
+        }
 
-        public static Task RunInBackground(Action worker) =>
-            Task.Factory.StartNew(worker, TaskCreationOptions.LongRunning);
+        public static void SetProcessEnvs(Process proc, Dictionary<string, string> envs)
+        {
+            if (envs == null || envs.Count <= 0)
+            {
+                return;
+            }
+
+            var procEnv = proc.StartInfo.EnvironmentVariables;
+            foreach (var env in envs)
+            {
+                procEnv[env.Key] = env.Value;
+            }
+        }
+
+        static readonly AutoResetEvent sendCtrlCLocker = new AutoResetEvent(true);
+        public static bool SendStopSignal(Process proc)
+        {
+            // https://stackoverflow.com/questions/283128/how-do-i-send-ctrlc-to-a-process-in-c
+
+            const int CTRL_C_EVENT = 0;
+
+            var success = false;
+            if (!sendCtrlCLocker.WaitOne(Models.Consts.Core.SendCtrlCTimeout))
+            {
+                return false;
+            }
+            try
+            {
+                if (Libs.Sys.ConsoleCtrls.AttachConsole((uint)proc.Id))
+                {
+                    Libs.Sys.ConsoleCtrls.SetConsoleCtrlHandler(null, true);
+                    try
+                    {
+                        if (Libs.Sys.ConsoleCtrls.GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0)
+                            && proc.WaitForExit(Models.Consts.Core.SendCtrlCTimeout))
+                        {
+                            success = true;
+                        }
+                    }
+                    catch { }
+                    Libs.Sys.ConsoleCtrls.FreeConsole();
+                    Libs.Sys.ConsoleCtrls.SetConsoleCtrlHandler(null, false);
+                }
+            }
+            catch { }
+            sendCtrlCLocker.Set();
+
+            return success;
+        }
+
+        public static void KillProcessAndChildrens(int pid)
+        {
+            ManagementObjectSearcher processSearcher = new ManagementObjectSearcher
+              ("Select * From Win32_Process Where ParentProcessID=" + pid);
+            ManagementObjectCollection processCollection = processSearcher.Get();
+
+            // We must kill child processes first!
+            if (processCollection != null)
+            {
+                foreach (ManagementObject mo in processCollection)
+                {
+                    KillProcessAndChildrens(Convert.ToInt32(mo["ProcessID"])); //kill child processes(also kills childrens of childrens etc.)
+                }
+            }
+
+            // Then kill parents.
+            try
+            {
+                Process proc = Process.GetProcessById(pid);
+                if (!proc.HasExited)
+                {
+                    proc.Kill();
+                    proc.WaitForExit(1000);
+                }
+            }
+            catch
+            {
+                // Process already exited.
+            }
+        }
+
+        public static Task RunInBackground(Action worker, bool configAwait = false)
+        {
+            Action job = () =>
+            {
+                try
+                {
+                    var missionId = Utils.RandomHex(8);
+                    if (UI.IsInUiThread())
+                    {
+                        Libs.Sys.FileLogger.Warn($"Task [{missionId}] running in UI thread");
+                        Libs.Sys.FileLogger.DumpCallStack("Caller stack:");
+                    }
+                    worker?.Invoke();
+                    if (UI.IsInUiThread())
+                    {
+                        Libs.Sys.FileLogger.Warn($"task [{missionId}] finished");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Libs.Sys.FileLogger.Error($"Background task error:\n{e}");
+                    throw;
+                }
+            };
+
+            try
+            {
+                var t = new Task(job, TaskCreationOptions.LongRunning);
+                if (!configAwait)
+                {
+                    t.ConfigureAwait(false);
+                }
+                t.Start();
+                return t;
+            }
+            catch (Exception e)
+            {
+                Libs.Sys.FileLogger.Error($"Create background task error:\n{e}");
+            }
+            return Task.FromResult(false);
+        }
         #endregion
 
         #region Json
@@ -588,7 +1049,9 @@ namespace VgcApis.Misc
             MeasureSimilarity(source.ToLower(), partial.ToLower());
 
         /// <summary>
-        /// -1: not match 1: equal >=2: the smaller the value, the more similar
+        /// -1: not match
+        ///  1: equal
+        /// >1: the smaller the value, the more similar
         /// </summary>
         public static long MeasureSimilarity(string source, string partial)
         {
@@ -758,6 +1221,33 @@ namespace VgcApis.Misc
         #endregion
 
         #region Misc
+        public static string GetLuaModuleName(string fullPath)
+        {
+            if (string.IsNullOrWhiteSpace(fullPath))
+            {
+                return null;
+            }
+
+            var appDir = GetAppDir();
+            if (fullPath.StartsWith(appDir))
+            {
+                fullPath = fullPath.Substring(appDir.Length);
+            }
+
+            var mn = fullPath.Replace("\\", ".").Replace("/", ".");
+            while (mn != null && mn.StartsWith("."))
+            {
+                mn = mn.Substring(1);
+            }
+
+            if (mn != null && mn.ToLower().EndsWith(".lua"))
+            {
+                mn = mn.Substring(0, mn.Length - ".lua".Length);
+            }
+
+            return mn;
+        }
+
         public static bool IsImportResultSuccess(string[] result) =>
            result[3] == VgcApis.Models.Consts.Import.MarkImportSuccess;
 
@@ -795,14 +1285,23 @@ namespace VgcApis.Misc
 
         public static string RelativePath2FullPath(string path)
         {
-            if (string.IsNullOrEmpty(path)
-                || Path.IsPathRooted(path))
+            if (string.IsNullOrEmpty(path) || Path.IsPathRooted(path))
             {
                 return path;
             }
 
             var appDir = GetAppDir();
             return Path.Combine(appDir, path);
+        }
+
+        public static string CopyFromClipboard()
+        {
+            try
+            {
+                return Clipboard.GetText();
+            }
+            catch { }
+            return string.Empty;
         }
 
         public static bool CopyToClipboard(string content)
@@ -862,7 +1361,97 @@ namespace VgcApis.Misc
         #endregion
 
         #region reflection
-        public static string GetFriendlyName(Type type)
+        static public string GetPublicFieldsInfoOfType(Type type)
+        {
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
+                .Select(field =>
+                {
+                    var pf = field.IsStatic ? "Static " : "";
+                    var tn = GetFriendlyTypeName(field.FieldType);
+                    return $"{pf}{tn} {field.Name}";
+                })
+                .OrderBy(fn => fn);
+
+            return string.Join("\n", fields);
+        }
+
+        static public string GetPublicMethodsInfoOfType(Type type)
+        {
+            List<string> staticMems = new List<string>();
+            List<string> dynamicMems = new List<string>();
+            List<string> allMems = new List<string>();
+
+            var methods = type.GetMethods()
+                .Where(m => m.IsPublic)
+                .ToList();
+
+            foreach (var method in methods)
+            {
+                var fn = GetFriendlyMethodDeclareInfo(method);
+                if (method.IsStatic)
+                {
+                    staticMems.Add(fn);
+                }
+                else
+                {
+                    dynamicMems.Add(fn);
+                }
+            }
+
+            staticMems.Sort();
+            dynamicMems.Sort();
+            allMems.AddRange(staticMems);
+            allMems.AddRange(dynamicMems);
+
+            return string.Join("\n", allMems);
+        }
+
+        static public List<Type> GetAllAssembliesType()
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(t => t.GetTypes())
+                .Where(t => t.IsClass)
+                .ToList();
+        }
+
+        /// <summary>
+        /// e.g. static void Sum&lt;int>(int a, int b)
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        static public string GetFriendlyMethodDeclareInfo(MethodInfo method)
+        {
+            var pms = method.GetParameters()
+                .Select(arg =>
+                {
+                    var tn = GetFriendlyTypeName(arg.ParameterType);
+                    var name = arg.Name;
+                    return $"{tn} {name}";
+                });
+
+            var head = method.IsStatic ? @"Static " : @"";
+            var rtt = GetFriendlyTypeName(method.ReturnType);
+            var fn = GetFriendlyMethodName(method);
+            var args = string.Join(@", ", pms);
+            return $"{head}{rtt} {fn}({args})";
+        }
+
+        static public string GetFriendlyMethodName(MethodInfo method)
+        {
+            var name = method.Name;
+            if (!method.IsGenericMethod)
+            {
+                return name;
+            }
+
+            var args = method
+                .GetGenericArguments()
+                .Select(arg => GetFriendlyTypeName(arg));
+
+            return $"{name}<{string.Join(@", ", args)}>";
+        }
+
+        public static string GetFriendlyTypeName(Type type)
         {
             string friendlyName = type.Name;
             if (type.IsGenericType)
@@ -876,7 +1465,7 @@ namespace VgcApis.Misc
                 Type[] typeParameters = type.GetGenericArguments();
                 for (int i = 0; i < typeParameters.Length; ++i)
                 {
-                    string typeParamName = GetFriendlyName(typeParameters[i]);
+                    string typeParamName = GetFriendlyTypeName(typeParameters[i]);
                     friendlyName += (i == 0 ? typeParamName : "," + typeParamName);
                 }
                 friendlyName += ">";
@@ -900,13 +1489,13 @@ namespace VgcApis.Misc
 
             var fullNames = new List<Tuple<string, string, string, string>>();
             var methods = type.GetMethods();
-            foreach (var method in type.GetMethods())
+            foreach (var method in methods)
             {
                 var name = method.Name;
                 if (method.IsPublic && !exceptList.Contains(name))
                 {
                     var paramStrs = GenParamStr(method);
-                    var returnType = GetFriendlyName(method.ReturnType);
+                    var returnType = GetFriendlyTypeName(method.ReturnType);
                     fullNames.Add(
                         new Tuple<string, string, string, string>(
                             returnType, name, paramStrs.Item1, paramStrs.Item2));

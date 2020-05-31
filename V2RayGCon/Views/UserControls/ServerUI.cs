@@ -19,10 +19,11 @@ namespace V2RayGCon.Views.UserControls
 
         string keyword = null;
 
-        VgcApis.Libs.Tasks.Bar uiUpdateLock = new VgcApis.Libs.Tasks.Bar();
-        VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater;
+        VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater, lazyHighlighter;
 
         static readonly Bitmap[] btnBgCaches = new Bitmap[3];
+
+        List<Control> roundLables;
 
         public ServerUI(VgcApis.Interfaces.ICoreServCtrl serverItem)
         {
@@ -32,15 +33,36 @@ namespace V2RayGCon.Views.UserControls
 
             this.coreServCtrl = serverItem;
             InitializeComponent();
-
-            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiLater, 100);
         }
 
         private void ServerUI_Load(object sender, EventArgs e)
         {
+            UpdateOnOffLabel(false);
+
+            roundLables = new List<Control>
+            {
+                rlbLastModify,
+                rlbRemark,
+                rlbMark,
+                rlbSpeedtest,
+            };
+
             rtboxServerTitle.BackColor = BackColor;
+            rlbSpeedtest.Text = @"";
+            rlbSpeedtest.Visible = false;
+
+            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 250, 3000)
+            {
+                Name = "ServerUi.RefreshPanel",
+            };
+
+            lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(
+                HighLightKeywordsThen, 400, 1000)
+            {
+                Name = "ServerUi.HighLight",
+            };
+
             InitButtonBackgroundImage();
-            InitStatusLabel();
             BindCoreCtrlEvents();
             RefreshUiLater();
         }
@@ -75,48 +97,39 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region private method
-        void InitStatusLabel()
-        {
+        void ShowModifyConfigsWinForm() => WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);
 
-            VgcApis.Misc.UI.RunInUiThread(rlbSpeedtest, () =>
+        void HighLightKeyWords()
+        {
+            var box = rtboxServerTitle;
+            var title = box.Text.ToLower();
+
+            if (string.IsNullOrEmpty(keyword)
+                || !VgcApis.Misc.Utils.PartialMatchCi(title, keyword))
             {
-                try
+                return;
+            }
+
+            int idxTitle = 0, idxKeyword = 0;
+            while (idxTitle < title.Length && idxKeyword < keyword.Length)
+            {
+                if (title[idxTitle].CompareTo(keyword[idxKeyword]) == 0)
                 {
-                    UpdateControlTextOndemand(rlbSpeedtest, @"");
+                    box.SelectionStart = idxTitle;
+                    box.SelectionLength = 1;
+                    box.SelectionBackColor = Color.Yellow;
+                    idxKeyword++;
                 }
-                catch { }
-            });
+                idxTitle++;
+            }
+            box.SelectionStart = 0;
+            box.SelectionLength = 0;
+            box.DeselectAll();
         }
 
-        private void HighLightServerTitleWithKeywords()
+        void HighLightKeywordsThen()
         {
-            VgcApis.Misc.UI.RunInUiThread(rtboxServerTitle, () =>
-            {
-                var box = rtboxServerTitle;
-                var title = box.Text.ToLower();
-
-                if (string.IsNullOrEmpty(keyword)
-                    || !VgcApis.Misc.Utils.PartialMatchCi(title, keyword))
-                {
-                    return;
-                }
-
-                int idxTitle = 0, idxKeyword = 0;
-                while (idxTitle < title.Length && idxKeyword < keyword.Length)
-                {
-                    if (title[idxTitle].CompareTo(keyword[idxKeyword]) == 0)
-                    {
-                        box.SelectionStart = idxTitle;
-                        box.SelectionLength = 1;
-                        box.SelectionBackColor = Color.Yellow;
-                        idxKeyword++;
-                    }
-                    idxTitle++;
-                }
-                box.SelectionStart = 0;
-                box.SelectionLength = 0;
-                box.DeselectAll();
-            });
+            VgcApis.Misc.UI.Invoke(HighLightKeyWords);
         }
 
         void StartThisServerOnlyThen(Action done = null)
@@ -125,15 +138,40 @@ namespace V2RayGCon.Views.UserControls
             servers.StopAllServersThen(() => server.GetCoreCtrl().RestartCoreThen(done));
         }
 
-        void RefreshUiLater()
-        {
-            if (!uiUpdateLock.Install())
-            {
-                lazyUiUpdater.DoItLater();
-                return;
-            }
+        void RefreshUiLater() => lazyUiUpdater.Postpone();
 
-            RefreshUiThen(() => uiUpdateLock.Remove());
+        void RefreshUiWorker(Action done)
+        {
+            Action worker = () =>
+            {
+                var cs = coreServCtrl.GetCoreStates();
+                var cc = coreServCtrl.GetCoreCtrl();
+
+                // must update background first
+                var isSelected = cs.IsSelected();
+
+                // first line
+                UpdateOnOffLabel(cc.IsCoreRunning());
+                UpdateSelectCheckboxState(isSelected);
+                UpdateTitleTextBox(cs);
+
+                // second line
+                UpdateInboundModeLabel(cs);
+                UpdateLastModifiedLable(cs.GetLastModifiedUtcTicks());
+                UpdateMarkLabel(cs.GetMark());
+                UpdateRemarkLabel(cs.GetRemark());
+                UpdateStatusLable(cs);
+                UpdateSettingsLable(cs);
+                CompactRoundLables();
+            };
+
+            Action next = () =>
+            {
+                lazyHighlighter?.Postpone();
+                done?.Invoke();
+            };
+
+            VgcApis.Misc.UI.InvokeThen(worker, next);
         }
 
         void OnCorePropertyChangesHandler(object sender, EventArgs args) =>
@@ -141,12 +179,9 @@ namespace V2RayGCon.Views.UserControls
 
         void UpdateControlTextAndTooltip(Control control, string text, string tooltip)
         {
-            if (control.Text != text)
-            {
-                control.Text = text;
-            }
+            UpdateControlTextOndemand(control, text);
 
-            if (toolTip1.GetToolTip(control) != tooltip)
+            if (control.Visible && toolTip1.GetToolTip(control) != tooltip)
             {
                 toolTip1.SetToolTip(control, tooltip);
             }
@@ -154,25 +189,24 @@ namespace V2RayGCon.Views.UserControls
 
         void CompactRoundLables()
         {
-            var margin = rlbSetting.Left / 2;
+            var rleft = rlbIsRunning.Left;
+            var margin = rleft / 2;
+
+            rlbSetting.Left = rleft + (rlbIsRunning.Width - rlbSetting.Width) / 2;
+
             var end = rlbInboundMode.Right;
 
-            var controls = new List<Control>
-            {
-                rlbLastModify,
-                rlbMark,
-                rlbSpeedtest,
-            };
 
-            foreach (var control in controls)
+
+            foreach (var control in roundLables)
             {
                 if (!control.Visible)
                 {
                     continue;
                 }
 
-                var left = end + margin;
-                if (control.Left != left)
+                var start = end + margin;
+                if (control.Left != start)
                 {
                     control.Left = end + margin;
                 }
@@ -197,28 +231,27 @@ namespace V2RayGCon.Views.UserControls
             Bitmap clone;
             lock (drawImageLocker)
             {
-                if (btnBgCaches[idx] == null || btnBgCaches[idx].Size != btn.Size)
+                var size = btn.ClientSize;
+                if (btnBgCaches[idx] == null || btnBgCaches[idx].Size != size)
                 {
-                    btnBgCaches[idx] = CreateBgCache(btn.ClientSize, btn.Padding, btnType);
+                    btnBgCaches[idx] = CreateBgCache(size, btnType);
                 }
                 clone = btnBgCaches[idx].Clone() as Bitmap;
             }
             btn.BackgroundImage = clone;
-            btn.BackgroundImageLayout = ImageLayout.None;
         }
 
-        Bitmap CreateBgCache(Size size, Padding padding, ButtonTypes btnType)
+        Bitmap CreateBgCache(Size size, ButtonTypes btnType)
         {
-            var bmp = new Bitmap(
-                size.Width - padding.Left - padding.Right,
-                size.Height - padding.Top - padding.Bottom);
+            var bmp = new Bitmap(size.Width, size.Height);
 
             var r = Math.Min(bmp.Width, bmp.Height) * 0.6f / 2f;
             var cx = bmp.Width / 2f;
             var cy = bmp.Height / 2f;
             var pw = r * 0.4f;
+            var pc = Color.FromArgb(45, 45, 45);
             using (var g = Graphics.FromImage(bmp))
-            using (var pen = new Pen(Color.DimGray, pw))
+            using (var pen = new Pen(pc, pw))
             {
                 pen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
                 pen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
@@ -313,43 +346,55 @@ namespace V2RayGCon.Views.UserControls
             }
         }
 
-        void RefreshUiThen(Action done)
+        private void UpdateTitleTextBox(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
         {
-            VgcApis.Misc.UI.RunInUiThread(rtboxServerTitle, () =>
+            var cs = coreStates;
+            var summary = VgcApis.Misc.Utils.AutoEllipsis(cs.GetSummary(), VgcApis.Models.Consts.AutoEllipsis.ServerSummaryMaxLength);
+            var tip = $"{I18N.NameColon}{cs.GetLongName()}\n{I18N.SummaryColon}{summary}";
+            UpdateControlTextAndTooltip(rtboxServerTitle, cs.GetTitle(), tip);
+        }
+
+        void UpdateMarkLabel(string mark)
+        {
+            var m = VgcApis.Misc.Utils.AutoEllipsis(mark, VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength);
+            var tooltip = $"{I18N.Mark}{m}";
+            UpdateControlTextAndTooltip(rlbMark, mark, tooltip);
+        }
+
+        void UpdateRemarkLabel(string remark)
+        {
+            var m = VgcApis.Misc.Utils.AutoEllipsis(remark, VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength);
+            var tooltip = $"{I18N.Remark}{m}";
+            UpdateControlTextAndTooltip(rlbRemark, remark, tooltip);
+        }
+
+        void UpdateStatusLable(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates cs)
+        {
+            var r = cs.GetSpeedTestResult();
+            var isTimeout = r == long.MaxValue;
+            var color = isTimeout ? Color.OrangeRed : Color.DimGray;
+            var status = cs.GetStatus();
+            var tooltip = Ticks2Tooltip(cs.GetLastSpeedTestUtcTicks());
+
+            UpdateControlTextAndTooltip(rlbSpeedtest, status, tooltip);
+            if (rlbSpeedtest.ForeColor != color)
             {
-                try
-                {
-                    var cs = coreServCtrl.GetCoreStates();
-                    var cc = coreServCtrl.GetCoreCtrl();
-
-                    // first line
-                    UpdateOnOffLabel(cc.IsCoreRunning());
-                    UpdateSelectCheckboxState(cs);
-                    var title = cs.GetTitle();
-                    UpdateControlTextAndTooltip(rtboxServerTitle, title, title);
-
-                    // second line
-                    UpdateInboundModeLabel(cs);
-                    UpdateLastModifiedLable(cs.GetLastModifiedUtcTicks());
-                    UpdateControlTextOndemand(rlbMark, cs.GetMark());
-                    UpdateControlTextOndemand(rlbSpeedtest, cs.GetStatus());
-                    UpdateSettingsLable(cs);
-                    CompactRoundLables();
-                }
-                catch { }
-                finally
-                {
-                    done?.Invoke();
-                }
-            });
+                rlbSpeedtest.ForeColor = color;
+            }
         }
 
         void UpdateLastModifiedLable(long utcTicks)
         {
             var date = new DateTime(utcTicks, DateTimeKind.Utc).ToLocalTime();
             var text = date.ToString(I18N.MMdd);
-            var tooltip = I18N.LastModified + date.ToLongDateString() + date.ToLongTimeString();
+            var tooltip = Ticks2Tooltip(utcTicks);
             UpdateControlTextAndTooltip(rlbLastModify, text, tooltip);
+        }
+
+        string Ticks2Tooltip(long utcTicks)
+        {
+            var date = new DateTime(utcTicks, DateTimeKind.Utc).ToLocalTime();
+            return I18N.LastModified + date.ToLongDateString() + date.ToLongTimeString();
         }
 
         private void UpdateSettingsLable(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
@@ -359,19 +404,23 @@ namespace V2RayGCon.Views.UserControls
                 + (coreStates.IsInjectGlobalImport() ? "I" : "")
                 + (coreStates.IsUntrack() ? "U" : "");
 
+            if (text.Length > 0 && text.Length <= 2)
+            {
+                text = $" {text} ";
+            }
+
             UpdateControlTextOndemand(rlbSetting, text);
         }
 
-        void UpdateSelectCheckboxState(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
+        void UpdateSelectCheckboxState(bool isSelected)
         {
-            var selected = coreStates.IsSelected();
-            if (selected == chkSelected.Checked)
+            if (isSelected == chkSelected.Checked)
             {
                 return;
             }
 
-            chkSelected.Checked = selected;
-            SetServerTitleLabelFontStyle(selected);
+            chkSelected.Checked = isSelected;
+            SetServerTitleLabelFontStyle(isSelected);
         }
 
         void SetServerTitleLabelFontStyle(bool selected)
@@ -389,7 +438,7 @@ namespace V2RayGCon.Views.UserControls
                 rlbIsRunning.Text = text;
             }
             var bc = isServerOn ? Color.DarkOrange : BackColor;
-            var fc = isServerOn ? BackColor : Color.ForestGreen;
+            var fc = isServerOn ? Color.Ivory : Color.ForestGreen;
 
             if (rlbIsRunning._BackColor != bc)
             {
@@ -435,15 +484,7 @@ namespace V2RayGCon.Views.UserControls
                 return;
             }
 
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                // control may be desposed, the sun may explode while this function is running
-                try
-                {
-                    HighLightServerTitleWithKeywords();
-                }
-                catch { }
-            });
+            lazyHighlighter?.Deadline();
         }
 
         public string GetConfig() => coreServCtrl.GetConfiger().GetConfig();
@@ -462,12 +503,10 @@ namespace V2RayGCon.Views.UserControls
 
         public void Cleanup()
         {
-            lazyUiUpdater?.Quit();
-
+            lazyUiUpdater?.Dispose();
+            lazyHighlighter?.Dispose();
             ReleaseCoreCtrlEvents();
         }
-
-
         #endregion
 
         #region UI event
@@ -492,7 +531,7 @@ namespace V2RayGCon.Views.UserControls
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var config = coreServCtrl.GetConfiger().GetConfig();
-            new Views.WinForms.FormConfiger(config);
+            WinForms.FormConfiger.ShowConfig(config);
         }
 
         private void vmessToolStripMenuItem_Click(object sender, EventArgs e)
@@ -572,7 +611,7 @@ namespace V2RayGCon.Views.UserControls
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var finalConfig = coreServCtrl.GetConfiger().GetFinalConfig();
-            new WinForms.FormConfiger(finalConfig.ToString(Formatting.Indented));
+            WinForms.FormConfiger.ShowConfig(finalConfig.ToString(Formatting.Indented));
         }
 
         private void vToolStripMenuItem_Click(object sender, EventArgs e)
@@ -614,7 +653,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void showSettingsWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);
+            ShowModifyConfigsWinForm();
         }
 
         private void btnShowPopupMenu_Click(object sender, EventArgs e)
@@ -632,21 +671,7 @@ namespace V2RayGCon.Views.UserControls
             coreServCtrl.GetCoreCtrl().StopCoreThen();
         }
 
-        private void rlbInboundMode_MouseDown(object sender, MouseEventArgs e)
-        {
-            UserMouseDown();
-        }
-        private void rlbSetting_MouseDown(object sender, MouseEventArgs e)
-        {
-            UserMouseDown();
-        }
-
         private void rlbLastModify_MouseDown(object sender, MouseEventArgs e)
-        {
-            UserMouseDown();
-        }
-
-        private void rlbMark_MouseDown(object sender, MouseEventArgs e)
         {
             UserMouseDown();
         }
@@ -655,10 +680,26 @@ namespace V2RayGCon.Views.UserControls
         {
             UserMouseDown();
         }
+
+        private void rlbSetting_Click(object sender, EventArgs e)
+        {
+            ShowModifyConfigsWinForm();
+        }
+
+        private void rlbInboundMode_Click(object sender, EventArgs e)
+        {
+            ShowModifyConfigsWinForm();
+        }
+
+        private void rlbMark_Click(object sender, EventArgs e)
+        {
+            ShowModifyConfigsWinForm();
+        }
+
+        private void rlbRemark_Click(object sender, EventArgs e)
+        {
+            ShowModifyConfigsWinForm();
+        }
         #endregion
-
-
-
-
     }
 }

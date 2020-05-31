@@ -5,6 +5,11 @@ namespace V2RayGCon.Models.Datas
     class UserSettings
     {
         #region public properties
+        public string DebugLogFilePath { get; set; }
+        public bool isEnableDebugFile { get; set; }
+
+        public int QuickSwitchServerLatency { get; set; }
+        public bool isAutoPatchSubsInfo { get; set; }
 
         // FormOption->Defaults->Mode
         public ImportSharelinkOptions ImportOptions = null;
@@ -16,6 +21,8 @@ namespace V2RayGCon.Models.Datas
         public bool isDownloadWin32V2RayCore { get; set; } = true;
         public List<string> V2RayCoreDownloadVersionList = null;
 
+        public bool isSupportSelfSignedCert { get; set; }
+
         public int ServerPanelPageSize { get; set; }
         public bool isEnableStat { get; set; } = false;
         public bool isUseV4Format { get; set; }
@@ -23,6 +30,9 @@ namespace V2RayGCon.Models.Datas
         public bool isPortable { get; set; }
         public bool isCheckUpdateWhenAppStart { get; set; }
         public bool isUpdateUseProxy { get; set; }
+
+        // v2ray-core v4.23.1 multiple config file supports
+        public string MultiConfItems { get; set; }
 
         public string ImportUrls { get; set; }
         public string DecodeCache { get; set; }
@@ -46,6 +56,15 @@ namespace V2RayGCon.Models.Datas
         {
             Normalized();
 
+            DebugLogFilePath = @"";
+            isEnableDebugFile = false;
+
+            QuickSwitchServerLatency = 0;
+
+            isSupportSelfSignedCert = false;
+
+            isAutoPatchSubsInfo = false;
+
             ServerPanelPageSize = 8;
 
             MaxConcurrentV2RayCoreNum = 20;
@@ -57,6 +76,7 @@ namespace V2RayGCon.Models.Datas
             CfgShowToolPanel = true;
             isPortable = true;
 
+            MultiConfItems = string.Empty;
             ImportUrls = string.Empty;
             DecodeCache = string.Empty;
             SubscribeUrls = string.Empty;

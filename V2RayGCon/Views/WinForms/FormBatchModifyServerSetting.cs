@@ -14,8 +14,12 @@ namespace V2RayGCon.Views.WinForms
         {
             if (_instant == null || _instant.IsDisposed)
             {
-                _instant = new FormBatchModifyServerSetting();
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    _instant = new FormBatchModifyServerSetting();
+                });
             }
+            VgcApis.Misc.UI.Invoke(() => _instant.Show());
             return _instant;
         }
         #endregion
@@ -29,16 +33,12 @@ namespace V2RayGCon.Views.WinForms
             InitializeComponent();
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);
-            this.Show();
         }
 
         private void FormBatchModifyServerInfo_Shown(object sender, EventArgs e)
         {
             this.cboxMark.Items.Clear();
-            foreach (var mark in servers.GetMarkList())
-            {
-                this.cboxMark.Items.Add(mark);
-            }
+            cboxMark.Items.AddRange(servers.GetMarkList());
 
             var firstCtrl = servers
                 .GetAllServersOrderByIndex()
@@ -142,10 +142,7 @@ namespace V2RayGCon.Views.WinForms
             Action done = () =>
             {
                 servers.UpdateMarkList();
-                VgcApis.Misc.UI.RunInUiThread(btnModify, () =>
-                {
-                    that.Close();
-                });
+                VgcApis.Misc.UI.Invoke(() => that.Close());
             };
 
             Misc.Utils.ChainActionHelperAsync(list.Count, worker, done);

@@ -22,6 +22,15 @@ namespace V2RayGCon.Controllers
             pluginServ = Services.PluginsServer.Instance;
         }
 
+        public void Cleanup()
+        {
+            foreach (var kv in GetAllComponents())
+            {
+                var ctrl = kv.Value as OptionComponent.OptionComponentController;
+                ctrl.Cleanup();
+            }
+        }
+
         public bool IsOptionsSaved()
         {
             foreach (var component in GetAllComponents())
@@ -109,7 +118,7 @@ namespace V2RayGCon.Controllers
             if (options.ContainsKey(BAK_IMPORT)
                 && Misc.UI.Confirm(I18N.ConfirmRestoreGlobalImportSettings))
             {
-                GetComponent<OptionComponent.Import>().Reload(options[BAK_IMPORT]);
+                GetComponent<OptionComponent.TabImport>().Reload(options[BAK_IMPORT]);
             }
 
             if (options.ContainsKey(BAK_SUBSCRIPTION)

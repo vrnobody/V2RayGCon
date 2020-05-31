@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -9,7 +10,6 @@ namespace V2RayGCon
 {
     static class Program
     {
-
         #region single instance
         // https://stackoverflow.com/questions/19147/what-is-the-correct-way-to-create-a-single-instance-application
 
@@ -29,6 +29,8 @@ namespace V2RayGCon
         [STAThread]
         static void Main()
         {
+            Thread.CurrentThread.Name = VgcApis.Models.Consts.Libs.UiThreadName;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -36,9 +38,11 @@ namespace V2RayGCon
             if (mutex.WaitOne(TimeSpan.Zero, true))
             {
                 var app = new Services.Launcher();
-                if (app.Run())
+                if (app.Warmup())
                 {
-                    Application.Run();
+                    app.Run();
+                    Application.Run(app.context);
+                    app.Dispose();
                 }
                 mutex.ReleaseMutex();
             }
@@ -46,6 +50,8 @@ namespace V2RayGCon
             {
                 MessageBox.Show(I18N.ExitOtherVGCFirst);
             }
+
+
             Libs.Sys.SafeNativeMethods.FreeLibrary(pShcoreDll);
         }
 

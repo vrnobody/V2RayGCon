@@ -70,6 +70,33 @@ namespace VgcApis.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Copy 的本地化字符串。
+        /// </summary>
+        internal static string Copy {
+            get {
+                return ResourceManager.GetString("Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Cut 的本地化字符串。
+        /// </summary>
+        internal static string Cut {
+            get {
+                return ResourceManager.GetString("Cut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Delete 的本地化字符串。
+        /// </summary>
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Done. 的本地化字符串。
         /// </summary>
         internal static string Done {
@@ -79,11 +106,83 @@ namespace VgcApis.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Max keyword length is 100 character. 的本地化字符串。
+        /// </summary>
+        internal static string KeywordIsTooLong {
+            get {
+                return ResourceManager.GetString("KeywordIsTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 No match result! 的本地化字符串。
+        /// </summary>
+        internal static string NoMatchResult {
+            get {
+                return ResourceManager.GetString("NoMatchResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Paste 的本地化字符串。
+        /// </summary>
+        internal static string Paste {
+            get {
+                return ResourceManager.GetString("Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Please do search first. 的本地化字符串。
+        /// </summary>
+        internal static string PlsDoSearchFirst {
+            get {
+                return ResourceManager.GetString("PlsDoSearchFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Redo 的本地化字符串。
+        /// </summary>
+        internal static string Redo {
+            get {
+                return ResourceManager.GetString("Redo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Replaced {0} times. 的本地化字符串。
+        /// </summary>
+        internal static string ReplacedCount {
+            get {
+                return ResourceManager.GetString("ReplacedCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Save as 的本地化字符串。
         /// </summary>
         internal static string SaveAs {
             get {
                 return ResourceManager.GetString("SaveAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Select all 的本地化字符串。
+        /// </summary>
+        internal static string SelectAll {
+            get {
+                return ResourceManager.GetString("SelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Undo 的本地化字符串。
+        /// </summary>
+        internal static string Undo {
+            get {
+                return ResourceManager.GetString("Undo", resourceCulture);
             }
         }
         

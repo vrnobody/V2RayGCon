@@ -14,12 +14,21 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         int GetInboundType();
         double GetIndex();
         long GetLastModifiedUtcTicks();
+
+        long GetLastSpeedTestUtcTicks();
+
         string GetMark();
+        string GetRemark();
+
+        string GetShortName();
+        string GetLongName();
         string GetName();
+
         string GetRawUid();
         long GetSpeedTestResult();
         string GetStatus();
         string GetSummary();
+
         string GetTitle();
         string GetUid();
 
@@ -36,6 +45,9 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         void SetInboundType(int type);
         void SetLastModifiedUtcTicks(long utcTicks);
         void SetMark(string mark);
+
+        void SetRemark(string remark);
+        void SetSpeedTestResult(long latency);
 
         void SetIsAutoRun(bool isAutoRun);
         void SetIsUntrack(bool isUntrack);

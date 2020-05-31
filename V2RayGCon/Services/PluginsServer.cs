@@ -15,10 +15,13 @@ namespace V2RayGCon.Services
 
         Libs.Lua.Apis vgcApis = new Libs.Lua.Apis();
 
-        Dictionary<string, VgcApis.Interfaces.IPlugin> plugins =
-            new Dictionary<string, VgcApis.Interfaces.IPlugin>();
+        readonly Dictionary<string, VgcApis.Interfaces.IPlugin> plugins =
+             new Dictionary<string, VgcApis.Interfaces.IPlugin>();
 
-        PluginsServer() { }
+        PluginsServer()
+        {
+            plugins = LoadAllPlugins();
+        }
 
         public void Run(
             Settings setting,
@@ -29,10 +32,7 @@ namespace V2RayGCon.Services
         {
             this.setting = setting;
             this.notifier = notifier;
-
             vgcApis.Run(setting, servers, configMgr, slinkMgr, notifier);
-            plugins = LoadAllPlugins();
-            RestartAllPlugins();
         }
 
         #region properties
@@ -207,9 +207,11 @@ namespace V2RayGCon.Services
         #region protected methods
         protected override void Cleanup()
         {
+            VgcApis.Libs.Sys.FileLogger.Info("PluginsServer.Cleanup() begin");
             CleanupPlugins(plugins.Keys.ToList());
-            plugins = new Dictionary<string, VgcApis.Interfaces.IPlugin>();
+            plugins.Clear();
             vgcApis.Dispose();
+            VgcApis.Libs.Sys.FileLogger.Info("PluginsServer.Cleanup() done");
         }
         #endregion
     }

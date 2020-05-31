@@ -6,8 +6,7 @@ namespace V2RayGCon.Views.WinForms
 {
     public partial class FormMain : Form
     {
-
-        #region single instance thing
+        #region Sigleton
         static readonly VgcApis.BaseClasses.AuxSiWinForm<FormMain> auxSiForm =
             new VgcApis.BaseClasses.AuxSiWinForm<FormMain>();
         static public FormMain GetForm() => auxSiForm.GetForm();
@@ -18,64 +17,48 @@ namespace V2RayGCon.Views.WinForms
         Services.ShareLinkMgr slinkMgr;
 
         Controllers.FormMainCtrl formMainCtrl;
-        Timer updateTitleTimer = null;
+
         string formTitle = "";
 
         public FormMain()
         {
-            setting = Services.Settings.Instance;
-            slinkMgr = Services.ShareLinkMgr.Instance;
-
+            CreateHandle();
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             Misc.UI.AutoScaleToolStripControls(this, 16);
-            GenFormTitle();
+
+            formTitle = Misc.Utils.GetAppNameAndVer();
         }
 
-        public void FormMain_Shown(object sender, EventArgs e)
+        private void FormMain_Load(object sender, EventArgs e)
         {
-            UpdateFormTitle(this, EventArgs.Empty);
+            slinkMgr = Services.ShareLinkMgr.Instance;
+            setting = Services.Settings.Instance;
+
             setting.RestoreFormRect(this);
-
-            // https://alexpkent.wordpress.com/2011/05/11/25/
-            // 添加新控件的时候会有bug,不显示新控件
-            // ToolStripManager.LoadSettings(this); 
-
-            this.FormClosing += (s, a) =>
-            {
-                if (updateTitleTimer != null)
-                {
-                    updateTitleTimer.Stop();
-                    updateTitleTimer.Tick -= UpdateFormTitle;
-                    updateTitleTimer.Dispose();
-                }
-            };
-
-            this.FormClosed += (s, a) =>
-            {
-                setting.SaveFormRect(this);
-                // ToolStripManager.SaveSettings(this);
-                formMainCtrl.Cleanup();
-                setting.LazyGC();
-            };
 
             formMainCtrl = InitFormMainCtrl();
             BindToolStripButtonToMenuItem();
 
-            updateTitleTimer = new Timer
-            {
-                Interval = 2000,
-            };
-            updateTitleTimer.Tick += UpdateFormTitle;
-            updateTitleTimer.Start();
+            setting.OnPortableModeChanged += UpdateFormTitle;
+            UpdateFormTitle(this, EventArgs.Empty);
         }
 
+        #region exit 
+        void Cleanup()
+        {
+            formMainCtrl?.Cleanup();
+        }
+
+        #endregion
+
         #region private method
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Misc.UI.Confirm(I18N.ConfirmExitApp))
             {
-                setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;
+                setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser);
                 Application.Exit();
             }
         }
@@ -86,15 +69,6 @@ namespace V2RayGCon.Views.WinForms
             notifier.ScanQrcode();
         }
 
-        private void GenFormTitle()
-        {
-            var version = Misc.Utils.GetAssemblyVersion();
-            formTitle = string.Format(
-                "{0} v{1}",
-                Properties.Resources.AppName,
-                Misc.Utils.TrimVersionString(version));
-        }
-
         private void UpdateFormTitle(object sender, EventArgs args)
         {
             var title = formTitle;
@@ -103,7 +77,7 @@ namespace V2RayGCon.Views.WinForms
                 title += " - " + I18N.Portable;
             }
 
-            this.Invoke((MethodInvoker)delegate
+            VgcApis.Misc.UI.Invoke(() =>
             {
                 if (this.Text != title)
                 {
@@ -132,8 +106,6 @@ namespace V2RayGCon.Views.WinForms
                 }
             }
 
-            // for security 
-            // bind(toolStripButtonImportFromClipboard, toolMenuItemImportLinkFromClipboard, false);
             toolStripButtonImportFromClipboard.Click += (s, a) =>
             {
                 string text = Misc.Utils.GetClipboardText();
@@ -269,6 +241,8 @@ namespace V2RayGCon.Views.WinForms
                 //// batch op
                 toolStripMenuItemStopBatchSpeedTest,
                 toolStripMenuItemRunBatchSpeedTest,
+                toolStripMenuItemClearSpeedTestResults,
+
                 toolStripMenuItemModifySettings,
                 toolStripMenuItemStopSelected,
                 toolStripMenuItemRestartSelected,
@@ -282,7 +256,8 @@ namespace V2RayGCon.Views.WinForms
                 toolStripMenuItemMoveToBottom,
                 toolStripMenuItemSortBySpeedTest,
                 toolStripMenuItemSortByDateT,
-                toolStripMenuItemSortBySummary));
+                toolStripMenuItemSortBySummary,
+                toolStripMenuItemReverseByIndex));
 
             return ctrl;
         }
@@ -292,10 +267,19 @@ namespace V2RayGCon.Views.WinForms
         #region UI event handler
         private void closeWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
+        }
+
+        private void flyServerListContainer_Scroll(object sender, ScrollEventArgs e)
+        {
+            flyServerListContainer.Refresh();
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            setting.SaveFormRect(this);
+            setting.LazyGC();
         }
         #endregion
-
-
     }
 }

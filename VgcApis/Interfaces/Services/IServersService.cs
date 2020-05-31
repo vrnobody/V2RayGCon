@@ -10,15 +10,23 @@ namespace VgcApis.Interfaces.Services
 
         int GetAvailableHttpProxyPort();
         string ReplaceOrAddNewServer(string orgUid, string newConfig);
+
+        string ReplaceOrAddNewServer(string orgUid, string newConfig, string mark);
+
         void RequireFormMainReload();
         void ResetIndexQuiet();
         bool RunSpeedTestOnSelectedServers();
+
+        void ReverseSelectedByIndex();
 
         void SortSelectedByLastModifiedDate();
 
         void SortSelectedBySpeedTest();
 
         void SortSelectedBySummary();
+
+        void StopAllServersThen(Action lambda = null);
+
         void UpdateAllServersSummarySync();
 
         string PackSelectedServersIntoV4Package(

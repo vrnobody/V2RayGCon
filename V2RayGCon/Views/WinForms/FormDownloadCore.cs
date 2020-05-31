@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -9,12 +8,16 @@ namespace V2RayGCon.Views.WinForms
     {
         #region Sigleton
         static FormDownloadCore _instant;
-        public static FormDownloadCore GetForm()
+        public static FormDownloadCore ShowForm()
         {
             if (_instant == null || _instant.IsDisposed)
             {
-                _instant = new FormDownloadCore();
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    _instant = new FormDownloadCore();
+                });
             }
+            VgcApis.Misc.UI.Invoke(() => _instant.Show());
             return _instant;
         }
         #endregion
@@ -38,8 +41,6 @@ namespace V2RayGCon.Views.WinForms
             };
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);
-
-            this.Show();
         }
 
         private void FormDownloadCore_Shown(object sender, System.EventArgs e)
@@ -60,38 +61,21 @@ namespace V2RayGCon.Views.WinForms
                 var msg = string.IsNullOrEmpty(version) ?
                     I18N.GetCoreVerFail :
                     string.Format(I18N.CurrentCoreVerIs, version);
-                try
-                {
-                    VgcApis.Misc.UI.RunInUiThread(
-                        el, () => { el.Text = msg; });
-                }
-                catch { }
+
+                VgcApis.Misc.UI.Invoke(() => el.Text = msg);
+
             });
         }
 
         void UpdateProgressBar(int percentage)
         {
-            // window may closed before this function is called
-            try
-            {
-                VgcApis.Misc.UI.RunInUiThread(pgBarDownload, () =>
-                {
-                    pgBarDownload.Value = Misc.Utils.Clamp(percentage, 0, 101);
-                });
-            }
-            catch { }
+            var v = Misc.Utils.Clamp(percentage, 0, 101);
+            VgcApis.Misc.UI.Invoke(() => pgBarDownload.Value = v);
         }
 
         void EnableBtnDownload()
         {
-            try
-            {
-                VgcApis.Misc.UI.RunInUiThread(btnDownload, () =>
-                {
-                    btnDownload.Enabled = true;
-                });
-            }
-            catch { }
+            VgcApis.Misc.UI.Invoke(() => btnDownload.Enabled = true);
         }
 
         void DownloadV2RayCore(int proxyPort)
@@ -175,26 +159,21 @@ namespace V2RayGCon.Views.WinForms
                 {
                     setting.SaveV2RayCoreVersionList(versions);
                 }
-                try
-                {
-                    VgcApis.Misc.UI.RunInUiThread(elRefresh, () =>
-                    {
-                        elRefresh.Enabled = true;
-                    });
 
-                    VgcApis.Misc.UI.RunInUiThread(elCboxVer, () =>
+                VgcApis.Misc.UI.Invoke(() => elRefresh.Enabled = true);
+
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    if (versions.Count > 0)
                     {
-                        if (versions.Count > 0)
-                        {
-                            Misc.UI.FillComboBox(elCboxVer, versions);
-                        }
-                        else
-                        {
-                            MessageBox.Show(I18N.GetVersionListFail);
-                        }
-                    });
-                }
-                catch { }
+                        Misc.UI.FillComboBox(elCboxVer, versions);
+                    }
+                    else
+                    {
+                        MessageBox.Show(I18N.GetVersionListFail);
+                    }
+                });
+
             });
         }
 

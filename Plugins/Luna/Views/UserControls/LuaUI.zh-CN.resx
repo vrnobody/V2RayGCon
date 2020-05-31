@@ -140,7 +140,51 @@
   <data name="btnStop.ToolTip" xml:space="preserve">
     <value>停止此脚本</value>
   </data>
-  <data name="btnKill.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="lbRunningState.ToolTip" xml:space="preserve">
+    <value>脚本是否正在运行</value>
+  </data>
+  <data name="lbName.ToolTip" xml:space="preserve">
+    <value>脚本名</value>
+  </data>
+  <data name="rlbOptions.ToolTip" xml:space="preserve">
+    <value>(A)自启动
+(C)加载CLR库
+(H)不在托盘菜单显示
+无 - 这不用解释了吧</value>
+  </data>
+  <data name="btnMenuMore.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAERJREFUOE+1zqENADAMA8HOlv3nCXVZSR/ErQxOigJeXpK+4NNxju6WAwNVNZIL
+        ODIBmktyAUcmQHNJLuC4Aq/wOae1ARVS/s9sUlFoAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnMenuMore.ToolTip" xml:space="preserve">
+    <value>显示菜单</value>
+  </data>
+  <data name="restartToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
+        0IjIJ1eHT8xBVUrp4RFudUQihgKk8JJzFpxTrYQYG7DcwXMIQZxzEmOslliGA4TlIaUk3vvDEmIoqK5K
+        iKFgdFZCDAWjTwVn8HZPDIUb8CZibMDSL8/4/iPt0pLnX/mNq8P7lmYFTOJvU/foAJoAAAAASUVORK5C
+        YII=
+</value>
+  </data>
+  <data name="restartToolStripMenuItem.Text" xml:space="preserve">
+    <value>重启</value>
+  </data>
+  <data name="stopToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
+        jpx4AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="stopToolStripMenuItem.Text" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="terminateToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         xAAADsQBlSsOGwAAAKpJREFUOE/dU0sOQDAU7CEcwIWcgEW3Entns+EIPYUNEolFt/WGJ9GnxGdnklm0
@@ -149,22 +193,28 @@
         PGelZoKjbA1QHzFCAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="btnKill.ToolTip" xml:space="preserve">
-    <value>强制终止此脚本</value>
+  <data name="terminateToolStripMenuItem.Text" xml:space="preserve">
+    <value>强制终止</value>
   </data>
-  <data name="chkIsAutoRun.Text" xml:space="preserve">
-    <value>自启动</value>
+  <data name="actionToolStripMenuItem.Text" xml:space="preserve">
+    <value>操作</value>
   </data>
-  <data name="chkIsAutoRun.ToolTip" xml:space="preserve">
-    <value>加载此插件时启动脚本</value>
+  <data name="editToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAAKhJREFUOE/NkDEOAiEQRfdEHoKeytZTeBIPsFfwCnY2Nh7DxmTX7EA7+kiGiNEN
+        UEnyMhDmPyYMqpqIMU7AvmlZeHc4KTRLXoEUHLajCZrIAgtTN/ujni9X9d6rc+4nWUCzhZkEaiRZwIFm
+        QiaokRSCeXqoLFJMYZIQQrp/56sAPiX2NyJSJwAkvGxhapByilUBILnd5zxNswCQcA9dgjX+UNBDFvQT
+        9QkHKOQWh3DrDAAAAABJRU5ErkJggg==
+</value>
   </data>
-  <data name="lbRunningState.ToolTip" xml:space="preserve">
-    <value>脚本是否正在运行</value>
+  <data name="editToolStripMenuItem.Text" xml:space="preserve">
+    <value>编辑</value>
   </data>
-  <data name="lbName.ToolTip" xml:space="preserve">
-    <value>脚本名</value>
+  <data name="optionToolStripMenuItem.Text" xml:space="preserve">
+    <value>选项</value>
   </data>
-  <data name="btnRemove.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="removeToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         xAAADsQBlSsOGwAAALZJREFUOE9jQAbfvn0zgDJxApxqgBIVQPwfiDOhQhgAJAdVUwEVggCQwKubV/9v
@@ -173,7 +223,13 @@
         AZAcVA2qZhgASpCYnRkYAKjTuVoFkX4yAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="btnRemove.ToolTip" xml:space="preserve">
-    <value>删除此脚本</value>
+  <data name="removeToolStripMenuItem.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="contextMenuStripMore.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value>拖放调整顺序</value>
   </data>
 </root>

@@ -42,7 +42,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbDownloadV2rayCore_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Views.WinForms.FormDownloadCore.GetForm();
+            Views.WinForms.FormDownloadCore.ShowForm();
         }
 
         private void lbV2rayCoreGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -70,7 +70,7 @@ namespace V2RayGCon.Views.UserControls
         {
             void Success(string text)
             {
-                var msg = Misc.Utils.CutStr(text, 90);
+                var msg = VgcApis.Misc.Utils.AutoEllipsis(text, VgcApis.Models.Consts.AutoEllipsis.QrcodeTextMaxLength);
                 setting.SendLog($"QRCode: {msg}");
                 slinkMgr.ImportLinkWithOutV2cfgLinks(text);
             }
@@ -90,7 +90,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbConfigEditor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            new Views.WinForms.FormConfiger();
+            Views.WinForms.FormConfiger.ShowConfig();
         }
     }
 }

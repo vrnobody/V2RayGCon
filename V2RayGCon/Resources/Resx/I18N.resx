@@ -336,8 +336,8 @@ Please use [Add new server] or [Replace server].</value>
   <data name="ConfirmCloseWindow" xml:space="preserve">
     <value>Close window?</value>
   </data>
-  <data name="ServerListIsEmpty" xml:space="preserve">
-    <value>Server list is empty!</value>
+  <data name="NoServerAvailable" xml:space="preserve">
+    <value>No server available!</value>
   </data>
   <data name="DataTooBig" xml:space="preserve">
     <value>Data too big. Please trim down the config file.</value>
@@ -722,5 +722,32 @@ No, abort.</value>
   </data>
   <data name="InbModeConfigToolTip" xml:space="preserve">
     <value>Use inbound settings in config.</value>
+  </data>
+  <data name="Mark" xml:space="preserve">
+    <value>Mark: </value>
+  </data>
+  <data name="NameColon" xml:space="preserve">
+    <value>Name: </value>
+  </data>
+  <data name="SummaryColon" xml:space="preserve">
+    <value>Summary: </value>
+  </data>
+  <data name="Remark" xml:space="preserve">
+    <value>Remark: </value>
+  </data>
+  <data name="QuickSwitch" xml:space="preserve">
+    <value>Quick switch</value>
+  </data>
+  <data name="SwitchToRandomServer" xml:space="preserve">
+    <value>Switch to a random server</value>
+  </data>
+  <data name="SwitchToRandomTlsserver" xml:space="preserve">
+    <value>Switch to a random TLS server</value>
+  </data>
+  <data name="TheNthServer" xml:space="preserve">
+    <value>Server #{0}</value>
+  </data>
+  <data name="ConfirmClearSpeedTestResults" xml:space="preserve">
+    <value>Clear speed test results?</value>
   </data>
 </root>

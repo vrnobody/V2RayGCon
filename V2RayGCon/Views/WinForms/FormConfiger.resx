@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="cboxConfigSection.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="cboxConfigSection.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 9pt</value>
@@ -128,7 +132,7 @@
     <value>nothing</value>
   </data>
   <data name="cboxConfigSection.Location" type="System.Drawing.Point, System.Drawing">
-    <value>59, 3</value>
+    <value>59, 2</value>
   </data>
   <data name="cboxConfigSection.Size" type="System.Drawing.Size, System.Drawing">
     <value>131, 20</value>
@@ -149,7 +153,6 @@
   <data name="&gt;&gt;cboxConfigSection.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tabCtrlToolPanel.Alignment" type="System.Windows.Forms.TabAlignment, System.Windows.Forms">
     <value>Left</value>
   </data>
@@ -1024,7 +1027,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPageProtocol.Size" type="System.Drawing.Size, System.Drawing">
-    <value>402, 351</value>
+    <value>402, 376</value>
   </data>
   <data name="tabPageProtocol.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1042,6 +1045,159 @@
     <value>tabCtrlToolPanel</value>
   </data>
   <data name="&gt;&gt;tabPageProtocol.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tboxMultiConfPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>68, 46</value>
+  </data>
+  <data name="tboxMultiConfPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>243, 21</value>
+  </data>
+  <data name="tboxMultiConfPath.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tboxMultiConfPath.Name" xml:space="preserve">
+    <value>tboxMultiConfPath</value>
+  </data>
+  <data name="&gt;&gt;tboxMultiConfPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxMultiConfPath.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;tboxMultiConfPath.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label6.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 49</value>
+  </data>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 12</value>
+  </data>
+  <data name="label6.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
+  </data>
+  <data name="&gt;&gt;label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label6.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnInsertMultiConf.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnInsertMultiConf.Location" type="System.Drawing.Point, System.Drawing">
+    <value>318, 20</value>
+  </data>
+  <data name="btnInsertMultiConf.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 21</value>
+  </data>
+  <data name="btnInsertMultiConf.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="btnInsertMultiConf.Text" xml:space="preserve">
+    <value>Insert→</value>
+  </data>
+  <data name="&gt;&gt;btnInsertMultiConf.Name" xml:space="preserve">
+    <value>btnInsertMultiConf</value>
+  </data>
+  <data name="&gt;&gt;btnInsertMultiConf.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnInsertMultiConf.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;btnInsertMultiConf.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cboxMultiConfAlias.Location" type="System.Drawing.Point, System.Drawing">
+    <value>68, 20</value>
+  </data>
+  <data name="cboxMultiConfAlias.Size" type="System.Drawing.Size, System.Drawing">
+    <value>243, 20</value>
+  </data>
+  <data name="cboxMultiConfAlias.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;cboxMultiConfAlias.Name" xml:space="preserve">
+    <value>cboxMultiConfAlias</value>
+  </data>
+  <data name="&gt;&gt;cboxMultiConfAlias.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboxMultiConfAlias.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;cboxMultiConfAlias.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label8.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label8.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 24</value>
+  </data>
+  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 12</value>
+  </data>
+  <data name="label8.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>Alias</value>
+  </data>
+  <data name="&gt;&gt;label8.Name" xml:space="preserve">
+    <value>label8</value>
+  </data>
+  <data name="&gt;&gt;label8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label8.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 177</value>
+  </data>
+  <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>388, 79</value>
+  </data>
+  <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>MultiConf</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Parent" xml:space="preserve">
+    <value>tabPageMisc</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="tboxEnvValue.Location" type="System.Drawing.Point, System.Drawing">
@@ -1069,7 +1225,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnInsertEnv.Location" type="System.Drawing.Point, System.Drawing">
-    <value>318, 18</value>
+    <value>318, 20</value>
   </data>
   <data name="btnInsertEnv.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 21</value>
@@ -1174,7 +1330,7 @@
     <value>4</value>
   </data>
   <data name="groupBox8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 177</value>
+    <value>9, 262</value>
   </data>
   <data name="groupBox8.Size" type="System.Drawing.Size, System.Drawing">
     <value>388, 53</value>
@@ -1195,7 +1351,7 @@
     <value>tabPageMisc</value>
   </data>
   <data name="&gt;&gt;groupBox8.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="tboxImportURL.Location" type="System.Drawing.Point, System.Drawing">
     <value>68, 46</value>
@@ -1249,7 +1405,7 @@
     <value>1</value>
   </data>
   <data name="btnInsertImport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>318, 18</value>
+    <value>318, 20</value>
   </data>
   <data name="btnInsertImport.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 21</value>
@@ -1345,7 +1501,7 @@
     <value>tabPageMisc</value>
   </data>
   <data name="&gt;&gt;groupBox7.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="btnQConMTProto.Location" type="System.Drawing.Point, System.Drawing">
     <value>126, 18</value>
@@ -1408,7 +1564,7 @@
     <value>1</value>
   </data>
   <data name="groupBox5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 235</value>
+    <value>9, 320</value>
   </data>
   <data name="groupBox5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -1417,7 +1573,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="groupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>388, 79</value>
+    <value>388, 49</value>
   </data>
   <data name="groupBox5.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1435,7 +1591,7 @@
     <value>tabPageMisc</value>
   </data>
   <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="tboxVGCDesc.Location" type="System.Drawing.Point, System.Drawing">
     <value>68, 47</value>
@@ -1495,7 +1651,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnInsertVGC.Location" type="System.Drawing.Point, System.Drawing">
-    <value>318, 19</value>
+    <value>318, 20</value>
   </data>
   <data name="btnInsertVGC.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 21</value>
@@ -1594,13 +1750,13 @@
     <value>tabPageMisc</value>
   </data>
   <data name="&gt;&gt;groupBox6.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="tabPageMisc.Location" type="System.Drawing.Point, System.Drawing">
     <value>22, 4</value>
   </data>
   <data name="tabPageMisc.Size" type="System.Drawing.Size, System.Drawing">
-    <value>402, 351</value>
+    <value>402, 376</value>
   </data>
   <data name="tabPageMisc.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1783,7 +1939,7 @@
     <value>4</value>
   </data>
   <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 309</value>
+    <value>4, 334</value>
   </data>
   <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -1816,7 +1972,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="panelExpandConfig.Size" type="System.Drawing.Size, System.Drawing">
-    <value>380, 287</value>
+    <value>380, 312</value>
   </data>
   <data name="panelExpandConfig.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1843,7 +1999,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="groupBox9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>388, 340</value>
+    <value>388, 365</value>
   </data>
   <data name="groupBox9.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1870,7 +2026,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="tabPageExpanseImport.Size" type="System.Drawing.Size, System.Drawing">
-    <value>402, 351</value>
+    <value>402, 376</value>
   </data>
   <data name="tabPageExpanseImport.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -1897,7 +2053,7 @@
     <value>0, 0</value>
   </data>
   <data name="tabCtrlToolPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>428, 359</value>
+    <value>428, 384</value>
   </data>
   <data name="tabCtrlToolPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1914,8 +2070,11 @@
   <data name="&gt;&gt;tabCtrlToolPanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="btnClearModify.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
   <data name="btnClearModify.Location" type="System.Drawing.Point, System.Drawing">
-    <value>375, 1</value>
+    <value>375, 2</value>
   </data>
   <data name="btnClearModify.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 21</value>
@@ -2077,7 +2236,7 @@
     <value>7, 25</value>
   </data>
   <data name="pnlTools.Size" type="System.Drawing.Size, System.Drawing">
-    <value>428, 359</value>
+    <value>428, 384</value>
   </data>
   <data name="pnlTools.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -2112,6 +2271,9 @@
   <data name="panel2.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
   </data>
+  <data name="label7.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
   <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 2</value>
   </data>
@@ -2139,11 +2301,14 @@
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="btnFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
   <data name="btnFormat.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnFormat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>305, 1</value>
+    <value>305, 2</value>
   </data>
   <data name="btnFormat.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 21</value>
@@ -2166,6 +2331,9 @@
   <data name="&gt;&gt;btnFormat.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="cboxExamples.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
   <data name="cboxExamples.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 9pt</value>
   </data>
@@ -2173,7 +2341,7 @@
     <value>12</value>
   </data>
   <data name="cboxExamples.Location" type="System.Drawing.Point, System.Drawing">
-    <value>196, 3</value>
+    <value>196, 2</value>
   </data>
   <data name="cboxExamples.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 20</value>
@@ -2236,7 +2404,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panelScintilla.Size" type="System.Drawing.Size, System.Drawing">
-    <value>442, 335</value>
+    <value>442, 360</value>
   </data>
   <data name="panelScintilla.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2266,7 +2434,7 @@
     <value>2</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>442, 359</value>
+    <value>442, 384</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
@@ -2317,7 +2485,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="pnlEditor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>442, 359</value>
+    <value>442, 384</value>
   </data>
   <data name="pnlEditor.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2337,11 +2505,14 @@
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>44</value>
+  </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 12</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>884, 391</value>
+    <value>884, 416</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>348, 344</value>

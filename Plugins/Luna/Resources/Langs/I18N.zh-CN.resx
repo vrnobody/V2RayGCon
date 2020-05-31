@@ -147,6 +147,21 @@
   <data name="ImportScriptsSuccess" xml:space="preserve">
     <value>导入脚本完成！</value>
   </data>
+  <data name="LuaCtrlOptionNone" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="LunaScrEditor" xml:space="preserve">
+    <value>Luna v{0} - 脚本编辑器</value>
+  </data>
+  <data name="LunaScrMgr" xml:space="preserve">
+    <value>Luna v{0} - 脚本管理器</value>
+  </data>
+  <data name="OpenScriptEditor" xml:space="preserve">
+    <value>打开脚本编辑器</value>
+  </data>
+  <data name="OpenScriptManger" xml:space="preserve">
+    <value>打开脚本管理器</value>
+  </data>
   <data name="ScriptNameNotSet" xml:space="preserve">
     <value>脚本名没设置！</value>
   </data>
@@ -155,9 +170,6 @@
   </data>
   <data name="SendStopSignalTo" xml:space="preserve">
     <value>发送停止信号至</value>
-  </data>
-  <data name="ShowWindow" xml:space="preserve">
-    <value>显示窗口</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>启动</value>

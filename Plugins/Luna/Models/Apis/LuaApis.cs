@@ -1,33 +1,54 @@
-﻿using System;
+﻿using Luna.Services;
+using System;
 
 namespace Luna.Models.Apis
 {
-    public class LuaApis :
+    internal class LuaApis :
         VgcApis.BaseClasses.ComponentOf<LuaApis>
     {
-        Services.Settings settings;
+        // this must be static!
+        static SysCmpos.PostOffice postOffice = new SysCmpos.PostOffice();
+
+        Settings settings;
         VgcApis.Interfaces.Services.IApiService vgcApi;
+        private readonly FormMgrSvc formMgr;
         Action<string> redirectLogWorker;
 
         public LuaApis(
-            Services.Settings settings,
-            VgcApis.Interfaces.Services.IApiService api)
+            VgcApis.Interfaces.Services.IApiService api,
+            Settings settings,
+            FormMgrSvc formMgr)
         {
             this.settings = settings;
-            this.redirectLogWorker = settings.SendLog;
+            redirectLogWorker = settings.SendLog;
+
             vgcApi = api;
+            this.formMgr = formMgr;
         }
 
         #region public methods
+        public SysCmpos.PostOffice GetPostOffice() => postOffice;
+
+        public string RegisterHotKey(Action hotKeyHandler,
+              string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+        {
+            var vgcNotifier = vgcApi.GetNotifierService();
+            return vgcNotifier.RegisterHotKey(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
+        }
+
+        public bool UnregisterHotKey(string hotKeyHandle)
+        {
+            var vgcNotifier = vgcApi.GetNotifierService();
+            return vgcNotifier.UnregisterHotKey(hotKeyHandle);
+        }
+
         public override void Prepare()
         {
-            var misc = new Components.Misc(settings, vgcApi);
-            var json = new Components.Json(vgcApi);
+            var misc = new Components.Misc(vgcApi, settings, formMgr);
             var web = new Components.Web(vgcApi);
             var server = new Components.Server(vgcApi);
 
             AddChild(misc);
-            AddChild(json);
             AddChild(web);
             AddChild(server);
         }

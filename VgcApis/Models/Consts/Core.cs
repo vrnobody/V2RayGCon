@@ -4,12 +4,15 @@ namespace VgcApis.Models.Consts
 {
     static public class Core
     {
+        public static string StdIn = @"stdin:";
+        public static string ConfigArg = @"config";
+
         public static long SpeedtestAbort = -1;
         public static long SpeedtestTimeout = long.MaxValue;
 
         public const int GetStatisticsTimeout = 2 * 1000;
         public const int WaitUntilReadyTimeout = 5 * 1000;
-        public const int SendCtrlCTimeout = 5 * 1000;
+        public const int SendCtrlCTimeout = 15 * 1000;
         public const int GetVersionTimeout = 2 * 1000;
         public const int KillCoreTimeout = 3 * 1000;
 

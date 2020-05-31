@@ -7,6 +7,7 @@ namespace Luna.Models.Data
         public Dictionary<string, string> luaShareMemory;
         public List<LuaCoreSetting> luaServers;
 
+
         public UserSettings()
         {
             NormalizeData();

@@ -3,39 +3,47 @@ using System.Windows.Forms;
 
 namespace Luna.Views.WinForms
 {
-    public partial class FormMain : Form
+    internal partial class FormMain : Form
     {
-        Controllers.TabEditorCtrl editorCtrl;
-        Controllers.TabGeneralCtrl genCtrl;
-        Controllers.MenuCtrl menuCtrl;
+        Controllers.FormMainCtrl.TabGeneralCtrl genCtrl;
 
         Services.LuaServer luaServer;
         Services.Settings settings;
-        Services.FormMgr formMgr;
-        VgcApis.Interfaces.Services.IApiService api;
+        Services.FormMgrSvc formMgr;
 
-        public FormMain(
-            VgcApis.Interfaces.Services.IApiService api,
+        public static FormMain CreateForm(
             Services.Settings settings,
             Services.LuaServer luaServer,
-            Services.FormMgr formMgr)
+            Services.FormMgrSvc formMgr)
         {
-            this.api = api;
-            this.formMgr = formMgr;
+            FormMain r = null;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                r = new FormMain(settings, luaServer, formMgr);
+            });
+            return r;
+        }
+
+        FormMain(
+            Services.Settings settings,
+            Services.LuaServer luaServer,
+            Services.FormMgrSvc formMgr)
+        {
             this.settings = settings;
             this.luaServer = luaServer;
+            this.formMgr = formMgr;
+
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
-            this.Text = Properties.Resources.Name + " v" + Properties.Resources.Version;
+            this.Text = string.Format(I18N.LunaScrMgr, Properties.Resources.Version);
         }
 
         private void FormMain_Load(object sender, System.EventArgs e)
         {
-            FixSplitPanelWidth();
             lbStatusBarMsg.Text = "";
 
             // TabGeneral should initialize before TabEditor.
-            genCtrl = new Controllers.TabGeneralCtrl(
+            genCtrl = new Controllers.FormMainCtrl.TabGeneralCtrl(
                 flyScriptUIContainer,
                 btnStopAllScript,
                 btnKillAllScript,
@@ -43,66 +51,40 @@ namespace Luna.Views.WinForms
                 btnImportFromFile,
                 btnExportToFile);
 
-            genCtrl.Run(settings, luaServer);
+            genCtrl.Run(luaServer, formMgr);
 
-            editorCtrl = new Controllers.TabEditorCtrl(
-                cboxScriptName,
-                btnNewScript,
-                btnSaveScript,
-                btnRemoveScript,
-                btnRunScript,
-                btnStopScript,
-                btnKillScript,
-                btnClearOutput,
-                rtBoxOutput,
-                pnlScriptEditor);
-
-            editorCtrl.Run(api, settings, luaServer);
-
-            menuCtrl = new Controllers.MenuCtrl(
-                formMgr,
-                this,
-                editorCtrl,
-                newWindowToolStripMenuItem,
-                loadFileToolStripMenuItem,
-                saveAsToolStripMenuItem,
-                exitToolStripMenuItem);
-
-            this.FormClosing += FormClosingHandler;
             this.FormClosed += (s, a) =>
             {
                 // reverse order 
-                editorCtrl.Cleanup();
                 genCtrl.Cleanup();
             };
-
-            this.KeyDown += (s, a) => editorCtrl?.KeyBoardShortcutHandler(a);
         }
 
-        //protected override bool ProcessCmdKey(ref Message msg, Keys keyCode)
-        //{
+        #region private methods
 
-        //    editorCtrl?.KeyBoardShortcutHandler(keyCode);
-        //    return base.ProcessCmdKey(ref msg, keyCode);
-        //}
+        #endregion
 
-        void FixSplitPanelWidth()
+        #region UI event handlers
+        private void flyScriptUIContainer_Scroll(object sender, ScrollEventArgs e)
         {
-            splitContainerTabEditor.SplitterDistance = this.Width * 6 / 10;
+            flyScriptUIContainer.Refresh();
         }
 
-        private void FormClosingHandler(object sender, FormClosingEventArgs e)
+        private void showEditorToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
-            if (settings.IsShutdown())
-            {
-                return;
-            }
-
-            if (editorCtrl.IsChanged())
-            {
-                e.Cancel = !VgcApis.Misc.UI.Confirm(I18N.DiscardUnsavedChanges);
-            }
+            formMgr.ShowOrCreateFirstEditor();
         }
+
+        private void closeToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            this.Close();
+        }
+        private void btnOpenEditor_Click(object sender, System.EventArgs e)
+        {
+            formMgr.CreateNewEditor();
+        }
+        #endregion
+
 
     }
 }

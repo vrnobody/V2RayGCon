@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Luna.Models.Apis.Components
 {
-    public sealed class Web :
+    internal sealed class Web :
         VgcApis.BaseClasses.ComponentOf<LuaApis>,
         VgcApis.Interfaces.Lua.ILuaWeb
     {
@@ -18,14 +22,75 @@ namespace Luna.Models.Apis.Components
         }
 
         #region ILuaWeb thinggy
+        public string Post(string url, string text) => Post(url, text, 20000);
+
+        public string Post(string url, string text, int timeout)
+        {
+            timeout = Math.Max(1, timeout);
+
+            try
+            {
+                var t = Task.Run(async () =>
+                {
+                    using (var client = new HttpClient())
+                    {
+                        var token = new CancellationTokenSource(timeout).Token;
+                        var content = new StringContent(text);
+                        var resp = await client.PostAsync(url, content, token);
+                        return await resp.Content.ReadAsStringAsync();
+                    }
+                });
+
+                return t.GetAwaiter().GetResult();
+            }
+            catch { }
+            return null;
+        }
+
+        public bool Tcping(string url, int milSec) =>
+            Tcping(url, milSec, -1);
+
+        public bool Tcping(string url, int milSec, int proxyPort)
+        {
+            var timeout = TimedDownloadTesting(url, milSec, 0, proxyPort);
+            return timeout > 0 && timeout <= milSec;
+        }
+
+        public long TimedDownloadTesting(string url, int timeout, int kib) =>
+            TimedDownloadTesting(url, timeout, kib, -1);
+
+        public long TimedDownloadTesting(string url, int timeout, int kib, int proxyPort)
+        {
+            try
+            {
+                return VgcApis.Misc.Utils.TimedDownloadTest(url, proxyPort, kib, timeout);
+            }
+            catch { }
+            return -1;
+        }
+
         public List<string> ExtractBase64String(string text) =>
             VgcApis.Misc.Utils.ExtractBase64Strings(text);
 
         public int GetProxyPort() =>
             vgcServers.GetAvailableHttpProxyPort();
 
-        public string Fetch(string url) =>
-            vgcWeb.Fetch(url, -1, -1);
+        public bool Download(string url, string filename) =>
+            vgcWeb.Download(url, filename, -1, -1);
+
+        public bool Download(string url, string filename, int millSecond) =>
+            vgcWeb.Download(url, filename, -1, millSecond);
+
+        public bool Download(string url, string filename, int proxyPort, int millSecond) =>
+            vgcWeb.Download(url, filename, proxyPort, millSecond);
+
+        public string Fetch(string url) => vgcWeb.Fetch(url, -1, -1);
+
+        public string Fetch(string url, int milliSeconds) =>
+            vgcWeb.Fetch(url, -1, milliSeconds);
+
+        public string Fetch(string url, int proxyPort, int milliSeconds) =>
+            vgcWeb.Fetch(url, proxyPort, milliSeconds);
 
         public int UpdateSubscriptions() =>
             vgcSlinkMgr.UpdateSubscriptions(-1);
@@ -54,8 +119,7 @@ namespace Luna.Models.Apis.Components
         public List<string> FindAllHrefs(string text) =>
             vgcWeb.FindAllHrefs(text);
 
-        public string Fetch(string url, int proxyPort, int milliSeconds) =>
-          vgcWeb.Fetch(url, proxyPort, milliSeconds);
+
 
         #endregion
     }

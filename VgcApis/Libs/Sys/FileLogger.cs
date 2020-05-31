@@ -6,9 +6,32 @@ namespace VgcApis.Libs.Sys
     // https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-open-and-append-to-a-log-file
     public class FileLogger
     {
+        public static string LogFilename = @"";
+
         static readonly object writeLogLocker = new object();
 
         #region public method
+        static public void Raw(string message)
+        {
+            if (string.IsNullOrEmpty(LogFilename))
+            {
+                return;
+            }
+
+            lock (writeLogLocker)
+            {
+                using (StreamWriter w = File.AppendText(LogFilename))
+                {
+                    w.WriteLine(message);
+                }
+            }
+        }
+
+        public static void Debug(string message)
+        {
+            AppendLog("Debug", message);
+        }
+
         public static void Info(string message)
         {
             AppendLog("Info", message);
@@ -26,7 +49,8 @@ namespace VgcApis.Libs.Sys
 
         public static void Dump()
         {
-            using (StreamReader r = File.OpenText(Properties.Resources.LogFileName))
+
+            using (StreamReader r = File.OpenText(LogFilename))
             {
                 string line;
                 while ((line = r.ReadLine()) != null)
@@ -34,27 +58,38 @@ namespace VgcApis.Libs.Sys
                     Console.WriteLine(line);
                 }
             }
-        }
-        #endregion
 
-        #region private method
-        static void AppendLog(string prefix, string message)
+        }
+
+        static readonly object dumpCsLocker = new object();
+        static public void DumpCallStack(string message)
         {
-            if (string.IsNullOrEmpty(Properties.Resources.LogFileName))
+            if (string.IsNullOrEmpty(LogFilename))
             {
                 return;
             }
 
-            lock (writeLogLocker)
+            lock (dumpCsLocker)
             {
-                using (StreamWriter w = File.AppendText(Properties.Resources.LogFileName))
-                {
-                    w.WriteLine("[{0}] {1} {2}",
-                        prefix,
-                        DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss.fff"),
-                        message);
-                }
+                Debug(message);
+                Debug(Misc.Utils.GetCurCallStack());
             }
+        }
+
+
+        #endregion
+
+        #region private method
+
+        static void AppendLog(string prefix, string message)
+        {
+            var text = string.Format(
+                "[{0}] {1} {2}",
+                prefix,
+                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                message);
+
+            Raw(text);
         }
         #endregion
     }

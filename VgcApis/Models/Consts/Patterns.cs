@@ -2,11 +2,14 @@
 {
     public static class Patterns
     {
+        public const string GitHubReadmeUrl = @"https://github.com(/[^/]+/[^/]+)/blob(/.*)";
+        public const string GitHuhFileUrl = @"https://github.com(/[^/]+/[^/]+)/blob(/.*)";
+
         public const string ExtractAliasFromSubscriptUrl = @"//[^/]+/([^/]+)";
 
         public const string JsonSnippetSearchPattern = @"[:/,_\.\-\\\*\$\w]";
 
-        public const string LuaSnippetSearchPattern = @"[\w\.:]";
+        public const string LuaSnippetSearchPattern = @"[\w\.:\(]";
 
         public const string NonAlphabets = @"[^0-9a-zA-Z]";
 

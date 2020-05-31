@@ -19,7 +19,7 @@ namespace Luna.Resources.Files {
     // 类通过类似于 ResGen 或 Visual Studio 的工具自动生成的。
     // 若要添加或移除成员，请编辑 .ResX 文件，然后重新运行 ResGen
     // (以 /str 作为命令选项)，或重新生成 VS 项目。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Datas {
@@ -61,15 +61,19 @@ namespace Luna.Resources.Files {
         }
         
         /// <summary>
-        ///   查找类似 import = function () end
-        ///print = function(...) Api:Print(...) end
+        ///   查找类似 -- Enable import on 2020-04-17
+        ///-- import = function () end
+        ///
+        ///
+        ///print = function(...) Misc:Print(...) end
+        ///os.exit = function() print(&quot;os.exit() is disabled&quot;) end
         ///                
         ///-- copy from NLua
         ///function Each(o)
         ///    local e = o:GetEnumerator()
         ///    return function()
         ///        if e:MoveNext() then
-        ///        return e.Current
+        ///            return e.Current
         ///        end
         ///    end
         ///end
@@ -79,10 +83,7 @@ namespace Luna.Resources.Files {
         ///        return false
         ///    end
         ///    local t = string.lower(text)
-        ///    local kw =&apos;^&apos; .. string.lower(keyword)
-        ///    if string.find(t, kw) then
-        ///        return true
-        ///    e [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///    l [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string LuaPredefinedFunctions {
             get {

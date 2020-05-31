@@ -125,23 +125,11 @@ namespace V2RayGCon.Test
         [DataRow("http://www.baidu.com")]
         public void VisitWebPageSpeedTestTest(string url)
         {
-            var time = VisitWebPageSpeedTest(url, -1, 1024 * 1024, -1);
+            var time = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, 1024 * 1024, -1);
             Assert.AreEqual(SpeedtestTimeout, time);
 
-            time = VisitWebPageSpeedTest(url, -1, -1, -1);
+            time = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, -1, -1);
             Assert.AreEqual(true, time < SpeedtestTimeout);
-        }
-
-        [DataTestMethod]
-        [DataRow("aaaaaa", 0, "...")]
-        [DataRow("aaaaaaaaa", 5, "aa...")]
-        [DataRow("aaaaaa", 3, "...")]
-        [DataRow("aaaaaa", -1, "...")]
-        [DataRow("", 100, "")]
-        public void CutStrTest(string org, int len, string expect)
-        {
-            var cut = Misc.Utils.CutStr(org, len);
-            Assert.AreEqual(expect, cut);
         }
 
         [DataTestMethod]
@@ -180,7 +168,7 @@ namespace V2RayGCon.Test
         {
             var r = JObject.Parse(json);
             var e = JObject.Parse(expect);
-            Misc.Utils.SetValue<string>(r, path, value);
+            Misc.Utils.TrySetValue<string>(r, path, value);
             Assert.AreEqual(true, JObject.DeepEquals(e, r));
         }
 
@@ -191,7 +179,7 @@ namespace V2RayGCon.Test
         {
             var r = JObject.Parse(json);
             var e = JObject.Parse(expect);
-            Misc.Utils.SetValue<int>(r, path, value);
+            Misc.Utils.TrySetValue<int>(r, path, value);
             Assert.AreEqual(true, JObject.DeepEquals(e, r));
         }
 

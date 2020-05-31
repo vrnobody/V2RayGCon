@@ -8,11 +8,12 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
 {
-    internal sealed class Updater :
+    public sealed class Updater :
         BaseClasses.SingletonService<Updater>
     {
         Settings setting;
         Servers servers;
+        Notifier notifier;
 
         VgcApis.Libs.Tasks.Bar updateBar = new VgcApis.Libs.Tasks.Bar();
         readonly string LoopBackIP = VgcApis.Models.Consts.Webs.LoopBackIP;
@@ -36,8 +37,10 @@ namespace V2RayGCon.Services
 
         public void Run(
             Settings setting,
-            Servers servers)
+            Servers servers,
+            Notifier notifier)
         {
+            this.notifier = notifier;
             this.setting = setting;
             this.servers = servers;
             InitAutoUpdater();
@@ -79,18 +82,21 @@ namespace V2RayGCon.Services
 
         void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
         {
-            if (!CheckUpdateInfoArgs(args)
-                || !ConfirmUpdate())
+            if (!CheckUpdateInfoArgs(args) || !ConfirmUpdate())
             {
+                // must confirm first
                 updateBar.Remove();
                 return;
             }
+
+            // if download file failed or cancelled, user can try again
+            updateBar.Remove();
 
             try
             {
                 if (AutoUpdater.DownloadUpdate())
                 {
-                    setting.ShutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser;
+                    setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser);
                     Application.Exit();
                 }
             }
@@ -182,20 +188,16 @@ namespace V2RayGCon.Services
         void InitAutoUpdater()
         {
             AutoUpdater.ReportErrors = true;
-            AutoUpdater.ParseUpdateInfoEvent +=
-                AutoUpdaterOnParseUpdateInfoEvent;
-            AutoUpdater.CheckForUpdateEvent +=
-                AutoUpdaterOnCheckForUpdateEvent;
+            AutoUpdater.ParseUpdateInfoEvent += AutoUpdaterOnParseUpdateInfoEvent;
+            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
         }
         #endregion
 
         #region protected methods
         protected override void Cleanup()
         {
-            AutoUpdater.ParseUpdateInfoEvent -=
-                AutoUpdaterOnParseUpdateInfoEvent;
-            AutoUpdater.CheckForUpdateEvent -=
-                AutoUpdaterOnCheckForUpdateEvent;
+            AutoUpdater.ParseUpdateInfoEvent -= AutoUpdaterOnParseUpdateInfoEvent;
+            AutoUpdater.CheckForUpdateEvent -= AutoUpdaterOnCheckForUpdateEvent;
         }
         #endregion
     }

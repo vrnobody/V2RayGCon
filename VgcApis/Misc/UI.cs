@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ScintillaNET;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -6,6 +7,8 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using VgcApis.Resources.Langs;
 
@@ -13,8 +16,106 @@ namespace VgcApis.Misc
 {
     public static class UI
     {
-
         #region Controls
+        public static void SetSearchIndicator(Scintilla scintilla)
+        {
+            // indicator for search
+            const int INDICATOR_NUM = 8;
+
+            // Remove all uses of our indicator
+            scintilla.IndicatorCurrent = INDICATOR_NUM;
+
+            // Update indicator appearance
+            scintilla.Indicators[INDICATOR_NUM].Style = IndicatorStyle.StraightBox;
+            scintilla.Indicators[INDICATOR_NUM].Under = true;
+            scintilla.Indicators[INDICATOR_NUM].ForeColor = Color.Yellow;
+            scintilla.Indicators[INDICATOR_NUM].OutlineAlpha = 220;
+            scintilla.Indicators[INDICATOR_NUM].Alpha = 180;
+        }
+
+        public static void ResetComboBoxDropdownMenuWidth(ComboBox cbox)
+        {
+            int maxWidth = 0, tempWidth = 0;
+            var font = cbox.Font;
+
+            foreach (var item in cbox.Items)
+            {
+                tempWidth = TextRenderer.MeasureText(item.ToString(), font).Width;
+                if (tempWidth > maxWidth)
+                {
+                    maxWidth = tempWidth;
+                }
+            }
+            cbox.DropDownWidth = Math.Max(cbox.Width, maxWidth + SystemInformation.VerticalScrollBarWidth);
+        }
+
+        public static void AddContextMenu(RichTextBox rtb)
+        {
+            // https://stackoverflow.com/questions/18966407/enable-copy-cut-past-window-in-a-rich-text-box/44064791
+
+            if (rtb.ContextMenuStrip != null)
+            {
+                return;
+            }
+
+            ContextMenuStrip cms = new ContextMenuStrip()
+            {
+                ShowImageMargin = false
+            };
+
+            var tsmiUndo = new ToolStripMenuItem(
+                I18N.Undo, null, (sender, e) => rtb.Undo());
+
+            var tsmiRedo = new ToolStripMenuItem(
+                I18N.Redo, null, (sender, e) => rtb.Redo());
+
+            var tsmiCut = new ToolStripMenuItem(
+                I18N.Cut, null, (sender, e) => rtb.Cut());
+
+            var tsmiCopy = new ToolStripMenuItem(
+                I18N.Copy, null, (sender, e) => rtb.Copy());
+
+            var tsmiPaste = new ToolStripMenuItem(
+                I18N.Paste, null, (sender, e) => rtb.Paste());
+
+            var tsmiDelete = new ToolStripMenuItem(
+                I18N.Delete, null, (sender, e) => rtb.SelectedText = "");
+
+            var tsmiSelectAll = new ToolStripMenuItem(
+                I18N.SelectAll, null, (sender, e) => rtb.SelectAll());
+
+            ToolStripSeparator nsp() => new ToolStripSeparator();
+            cms.Items.AddRange(new ToolStripItem[] {
+                tsmiSelectAll,
+                nsp(),
+                tsmiCut,
+                tsmiCopy,
+                tsmiPaste,
+                nsp(),
+                tsmiUndo,
+                tsmiRedo,
+                tsmiDelete,
+            });
+
+            bool isClipboardHasText()
+            {
+                var r = Clipboard.ContainsText();
+                return r;
+            }
+
+            cms.Opening += (sender, e) =>
+            {
+                tsmiUndo.Enabled = !rtb.ReadOnly && rtb.CanUndo;
+                tsmiRedo.Enabled = !rtb.ReadOnly && rtb.CanRedo;
+                tsmiCut.Enabled = !rtb.ReadOnly && rtb.SelectionLength > 0;
+                tsmiCopy.Enabled = rtb.SelectionLength > 0;
+                tsmiPaste.Enabled = !rtb.ReadOnly && isClipboardHasText();
+                tsmiDelete.Enabled = !rtb.ReadOnly && rtb.SelectionLength > 0;
+                tsmiSelectAll.Enabled = rtb.TextLength > 0 && rtb.SelectionLength < rtb.TextLength;
+            };
+
+            rtb.ContextMenuStrip = cms;
+        }
         static void SetControlFontColor(Control control, bool isValid)
         {
             var color = isValid ? Color.Black : Color.Red;
@@ -50,78 +151,17 @@ namespace VgcApis.Misc
         #endregion
 
         #region update ui
-        public static void CloseFormIgnoreError(Form form)
+        public static void CloseFormIgnoreError(Form form) =>
+            Invoke(() => form?.Close());
+
+        public static bool IsInUiThread()
         {
-            try
-            {
-                form?.Invoke((MethodInvoker)delegate
-                {
-                    try
-                    {
-                        form?.Close();
-                    }
-                    catch { }
-                });
-            }
-            catch { }
+            return Thread.CurrentThread.Name == Models.Consts.Libs.UiThreadName;
         }
 
-        /// <summary>
-        /// If control==null return;
-        /// </summary>
-        /// <param name="control">invokeable control</param>
-        /// <param name="updateUi">UI updater</param>
-        public static void RunInUiThread(Control control, Action updateUi)
-        {
-            if (control == null || control.IsDisposed)
-            {
-                return;
-            }
+        public static Action<Action> Invoke;
 
-            if (control.InvokeRequired)
-            {
-                control.Invoke((MethodInvoker)delegate
-                {
-                    updateUi();
-                });
-            }
-            else
-            {
-                updateUi();
-            }
-        }
-
-        public static void RunInUiThreadIgnoreError(Control control, Action updateUi)
-        {
-            if (control == null || control.IsDisposed)
-            {
-                return;
-            }
-
-            if (control.InvokeRequired)
-            {
-                try
-                {
-                    control.Invoke((MethodInvoker)delegate
-                    {
-                        try
-                        {
-                            updateUi();
-                        }
-                        catch { }
-                    });
-                }
-                catch { }
-            }
-            else
-            {
-                try
-                {
-                    updateUi();
-                }
-                catch { }
-            }
-        }
+        public static Action<Action, Action> InvokeThen;
 
         // https://stackoverflow.com/questions/87795/how-to-prevent-flickering-in-listview-when-updating-a-single-listviewitems-text
         public static void DoubleBuffered(this Control control, bool enable)
@@ -153,9 +193,18 @@ namespace VgcApis.Misc
         /// <returns></returns>
         static public Tuple<string, string> ReadFileFromDialog(string extension)
         {
+            Tuple<string, string> r = null;
+            Invoke(() =>
+            {
+                r = ReadFileFromDialogWorker(extension);
+            });
+            return r;
+        }
+
+        static Tuple<string, string> ReadFileFromDialogWorker(string extension)
+        {
             OpenFileDialog readFileDialog = new OpenFileDialog
             {
-                InitialDirectory = "c:\\",
                 Filter = extension,
                 RestoreDirectory = true,
                 CheckFileExists = true,
@@ -211,30 +260,68 @@ namespace VgcApis.Misc
         public static Models.Datas.Enums.SaveFileErrorCode ShowSaveFileDialog(
             string extension, string content, out string fileName)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog
+            Models.Datas.Enums.SaveFileErrorCode r = Models.Datas.Enums.SaveFileErrorCode.Cancel;
+            string fn = null;
+            Invoke(() =>
             {
-                InitialDirectory = "c:\\",
+                r = ShowSaveFileDialogWorker(extension, content, out fn);
+            });
+            fileName = fn;
+            return r;
+        }
+
+        static Models.Datas.Enums.SaveFileErrorCode ShowSaveFileDialogWorker(
+            string extension, string content, out string fileName)
+        {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
                 Filter = extension,
                 RestoreDirectory = true,
                 Title = I18N.SaveAs,
                 ShowHelp = true,
-            };
-
-            saveFileDialog.ShowDialog();
-
-            fileName = saveFileDialog.FileName;
-            if (string.IsNullOrEmpty(fileName))
+            })
             {
-                return Models.Datas.Enums.SaveFileErrorCode.Cancel;
+                saveFileDialog.ShowDialog();
+
+                fileName = saveFileDialog.FileName;
+                if (string.IsNullOrEmpty(fileName))
+                {
+                    return Models.Datas.Enums.SaveFileErrorCode.Cancel;
+                }
+
+                try
+                {
+                    File.WriteAllText(fileName, content);
+                    return Models.Datas.Enums.SaveFileErrorCode.Success;
+                }
+                catch { }
+                return Models.Datas.Enums.SaveFileErrorCode.Fail;
+            }
+        }
+
+        public static string ShowSelectFolderDialog()
+        {
+            string r = null;
+            Invoke(() =>
+            {
+                r = ShowSelectFolderDialogWorker();
+            });
+            return r;
+        }
+
+        static string ShowSelectFolderDialogWorker()
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    return fbd.SelectedPath;
+                }
             }
 
-            try
-            {
-                File.WriteAllText(fileName, content);
-                return Models.Datas.Enums.SaveFileErrorCode.Success;
-            }
-            catch { }
-            return Models.Datas.Enums.SaveFileErrorCode.Fail;
+            return null;
         }
 
         /// <summary>
@@ -244,7 +331,17 @@ namespace VgcApis.Misc
         /// <returns></returns>
         public static string ShowSelectFileDialog(string extension)
         {
-            OpenFileDialog readFileDialog = new OpenFileDialog
+            string r = null;
+            Invoke(() =>
+            {
+                r = ShowSelectFileDialogWorker(extension);
+            });
+            return r;
+        }
+
+        static string ShowSelectFileDialogWorker(string extension)
+        {
+            using (OpenFileDialog readFileDialog = new OpenFileDialog
             {
                 InitialDirectory = "c:\\",
                 Filter = extension,
@@ -252,16 +349,15 @@ namespace VgcApis.Misc
                 CheckFileExists = true,
                 CheckPathExists = true,
                 ShowHelp = true,
-            };
-
-            var fileName = string.Empty;
-
-            if (readFileDialog.ShowDialog() != DialogResult.OK)
+            })
             {
-                return null;
-            }
+                if (readFileDialog.ShowDialog() != DialogResult.OK)
+                {
+                    return null;
+                }
 
-            return readFileDialog.FileName;
+                return readFileDialog.FileName;
+            }
         }
 
         #endregion
@@ -303,6 +399,7 @@ namespace VgcApis.Misc
         #endregion
 
         #region winform
+
         static List<Color> colorTable = new List<Color> {
             Color.AntiqueWhite,
             Color.Aqua,
@@ -422,7 +519,20 @@ namespace VgcApis.Misc
         }
 
         public static List<ToolStripMenuItem> AutoGroupMenuItems(
-            IEnumerable<ToolStripMenuItem> menuItems, int groupSize)
+            List<ToolStripMenuItem> menuItems, int groupSize)
+        {
+            var mi = menuItems;
+            var menuSpan = groupSize;
+            while (mi.Count() > groupSize)
+            {
+                mi = AutoGroupMenuItemsWorker(mi, groupSize, menuSpan);
+                menuSpan *= groupSize;
+            }
+            return mi;
+        }
+
+        static List<ToolStripMenuItem> AutoGroupMenuItemsWorker(
+            IEnumerable<ToolStripMenuItem> menuItems, int groupSize, int menuSpan)
         {
             var count = menuItems.Count();
             if (count <= groupSize)
@@ -432,15 +542,17 @@ namespace VgcApis.Misc
 
             // grouping
             var groups = new List<ToolStripMenuItem>();
-            var index = 0;
-            while (index < count)
+            var servIdx = 0;
+            var pageIdx = 0;
+            while (servIdx < count)
             {
-                var take = Math.Min(groupSize, count - index);
-                groups.Add(new ToolStripMenuItem(
-                     string.Format("{0,4} - {1,4}", index + 1, index + groupSize),
-                     null,
-                     menuItems.Skip(index).Take(take).ToArray()));
-                index += groupSize;
+                var take = Math.Min(groupSize, count - servIdx);
+                var text = string.Format("{0,4} - {1,4}", pageIdx + 1, pageIdx + menuSpan);
+                var mis = menuItems.Skip(servIdx).Take(take).ToArray();
+                var mi = new ToolStripMenuItem(text, null, mis);
+                groups.Add(mi);
+                servIdx += groupSize;
+                pageIdx += menuSpan;
             }
             return groups;
         }

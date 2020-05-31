@@ -302,7 +302,7 @@ namespace Luna.Models.Apis
 
         public Process RunAndForgot(string exePath, string args, string stdin,
             LuaTable envs, bool hasWindow, bool redirectOutput) =>
-            RunProcWorker(false, exePath, args, stdin, envs, hasWindow, redirectOutput);
+            RunProcWrapper(false, exePath, args, stdin, envs, hasWindow, redirectOutput);
 
         public Process Run(string exePath) =>
             Run(exePath, null);
@@ -315,7 +315,7 @@ namespace Luna.Models.Apis
 
         public Process Run(string exePath, string args, string stdin,
             LuaTable envs, bool hasWindow, bool redirectOutput) =>
-            RunProcWorker(true, exePath, args, stdin, envs, hasWindow, redirectOutput);
+            RunProcWrapper(true, exePath, args, stdin, envs, hasWindow, redirectOutput);
 
         #endregion
 
@@ -381,8 +381,21 @@ namespace Luna.Models.Apis
         #endregion
 
         #region private methods
-        Process RunProcWorker(bool isTracking, string exePath, string args, string stdin,
+        Process RunProcWrapper(
+            bool isTracking, string exePath, string args, string stdin,
            LuaTable envs, bool hasWindow, bool redirectOutput)
+        {
+            try
+            {
+                return RunProcWorker(isTracking, exePath, args, stdin, envs, hasWindow, redirectOutput);
+            }
+            catch { }
+            return null;
+        }
+
+        Process RunProcWorker(
+            bool isTracking, string exePath, string args, string stdin,
+            LuaTable envs, bool hasWindow, bool redirectOutput)
         {
             var useStdIn = !string.IsNullOrEmpty(stdin);
             var p = new Process

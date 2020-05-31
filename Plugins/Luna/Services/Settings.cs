@@ -16,6 +16,9 @@ namespace Luna.Services
         public Settings() { }
 
         #region properties
+        bool _isDisposing = false;
+        public void SetIsDisposing(bool value) => _isDisposing = value;
+
         public bool isScreenLocked => vgcSetting.IsScreenLocked();
 
 
@@ -36,10 +39,7 @@ namespace Luna.Services
             vgcSetting.SendLog(string.Format("[{0}] {1}", name, contnet));
         }
 
-        bool isDisposing = false;
-        public bool IsClosing() => isDisposing || vgcSetting.IsClosing();
-
-        public void SetIsDisposing(bool value) => isDisposing = value;
+        public bool IsClosing() => _isDisposing || vgcSetting.IsClosing();
 
         public void Run(
             VgcApis.Interfaces.Services.ISettingsService vgcSetting)

@@ -17,7 +17,7 @@ jobs:
         verStr: '1.3.x'
         boxAppend: box
         v2rayCorePkgName: 'v2ray-windows-32.zip'
-        v2rayCoreVer: 'v4.23.1'
+        v2rayCoreVer: 'v4.23.2'
         # https://github.com/v2ray/v2ray-core/releases/download/v4.20.0/v2ray-windows-32.zip
         v2rayCoreUrl: 'https://github.com/v2ray/v2ray-core/releases/download'
 

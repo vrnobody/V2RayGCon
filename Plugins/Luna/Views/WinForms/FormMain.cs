@@ -53,7 +53,6 @@ namespace Luna.Views.WinForms
 
             genCtrl.Run(luaServer, formMgr);
 
-            this.FormClosing += FormClosingHandler;
             this.FormClosed += (s, a) =>
             {
                 // reverse order 
@@ -62,13 +61,7 @@ namespace Luna.Views.WinForms
         }
 
         #region private methods
-        private void FormClosingHandler(object sender, FormClosingEventArgs e)
-        {
-            if (settings.IsClosing())
-            {
-                return;
-            }
-        }
+
         #endregion
 
         #region UI event handlers

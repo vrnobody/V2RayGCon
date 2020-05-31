@@ -1,8 +1,13 @@
 {
-  "version": "1.3.9.0",
-  "md5": "664C230B63758DB416D276BCA94BC76E",
+  "version": "1.4.0.0",
+  "md5": "8816FFC4AE420E2DCF4C85E095140616",
   "warnings": [],
   "changes": [
-    "界面微调"
+    "Luna界面少量调整",
+    "添加luasocket、luasec模块",
+    "添加Sys:CreateHttpServer()、Sys:Volume*()",
+    "Misc:Choice()支持数字键选取及双击确定",
+    "托盘菜单可以停止脚本",
+    "少量其他bug修复"
   ]
 }

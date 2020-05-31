@@ -34,6 +34,7 @@ namespace VgcApis.Misc
             }
 
             var start = editor.CurrentPosition - line.Position - 1;
+            start = Clamp(start, 0, text.Length);
             var end = start;
             for (; start >= 0; start--)
             {
@@ -1291,6 +1292,16 @@ namespace VgcApis.Misc
 
             var appDir = GetAppDir();
             return Path.Combine(appDir, path);
+        }
+
+        public static string CopyFromClipboard()
+        {
+            try
+            {
+                return Clipboard.GetText();
+            }
+            catch { }
+            return string.Empty;
         }
 
         public static bool CopyToClipboard(string content)

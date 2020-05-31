@@ -24,7 +24,7 @@ namespace Luna.Controllers.FormEditorCtrl
         string KEY_FUNCTION = "funcs";
         string KEY_VARS = "vars";
         string KEY_MODULES = "modules";
-        // string KEY_LINE_NUM = "line";  // line number
+        string KEY_LINE_NUM = "line";  // line number
         string KEY_METHODS = "methods";
         string KEY_SUB_FUNCS = "subs";
         #endregion
@@ -538,7 +538,23 @@ namespace Luna.Controllers.FormEditorCtrl
 
         bool ScrollToFunction(string text)
         {
+            var funcs = funcDefTable;
+            if (funcs.ContainsKey(text))
+            {
+                ScrollToLine(funcs[text]);
+                return true;
+            }
+
+            return FallbackScrollToFunction(text);
+        }
+
+        bool FallbackScrollToFunction(string text)
+        {
             text = text?.Replace(":", ".")?.Replace(" ", "")
+                ?.Replace("['", ".")
+                ?.Replace("[\"", ".")
+                ?.Replace("\"]", "")
+                ?.Replace("']", "")
                 ?.Split('(')?.FirstOrDefault();
 
             if (string.IsNullOrWhiteSpace(text))
@@ -695,6 +711,8 @@ namespace Luna.Controllers.FormEditorCtrl
 
         }
 
+        Dictionary<string, int> funcDefTable = new Dictionary<string, int>();
+
         private void OnCboxFunctionListDropDownHandler(object sender, EventArgs args)
         {
             history.Add(editor.CurrentLine);
@@ -708,7 +726,8 @@ namespace Luna.Controllers.FormEditorCtrl
                 KEY_METHODS,
             };
 
-            List<string> funcs = new List<string>();
+            Dictionary<string, int> funcs = new Dictionary<string, int>();
+
             foreach (var key in keys)
             {
                 if (ast != null && ast[key] is JObject)
@@ -716,17 +735,20 @@ namespace Luna.Controllers.FormEditorCtrl
                     foreach (var kv in ast[key] as JObject)
                     {
                         var ps = (kv.Value as JObject)[KEY_PARAMS] as JArray;
+                        var luaLineNumber = (kv.Value as JObject)[KEY_LINE_NUM].Value<int>();
                         var sps = string.Join(", ", ps);
-                        funcs.Add($"{kv.Key}({sps})");
+                        var fn = $"{kv.Key}({sps})";
+                        funcs.Add(fn, luaLineNumber - 1);
                     }
                 }
             }
+            funcDefTable = funcs;
 
             VgcApis.Misc.UI.Invoke(() =>
             {
                 var items = cboxFunctionList.Items;
                 items.Clear();
-                items.AddRange(funcs.OrderBy(x => x).ToArray());
+                items.AddRange(funcs.Keys.OrderBy(x => x).ToArray());
                 VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxFunctionList);
             });
         }
@@ -769,6 +791,8 @@ namespace Luna.Controllers.FormEditorCtrl
             }
             return false;
         }
+
+
 
         private void OnCboxVarListDropDownHandler(object sender, EventArgs args)
         {

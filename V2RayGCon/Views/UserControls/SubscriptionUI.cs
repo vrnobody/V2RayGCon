@@ -154,11 +154,22 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbUrl_Click(object sender, EventArgs e)
         {
-            tboxUrl.Focus();
-            var msg = VgcApis.Misc.Utils.CopyToClipboard(tboxUrl.Text) ?
-                 I18N.CopySuccess : I18N.CopyFail;
-            VgcApis.Misc.UI.MsgBoxAsync(msg);
-
+            var url = tboxUrl.Text;
+            if (string.IsNullOrEmpty(url))
+            {
+                var clipboard = VgcApis.Misc.Utils.CopyFromClipboard();
+                if (!string.IsNullOrEmpty(clipboard))
+                {
+                    tboxUrl.Text = clipboard;
+                }
+            }
+            else
+            {
+                tboxUrl.Focus();
+                var msg = VgcApis.Misc.Utils.CopyToClipboard(tboxUrl.Text) ?
+                     I18N.CopySuccess : I18N.CopyFail;
+                VgcApis.Misc.UI.MsgBoxAsync(msg);
+            }
         }
         #endregion
 

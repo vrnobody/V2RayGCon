@@ -115,6 +115,15 @@ namespace Luna.Controllers.FormEditorCtrl
         }
 
         #region public methods
+        public void LoadScript(string name)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                cboxScriptName.Text = name;
+                CboxScriptNameChangedHandler(this, EventArgs.Empty);
+            }
+        }
+
         public bool isLoadClrLib;
 
         public void KeyBoardShortcutHandler(KeyEventArgs keyEvent)
@@ -448,7 +457,6 @@ namespace Luna.Controllers.FormEditorCtrl
             cboxScriptName.DropDown += (s, a) => ReloadScriptName();
 
             cboxScriptName.SelectedValueChanged += CboxScriptNameChangedHandler;
-
         }
 
         private void OnBtnSaveScriptClickHandler(bool showResult)

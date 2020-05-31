@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -43,6 +44,42 @@ namespace Luna.Views.WinForms
         #endregion
 
         #region private methods
+        void Choose(Keys key)
+        {
+            var kts = new Dictionary<Keys, int> {
+                { Keys.D1, 0 },
+                { Keys.D2, 1 },
+                { Keys.D3, 2 },
+                { Keys.D4, 3 },
+                { Keys.D5, 4 },
+                { Keys.D6, 5 },
+                { Keys.D7, 6 },
+                { Keys.D8, 7 },
+                { Keys.D9, 8 },
+                { Keys.D0, 9 },
+            };
+
+            if (!kts.ContainsKey(key))
+            {
+                return;
+            }
+
+            var idx = kts[key];
+            var len = radioButtons.Count;
+            if (idx >= len)
+            {
+                return;
+            }
+
+            var btn = radioButtons[idx];
+
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                btn.Focus();
+                btn.PerformClick();
+            });
+        }
+
         void SetResult()
         {
             for (int i = 0; i < radioButtons.Count; i++)
@@ -74,24 +111,39 @@ namespace Luna.Views.WinForms
 
             for (int i = 0; i < num; i++)
             {
-                var control = new RadioButton
-                {
-                    Text = VgcApis.Misc.Utils.AutoEllipsis(choices[i], MAX_CHOICE_LEN),
-                    Left = left,
-                    Top = h * (i + 1) + margin,
-                    AutoSize = true,
-                };
-
-                if (defChoice - 1 == i)
-                {
-                    control.Checked = true;
-                }
-
-                toolTip1.SetToolTip(control, choices[i]);
+                RadioButton control = CreateOneChoiceCtrl(margin, left, h, i);
 
                 Controls.Add(control);
                 radioButtons.Add(control);
             }
+        }
+
+        private RadioButton CreateOneChoiceCtrl(int margin, int left, int h, int i)
+        {
+            var control = new RadioButton
+            {
+                Text = VgcApis.Misc.Utils.AutoEllipsis(choices[i], MAX_CHOICE_LEN),
+                Left = left,
+                Top = h * (i + 1) + margin,
+                AutoSize = true,
+            };
+
+            if (defChoice - 1 == i)
+            {
+                control.Checked = true;
+            }
+
+            MethodInfo m = typeof(RadioButton).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (m != null)
+            {
+                m.Invoke(control, new object[] { ControlStyles.StandardClick | ControlStyles.StandardDoubleClick, true });
+            }
+
+            control.MouseDoubleClick += (s, a) => VgcApis.Misc.UI.Invoke(btnOk.PerformClick);
+
+            toolTip1.SetToolTip(control, choices[i]);
+
+            return control;
         }
         #endregion
 
@@ -109,9 +161,18 @@ namespace Luna.Views.WinForms
 
         private void FormChoice_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
+            var kc = e.KeyCode;
+            switch (kc)
             {
-                VgcApis.Misc.UI.CloseFormIgnoreError(this);
+                case Keys.Escape:
+                    VgcApis.Misc.UI.CloseFormIgnoreError(this);
+                    break;
+                case Keys.Enter:
+                    VgcApis.Misc.UI.Invoke(btnOk.PerformClick);
+                    break;
+                default:
+                    Choose(kc);
+                    break;
             }
         }
 

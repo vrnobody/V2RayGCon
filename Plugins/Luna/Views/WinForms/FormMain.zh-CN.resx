@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="statusStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer1.BottomToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnExportToFile.Text" xml:space="preserve">
     <value>导出...</value>
   </data>
@@ -142,7 +148,7 @@
     <value>给所有脚本发送停止信号</value>
   </data>
   <data name="btnOpenEditor.Text" xml:space="preserve">
-    <value>编辑器</value>
+    <value>新脚本</value>
   </data>
   <data name="btnOpenEditor.ToolTip" xml:space="preserve">
     <value>打开脚本编辑器</value>
@@ -153,8 +159,33 @@
   <data name="btnKillAllScript.ToolTip" xml:space="preserve">
     <value>强制停止所有脚本</value>
   </data>
-  <data name="windowToolStripMenuItem.Text" xml:space="preserve">
-    <value>窗口</value>
+  <data name="panelBtnContainer.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="flyScriptUIContainer.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panelFlyContainer.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panelMainContainer.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer1.ContentPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer1.LeftToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer1.RightToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="showEditorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
   <data name="showEditorToolStripMenuItem.Text" xml:space="preserve">
     <value>脚本编辑器</value>
@@ -162,10 +193,31 @@
   <data name="showEditorToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>打开脚本编辑器</value>
   </data>
+  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 6</value>
+  </data>
+  <data name="closeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
   <data name="closeToolStripMenuItem.Text" xml:space="preserve">
     <value>关闭窗口</value>
   </data>
   <data name="closeToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>关闭这个窗口</value>
+  </data>
+  <data name="windowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 21</value>
+  </data>
+  <data name="windowToolStripMenuItem.Text" xml:space="preserve">
+    <value>窗口</value>
+  </data>
+  <data name="menuStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="toolStripContainer1.TopToolStripPanel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

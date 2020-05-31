@@ -17,7 +17,10 @@
 
 
         #region public methods
-        public bool IsClosing() => setting.IsClosing();
+        bool _IsDisposing = false;
+        public void SetIsDisposing(bool value) => _IsDisposing = value;
+
+        public bool IsClosing() => _IsDisposing || setting.IsClosing();
         public void DebugLog(string content)
         {
 #if DEBUG

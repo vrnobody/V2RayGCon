@@ -1,4 +1,5 @@
-﻿using Luna.Resources.Langs;
+﻿using Luna.Models.Data;
+using Luna.Resources.Langs;
 using System.Windows.Forms;
 
 namespace Luna.Views.WinForms
@@ -12,6 +13,7 @@ namespace Luna.Views.WinForms
         Services.LuaServer luaServer;
         Services.Settings settings;
         Services.FormMgrSvc formMgr;
+        private readonly LuaCoreSetting initialCoreSettings;
         VgcApis.Interfaces.Services.IApiService api;
 
         ScintillaNET.Scintilla editor;
@@ -21,12 +23,17 @@ namespace Luna.Views.WinForms
             VgcApis.Interfaces.Services.IApiService api,
             Services.Settings settings,
             Services.LuaServer luaServer,
-            Services.FormMgrSvc formMgr)
+            Services.FormMgrSvc formMgr,
+
+            Models.Data.LuaCoreSetting initialCoreSettings)
         {
             FormEditor r = null;
             VgcApis.Misc.UI.Invoke(() =>
             {
-                r = new FormEditor(api, settings, luaServer, formMgr);
+                r = new FormEditor(
+                    api, settings, luaServer, formMgr,
+
+                    initialCoreSettings);
             });
             return r;
         }
@@ -35,12 +42,17 @@ namespace Luna.Views.WinForms
             VgcApis.Interfaces.Services.IApiService api,
             Services.Settings settings,
             Services.LuaServer luaServer,
-            Services.FormMgrSvc formMgr)
+            Services.FormMgrSvc formMgr,
+
+            Models.Data.LuaCoreSetting initialCoreSettings)
         {
             this.api = api;
             this.formMgr = formMgr;
+            this.initialCoreSettings = initialCoreSettings;
+
             this.settings = settings;
             this.luaServer = luaServer;
+
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             title = string.Format(I18N.LunaScrEditor, Properties.Resources.Version);
@@ -89,6 +101,7 @@ namespace Luna.Views.WinForms
             menuCtrl = new Controllers.FormEditorCtrl.MenuCtrl(
                 this,
                 editorCtrl,
+
                 newWindowToolStripMenuItem,
                 showScriptManagerToolStripMenuItem,
                 loadFileToolStripMenuItem,
@@ -98,7 +111,7 @@ namespace Luna.Views.WinForms
                 toolStripStatusClrLib,
                 cboxScriptName);
 
-            menuCtrl.Run(formMgr);
+            menuCtrl.Run(formMgr, initialCoreSettings);
 
             this.FormClosing += FormClosingHandler;
             this.FormClosed += (s, a) =>
@@ -116,6 +129,8 @@ namespace Luna.Views.WinForms
                         acmCtrl?.KeyBoardShortcutHandler(a);
                     }));
             };
+
+
         }
 
         #region private methods

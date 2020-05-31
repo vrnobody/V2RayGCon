@@ -29,10 +29,15 @@ namespace Luna.Controllers.FormMainCtrl
 
         #region public methods
         Services.LuaServer luaServer;
+        Services.FormMgrSvc formMgrSvc;
 
-        public void Run(Services.LuaServer luaServer)
+        public void Run(
+            Services.LuaServer luaServer,
+            Services.FormMgrSvc formMgrSvc)
         {
             this.luaServer = luaServer;
+            this.formMgrSvc = formMgrSvc;
+
             BindEvents(luaServer);
             BindDragDropEvent();
 
@@ -221,8 +226,8 @@ namespace Luna.Controllers.FormMainCtrl
             var ctrls = luaServer.GetAllLuaCoreCtrls();
             foreach (var c in ctrls)
             {
-                var ui = new Views.UserControls.LuaUI(
-                    luaServer, c);
+                var ui = new LuaUI(
+                    luaServer, formMgrSvc, c);
                 flyLuaUiPanel.Controls.Add(ui);
             }
         }

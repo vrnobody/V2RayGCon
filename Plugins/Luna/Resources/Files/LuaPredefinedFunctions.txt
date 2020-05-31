@@ -1,6 +1,16 @@
 ﻿-- Enable import on 2020-04-17
 -- import = function () end
 
+-- require path
+package.path = ".\\?.lua;.\\?\\init.lua"
+
+-- dll path
+if os.getenv('PROCESSOR_ARCHITECTURE') == "AMD64" then
+    package.cpath = '.\\lua\\dll64\\?.dll'
+else
+    package.cpath = '.\\lua\\dll32\\?.dll'
+end
+
 
 print = function(...) Misc:Print(...) end
 os.exit = function() print("os.exit() is disabled") end
@@ -88,8 +98,10 @@ table.dump = function(t, indent, header, level)
     if tt ~= "table" then
         if tt == "string" then
             return '"' .. t .. '"'
-        else
+        elseif tt == "nil" or tt == "boolean" or tt == "number" then
             return tostring(t)
+        else
+            return tt
         end
     end
     

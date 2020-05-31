@@ -1,4 +1,5 @@
 ﻿using Luna.Resources.Langs;
+using Luna.Services;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,15 +10,17 @@ namespace Luna.Views.UserControls
     {
         Controllers.LuaCoreCtrl luaCoreCtrl;
         Services.LuaServer luaServer;
-
+        private readonly FormMgrSvc formMgrSvc;
         VgcApis.Libs.Tasks.LazyGuy lazyUpdater;
 
         public LuaUI(
             Services.LuaServer luaServer,
+            Services.FormMgrSvc formMgrSvc,
             Controllers.LuaCoreCtrl luaCoreCtrl)
         {
             this.luaCoreCtrl = luaCoreCtrl;
             this.luaServer = luaServer;
+            this.formMgrSvc = formMgrSvc;
             InitializeComponent();
         }
 
@@ -112,10 +115,7 @@ namespace Luna.Views.UserControls
         #endregion
 
         #region UI event handlers
-        private void btnKill_Click(object sender, EventArgs e)
-        {
-            luaCoreCtrl.Abort();
-        }
+
 
         private void btnStop_Click(object sender, EventArgs e)
         {
@@ -127,23 +127,6 @@ namespace Luna.Views.UserControls
             luaCoreCtrl.Start();
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
-        {
-            var scriptName = luaCoreCtrl.name;
-            if (string.IsNullOrEmpty(scriptName)
-                || !VgcApis.Misc.UI.Confirm(I18N.ConfirmRemoveScript))
-            {
-                return;
-            }
-
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                if (!luaServer.RemoveScriptByName(scriptName))
-                {
-                    VgcApis.Misc.UI.MsgBoxAsync("", I18N.ScriptNotFound);
-                }
-            });
-        }
 
         private void LuaUI_MouseDown(object sender, MouseEventArgs e)
         {
@@ -165,8 +148,62 @@ namespace Luna.Views.UserControls
             Views.WinForms.FormLuaCoreSettings.ShowForm(luaCoreCtrl);
         }
 
+
+
+        private void restartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            luaCoreCtrl.Start();
+        }
+
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            luaCoreCtrl.Stop();
+        }
+
+        private void terminateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            luaCoreCtrl.Abort();
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var cs = luaCoreCtrl.GetCoreSettings();
+            formMgrSvc.CreateNewEditor(cs);
+        }
+
+        private void optionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Views.WinForms.FormLuaCoreSettings.ShowForm(luaCoreCtrl);
+
+        }
+
+        private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var scriptName = luaCoreCtrl.name;
+            if (string.IsNullOrEmpty(scriptName)
+                || !VgcApis.Misc.UI.Confirm(I18N.ConfirmRemoveScript))
+            {
+                return;
+            }
+
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                if (!luaServer.RemoveScriptByName(scriptName))
+                {
+                    VgcApis.Misc.UI.MsgBoxAsync("", I18N.ScriptNotFound);
+                }
+            });
+
+        }
+
+        private void btnMenuMore_Click(object sender, EventArgs e)
+        {
+            var control = sender as Control;
+            Point pos = new Point(control.Left, control.Top + control.Height);
+            contextMenuStripMore.Show(this, pos);
+        }
+
+
         #endregion
-
-
     }
 }

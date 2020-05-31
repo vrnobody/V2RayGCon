@@ -5,6 +5,10 @@ namespace VgcApis.Interfaces.Lua
 {
     public interface ILuaSys
     {
+        #region Net
+        IRunnable CreateHttpServer(string url, ILuaMailBox inbox, ILuaMailBox outbox);
+        #endregion
+
         #region keyboard hotkey
         string GetAllKeyNames();
         bool UnregisterHotKey(ILuaMailBox mailbox, string handle);
@@ -61,6 +65,12 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region system
+        void VolumeUp();
+
+        void VolumeDown();
+
+        void VolumeMute();
+
         string GetOsVersion();
 
         string GetOsReleaseInfo();

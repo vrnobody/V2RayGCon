@@ -70,7 +70,19 @@ namespace Luna.Services
             foreach (var luaCtrl in luaCtrls)
             {
                 var ctrl = luaCtrl; // capture
-                var mi = new ToolStripMenuItem(ctrl.name, null, (s, a) => ctrl.Start());
+                Action onClick = () =>
+                {
+                    if (ctrl.isRunning)
+                    {
+                        ctrl.Stop();
+                    }
+                    else
+                    {
+                        ctrl.Start();
+                    }
+                };
+
+                var mi = new ToolStripMenuItem(ctrl.name, null, (s, a) => onClick());
                 mi.Checked = luaCtrl.isRunning;
                 mis.Add(mi);
             }

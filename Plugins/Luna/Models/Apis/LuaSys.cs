@@ -70,6 +70,32 @@ namespace Luna.Models.Apis
         }
         #endregion
 
+        #region ILuaSys.Net
+        List<SysCmpos.HttpServer> httpServs = new List<SysCmpos.HttpServer>();
+
+        public VgcApis.Interfaces.Lua.IRunnable CreateHttpServer(
+            string url,
+            VgcApis.Interfaces.Lua.ILuaMailBox inbox,
+            VgcApis.Interfaces.Lua.ILuaMailBox outbox)
+        {
+            try
+            {
+                var serv = new SysCmpos.HttpServer(url, inbox, outbox);
+                lock (httpServs)
+                {
+                    httpServs.Add(serv);
+                }
+                return serv;
+            }
+            catch (Exception ex)
+            {
+                luaApis.SendLog(ex.ToString());
+                throw;
+            }
+        }
+
+        #endregion
+
         #region ILluaSys.Hotkey
         public string GetAllKeyNames()
         {
@@ -276,7 +302,7 @@ namespace Luna.Models.Apis
 
         public Process RunAndForgot(string exePath, string args, string stdin,
             LuaTable envs, bool hasWindow, bool redirectOutput) =>
-            RunProcWorker(false, exePath, args, stdin, envs, hasWindow, redirectOutput);
+            RunProcWrapper(false, exePath, args, stdin, envs, hasWindow, redirectOutput);
 
         public Process Run(string exePath) =>
             Run(exePath, null);
@@ -289,11 +315,17 @@ namespace Luna.Models.Apis
 
         public Process Run(string exePath, string args, string stdin,
             LuaTable envs, bool hasWindow, bool redirectOutput) =>
-            RunProcWorker(true, exePath, args, stdin, envs, hasWindow, redirectOutput);
+            RunProcWrapper(true, exePath, args, stdin, envs, hasWindow, redirectOutput);
 
         #endregion
 
         #region ILuaSys.System
+        public void VolumeUp() => Libs.Sys.VolumeChanger.VolumeUp();
+
+        public void VolumeDown() => Libs.Sys.VolumeChanger.VolumeDown();
+
+        public void VolumeMute() => Libs.Sys.VolumeChanger.Mute();
+
         static string osReleaseId;
         public string GetOsReleaseInfo()
         {
@@ -349,8 +381,21 @@ namespace Luna.Models.Apis
         #endregion
 
         #region private methods
-        Process RunProcWorker(bool isTracking, string exePath, string args, string stdin,
+        Process RunProcWrapper(
+            bool isTracking, string exePath, string args, string stdin,
            LuaTable envs, bool hasWindow, bool redirectOutput)
+        {
+            try
+            {
+                return RunProcWorker(isTracking, exePath, args, stdin, envs, hasWindow, redirectOutput);
+            }
+            catch { }
+            return null;
+        }
+
+        Process RunProcWorker(
+            bool isTracking, string exePath, string args, string stdin,
+            LuaTable envs, bool hasWindow, bool redirectOutput)
         {
             var useStdIn = !string.IsNullOrEmpty(stdin);
             var p = new Process
@@ -430,6 +475,21 @@ namespace Luna.Models.Apis
             }
         }
 
+        void CloseAllHttpServers()
+        {
+            List<SysCmpos.HttpServer> servs;
+            lock (httpServs)
+            {
+                servs = httpServs.ToList();
+                httpServs.Clear();
+            }
+
+            foreach (var s in servs)
+            {
+                s.Stop();
+            }
+        }
+
         void CloseAllMailBox()
         {
             List<VgcApis.Interfaces.Lua.ILuaMailBox> boxes;
@@ -462,6 +522,7 @@ namespace Luna.Models.Apis
         protected override void Cleanup()
         {
             RemoveAllKeyboardHooks();
+            CloseAllHttpServers();
             CloseAllMailBox();
             KillAllProcesses();
         }

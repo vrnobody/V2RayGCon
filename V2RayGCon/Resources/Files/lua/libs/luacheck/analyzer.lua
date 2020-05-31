@@ -14,13 +14,32 @@ local anz = {}
 local function DumpTable(t)
     print( table.dump(t, "    ", " >(((@> ") )
 end
+    
+local function ParseVarName(name)
+    
+    if type(name) == "string" 
+        and string.match(name, "[^%w^_]") == nil 
+    then
+        if string.match(name, "[^%d^.]") == nil then
+            -- pure numbers 
+            return "[" .. name .. "]"
+        else
+            return name
+        end
+    end
+    
+    local s = tostring(name)
+    if string.match(s, '"') ~= nil then
+        return "['" .. s .. "']"
+    end
+    return '["' .. s .. '"]'
+end
 
 local function InsertOnce(t, v)
     if not table.contains(t, v) then
         table.insert(t, v)
     end
 end
-
 
 local function analyzeFuncParams(f)
     
@@ -224,18 +243,22 @@ end
 -- anz codes start
 
 local function analyzeName(n, sep)
+    
     if type(n) ~= "table" then
-        return false, n
+        return false, ParseVarName(n)
     end
     
-    if n.tag == "Id" then
-        return false, n[1]
-    elseif n.tag == "Index" and n[1] and n[1][1] and n[2] then
-        return true, n[1][1] .. sep .. n[2][1]
+    if n.tag == "Index" and n[1] and n[2] then
+        local itl, left = analyzeName(n[1], ".")
+        local itr, right = analyzeName(n[2], ".")
+        local c = "."
+        if right ~= nil and string.sub(right, 1, 1) == '[' then
+            c = ""
+        end
+        return true, left .. c .. right
     end
-    
-    -- unknow error
-    return false, ""
+
+    return false, ParseVarName(n[1])
 end
 
 local function analyzeRequirePath(v, r)
@@ -265,7 +288,7 @@ local function analyzeRequirePath(v, r)
     return "", ""
 end
     
-local function anlyzeValue(v, r)
+local function analyzeValue(v, r)
     if type(v) ~= "table" then
         return "vars", nil
     end
@@ -309,7 +332,7 @@ end
 
 local function analyzeEqual(n, v, r, ln)
     
-    local vt, vv = anlyzeValue(v, r)
+    local vt, vv = analyzeValue(v, r)
     
     -- print( table.dump(v) )
     -- print("vt: ", vt)
@@ -353,16 +376,19 @@ end
 
 local function analyzeLines(ast, r)
     for n, line in ipairs(ast) do
-        local ln = line["line"]            
-        local len = table.length(line[1]) 
-        for n = 1, len do
-            if line[2] and line[2][n] then
-                -- print( "analyzing: ", table.dump(line))
-                analyzeEqual(line[1][n], line[2][n], r, ln)
-            else
-                local isTable, name = analyzeName(line[1][n], ".")
-                if name ~= nil and name ~= "" and r["vars"][name] == nil then
-                    r["vars"][name] = ln
+        local tag = line.tag
+        if tag == "Local" or tag == "Set" or tag == "Localrec" then
+            local ln = line["line"]            
+            local len = table.length(line[1]) 
+            for n = 1, len do
+                if line[2] and line[2][n] then
+                    -- print( "analyzing: ", table.dump(line))
+                    analyzeEqual(line[1][n], line[2][n], r, ln)
+                else
+                    local isTable, name = analyzeName(line[1][n], ".")
+                    if name ~= nil and name ~= "" and r["vars"][name] == nil then
+                        r["vars"][name] = ln
+                    end
                 end
             end
         end
@@ -421,6 +447,14 @@ until trrue  -- oopsy!
 local function Add(a, b)
     local c = a + b
     return c
+end
+
+function t.abc(self, a, b)
+    print(a, b)
+end
+
+t['{'] = function(a, b)
+    return a
 end
 
 function Main(ps)
@@ -494,8 +528,6 @@ local function testAnalyzeModuleEx()
     print( DumpTable(o) )
     print(r)
 end
-
-
 
 -- testCodeToAst(testCode)
 -- testAnalyzeCode()

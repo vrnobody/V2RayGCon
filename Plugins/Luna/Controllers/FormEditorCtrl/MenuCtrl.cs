@@ -51,10 +51,24 @@ namespace Luna.Controllers.FormEditorCtrl
         }
 
         public void Run(
-            Services.FormMgrSvc formMgrService)
+            Services.FormMgrSvc formMgrService,
+            Models.Data.LuaCoreSetting initialCoreSettings)
         {
             InitControls();
             BindEvents(formMgrService);
+
+            if (initialCoreSettings != null)
+            {
+                var name = initialCoreSettings.name;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    editorCtrl.LoadScript(name);
+                }
+
+                var enabled = initialCoreSettings.isLoadClr;
+                UpdateClrControlsEanbledState(enabled);
+                editorCtrl.isLoadClrLib = enabled;
+            }
         }
 
         #region private method
@@ -71,9 +85,7 @@ namespace Luna.Controllers.FormEditorCtrl
             miLoadClrLib.Click += (s, a) =>
             {
                 var enable = !miLoadClrLib.Checked;
-                miLoadClrLib.Checked = enable;
-                smiLbClrLib.Enabled = enable;
-                editorCtrl.isLoadClrLib = enable;
+                UpdateClrControlsEanbledState(enable);
             };
 
             miNewWindow.Click += (s, a) =>
@@ -129,6 +141,13 @@ namespace Luna.Controllers.FormEditorCtrl
                         break;
                 }
             };
+        }
+
+        private void UpdateClrControlsEanbledState(bool enable)
+        {
+            miLoadClrLib.Checked = enable;
+            smiLbClrLib.Enabled = enable;
+            editorCtrl.isLoadClrLib = enable;
         }
         #endregion
     }

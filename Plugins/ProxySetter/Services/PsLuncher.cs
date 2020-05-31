@@ -61,12 +61,10 @@ namespace ProxySetter.Services
         public void Cleanup()
         {
             FileLogger.Info("ProxySetting.Cleanup() begin");
+            setting.SetIsDisposing(true);
             setting.DebugLog("call Luncher.cleanup");
             serverTracker.OnSysProxyChanged -= UpdateMenuItemCheckedStatHandler;
-            if (!setting.IsClosing())
-            {
-                VgcApis.Misc.UI.CloseFormIgnoreError(formMain);
-            }
+            VgcApis.Misc.UI.CloseFormIgnoreError(formMain);
             serverTracker.Cleanup();
             pacServer.Cleanup();
             setting.Cleanup();

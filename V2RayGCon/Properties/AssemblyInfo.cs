@@ -33,10 +33,23 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.9.0")]
+[assembly: AssemblyVersion("1.4.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * ----------------------------------------
+ * v1.3.9.8 Fix a bug which would block core updating.
+ * v1.3.9.7 Add luasocket and luasec.
+ * v1.3.9.6 Add Sys:CreateHttpServer().
+ * v1.3.9.5 Adjust LuaUI.
+ * v1.3.9.4 Selection hotkeys support in Misc:Choice().
+ *          Add feature, stop script from systray menu.
+ *          Add Sys:Volume*().
+ *          Fix index out of range again.
+ * v1.3.9.3 Add edit button in LuaUI.
+ * v1.3.9.2 Fix index out of range bug.
+ *          Choice support double click.
+ * v1.3.9.1 Fix bugs in analyzer.
  * -----------------------------------------------------
  * v1.3.8.5 Tweak serverUI labels' color.
  * v1.3.8.4 Fix a bug in modules.set.lua.

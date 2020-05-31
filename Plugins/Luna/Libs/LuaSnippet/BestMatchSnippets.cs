@@ -60,6 +60,9 @@ namespace Luna.Libs.LuaSnippet
         #endregion
 
         #region private methods
+        HashSet<string> ignoredList =
+            new HashSet<string>(
+                VgcApis.Models.Consts.Lua.LuaKeywords.Split(' '));
 
         private IEnumerable<AutocompleteItem> BuildList()
         {
@@ -69,6 +72,20 @@ namespace Luna.Libs.LuaSnippet
                 fragment = VgcApis.Misc.Utils.GetFragment(editor, searchPattern);
             });
 
+            var snps = new List<AutocompleteItem>();
+            if (!ignoredList.Contains(fragment))
+            {
+                snps = CreateSnippets(fragment);
+            }
+
+            //return autocomplete items
+            foreach (var item in snps)
+                yield return item;
+        }
+
+        private List<AutocompleteItem> CreateSnippets(string fragment)
+        {
+            List<AutocompleteItem> snps;
             var cache = customScriptSnippets;
 
             List<MatchItemBase> candidates = cache
@@ -85,15 +102,12 @@ namespace Luna.Libs.LuaSnippet
                 }
             }
 
-            var sorted = table
+            snps = table
                 .OrderBy(kv => kv.Value)
                 .ThenBy(kv => kv.Key.GetLowerText())
                 .Select(kv => kv.Key as AutocompleteItem)
                 .ToList();
-
-            //return autocomplete items
-            foreach (var item in sorted)
-                yield return item;
+            return snps;
         }
 
         List<MatchItemBase> GenCandidateList(string fragment)

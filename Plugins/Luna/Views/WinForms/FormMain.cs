@@ -51,9 +51,8 @@ namespace Luna.Views.WinForms
                 btnImportFromFile,
                 btnExportToFile);
 
-            genCtrl.Run(luaServer);
+            genCtrl.Run(luaServer, formMgr);
 
-            this.FormClosing += FormClosingHandler;
             this.FormClosed += (s, a) =>
             {
                 // reverse order 
@@ -62,13 +61,7 @@ namespace Luna.Views.WinForms
         }
 
         #region private methods
-        private void FormClosingHandler(object sender, FormClosingEventArgs e)
-        {
-            if (settings.IsClosing())
-            {
-                return;
-            }
-        }
+
         #endregion
 
         #region UI event handlers
@@ -88,7 +81,7 @@ namespace Luna.Views.WinForms
         }
         private void btnOpenEditor_Click(object sender, System.EventArgs e)
         {
-            formMgr.ShowOrCreateFirstEditor();
+            formMgr.CreateNewEditor();
         }
         #endregion
 

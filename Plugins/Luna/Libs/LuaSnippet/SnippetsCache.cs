@@ -37,11 +37,6 @@ namespace Luna.Libs.LuaSnippet
         #endregion
 
         #region private methods
-        string GetFilteredLuaKeywords() =>
-            VgcApis.Models.Consts.Lua.LuaKeywords
-            .Replace("do", "")
-            .Replace("then", "")
-            .Replace("end", "");
 
         List<string> GetAllNameapaces() => VgcApis.Misc.Utils.GetAllAssembliesType()
             .Select(t => t.Namespace)
@@ -93,7 +88,7 @@ namespace Luna.Libs.LuaSnippet
             IEnumerable<string> initValues) =>
             new StringBuilder(VgcApis.Models.Consts.Lua.LuaModules)
             .Append(@" ")
-            .Append(GetFilteredLuaKeywords())
+            .Append(VgcApis.Models.Consts.Lua.LuaKeywords)
             .ToString()
             .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
             .Union(initValues)

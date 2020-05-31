@@ -29,14 +29,19 @@ namespace Luna.Services
         }
 
         #region public methods
+        public void CreateNewEditor() => CreateNewEditor(null);
 
-        public void CreateNewEditor()
+        public void CreateNewEditor(Models.Data.LuaCoreSetting initialCoreSettings)
         {
             lock (formLocker)
             {
                 VgcApis.Misc.UI.Invoke(() =>
                 {
-                    var newForm = Views.WinForms.FormEditor.CreateForm(api, settings, luaServer, this);
+                    var newForm = Views.WinForms.FormEditor.CreateForm(
+                        api, settings, luaServer, this,
+
+                        initialCoreSettings);
+
                     newForm.FormClosed += (s, a) =>
                     {
                         var form = newForm; // capture
@@ -95,11 +100,6 @@ namespace Luna.Services
         #region protected methods
         protected override void Cleanup()
         {
-            if (settings.IsClosing())
-            {
-                return;
-            }
-
             VgcApis.Misc.UI.CloseFormIgnoreError(formMain);
 
             List<Views.WinForms.FormEditor> formList;

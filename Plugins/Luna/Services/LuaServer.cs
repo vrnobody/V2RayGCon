@@ -56,10 +56,8 @@ namespace Luna.Services
             var ctrls = GetAllLuaCoreCtrls();
             foreach (var luaCore in ctrls)
             {
-                scripts.Add(new string[] {
-                    luaCore.name,
-                    luaCore.GetScript(),
-                });
+                var cs = luaCore.GetCoreSettings();
+                scripts.Add(new string[] { cs.name, cs.script });
             }
             return scripts;
         }
@@ -173,11 +171,6 @@ namespace Luna.Services
         #region protected methods
         protected override void Cleanup()
         {
-            if (settings.IsClosing())
-            {
-                return;
-            }
-
             var coreCtrls = GetAllLuaCoreCtrls();
             foreach (var ctrl in coreCtrls)
             {

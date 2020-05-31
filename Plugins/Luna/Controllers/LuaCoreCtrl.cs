@@ -132,7 +132,6 @@ namespace Luna.Controllers
             }
         }
 
-
         void InvokeOnStateChangeIgnoreError()
         {
             try
@@ -144,7 +143,8 @@ namespace Luna.Controllers
         #endregion
 
         #region public methods
-        public string GetScript() => coreSetting.script;
+        public Models.Data.LuaCoreSetting GetCoreSettings() =>
+            coreSetting;
 
         public void SetScriptName(string name)
         {
@@ -169,9 +169,9 @@ namespace Luna.Controllers
             luaSys?.OnSignalStop();
         }
 
-        public void Abort() => Killer(2000);
+        public void Abort() => KillCore(2000);
 
-        public void AbortNow() => Killer(1);
+        public void AbortNow() => KillCore(1);
 
         public void Start()
         {
@@ -200,7 +200,7 @@ namespace Luna.Controllers
         #endregion
 
         #region private methods
-        void Killer(int timeout)
+        void KillCore(int timeout)
         {
             if (!isRunning)
             {

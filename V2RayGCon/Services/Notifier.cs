@@ -738,27 +738,31 @@ namespace V2RayGCon.Services
         {
             var lw = w * 0.07f;
             var cr = w * 0.22f;
+
             if (isFirstServ)
             {
-                cr -= lw / 2;
+                cr = cr - lw / 2;
             }
+
             var dh = Math.Sqrt(3) * cr / 2f;
             var tri = new Point[] {
-                    new Point((int)(cx - cr / 2f),(int)(cx - dh)),
-                    new Point((int)(cx + cr),(int)cx),
-                    new Point((int)(cx - cr / 2f),(int)(cx + dh)),
-                };
+                new Point((int)(cx - cr / 2f),(int)(cx - dh)),
+                new Point((int)(cx + cr),(int)cx),
+                new Point((int)(cx - cr / 2f),(int)(cx + dh)),
+            };
 
             if (!isFirstServ)
             {
                 graphics.FillPolygon(Brushes.White, tri);
-            }
-            else
-            {
-                var pen = new Pen(Brushes.White, lw);
-                graphics.DrawPolygon(pen, tri);
+                return;
             }
 
+            var pen = new Pen(Brushes.White, lw)
+            {
+                StartCap = LineCap.Round,
+                EndCap = LineCap.Round,
+            };
+            graphics.DrawPolygon(pen, tri);
         }
 
         private static void DrawOneLine(

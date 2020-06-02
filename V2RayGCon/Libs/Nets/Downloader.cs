@@ -66,6 +66,7 @@ namespace V2RayGCon.Libs.Nets
             var filename = GetLocalFilename();
             if (string.IsNullOrEmpty(path) || string.IsNullOrEmpty(filename))
             {
+                setting.SendLog(I18N.LocateTargetFolderFail);
                 return false;
             }
 
@@ -82,11 +83,12 @@ namespace V2RayGCon.Libs.Nets
             VgcApis.Misc.Utils.Sleep(2000);
             try
             {
+                RemoveOldExe(path);
                 Misc.Utils.ZipFileDecompress(filename, path);
             }
-            catch
+            catch (Exception ex)
             {
-                setting.SendLog(I18N.DecompressFileFail);
+                setting.SendLog(I18N.DecompressFileFail + Environment.NewLine + ex.ToString());
                 return false;
             }
             return true;
@@ -105,6 +107,35 @@ namespace V2RayGCon.Libs.Nets
         #endregion
 
         #region private method
+        void RemoveOldExe(string path)
+        {
+            string[] exes = new string[] { "v2ray.exe", "v2ctl.exe" };
+            string prefix = "bak";
+
+            foreach (var exe in exes)
+            {
+                var newFn = Path.Combine(path, $"{prefix}.{exe}");
+                if (File.Exists(newFn))
+                {
+                    try
+                    {
+                        File.Delete(newFn);
+                    }
+                    catch
+                    {
+                        var now = DateTime.Now.ToString("yyyy-MM-dd.HHmmss.ffff");
+                        newFn = Path.Combine(path, $"{prefix}.{now}.{exe}");
+                    }
+                }
+
+                var orgFn = Path.Combine(path, exe);
+                if (File.Exists(orgFn))
+                {
+                    File.Move(orgFn, newFn);
+                }
+            }
+        }
+
         void SendProgress(int percentage)
         {
             try

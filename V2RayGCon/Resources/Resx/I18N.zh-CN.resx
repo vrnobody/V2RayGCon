@@ -741,4 +741,7 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="ConfirmClearSpeedTestResults" xml:space="preserve">
     <value>清除速度测试数据?</value>
   </data>
+  <data name="LocateTargetFolderFail" xml:space="preserve">
+    <value>定位目标文件不会失败！</value>
+  </data>
 </root>

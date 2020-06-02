@@ -1100,6 +1100,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Locate target folder fail. 的本地化字符串。
+        /// </summary>
+        internal static string LocateTargetFolderFail {
+            get {
+                return ResourceManager.GetString("LocateTargetFolderFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Log 的本地化字符串。
         /// </summary>
         internal static string Log {

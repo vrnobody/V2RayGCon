@@ -57,11 +57,13 @@
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
+            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // tboxServerName
             // 
             resources.ApplyResources(this.tboxServerName, "tboxServerName");
             this.tboxServerName.Name = "tboxServerName";
+            this.toolTip1.SetToolTip(this.tboxServerName, resources.GetString("tboxServerName.ToolTip"));
             // 
             // cboxInboundAddress
             // 
@@ -73,6 +75,7 @@
             resources.GetString("cboxInboundAddress.Items2"),
             resources.GetString("cboxInboundAddress.Items3")});
             this.cboxInboundAddress.Name = "cboxInboundAddress";
+            this.toolTip1.SetToolTip(this.cboxInboundAddress, resources.GetString("cboxInboundAddress.ToolTip"));
             this.cboxInboundAddress.TextChanged += new System.EventHandler(this.cboxInboundAddress_TextChanged);
             // 
             // chkAutoRun
@@ -98,14 +101,16 @@
             // 
             // cboxInboundMode
             // 
+            resources.ApplyResources(this.cboxInboundMode, "cboxInboundMode");
             this.cboxInboundMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxInboundMode.FormattingEnabled = true;
             this.cboxInboundMode.Items.AddRange(new object[] {
             resources.GetString("cboxInboundMode.Items"),
             resources.GetString("cboxInboundMode.Items1"),
-            resources.GetString("cboxInboundMode.Items2")});
-            resources.ApplyResources(this.cboxInboundMode, "cboxInboundMode");
+            resources.GetString("cboxInboundMode.Items2"),
+            resources.GetString("cboxInboundMode.Items3")});
             this.cboxInboundMode.Name = "cboxInboundMode";
+            this.toolTip1.SetToolTip(this.cboxInboundMode, resources.GetString("cboxInboundMode.ToolTip"));
             this.cboxInboundMode.SelectedIndexChanged += new System.EventHandler(this.cboxInboundMode_SelectedIndexChanged);
             // 
             // cboxMark
@@ -113,6 +118,7 @@
             resources.ApplyResources(this.cboxMark, "cboxMark");
             this.cboxMark.FormattingEnabled = true;
             this.cboxMark.Name = "cboxMark";
+            this.toolTip1.SetToolTip(this.cboxMark, resources.GetString("cboxMark.ToolTip"));
             // 
             // chkUntrack
             // 
@@ -143,6 +149,7 @@
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
             this.btnSave.Name = "btnSave";
+            this.toolTip1.SetToolTip(this.btnSave, resources.GetString("btnSave.ToolTip"));
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -162,27 +169,32 @@
             // 
             resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
+            this.toolTip1.SetToolTip(this.label7, resources.GetString("label7.ToolTip"));
             // 
             // tboxDescription
             // 
             resources.ApplyResources(this.tboxDescription, "tboxDescription");
             this.tboxDescription.Name = "tboxDescription";
+            this.toolTip1.SetToolTip(this.tboxDescription, resources.GetString("tboxDescription.ToolTip"));
             // 
             // label10
             // 
             resources.ApplyResources(this.label10, "label10");
             this.label10.Name = "label10";
+            this.toolTip1.SetToolTip(this.label10, resources.GetString("label10.ToolTip"));
             // 
             // tboxTitle
             // 
             resources.ApplyResources(this.tboxTitle, "tboxTitle");
             this.tboxTitle.Name = "tboxTitle";
             this.tboxTitle.ReadOnly = true;
+            this.toolTip1.SetToolTip(this.tboxTitle, resources.GetString("tboxTitle.ToolTip"));
             // 
             // tboxRemark
             // 
             resources.ApplyResources(this.tboxRemark, "tboxRemark");
             this.tboxRemark.Name = "tboxRemark";
+            this.toolTip1.SetToolTip(this.tboxRemark, resources.GetString("tboxRemark.ToolTip"));
             // 
             // FormModifyServerSettings
             // 
@@ -209,6 +221,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Name = "FormModifyServerSettings";
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.FormModifyServerSettings_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

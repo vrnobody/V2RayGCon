@@ -5,6 +5,8 @@ namespace V2RayGCon.Models.Datas
     class UserSettings
     {
         #region public properties
+
+        public string CustomInbounds { get; set; }
         public string DebugLogFilePath { get; set; }
         public bool isEnableDebugFile { get; set; }
 
@@ -55,6 +57,8 @@ namespace V2RayGCon.Models.Datas
         public UserSettings()
         {
             Normalized();
+
+            CustomInbounds = @"[]";
 
             DebugLogFilePath = @"";
             isEnableDebugFile = false;

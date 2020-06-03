@@ -51,6 +51,19 @@ namespace V2RayGCon.Services
         }
 
         #region Properties
+        public string CustomDefInbounds
+        {
+            get => userSettings.CustomInbounds;
+            set
+            {
+                if (userSettings.CustomInbounds == value)
+                {
+                    return;
+                }
+                userSettings.CustomInbounds = value;
+                SaveSettingsLater();
+            }
+        }
 
         public string DebugLogFilePath
         {

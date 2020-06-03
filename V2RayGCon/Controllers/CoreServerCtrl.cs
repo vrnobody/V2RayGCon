@@ -99,7 +99,7 @@ namespace V2RayGCon.Controllers
             var restartCore = false;
             if (cs.inboundMode != ci.customInbType)
             {
-                ci.customInbType = Math.Abs(cs.inboundMode) % 3;
+                ci.customInbType = Misc.Utils.Clamp(cs.inboundMode, 0, Models.Datas.Table.customInbTypeNames.Length);
                 restartCore = true;
             }
 

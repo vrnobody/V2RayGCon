@@ -20,6 +20,10 @@ namespace V2RayGCon.Controllers.OptionComponent
             tboxSetSpeedtestCycles = null,
             tboxSetSpeedtestTimeout = null;
 
+        RichTextBox exRTBoxDefCustomInbounds = null;
+
+
+
         public TabDefaults(
             ComboBox cboxDefImportMode,
             TextBox tboxDefImportAddr,
@@ -32,9 +36,13 @@ namespace V2RayGCon.Controllers.OptionComponent
             ComboBox cboxDefSpeedtestUrl,
             TextBox tboxSetSpeedtestCycles,
             ComboBox cboxDefSpeedtestExpectedSize,
-            TextBox tboxSetSpeedtestTimeout)
+            TextBox tboxSetSpeedtestTimeout,
+
+            RichTextBox exRTBoxDefCustomInbounds)
         {
             this.setting = Services.Settings.Instance;
+
+            this.exRTBoxDefCustomInbounds = exRTBoxDefCustomInbounds;
 
             // Do not put these lines of code into InitElement.
             this.cboxDefImportMode = cboxDefImportMode;
@@ -53,6 +61,8 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         private void InitElement()
         {
+            exRTBoxDefCustomInbounds.Text = setting.CustomDefInbounds;
+
             // mode
             chkImportBypassCnSite.Checked = setting.CustomDefImportBypassCnSite;
             chkImportInjectGlobalImport.Checked = setting.CustomDefImportGlobalImport;
@@ -81,6 +91,8 @@ namespace V2RayGCon.Controllers.OptionComponent
                 return false;
             }
 
+            setting.CustomDefInbounds = exRTBoxDefCustomInbounds.Text;
+
             // mode
             if (VgcApis.Misc.Utils.TryParseAddress(tboxDefImportAddr.Text, out string ip, out int port))
             {
@@ -108,6 +120,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             var success = VgcApis.Misc.Utils.TryParseAddress(tboxDefImportAddr.Text, out string ip, out int port);
             if (!success
+                || setting.CustomDefInbounds != exRTBoxDefCustomInbounds.Text
                 || setting.CustomDefImportGlobalImport != chkImportInjectGlobalImport.Checked
                 || setting.CustomDefImportBypassCnSite != chkImportBypassCnSite.Checked
                 || setting.CustomDefImportSsShareLink != chkImportSsShareLink.Checked

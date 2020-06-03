@@ -237,13 +237,41 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         Tuple<string, string, int> GetterParsedInboundInfo(string rawConfig)
         {
             var protocol = Misc.Utils.InboundTypeNumberToName(coreInfo.customInbType);
-            var ip = coreInfo.inbIp;
-            var port = coreInfo.inbPort;
-
-            if (protocol != "config")
+            switch (protocol)
             {
+                case "http":
+                case "socks":
+                    var info = new Tuple<string, string, int>(
+                        protocol, coreInfo.inbIp, coreInfo.inbPort);
+                    return info;
+                case "config":
+                    return GetInboundInfoFromConfig(rawConfig);
+                case "custom":
+                    return GetInboundInfoFromCustomInboundsSetting();
+                default:
+                    return null;
+            }
+        }
+
+        Tuple<string, string, int> GetInboundInfoFromCustomInboundsSetting()
+        {
+            try
+            {
+                var jobj = JArray.Parse(setting.CustomDefInbounds)[0];
+                var protocol = Misc.Utils.GetValue<string>(jobj, "protocol");
+                string ip = Misc.Utils.GetValue<string>(jobj, "listen");
+                int port = Misc.Utils.GetValue<int>(jobj, "port");
                 return new Tuple<string, string, int>(protocol, ip, port);
             }
+            catch
+            {
+                setting.SendLog(I18N.ParseCustomInboundsSettingFail);
+            }
+            return null;
+        }
+
+        Tuple<string, string, int> GetInboundInfoFromConfig(string rawConfig)
+        {
 
             var parsedConfig = configMgr.DecodeConfig(
                 rawConfig,
@@ -257,11 +285,11 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
 
             string prefix = "inbound";
+            string protocol = "";
             foreach (var p in new string[] { "inbound", "inbounds.0" })
             {
                 prefix = p;
-                protocol = Misc.Utils.GetValue<string>(
-                    parsedConfig, prefix, "protocol");
+                protocol = Misc.Utils.GetValue<string>(parsedConfig, prefix, "protocol");
 
                 if (!string.IsNullOrEmpty(protocol))
                 {
@@ -269,10 +297,12 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 }
             }
 
-            ip = Misc.Utils.GetValue<string>(parsedConfig, prefix, "listen");
-            port = Misc.Utils.GetValue<int>(parsedConfig, prefix, "port");
+            string ip = Misc.Utils.GetValue<string>(parsedConfig, prefix, "listen");
+            int port = Misc.Utils.GetValue<int>(parsedConfig, prefix, "port");
             return new Tuple<string, string, int>(protocol, ip, port);
         }
+
+
         #endregion
     }
 }

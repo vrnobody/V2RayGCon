@@ -320,6 +320,10 @@ namespace V2RayGCon.Views.UserControls
                     text = (lower ? @"s" : @"S") + coreState.GetInboundPort();
                     tooltip = @"inbound -> socks://" + coreState.GetInboundAddr();
                     break;
+                case (int)VgcApis.Models.Datas.Enums.ProxyTypes.Custom:
+                    text = I18N.Custom;
+                    tooltip = I18N.InbModeCustomToolTip;
+                    break;
             }
             UpdateControlTextAndTooltip(rlbInboundMode, text, tooltip);
         }

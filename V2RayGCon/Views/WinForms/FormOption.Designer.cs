@@ -68,6 +68,8 @@
             this.cboxSettingLanguage = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPageDefaults = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.exRTBoxDefCustomInbounds = new VgcApis.UserControls.ExRichTextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chkDefImportInjectGlobalImport = new System.Windows.Forms.CheckBox();
             this.chkDefImportBypassCnSite = new System.Windows.Forms.CheckBox();
@@ -108,6 +110,7 @@
             this.groupBox5.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPageDefaults.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPageImport.SuspendLayout();
@@ -408,11 +411,25 @@
             // 
             // tabPageDefaults
             // 
+            this.tabPageDefaults.Controls.Add(this.groupBox7);
             this.tabPageDefaults.Controls.Add(this.groupBox4);
             this.tabPageDefaults.Controls.Add(this.groupBox3);
             resources.ApplyResources(this.tabPageDefaults, "tabPageDefaults");
             this.tabPageDefaults.Name = "tabPageDefaults";
             this.tabPageDefaults.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            resources.ApplyResources(this.groupBox7, "groupBox7");
+            this.groupBox7.Controls.Add(this.exRTBoxDefCustomInbounds);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.TabStop = false;
+            // 
+            // exRTBoxDefCustomInbounds
+            // 
+            resources.ApplyResources(this.exRTBoxDefCustomInbounds, "exRTBoxDefCustomInbounds");
+            this.exRTBoxDefCustomInbounds.Name = "exRTBoxDefCustomInbounds";
+            this.toolTip1.SetToolTip(this.exRTBoxDefCustomInbounds, resources.GetString("exRTBoxDefCustomInbounds.ToolTip"));
             // 
             // groupBox4
             // 
@@ -461,7 +478,8 @@
             this.cboxDefImportMode.Items.AddRange(new object[] {
             resources.GetString("cboxDefImportMode.Items"),
             resources.GetString("cboxDefImportMode.Items1"),
-            resources.GetString("cboxDefImportMode.Items2")});
+            resources.GetString("cboxDefImportMode.Items2"),
+            resources.GetString("cboxDefImportMode.Items3")});
             resources.ApplyResources(this.cboxDefImportMode, "cboxDefImportMode");
             this.cboxDefImportMode.Name = "cboxDefImportMode";
             this.toolTip1.SetToolTip(this.cboxDefImportMode, resources.GetString("cboxDefImportMode.ToolTip"));
@@ -688,6 +706,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPageDefaults.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -772,5 +791,7 @@
         private System.Windows.Forms.CheckBox chkSetEnableDebugFile;
         private System.Windows.Forms.TextBox tboxSetDebugFilePath;
         private System.Windows.Forms.Button btnSetBrowseDebugFile;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private VgcApis.UserControls.ExRichTextBox exRTBoxDefCustomInbounds;
     }
 }

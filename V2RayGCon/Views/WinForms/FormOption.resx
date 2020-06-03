@@ -1236,6 +1236,66 @@
   <data name="&gt;&gt;tabPageSetting.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="groupBox7.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="exRTBoxDefCustomInbounds.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="exRTBoxDefCustomInbounds.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 20</value>
+  </data>
+  <data name="exRTBoxDefCustomInbounds.ScrollBars" type="System.Windows.Forms.RichTextBoxScrollBars, System.Windows.Forms">
+    <value>ForcedVertical</value>
+  </data>
+  <data name="exRTBoxDefCustomInbounds.Size" type="System.Drawing.Size, System.Drawing">
+    <value>428, 109</value>
+  </data>
+  <data name="exRTBoxDefCustomInbounds.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="exRTBoxDefCustomInbounds.Text" xml:space="preserve">
+    <value>[]</value>
+  </data>
+  <data name="exRTBoxDefCustomInbounds.ToolTip" xml:space="preserve">
+    <value>[{ ... }, {...}, ...]</value>
+  </data>
+  <data name="&gt;&gt;exRTBoxDefCustomInbounds.Name" xml:space="preserve">
+    <value>exRTBoxDefCustomInbounds</value>
+  </data>
+  <data name="&gt;&gt;exRTBoxDefCustomInbounds.Type" xml:space="preserve">
+    <value>VgcApis.UserControls.ExRichTextBox, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;exRTBoxDefCustomInbounds.Parent" xml:space="preserve">
+    <value>groupBox7</value>
+  </data>
+  <data name="&gt;&gt;exRTBoxDefCustomInbounds.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="groupBox7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 164</value>
+  </data>
+  <data name="groupBox7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>449, 140</value>
+  </data>
+  <data name="groupBox7.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="groupBox7.Text" xml:space="preserve">
+    <value>Custom inbounds</value>
+  </data>
+  <data name="&gt;&gt;groupBox7.Name" xml:space="preserve">
+    <value>groupBox7</value>
+  </data>
+  <data name="&gt;&gt;groupBox7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox7.Parent" xml:space="preserve">
+    <value>tabPageDefaults</value>
+  </data>
+  <data name="&gt;&gt;groupBox7.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="groupBox4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -1374,6 +1434,9 @@
   <data name="cboxDefImportMode.Items2" xml:space="preserve">
     <value>SOCKS</value>
   </data>
+  <data name="cboxDefImportMode.Items3" xml:space="preserve">
+    <value>Custom</value>
+  </data>
   <data name="cboxDefImportMode.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 18</value>
   </data>
@@ -1456,7 +1519,7 @@
     <value>Def. Mode</value>
   </data>
   <data name="label10.ToolTip" xml:space="preserve">
-    <value>Config means keep original inbound config.</value>
+    <value>Default inbound mode. Config means keep original inbound config.</value>
   </data>
   <data name="&gt;&gt;label10.Name" xml:space="preserve">
     <value>label10</value>
@@ -1498,7 +1561,7 @@
     <value>tabPageDefaults</value>
   </data>
   <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="groupBox3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -1857,7 +1920,7 @@
     <value>tabPageDefaults</value>
   </data>
   <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="tabPageDefaults.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>

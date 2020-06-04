@@ -279,9 +279,10 @@ namespace V2RayGCon.Services
             void Success(string link)
             {
                 // no comment ^v^
-                if (link == StrConst.Nobody3uVideoUrl)
+                var video = VgcApis.Models.Consts.Webs.Nobody3uVideoUrl;
+                if (link == video)
                 {
-                    Misc.UI.VisitUrl(I18N.VisitWebPage, StrConst.Nobody3uVideoUrl);
+                    Misc.UI.VisitUrl(I18N.VisitWebPage, video);
                     return;
                 }
 

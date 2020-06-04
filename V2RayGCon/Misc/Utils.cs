@@ -1139,49 +1139,8 @@ namespace V2RayGCon.Misc
         public static string Fetch(string url, int timeout) =>
             Fetch(url, -1, timeout);
 
-        public static string GetLatestVgcVersion()
-        {
-            string html = Fetch(StrConst.UrlLatestVGC);
 
-            if (string.IsNullOrEmpty(html))
-            {
-                return string.Empty;
-            }
 
-            string p = StrConst.PatternLatestVGC;
-            var match = Regex.Match(html, p, RegexOptions.IgnoreCase);
-            if (match.Success)
-            {
-                return match.Groups[1].Value;
-            }
-
-            return string.Empty;
-        }
-
-        public static List<string> GetOnlineV2RayCoreVersionList(int proxyPort)
-        {
-            List<string> versions = new List<string> { };
-            var url = StrConst.V2rayCoreReleasePageUrl;
-
-            string html = Fetch(url, proxyPort, -1);
-            if (string.IsNullOrEmpty(html))
-            {
-                return versions;
-            }
-
-            string pattern = StrConst.PatternDownloadLink;
-            var matches = Regex.Matches(html, pattern, RegexOptions.IgnoreCase);
-            foreach (Match match in matches)
-            {
-                var v = match.Groups[1].Value;
-                if (!versions.Contains(v))
-                {
-                    versions.Add(v);
-                }
-            }
-
-            return versions;
-        }
         #endregion
 
         #region files

@@ -20,7 +20,8 @@ namespace V2RayGCon.Models.Datas
         public SpeedTestOptions SpeedtestOptions = null;
 
         // FormDownloadCore
-        public bool isDownloadWin32V2RayCore { get; set; } = true;
+        public bool isDownloadWin32V2RayCore { get; set; }
+        public string v2rayCoreDownloadSource { get; set; }
         public List<string> V2RayCoreDownloadVersionList = null;
 
         public bool isSupportSelfSignedCert { get; set; }
@@ -57,6 +58,9 @@ namespace V2RayGCon.Models.Datas
         public UserSettings()
         {
             Normalized();
+
+            isDownloadWin32V2RayCore = true;
+            v2rayCoreDownloadSource = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(0);
 
             CustomInbounds = @"[]";
 

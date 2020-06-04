@@ -242,7 +242,7 @@ namespace V2RayGCon.Views.WinForms
                 Stream myStream;
                 SaveFileDialog saveFileDialog1 = new SaveFileDialog
                 {
-                    Filter = StrConst.ExtPng,
+                    Filter = VgcApis.Models.Consts.Files.PngExt,
                     FilterIndex = 1,
                     RestoreDirectory = true,
                 };

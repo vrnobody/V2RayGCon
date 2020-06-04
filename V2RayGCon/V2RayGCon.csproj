@@ -152,6 +152,11 @@
     <Compile Include="Models\VeeShareLinks\Http3a.cs" />
     <Compile Include="Models\VeeShareLinks\Socks2a.cs" />
     <Compile Include="Models\VeeShareLinks\BasicSettings.cs" />
+    <Compile Include="Resources\Resx\StrConst.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StrConst.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\Caches\JsonAcm.cs" />
     <Compile Include="Controllers\ConfigerComponent\MenuUpdater.cs" />
     <Compile Include="Controllers\CoreServerComponent\Configer.cs" />
@@ -271,11 +276,6 @@
     <Compile Include="Models\Datas\Enums.cs" />
     <Compile Include="Models\Datas\Shadowsocks.cs" />
     <Compile Include="Models\Datas\Table.cs" />
-    <Compile Include="Resources\Resx\StrConst.Designer.cs">
-      <DependentUpon>StrConst.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Resources\Resx\I18N.zh-CN.Designer.cs">
       <DependentUpon>I18N.zh-CN.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -365,6 +365,10 @@
     <Compile Include="Views\WinForms\FormSimAddVmessClient.Designer.cs">
       <DependentUpon>FormSimAddVmessClient.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Resources\Resx\StrConst.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StrConst.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\MultiConfUI.resx">
       <DependentUpon>MultiConfUI.cs</DependentUpon>
     </EmbeddedResource>
@@ -411,11 +415,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Resources\Resx\StrConst.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>StrConst.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resx\I18N.zh-CN.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>I18N.zh-CN.Designer.cs</LastGenOutput>

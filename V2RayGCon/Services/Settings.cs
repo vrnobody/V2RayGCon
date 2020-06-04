@@ -140,6 +140,15 @@ namespace V2RayGCon.Services
             this.shutdownReason = reason;
         }
 
+        public string v2rayCoreDownloadSource
+        {
+            get => userSettings.v2rayCoreDownloadSource;
+            set
+            {
+                userSettings.v2rayCoreDownloadSource = value;
+                SaveSettingsLater();
+            }
+        }
 
         public bool isDownloadWin32V2RayCore
         {

@@ -117,7 +117,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     string newUid;
                     do
                     {
-                        newUid = Misc.Utils.RandomHex(16);
+                        newUid = VgcApis.Misc.Utils.RandomHex(16);
                     } while (uidList.Contains(newUid));
 
                     coreInfo.uid = newUid;

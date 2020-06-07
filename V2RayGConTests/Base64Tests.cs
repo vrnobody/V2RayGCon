@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Text;
 
 namespace V2RayGCon.Test
 {
@@ -15,9 +13,9 @@ namespace V2RayGCon.Test
             @"中123ac文"
         };
 
-        string GenRandHex() => Misc.Utils.RandomHex(7);
+        string GenRandHex() => VgcApis.Misc.Utils.RandomHex(7);
 
-       
+
         [TestMethod]
         public void NormalEncodingTest()
         {

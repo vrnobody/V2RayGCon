@@ -1239,37 +1239,11 @@ namespace V2RayGCon.Misc
             return hash.ToString();
         }
 
-        static readonly object genRandomNumberLocker = new object();
-        static Random randHexSource = new Random();
 
-        public static string RandomHex(int length)
-        {
-            //  https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c
-            if (length <= 0)
-            {
-                return string.Empty;
-            }
+        // 懒得改调用处的代码了。
+        public static int Clamp(int value, int min, int max) =>
+            VgcApis.Misc.Utils.Clamp(value, min, max);
 
-            const string chars = "0123456789abcdef";
-            int charLen = chars.Length;
-
-            int rndIndex;
-            StringBuilder sb = new StringBuilder("");
-            for (int i = 0; i < length; i++)
-            {
-                lock (genRandomNumberLocker)
-                {
-                    rndIndex = randHexSource.Next(charLen);
-                }
-                sb.Append(chars[rndIndex]);
-            }
-            return sb.ToString();
-        }
-
-        public static int Clamp(int value, int min, int max)
-        {
-            return Math.Max(Math.Min(value, max - 1), min);
-        }
 
         public static int GetIndexIgnoreCase(Dictionary<int, string> dict, string value)
         {

@@ -90,6 +90,14 @@ end
 
 -- utils
 
+function u.GC()
+    local prev = collectgarbage("count")
+    collectgarbage("collect")
+    local cur = math.floor(collectgarbage("count"))
+    local diff = math.floor(prev - cur)
+    print("Mem stat: collected ", diff, " KiB current ", cur, " KiB")
+end
+
 function u.ToNumber(str)
     return ToNumber(str)
 end

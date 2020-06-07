@@ -1240,6 +1240,8 @@ namespace V2RayGCon.Misc
         }
 
         static readonly object genRandomNumberLocker = new object();
+        static Random randHexSource = new Random();
+
         public static string RandomHex(int length)
         {
             //  https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c
@@ -1248,7 +1250,6 @@ namespace V2RayGCon.Misc
                 return string.Empty;
             }
 
-            Random random = new Random();
             const string chars = "0123456789abcdef";
             int charLen = chars.Length;
 
@@ -1258,7 +1259,7 @@ namespace V2RayGCon.Misc
             {
                 lock (genRandomNumberLocker)
                 {
-                    rndIndex = random.Next(charLen);
+                    rndIndex = randHexSource.Next(charLen);
                 }
                 sb.Append(chars[rndIndex]);
             }

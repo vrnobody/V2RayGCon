@@ -26,7 +26,6 @@ namespace V2RayGCon.Services
         static readonly int UpdateInterval = VgcApis.Models.Consts.Intervals.NotifierMenuUpdateIntreval;
 
         Bitmap orgIcon;
-        bool isMenuOpened = false;
 
         VgcApis.Libs.Tasks.LazyGuy lazyNotifierMenuUpdater;
 
@@ -91,6 +90,7 @@ namespace V2RayGCon.Services
             BindServerEvents();
             RefreshNotifyIconLater();
 
+            NotifyIconMenuOpenHandler(this, EventArgs.Empty);
         }
 
         #region hotkey window
@@ -409,9 +409,6 @@ namespace V2RayGCon.Services
                 }
             };
 
-            ni.ContextMenuStrip.Opening += (s, a) => isMenuOpened = true;
-            ni.ContextMenuStrip.Closed += (s, a) => isMenuOpened = false;
-
             ni.MouseClick += (s, a) =>
             {
                 switch (a.Button)
@@ -424,6 +421,17 @@ namespace V2RayGCon.Services
                         break;
                 }
             };
+
+            ni.ContextMenuStrip.Opening += NotifyIconMenuOpenHandler;
+        }
+
+        void NotifyIconMenuOpenHandler(object sender, EventArgs args)
+        {
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                VgcApis.Misc.Utils.Sleep(10);
+                UpdateServersMenuThen();
+            });
         }
 
         private void BindServerEvents()
@@ -589,8 +597,17 @@ namespace V2RayGCon.Services
             miServersRoot.Visible = true;
         }
 
-        void UpdateServersMenuThen(Action done = null)
+        VgcApis.Libs.Tasks.Bar serversMenuUpdateBar = new VgcApis.Libs.Tasks.Bar();
+
+        void UpdateServersMenuThen()
         {
+            if (!serversMenuUpdateBar.Install())
+            {
+                return;
+            }
+
+            Action done = () => serversMenuUpdateBar.Remove();
+
             var serverList = servers.GetAllServersOrderByIndex();
             var num = VgcApis.Models.Consts.Config.QuickSwitchMenuItemNum;
             var groupSize = VgcApis.Models.Consts.Config.MenuItemGroupSize;
@@ -614,7 +631,7 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            if (isMenuOpened || setting.IsScreenLocked())
+            if (setting.IsScreenLocked())
             {
                 VgcApis.Misc.Utils.RunInBackground(() =>
                 {
@@ -634,7 +651,6 @@ namespace V2RayGCon.Services
                 done();
             });
 
-            Action next = () => UpdateServersMenuThen(finished);
             try
             {
                 var list = servers.GetAllServersOrderByIndex()
@@ -651,13 +667,13 @@ namespace V2RayGCon.Services
                         org?.Dispose();
                     }
                 });
-                UpdateNotifyIconTextThen(list, next);
+                UpdateNotifyIconTextThen(list, finished);
             }
             catch (Exception e)
             {
                 VgcApis.Libs.Sys.FileLogger.Error($"Notifier update icon error!\n{e}");
+                done();
             }
-            done();
         }
 
         private Bitmap CreateNotifyIconImage(List<ICoreServCtrl> coreCtrls)

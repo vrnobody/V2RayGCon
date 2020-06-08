@@ -42,3 +42,4 @@ Require .net framework 4.5+.
 [shadowsocksr-backup/shadowsocksr-csharp](https://github.com/shadowsocksr-backup/shadowsocksr-csharp) 屏幕扫码实现代码  
 [txthinking/blackwhite](https://github.com/txthinking/blackwhite) ProxySetter插件中的默认PAC  
 [v2ray/v2ray-core](https://github.com/v2ray/v2ray-core) v2ray-core服务端  
+[wilhelmy/lua-bencode](https://bitbucket.org/wilhelmy/lua-bencode) bencode(torrent)解释器  

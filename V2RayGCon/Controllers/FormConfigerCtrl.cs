@@ -24,8 +24,7 @@ namespace V2RayGCon.Controllers
         }
 
         #region public method
-        public void UpdateServerMenusLater() =>
-            GetComponent<ConfigerComponet.MenuUpdater>()?.UpdateMenusLater();
+
 
         public void Cleanup()
         {

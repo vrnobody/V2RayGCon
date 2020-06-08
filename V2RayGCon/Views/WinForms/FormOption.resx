@@ -1249,7 +1249,7 @@
     <value>ForcedVertical</value>
   </data>
   <data name="exRTBoxDefCustomInbounds.Size" type="System.Drawing.Size, System.Drawing">
-    <value>428, 109</value>
+    <value>434, 167</value>
   </data>
   <data name="exRTBoxDefCustomInbounds.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1276,7 +1276,7 @@
     <value>13, 164</value>
   </data>
   <data name="groupBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 140</value>
+    <value>449, 198</value>
   </data>
   <data name="groupBox7.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>

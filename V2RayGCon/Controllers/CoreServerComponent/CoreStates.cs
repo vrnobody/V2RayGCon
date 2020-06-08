@@ -98,7 +98,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public void SetIsInjectImport(bool IsInjectImport)
         {
             SetSettingsPropertyOnDemand(ref coreInfo.isInjectImport, IsInjectImport, true);
-            configer.UpdateSummaryThen(() => GetParent().InvokeEventOnPropertyChange());
+            configer.UpdateSummary();
         }
 
         public VgcApis.Models.Datas.CoreInfo GetAllRawCoreInfo() => coreInfo;

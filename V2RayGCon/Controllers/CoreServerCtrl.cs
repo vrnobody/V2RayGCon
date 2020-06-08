@@ -147,17 +147,11 @@ namespace V2RayGCon.Controllers
 
             ci.isInjectImport = cs.isGlobalImport;
             ci.isInjectSkipCNSite = cs.isBypassCnSite;
-
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            GetConfiger().UpdateSummary();
+            if (restartCore && GetCoreCtrl().IsCoreRunning())
             {
-                GetConfiger().UpdateSummaryThen(() =>
-                {
-                    if (restartCore && GetCoreCtrl().IsCoreRunning())
-                    {
-                        GetCoreCtrl().RestartCore();
-                    }
-                });
-            });
+                GetCoreCtrl().RestartCore();
+            }
         }
 
         public ICoreStates GetCoreStates() => states;

@@ -67,32 +67,27 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GetConfig() => coreInfo.config;
 
-        public void UpdateSummaryThen(Action next = null)
+        public void UpdateSummary()
         {
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            try
             {
                 var configString = coreInfo.isInjectImport ?
                     configMgr.InjectImportTpls(coreInfo.config, false, true) :
                     coreInfo.config;
 
-                JObject finalConfig = null;
-                try
-                {
-                    finalConfig = JObject.Parse(configString);
-                    finalConfig = configMgr.ParseImport(configString);
-                }
-                catch { }
+                JObject finalConfig = JObject.Parse(configString);
+                finalConfig = configMgr.ParseImport(configString);
+
 
                 if (finalConfig != null)
                 {
+                    // update summary should not clear status
+                    // this.status = string.Empty;
                     UpdateSummary(finalConfig);
                 }
-
-                // update summary should not clear status
-                // this.status = string.Empty;
-                GetParent().InvokeEventOnPropertyChange();
-                next?.Invoke();
-            });
+            }
+            catch { }
+            GetParent().InvokeEventOnPropertyChange();
         }
 
         public bool IsSuitableToBeUsedAsSysProxy(
@@ -130,13 +125,13 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
 
             coreInfo.config = trimed;
-            UpdateSummaryThen(() =>
+            UpdateSummary();
+
+            if (coreCtrl.IsCoreRunning())
             {
-                if (coreCtrl.IsCoreRunning())
-                {
-                    coreCtrl.RestartCoreThen();
-                }
-            });
+                coreCtrl.RestartCoreThen();
+            }
+
         }
 
         public void GetterInfoForNotifyIconf(Action<string> next)
@@ -211,7 +206,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             var name = Misc.Utils.GetAliasFromConfig(config);
             coreInfo.name = name;
             coreInfo.summary = Misc.Utils.GetSummaryFromConfig(config);
-
             coreInfo.ClearCachedString();
         }
 

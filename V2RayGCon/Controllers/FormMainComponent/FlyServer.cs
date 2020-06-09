@@ -353,8 +353,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
             // 如果不RemoveAll会乱序
             RemoveAllServersConrol();
 
-            // 修改搜索项时应该清除选择,否则会有可显示列表外的选中项
-            servers.SetAllServerIsSelected(false);
+            // 2020-06-09 改为保留选中状态
+            // servers.SetAllServerIsSelected(false);
 
             lazyFlyPanelUpdater?.Postpone();
         }

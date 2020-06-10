@@ -969,31 +969,6 @@ namespace V2RayGCon.Misc
             return baseUrl + href;
         }
 
-        public static List<string> FindAllHrefs(string text)
-        {
-            var empty = new List<string>();
-
-            if (string.IsNullOrEmpty(text))
-            {
-                return empty;
-            }
-
-            try
-            {
-                HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-                doc.LoadHtml(text);
-
-                var result = doc.DocumentNode.SelectNodes("//a")
-                    ?.Select(p => p.GetAttributeValue("href", ""))
-                    ?.Where(s => !string.IsNullOrEmpty(s))
-                    ?.ToList();
-
-                return result ?? empty;
-            }
-            catch { }
-            return empty;
-        }
-
         public static string GenSearchUrl(string query, int start)
         {
             var url = VgcApis.Models.Consts.Webs.SearchUrlPrefix + UrlEncode(query);

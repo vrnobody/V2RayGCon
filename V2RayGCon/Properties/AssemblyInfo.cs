@@ -37,6 +37,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.4.0.9 Remove HtmlAgilityPack.
  * v1.4.0.8 Keep current selections in searching.
  * v1.4.0.7 Refactoring.
  * v1.4.0.6 Try to fix a dead lock.

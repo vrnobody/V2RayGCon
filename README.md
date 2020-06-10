@@ -30,7 +30,6 @@ Require .net framework 4.5+.
 [diegonehab/luasocket](https://github.com/diegonehab/luasocket.git) Lua socket  
 [FourierTransformer/lua-complete](https://github.com/FourierTransformer/lua-complete.git) lua模块补全  
 [haf/DotNetZip.Semverd](https://github.com/haf/DotNetZip.Semverd) .net 4.0解压zip文件  
-[HtmlAgilityPack](https://html-agility-pack.net/) HTML解释器  
 [jacobslusser/ScintillaNET](https://github.com/jacobslusser/ScintillaNET) 编辑器  
 [JamesNK/Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) 处理json  
 [micjahn/ZXing.Net](https://github.com/micjahn/ZXing.Net/) 处理二维码  

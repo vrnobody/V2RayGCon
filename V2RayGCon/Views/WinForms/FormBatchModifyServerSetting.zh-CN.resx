@@ -156,6 +156,9 @@
   <data name="chkShareOverLAN.ToolTip" xml:space="preserve">
     <value>允许局域网访问代理</value>
   </data>
+  <data name="cboxInMode.Items3" xml:space="preserve">
+    <value>自定义</value>
+  </data>
   <data name="cboxInMode.ToolTip" xml:space="preserve">
     <value />
   </data>
@@ -192,8 +195,17 @@
   <data name="cboxAutorun.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="tboxRemark.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkImport.ToolTip" xml:space="preserve">
     <value>注入全局import</value>
+  </data>
+  <data name="chkRemark.Text" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="chkRemark.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="chkAutorun.Text" xml:space="preserve">
     <value>自启动</value>

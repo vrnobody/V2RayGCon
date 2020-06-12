@@ -38,7 +38,7 @@ namespace V2RayGCon.Libs.V2Ray
             {
                 if (string.IsNullOrEmpty(_v2ctl))
                 {
-                    _v2ctl = GetExecutablePath(StrConst.ExecutableV2ctl);
+                    _v2ctl = GetExecutablePath(VgcApis.Models.Consts.Core.V2RayCtlExeFileName);
                 }
                 return _v2ctl;
             }
@@ -82,7 +82,7 @@ namespace V2RayGCon.Libs.V2Ray
             }
 
             var queryParam = string.Format(
-                StrConst.StatsQueryParamTpl,
+                VgcApis.Models.Consts.Core.StatsQueryParamTpl,
                 port.ToString(),
                 isUplink ? "uplink" : "downlink");
 
@@ -132,7 +132,7 @@ namespace V2RayGCon.Libs.V2Ray
             List<string> folders = GenV2RayCoreSearchPaths(setting.isPortable);
             for (var i = 0; i < folders.Count; i++)
             {
-                var file = Path.Combine(folders[i], fileName ?? StrConst.ExecutableV2ray);
+                var file = Path.Combine(folders[i], fileName ?? VgcApis.Models.Consts.Core.V2RayCoreExeFileName);
                 if (File.Exists(file))
                 {
                     return file;

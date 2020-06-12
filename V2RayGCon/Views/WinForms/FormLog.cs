@@ -15,6 +15,7 @@ namespace V2RayGCon.Views.WinForms
         Services.Settings setting;
 
         VgcApis.UserControls.RepaintController repaintCtrl;
+        bool isPaused = false;
         long updateTimeStamp = DateTime.Now.Ticks;
         Timer updateLogTimer = new Timer { Interval = 500 };
         VgcApis.Libs.Tasks.Bar bar = new VgcApis.Libs.Tasks.Bar();
@@ -44,6 +45,7 @@ namespace V2RayGCon.Views.WinForms
             repaintCtrl = new VgcApis.UserControls.RepaintController(rtBoxLogger);
             updateLogTimer.Tick += UpdateLog;
             updateLogTimer.Start();
+            SetIsPause(false);
 
             // throw new NullReferenceException("for debugging");
         }
@@ -58,6 +60,11 @@ namespace V2RayGCon.Views.WinForms
 
         void UpdateLog(object sender, EventArgs args)
         {
+            if (isPaused)
+            {
+                return;
+            }
+
             if (!bar.Install())
             {
                 return;
@@ -85,6 +92,35 @@ namespace V2RayGCon.Views.WinForms
                 bar.Remove();
             }
         }
+
+        void SetIsPause(bool isPaused)
+        {
+            this.isPaused = isPaused;
+            pauseToolStripMenuItem.Checked = isPaused;
+        }
         #endregion
+
+        #region UI events
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetIsPause(!isPaused);
+        }
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var logs = setting.GetLogContent();
+            var msg = VgcApis.Misc.Utils.CopyToClipboard(logs) ?
+                Resources.Resx.I18N.CopySuccess : 
+                Resources.Resx.I18N.CopyFail;
+            VgcApis.Misc.UI.MsgBoxAsync(msg);
+        }
+
+        #endregion
+
+
     }
 }

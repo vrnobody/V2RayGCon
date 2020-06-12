@@ -105,15 +105,30 @@ namespace V2RayGCon.Services
             string ip,
             int port)
         {
-            switch (inbType)
+            if (inbType == (int)Models.Datas.Enums.ProxyTypes.Config)
             {
-                case (int)Models.Datas.Enums.ProxyTypes.HTTP:
-                case (int)Models.Datas.Enums.ProxyTypes.SOCKS:
-                    break;
+                return true;
+            }
 
-                case (int)Models.Datas.Enums.ProxyTypes.Config:
-                default:
+            if (inbType == (int)Models.Datas.Enums.ProxyTypes.Custom)
+            {
+                try
+                {
+                    var inbs = JArray.Parse(setting.CustomDefInbounds);
+                    config["inbounds"] = inbs;
                     return true;
+                }
+                catch
+                {
+                    setting.SendLog(I18N.ParseCustomInboundsSettingFail);
+                }
+                return false;
+            }
+
+            if (inbType != (int)Models.Datas.Enums.ProxyTypes.HTTP
+                && inbType != (int)Models.Datas.Enums.ProxyTypes.SOCKS)
+            {
+                return false;
             }
 
             var protocol = Misc.Utils.InboundTypeNumberToName(inbType);

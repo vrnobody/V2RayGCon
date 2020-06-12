@@ -313,15 +313,7 @@ namespace V2RayGCon.Test
             }
         }
 
-        [DataTestMethod]
-        [DataRow("http://abc.com https://def.com", 0)]
-        [DataRow("<a href='http://abc.com' ></a> https://def.com", 1)]
-        [DataRow("<a href='a' ></a> https://def.com", 1)]
-        public void FindAllHrefTest(string html, int count)
-        {
-            var links = Misc.Utils.FindAllHrefs(html);
-            Assert.AreEqual(count, links.Count());
-        }
+
 
         [TestMethod]
         public void ExtractLinks_HttpLink()

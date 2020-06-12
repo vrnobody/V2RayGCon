@@ -1343,6 +1343,7 @@ namespace VgcApis.Misc
             return Math.Max(Math.Min(value, max - 1), min);
         }
 
+        static readonly Random randHexSource = new Random();
         public static string RandomHex(int length)
         {
             //  https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c
@@ -1351,12 +1352,20 @@ namespace VgcApis.Misc
                 return string.Empty;
             }
 
-            Random random = new Random();
             const string chars = "0123456789abcdef";
-            return new string(
-                Enumerable.Repeat(chars, length)
-                    .Select(s => s[random.Next(s.Length)])
-                    .ToArray());
+            int charLen = chars.Length;
+
+            int rndIndex;
+            StringBuilder sb = new StringBuilder("");
+            lock (randHexSource)
+            {
+                for (int i = 0; i < length; i++)
+                {
+                    rndIndex = randHexSource.Next(charLen);
+                    sb.Append(chars[rndIndex]);
+                }
+            }
+            return sb.ToString();
         }
         #endregion
 

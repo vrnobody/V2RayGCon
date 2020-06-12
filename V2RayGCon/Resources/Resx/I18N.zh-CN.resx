@@ -741,4 +741,16 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="ConfirmClearSpeedTestResults" xml:space="preserve">
     <value>清除速度测试数据?</value>
   </data>
+  <data name="LocateTargetFolderFail" xml:space="preserve">
+    <value>定位目标文件不会失败！</value>
+  </data>
+  <data name="ParseCustomInboundsSettingFail" xml:space="preserve">
+    <value>解释自定义inbounds失败！</value>
+  </data>
+  <data name="InbModeCustomToolTip" xml:space="preserve">
+    <value>使用选项窗口中的自定义inbounds设定</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>自定义</value>
+  </data>
 </root>

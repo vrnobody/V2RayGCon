@@ -23,7 +23,8 @@ namespace V2RayGCon.Models.Datas
         public static readonly string[] customInbTypeNames = new string[] {
             "config",
             "http",
-            "socks"
+            "socks",
+            "custom",
         };
 
         public static readonly Dictionary<int, string> ssMethods = new Dictionary<int, string>

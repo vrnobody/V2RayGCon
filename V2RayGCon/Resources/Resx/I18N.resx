@@ -750,4 +750,16 @@ No, abort.</value>
   <data name="ConfirmClearSpeedTestResults" xml:space="preserve">
     <value>Clear speed test results?</value>
   </data>
+  <data name="LocateTargetFolderFail" xml:space="preserve">
+    <value>Locate target folder fail.</value>
+  </data>
+  <data name="ParseCustomInboundsSettingFail" xml:space="preserve">
+    <value>Parse custom inbound setting fail!</value>
+  </data>
+  <data name="InbModeCustomToolTip" xml:space="preserve">
+    <value>Use custom inbounds setting in option window.</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
 </root>

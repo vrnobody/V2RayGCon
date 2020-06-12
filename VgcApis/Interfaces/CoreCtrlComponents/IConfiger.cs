@@ -13,7 +13,7 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
 
         bool IsSuitableToBeUsedAsSysProxy(bool isGlobal, out bool isSocks, out int port);
 
-        void UpdateSummaryThen(Action next = null);
+        void UpdateSummary();
 
         void GetterInfoForNotifyIconf(Action<string> next);
     }

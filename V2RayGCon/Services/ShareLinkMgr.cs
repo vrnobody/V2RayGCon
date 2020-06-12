@@ -202,7 +202,8 @@ namespace V2RayGCon.Services
 
             if (IsAddNewServer(list))
             {
-                servers.UpdateAllServersSummaryBg();
+                VgcApis.Misc.Utils.RunInBackground(
+                    servers.UpdateAllServersSummary);
             }
 
             VgcApis.Misc.Utils.RunInBackground(() =>

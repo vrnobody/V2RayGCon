@@ -98,7 +98,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public void SetIsInjectImport(bool IsInjectImport)
         {
             SetSettingsPropertyOnDemand(ref coreInfo.isInjectImport, IsInjectImport, true);
-            configer.UpdateSummaryThen(() => GetParent().InvokeEventOnPropertyChange());
+            configer.UpdateSummary();
         }
 
         public VgcApis.Models.Datas.CoreInfo GetAllRawCoreInfo() => coreInfo;
@@ -117,7 +117,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     string newUid;
                     do
                     {
-                        newUid = Misc.Utils.RandomHex(16);
+                        newUid = VgcApis.Misc.Utils.RandomHex(16);
                     } while (uidList.Contains(newUid));
 
                     coreInfo.uid = newUid;

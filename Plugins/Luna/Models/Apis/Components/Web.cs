@@ -116,9 +116,6 @@ namespace Luna.Models.Apis.Components
         public string PatchHref(string url, string href) =>
             vgcWeb.PatchHref(url, href);
 
-        public List<string> FindAllHrefs(string text) =>
-            vgcWeb.FindAllHrefs(text);
-
 
 
         #endregion

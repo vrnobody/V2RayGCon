@@ -124,6 +124,10 @@
   <data name="&gt;&gt;chkInPort.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tboxRemark.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
   <data name="chkIncrement.ToolTip" xml:space="preserve">
     <value>Auto increment port number.</value>
   </data>
@@ -153,9 +157,8 @@
     <value>3</value>
   </data>
   <data name="cboxImport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 61</value>
+    <value>87, 91</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
@@ -193,10 +196,10 @@
     <value>12, 39</value>
   </data>
   <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>306, 108</value>
+    <value>306, 144</value>
   </data>
   <data name="&gt;&gt;chkImport.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
     <value>$this</value>
@@ -204,11 +207,14 @@
   <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="chkRemark.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
   <data name="&gt;&gt;chkIsInjectSkipCNSite.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>340, 249</value>
+    <value>340, 292</value>
   </data>
   <data name="&gt;&gt;cboxMark.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -219,8 +225,8 @@
   <data name="&gt;&gt;cboxInMode.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="chkImport.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;tboxRemark.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cboxMark.Name" xml:space="preserve">
     <value>cboxMark</value>
@@ -252,6 +258,9 @@
   <data name="chkInPort.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
+  <data name="chkRemark.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnCancel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
@@ -261,8 +270,8 @@
   <data name="cboxInMode.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="chkImport.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;chkInMode.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -291,17 +300,23 @@
   <data name="cboxIsInjectSkipCNSite.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 20</value>
   </data>
+  <data name="chkMark.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkInIP.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;chkImport.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="chkIsInjectSkipCNSite.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
   <data name="cboxImport.Items" xml:space="preserve">
     <value>True</value>
   </data>
   <data name="&gt;&gt;chkInMode.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxRemark.Name" xml:space="preserve">
+    <value>tboxRemark</value>
   </data>
   <data name="cboxMark.Location" type="System.Drawing.Point, System.Drawing">
     <value>87, 18</value>
@@ -314,6 +329,9 @@
   </data>
   <data name="cboxIsInjectSkipCNSite.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
+  </data>
+  <data name="cboxIsInjectSkipCNSite.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;chkShareOverLAN.Name" xml:space="preserve">
     <value>chkShareOverLAN</value>
@@ -331,16 +349,19 @@
     <value>cboxImport</value>
   </data>
   <data name="chkImport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 62</value>
+    <value>12, 93</value>
   </data>
   <data name="&gt;&gt;chkIsInjectSkipCNSite.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="chkIsInjectSkipCNSite.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 83</value>
+    <value>12, 117</value>
   </data>
-  <data name="chkMark.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;tboxRemark.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;chkRemark.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="chkShareOverLAN.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -354,8 +375,11 @@
   <data name="cboxImport.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
+  <data name="&gt;&gt;chkRemark.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
   <data name="&gt;&gt;chkAutorun.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;tboxInIP.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -366,11 +390,14 @@
   <data name="cboxMark.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 20</value>
   </data>
+  <data name="&gt;&gt;tboxRemark.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
   <data name="chkInPort.Text" xml:space="preserve">
     <value>Port</value>
   </data>
-  <data name="cboxIsInjectSkipCNSite.ToolTip" xml:space="preserve">
-    <value />
+  <data name="chkRemark.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="chkIncrement.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -399,8 +426,11 @@
   <data name="&gt;&gt;cboxIsInjectSkipCNSite.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
-    <value>groupBox2</value>
+  <data name="chkRemark.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 44</value>
+  </data>
+  <data name="cboxInMode.Items3" xml:space="preserve">
+    <value>Custom</value>
   </data>
   <data name="cboxInMode.Items2" xml:space="preserve">
     <value>SOCKS</value>
@@ -414,14 +444,23 @@
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="tboxRemark.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 42</value>
+  </data>
   <data name="cboxAutorun.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 39</value>
+    <value>87, 67</value>
   </data>
   <data name="&gt;&gt;cboxMark.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="chkImport.ToolTip" xml:space="preserve">
     <value>Inject global import.</value>
+  </data>
+  <data name="chkRemark.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 16</value>
+  </data>
+  <data name="chkRemark.Text" xml:space="preserve">
+    <value>Remark</value>
   </data>
   <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -438,8 +477,8 @@
   <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="chkMark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 19</value>
+  <data name="chkRemark.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;btnModify.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -462,8 +501,8 @@
   <data name="&gt;&gt;chkIsInjectSkipCNSite.Parent" xml:space="preserve">
     <value>groupBox2</value>
   </data>
-  <data name="chkShareOverLAN.ToolTip" xml:space="preserve">
-    <value>Share proxy over LAN.</value>
+  <data name="btnModify.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
   </data>
   <data name="cboxInMode.Items" xml:space="preserve">
     <value>Config</value>
@@ -471,8 +510,8 @@
   <data name="&gt;&gt;chkInIP.Name" xml:space="preserve">
     <value>chkInIP</value>
   </data>
-  <data name="chkImport.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="btnCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
   </data>
   <data name="&gt;&gt;chkMark.Name" xml:space="preserve">
     <value>chkMark</value>
@@ -489,14 +528,26 @@
   <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="chkRemark.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkShareOverLAN.ToolTip" xml:space="preserve">
+    <value>Share proxy over LAN.</value>
+  </data>
   <data name="cboxAutorun.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 20</value>
+  </data>
+  <data name="&gt;&gt;chkImport.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 13</value>
   </data>
   <data name="chkAutorun.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 16</value>
+  </data>
+  <data name="chkAutorun.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;cboxImport.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -513,11 +564,14 @@
   <data name="tboxInPort.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
+  <data name="groupBox1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;cboxIsInjectSkipCNSite.Parent" xml:space="preserve">
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;chkMark.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="tboxInIP.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -540,14 +594,14 @@
   <data name="&gt;&gt;chkMark.Parent" xml:space="preserve">
     <value>groupBox2</value>
   </data>
+  <data name="&gt;&gt;chkRemark.Name" xml:space="preserve">
+    <value>chkRemark</value>
+  </data>
   <data name="chkIncrement.Location" type="System.Drawing.Point, System.Drawing">
     <value>223, 62</value>
   </data>
   <data name="chkMark.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;chkIncrement.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tboxInPort.ZOrder" xml:space="preserve">
     <value>4</value>
@@ -564,8 +618,8 @@
   <data name="groupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
-  <data name="chkAutorun.ToolTip" xml:space="preserve">
-    <value />
+  <data name="tboxRemark.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
   <data name="chkIsInjectSkipCNSite.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -574,7 +628,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="btnModify.Location" type="System.Drawing.Point, System.Drawing">
-    <value>105, 220</value>
+    <value>105, 260</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormBatchModifyServerSetting</value>
@@ -588,8 +642,8 @@
   <data name="cboxAutorun.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="chkIsInjectSkipCNSite.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 16</value>
+  <data name="&gt;&gt;chkIncrement.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="tboxInPort.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 21</value>
@@ -624,8 +678,8 @@
   <data name="&gt;&gt;chkShareOverLAN.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-  <data name="chkIsInjectSkipCNSite.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+  <data name="chkMark.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 20</value>
   </data>
   <data name="chkInMode.ToolTip" xml:space="preserve">
     <value>Inbound protocol. Config means keep the original config.</value>
@@ -636,8 +690,8 @@
   <data name="groupBox2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
-  <data name="groupBox1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="chkImport.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="chkImport.Text" xml:space="preserve">
     <value>Import</value>
@@ -667,10 +721,13 @@
     <value />
   </data>
   <data name="cboxIsInjectSkipCNSite.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 82</value>
+    <value>87, 115</value>
   </data>
   <data name="&gt;&gt;chkInIP.ZOrder" xml:space="preserve">
     <value>7</value>
+  </data>
+  <data name="chkIsInjectSkipCNSite.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 16</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 12</value>
@@ -699,8 +756,17 @@
   <data name="chkMark.Text" xml:space="preserve">
     <value>Mark</value>
   </data>
+  <data name="tboxRemark.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxRemark.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 21</value>
+  </data>
   <data name="cboxImport.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 20</value>
+  </data>
+  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="&gt;&gt;chkAutorun.Parent" xml:space="preserve">
     <value>groupBox2</value>
@@ -739,7 +805,7 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>173, 220</value>
+    <value>173, 260</value>
   </data>
   <data name="&gt;&gt;tboxInIP.ZOrder" xml:space="preserve">
     <value>5</value>
@@ -766,13 +832,16 @@
     <value>4</value>
   </data>
   <data name="chkAutorun.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 41</value>
+    <value>12, 69</value>
   </data>
   <data name="chkAutorun.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="&gt;&gt;btnModify.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
+    <value>groupBox2</value>
   </data>
   <data name="chkInPort.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 62</value>
@@ -785,6 +854,9 @@
   </data>
   <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkRemark.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

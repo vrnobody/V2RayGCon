@@ -9,8 +9,6 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
         public string PatchHref(string url, string href) =>
             Misc.Utils.PatchHref(url, href);
 
-        public List<string> FindAllHrefs(string text) =>
-            Misc.Utils.FindAllHrefs(text);
 
         public List<string> ExtractLinks(
             string text,

@@ -12,7 +12,8 @@ namespace V2RayGCon.Libs.Nets
         public event EventHandler<VgcApis.Models.Datas.IntEvent> OnProgress;
 
         string _packageName;
-        string _version;
+        string _version = @"v4.23.4";
+        string _source = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(0);
         string _sha256sum = null;
         readonly object waitForDigest = new object();
 
@@ -24,16 +25,20 @@ namespace V2RayGCon.Libs.Nets
         public Downloader(Services.Settings setting)
         {
             this.setting = setting;
-
             SetArchitecture(false);
-            _version = StrConst.DefCoreVersion;
             webClient = null;
         }
 
         #region public method
+        public void SetSource(int index)
+        {
+            _source = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(index);
+        }
+
         public void SetArchitecture(bool win64 = false)
         {
-            _packageName = win64 ? StrConst.PkgWin64 : StrConst.PkgWin32;
+            var arch = win64 ? "64" : "32";
+            _packageName = $"v2ray-windows-{arch}.zip";
         }
 
         public void SetVersion(string version)
@@ -66,6 +71,7 @@ namespace V2RayGCon.Libs.Nets
             var filename = GetLocalFilename();
             if (string.IsNullOrEmpty(path) || string.IsNullOrEmpty(filename))
             {
+                setting.SendLog(I18N.LocateTargetFolderFail);
                 return false;
             }
 
@@ -79,14 +85,15 @@ namespace V2RayGCon.Libs.Nets
                 }
             }
 
-            VgcApis.Misc.Utils.Sleep(2000);
+            VgcApis.Misc.Utils.Sleep(1000);
             try
             {
+                RemoveOldExe(path);
                 Misc.Utils.ZipFileDecompress(filename, path);
             }
-            catch
+            catch (Exception ex)
             {
-                setting.SendLog(I18N.DecompressFileFail);
+                setting.SendLog(I18N.DecompressFileFail + Environment.NewLine + ex.ToString());
                 return false;
             }
             return true;
@@ -105,6 +112,39 @@ namespace V2RayGCon.Libs.Nets
         #endregion
 
         #region private method
+        void RemoveOldExe(string path)
+        {
+            string[] exes = new string[] {
+                VgcApis.Models.Consts.Core.V2RayCoreExeFileName,
+                VgcApis.Models.Consts.Core.V2RayCtlExeFileName,
+            };
+
+            string prefix = "bak";
+
+            foreach (var exe in exes)
+            {
+                var newFn = Path.Combine(path, $"{prefix}.{exe}");
+                if (File.Exists(newFn))
+                {
+                    try
+                    {
+                        File.Delete(newFn);
+                    }
+                    catch
+                    {
+                        var now = DateTime.Now.ToString("yyyy-MM-dd.HHmmss.ffff");
+                        newFn = Path.Combine(path, $"{prefix}.{now}.{exe}");
+                    }
+                }
+
+                var orgFn = Path.Combine(path, exe);
+                if (File.Exists(orgFn))
+                {
+                    File.Move(orgFn, newFn);
+                }
+            }
+        }
+
         void SendProgress(int percentage)
         {
             try
@@ -137,7 +177,7 @@ namespace V2RayGCon.Libs.Nets
             var pluginServ = Services.PluginsServer.Instance;
 
             pluginServ.StopAllPlugins();
-            VgcApis.Misc.Utils.Sleep(3000);
+            VgcApis.Misc.Utils.Sleep(1000);
 
             var activeServerList = servers.GetRunningServers();
             servers.StopAllServersThen(() =>
@@ -217,10 +257,16 @@ namespace V2RayGCon.Libs.Nets
                 ?.Trim();
         }
 
+        string GenReleaseUrl()
+        {
+            // tail =  "/releases/download/{0}/{1}";
+            string tpl = _source + @"/download/{0}/{1}";
+            return string.Format(tpl, _version, _packageName);
+        }
+
         void Download()
         {
-            string tpl = StrConst.DownloadLinkTpl;
-            string url = string.Format(tpl, _version, _packageName);
+            string url = GenReleaseUrl();
 
             lock (waitForDigest)
             {

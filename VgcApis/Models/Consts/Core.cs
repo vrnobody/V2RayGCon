@@ -4,6 +4,35 @@ namespace VgcApis.Models.Consts
 {
     static public class Core
     {
+        public static string StatsQueryParamTpl = "api --server=\"127.0.0.1:{0}\" StatsService.GetStats \"name: \"\"\"\"inbound>>>agentin>>>traffic>>>{1}\"\"\"\" reset: true\"";
+
+        public static string V2RayCtlExeFileName = "v2ctl.exe";
+        public static string V2RayCoreExeFileName = "v2ray.exe";
+
+        public static string[] SourceUrls = new string[]
+        {
+            @"https://github.com/v2ray/v2ray-core/releases",
+            @"https://github.com/v2fly/v2ray-core/releases",
+        };
+
+        public static int GetIndexBySourceUrl(string url)
+        {
+            for (int i = 0; i < SourceUrls.Length; i++)
+            {
+                if (SourceUrls[i] == url)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public static string GetSourceUrlByIndex(int index)
+        {
+            index = Misc.Utils.Clamp(index, 0, SourceUrls.Length);
+            return SourceUrls[index];
+        }
+
         public static string StdIn = @"stdin:";
         public static string ConfigArg = @"config";
 

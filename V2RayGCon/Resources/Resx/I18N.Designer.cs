@@ -577,6 +577,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Custom 的本地化字符串。
+        /// </summary>
+        internal static string Custom {
+            get {
+                return ResourceManager.GetString("Custom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Data too big. Please trim down the config file. 的本地化字符串。
         /// </summary>
         internal static string DataTooBig {
@@ -1037,6 +1046,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Use custom inbounds setting in option window. 的本地化字符串。
+        /// </summary>
+        internal static string InbModeCustomToolTip {
+            get {
+                return ResourceManager.GetString("InbModeCustomToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Inject packageing imports fail, ignore imports. 的本地化字符串。
         /// </summary>
         internal static string InjectPackagingImportsFail {
@@ -1096,6 +1114,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string LoadJsonFail {
             get {
                 return ResourceManager.GetString("LoadJsonFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Locate target folder fail. 的本地化字符串。
+        /// </summary>
+        internal static string LocateTargetFolderFail {
+            get {
+                return ResourceManager.GetString("LocateTargetFolderFail", resourceCulture);
             }
         }
         
@@ -1333,6 +1360,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string PacProxy {
             get {
                 return ResourceManager.GetString("PacProxy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Parse custom inbound setting fail! 的本地化字符串。
+        /// </summary>
+        internal static string ParseCustomInboundsSettingFail {
+            get {
+                return ResourceManager.GetString("ParseCustomInboundsSettingFail", resourceCulture);
             }
         }
         

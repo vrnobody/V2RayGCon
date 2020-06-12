@@ -33,10 +33,22 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.4.0.0")]
+[assembly: AssemblyVersion("1.4.1.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * ------------------------------------------------
+ * v1.4.0.11 18080 -> 8080
+ * v1.4.0.10 Print server index in logs.
+ * v1.4.0.9 Remove HtmlAgilityPack.
+ * v1.4.0.8 Keep current selections in searching.
+ * v1.4.0.7 Refactoring.
+ * v1.4.0.6 Try to fix a dead lock.
+ * v1.4.0.5 Create menu items on demand.
+ * v1.4.0.4 Fix a bug in Misc:RandHex().
+ * v1.4.0.3 Add v2fly as core update source.
+ * v1.4.0.2 Custom inbounds support.
+ * v1.4.0.1 Fix a bug in v2ray-core updating.
  * ----------------------------------------
  * v1.3.9.8 Fix a bug which would block core updating.
  * v1.3.9.7 Add luasocket and luasec.

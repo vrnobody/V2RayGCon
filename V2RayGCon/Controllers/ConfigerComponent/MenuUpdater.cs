@@ -12,96 +12,99 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         Views.WinForms.FormConfiger formConfiger;
         ToolStripMenuItem miReplaceServer, miLoadServer;
 
-        VgcApis.Libs.Tasks.LazyGuy lazyServerMenuItemsUpdater;
-
         public MenuUpdater(
             Views.WinForms.FormConfiger formConfiger,
             ToolStripMenuItem miReplaceServer,
             ToolStripMenuItem miLoadServer)
         {
             servers = Services.Servers.Instance;
-
             this.formConfiger = formConfiger;
             this.miReplaceServer = miReplaceServer;
             this.miLoadServer = miLoadServer;
 
-            lazyServerMenuItemsUpdater = new VgcApis.Libs.Tasks.LazyGuy(
-                ServerMenuItemsUpdateWorker,
-                VgcApis.Models.Consts.Intervals.FormConfigerMenuUpdateDelay,
-                1500)
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                Name = "Vgc.Configer.MenuUpdater",
-            };
+                VgcApis.Misc.Utils.Sleep(2000);
+                ServerMenuItemsUpdateWorker();
+            });
+
         }
 
         #region properties
         #endregion
 
         #region private method
-        void ServerMenuItemsUpdateWorker()
+        List<string[]> CollectServNameAndConfig()
         {
-            var loadServMiList = new List<ToolStripMenuItem>();
-            var replaceServMiList = new List<ToolStripMenuItem>();
-
-            try
+            var serverList = servers.GetAllServersOrderByIndex();
+            var servInfos = new List<string[]>();
+            for (int i = 0; i < serverList.Count; i++)
             {
-                var serverList = servers.GetAllServersOrderByIndex();
+                var coreServ = serverList[i];
+                var coreState = coreServ.GetCoreStates();
 
+                var name = string.Format(
+                    "{0}.{1}",
+                    coreState.GetIndex(),
+                    coreState.GetLongName());
 
-
-                for (int i = 0; i < serverList.Count; i++)
-                {
-                    var coreServ = serverList[i];
-                    var coreState = coreServ.GetCoreStates();
-
-                    var name = string.Format(
-                        "{0}.{1}",
-                        coreState.GetIndex(),
-                        coreState.GetLongName());
-
-
-                    var org = coreServ.GetConfiger().GetConfig();
-                    loadServMiList.Add(GenMenuItemLoad(name, org));
-                    replaceServMiList.Add(GenMenuItemReplace(name, org));
-                }
+                var org = coreServ.GetConfiger().GetConfig();
+                servInfos.Add(new string[] { name, org });
             }
-            catch
-            {
-                return;
-            }
-
-            VgcApis.Misc.UI.Invoke(
-                () => ReplaceOldMenus(loadServMiList, replaceServMiList));
+            return servInfos;
         }
 
-        private void ReplaceOldMenus(
-            List<ToolStripMenuItem> loadServMiList,
-            List<ToolStripMenuItem> replaceServMiList)
+        void ServerMenuItemsUpdateWorker()
         {
-            var miRootReplace = miReplaceServer.DropDownItems;
-            var miRootLoad = miLoadServer.DropDownItems;
+            // step 1 bg
+            var servInfos = CollectServNameAndConfig();
 
-            miRootReplace.Clear();
-            miRootLoad.Clear();
-
-            if (loadServMiList.Count <= 0)
+            // step 2 ui
+            VgcApis.Misc.UI.Invoke(() =>
             {
-                miReplaceServer.Enabled = false;
-                miLoadServer.Enabled = false;
+                var miRootReplace = miReplaceServer.DropDownItems;
+                var miRootLoad = miLoadServer.DropDownItems;
+                miRootReplace.Clear();
+                miRootLoad.Clear();
+            });
+
+            if (servInfos.Count <= 0)
+            {
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    miReplaceServer.Enabled = false;
+                    miLoadServer.Enabled = false;
+                });
                 return;
             }
 
+            // step 3 ui
+            var loadServMiList = new List<ToolStripMenuItem>();
+            var replaceServMiList = new List<ToolStripMenuItem>();
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                foreach (var si in servInfos)
+                {
+                    loadServMiList.Add(GenMenuItemLoad(si[0], si[1]));
+                    replaceServMiList.Add(GenMenuItemReplace(si[0], si[1]));
+                }
+            });
+
+            // step 4 bg
             var groupSize = VgcApis.Models.Consts.Config.MenuItemGroupSize;
-            var groupedMiLoad = VgcApis.Misc.UI.AutoGroupMenuItems(
-                loadServMiList, groupSize);
-            var groupedMiReplace = VgcApis.Misc.UI.AutoGroupMenuItems(
-                replaceServMiList, groupSize);
+            var groupedMiLoad = VgcApis.Misc.UI.AutoGroupMenuItems(loadServMiList, groupSize);
+            var groupedMiReplace = VgcApis.Misc.UI.AutoGroupMenuItems(replaceServMiList, groupSize);
 
-            miRootLoad.AddRange(groupedMiLoad.ToArray());
-            miRootReplace.AddRange(groupedMiReplace.ToArray());
-
-            miLoadServer.Enabled = true;
-            miReplaceServer.Enabled = true;
+            // step 5 ui
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                var miRootReplace = miReplaceServer.DropDownItems;
+                var miRootLoad = miLoadServer.DropDownItems;
+                miRootLoad.AddRange(groupedMiLoad.ToArray());
+                miRootReplace.AddRange(groupedMiReplace.ToArray());
+                miLoadServer.Enabled = true;
+                miReplaceServer.Enabled = true;
+            });
         }
 
         private ToolStripMenuItem GenMenuItemLoad(string name, string orgConfig)
@@ -142,11 +145,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         #region public method
         public void Cleanup()
         {
-            lazyServerMenuItemsUpdater?.Dispose();
-        }
 
-        public void UpdateMenusLater() =>
-            lazyServerMenuItemsUpdater?.Deadline();
+        }
 
         public override void Update(JObject config) { }
         #endregion

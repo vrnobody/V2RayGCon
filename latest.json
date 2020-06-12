@@ -1,13 +1,13 @@
 {
-  "version": "1.4.0.0",
-  "md5": "8816FFC4AE420E2DCF4C85E095140616",
+  "version": "1.4.1.0",
+  "md5": "FBA07992FB60D42B3692673284690751",
   "warnings": [],
   "changes": [
-    "Luna界面少量调整",
-    "添加luasocket、luasec模块",
-    "添加Sys:CreateHttpServer()、Sys:Volume*()",
-    "Misc:Choice()支持数字键选取及双击确定",
-    "托盘菜单可以停止脚本",
-    "少量其他bug修复"
+    "添加自定义inbounds选项",
+    "添加可选v2fly更新源",
+    "修复了一个磨人的小(死)妖(锁)精",
+    "修复文件占用引起的v2ray-core更新失败问题",
+    "主窗口搜索时保留当前的选中状态",
+    "删除Luna中的Web:FindAllHrefs()函数"
   ]
 }

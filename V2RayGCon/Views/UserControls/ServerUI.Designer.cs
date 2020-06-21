@@ -157,11 +157,11 @@
             this.rlbLastModify._BackColor = System.Drawing.Color.SandyBrown;
             this.rlbLastModify.AutoEllipsis = true;
             resources.ApplyResources(this.rlbLastModify, "rlbLastModify");
-            this.rlbLastModify.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.rlbLastModify.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rlbLastModify.ForeColor = System.Drawing.Color.DimGray;
             this.rlbLastModify.Name = "rlbLastModify";
             this.toolTip1.SetToolTip(this.rlbLastModify, resources.GetString("rlbLastModify.ToolTip"));
-            this.rlbLastModify.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbLastModify_MouseDown);
+            this.rlbLastModify.Click += new System.EventHandler(this.rlbLastModify_Click);
             // 
             // rlbSpeedtest
             // 
@@ -169,11 +169,11 @@
             this.rlbSpeedtest.AutoEllipsis = true;
             resources.ApplyResources(this.rlbSpeedtest, "rlbSpeedtest");
             this.rlbSpeedtest.BackColor = System.Drawing.SystemColors.Control;
-            this.rlbSpeedtest.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.rlbSpeedtest.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rlbSpeedtest.ForeColor = System.Drawing.Color.Red;
             this.rlbSpeedtest.Name = "rlbSpeedtest";
             this.toolTip1.SetToolTip(this.rlbSpeedtest, resources.GetString("rlbSpeedtest.ToolTip"));
-            this.rlbSpeedtest.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbSpeedtest_MouseDown);
+            this.rlbSpeedtest.Click += new System.EventHandler(this.rlbSpeedtest_Click);
             // 
             // rlbInboundMode
             // 

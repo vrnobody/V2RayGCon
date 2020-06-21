@@ -675,16 +675,6 @@ namespace V2RayGCon.Views.UserControls
             coreServCtrl.GetCoreCtrl().StopCoreThen();
         }
 
-        private void rlbLastModify_MouseDown(object sender, MouseEventArgs e)
-        {
-            UserMouseDown();
-        }
-
-        private void rlbSpeedtest_MouseDown(object sender, MouseEventArgs e)
-        {
-            UserMouseDown();
-        }
-
         private void rlbSetting_Click(object sender, EventArgs e)
         {
             ShowModifyConfigsWinForm();
@@ -696,6 +686,16 @@ namespace V2RayGCon.Views.UserControls
         }
 
         private void rlbMark_Click(object sender, EventArgs e)
+        {
+            ShowModifyConfigsWinForm();
+        }
+
+        private void rlbLastModify_Click(object sender, EventArgs e)
+        {
+            ShowModifyConfigsWinForm();
+        }
+
+        private void rlbSpeedtest_Click(object sender, EventArgs e)
         {
             ShowModifyConfigsWinForm();
         }

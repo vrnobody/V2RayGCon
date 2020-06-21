@@ -172,7 +172,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             var outVmess = LoadVmessDecodeTemplate();
 
-            outVmess["streamSettings"] = GenStreamSetting(vmess);
+            var streamToken = JObject.Parse(@"{streamSettings:{}}");
+            streamToken["streamSettings"] = GenStreamSetting(vmess);
+            var o = outVmess as JObject;
+            Misc.Utils.MergeJson(ref o, streamToken);
+
             var node = outVmess["settings"]["vnext"][0];
             node["address"] = vmess.add;
             node["port"] = VgcApis.Misc.Utils.Str2Int(vmess.port);

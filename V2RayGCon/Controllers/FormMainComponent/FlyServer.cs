@@ -111,6 +111,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             UnwatchServers();
 
+            tsdbtnPager.DropDownOpening -= StatusBarPagerDropdownMenuOpeningHandler;
+
             lazyFlyPanelUpdater?.Dispose();
             lazyStatusBarUpdater?.Dispose();
             lazySearchResultDisplayer?.Dispose();
@@ -147,7 +149,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             Action worker = () =>
             {
                 UpdateStatusBarText(filteredListCount, allServersCount, selectedServersCount, serverControlCount);
-                UpdateStatusBarPageSelectorMenuItemsOndemand();
                 UpdateStatusBarPagingButtons();
 
                 // prevent formain lost focus after click next page
@@ -283,20 +284,21 @@ namespace V2RayGCon.Controllers.FormMainComponent
             }
         }
 
-        private void UpdateStatusBarPageSelectorMenuItemsOndemand()
+        List<ToolStripMenuItem> pagerMenuItemCache = new List<ToolStripMenuItem>();
+        private void StatusBarPagerDropdownMenuOpeningHandler(object sender, EventArgs args)
         {
-            if (totalPageNumber == pagerMenuItemCache.Count())
+            if (totalPageNumber != pagerMenuItemCache.Count)
             {
-                return;
+                pagerMenuItemCache = CreateStatusBarPagerMenuItems();
+                var groupedMenu = VgcApis.Misc.UI.AutoGroupMenuItems(pagerMenuItemCache, VgcApis.Models.Consts.Config.MenuItemGroupSize);
+                tsdbtnPager.DropDownItems.AddRange(groupedMenu.ToArray());
             }
 
-            var pagerMenu = tsdbtnPager.DropDownItems;
-            pagerMenu.Clear();
-            UpdateStatusBarPagerMenuCache();
-            var groupedMenu = VgcApis.Misc.UI.AutoGroupMenuItems(
-                pagerMenuItemCache,
-                VgcApis.Models.Consts.Config.MenuItemGroupSize);
-            pagerMenu.AddRange(groupedMenu.ToArray());
+            var cpn = VgcApis.Misc.Utils.Clamp(curPageNumber, 0, totalPageNumber);
+            for (int i = 0; i < pagerMenuItemCache.Count; i++)
+            {
+                pagerMenuItemCache[i].Checked = cpn == i;
+            }
         }
 
         private void UpdateStatusBarPagingButtons()
@@ -314,18 +316,13 @@ namespace V2RayGCon.Controllers.FormMainComponent
             tslbPrePage.Enabled = cpn > 0;
             tslbNextPage.Enabled = totalPageNumber > 1 && cpn < totalPageNumber - 1;
             tsdbtnPager.Text = string.Format(I18N.StatusBarPagerInfoTpl, cpn + 1, totalPageNumber);
-
-            for (int i = 0; i < pagerMenuItemCache.Count; i++)
-            {
-                pagerMenuItemCache[i].Checked = cpn == i;
-            }
         }
 
-        readonly List<ToolStripMenuItem> pagerMenuItemCache = new List<ToolStripMenuItem>();
-        private void UpdateStatusBarPagerMenuCache()
+        List<ToolStripMenuItem> CreateStatusBarPagerMenuItems()
         {
+            var mis = new List<ToolStripMenuItem>();
+
             var ps = setting.serverPanelPageSize;
-            pagerMenuItemCache.Clear();
             for (int i = 0; i < totalPageNumber; i++)
             {
                 var pn = i;
@@ -342,8 +339,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
                         isFocusOnFormMain = true;
                         RefreshFlyPanelLater();
                     });
-                pagerMenuItemCache.Add(item);
+                mis.Add(item);
             }
+            return mis;
         }
 
         string searchKeywords = "";
@@ -366,6 +364,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem miResizeFormMain)
         {
             InitComboBoxMarkFilter();
+
+            tsdbtnPager.DropDownOpening += StatusBarPagerDropdownMenuOpeningHandler;
+
             tslbPrePage.Click += (s, a) =>
             {
                 curPageNumber--;

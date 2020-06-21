@@ -516,6 +516,7 @@
     <None Include="Resources\Files\lua\modules\set.lua" />
     <None Include="Resources\Files\lua\modules\writer.lua" />
     <None Include="Resources\Files\templates\basic\basic.json" />
+    <None Include="Resources\Files\templates\custom\vmessDecodeTemplate.json" />
     <None Include="Resources\Files\templates\routing\whitelist.json" />
     <None Include="V2RayGCon.ruleset" />
   </ItemGroup>
@@ -555,9 +556,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Files\templates\custom\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Plugins\Luna\Luna.csproj">
       <Project>{2d29f9e2-f358-4b07-8f50-1cbe4291eed8}</Project>

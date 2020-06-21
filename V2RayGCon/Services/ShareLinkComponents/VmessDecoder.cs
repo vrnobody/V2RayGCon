@@ -190,10 +190,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
             {
                 return cache.tpl.LoadTemplate("outbVmess");
             }
+
             try
             {
                 var str = System.IO.File.ReadAllText(setting.CustomVmessDecodeTemplateUrl);
-                return JToken.Parse(str);
+                return JObject.Parse(str);
             }
             catch
             {

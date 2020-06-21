@@ -100,7 +100,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             }
 
             setting.CustomVmessDecodeTemplateEnabled = chkDefVmessDecodeTemplateEnabled.Checked;
-            setting.CustomSpeedtestUrl = tboxDefVmessDecodeTemplateUrl.Text;
+            setting.CustomVmessDecodeTemplateUrl = tboxDefVmessDecodeTemplateUrl.Text;
 
             setting.CustomDefInbounds = exRTBoxDefCustomInbounds.Text;
 

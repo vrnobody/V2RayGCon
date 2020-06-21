@@ -1249,7 +1249,7 @@
     <value>ForcedVertical</value>
   </data>
   <data name="exRTBoxDefCustomInbounds.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 167</value>
+    <value>434, 140</value>
   </data>
   <data name="exRTBoxDefCustomInbounds.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1273,10 +1273,10 @@
     <value>0</value>
   </data>
   <data name="groupBox7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 164</value>
+    <value>13, 191</value>
   </data>
   <data name="groupBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 198</value>
+    <value>449, 171</value>
   </data>
   <data name="groupBox7.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1298,6 +1298,84 @@
   </data>
   <data name="groupBox4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
+  </data>
+  <data name="tboxDefImportVmessDecodeTemplateUrl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 67</value>
+  </data>
+  <data name="tboxDefImportVmessDecodeTemplateUrl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>307, 21</value>
+  </data>
+  <data name="tboxDefImportVmessDecodeTemplateUrl.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;tboxDefImportVmessDecodeTemplateUrl.Name" xml:space="preserve">
+    <value>tboxDefImportVmessDecodeTemplateUrl</value>
+  </data>
+  <data name="&gt;&gt;tboxDefImportVmessDecodeTemplateUrl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxDefImportVmessDecodeTemplateUrl.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;tboxDefImportVmessDecodeTemplateUrl.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="chkDefImportIsUseVmessDecodeTemplate.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkDefImportIsUseVmessDecodeTemplate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>398, 69</value>
+  </data>
+  <data name="chkDefImportIsUseVmessDecodeTemplate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 16</value>
+  </data>
+  <data name="chkDefImportIsUseVmessDecodeTemplate.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="chkDefImportIsUseVmessDecodeTemplate.Text" xml:space="preserve">
+    <value>Use</value>
+  </data>
+  <data name="chkDefImportIsUseVmessDecodeTemplate.ToolTip" xml:space="preserve">
+    <value>使用此解码模板</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportIsUseVmessDecodeTemplate.Name" xml:space="preserve">
+    <value>chkDefImportIsUseVmessDecodeTemplate</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportIsUseVmessDecodeTemplate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportIsUseVmessDecodeTemplate.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;chkDefImportIsUseVmessDecodeTemplate.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnDefImportBrowseVemssDecodeTemplate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 67</value>
+  </data>
+  <data name="btnDefImportBrowseVemssDecodeTemplate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 21</value>
+  </data>
+  <data name="btnDefImportBrowseVemssDecodeTemplate.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="btnDefImportBrowseVemssDecodeTemplate.Text" xml:space="preserve">
+    <value>VmessTpl</value>
+  </data>
+  <data name="btnDefImportBrowseVemssDecodeTemplate.ToolTip" xml:space="preserve">
+    <value>Browse vmess://... decode template.</value>
+  </data>
+  <data name="&gt;&gt;btnDefImportBrowseVemssDecodeTemplate.Name" xml:space="preserve">
+    <value>btnDefImportBrowseVemssDecodeTemplate</value>
+  </data>
+  <data name="&gt;&gt;btnDefImportBrowseVemssDecodeTemplate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnDefImportBrowseVemssDecodeTemplate.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;btnDefImportBrowseVemssDecodeTemplate.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="chkDefImportInjectGlobalImport.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1330,7 +1408,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;chkDefImportInjectGlobalImport.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>3</value>
   </data>
   <data name="chkDefImportBypassCnSite.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1360,7 +1438,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;chkDefImportBypassCnSite.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>4</value>
   </data>
   <data name="chkDefImportSsShareLink.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1393,7 +1471,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;chkDefImportSsShareLink.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="tboxDefImportAddr.Location" type="System.Drawing.Point, System.Drawing">
     <value>239, 18</value>
@@ -1423,7 +1501,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;tboxDefImportAddr.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>6</value>
   </data>
   <data name="cboxDefImportMode.Items" xml:space="preserve">
     <value>Config</value>
@@ -1462,7 +1540,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;cboxDefImportMode.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>7</value>
   </data>
   <data name="label9.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1498,13 +1576,13 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>8</value>
   </data>
   <data name="label10.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 22</value>
+    <value>10, 22</value>
   </data>
   <data name="label10.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 0, 2, 0</value>
@@ -1531,7 +1609,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>9</value>
   </data>
   <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 91</value>
@@ -1543,7 +1621,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 68</value>
+    <value>449, 95</value>
   </data>
   <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1794,7 +1872,7 @@
     <value>NoControl</value>
   </data>
   <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 47</value>
+    <value>10, 47</value>
   </data>
   <data name="label6.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 0, 2, 0</value>
@@ -1830,7 +1908,7 @@
     <value>NoControl</value>
   </data>
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 22</value>
+    <value>10, 22</value>
   </data>
   <data name="label5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 0, 2, 0</value>

@@ -71,6 +71,9 @@
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.exRTBoxDefCustomInbounds = new VgcApis.UserControls.ExRichTextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.tboxDefImportVmessDecodeTemplateUrl = new System.Windows.Forms.TextBox();
+            this.chkDefImportIsUseVmessDecodeTemplate = new System.Windows.Forms.CheckBox();
+            this.btnDefImportBrowseVemssDecodeTemplate = new System.Windows.Forms.Button();
             this.chkDefImportInjectGlobalImport = new System.Windows.Forms.CheckBox();
             this.chkDefImportBypassCnSite = new System.Windows.Forms.CheckBox();
             this.chkDefImportSsShareLink = new System.Windows.Forms.CheckBox();
@@ -434,6 +437,9 @@
             // groupBox4
             // 
             resources.ApplyResources(this.groupBox4, "groupBox4");
+            this.groupBox4.Controls.Add(this.tboxDefImportVmessDecodeTemplateUrl);
+            this.groupBox4.Controls.Add(this.chkDefImportIsUseVmessDecodeTemplate);
+            this.groupBox4.Controls.Add(this.btnDefImportBrowseVemssDecodeTemplate);
             this.groupBox4.Controls.Add(this.chkDefImportInjectGlobalImport);
             this.groupBox4.Controls.Add(this.chkDefImportBypassCnSite);
             this.groupBox4.Controls.Add(this.chkDefImportSsShareLink);
@@ -443,6 +449,26 @@
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.TabStop = false;
+            // 
+            // tboxDefImportVmessDecodeTemplateUrl
+            // 
+            resources.ApplyResources(this.tboxDefImportVmessDecodeTemplateUrl, "tboxDefImportVmessDecodeTemplateUrl");
+            this.tboxDefImportVmessDecodeTemplateUrl.Name = "tboxDefImportVmessDecodeTemplateUrl";
+            // 
+            // chkDefImportIsUseVmessDecodeTemplate
+            // 
+            resources.ApplyResources(this.chkDefImportIsUseVmessDecodeTemplate, "chkDefImportIsUseVmessDecodeTemplate");
+            this.chkDefImportIsUseVmessDecodeTemplate.Name = "chkDefImportIsUseVmessDecodeTemplate";
+            this.toolTip1.SetToolTip(this.chkDefImportIsUseVmessDecodeTemplate, resources.GetString("chkDefImportIsUseVmessDecodeTemplate.ToolTip"));
+            this.chkDefImportIsUseVmessDecodeTemplate.UseVisualStyleBackColor = true;
+            // 
+            // btnDefImportBrowseVemssDecodeTemplate
+            // 
+            resources.ApplyResources(this.btnDefImportBrowseVemssDecodeTemplate, "btnDefImportBrowseVemssDecodeTemplate");
+            this.btnDefImportBrowseVemssDecodeTemplate.Name = "btnDefImportBrowseVemssDecodeTemplate";
+            this.toolTip1.SetToolTip(this.btnDefImportBrowseVemssDecodeTemplate, resources.GetString("btnDefImportBrowseVemssDecodeTemplate.ToolTip"));
+            this.btnDefImportBrowseVemssDecodeTemplate.UseVisualStyleBackColor = true;
+            this.btnDefImportBrowseVemssDecodeTemplate.Click += new System.EventHandler(this.btnDefImportBrowseVemssDecodeTemplate_Click);
             // 
             // chkDefImportInjectGlobalImport
             // 
@@ -793,5 +819,8 @@
         private System.Windows.Forms.Button btnSetBrowseDebugFile;
         private System.Windows.Forms.GroupBox groupBox7;
         private VgcApis.UserControls.ExRichTextBox exRTBoxDefCustomInbounds;
+        private System.Windows.Forms.TextBox tboxDefImportVmessDecodeTemplateUrl;
+        private System.Windows.Forms.CheckBox chkDefImportIsUseVmessDecodeTemplate;
+        private System.Windows.Forms.Button btnDefImportBrowseVemssDecodeTemplate;
     }
 }

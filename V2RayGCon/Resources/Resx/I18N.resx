@@ -762,4 +762,7 @@ No, abort.</value>
   <data name="Custom" xml:space="preserve">
     <value>Custom</value>
   </data>
+  <data name="LoadVemssDecodeTemplateFail" xml:space="preserve">
+    <value>Load vemss://... decode template fails.</value>
+  </data>
 </root>

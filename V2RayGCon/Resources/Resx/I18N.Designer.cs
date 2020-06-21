@@ -1118,6 +1118,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Load vemss://... decode template fails. 的本地化字符串。
+        /// </summary>
+        internal static string LoadVemssDecodeTemplateFail {
+            get {
+                return ResourceManager.GetString("LoadVemssDecodeTemplateFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Locate target folder fail. 的本地化字符串。
         /// </summary>
         internal static string LocateTargetFolderFail {

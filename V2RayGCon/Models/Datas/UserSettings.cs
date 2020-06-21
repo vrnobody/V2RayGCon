@@ -5,6 +5,8 @@ namespace V2RayGCon.Models.Datas
     class UserSettings
     {
         #region public properties
+        public bool CustomVmessDecodeTemplateEnabled { get; set; }
+        public string CustomVmessDecodeTemplateUrl { get; set; }
 
         public string CustomInbounds { get; set; }
         public string DebugLogFilePath { get; set; }
@@ -58,6 +60,9 @@ namespace V2RayGCon.Models.Datas
         public UserSettings()
         {
             Normalized();
+
+            CustomVmessDecodeTemplateEnabled = false;
+            CustomVmessDecodeTemplateUrl = @"";
 
             isDownloadWin32V2RayCore = true;
             v2rayCoreDownloadSource = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(0);

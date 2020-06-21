@@ -303,6 +303,21 @@
   <data name="groupBox7.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="tboxDefImportVmessDecodeTemplateUrl.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkDefImportIsUseVmessDecodeTemplate.Text" xml:space="preserve">
+    <value>使用</value>
+  </data>
+  <data name="chkDefImportIsUseVmessDecodeTemplate.ToolTip" xml:space="preserve">
+    <value>使用此解码模板</value>
+  </data>
+  <data name="btnDefImportBrowseVemssDecodeTemplate.Text" xml:space="preserve">
+    <value>解码模板</value>
+  </data>
+  <data name="btnDefImportBrowseVemssDecodeTemplate.ToolTip" xml:space="preserve">
+    <value>浏览 vmess://... 解码模板</value>
+  </data>
   <data name="chkDefImportInjectGlobalImport.Text" xml:space="preserve">
     <value>全局import</value>
   </data>

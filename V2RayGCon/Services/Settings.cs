@@ -51,6 +51,31 @@ namespace V2RayGCon.Services
         }
 
         #region Properties
+
+        public bool CustomVmessDecodeTemplateEnabled
+        {
+            get => userSettings.CustomVmessDecodeTemplateEnabled;
+            set
+            {
+                userSettings.CustomVmessDecodeTemplateEnabled = value;
+                SaveSettingsLater();
+            }
+        }
+
+        public string CustomVmessDecodeTemplateUrl
+        {
+            get => userSettings.CustomVmessDecodeTemplateUrl;
+            set
+            {
+                if (userSettings.CustomVmessDecodeTemplateUrl == value)
+                {
+                    return;
+                }
+                userSettings.CustomVmessDecodeTemplateUrl = value;
+                SaveSettingsLater();
+            }
+        }
+
         public string CustomDefInbounds
         {
             get => userSettings.CustomInbounds;

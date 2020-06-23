@@ -147,7 +147,7 @@ namespace V2RayGCon.Services
             // Many thanks to windows defender
             plugins.Add(new ProxySetter.ProxySetter());
 
-            plugins.Add(new Statistics.Statistics());
+            // plugins.Add(new Statistics.Statistics());
 
             foreach (var plugin in plugins)
             {

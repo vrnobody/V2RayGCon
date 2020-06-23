@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
@@ -322,7 +323,15 @@ namespace VgcApis.Misc
 
         #region net
 
-        public static long TimedDownloadTest(
+        /// <summary>
+        /// return (milSec, recvBytesLen)
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="port"></param>
+        /// <param name="expectedSizeInKiB"></param>
+        /// <param name="timeout"></param>
+        /// <returns>(milSec, recvBytesLen)</returns>
+        public static Tuple<long, long> TimedDownloadTest(
             string url,
             int port,
             int expectedSizeInKiB,
@@ -333,68 +342,55 @@ namespace VgcApis.Misc
                 throw new ArgumentNullException("URL must not null!");
             }
 
-            var maxTimeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
-
-            WebClient wc = new WebClient
-            {
-                Encoding = Encoding.UTF8,
-            };
-            wc.Headers.Add(Models.Consts.Webs.UserAgent);
-
+            HttpClient hc;
             if (port > 0 && port < 65536)
             {
-                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, port);
-            }
-
-            Stopwatch sw = new Stopwatch();
-            AutoResetEvent dlCompleted = new AutoResetEvent(false);
-            long totalReceived = 0;
-            var expectedBytes = expectedSizeInKiB * 1024;
-
-            if (expectedSizeInKiB >= 0)
-            {
-                wc.DownloadProgressChanged += (s, a) =>
+                var httpClientHandler = new HttpClientHandler
                 {
-                    Interlocked.Add(ref totalReceived, a.BytesReceived);
-                    if (totalReceived > expectedBytes)
-                    {
-                        sw.Stop();
-                        wc.CancelAsync();
-                    }
+                    Proxy = new WebProxy(Models.Consts.Webs.LoopBackIP, port),
                 };
+                hc = new HttpClient(handler: httpClientHandler, disposeHandler: true);
             }
-
-            wc.DownloadStringCompleted += (s, a) =>
+            else
             {
-                sw.Stop();
-                dlCompleted.Set();
-                wc.Dispose();
-            };
+                hc = new HttpClient();
+            }
+            hc.DefaultRequestHeaders.Add(Models.Consts.Webs.UserAgentKey, Models.Consts.Webs.ChromeUserAgent);
 
-            var speedtestTimeout = Models.Consts.Core.SpeedtestTimeout;
-
+            long totalRead = 0;
+            long latency = Models.Consts.Core.SpeedtestTimeout;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             try
             {
-                var patchedUrl = IsHttpLink(url) ? url : RelativePath2FullPath(url);
-                sw.Start();
-                wc.DownloadStringAsync(new Uri(patchedUrl));
-                // 收到信号为True
-                if (!dlCompleted.WaitOne(maxTimeout))
+                var expectedBytes = expectedSizeInKiB * 1024;
+                var maxTimeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
+                var cts = new CancellationTokenSource(maxTimeout);
+                using (hc)
+                using (HttpResponseMessage response = hc.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cts.Token).Result)
+                using (Stream stream = response.Content.ReadAsStreamAsync().Result)
                 {
-                    wc.CancelAsync();
-                    return speedtestTimeout;
+                    byte[] buffer = new byte[4096];
+                    long read;
+                    while ((read = stream.ReadAsync(buffer, 0, buffer.Length, cts.Token).Result) > 0)
+                    {
+                        totalRead += read;
+                        if (expectedBytes >= 0 && totalRead > expectedBytes)
+                        {
+                            break;
+                        }
+                    }
                 }
+                sw.Stop();
+                latency = sw.ElapsedMilliseconds;
             }
             catch
             {
-                // network operation always buggy.
-                wc.CancelAsync();
-                return speedtestTimeout;
+                // break point for debugging
             }
 
-            return totalReceived <= expectedBytes ? speedtestTimeout : sw.ElapsedMilliseconds;
+            return new Tuple<long, long>(latency, totalRead);
         }
-
 
         public static bool IsValidPort(string port)
         {

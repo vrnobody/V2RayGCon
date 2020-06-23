@@ -74,17 +74,15 @@ namespace V2RayGCon.Libs.V2Ray
         #endregion
 
         #region public method
-        public int QueryStatsApi(int port, bool isUplink)
+
+        public VgcApis.Models.Datas.StatsSample QueryStatsApi(int port)
         {
             if (string.IsNullOrEmpty(v2ctl))
             {
-                return 0;
+                return null;
             }
 
-            var queryParam = string.Format(
-                VgcApis.Models.Consts.Core.StatsQueryParamTpl,
-                port.ToString(),
-                isUplink ? "uplink" : "downlink");
+            var queryParam = string.Format(VgcApis.Models.Consts.Core.StatsQueryParamTpl, port.ToString());
 
             try
             {
@@ -93,14 +91,10 @@ namespace V2RayGCon.Libs.V2Ray
                     queryParam,
                     VgcApis.Models.Consts.Core.GetStatisticsTimeout);
 
-                // Regex pattern = new Regex(@"(?<value>(\d+))");
-                var value = VgcApis.Misc.Utils.ExtractStringWithPattern(
-                    "value", @"(\d+)", output);
-
-                return VgcApis.Misc.Utils.Str2Int(value);
+                return Misc.Utils.ParseStatApiResult(output);
             }
             catch { }
-            return 0;
+            return null;
         }
 
         public string GetCoreVersion()

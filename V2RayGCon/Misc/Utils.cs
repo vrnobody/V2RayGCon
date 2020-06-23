@@ -23,6 +23,40 @@ namespace V2RayGCon.Misc
     {
 
         #region strings
+
+        public static VgcApis.Models.Datas.StatsSample ParseStatApiResult(string result)
+        {
+            var pat = StrConst.StatApiResultPattern;
+            Regex rgx = new Regex(pat, RegexOptions.Singleline);
+            var ms = rgx.Matches(result ?? string.Empty);
+            var up = 0;
+            var down = 0;
+            foreach (Match match in ms)
+            {
+                if (!match.Success)
+                {
+                    continue;
+                }
+                var name = match.Groups[1].Value;
+                if (!name.StartsWith(@"inbound>"))
+                {
+                    continue;
+                }
+
+                var value = VgcApis.Misc.Utils.Str2Int(match.Groups[3].Value);
+                if (name.EndsWith(@">uplink"))
+                {
+                    up += value;
+                }
+                else
+                {
+                    down += value;
+                }
+            }
+            return new VgcApis.Models.Datas.StatsSample(up, down);
+        }
+
+
         static string appNameAndVersion = null;
         public static string GetAppNameAndVer()
         {

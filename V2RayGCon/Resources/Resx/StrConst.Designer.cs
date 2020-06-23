@@ -252,5 +252,14 @@ namespace V2RayGCon.Resources.Resx {
                 return ResourceManager.GetString("Notice", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 stat: \&lt;.+?name: &quot;([^&quot;]+)&quot;([^&gt;]+?value: (\d+))?.+?&gt; 的本地化字符串。
+        /// </summary>
+        internal static string StatApiResultPattern {
+            get {
+                return ResourceManager.GetString("StatApiResultPattern", resourceCulture);
+            }
+        }
     }
 }

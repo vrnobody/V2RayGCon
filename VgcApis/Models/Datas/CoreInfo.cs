@@ -23,12 +23,17 @@
 
         public long lastModifiedUtcTicks, lastSpeedTestUtcTicks, speedTestResult;
 
+        public long totalUplinkInBytes, totalDownlinkInBytes;
+
         public CoreInfo()
         {
             lastModifiedUtcTicks = System.DateTime.UtcNow.Ticks;
             lastSpeedTestUtcTicks = System.DateTime.UtcNow.Ticks;
 
             speedTestResult = -1;
+
+            totalUplinkInBytes = 0;
+            totalDownlinkInBytes = 0;
 
             // new server will displays at the bottom
             index = double.MaxValue;

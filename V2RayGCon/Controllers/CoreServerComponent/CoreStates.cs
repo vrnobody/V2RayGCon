@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
@@ -37,6 +38,27 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region public methods
+        public long GetUplinkTotalInBytes() => coreInfo.totalUplinkInBytes;
+        public long GetDownlinkTotalInBytes() => coreInfo.totalDownlinkInBytes;
+
+        public void SetUplinkTotal(long sizeInBytes)
+        {
+            if (coreInfo.totalUplinkInBytes != sizeInBytes)
+            {
+                Interlocked.Exchange(ref coreInfo.totalUplinkInBytes, sizeInBytes);
+                GetParent().InvokeEventOnPropertyChange();
+            }
+        }
+
+        public void SetDownlinkTotal(long sizeInBytes)
+        {
+            if (coreInfo.totalDownlinkInBytes != sizeInBytes)
+            {
+                Interlocked.Exchange(ref coreInfo.totalDownlinkInBytes, sizeInBytes);
+                GetParent().InvokeEventOnPropertyChange();
+            }
+        }
+
         string GetInProtocolNameByNumber(int typeNumber)
         {
             var table = Models.Datas.Table.customInbTypeNames;

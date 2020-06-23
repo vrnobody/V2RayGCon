@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
@@ -12,6 +13,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         Services.ConfigMgr configMgr;
 
         static long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+
+        VgcApis.Libs.Tasks.Routine bookKeeper;
+
+        VgcApis.Libs.Tasks.Bar isRecording = new VgcApis.Libs.Tasks.Bar();
 
         public CoreCtrl(
             Services.Settings setting,
@@ -32,6 +37,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             coreStates = GetSibling<CoreStates>();
             configer = GetSibling<Configer>();
             logger = GetSibling<Logger>();
+
+            bookKeeper = new VgcApis.Libs.Tasks.Routine(Record, 3000);
+
         }
 
         #region public mehtods
@@ -45,22 +53,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
         public void ReleaseEvents()
         {
+            bookKeeper?.Dispose();
             v2rayCore.OnLog -= OnLogHandler;
             v2rayCore.OnCoreStatusChanged -= OnCoreStateChangedHandler;
-        }
-
-        public VgcApis.Models.Datas.StatsSample TakeStatisticsSample()
-        {
-            var statsPort = coreStates.GetStatPort();
-            if (!setting.isEnableStatistics
-                || statsPort <= 0)
-            {
-                return null;
-            }
-
-            var up = this.v2rayCore.QueryStatsApi(statsPort, true);
-            var down = this.v2rayCore.QueryStatsApi(statsPort, false);
-            return new VgcApis.Models.Datas.StatsSample(up, down);
         }
 
         public void StopCore() => StopCoreWorker(null);
@@ -82,6 +77,38 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region private methods
+        VgcApis.Models.Datas.StatsSample TakeStatisticsSample(int port)
+        {
+            if (!setting.isEnableStatistics || port <= 0)
+            {
+                return null;
+            }
+            return v2rayCore.QueryStatsApi(port);
+        }
+
+        void Record()
+        {
+            if (!setting.isEnableStatistics || !isRecording.Install())
+            {
+                return;
+            }
+
+            try
+            {
+                var statsPort = coreStates.GetStatPort();
+                if (statsPort > 0)
+                {
+                    var sample = v2rayCore.QueryStatsApi(statsPort);
+                    if (sample != null)
+                    {
+                        AddToTotal(sample.statsUplink, sample.statsDownlink);
+                    }
+                }
+            }
+            catch { }
+            isRecording.Remove();
+        }
+
         void OnCoreStateChangedHandler(object sender, EventArgs args)
         {
             if (v2rayCore.isRunning)
@@ -93,6 +120,19 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 coreStates.SetStatPort(0);
                 GetParent().InvokeEventOnCoreStop();
             }
+        }
+
+        void AddToTotal(long uplink, long downlink)
+        {
+            if (uplink < 1 && downlink < 1)
+            {
+                return;
+            }
+
+            var cis = coreStates.GetAllRawCoreInfo();
+            Interlocked.Add(ref cis.totalUplinkInBytes, uplink);
+            Interlocked.Add(ref cis.totalDownlinkInBytes, downlink);
+            GetParent().InvokeEventOnPropertyChange();
         }
 
         void SpeedTestWorker(string rawConfig)
@@ -107,7 +147,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             logger.Log(I18N.Testing);
             for (int i = 0; i < cycles && !setting.isSpeedtestCancelled; i++)
             {
-                curDelay = configMgr.RunDefaultSpeedTest(rawConfig, coreStates.GetTitle(), (s, a) => logger.Log(a.Data));
+                var sr = configMgr.RunDefaultSpeedTest(rawConfig, coreStates.GetTitle(), (s, a) => logger.Log(a.Data));
+                curDelay = sr.Item1;
+                AddToTotal(0, sr.Item2);
                 ShowCurrentSpeedtestResult(I18N.CurSpeedtestResult, curDelay);
                 if (curDelay == SpeedtestTimeout)
                 {
@@ -142,6 +184,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         void StopCoreWorker(Action next)
         {
+            bookKeeper?.Pause();
             try
             {
                 GetParent().InvokeEventOnCoreClosing();
@@ -168,6 +211,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 v2rayCore.RestartCore(
                     finalConfig.ToString(),
                     Misc.Utils.GetEnvVarsFromConfig(finalConfig));
+                bookKeeper?.Run();
             }
             finally
             {

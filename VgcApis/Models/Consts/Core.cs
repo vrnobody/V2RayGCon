@@ -4,7 +4,28 @@ namespace VgcApis.Models.Consts
 {
     static public class Core
     {
-        public static string StatsQueryParamTpl = "api --server=\"127.0.0.1:{0}\" StatsService.GetStats \"name: \"\"\"\"inbound>>>agentin>>>traffic>>>{1}\"\"\"\" reset: true\"";
+
+        // new api v2ctl.exe api --server="127.0.0.1:3537" StatsService.QueryStats "reset: true"
+
+        /* return values
+stat: <
+  name: "inbound>>>agentin>>>traffic>>>uplink"
+>
+stat: <
+  name: "inbound>>>agentin>>>traffic>>>downlink"
+>
+stat: <
+  name: "inbound>>>StatsApiInb>>>traffic>>>uplink"
+  value: 222
+>
+stat: <
+  name: "inbound>>>StatsApiInb>>>traffic>>>downlink"
+  value: 325
+>
+         */
+
+        // public static string StatsQueryParamTpl = "api --server=\"127.0.0.1:{0}\" StatsService.GetStats \"name: \"\"\"\"inbound>>>agentin>>>traffic>>>{1}\"\"\"\" reset: true\"";
+        public static string StatsQueryParamTpl = "api --server=\"127.0.0.1:{0}\" StatsService.QueryStats \"reset: true\"";
 
         public static string V2RayCtlExeFileName = "v2ctl.exe";
         public static string V2RayCoreExeFileName = "v2ray.exe";

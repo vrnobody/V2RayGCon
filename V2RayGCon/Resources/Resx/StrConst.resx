@@ -137,4 +137,8 @@
   <data name="config_tpl" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Config\config_tpl.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="StatApiResultPattern" xml:space="preserve">
+    <value>stat: \&lt;.+?name: "([^"]+)"([^&gt;]+?value: (\d+))?.+?&gt;</value>
+    <comment>1: name, 3: value真复杂！</comment>
+  </data>
 </root>

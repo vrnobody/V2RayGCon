@@ -12,6 +12,51 @@ namespace V2RayGCon.Test
     {
         static long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
+        [TestMethod]
+        public void ParseStatApiResultTest()
+        {
+            var str =
+@"stat: <
+  name: ""inbound>>>agentin>>>traffic>>>uplink""
+>
+stat: <
+  name: ""inbound>>>agentin>>>traffic>>>downlink""
+>
+stat: <
+  name: ""outbound>>>StatsApiInb>>>traffic>>>uplink""
+  value: 1
+>
+stat: <
+  name: ""inbound1>>>StatsApiInb>>>traffic>>>uplink""
+  value: 2
+>
+stat: <
+  name: ""inbound>>>StatsApiInb>>>traffic>>>uplink""
+  value: 1
+>
+stat: <
+  name: ""inbound>>>StatsApiInb>>>traffic>>>downlink""
+  value: 2
+>
+stat: <
+  name: ""inbound>>>StatsApiInb>>>traffic>>>uplink""
+  value: 3
+>
+stat: <
+  name: ""inbound>>>StatsApiInb>>>traffic>>>uplink""
+  value: 4
+>
+stat: <
+  name: ""inbound>>>StatsApiInb>>>traffic>>>downlink""
+  value: 5
+>";
+
+            var result = ParseStatApiResult(str);
+            Assert.AreEqual(8, result.statsUplink);
+            Assert.AreEqual(7, result.statsDownlink);
+        }
+
+
         [DataTestMethod]
         [DataRow(@"http://abc.com", @"abc.com")]
         [DataRow(@"v://abc.com", @"abc.com")]
@@ -125,10 +170,12 @@ namespace V2RayGCon.Test
         [DataRow("http://www.baidu.com")]
         public void VisitWebPageSpeedTestTest(string url)
         {
-            var time = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, 1024 * 1024, -1);
+            var r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, 1024 * 1024, -1);
+            var time = r.Item1;
             Assert.AreEqual(SpeedtestTimeout, time);
 
-            time = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, -1, -1);
+            r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, -1, -1);
+            time = r.Item1;
             Assert.AreEqual(true, time < SpeedtestTimeout);
         }
 

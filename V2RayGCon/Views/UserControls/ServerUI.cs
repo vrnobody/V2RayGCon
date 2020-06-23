@@ -162,6 +162,8 @@ namespace V2RayGCon.Views.UserControls
                 UpdateRemarkLabel(cs.GetRemark());
                 UpdateStatusLable(cs);
                 UpdateSettingsLable(cs);
+                UpdateNetworkFlowLable(cs);
+
                 CompactRoundLables();
             };
 
@@ -172,6 +174,30 @@ namespace V2RayGCon.Views.UserControls
             };
 
             VgcApis.Misc.UI.InvokeThen(worker, next);
+        }
+
+        void UpdateNetworkFlowLable(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreState)
+        {
+            if (!settings.isEnableStatistics)
+            {
+                lbTotalDataFlow.Visible = false;
+                return;
+            }
+
+            var up = coreState.GetUplinkTotalInBytes();
+            var down = coreState.GetDownlinkTotalInBytes();
+            if (up == 0 && down == 0)
+            {
+                lbTotalDataFlow.Visible = false;
+                return;
+            }
+            const long mib = 1024 * 1024;
+            var t = $"U:{up / mib} D:{down / mib}";
+            if (lbTotalDataFlow.Text != t)
+            {
+                lbTotalDataFlow.Text = t;
+            }
+            lbTotalDataFlow.Visible = true;
         }
 
         void OnCorePropertyChangesHandler(object sender, EventArgs args) =>
@@ -698,6 +724,11 @@ namespace V2RayGCon.Views.UserControls
         private void rlbSpeedtest_Click(object sender, EventArgs e)
         {
             ShowModifyConfigsWinForm();
+        }
+
+        private void lbTotalDataFlow_MouseDown(object sender, MouseEventArgs e)
+        {
+            UserMouseDown();
         }
 
         private void rlbRemark_Click(object sender, EventArgs e)

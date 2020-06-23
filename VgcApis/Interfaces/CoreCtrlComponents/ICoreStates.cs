@@ -6,6 +6,12 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
     {
         Models.Datas.CoreInfo GetAllRawCoreInfo();
 
+        long GetUplinkTotalInBytes();
+        long GetDownlinkTotalInBytes();
+
+        void SetUplinkTotal(long sizeInBytes);
+        void SetDownlinkTotal(long sizeInBytes);
+
         bool GetterInfoForSearch(Func<string[], bool> filter);
 
         string GetInboundAddr();
@@ -19,8 +25,10 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
 
         string GetMark();
         string GetRemark();
+        int GetStatPort();
 
         string GetShortName();
+
         string GetLongName();
         string GetName();
 

@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="tabPageSubscribe.Text" xml:space="preserve">
+    <value>订阅</value>
+  </data>
+  <data name="tabPageSetting.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="tabPageDefaults.Text" xml:space="preserve">
+    <value>默认值</value>
+  </data>
+  <data name="tabPageImport.Text" xml:space="preserve">
+    <value>全局import</value>
+  </data>
+  <data name="tabPageMultiConf.Text" xml:space="preserve">
+    <value>多文件配置</value>
+  </data>
+  <data name="tabPagePlugins.Text" xml:space="preserve">
+    <value>插件</value>
+  </data>
   <data name="chkSubsIsAutoPatch.Text" xml:space="preserve">
     <value>自动修整</value>
   </data>
@@ -153,23 +171,8 @@
   <data name="btnAddSubsUrl.ToolTip" xml:space="preserve">
     <value>添加订阅url</value>
   </data>
-  <data name="flySubsUrlContainer.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPageSubscribe.Text" xml:space="preserve">
-    <value>订阅</value>
-  </data>
-  <data name="tabPageSubscribe.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="chkSetEnableDebugFile.Text" xml:space="preserve">
     <value>启用</value>
-  </data>
-  <data name="chkSetEnableDebugFile.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxSetDebugFilePath.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="btnSetBrowseDebugFile.ToolTip" xml:space="preserve">
     <value>浏览debug文件位置</value>
@@ -186,8 +189,8 @@
   <data name="chkSetUpgradeUseProxy.ToolTip" xml:space="preserve">
     <value>随机选一个运行中的HTTP代理用于升级</value>
   </data>
-  <data name="groupBox2.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox6.Text" xml:space="preserve">
+    <value>系统</value>
   </data>
   <data name="btnSetOpenStartupFolder.Text" xml:space="preserve">
     <value>自启动文件夹</value>
@@ -207,17 +210,14 @@
   <data name="chkSetSysPortable.ToolTip" xml:space="preserve">
     <value>将配置信息保存到软件运行目录内</value>
   </data>
-  <data name="groupBox6.Text" xml:space="preserve">
-    <value>系统</value>
-  </data>
-  <data name="groupBox6.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox5.Text" xml:space="preserve">
+    <value>服务器</value>
   </data>
   <data name="chkSetServStatistics.Text" xml:space="preserve">
-    <value>统计支持(仅v4格式)</value>
+    <value>流量统计</value>
   </data>
   <data name="chkSetServStatistics.ToolTip" xml:space="preserve">
-    <value>开启统计支持。会导致旧配置格式服务器无法启动！</value>
+    <value>开启流量统计</value>
   </data>
   <data name="chkSetSelfSignedCert.Text" xml:space="preserve">
     <value>自签名证书(不安全)</value>
@@ -225,17 +225,8 @@
   <data name="chkSetSelfSignedCert.ToolTip" xml:space="preserve">
     <value>是否允许使用自签名证书</value>
   </data>
-  <data name="cboxSettingsRandomSelectServerLatency.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="label14.Text" xml:space="preserve">
     <value>ms (零表示忽略延迟)</value>
-  </data>
-  <data name="label14.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxSettingsMaxCoreNum.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="label15.Text" xml:space="preserve">
     <value>快速切换</value>
@@ -249,29 +240,14 @@
   <data name="chkSetServAutotrack.ToolTip" xml:space="preserve">
     <value>保持上次退出时的服务器运行状态。</value>
   </data>
-  <data name="label13.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="label12.Text" xml:space="preserve">
     <value>最大并发</value>
   </data>
   <data name="label12.ToolTip" xml:space="preserve">
     <value>测速时并发运行的v2ray-core最大数量</value>
   </data>
-  <data name="groupBox5.Text" xml:space="preserve">
-    <value>服务器</value>
-  </data>
-  <data name="groupBox5.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxSettingPageSize.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label8.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label3.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>界面</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>分页大小</value>
@@ -279,38 +255,14 @@
   <data name="label2.ToolTip" xml:space="preserve">
     <value>主窗口服务器列表每页显示服务器数</value>
   </data>
-  <data name="cboxSettingLanguage.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>界面</value>
-  </data>
-  <data name="groupBox1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPageSetting.Text" xml:space="preserve">
-    <value>设置</value>
-  </data>
-  <data name="tabPageSetting.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="groupBox7.Text" xml:space="preserve">
     <value>自定义inbounds</value>
   </data>
-  <data name="groupBox7.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxDefImportVmessDecodeTemplateUrl.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>导入分享链接</value>
   </data>
   <data name="chkDefImportIsUseVmessDecodeTemplate.Text" xml:space="preserve">
     <value>使用</value>
-  </data>
-  <data name="chkDefImportIsUseVmessDecodeTemplate.ToolTip" xml:space="preserve">
-    <value>使用此解码模板</value>
   </data>
   <data name="btnDefImportBrowseVemssDecodeTemplate.Text" xml:space="preserve">
     <value>解码模板</value>
@@ -351,17 +303,8 @@
   <data name="label10.ToolTip" xml:space="preserve">
     <value>默认inbound模式。Config表示保持原样。</value>
   </data>
-  <data name="groupBox4.Text" xml:space="preserve">
-    <value>导入分享链接</value>
-  </data>
-  <data name="groupBox4.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxDefSpeedTestExpectedSize.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxDefSpeedTestUrl.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>测速</value>
   </data>
   <data name="tboxDefSpeedtestTimeout.ToolTip" xml:space="preserve">
     <value>20000（20秒）</value>
@@ -398,32 +341,11 @@
   <data name="label11.ToolTip" xml:space="preserve">
     <value>超时（单位毫秒）</value>
   </data>
-  <data name="groupBox3.Text" xml:space="preserve">
-    <value>测速</value>
-  </data>
-  <data name="groupBox3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPageDefaults.Text" xml:space="preserve">
-    <value>默认值</value>
-  </data>
-  <data name="tabPageDefaults.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnImportAdd.Text" xml:space="preserve">
     <value>添加</value>
   </data>
   <data name="btnImportAdd.ToolTip" xml:space="preserve">
     <value>添加import URL</value>
-  </data>
-  <data name="flyImportPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPageImport.Text" xml:space="preserve">
-    <value>全局import</value>
-  </data>
-  <data name="tabPageImport.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="btnMultiConfAdd.Text" xml:space="preserve">
     <value>添加</value>
@@ -431,32 +353,8 @@
   <data name="btnMultiConfAdd.ToolTip" xml:space="preserve">
     <value>添加配置文件</value>
   </data>
-  <data name="flyMultiConfPanel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPageMultiConf.Text" xml:space="preserve">
-    <value>多文件配置</value>
-  </data>
-  <data name="tabPageMultiConf.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="label4.Text" xml:space="preserve">
     <value>钩选并保存后，主窗口及托盘图标将多出一个插件菜单。</value>
-  </data>
-  <data name="label4.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="flyPluginsItemsContainer.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPagePlugins.Text" xml:space="preserve">
-    <value>插件</value>
-  </data>
-  <data name="tabPagePlugins.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabControl1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="btnBakBackup.Text" xml:space="preserve">
     <value>备份</value>
@@ -479,13 +377,7 @@
   <data name="btnOptionExit.Text" xml:space="preserve">
     <value>退出</value>
   </data>
-  <data name="btnOptionExit.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>选项</value>
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>

@@ -322,46 +322,6 @@ namespace VgcApis.Misc
         #endregion
 
         #region net
-
-        static async Task<long> TimedDownloadWorker(
-            string url, int port,
-            Func<long, bool> onProgress,
-            CancellationToken token)
-        {
-            HttpClient hc = CreateHttpClient(port);
-            long latency = Models.Consts.Core.SpeedtestTimeout;
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            try
-            {
-                var opt = HttpCompletionOption.ResponseHeadersRead;
-
-                using (hc)
-                using (var response = await hc.GetAsync(url, opt, token).ConfigureAwait(false))
-                using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                {
-                    byte[] buffer = new byte[4096];
-                    long read;
-                    do
-                    {
-                        read = await stream.ReadAsync(buffer, 0, buffer.Length, token).ConfigureAwait(false);
-                        if (!onProgress.Invoke(read))
-                        {
-                            break;
-                        }
-                    } while (read > 0);
-                }
-                sw.Stop();
-                latency = sw.ElapsedMilliseconds;
-            }
-            catch
-            {
-                // break point for debugging
-            }
-
-            return latency;
-        }
-
         static HttpClient CreateHttpClient(int port)
         {
             HttpClient hc;
@@ -381,6 +341,55 @@ namespace VgcApis.Misc
             return hc;
         }
 
+
+        static async Task<long> TimedDownloadWorker(
+            string url, int port,
+            Func<long, bool> onProgress,
+            CancellationToken token)
+        {
+            long timeout = Models.Consts.Core.SpeedtestTimeout;
+
+            Stopwatch sw = new Stopwatch();
+
+            try
+            {
+                HttpClient hc = CreateHttpClient(port);
+                var opt = HttpCompletionOption.ResponseHeadersRead;
+
+                sw.Start();
+                using (hc)
+                using (var response = await hc.GetAsync(url, opt, token).ConfigureAwait(false))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return timeout;
+                    }
+
+                    using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    {
+                        byte[] buffer = new byte[4096];
+                        long read;
+                        do
+                        {
+                            read = await stream.ReadAsync(buffer, 0, buffer.Length, token).ConfigureAwait(false);
+                            if (!onProgress.Invoke(read))
+                            {
+                                break;
+                            }
+                        } while (read > 0);
+                    }
+                }
+                sw.Stop();
+                return sw.ElapsedMilliseconds;
+            }
+            catch
+            {
+                // break point for debugging
+            }
+
+            return timeout;
+        }
+
         /// <summary>
         /// return (milSec, recvBytesLen)
         /// </summary>
@@ -397,13 +406,15 @@ namespace VgcApis.Misc
                 throw new ArgumentNullException("URL must not null!");
             }
 
-            long latency = Models.Consts.Core.SpeedtestTimeout;
+            long to = Models.Consts.Core.SpeedtestTimeout;
+
+            long latency = to;
             long totalRead = 0;
             long expectedBytes = expectedSizeInKiB * 1024;
             Func<long, bool> onProgress = (read) =>
             {
                 totalRead += read;
-                if (expectedBytes >= 0 && totalRead > expectedBytes)
+                if (totalRead > expectedBytes && totalRead > 0)
                 {
                     return false;
                 }
@@ -414,14 +425,21 @@ namespace VgcApis.Misc
             var cts = new CancellationTokenSource(maxTimeout);
 
             var done = new AutoResetEvent(false);
-            var t = new Task(
-                async () => latency = await TimedDownloadWorker(url, port, onProgress, cts.Token),
-                TaskCreationOptions.LongRunning);
+            var t = new Task(async () =>
+            {
+                latency = await TimedDownloadWorker(url, port, onProgress, cts.Token);
+                done.Set();
+            }, TaskCreationOptions.LongRunning);
             t.ConfigureAwait(false);
             t.Start();
             done.WaitOne((int)(maxTimeout * 1.5));
 
-            return new Tuple<long, long>(latency, totalRead);
+            if (totalRead > 0 && totalRead > expectedBytes)
+            {
+                return new Tuple<long, long>(latency, totalRead);
+            }
+
+            return new Tuple<long, long>(to, totalRead);
         }
 
         public static bool IsValidPort(string port)

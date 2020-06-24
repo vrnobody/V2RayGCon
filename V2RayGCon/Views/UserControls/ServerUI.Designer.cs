@@ -153,7 +153,7 @@
             // 
             // rlbRemark
             // 
-            this.rlbRemark._BackColor = System.Drawing.Color.LightSkyBlue;
+            this.rlbRemark._BackColor = System.Drawing.Color.SandyBrown;
             this.rlbRemark.AutoEllipsis = true;
             resources.ApplyResources(this.rlbRemark, "rlbRemark");
             this.rlbRemark.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -164,7 +164,7 @@
             // 
             // rlbTotalNetFlow
             // 
-            this.rlbTotalNetFlow._BackColor = System.Drawing.Color.SandyBrown;
+            this.rlbTotalNetFlow._BackColor = System.Drawing.Color.LightSkyBlue;
             this.rlbTotalNetFlow.AutoEllipsis = true;
             resources.ApplyResources(this.rlbTotalNetFlow, "rlbTotalNetFlow");
             this.rlbTotalNetFlow.Cursor = System.Windows.Forms.Cursors.Hand;

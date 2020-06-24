@@ -41,9 +41,9 @@ namespace V2RayGCon.Views.UserControls
 
             roundLables = new List<Control>
             {
-                rlbTotalNetFlow,
                 rlbRemark,
                 rlbMark,
+                rlbTotalNetFlow,
                 rlbSpeedtest,
             };
 

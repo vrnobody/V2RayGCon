@@ -83,7 +83,6 @@ namespace V2RayGCon.Libs.V2Ray
             }
 
             var queryParam = string.Format(VgcApis.Models.Consts.Core.StatsQueryParamTpl, port.ToString());
-
             try
             {
                 var output = Misc.Utils.GetOutputFromExecutable(

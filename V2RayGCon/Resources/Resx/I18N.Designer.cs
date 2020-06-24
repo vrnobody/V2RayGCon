@@ -1209,6 +1209,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Upload: {0} MiB Download: {1} MiB 的本地化字符串。
+        /// </summary>
+        internal static string NetFlowToolTipTpl {
+            get {
+                return ResourceManager.GetString("NetFlowToolTipTpl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Network timeout 的本地化字符串。
         /// </summary>
         internal static string NetworkTimeout {

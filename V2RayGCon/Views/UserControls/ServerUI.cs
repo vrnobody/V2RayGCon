@@ -41,8 +41,8 @@ namespace V2RayGCon.Views.UserControls
 
             roundLables = new List<Control>
             {
-                rlbLastModify,
                 rlbRemark,
+                rlbTotalNetFlow,
                 rlbMark,
                 rlbSpeedtest,
             };
@@ -178,26 +178,21 @@ namespace V2RayGCon.Views.UserControls
 
         void UpdateNetworkFlowLable(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreState)
         {
-            if (!settings.isEnableStatistics)
+            var text = "";
+            var tooltip = "";
+            if (settings.isEnableStatistics)
             {
-                lbTotalDataFlow.Visible = false;
-                return;
+                var up = coreState.GetUplinkTotalInBytes();
+                var down = coreState.GetDownlinkTotalInBytes();
+                if (up > 0 || down > 0)
+                {
+                    const long mib = 1024 * 1024;
+                    var dm = down / mib;
+                    text = $"⇵ {dm}M";
+                    tooltip = string.Format(I18N.NetFlowToolTipTpl, up / mib, dm);
+                }
             }
-
-            var up = coreState.GetUplinkTotalInBytes();
-            var down = coreState.GetDownlinkTotalInBytes();
-            if (up == 0 && down == 0)
-            {
-                lbTotalDataFlow.Visible = false;
-                return;
-            }
-            const long mib = 1024 * 1024;
-            var t = $"U:{up / mib} D:{down / mib}";
-            if (lbTotalDataFlow.Text != t)
-            {
-                lbTotalDataFlow.Text = t;
-            }
-            lbTotalDataFlow.Visible = true;
+            UpdateControlTextAndTooltip(rlbTotalNetFlow, text, tooltip);
         }
 
         void OnCorePropertyChangesHandler(object sender, EventArgs args) =>
@@ -221,8 +216,6 @@ namespace V2RayGCon.Views.UserControls
             rlbSetting.Left = rleft + (rlbIsRunning.Width - rlbSetting.Width) / 2;
 
             var end = rlbInboundMode.Right;
-
-
 
             foreach (var control in roundLables)
             {
@@ -418,7 +411,7 @@ namespace V2RayGCon.Views.UserControls
             var date = new DateTime(utcTicks, DateTimeKind.Utc).ToLocalTime();
             var text = date.ToString(I18N.MMdd);
             var tooltip = Ticks2Tooltip(utcTicks);
-            UpdateControlTextAndTooltip(rlbLastModify, text, tooltip);
+            UpdateControlTextAndTooltip(lbLastModifyDate, text, tooltip);
         }
 
         string Ticks2Tooltip(long utcTicks)
@@ -716,7 +709,7 @@ namespace V2RayGCon.Views.UserControls
             ShowModifyConfigsWinForm();
         }
 
-        private void rlbLastModify_Click(object sender, EventArgs e)
+        private void rlbTotalNetFlow_Click(object sender, EventArgs e)
         {
             ShowModifyConfigsWinForm();
         }
@@ -726,7 +719,7 @@ namespace V2RayGCon.Views.UserControls
             ShowModifyConfigsWinForm();
         }
 
-        private void lbTotalDataFlow_MouseDown(object sender, MouseEventArgs e)
+        private void lbLastModifyDate_MouseDown(object sender, MouseEventArgs e)
         {
             UserMouseDown();
         }

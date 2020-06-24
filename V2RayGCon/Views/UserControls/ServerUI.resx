@@ -264,194 +264,38 @@
   <data name="&gt;&gt;btnMenu.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="lbTotalDataFlow.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="lbTotalDataFlow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="lbLastModifyDate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="lbTotalDataFlow.Location" type="System.Drawing.Point, System.Drawing">
-    <value>363, 3</value>
+  <data name="lbLastModifyDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>414, 3</value>
   </data>
-  <data name="lbTotalDataFlow.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 14</value>
+  <data name="lbLastModifyDate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 14</value>
   </data>
-  <data name="lbTotalDataFlow.TabIndex" type="System.Int32, mscorlib">
+  <data name="lbLastModifyDate.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
   </data>
-  <data name="lbTotalDataFlow.Text" xml:space="preserve">
-    <value>U:123 D:456</value>
+  <data name="lbLastModifyDate.Text" xml:space="preserve">
+    <value>02月30日</value>
   </data>
-  <data name="lbTotalDataFlow.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="lbLastModifyDate.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
   </data>
-  <data name="lbTotalDataFlow.ToolTip" xml:space="preserve">
-    <value>Total upload / download in MiB.</value>
+  <data name="lbLastModifyDate.ToolTip" xml:space="preserve">
+    <value>Last modify</value>
   </data>
-  <data name="&gt;&gt;lbTotalDataFlow.Name" xml:space="preserve">
-    <value>lbTotalDataFlow</value>
+  <data name="&gt;&gt;lbLastModifyDate.Name" xml:space="preserve">
+    <value>lbLastModifyDate</value>
   </data>
-  <data name="&gt;&gt;lbTotalDataFlow.Type" xml:space="preserve">
+  <data name="&gt;&gt;lbLastModifyDate.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lbTotalDataFlow.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lbLastModifyDate.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;lbTotalDataFlow.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lbLastModifyDate.ZOrder" xml:space="preserve">
     <value>13</value>
-  </data>
-  <metadata name="ctxMenuStripMore.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>119, 18</value>
-  </metadata>
-  <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 22</value>
-  </data>
-  <data name="startToolStripMenuItem.Text" xml:space="preserve">
-    <value>Start</value>
-  </data>
-  <data name="startToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Stop all running servers and start this server.</value>
-  </data>
-  <data name="multiboxingToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 22</value>
-  </data>
-  <data name="multiboxingToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Multiboxing</value>
-  </data>
-  <data name="multiboxingToolStripMenuItem1.ToolTipText" xml:space="preserve">
-    <value>Start this server along with other started server. Inbound port should not duplicate.</value>
-  </data>
-  <data name="stopToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 22</value>
-  </data>
-  <data name="stopToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Stop</value>
-  </data>
-  <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
-    <value>Stop this server.</value>
-  </data>
-  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
-  </data>
-  <data name="toolStripMenuItem3.Text" xml:space="preserve">
-    <value>Action</value>
-  </data>
-  <data name="moveToTopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 22</value>
-  </data>
-  <data name="moveToTopToolStripMenuItem.Text" xml:space="preserve">
-    <value>Top</value>
-  </data>
-  <data name="moveToTopToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Move this server to top.</value>
-  </data>
-  <data name="moveToBottomToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 22</value>
-  </data>
-  <data name="moveToBottomToolStripMenuItem.Text" xml:space="preserve">
-    <value>Bottom</value>
-  </data>
-  <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Move this server to bottom.</value>
-  </data>
-  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
-  </data>
-  <data name="toolStripMenuItem6.Text" xml:space="preserve">
-    <value>Move</value>
-  </data>
-  <data name="vToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 22</value>
-  </data>
-  <data name="vToolStripMenuItem.Text" xml:space="preserve">
-    <value>v:// ...</value>
-  </data>
-  <data name="vToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Contain main config information.</value>
-  </data>
-  <data name="vmessToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 22</value>
-  </data>
-  <data name="vmessToolStripMenuItem.Text" xml:space="preserve">
-    <value>vmess:// ...</value>
-  </data>
-  <data name="vmessToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Contain main config information.</value>
-  </data>
-  <data name="v2cfgToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 22</value>
-  </data>
-  <data name="v2cfgToolStripMenuItem.Text" xml:space="preserve">
-    <value>v2cfg:// ...</value>
-  </data>
-  <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Contain all config information.</value>
-  </data>
-  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
-  </data>
-  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
-    <value>Copy</value>
-  </data>
-  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 6</value>
-  </data>
-  <data name="showSettingWindowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
-  </data>
-  <data name="showSettingWindowToolStripMenuItem.Text" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="showSettingWindowToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Show settings window.</value>
-  </data>
-  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
-  </data>
-  <data name="editToolStripMenuItem.Text" xml:space="preserve">
-    <value>Edit config</value>
-  </data>
-  <data name="debugToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
-  </data>
-  <data name="debugToolStripMenuItem.Text" xml:space="preserve">
-    <value>View final config</value>
-  </data>
-  <data name="debugToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Final config for v2ray-core.</value>
-  </data>
-  <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
-  </data>
-  <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 6</value>
-  </data>
-  <data name="logOfThisServerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
-  </data>
-  <data name="logOfThisServerToolStripMenuItem.Text" xml:space="preserve">
-    <value>Log of this server</value>
-  </data>
-  <data name="runSpeedTestToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
-  </data>
-  <data name="runSpeedTestToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Run speed test</value>
-  </data>
-  <data name="runSpeedTestToolStripMenuItem1.ToolTipText" xml:space="preserve">
-    <value>The time it takes to download the test web page.</value>
-  </data>
-  <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 214</value>
-  </data>
-  <data name="&gt;&gt;ctxMenuStripMore.Name" xml:space="preserve">
-    <value>ctxMenuStripMore</value>
-  </data>
-  <data name="&gt;&gt;ctxMenuStripMore.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="rlbIsRunning.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 9pt, style=Bold</value>
@@ -541,7 +385,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbMark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 31</value>
+    <value>234, 31</value>
   </data>
   <data name="rlbMark.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>90, 18</value>
@@ -586,7 +430,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbRemark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>160, 31</value>
+    <value>99, 31</value>
   </data>
   <data name="rlbRemark.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>70, 18</value>
@@ -595,7 +439,7 @@
     <value>1, 3, 1, 3</value>
   </data>
   <data name="rlbRemark.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 18</value>
+    <value>43, 18</value>
   </data>
   <data name="rlbRemark.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -624,46 +468,46 @@
   <data name="&gt;&gt;rlbRemark.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="rlbLastModify.AutoSize" type="System.Boolean, mscorlib">
+  <data name="rlbTotalNetFlow.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="rlbLastModify.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="rlbTotalNetFlow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="rlbLastModify.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 31</value>
+  <data name="rlbTotalNetFlow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>148, 31</value>
   </data>
-  <data name="rlbLastModify.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>60, 18</value>
+  <data name="rlbTotalNetFlow.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>80, 18</value>
   </data>
-  <data name="rlbLastModify.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="rlbTotalNetFlow.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 3, 1, 3</value>
   </data>
-  <data name="rlbLastModify.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 18</value>
+  <data name="rlbTotalNetFlow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 18</value>
   </data>
-  <data name="rlbLastModify.TabIndex" type="System.Int32, mscorlib">
+  <data name="rlbTotalNetFlow.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
   </data>
-  <data name="rlbLastModify.Text" xml:space="preserve">
-    <value>02月30日</value>
+  <data name="rlbTotalNetFlow.Text" xml:space="preserve">
+    <value>⇵ 123456789M</value>
   </data>
-  <data name="rlbLastModify.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="rlbTotalNetFlow.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
   </data>
-  <data name="rlbLastModify.ToolTip" xml:space="preserve">
-    <value>Last modified time.</value>
+  <data name="rlbTotalNetFlow.ToolTip" xml:space="preserve">
+    <value>Total network flow.</value>
   </data>
-  <data name="&gt;&gt;rlbLastModify.Name" xml:space="preserve">
-    <value>rlbLastModify</value>
+  <data name="&gt;&gt;rlbTotalNetFlow.Name" xml:space="preserve">
+    <value>rlbTotalNetFlow</value>
   </data>
-  <data name="&gt;&gt;rlbLastModify.Type" xml:space="preserve">
+  <data name="&gt;&gt;rlbTotalNetFlow.Type" xml:space="preserve">
     <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;rlbLastModify.Parent" xml:space="preserve">
+  <data name="&gt;&gt;rlbTotalNetFlow.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;rlbLastModify.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;rlbTotalNetFlow.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
   <data name="rlbSpeedtest.AutoSize" type="System.Boolean, mscorlib">
@@ -673,7 +517,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbSpeedtest.Location" type="System.Drawing.Point, System.Drawing">
-    <value>300, 31</value>
+    <value>325, 31</value>
   </data>
   <data name="rlbSpeedtest.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>60, 18</value>
@@ -752,6 +596,159 @@
   </data>
   <data name="&gt;&gt;rlbInboundMode.ZOrder" xml:space="preserve">
     <value>10</value>
+  </data>
+  <metadata name="ctxMenuStripMore.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>119, 18</value>
+  </metadata>
+  <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 214</value>
+  </data>
+  <data name="&gt;&gt;ctxMenuStripMore.Name" xml:space="preserve">
+    <value>ctxMenuStripMore</value>
+  </data>
+  <data name="&gt;&gt;ctxMenuStripMore.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="toolStripMenuItem3.Text" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 22</value>
+  </data>
+  <data name="startToolStripMenuItem.Text" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="startToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Stop all running servers and start this server.</value>
+  </data>
+  <data name="multiboxingToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 22</value>
+  </data>
+  <data name="multiboxingToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Multiboxing</value>
+  </data>
+  <data name="multiboxingToolStripMenuItem1.ToolTipText" xml:space="preserve">
+    <value>Start this server along with other started server. Inbound port should not duplicate.</value>
+  </data>
+  <data name="stopToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 22</value>
+  </data>
+  <data name="stopToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
+    <value>Stop this server.</value>
+  </data>
+  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="toolStripMenuItem6.Text" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="moveToTopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 22</value>
+  </data>
+  <data name="moveToTopToolStripMenuItem.Text" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="moveToTopToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Move this server to top.</value>
+  </data>
+  <data name="moveToBottomToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 22</value>
+  </data>
+  <data name="moveToBottomToolStripMenuItem.Text" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Move this server to bottom.</value>
+  </data>
+  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="vToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 22</value>
+  </data>
+  <data name="vToolStripMenuItem.Text" xml:space="preserve">
+    <value>v:// ...</value>
+  </data>
+  <data name="vToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Contain main config information.</value>
+  </data>
+  <data name="vmessToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 22</value>
+  </data>
+  <data name="vmessToolStripMenuItem.Text" xml:space="preserve">
+    <value>vmess:// ...</value>
+  </data>
+  <data name="vmessToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Contain main config information.</value>
+  </data>
+  <data name="v2cfgToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 22</value>
+  </data>
+  <data name="v2cfgToolStripMenuItem.Text" xml:space="preserve">
+    <value>v2cfg:// ...</value>
+  </data>
+  <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Contain all config information.</value>
+  </data>
+  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 6</value>
+  </data>
+  <data name="showSettingWindowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="showSettingWindowToolStripMenuItem.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="showSettingWindowToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Show settings window.</value>
+  </data>
+  <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="editToolStripMenuItem.Text" xml:space="preserve">
+    <value>Edit config</value>
+  </data>
+  <data name="debugToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="debugToolStripMenuItem.Text" xml:space="preserve">
+    <value>View final config</value>
+  </data>
+  <data name="debugToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Final config for v2ray-core.</value>
+  </data>
+  <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 6</value>
+  </data>
+  <data name="logOfThisServerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="logOfThisServerToolStripMenuItem.Text" xml:space="preserve">
+    <value>Log of this server</value>
+  </data>
+  <data name="runSpeedTestToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="runSpeedTestToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Run speed test</value>
+  </data>
+  <data name="runSpeedTestToolStripMenuItem1.ToolTipText" xml:space="preserve">
+    <value>The time it takes to download the test web page.</value>
   </data>
   <data name="rtboxServerTitle.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 9pt</value>

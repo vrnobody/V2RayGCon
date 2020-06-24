@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
@@ -38,8 +37,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             configer = GetSibling<Configer>();
             logger = GetSibling<Logger>();
 
-            bookKeeper = new VgcApis.Libs.Tasks.Routine(Record, 3000);
-
+            bookKeeper = new VgcApis.Libs.Tasks.Routine(RecordStatSample, 3000);
         }
 
         #region public mehtods
@@ -86,9 +84,11 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return v2rayCore.QueryStatsApi(port);
         }
 
-        void Record()
+        void RecordStatSample()
         {
-            if (!setting.isEnableStatistics || !isRecording.Install())
+            if (!setting.isEnableStatistics
+                || !IsCoreRunning()
+                || !isRecording.Install())
             {
                 return;
             }
@@ -98,11 +98,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 var statsPort = coreStates.GetStatPort();
                 if (statsPort > 0)
                 {
-                    var sample = v2rayCore.QueryStatsApi(statsPort);
-                    if (sample != null)
-                    {
-                        AddToTotal(sample.statsUplink, sample.statsDownlink);
-                    }
+                    VgcApis.Models.Datas.StatsSample sample = v2rayCore.QueryStatsApi(statsPort);
+                    coreStates.AddStatSample(sample);
                 }
             }
             catch { }
@@ -122,19 +119,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
         }
 
-        void AddToTotal(long uplink, long downlink)
-        {
-            if (uplink < 1 && downlink < 1)
-            {
-                return;
-            }
-
-            var cis = coreStates.GetAllRawCoreInfo();
-            Interlocked.Add(ref cis.totalUplinkInBytes, uplink);
-            Interlocked.Add(ref cis.totalDownlinkInBytes, downlink);
-            GetParent().InvokeEventOnPropertyChange();
-        }
-
         void SpeedTestWorker(string rawConfig)
         {
             long avgDelay = -1;
@@ -149,7 +133,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             {
                 var sr = configMgr.RunDefaultSpeedTest(rawConfig, coreStates.GetTitle(), (s, a) => logger.Log(a.Data));
                 curDelay = sr.Item1;
-                AddToTotal(0, sr.Item2);
+                coreStates.AddStatSample(new VgcApis.Models.Datas.StatsSample(0, sr.Item2));
                 ShowCurrentSpeedtestResult(I18N.CurSpeedtestResult, curDelay);
                 if (curDelay == SpeedtestTimeout)
                 {

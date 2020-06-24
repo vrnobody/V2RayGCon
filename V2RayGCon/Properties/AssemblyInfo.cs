@@ -37,6 +37,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.4.1.8 Clear paging menu before adding new item.
  * v1.4.1.7 Adjust UI.
  * v1.4.1.6 Fix bugs.
  * v1.4.1.5 Remove statistics plug-in.

@@ -149,7 +149,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             Action worker = () =>
             {
                 UpdateStatusBarText(filteredListCount, allServersCount, selectedServersCount, serverControlCount);
-                UpdateStatusBarPagingButtons();
+                UpdateStatusBarPagerButtons();
 
                 // prevent formain lost focus after click next page
                 if (isFocusOnFormMain)
@@ -287,21 +287,24 @@ namespace V2RayGCon.Controllers.FormMainComponent
         List<ToolStripMenuItem> pagerMenuItemCache = new List<ToolStripMenuItem>();
         private void StatusBarPagerDropdownMenuOpeningHandler(object sender, EventArgs args)
         {
-            if (totalPageNumber != pagerMenuItemCache.Count)
+            var cache = pagerMenuItemCache;
+            if (totalPageNumber != cache.Count)
             {
-                pagerMenuItemCache = CreateStatusBarPagerMenuItems();
-                var groupedMenu = VgcApis.Misc.UI.AutoGroupMenuItems(pagerMenuItemCache, VgcApis.Models.Consts.Config.MenuItemGroupSize);
+                cache = CreateStatusBarPagerMenuItems();
+                var groupedMenu = VgcApis.Misc.UI.AutoGroupMenuItems(cache, VgcApis.Models.Consts.Config.MenuItemGroupSize);
+                tsdbtnPager.DropDownItems.Clear();
                 tsdbtnPager.DropDownItems.AddRange(groupedMenu.ToArray());
+                pagerMenuItemCache = cache;
             }
 
             var cpn = VgcApis.Misc.Utils.Clamp(curPageNumber, 0, totalPageNumber);
-            for (int i = 0; i < pagerMenuItemCache.Count; i++)
+            for (int i = 0; i < cache.Count; i++)
             {
-                pagerMenuItemCache[i].Checked = cpn == i;
+                cache[i].Checked = cpn == i;
             }
         }
 
-        private void UpdateStatusBarPagingButtons()
+        private void UpdateStatusBarPagerButtons()
         {
             var showPager = totalPageNumber > 1;
             var cpn = VgcApis.Misc.Utils.Clamp(curPageNumber, 0, totalPageNumber);

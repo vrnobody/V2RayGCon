@@ -41,9 +41,9 @@ namespace V2RayGCon.Views.UserControls
 
             roundLables = new List<Control>
             {
-                rlbRemark,
-                rlbMark,
                 rlbTotalNetFlow,
+                rlbMark,
+                rlbRemark,
                 rlbSpeedtest,
             };
 
@@ -190,6 +190,11 @@ namespace V2RayGCon.Views.UserControls
                     var dm = down / mib;
                     text = $"⇵ {dm}M";
                     tooltip = string.Format(I18N.NetFlowToolTipTpl, up / mib, dm);
+                    var speed = coreState.GetDownloadSpeedKiBps();
+                    if (speed > 0)
+                    {
+                        tooltip += $" ({speed} KiB/s)";
+                    }
                 }
             }
             UpdateControlTextAndTooltip(rlbTotalNetFlow, text, tooltip);

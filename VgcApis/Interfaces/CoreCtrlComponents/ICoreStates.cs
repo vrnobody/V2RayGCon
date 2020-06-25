@@ -6,6 +6,8 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
     {
         Models.Datas.CoreInfo GetAllRawCoreInfo();
 
+        long GetDownloadSpeedKiBps();
+
         long GetUplinkTotalInBytes();
         long GetDownlinkTotalInBytes();
 

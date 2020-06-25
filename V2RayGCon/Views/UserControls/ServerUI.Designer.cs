@@ -109,8 +109,8 @@
             // lbLastModifyDate
             // 
             this.lbLastModifyDate.AutoEllipsis = true;
-            this.lbLastModifyDate.ForeColor = System.Drawing.SystemColors.ControlDark;
             resources.ApplyResources(this.lbLastModifyDate, "lbLastModifyDate");
+            this.lbLastModifyDate.ForeColor = System.Drawing.SystemColors.ScrollBar;
             this.lbLastModifyDate.Name = "lbLastModifyDate";
             this.toolTip1.SetToolTip(this.lbLastModifyDate, resources.GetString("lbLastModifyDate.ToolTip"));
             this.lbLastModifyDate.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbLastModifyDate_MouseDown);
@@ -153,7 +153,7 @@
             // 
             // rlbRemark
             // 
-            this.rlbRemark._BackColor = System.Drawing.Color.SandyBrown;
+            this.rlbRemark._BackColor = System.Drawing.Color.LightSkyBlue;
             this.rlbRemark.AutoEllipsis = true;
             resources.ApplyResources(this.rlbRemark, "rlbRemark");
             this.rlbRemark.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -164,7 +164,7 @@
             // 
             // rlbTotalNetFlow
             // 
-            this.rlbTotalNetFlow._BackColor = System.Drawing.Color.LightSkyBlue;
+            this.rlbTotalNetFlow._BackColor = System.Drawing.Color.MediumTurquoise;
             this.rlbTotalNetFlow.AutoEllipsis = true;
             resources.ApplyResources(this.rlbTotalNetFlow, "rlbTotalNetFlow");
             this.rlbTotalNetFlow.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -187,7 +187,7 @@
             // 
             // rlbInboundMode
             // 
-            this.rlbInboundMode._BackColor = System.Drawing.Color.MediumTurquoise;
+            this.rlbInboundMode._BackColor = System.Drawing.Color.SandyBrown;
             this.rlbInboundMode.AutoEllipsis = true;
             resources.ApplyResources(this.rlbInboundMode, "rlbInboundMode");
             this.rlbInboundMode.BackColor = System.Drawing.SystemColors.Control;

@@ -38,6 +38,34 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region public methods
+        public long GetDownloadSpeedKiBps()
+        {
+            var span = TimeSpan.FromSeconds(10).Ticks;
+
+            List<double> speeds = new List<double>();
+            lock (samples)
+            {
+                var len = samples.Count;
+                for (int i = 0; i < len; i++)
+                {
+                    var prev = (i - 1 + len) % len;
+                    var ticks = Math.Abs(samples[i].stamp - samples[prev].stamp);
+                    if (ticks < span)
+                    {
+                        var dt = ticks * 10f / span;
+                        var speed = samples[prev].statsDownlink / dt;
+                        if (speed > 1024)
+                        {
+                            speeds.Add(speed);
+                        }
+                    }
+                }
+            }
+
+            var avg = speeds.Count > 0 ? speeds.Average() : -1;
+            return (long)(avg / 1024);
+        }
+
         public void AddStatSample(VgcApis.Models.Datas.StatsSample sample)
         {
             if (sample == null)

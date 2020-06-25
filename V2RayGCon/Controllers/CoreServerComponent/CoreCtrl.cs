@@ -98,7 +98,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 var statsPort = coreStates.GetStatPort();
                 if (statsPort > 0)
                 {
-                    VgcApis.Models.Datas.StatsSample sample = v2rayCore.QueryStatsApi(statsPort);
+                    var sample = v2rayCore.QueryStatsApi(statsPort);
                     coreStates.AddStatSample(sample);
                 }
             }
@@ -108,15 +108,17 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         void OnCoreStateChangedHandler(object sender, EventArgs args)
         {
-            if (v2rayCore.isRunning)
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                GetParent().InvokeEventOnCoreStart();
-            }
-            else
-            {
-                coreStates.SetStatPort(0);
-                GetParent().InvokeEventOnCoreStop();
-            }
+                if (v2rayCore.isRunning)
+                {
+                    GetParent().InvokeEventOnCoreStart();
+                }
+                else
+                {
+                    GetParent().InvokeEventOnCoreStop();
+                }
+            });
         }
 
         void SpeedTestWorker(string rawConfig)

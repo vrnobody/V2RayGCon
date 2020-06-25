@@ -40,30 +40,34 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #region public methods
         public long GetDownloadSpeedKiBps()
         {
-            var span = TimeSpan.FromSeconds(10).Ticks;
-
-            List<double> speeds = new List<double>();
+            var p30 = DateTime.Now.Ticks - TimeSpan.FromSeconds(30).Ticks;
+            List<VgcApis.Models.Datas.StatsSample> data;
             lock (samples)
             {
-                var len = samples.Count;
-                for (int i = 0; i < len; i++)
+                data = samples.Where(e => e.stamp > p30).ToList();
+            }
+
+            var s1 = TimeSpan.FromSeconds(1).Ticks;
+            var s10 = s1 * 10;
+            var len = data.Count;
+
+            List<long> speeds = new List<long>();
+            for (int i = 0; i < len; i++)
+            {
+                var prev = (i - 1 + len) % len;
+                var ticks = data[i].stamp - data[prev].stamp;
+                if (ticks < s10 && ticks > s1)
                 {
-                    var prev = (i - 1 + len) % len;
-                    var ticks = Math.Abs(samples[i].stamp - samples[prev].stamp);
-                    if (ticks < span)
+                    var speed = data[prev].statsDownlink * s1 / ticks / 1024;
+                    if (speed > 0)
                     {
-                        var dt = ticks * 10f / span;
-                        var speed = samples[prev].statsDownlink / dt;
-                        if (speed > 1024)
-                        {
-                            speeds.Add(speed);
-                        }
+                        speeds.Add(speed);
                     }
                 }
             }
 
             var avg = speeds.Count > 0 ? speeds.Average() : -1;
-            return (long)(avg / 1024);
+            return (long)(avg);
         }
 
         public void AddStatSample(VgcApis.Models.Datas.StatsSample sample)

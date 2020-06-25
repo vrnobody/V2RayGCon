@@ -171,7 +171,9 @@ namespace V2RayGCon.Libs.V2Ray
                     VgcApis.Misc.UI.MsgBoxAsync(I18N.ExeNotFound);
                 }
             }
-            VgcApis.Misc.Utils.RunInBackground(() => InvokeEventOnCoreStatusChanged());
+            // do not run in background
+            // VgcApis.Misc.Utils.RunInBackground(() => InvokeEventOnCoreStatusChanged());
+            InvokeEventOnCoreStatusChanged();
         }
 
         // blocking
@@ -327,7 +329,10 @@ namespace V2RayGCon.Libs.V2Ray
 
             // SendLog("Exit code: " + err);
             isRunning = false;
-            VgcApis.Misc.Utils.RunInBackground(() => InvokeEventOnCoreStatusChanged());
+
+            // do not run in background
+            // VgcApis.Misc.Utils.RunInBackground(() => InvokeEventOnCoreStatusChanged());
+            InvokeEventOnCoreStatusChanged();
         }
 
         void BindEvents(Process proc)

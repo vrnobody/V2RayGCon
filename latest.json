@@ -1,13 +1,12 @@
 {
-  "version": "1.4.1.0",
-  "md5": "FBA07992FB60D42B3692673284690751",
-  "warnings": [],
+  "version": "1.4.2.0",
+  "md5": "7CF38B3243BAB7597D59556F90D0D419",
+  "warnings": [
+    "移除Staticstics插件（请先备份数据）"
+  ],
   "changes": [
-    "添加自定义inbounds选项",
-    "添加可选v2fly更新源",
-    "修复了一个磨人的小(死)妖(锁)精",
-    "修复文件占用引起的v2ray-core更新失败问题",
-    "主窗口搜索时保留当前的选中状态",
-    "删除Luna中的Web:FindAllHrefs()函数"
+    "流量统计功能整合进主窗口，试验中还有点bug",
+    "添加解码模板选项，样板参见templates/custom/vmessDecodeTemplate.json",
+    "添加检查v2ray-core更新选项"
   ]
 }

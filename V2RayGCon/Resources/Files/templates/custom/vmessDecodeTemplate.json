@@ -1,0 +1,20 @@
+{
+  "protocol": "vmess",
+  "settings": {
+    "vnext": [
+      {
+        "address": "",
+        "port": 1234,
+        "users": [
+          {
+            "id": "",
+            "alterId": 32,
+            "security": "auto"
+          }
+        ]
+      }
+    ]
+  },
+  "tag": "agentout",
+  "streamSettings": {}
+}

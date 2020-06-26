@@ -63,7 +63,8 @@ namespace Luna.Models.Apis.Components
         {
             try
             {
-                return VgcApis.Misc.Utils.TimedDownloadTest(url, proxyPort, kib, timeout);
+                var r = VgcApis.Misc.Utils.TimedDownloadTest(url, proxyPort, kib, timeout);
+                return r.Item1;
             }
             catch { }
             return -1;

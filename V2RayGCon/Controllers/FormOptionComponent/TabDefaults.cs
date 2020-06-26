@@ -14,15 +14,15 @@ namespace V2RayGCon.Controllers.OptionComponent
         CheckBox chkSetSpeedtestIsUse = null,
             chkImportSsShareLink = null,
             chkImportBypassCnSite = null,
-            chkImportInjectGlobalImport = null;
+            chkImportInjectGlobalImport = null,
+            chkDefVmessDecodeTemplateEnabled = null;
 
         TextBox tboxDefImportAddr = null,
             tboxSetSpeedtestCycles = null,
-            tboxSetSpeedtestTimeout = null;
+            tboxSetSpeedtestTimeout = null,
+            tboxDefVmessDecodeTemplateUrl = null;
 
         RichTextBox exRTBoxDefCustomInbounds = null;
-
-
 
         public TabDefaults(
             ComboBox cboxDefImportMode,
@@ -38,9 +38,15 @@ namespace V2RayGCon.Controllers.OptionComponent
             ComboBox cboxDefSpeedtestExpectedSize,
             TextBox tboxSetSpeedtestTimeout,
 
+            TextBox tboxDefVmessDecodeTemplateUrl,
+            CheckBox chkDefVmessDecodeTemplateEnabled,
+
             RichTextBox exRTBoxDefCustomInbounds)
         {
             this.setting = Services.Settings.Instance;
+
+            this.tboxDefVmessDecodeTemplateUrl = tboxDefVmessDecodeTemplateUrl;
+            this.chkDefVmessDecodeTemplateEnabled = chkDefVmessDecodeTemplateEnabled;
 
             this.exRTBoxDefCustomInbounds = exRTBoxDefCustomInbounds;
 
@@ -61,6 +67,8 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         private void InitElement()
         {
+            tboxDefVmessDecodeTemplateUrl.Text = setting.CustomVmessDecodeTemplateUrl;
+            chkDefVmessDecodeTemplateEnabled.Checked = setting.CustomVmessDecodeTemplateEnabled;
             exRTBoxDefCustomInbounds.Text = setting.CustomDefInbounds;
 
             // mode
@@ -91,6 +99,9 @@ namespace V2RayGCon.Controllers.OptionComponent
                 return false;
             }
 
+            setting.CustomVmessDecodeTemplateEnabled = chkDefVmessDecodeTemplateEnabled.Checked;
+            setting.CustomVmessDecodeTemplateUrl = tboxDefVmessDecodeTemplateUrl.Text;
+
             setting.CustomDefInbounds = exRTBoxDefCustomInbounds.Text;
 
             // mode
@@ -120,6 +131,8 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             var success = VgcApis.Misc.Utils.TryParseAddress(tboxDefImportAddr.Text, out string ip, out int port);
             if (!success
+                || setting.CustomVmessDecodeTemplateUrl != tboxDefVmessDecodeTemplateUrl.Text
+                || setting.CustomVmessDecodeTemplateEnabled != chkDefVmessDecodeTemplateEnabled.Checked
                 || setting.CustomDefInbounds != exRTBoxDefCustomInbounds.Text
                 || setting.CustomDefImportGlobalImport != chkImportInjectGlobalImport.Checked
                 || setting.CustomDefImportBypassCnSite != chkImportBypassCnSite.Checked

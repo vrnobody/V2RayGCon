@@ -164,9 +164,6 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="Downloading" xml:space="preserve">
     <value>Downloading, please wait ...</value>
   </data>
-  <data name="EditorCannotLoadServerConfig" xml:space="preserve">
-    <value>Cannot load server config. Using default config!</value>
-  </data>
   <data name="EditorCheckConfig" xml:space="preserve">
     <value>Can not parse json! Please check you config.</value>
   </data>
@@ -761,5 +758,14 @@ No, abort.</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Custom</value>
+  </data>
+  <data name="LoadVemssDecodeTemplateFail" xml:space="preserve">
+    <value>Load vemss://... decode template fails.</value>
+  </data>
+  <data name="NetFlowToolTipTpl" xml:space="preserve">
+    <value>Upload: {0} MiB Download: {1} MiB</value>
+  </data>
+  <data name="ConfirmUpgradeV2rayCore" xml:space="preserve">
+    <value>Newer v2ray-core {0} is available, upgrade now?</value>
   </data>
 </root>

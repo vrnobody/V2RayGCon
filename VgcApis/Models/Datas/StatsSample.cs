@@ -5,15 +5,14 @@ namespace VgcApis.Models.Datas
     public class StatsSample
     {
         public long stamp { get; set; }
-        public int statsUplink { get; set; }
-        public int statsDownlink { get; set; }
+        public long statsUplink { get; set; }
+        public long statsDownlink { get; set; }
 
         public StatsSample(string upLink, string downLink)
-            : this(Misc.Utils.Str2Int(upLink),
-                  Misc.Utils.Str2Int(downLink))
+            : this(Misc.Utils.Str2Int(upLink), Misc.Utils.Str2Int(downLink))
         { }
 
-        public StatsSample(int upLink, int downLink)
+        public StatsSample(long upLink, long downLink)
         {
             stamp = DateTime.Now.Ticks;
             statsUplink = upLink;

@@ -487,6 +487,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Newer v2ray-core {0} is available, upgrade now? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmUpgradeV2rayCore {
+            get {
+                return ResourceManager.GetString("ConfirmUpgradeV2rayCore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Newer V2RayGCon v{0} is available, upgrade now? 的本地化字符串。
         /// </summary>
         internal static string ConfirmUpgradeVgc {
@@ -744,15 +753,6 @@ namespace V2RayGCon.Resources.Resx {
         internal static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Cannot load server config. Using default config! 的本地化字符串。
-        /// </summary>
-        internal static string EditorCannotLoadServerConfig {
-            get {
-                return ResourceManager.GetString("EditorCannotLoadServerConfig", resourceCulture);
             }
         }
         
@@ -1118,6 +1118,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Load vemss://... decode template fails. 的本地化字符串。
+        /// </summary>
+        internal static string LoadVemssDecodeTemplateFail {
+            get {
+                return ResourceManager.GetString("LoadVemssDecodeTemplateFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Locate target folder fail. 的本地化字符串。
         /// </summary>
         internal static string LocateTargetFolderFail {
@@ -1196,6 +1205,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string NameColon {
             get {
                 return ResourceManager.GetString("NameColon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Upload: {0} MiB Download: {1} MiB 的本地化字符串。
+        /// </summary>
+        internal static string NetFlowToolTipTpl {
+            get {
+                return ResourceManager.GetString("NetFlowToolTipTpl", resourceCulture);
             }
         }
         

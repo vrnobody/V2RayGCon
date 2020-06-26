@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
@@ -322,79 +323,126 @@ namespace VgcApis.Misc
 
         #region net
 
-        public static long TimedDownloadTest(
-            string url,
-            int port,
-            int expectedSizeInKiB,
-            int timeout)
+
+        static HttpClient CreateHttpClient(int port)
+        {
+            HttpClient hc;
+            if (port > 0 && port < 65536)
+            {
+                var httpClientHandler = new HttpClientHandler
+                {
+                    Proxy = new WebProxy(Models.Consts.Webs.LoopBackIP, port),
+                };
+                hc = new HttpClient(handler: httpClientHandler, disposeHandler: true);
+            }
+            else
+            {
+                hc = new HttpClient();
+            }
+            hc.DefaultRequestHeaders.Add(Models.Consts.Webs.UserAgentKey, Models.Consts.Webs.ChromeUserAgent);
+            return hc;
+        }
+
+
+        static async Task<long> TimedDownloadWorker(
+            string url, int port,
+            Func<long, bool> onProgress,
+            CancellationToken token)
+        {
+            long timeout = Models.Consts.Core.SpeedtestTimeout;
+
+            Stopwatch sw = new Stopwatch();
+
+            try
+            {
+                HttpClient hc = CreateHttpClient(port);
+                var opt = HttpCompletionOption.ResponseHeadersRead;
+
+                sw.Start();
+                using (hc)
+                using (var response = await hc.GetAsync(url, opt, token).ConfigureAwait(false))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return timeout;
+                    }
+
+                    using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    {
+                        byte[] buffer = new byte[4096];
+                        long read;
+                        do
+                        {
+                            read = await stream.ReadAsync(buffer, 0, buffer.Length, token).ConfigureAwait(false);
+                            if (!onProgress.Invoke(read))
+                            {
+                                break;
+                            }
+                        } while (read > 0);
+                    }
+                }
+                sw.Stop();
+                return sw.ElapsedMilliseconds;
+            }
+            catch
+            {
+                // break point for debugging
+            }
+
+            return timeout;
+        }
+
+        /// <summary>
+        /// return (milSec, recvBytesLen)
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="port"></param>
+        /// <param name="expectedSizeInKiB"></param>
+        /// <param name="timeout"></param>
+        /// <returns>(milSec, recvBytesLen)</returns>
+        public static Tuple<long, long> TimedDownloadTest(
+            string url, int port, int expectedSizeInKiB, int timeout)
         {
             if (string.IsNullOrEmpty(url))
             {
                 throw new ArgumentNullException("URL must not null!");
             }
 
-            var maxTimeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
+            long to = Models.Consts.Core.SpeedtestTimeout;
 
-            WebClient wc = new WebClient
+            long latency = to;
+            long totalRead = 0;
+            long expectedBytes = expectedSizeInKiB * 1024;
+            Func<long, bool> onProgress = (read) =>
             {
-                Encoding = Encoding.UTF8,
-            };
-            wc.Headers.Add(Models.Consts.Webs.UserAgent);
-
-            if (port > 0 && port < 65536)
-            {
-                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, port);
-            }
-
-            Stopwatch sw = new Stopwatch();
-            AutoResetEvent dlCompleted = new AutoResetEvent(false);
-            long totalReceived = 0;
-            var expectedBytes = expectedSizeInKiB * 1024;
-
-            if (expectedSizeInKiB >= 0)
-            {
-                wc.DownloadProgressChanged += (s, a) =>
+                totalRead += read;
+                if (totalRead > expectedBytes && totalRead > 0)
                 {
-                    Interlocked.Add(ref totalReceived, a.BytesReceived);
-                    if (totalReceived > expectedBytes)
-                    {
-                        sw.Stop();
-                        wc.CancelAsync();
-                    }
-                };
-            }
-
-            wc.DownloadStringCompleted += (s, a) =>
-            {
-                sw.Stop();
-                dlCompleted.Set();
-                wc.Dispose();
-            };
-
-            var speedtestTimeout = Models.Consts.Core.SpeedtestTimeout;
-
-            try
-            {
-                var patchedUrl = IsHttpLink(url) ? url : RelativePath2FullPath(url);
-                sw.Start();
-                wc.DownloadStringAsync(new Uri(patchedUrl));
-                // 收到信号为True
-                if (!dlCompleted.WaitOne(maxTimeout))
-                {
-                    wc.CancelAsync();
-                    return speedtestTimeout;
+                    return false;
                 }
-            }
-            catch
+                return true;
+            };
+
+            var maxTimeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
+            var cts = new CancellationTokenSource(maxTimeout);
+
+            var done = new AutoResetEvent(false);
+            var t = new Task(async () =>
             {
-                // network operation always buggy.
-                wc.CancelAsync();
-                return speedtestTimeout;
+                latency = await TimedDownloadWorker(url, port, onProgress, cts.Token);
+                done.Set();
+            }, TaskCreationOptions.LongRunning);
+            t.ConfigureAwait(false);
+            t.Start();
+            done.WaitOne((int)(maxTimeout * 1.5));
+
+            if (totalRead > 0 && totalRead > expectedBytes)
+            {
+                return new Tuple<long, long>(latency, totalRead);
             }
 
-            return totalReceived <= expectedBytes ? speedtestTimeout : sw.ElapsedMilliseconds;
+            return new Tuple<long, long>(to, totalRead);
         }
-
 
         public static bool IsValidPort(string port)
         {

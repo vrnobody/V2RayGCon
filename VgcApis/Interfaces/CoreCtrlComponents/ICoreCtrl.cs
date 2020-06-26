@@ -17,6 +17,6 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         void RestartCoreThen();
         void RestartCoreThen(Action next);
 
-        Models.Datas.StatsSample TakeStatisticsSample();
+        // Models.Datas.StatsSample TakeStatisticsSample();
     }
 }

@@ -264,6 +264,42 @@
   <data name="&gt;&gt;btnMenu.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="lbLastModifyDate.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 9pt, style=Bold</value>
+  </data>
+  <data name="lbLastModifyDate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lbLastModifyDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>414, 2</value>
+  </data>
+  <data name="lbLastModifyDate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 14</value>
+  </data>
+  <data name="lbLastModifyDate.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="lbLastModifyDate.Text" xml:space="preserve">
+    <value>02月30日</value>
+  </data>
+  <data name="lbLastModifyDate.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="lbLastModifyDate.ToolTip" xml:space="preserve">
+    <value>Last modify</value>
+  </data>
+  <data name="&gt;&gt;lbLastModifyDate.Name" xml:space="preserve">
+    <value>lbLastModifyDate</value>
+  </data>
+  <data name="&gt;&gt;lbLastModifyDate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbLastModifyDate.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbLastModifyDate.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
   <data name="rlbIsRunning.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 9pt, style=Bold</value>
   </data>
@@ -352,7 +388,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbMark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 31</value>
+    <value>185, 31</value>
   </data>
   <data name="rlbMark.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>90, 18</value>
@@ -397,7 +433,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbRemark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>160, 31</value>
+    <value>276, 31</value>
   </data>
   <data name="rlbRemark.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>70, 18</value>
@@ -435,46 +471,49 @@
   <data name="&gt;&gt;rlbRemark.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="rlbLastModify.AutoSize" type="System.Boolean, mscorlib">
+  <data name="rlbTotalNetFlow.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="rlbLastModify.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="rlbTotalNetFlow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="rlbLastModify.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="rlbTotalNetFlow.Location" type="System.Drawing.Point, System.Drawing">
     <value>99, 31</value>
   </data>
-  <data name="rlbLastModify.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>60, 18</value>
+  <data name="rlbTotalNetFlow.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>80, 18</value>
   </data>
-  <data name="rlbLastModify.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="rlbTotalNetFlow.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 3, 1, 3</value>
   </data>
-  <data name="rlbLastModify.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 18</value>
+  <data name="rlbTotalNetFlow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 18</value>
   </data>
-  <data name="rlbLastModify.TabIndex" type="System.Int32, mscorlib">
+  <data name="rlbTotalNetFlow.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
   </data>
-  <data name="rlbLastModify.Text" xml:space="preserve">
-    <value>02月30日</value>
+  <data name="rlbTotalNetFlow.Text" xml:space="preserve">
+    <value>⇵ 123456789M</value>
   </data>
-  <data name="rlbLastModify.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="rlbTotalNetFlow.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
   </data>
-  <data name="rlbLastModify.ToolTip" xml:space="preserve">
-    <value>Last modified time.</value>
+  <data name="rlbTotalNetFlow.ToolTip" xml:space="preserve">
+    <value>Total network flow.</value>
   </data>
-  <data name="&gt;&gt;rlbLastModify.Name" xml:space="preserve">
-    <value>rlbLastModify</value>
+  <data name="rlbTotalNetFlow.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
-  <data name="&gt;&gt;rlbLastModify.Type" xml:space="preserve">
+  <data name="&gt;&gt;rlbTotalNetFlow.Name" xml:space="preserve">
+    <value>rlbTotalNetFlow</value>
+  </data>
+  <data name="&gt;&gt;rlbTotalNetFlow.Type" xml:space="preserve">
     <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;rlbLastModify.Parent" xml:space="preserve">
+  <data name="&gt;&gt;rlbTotalNetFlow.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;rlbLastModify.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;rlbTotalNetFlow.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
   <data name="rlbSpeedtest.AutoSize" type="System.Boolean, mscorlib">
@@ -484,7 +523,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbSpeedtest.Location" type="System.Drawing.Point, System.Drawing">
-    <value>300, 31</value>
+    <value>325, 31</value>
   </data>
   <data name="rlbSpeedtest.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>60, 18</value>

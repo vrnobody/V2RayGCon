@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -53,31 +52,7 @@ namespace V2RayGCon.Views.WinForms
         }
 
         #region private methods
-        List<string> GetOnlineV2RayCoreVersionList(
-           int proxyPort, string sourceUrl)
-        {
-            List<string> versions = new List<string> { };
 
-            string html = Misc.Utils.Fetch(sourceUrl, proxyPort, -1);
-            if (string.IsNullOrEmpty(html))
-            {
-                return versions;
-            }
-
-            string pattern = VgcApis.Models.Consts.Patterns.V2RayCoreReleaseAssets;
-
-            var matches = Regex.Matches(html, pattern, RegexOptions.IgnoreCase);
-            foreach (Match match in matches)
-            {
-                var v = match.Groups[1].Value;
-                if (!versions.Contains(v))
-                {
-                    versions.Add(v);
-                }
-            }
-
-            return versions;
-        }
 
         void RefreshV2RayCoreSourceUrls()
         {
@@ -203,7 +178,7 @@ namespace V2RayGCon.Views.WinForms
 
             Action worker = () =>
             {
-                var versions = GetOnlineV2RayCoreVersionList(proxyPort, sourceUrl);
+                var versions = Misc.Utils.GetOnlineV2RayCoreVersionList(proxyPort, sourceUrl);
                 if (versions != null && versions.Count > 0)
                 {
                     setting.SaveV2RayCoreVersionList(versions);

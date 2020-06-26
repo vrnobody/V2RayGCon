@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
@@ -104,7 +105,6 @@ namespace V2RayGCon.Services
 
         #region private method
 
-
         void ShowExceptionDetailAndExit(Exception exception)
         {
             VgcApis.Libs.Sys.FileLogger.Error($"unhandled exception:\n{exception}");
@@ -132,7 +132,6 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.NotepadHelper.ShowMessage(log, "V2RayGCon bug report");
         }
 
-
         private void BootUp()
         {
             PluginsServer.Instance.RestartAllPlugins();
@@ -146,16 +145,63 @@ namespace V2RayGCon.Services
                 servers.WakeupServersInBootList();
             }
 
-            if (setting.isCheckUpdateWhenAppStart)
+            CheckForUpdateBg(setting.isCheckV2RayCoreUpdateWhenAppStart, V2RayCoreUpdater);
+            CheckForUpdateBg(setting.isCheckVgcUpdateWhenAppStart, () => updater.CheckForUpdate(false));
+        }
+
+        void CheckForUpdateBg(bool flag, Action worker)
+        {
+            if (!flag)
             {
-                VgcApis.Misc.Utils.RunInBackground(() =>
-                {
+                return;
+            }
+
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
 #if DEBUG
+                VgcApis.Misc.Utils.Sleep(5000);
 #else
-                    VgcApis.Misc.Utils.Sleep(VgcApis.Models.Consts.Webs.CheckForUpdateDelay);
+                VgcApis.Misc.Utils.Sleep(VgcApis.Models.Consts.Webs.CheckForUpdateDelay);
 #endif
-                    updater.CheckForUpdate(false);
-                });
+                try
+                {
+                    worker?.Invoke();
+                }
+                catch { };
+            });
+        }
+
+        void V2RayCoreUpdater()
+        {
+            var core = new Libs.V2Ray.Core(setting);
+            var curVerStr = core.GetCoreVersion();
+            if (string.IsNullOrEmpty(curVerStr))
+            {
+                return;
+            }
+
+            var src = setting.v2rayCoreDownloadSource;
+            var port = -1;
+            if (setting.isUpdateUseProxy)
+            {
+                port = servers.GetAvailableHttpProxyPort();
+            }
+
+            var vers = Misc.Utils.GetOnlineV2RayCoreVersionList(port, src);
+            if (vers.Count < 1)
+            {
+                return;
+            }
+            setting.SaveV2RayCoreVersionList(vers);
+
+            var first = vers.First();
+            var current = new Version(curVerStr);
+            var latest = new Version(first.Substring(1));
+
+            var msg = string.Format(I18N.ConfirmUpgradeV2rayCore, first);
+            if (latest > current && VgcApis.Misc.UI.Confirm(msg))
+            {
+                Views.WinForms.FormDownloadCore.ShowForm();
             }
         }
 

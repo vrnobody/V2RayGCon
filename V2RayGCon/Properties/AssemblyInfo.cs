@@ -33,10 +33,23 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.4.1.0")]
+[assembly: AssemblyVersion("1.4.2.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * -----------------------------------------------------
+ * v1.4.1.12 Add option check for v2ray-core update when app start.
+ * v1.4.1.11 Disable prompt of loading default config in configer.
+ * v1.4.1.10 Reverse v1.4.1.9
+ * v1.4.1.9 Add download speed in tooltip of total-down-label.
+ * v1.4.1.8 Clear paging menu before adding new item.
+ * v1.4.1.7 Adjust UI.
+ * v1.4.1.6 Fix bugs.
+ * v1.4.1.5 Remove statistics plug-in.
+ * v1.4.1.4 Add stream settings support in vmess://... decode template.
+ * v1.4.1.3 Fix a bug.
+ * v1.4.1.2 Fix a bug in pager updating.
+ * v1.4.1.1 Add vmess://... decode template support.
  * ------------------------------------------------
  * v1.4.0.11 18080 -> 8080
  * v1.4.0.10 Print server index in logs.

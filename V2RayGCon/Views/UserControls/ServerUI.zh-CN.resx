@@ -138,6 +138,9 @@
   <data name="rlbMark.ToolTip" xml:space="preserve">
     <value>标记</value>
   </data>
+  <data name="rlbRemark.ToolTip" xml:space="preserve">
+    <value>备注</value>
+  </data>
   <data name="rlbLastModify.ToolTip" xml:space="preserve">
     <value>最后修改时间</value>
   </data>
@@ -147,8 +150,8 @@
   <data name="rlbInboundMode.ToolTip" xml:space="preserve">
     <value>Inbound信息</value>
   </data>
-  <data name="rlbRemark.ToolTip" xml:space="preserve">
-    <value>备注</value>
+  <data name="lbTotalDataFlow.ToolTip" xml:space="preserve">
+    <value>上传、下载合计（MiB）</value>
   </data>
   <data name="startToolStripMenuItem.Text" xml:space="preserve">
     <value>开启</value>

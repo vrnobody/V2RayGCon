@@ -322,6 +322,8 @@ namespace VgcApis.Misc
         #endregion
 
         #region net
+
+
         static HttpClient CreateHttpClient(int port)
         {
             HttpClient hc;

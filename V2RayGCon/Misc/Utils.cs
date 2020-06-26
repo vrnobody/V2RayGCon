@@ -931,6 +931,32 @@ namespace V2RayGCon.Misc
         #endregion
 
         #region net
+
+        static public List<string> GetOnlineV2RayCoreVersionList(int proxyPort, string sourceUrl)
+        {
+            List<string> versions = new List<string> { };
+
+            string html = Misc.Utils.Fetch(sourceUrl, proxyPort, -1);
+            if (string.IsNullOrEmpty(html))
+            {
+                return versions;
+            }
+
+            string pattern = VgcApis.Models.Consts.Patterns.V2RayCoreReleaseAssets;
+
+            var matches = Regex.Matches(html, pattern, RegexOptions.IgnoreCase);
+            foreach (Match match in matches)
+            {
+                var v = match.Groups[1].Value;
+                if (!versions.Contains(v))
+                {
+                    versions.Add(v);
+                }
+            }
+
+            return versions;
+        }
+
         /// <summary>
         /// List( success ? ( vmess://... , mark ) : ( "", [alias] url ) )
         /// </summary>

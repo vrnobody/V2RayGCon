@@ -358,7 +358,17 @@ namespace V2RayGCon.Services
             }
         }
 
-        public bool isCheckUpdateWhenAppStart
+        public bool isCheckV2RayCoreUpdateWhenAppStart
+        {
+            get => userSettings.isCheckV2RayCoreUpdateWhenAppStart;
+            set
+            {
+                userSettings.isCheckV2RayCoreUpdateWhenAppStart = value;
+                SaveSettingsLater();
+            }
+        }
+
+        public bool isCheckVgcUpdateWhenAppStart
         {
             get => userSettings.isCheckUpdateWhenAppStart;
             set

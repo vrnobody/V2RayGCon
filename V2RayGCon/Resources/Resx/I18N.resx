@@ -765,4 +765,7 @@ No, abort.</value>
   <data name="NetFlowToolTipTpl" xml:space="preserve">
     <value>Upload: {0} MiB Download: {1} MiB</value>
   </data>
+  <data name="ConfirmUpgradeV2rayCore" xml:space="preserve">
+    <value>Newer v2ray-core {0} is available, upgrade now?</value>
+  </data>
 </root>

@@ -90,7 +90,8 @@ namespace V2RayGCon.Views.WinForms
                     chkSetSelfSignedCert,
                     chkSetServStatistics,
                     chkSetUpgradeUseProxy,
-                    chkSetCheckWhenStart,
+                    chkSetCheckVgcUpdateWhenStart,
+                    chkSetCheckV2RayCoreUpdateWhenStart,
 
                     btnSetBrowseDebugFile,
                     tboxSetDebugFilePath,

@@ -487,6 +487,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Newer v2ray-core {0} is available, upgrade now? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmUpgradeV2rayCore {
+            get {
+                return ResourceManager.GetString("ConfirmUpgradeV2rayCore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Newer V2RayGCon v{0} is available, upgrade now? 的本地化字符串。
         /// </summary>
         internal static string ConfirmUpgradeVgc {

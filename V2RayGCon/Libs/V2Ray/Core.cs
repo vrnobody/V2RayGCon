@@ -103,16 +103,14 @@ namespace V2RayGCon.Libs.V2Ray
                 return string.Empty;
             }
 
-            var output = Misc.Utils.GetOutputFromExecutable(
-                GetExecutablePath(),
-                "-version",
-                VgcApis.Models.Consts.Core.GetVersionTimeout);
+            var timeout = VgcApis.Models.Consts.Core.GetVersionTimeout;
+            var output = Misc.Utils.GetOutputFromExecutable(GetExecutablePath(), "-version", timeout);
 
             // since 3.46.* v is deleted
             // Regex pattern = new Regex(@"(?<version>(\d+\.)+\d+)");
             // Regex pattern = new Regex(@"v(?<version>[\d\.]+)");
-            return VgcApis.Misc.Utils.ExtractStringWithPattern(
-                "version", @"(\d+\.)+\d+", output);
+            var ver = VgcApis.Misc.Utils.ExtractStringWithPattern("version", @"(\d+\.)+\d+", output);
+            return ver;
         }
 
         public bool IsExecutableExist()

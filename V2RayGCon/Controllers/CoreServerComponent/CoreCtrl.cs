@@ -88,6 +88,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             if (!setting.isEnableStatistics
                 || !IsCoreRunning()
+                || setting.IsScreenLocked()
+                || setting.IsClosing()
                 || !isRecording.Install())
             {
                 return;

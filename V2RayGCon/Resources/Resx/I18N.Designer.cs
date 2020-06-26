@@ -748,15 +748,6 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Cannot load server config. Using default config! 的本地化字符串。
-        /// </summary>
-        internal static string EditorCannotLoadServerConfig {
-            get {
-                return ResourceManager.GetString("EditorCannotLoadServerConfig", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Can not parse json! Please check you config. 的本地化字符串。
         /// </summary>
         internal static string EditorCheckConfig {

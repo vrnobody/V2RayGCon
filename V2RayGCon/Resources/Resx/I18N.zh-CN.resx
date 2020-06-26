@@ -160,9 +160,6 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="Downloading" xml:space="preserve">
     <value>正在下载，请稍后。</value>
   </data>
-  <data name="EditorCannotLoadServerConfig" xml:space="preserve">
-    <value>加载服务器配置失败，调取默认配置文件。</value>
-  </data>
   <data name="EditorCheckConfig" xml:space="preserve">
     <value>无法解析JSON文件，请仔细检查。</value>
   </data>

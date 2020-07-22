@@ -1,5 +1,7 @@
-﻿using System;
+﻿using NLua;
+using System;
 using System.Diagnostics;
+using System.Text;
 
 namespace VgcApis.Interfaces.Lua
 {
@@ -33,6 +35,16 @@ namespace VgcApis.Interfaces.Lua
         bool RemoveMailBox(ILuaMailBox mailbox);
         #endregion
 
+        #region encoding
+        Encoding GetEncoding(int codepage);
+
+        Encoding EncodingCmd936();
+        Encoding EncodingUtf8();
+
+        Encoding EncodingAscII();
+        Encoding EncodingUnicode();
+        #endregion
+
         #region process
 
         void DoEvents();
@@ -52,6 +64,10 @@ namespace VgcApis.Interfaces.Lua
         Process RunAndForgot(string exePath, string args, string stdin,
             NLua.LuaTable envs, bool hasWindow, bool redirectOutput);
 
+        Process RunAndForgot(string exePath, string args, string stdin,
+            LuaTable envs, bool hasWindow, bool redirectOutput,
+            Encoding inputEncoding, Encoding outputEncoding);
+
         Process Run(string exePath);
 
         Process Run(string exePath, string args);
@@ -60,6 +76,10 @@ namespace VgcApis.Interfaces.Lua
 
         Process Run(string exePath, string args, string stdin,
             NLua.LuaTable envs, bool hasWindow, bool redirectOutput);
+
+        Process Run(string exePath, string args, string stdin,
+           LuaTable envs, bool hasWindow, bool redirectOutput,
+           Encoding inputEncoding, Encoding outputEncoding);
         bool SendStopSignal(Process proc);
         void WaitForExit(Process proc);
         #endregion

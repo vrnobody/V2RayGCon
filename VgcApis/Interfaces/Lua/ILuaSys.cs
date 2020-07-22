@@ -36,6 +36,7 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region encoding
+        Encoding EncodingDefault();
         Encoding GetEncoding(int codepage);
 
         Encoding EncodingCmd936();

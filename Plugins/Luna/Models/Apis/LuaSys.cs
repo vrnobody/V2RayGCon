@@ -15,7 +15,6 @@ namespace Luna.Models.Apis
         VgcApis.Interfaces.Lua.ILuaSys
     {
         readonly object procLocker = new object();
-        readonly Encoding encodingCmd936 = Encoding.GetEncoding(936);
 
         private readonly LuaApis luaApis;
         private readonly Func<List<Type>> getAllAssemblies;
@@ -40,22 +39,37 @@ namespace Luna.Models.Apis
         }
 
         #region private methods
+        DataReceivedEventHandler CreateSendLogHandler(Encoding encoding)
+        {
+            var ec = encoding;
+
+            return (s, a) =>
+            {
+                try
+                {
+                    string msg = null;
+                    var bin = Encoding.Default.GetBytes(a.Data);
+                    msg = ec.GetString(bin);
+                    if (!string.IsNullOrEmpty(msg))
+                    {
+                        luaApis?.SendLog(msg);
+                    }
+                }
+                catch { }
+            };
+        }
 
         void SendLogHandler(object sender, DataReceivedEventArgs args)
         {
-            string msg = null;
             try
             {
-                msg = args.Data;
+                string msg = null;
+                msg = args.Data; if (!string.IsNullOrEmpty(msg))
+                {
+                    luaApis?.SendLog(msg);
+                }
             }
             catch { }
-
-            if (msg == null)
-            {
-                return;
-            }
-
-            luaApis.SendLog(msg);
         }
 
         void TrackdownProcess(Process proc)
@@ -301,15 +315,18 @@ namespace Luna.Models.Apis
         public Process RunAndForgot(string exePath, string args, string stdin) =>
             RunAndForgot(exePath, args, stdin, null, true, false);
 
-
         public Process RunAndForgot(string exePath, string args, string stdin,
             LuaTable envs, bool hasWindow, bool redirectOutput) =>
-            RunAndForgot(exePath, args, stdin, envs, hasWindow, redirectOutput, encodingCmd936, encodingCmd936);
+            RunAndForgot(exePath, args, stdin,
+                envs, hasWindow, redirectOutput,
+                null, null);
 
         public Process RunAndForgot(string exePath, string args, string stdin,
             LuaTable envs, bool hasWindow, bool redirectOutput,
             Encoding inputEncoding, Encoding outputEncoding) =>
-            RunProcWrapper(false, exePath, args, stdin, envs, hasWindow, redirectOutput, inputEncoding, outputEncoding);
+            RunProcWrapper(false, exePath, args, stdin,
+                envs, hasWindow, redirectOutput,
+                inputEncoding, outputEncoding);
 
         public Process Run(string exePath) =>
             Run(exePath, null);
@@ -322,27 +339,31 @@ namespace Luna.Models.Apis
 
         public Process Run(string exePath, string args, string stdin,
             LuaTable envs, bool hasWindow, bool redirectOutput) =>
-            Run(exePath, args, stdin, envs, hasWindow, redirectOutput, encodingCmd936, encodingCmd936);
+            Run(exePath, args, stdin,
+                envs, hasWindow, redirectOutput,
+                null, null);
 
         public Process Run(string exePath, string args, string stdin,
             LuaTable envs, bool hasWindow, bool redirectOutput,
             Encoding inputEncoding, Encoding outputEncoding) =>
-            RunProcWrapper(true, exePath, args, stdin, envs, hasWindow, redirectOutput, inputEncoding, outputEncoding);
-
-
+            RunProcWrapper(true, exePath, args, stdin,
+                envs, hasWindow, redirectOutput,
+                inputEncoding, outputEncoding);
 
         #endregion
 
         #region ILuaSys.Encoding
         public Encoding GetEncoding(int codepage) => Encoding.GetEncoding(codepage);
 
-        public Encoding EncodingCmd936() => encodingCmd936;
+        public Encoding EncodingCmd936() => GetEncoding(936);
 
         public Encoding EncodingUtf8() => Encoding.UTF8;
 
         public Encoding EncodingAscII() => Encoding.ASCII;
 
         public Encoding EncodingUnicode() => Encoding.Unicode;
+
+        public Encoding EncodingDefault() => Encoding.Default;
 
         #endregion
 
@@ -415,7 +436,10 @@ namespace Luna.Models.Apis
         {
             try
             {
-                return RunProcWorker(isTracking, exePath, args, stdin, envs, hasWindow, redirectOutput, inputEncoding, outputEncoding);
+                return RunProcWorker(
+                    isTracking, exePath, args, stdin,
+                    envs, hasWindow, redirectOutput,
+                    inputEncoding, outputEncoding);
             }
             catch { }
             return null;
@@ -438,21 +462,25 @@ namespace Luna.Models.Apis
                     RedirectStandardInput = useStdIn,
                     RedirectStandardError = redirectOutput,
                     RedirectStandardOutput = redirectOutput,
-                    StandardErrorEncoding = outputEncoding,
-                    StandardOutputEncoding = outputEncoding,
                 }
             };
+
+            DataReceivedEventHandler logHandler = SendLogHandler;
+            if (outputEncoding != null)
+            {
+                logHandler = CreateSendLogHandler(outputEncoding);
+            }
 
             if (redirectOutput)
             {
                 p.Exited += (s, a) =>
                 {
-                    p.ErrorDataReceived -= SendLogHandler;
-                    p.OutputDataReceived -= SendLogHandler;
+                    p.ErrorDataReceived -= logHandler;
+                    p.OutputDataReceived -= logHandler;
                 };
 
-                p.ErrorDataReceived += SendLogHandler;
-                p.OutputDataReceived += SendLogHandler;
+                p.ErrorDataReceived += logHandler;
+                p.OutputDataReceived += logHandler;
             }
 
             if (envs != null)
@@ -475,8 +503,10 @@ namespace Luna.Models.Apis
 
             if (useStdIn)
             {
+                var ie = inputEncoding == null ? EncodingCmd936() : inputEncoding;
+                var buff = ie.GetBytes(stdin);
+
                 var input = p.StandardInput;
-                var buff = inputEncoding.GetBytes(stdin);
                 input.BaseStream.Write(buff, 0, buff.Length);
                 input.WriteLine();
                 input.Close();

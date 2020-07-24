@@ -72,6 +72,17 @@ namespace Luna.Views.WinForms
         {
             Close();
         }
+
+        private void FormInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            var kc = e.KeyCode;
+            switch (kc)
+            {
+                case Keys.Escape:
+                    Close();
+                    return;
+            }
+        }
         #endregion
 
 

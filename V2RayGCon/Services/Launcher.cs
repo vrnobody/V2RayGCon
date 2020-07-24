@@ -120,7 +120,8 @@ namespace V2RayGCon.Services
         {
             var nl = Environment.NewLine;
             var verInfo = Misc.Utils.GetAppNameAndVer();
-            var log = $"{I18N.LooksLikeABug}{nl}{nl}{verInfo}";
+            var issue = Properties.Resources.IssueLink;
+            var log = $"{I18N.LooksLikeABug}{nl}{issue}{nl}{nl}{verInfo}";
 
             try
             {

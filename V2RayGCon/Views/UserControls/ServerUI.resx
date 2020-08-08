@@ -151,7 +151,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chkSelected.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="btnStart.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -176,6 +176,9 @@
   </data>
   <data name="btnStart.ToolTip" xml:space="preserve">
     <value>Start this server only.</value>
+  </data>
+  <data name="btnStart.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;btnStart.Name" xml:space="preserve">
     <value>btnStart</value>
@@ -212,6 +215,9 @@
   </data>
   <data name="btnStop.ToolTip" xml:space="preserve">
     <value>Stop this server.</value>
+  </data>
+  <data name="btnStop.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;btnStop.Name" xml:space="preserve">
     <value>btnStop</value>
@@ -252,6 +258,9 @@
   <data name="btnMenu.ToolTip" xml:space="preserve">
     <value>Show menu.</value>
   </data>
+  <data name="btnMenu.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="&gt;&gt;btnMenu.Name" xml:space="preserve">
     <value>btnMenu</value>
   </data>
@@ -263,345 +272,6 @@
   </data>
   <data name="&gt;&gt;btnMenu.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="lbLastModifyDate.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 9pt, style=Bold</value>
-  </data>
-  <data name="lbLastModifyDate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lbLastModifyDate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>414, 2</value>
-  </data>
-  <data name="lbLastModifyDate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 14</value>
-  </data>
-  <data name="lbLastModifyDate.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="lbLastModifyDate.Text" xml:space="preserve">
-    <value>02月30日</value>
-  </data>
-  <data name="lbLastModifyDate.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleRight</value>
-  </data>
-  <data name="lbLastModifyDate.ToolTip" xml:space="preserve">
-    <value>Last modify</value>
-  </data>
-  <data name="&gt;&gt;lbLastModifyDate.Name" xml:space="preserve">
-    <value>lbLastModifyDate</value>
-  </data>
-  <data name="&gt;&gt;lbLastModifyDate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbLastModifyDate.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbLastModifyDate.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="rlbIsRunning.Font" type="System.Drawing.Font, System.Drawing">
-    <value>宋体, 9pt, style=Bold</value>
-  </data>
-  <data name="rlbIsRunning.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="rlbIsRunning.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 9</value>
-  </data>
-  <data name="rlbIsRunning.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 16</value>
-  </data>
-  <data name="rlbIsRunning.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="rlbIsRunning.Text" xml:space="preserve">
-    <value>ON</value>
-  </data>
-  <data name="rlbIsRunning.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="rlbIsRunning.ToolTip" xml:space="preserve">
-    <value>Click to turn server ON/OFF.</value>
-  </data>
-  <data name="&gt;&gt;rlbIsRunning.Name" xml:space="preserve">
-    <value>rlbIsRunning</value>
-  </data>
-  <data name="&gt;&gt;rlbIsRunning.Type" xml:space="preserve">
-    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;rlbIsRunning.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;rlbIsRunning.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="rlbSetting.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="rlbSetting.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="rlbSetting.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 31</value>
-  </data>
-  <data name="rlbSetting.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>60, 18</value>
-  </data>
-  <data name="rlbSetting.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 3, 1, 3</value>
-  </data>
-  <data name="rlbSetting.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 18</value>
-  </data>
-  <data name="rlbSetting.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="rlbSetting.Text" xml:space="preserve">
-    <value>ACIU</value>
-  </data>
-  <data name="rlbSetting.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="rlbSetting.ToolTip" xml:space="preserve">
-    <value>(A)utorun / Global (I)mport / Skip (C)N website / (U)ntrack</value>
-  </data>
-  <data name="rlbSetting.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;rlbSetting.Name" xml:space="preserve">
-    <value>rlbSetting</value>
-  </data>
-  <data name="&gt;&gt;rlbSetting.Type" xml:space="preserve">
-    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;rlbSetting.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;rlbSetting.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="rlbMark.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="rlbMark.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="rlbMark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>185, 31</value>
-  </data>
-  <data name="rlbMark.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>90, 18</value>
-  </data>
-  <data name="rlbMark.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 3, 1, 3</value>
-  </data>
-  <data name="rlbMark.Size" type="System.Drawing.Size, System.Drawing">
-    <value>85, 18</value>
-  </data>
-  <data name="rlbMark.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="rlbMark.Text" xml:space="preserve">
-    <value>PackageV4Markaaaaaaaaaaaaaaaaa</value>
-  </data>
-  <data name="rlbMark.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="rlbMark.ToolTip" xml:space="preserve">
-    <value>Mark</value>
-  </data>
-  <data name="rlbMark.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;rlbMark.Name" xml:space="preserve">
-    <value>rlbMark</value>
-  </data>
-  <data name="&gt;&gt;rlbMark.Type" xml:space="preserve">
-    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;rlbMark.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;rlbMark.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="rlbRemark.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="rlbRemark.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="rlbRemark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>276, 31</value>
-  </data>
-  <data name="rlbRemark.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>70, 18</value>
-  </data>
-  <data name="rlbRemark.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 3, 1, 3</value>
-  </data>
-  <data name="rlbRemark.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 18</value>
-  </data>
-  <data name="rlbRemark.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="rlbRemark.Text" xml:space="preserve">
-    <value>备注🖤</value>
-  </data>
-  <data name="rlbRemark.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="rlbRemark.ToolTip" xml:space="preserve">
-    <value>Remark</value>
-  </data>
-  <data name="rlbRemark.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;rlbRemark.Name" xml:space="preserve">
-    <value>rlbRemark</value>
-  </data>
-  <data name="&gt;&gt;rlbRemark.Type" xml:space="preserve">
-    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;rlbRemark.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;rlbRemark.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="rlbTotalNetFlow.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="rlbTotalNetFlow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="rlbTotalNetFlow.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 31</value>
-  </data>
-  <data name="rlbTotalNetFlow.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>80, 18</value>
-  </data>
-  <data name="rlbTotalNetFlow.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 3, 1, 3</value>
-  </data>
-  <data name="rlbTotalNetFlow.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 18</value>
-  </data>
-  <data name="rlbTotalNetFlow.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="rlbTotalNetFlow.Text" xml:space="preserve">
-    <value>⇵ 123456789M</value>
-  </data>
-  <data name="rlbTotalNetFlow.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="rlbTotalNetFlow.ToolTip" xml:space="preserve">
-    <value>Total network flow.</value>
-  </data>
-  <data name="rlbTotalNetFlow.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;rlbTotalNetFlow.Name" xml:space="preserve">
-    <value>rlbTotalNetFlow</value>
-  </data>
-  <data name="&gt;&gt;rlbTotalNetFlow.Type" xml:space="preserve">
-    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;rlbTotalNetFlow.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;rlbTotalNetFlow.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="rlbSpeedtest.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="rlbSpeedtest.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="rlbSpeedtest.Location" type="System.Drawing.Point, System.Drawing">
-    <value>325, 31</value>
-  </data>
-  <data name="rlbSpeedtest.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>60, 18</value>
-  </data>
-  <data name="rlbSpeedtest.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 3, 1, 3</value>
-  </data>
-  <data name="rlbSpeedtest.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 18</value>
-  </data>
-  <data name="rlbSpeedtest.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="rlbSpeedtest.Text" xml:space="preserve">
-    <value>正在测试中啊啊啊</value>
-  </data>
-  <data name="rlbSpeedtest.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="rlbSpeedtest.ToolTip" xml:space="preserve">
-    <value>Speed test result.</value>
-  </data>
-  <data name="rlbSpeedtest.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;rlbSpeedtest.Name" xml:space="preserve">
-    <value>rlbSpeedtest</value>
-  </data>
-  <data name="&gt;&gt;rlbSpeedtest.Type" xml:space="preserve">
-    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;rlbSpeedtest.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;rlbSpeedtest.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="rlbInboundMode.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="rlbInboundMode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="rlbInboundMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>50, 31</value>
-  </data>
-  <data name="rlbInboundMode.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>60, 18</value>
-  </data>
-  <data name="rlbInboundMode.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 3, 1, 3</value>
-  </data>
-  <data name="rlbInboundMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 18</value>
-  </data>
-  <data name="rlbInboundMode.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="rlbInboundMode.Text" xml:space="preserve">
-    <value>S65535</value>
-  </data>
-  <data name="rlbInboundMode.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="rlbInboundMode.ToolTip" xml:space="preserve">
-    <value>Inbound information.</value>
-  </data>
-  <data name="&gt;&gt;rlbInboundMode.Name" xml:space="preserve">
-    <value>rlbInboundMode</value>
-  </data>
-  <data name="&gt;&gt;rlbInboundMode.Type" xml:space="preserve">
-    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;rlbInboundMode.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;rlbInboundMode.ZOrder" xml:space="preserve">
-    <value>10</value>
   </data>
   <metadata name="ctxMenuStripMore.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>119, 18</value>
@@ -756,6 +426,351 @@
   <data name="runSpeedTestToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>The time it takes to download the test web page.</value>
   </data>
+  <data name="rlbIsRunning.Font" type="System.Drawing.Font, System.Drawing">
+    <value>宋体, 9pt, style=Bold</value>
+  </data>
+  <data name="rlbIsRunning.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rlbIsRunning.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 9</value>
+  </data>
+  <data name="rlbIsRunning.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 16</value>
+  </data>
+  <data name="rlbIsRunning.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbIsRunning.Text" xml:space="preserve">
+    <value>ON</value>
+  </data>
+  <data name="rlbIsRunning.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="rlbIsRunning.ToolTip" xml:space="preserve">
+    <value>Click to turn server ON/OFF.</value>
+  </data>
+  <data name="&gt;&gt;rlbIsRunning.Name" xml:space="preserve">
+    <value>rlbIsRunning</value>
+  </data>
+  <data name="&gt;&gt;rlbIsRunning.Type" xml:space="preserve">
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rlbIsRunning.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rlbIsRunning.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="rlbSetting.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rlbSetting.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rlbSetting.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 31</value>
+  </data>
+  <data name="rlbSetting.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>60, 18</value>
+  </data>
+  <data name="rlbSetting.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 1, 3</value>
+  </data>
+  <data name="rlbSetting.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 18</value>
+  </data>
+  <data name="rlbSetting.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbSetting.Text" xml:space="preserve">
+    <value>ACIU</value>
+  </data>
+  <data name="rlbSetting.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="rlbSetting.ToolTip" xml:space="preserve">
+    <value>(A)utorun / Global (I)mport / Skip (C)N website / (U)ntrack</value>
+  </data>
+  <data name="rlbSetting.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;rlbSetting.Name" xml:space="preserve">
+    <value>rlbSetting</value>
+  </data>
+  <data name="&gt;&gt;rlbSetting.Type" xml:space="preserve">
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rlbSetting.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rlbSetting.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="rlbMark.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rlbMark.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rlbMark.Location" type="System.Drawing.Point, System.Drawing">
+    <value>235, 31</value>
+  </data>
+  <data name="rlbMark.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>90, 18</value>
+  </data>
+  <data name="rlbMark.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 1, 3</value>
+  </data>
+  <data name="rlbMark.Size" type="System.Drawing.Size, System.Drawing">
+    <value>85, 18</value>
+  </data>
+  <data name="rlbMark.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbMark.Text" xml:space="preserve">
+    <value>PackageV4Markaaaaaaaaaaaaaaaaa</value>
+  </data>
+  <data name="rlbMark.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="rlbMark.ToolTip" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="rlbMark.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;rlbMark.Name" xml:space="preserve">
+    <value>rlbMark</value>
+  </data>
+  <data name="&gt;&gt;rlbMark.Type" xml:space="preserve">
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rlbMark.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rlbMark.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="rlbRemark.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rlbRemark.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rlbRemark.Location" type="System.Drawing.Point, System.Drawing">
+    <value>326, 31</value>
+  </data>
+  <data name="rlbRemark.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>70, 18</value>
+  </data>
+  <data name="rlbRemark.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 1, 3</value>
+  </data>
+  <data name="rlbRemark.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 18</value>
+  </data>
+  <data name="rlbRemark.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbRemark.Text" xml:space="preserve">
+    <value>备注🖤</value>
+  </data>
+  <data name="rlbRemark.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="rlbRemark.ToolTip" xml:space="preserve">
+    <value>Remark</value>
+  </data>
+  <data name="rlbRemark.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;rlbRemark.Name" xml:space="preserve">
+    <value>rlbRemark</value>
+  </data>
+  <data name="&gt;&gt;rlbRemark.Type" xml:space="preserve">
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rlbRemark.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rlbRemark.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="rlbTotalNetFlow.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rlbTotalNetFlow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rlbTotalNetFlow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>160, 31</value>
+  </data>
+  <data name="rlbTotalNetFlow.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>80, 18</value>
+  </data>
+  <data name="rlbTotalNetFlow.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 1, 3</value>
+  </data>
+  <data name="rlbTotalNetFlow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 18</value>
+  </data>
+  <data name="rlbTotalNetFlow.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbTotalNetFlow.Text" xml:space="preserve">
+    <value>⇵ 123456789M</value>
+  </data>
+  <data name="rlbTotalNetFlow.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="rlbTotalNetFlow.ToolTip" xml:space="preserve">
+    <value>Total network flow.</value>
+  </data>
+  <data name="rlbTotalNetFlow.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;rlbTotalNetFlow.Name" xml:space="preserve">
+    <value>rlbTotalNetFlow</value>
+  </data>
+  <data name="&gt;&gt;rlbTotalNetFlow.Type" xml:space="preserve">
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rlbTotalNetFlow.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rlbTotalNetFlow.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="rlbSpeedtest.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rlbSpeedtest.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rlbSpeedtest.Location" type="System.Drawing.Point, System.Drawing">
+    <value>375, 31</value>
+  </data>
+  <data name="rlbSpeedtest.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>60, 18</value>
+  </data>
+  <data name="rlbSpeedtest.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 1, 3</value>
+  </data>
+  <data name="rlbSpeedtest.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 18</value>
+  </data>
+  <data name="rlbSpeedtest.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbSpeedtest.Text" xml:space="preserve">
+    <value>正在测试中啊啊啊</value>
+  </data>
+  <data name="rlbSpeedtest.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="rlbSpeedtest.ToolTip" xml:space="preserve">
+    <value>Speed test result.</value>
+  </data>
+  <data name="rlbSpeedtest.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;rlbSpeedtest.Name" xml:space="preserve">
+    <value>rlbSpeedtest</value>
+  </data>
+  <data name="&gt;&gt;rlbSpeedtest.Type" xml:space="preserve">
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rlbSpeedtest.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rlbSpeedtest.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="rlbLastModifyDate.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rlbLastModifyDate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rlbLastModifyDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>99, 31</value>
+  </data>
+  <data name="rlbLastModifyDate.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>55, 18</value>
+  </data>
+  <data name="rlbLastModifyDate.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 1, 3</value>
+  </data>
+  <data name="rlbLastModifyDate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 18</value>
+  </data>
+  <data name="rlbLastModifyDate.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbLastModifyDate.Text" xml:space="preserve">
+    <value>02月30日</value>
+  </data>
+  <data name="rlbLastModifyDate.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="rlbLastModifyDate.ToolTip" xml:space="preserve">
+    <value>Inbound information.</value>
+  </data>
+  <data name="&gt;&gt;rlbLastModifyDate.Name" xml:space="preserve">
+    <value>rlbLastModifyDate</value>
+  </data>
+  <data name="&gt;&gt;rlbLastModifyDate.Type" xml:space="preserve">
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rlbLastModifyDate.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rlbLastModifyDate.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="rlbInboundMode.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rlbInboundMode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rlbInboundMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>50, 31</value>
+  </data>
+  <data name="rlbInboundMode.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>60, 18</value>
+  </data>
+  <data name="rlbInboundMode.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 1, 3</value>
+  </data>
+  <data name="rlbInboundMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 18</value>
+  </data>
+  <data name="rlbInboundMode.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbInboundMode.Text" xml:space="preserve">
+    <value>S65535</value>
+  </data>
+  <data name="rlbInboundMode.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="rlbInboundMode.ToolTip" xml:space="preserve">
+    <value>Inbound information.</value>
+  </data>
+  <data name="&gt;&gt;rlbInboundMode.Name" xml:space="preserve">
+    <value>rlbInboundMode</value>
+  </data>
+  <data name="&gt;&gt;rlbInboundMode.Type" xml:space="preserve">
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rlbInboundMode.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rlbInboundMode.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
   <data name="rtboxServerTitle.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 9pt</value>
   </data>
@@ -772,7 +787,7 @@
     <value>None</value>
   </data>
   <data name="rtboxServerTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>309, 14</value>
+    <value>386, 14</value>
   </data>
   <data name="rtboxServerTitle.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
@@ -793,7 +808,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;rtboxServerTitle.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

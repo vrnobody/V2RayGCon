@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -41,6 +42,7 @@ namespace V2RayGCon.Views.UserControls
 
             roundLables = new List<Control>
             {
+                rlbLastModifyDate,
                 rlbTotalNetFlow,
                 rlbMark,
                 rlbRemark,
@@ -79,6 +81,11 @@ namespace V2RayGCon.Views.UserControls
             coreServCtrl.OnCoreStart -= OnCorePropertyChangesHandler;
             coreServCtrl.OnCoreStop -= OnCorePropertyChangesHandler;
             coreServCtrl.OnPropertyChanged -= OnCorePropertyChangesHandler;
+
+            foreach (Control item in this.Controls)
+            {
+                item.MouseEnter -= ShowCtrlBtn;
+            }
         }
 
         private void BindCoreCtrlEvents()
@@ -86,6 +93,16 @@ namespace V2RayGCon.Views.UserControls
             coreServCtrl.OnCoreStart += OnCorePropertyChangesHandler;
             coreServCtrl.OnCoreStop += OnCorePropertyChangesHandler;
             coreServCtrl.OnPropertyChanged += OnCorePropertyChangesHandler;
+
+            foreach (Control item in this.Controls)
+            {
+                item.MouseEnter += ShowCtrlBtn;
+            }
+        }
+
+        async void ShowCtrlBtn(object sender, EventArgs args)
+        {
+            await ToggleCtrlButtonsVisibility(true);
         }
 
         #region interface VgcApis.Models.IDropableControl
@@ -97,6 +114,26 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region private method
+
+        bool isCtrlBtnVisable = false;
+        async Task ToggleCtrlButtonsVisibility(bool isVisable)
+        {
+            isCtrlBtnVisable = isVisable;
+            try
+            {
+                await Task.Delay(180);
+                if (btnStart.Visible != isCtrlBtnVisable)
+                {
+                    btnStart.Visible = isCtrlBtnVisable;
+                    btnStop.Visible = isCtrlBtnVisable;
+                    btnMenu.Visible = isCtrlBtnVisable;
+                }
+            }
+            catch
+            {
+                // Tronald Dump could ban this app while this function is executing.
+            }
+        }
         void ShowModifyConfigsWinForm() => WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);
 
         void HighLightKeyWords()
@@ -411,7 +448,7 @@ namespace V2RayGCon.Views.UserControls
             var date = new DateTime(utcTicks, DateTimeKind.Utc).ToLocalTime();
             var text = date.ToString(I18N.MMdd);
             var tooltip = Ticks2Tooltip(utcTicks);
-            UpdateControlTextAndTooltip(lbLastModifyDate, text, tooltip);
+            UpdateControlTextAndTooltip(rlbLastModifyDate, text, tooltip);
         }
 
         string Ticks2Tooltip(long utcTicks)
@@ -722,6 +759,16 @@ namespace V2RayGCon.Views.UserControls
         private void lbLastModifyDate_MouseDown(object sender, MouseEventArgs e)
         {
             UserMouseDown();
+        }
+
+        private async void ServerUI_MouseEnter(object sender, EventArgs e)
+        {
+            await ToggleCtrlButtonsVisibility(true);
+        }
+
+        private async void ServerUI_MouseLeave(object sender, EventArgs e)
+        {
+            await ToggleCtrlButtonsVisibility(false);
         }
 
         private void rlbRemark_Click(object sender, EventArgs e)

@@ -285,6 +285,7 @@ namespace V2RayGCon.Misc
             string ipKey = root;
             switch (protocol)
             {
+                case "vless":
                 case "vmess":
                     ipKey += ".settings.vnext.0.address";
                     break;

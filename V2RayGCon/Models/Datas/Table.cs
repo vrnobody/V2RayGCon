@@ -174,6 +174,7 @@ namespace V2RayGCon.Models.Datas
             list.Add(SSS("HTTP", "inHTTP", "http"));
             list.Add(SSS("SOCKS", "inSocks", "socks"));
             list.Add(SSS("Shadowsocks", "inSS", "shadowsocks"));
+            list.Add(SSS("VLess", "inVless", "vless"));
             list.Add(SSS("VMess", "inVmess", "vmess"));
             list.Add(SSS("Dokodemo-door", "inDoko", "dokodemo-door"));
             d.Add("inbound", list);
@@ -183,11 +184,12 @@ namespace V2RayGCon.Models.Datas
 
             //{ 3, "outbound"},
             list = NewList();
-            list.Add(SSS("VMess", "outVmess", "vmess"));
-            list.Add(SSS("Shadowsocks", "outSS", "shadowsocks"));
-            list.Add(SSS("SOCKS", "outSocks", "socks"));
-            list.Add(SSS("HTTP", "outHttp", "http"));
             list.Add(SSS("Freedom", "outFree", "freedom"));
+            list.Add(SSS("HTTP", "outHttp", "http"));
+            list.Add(SSS("SOCKS", "outSocks", "socks"));
+            list.Add(SSS("Shadowsocks", "outSS", "shadowsocks"));
+            list.Add(SSS("VLess", "outVless", "vless"));
+            list.Add(SSS("VMess", "outVmess", "vmess"));
             list.Add(SSS("Black hole", "outBlackHole", "blackhole"));
             d.Add("outbound", list);
 

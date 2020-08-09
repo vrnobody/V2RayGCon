@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.4.2.4")]
+[assembly: AssemblyVersion("1.4.2.5")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.4.2.5 Adjust ServerUI.
  * v1.4.2.4 Auto show/hide control buttons in servers panel.
  * v1.4.2.3 Tweak Misc:Choice() and Misc:Input().
  * v1.4.2.2 Fix a bug which was introduced by v1.4.2.1.

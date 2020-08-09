@@ -42,10 +42,12 @@ namespace V2RayGCon.Views.UserControls
 
             roundLables = new List<Control>
             {
+                rlbInboundMode,
+                rlbSetting,
                 rlbLastModifyDate,
+                rlbRemark,
                 rlbTotalNetFlow,
                 rlbMark,
-                rlbRemark,
                 rlbSpeedtest,
             };
 
@@ -247,12 +249,8 @@ namespace V2RayGCon.Views.UserControls
 
         void CompactRoundLables()
         {
-            var rleft = rlbIsRunning.Left;
-            var margin = rleft / 2;
-
-            rlbSetting.Left = rleft + (rlbIsRunning.Width - rlbSetting.Width) / 2;
-
-            var end = rlbInboundMode.Right;
+            var left = chkSelected.Left;
+            var margin = chkSelected.Left / 2;
 
             foreach (var control in roundLables)
             {
@@ -261,12 +259,11 @@ namespace V2RayGCon.Views.UserControls
                     continue;
                 }
 
-                var start = end + margin;
-                if (control.Left != start)
+                if (control.Left != left)
                 {
-                    control.Left = end + margin;
+                    control.Left = left;
                 }
-                end = control.Right;
+                left = control.Right + margin;
             }
         }
 
@@ -463,12 +460,6 @@ namespace V2RayGCon.Views.UserControls
                 + (coreStates.IsInjectSkipCnSite() ? "C" : "")
                 + (coreStates.IsInjectGlobalImport() ? "I" : "")
                 + (coreStates.IsUntrack() ? "U" : "");
-
-            if (text.Length > 0 && text.Length <= 2)
-            {
-                text = $" {text} ";
-            }
-
             UpdateControlTextOndemand(rlbSetting, text);
         }
 
@@ -491,23 +482,9 @@ namespace V2RayGCon.Views.UserControls
 
         private void UpdateOnOffLabel(bool isServerOn)
         {
-            var text = isServerOn ? "ON" : "OFF";
-
-            if (rlbIsRunning.Text != text)
+            if (rlbIsRunning.Visible != isServerOn)
             {
-                rlbIsRunning.Text = text;
-            }
-            var bc = isServerOn ? Color.DarkOrange : BackColor;
-            var fc = isServerOn ? Color.Ivory : Color.ForestGreen;
-
-            if (rlbIsRunning._BackColor != bc)
-            {
-                rlbIsRunning._BackColor = bc;
-            }
-
-            if (rlbIsRunning.ForeColor != fc)
-            {
-                rlbIsRunning.ForeColor = fc;
+                rlbIsRunning.Visible = isServerOn;
             }
         }
 
@@ -682,33 +659,9 @@ namespace V2RayGCon.Views.UserControls
             Misc.Utils.CopyToClipboardAndPrompt(vee);
         }
 
-
-        bool isRlbIsRunningDisabled = false;
         private void rlbIsRunning_Click(object sender, EventArgs e)
         {
-
-            if (isRlbIsRunningDisabled)
-            {
-                return;
-            }
-
-            var cc = coreServCtrl.GetCoreCtrl();
-            rlbIsRunning._BackColor = Color.DarkGray;
-            isRlbIsRunningDisabled = true;
-
-            Action done = () =>
-            {
-                isRlbIsRunningDisabled = false;
-            };
-
-            if (cc.IsCoreRunning())
-            {
-                cc.StopCoreThen(done);
-            }
-            else
-            {
-                cc.RestartCoreThen(done);
-            }
+            coreServCtrl.GetCoreCtrl().StopCoreThen();
         }
 
         private void showSettingsWindowToolStripMenuItem_Click(object sender, EventArgs e)

@@ -35,6 +35,14 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnMenu = new System.Windows.Forms.Button();
+            this.rlbIsRunning = new VgcApis.UserControls.RoundLabel();
+            this.rlbSetting = new VgcApis.UserControls.RoundLabel();
+            this.rlbMark = new VgcApis.UserControls.RoundLabel();
+            this.rlbRemark = new VgcApis.UserControls.RoundLabel();
+            this.rlbTotalNetFlow = new VgcApis.UserControls.RoundLabel();
+            this.rlbSpeedtest = new VgcApis.UserControls.RoundLabel();
+            this.rlbLastModifyDate = new VgcApis.UserControls.RoundLabel();
+            this.rlbInboundMode = new VgcApis.UserControls.RoundLabel();
             this.ctxMenuStripMore = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,14 +63,6 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.logOfThisServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runSpeedTestToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.rlbIsRunning = new VgcApis.UserControls.RoundLabel();
-            this.rlbSetting = new VgcApis.UserControls.RoundLabel();
-            this.rlbMark = new VgcApis.UserControls.RoundLabel();
-            this.rlbRemark = new VgcApis.UserControls.RoundLabel();
-            this.rlbTotalNetFlow = new VgcApis.UserControls.RoundLabel();
-            this.rlbSpeedtest = new VgcApis.UserControls.RoundLabel();
-            this.rlbLastModifyDate = new VgcApis.UserControls.RoundLabel();
-            this.rlbInboundMode = new VgcApis.UserControls.RoundLabel();
             this.rtboxServerTitle = new VgcApis.UserControls.ExRichTextBox();
             this.ctxMenuStripMore.SuspendLayout();
             this.SuspendLayout();
@@ -105,6 +105,100 @@
             this.toolTip1.SetToolTip(this.btnMenu, resources.GetString("btnMenu.ToolTip"));
             this.btnMenu.UseVisualStyleBackColor = true;
             this.btnMenu.Click += new System.EventHandler(this.btnShowPopupMenu_Click);
+            // 
+            // rlbIsRunning
+            // 
+            this.rlbIsRunning._BackColor = System.Drawing.Color.DarkOrange;
+            this.rlbIsRunning.AutoEllipsis = true;
+            this.rlbIsRunning.Cursor = System.Windows.Forms.Cursors.Hand;
+            resources.ApplyResources(this.rlbIsRunning, "rlbIsRunning");
+            this.rlbIsRunning.ForeColor = System.Drawing.Color.Ivory;
+            this.rlbIsRunning.Name = "rlbIsRunning";
+            this.toolTip1.SetToolTip(this.rlbIsRunning, resources.GetString("rlbIsRunning.ToolTip"));
+            this.rlbIsRunning.UseCompatibleTextRendering = true;
+            this.rlbIsRunning.Click += new System.EventHandler(this.rlbIsRunning_Click);
+            // 
+            // rlbSetting
+            // 
+            this.rlbSetting._BackColor = System.Drawing.Color.Silver;
+            this.rlbSetting.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbSetting, "rlbSetting");
+            this.rlbSetting.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbSetting.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbSetting.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbSetting.Name = "rlbSetting";
+            this.toolTip1.SetToolTip(this.rlbSetting, resources.GetString("rlbSetting.ToolTip"));
+            this.rlbSetting.Click += new System.EventHandler(this.rlbSetting_Click);
+            // 
+            // rlbMark
+            // 
+            this.rlbMark._BackColor = System.Drawing.Color.LightGreen;
+            this.rlbMark.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbMark, "rlbMark");
+            this.rlbMark.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbMark.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbMark.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbMark.Name = "rlbMark";
+            this.toolTip1.SetToolTip(this.rlbMark, resources.GetString("rlbMark.ToolTip"));
+            this.rlbMark.Click += new System.EventHandler(this.rlbMark_Click);
+            // 
+            // rlbRemark
+            // 
+            this.rlbRemark._BackColor = System.Drawing.Color.LightSkyBlue;
+            this.rlbRemark.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbRemark, "rlbRemark");
+            this.rlbRemark.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbRemark.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbRemark.Name = "rlbRemark";
+            this.toolTip1.SetToolTip(this.rlbRemark, resources.GetString("rlbRemark.ToolTip"));
+            this.rlbRemark.Click += new System.EventHandler(this.rlbRemark_Click);
+            // 
+            // rlbTotalNetFlow
+            // 
+            this.rlbTotalNetFlow._BackColor = System.Drawing.Color.LightSteelBlue;
+            this.rlbTotalNetFlow.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbTotalNetFlow, "rlbTotalNetFlow");
+            this.rlbTotalNetFlow.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbTotalNetFlow.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbTotalNetFlow.Name = "rlbTotalNetFlow";
+            this.toolTip1.SetToolTip(this.rlbTotalNetFlow, resources.GetString("rlbTotalNetFlow.ToolTip"));
+            this.rlbTotalNetFlow.Click += new System.EventHandler(this.rlbTotalNetFlow_Click);
+            // 
+            // rlbSpeedtest
+            // 
+            this.rlbSpeedtest._BackColor = System.Drawing.Color.Wheat;
+            this.rlbSpeedtest.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbSpeedtest, "rlbSpeedtest");
+            this.rlbSpeedtest.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbSpeedtest.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbSpeedtest.ForeColor = System.Drawing.Color.Red;
+            this.rlbSpeedtest.Name = "rlbSpeedtest";
+            this.toolTip1.SetToolTip(this.rlbSpeedtest, resources.GetString("rlbSpeedtest.ToolTip"));
+            this.rlbSpeedtest.Click += new System.EventHandler(this.rlbSpeedtest_Click);
+            // 
+            // rlbLastModifyDate
+            // 
+            this.rlbLastModifyDate._BackColor = System.Drawing.Color.SandyBrown;
+            this.rlbLastModifyDate.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbLastModifyDate, "rlbLastModifyDate");
+            this.rlbLastModifyDate.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbLastModifyDate.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbLastModifyDate.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbLastModifyDate.Name = "rlbLastModifyDate";
+            this.toolTip1.SetToolTip(this.rlbLastModifyDate, resources.GetString("rlbLastModifyDate.ToolTip"));
+            this.rlbLastModifyDate.Click += new System.EventHandler(this.rlbInboundMode_Click);
+            // 
+            // rlbInboundMode
+            // 
+            this.rlbInboundMode._BackColor = System.Drawing.Color.MediumTurquoise;
+            this.rlbInboundMode.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbInboundMode, "rlbInboundMode");
+            this.rlbInboundMode.BackColor = System.Drawing.SystemColors.Control;
+            this.rlbInboundMode.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbInboundMode.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbInboundMode.Name = "rlbInboundMode";
+            this.toolTip1.SetToolTip(this.rlbInboundMode, resources.GetString("rlbInboundMode.ToolTip"));
+            this.rlbInboundMode.Click += new System.EventHandler(this.rlbInboundMode_Click);
             // 
             // ctxMenuStripMore
             // 
@@ -243,100 +337,6 @@
             this.runSpeedTestToolStripMenuItem1.Name = "runSpeedTestToolStripMenuItem1";
             resources.ApplyResources(this.runSpeedTestToolStripMenuItem1, "runSpeedTestToolStripMenuItem1");
             this.runSpeedTestToolStripMenuItem1.Click += new System.EventHandler(this.runSpeedTestToolStripMenuItem1_Click);
-            // 
-            // rlbIsRunning
-            // 
-            this.rlbIsRunning._BackColor = System.Drawing.Color.DarkOrange;
-            this.rlbIsRunning.AutoEllipsis = true;
-            this.rlbIsRunning.Cursor = System.Windows.Forms.Cursors.Hand;
-            resources.ApplyResources(this.rlbIsRunning, "rlbIsRunning");
-            this.rlbIsRunning.ForeColor = System.Drawing.Color.Ivory;
-            this.rlbIsRunning.Name = "rlbIsRunning";
-            this.toolTip1.SetToolTip(this.rlbIsRunning, resources.GetString("rlbIsRunning.ToolTip"));
-            this.rlbIsRunning.UseCompatibleTextRendering = true;
-            this.rlbIsRunning.Click += new System.EventHandler(this.rlbIsRunning_Click);
-            // 
-            // rlbSetting
-            // 
-            this.rlbSetting._BackColor = System.Drawing.Color.Silver;
-            this.rlbSetting.AutoEllipsis = true;
-            resources.ApplyResources(this.rlbSetting, "rlbSetting");
-            this.rlbSetting.BackColor = System.Drawing.SystemColors.Control;
-            this.rlbSetting.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rlbSetting.ForeColor = System.Drawing.Color.DimGray;
-            this.rlbSetting.Name = "rlbSetting";
-            this.toolTip1.SetToolTip(this.rlbSetting, resources.GetString("rlbSetting.ToolTip"));
-            this.rlbSetting.Click += new System.EventHandler(this.rlbSetting_Click);
-            // 
-            // rlbMark
-            // 
-            this.rlbMark._BackColor = System.Drawing.Color.LightGreen;
-            this.rlbMark.AutoEllipsis = true;
-            resources.ApplyResources(this.rlbMark, "rlbMark");
-            this.rlbMark.BackColor = System.Drawing.SystemColors.Control;
-            this.rlbMark.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rlbMark.ForeColor = System.Drawing.Color.DimGray;
-            this.rlbMark.Name = "rlbMark";
-            this.toolTip1.SetToolTip(this.rlbMark, resources.GetString("rlbMark.ToolTip"));
-            this.rlbMark.Click += new System.EventHandler(this.rlbMark_Click);
-            // 
-            // rlbRemark
-            // 
-            this.rlbRemark._BackColor = System.Drawing.Color.LightSkyBlue;
-            this.rlbRemark.AutoEllipsis = true;
-            resources.ApplyResources(this.rlbRemark, "rlbRemark");
-            this.rlbRemark.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rlbRemark.ForeColor = System.Drawing.Color.DimGray;
-            this.rlbRemark.Name = "rlbRemark";
-            this.toolTip1.SetToolTip(this.rlbRemark, resources.GetString("rlbRemark.ToolTip"));
-            this.rlbRemark.Click += new System.EventHandler(this.rlbRemark_Click);
-            // 
-            // rlbTotalNetFlow
-            // 
-            this.rlbTotalNetFlow._BackColor = System.Drawing.Color.LightSteelBlue;
-            this.rlbTotalNetFlow.AutoEllipsis = true;
-            resources.ApplyResources(this.rlbTotalNetFlow, "rlbTotalNetFlow");
-            this.rlbTotalNetFlow.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rlbTotalNetFlow.ForeColor = System.Drawing.Color.DimGray;
-            this.rlbTotalNetFlow.Name = "rlbTotalNetFlow";
-            this.toolTip1.SetToolTip(this.rlbTotalNetFlow, resources.GetString("rlbTotalNetFlow.ToolTip"));
-            this.rlbTotalNetFlow.Click += new System.EventHandler(this.rlbTotalNetFlow_Click);
-            // 
-            // rlbSpeedtest
-            // 
-            this.rlbSpeedtest._BackColor = System.Drawing.Color.Wheat;
-            this.rlbSpeedtest.AutoEllipsis = true;
-            resources.ApplyResources(this.rlbSpeedtest, "rlbSpeedtest");
-            this.rlbSpeedtest.BackColor = System.Drawing.SystemColors.Control;
-            this.rlbSpeedtest.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rlbSpeedtest.ForeColor = System.Drawing.Color.Red;
-            this.rlbSpeedtest.Name = "rlbSpeedtest";
-            this.toolTip1.SetToolTip(this.rlbSpeedtest, resources.GetString("rlbSpeedtest.ToolTip"));
-            this.rlbSpeedtest.Click += new System.EventHandler(this.rlbSpeedtest_Click);
-            // 
-            // rlbLastModifyDate
-            // 
-            this.rlbLastModifyDate._BackColor = System.Drawing.Color.SandyBrown;
-            this.rlbLastModifyDate.AutoEllipsis = true;
-            resources.ApplyResources(this.rlbLastModifyDate, "rlbLastModifyDate");
-            this.rlbLastModifyDate.BackColor = System.Drawing.SystemColors.Control;
-            this.rlbLastModifyDate.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rlbLastModifyDate.ForeColor = System.Drawing.Color.DimGray;
-            this.rlbLastModifyDate.Name = "rlbLastModifyDate";
-            this.toolTip1.SetToolTip(this.rlbLastModifyDate, resources.GetString("rlbLastModifyDate.ToolTip"));
-            this.rlbLastModifyDate.Click += new System.EventHandler(this.rlbInboundMode_Click);
-            // 
-            // rlbInboundMode
-            // 
-            this.rlbInboundMode._BackColor = System.Drawing.Color.MediumTurquoise;
-            this.rlbInboundMode.AutoEllipsis = true;
-            resources.ApplyResources(this.rlbInboundMode, "rlbInboundMode");
-            this.rlbInboundMode.BackColor = System.Drawing.SystemColors.Control;
-            this.rlbInboundMode.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rlbInboundMode.ForeColor = System.Drawing.Color.DimGray;
-            this.rlbInboundMode.Name = "rlbInboundMode";
-            this.toolTip1.SetToolTip(this.rlbInboundMode, resources.GetString("rlbInboundMode.ToolTip"));
-            this.rlbInboundMode.Click += new System.EventHandler(this.rlbInboundMode_Click);
             // 
             // rtboxServerTitle
             // 

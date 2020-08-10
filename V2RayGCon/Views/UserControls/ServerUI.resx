@@ -163,7 +163,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnStart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>397, 29</value>
+    <value>401, 29</value>
   </data>
   <data name="btnStart.Size" type="System.Drawing.Size, System.Drawing">
     <value>21, 21</value>
@@ -202,7 +202,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnStop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>421, 29</value>
+    <value>423, 29</value>
   </data>
   <data name="btnStop.Size" type="System.Drawing.Size, System.Drawing">
     <value>21, 21</value>
@@ -316,7 +316,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbSetting.Location" type="System.Drawing.Point, System.Drawing">
-    <value>58, 31</value>
+    <value>119, 31</value>
   </data>
   <data name="rlbSetting.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>35, 18</value>
@@ -544,7 +544,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbLastModifyDate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>83, 31</value>
+    <value>58, 31</value>
   </data>
   <data name="rlbLastModifyDate.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>55, 18</value>

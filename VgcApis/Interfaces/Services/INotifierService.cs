@@ -11,7 +11,6 @@ namespace VgcApis.Interfaces.Services
 
         void ShowFormQrcode();
 
-
         string RegisterHotKey(Action hotKeyHandler,
             string keyName, bool hasAlt, bool hasCtrl, bool hasShift);
 

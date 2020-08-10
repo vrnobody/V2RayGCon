@@ -913,7 +913,8 @@ namespace V2RayGCon.Misc
 
         public static string Base64PadRight(string base64)
         {
-            var str = base64.Replace("\r", "").Replace("\n", "");
+            // 一位顾客点了一份炒饭，酒吧炸了
+            var str = base64.Replace("\r", "").Replace("\n", "").Replace("=", "");
             var len = str.Length;
             return str.PadRight(len + (4 - len % 4) % 4, '=');
         }

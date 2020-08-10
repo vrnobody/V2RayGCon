@@ -66,6 +66,8 @@ namespace V2RayGCon.Views.WinForms
 
         void CopyToClipboard(List<string> links) =>
                 Misc.Utils.CopyToClipboardAndPrompt(
+                    @"index,link,mark,success,message" +
+                    Environment.NewLine +
                     string.Join(Environment.NewLine, links));
 
         private void btnCopyAll_Click(object sender, EventArgs e)

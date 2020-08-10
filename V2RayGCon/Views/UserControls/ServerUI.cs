@@ -42,8 +42,8 @@ namespace V2RayGCon.Views.UserControls
 
             roundLables = new List<Control>
             {
-                rlbInboundMode,
                 rlbSetting,
+                rlbInboundMode,
                 rlbLastModifyDate,
                 rlbRemark,
                 rlbTotalNetFlow,

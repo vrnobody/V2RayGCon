@@ -510,6 +510,7 @@
     <None Include="Resources\Files\lua\libs\luacheck\unicode_prntbnd.lua" />
     <None Include="Resources\Files\lua\libs\luacheck\utils.lua" />
     <None Include="Resources\Files\lua\libs\utils.lua" />
+    <None Include="Resources\Files\lua\modules\coreEvent.lua" />
     <None Include="Resources\Files\lua\modules\hotkey.lua" />
     <None Include="Resources\Files\lua\modules\logger.lua" />
     <None Include="Resources\Files\lua\modules\reader.lua" />

@@ -11,6 +11,17 @@ namespace VgcApis.Interfaces.Lua
         IRunnable CreateHttpServer(string url, ILuaMailBox inbox, ILuaMailBox outbox);
         #endregion
 
+        #region core event
+        bool UnregisterCoreStopEvent(ILuaMailBox mailbox, string handle);
+
+        string RegisterCoreStopEvent(ICoreServCtrl coreServ, ILuaMailBox mailbox, int evCode);
+
+        bool UnregisterCoreStartEvent(ILuaMailBox mailbox, string handle);
+
+        string RegisterCoreStartEvent(ICoreServCtrl coreServ, ILuaMailBox mailbox, int evCode);
+
+        #endregion
+
         #region keyboard hotkey
         string GetAllKeyNames();
         bool UnregisterHotKey(ILuaMailBox mailbox, string handle);

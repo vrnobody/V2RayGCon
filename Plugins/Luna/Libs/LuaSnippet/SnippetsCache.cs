@@ -119,6 +119,8 @@ namespace Luna.Libs.LuaSnippet
             .Union(append)
             .ToList();
 
+
+
         List<LuaSubFuncSnippets> GenLuaSubFunctionSnippet() =>
             VgcApis.Models.Consts.Lua.LuaSubFunctions
             .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
@@ -157,8 +159,14 @@ namespace Luna.Libs.LuaSnippet
             functionCache = GenLuaFunctionSnippet();
 
             var orgLuaSubFuncSnippet = GenLuaSubFunctionSnippet();
-            subFunctionCache = GenLuaPredefinedFuncSnippets(orgLuaSubFuncSnippet);
+
+            subFunctionCache = apis
+                .SelectMany(api => GenApisEventSnippet(api.Item1, api.Item2))
+                .Concat(GenLuaPredefinedFuncSnippets(orgLuaSubFuncSnippet))
+                .ToList();
+
             importClrCache = GenLuaImportClrSnippet();
+
             apiFunctionCache = apis
                .SelectMany(api => GenApiFunctionSnippetItems(api.Item1, api.Item2))
                .ToList();
@@ -169,6 +177,11 @@ namespace Luna.Libs.LuaSnippet
             .OrderBy(k => k)
             .Select(e => new LuaKeywordSnippets(e))
             .ToList();
+
+        IEnumerable<LuaSubFuncSnippets> GenApisEventSnippet(string apiName, Type type) =>
+            VgcApis.Misc.Utils.GetPublicEventsInfoOfType(type)
+                .OrderBy(infos => infos.Item2)
+                .Select(infos => new LuaSubFuncSnippets($"{apiName}.{infos.Item2}", "."));
 
         IEnumerable<ApiFunctionSnippets> GenApiFunctionSnippetItems(
             string apiName, Type type) =>

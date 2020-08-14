@@ -1,18 +1,42 @@
 local coreEv = {}
 
-function coreEv:Reg(coreServ, fn, isEvStart)
+local Events = {
+    OnCoreStart = 1,
+    
+    -- not implement yet
+    -- OnCoreClosing = 2,
+    
+    OnCoreStop = 3,
+}
+
+local function BindToCoreEvent(coreServ, mailbox, evCode, evType)
+    if evType == Events.OnCoreStart then
+        return Sys:RegisterCoreStartEvent(coreServ, mailbox, evCode)
+    elseif evType == Events.OnCoreStop then
+        return Sys:RegisterCoreStopEvent(coreServ, mailbox, evCode)
+    end
+    return nil
+end
+
+local function RegEvHandler(self, coreServ, fn, evType)
     local evCode = table.length(self.handles) + 1
-    local handle = isEvStart 
-        and Sys:RegisterCoreStartEvent(coreServ, self.mailbox, evCode)
-        or Sys:RegisterCoreStopEvent(coreServ, self.mailbox, evCode)
+    local handle = BindToCoreEvent(coreServ, self.mailbox, evCode, evType)
         
     if handle ~= nil then
-        table.insert(self.evTypes, isEvStart)
+        table.insert(self.evTypes, evType)
         table.insert(self.fns, fn)
         table.insert(self.handles, handle)
         return true
     end
     return false
+end
+
+function coreEv:RegStartEv(coreServ, handler)
+    return RegEvHandler(self, coreServ, handler, Events.OnCoreStart)
+end
+
+function coreEv:RegStopEv(coreServ, handler)
+    return RegEvHandler(self, coreServ, handler, Events.OnCoreStop)
 end
 
 function coreEv:ClearEvents()
@@ -21,10 +45,13 @@ end
 
 function coreEv:Destroy()
     for idx, handle in ipairs(self.handles) do
-        if self.evTypes[idx] then
+        local evType = self.evTypes[idx]
+        if evType == Events.OnCoreStart then
             Sys:UnregisterCoreStartEvent(self.mailbox, handle)
-        else
+        elseif evType == Events.OnCoreStop then
             Sys:UnregisterCoreStopEvent(self.mailbox, handle)
+        else
+            assert(false, "unsupported event type: " .. tostring(evType))
         end
     end
     self:ClearEvents()

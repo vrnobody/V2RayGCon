@@ -26,19 +26,15 @@ namespace V2RayGCon.Views.UserControls
 
         List<Control> roundLables;
 
-        public ServerUI(VgcApis.Interfaces.ICoreServCtrl serverItem)
+        readonly object bindCoreServLocker = new object();
+
+        public ServerUI()
         {
             servers = Services.Servers.Instance;
             slinkMgr = Services.ShareLinkMgr.Instance;
             settings = Services.Settings.Instance;
 
-            this.coreServCtrl = serverItem;
             InitializeComponent();
-        }
-
-        private void ServerUI_Load(object sender, EventArgs e)
-        {
-            UpdateOnOffLabel(false);
 
             roundLables = new List<Control>
             {
@@ -51,11 +47,7 @@ namespace V2RayGCon.Views.UserControls
                 rlbSpeedtest,
             };
 
-            rtboxServerTitle.BackColor = BackColor;
-            rlbSpeedtest.Text = @"";
-            rlbSpeedtest.Visible = false;
-
-            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 250, 3000)
+            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 150, 3000)
             {
                 Name = "ServerUi.RefreshPanel",
             };
@@ -67,9 +59,25 @@ namespace V2RayGCon.Views.UserControls
             };
 
             InitButtonBackgroundImage();
-            BindCoreCtrlEvents();
-            RefreshUiLater();
+
+            ResetControls();
+
+            foreach (Control item in this.Controls)
+            {
+                item.MouseEnter += ShowCtrlBtn;
+            }
         }
+
+        private void ResetControls()
+        {
+            UpdateOnOffLabel(false);
+
+            rtboxServerTitle.BackColor = BackColor;
+            rlbSpeedtest.Text = @"";
+            rlbSpeedtest.Visible = false;
+            SetCtrlButtonsVisiblity(false);
+        }
+
 
         private void InitButtonBackgroundImage()
         {
@@ -83,11 +91,6 @@ namespace V2RayGCon.Views.UserControls
             coreServCtrl.OnCoreStart -= OnCorePropertyChangesHandler;
             coreServCtrl.OnCoreStop -= OnCorePropertyChangesHandler;
             coreServCtrl.OnPropertyChanged -= OnCorePropertyChangesHandler;
-
-            foreach (Control item in this.Controls)
-            {
-                item.MouseEnter -= ShowCtrlBtn;
-            }
         }
 
         private void BindCoreCtrlEvents()
@@ -95,16 +98,11 @@ namespace V2RayGCon.Views.UserControls
             coreServCtrl.OnCoreStart += OnCorePropertyChangesHandler;
             coreServCtrl.OnCoreStop += OnCorePropertyChangesHandler;
             coreServCtrl.OnPropertyChanged += OnCorePropertyChangesHandler;
-
-            foreach (Control item in this.Controls)
-            {
-                item.MouseEnter += ShowCtrlBtn;
-            }
         }
 
         async void ShowCtrlBtn(object sender, EventArgs args)
         {
-            await ToggleCtrlButtonsVisibility(true);
+            await SetCtrlButtonsVisiblityLater(true);
         }
 
         #region interface VgcApis.Models.IDropableControl
@@ -118,17 +116,22 @@ namespace V2RayGCon.Views.UserControls
         #region private method
 
         bool isCtrlBtnVisable = false;
-        async Task ToggleCtrlButtonsVisibility(bool isVisable)
+        async Task SetCtrlButtonsVisiblityLater(bool isVisable)
         {
             isCtrlBtnVisable = isVisable;
+            await Task.Delay(180);
+            SetCtrlButtonsVisiblity(isCtrlBtnVisable);
+        }
+
+        void SetCtrlButtonsVisiblity(bool isVisable)
+        {
             try
             {
-                await Task.Delay(180);
-                if (btnStart.Visible != isCtrlBtnVisable)
+                if (btnStart.Visible != isVisable)
                 {
-                    btnStart.Visible = isCtrlBtnVisable;
-                    btnStop.Visible = isCtrlBtnVisable;
-                    btnMenu.Visible = isCtrlBtnVisable;
+                    btnStart.Visible = isVisable;
+                    btnStop.Visible = isVisable;
+                    btnMenu.Visible = isVisable;
                 }
             }
             catch
@@ -181,10 +184,23 @@ namespace V2RayGCon.Views.UserControls
 
         void RefreshUiWorker(Action done)
         {
+            VgcApis.Interfaces.ICoreServCtrl csc = null;
+
+            lock (bindCoreServLocker)
+            {
+                csc = coreServCtrl;
+            }
+
+            if (csc == null)
+            {
+                return;
+            }
+
+
             Action worker = () =>
             {
-                var cs = coreServCtrl.GetCoreStates();
-                var cc = coreServCtrl.GetCoreCtrl();
+                var cs = csc.GetCoreStates();
+                var cc = csc.GetCoreCtrl();
 
                 // must update background first
                 var isSelected = cs.IsSelected();
@@ -513,6 +529,22 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region public method
+        public void Rebind(VgcApis.Interfaces.ICoreServCtrl coreServCtrl)
+        {
+            lock (bindCoreServLocker)
+            {
+                if (this.coreServCtrl != null)
+                {
+                    ReleaseCoreCtrlEvents();
+                }
+
+                this.coreServCtrl = coreServCtrl;
+                ResetControls();
+                BindCoreCtrlEvents();
+            }
+            RefreshUiLater();
+        }
+
         public void SetKeywords(string keywords)
         {
             this.keyword = keywords?.Replace(@" ", "")?.ToLower();
@@ -542,7 +574,13 @@ namespace V2RayGCon.Views.UserControls
         {
             lazyUiUpdater?.Dispose();
             lazyHighlighter?.Dispose();
+
             ReleaseCoreCtrlEvents();
+
+            foreach (Control item in this.Controls)
+            {
+                item.MouseEnter -= ShowCtrlBtn;
+            }
         }
         #endregion
 
@@ -716,12 +754,12 @@ namespace V2RayGCon.Views.UserControls
 
         private async void ServerUI_MouseEnter(object sender, EventArgs e)
         {
-            await ToggleCtrlButtonsVisibility(true);
+            await SetCtrlButtonsVisiblityLater(true);
         }
 
         private async void ServerUI_MouseLeave(object sender, EventArgs e)
         {
-            await ToggleCtrlButtonsVisibility(false);
+            await SetCtrlButtonsVisiblityLater(false);
         }
 
         private void rlbRemark_Click(object sender, EventArgs e)

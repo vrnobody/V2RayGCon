@@ -370,7 +370,6 @@
             this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Name = "ServerUI";
             this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
-            this.Load += new System.EventHandler(this.ServerUI_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ServerListItem_MouseDown);
             this.MouseEnter += new System.EventHandler(this.ServerUI_MouseEnter);
             this.MouseLeave += new System.EventHandler(this.ServerUI_MouseLeave);

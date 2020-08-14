@@ -70,14 +70,9 @@ namespace V2RayGCon.Views.UserControls
 
         private void ResetControls()
         {
-            UpdateOnOffLabel(false);
-
             rtboxServerTitle.BackColor = BackColor;
-            rlbSpeedtest.Text = @"";
-            rlbSpeedtest.Visible = false;
             SetCtrlButtonsVisiblity(false);
         }
-
 
         private void InitButtonBackgroundImage()
         {

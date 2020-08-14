@@ -521,16 +521,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 .OfType<Views.UserControls.ServerUI>()
                 .ToList();
 
-
         void OnRequireFlyPanelReloadHandler(object sender, EventArgs args) =>
-            ReloadFlyPanel();
-
-        void ReloadFlyPanel()
-        {
-            // sort, move to top
-            // RemoveAllServersConrol();
             RefreshFlyPanelLater();
-        }
 
         void OnRequireFlyPanelUpdateHandler(object sender, EventArgs args)
         {

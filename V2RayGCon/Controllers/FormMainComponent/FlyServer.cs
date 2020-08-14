@@ -383,8 +383,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void ShowSearchResultNow()
         {
+            // 2020-08-14 现在不会乱序了
             // 如果不RemoveAll会乱序
-            RemoveAllServersConrol();
+            // RemoveAllServersConrol();
 
             // 2020-06-09 改为保留选中状态
             // servers.SetAllServerIsSelected(false);

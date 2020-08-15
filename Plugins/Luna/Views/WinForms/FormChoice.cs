@@ -38,46 +38,32 @@ namespace Luna.Views.WinForms
             this.FormClosed += (s, a) => done.Set();
         }
 
+        private void FormChoice_Shown(object sender, EventArgs e)
+        {
+            Choose(this.defChoice - 1);
+        }
+
         #region public methods
         public int GetResult() => result;
 
         #endregion
 
         #region private methods
-        void Choose(Keys key)
+        bool Choose(int idx)
         {
-            var kts = new Dictionary<Keys, int> {
-                { Keys.D1, 0 },
-                { Keys.D2, 1 },
-                { Keys.D3, 2 },
-                { Keys.D4, 3 },
-                { Keys.D5, 4 },
-                { Keys.D6, 5 },
-                { Keys.D7, 6 },
-                { Keys.D8, 7 },
-                { Keys.D9, 8 },
-                { Keys.D0, 9 },
-            };
-
-            if (!kts.ContainsKey(key))
-            {
-                return;
-            }
-
-            var idx = kts[key];
             var len = radioButtons.Count;
-            if (idx >= len)
+            if (idx >= len || idx < 0)
             {
-                return;
+                return false;
             }
 
             var btn = radioButtons[idx];
-
+            btn.Checked = true;
             VgcApis.Misc.UI.Invoke(() =>
             {
-                btn.Focus();
-                btn.PerformClick();
+                btnOk.Focus();
             });
+            return true;
         }
 
         void SetResult()
@@ -128,11 +114,6 @@ namespace Luna.Views.WinForms
                 AutoSize = true,
             };
 
-            if (defChoice - 1 == i)
-            {
-                control.Checked = true;
-            }
-
             MethodInfo m = typeof(RadioButton).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
             if (m != null)
             {
@@ -166,15 +147,22 @@ namespace Luna.Views.WinForms
             {
                 case Keys.Escape:
                     VgcApis.Misc.UI.CloseFormIgnoreError(this);
-                    break;
+                    return;
                 case Keys.Enter:
-                    VgcApis.Misc.UI.Invoke(btnOk.PerformClick);
-                    break;
-                default:
-                    Choose(kc);
-                    break;
+                    // VgcApis.Misc.UI.Invoke(btnOk.PerformClick);
+                    return;
+                case Keys.D0:
+                    Choose(9);
+                    return;
+            }
+
+            if (kc >= Keys.D1 && kc <= Keys.D9)
+            {
+                Choose(kc - Keys.D1);
+                return;
             }
         }
+
 
         #endregion
 

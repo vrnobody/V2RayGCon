@@ -181,15 +181,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var flatList = GetFilteredList();
             var pagedList = GenPagedServerList(flatList);
             var showWelcome = servers.CountAllServers() == 0;
-            List<Views.UserControls.ServerUI> removed = null;
+            List<Views.UserControls.ServerUI> removed = new List<Views.UserControls.ServerUI>();
 
             Action next = () =>
             {
                 lazyStatusBarUpdater?.Postpone();
-                if (removed != null)
-                {
-                    DisposeFlyPanelControlByList(removed);
-                }
+                DisposeFlyPanelControlByList(removed);
                 var relex = flyPanelUpdateInterval - (DateTime.Now.Millisecond - start);
                 VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
                 done();
@@ -198,19 +195,18 @@ namespace V2RayGCon.Controllers.FormMainComponent
             Action worker = () =>
             {
                 flyPanel.SuspendLayout();
-                removed = GetAllServerControls();
-                flyPanel.Controls.Clear();
                 if (showWelcome)
                 {
                     flyPanel.Controls.Add(welcomeItem);
+                    removed = GetAllServerControls();
+                    flyPanel.Controls.Clear();
                 }
                 else
                 {
-                    foreach (var serv in pagedList)
-                    {
-                        var ui = new Views.UserControls.ServerUI(serv);
-                        flyPanel.Controls.Add(ui);
-                    }
+                    AdjustServUiNum(removed, pagedList.Count);
+                    var servUis = GetAllServerControls();
+                    BindServUiToCoreServCtrl(servUis, pagedList);
+
                 }
                 flyPanel.ResumeLayout();
             };
@@ -218,9 +214,44 @@ namespace V2RayGCon.Controllers.FormMainComponent
             VgcApis.Misc.UI.InvokeThen(worker, next);
         }
 
+        private void BindServUiToCoreServCtrl(
+            List<Views.UserControls.ServerUI> servUis,
+            List<VgcApis.Interfaces.ICoreServCtrl> coreServs)
+        {
+
+            if (servUis.Count != coreServs.Count)
+            {
+                throw new Exception("ServUi.Count != cs.Count");
+            }
+
+            for (int i = 0; i < servUis.Count; i++)
+            {
+                servUis[i].Rebind(coreServs[i]);
+            }
+        }
+
+        private void AdjustServUiNum(List<Views.UserControls.ServerUI> removed, int num)
+        {
+            var ctrls = GetAllServerControls();
+
+            var numAdd = num - ctrls.Count;
+            for (int i = 0; i < numAdd; i++)
+            {
+                flyPanel.Controls.Add(new Views.UserControls.ServerUI());
+            }
+
+            var numRemove = ctrls.Count - num;
+            ctrls.Reverse();
+            for (int i = 0; i < numRemove; i++)
+            {
+                var c = ctrls[i];
+                removed.Add(c);
+                flyPanel.Controls.Remove(c);
+            }
+        }
+
         private void WatchServers()
         {
-            servers.OnRequireFlyPanelUpdate += OnRequireFlyPanelUpdateHandler;
             servers.OnRequireFlyPanelReload += OnRequireFlyPanelReloadHandler;
             servers.OnServerPropertyChange += OnServerPropertyChangeHandler;
         }
@@ -228,7 +259,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         private void UnwatchServers()
         {
             servers.OnRequireFlyPanelReload -= OnRequireFlyPanelReloadHandler;
-            servers.OnRequireFlyPanelUpdate -= OnRequireFlyPanelUpdateHandler;
             servers.OnServerPropertyChange -= OnServerPropertyChangeHandler;
         }
 
@@ -351,8 +381,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void ShowSearchResultNow()
         {
+            // 2020-08-14 现在不会乱序了
             // 如果不RemoveAll会乱序
-            RemoveAllServersConrol();
+            // RemoveAllServersConrol();
 
             // 2020-06-09 改为保留选中状态
             // servers.SetAllServerIsSelected(false);
@@ -445,6 +476,11 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void DisposeFlyPanelControlByList(List<Views.UserControls.ServerUI> controlList)
         {
+            if (controlList == null)
+            {
+                return;
+            }
+
             foreach (var control in controlList)
             {
                 control.Cleanup();
@@ -484,20 +520,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 .OfType<Views.UserControls.ServerUI>()
                 .ToList();
 
-
         void OnRequireFlyPanelReloadHandler(object sender, EventArgs args) =>
-            ReloadFlyPanel();
-
-        void ReloadFlyPanel()
-        {
-            RemoveAllServersConrol();
             RefreshFlyPanelLater();
-        }
 
-        void OnRequireFlyPanelUpdateHandler(object sender, EventArgs args)
-        {
-            lazyFlyPanelUpdater?.Postpone();
-        }
+        void OnRequireFlyPanelUpdateHandler(object sender, EventArgs args) => RefreshFlyPanelLater();
 
         private void BindDragDropEvent()
         {

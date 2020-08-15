@@ -48,6 +48,29 @@
     "allowTransparent": false,
     "userLevel": 0
   },
+  "inVless": {
+    "clients": [
+      {
+        "id": "27848739-7e62-4138-9fd3-098a63964b6b",
+        "level": 0,
+        "alterId": 100,
+        "email": "love@v2ray.com"
+      }
+    ],
+    "decryption": "none",
+    "fallback": {
+      "addr": "127.0.0.1",
+      "port": 80,
+      "unix": "/dev/shm/domain.socket",
+      "xver": 0
+    },
+    "fallback_h2": {
+      "addr": "127.0.0.1",
+      "port": 80,
+      "unix": "/dev/shm/domain.socket",
+      "xver": 0
+    }
+  },
   "inVmess": {
     "clients": [
       {
@@ -89,6 +112,21 @@
       "tag": "another-outbound-tag"
     },
     "mux": {}
+  },
+  "outVless": {
+    "vnext": [
+      {
+        "address": "example.com",
+        "port": 443,
+        "users": [
+          {
+            "id": "27848739-7e62-4138-9fd3-098a63964b6b",
+            "encryption": "none",
+            "level": 0
+          }
+        ]
+      }
+    ]
   },
   "outVmess": {
     "vnext": [

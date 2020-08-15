@@ -114,7 +114,7 @@ namespace V2RayGCon.Views.WinForms
         {
             var logs = setting.GetLogContent();
             var msg = VgcApis.Misc.Utils.CopyToClipboard(logs) ?
-                Resources.Resx.I18N.CopySuccess : 
+                Resources.Resx.I18N.CopySuccess :
                 Resources.Resx.I18N.CopyFail;
             VgcApis.Misc.UI.MsgBoxAsync(msg);
         }

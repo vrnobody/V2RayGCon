@@ -250,6 +250,8 @@ namespace V2RayGCon.Libs.V2Ray
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     RedirectStandardInput = true,
+
+                    // 定时炸弹
                     StandardOutputEncoding = ioEncoding,
                     StandardErrorEncoding = ioEncoding,
                 }

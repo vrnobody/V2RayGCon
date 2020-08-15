@@ -70,8 +70,10 @@
             this.Controls.Add(this.lbTitle);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
+            this.KeyPreview = true;
             this.Name = "FormInput";
             this.Load += new System.EventHandler(this.FormInput_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormInput_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

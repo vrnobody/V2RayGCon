@@ -33,10 +33,23 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.4.2.0")]
+[assembly: AssemblyVersion("1.4.3.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * --------------------------------------------------
+ * v1.4.2.11 Refactor lua.modules.coreEvent.
+ * v1.4.2.10 Refactor lua.modules.coreEvent.
+ * v1.4.2.9 Anti flicker in searching.
+ * v1.4.2.8 Refactoring.
+ * v1.4.2.7 Anti flicker in page switching.
+ * v1.4.2.6 Add lua.modules.coreEvent.
+ * v1.4.2.5 Adjust ServerUI.
+ * v1.4.2.4 Auto show/hide control buttons in servers panel.
+ * v1.4.2.3 Tweak Misc:Choice() and Misc:Input().
+ * v1.4.2.2 Fix a bug which was introduced by v1.4.2.1.
+ * v1.4.2.1 Add encoding param in Sys:Run().
+ *          v2ray-core win32 v4.26.0
  * -----------------------------------------------------
  * v1.4.1.12 Add option check for v2ray-core update when app start.
  * v1.4.1.11 Disable prompt of loading default config in configer.

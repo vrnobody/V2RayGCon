@@ -1418,6 +1418,7 @@ namespace VgcApis.Misc
         #endregion
 
         #region reflection
+
         static public string GetPublicFieldsInfoOfType(Type type)
         {
             var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
@@ -1531,6 +1532,25 @@ namespace VgcApis.Misc
             return friendlyName;
         }
 
+        static public List<Tuple<string, string>> GetPublicPropsInfoOfType(Type type) =>
+            type.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
+                .Select(field =>
+                {
+                    var tn = GetFriendlyTypeName(field.PropertyType);
+                    return new Tuple<string, string>(tn, field.Name);
+                })
+                .ToList();
+
+        static public List<Tuple<string, string>> GetPublicEventsInfoOfType(Type type) =>
+            type.GetEvents(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
+                .Select(field =>
+                {
+                    var tn = GetFriendlyTypeName(field.EventHandlerType);
+                    return new Tuple<string, string>(tn, field.Name);
+                })
+                .ToList();
+
+
         /// <summary>
         /// [0: ReturnType 1: MethodName 2: ParamsStr 3: ParamsWithType]
         /// </summary>
@@ -1538,25 +1558,24 @@ namespace VgcApis.Misc
         /// <returns></returns>
         public static List<Tuple<string, string, string, string>> GetPublicMethodNameAndParam(Type type)
         {
-            var exceptList = new List<string>
-            {
-                "add_OnPropertyChanged",
-                "remove_OnPropertyChanged",
-            };
-
             var fullNames = new List<Tuple<string, string, string, string>>();
             var methods = type.GetMethods();
             foreach (var method in methods)
             {
-                var name = method.Name;
-                if (method.IsPublic && !exceptList.Contains(name))
+                if (!method.IsPublic)
                 {
-                    var paramStrs = GenParamStr(method);
-                    var returnType = GetFriendlyTypeName(method.ReturnType);
-                    fullNames.Add(
-                        new Tuple<string, string, string, string>(
-                            returnType, name, paramStrs.Item1, paramStrs.Item2));
+                    continue;
                 }
+                var name = method.Name;
+                if (name.StartsWith("add_On") || name.StartsWith("remove_On"))
+                {
+                    continue;
+                }
+                var paramStrs = GenParamStr(method);
+                var returnType = GetFriendlyTypeName(method.ReturnType);
+                fullNames.Add(
+                    new Tuple<string, string, string, string>(
+                        returnType, name, paramStrs.Item1, paramStrs.Item2));
             }
             return fullNames;
         }

@@ -1,12 +1,11 @@
 {
-  "version": "1.4.2.0",
-  "md5": "7CF38B3243BAB7597D59556F90D0D419",
-  "warnings": [
-    "移除Staticstics插件（请先备份数据）"
-  ],
+  "version": "1.4.3.0",
+  "md5": "09F821EA1C5AEF8AD917C1B5844C213D",
+  "warnings": [],
   "changes": [
-    "流量统计功能整合进主窗口，试验中还有点bug",
-    "添加解码模板选项，样板参见templates/custom/vmessDecodeTemplate.json",
-    "添加检查v2ray-core更新选项"
+    "调整服务器面板各元素布局",
+    "减少搜索及换页时出现的闪烁现象",
+    "导入分享链接时忽略vmess最后面的等号",
+    "添加lua.modules.coreEvent详见手册-所有函数"
   ]
 }

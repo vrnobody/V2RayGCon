@@ -252,7 +252,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private void WatchServers()
         {
-            servers.OnRequireFlyPanelUpdate += OnRequireFlyPanelUpdateHandler;
             servers.OnRequireFlyPanelReload += OnRequireFlyPanelReloadHandler;
             servers.OnServerPropertyChange += OnServerPropertyChangeHandler;
         }
@@ -260,7 +259,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         private void UnwatchServers()
         {
             servers.OnRequireFlyPanelReload -= OnRequireFlyPanelReloadHandler;
-            servers.OnRequireFlyPanelUpdate -= OnRequireFlyPanelUpdateHandler;
             servers.OnServerPropertyChange -= OnServerPropertyChangeHandler;
         }
 
@@ -525,10 +523,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void OnRequireFlyPanelReloadHandler(object sender, EventArgs args) =>
             RefreshFlyPanelLater();
 
-        void OnRequireFlyPanelUpdateHandler(object sender, EventArgs args)
-        {
-            lazyFlyPanelUpdater?.Postpone();
-        }
+        void OnRequireFlyPanelUpdateHandler(object sender, EventArgs args) => RefreshFlyPanelLater();
 
         private void BindDragDropEvent()
         {

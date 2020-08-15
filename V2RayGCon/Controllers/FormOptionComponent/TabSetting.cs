@@ -105,7 +105,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             if (pageSize != setting.serverPanelPageSize)
             {
                 setting.serverPanelPageSize = pageSize;
-                Services.Servers.Instance.RequireFormMainUpdate();
+                Services.Servers.Instance.RequireFormMainReload();
             }
 
             setting.isEnableDebugLogFile = chkIsEnableDebugLogFile.Checked;

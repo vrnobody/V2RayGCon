@@ -10,10 +10,39 @@ using System.Windows.Forms;
 
 namespace Luna.Models.Apis
 {
+    enum CoreEvTypes
+    {
+        CoreStart = 1,
+        CoreClosing = 2,
+        CoreStop = 3,
+        PropertyChanged = 4,
+    }
+
+    class EvHook
+    {
+        public CoreEvTypes evType { get; set; }
+        public VgcApis.Interfaces.ICoreServCtrl coreServCtrl { get; set; }
+        public VgcApis.Interfaces.Lua.ILuaMailBox mailBox { get; set; }
+        public EventHandler evHandler { get; set; }
+        public EvHook(
+            CoreEvTypes evType,
+            VgcApis.Interfaces.ICoreServCtrl coreServCtrl,
+            VgcApis.Interfaces.Lua.ILuaMailBox mailBox,
+            EventHandler evHandler)
+        {
+            this.evType = evType;
+            this.coreServCtrl = coreServCtrl;
+            this.mailBox = mailBox;
+            this.evHandler = evHandler;
+        }
+    }
+
     internal class LuaSys :
         VgcApis.BaseClasses.Disposable,
         VgcApis.Interfaces.Lua.ILuaSys
     {
+
+
         readonly object procLocker = new object();
 
         private readonly LuaApis luaApis;
@@ -27,12 +56,7 @@ namespace Luna.Models.Apis
         ConcurrentDictionary<string, VgcApis.Interfaces.Lua.ILuaMailBox>
             hotkeys = new ConcurrentDictionary<string, VgcApis.Interfaces.Lua.ILuaMailBox>();
 
-        ConcurrentDictionary<string, Tuple<VgcApis.Interfaces.ICoreServCtrl, VgcApis.Interfaces.Lua.ILuaMailBox, EventHandler>> coreStartEventHooks =
-            new ConcurrentDictionary<string, Tuple<VgcApis.Interfaces.ICoreServCtrl, VgcApis.Interfaces.Lua.ILuaMailBox, EventHandler>>();
-
-        ConcurrentDictionary<string, Tuple<VgcApis.Interfaces.ICoreServCtrl, VgcApis.Interfaces.Lua.ILuaMailBox, EventHandler>> coreStopEventHooks =
-            new ConcurrentDictionary<string, Tuple<VgcApis.Interfaces.ICoreServCtrl, VgcApis.Interfaces.Lua.ILuaMailBox, EventHandler>>();
-
+        ConcurrentDictionary<string, EvHook> evHooks = new ConcurrentDictionary<string, EvHook>();
 
         SysCmpos.PostOffice postOffice;
 
@@ -44,54 +68,6 @@ namespace Luna.Models.Apis
             this.getAllAssemblies = getAllAssemblies;
             this.postOffice = luaApis.GetPostOffice();
         }
-
-        #region private methods
-        DataReceivedEventHandler CreateSendLogHandler(Encoding encoding)
-        {
-            var ec = encoding;
-
-            return (s, a) =>
-            {
-                try
-                {
-                    string msg = null;
-                    var bin = Encoding.Default.GetBytes(a.Data);
-                    msg = ec.GetString(bin);
-                    if (!string.IsNullOrEmpty(msg))
-                    {
-                        luaApis?.SendLog(msg);
-                    }
-                }
-                catch { }
-            };
-        }
-
-        void SendLogHandler(object sender, DataReceivedEventArgs args)
-        {
-            try
-            {
-                string msg = null;
-                msg = args.Data; if (!string.IsNullOrEmpty(msg))
-                {
-                    luaApis?.SendLog(msg);
-                }
-            }
-            catch { }
-        }
-
-        void TrackdownProcess(Process proc)
-        {
-            lock (procLocker)
-            {
-                if (processes.Contains(proc))
-                {
-                    return;
-                }
-                processes.Add(proc);
-            }
-            VgcApis.Libs.Sys.ChildProcessTracker.AddProcess(proc);
-        }
-        #endregion
 
         #region ILuaSys.Net
         List<SysCmpos.HttpServer> httpServs = new List<SysCmpos.HttpServer>();
@@ -119,7 +95,92 @@ namespace Luna.Models.Apis
 
         #endregion
 
-        #region ILluaSys.Hotkey
+        #region ILuaSys.EventHooks
+        public int CoreEvStart { get; } = (int)CoreEvTypes.CoreStart;
+        public int CoreEvClosing { get; } = (int)CoreEvTypes.CoreClosing;
+        public int CoreEvStop { get; } = (int)CoreEvTypes.CoreStop;
+        public int CoreEvPropertyChanged { get; } = (int)CoreEvTypes.PropertyChanged;
+
+        public bool UnregisterCoreEvent(VgcApis.Interfaces.Lua.ILuaMailBox mailbox, string handle)
+        {
+            if (postOffice.ValidateMailBox(mailbox)
+               && hotkeys.TryGetValue(handle, out var mb)
+               && ReferenceEquals(mb, mailbox)
+               && evHooks.TryRemove(handle, out var evhook))
+            {
+                try
+                {
+                    var coreServ = evhook.coreServCtrl;
+                    var handler = evhook.evHandler;
+                    switch (evhook.evType)
+                    {
+                        case CoreEvTypes.CoreStart:
+                            coreServ.OnCoreStart -= handler;
+                            break;
+                        case CoreEvTypes.CoreStop:
+                            coreServ.OnCoreStop -= handler;
+                            break;
+                        case CoreEvTypes.CoreClosing:
+                            coreServ.OnCoreStop -= handler;
+                            break;
+                        case CoreEvTypes.PropertyChanged:
+                            coreServ.OnPropertyChanged -= handler;
+                            break;
+                        default:
+                            return false;
+                    }
+                    return true;
+                }
+                catch { }
+            }
+            return false;
+        }
+
+        public string RegisterCoreEvent(
+            VgcApis.Interfaces.ICoreServCtrl coreServ,
+            VgcApis.Interfaces.Lua.ILuaMailBox mailbox,
+            int evType,
+            int evCode)
+        {
+            // 无权访问
+            if (!postOffice.ValidateMailBox(mailbox))
+            {
+                return null;
+            }
+
+            try
+            {
+                var handle = Guid.NewGuid().ToString();
+                var addr = mailbox.GetAddress();
+                EventHandler handler = (s, a) => mailbox.SendCode(addr, evCode);
+                switch ((CoreEvTypes)evType)
+                {
+                    case CoreEvTypes.CoreStart:
+                        coreServ.OnCoreStart += handler;
+                        break;
+                    case CoreEvTypes.CoreStop:
+                        coreServ.OnCoreStop += handler;
+                        break;
+                    case CoreEvTypes.CoreClosing:
+                        coreServ.OnCoreStop += handler;
+                        break;
+                    case CoreEvTypes.PropertyChanged:
+                        coreServ.OnPropertyChanged += handler;
+                        break;
+                    default:
+                        return null;
+                }
+                var item = new EvHook((CoreEvTypes)evType, coreServ, mailbox, handler);
+                evHooks.TryAdd(handle, item);
+                return handle;
+            }
+            catch { }
+            return null;
+        }
+
+        #endregion
+
+        #region ILuaSys.Hotkey
         public string GetAllKeyNames()
         {
             return string.Join(@", ", Enum.GetNames(typeof(Keys)));
@@ -135,90 +196,6 @@ namespace Luna.Models.Apis
                 return luaApis.UnregisterHotKey(handle);
             }
             return false;
-        }
-
-        public bool UnregisterCoreStopEvent(VgcApis.Interfaces.Lua.ILuaMailBox mailbox, string handle)
-        {
-            if (postOffice.ValidateMailBox(mailbox)
-               && hotkeys.TryGetValue(handle, out var mb)
-               && ReferenceEquals(mb, mailbox)
-               && coreStopEventHooks.TryRemove(handle, out var hook))
-            {
-                try
-                {
-                    hook.Item1.OnCoreStop -= hook.Item3;
-                    return true;
-                }
-                catch { }
-            }
-            return false;
-        }
-
-        public string RegisterCoreStopEvent(
-            VgcApis.Interfaces.ICoreServCtrl coreServ,
-            VgcApis.Interfaces.Lua.ILuaMailBox mailbox,
-            int evCode)
-        {
-            // 无权访问
-            if (!postOffice.ValidateMailBox(mailbox))
-            {
-                return null;
-            }
-
-            try
-            {
-                var handle = Guid.NewGuid().ToString();
-                var addr = mailbox.GetAddress();
-                EventHandler handler = (s, a) => mailbox.SendCode(addr, evCode);
-                coreServ.OnCoreStop += handler;
-                var item = new Tuple<VgcApis.Interfaces.ICoreServCtrl, VgcApis.Interfaces.Lua.ILuaMailBox, EventHandler>(coreServ, mailbox, handler);
-                coreStopEventHooks.TryAdd(handle, item);
-                return handle;
-            }
-            catch { }
-            return null;
-        }
-
-        public bool UnregisterCoreStartEvent(VgcApis.Interfaces.Lua.ILuaMailBox mailbox, string handle)
-        {
-            if (postOffice.ValidateMailBox(mailbox)
-               && hotkeys.TryGetValue(handle, out var mb)
-               && ReferenceEquals(mb, mailbox)
-               && coreStartEventHooks.TryRemove(handle, out var hook))
-            {
-                try
-                {
-                    hook.Item1.OnCoreStart -= hook.Item3;
-                    return true;
-                }
-                catch { }
-            }
-            return false;
-        }
-
-        public string RegisterCoreStartEvent(
-            VgcApis.Interfaces.ICoreServCtrl coreServ,
-            VgcApis.Interfaces.Lua.ILuaMailBox mailbox,
-            int evCode)
-        {
-            // 无权访问
-            if (!postOffice.ValidateMailBox(mailbox))
-            {
-                return null;
-            }
-
-            try
-            {
-                var handle = Guid.NewGuid().ToString();
-                var addr = mailbox.GetAddress();
-                EventHandler handler = (s, a) => mailbox.SendCode(addr, evCode);
-                coreServ.OnCoreStart += handler;
-                var item = new Tuple<VgcApis.Interfaces.ICoreServCtrl, VgcApis.Interfaces.Lua.ILuaMailBox, EventHandler>(coreServ, mailbox, handler);
-                coreStartEventHooks.TryAdd(handle, item);
-                return handle;
-            }
-            catch { }
-            return null;
         }
 
         public string RegisterHotKey(
@@ -252,11 +229,15 @@ namespace Luna.Models.Apis
             var evs = VgcApis.Misc.Utils.GetPublicEventsInfoOfType(type)
                 .Select(infos => $"{infos.Item1} {infos.Item2}")
                 .ToList();
+            var props = VgcApis.Misc.Utils.GetPublicPropsInfoOfType(type)
+                .Select(infos => $"{infos.Item1} {infos.Item2}")
+                .ToList();
 
             var evi = string.Join(nl, evs);
+            var propi = string.Join(nl, props);
             var pmi = VgcApis.Misc.Utils.GetPublicFieldsInfoOfType(type);
             var pfi = VgcApis.Misc.Utils.GetPublicMethodsInfoOfType(type);
-            return $"{evi}{nl}{pmi}{nl}{pfi}";
+            return $"{propi}{nl}{evi}{nl}{pmi}{nl}{pfi}";
         }
 
         public string GetPublicInfosOfObject(object @object)
@@ -452,15 +433,15 @@ namespace Luna.Models.Apis
         #region ILuaSys.Encoding
         public Encoding GetEncoding(int codepage) => Encoding.GetEncoding(codepage);
 
-        public Encoding EncodingCmd936() => GetEncoding(936);
+        public Encoding EncodingCmd936 { get; } = Encoding.GetEncoding(936);
 
-        public Encoding EncodingUtf8() => Encoding.UTF8;
+        public Encoding EncodingUtf8 { get; } = Encoding.UTF8;
 
-        public Encoding EncodingAscII() => Encoding.ASCII;
+        public Encoding EncodingAscII { get; } = Encoding.ASCII;
 
-        public Encoding EncodingUnicode() => Encoding.Unicode;
+        public Encoding EncodingUnicode { get; } = Encoding.Unicode;
 
-        public Encoding EncodingDefault() => Encoding.Default;
+        public Encoding EncodingDefault { get; } = Encoding.Default;
 
         #endregion
 
@@ -526,6 +507,52 @@ namespace Luna.Models.Apis
         #endregion
 
         #region private methods
+        DataReceivedEventHandler CreateSendLogHandler(Encoding encoding)
+        {
+            var ec = encoding;
+
+            return (s, a) =>
+            {
+                try
+                {
+                    string msg = null;
+                    var bin = Encoding.Default.GetBytes(a.Data);
+                    msg = ec.GetString(bin);
+                    if (!string.IsNullOrEmpty(msg))
+                    {
+                        luaApis?.SendLog(msg);
+                    }
+                }
+                catch { }
+            };
+        }
+
+        void SendLogHandler(object sender, DataReceivedEventArgs args)
+        {
+            try
+            {
+                string msg = null;
+                msg = args.Data; if (!string.IsNullOrEmpty(msg))
+                {
+                    luaApis?.SendLog(msg);
+                }
+            }
+            catch { }
+        }
+
+        void TrackdownProcess(Process proc)
+        {
+            lock (procLocker)
+            {
+                if (processes.Contains(proc))
+                {
+                    return;
+                }
+                processes.Add(proc);
+            }
+            VgcApis.Libs.Sys.ChildProcessTracker.AddProcess(proc);
+        }
+
         Process RunProcWrapper(
             bool isTracking, string exePath, string args, string stdin,
            LuaTable envs, bool hasWindow, bool redirectOutput,
@@ -600,7 +627,7 @@ namespace Luna.Models.Apis
 
             if (useStdIn)
             {
-                var ie = inputEncoding == null ? EncodingCmd936() : inputEncoding;
+                var ie = inputEncoding == null ? EncodingCmd936 : inputEncoding;
                 var buff = ie.GetBytes(stdin);
 
                 var input = p.StandardInput;
@@ -665,19 +692,12 @@ namespace Luna.Models.Apis
 
         void RemoveAllCoreEventHooks()
         {
-            foreach (var handle in coreStartEventHooks.Keys)
+            var handles = evHooks.Keys;
+            foreach (var handle in handles)
             {
-                if (coreStartEventHooks.TryRemove(handle, out var evi))
+                if (evHooks.TryRemove(handle, out var hook))
                 {
-                    UnregisterCoreStartEvent(evi.Item2, handle);
-                }
-            }
-
-            foreach (var handle in coreStopEventHooks.Keys)
-            {
-                if (coreStartEventHooks.TryRemove(handle, out var evi))
-                {
-                    UnregisterCoreStopEvent(evi.Item2, handle);
+                    UnregisterCoreEvent(hook.mailBox, handle);
                 }
             }
         }

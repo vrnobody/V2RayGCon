@@ -33,8 +33,7 @@ namespace V2RayGCon.Services
             OnServerPropertyChange,
             OnServerCountChange,
 
-            // special events 
-            OnRequireFlyPanelUpdate,
+            // special events
             OnRequireFlyPanelReload;
 
         List<Controllers.CoreServerCtrl> coreServList =
@@ -232,16 +231,6 @@ namespace V2RayGCon.Services
 
         #region public method
 
-
-        /// <summary>
-        /// Add new only.
-        /// </summary>
-        public void RequireFormMainUpdate() =>
-            InvokeEventHandlerIgnoreError(OnRequireFlyPanelUpdate, this, EventArgs.Empty);
-
-        /// <summary>
-        /// Remove all then add new.
-        /// </summary>
         public void RequireFormMainReload() =>
             InvokeEventHandlerIgnoreError(OnRequireFlyPanelReload, this, EventArgs.Empty);
 
@@ -534,7 +523,7 @@ namespace V2RayGCon.Services
             {
                 lazyServerSettingsRecorder.Deadline();
                 UpdateMarkList();
-                RequireFormMainUpdate();
+                RequireFormMainReload();
                 InvokeEventOnServerCountChange(this, EventArgs.Empty);
                 speedTestingBar.Remove();
 
@@ -556,7 +545,7 @@ namespace V2RayGCon.Services
             {
                 lazyServerSettingsRecorder.Deadline();
                 UpdateMarkList();
-                RequireFormMainUpdate();
+                RequireFormMainReload();
                 InvokeEventOnServerCountChange(this, EventArgs.Empty);
                 speedTestingBar.Remove();
                 done?.Invoke();
@@ -595,7 +584,7 @@ namespace V2RayGCon.Services
                 catch { }
             }
 
-            RequireFormMainUpdate();
+            RequireFormMainReload();
             setting.LazyGC();
             lazyServerSettingsRecorder.Deadline();
             InvokeEventOnServerPropertyChange(this, EventArgs.Empty);
@@ -631,7 +620,7 @@ namespace V2RayGCon.Services
                 InvokeEventOnServerCountChange(this, EventArgs.Empty);
                 lazyServerSettingsRecorder.Deadline();
                 UpdateMarkList();
-                RequireFormMainUpdate();
+                RequireFormMainReload();
                 speedTestingBar.Remove();
             });
         }
@@ -693,7 +682,7 @@ namespace V2RayGCon.Services
                 newServer.GetConfiger().UpdateSummary();
                 // UpdateSummaryThen will invoke OnServerPropertyChange.
                 InvokeEventOnServerCountChange(this, EventArgs.Empty);
-                RequireFormMainUpdate();
+                RequireFormMainReload();
             }
             setting.LazyGC();
             lazyServerSettingsRecorder.Deadline();

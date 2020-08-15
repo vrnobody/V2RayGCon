@@ -1532,6 +1532,15 @@ namespace VgcApis.Misc
             return friendlyName;
         }
 
+        static public List<Tuple<string, string>> GetPublicPropsInfoOfType(Type type) =>
+            type.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
+                .Select(field =>
+                {
+                    var tn = GetFriendlyTypeName(field.PropertyType);
+                    return new Tuple<string, string>(tn, field.Name);
+                })
+                .ToList();
+
         static public List<Tuple<string, string>> GetPublicEventsInfoOfType(Type type) =>
             type.GetEvents(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
                 .Select(field =>

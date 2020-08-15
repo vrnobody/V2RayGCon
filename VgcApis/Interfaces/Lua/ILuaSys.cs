@@ -7,19 +7,19 @@ namespace VgcApis.Interfaces.Lua
 {
     public interface ILuaSys
     {
+
         #region Net
         IRunnable CreateHttpServer(string url, ILuaMailBox inbox, ILuaMailBox outbox);
         #endregion
 
         #region core event
-        bool UnregisterCoreStopEvent(ILuaMailBox mailbox, string handle);
+        int CoreEvStart { get; }
+        int CoreEvClosing { get; }
+        int CoreEvStop { get; }
+        int CoreEvPropertyChanged { get; }
 
-        string RegisterCoreStopEvent(ICoreServCtrl coreServ, ILuaMailBox mailbox, int evCode);
-
-        bool UnregisterCoreStartEvent(ILuaMailBox mailbox, string handle);
-
-        string RegisterCoreStartEvent(ICoreServCtrl coreServ, ILuaMailBox mailbox, int evCode);
-
+        bool UnregisterCoreEvent(ILuaMailBox mailbox, string handle);
+        string RegisterCoreEvent(ICoreServCtrl coreServ, ILuaMailBox mailbox, int evType, int evCode);
         #endregion
 
         #region keyboard hotkey
@@ -47,14 +47,15 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region encoding
-        Encoding EncodingDefault();
+
         Encoding GetEncoding(int codepage);
+        Encoding EncodingDefault { get; }
 
-        Encoding EncodingCmd936();
-        Encoding EncodingUtf8();
+        Encoding EncodingCmd936 { get; }
+        Encoding EncodingUtf8 { get; }
 
-        Encoding EncodingAscII();
-        Encoding EncodingUnicode();
+        Encoding EncodingAscII { get; }
+        Encoding EncodingUnicode { get; }
         #endregion
 
         #region process

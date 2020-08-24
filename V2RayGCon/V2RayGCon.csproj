@@ -144,11 +144,13 @@
     <Compile Include="Controllers\FormOptionComponent\TabDefaults.cs" />
     <Compile Include="Models\Datas\MultiConfItem.cs" />
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
+    <Compile Include="Models\Datas\ServerConfigs.cs" />
     <Compile Include="Models\Datas\SpeedTestOptions.cs" />
     <Compile Include="Models\Datas\UpdateInfo.cs" />
     <Compile Include="Models\VeeShareLinks\Http3a.cs" />
     <Compile Include="Models\VeeShareLinks\Socks2a.cs" />
     <Compile Include="Models\VeeShareLinks\BasicSettings.cs" />
+    <Compile Include="Models\VeeShareLinks\Vless4a.cs" />
     <Compile Include="Resources\Resx\StrConst.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -219,6 +221,7 @@
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Ss1a.cs" />
     <Compile Include="Models\VeeShareLinks\Vmess0a.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Socks2a.cs" />
+    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Vless4a.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Vmess0a.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeDecoder.cs" />
     <Compile Include="Services\ShareLinkComponents\VmessDecoder.cs" />
@@ -350,12 +353,6 @@
     <Compile Include="Views\WinForms\FormOption.Designer.cs">
       <DependentUpon>FormOption.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\WinForms\FormQRCode.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\WinForms\FormQRCode.Designer.cs">
-      <DependentUpon>FormQRCode.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\WinForms\FormSimAddVmessClient.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -472,13 +469,6 @@
     <EmbeddedResource Include="Views\WinForms\FormOption.zh-CN.resx">
       <DependentUpon>FormOption.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormQRCode.resx">
-      <DependentUpon>FormQRCode.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormQRCode.zh-CN.resx">
-      <DependentUpon>FormQRCode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormDownloadCore.zh-CN.resx">
       <DependentUpon>FormDownloadCore.cs</DependentUpon>

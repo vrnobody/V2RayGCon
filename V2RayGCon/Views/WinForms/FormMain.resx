@@ -1014,34 +1014,28 @@
     <value>Server</value>
   </data>
   <data name="toolMenuItemConfigEditor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 30</value>
+    <value>188, 30</value>
   </data>
   <data name="toolMenuItemConfigEditor.Text" xml:space="preserve">
     <value>Config editor</value>
   </data>
-  <data name="toolMenuItemQRCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 30</value>
-  </data>
-  <data name="toolMenuItemQRCode.Text" xml:space="preserve">
-    <value>QRCode</value>
-  </data>
   <data name="toolMenuItemLog.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 30</value>
+    <value>188, 30</value>
   </data>
   <data name="toolMenuItemLog.Text" xml:space="preserve">
     <value>Log</value>
   </data>
   <data name="toolMenuItemOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 30</value>
+    <value>188, 30</value>
   </data>
   <data name="toolMenuItemOptions.Text" xml:space="preserve">
     <value>Options</value>
   </data>
   <data name="toolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 6</value>
+    <value>185, 6</value>
   </data>
   <data name="toolStripMenuItemResize.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 30</value>
+    <value>188, 30</value>
   </data>
   <data name="toolStripMenuItemResize.Text" xml:space="preserve">
     <value>Resize</value>
@@ -1805,12 +1799,6 @@
     <value>toolMenuItemConfigEditor</value>
   </data>
   <data name="&gt;&gt;toolMenuItemConfigEditor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolMenuItemQRCode.Name" xml:space="preserve">
-    <value>toolMenuItemQRCode</value>
-  </data>
-  <data name="&gt;&gt;toolMenuItemQRCode.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolMenuItemLog.Name" xml:space="preserve">

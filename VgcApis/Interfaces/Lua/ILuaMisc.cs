@@ -53,8 +53,6 @@ namespace VgcApis.Interfaces.Lua
 
         void ShowFormLog();
 
-        void ShowFormQrcode();
-
         #endregion
 
         #region vgc

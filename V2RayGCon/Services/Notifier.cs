@@ -263,8 +263,6 @@ namespace V2RayGCon.Services
 
         public void ShowFormLog() => Views.WinForms.FormLog.ShowForm();
 
-        public void ShowFormQrcode() => Views.WinForms.FormQRCode.ShowForm();
-
         #endregion
 
 
@@ -967,17 +965,9 @@ namespace V2RayGCon.Services
                             Properties.Resources.EditWindow_16x,
                             (s,a)=>Views.WinForms.FormConfiger.ShowConfig()),
                         new ToolStripMenuItem(
-                            I18N.GenQRCode,
-                            Properties.Resources.AzureVirtualMachineExtension_16x,
-                            (s,a)=>Views.WinForms.FormQRCode.ShowForm()),
-                        new ToolStripMenuItem(
                             I18N.Log,
                             Properties.Resources.FSInteractiveWindow_16x,
                             (s,a)=> Views.WinForms.FormLog.ShowForm() ),
-                         new ToolStripMenuItem(
-                            I18N.DownloadV2rayCore,
-                            Properties.Resources.ASX_TransferDownload_blue_16x,
-                            (s,a)=>Views.WinForms.FormDownloadCore.ShowForm()),
                     }),
 
                 serversRootMenuItem,
@@ -1038,14 +1028,19 @@ namespace V2RayGCon.Services
             var children = aboutMenu.DropDownItems;
 
             children.Add(
+                I18N.DownloadV2rayCore,
+                Properties.Resources.ASX_TransferDownload_blue_16x,
+                (s, a) => Views.WinForms.FormDownloadCore.ShowForm());
+
+            children.Add(
+               I18N.CheckForVgcUpdate,
+               null,
+               (s, a) => updater.CheckForUpdate(true));
+
+            children.Add(
                 I18N.ProjectPage,
                 null,
                 (s, a) => Misc.UI.VisitUrl(I18N.VistProjectPage, Properties.Resources.ProjectLink));
-
-            children.Add(
-               I18N.CheckForUpdate,
-               null,
-                (s, a) => updater.CheckForUpdate(true));
 
             children.Add(
                 I18N.Feedback,

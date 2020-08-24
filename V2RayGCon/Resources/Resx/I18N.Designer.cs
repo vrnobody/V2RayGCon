@@ -232,11 +232,11 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Check for update 的本地化字符串。
+        ///   查找类似 Check for V2RayGCon update 的本地化字符串。
         /// </summary>
-        internal static string CheckForUpdate {
+        internal static string CheckForVgcUpdate {
             get {
-                return ResourceManager.GetString("CheckForUpdate", resourceCulture);
+                return ResourceManager.GetString("CheckForVgcUpdate", resourceCulture);
             }
         }
         
@@ -1391,6 +1391,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Password 的本地化字符串。
+        /// </summary>
+        internal static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Can not parse json! Please check current config. 的本地化字符串。
         /// </summary>
         internal static string PleaseCheckConfig {
@@ -1846,6 +1855,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string UpdatingPleaseWait {
             get {
                 return ResourceManager.GetString("UpdatingPleaseWait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 User 的本地化字符串。
+        /// </summary>
+        internal static string User {
+            get {
+                return ResourceManager.GetString("User", resourceCulture);
             }
         }
         

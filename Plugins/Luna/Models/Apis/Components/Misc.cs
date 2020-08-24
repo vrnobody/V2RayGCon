@@ -49,8 +49,6 @@ namespace Luna.Models.Apis.Components
 
         public void ShowFormLog() => vgcNotifier.ShowFormLog();
 
-        public void ShowFormQrcode() => vgcNotifier.ShowFormQrcode();
-
         #endregion
 
         #region ILuaMisc.Json

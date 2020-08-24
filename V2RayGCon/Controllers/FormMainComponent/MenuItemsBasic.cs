@@ -26,7 +26,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem miAbout,
             ToolStripMenuItem miHelp,
             ToolStripMenuItem miFormConfigEditor,
-            ToolStripMenuItem miFormQRCode,
             ToolStripMenuItem miFormLog,
             ToolStripMenuItem miFormOptions,
             ToolStripMenuItem miDownloadV2rayCore,
@@ -43,7 +42,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             InitMenuPlugin(pluginToolStrip);
 
             InitMenuFile(miSimVmessServer, miImportLinkFromClipboard, miExportAllServer, miImportFromFile);
-            InitMenuWindows(miFormConfigEditor, miFormQRCode, miFormLog, miFormOptions);
+            InitMenuWindows(miFormConfigEditor, miFormLog, miFormOptions);
             InitMenuAbout(miAbout, miHelp, miDownloadV2rayCore, miRemoveV2rayCore, miCheckVgcUpdate);
         }
 
@@ -164,13 +163,13 @@ namespace V2RayGCon.Controllers.FormMainComponent
             importFromFile.Click += (s, a) => ImportServersFromTextFile();
         }
 
-        private static void InitMenuWindows(ToolStripMenuItem miFormConfigEditor, ToolStripMenuItem miFormQRCode, ToolStripMenuItem miFormLog, ToolStripMenuItem miFormOptions)
+        private static void InitMenuWindows(
+            ToolStripMenuItem miFormConfigEditor,
+            ToolStripMenuItem miFormLog,
+            ToolStripMenuItem miFormOptions)
         {
             // menu window
             miFormConfigEditor.Click += (s, a) => Views.WinForms.FormConfiger.ShowConfig();
-
-
-            miFormQRCode.Click += (s, a) => Views.WinForms.FormQRCode.ShowForm();
 
             miFormLog.Click += (s, a) => Views.WinForms.FormLog.ShowForm();
 

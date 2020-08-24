@@ -121,7 +121,6 @@ namespace V2RayGCon.Views.WinForms
             this.deleteSelectedServersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolMenuItemConfigEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolMenuItemQRCode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolMenuItemLog = new System.Windows.Forms.ToolStripMenuItem();
             this.toolMenuItemOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
@@ -722,7 +721,6 @@ namespace V2RayGCon.Views.WinForms
             // 
             this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolMenuItemConfigEditor,
-            this.toolMenuItemQRCode,
             this.toolMenuItemLog,
             this.toolMenuItemOptions,
             this.toolStripMenuItem4,
@@ -735,12 +733,6 @@ namespace V2RayGCon.Views.WinForms
             this.toolMenuItemConfigEditor.Image = global::V2RayGCon.Properties.Resources.EditWindow_16x;
             this.toolMenuItemConfigEditor.Name = "toolMenuItemConfigEditor";
             resources.ApplyResources(this.toolMenuItemConfigEditor, "toolMenuItemConfigEditor");
-            // 
-            // toolMenuItemQRCode
-            // 
-            this.toolMenuItemQRCode.Image = global::V2RayGCon.Properties.Resources.AzureVirtualMachineExtension_16x;
-            this.toolMenuItemQRCode.Name = "toolMenuItemQRCode";
-            resources.ApplyResources(this.toolMenuItemQRCode, "toolMenuItemQRCode");
             // 
             // toolMenuItemLog
             // 
@@ -900,7 +892,6 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolMenuItemConfigEditor;
-        private System.Windows.Forms.ToolStripMenuItem toolMenuItemQRCode;
         private System.Windows.Forms.ToolStripMenuItem toolMenuItemLog;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolTip toolTip1;

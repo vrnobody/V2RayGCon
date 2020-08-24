@@ -120,17 +120,36 @@
   <data name="label1.Text" xml:space="preserve">
     <value>名称</value>
   </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxServerName.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxInboundAddress.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkAutoRun.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 16</value>
+  </data>
   <data name="chkAutoRun.Text" xml:space="preserve">
     <value>自启动</value>
   </data>
   <data name="chkAutoRun.ToolTip" xml:space="preserve">
     <value>软件启动的时候运行这个服务器</value>
   </data>
+  <data name="chkGlobalImport.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 16</value>
+  </data>
   <data name="chkGlobalImport.Text" xml:space="preserve">
     <value>全局import *</value>
   </data>
   <data name="chkGlobalImport.ToolTip" xml:space="preserve">
     <value>服务器启动时注入全局import</value>
+  </data>
+  <data name="chkBypassCnSite.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 16</value>
   </data>
   <data name="chkBypassCnSite.Text" xml:space="preserve">
     <value>绕过CN网站 *</value>
@@ -141,6 +160,15 @@
   <data name="cboxInboundMode.Items3" xml:space="preserve">
     <value>自定义</value>
   </data>
+  <data name="cboxInboundMode.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxMark.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkUntrack.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 16</value>
+  </data>
   <data name="chkUntrack.Text" xml:space="preserve">
     <value>不追踪</value>
   </data>
@@ -150,20 +178,17 @@
   <data name="label2.ToolTip" xml:space="preserve">
     <value>修改Inbound协议，Config表示按原配置设定。</value>
   </data>
-  <data name="label5.ToolTip" xml:space="preserve">
-    <value>服务器会重启</value>
-  </data>
   <data name="label6.Text" xml:space="preserve">
     <value>标记</value>
   </data>
   <data name="label6.ToolTip" xml:space="preserve">
     <value>用于搜索的标记</value>
   </data>
-  <data name="btnSave.Text" xml:space="preserve">
-    <value>保存</value>
-  </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>标题</value>
+    <value>标题：</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 12</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
     <value>备注</value>
@@ -171,13 +196,157 @@
   <data name="label4.ToolTip" xml:space="preserve">
     <value>用于搜索的二级标签</value>
   </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>缩放</value>
+  </data>
+  <data name="btnOpenInEditor.Text" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="btnOpenInEditor.ToolTip" xml:space="preserve">
+    <value>编辑服务器配置</value>
+  </data>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 12</value>
+  </data>
   <data name="label7.Text" xml:space="preserve">
     <value>描述</value>
+  </data>
+  <data name="label7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxDescription.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 12</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
     <value>* 修改带星号的选项会重启服务器</value>
   </data>
+  <data name="label10.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxRemark.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="pboxQrcode.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="groupBox1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxZoomMode.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxShareLinkType.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkOutbStreamUseTls.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxOutbMethod.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxOutbStreamParma.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxOutbProto.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxOutbStreamType.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxOutbAddr.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxOutbAuth2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxOutbAuth1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 12</value>
+  </data>
+  <data name="label16.Text" xml:space="preserve">
+    <value>参数</value>
+  </data>
+  <data name="label16.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbOutbAuth2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label14.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbOutbAuth1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label12.Text" xml:space="preserve">
+    <value>主机</value>
+  </data>
+  <data name="label12.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 12</value>
+  </data>
+  <data name="label11.Text" xml:space="preserve">
+    <value>协议</value>
+  </data>
+  <data name="label11.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnSaveQrcode.Text" xml:space="preserve">
+    <value>另存二维码</value>
+  </data>
+  <data name="btnSaveQrcode.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnCopyShareLink.Text" xml:space="preserve">
+    <value>复制链接</value>
+  </data>
+  <data name="btnCopyShareLink.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="label8.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxShareLink.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>分享</value>
+  </data>
+  <data name="groupBox4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnOK.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="btnCancel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbServerTitle.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>服务器设置</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

@@ -30,6 +30,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             AddChild(new VeeCodecs.Ss1a(cache));
             AddChild(new VeeCodecs.Socks2a(cache));
             AddChild(new VeeCodecs.Http3a(cache));
+            AddChild(new VeeCodecs.Vless4a(cache));
         }
 
         public Tuple<JObject, JToken> Decode(string shareLink)
@@ -100,6 +101,9 @@ namespace V2RayGCon.Services.ShareLinkComponents
             var protocol = Misc.Utils.GetProtocolFromConfig(json);
             switch (protocol)
             {
+                case VgcApis.Models.Consts.Config.ProtocolNameVless:
+                    encoder = GetChild<VeeCodecs.Vless4a>();
+                    break;
                 case VgcApis.Models.Consts.Config.ProtocolNameVmess:
                     encoder = GetChild<VeeCodecs.Vmess0a>();
                     break;

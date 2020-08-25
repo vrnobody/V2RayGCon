@@ -774,4 +774,10 @@ No, abort.</value>
   <data name="User" xml:space="preserve">
     <value>User</value>
   </data>
+  <data name="AddClientManually" xml:space="preserve">
+    <value>Add client manually.</value>
+  </data>
+  <data name="ConfirmClearOrgServCfg" xml:space="preserve">
+    <value>Origin server's config will be reset, continue?</value>
+  </data>
 </root>

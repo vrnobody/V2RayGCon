@@ -57,6 +57,7 @@
             this.v2cfgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.showSettingWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simpleEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -209,6 +210,7 @@
             this.copyToolStripMenuItem,
             this.toolStripMenuItem1,
             this.showSettingWindowToolStripMenuItem,
+            this.simpleEditorToolStripMenuItem,
             this.editToolStripMenuItem,
             this.debugToolStripMenuItem,
             this.deleteToolStripMenuItem,
@@ -302,6 +304,12 @@
             this.showSettingWindowToolStripMenuItem.Name = "showSettingWindowToolStripMenuItem";
             resources.ApplyResources(this.showSettingWindowToolStripMenuItem, "showSettingWindowToolStripMenuItem");
             this.showSettingWindowToolStripMenuItem.Click += new System.EventHandler(this.showSettingsWindowToolStripMenuItem_Click);
+            // 
+            // simpleEditorToolStripMenuItem
+            // 
+            this.simpleEditorToolStripMenuItem.Name = "simpleEditorToolStripMenuItem";
+            resources.ApplyResources(this.simpleEditorToolStripMenuItem, "simpleEditorToolStripMenuItem");
+            this.simpleEditorToolStripMenuItem.Click += new System.EventHandler(this.simpleEditorToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -414,5 +422,6 @@
         private System.Windows.Forms.Button btnMenu;
         private VgcApis.UserControls.RoundLabel rlbRemark;
         private VgcApis.UserControls.RoundLabel rlbLastModifyDate;
+        private System.Windows.Forms.ToolStripMenuItem simpleEditorToolStripMenuItem;
     }
 }

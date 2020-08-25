@@ -86,7 +86,8 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbSimAddVmessWin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Views.WinForms.FormSimAddVmessClient.GetForm();
+            var f = WinForms.FormSimpleEditor.GetForm();
+            f.LoadCoreServer(null);
         }
 
         private void lbConfigEditor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

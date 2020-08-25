@@ -765,4 +765,10 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="User" xml:space="preserve">
     <value>用户</value>
   </data>
+  <data name="AddClientManually" xml:space="preserve">
+    <value>手动添加客户端</value>
+  </data>
+  <data name="ConfirmClearOrgServCfg" xml:space="preserve">
+    <value>原服务器的所有配置将被删除，是否继续？</value>
+  </data>
 </root>

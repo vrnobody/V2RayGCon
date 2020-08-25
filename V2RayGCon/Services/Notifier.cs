@@ -961,6 +961,13 @@ namespace V2RayGCon.Services
                             Properties.Resources.WindowsForm_16x,
                             (s,a)=>Views.WinForms.FormMain.ShowForm()),
                         new ToolStripMenuItem(
+                            I18N.AddClientManually,
+                            Properties.Resources.AddField_16x,
+                            (s,a)=>{
+                                var f = Views.WinForms.FormSimpleEditor.GetForm();
+                                f.LoadCoreServer(null);
+                            }),
+                        new ToolStripMenuItem(
                             I18N.ConfigEditor,
                             Properties.Resources.EditWindow_16x,
                             (s,a)=>Views.WinForms.FormConfiger.ShowConfig()),

@@ -149,8 +149,11 @@ namespace V2RayGCon.Controllers.FormMainComponent
         private void InitMenuFile(ToolStripMenuItem simVmessServer, ToolStripMenuItem importLinkFromClipboard, ToolStripMenuItem exportAllServer, ToolStripMenuItem importFromFile)
         {
             // menu file
-            simVmessServer.Click +=
-                (s, a) => Views.WinForms.FormSimAddVmessClient.GetForm();
+            simVmessServer.Click += (s, a) =>
+            {
+                var f = Views.WinForms.FormSimpleEditor.GetForm();
+                f.LoadCoreServer(null);
+            };
 
             importLinkFromClipboard.Click += (s, a) =>
             {

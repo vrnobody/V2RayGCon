@@ -1,123 +1,218 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 
 namespace V2RayGCon.Models.Datas
 {
-    internal class ServerConfigs
+    public class ServerConfigs
     {
-        public string proto;
-        public string addr;
-        public string auth1;
-        public string auth2;
-        public string method;
-        public bool useOta;
-        public bool useTls;
-        public string streamType;
-        public string streamParam;
+        public string name = string.Empty;
+        public string description = string.Empty;
+        public string proto = string.Empty;
+        public string host = string.Empty;
+        public int port = 0;
+        public string auth1 = string.Empty;
+        public string auth2 = string.Empty;
+        public string method = string.Empty;
+        public bool useOta = false;
+        public bool useSelfSignCert = false;
+        public bool useTls = false;
+        public string streamType = string.Empty;
+        public string streamParam1 = string.Empty;
+        public string streamParam2 = string.Empty;
+        public string streamParam3 = string.Empty;
+
 
         public ServerConfigs() { }
 
-        public ServerConfigs(string config)
+        public ServerConfigs(string config) : this()
         {
             try
             {
-                var j = JObject.Parse(config);
-                ParseConfig(j);
+                ParseConfig(config);
             }
             catch { }
         }
-        public ServerConfigs(JObject config)
+
+        public ServerConfigs(JObject config) : this(config.ToString())
         {
-            ParseConfig(config);
+
         }
 
-        public string ToConfig()
+        public string ToVeeShareLink()
         {
+            try
+            {
+                var bytes = GenVeeShareLink();
+                return Services.ShareLinkComponents.VeeDecoder.Bytes2VeeLink(bytes);
+            }
+            catch { }
             return "";
         }
 
         #region private methods
 
-        int GetIndexByNetwork(string network)
+
+        byte[] GenVeeShareLink()
         {
-            if (string.IsNullOrEmpty(network))
+            var bs = GetBasicSettings();
+            switch (proto)
             {
-                return -1;
+                case "vmess":
+                    var vmess = new VeeShareLinks.Vmess0a(bs);
+                    vmess.uuid = Guid.Parse(auth1);
+                    return vmess.ToBytes();
+                case "vless":
+                    var vless = new VeeShareLinks.Vless4a(bs);
+                    vless.uuid = Guid.Parse(auth1);
+                    return vless.ToBytes();
+                case "http":
+                    var http = new VeeShareLinks.Http3a(bs);
+                    http.userName = auth1;
+                    http.userPassword = auth2;
+                    return http.ToBytes();
+                case "socks":
+                    var socks = new VeeShareLinks.Socks2a(bs);
+                    socks.userName = auth1;
+                    socks.userPassword = auth2;
+                    return socks.ToBytes();
+                case "shadowsocks":
+                    var ss = GetSsConfig();
+                    return ss.ToBytes();
+                default:
+                    break;
             }
-
-            foreach (var item in Models.Datas.Table.streamSettings)
-            {
-                if (item.Value.network == network)
-                {
-                    return item.Key;
-                }
-            }
-
-            return -1;
+            return null;
         }
 
-        void ParseConfig(JObject config)
+        VeeShareLinks.Ss1a GetSsConfig()
         {
-            if (config == null)
+            var ss = new VeeShareLinks.Ss1a();
+            ss.alias = name;
+            ss.description = description;
+            ss.address = host;
+            ss.port = port;
+
+            ss.isUseTls = useTls;
+            ss.streamType = streamType;
+            ss.streamParam1 = streamParam1;
+            ss.streamParam2 = streamParam2;
+            ss.streamParam3 = streamParam3;
+
+            ss.isUseOta = useOta;
+            ss.password = auth1;
+            ss.method = method;
+            return ss;
+        }
+
+        VeeShareLinks.BasicSettings GetBasicSettings()
+        {
+            var bs = new VeeShareLinks.BasicSettings();
+            bs.alias = name;
+            bs.description = description;
+
+            bs.address = host;
+            bs.port = port;
+
+            bs.isUseTls = useTls;
+            bs.isSecTls = !useSelfSignCert;
+            bs.streamType = streamType;
+
+            bs.streamParam1 = streamParam1;
+            bs.streamParam2 = streamParam2;
+            bs.streamParam3 = streamParam3;
+            return bs;
+        }
+
+        void ParseBasicSettings(VeeShareLinks.BasicSettings bs)
+        {
+            name = bs.alias;
+            description = bs.description;
+
+            host = bs.address;
+            port = bs.port;
+
+            useTls = bs.isUseTls;
+            useSelfSignCert = !bs.isSecTls;
+            streamType = bs.streamType;
+
+            streamParam1 = bs.streamParam1;
+            streamParam2 = bs.streamParam2;
+            streamParam3 = bs.streamParam3;
+        }
+
+        void ParseConfig(string config)
+        {
+            var slinkMgr = Services.ShareLinkMgr.Instance;
+
+            var vee = slinkMgr.EncodeConfigToShareLink(config, VgcApis.Models.Datas.Enums.LinkTypes.v);
+            if (vee == null)
             {
                 return;
             }
 
-            var root = Misc.Utils.GetConfigRoot(false, true);
-            var GetStr = Misc.Utils.GetStringByPrefixAndKeyHelper(config);
+            var bytes = Services.ShareLinkComponents.VeeDecoder.VeeLink2Bytes(vee);
+            var lv = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
 
-            ParseStreamSettings(root, GetStr);
-
-            proto = Misc.Utils.GetValue<string>(config, root, "protocol");
-            switch (proto)
+            if (lv == VeeShareLinks.Vmess0a.SupportedVersion())
             {
-                case "vmess":
-                case "vless":
-                    auth1 = GetStr(root + ".settings.vnext.0.users.0", "id");
-                    addr = Misc.Utils.GetAddr(config, root + ".settings.vnext.0", "address", "port");
-                    break;
-                case "shadowsocks":
-                    var ssPrefix = root + ".settings.servers.0";
-                    useOta = Misc.Utils.GetValue<bool>(config, ssPrefix, "ota");
-                    auth1 = GetStr(ssPrefix, "password");
-                    addr = Misc.Utils.GetAddr(config, ssPrefix, "address", "port");
-                    method = GetStr(ssPrefix, "method");
-                    break;
-                case "http":
-                case "socks":
-                    var httpPrefix = root + ".settings.servers.0";
-                    addr = Misc.Utils.GetAddr(config, httpPrefix, "address", "port");
-                    auth1 = GetStr(httpPrefix, "users.0.user");
-                    auth2 = GetStr(httpPrefix, "users.0.pass");
-                    break;
-                default:
-                    break;
+                this.proto = "vmess";
+                var vmess = new VeeShareLinks.Vmess0a(bytes);
+                ParseBasicSettings(vmess);
+                this.auth1 = vmess.uuid.ToString();
+            }
+            else if (lv == VeeShareLinks.Vless4a.SupportedVersion())
+            {
+                this.proto = "vless";
+                var vless = new VeeShareLinks.Vless4a(bytes);
+                ParseBasicSettings(vless);
+                this.auth1 = vless.uuid.ToString();
+            }
+            else if (lv == VeeShareLinks.Ss1a.SupportedVersion())
+            {
+                this.proto = "shadowsocks";
+                var ss = new VeeShareLinks.Ss1a(bytes);
+                ParseSsConfig(ss);
+            }
+            else if (lv == VeeShareLinks.Http3a.SupportedVersion())
+            {
+                this.proto = "http";
+                var http = new VeeShareLinks.Http3a(bytes);
+                ParseBasicSettings(http);
+                this.auth1 = http.userName;
+                this.auth2 = http.userPassword;
+            }
+            else if (lv == VeeShareLinks.Socks2a.SupportedVersion())
+            {
+                this.proto = "socks";
+                var socks = new VeeShareLinks.Socks2a(bytes);
+                ParseBasicSettings(socks);
+                this.auth1 = socks.userName;
+                this.auth2 = socks.userPassword;
             }
         }
 
-        private void ParseStreamSettings(string root, Func<string, string, string> GetStr)
+        void ParseSsConfig(VeeShareLinks.Ss1a bs)
         {
 
-            var dict = new Dictionary<string, string>
-            {
-                {"kcp","mkcp" },
-                {"h2","http/2" },
-                {"ws","websocket" },
-                {"ds","domainsocket" },
-            };
+            name = bs.alias;
+            description = bs.description;
 
-            var sp = root + ".streamSettings";
-            var st = GetStr(sp, "network");
-            streamType = dict.ContainsKey(st) ? dict[st] : st;
-            var index = GetIndexByNetwork(st);
-            streamParam = index < 0 ? string.Empty : GetStr(sp, Models.Datas.Table.streamSettings[index].optionPath);
-            useTls = GetStr(sp, "security") == "tls";
+            host = bs.address;
+            port = bs.port;
+
+            this.useTls = bs.isUseTls;
+            this.useSelfSignCert = false;
+            this.streamType = bs.streamType;
+
+            this.streamParam1 = bs.streamParam1;
+            this.streamParam2 = bs.streamParam2;
+            this.streamParam3 = bs.streamParam3;
+            this.useOta = bs.isUseOta;
+            this.auth1 = bs.password;
+            this.method = bs.method;
         }
 
         #endregion
-
-
 
     }
 }

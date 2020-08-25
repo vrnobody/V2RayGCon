@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -47,8 +46,6 @@ namespace V2RayGCon.Views.WinForms
 
         private void FormModifyServerSettings_Load(object sender, System.EventArgs e)
         {
-            InitCboxStreamType();
-            Misc.UI.FillComboBox(cboxOutbMethod, Models.Datas.Table.ssMethods);
             cboxShareLinkType.SelectedIndex = 1;
             cboxZoomMode.SelectedIndex = 0;
         }
@@ -64,25 +61,9 @@ namespace V2RayGCon.Views.WinForms
             Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMark);
             UpdateControls(orgCoreServSettings);
             UpdateShareLink();
-            InitOutbControls();
         }
 
         #region private methods
-
-        void InitOutbControls()
-        {
-            var config = coreServ.GetConfiger().GetConfig();
-            var sc = new Models.Datas.ServerConfigs(config);
-            SelectByText(cboxOutbProto, sc.proto);
-            tboxOutbAddr.Text = sc.addr;
-            tboxOutbAuth1.Text = sc.auth1;
-            tboxOutbAuth2.Text = sc.auth2;
-            SelectByText(cboxOutbMethod, sc.method);
-            chkOutbOTA.Checked = sc.useOta;
-            chkOutbStreamUseTls.Checked = sc.useTls;
-            SelectByText(cboxOutbStreamType, sc.streamType);
-            cboxOutbStreamParma.Text = sc.streamParam;
-        }
 
         void SelectByText(ComboBox cbox, string text)
         {
@@ -129,15 +110,7 @@ namespace V2RayGCon.Views.WinForms
             chkUntrack.Checked = s.isUntrack;
         }
 
-        void InitCboxStreamType()
-        {
-            var streamType = new Dictionary<int, string>();
-            foreach (var type in Models.Datas.Table.streamSettings)
-            {
-                streamType.Add(type.Key, type.Value.name);
-            }
-            Misc.UI.FillComboBox(cboxOutbStreamType, streamType);
-        }
+
 
         void UpdateShareLink()
         {
@@ -174,70 +147,6 @@ namespace V2RayGCon.Views.WinForms
         {
             var idx = cboxInboundMode.SelectedIndex;
             cboxInboundAddress.Enabled = idx == 1 || idx == 2;
-        }
-
-        private void cboxOutbProto_SelectedValueChanged(object sender, System.EventArgs e)
-        {
-            var t = cboxOutbProto.Text.ToLower();
-
-            switch (t)
-            {
-                case @"vmess":
-                case @"vless":
-                    lbOutbAuth2.Visible = false;
-                    cboxOutbMethod.Visible = false;
-                    chkOutbOTA.Visible = false;
-                    tboxOutbAuth2.Visible = false;
-                    lbOutbAuth1.Text = @"UUID";
-                    break;
-                case @"socks":
-                case @"http":
-                    lbOutbAuth1.Text = I18N.User;
-                    lbOutbAuth2.Text = I18N.Password;
-                    lbOutbAuth2.Visible = true;
-                    cboxOutbMethod.Visible = false;
-                    chkOutbOTA.Visible = false;
-                    tboxOutbAuth2.Visible = true;
-                    break;
-                case @"shadowsocks":
-                    lbOutbAuth1.Text = I18N.Password;
-                    lbOutbAuth2.Text = @"Method";
-                    lbOutbAuth2.Visible = true;
-                    cboxOutbMethod.Visible = true;
-                    chkOutbOTA.Visible = true;
-                    tboxOutbAuth2.Visible = false;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void cboxOutbStreamType_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
-            var index = cboxOutbStreamType.SelectedIndex;
-
-            if (index < 0)
-            {
-                cboxOutbStreamParma.SelectedIndex = -1;
-                cboxOutbStreamParma.Items.Clear();
-                return;
-            }
-
-            var s = Models.Datas.Table.streamSettings[index];
-
-            cboxOutbStreamParma.Items.Clear();
-
-            if (!s.dropDownStyle)
-            {
-                cboxOutbStreamParma.DropDownStyle = ComboBoxStyle.DropDown;
-                return;
-            }
-
-            cboxOutbStreamParma.DropDownStyle = ComboBoxStyle.DropDownList;
-            foreach (var option in s.options)
-            {
-                cboxOutbStreamParma.Items.Add(option.Key);
-            }
         }
 
         private void tboxShareLink_TextChanged(object sender, System.EventArgs e)
@@ -306,30 +215,6 @@ namespace V2RayGCon.Views.WinForms
             }
         }
 
-        private void tboxOutbAddr_TextChanged(object sender, EventArgs e)
-        {
-            var t = tboxOutbAddr.Text;
-            var ok = VgcApis.Misc.Utils.TryParseAddress(t, out string ip, out int port);
-            var color = ok ? Color.Black : Color.Red;
-            if (tboxOutbAddr.ForeColor != color)
-            {
-                tboxOutbAddr.ForeColor = color;
-            }
-        }
-
-        private void lbOutbAuth1_Click(object sender, EventArgs e)
-        {
-            // tboxOutbAuth1.Text = Guid.NewGuid().ToString();
-            var msg = VgcApis.Misc.Utils.CopyToClipboard(tboxOutbAuth1.Text) ?
-                 I18N.CopySuccess : I18N.CopyFail;
-            VgcApis.Misc.UI.MsgBoxAsync(msg);
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private void btnOK_Click(object sender, EventArgs e)
         {
             var curSettings = GetterSettings();
@@ -343,10 +228,6 @@ namespace V2RayGCon.Views.WinForms
 
         #endregion
 
-        private void btnOpenInEditor_Click(object sender, EventArgs e)
-        {
-            var config = coreServ.GetConfiger().GetConfig();
-            WinForms.FormConfiger.ShowConfig(config);
-        }
+
     }
 }

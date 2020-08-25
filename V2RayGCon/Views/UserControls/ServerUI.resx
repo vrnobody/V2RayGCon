@@ -655,7 +655,7 @@
     <value>Stop this server.</value>
   </data>
   <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="toolStripMenuItem3.Text" xml:space="preserve">
     <value>Action</value>
@@ -679,7 +679,7 @@
     <value>Move this server to bottom.</value>
   </data>
   <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="toolStripMenuItem6.Text" xml:space="preserve">
     <value>Move</value>
@@ -712,31 +712,40 @@
     <value>Contain all config information.</value>
   </data>
   <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="copyToolStripMenuItem.Text" xml:space="preserve">
     <value>Copy</value>
   </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 6</value>
+    <value>198, 6</value>
   </data>
   <data name="showSettingWindowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="showSettingWindowToolStripMenuItem.Text" xml:space="preserve">
-    <value>Settings</value>
+    <value>Settings and QRCode</value>
   </data>
   <data name="showSettingWindowToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Show settings window.</value>
   </data>
+  <data name="simpleEditorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>201, 22</value>
+  </data>
+  <data name="simpleEditorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Simple editor</value>
+  </data>
   <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="editToolStripMenuItem.Text" xml:space="preserve">
-    <value>Edit config</value>
+    <value>Json editor</value>
+  </data>
+  <data name="editToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Edit config.json</value>
   </data>
   <data name="debugToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="debugToolStripMenuItem.Text" xml:space="preserve">
     <value>View final config</value>
@@ -745,22 +754,22 @@
     <value>Final config for v2ray-core.</value>
   </data>
   <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 6</value>
+    <value>198, 6</value>
   </data>
   <data name="logOfThisServerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="logOfThisServerToolStripMenuItem.Text" xml:space="preserve">
     <value>Log of this server</value>
   </data>
   <data name="runSpeedTestToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="runSpeedTestToolStripMenuItem1.Text" xml:space="preserve">
     <value>Run speed test</value>
@@ -769,7 +778,7 @@
     <value>The time it takes to download the test web page.</value>
   </data>
   <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 214</value>
+    <value>202, 236</value>
   </data>
   <data name="&gt;&gt;ctxMenuStripMore.Name" xml:space="preserve">
     <value>ctxMenuStripMore</value>
@@ -910,6 +919,12 @@
     <value>showSettingWindowToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;showSettingWindowToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;simpleEditorToolStripMenuItem.Name" xml:space="preserve">
+    <value>simpleEditorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;simpleEditorToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">

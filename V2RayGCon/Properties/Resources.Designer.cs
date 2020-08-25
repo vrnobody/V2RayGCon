@@ -63,6 +63,16 @@ namespace V2RayGCon.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap AddField_16x {
+            get {
+                object obj = ResourceManager.GetObject("AddField_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap ASX_TransferDownload_blue_16x {
             get {
                 object obj = ResourceManager.GetObject("ASX_TransferDownload_blue_16x", resourceCulture);

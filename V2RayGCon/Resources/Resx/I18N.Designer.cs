@@ -70,6 +70,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Add client manually. 的本地化字符串。
+        /// </summary>
+        internal static string AddClientManually {
+            get {
+                return ResourceManager.GetString("AddClientManually", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Save current config as new server? 的本地化字符串。
         /// </summary>
         internal static string AddNewServer {
@@ -282,6 +291,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string ConfirmClearLog {
             get {
                 return ResourceManager.GetString("ConfirmClearLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Origin server&apos;s config will be reset, continue? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmClearOrgServCfg {
+            get {
+                return ResourceManager.GetString("ConfirmClearOrgServCfg", resourceCulture);
             }
         }
         

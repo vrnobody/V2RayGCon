@@ -82,6 +82,10 @@ namespace V2RayGCon.Models.Datas
                     { "none","tcp" },
                     { "http","tcp_http" },
                 },
+                option2Name= "Path",
+                option2Path="tcpSettings.header.request.path",
+                option3Name = "Host",
+                option3Path = "tcpSettings.header.request.headers.Host",
             } },
 
             // h2 ws dsock
@@ -93,6 +97,8 @@ namespace V2RayGCon.Models.Datas
                 options=new Dictionary<string, string>{
                     { "none","h2" },
                 },
+                option2Name = "Host",
+                option2Path = "httpSettings.host", // array
             } },
             { 3, new StreamComponent{
                 dropDownStyle=false,
@@ -102,6 +108,8 @@ namespace V2RayGCon.Models.Datas
                 options=new Dictionary<string, string>{
                     { "none","ws" },
                 },
+                option2Name = "Host",
+                option2Path = "wsSettings.headers.Host",
             } },
             { 4, new StreamComponent{
                 dropDownStyle=false,
@@ -127,6 +135,10 @@ namespace V2RayGCon.Models.Datas
                     { "dtls", "quic_dtls"},
                     { "wireguard", "quic_wireguard"},
                 },
+                option2Name = "Security",
+                option2Path = "quicSettings.security",
+                option3Name = "key",
+                option3Path = "quicSettings.key",
             } },
         };
 

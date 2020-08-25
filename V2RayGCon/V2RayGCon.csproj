@@ -264,6 +264,12 @@
     <Compile Include="Views\UserControls\SubscriptionUI.Designer.cs">
       <DependentUpon>SubscriptionUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\VeeImporter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\VeeImporter.Designer.cs">
+      <DependentUpon>VeeImporter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\WelcomeUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -353,11 +359,11 @@
     <Compile Include="Views\WinForms\FormOption.Designer.cs">
       <DependentUpon>FormOption.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\WinForms\FormSimAddVmessClient.cs">
+    <Compile Include="Views\WinForms\FormSimpleEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\WinForms\FormSimAddVmessClient.Designer.cs">
-      <DependentUpon>FormSimAddVmessClient.cs</DependentUpon>
+    <Compile Include="Views\WinForms\FormSimpleEditor.Designer.cs">
+      <DependentUpon>FormSimpleEditor.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Resources\Resx\StrConst.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -392,6 +398,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\SubscriptionUI.zh-CN.resx">
       <DependentUpon>SubscriptionUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\VeeImporter.resx">
+      <DependentUpon>VeeImporter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\VeeImporter.zh-CN.resx">
+      <DependentUpon>VeeImporter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\WelcomeUI.resx">
       <DependentUpon>WelcomeUI.cs</DependentUpon>
@@ -473,11 +485,11 @@
     <EmbeddedResource Include="Views\WinForms\FormDownloadCore.zh-CN.resx">
       <DependentUpon>FormDownloadCore.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormSimAddVmessClient.resx">
-      <DependentUpon>FormSimAddVmessClient.cs</DependentUpon>
+    <EmbeddedResource Include="Views\WinForms\FormSimpleEditor.resx">
+      <DependentUpon>FormSimpleEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormSimAddVmessClient.zh-CN.resx">
-      <DependentUpon>FormSimAddVmessClient.cs</DependentUpon>
+    <EmbeddedResource Include="Views\WinForms\FormSimpleEditor.zh-CN.resx">
+      <DependentUpon>FormSimpleEditor.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
@@ -514,6 +526,7 @@
   <ItemGroup>
     <Content Include="icon_dark.ico" />
     <Content Include="Resources\Files\CSharp\ConfigJsonKeywords.txt" />
+    <None Include="Resources\Icon\FormMainToolStrip\AddField_16x.png" />
     <None Include="Resources\Icon\TaskTray\SFTPConnection_16x.png" />
     <None Include="Resources\Icon\TaskTray\FTPConnection_16x.png" />
     <None Include="Resources\Icon\TaskTray\Stop_16x.png" />

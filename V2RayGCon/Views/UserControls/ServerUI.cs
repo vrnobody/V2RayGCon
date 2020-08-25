@@ -757,6 +757,12 @@ namespace V2RayGCon.Views.UserControls
             await SetCtrlButtonsVisiblityLater(false);
         }
 
+        private void simpleEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var f = WinForms.FormSimpleEditor.GetForm();
+            f.LoadCoreServer(this.coreServCtrl);
+        }
+
         private void rlbRemark_Click(object sender, EventArgs e)
         {
             ShowModifyConfigsWinForm();

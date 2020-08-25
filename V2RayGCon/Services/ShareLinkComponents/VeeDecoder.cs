@@ -124,7 +124,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return Bytes2VeeLink(bytes);
         }
 
-        byte[] VeeLink2Bytes(string veeLink)
+        public static byte[] VeeLink2Bytes(string veeLink)
         {
             // Do not use Misc.Utils.Base64Decode() 
             // Unicode encoder can not handle all possible byte values.
@@ -134,7 +134,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return Convert.FromBase64String(b64Padded);
         }
 
-        string Bytes2VeeLink(byte[] bytes)
+        public static string Bytes2VeeLink(byte[] bytes)
         {
             if (bytes == null)
             {

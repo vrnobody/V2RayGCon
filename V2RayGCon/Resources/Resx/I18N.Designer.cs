@@ -1336,6 +1336,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 null param error 的本地化字符串。
+        /// </summary>
+        internal static string NullParamError {
+            get {
+                return ResourceManager.GetString("NullParamError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Options 的本地化字符串。
         /// </summary>
         internal static string Options {

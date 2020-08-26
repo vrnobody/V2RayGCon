@@ -257,6 +257,27 @@ namespace V2RayGCon.Services
 
 
         #region INotifier.WinForms
+        public void ShowFormJsonEditor(string config)
+        {
+            Views.WinForms.FormConfiger.ShowConfig(config);
+        }
+
+        public void ShowFormServerSettings(ICoreServCtrl coreServ)
+        {
+            if (coreServ == null)
+            {
+                VgcApis.Misc.UI.MsgBox(I18N.NullParamError);
+                return;
+            }
+            Views.WinForms.FormModifyServerSettings.ShowForm(coreServ);
+        }
+
+        public void ShowFormSimpleEditor(ICoreServCtrl coreServ)
+        {
+            var f = Views.WinForms.FormSimpleEditor.GetForm();
+            f.LoadCoreServer(coreServ);
+        }
+
         public void ShowFormOption() => Views.WinForms.FormOption.ShowForm();
 
         public void ShowFormMain() => Views.WinForms.FormMain.ShowForm();

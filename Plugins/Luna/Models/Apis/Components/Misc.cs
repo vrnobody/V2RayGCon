@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Threading;
 using System.Windows.Forms;
+using VgcApis.Interfaces;
 
 namespace Luna.Models.Apis.Components
 {
@@ -38,6 +39,12 @@ namespace Luna.Models.Apis.Components
 
         #region ILuaMisc.WinForms
         public void Invoke(LuaFunction func) => VgcApis.Misc.UI.Invoke(() => func.Call());
+
+        public void ShowFormJsonEditor(string config) => vgcNotifier.ShowFormJsonEditor(config);
+
+        public void ShowFormServerSettings(ICoreServCtrl coreServ) => vgcNotifier.ShowFormServerSettings(coreServ);
+
+        public void ShowFormSimpleEditor(ICoreServCtrl coreServ) => vgcNotifier.ShowFormSimpleEditor(coreServ);
 
         public void ShowFormOption() => vgcNotifier.ShowFormOption();
 

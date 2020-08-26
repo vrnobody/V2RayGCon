@@ -3,7 +3,7 @@ using System;
 
 namespace V2RayGCon.Models.Datas
 {
-    public class ServerConfigs
+    public class VeeConfigs
     {
         public string name = string.Empty;
         public string description = string.Empty;
@@ -22,9 +22,9 @@ namespace V2RayGCon.Models.Datas
         public string streamParam3 = string.Empty;
 
 
-        public ServerConfigs() { }
+        public VeeConfigs() { }
 
-        public ServerConfigs(string config) : this()
+        public VeeConfigs(string config) : this()
         {
             try
             {
@@ -33,7 +33,7 @@ namespace V2RayGCon.Models.Datas
             catch { }
         }
 
-        public ServerConfigs(JObject config) : this(config.ToString())
+        public VeeConfigs(JObject config) : this(config.ToString())
         {
 
         }

@@ -144,7 +144,7 @@
     <Compile Include="Controllers\FormOptionComponent\TabDefaults.cs" />
     <Compile Include="Models\Datas\MultiConfItem.cs" />
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
-    <Compile Include="Models\Datas\ServerConfigs.cs" />
+    <Compile Include="Models\Datas\VeeConfigs.cs" />
     <Compile Include="Models\Datas\SpeedTestOptions.cs" />
     <Compile Include="Models\Datas\UpdateInfo.cs" />
     <Compile Include="Models\VeeShareLinks\Http3a.cs" />
@@ -264,11 +264,11 @@
     <Compile Include="Views\UserControls\SubscriptionUI.Designer.cs">
       <DependentUpon>SubscriptionUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\VeeImporter.cs">
+    <Compile Include="Views\UserControls\VeeConfigerUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\UserControls\VeeImporter.Designer.cs">
-      <DependentUpon>VeeImporter.cs</DependentUpon>
+    <Compile Include="Views\UserControls\VeeConfigerUI.Designer.cs">
+      <DependentUpon>VeeConfigerUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\WelcomeUI.cs">
       <SubType>UserControl</SubType>
@@ -399,11 +399,11 @@
     <EmbeddedResource Include="Views\UserControls\SubscriptionUI.zh-CN.resx">
       <DependentUpon>SubscriptionUI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\UserControls\VeeImporter.resx">
-      <DependentUpon>VeeImporter.cs</DependentUpon>
+    <EmbeddedResource Include="Views\UserControls\VeeConfigerUI.resx">
+      <DependentUpon>VeeConfigerUI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\UserControls\VeeImporter.zh-CN.resx">
-      <DependentUpon>VeeImporter.cs</DependentUpon>
+    <EmbeddedResource Include="Views\UserControls\VeeConfigerUI.zh-CN.resx">
+      <DependentUpon>VeeConfigerUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\WelcomeUI.resx">
       <DependentUpon>WelcomeUI.cs</DependentUpon>

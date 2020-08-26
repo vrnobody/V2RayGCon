@@ -47,25 +47,27 @@ namespace V2RayGCon.Views.WinForms
 
         private void FormSimpleEditor_Load(object sender, EventArgs e)
         {
-            veeImporter.Dock = DockStyle.Fill;
         }
 
         public void LoadCoreServer(VgcApis.Interfaces.ICoreServCtrl coreServ)
         {
             this.coreServ = coreServ;
-            if (this.coreServ == null)
+            VgcApis.Misc.UI.Invoke(() =>
             {
-                lbTitle.Visible = false;
-                linkConfigEditor.Visible = true;
-                return;
-            }
+                if (this.coreServ == null)
+                {
+                    lbTitle.Visible = false;
+                    linkConfigEditor.Visible = true;
+                    return;
+                }
 
-            var title = coreServ.GetCoreStates().GetTitle();
-            lbTitle.Text = title;
-            lbTitle.Visible = true;
-            linkConfigEditor.Visible = false;
-            var config = coreServ.GetConfiger().GetConfig();
-            this.veeImporter.FromServerConfig(config);
+                var title = coreServ.GetCoreStates().GetTitle();
+                lbTitle.Text = title;
+                lbTitle.Visible = true;
+                linkConfigEditor.Visible = false;
+                var config = coreServ.GetConfiger().GetConfig();
+                this.veeConfigerUI1.FromCoreConfig(config);
+            });
         }
 
         #region private methods
@@ -80,9 +82,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            var sc = this.veeImporter.ToServerConfig();
-            var vee = sc.ToVeeShareLink();
-
+            var vee = this.veeConfigerUI1.ToVeeShareLink();
 
             if (coreServ == null)
             {

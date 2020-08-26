@@ -771,4 +771,7 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="ConfirmClearOrgServCfg" xml:space="preserve">
     <value>原服务器的所有配置将被删除，是否继续？</value>
   </data>
+  <data name="NullParamError" xml:space="preserve">
+    <value>参数为空错误</value>
+  </data>
 </root>

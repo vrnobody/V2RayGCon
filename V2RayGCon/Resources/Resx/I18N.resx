@@ -780,4 +780,7 @@ No, abort.</value>
   <data name="ConfirmClearOrgServCfg" xml:space="preserve">
     <value>Origin server's config will be reset, continue?</value>
   </data>
+  <data name="NullParamError" xml:space="preserve">
+    <value>null param error</value>
+  </data>
 </root>

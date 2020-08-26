@@ -5,9 +5,9 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Views.UserControls
 {
-    public partial class VeeImporter : UserControl
+    public partial class VeeConfigerUI : UserControl
     {
-        public VeeImporter()
+        public VeeConfigerUI()
         {
             InitializeComponent();
             InitControls();
@@ -17,9 +17,9 @@ namespace V2RayGCon.Views.UserControls
         {
         }
 
-        public Models.Datas.ServerConfigs ToServerConfig()
+        public string ToVeeShareLink()
         {
-            var sc = new Models.Datas.ServerConfigs();
+            var sc = new Models.Datas.VeeConfigs();
             sc.name = tboxName.Text;
             sc.description = tboxDescription.Text;
             sc.proto = cboxProtocol.Text;
@@ -34,27 +34,13 @@ namespace V2RayGCon.Views.UserControls
             sc.streamParam1 = cboxStreamParma1.Text;
             sc.streamParam2 = tboxStreamParam2.Text;
             sc.streamParam3 = tboxStreamParam3.Text;
-            return sc;
+
+            return sc.ToVeeShareLink();
         }
 
-        void SelectByText(ComboBox cbox, string content)
+        public void FromCoreConfig(string config)
         {
-            var idx = -1;
-            foreach (var item in cbox.Items)
-            {
-                idx++;
-                if (item.ToString() == content)
-                {
-                    cbox.SelectedIndex = idx;
-                    return;
-                }
-            }
-            cbox.SelectedIndex = -1;
-        }
-
-        public void FromServerConfig(string config)
-        {
-            var sc = new Models.Datas.ServerConfigs(config);
+            var sc = new Models.Datas.VeeConfigs(config);
             tboxName.Text = sc.name;
             tboxDescription.Text = sc.description;
 
@@ -68,7 +54,8 @@ namespace V2RayGCon.Views.UserControls
 
             chkOTA.Checked = sc.useOta;
 
-            SelectByText(cboxStreamType, sc.streamType);
+            var st = string.IsNullOrEmpty(sc.streamType) ? StreamTypeNone : sc.streamType;
+            SelectByText(cboxStreamType, st);
 
             chkStreamUseTls.Checked = sc.useTls;
             chkStreamUseSelfSignCert.Checked = sc.useSelfSignCert;
@@ -88,6 +75,23 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region private methods
+
+        void SelectByText(ComboBox cbox, string content)
+        {
+            var idx = -1;
+            foreach (var item in cbox.Items)
+            {
+                idx++;
+                if (item.ToString() == content)
+                {
+                    cbox.SelectedIndex = idx;
+                    return;
+                }
+            }
+            cbox.SelectedIndex = -1;
+        }
+
+
         const string StreamTypeNone = @"none";
 
         void InitControls()
@@ -217,7 +221,6 @@ namespace V2RayGCon.Views.UserControls
             tboxAuth1.Text = Guid.NewGuid().ToString();
         }
 
-        #endregion
 
         private void cboxStreamParma1_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -225,5 +228,7 @@ namespace V2RayGCon.Views.UserControls
             tboxStreamParam2.Enabled = !disable;
             tboxStreamParam3.Enabled = !disable;
         }
+        #endregion
+
     }
 }

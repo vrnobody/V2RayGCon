@@ -34,9 +34,9 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.panelVeeImporter = new System.Windows.Forms.Panel();
-            this.veeImporter = new V2RayGCon.Views.UserControls.VeeImporter();
             this.linkConfigEditor = new System.Windows.Forms.LinkLabel();
             this.lbTitle = new System.Windows.Forms.Label();
+            this.veeConfigerUI1 = new V2RayGCon.Views.UserControls.VeeConfigerUI();
             this.panelVeeImporter.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,13 +57,8 @@
             // panelVeeImporter
             // 
             resources.ApplyResources(this.panelVeeImporter, "panelVeeImporter");
-            this.panelVeeImporter.Controls.Add(this.veeImporter);
+            this.panelVeeImporter.Controls.Add(this.veeConfigerUI1);
             this.panelVeeImporter.Name = "panelVeeImporter";
-            // 
-            // veeImporter
-            // 
-            resources.ApplyResources(this.veeImporter, "veeImporter");
-            this.veeImporter.Name = "veeImporter";
             // 
             // linkConfigEditor
             // 
@@ -77,6 +72,11 @@
             // 
             resources.ApplyResources(this.lbTitle, "lbTitle");
             this.lbTitle.Name = "lbTitle";
+            // 
+            // veeConfigerUI1
+            // 
+            resources.ApplyResources(this.veeConfigerUI1, "veeConfigerUI1");
+            this.veeConfigerUI1.Name = "veeConfigerUI1";
             // 
             // FormSimpleEditor
             // 
@@ -99,9 +99,9 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnExit;
-        private UserControls.VeeImporter veeImporter;
         private System.Windows.Forms.Panel panelVeeImporter;
         private System.Windows.Forms.LinkLabel linkConfigEditor;
         private System.Windows.Forms.Label lbTitle;
+        private UserControls.VeeConfigerUI veeConfigerUI1;
     }
 }

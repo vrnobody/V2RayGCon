@@ -1,6 +1,6 @@
 ﻿namespace V2RayGCon.Views.UserControls
 {
-    partial class VeeImporter
+    partial class VeeConfigerUI
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VeeImporter));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VeeConfigerUI));
             this.chkOTA = new System.Windows.Forms.CheckBox();
             this.chkStreamUseTls = new System.Windows.Forms.CheckBox();
             this.cboxMethod = new System.Windows.Forms.ComboBox();
@@ -57,6 +57,10 @@
             this.tboxStreamParam3 = new System.Windows.Forms.TextBox();
             this.tboxPort = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkOTA
@@ -213,38 +217,56 @@
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
             // 
-            // VeeImporter
+            // groupBox1
+            // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.cboxStreamType);
+            this.groupBox1.Controls.Add(this.lbStreamParam1);
+            this.groupBox1.Controls.Add(this.lbStreamParam3);
+            this.groupBox1.Controls.Add(this.lbStreamParam2);
+            this.groupBox1.Controls.Add(this.tboxStreamParam2);
+            this.groupBox1.Controls.Add(this.tboxStreamParam3);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.chkStreamUseSelfSignCert);
+            this.groupBox1.Controls.Add(this.cboxStreamParma1);
+            this.groupBox1.Controls.Add(this.chkStreamUseTls);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.TabStop = false;
+            // 
+            // groupBox2
+            // 
+            resources.ApplyResources(this.groupBox2, "groupBox2");
+            this.groupBox2.Controls.Add(this.chkOTA);
+            this.groupBox2.Controls.Add(this.cboxMethod);
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.lbAuth2);
+            this.groupBox2.Controls.Add(this.lbAuth1);
+            this.groupBox2.Controls.Add(this.label12);
+            this.groupBox2.Controls.Add(this.tboxPort);
+            this.groupBox2.Controls.Add(this.cboxProtocol);
+            this.groupBox2.Controls.Add(this.tboxAuth1);
+            this.groupBox2.Controls.Add(this.tboxHost);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.tboxAuth2);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.TabStop = false;
+            // 
+            // VeeConfigerUI
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tboxName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.tboxDescription);
-            this.Controls.Add(this.chkOTA);
-            this.Controls.Add(this.chkStreamUseSelfSignCert);
-            this.Controls.Add(this.chkStreamUseTls);
-            this.Controls.Add(this.cboxProtocol);
-            this.Controls.Add(this.cboxMethod);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.cboxStreamParma1);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.lbAuth1);
-            this.Controls.Add(this.cboxStreamType);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.tboxPort);
-            this.Controls.Add(this.tboxStreamParam3);
-            this.Controls.Add(this.tboxStreamParam2);
-            this.Controls.Add(this.tboxHost);
-            this.Controls.Add(this.lbAuth2);
-            this.Controls.Add(this.tboxAuth2);
-            this.Controls.Add(this.lbStreamParam2);
-            this.Controls.Add(this.lbStreamParam3);
-            this.Controls.Add(this.lbStreamParam1);
-            this.Controls.Add(this.tboxAuth1);
-            this.Name = "VeeImporter";
+            this.Name = "VeeConfigerUI";
             this.Load += new System.EventHandler(this.VeeImporter_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -278,5 +300,7 @@
         private System.Windows.Forms.TextBox tboxStreamParam3;
         private System.Windows.Forms.TextBox tboxPort;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }

@@ -129,7 +129,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnOK.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 309</value>
+    <value>123, 355</value>
   </data>
   <data name="btnOK.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 21</value>
@@ -160,7 +160,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnExit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>167, 309</value>
+    <value>201, 355</value>
   </data>
   <data name="btnExit.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 21</value>
@@ -186,32 +186,38 @@
   <data name="panelVeeImporter.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="veeImporter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
+  <data name="veeConfigerUI1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
-  <data name="veeImporter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>297, 267</value>
+  <data name="veeConfigerUI1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
-  <data name="veeImporter.TabIndex" type="System.Int32, mscorlib">
+  <data name="veeConfigerUI1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="veeConfigerUI1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>373, 319</value>
+  </data>
+  <data name="veeConfigerUI1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;veeImporter.Name" xml:space="preserve">
-    <value>veeImporter</value>
+  <data name="&gt;&gt;veeConfigerUI1.Name" xml:space="preserve">
+    <value>veeConfigerUI1</value>
   </data>
-  <data name="&gt;&gt;veeImporter.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.VeeImporter, V2RayGCon, Version=1.4.3.2, Culture=neutral, PublicKeyToken=null</value>
+  <data name="&gt;&gt;veeConfigerUI1.Type" xml:space="preserve">
+    <value>V2RayGCon.Views.UserControls.VeeConfigerUI, V2RayGCon, Version=1.4.3.4, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;veeImporter.Parent" xml:space="preserve">
+  <data name="&gt;&gt;veeConfigerUI1.Parent" xml:space="preserve">
     <value>panelVeeImporter</value>
   </data>
-  <data name="&gt;&gt;veeImporter.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;veeConfigerUI1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="panelVeeImporter.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 28</value>
   </data>
   <data name="panelVeeImporter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>303, 273</value>
+    <value>373, 319</value>
   </data>
   <data name="panelVeeImporter.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -238,7 +244,7 @@
     <value>11, 13</value>
   </data>
   <data name="linkConfigEditor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 6</value>
+    <value>22, 9</value>
   </data>
   <data name="linkConfigEditor.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 0, 2, 0</value>
@@ -267,8 +273,11 @@
   <data name="lbTitle.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="lbTitle.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="lbTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 9</value>
+    <value>22, 9</value>
   </data>
   <data name="lbTitle.Size" type="System.Drawing.Size, System.Drawing">
     <value>191, 12</value>
@@ -301,10 +310,10 @@
     <value>6, 12</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>329, 340</value>
+    <value>397, 386</value>
   </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>400, 425</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>

@@ -18,13 +18,30 @@ namespace Luna.Models.Apis
         PropertyChanged = 4,
     }
 
-    class EvHook
+    class GlobalEvHook
+    {
+        public CoreEvTypes evType { get; set; }
+
+        public VgcApis.Interfaces.Lua.ILuaMailBox mailBox { get; set; }
+        public EventHandler evHandler { get; set; }
+        public GlobalEvHook(
+            CoreEvTypes evType,
+            VgcApis.Interfaces.Lua.ILuaMailBox mailBox,
+            EventHandler evHandler)
+        {
+            this.evType = evType;
+            this.mailBox = mailBox;
+            this.evHandler = evHandler;
+        }
+    }
+
+    class CoreEvHook
     {
         public CoreEvTypes evType { get; set; }
         public VgcApis.Interfaces.ICoreServCtrl coreServCtrl { get; set; }
         public VgcApis.Interfaces.Lua.ILuaMailBox mailBox { get; set; }
         public EventHandler evHandler { get; set; }
-        public EvHook(
+        public CoreEvHook(
             CoreEvTypes evType,
             VgcApis.Interfaces.ICoreServCtrl coreServCtrl,
             VgcApis.Interfaces.Lua.ILuaMailBox mailBox,
@@ -41,8 +58,6 @@ namespace Luna.Models.Apis
         VgcApis.BaseClasses.Disposable,
         VgcApis.Interfaces.Lua.ILuaSys
     {
-
-
         readonly object procLocker = new object();
 
         private readonly LuaApis luaApis;
@@ -56,7 +71,10 @@ namespace Luna.Models.Apis
         ConcurrentDictionary<string, VgcApis.Interfaces.Lua.ILuaMailBox>
             hotkeys = new ConcurrentDictionary<string, VgcApis.Interfaces.Lua.ILuaMailBox>();
 
-        ConcurrentDictionary<string, EvHook> evHooks = new ConcurrentDictionary<string, EvHook>();
+        ConcurrentDictionary<string, CoreEvHook> coreEvHooks = new ConcurrentDictionary<string, CoreEvHook>();
+        ConcurrentDictionary<string, GlobalEvHook> globalEvHooks = new ConcurrentDictionary<string, GlobalEvHook>();
+
+        VgcApis.Interfaces.Services.IServersService vgcServerService;
 
         SysCmpos.PostOffice postOffice;
 
@@ -67,6 +85,7 @@ namespace Luna.Models.Apis
             this.luaApis = luaApis;
             this.getAllAssemblies = getAllAssemblies;
             this.postOffice = luaApis.GetPostOffice();
+            this.vgcServerService = luaApis.GetVgcServerService();
         }
 
         #region ILuaSys.Net
@@ -103,10 +122,12 @@ namespace Luna.Models.Apis
 
         public bool UnregisterCoreEvent(VgcApis.Interfaces.Lua.ILuaMailBox mailbox, string handle)
         {
-            if (postOffice.ValidateMailBox(mailbox)
-               && hotkeys.TryGetValue(handle, out var mb)
-               && ReferenceEquals(mb, mailbox)
-               && evHooks.TryRemove(handle, out var evhook))
+            if (!postOffice.ValidateMailBox(mailbox))
+            {
+                return false;
+            }
+
+            if (coreEvHooks.TryRemove(handle, out var evhook))
             {
                 try
                 {
@@ -134,6 +155,74 @@ namespace Luna.Models.Apis
                 catch { }
             }
             return false;
+        }
+
+        public bool UnregisterGlobalEvent(VgcApis.Interfaces.Lua.ILuaMailBox mailbox, string handle)
+        {
+            if (postOffice.ValidateMailBox(mailbox)
+               && globalEvHooks.TryRemove(handle, out var evhook))
+            {
+                try
+                {
+                    var handler = evhook.evHandler;
+                    switch (evhook.evType)
+                    {
+                        case CoreEvTypes.CoreStart:
+                            vgcServerService.OnCoreStart -= handler;
+                            break;
+                        case CoreEvTypes.CoreStop:
+                            vgcServerService.OnCoreStop -= handler;
+                            break;
+                        default:
+                            return false;
+                    }
+                    return true;
+                }
+                catch { }
+            }
+            return false;
+        }
+
+        public string RegisterGlobalEvent(
+            VgcApis.Interfaces.Lua.ILuaMailBox mailbox,
+            int evType, int evCode)
+        {
+            if (!postOffice.ValidateMailBox(mailbox))
+            {
+                return null;
+            }
+
+            try
+            {
+                var handle = Guid.NewGuid().ToString();
+                var addr = mailbox.GetAddress();
+                EventHandler handler = (s, a) =>
+                {
+                    var coreServ = s as VgcApis.Interfaces.ICoreServCtrl;
+                    if (coreServ == null)
+                    {
+                        return;
+                    }
+                    var uid = coreServ.GetCoreStates().GetUid();
+                    mailbox.SendCode(addr, evCode, uid);
+                };
+                switch ((CoreEvTypes)evType)
+                {
+                    case CoreEvTypes.CoreStart:
+                        vgcServerService.OnCoreStart += handler;
+                        break;
+                    case CoreEvTypes.CoreStop:
+                        vgcServerService.OnCoreStop += handler;
+                        break;
+                    default:
+                        return null;
+                }
+                var item = new GlobalEvHook((CoreEvTypes)evType, mailbox, handler);
+                globalEvHooks.TryAdd(handle, item);
+                return handle;
+            }
+            catch { }
+            return null;
         }
 
         public string RegisterCoreEvent(
@@ -170,8 +259,8 @@ namespace Luna.Models.Apis
                     default:
                         return null;
                 }
-                var item = new EvHook((CoreEvTypes)evType, coreServ, mailbox, handler);
-                evHooks.TryAdd(handle, item);
+                var item = new CoreEvHook((CoreEvTypes)evType, coreServ, mailbox, handler);
+                coreEvHooks.TryAdd(handle, item);
                 return handle;
             }
             catch { }
@@ -500,7 +589,10 @@ namespace Luna.Models.Apis
 
         public void OnSignalStop()
         {
+            RemoveAllGlobalEventHooks();
+            RemoveAllCoreEventHooks();
             RemoveAllKeyboardHooks();
+            CloseAllHttpServers();
             CloseAllMailBox();
         }
 
@@ -690,12 +782,24 @@ namespace Luna.Models.Apis
             }
         }
 
-        void RemoveAllCoreEventHooks()
+        void RemoveAllGlobalEventHooks()
         {
-            var handles = evHooks.Keys;
+            var handles = globalEvHooks.Keys;
             foreach (var handle in handles)
             {
-                if (evHooks.TryRemove(handle, out var hook))
+                if (globalEvHooks.TryGetValue(handle, out var hook))
+                {
+                    UnregisterGlobalEvent(hook.mailBox, handle);
+                }
+            }
+        }
+        void RemoveAllCoreEventHooks()
+        {
+            var handles = coreEvHooks.Keys;
+            foreach (var handle in handles)
+            {
+                // Do not remove handle here, UnregisterCoreEvent() will take care of it.
+                if (coreEvHooks.TryGetValue(handle, out var hook))
                 {
                     UnregisterCoreEvent(hook.mailBox, handle);
                 }
@@ -718,6 +822,8 @@ namespace Luna.Models.Apis
         #region protected methods
         protected override void Cleanup()
         {
+            // 注意要在OnSignalStop中添加相关代码
+            RemoveAllGlobalEventHooks();
             RemoveAllCoreEventHooks();
             RemoveAllKeyboardHooks();
             CloseAllHttpServers();

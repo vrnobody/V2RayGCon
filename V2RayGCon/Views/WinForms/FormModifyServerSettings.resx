@@ -144,7 +144,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="tboxServerName.Location" type="System.Drawing.Point, System.Drawing">
     <value>71, 20</value>
@@ -168,7 +168,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;tboxServerName.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="cboxInboundAddress.Items" xml:space="preserve">
     <value>0.0.0.0:1080</value>
@@ -237,13 +237,13 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;chkAutoRun.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="chkGlobalImport.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="chkGlobalImport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>161, 175</value>
+    <value>71, 197</value>
   </data>
   <data name="chkGlobalImport.Size" type="System.Drawing.Size, System.Drawing">
     <value>114, 16</value>
@@ -267,7 +267,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;chkGlobalImport.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="chkBypassCnSite.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -277,7 +277,7 @@
     <value>NoControl</value>
   </data>
   <data name="chkBypassCnSite.Location" type="System.Drawing.Point, System.Drawing">
-    <value>161, 153</value>
+    <value>71, 219</value>
   </data>
   <data name="chkBypassCnSite.Size" type="System.Drawing.Size, System.Drawing">
     <value>126, 16</value>
@@ -301,7 +301,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;chkBypassCnSite.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="cboxInboundMode.Items" xml:space="preserve">
     <value>Config</value>
@@ -355,7 +355,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;cboxMark.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>17</value>
   </data>
   <data name="chkUntrack.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -385,7 +385,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;chkUntrack.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -415,7 +415,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="label6.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -445,7 +445,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -478,7 +478,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -538,7 +538,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="tboxDescription.Location" type="System.Drawing.Point, System.Drawing">
     <value>71, 47</value>
@@ -562,7 +562,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;tboxDescription.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="label10.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -571,7 +571,7 @@
     <value>NoControl</value>
   </data>
   <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 199</value>
+    <value>8, 244</value>
   </data>
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>167, 12</value>
@@ -592,7 +592,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="tboxRemark.Location" type="System.Drawing.Point, System.Drawing">
     <value>71, 126</value>
@@ -616,7 +616,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;tboxRemark.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="pboxQrcode.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 73</value>
@@ -639,14 +639,44 @@
   <data name="&gt;&gt;pboxQrcode.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="btnClearStat.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnClearStat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>152, 359</value>
+  </data>
+  <data name="btnClearStat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>84, 23</value>
+  </data>
+  <data name="btnClearStat.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="btnClearStat.Text" xml:space="preserve">
+    <value>Clear stat.</value>
+  </data>
+  <data name="btnClearStat.ToolTip" xml:space="preserve">
+    <value>Reset statistics data.</value>
+  </data>
+  <data name="&gt;&gt;btnClearStat.Name" xml:space="preserve">
+    <value>btnClearStat</value>
+  </data>
+  <data name="&gt;&gt;btnClearStat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnClearStat.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;btnClearStat.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="btnOK.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnOK.Location" type="System.Drawing.Point, System.Drawing">
-    <value>112, 359</value>
+    <value>62, 359</value>
   </data>
   <data name="btnOK.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+    <value>84, 23</value>
   </data>
   <data name="btnOK.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
@@ -664,7 +694,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;btnOK.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 39</value>
@@ -751,7 +781,7 @@
     <value>152, 359</value>
   </data>
   <data name="btnSaveQrcode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+    <value>84, 23</value>
   </data>
   <data name="btnSaveQrcode.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
@@ -772,10 +802,10 @@
     <value>0</value>
   </data>
   <data name="btnCopyShareLink.Location" type="System.Drawing.Point, System.Drawing">
-    <value>71, 359</value>
+    <value>62, 359</value>
   </data>
   <data name="btnCopyShareLink.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+    <value>84, 23</value>
   </data>
   <data name="btnCopyShareLink.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>

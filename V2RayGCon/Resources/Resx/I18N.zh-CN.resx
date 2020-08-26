@@ -774,4 +774,7 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="NullParamError" xml:space="preserve">
     <value>参数为空错误</value>
   </data>
+  <data name="ConfirmClearStat" xml:space="preserve">
+    <value>是否要把流量统计数据清零？</value>
+  </data>
 </root>

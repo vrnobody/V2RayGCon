@@ -783,4 +783,7 @@ No, abort.</value>
   <data name="NullParamError" xml:space="preserve">
     <value>null param error</value>
   </data>
+  <data name="ConfirmClearStat" xml:space="preserve">
+    <value>Reset statistics data?</value>
+  </data>
 </root>

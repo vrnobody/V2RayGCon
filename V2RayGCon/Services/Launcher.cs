@@ -81,7 +81,7 @@ namespace V2RayGCon.Services
             //  ShowPlugin(@"Luna");
 
             // Views.WinForms.FormLog.ShowForm();
-            // Views.WinForms.FormMain.ShowForm();
+            Views.WinForms.FormMain.ShowForm();
 
             //notifier.InjectDebugMenuItem(new ToolStripMenuItem(
             //    "Debug",
@@ -97,7 +97,7 @@ namespace V2RayGCon.Services
             // Views.WinForms.FormMain.ShowForm();
             // Views.WinForms.FormLog.ShowForm();
             // setting.WakeupAutorunServer();
-            Views.WinForms.FormSimpleEditor.GetForm();
+            // Views.WinForms.FormSimpleEditor.GetForm();
             // Views.WinForms.FormDownloadCore.GetForm();
         }
 #endif

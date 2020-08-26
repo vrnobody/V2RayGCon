@@ -518,6 +518,10 @@
     <None Include="Resources\Files\lua\modules\reader.lua" />
     <None Include="Resources\Files\lua\modules\set.lua" />
     <None Include="Resources\Files\lua\modules\writer.lua" />
+    <None Include="Resources\Files\Scripts\启动时更新订阅.lua" />
+    <None Include="Resources\Files\Scripts\显示全部服务器信息.lua" />
+    <None Include="Resources\Files\Scripts\每月清空流量统计数据.lua" />
+    <None Include="Resources\Files\Scripts\监听服务器事件.lua" />
     <None Include="Resources\Files\templates\basic\basic.json" />
     <None Include="Resources\Files\templates\custom\vmessDecodeTemplate.json" />
     <None Include="Resources\Files\templates\routing\whitelist.json" />

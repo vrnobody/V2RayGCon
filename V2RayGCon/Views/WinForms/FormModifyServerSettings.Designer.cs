@@ -50,6 +50,7 @@
             this.tboxRemark = new System.Windows.Forms.TextBox();
             this.pboxQrcode = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnClearStat = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.cboxZoomMode = new System.Windows.Forms.ComboBox();
             this.cboxShareLinkType = new System.Windows.Forms.ComboBox();
@@ -188,6 +189,7 @@
             // 
             this.groupBox1.Controls.Add(this.cboxInboundAddress);
             this.groupBox1.Controls.Add(this.cboxInboundMode);
+            this.groupBox1.Controls.Add(this.btnClearStat);
             this.groupBox1.Controls.Add(this.btnOK);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.chkGlobalImport);
@@ -206,6 +208,14 @@
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            // 
+            // btnClearStat
+            // 
+            resources.ApplyResources(this.btnClearStat, "btnClearStat");
+            this.btnClearStat.Name = "btnClearStat";
+            this.toolTip1.SetToolTip(this.btnClearStat, resources.GetString("btnClearStat.ToolTip"));
+            this.btnClearStat.UseVisualStyleBackColor = true;
+            this.btnClearStat.Click += new System.EventHandler(this.btnClearStat_Click);
             // 
             // btnOK
             // 
@@ -333,5 +343,6 @@
         private System.Windows.Forms.TextBox tboxShareLink;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label lbServerTitle;
+        private System.Windows.Forms.Button btnClearStat;
     }
 }

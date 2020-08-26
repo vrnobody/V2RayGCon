@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Luna.Controllers.FormMainCtrl
@@ -74,6 +75,7 @@ namespace Luna.Controllers.FormMainCtrl
                 return;
             }
 
+            var names = luaServer.GetAllScripts().Select(s => s[0]).ToList();
             foreach (var filename in filenames)
             {
                 if (!File.Exists(filename))
@@ -94,10 +96,16 @@ namespace Luna.Controllers.FormMainCtrl
                     continue;
                 }
 
-                if (!string.IsNullOrWhiteSpace(content) && !string.IsNullOrWhiteSpace(scriptName))
+                if (string.IsNullOrWhiteSpace(content) || string.IsNullOrWhiteSpace(scriptName))
                 {
-                    luaServer.AddOrReplaceScript(scriptName, content);
+                    continue;
                 }
+
+                if (names.Contains(scriptName) && !VgcApis.Misc.UI.Confirm($"{I18N.ReplaceScript} {scriptName}"))
+                {
+                    continue;
+                }
+                luaServer.AddOrReplaceScript(scriptName, content);
             }
         }
 

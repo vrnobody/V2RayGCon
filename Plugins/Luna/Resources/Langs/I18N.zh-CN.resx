@@ -162,6 +162,9 @@
   <data name="OpenScriptManger" xml:space="preserve">
     <value>打开脚本管理器</value>
   </data>
+  <data name="ReplaceScript" xml:space="preserve">
+    <value>替换现有脚本：</value>
+  </data>
   <data name="ScriptNameNotSet" xml:space="preserve">
     <value>脚本名没设置！</value>
   </data>

@@ -313,6 +313,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Reset statistics data? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmClearStat {
+            get {
+                return ResourceManager.GetString("ConfirmClearStat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Clear system proxy setting? 的本地化字符串。
         /// </summary>
         internal static string ConfirmClearSysProxy {

@@ -17,7 +17,7 @@ jobs:
         verStr: '1.4.x.x'
         boxAppend: box
         v2rayCorePkgName: 'v2ray-windows-64.zip'
-        scriptPkgName: 'scripts.zip'
+        scriptPkgName: 'scripts'
         v2rayCoreVer: 'v4.27.0'
         # https://github.com/v2ray/v2ray-core/releases/download/v4.20.0/v2ray-windows-32.zip
         v2rayCoreUrl: 'https://github.com/v2ray/v2ray-core/releases/download'
@@ -64,9 +64,12 @@ jobs:
             $hash1 = Get-FileHash "${env:projName}.zip" -Algorithm MD5
             $hash2 = Get-FileHash "${env:projName}-${env:boxAppend}.zip" -Algorithm MD5
             $hash3 = Get-FileHash "${env:scriptPkgName}.zip" -Algorithm MD5
-            echo "::set-env name=hashVgcZip::${hash1.Hash}"
-            echo "::set-env name=hashVgcBoxZip::${hash2.Hash}"
-            echo "::set-env name=hashScriptPkgZip::${hash3.Hash}"
+            $hv1 = $hash1.Hash
+            $hv2 = $hash2.Hash
+            $hv3 = $hash3.Hash
+            echo "::set-env name=hashVgcZip::${hv1}"
+            echo "::set-env name=hashVgcBoxZip::${hv2}"
+            echo "::set-env name=hashScriptPkgZip::${hv3}"
 
         - name: Create Release
           id: create_release
@@ -90,8 +93,8 @@ jobs:
                 ${{ env.projName }}-${{ env.boxAppend }}.zip (${{ env.hashVgcBoxZip }})
                 ${{ env.scriptPkgName }}.zip (${{ env.hashScriptPkgZip }})
 
-                其中V2RayGCon-box.zip打包了v2ray-core-win64 ${{ env.v2rayCoreVer }}
-                scripts.zip中的脚本直接拖进Luna脚本管理器的空白区即可食用
+                其中${{ env.projName }}-${{ env.boxAppend }}.zip打包了v2ray-core-win64 ${{ env.v2rayCoreVer }}
+                ${{ env.scriptPkgName }}.zip中的脚本直接拖进Luna脚本管理器的空白区即可食用
               draft: true
               prerelease: false
 

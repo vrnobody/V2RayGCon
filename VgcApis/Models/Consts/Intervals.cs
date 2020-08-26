@@ -19,7 +19,6 @@
         public const int SiFormLogRefreshInterval = 500;
         public const int LuaPluginLogRefreshInterval = 500;
 
-        public const int FormConfigerMenuUpdateDelay = 1500;
         public const int FormQrcodeMenuUpdateDelay = 1000;
     }
 }

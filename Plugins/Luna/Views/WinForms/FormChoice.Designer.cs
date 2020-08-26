@@ -67,6 +67,7 @@
             this.MinimizeBox = false;
             this.Name = "FormChoice";
             this.Load += new System.EventHandler(this.FormChoice_Load);
+            this.Shown += new System.EventHandler(this.FormChoice_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormChoice_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();

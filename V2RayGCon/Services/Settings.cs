@@ -52,6 +52,44 @@ namespace V2RayGCon.Services
 
         #region Properties
 
+        public bool CustomVmessDecodeTemplateEnabled
+        {
+            get => userSettings.CustomVmessDecodeTemplateEnabled;
+            set
+            {
+                userSettings.CustomVmessDecodeTemplateEnabled = value;
+                SaveSettingsLater();
+            }
+        }
+
+        public string CustomVmessDecodeTemplateUrl
+        {
+            get => userSettings.CustomVmessDecodeTemplateUrl;
+            set
+            {
+                if (userSettings.CustomVmessDecodeTemplateUrl == value)
+                {
+                    return;
+                }
+                userSettings.CustomVmessDecodeTemplateUrl = value;
+                SaveSettingsLater();
+            }
+        }
+
+        public string CustomDefInbounds
+        {
+            get => userSettings.CustomInbounds;
+            set
+            {
+                if (userSettings.CustomInbounds == value)
+                {
+                    return;
+                }
+                userSettings.CustomInbounds = value;
+                SaveSettingsLater();
+            }
+        }
+
         public string DebugLogFilePath
         {
             get => userSettings.DebugLogFilePath;
@@ -127,6 +165,15 @@ namespace V2RayGCon.Services
             this.shutdownReason = reason;
         }
 
+        public string v2rayCoreDownloadSource
+        {
+            get => userSettings.v2rayCoreDownloadSource;
+            set
+            {
+                userSettings.v2rayCoreDownloadSource = value;
+                SaveSettingsLater();
+            }
+        }
 
         public bool isDownloadWin32V2RayCore
         {
@@ -311,7 +358,17 @@ namespace V2RayGCon.Services
             }
         }
 
-        public bool isCheckUpdateWhenAppStart
+        public bool isCheckV2RayCoreUpdateWhenAppStart
+        {
+            get => userSettings.isCheckV2RayCoreUpdateWhenAppStart;
+            set
+            {
+                userSettings.isCheckV2RayCoreUpdateWhenAppStart = value;
+                SaveSettingsLater();
+            }
+        }
+
+        public bool isCheckVgcUpdateWhenAppStart
         {
             get => userSettings.isCheckUpdateWhenAppStart;
             set
@@ -440,7 +497,7 @@ namespace V2RayGCon.Services
         public ReadOnlyCollection<string> GetV2RayCoreVersionList()
         {
             var result = userSettings.V2RayCoreDownloadVersionList ??
-                new List<string> { "v3.48", "v3.47", "v3.46" };
+                new List<string> { "v4.23.4", "v4.22.1", "v4.21.3" };
             return result.AsReadOnly();
         }
 

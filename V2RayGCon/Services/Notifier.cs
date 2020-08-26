@@ -26,7 +26,6 @@ namespace V2RayGCon.Services
         static readonly int UpdateInterval = VgcApis.Models.Consts.Intervals.NotifierMenuUpdateIntreval;
 
         Bitmap orgIcon;
-        bool isMenuOpened = false;
 
         VgcApis.Libs.Tasks.LazyGuy lazyNotifierMenuUpdater;
 
@@ -91,6 +90,7 @@ namespace V2RayGCon.Services
             BindServerEvents();
             RefreshNotifyIconLater();
 
+            NotifyIconMenuOpenHandler(this, EventArgs.Empty);
         }
 
         #region hotkey window
@@ -257,13 +257,32 @@ namespace V2RayGCon.Services
 
 
         #region INotifier.WinForms
+        public void ShowFormJsonEditor(string config)
+        {
+            Views.WinForms.FormConfiger.ShowConfig(config);
+        }
+
+        public void ShowFormServerSettings(ICoreServCtrl coreServ)
+        {
+            if (coreServ == null)
+            {
+                VgcApis.Misc.UI.MsgBox(I18N.NullParamError);
+                return;
+            }
+            Views.WinForms.FormModifyServerSettings.ShowForm(coreServ);
+        }
+
+        public void ShowFormSimpleEditor(ICoreServCtrl coreServ)
+        {
+            var f = Views.WinForms.FormSimpleEditor.GetForm();
+            f.LoadCoreServer(coreServ);
+        }
+
         public void ShowFormOption() => Views.WinForms.FormOption.ShowForm();
 
         public void ShowFormMain() => Views.WinForms.FormMain.ShowForm();
 
         public void ShowFormLog() => Views.WinForms.FormLog.ShowForm();
-
-        public void ShowFormQrcode() => Views.WinForms.FormQRCode.ShowForm();
 
         #endregion
 
@@ -279,9 +298,10 @@ namespace V2RayGCon.Services
             void Success(string link)
             {
                 // no comment ^v^
-                if (link == StrConst.Nobody3uVideoUrl)
+                var video = VgcApis.Models.Consts.Webs.Nobody3uVideoUrl;
+                if (link == video)
                 {
-                    Misc.UI.VisitUrl(I18N.VisitWebPage, StrConst.Nobody3uVideoUrl);
+                    Misc.UI.VisitUrl(I18N.VisitWebPage, video);
                     return;
                 }
 
@@ -408,9 +428,6 @@ namespace V2RayGCon.Services
                 }
             };
 
-            ni.ContextMenuStrip.Opening += (s, a) => isMenuOpened = true;
-            ni.ContextMenuStrip.Closed += (s, a) => isMenuOpened = false;
-
             ni.MouseClick += (s, a) =>
             {
                 switch (a.Button)
@@ -423,6 +440,17 @@ namespace V2RayGCon.Services
                         break;
                 }
             };
+
+            ni.ContextMenuStrip.Opening += NotifyIconMenuOpenHandler;
+        }
+
+        void NotifyIconMenuOpenHandler(object sender, EventArgs args)
+        {
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                VgcApis.Misc.Utils.Sleep(10);
+                UpdateServersMenuThen();
+            });
         }
 
         private void BindServerEvents()
@@ -588,8 +616,17 @@ namespace V2RayGCon.Services
             miServersRoot.Visible = true;
         }
 
-        void UpdateServersMenuThen(Action done = null)
+        VgcApis.Libs.Tasks.Bar serversMenuUpdateBar = new VgcApis.Libs.Tasks.Bar();
+
+        void UpdateServersMenuThen()
         {
+            if (!serversMenuUpdateBar.Install())
+            {
+                return;
+            }
+
+            Action done = () => serversMenuUpdateBar.Remove();
+
             var serverList = servers.GetAllServersOrderByIndex();
             var num = VgcApis.Models.Consts.Config.QuickSwitchMenuItemNum;
             var groupSize = VgcApis.Models.Consts.Config.MenuItemGroupSize;
@@ -605,6 +642,19 @@ namespace V2RayGCon.Services
             }, done);
         }
 
+        enum SysTrayIconTypes
+        {
+            None = 0,
+            ProxyDirect = 1,
+            ProxyPac = 1 << 1,
+            ProxyGlobal = 1 << 2,
+            NoServRunning = 1 << 3,
+            FirstServRunning = 1 << 4,
+            OthServRunning = 1 << 5,
+            MultiServRunning = 1 << 6,
+        }
+
+        SysTrayIconTypes curSysTrayIconType = SysTrayIconTypes.None;
         void UpdateNotifyIconWorker(Action done)
         {
             if (setting.IsClosing())
@@ -613,7 +663,7 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            if (isMenuOpened || setting.IsScreenLocked())
+            if (setting.IsScreenLocked())
             {
                 VgcApis.Misc.Utils.RunInBackground(() =>
                 {
@@ -633,47 +683,84 @@ namespace V2RayGCon.Services
                 done();
             });
 
-            Action next = () => UpdateServersMenuThen(finished);
             try
             {
                 var list = servers.GetAllServersOrderByIndex()
                     .Where(s => s.GetCoreCtrl().IsCoreRunning())
                     .ToList();
 
-                Invoke(() =>
+                var iconType = AnalyzeSysTrayIconType(list);
+
+                if (iconType != curSysTrayIconType)
                 {
-                    var icon = CreateNotifyIconImage(list);
-                    if (icon != null)
+                    Invoke(() =>
                     {
+                        var icon = GetNotifyIconFromCache(iconType);
                         var org = ni.Icon;
                         ni.Icon = Icon.FromHandle(icon.GetHicon());
                         org?.Dispose();
-                    }
-                });
-                UpdateNotifyIconTextThen(list, next);
+                    });
+                    curSysTrayIconType = iconType;
+                }
+                UpdateNotifyIconTextThen(list, finished);
             }
             catch (Exception e)
             {
                 VgcApis.Libs.Sys.FileLogger.Error($"Notifier update icon error!\n{e}");
+                done();
             }
-            done();
         }
 
-        private Bitmap CreateNotifyIconImage(List<ICoreServCtrl> coreCtrls)
+        SysTrayIconTypes AnalyzeSysTrayIconType(List<ICoreServCtrl> coreCtrls)
         {
-            var activeServNum = coreCtrls.Count;
-            var isFirstServ = false;
+            var r = SysTrayIconTypes.None;
 
-            if (activeServNum == 1)
+            // corner mark
+            switch (coreCtrls.Count)
             {
-                var idx = coreCtrls.First().GetCoreStates().GetIndex();
-                if ((int)idx == 1)
-                {
-                    isFirstServ = true;
-                }
+                case 0:
+                    r |= SysTrayIconTypes.NoServRunning;
+                    break;
+                case 1:
+                    var idx = coreCtrls.First().GetCoreStates().GetIndex();
+                    r |= (idx == 1 ? SysTrayIconTypes.FirstServRunning : SysTrayIconTypes.OthServRunning);
+                    break;
+                default:
+                    r |= SysTrayIconTypes.MultiServRunning;
+                    break;
             }
 
-            var icon = orgIcon.Clone() as Bitmap;
+            // proxy type
+            switch (ProxySetter.Libs.Sys.WinInet.GetProxySettings().proxyMode)
+            {
+                case (int)ProxySetter.Libs.Sys.WinInet.ProxyModes.PAC:
+                    r |= SysTrayIconTypes.ProxyPac;
+                    break;
+                case (int)ProxySetter.Libs.Sys.WinInet.ProxyModes.Proxy:
+                    r |= SysTrayIconTypes.ProxyGlobal;
+                    break;
+                default:
+                    r |= SysTrayIconTypes.ProxyDirect;
+                    break;
+            }
+
+            return r;
+        }
+
+        ConcurrentDictionary<SysTrayIconTypes, Bitmap> sysTrayIconCache = new ConcurrentDictionary<SysTrayIconTypes, Bitmap>();
+        Bitmap GetNotifyIconFromCache(SysTrayIconTypes iconType)
+        {
+            if (!sysTrayIconCache.TryGetValue(iconType, out var icon))
+            {
+                icon = CreateNotifyIconImage(iconType);
+                sysTrayIconCache.TryAdd(iconType, icon);
+            }
+            return icon.Clone() as Bitmap;
+        }
+
+        private Bitmap CreateNotifyIconImage(SysTrayIconTypes iconType)
+        {
+            var icon = new Bitmap(orgIcon);
             var size = icon.Size;
 
             using (Graphics g = Graphics.FromImage(icon))
@@ -681,29 +768,25 @@ namespace V2RayGCon.Services
                 g.InterpolationMode = InterpolationMode.High;
                 g.CompositingQuality = CompositingQuality.HighQuality;
 
-                DrawProxyModeCornerCircle(g, size);
-                DrawIsRunningCornerMark(g, size, activeServNum, isFirstServ);
+                DrawProxyModeCornerCircle(g, size, iconType);
+                DrawIsRunningCornerMark(g, size, iconType);
             }
 
             return icon;
         }
 
         void DrawProxyModeCornerCircle(
-            Graphics graphics, Size size)
+            Graphics graphics, Size size, SysTrayIconTypes iconType)
         {
-            Brush br;
+            Brush br = Brushes.ForestGreen;
 
-            switch (ProxySetter.Libs.Sys.WinInet.GetProxySettings().proxyMode)
+            if (0 != (iconType & SysTrayIconTypes.ProxyPac))
             {
-                case (int)ProxySetter.Libs.Sys.WinInet.ProxyModes.PAC:
-                    br = Brushes.DeepPink;
-                    break;
-                case (int)ProxySetter.Libs.Sys.WinInet.ProxyModes.Proxy:
-                    br = Brushes.Blue;
-                    break;
-                default:
-                    br = Brushes.ForestGreen;
-                    break;
+                br = Brushes.DeepPink;
+            }
+            else if (0 != (iconType & SysTrayIconTypes.ProxyGlobal))
+            {
+                br = Brushes.Blue;
             }
 
             var w = size.Width;
@@ -713,23 +796,27 @@ namespace V2RayGCon.Services
         }
 
         private void DrawIsRunningCornerMark(
-            Graphics graphics, Size size, int activeServNum, bool isFirstServ)
+            Graphics graphics, Size size, SysTrayIconTypes iconType)
         {
             var w = size.Width;
             var cx = w * 0.7f;
 
-            switch (activeServNum)
+            if (0 != (iconType & SysTrayIconTypes.FirstServRunning))
             {
-                case 0:
-                    DrawOneLine(graphics, w, cx, false);
-                    break;
-                case 1:
-                    DrawTriangle(graphics, w, cx, isFirstServ);
-                    break;
-                default:
-                    DrawOneLine(graphics, w, cx, false);
-                    DrawOneLine(graphics, w, cx, true);
-                    break;
+                DrawTriangle(graphics, w, cx, true);
+            }
+            else if (0 != (iconType & SysTrayIconTypes.OthServRunning))
+            {
+                DrawTriangle(graphics, w, cx, false);
+            }
+            else if (0 != (iconType & SysTrayIconTypes.MultiServRunning))
+            {
+                DrawOneLine(graphics, w, cx, false);
+                DrawOneLine(graphics, w, cx, true);
+            }
+            else
+            {
+                DrawOneLine(graphics, w, cx, false);
             }
         }
 
@@ -895,21 +982,20 @@ namespace V2RayGCon.Services
                             Properties.Resources.WindowsForm_16x,
                             (s,a)=>Views.WinForms.FormMain.ShowForm()),
                         new ToolStripMenuItem(
+                            I18N.AddClientManually,
+                            Properties.Resources.AddField_16x,
+                            (s,a)=>{
+                                var f = Views.WinForms.FormSimpleEditor.GetForm();
+                                f.LoadCoreServer(null);
+                            }),
+                        new ToolStripMenuItem(
                             I18N.ConfigEditor,
                             Properties.Resources.EditWindow_16x,
                             (s,a)=>Views.WinForms.FormConfiger.ShowConfig()),
                         new ToolStripMenuItem(
-                            I18N.GenQRCode,
-                            Properties.Resources.AzureVirtualMachineExtension_16x,
-                            (s,a)=>Views.WinForms.FormQRCode.ShowForm()),
-                        new ToolStripMenuItem(
                             I18N.Log,
                             Properties.Resources.FSInteractiveWindow_16x,
                             (s,a)=> Views.WinForms.FormLog.ShowForm() ),
-                         new ToolStripMenuItem(
-                            I18N.DownloadV2rayCore,
-                            Properties.Resources.ASX_TransferDownload_blue_16x,
-                            (s,a)=>Views.WinForms.FormDownloadCore.ShowForm()),
                     }),
 
                 serversRootMenuItem,
@@ -970,14 +1056,19 @@ namespace V2RayGCon.Services
             var children = aboutMenu.DropDownItems;
 
             children.Add(
+                I18N.DownloadV2rayCore,
+                Properties.Resources.ASX_TransferDownload_blue_16x,
+                (s, a) => Views.WinForms.FormDownloadCore.ShowForm());
+
+            children.Add(
+               I18N.CheckForVgcUpdate,
+               null,
+               (s, a) => updater.CheckForUpdate(true));
+
+            children.Add(
                 I18N.ProjectPage,
                 null,
                 (s, a) => Misc.UI.VisitUrl(I18N.VistProjectPage, Properties.Resources.ProjectLink));
-
-            children.Add(
-               I18N.CheckForUpdate,
-               null,
-                (s, a) => updater.CheckForUpdate(true));
 
             children.Add(
                 I18N.Feedback,

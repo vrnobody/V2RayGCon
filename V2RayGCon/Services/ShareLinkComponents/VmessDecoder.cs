@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
@@ -169,8 +170,13 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var outVmess = cache.tpl.LoadTemplate("outbVmess");
-            outVmess["streamSettings"] = GenStreamSetting(vmess);
+            var outVmess = LoadVmessDecodeTemplate();
+
+            var streamToken = JObject.Parse(@"{streamSettings:{}}");
+            streamToken["streamSettings"] = GenStreamSetting(vmess);
+            var o = outVmess as JObject;
+            Misc.Utils.MergeJson(ref o, streamToken);
+
             var node = outVmess["settings"]["vnext"][0];
             node["address"] = vmess.add;
             node["port"] = VgcApis.Misc.Utils.Str2Int(vmess.port);
@@ -181,6 +187,26 @@ namespace V2RayGCon.Services.ShareLinkComponents
             tpl["v2raygcon"]["alias"] = vmess.ps;
             return new Tuple<JObject, JToken>(tpl, outVmess);
         }
+
+        JToken LoadVmessDecodeTemplate()
+        {
+            if (!setting.CustomVmessDecodeTemplateEnabled)
+            {
+                return cache.tpl.LoadTemplate("outbVmess");
+            }
+
+            try
+            {
+                var str = System.IO.File.ReadAllText(setting.CustomVmessDecodeTemplateUrl);
+                return JObject.Parse(str);
+            }
+            catch
+            {
+                setting.SendLog(I18N.LoadVemssDecodeTemplateFail);
+                throw;
+            }
+        }
+
 
         JToken GenStreamSetting(Models.Datas.Vmess vmess)
         {

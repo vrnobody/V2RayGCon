@@ -117,13 +117,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfirmCloseForm" xml:space="preserve">
-    <value>Close form?</value>
+  <data name="btnOK.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="ConfirmResetStatsData" xml:space="preserve">
-    <value>Reset statistics data to zero?</value>
+  <data name="btnExit.Text" xml:space="preserve">
+    <value>退出</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Show statistic info. (require statistic support)</value>
+  <data name="btnExit.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="linkConfigEditor.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
+    <value>16, 5</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="linkConfigEditor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>276, 19</value>
+  </data>
+  <data name="linkConfigEditor.Text" xml:space="preserve">
+    <value>如果你需要更高级的功能，请使用"配置编辑器"！</value>
+  </data>
+  <data name="linkConfigEditor.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="veeImporter.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>简易编辑器</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

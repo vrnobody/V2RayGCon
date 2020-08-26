@@ -102,7 +102,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             var user = Misc.Utils.GetKey(mtproto, $"{inbTag}.0.settings.users.0");
             if (user != null && user is JObject)
             {
-                user["secret"] = Misc.Utils.RandomHex(32);
+                user["secret"] = VgcApis.Misc.Utils.RandomHex(32);
             }
 
             Misc.Utils.CombineConfigWithRoutingInFront(ref mtproto, config);

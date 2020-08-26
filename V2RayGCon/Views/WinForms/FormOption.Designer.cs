@@ -40,11 +40,13 @@
             this.btnAddSubsUrl = new System.Windows.Forms.Button();
             this.flySubsUrlContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPageSetting = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.chkSetEnableDebugFile = new System.Windows.Forms.CheckBox();
-            this.tboxSetDebugFilePath = new System.Windows.Forms.TextBox();
             this.btnSetBrowseDebugFile = new System.Windows.Forms.Button();
-            this.chkSetCheckWhenStart = new System.Windows.Forms.CheckBox();
+            this.tboxSetDebugFilePath = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkSetCheckV2RayCoreUpdateWhenStart = new System.Windows.Forms.CheckBox();
+            this.chkSetCheckVgcUpdateWhenStart = new System.Windows.Forms.CheckBox();
             this.chkSetUpgradeUseProxy = new System.Windows.Forms.CheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.btnSetOpenStartupFolder = new System.Windows.Forms.Button();
@@ -68,7 +70,12 @@
             this.cboxSettingLanguage = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPageDefaults = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.exRTBoxDefCustomInbounds = new VgcApis.UserControls.ExRichTextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.tboxDefImportVmessDecodeTemplateUrl = new System.Windows.Forms.TextBox();
+            this.chkDefImportIsUseVmessDecodeTemplate = new System.Windows.Forms.CheckBox();
+            this.btnDefImportBrowseVemssDecodeTemplate = new System.Windows.Forms.Button();
             this.chkDefImportInjectGlobalImport = new System.Windows.Forms.CheckBox();
             this.chkDefImportBypassCnSite = new System.Windows.Forms.CheckBox();
             this.chkDefImportSsShareLink = new System.Windows.Forms.CheckBox();
@@ -103,11 +110,13 @@
             this.tabControl1.SuspendLayout();
             this.tabPageSubscribe.SuspendLayout();
             this.tabPageSetting.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPageDefaults.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPageImport.SuspendLayout();
@@ -126,9 +135,11 @@
             this.tabControl1.Controls.Add(this.tabPagePlugins);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
+            this.toolTip1.SetToolTip(this.tabControl1, resources.GetString("tabControl1.ToolTip"));
             // 
             // tabPageSubscribe
             // 
+            resources.ApplyResources(this.tabPageSubscribe, "tabPageSubscribe");
             this.tabPageSubscribe.Controls.Add(this.chkSubsIsAutoPatch);
             this.tabPageSubscribe.Controls.Add(this.btnSubsInvertSelection);
             this.tabPageSubscribe.Controls.Add(this.btnSubsUseAll);
@@ -136,8 +147,8 @@
             this.tabPageSubscribe.Controls.Add(this.btnUpdateViaSubscription);
             this.tabPageSubscribe.Controls.Add(this.btnAddSubsUrl);
             this.tabPageSubscribe.Controls.Add(this.flySubsUrlContainer);
-            resources.ApplyResources(this.tabPageSubscribe, "tabPageSubscribe");
             this.tabPageSubscribe.Name = "tabPageSubscribe";
+            this.toolTip1.SetToolTip(this.tabPageSubscribe, resources.GetString("tabPageSubscribe.ToolTip"));
             this.tabPageSubscribe.UseVisualStyleBackColor = true;
             // 
             // chkSubsIsAutoPatch
@@ -184,43 +195,41 @@
             // 
             // flySubsUrlContainer
             // 
-            this.flySubsUrlContainer.AllowDrop = true;
             resources.ApplyResources(this.flySubsUrlContainer, "flySubsUrlContainer");
+            this.flySubsUrlContainer.AllowDrop = true;
             this.flySubsUrlContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flySubsUrlContainer.Name = "flySubsUrlContainer";
+            this.toolTip1.SetToolTip(this.flySubsUrlContainer, resources.GetString("flySubsUrlContainer.ToolTip"));
             this.flySubsUrlContainer.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flySubsUrlContainer_Scroll);
             // 
             // tabPageSetting
             // 
+            resources.ApplyResources(this.tabPageSetting, "tabPageSetting");
+            this.tabPageSetting.Controls.Add(this.groupBox8);
             this.tabPageSetting.Controls.Add(this.groupBox2);
             this.tabPageSetting.Controls.Add(this.groupBox6);
             this.tabPageSetting.Controls.Add(this.groupBox5);
             this.tabPageSetting.Controls.Add(this.groupBox1);
-            resources.ApplyResources(this.tabPageSetting, "tabPageSetting");
             this.tabPageSetting.Name = "tabPageSetting";
+            this.toolTip1.SetToolTip(this.tabPageSetting, resources.GetString("tabPageSetting.ToolTip"));
             this.tabPageSetting.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // groupBox8
             // 
-            resources.ApplyResources(this.groupBox2, "groupBox2");
-            this.groupBox2.Controls.Add(this.chkSetEnableDebugFile);
-            this.groupBox2.Controls.Add(this.tboxSetDebugFilePath);
-            this.groupBox2.Controls.Add(this.btnSetBrowseDebugFile);
-            this.groupBox2.Controls.Add(this.chkSetCheckWhenStart);
-            this.groupBox2.Controls.Add(this.chkSetUpgradeUseProxy);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.TabStop = false;
+            resources.ApplyResources(this.groupBox8, "groupBox8");
+            this.groupBox8.Controls.Add(this.chkSetEnableDebugFile);
+            this.groupBox8.Controls.Add(this.btnSetBrowseDebugFile);
+            this.groupBox8.Controls.Add(this.tboxSetDebugFilePath);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox8, resources.GetString("groupBox8.ToolTip"));
             // 
             // chkSetEnableDebugFile
             // 
             resources.ApplyResources(this.chkSetEnableDebugFile, "chkSetEnableDebugFile");
             this.chkSetEnableDebugFile.Name = "chkSetEnableDebugFile";
+            this.toolTip1.SetToolTip(this.chkSetEnableDebugFile, resources.GetString("chkSetEnableDebugFile.ToolTip"));
             this.chkSetEnableDebugFile.UseVisualStyleBackColor = true;
-            // 
-            // tboxSetDebugFilePath
-            // 
-            resources.ApplyResources(this.tboxSetDebugFilePath, "tboxSetDebugFilePath");
-            this.tboxSetDebugFilePath.Name = "tboxSetDebugFilePath";
             // 
             // btnSetBrowseDebugFile
             // 
@@ -229,12 +238,35 @@
             this.toolTip1.SetToolTip(this.btnSetBrowseDebugFile, resources.GetString("btnSetBrowseDebugFile.ToolTip"));
             this.btnSetBrowseDebugFile.UseVisualStyleBackColor = true;
             // 
-            // chkSetCheckWhenStart
+            // tboxSetDebugFilePath
             // 
-            resources.ApplyResources(this.chkSetCheckWhenStart, "chkSetCheckWhenStart");
-            this.chkSetCheckWhenStart.Name = "chkSetCheckWhenStart";
-            this.toolTip1.SetToolTip(this.chkSetCheckWhenStart, resources.GetString("chkSetCheckWhenStart.ToolTip"));
-            this.chkSetCheckWhenStart.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.tboxSetDebugFilePath, "tboxSetDebugFilePath");
+            this.tboxSetDebugFilePath.Name = "tboxSetDebugFilePath";
+            this.toolTip1.SetToolTip(this.tboxSetDebugFilePath, resources.GetString("tboxSetDebugFilePath.ToolTip"));
+            // 
+            // groupBox2
+            // 
+            resources.ApplyResources(this.groupBox2, "groupBox2");
+            this.groupBox2.Controls.Add(this.chkSetCheckV2RayCoreUpdateWhenStart);
+            this.groupBox2.Controls.Add(this.chkSetCheckVgcUpdateWhenStart);
+            this.groupBox2.Controls.Add(this.chkSetUpgradeUseProxy);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox2, resources.GetString("groupBox2.ToolTip"));
+            // 
+            // chkSetCheckV2RayCoreUpdateWhenStart
+            // 
+            resources.ApplyResources(this.chkSetCheckV2RayCoreUpdateWhenStart, "chkSetCheckV2RayCoreUpdateWhenStart");
+            this.chkSetCheckV2RayCoreUpdateWhenStart.Name = "chkSetCheckV2RayCoreUpdateWhenStart";
+            this.toolTip1.SetToolTip(this.chkSetCheckV2RayCoreUpdateWhenStart, resources.GetString("chkSetCheckV2RayCoreUpdateWhenStart.ToolTip"));
+            this.chkSetCheckV2RayCoreUpdateWhenStart.UseVisualStyleBackColor = true;
+            // 
+            // chkSetCheckVgcUpdateWhenStart
+            // 
+            resources.ApplyResources(this.chkSetCheckVgcUpdateWhenStart, "chkSetCheckVgcUpdateWhenStart");
+            this.chkSetCheckVgcUpdateWhenStart.Name = "chkSetCheckVgcUpdateWhenStart";
+            this.toolTip1.SetToolTip(this.chkSetCheckVgcUpdateWhenStart, resources.GetString("chkSetCheckVgcUpdateWhenStart.ToolTip"));
+            this.chkSetCheckVgcUpdateWhenStart.UseVisualStyleBackColor = true;
             // 
             // chkSetUpgradeUseProxy
             // 
@@ -251,6 +283,7 @@
             this.groupBox6.Controls.Add(this.chkSetSysPortable);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox6, resources.GetString("groupBox6.ToolTip"));
             // 
             // btnSetOpenStartupFolder
             // 
@@ -288,6 +321,7 @@
             this.groupBox5.Controls.Add(this.label12);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox5, resources.GetString("groupBox5.ToolTip"));
             // 
             // chkSetServStatistics
             // 
@@ -305,6 +339,7 @@
             // 
             // cboxSettingsRandomSelectServerLatency
             // 
+            resources.ApplyResources(this.cboxSettingsRandomSelectServerLatency, "cboxSettingsRandomSelectServerLatency");
             this.cboxSettingsRandomSelectServerLatency.FormattingEnabled = true;
             this.cboxSettingsRandomSelectServerLatency.Items.AddRange(new object[] {
             resources.GetString("cboxSettingsRandomSelectServerLatency.Items"),
@@ -313,18 +348,20 @@
             resources.GetString("cboxSettingsRandomSelectServerLatency.Items3"),
             resources.GetString("cboxSettingsRandomSelectServerLatency.Items4"),
             resources.GetString("cboxSettingsRandomSelectServerLatency.Items5")});
-            resources.ApplyResources(this.cboxSettingsRandomSelectServerLatency, "cboxSettingsRandomSelectServerLatency");
             this.cboxSettingsRandomSelectServerLatency.Name = "cboxSettingsRandomSelectServerLatency";
+            this.toolTip1.SetToolTip(this.cboxSettingsRandomSelectServerLatency, resources.GetString("cboxSettingsRandomSelectServerLatency.ToolTip"));
             // 
             // label14
             // 
             resources.ApplyResources(this.label14, "label14");
             this.label14.Name = "label14";
+            this.toolTip1.SetToolTip(this.label14, resources.GetString("label14.ToolTip"));
             // 
             // tboxSettingsMaxCoreNum
             // 
             resources.ApplyResources(this.tboxSettingsMaxCoreNum, "tboxSettingsMaxCoreNum");
             this.tboxSettingsMaxCoreNum.Name = "tboxSettingsMaxCoreNum";
+            this.toolTip1.SetToolTip(this.tboxSettingsMaxCoreNum, resources.GetString("tboxSettingsMaxCoreNum.ToolTip"));
             // 
             // label15
             // 
@@ -343,6 +380,7 @@
             // 
             resources.ApplyResources(this.label13, "label13");
             this.label13.Name = "label13";
+            this.toolTip1.SetToolTip(this.label13, resources.GetString("label13.ToolTip"));
             // 
             // label12
             // 
@@ -361,9 +399,11 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox1, resources.GetString("groupBox1.ToolTip"));
             // 
             // cboxSettingPageSize
             // 
+            resources.ApplyResources(this.cboxSettingPageSize, "cboxSettingPageSize");
             this.cboxSettingPageSize.FormattingEnabled = true;
             this.cboxSettingPageSize.Items.AddRange(new object[] {
             resources.GetString("cboxSettingPageSize.Items"),
@@ -371,18 +411,20 @@
             resources.GetString("cboxSettingPageSize.Items2"),
             resources.GetString("cboxSettingPageSize.Items3"),
             resources.GetString("cboxSettingPageSize.Items4")});
-            resources.ApplyResources(this.cboxSettingPageSize, "cboxSettingPageSize");
             this.cboxSettingPageSize.Name = "cboxSettingPageSize";
+            this.toolTip1.SetToolTip(this.cboxSettingPageSize, resources.GetString("cboxSettingPageSize.ToolTip"));
             // 
             // label8
             // 
             resources.ApplyResources(this.label8, "label8");
             this.label8.Name = "label8";
+            this.toolTip1.SetToolTip(this.label8, resources.GetString("label8.ToolTip"));
             // 
             // label3
             // 
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
+            this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
             // 
             // label2
             // 
@@ -392,31 +434,52 @@
             // 
             // cboxSettingLanguage
             // 
+            resources.ApplyResources(this.cboxSettingLanguage, "cboxSettingLanguage");
             this.cboxSettingLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSettingLanguage.FormattingEnabled = true;
             this.cboxSettingLanguage.Items.AddRange(new object[] {
             resources.GetString("cboxSettingLanguage.Items"),
             resources.GetString("cboxSettingLanguage.Items1"),
             resources.GetString("cboxSettingLanguage.Items2")});
-            resources.ApplyResources(this.cboxSettingLanguage, "cboxSettingLanguage");
             this.cboxSettingLanguage.Name = "cboxSettingLanguage";
+            this.toolTip1.SetToolTip(this.cboxSettingLanguage, resources.GetString("cboxSettingLanguage.ToolTip"));
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
+            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // tabPageDefaults
             // 
+            resources.ApplyResources(this.tabPageDefaults, "tabPageDefaults");
+            this.tabPageDefaults.Controls.Add(this.groupBox7);
             this.tabPageDefaults.Controls.Add(this.groupBox4);
             this.tabPageDefaults.Controls.Add(this.groupBox3);
-            resources.ApplyResources(this.tabPageDefaults, "tabPageDefaults");
             this.tabPageDefaults.Name = "tabPageDefaults";
+            this.toolTip1.SetToolTip(this.tabPageDefaults, resources.GetString("tabPageDefaults.ToolTip"));
             this.tabPageDefaults.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            resources.ApplyResources(this.groupBox7, "groupBox7");
+            this.groupBox7.Controls.Add(this.exRTBoxDefCustomInbounds);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox7, resources.GetString("groupBox7.ToolTip"));
+            // 
+            // exRTBoxDefCustomInbounds
+            // 
+            resources.ApplyResources(this.exRTBoxDefCustomInbounds, "exRTBoxDefCustomInbounds");
+            this.exRTBoxDefCustomInbounds.Name = "exRTBoxDefCustomInbounds";
+            this.toolTip1.SetToolTip(this.exRTBoxDefCustomInbounds, resources.GetString("exRTBoxDefCustomInbounds.ToolTip"));
             // 
             // groupBox4
             // 
             resources.ApplyResources(this.groupBox4, "groupBox4");
+            this.groupBox4.Controls.Add(this.tboxDefImportVmessDecodeTemplateUrl);
+            this.groupBox4.Controls.Add(this.chkDefImportIsUseVmessDecodeTemplate);
+            this.groupBox4.Controls.Add(this.btnDefImportBrowseVemssDecodeTemplate);
             this.groupBox4.Controls.Add(this.chkDefImportInjectGlobalImport);
             this.groupBox4.Controls.Add(this.chkDefImportBypassCnSite);
             this.groupBox4.Controls.Add(this.chkDefImportSsShareLink);
@@ -426,6 +489,28 @@
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox4, resources.GetString("groupBox4.ToolTip"));
+            // 
+            // tboxDefImportVmessDecodeTemplateUrl
+            // 
+            resources.ApplyResources(this.tboxDefImportVmessDecodeTemplateUrl, "tboxDefImportVmessDecodeTemplateUrl");
+            this.tboxDefImportVmessDecodeTemplateUrl.Name = "tboxDefImportVmessDecodeTemplateUrl";
+            this.toolTip1.SetToolTip(this.tboxDefImportVmessDecodeTemplateUrl, resources.GetString("tboxDefImportVmessDecodeTemplateUrl.ToolTip"));
+            // 
+            // chkDefImportIsUseVmessDecodeTemplate
+            // 
+            resources.ApplyResources(this.chkDefImportIsUseVmessDecodeTemplate, "chkDefImportIsUseVmessDecodeTemplate");
+            this.chkDefImportIsUseVmessDecodeTemplate.Name = "chkDefImportIsUseVmessDecodeTemplate";
+            this.toolTip1.SetToolTip(this.chkDefImportIsUseVmessDecodeTemplate, resources.GetString("chkDefImportIsUseVmessDecodeTemplate.ToolTip"));
+            this.chkDefImportIsUseVmessDecodeTemplate.UseVisualStyleBackColor = true;
+            // 
+            // btnDefImportBrowseVemssDecodeTemplate
+            // 
+            resources.ApplyResources(this.btnDefImportBrowseVemssDecodeTemplate, "btnDefImportBrowseVemssDecodeTemplate");
+            this.btnDefImportBrowseVemssDecodeTemplate.Name = "btnDefImportBrowseVemssDecodeTemplate";
+            this.toolTip1.SetToolTip(this.btnDefImportBrowseVemssDecodeTemplate, resources.GetString("btnDefImportBrowseVemssDecodeTemplate.ToolTip"));
+            this.btnDefImportBrowseVemssDecodeTemplate.UseVisualStyleBackColor = true;
+            this.btnDefImportBrowseVemssDecodeTemplate.Click += new System.EventHandler(this.btnDefImportBrowseVemssDecodeTemplate_Click);
             // 
             // chkDefImportInjectGlobalImport
             // 
@@ -456,13 +541,14 @@
             // 
             // cboxDefImportMode
             // 
+            resources.ApplyResources(this.cboxDefImportMode, "cboxDefImportMode");
             this.cboxDefImportMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxDefImportMode.FormattingEnabled = true;
             this.cboxDefImportMode.Items.AddRange(new object[] {
             resources.GetString("cboxDefImportMode.Items"),
             resources.GetString("cboxDefImportMode.Items1"),
-            resources.GetString("cboxDefImportMode.Items2")});
-            resources.ApplyResources(this.cboxDefImportMode, "cboxDefImportMode");
+            resources.GetString("cboxDefImportMode.Items2"),
+            resources.GetString("cboxDefImportMode.Items3")});
             this.cboxDefImportMode.Name = "cboxDefImportMode";
             this.toolTip1.SetToolTip(this.cboxDefImportMode, resources.GetString("cboxDefImportMode.ToolTip"));
             // 
@@ -492,9 +578,11 @@
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox3, resources.GetString("groupBox3.ToolTip"));
             // 
             // cboxDefSpeedTestExpectedSize
             // 
+            resources.ApplyResources(this.cboxDefSpeedTestExpectedSize, "cboxDefSpeedTestExpectedSize");
             this.cboxDefSpeedTestExpectedSize.FormattingEnabled = true;
             this.cboxDefSpeedTestExpectedSize.Items.AddRange(new object[] {
             resources.GetString("cboxDefSpeedTestExpectedSize.Items"),
@@ -507,11 +595,12 @@
             resources.GetString("cboxDefSpeedTestExpectedSize.Items7"),
             resources.GetString("cboxDefSpeedTestExpectedSize.Items8"),
             resources.GetString("cboxDefSpeedTestExpectedSize.Items9")});
-            resources.ApplyResources(this.cboxDefSpeedTestExpectedSize, "cboxDefSpeedTestExpectedSize");
             this.cboxDefSpeedTestExpectedSize.Name = "cboxDefSpeedTestExpectedSize";
+            this.toolTip1.SetToolTip(this.cboxDefSpeedTestExpectedSize, resources.GetString("cboxDefSpeedTestExpectedSize.ToolTip"));
             // 
             // cboxDefSpeedTestUrl
             // 
+            resources.ApplyResources(this.cboxDefSpeedTestUrl, "cboxDefSpeedTestUrl");
             this.cboxDefSpeedTestUrl.FormattingEnabled = true;
             this.cboxDefSpeedTestUrl.Items.AddRange(new object[] {
             resources.GetString("cboxDefSpeedTestUrl.Items"),
@@ -521,8 +610,8 @@
             resources.GetString("cboxDefSpeedTestUrl.Items4"),
             resources.GetString("cboxDefSpeedTestUrl.Items5"),
             resources.GetString("cboxDefSpeedTestUrl.Items6")});
-            resources.ApplyResources(this.cboxDefSpeedTestUrl, "cboxDefSpeedTestUrl");
             this.cboxDefSpeedTestUrl.Name = "cboxDefSpeedTestUrl";
+            this.toolTip1.SetToolTip(this.cboxDefSpeedTestUrl, resources.GetString("cboxDefSpeedTestUrl.ToolTip"));
             // 
             // tboxDefSpeedtestTimeout
             // 
@@ -569,10 +658,11 @@
             // 
             // tabPageImport
             // 
+            resources.ApplyResources(this.tabPageImport, "tabPageImport");
             this.tabPageImport.Controls.Add(this.btnImportAdd);
             this.tabPageImport.Controls.Add(this.flyImportPanel);
-            resources.ApplyResources(this.tabPageImport, "tabPageImport");
             this.tabPageImport.Name = "tabPageImport";
+            this.toolTip1.SetToolTip(this.tabPageImport, resources.GetString("tabPageImport.ToolTip"));
             this.tabPageImport.UseVisualStyleBackColor = true;
             // 
             // btnImportAdd
@@ -584,18 +674,20 @@
             // 
             // flyImportPanel
             // 
-            this.flyImportPanel.AllowDrop = true;
             resources.ApplyResources(this.flyImportPanel, "flyImportPanel");
+            this.flyImportPanel.AllowDrop = true;
             this.flyImportPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flyImportPanel.Name = "flyImportPanel";
+            this.toolTip1.SetToolTip(this.flyImportPanel, resources.GetString("flyImportPanel.ToolTip"));
             this.flyImportPanel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flyImportPanel_Scroll);
             // 
             // tabPageMultiConf
             // 
+            resources.ApplyResources(this.tabPageMultiConf, "tabPageMultiConf");
             this.tabPageMultiConf.Controls.Add(this.btnMultiConfAdd);
             this.tabPageMultiConf.Controls.Add(this.flyMultiConfPanel);
-            resources.ApplyResources(this.tabPageMultiConf, "tabPageMultiConf");
             this.tabPageMultiConf.Name = "tabPageMultiConf";
+            this.toolTip1.SetToolTip(this.tabPageMultiConf, resources.GetString("tabPageMultiConf.ToolTip"));
             this.tabPageMultiConf.UseVisualStyleBackColor = true;
             // 
             // btnMultiConfAdd
@@ -607,29 +699,33 @@
             // 
             // flyMultiConfPanel
             // 
-            this.flyMultiConfPanel.AllowDrop = true;
             resources.ApplyResources(this.flyMultiConfPanel, "flyMultiConfPanel");
+            this.flyMultiConfPanel.AllowDrop = true;
             this.flyMultiConfPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flyMultiConfPanel.Name = "flyMultiConfPanel";
+            this.toolTip1.SetToolTip(this.flyMultiConfPanel, resources.GetString("flyMultiConfPanel.ToolTip"));
             // 
             // tabPagePlugins
             // 
+            resources.ApplyResources(this.tabPagePlugins, "tabPagePlugins");
             this.tabPagePlugins.Controls.Add(this.label4);
             this.tabPagePlugins.Controls.Add(this.flyPluginsItemsContainer);
-            resources.ApplyResources(this.tabPagePlugins, "tabPagePlugins");
             this.tabPagePlugins.Name = "tabPagePlugins";
+            this.toolTip1.SetToolTip(this.tabPagePlugins, resources.GetString("tabPagePlugins.ToolTip"));
             this.tabPagePlugins.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
+            this.toolTip1.SetToolTip(this.label4, resources.GetString("label4.ToolTip"));
             // 
             // flyPluginsItemsContainer
             // 
             resources.ApplyResources(this.flyPluginsItemsContainer, "flyPluginsItemsContainer");
             this.flyPluginsItemsContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flyPluginsItemsContainer.Name = "flyPluginsItemsContainer";
+            this.toolTip1.SetToolTip(this.flyPluginsItemsContainer, resources.GetString("flyPluginsItemsContainer.ToolTip"));
             this.flyPluginsItemsContainer.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flyPluginsItemsContainer_Scroll);
             // 
             // btnBakBackup
@@ -660,6 +756,7 @@
             // 
             resources.ApplyResources(this.btnOptionExit, "btnOptionExit");
             this.btnOptionExit.Name = "btnOptionExit";
+            this.toolTip1.SetToolTip(this.btnOptionExit, resources.GetString("btnOptionExit.ToolTip"));
             this.btnOptionExit.UseVisualStyleBackColor = true;
             this.btnOptionExit.Click += new System.EventHandler(this.btnOptionExit_Click);
             // 
@@ -674,11 +771,14 @@
             this.Controls.Add(this.tabControl1);
             this.DoubleBuffered = true;
             this.Name = "FormOption";
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.FormOption_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPageSubscribe.ResumeLayout(false);
             this.tabPageSubscribe.PerformLayout();
             this.tabPageSetting.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox6.ResumeLayout(false);
@@ -688,6 +788,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPageDefaults.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -734,7 +835,7 @@
         private System.Windows.Forms.CheckBox chkSetUpgradeUseProxy;
         private System.Windows.Forms.CheckBox chkSubsIsUseProxy;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox chkSetCheckWhenStart;
+        private System.Windows.Forms.CheckBox chkSetCheckVgcUpdateWhenStart;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TabPage tabPageDefaults;
         private System.Windows.Forms.GroupBox groupBox4;
@@ -772,5 +873,12 @@
         private System.Windows.Forms.CheckBox chkSetEnableDebugFile;
         private System.Windows.Forms.TextBox tboxSetDebugFilePath;
         private System.Windows.Forms.Button btnSetBrowseDebugFile;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private VgcApis.UserControls.ExRichTextBox exRTBoxDefCustomInbounds;
+        private System.Windows.Forms.TextBox tboxDefImportVmessDecodeTemplateUrl;
+        private System.Windows.Forms.CheckBox chkDefImportIsUseVmessDecodeTemplate;
+        private System.Windows.Forms.Button btnDefImportBrowseVemssDecodeTemplate;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.CheckBox chkSetCheckV2RayCoreUpdateWhenStart;
     }
 }

@@ -67,32 +67,27 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GetConfig() => coreInfo.config;
 
-        public void UpdateSummaryThen(Action next = null)
+        public void UpdateSummary()
         {
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            try
             {
                 var configString = coreInfo.isInjectImport ?
                     configMgr.InjectImportTpls(coreInfo.config, false, true) :
                     coreInfo.config;
 
-                JObject finalConfig = null;
-                try
-                {
-                    finalConfig = JObject.Parse(configString);
-                    finalConfig = configMgr.ParseImport(configString);
-                }
-                catch { }
+                JObject finalConfig = JObject.Parse(configString);
+                finalConfig = configMgr.ParseImport(configString);
+
 
                 if (finalConfig != null)
                 {
+                    // update summary should not clear status
+                    // this.status = string.Empty;
                     UpdateSummary(finalConfig);
                 }
-
-                // update summary should not clear status
-                // this.status = string.Empty;
-                GetParent().InvokeEventOnPropertyChange();
-                next?.Invoke();
-            });
+            }
+            catch { }
+            GetParent().InvokeEventOnPropertyChange();
         }
 
         public bool IsSuitableToBeUsedAsSysProxy(
@@ -130,13 +125,13 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
 
             coreInfo.config = trimed;
-            UpdateSummaryThen(() =>
+            UpdateSummary();
+
+            if (coreCtrl.IsCoreRunning())
             {
-                if (coreCtrl.IsCoreRunning())
-                {
-                    coreCtrl.RestartCoreThen();
-                }
-            });
+                coreCtrl.RestartCoreThen();
+            }
+
         }
 
         public void GetterInfoForNotifyIconf(Action<string> next)
@@ -211,7 +206,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             var name = Misc.Utils.GetAliasFromConfig(config);
             coreInfo.name = name;
             coreInfo.summary = Misc.Utils.GetSummaryFromConfig(config);
-
             coreInfo.ClearCachedString();
         }
 
@@ -237,13 +231,41 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         Tuple<string, string, int> GetterParsedInboundInfo(string rawConfig)
         {
             var protocol = Misc.Utils.InboundTypeNumberToName(coreInfo.customInbType);
-            var ip = coreInfo.inbIp;
-            var port = coreInfo.inbPort;
-
-            if (protocol != "config")
+            switch (protocol)
             {
+                case "http":
+                case "socks":
+                    var info = new Tuple<string, string, int>(
+                        protocol, coreInfo.inbIp, coreInfo.inbPort);
+                    return info;
+                case "config":
+                    return GetInboundInfoFromConfig(rawConfig);
+                case "custom":
+                    return GetInboundInfoFromCustomInboundsSetting();
+                default:
+                    return null;
+            }
+        }
+
+        Tuple<string, string, int> GetInboundInfoFromCustomInboundsSetting()
+        {
+            try
+            {
+                var jobj = JArray.Parse(setting.CustomDefInbounds)[0];
+                var protocol = Misc.Utils.GetValue<string>(jobj, "protocol");
+                string ip = Misc.Utils.GetValue<string>(jobj, "listen");
+                int port = Misc.Utils.GetValue<int>(jobj, "port");
                 return new Tuple<string, string, int>(protocol, ip, port);
             }
+            catch
+            {
+                setting.SendLog(I18N.ParseCustomInboundsSettingFail);
+            }
+            return null;
+        }
+
+        Tuple<string, string, int> GetInboundInfoFromConfig(string rawConfig)
+        {
 
             var parsedConfig = configMgr.DecodeConfig(
                 rawConfig,
@@ -257,11 +279,11 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
 
             string prefix = "inbound";
+            string protocol = "";
             foreach (var p in new string[] { "inbound", "inbounds.0" })
             {
                 prefix = p;
-                protocol = Misc.Utils.GetValue<string>(
-                    parsedConfig, prefix, "protocol");
+                protocol = Misc.Utils.GetValue<string>(parsedConfig, prefix, "protocol");
 
                 if (!string.IsNullOrEmpty(protocol))
                 {
@@ -269,10 +291,12 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 }
             }
 
-            ip = Misc.Utils.GetValue<string>(parsedConfig, prefix, "listen");
-            port = Misc.Utils.GetValue<int>(parsedConfig, prefix, "port");
+            string ip = Misc.Utils.GetValue<string>(parsedConfig, prefix, "listen");
+            int port = Misc.Utils.GetValue<int>(parsedConfig, prefix, "port");
             return new Tuple<string, string, int>(protocol, ip, port);
         }
+
+
         #endregion
     }
 }

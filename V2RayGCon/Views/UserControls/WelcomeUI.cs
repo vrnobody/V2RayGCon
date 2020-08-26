@@ -47,7 +47,8 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbV2rayCoreGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Misc.UI.VisitUrl(I18N.VisitV2rayCoreReleasePage, StrConst.V2rayCoreReleasePageUrl);
+            var url = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(0);
+            Misc.UI.VisitUrl(I18N.VisitV2rayCoreReleasePage, url);
         }
 
         private void lbWiki_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -85,7 +86,8 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbSimAddVmessWin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Views.WinForms.FormSimAddVmessClient.GetForm();
+            var f = WinForms.FormSimpleEditor.GetForm();
+            f.LoadCoreServer(null);
         }
 
         private void lbConfigEditor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

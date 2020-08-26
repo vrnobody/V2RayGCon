@@ -17,8 +17,6 @@ namespace VgcApis.Interfaces.Lua
         bool Download(string url, string filename, int millSeconds);
         bool Download(string url, string filename, int proxyPort, int millSeconds);
 
-        List<string> FindAllHrefs(string text);
-
         // the first running http server's port number
         int GetProxyPort();
 

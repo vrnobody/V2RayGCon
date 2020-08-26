@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -45,18 +46,33 @@ namespace V2RayGCon.Views.WinForms
 
         private void FormDownloadCore_Shown(object sender, System.EventArgs e)
         {
+            RefreshV2RayCoreSourceUrls();
             RefreshLocalV2RayCoreVersion();
             chkUseProxy.Checked = setting.isUpdateUseProxy;
         }
 
-        #region private method
+        #region private methods
+
+
+        void RefreshV2RayCoreSourceUrls()
+        {
+            var urls = VgcApis.Models.Consts.Core.SourceUrls;
+            var items = cboxDownloadSource.Items;
+            items.Clear();
+            items.AddRange(urls);
+            VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxDownloadSource);
+            var url = setting.v2rayCoreDownloadSource;
+            var index = VgcApis.Models.Consts.Core.GetIndexBySourceUrl(url);
+            cboxDownloadSource.SelectedIndex = index;
+        }
+
         void RefreshLocalV2RayCoreVersion()
         {
             var el = labelCoreVersion;
 
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                var core = new V2RayGCon.Libs.V2Ray.Core(setting);
+                var core = new Libs.V2Ray.Core(setting);
                 var version = core.GetCoreVersion();
                 var msg = string.IsNullOrEmpty(version) ?
                     I18N.GetCoreVerFail :
@@ -81,6 +97,7 @@ namespace V2RayGCon.Views.WinForms
         void DownloadV2RayCore(int proxyPort)
         {
             downloader = new Libs.Nets.Downloader(setting);
+            downloader.SetSource(cboxDownloadSource.SelectedIndex);
             downloader.SetArchitecture(cboxArch.SelectedIndex == 1);
             downloader.SetVersion(cboxVer.Text);
             downloader.proxyPort = proxyPort;
@@ -127,8 +144,7 @@ namespace V2RayGCon.Views.WinForms
 
         void InitUI()
         {
-            cboxArch.SelectedIndex =
-                setting.isDownloadWin32V2RayCore ? 0 : 1;
+            cboxArch.SelectedIndex = setting.isDownloadWin32V2RayCore ? 0 : 1;
 
             var verList = setting.GetV2RayCoreVersionList();
             Misc.UI.FillComboBox(cboxVer, new List<string>(verList));
@@ -142,39 +158,35 @@ namespace V2RayGCon.Views.WinForms
 
         private void BtnRefreshVer_Click(object sender, System.EventArgs e)
         {
-            var elRefresh = btnRefreshVer;
-            var elCboxVer = cboxVer;
+            btnRefreshVer.Enabled = false;
 
-            elRefresh.Enabled = false;
+            var sourceUrl = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(cboxDownloadSource.SelectedIndex);
+            int proxyPort = chkUseProxy.Checked ? servers.GetAvailableHttpProxyPort() : -1;
 
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            Action<List<string>> done = (versions) =>
             {
-                int proxyPort = -1;
-                if (chkUseProxy.Checked)
+                btnRefreshVer.Enabled = true;
+                if (versions.Count > 0)
                 {
-                    proxyPort = servers.GetAvailableHttpProxyPort();
+                    Misc.UI.FillComboBox(cboxVer, versions);
                 }
-                var versions = Misc.Utils.GetOnlineV2RayCoreVersionList(proxyPort);
+                else
+                {
+                    MessageBox.Show(I18N.GetVersionListFail);
+                }
+            };
+
+            Action worker = () =>
+            {
+                var versions = Misc.Utils.GetOnlineV2RayCoreVersionList(proxyPort, sourceUrl);
                 if (versions != null && versions.Count > 0)
                 {
                     setting.SaveV2RayCoreVersionList(versions);
                 }
+                VgcApis.Misc.UI.Invoke(() => done(versions));
+            };
 
-                VgcApis.Misc.UI.Invoke(() => elRefresh.Enabled = true);
-
-                VgcApis.Misc.UI.Invoke(() =>
-                {
-                    if (versions.Count > 0)
-                    {
-                        Misc.UI.FillComboBox(elCboxVer, versions);
-                    }
-                    else
-                    {
-                        MessageBox.Show(I18N.GetVersionListFail);
-                    }
-                });
-
-            });
+            VgcApis.Misc.Utils.RunInBackground(worker);
         }
 
         private void BtnUpdate_Click(object sender, System.EventArgs e)
@@ -214,7 +226,6 @@ namespace V2RayGCon.Views.WinForms
             RefreshLocalV2RayCoreVersion();
         }
 
-        #endregion
 
         private void cboxArch_SelectedIndexChanged(object sender, System.EventArgs e)
         {
@@ -232,5 +243,14 @@ namespace V2RayGCon.Views.WinForms
 
             setting.isDownloadWin32V2RayCore = isWin32;
         }
+
+        private void cboxDownloadSource_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            var index = cboxDownloadSource.SelectedIndex;
+            var url = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(index);
+            setting.v2rayCoreDownloadSource = url;
+        }
+        #endregion
+
     }
 }

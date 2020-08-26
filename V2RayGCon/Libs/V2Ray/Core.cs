@@ -38,7 +38,7 @@ namespace V2RayGCon.Libs.V2Ray
             {
                 if (string.IsNullOrEmpty(_v2ctl))
                 {
-                    _v2ctl = GetExecutablePath(StrConst.ExecutableV2ctl);
+                    _v2ctl = GetExecutablePath(VgcApis.Models.Consts.Core.V2RayCtlExeFileName);
                 }
                 return _v2ctl;
             }
@@ -74,18 +74,15 @@ namespace V2RayGCon.Libs.V2Ray
         #endregion
 
         #region public method
-        public int QueryStatsApi(int port, bool isUplink)
+
+        public VgcApis.Models.Datas.StatsSample QueryStatsApi(int port)
         {
             if (string.IsNullOrEmpty(v2ctl))
             {
-                return 0;
+                return null;
             }
 
-            var queryParam = string.Format(
-                StrConst.StatsQueryParamTpl,
-                port.ToString(),
-                isUplink ? "uplink" : "downlink");
-
+            var queryParam = string.Format(VgcApis.Models.Consts.Core.StatsQueryParamTpl, port.ToString());
             try
             {
                 var output = Misc.Utils.GetOutputFromExecutable(
@@ -93,14 +90,10 @@ namespace V2RayGCon.Libs.V2Ray
                     queryParam,
                     VgcApis.Models.Consts.Core.GetStatisticsTimeout);
 
-                // Regex pattern = new Regex(@"(?<value>(\d+))");
-                var value = VgcApis.Misc.Utils.ExtractStringWithPattern(
-                    "value", @"(\d+)", output);
-
-                return VgcApis.Misc.Utils.Str2Int(value);
+                return Misc.Utils.ParseStatApiResult(output);
             }
             catch { }
-            return 0;
+            return null;
         }
 
         public string GetCoreVersion()
@@ -110,16 +103,14 @@ namespace V2RayGCon.Libs.V2Ray
                 return string.Empty;
             }
 
-            var output = Misc.Utils.GetOutputFromExecutable(
-                GetExecutablePath(),
-                "-version",
-                VgcApis.Models.Consts.Core.GetVersionTimeout);
+            var timeout = VgcApis.Models.Consts.Core.GetVersionTimeout;
+            var output = Misc.Utils.GetOutputFromExecutable(GetExecutablePath(), "-version", timeout);
 
             // since 3.46.* v is deleted
             // Regex pattern = new Regex(@"(?<version>(\d+\.)+\d+)");
             // Regex pattern = new Regex(@"v(?<version>[\d\.]+)");
-            return VgcApis.Misc.Utils.ExtractStringWithPattern(
-                "version", @"(\d+\.)+\d+", output);
+            var ver = VgcApis.Misc.Utils.ExtractStringWithPattern("version", @"(\d+\.)+\d+", output);
+            return ver;
         }
 
         public bool IsExecutableExist()
@@ -132,7 +123,7 @@ namespace V2RayGCon.Libs.V2Ray
             List<string> folders = GenV2RayCoreSearchPaths(setting.isPortable);
             for (var i = 0; i < folders.Count; i++)
             {
-                var file = Path.Combine(folders[i], fileName ?? StrConst.ExecutableV2ray);
+                var file = Path.Combine(folders[i], fileName ?? VgcApis.Models.Consts.Core.V2RayCoreExeFileName);
                 if (File.Exists(file))
                 {
                     return file;
@@ -178,7 +169,9 @@ namespace V2RayGCon.Libs.V2Ray
                     VgcApis.Misc.UI.MsgBoxAsync(I18N.ExeNotFound);
                 }
             }
-            VgcApis.Misc.Utils.RunInBackground(() => InvokeEventOnCoreStatusChanged());
+            // do not run in background
+            // VgcApis.Misc.Utils.RunInBackground(() => InvokeEventOnCoreStatusChanged());
+            InvokeEventOnCoreStatusChanged();
         }
 
         // blocking
@@ -257,6 +250,8 @@ namespace V2RayGCon.Libs.V2Ray
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     RedirectStandardInput = true,
+
+                    // 定时炸弹
                     StandardOutputEncoding = ioEncoding,
                     StandardErrorEncoding = ioEncoding,
                 }
@@ -334,7 +329,10 @@ namespace V2RayGCon.Libs.V2Ray
 
             // SendLog("Exit code: " + err);
             isRunning = false;
-            VgcApis.Misc.Utils.RunInBackground(() => InvokeEventOnCoreStatusChanged());
+
+            // do not run in background
+            // VgcApis.Misc.Utils.RunInBackground(() => InvokeEventOnCoreStatusChanged());
+            InvokeEventOnCoreStatusChanged();
         }
 
         void BindEvents(Process proc)

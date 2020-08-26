@@ -1,12 +1,28 @@
-﻿using System;
+﻿using NLua;
+using System;
 using System.Diagnostics;
+using System.Text;
 
 namespace VgcApis.Interfaces.Lua
 {
     public interface ILuaSys
     {
+
         #region Net
         IRunnable CreateHttpServer(string url, ILuaMailBox inbox, ILuaMailBox outbox);
+        #endregion
+
+        #region core event
+        int CoreEvStart { get; }
+        int CoreEvClosing { get; }
+        int CoreEvStop { get; }
+        int CoreEvPropertyChanged { get; }
+
+        bool UnregisterGlobalEvent(ILuaMailBox mailbox, string handle);
+        string RegisterGlobalEvent(ILuaMailBox mailbox, int evType, int evCode);
+
+        bool UnregisterCoreEvent(ILuaMailBox mailbox, string handle);
+        string RegisterCoreEvent(ICoreServCtrl coreServ, ILuaMailBox mailbox, int evType, int evCode);
         #endregion
 
         #region keyboard hotkey
@@ -33,6 +49,18 @@ namespace VgcApis.Interfaces.Lua
         bool RemoveMailBox(ILuaMailBox mailbox);
         #endregion
 
+        #region encoding
+
+        Encoding GetEncoding(int codepage);
+        Encoding EncodingDefault { get; }
+
+        Encoding EncodingCmd936 { get; }
+        Encoding EncodingUtf8 { get; }
+
+        Encoding EncodingAscII { get; }
+        Encoding EncodingUnicode { get; }
+        #endregion
+
         #region process
 
         void DoEvents();
@@ -52,6 +80,10 @@ namespace VgcApis.Interfaces.Lua
         Process RunAndForgot(string exePath, string args, string stdin,
             NLua.LuaTable envs, bool hasWindow, bool redirectOutput);
 
+        Process RunAndForgot(string exePath, string args, string stdin,
+            LuaTable envs, bool hasWindow, bool redirectOutput,
+            Encoding inputEncoding, Encoding outputEncoding);
+
         Process Run(string exePath);
 
         Process Run(string exePath, string args);
@@ -60,6 +92,10 @@ namespace VgcApis.Interfaces.Lua
 
         Process Run(string exePath, string args, string stdin,
             NLua.LuaTable envs, bool hasWindow, bool redirectOutput);
+
+        Process Run(string exePath, string args, string stdin,
+           LuaTable envs, bool hasWindow, bool redirectOutput,
+           Encoding inputEncoding, Encoding outputEncoding);
         bool SendStopSignal(Process proc);
         void WaitForExit(Process proc);
         #endregion

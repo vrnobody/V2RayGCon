@@ -121,50 +121,9 @@
   <data name="config_min" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Config\config_min.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
   </data>
-  <data name="DownloadLinkTpl" xml:space="preserve">
-    <value>https://github.com/v2ray/v2ray-core/releases/download/{0}/{1}</value>
-  </data>
-  <data name="PkgWin32" xml:space="preserve">
-    <value>v2ray-windows-32.zip</value>
-  </data>
-  <data name="DefCoreVersion" xml:space="preserve">
-    <value>v3.26</value>
-  </data>
-  <data name="ExecutableV2ray" xml:space="preserve">
-    <value>v2ray.exe</value>
-  </data>
-  <data name="DummyServ1" xml:space="preserve">
-    <value>vmess://ew0KICAicHMiOiAiZHVtbXkxIiwNCiAgImFkZCI6ICIxLjIuMy40IiwNCiAgInBvcnQiOiAiNDQzIiwNCiAgImlkIjogImI4NzNkNWY0LTMyNjEtNGYxOS04MGE3LWYwZTY3YzkwYzA4MiIsDQogICJhaWQiOiAiMTAwIiwNCiAgIm5ldCI6ICJ3cyIsDQogICJ0eXBlIjogIm5vbmUiLA0KICAiaG9zdCI6ICIvcmF5IiwNCiAgInRscyI6ICJ0bHMiDQp9</value>
-  </data>
-  <data name="DummyServ2" xml:space="preserve">
-    <value>vmess://ew0KICAicHMiOiAiZHVtbXkyIiwNCiAgImFkZCI6ICIyLjMuNC41IiwNCiAgInBvcnQiOiAiMTIzNCIsDQogICJpZCI6ICI1NjIxODM4ZS1hYmM1LTRiNmQtOWQzMS00MmUwOGE3ZWMzMmYiLA0KICAiYWlkIjogIjY0IiwNCiAgIm5ldCI6ICJ0Y3AiLA0KICAidHlwZSI6ICJub25lIiwNCiAgImhvc3QiOiAiIiwNCiAgInRscyI6ICIiDQp9</value>
-  </data>
-  <data name="PkgWin64" xml:space="preserve">
-    <value>v2ray-windows-64.zip</value>
-  </data>
-  <data name="ExtPng" xml:space="preserve">
-    <value>PNG Files|*.png|All File|*.*</value>
-  </data>
-  <data name="LatestCoreLink" xml:space="preserve">
-    <value>https://github.com/v2ray/v2ray-core/releases/latest</value>
-  </data>
-  <data name="PatternDownloadLink" xml:space="preserve">
-    <value>/v2ray/v2ray-core/releases/download/(v[\.0-9]+)/v2ray-windows-64.zip</value>
-  </data>
-  <data name="V2rayCoreReleasePageUrl" xml:space="preserve">
-    <value>https://github.com/v2ray/v2ray-core/releases</value>
-  </data>
-  <data name="PatternLatestVGC" xml:space="preserve">
-    <value>/nobody3u/V2RayGCon/releases/tag/([\.0-9]+)</value>
-  </data>
-  <data name="TplUrlVGCRelease" xml:space="preserve">
-    <value>https://github.com/nobody3u/V2RayGCon/releases/tag/{0}</value>
-  </data>
-  <data name="UrlLatestVGC" xml:space="preserve">
-    <value>https://github.com/nobody3u/V2RayGCon/releases/latest</value>
-  </data>
-  <data name="VlinkWiki" xml:space="preserve">
-    <value>https://github.com/nobody3u/V2RayGCon/wiki/vlink</value>
+  <data name="Notice" xml:space="preserve">
+    <value>DO NOT REMOVE THIS FILE!</value>
+    <comment>本文件包含config模板</comment>
   </data>
   <data name="config_pkg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Config\config_pkg.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -172,22 +131,14 @@
   <data name="config_example" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Config\config_example.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="ExtJs" xml:space="preserve">
-    <value>JS Files|*.js|All File|*.*</value>
-  </data>
-  <data name="Nobody3uVideoUrl" xml:space="preserve">
-    <value>https://www.youtube.com/watch?v=BA7fdSkp8ds</value>
-  </data>
-  <data name="ExecutableV2ctl" xml:space="preserve">
-    <value>v2ctl.exe</value>
-  </data>
-  <data name="StatsQueryParamTpl" xml:space="preserve">
-    <value>api --server="127.0.0.1:{0}" StatsService.GetStats "name: """"inbound&gt;&gt;&gt;agentin&gt;&gt;&gt;traffic&gt;&gt;&gt;{1}"""" reset: true"</value>
-  </data>
   <data name="ConfigJsonKeywords" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\CSharp\ConfigJsonKeywords.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="config_tpl" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Config\config_tpl.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="StatApiResultPattern" xml:space="preserve">
+    <value>stat: \&lt;.+?name: "([^"]+)"([^&gt;]+?value: (\d+))?.+?&gt;</value>
+    <comment>1: name, 3: value真复杂！</comment>
   </data>
 </root>

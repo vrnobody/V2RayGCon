@@ -23,6 +23,40 @@ namespace V2RayGCon.Misc
     {
 
         #region strings
+
+        public static VgcApis.Models.Datas.StatsSample ParseStatApiResult(string result)
+        {
+            var pat = StrConst.StatApiResultPattern;
+            Regex rgx = new Regex(pat, RegexOptions.Singleline);
+            var ms = rgx.Matches(result ?? string.Empty);
+            var up = 0;
+            var down = 0;
+            foreach (Match match in ms)
+            {
+                if (!match.Success)
+                {
+                    continue;
+                }
+                var name = match.Groups[1].Value;
+                if (!name.StartsWith(@"inbound>"))
+                {
+                    continue;
+                }
+
+                var value = VgcApis.Misc.Utils.Str2Int(match.Groups[3].Value);
+                if (name.EndsWith(@">uplink"))
+                {
+                    up += value;
+                }
+                else
+                {
+                    down += value;
+                }
+            }
+            return new VgcApis.Models.Datas.StatsSample(up, down);
+        }
+
+
         static string appNameAndVersion = null;
         public static string GetAppNameAndVer()
         {
@@ -251,6 +285,7 @@ namespace V2RayGCon.Misc
             string ipKey = root;
             switch (protocol)
             {
+                case "vless":
                 case "vmess":
                     ipKey += ".settings.vnext.0.address";
                     break;
@@ -878,7 +913,8 @@ namespace V2RayGCon.Misc
 
         public static string Base64PadRight(string base64)
         {
-            var str = base64.Replace("\r", "").Replace("\n", "");
+            // 一位顾客点了一份炒饭，酒吧炸了
+            var str = base64.Replace("\r", "").Replace("\n", "").Replace("=", "");
             var len = str.Length;
             return str.PadRight(len + (4 - len % 4) % 4, '=');
         }
@@ -897,6 +933,32 @@ namespace V2RayGCon.Misc
         #endregion
 
         #region net
+
+        static public List<string> GetOnlineV2RayCoreVersionList(int proxyPort, string sourceUrl)
+        {
+            List<string> versions = new List<string> { };
+
+            string html = Misc.Utils.Fetch(sourceUrl, proxyPort, -1);
+            if (string.IsNullOrEmpty(html))
+            {
+                return versions;
+            }
+
+            string pattern = VgcApis.Models.Consts.Patterns.V2RayCoreReleaseAssets;
+
+            var matches = Regex.Matches(html, pattern, RegexOptions.IgnoreCase);
+            foreach (Match match in matches)
+            {
+                var v = match.Groups[1].Value;
+                if (!versions.Contains(v))
+                {
+                    versions.Add(v);
+                }
+            }
+
+            return versions;
+        }
+
         /// <summary>
         /// List( success ? ( vmess://... , mark ) : ( "", [alias] url ) )
         /// </summary>
@@ -924,6 +986,7 @@ namespace V2RayGCon.Misc
                 }
 
                 var links = new List<string>();
+                links.Add(subsString);
                 foreach (var substr in VgcApis.Misc.Utils.ExtractBase64Strings(subsString))
                 {
                     try
@@ -967,31 +1030,6 @@ namespace V2RayGCon.Misc
             }
 
             return baseUrl + href;
-        }
-
-        public static List<string> FindAllHrefs(string text)
-        {
-            var empty = new List<string>();
-
-            if (string.IsNullOrEmpty(text))
-            {
-                return empty;
-            }
-
-            try
-            {
-                HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-                doc.LoadHtml(text);
-
-                var result = doc.DocumentNode.SelectNodes("//a")
-                    ?.Select(p => p.GetAttributeValue("href", ""))
-                    ?.Where(s => !string.IsNullOrEmpty(s))
-                    ?.ToList();
-
-                return result ?? empty;
-            }
-            catch { }
-            return empty;
         }
 
         public static string GenSearchUrl(string query, int start)
@@ -1139,49 +1177,8 @@ namespace V2RayGCon.Misc
         public static string Fetch(string url, int timeout) =>
             Fetch(url, -1, timeout);
 
-        public static string GetLatestVgcVersion()
-        {
-            string html = Fetch(StrConst.UrlLatestVGC);
 
-            if (string.IsNullOrEmpty(html))
-            {
-                return string.Empty;
-            }
 
-            string p = StrConst.PatternLatestVGC;
-            var match = Regex.Match(html, p, RegexOptions.IgnoreCase);
-            if (match.Success)
-            {
-                return match.Groups[1].Value;
-            }
-
-            return string.Empty;
-        }
-
-        public static List<string> GetOnlineV2RayCoreVersionList(int proxyPort)
-        {
-            List<string> versions = new List<string> { };
-            var url = StrConst.V2rayCoreReleasePageUrl;
-
-            string html = Fetch(url, proxyPort, -1);
-            if (string.IsNullOrEmpty(html))
-            {
-                return versions;
-            }
-
-            string pattern = StrConst.PatternDownloadLink;
-            var matches = Regex.Matches(html, pattern, RegexOptions.IgnoreCase);
-            foreach (Match match in matches)
-            {
-                var v = match.Groups[1].Value;
-                if (!versions.Contains(v))
-                {
-                    versions.Add(v);
-                }
-            }
-
-            return versions;
-        }
         #endregion
 
         #region files
@@ -1280,36 +1277,11 @@ namespace V2RayGCon.Misc
             return hash.ToString();
         }
 
-        static readonly object genRandomNumberLocker = new object();
-        public static string RandomHex(int length)
-        {
-            //  https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c
-            if (length <= 0)
-            {
-                return string.Empty;
-            }
 
-            Random random = new Random();
-            const string chars = "0123456789abcdef";
-            int charLen = chars.Length;
+        // 懒得改调用处的代码了。
+        public static int Clamp(int value, int min, int max) =>
+            VgcApis.Misc.Utils.Clamp(value, min, max);
 
-            int rndIndex;
-            StringBuilder sb = new StringBuilder("");
-            for (int i = 0; i < length; i++)
-            {
-                lock (genRandomNumberLocker)
-                {
-                    rndIndex = random.Next(charLen);
-                }
-                sb.Append(chars[rndIndex]);
-            }
-            return sb.ToString();
-        }
-
-        public static int Clamp(int value, int min, int max)
-        {
-            return Math.Max(Math.Min(value, max - 1), min);
-        }
 
         public static int GetIndexIgnoreCase(Dictionary<int, string> dict, string value)
         {

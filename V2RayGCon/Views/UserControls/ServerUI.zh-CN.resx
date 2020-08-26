@@ -138,17 +138,14 @@
   <data name="rlbMark.ToolTip" xml:space="preserve">
     <value>标记</value>
   </data>
-  <data name="rlbLastModify.ToolTip" xml:space="preserve">
-    <value>最后修改时间</value>
+  <data name="rlbRemark.ToolTip" xml:space="preserve">
+    <value>备注</value>
   </data>
   <data name="rlbSpeedtest.ToolTip" xml:space="preserve">
     <value>可用性测试结果</value>
   </data>
   <data name="rlbInboundMode.ToolTip" xml:space="preserve">
     <value>Inbound信息</value>
-  </data>
-  <data name="rlbRemark.ToolTip" xml:space="preserve">
-    <value>备注</value>
   </data>
   <data name="startToolStripMenuItem.Text" xml:space="preserve">
     <value>开启</value>
@@ -199,13 +196,16 @@
     <value>复制</value>
   </data>
   <data name="showSettingWindowToolStripMenuItem.Text" xml:space="preserve">
-    <value>设定</value>
+    <value>设定及二维码</value>
   </data>
   <data name="showSettingWindowToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>调出修改设置窗口</value>
   </data>
+  <data name="simpleEditorToolStripMenuItem.Text" xml:space="preserve">
+    <value>简易编辑器</value>
+  </data>
   <data name="editToolStripMenuItem.Text" xml:space="preserve">
-    <value>编辑配置</value>
+    <value>Json编辑器</value>
   </data>
   <data name="debugToolStripMenuItem.Text" xml:space="preserve">
     <value>查看最终配置</value>

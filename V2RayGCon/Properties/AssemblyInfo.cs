@@ -33,10 +33,52 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.4.0.0")]
+[assembly: AssemblyVersion("1.4.3.4")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.4.3.4 Tweak UI.
+ * v1.4.3.3 Add simple editor.
+ * v1.4.3.2 Remove form QR code.
+ * v1.4.3.1 Support plain vmess://... in subscription url.
+ * --------------------------------------------------
+ * v1.4.2.11 Refactor lua.modules.coreEvent.
+ * v1.4.2.10 Refactor lua.modules.coreEvent.
+ * v1.4.2.9 Anti flicker in searching.
+ * v1.4.2.8 Refactoring.
+ * v1.4.2.7 Anti flicker in page switching.
+ * v1.4.2.6 Add lua.modules.coreEvent.
+ * v1.4.2.5 Adjust ServerUI.
+ * v1.4.2.4 Auto show/hide control buttons in servers panel.
+ * v1.4.2.3 Tweak Misc:Choice() and Misc:Input().
+ * v1.4.2.2 Fix a bug which was introduced by v1.4.2.1.
+ * v1.4.2.1 Add encoding param in Sys:Run().
+ *          v2ray-core win32 v4.26.0
+ * -----------------------------------------------------
+ * v1.4.1.12 Add option check for v2ray-core update when app start.
+ * v1.4.1.11 Disable prompt of loading default config in configer.
+ * v1.4.1.10 Reverse v1.4.1.9
+ * v1.4.1.9 Add download speed in tooltip of total-down-label.
+ * v1.4.1.8 Clear paging menu before adding new item.
+ * v1.4.1.7 Adjust UI.
+ * v1.4.1.6 Fix bugs.
+ * v1.4.1.5 Remove statistics plug-in.
+ * v1.4.1.4 Add stream settings support in vmess://... decode template.
+ * v1.4.1.3 Fix a bug.
+ * v1.4.1.2 Fix a bug in pager updating.
+ * v1.4.1.1 Add vmess://... decode template support.
+ * ------------------------------------------------
+ * v1.4.0.11 18080 -> 8080
+ * v1.4.0.10 Print server index in logs.
+ * v1.4.0.9 Remove HtmlAgilityPack.
+ * v1.4.0.8 Keep current selections in searching.
+ * v1.4.0.7 Refactoring.
+ * v1.4.0.6 Try to fix a dead lock.
+ * v1.4.0.5 Create menu items on demand.
+ * v1.4.0.4 Fix a bug in Misc:RandHex().
+ * v1.4.0.3 Add v2fly as core update source.
+ * v1.4.0.2 Custom inbounds support.
+ * v1.4.0.1 Fix a bug in v2ray-core updating.
  * ----------------------------------------
  * v1.3.9.8 Fix a bug which would block core updating.
  * v1.3.9.7 Add luasocket and luasec.

@@ -4,9 +4,7 @@ namespace VgcApis.Interfaces
 {
     public interface ICoreServCtrl
     {
-        event EventHandler OnPropertyChanged;
-        event EventHandler OnCoreStop;
-        event EventHandler OnCoreStart;
+        event EventHandler OnPropertyChanged, OnCoreStop, OnCoreClosing, OnCoreStart;
 
         void InvokeEventOnPropertyChange();
         CoreCtrlComponents.ICoreStates GetCoreStates();

@@ -92,13 +92,10 @@
       <HintPath>..\packages\Autoupdater.NET.Official.1.5.8\lib\net40\AutoUpdater.NET.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
+      <HintPath>..\packages\Castle.Core.4.4.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DotNetZip, Version=1.13.5.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetZip.1.13.5\lib\net40\DotNetZip.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.11.18.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.18\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="DotNetZip, Version=1.13.8.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.13.8\lib\net40\DotNetZip.dll</HintPath>
     </Reference>
     <Reference Include="KeraLua, Version=1.0.26.0, Culture=neutral, PublicKeyToken=6a194c04b9c89217, processorArchitecture=MSIL">
       <HintPath>..\packages\KeraLua.1.0.26\lib\net45\KeraLua.dll</HintPath>
@@ -119,11 +116,11 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -147,11 +144,18 @@
     <Compile Include="Controllers\FormOptionComponent\TabDefaults.cs" />
     <Compile Include="Models\Datas\MultiConfItem.cs" />
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
+    <Compile Include="Models\Datas\VeeConfigs.cs" />
     <Compile Include="Models\Datas\SpeedTestOptions.cs" />
     <Compile Include="Models\Datas\UpdateInfo.cs" />
     <Compile Include="Models\VeeShareLinks\Http3a.cs" />
     <Compile Include="Models\VeeShareLinks\Socks2a.cs" />
     <Compile Include="Models\VeeShareLinks\BasicSettings.cs" />
+    <Compile Include="Models\VeeShareLinks\Vless4a.cs" />
+    <Compile Include="Resources\Resx\StrConst.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StrConst.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\Caches\JsonAcm.cs" />
     <Compile Include="Controllers\ConfigerComponent\MenuUpdater.cs" />
     <Compile Include="Controllers\CoreServerComponent\Configer.cs" />
@@ -217,6 +221,7 @@
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Ss1a.cs" />
     <Compile Include="Models\VeeShareLinks\Vmess0a.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Socks2a.cs" />
+    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Vless4a.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Vmess0a.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeDecoder.cs" />
     <Compile Include="Services\ShareLinkComponents\VmessDecoder.cs" />
@@ -259,6 +264,12 @@
     <Compile Include="Views\UserControls\SubscriptionUI.Designer.cs">
       <DependentUpon>SubscriptionUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\VeeConfigerUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\VeeConfigerUI.Designer.cs">
+      <DependentUpon>VeeConfigerUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\WelcomeUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -271,11 +282,6 @@
     <Compile Include="Models\Datas\Enums.cs" />
     <Compile Include="Models\Datas\Shadowsocks.cs" />
     <Compile Include="Models\Datas\Table.cs" />
-    <Compile Include="Resources\Resx\StrConst.Designer.cs">
-      <DependentUpon>StrConst.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Resources\Resx\I18N.zh-CN.Designer.cs">
       <DependentUpon>I18N.zh-CN.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -353,18 +359,16 @@
     <Compile Include="Views\WinForms\FormOption.Designer.cs">
       <DependentUpon>FormOption.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\WinForms\FormQRCode.cs">
+    <Compile Include="Views\WinForms\FormSimpleEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\WinForms\FormQRCode.Designer.cs">
-      <DependentUpon>FormQRCode.cs</DependentUpon>
+    <Compile Include="Views\WinForms\FormSimpleEditor.Designer.cs">
+      <DependentUpon>FormSimpleEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\WinForms\FormSimAddVmessClient.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\WinForms\FormSimAddVmessClient.Designer.cs">
-      <DependentUpon>FormSimAddVmessClient.cs</DependentUpon>
-    </Compile>
+    <EmbeddedResource Include="Resources\Resx\StrConst.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StrConst.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\MultiConfUI.resx">
       <DependentUpon>MultiConfUI.cs</DependentUpon>
     </EmbeddedResource>
@@ -395,6 +399,12 @@
     <EmbeddedResource Include="Views\UserControls\SubscriptionUI.zh-CN.resx">
       <DependentUpon>SubscriptionUI.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\VeeConfigerUI.resx">
+      <DependentUpon>VeeConfigerUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\VeeConfigerUI.zh-CN.resx">
+      <DependentUpon>VeeConfigerUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\WelcomeUI.resx">
       <DependentUpon>WelcomeUI.cs</DependentUpon>
     </EmbeddedResource>
@@ -411,11 +421,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Resources\Resx\StrConst.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>StrConst.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resx\I18N.zh-CN.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>I18N.zh-CN.Designer.cs</LastGenOutput>
@@ -477,21 +482,14 @@
       <DependentUpon>FormOption.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormQRCode.resx">
-      <DependentUpon>FormQRCode.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormQRCode.zh-CN.resx">
-      <DependentUpon>FormQRCode.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormDownloadCore.zh-CN.resx">
       <DependentUpon>FormDownloadCore.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormSimAddVmessClient.resx">
-      <DependentUpon>FormSimAddVmessClient.cs</DependentUpon>
+    <EmbeddedResource Include="Views\WinForms\FormSimpleEditor.resx">
+      <DependentUpon>FormSimpleEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormSimAddVmessClient.zh-CN.resx">
-      <DependentUpon>FormSimAddVmessClient.cs</DependentUpon>
+    <EmbeddedResource Include="Views\WinForms\FormSimpleEditor.zh-CN.resx">
+      <DependentUpon>FormSimpleEditor.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
@@ -514,18 +512,25 @@
     <None Include="Resources\Files\lua\libs\luacheck\unicode_prntbnd.lua" />
     <None Include="Resources\Files\lua\libs\luacheck\utils.lua" />
     <None Include="Resources\Files\lua\libs\utils.lua" />
+    <None Include="Resources\Files\lua\modules\coreEvent.lua" />
     <None Include="Resources\Files\lua\modules\hotkey.lua" />
     <None Include="Resources\Files\lua\modules\logger.lua" />
     <None Include="Resources\Files\lua\modules\reader.lua" />
     <None Include="Resources\Files\lua\modules\set.lua" />
     <None Include="Resources\Files\lua\modules\writer.lua" />
+    <None Include="Resources\Files\Scripts\启动时更新订阅.lua" />
+    <None Include="Resources\Files\Scripts\显示全部服务器信息.lua" />
+    <None Include="Resources\Files\Scripts\每月清空流量统计数据.lua" />
+    <None Include="Resources\Files\Scripts\监听服务器事件.lua" />
     <None Include="Resources\Files\templates\basic\basic.json" />
+    <None Include="Resources\Files\templates\custom\vmessDecodeTemplate.json" />
     <None Include="Resources\Files\templates\routing\whitelist.json" />
     <None Include="V2RayGCon.ruleset" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon_dark.ico" />
     <Content Include="Resources\Files\CSharp\ConfigJsonKeywords.txt" />
+    <None Include="Resources\Icon\FormMainToolStrip\AddField_16x.png" />
     <None Include="Resources\Icon\TaskTray\SFTPConnection_16x.png" />
     <None Include="Resources\Icon\TaskTray\FTPConnection_16x.png" />
     <None Include="Resources\Icon\TaskTray\Stop_16x.png" />
@@ -559,9 +564,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Files\templates\custom\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Plugins\Luna\Luna.csproj">
       <Project>{2d29f9e2-f358-4b07-8f50-1cbe4291eed8}</Project>
@@ -575,10 +578,6 @@
       <Project>{8ddda069-8b11-4b48-93c1-c608bff0c361}</Project>
       <Name>ProxySetter</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plugins\Statistics\Statistics.csproj">
-      <Project>{b75a3390-b84b-43b0-9507-483ac7e1be38}</Project>
-      <Name>Statistics</Name>
-    </ProjectReference>
     <ProjectReference Include="..\VgcApis\VgcApis.csproj">
       <Project>{b3cf9873-afbc-4703-8a3b-06d39fd761b9}</Project>
       <Name>VgcApis</Name>
@@ -588,7 +587,7 @@
   <PropertyGroup>
     <PostBuildEvent>set "libsDir=libs\"
 set "copyFolderList=lua templates"
-set "allDlls=KeraLua liblua53 lua53 Nlua AutocompleteMenu-ScintillaNET Luna ProxySetter Statistics Pacman HtmlAgilityPack DotNetZip Newtonsoft ScintillaNET VgcApis zxing AutoUpdater.NET Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
+set "allDlls=KeraLua liblua53 lua53 Nlua AutocompleteMenu-ScintillaNET Luna ProxySetter Pacman DotNetZip Newtonsoft ScintillaNET VgcApis zxing AutoUpdater.NET Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
 
 call:CreateFoldersOnDemand "%25libsDir%25 %25copyFolderList%25"
 call:MoveFilesByList "%25allDlls%25"

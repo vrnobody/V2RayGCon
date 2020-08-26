@@ -33,8 +33,7 @@ namespace V2RayGCon.Services
             OnServerPropertyChange,
             OnServerCountChange,
 
-            // special events 
-            OnRequireFlyPanelUpdate,
+            // special events
             OnRequireFlyPanelReload;
 
         List<Controllers.CoreServerCtrl> coreServList =
@@ -232,16 +231,6 @@ namespace V2RayGCon.Services
 
         #region public method
 
-
-        /// <summary>
-        /// Add new only.
-        /// </summary>
-        public void RequireFormMainUpdate() =>
-            InvokeEventHandlerIgnoreError(OnRequireFlyPanelUpdate, this, EventArgs.Empty);
-
-        /// <summary>
-        /// Remove all then add new.
-        /// </summary>
         public void RequireFormMainReload() =>
             InvokeEventHandlerIgnoreError(OnRequireFlyPanelReload, this, EventArgs.Empty);
 
@@ -534,7 +523,7 @@ namespace V2RayGCon.Services
             {
                 lazyServerSettingsRecorder.Deadline();
                 UpdateMarkList();
-                RequireFormMainUpdate();
+                RequireFormMainReload();
                 InvokeEventOnServerCountChange(this, EventArgs.Empty);
                 speedTestingBar.Remove();
 
@@ -556,7 +545,7 @@ namespace V2RayGCon.Services
             {
                 lazyServerSettingsRecorder.Deadline();
                 UpdateMarkList();
-                RequireFormMainUpdate();
+                RequireFormMainReload();
                 InvokeEventOnServerCountChange(this, EventArgs.Empty);
                 speedTestingBar.Remove();
                 done?.Invoke();
@@ -578,18 +567,14 @@ namespace V2RayGCon.Services
             Misc.Utils.ChainActionHelperAsync(servs.Count, worker, finish);
         }
 
-        public void UpdateAllServersSummarySync()
+        public void UpdateAllServersSummary()
         {
-            var list = coreServList;
-            AutoResetEvent isFinished = new AutoResetEvent(false);
-
-
-            void worker(int index, Action next)
+            var list = coreServList.ToList(); // clone
+            foreach (var core in list)
             {
-                var core = list[index];
-
                 try
                 {
+                    core.GetConfiger().UpdateSummary();
                     if (core.GetCoreStates().GetLastModifiedUtcTicks() == 0)
                     {
                         var utcTicks = DateTime.UtcNow.Ticks;
@@ -597,34 +582,12 @@ namespace V2RayGCon.Services
                     }
                 }
                 catch { }
-
-                try
-                {
-                    core.GetConfiger().UpdateSummaryThen(next);
-                }
-                catch
-                {
-                    // skip if something goes wrong
-                    next();
-                }
             }
 
-            void done()
-            {
-                setting.LazyGC();
-                lazyServerSettingsRecorder.Deadline();
-                RequireFormMainUpdate();
-                InvokeEventOnServerPropertyChange(this, EventArgs.Empty);
-                isFinished.Set();
-            }
-
-            Misc.Utils.ChainActionHelper(list.Count, worker, done);
-            notifier.BlockingWaitOne(isFinished);
-        }
-
-        public void UpdateAllServersSummaryBg()
-        {
-            VgcApis.Misc.Utils.RunInBackground(() => UpdateAllServersSummarySync());
+            RequireFormMainReload();
+            setting.LazyGC();
+            lazyServerSettingsRecorder.Deadline();
+            InvokeEventOnServerPropertyChange(this, EventArgs.Empty);
         }
 
         public void DeleteServerByConfig(string config)
@@ -657,7 +620,7 @@ namespace V2RayGCon.Services
                 InvokeEventOnServerCountChange(this, EventArgs.Empty);
                 lazyServerSettingsRecorder.Deadline();
                 UpdateMarkList();
-                RequireFormMainUpdate();
+                RequireFormMainReload();
                 speedTestingBar.Remove();
             });
         }
@@ -716,12 +679,10 @@ namespace V2RayGCon.Services
             BindEventsTo(newServer);
             if (!quiet)
             {
-                newServer.GetConfiger().UpdateSummaryThen(() =>
-                {
-                    // UpdateSummaryThen will invoke OnServerPropertyChange.
-                    InvokeEventOnServerCountChange(this, EventArgs.Empty);
-                    RequireFormMainUpdate();
-                });
+                newServer.GetConfiger().UpdateSummary();
+                // UpdateSummaryThen will invoke OnServerPropertyChange.
+                InvokeEventOnServerCountChange(this, EventArgs.Empty);
+                RequireFormMainReload();
             }
             setting.LazyGC();
             lazyServerSettingsRecorder.Deadline();

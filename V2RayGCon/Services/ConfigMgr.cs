@@ -21,15 +21,15 @@ namespace V2RayGCon.Services
         #region public methods
 
         public long RunCustomSpeedTest(string rawConfig, string testUrl, int testTimeout) =>
-            QueuedSpeedTesting(rawConfig, "Custom speed-test", testUrl, testTimeout, false, false, false, null);
+            QueuedSpeedTesting(rawConfig, "Custom speed-test", testUrl, testTimeout, false, false, false, null).Item1;
 
         public long RunSpeedTest(string rawConfig)
         {
             var url = GetDefaultSpeedtestUrl();
-            return QueuedSpeedTesting(rawConfig, "Default speed-test", "", GetDefaultTimeout(), false, false, false, null);
+            return QueuedSpeedTesting(rawConfig, "Default speed-test", "", GetDefaultTimeout(), false, false, false, null).Item1;
         }
 
-        public long RunDefaultSpeedTest(
+        public Tuple<long, long> RunDefaultSpeedTest(
             string rawConfig,
             string title,
             EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever)
@@ -105,15 +105,30 @@ namespace V2RayGCon.Services
             string ip,
             int port)
         {
-            switch (inbType)
+            if (inbType == (int)Models.Datas.Enums.ProxyTypes.Config)
             {
-                case (int)Models.Datas.Enums.ProxyTypes.HTTP:
-                case (int)Models.Datas.Enums.ProxyTypes.SOCKS:
-                    break;
+                return true;
+            }
 
-                case (int)Models.Datas.Enums.ProxyTypes.Config:
-                default:
+            if (inbType == (int)Models.Datas.Enums.ProxyTypes.Custom)
+            {
+                try
+                {
+                    var inbs = JArray.Parse(setting.CustomDefInbounds);
+                    config["inbounds"] = inbs;
                     return true;
+                }
+                catch
+                {
+                    setting.SendLog(I18N.ParseCustomInboundsSettingFail);
+                }
+                return false;
+            }
+
+            if (inbType != (int)Models.Datas.Enums.ProxyTypes.HTTP
+                && inbType != (int)Models.Datas.Enums.ProxyTypes.SOCKS)
+            {
+                return false;
             }
 
             var protocol = Misc.Utils.InboundTypeNumberToName(inbType);
@@ -385,7 +400,7 @@ namespace V2RayGCon.Services
             return ParseImport(imports.ToString());
         }
 
-        long QueuedSpeedTesting(
+        Tuple<long, long> QueuedSpeedTesting(
             string rawConfig,
             string title,
             string testUrl,
@@ -402,7 +417,9 @@ namespace V2RayGCon.Services
             if (setting.isSpeedtestCancelled)
             {
                 pool.Release();
-                return VgcApis.Models.Consts.Core.SpeedtestAbort;
+                return new Tuple<long, long>(
+                    VgcApis.Models.Consts.Core.SpeedtestAbort,
+                    0);
             }
 
             var port = VgcApis.Misc.Utils.GetFreeTcpPort();
@@ -428,7 +445,7 @@ namespace V2RayGCon.Services
             return false;
         }
 
-        long DoSpeedTesting(
+        Tuple<long, long> DoSpeedTesting(
             string title,
             string testUrl,
             int testTimeout,
@@ -442,7 +459,7 @@ namespace V2RayGCon.Services
             if (string.IsNullOrEmpty(config))
             {
                 log(I18N.DecodeImportFail);
-                return TIMEOUT;
+                return new Tuple<long, long>(TIMEOUT, 0);
             }
 
             var speedTester = new Libs.V2Ray.Core(setting) { title = title };
@@ -452,13 +469,17 @@ namespace V2RayGCon.Services
             }
 
             long latency = TIMEOUT;
+            long len = 0;
+
             try
             {
                 speedTester.RestartCore(config);
                 if (WaitUntilCoreReady(speedTester))
                 {
                     var expectedSizeInKib = setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestExpectedSizeInKib : -1;
-                    latency = VgcApis.Misc.Utils.TimedDownloadTest(testUrl, port, expectedSizeInKib, testTimeout);
+                    var r = VgcApis.Misc.Utils.TimedDownloadTest(testUrl, port, expectedSizeInKib, testTimeout);
+                    latency = r.Item1;
+                    len = r.Item2;
                 }
                 speedTester.StopCore();
                 if (logDeliever != null)
@@ -468,7 +489,7 @@ namespace V2RayGCon.Services
             }
             catch { }
 
-            return latency;
+            return new Tuple<long, long>(latency, len);
         }
 
         List<string> GetHtmlContentFromCache(IEnumerable<string> urls)

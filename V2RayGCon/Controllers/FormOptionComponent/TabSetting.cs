@@ -18,9 +18,9 @@ namespace V2RayGCon.Controllers.OptionComponent
             chkSetUseV4 = null,
             chkSetEnableStat = null,
             chkSetUpdateUseProxy = null,
-            chkSetCheckWhenAppStart = null,
+            chkSetCheckVgcUpdateWhenAppStart = null,
             chkSetIsSupportSelfSignedCert = null;
-
+        private readonly CheckBox chkSetCheckV2RayCoreUpdateWhenAppStart;
         private readonly Button btnBrowseDebugLogFile;
         private readonly TextBox tboxDebugLogFilePath;
         private readonly CheckBox chkIsEnableDebugLogFile;
@@ -37,7 +37,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             CheckBox chkSetIsSupportSelfSignedCert,
             CheckBox chkSetEnableStat,
             CheckBox chkSetUpdateUseProxy,
-            CheckBox chkSetCheckWhenAppStart,
+            CheckBox chkSetCheckVgcUpdateWhenAppStart,
+            CheckBox chkSetCheckV2rayCoreUpdateWhenAppStart,
 
             Button btnBrowseDebugLogFile,
             TextBox tboxDebugLogFilePath,
@@ -56,7 +57,10 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.chkSetUseV4 = chkSetUseV4;
             this.chkSetIsSupportSelfSignedCert = chkSetIsSupportSelfSignedCert;
             this.chkSetEnableStat = chkSetEnableStat;
-            this.chkSetCheckWhenAppStart = chkSetCheckWhenAppStart;
+
+            this.chkSetCheckVgcUpdateWhenAppStart = chkSetCheckVgcUpdateWhenAppStart;
+            this.chkSetCheckV2RayCoreUpdateWhenAppStart = chkSetCheckV2rayCoreUpdateWhenAppStart;
+
             this.btnBrowseDebugLogFile = btnBrowseDebugLogFile;
             this.tboxDebugLogFilePath = tboxDebugLogFilePath;
             this.chkIsEnableDebugLogFile = chkIsEnableDebugLogFile;
@@ -74,7 +78,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             cboxRandomSelectServerLatency.Text = setting.QuickSwitchServerLantency.ToString();
 
             chkSetUpdateUseProxy.Checked = setting.isUpdateUseProxy;
-            chkSetCheckWhenAppStart.Checked = setting.isCheckUpdateWhenAppStart;
+            chkSetCheckVgcUpdateWhenAppStart.Checked = setting.isCheckVgcUpdateWhenAppStart;
+            chkSetCheckV2RayCoreUpdateWhenAppStart.Checked = setting.isCheckV2RayCoreUpdateWhenAppStart;
 
             chkSetEnableStat.Checked = setting.isEnableStatistics;
             chkSetUseV4.Checked = setting.isUseV4;
@@ -100,7 +105,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             if (pageSize != setting.serverPanelPageSize)
             {
                 setting.serverPanelPageSize = pageSize;
-                Services.Servers.Instance.RequireFormMainUpdate();
+                Services.Servers.Instance.RequireFormMainReload();
             }
 
             setting.isEnableDebugLogFile = chkIsEnableDebugLogFile.Checked;
@@ -126,7 +131,9 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             setting.QuickSwitchServerLantency = VgcApis.Misc.Utils.Str2Int(cboxRandomSelectServerLatency.Text);
             setting.isUpdateUseProxy = chkSetUpdateUseProxy.Checked;
-            setting.isCheckUpdateWhenAppStart = chkSetCheckWhenAppStart.Checked;
+            setting.isCheckVgcUpdateWhenAppStart = chkSetCheckVgcUpdateWhenAppStart.Checked;
+            setting.isCheckV2RayCoreUpdateWhenAppStart = chkSetCheckV2RayCoreUpdateWhenAppStart.Checked;
+
             setting.isSupportSelfSignedCert = chkSetIsSupportSelfSignedCert.Checked;
             setting.isPortable = chkPortableMode.Checked;
             setting.isUseV4 = chkSetUseV4.Checked;
@@ -146,7 +153,8 @@ namespace V2RayGCon.Controllers.OptionComponent
                 || setting.isSupportSelfSignedCert != chkSetIsSupportSelfSignedCert.Checked
                 || setting.QuickSwitchServerLantency != VgcApis.Misc.Utils.Str2Int(cboxRandomSelectServerLatency.Text)
                 || setting.isUpdateUseProxy != chkSetUpdateUseProxy.Checked
-                || setting.isCheckUpdateWhenAppStart != chkSetCheckWhenAppStart.Checked
+                || setting.isCheckVgcUpdateWhenAppStart != chkSetCheckVgcUpdateWhenAppStart.Checked
+                || setting.isCheckV2RayCoreUpdateWhenAppStart != chkSetCheckV2RayCoreUpdateWhenAppStart.Checked
                 || setting.isEnableStatistics != chkSetEnableStat.Checked
                 || VgcApis.Misc.Utils.Str2Int(tboxMaxCoreNum.Text) != setting.maxConcurrentV2RayCoreNum
                 || setting.isPortable != chkPortableMode.Checked

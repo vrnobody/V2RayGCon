@@ -160,9 +160,6 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="Downloading" xml:space="preserve">
     <value>正在下载，请稍后。</value>
   </data>
-  <data name="EditorCannotLoadServerConfig" xml:space="preserve">
-    <value>加载服务器配置失败，调取默认配置文件。</value>
-  </data>
   <data name="EditorCheckConfig" xml:space="preserve">
     <value>无法解析JSON文件，请仔细检查。</value>
   </data>
@@ -675,8 +672,8 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="Servers" xml:space="preserve">
     <value>服务器</value>
   </data>
-  <data name="CheckForUpdate" xml:space="preserve">
-    <value>检查更新</value>
+  <data name="CheckForVgcUpdate" xml:space="preserve">
+    <value>检查V2RayGCon更新</value>
   </data>
   <data name="StopAllServers" xml:space="preserve">
     <value>全部停止</value>
@@ -740,5 +737,44 @@ https://github.com/v2ray/v2ray-core</value>
   </data>
   <data name="ConfirmClearSpeedTestResults" xml:space="preserve">
     <value>清除速度测试数据?</value>
+  </data>
+  <data name="LocateTargetFolderFail" xml:space="preserve">
+    <value>定位目标文件不会失败！</value>
+  </data>
+  <data name="ParseCustomInboundsSettingFail" xml:space="preserve">
+    <value>解释自定义inbounds失败！</value>
+  </data>
+  <data name="InbModeCustomToolTip" xml:space="preserve">
+    <value>使用选项窗口中的自定义inbounds设定</value>
+  </data>
+  <data name="Custom" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="LoadVemssDecodeTemplateFail" xml:space="preserve">
+    <value>加载vmess://...解码模板失败</value>
+  </data>
+  <data name="NetFlowToolTipTpl" xml:space="preserve">
+    <value>上传：{0} MiB 下载：{1} MiB</value>
+  </data>
+  <data name="ConfirmUpgradeV2rayCore" xml:space="preserve">
+    <value>发现新版v2ray-core {0}是否升级？</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>用户</value>
+  </data>
+  <data name="AddClientManually" xml:space="preserve">
+    <value>手动添加客户端</value>
+  </data>
+  <data name="ConfirmClearOrgServCfg" xml:space="preserve">
+    <value>原服务器的所有配置将被删除，是否继续？</value>
+  </data>
+  <data name="NullParamError" xml:space="preserve">
+    <value>参数为空错误</value>
+  </data>
+  <data name="ConfirmClearStat" xml:space="preserve">
+    <value>是否要把流量统计数据清零？</value>
   </data>
 </root>

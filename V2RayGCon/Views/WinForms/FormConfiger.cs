@@ -99,11 +99,7 @@ namespace V2RayGCon.Views.WinForms
                 setting.SaveFormRect(this);
                 setting.LazyGC();
             };
-
-            configer.UpdateServerMenusLater();
         }
-
-
 
         #region UI event handler
         private void tboxVMessID_TextChanged(object sender, EventArgs e)
@@ -399,14 +395,10 @@ namespace V2RayGCon.Views.WinForms
         #region private method
         private void ReleaseServerEvents()
         {
-            servers.OnServerCountChange -= MenuUpdateHandler;
-            servers.OnServerPropertyChange -= MenuUpdateHandler;
         }
 
         private void BindServerEvents()
         {
-            servers.OnServerCountChange += MenuUpdateHandler;
-            servers.OnServerPropertyChange += MenuUpdateHandler;
         }
 
         public void SetTitle(string name)
@@ -455,10 +447,6 @@ namespace V2RayGCon.Views.WinForms
             isShowPanel = visible;
         }
 
-        void MenuUpdateHandler(object sender, EventArgs args)
-        {
-            configer.UpdateServerMenusLater();
-        }
 
         void OnMouseEnterToolsPanel(object sender, EventArgs e)
         {

@@ -18,7 +18,7 @@
             qLogger.Log(message);
             try
             {
-                setting.SendLog($"[{coreInfo.GetShortName()}] {message}");
+                setting.SendLog($"[{coreInfo.GetIndex()}.{coreInfo.GetShortName()}] {message}");
             }
             catch { }
         }

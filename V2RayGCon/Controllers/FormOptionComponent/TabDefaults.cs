@@ -14,11 +14,15 @@ namespace V2RayGCon.Controllers.OptionComponent
         CheckBox chkSetSpeedtestIsUse = null,
             chkImportSsShareLink = null,
             chkImportBypassCnSite = null,
-            chkImportInjectGlobalImport = null;
+            chkImportInjectGlobalImport = null,
+            chkDefVmessDecodeTemplateEnabled = null;
 
         TextBox tboxDefImportAddr = null,
             tboxSetSpeedtestCycles = null,
-            tboxSetSpeedtestTimeout = null;
+            tboxSetSpeedtestTimeout = null,
+            tboxDefVmessDecodeTemplateUrl = null;
+
+        RichTextBox exRTBoxDefCustomInbounds = null;
 
         public TabDefaults(
             ComboBox cboxDefImportMode,
@@ -32,9 +36,19 @@ namespace V2RayGCon.Controllers.OptionComponent
             ComboBox cboxDefSpeedtestUrl,
             TextBox tboxSetSpeedtestCycles,
             ComboBox cboxDefSpeedtestExpectedSize,
-            TextBox tboxSetSpeedtestTimeout)
+            TextBox tboxSetSpeedtestTimeout,
+
+            TextBox tboxDefVmessDecodeTemplateUrl,
+            CheckBox chkDefVmessDecodeTemplateEnabled,
+
+            RichTextBox exRTBoxDefCustomInbounds)
         {
             this.setting = Services.Settings.Instance;
+
+            this.tboxDefVmessDecodeTemplateUrl = tboxDefVmessDecodeTemplateUrl;
+            this.chkDefVmessDecodeTemplateEnabled = chkDefVmessDecodeTemplateEnabled;
+
+            this.exRTBoxDefCustomInbounds = exRTBoxDefCustomInbounds;
 
             // Do not put these lines of code into InitElement.
             this.cboxDefImportMode = cboxDefImportMode;
@@ -53,6 +67,10 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         private void InitElement()
         {
+            tboxDefVmessDecodeTemplateUrl.Text = setting.CustomVmessDecodeTemplateUrl;
+            chkDefVmessDecodeTemplateEnabled.Checked = setting.CustomVmessDecodeTemplateEnabled;
+            exRTBoxDefCustomInbounds.Text = setting.CustomDefInbounds;
+
             // mode
             chkImportBypassCnSite.Checked = setting.CustomDefImportBypassCnSite;
             chkImportInjectGlobalImport.Checked = setting.CustomDefImportGlobalImport;
@@ -81,6 +99,11 @@ namespace V2RayGCon.Controllers.OptionComponent
                 return false;
             }
 
+            setting.CustomVmessDecodeTemplateEnabled = chkDefVmessDecodeTemplateEnabled.Checked;
+            setting.CustomVmessDecodeTemplateUrl = tboxDefVmessDecodeTemplateUrl.Text;
+
+            setting.CustomDefInbounds = exRTBoxDefCustomInbounds.Text;
+
             // mode
             if (VgcApis.Misc.Utils.TryParseAddress(tboxDefImportAddr.Text, out string ip, out int port))
             {
@@ -108,6 +131,9 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             var success = VgcApis.Misc.Utils.TryParseAddress(tboxDefImportAddr.Text, out string ip, out int port);
             if (!success
+                || setting.CustomVmessDecodeTemplateUrl != tboxDefVmessDecodeTemplateUrl.Text
+                || setting.CustomVmessDecodeTemplateEnabled != chkDefVmessDecodeTemplateEnabled.Checked
+                || setting.CustomDefInbounds != exRTBoxDefCustomInbounds.Text
                 || setting.CustomDefImportGlobalImport != chkImportInjectGlobalImport.Checked
                 || setting.CustomDefImportBypassCnSite != chkImportBypassCnSite.Checked
                 || setting.CustomDefImportSsShareLink != chkImportSsShareLink.Checked

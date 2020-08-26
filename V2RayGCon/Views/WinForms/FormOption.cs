@@ -90,7 +90,8 @@ namespace V2RayGCon.Views.WinForms
                     chkSetSelfSignedCert,
                     chkSetServStatistics,
                     chkSetUpgradeUseProxy,
-                    chkSetCheckWhenStart,
+                    chkSetCheckVgcUpdateWhenStart,
+                    chkSetCheckV2RayCoreUpdateWhenStart,
 
                     btnSetBrowseDebugFile,
                     tboxSetDebugFilePath,
@@ -112,7 +113,12 @@ namespace V2RayGCon.Views.WinForms
                     cboxDefSpeedTestUrl,
                     tboxDefSpeedtestCycles,
                     cboxDefSpeedTestExpectedSize,
-                    tboxDefSpeedtestTimeout)
+                    tboxDefSpeedtestTimeout,
+
+                    tboxDefImportVmessDecodeTemplateUrl,
+                    chkDefImportIsUseVmessDecodeTemplate,
+
+                    exRTBoxDefCustomInbounds)
             );
 
             return ctrl;
@@ -160,6 +166,15 @@ namespace V2RayGCon.Views.WinForms
         private void flyPluginsItemsContainer_Scroll(object sender, ScrollEventArgs e)
         {
             flyPluginsItemsContainer.Refresh();
+        }
+
+        private void btnDefImportBrowseVemssDecodeTemplate_Click(object sender, System.EventArgs e)
+        {
+            var path = VgcApis.Misc.UI.ShowSelectFileDialog(VgcApis.Models.Consts.Files.JsonExt);
+            if (!string.IsNullOrWhiteSpace(path))
+            {
+                tboxDefImportVmessDecodeTemplateUrl.Text = path;
+            }
         }
         #endregion
 

@@ -130,7 +130,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkSelected.Location" type="System.Drawing.Point, System.Drawing">
-    <value>50, 10</value>
+    <value>11, 10</value>
   </data>
   <data name="chkSelected.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
@@ -151,7 +151,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chkSelected.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="btnStart.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -163,7 +163,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnStart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>393, 18</value>
+    <value>401, 29</value>
   </data>
   <data name="btnStart.Size" type="System.Drawing.Size, System.Drawing">
     <value>21, 21</value>
@@ -176,6 +176,9 @@
   </data>
   <data name="btnStart.ToolTip" xml:space="preserve">
     <value>Start this server only.</value>
+  </data>
+  <data name="btnStart.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;btnStart.Name" xml:space="preserve">
     <value>btnStart</value>
@@ -199,7 +202,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnStop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>414, 18</value>
+    <value>423, 29</value>
   </data>
   <data name="btnStop.Size" type="System.Drawing.Size, System.Drawing">
     <value>21, 21</value>
@@ -212,6 +215,9 @@
   </data>
   <data name="btnStop.ToolTip" xml:space="preserve">
     <value>Stop this server.</value>
+  </data>
+  <data name="btnStop.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;btnStop.Name" xml:space="preserve">
     <value>btnStop</value>
@@ -238,7 +244,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnMenu.Location" type="System.Drawing.Point, System.Drawing">
-    <value>435, 18</value>
+    <value>445, 29</value>
   </data>
   <data name="btnMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>21, 21</value>
@@ -251,6 +257,9 @@
   </data>
   <data name="btnMenu.ToolTip" xml:space="preserve">
     <value>Show menu.</value>
+  </data>
+  <data name="btnMenu.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;btnMenu.Name" xml:space="preserve">
     <value>btnMenu</value>
@@ -271,7 +280,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbIsRunning.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 9</value>
+    <value>435, 9</value>
   </data>
   <data name="rlbIsRunning.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 16</value>
@@ -287,6 +296,9 @@
   </data>
   <data name="rlbIsRunning.ToolTip" xml:space="preserve">
     <value>Click to turn server ON/OFF.</value>
+  </data>
+  <data name="rlbIsRunning.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;rlbIsRunning.Name" xml:space="preserve">
     <value>rlbIsRunning</value>
@@ -307,22 +319,25 @@
     <value>NoControl</value>
   </data>
   <data name="rlbSetting.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 31</value>
+    <value>119, 31</value>
   </data>
   <data name="rlbSetting.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>60, 18</value>
+    <value>35, 18</value>
+  </data>
+  <data name="rlbSetting.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>19, 0</value>
   </data>
   <data name="rlbSetting.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 3, 1, 3</value>
   </data>
   <data name="rlbSetting.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 18</value>
+    <value>19, 18</value>
   </data>
   <data name="rlbSetting.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
   </data>
   <data name="rlbSetting.Text" xml:space="preserve">
-    <value>ACIU</value>
+    <value>A</value>
   </data>
   <data name="rlbSetting.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
@@ -352,7 +367,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbMark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 31</value>
+    <value>279, 31</value>
   </data>
   <data name="rlbMark.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>90, 18</value>
@@ -397,7 +412,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbRemark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>160, 31</value>
+    <value>144, 31</value>
   </data>
   <data name="rlbRemark.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>70, 18</value>
@@ -435,46 +450,49 @@
   <data name="&gt;&gt;rlbRemark.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="rlbLastModify.AutoSize" type="System.Boolean, mscorlib">
+  <data name="rlbTotalNetFlow.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="rlbLastModify.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="rlbTotalNetFlow.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="rlbLastModify.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 31</value>
+  <data name="rlbTotalNetFlow.Location" type="System.Drawing.Point, System.Drawing">
+    <value>193, 31</value>
   </data>
-  <data name="rlbLastModify.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>60, 18</value>
+  <data name="rlbTotalNetFlow.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>80, 18</value>
   </data>
-  <data name="rlbLastModify.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="rlbTotalNetFlow.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 3, 1, 3</value>
   </data>
-  <data name="rlbLastModify.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 18</value>
+  <data name="rlbTotalNetFlow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 18</value>
   </data>
-  <data name="rlbLastModify.TabIndex" type="System.Int32, mscorlib">
+  <data name="rlbTotalNetFlow.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
   </data>
-  <data name="rlbLastModify.Text" xml:space="preserve">
-    <value>02月30日</value>
+  <data name="rlbTotalNetFlow.Text" xml:space="preserve">
+    <value>⇵ 123456789M</value>
   </data>
-  <data name="rlbLastModify.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="rlbTotalNetFlow.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
   </data>
-  <data name="rlbLastModify.ToolTip" xml:space="preserve">
-    <value>Last modified time.</value>
+  <data name="rlbTotalNetFlow.ToolTip" xml:space="preserve">
+    <value>Total network flow.</value>
   </data>
-  <data name="&gt;&gt;rlbLastModify.Name" xml:space="preserve">
-    <value>rlbLastModify</value>
+  <data name="rlbTotalNetFlow.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
-  <data name="&gt;&gt;rlbLastModify.Type" xml:space="preserve">
+  <data name="&gt;&gt;rlbTotalNetFlow.Name" xml:space="preserve">
+    <value>rlbTotalNetFlow</value>
+  </data>
+  <data name="&gt;&gt;rlbTotalNetFlow.Type" xml:space="preserve">
     <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;rlbLastModify.Parent" xml:space="preserve">
+  <data name="&gt;&gt;rlbTotalNetFlow.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;rlbLastModify.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;rlbTotalNetFlow.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
   <data name="rlbSpeedtest.AutoSize" type="System.Boolean, mscorlib">
@@ -484,7 +502,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbSpeedtest.Location" type="System.Drawing.Point, System.Drawing">
-    <value>300, 31</value>
+    <value>370, 31</value>
   </data>
   <data name="rlbSpeedtest.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>60, 18</value>
@@ -522,6 +540,48 @@
   <data name="&gt;&gt;rlbSpeedtest.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
+  <data name="rlbLastModifyDate.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rlbLastModifyDate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="rlbLastModifyDate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>58, 31</value>
+  </data>
+  <data name="rlbLastModifyDate.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>55, 18</value>
+  </data>
+  <data name="rlbLastModifyDate.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>1, 3, 1, 3</value>
+  </data>
+  <data name="rlbLastModifyDate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 18</value>
+  </data>
+  <data name="rlbLastModifyDate.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="rlbLastModifyDate.Text" xml:space="preserve">
+    <value>02月30日</value>
+  </data>
+  <data name="rlbLastModifyDate.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="rlbLastModifyDate.ToolTip" xml:space="preserve">
+    <value>Inbound information.</value>
+  </data>
+  <data name="&gt;&gt;rlbLastModifyDate.Name" xml:space="preserve">
+    <value>rlbLastModifyDate</value>
+  </data>
+  <data name="&gt;&gt;rlbLastModifyDate.Type" xml:space="preserve">
+    <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;rlbLastModifyDate.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;rlbLastModifyDate.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
   <data name="rlbInboundMode.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -529,7 +589,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbInboundMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>50, 31</value>
+    <value>9, 31</value>
   </data>
   <data name="rlbInboundMode.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>60, 18</value>
@@ -562,26 +622,11 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;rlbInboundMode.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <metadata name="ctxMenuStripMore.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>119, 18</value>
   </metadata>
-  <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 214</value>
-  </data>
-  <data name="&gt;&gt;ctxMenuStripMore.Name" xml:space="preserve">
-    <value>ctxMenuStripMore</value>
-  </data>
-  <data name="&gt;&gt;ctxMenuStripMore.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
-  </data>
-  <data name="toolStripMenuItem3.Text" xml:space="preserve">
-    <value>Action</value>
-  </data>
   <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>145, 22</value>
   </data>
@@ -609,11 +654,11 @@
   <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>Stop this server.</value>
   </data>
-  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>201, 22</value>
   </data>
-  <data name="toolStripMenuItem6.Text" xml:space="preserve">
-    <value>Move</value>
+  <data name="toolStripMenuItem3.Text" xml:space="preserve">
+    <value>Action</value>
   </data>
   <data name="moveToTopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 22</value>
@@ -633,11 +678,11 @@
   <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Move this server to bottom.</value>
   </data>
-  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>201, 22</value>
   </data>
-  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
-    <value>Copy</value>
+  <data name="toolStripMenuItem6.Text" xml:space="preserve">
+    <value>Move</value>
   </data>
   <data name="vToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>138, 22</value>
@@ -666,26 +711,41 @@
   <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Contain all config information.</value>
   </data>
+  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>201, 22</value>
+  </data>
+  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy</value>
+  </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 6</value>
+    <value>198, 6</value>
   </data>
   <data name="showSettingWindowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="showSettingWindowToolStripMenuItem.Text" xml:space="preserve">
-    <value>Settings</value>
+    <value>Settings and QRCode</value>
   </data>
   <data name="showSettingWindowToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Show settings window.</value>
   </data>
+  <data name="simpleEditorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>201, 22</value>
+  </data>
+  <data name="simpleEditorToolStripMenuItem.Text" xml:space="preserve">
+    <value>Simple editor</value>
+  </data>
   <data name="editToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="editToolStripMenuItem.Text" xml:space="preserve">
-    <value>Edit config</value>
+    <value>Json editor</value>
+  </data>
+  <data name="editToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Edit config.json</value>
   </data>
   <data name="debugToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="debugToolStripMenuItem.Text" xml:space="preserve">
     <value>View final config</value>
@@ -694,22 +754,22 @@
     <value>Final config for v2ray-core.</value>
   </data>
   <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 6</value>
+    <value>198, 6</value>
   </data>
   <data name="logOfThisServerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="logOfThisServerToolStripMenuItem.Text" xml:space="preserve">
     <value>Log of this server</value>
   </data>
   <data name="runSpeedTestToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>201, 22</value>
   </data>
   <data name="runSpeedTestToolStripMenuItem1.Text" xml:space="preserve">
     <value>Run speed test</value>
@@ -717,11 +777,20 @@
   <data name="runSpeedTestToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>The time it takes to download the test web page.</value>
   </data>
+  <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 236</value>
+  </data>
+  <data name="&gt;&gt;ctxMenuStripMore.Name" xml:space="preserve">
+    <value>ctxMenuStripMore</value>
+  </data>
+  <data name="&gt;&gt;ctxMenuStripMore.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="rtboxServerTitle.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 9pt</value>
   </data>
   <data name="rtboxServerTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 10</value>
+    <value>31, 10</value>
   </data>
   <data name="rtboxServerTitle.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -733,7 +802,7 @@
     <value>None</value>
   </data>
   <data name="rtboxServerTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>309, 14</value>
+    <value>435, 14</value>
   </data>
   <data name="rtboxServerTitle.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
@@ -754,7 +823,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;rtboxServerTitle.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -850,6 +919,12 @@
     <value>showSettingWindowToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;showSettingWindowToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;simpleEditorToolStripMenuItem.Name" xml:space="preserve">
+    <value>simpleEditorToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;simpleEditorToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;editToolStripMenuItem.Name" xml:space="preserve">

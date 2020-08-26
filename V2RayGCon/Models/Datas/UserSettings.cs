@@ -5,9 +5,11 @@ namespace V2RayGCon.Models.Datas
     class UserSettings
     {
         #region public properties
+        public bool CustomVmessDecodeTemplateEnabled { get; set; }
+        public string CustomVmessDecodeTemplateUrl { get; set; }
+        public string CustomInbounds { get; set; }
         public string DebugLogFilePath { get; set; }
         public bool isEnableDebugFile { get; set; }
-
         public int QuickSwitchServerLatency { get; set; }
         public bool isAutoPatchSubsInfo { get; set; }
 
@@ -18,7 +20,8 @@ namespace V2RayGCon.Models.Datas
         public SpeedTestOptions SpeedtestOptions = null;
 
         // FormDownloadCore
-        public bool isDownloadWin32V2RayCore { get; set; } = true;
+        public bool isDownloadWin32V2RayCore { get; set; }
+        public string v2rayCoreDownloadSource { get; set; }
         public List<string> V2RayCoreDownloadVersionList = null;
 
         public bool isSupportSelfSignedCert { get; set; }
@@ -29,6 +32,8 @@ namespace V2RayGCon.Models.Datas
         public bool CfgShowToolPanel { get; set; }
         public bool isPortable { get; set; }
         public bool isCheckUpdateWhenAppStart { get; set; }
+
+        public bool isCheckV2RayCoreUpdateWhenAppStart { get; set; }
         public bool isUpdateUseProxy { get; set; }
 
         // v2ray-core v4.23.1 multiple config file supports
@@ -56,6 +61,14 @@ namespace V2RayGCon.Models.Datas
         {
             Normalized();
 
+            CustomVmessDecodeTemplateEnabled = false;
+            CustomVmessDecodeTemplateUrl = @"";
+
+            isDownloadWin32V2RayCore = true;
+            v2rayCoreDownloadSource = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(0);
+
+            CustomInbounds = @"[]";
+
             DebugLogFilePath = @"";
             isEnableDebugFile = false;
 
@@ -70,6 +83,8 @@ namespace V2RayGCon.Models.Datas
             MaxConcurrentV2RayCoreNum = 20;
 
             isCheckUpdateWhenAppStart = false;
+
+            isCheckV2RayCoreUpdateWhenAppStart = false;
 
             isUpdateUseProxy = true;
             isUseV4Format = true;

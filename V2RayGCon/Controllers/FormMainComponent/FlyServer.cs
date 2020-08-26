@@ -111,6 +111,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             UnwatchServers();
 
+            tsdbtnPager.DropDownOpening -= StatusBarPagerDropdownMenuOpeningHandler;
+
             lazyFlyPanelUpdater?.Dispose();
             lazyStatusBarUpdater?.Dispose();
             lazySearchResultDisplayer?.Dispose();
@@ -147,8 +149,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             Action worker = () =>
             {
                 UpdateStatusBarText(filteredListCount, allServersCount, selectedServersCount, serverControlCount);
-                UpdateStatusBarPageSelectorMenuItemsOndemand();
-                UpdateStatusBarPagingButtons();
+                UpdateStatusBarPagerButtons();
 
                 // prevent formain lost focus after click next page
                 if (isFocusOnFormMain)
@@ -180,15 +181,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var flatList = GetFilteredList();
             var pagedList = GenPagedServerList(flatList);
             var showWelcome = servers.CountAllServers() == 0;
-            List<Views.UserControls.ServerUI> removed = null;
+            List<Views.UserControls.ServerUI> removed = new List<Views.UserControls.ServerUI>();
 
             Action next = () =>
             {
                 lazyStatusBarUpdater?.Postpone();
-                if (removed != null)
-                {
-                    DisposeFlyPanelControlByList(removed);
-                }
+                DisposeFlyPanelControlByList(removed);
                 var relex = flyPanelUpdateInterval - (DateTime.Now.Millisecond - start);
                 VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
                 done();
@@ -197,19 +195,18 @@ namespace V2RayGCon.Controllers.FormMainComponent
             Action worker = () =>
             {
                 flyPanel.SuspendLayout();
-                removed = GetAllServerControls();
-                flyPanel.Controls.Clear();
                 if (showWelcome)
                 {
                     flyPanel.Controls.Add(welcomeItem);
+                    removed = GetAllServerControls();
+                    flyPanel.Controls.Clear();
                 }
                 else
                 {
-                    foreach (var serv in pagedList)
-                    {
-                        var ui = new Views.UserControls.ServerUI(serv);
-                        flyPanel.Controls.Add(ui);
-                    }
+                    AdjustServUiNum(removed, pagedList.Count);
+                    var servUis = GetAllServerControls();
+                    BindServUiToCoreServCtrl(servUis, pagedList);
+
                 }
                 flyPanel.ResumeLayout();
             };
@@ -217,9 +214,44 @@ namespace V2RayGCon.Controllers.FormMainComponent
             VgcApis.Misc.UI.InvokeThen(worker, next);
         }
 
+        private void BindServUiToCoreServCtrl(
+            List<Views.UserControls.ServerUI> servUis,
+            List<VgcApis.Interfaces.ICoreServCtrl> coreServs)
+        {
+
+            if (servUis.Count != coreServs.Count)
+            {
+                throw new Exception("ServUi.Count != cs.Count");
+            }
+
+            for (int i = 0; i < servUis.Count; i++)
+            {
+                servUis[i].Rebind(coreServs[i]);
+            }
+        }
+
+        private void AdjustServUiNum(List<Views.UserControls.ServerUI> removed, int num)
+        {
+            var ctrls = GetAllServerControls();
+
+            var numAdd = num - ctrls.Count;
+            for (int i = 0; i < numAdd; i++)
+            {
+                flyPanel.Controls.Add(new Views.UserControls.ServerUI());
+            }
+
+            var numRemove = ctrls.Count - num;
+            ctrls.Reverse();
+            for (int i = 0; i < numRemove; i++)
+            {
+                var c = ctrls[i];
+                removed.Add(c);
+                flyPanel.Controls.Remove(c);
+            }
+        }
+
         private void WatchServers()
         {
-            servers.OnRequireFlyPanelUpdate += OnRequireFlyPanelUpdateHandler;
             servers.OnRequireFlyPanelReload += OnRequireFlyPanelReloadHandler;
             servers.OnServerPropertyChange += OnServerPropertyChangeHandler;
         }
@@ -227,7 +259,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         private void UnwatchServers()
         {
             servers.OnRequireFlyPanelReload -= OnRequireFlyPanelReloadHandler;
-            servers.OnRequireFlyPanelUpdate -= OnRequireFlyPanelUpdateHandler;
             servers.OnServerPropertyChange -= OnServerPropertyChangeHandler;
         }
 
@@ -283,23 +314,27 @@ namespace V2RayGCon.Controllers.FormMainComponent
             }
         }
 
-        private void UpdateStatusBarPageSelectorMenuItemsOndemand()
+        List<ToolStripMenuItem> pagerMenuItemCache = new List<ToolStripMenuItem>();
+        private void StatusBarPagerDropdownMenuOpeningHandler(object sender, EventArgs args)
         {
-            if (totalPageNumber == pagerMenuItemCache.Count())
+            var cache = pagerMenuItemCache;
+            if (totalPageNumber != cache.Count)
             {
-                return;
+                cache = CreateStatusBarPagerMenuItems();
+                var groupedMenu = VgcApis.Misc.UI.AutoGroupMenuItems(cache, VgcApis.Models.Consts.Config.MenuItemGroupSize);
+                tsdbtnPager.DropDownItems.Clear();
+                tsdbtnPager.DropDownItems.AddRange(groupedMenu.ToArray());
+                pagerMenuItemCache = cache;
             }
 
-            var pagerMenu = tsdbtnPager.DropDownItems;
-            pagerMenu.Clear();
-            UpdateStatusBarPagerMenuCache();
-            var groupedMenu = VgcApis.Misc.UI.AutoGroupMenuItems(
-                pagerMenuItemCache,
-                VgcApis.Models.Consts.Config.MenuItemGroupSize);
-            pagerMenu.AddRange(groupedMenu.ToArray());
+            var cpn = VgcApis.Misc.Utils.Clamp(curPageNumber, 0, totalPageNumber);
+            for (int i = 0; i < cache.Count; i++)
+            {
+                cache[i].Checked = cpn == i;
+            }
         }
 
-        private void UpdateStatusBarPagingButtons()
+        private void UpdateStatusBarPagerButtons()
         {
             var showPager = totalPageNumber > 1;
             var cpn = VgcApis.Misc.Utils.Clamp(curPageNumber, 0, totalPageNumber);
@@ -314,18 +349,13 @@ namespace V2RayGCon.Controllers.FormMainComponent
             tslbPrePage.Enabled = cpn > 0;
             tslbNextPage.Enabled = totalPageNumber > 1 && cpn < totalPageNumber - 1;
             tsdbtnPager.Text = string.Format(I18N.StatusBarPagerInfoTpl, cpn + 1, totalPageNumber);
-
-            for (int i = 0; i < pagerMenuItemCache.Count; i++)
-            {
-                pagerMenuItemCache[i].Checked = cpn == i;
-            }
         }
 
-        readonly List<ToolStripMenuItem> pagerMenuItemCache = new List<ToolStripMenuItem>();
-        private void UpdateStatusBarPagerMenuCache()
+        List<ToolStripMenuItem> CreateStatusBarPagerMenuItems()
         {
+            var mis = new List<ToolStripMenuItem>();
+
             var ps = setting.serverPanelPageSize;
-            pagerMenuItemCache.Clear();
             for (int i = 0; i < totalPageNumber; i++)
             {
                 var pn = i;
@@ -342,19 +372,21 @@ namespace V2RayGCon.Controllers.FormMainComponent
                         isFocusOnFormMain = true;
                         RefreshFlyPanelLater();
                     });
-                pagerMenuItemCache.Add(item);
+                mis.Add(item);
             }
+            return mis;
         }
 
         string searchKeywords = "";
 
         void ShowSearchResultNow()
         {
+            // 2020-08-14 现在不会乱序了
             // 如果不RemoveAll会乱序
-            RemoveAllServersConrol();
+            // RemoveAllServersConrol();
 
-            // 修改搜索项时应该清除选择,否则会有可显示列表外的选中项
-            servers.SetAllServerIsSelected(false);
+            // 2020-06-09 改为保留选中状态
+            // servers.SetAllServerIsSelected(false);
 
             lazyFlyPanelUpdater?.Postpone();
         }
@@ -366,6 +398,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem miResizeFormMain)
         {
             InitComboBoxMarkFilter();
+
+            tsdbtnPager.DropDownOpening += StatusBarPagerDropdownMenuOpeningHandler;
+
             tslbPrePage.Click += (s, a) =>
             {
                 curPageNumber--;
@@ -441,6 +476,11 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void DisposeFlyPanelControlByList(List<Views.UserControls.ServerUI> controlList)
         {
+            if (controlList == null)
+            {
+                return;
+            }
+
             foreach (var control in controlList)
             {
                 control.Cleanup();
@@ -480,20 +520,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 .OfType<Views.UserControls.ServerUI>()
                 .ToList();
 
-
         void OnRequireFlyPanelReloadHandler(object sender, EventArgs args) =>
-            ReloadFlyPanel();
-
-        void ReloadFlyPanel()
-        {
-            RemoveAllServersConrol();
             RefreshFlyPanelLater();
-        }
 
-        void OnRequireFlyPanelUpdateHandler(object sender, EventArgs args)
-        {
-            lazyFlyPanelUpdater?.Postpone();
-        }
+        void OnRequireFlyPanelUpdateHandler(object sender, EventArgs args) => RefreshFlyPanelLater();
 
         private void BindDragDropEvent()
         {

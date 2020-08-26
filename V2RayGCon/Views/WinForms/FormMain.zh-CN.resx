@@ -317,7 +317,7 @@
 </value>
   </data>
   <data name="toolMenuItemSimAddVmessServer.Text" xml:space="preserve">
-    <value>添加vmess客户端</value>
+    <value>手动添加客户端</value>
   </data>
   <data name="toolMenuItemImportLinkFromClipboard.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -570,9 +570,6 @@
   </data>
   <data name="toolMenuItemConfigEditor.Text" xml:space="preserve">
     <value>配置编辑器</value>
-  </data>
-  <data name="toolMenuItemQRCode.Text" xml:space="preserve">
-    <value>二维码</value>
   </data>
   <data name="toolMenuItemLog.Text" xml:space="preserve">
     <value>日志</value>

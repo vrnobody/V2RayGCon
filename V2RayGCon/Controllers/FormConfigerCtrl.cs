@@ -24,8 +24,7 @@ namespace V2RayGCon.Controllers
         }
 
         #region public method
-        public void UpdateServerMenusLater() =>
-            GetComponent<ConfigerComponet.MenuUpdater>()?.UpdateMenusLater();
+
 
         public void Cleanup()
         {
@@ -200,16 +199,18 @@ namespace V2RayGCon.Controllers
         void LoadConfig(string originalConfig)
         {
             JObject o = null;
-
-            if (!string.IsNullOrEmpty(originalConfig))
+            try
             {
-                o = JObject.Parse(originalConfig);
+                if (!string.IsNullOrEmpty(originalConfig))
+                {
+                    o = JObject.Parse(originalConfig);
+                }
             }
+            catch { }
 
             if (o == null)
             {
-                o = Services.Cache.Instance.tpl.LoadMinConfig();
-                VgcApis.Misc.UI.MsgBoxAsync(I18N.EditorCannotLoadServerConfig);
+                o = JObject.Parse(@"{}");
             }
 
             config = o;

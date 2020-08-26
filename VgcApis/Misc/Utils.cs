@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
@@ -322,79 +323,126 @@ namespace VgcApis.Misc
 
         #region net
 
-        public static long TimedDownloadTest(
-            string url,
-            int port,
-            int expectedSizeInKiB,
-            int timeout)
+
+        static HttpClient CreateHttpClient(int port)
+        {
+            HttpClient hc;
+            if (port > 0 && port < 65536)
+            {
+                var httpClientHandler = new HttpClientHandler
+                {
+                    Proxy = new WebProxy(Models.Consts.Webs.LoopBackIP, port),
+                };
+                hc = new HttpClient(handler: httpClientHandler, disposeHandler: true);
+            }
+            else
+            {
+                hc = new HttpClient();
+            }
+            hc.DefaultRequestHeaders.Add(Models.Consts.Webs.UserAgentKey, Models.Consts.Webs.ChromeUserAgent);
+            return hc;
+        }
+
+
+        static async Task<long> TimedDownloadWorker(
+            string url, int port,
+            Func<long, bool> onProgress,
+            CancellationToken token)
+        {
+            long timeout = Models.Consts.Core.SpeedtestTimeout;
+
+            Stopwatch sw = new Stopwatch();
+
+            try
+            {
+                HttpClient hc = CreateHttpClient(port);
+                var opt = HttpCompletionOption.ResponseHeadersRead;
+
+                sw.Start();
+                using (hc)
+                using (var response = await hc.GetAsync(url, opt, token).ConfigureAwait(false))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return timeout;
+                    }
+
+                    using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    {
+                        byte[] buffer = new byte[4096];
+                        long read;
+                        do
+                        {
+                            read = await stream.ReadAsync(buffer, 0, buffer.Length, token).ConfigureAwait(false);
+                            if (!onProgress.Invoke(read))
+                            {
+                                break;
+                            }
+                        } while (read > 0);
+                    }
+                }
+                sw.Stop();
+                return sw.ElapsedMilliseconds;
+            }
+            catch
+            {
+                // break point for debugging
+            }
+
+            return timeout;
+        }
+
+        /// <summary>
+        /// return (milSec, recvBytesLen)
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="port"></param>
+        /// <param name="expectedSizeInKiB"></param>
+        /// <param name="timeout"></param>
+        /// <returns>(milSec, recvBytesLen)</returns>
+        public static Tuple<long, long> TimedDownloadTest(
+            string url, int port, int expectedSizeInKiB, int timeout)
         {
             if (string.IsNullOrEmpty(url))
             {
                 throw new ArgumentNullException("URL must not null!");
             }
 
-            var maxTimeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
+            long to = Models.Consts.Core.SpeedtestTimeout;
 
-            WebClient wc = new WebClient
+            long latency = to;
+            long totalRead = 0;
+            long expectedBytes = expectedSizeInKiB * 1024;
+            Func<long, bool> onProgress = (read) =>
             {
-                Encoding = Encoding.UTF8,
-            };
-            wc.Headers.Add(Models.Consts.Webs.UserAgent);
-
-            if (port > 0 && port < 65536)
-            {
-                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, port);
-            }
-
-            Stopwatch sw = new Stopwatch();
-            AutoResetEvent dlCompleted = new AutoResetEvent(false);
-            long totalReceived = 0;
-            var expectedBytes = expectedSizeInKiB * 1024;
-
-            if (expectedSizeInKiB >= 0)
-            {
-                wc.DownloadProgressChanged += (s, a) =>
+                totalRead += read;
+                if (totalRead > expectedBytes && totalRead > 0)
                 {
-                    Interlocked.Add(ref totalReceived, a.BytesReceived);
-                    if (totalReceived > expectedBytes)
-                    {
-                        sw.Stop();
-                        wc.CancelAsync();
-                    }
-                };
-            }
-
-            wc.DownloadStringCompleted += (s, a) =>
-            {
-                sw.Stop();
-                dlCompleted.Set();
-                wc.Dispose();
-            };
-
-            var speedtestTimeout = Models.Consts.Core.SpeedtestTimeout;
-
-            try
-            {
-                var patchedUrl = IsHttpLink(url) ? url : RelativePath2FullPath(url);
-                sw.Start();
-                wc.DownloadStringAsync(new Uri(patchedUrl));
-                // 收到信号为True
-                if (!dlCompleted.WaitOne(maxTimeout))
-                {
-                    wc.CancelAsync();
-                    return speedtestTimeout;
+                    return false;
                 }
-            }
-            catch
+                return true;
+            };
+
+            var maxTimeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
+            var cts = new CancellationTokenSource(maxTimeout);
+
+            var done = new AutoResetEvent(false);
+            var t = new Task(async () =>
             {
-                // network operation always buggy.
-                wc.CancelAsync();
-                return speedtestTimeout;
+                latency = await TimedDownloadWorker(url, port, onProgress, cts.Token);
+                done.Set();
+            }, TaskCreationOptions.LongRunning);
+            t.ConfigureAwait(false);
+            t.Start();
+            done.WaitOne((int)(maxTimeout * 1.5));
+
+            if (totalRead > 0 && totalRead > expectedBytes)
+            {
+                return new Tuple<long, long>(latency, totalRead);
             }
 
-            return totalReceived <= expectedBytes ? speedtestTimeout : sw.ElapsedMilliseconds;
+            return new Tuple<long, long>(to, totalRead);
         }
-
 
         public static bool IsValidPort(string port)
         {
@@ -1343,6 +1391,7 @@ namespace VgcApis.Misc
             return Math.Max(Math.Min(value, max - 1), min);
         }
 
+        static readonly Random randHexSource = new Random();
         public static string RandomHex(int length)
         {
             //  https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c
@@ -1351,16 +1400,25 @@ namespace VgcApis.Misc
                 return string.Empty;
             }
 
-            Random random = new Random();
             const string chars = "0123456789abcdef";
-            return new string(
-                Enumerable.Repeat(chars, length)
-                    .Select(s => s[random.Next(s.Length)])
-                    .ToArray());
+            int charLen = chars.Length;
+
+            int rndIndex;
+            StringBuilder sb = new StringBuilder("");
+            lock (randHexSource)
+            {
+                for (int i = 0; i < length; i++)
+                {
+                    rndIndex = randHexSource.Next(charLen);
+                    sb.Append(chars[rndIndex]);
+                }
+            }
+            return sb.ToString();
         }
         #endregion
 
         #region reflection
+
         static public string GetPublicFieldsInfoOfType(Type type)
         {
             var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
@@ -1474,6 +1532,25 @@ namespace VgcApis.Misc
             return friendlyName;
         }
 
+        static public List<Tuple<string, string>> GetPublicPropsInfoOfType(Type type) =>
+            type.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
+                .Select(field =>
+                {
+                    var tn = GetFriendlyTypeName(field.PropertyType);
+                    return new Tuple<string, string>(tn, field.Name);
+                })
+                .ToList();
+
+        static public List<Tuple<string, string>> GetPublicEventsInfoOfType(Type type) =>
+            type.GetEvents(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
+                .Select(field =>
+                {
+                    var tn = GetFriendlyTypeName(field.EventHandlerType);
+                    return new Tuple<string, string>(tn, field.Name);
+                })
+                .ToList();
+
+
         /// <summary>
         /// [0: ReturnType 1: MethodName 2: ParamsStr 3: ParamsWithType]
         /// </summary>
@@ -1481,25 +1558,24 @@ namespace VgcApis.Misc
         /// <returns></returns>
         public static List<Tuple<string, string, string, string>> GetPublicMethodNameAndParam(Type type)
         {
-            var exceptList = new List<string>
-            {
-                "add_OnPropertyChanged",
-                "remove_OnPropertyChanged",
-            };
-
             var fullNames = new List<Tuple<string, string, string, string>>();
             var methods = type.GetMethods();
             foreach (var method in methods)
             {
-                var name = method.Name;
-                if (method.IsPublic && !exceptList.Contains(name))
+                if (!method.IsPublic)
                 {
-                    var paramStrs = GenParamStr(method);
-                    var returnType = GetFriendlyTypeName(method.ReturnType);
-                    fullNames.Add(
-                        new Tuple<string, string, string, string>(
-                            returnType, name, paramStrs.Item1, paramStrs.Item2));
+                    continue;
                 }
+                var name = method.Name;
+                if (name.StartsWith("add_On") || name.StartsWith("remove_On"))
+                {
+                    continue;
+                }
+                var paramStrs = GenParamStr(method);
+                var returnType = GetFriendlyTypeName(method.ReturnType);
+                fullNames.Add(
+                    new Tuple<string, string, string, string>(
+                        returnType, name, paramStrs.Item1, paramStrs.Item2));
             }
             return fullNames;
         }

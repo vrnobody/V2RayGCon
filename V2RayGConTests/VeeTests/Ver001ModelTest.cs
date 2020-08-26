@@ -18,9 +18,9 @@ namespace V2RayGCon.Test.VeeTests
                     description = "描述abc123",
                     isUseTls = true,
                     streamParam1 = "/v2ray?#abc",
-                    streamParam2 = Misc.Utils.RandomHex(7),
-                    streamParam3 = Misc.Utils.RandomHex(7),
-                    streamType = Misc.Utils.RandomHex(7),
+                    streamParam2 = VgcApis.Misc.Utils.RandomHex(7),
+                    streamParam3 = VgcApis.Misc.Utils.RandomHex(7),
+                    streamType = VgcApis.Misc.Utils.RandomHex(7),
                     port = 123,
                     uuid = Guid.NewGuid(),
                 };

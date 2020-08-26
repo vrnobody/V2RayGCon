@@ -63,7 +63,8 @@ namespace Luna.Models.Apis.Components
         {
             try
             {
-                return VgcApis.Misc.Utils.TimedDownloadTest(url, proxyPort, kib, timeout);
+                var r = VgcApis.Misc.Utils.TimedDownloadTest(url, proxyPort, kib, timeout);
+                return r.Item1;
             }
             catch { }
             return -1;
@@ -115,9 +116,6 @@ namespace Luna.Models.Apis.Components
 
         public string PatchHref(string url, string href) =>
             vgcWeb.PatchHref(url, href);
-
-        public List<string> FindAllHrefs(string text) =>
-            vgcWeb.FindAllHrefs(text);
 
 
 

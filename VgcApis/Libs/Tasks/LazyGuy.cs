@@ -11,6 +11,7 @@ namespace VgcApis.Libs.Tasks
         private readonly int interval;
         private readonly long ticks;
         private readonly int expectedWorkTime;
+
         AutoResetEvent jobToken = new AutoResetEvent(true);
         AutoResetEvent waitToken = new AutoResetEvent(true);
 

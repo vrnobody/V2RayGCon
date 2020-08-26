@@ -48,7 +48,9 @@
             this.chkIsInjectSkipCNSite = new System.Windows.Forms.CheckBox();
             this.cboxImport = new System.Windows.Forms.ComboBox();
             this.cboxAutorun = new System.Windows.Forms.ComboBox();
+            this.tboxRemark = new System.Windows.Forms.TextBox();
             this.chkImport = new System.Windows.Forms.CheckBox();
+            this.chkRemark = new System.Windows.Forms.CheckBox();
             this.chkAutorun = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
@@ -133,7 +135,8 @@
             this.cboxInMode.Items.AddRange(new object[] {
             resources.GetString("cboxInMode.Items"),
             resources.GetString("cboxInMode.Items1"),
-            resources.GetString("cboxInMode.Items2")});
+            resources.GetString("cboxInMode.Items2"),
+            resources.GetString("cboxInMode.Items3")});
             this.cboxInMode.Name = "cboxInMode";
             this.toolTip1.SetToolTip(this.cboxInMode, resources.GetString("cboxInMode.ToolTip"));
             // 
@@ -167,7 +170,9 @@
             this.groupBox2.Controls.Add(this.chkIsInjectSkipCNSite);
             this.groupBox2.Controls.Add(this.cboxImport);
             this.groupBox2.Controls.Add(this.cboxAutorun);
+            this.groupBox2.Controls.Add(this.tboxRemark);
             this.groupBox2.Controls.Add(this.chkImport);
+            this.groupBox2.Controls.Add(this.chkRemark);
             this.groupBox2.Controls.Add(this.chkAutorun);
             this.groupBox2.Controls.Add(this.chkMark);
             this.groupBox2.Controls.Add(this.cboxMark);
@@ -215,12 +220,25 @@
             this.cboxAutorun.Name = "cboxAutorun";
             this.toolTip1.SetToolTip(this.cboxAutorun, resources.GetString("cboxAutorun.ToolTip"));
             // 
+            // tboxRemark
+            // 
+            resources.ApplyResources(this.tboxRemark, "tboxRemark");
+            this.tboxRemark.Name = "tboxRemark";
+            this.toolTip1.SetToolTip(this.tboxRemark, resources.GetString("tboxRemark.ToolTip"));
+            // 
             // chkImport
             // 
             resources.ApplyResources(this.chkImport, "chkImport");
             this.chkImport.Name = "chkImport";
             this.toolTip1.SetToolTip(this.chkImport, resources.GetString("chkImport.ToolTip"));
             this.chkImport.UseVisualStyleBackColor = true;
+            // 
+            // chkRemark
+            // 
+            resources.ApplyResources(this.chkRemark, "chkRemark");
+            this.chkRemark.Name = "chkRemark";
+            this.toolTip1.SetToolTip(this.chkRemark, resources.GetString("chkRemark.ToolTip"));
+            this.chkRemark.UseVisualStyleBackColor = true;
             // 
             // chkAutorun
             // 
@@ -274,5 +292,7 @@
         private System.Windows.Forms.CheckBox chkIsInjectSkipCNSite;
         private System.Windows.Forms.CheckBox chkShareOverLAN;
         private System.Windows.Forms.CheckBox chkIncrement;
+        private System.Windows.Forms.TextBox tboxRemark;
+        private System.Windows.Forms.CheckBox chkRemark;
     }
 }

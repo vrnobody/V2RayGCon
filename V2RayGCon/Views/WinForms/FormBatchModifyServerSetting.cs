@@ -51,10 +51,12 @@ namespace V2RayGCon.Views.WinForms
 
             var first = firstCtrl.GetCoreStates().GetAllRawCoreInfo();
 
+
             this.cboxInMode.SelectedIndex = first.customInbType;
             this.tboxInIP.Text = first.inbIp;
             this.tboxInPort.Text = first.inbPort.ToString();
             this.cboxMark.Text = first.customMark;
+            this.tboxRemark.Text = first.customRemark;
             this.cboxAutorun.SelectedIndex = first.isAutoRun ? 0 : 1;
             this.cboxImport.SelectedIndex = first.isInjectImport ? 0 : 1;
             this.cboxIsInjectSkipCNSite.SelectedIndex = first.isInjectSkipCNSite ? 0 : 1;
@@ -95,12 +97,13 @@ namespace V2RayGCon.Views.WinForms
             var newImport = chkImport.Checked ? cboxImport.SelectedIndex : -1;
             var newSkipCN = chkIsInjectSkipCNSite.Checked ? cboxIsInjectSkipCNSite.SelectedIndex : -1;
             var isPortAutoIncrease = chkIncrement.Checked;
+            var newRemark = chkRemark.Checked ? tboxRemark.Text : null;
 
 
             ModifyServersSetting(
                 list,
                 newMode, newIP, newPort, isPortAutoIncrease,
-                newMark, newAutorun, newImport, newSkipCN);
+                newMark, newRemark, newAutorun, newImport, newSkipCN);
         }
 
         #endregion
@@ -109,7 +112,7 @@ namespace V2RayGCon.Views.WinForms
         void ModifyServersSetting(
             List<VgcApis.Interfaces.ICoreServCtrl> list,
             int newMode, string newIP, int newPort, bool isPortAutoIncrease,
-            string newMark, int newAutorun, int newImport, int newSkipCN)
+            string newMark, string newRemark, int newAutorun, int newImport, int newSkipCN)
         {
             Action<int, Action> worker = (index, next) =>
             {
@@ -121,7 +124,7 @@ namespace V2RayGCon.Views.WinForms
                     ModifyServerSetting(
                         ref server,
                         newMode, newIP, portNumber,
-                        newMark, newAutorun, newImport, newSkipCN);
+                        newMark, newRemark, newAutorun, newImport, newSkipCN);
                     server.InvokeEventOnPropertyChange();
                     next();
                     return;
@@ -132,7 +135,7 @@ namespace V2RayGCon.Views.WinForms
                     ModifyServerSetting(
                         ref server,
                         newMode, newIP, portNumber,
-                        newMark, newAutorun, newImport, newSkipCN);
+                        newMark, newRemark, newAutorun, newImport, newSkipCN);
                     server.GetCoreCtrl().RestartCoreThen();
                     next();
                 });
@@ -152,7 +155,7 @@ namespace V2RayGCon.Views.WinForms
         void ModifyServerSetting(
             ref VgcApis.Interfaces.ICoreServCtrl serverCtrl,
             int newMode, string newIP, int newPort,
-            string newMark, int newAutorun, int newImport, int newSkipCN)
+            string newMark, string newRemark, int newAutorun, int newImport, int newSkipCN)
         {
             var server = serverCtrl.GetCoreStates().GetAllRawCoreInfo();
 
@@ -188,6 +191,11 @@ namespace V2RayGCon.Views.WinForms
             if (newMark != null)
             {
                 server.customMark = newMark;
+            }
+
+            if (!string.IsNullOrEmpty(newRemark))
+            {
+                server.customRemark = newRemark;
             }
         }
 

@@ -99,7 +99,7 @@ namespace V2RayGCon.Controllers
             var restartCore = false;
             if (cs.inboundMode != ci.customInbType)
             {
-                ci.customInbType = Math.Abs(cs.inboundMode) % 3;
+                ci.customInbType = Misc.Utils.Clamp(cs.inboundMode, 0, Models.Datas.Table.customInbTypeNames.Length);
                 restartCore = true;
             }
 
@@ -147,17 +147,11 @@ namespace V2RayGCon.Controllers
 
             ci.isInjectImport = cs.isGlobalImport;
             ci.isInjectSkipCNSite = cs.isBypassCnSite;
-
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            GetConfiger().UpdateSummary();
+            if (restartCore && GetCoreCtrl().IsCoreRunning())
             {
-                GetConfiger().UpdateSummaryThen(() =>
-                {
-                    if (restartCore && GetCoreCtrl().IsCoreRunning())
-                    {
-                        GetCoreCtrl().RestartCore();
-                    }
-                });
-            });
+                GetCoreCtrl().RestartCore();
+            }
         }
 
         public ICoreStates GetCoreStates() => states;

@@ -70,6 +70,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Add client manually. 的本地化字符串。
+        /// </summary>
+        internal static string AddClientManually {
+            get {
+                return ResourceManager.GetString("AddClientManually", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Save current config as new server? 的本地化字符串。
         /// </summary>
         internal static string AddNewServer {
@@ -232,11 +241,11 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Check for update 的本地化字符串。
+        ///   查找类似 Check for V2RayGCon update 的本地化字符串。
         /// </summary>
-        internal static string CheckForUpdate {
+        internal static string CheckForVgcUpdate {
             get {
-                return ResourceManager.GetString("CheckForUpdate", resourceCulture);
+                return ResourceManager.GetString("CheckForVgcUpdate", resourceCulture);
             }
         }
         
@@ -286,11 +295,29 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Origin server&apos;s config will be reset, continue? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmClearOrgServCfg {
+            get {
+                return ResourceManager.GetString("ConfirmClearOrgServCfg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Clear speed test results? 的本地化字符串。
         /// </summary>
         internal static string ConfirmClearSpeedTestResults {
             get {
                 return ResourceManager.GetString("ConfirmClearSpeedTestResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Reset statistics data? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmClearStat {
+            get {
+                return ResourceManager.GetString("ConfirmClearStat", resourceCulture);
             }
         }
         
@@ -487,6 +514,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Newer v2ray-core {0} is available, upgrade now? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmUpgradeV2rayCore {
+            get {
+                return ResourceManager.GetString("ConfirmUpgradeV2rayCore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Newer V2RayGCon v{0} is available, upgrade now? 的本地化字符串。
         /// </summary>
         internal static string ConfirmUpgradeVgc {
@@ -573,6 +609,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string CurSysProxy {
             get {
                 return ResourceManager.GetString("CurSysProxy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Custom 的本地化字符串。
+        /// </summary>
+        internal static string Custom {
+            get {
+                return ResourceManager.GetString("Custom", resourceCulture);
             }
         }
         
@@ -735,15 +780,6 @@ namespace V2RayGCon.Resources.Resx {
         internal static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Cannot load server config. Using default config! 的本地化字符串。
-        /// </summary>
-        internal static string EditorCannotLoadServerConfig {
-            get {
-                return ResourceManager.GetString("EditorCannotLoadServerConfig", resourceCulture);
             }
         }
         
@@ -1037,6 +1073,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Use custom inbounds setting in option window. 的本地化字符串。
+        /// </summary>
+        internal static string InbModeCustomToolTip {
+            get {
+                return ResourceManager.GetString("InbModeCustomToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Inject packageing imports fail, ignore imports. 的本地化字符串。
         /// </summary>
         internal static string InjectPackagingImportsFail {
@@ -1096,6 +1141,24 @@ namespace V2RayGCon.Resources.Resx {
         internal static string LoadJsonFail {
             get {
                 return ResourceManager.GetString("LoadJsonFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Load vemss://... decode template fails. 的本地化字符串。
+        /// </summary>
+        internal static string LoadVemssDecodeTemplateFail {
+            get {
+                return ResourceManager.GetString("LoadVemssDecodeTemplateFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Locate target folder fail. 的本地化字符串。
+        /// </summary>
+        internal static string LocateTargetFolderFail {
+            get {
+                return ResourceManager.GetString("LocateTargetFolderFail", resourceCulture);
             }
         }
         
@@ -1169,6 +1232,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string NameColon {
             get {
                 return ResourceManager.GetString("NameColon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Upload: {0} MiB Download: {1} MiB 的本地化字符串。
+        /// </summary>
+        internal static string NetFlowToolTipTpl {
+            get {
+                return ResourceManager.GetString("NetFlowToolTipTpl", resourceCulture);
             }
         }
         
@@ -1273,6 +1345,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 null param error 的本地化字符串。
+        /// </summary>
+        internal static string NullParamError {
+            get {
+                return ResourceManager.GetString("NullParamError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Options 的本地化字符串。
         /// </summary>
         internal static string Options {
@@ -1333,6 +1414,24 @@ namespace V2RayGCon.Resources.Resx {
         internal static string PacProxy {
             get {
                 return ResourceManager.GetString("PacProxy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Parse custom inbound setting fail! 的本地化字符串。
+        /// </summary>
+        internal static string ParseCustomInboundsSettingFail {
+            get {
+                return ResourceManager.GetString("ParseCustomInboundsSettingFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Password 的本地化字符串。
+        /// </summary>
+        internal static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
             }
         }
         
@@ -1792,6 +1891,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string UpdatingPleaseWait {
             get {
                 return ResourceManager.GetString("UpdatingPleaseWait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 User 的本地化字符串。
+        /// </summary>
+        internal static string User {
+            get {
+                return ResourceManager.GetString("User", resourceCulture);
             }
         }
         

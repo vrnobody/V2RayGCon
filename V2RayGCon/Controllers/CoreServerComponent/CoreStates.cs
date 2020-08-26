@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
@@ -37,6 +38,59 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region public methods
+
+        public void AddStatSample(VgcApis.Models.Datas.StatsSample sample)
+        {
+            if (sample == null)
+            {
+                return;
+            }
+
+            AddToSampleHistory(sample);
+
+            var up = sample.statsUplink;
+            var down = sample.statsDownlink;
+
+            var changed = false;
+            if (up > 0)
+            {
+                Interlocked.Add(ref coreInfo.totalUplinkInBytes, up);
+                changed = true;
+            }
+
+            if (down > 0)
+            {
+                Interlocked.Add(ref coreInfo.totalDownlinkInBytes, down);
+                changed = true;
+            }
+
+            if (changed)
+            {
+                GetParent().InvokeEventOnPropertyChange();
+            }
+        }
+
+        public long GetUplinkTotalInBytes() => coreInfo.totalUplinkInBytes;
+        public long GetDownlinkTotalInBytes() => coreInfo.totalDownlinkInBytes;
+
+        public void SetUplinkTotal(long sizeInBytes)
+        {
+            if (coreInfo.totalUplinkInBytes != sizeInBytes)
+            {
+                Interlocked.Exchange(ref coreInfo.totalUplinkInBytes, sizeInBytes);
+                GetParent().InvokeEventOnPropertyChange();
+            }
+        }
+
+        public void SetDownlinkTotal(long sizeInBytes)
+        {
+            if (coreInfo.totalDownlinkInBytes != sizeInBytes)
+            {
+                Interlocked.Exchange(ref coreInfo.totalDownlinkInBytes, sizeInBytes);
+                GetParent().InvokeEventOnPropertyChange();
+            }
+        }
+
         string GetInProtocolNameByNumber(int typeNumber)
         {
             var table = Models.Datas.Table.customInbTypeNames;
@@ -98,7 +152,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public void SetIsInjectImport(bool IsInjectImport)
         {
             SetSettingsPropertyOnDemand(ref coreInfo.isInjectImport, IsInjectImport, true);
-            configer.UpdateSummaryThen(() => GetParent().InvokeEventOnPropertyChange());
+            configer.UpdateSummary();
         }
 
         public VgcApis.Models.Datas.CoreInfo GetAllRawCoreInfo() => coreInfo;
@@ -117,7 +171,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     string newUid;
                     do
                     {
-                        newUid = Misc.Utils.RandomHex(16);
+                        newUid = VgcApis.Misc.Utils.RandomHex(16);
                     } while (uidList.Contains(newUid));
 
                     coreInfo.uid = newUid;
@@ -308,6 +362,28 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region private methods
+
+        // 暂时不知道这个有什么用，先浪费下内存 XD
+        const int sampleSize = 50;
+        int curSampleIdx = -1;
+        List<VgcApis.Models.Datas.StatsSample> samples = new List<VgcApis.Models.Datas.StatsSample>();
+        void AddToSampleHistory(VgcApis.Models.Datas.StatsSample sample)
+        {
+            lock (samples)
+            {
+                curSampleIdx++;
+                if (samples.Count < sampleSize)
+                {
+                    samples.Add(sample);
+                }
+                else
+                {
+                    curSampleIdx %= sampleSize;
+                    samples[curSampleIdx] = sample;
+                }
+            }
+        }
+
         void UpdateStatusWithSpeedTestResult()
         {
             var latency = GetSpeedTestResult();

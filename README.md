@@ -12,7 +12,7 @@
 
 V2RayGCon是windows下[v2ray-core](https://v2ray.com)的图形(graphic)配置器(configer)。  
 
-[\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]](https://vrnobody.github.io/V2RayGCon/)&nbsp;&nbsp;[\[唯一联系方式 issue\]](https://github.com/vrnobody/V2RayGCon/issues)&nbsp;&nbsp;[\[脚本共享 scripts\]](https://github.com/vrnobody/luna-scripts)  
+[\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]](https://vrnobody.github.io/V2RayGCon/)&nbsp;&nbsp;
 
 ### 安装 Install
 先安装.net framework 4.5+，然后下载解压[V2RayGCon-box.zip][9]到任意目录。  
@@ -30,7 +30,6 @@ Require .net framework 4.5+.
 [diegonehab/luasocket](https://github.com/diegonehab/luasocket.git) Lua socket  
 [FourierTransformer/lua-complete](https://github.com/FourierTransformer/lua-complete.git) lua模块补全  
 [haf/DotNetZip.Semverd](https://github.com/haf/DotNetZip.Semverd) .net 4.0解压zip文件  
-[HtmlAgilityPack](https://html-agility-pack.net/) HTML解释器  
 [jacobslusser/ScintillaNET](https://github.com/jacobslusser/ScintillaNET) 编辑器  
 [JamesNK/Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) 处理json  
 [micjahn/ZXing.Net](https://github.com/micjahn/ZXing.Net/) 处理二维码  
@@ -42,3 +41,4 @@ Require .net framework 4.5+.
 [shadowsocksr-backup/shadowsocksr-csharp](https://github.com/shadowsocksr-backup/shadowsocksr-csharp) 屏幕扫码实现代码  
 [txthinking/blackwhite](https://github.com/txthinking/blackwhite) ProxySetter插件中的默认PAC  
 [v2ray/v2ray-core](https://github.com/v2ray/v2ray-core) v2ray-core服务端  
+[wilhelmy/lua-bencode](https://bitbucket.org/wilhelmy/lua-bencode) bencode(torrent)解释器  

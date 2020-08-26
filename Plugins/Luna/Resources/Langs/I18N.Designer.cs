@@ -196,6 +196,15 @@ namespace Luna.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Replace script: 的本地化字符串。
+        /// </summary>
+        internal static string ReplaceScript {
+            get {
+                return ResourceManager.GetString("ReplaceScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Script name not set! 的本地化字符串。
         /// </summary>
         internal static string ScriptNameNotSet {

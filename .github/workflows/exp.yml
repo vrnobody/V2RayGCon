@@ -94,7 +94,7 @@ jobs:
                 ${{ env.scriptPkgName }}.zip (${{ env.hashScriptPkgZip }})
 
                 其中${{ env.projName }}-${{ env.boxAppend }}.zip打包了v2ray-core-win64 ${{ env.v2rayCoreVer }}
-                ${{ env.scriptPkgName }}.zip中的脚本直接拖进Luna脚本管理器的空白区即可食用
+                ${{ env.scriptPkgName }}.zip解压后拖进Luna脚本管理器的空白区中即可食用
               draft: true
               prerelease: false
 

@@ -83,16 +83,26 @@ namespace V2RayGCon.Views.UserControls
 
         private void ReleaseCoreCtrlEvents()
         {
-            coreServCtrl.OnCoreStart -= OnCorePropertyChangesHandler;
-            coreServCtrl.OnCoreStop -= OnCorePropertyChangesHandler;
-            coreServCtrl.OnPropertyChanged -= OnCorePropertyChangesHandler;
+            var cs = coreServCtrl;
+            if (cs == null)
+            {
+                return;
+            }
+            cs.OnCoreStart -= OnCorePropertyChangesHandler;
+            cs.OnCoreStop -= OnCorePropertyChangesHandler;
+            cs.OnPropertyChanged -= OnCorePropertyChangesHandler;
         }
 
         private void BindCoreCtrlEvents()
         {
-            coreServCtrl.OnCoreStart += OnCorePropertyChangesHandler;
-            coreServCtrl.OnCoreStop += OnCorePropertyChangesHandler;
-            coreServCtrl.OnPropertyChanged += OnCorePropertyChangesHandler;
+            var cs = coreServCtrl;
+            if (cs == null)
+            {
+                return;
+            }
+            cs.OnCoreStart += OnCorePropertyChangesHandler;
+            cs.OnCoreStop += OnCorePropertyChangesHandler;
+            cs.OnPropertyChanged += OnCorePropertyChangesHandler;
         }
 
         async void ShowCtrlBtn(object sender, EventArgs args)
@@ -628,8 +638,14 @@ namespace V2RayGCon.Views.UserControls
             {
                 return;
             }
-            Cleanup();
-            servers.DeleteServerByConfig(GetConfig());
+
+            var config = GetConfig();
+            lock (bindCoreServLocker)
+            {
+                ReleaseCoreCtrlEvents();
+                this.coreServCtrl = null;
+            }
+            servers.DeleteServerByConfig(config);
         }
 
         private void logOfThisServerToolStripMenuItem_Click(object sender, EventArgs e)

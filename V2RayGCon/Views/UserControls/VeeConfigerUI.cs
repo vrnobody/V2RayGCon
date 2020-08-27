@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -124,6 +125,15 @@ namespace V2RayGCon.Views.UserControls
             }
             return null;
         }
+        void DisableStreamParamControlsWhenStreamTypeIsNone(bool isNone)
+        {
+            var enable = !isNone;
+            cboxStreamParma1.Enabled = enable;
+            chkStreamUseTls.Enabled = enable;
+            chkStreamUseSelfSignCert.Enabled = enable;
+            tboxStreamParam2.Enabled = enable;
+            tboxStreamParam3.Enabled = enable;
+        }
 
         #endregion
 
@@ -135,21 +145,15 @@ namespace V2RayGCon.Views.UserControls
             var network = cboxStreamType.Text;
             var opts = GetStreamComponet(network);
 
-            var enableStreamParams = opts != null;
-            cboxStreamParma1.Enabled = enableStreamParams;
-            chkStreamUseTls.Enabled = enableStreamParams;
-            chkStreamUseSelfSignCert.Enabled = enableStreamParams;
-            tboxStreamParam2.Enabled = enableStreamParams;
-            tboxStreamParam3.Enabled = enableStreamParams;
-
-            if (!enableStreamParams)
+            // stream = none or ...
+            DisableStreamParamControlsWhenStreamTypeIsNone(opts == null);
+            if (opts == null)
             {
                 return;
             }
 
             cboxStreamParma1.Items.Clear();
-            cboxStreamParma1.DropDownStyle = opts.dropDownStyle ?
-                ComboBoxStyle.DropDownList : ComboBoxStyle.DropDown;
+            cboxStreamParma1.DropDownStyle = opts.dropDownStyle ? ComboBoxStyle.DropDownList : ComboBoxStyle.DropDown;
             if (opts.dropDownStyle && opts.options.Count > 0)
             {
                 foreach (var kv in opts.options)
@@ -158,26 +162,20 @@ namespace V2RayGCon.Views.UserControls
                 }
             }
 
-            if (string.IsNullOrEmpty(opts.option2Name))
+            var lbs = new List<Control> { lbStreamParam1, lbStreamParam2, lbStreamParam3 };
+            var tboxes = new List<Control> { cboxStreamParma1, tboxStreamParam2, tboxStreamParam3 };
+            var paths = opts.paths;
+            for (int i = 0; i < lbs.Count; i++)
             {
-                tboxStreamParam2.Enabled = false;
+                var visable = i < paths.Count;
+                lbs[i].Visible = visable;
+                tboxes[i].Visible = visable;
+                if (visable)
+                {
+                    var name = paths[i].Split('.').Last();
+                    lbs[i].Text = name;
+                }
             }
-            else
-            {
-                lbStreamParam2.Text = opts.option2Name;
-                tboxStreamParam2.Enabled = true;
-            }
-
-            if (string.IsNullOrEmpty(opts.option3Name))
-            {
-                tboxStreamParam3.Enabled = false;
-            }
-            else
-            {
-                lbStreamParam3.Text = opts.option3Name;
-                tboxStreamParam3.Enabled = true;
-            }
-
         }
 
         private void cboxProtocol_SelectedValueChanged(object sender, EventArgs e)
@@ -224,9 +222,12 @@ namespace V2RayGCon.Views.UserControls
 
         private void cboxStreamParma1_SelectedValueChanged(object sender, EventArgs e)
         {
-            var disable = cboxStreamType.Text == "tcp" && cboxStreamParma1.Text == "none";
-            tboxStreamParam2.Enabled = !disable;
-            tboxStreamParam3.Enabled = !disable;
+            if (cboxStreamType.Text == "tcp")
+            {
+                var enable = cboxStreamParma1.Text != "none";
+                tboxStreamParam2.Enabled = enable;
+                tboxStreamParam3.Enabled = enable;
+            }
         }
         #endregion
 

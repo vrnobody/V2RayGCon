@@ -73,7 +73,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             streamParamText = index < 0 ? string.Empty :
                 GetStr(
                     prefix,
-                    Models.Datas.Table.streamSettings[index].optionPath);
+                    Models.Datas.Table.streamSettings[index].paths[0]);
 
             isUseSockopt = Misc.Utils.GetKey(config, prefix + ".sockopt") != null;
             isUseTls = GetStr(prefix, "security") == "tls";
@@ -218,7 +218,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             var tpl = cache.tpl.LoadTemplate(s.options[key]) as JObject;
             if (!s.dropDownStyle)
             {
-                Misc.Utils.TrySetValue<string>(tpl, s.optionPath, streamParamText);
+                Misc.Utils.TrySetValue<string>(tpl, s.paths[0], streamParamText);
             }
 
             InsertTLSSettings(tpl);

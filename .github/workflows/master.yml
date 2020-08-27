@@ -1,9 +1,9 @@
-name: exp
+name: master
 
 on: 
   push:
     branches:
-      - exp
+      - master
 
 jobs:
   build:

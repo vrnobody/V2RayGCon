@@ -1,3 +1,8 @@
+--[[
+    这个脚本运行后会监听服务器启动、停止事件，并在日志窗口中显示相关信息。
+    你可以通过修改OnGlobalStart/Stop函数来实现更强大的功能。
+]]
+
 local Utils = require('lua.libs.utils')
 local cev = require('lua.modules.coreEvent').new()
 

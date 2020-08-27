@@ -154,7 +154,6 @@ namespace V2RayGCon.Views.WinForms
                 toolMenuItemAbout,
                 toolMenuItemHelp,
                 toolMenuItemConfigEditor,
-                toolMenuItemQRCode,
                 toolMenuItemLog,
                 toolMenuItemOptions,
                 toolStripMenuItemDownLoadV2rayCore,

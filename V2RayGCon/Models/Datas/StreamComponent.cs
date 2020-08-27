@@ -8,7 +8,7 @@ namespace V2RayGCon.Models.Datas
 
         public string name;
         public string network;
-        public string optionPath;
+        public List<string> paths;
         public Dictionary<string, string> options;
 
         public StreamComponent()
@@ -16,7 +16,7 @@ namespace V2RayGCon.Models.Datas
             dropDownStyle = false;
             name = string.Empty;
             network = string.Empty;
-            optionPath = string.Empty;
+            paths = new List<string>();
             options = new Dictionary<string, string>();
         }
     }

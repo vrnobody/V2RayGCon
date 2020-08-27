@@ -986,6 +986,7 @@ namespace V2RayGCon.Misc
                 }
 
                 var links = new List<string>();
+                links.Add(subsString);
                 foreach (var substr in VgcApis.Misc.Utils.ExtractBase64Strings(subsString))
                 {
                     try

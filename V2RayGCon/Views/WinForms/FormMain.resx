@@ -523,7 +523,7 @@
     <value>3, 0</value>
   </data>
   <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>465, 25</value>
+    <value>483, 25</value>
   </data>
   <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -582,7 +582,7 @@
     <value>204, 30</value>
   </data>
   <data name="toolMenuItemSimAddVmessServer.Text" xml:space="preserve">
-    <value>Add vmess client</value>
+    <value>Add client manually</value>
   </data>
   <data name="toolMenuItemImportLinkFromClipboard.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1018,12 +1018,6 @@
   </data>
   <data name="toolMenuItemConfigEditor.Text" xml:space="preserve">
     <value>Config editor</value>
-  </data>
-  <data name="toolMenuItemQRCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 30</value>
-  </data>
-  <data name="toolMenuItemQRCode.Text" xml:space="preserve">
-    <value>QRCode</value>
   </data>
   <data name="toolMenuItemLog.Size" type="System.Drawing.Size, System.Drawing">
     <value>156, 30</value>
@@ -1805,12 +1799,6 @@
     <value>toolMenuItemConfigEditor</value>
   </data>
   <data name="&gt;&gt;toolMenuItemConfigEditor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolMenuItemQRCode.Name" xml:space="preserve">
-    <value>toolMenuItemQRCode</value>
-  </data>
-  <data name="&gt;&gt;toolMenuItemQRCode.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolMenuItemLog.Name" xml:space="preserve">

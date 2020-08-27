@@ -117,100 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnGenUserID.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxAID.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label8.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxPort.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label6.Text" xml:space="preserve">
-    <value>端口</value>
-  </data>
-  <data name="label6.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 12</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>IP(主机名)</value>
-  </data>
-  <data name="label3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="chkboxTLS.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 16</value>
-  </data>
-  <data name="chkboxTLS.Text" xml:space="preserve">
-    <value>Use TLS (https服务器要钩上)</value>
-  </data>
-  <data name="chkboxTLS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>mKCP伪装</value>
-  </data>
-  <data name="label5.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
-  </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>ws的路径</value>
-  </data>
-  <data name="label4.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxKCP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rbtnKCP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rbtnTCP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rbtnWS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rbtnNoStream.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 16</value>
-  </data>
-  <data name="rbtnNoStream.Text" xml:space="preserve">
-    <value>不使用streamSettings</value>
-  </data>
-  <data name="rbtnNoStream.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxAlias.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 12</value>
-  </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>给这份配置起个可爱的名字</value>
-  </data>
-  <data name="label7.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnOK.ToolTip" xml:space="preserve">
     <value />
   </data>
@@ -224,6 +130,7 @@
   <data name="linkConfigEditor.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
     <value>16, 5</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="linkConfigEditor.Size" type="System.Drawing.Size, System.Drawing">
     <value>276, 19</value>
   </data>
@@ -233,8 +140,11 @@
   <data name="linkConfigEditor.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="veeImporter.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>添加vmess客户端</value>
+    <value>简易编辑器</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value />

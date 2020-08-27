@@ -672,8 +672,8 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="Servers" xml:space="preserve">
     <value>服务器</value>
   </data>
-  <data name="CheckForUpdate" xml:space="preserve">
-    <value>检查更新</value>
+  <data name="CheckForVgcUpdate" xml:space="preserve">
+    <value>检查V2RayGCon更新</value>
   </data>
   <data name="StopAllServers" xml:space="preserve">
     <value>全部停止</value>
@@ -758,5 +758,23 @@ https://github.com/v2ray/v2ray-core</value>
   </data>
   <data name="ConfirmUpgradeV2rayCore" xml:space="preserve">
     <value>发现新版v2ray-core {0}是否升级？</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>用户</value>
+  </data>
+  <data name="AddClientManually" xml:space="preserve">
+    <value>手动添加客户端</value>
+  </data>
+  <data name="ConfirmClearOrgServCfg" xml:space="preserve">
+    <value>原服务器的所有配置将被删除，是否继续？</value>
+  </data>
+  <data name="NullParamError" xml:space="preserve">
+    <value>参数为空错误</value>
+  </data>
+  <data name="ConfirmClearStat" xml:space="preserve">
+    <value>是否要把流量统计数据清零？</value>
   </data>
 </root>

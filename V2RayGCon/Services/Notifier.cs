@@ -257,13 +257,32 @@ namespace V2RayGCon.Services
 
 
         #region INotifier.WinForms
+        public void ShowFormJsonEditor(string config)
+        {
+            Views.WinForms.FormConfiger.ShowConfig(config);
+        }
+
+        public void ShowFormServerSettings(ICoreServCtrl coreServ)
+        {
+            if (coreServ == null)
+            {
+                VgcApis.Misc.UI.MsgBox(I18N.NullParamError);
+                return;
+            }
+            Views.WinForms.FormModifyServerSettings.ShowForm(coreServ);
+        }
+
+        public void ShowFormSimpleEditor(ICoreServCtrl coreServ)
+        {
+            var f = Views.WinForms.FormSimpleEditor.GetForm();
+            f.LoadCoreServer(coreServ);
+        }
+
         public void ShowFormOption() => Views.WinForms.FormOption.ShowForm();
 
         public void ShowFormMain() => Views.WinForms.FormMain.ShowForm();
 
         public void ShowFormLog() => Views.WinForms.FormLog.ShowForm();
-
-        public void ShowFormQrcode() => Views.WinForms.FormQRCode.ShowForm();
 
         #endregion
 
@@ -963,21 +982,20 @@ namespace V2RayGCon.Services
                             Properties.Resources.WindowsForm_16x,
                             (s,a)=>Views.WinForms.FormMain.ShowForm()),
                         new ToolStripMenuItem(
+                            I18N.AddClientManually,
+                            Properties.Resources.AddField_16x,
+                            (s,a)=>{
+                                var f = Views.WinForms.FormSimpleEditor.GetForm();
+                                f.LoadCoreServer(null);
+                            }),
+                        new ToolStripMenuItem(
                             I18N.ConfigEditor,
                             Properties.Resources.EditWindow_16x,
                             (s,a)=>Views.WinForms.FormConfiger.ShowConfig()),
                         new ToolStripMenuItem(
-                            I18N.GenQRCode,
-                            Properties.Resources.AzureVirtualMachineExtension_16x,
-                            (s,a)=>Views.WinForms.FormQRCode.ShowForm()),
-                        new ToolStripMenuItem(
                             I18N.Log,
                             Properties.Resources.FSInteractiveWindow_16x,
                             (s,a)=> Views.WinForms.FormLog.ShowForm() ),
-                         new ToolStripMenuItem(
-                            I18N.DownloadV2rayCore,
-                            Properties.Resources.ASX_TransferDownload_blue_16x,
-                            (s,a)=>Views.WinForms.FormDownloadCore.ShowForm()),
                     }),
 
                 serversRootMenuItem,
@@ -1038,14 +1056,19 @@ namespace V2RayGCon.Services
             var children = aboutMenu.DropDownItems;
 
             children.Add(
+                I18N.DownloadV2rayCore,
+                Properties.Resources.ASX_TransferDownload_blue_16x,
+                (s, a) => Views.WinForms.FormDownloadCore.ShowForm());
+
+            children.Add(
+               I18N.CheckForVgcUpdate,
+               null,
+               (s, a) => updater.CheckForUpdate(true));
+
+            children.Add(
                 I18N.ProjectPage,
                 null,
                 (s, a) => Misc.UI.VisitUrl(I18N.VistProjectPage, Properties.Resources.ProjectLink));
-
-            children.Add(
-               I18N.CheckForUpdate,
-               null,
-                (s, a) => updater.CheckForUpdate(true));
 
             children.Add(
                 I18N.Feedback,

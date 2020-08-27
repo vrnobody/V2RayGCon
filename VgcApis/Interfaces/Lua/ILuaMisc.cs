@@ -44,6 +44,11 @@ namespace VgcApis.Interfaces.Lua
 
         #region vgc.Forms
         void Invoke(LuaFunction func);
+
+        void ShowFormJsonEditor(string config);
+        void ShowFormServerSettings(ICoreServCtrl coreServ);
+        void ShowFormSimpleEditor(ICoreServCtrl coreServ);
+
         void ShowFormOption();
 
         void ShowFormLunaMgr();
@@ -52,8 +57,6 @@ namespace VgcApis.Interfaces.Lua
         void ShowFormMain();
 
         void ShowFormLog();
-
-        void ShowFormQrcode();
 
         #endregion
 

@@ -61,7 +61,9 @@ namespace V2RayGCon.Models.Datas
                 dropDownStyle=true,
                 name="mKCP",
                 network="kcp",
-                optionPath="kcpSettings.header.type",
+                paths=new List<string>{
+                    "kcpSettings.header.type",
+                },
                 options=new Dictionary<string,string>{
                     { "none", "kcp"},
                     { "srtp", "kcp_srtp" },
@@ -77,7 +79,11 @@ namespace V2RayGCon.Models.Datas
                 dropDownStyle=true,
                 name="TCP",
                 network="tcp",
-                optionPath="tcpSettings.header.type",
+                paths=new List<string>{
+                    "tcpSettings.header.type",
+                    "tcpSettings.header.request.path",
+                    "tcpSettings.header.request.headers.Host",
+                },
                 options=new Dictionary<string, string>{
                     { "none","tcp" },
                     { "http","tcp_http" },
@@ -89,7 +95,10 @@ namespace V2RayGCon.Models.Datas
                 dropDownStyle=false,
                 name="HTTP/2",
                 network="h2",
-                optionPath="httpSettings.path",
+                paths=new List<string>{
+                    "httpSettings.path",
+                    "httpSettings.host",
+                },
                 options=new Dictionary<string, string>{
                     { "none","h2" },
                 },
@@ -98,7 +107,10 @@ namespace V2RayGCon.Models.Datas
                 dropDownStyle=false,
                 name="WebSocket",
                 network="ws",
-                optionPath="wsSettings.path",
+                paths=new List<string>{
+                    "wsSettings.path",
+                    "wsSettings.headers.Host",
+                },
                 options=new Dictionary<string, string>{
                     { "none","ws" },
                 },
@@ -107,7 +119,9 @@ namespace V2RayGCon.Models.Datas
                 dropDownStyle=false,
                 name="DomainSocket",
                 network="domainsocket",
-                optionPath="dsSettings.path",
+                paths=new List<string>{
+                    "dsSettings.path",
+                },
                 options=new Dictionary<string, string>{
                     { "none","dsock" },
                 },
@@ -118,7 +132,11 @@ namespace V2RayGCon.Models.Datas
                 dropDownStyle=true,
                 name="QUIC",
                 network="quic",
-                optionPath="quicSettings.header.type",
+                paths=new List<string>{
+                    "quicSettings.header.type",
+                    "quicSettings.security",
+                    "quicSettings.key",
+                },
                 options=new Dictionary<string,string>{
                     { "none", "quic"},
                     { "srtp", "quic_srtp" },

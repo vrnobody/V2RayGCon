@@ -11,6 +11,7 @@ namespace VgcApis.Models.Consts
 
         public static int MenuItemGroupSize = 16;
 
+        public const string ProtocolNameVless = @"vless";
         public const string ProtocolNameVmess = @"vmess";
         public const string ProtocolNameSs = @"shadowsocks";
         public const string ProtocolNameSocks = @"socks";

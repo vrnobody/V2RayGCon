@@ -18,6 +18,9 @@ namespace VgcApis.Interfaces.Lua
         int CoreEvStop { get; }
         int CoreEvPropertyChanged { get; }
 
+        bool UnregisterGlobalEvent(ILuaMailBox mailbox, string handle);
+        string RegisterGlobalEvent(ILuaMailBox mailbox, int evType, int evCode);
+
         bool UnregisterCoreEvent(ILuaMailBox mailbox, string handle);
         string RegisterCoreEvent(ICoreServCtrl coreServ, ILuaMailBox mailbox, int evType, int evCode);
         #endregion

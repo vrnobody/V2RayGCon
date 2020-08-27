@@ -27,6 +27,9 @@ namespace Luna.Models.Apis
         }
 
         #region public methods
+        public VgcApis.Interfaces.Services.IServersService GetVgcServerService() =>
+            vgcApi.GetServersService();
+
         public SysCmpos.PostOffice GetPostOffice() => postOffice;
 
         public string RegisterHotKey(Action hotKeyHandler,

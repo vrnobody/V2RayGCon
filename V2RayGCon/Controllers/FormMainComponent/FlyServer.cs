@@ -197,16 +197,16 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 flyPanel.SuspendLayout();
                 if (showWelcome)
                 {
-                    flyPanel.Controls.Add(welcomeItem);
                     removed = GetAllServerControls();
                     flyPanel.Controls.Clear();
+                    flyPanel.Controls.Add(welcomeItem);
                 }
                 else
                 {
+                    flyPanel.Controls.Remove(welcomeItem);
                     AdjustServUiNum(removed, pagedList.Count);
                     var servUis = GetAllServerControls();
                     BindServUiToCoreServCtrl(servUis, pagedList);
-
                 }
                 flyPanel.ResumeLayout();
             };

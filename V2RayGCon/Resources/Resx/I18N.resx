@@ -678,8 +678,8 @@ No, abort.</value>
   <data name="Servers" xml:space="preserve">
     <value>Servers</value>
   </data>
-  <data name="CheckForUpdate" xml:space="preserve">
-    <value>Check for update</value>
+  <data name="CheckForVgcUpdate" xml:space="preserve">
+    <value>Check for V2RayGCon update</value>
   </data>
   <data name="StopAllServers" xml:space="preserve">
     <value>Stop all servers</value>
@@ -767,5 +767,23 @@ No, abort.</value>
   </data>
   <data name="ConfirmUpgradeV2rayCore" xml:space="preserve">
     <value>Newer v2ray-core {0} is available, upgrade now?</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="AddClientManually" xml:space="preserve">
+    <value>Add client manually.</value>
+  </data>
+  <data name="ConfirmClearOrgServCfg" xml:space="preserve">
+    <value>Origin server's config will be reset, continue?</value>
+  </data>
+  <data name="NullParamError" xml:space="preserve">
+    <value>null param error</value>
+  </data>
+  <data name="ConfirmClearStat" xml:space="preserve">
+    <value>Reset statistics data?</value>
   </data>
 </root>

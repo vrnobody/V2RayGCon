@@ -162,6 +162,9 @@
   <data name="OpenScriptManger" xml:space="preserve">
     <value>Open script manager</value>
   </data>
+  <data name="ReplaceScript" xml:space="preserve">
+    <value>Replace script:</value>
+  </data>
   <data name="ScriptNameNotSet" xml:space="preserve">
     <value>Script name not set!</value>
   </data>

@@ -26,8 +26,6 @@ namespace V2RayGCon.Views.UserControls
 
         List<Control> roundLables;
 
-        readonly object bindCoreServLocker = new object();
-
         public ServerUI()
         {
             servers = Services.Servers.Instance;
@@ -81,9 +79,8 @@ namespace V2RayGCon.Views.UserControls
             CreateBgImgForButton(btnMenu, ButtonTypes.Menu);
         }
 
-        private void ReleaseCoreCtrlEvents()
+        private void ReleaseCoreCtrlEvents(VgcApis.Interfaces.ICoreServCtrl cs)
         {
-            var cs = coreServCtrl;
             if (cs == null)
             {
                 return;
@@ -93,9 +90,8 @@ namespace V2RayGCon.Views.UserControls
             cs.OnPropertyChanged -= OnCorePropertyChangesHandler;
         }
 
-        private void BindCoreCtrlEvents()
+        private void BindCoreCtrlEvents(VgcApis.Interfaces.ICoreServCtrl cs)
         {
-            var cs = coreServCtrl;
             if (cs == null)
             {
                 return;
@@ -189,18 +185,11 @@ namespace V2RayGCon.Views.UserControls
 
         void RefreshUiWorker(Action done)
         {
-            VgcApis.Interfaces.ICoreServCtrl csc = null;
-
-            lock (bindCoreServLocker)
-            {
-                csc = coreServCtrl;
-            }
-
+            var csc = coreServCtrl;
             if (csc == null)
             {
                 return;
             }
-
 
             Action worker = () =>
             {
@@ -302,15 +291,18 @@ namespace V2RayGCon.Views.UserControls
             btn.Text = string.Empty;
             btn.FlatAppearance.BorderSize = 0;
 
+            var ico = btnBgCaches[idx];
+            var size = btn.ClientSize;
+            if (ico == null || ico.Size != size)
+            {
+                ico = CreateBgCache(size, btnType);
+                btnBgCaches[idx] = ico;
+            }
+
             Bitmap clone;
             lock (drawImageLocker)
             {
-                var size = btn.ClientSize;
-                if (btnBgCaches[idx] == null || btnBgCaches[idx].Size != size)
-                {
-                    btnBgCaches[idx] = CreateBgCache(size, btnType);
-                }
-                clone = btnBgCaches[idx].Clone() as Bitmap;
+                clone = ico.Clone() as Bitmap;
             }
             btn.BackgroundImage = clone;
         }
@@ -536,17 +528,10 @@ namespace V2RayGCon.Views.UserControls
         #region public method
         public void Rebind(VgcApis.Interfaces.ICoreServCtrl coreServCtrl)
         {
-            lock (bindCoreServLocker)
-            {
-                if (this.coreServCtrl != null)
-                {
-                    ReleaseCoreCtrlEvents();
-                }
-
-                this.coreServCtrl = coreServCtrl;
-                ResetControls();
-                BindCoreCtrlEvents();
-            }
+            ReleaseCoreCtrlEvents(this.coreServCtrl);
+            this.coreServCtrl = coreServCtrl;
+            ResetControls();
+            BindCoreCtrlEvents(coreServCtrl);
             RefreshUiLater();
         }
 
@@ -561,7 +546,7 @@ namespace V2RayGCon.Views.UserControls
             lazyHighlighter?.Deadline();
         }
 
-        public string GetConfig() => coreServCtrl.GetConfiger().GetConfig();
+        public string GetConfig() => coreServCtrl?.GetConfiger()?.GetConfig() ?? "";
 
         public void SetSelected(bool selected)
         {
@@ -577,11 +562,9 @@ namespace V2RayGCon.Views.UserControls
 
         public void Cleanup()
         {
+            ReleaseCoreCtrlEvents(this.coreServCtrl);
             lazyUiUpdater?.Dispose();
             lazyHighlighter?.Dispose();
-
-            ReleaseCoreCtrlEvents();
-
             foreach (Control item in this.Controls)
             {
                 item.MouseEnter -= ShowCtrlBtn;
@@ -639,12 +622,10 @@ namespace V2RayGCon.Views.UserControls
                 return;
             }
 
-            var config = GetConfig();
-            lock (bindCoreServLocker)
-            {
-                ReleaseCoreCtrlEvents();
-                this.coreServCtrl = null;
-            }
+            var csc = this.coreServCtrl;
+            this.coreServCtrl = null;
+            ReleaseCoreCtrlEvents(csc);
+            var config = csc?.GetConfiger()?.GetConfig() ?? "";
             servers.DeleteServerByConfig(config);
         }
 

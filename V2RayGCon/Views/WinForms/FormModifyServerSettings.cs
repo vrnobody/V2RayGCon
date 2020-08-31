@@ -14,22 +14,37 @@ namespace V2RayGCon.Views.WinForms
         static readonly object formInstanLocker = new object();
         public static void ShowForm(ICoreServCtrl coreServ)
         {
+            FormModifyServerSettings form = null;
+
+            if (_instant == null || _instant.IsDisposed)
+            {
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    form = new FormModifyServerSettings();
+                });
+            }
+
             lock (formInstanLocker)
             {
                 if (_instant == null || _instant.IsDisposed)
                 {
-                    VgcApis.Misc.UI.Invoke(() =>
-                    {
-                        _instant = new FormModifyServerSettings();
-                    });
+                    _instant = form;
+                    form = null;
                 }
-                VgcApis.Misc.UI.Invoke(() =>
-                {
-                    _instant.InitControls(coreServ);
-                    _instant.Show();
-                    _instant.Activate();
-                });
             }
+
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                form?.Close();
+                var inst = _instant;
+                if (inst != null)
+                {
+                    inst.InitControls(coreServ);
+                    inst.Show();
+                    inst.Activate();
+                }
+            });
+
         }
         #endregion
 

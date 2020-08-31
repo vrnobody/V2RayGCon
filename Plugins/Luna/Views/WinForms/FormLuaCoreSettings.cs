@@ -9,23 +9,36 @@ namespace Luna.Views.WinForms
         static readonly object formInstanLocker = new object();
         public static void ShowForm(Controllers.LuaCoreCtrl luaCoreCtrl)
         {
+            FormLuaCoreSettings f = null;
+
+            if (_instant == null || _instant.IsDisposed)
+            {
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    f = new FormLuaCoreSettings();
+                });
+            }
+
             lock (formInstanLocker)
             {
                 if (_instant == null || _instant.IsDisposed)
                 {
-                    VgcApis.Misc.UI.Invoke(() =>
-                    {
-                        _instant = new FormLuaCoreSettings();
-                    });
+                    _instant = f;
+                    f = null;
                 }
-
-                VgcApis.Misc.UI.Invoke(() =>
-                {
-                    _instant.InitControls(luaCoreCtrl);
-                    _instant.Show();
-                    _instant.Activate();
-                });
             }
+
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                f?.Close();
+                var inst = _instant;
+                if (inst != null)
+                {
+                    inst.InitControls(luaCoreCtrl);
+                    inst.Show();
+                    inst.Activate();
+                }
+            });
         }
         #endregion
 

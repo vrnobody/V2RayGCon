@@ -226,7 +226,7 @@ namespace V2RayGCon.Libs.V2Ray
             Debug.WriteLine("Kill core!");
 
             isForcedExit = true;
-            SendLog(I18N.AttachToV2rayCoreProcessFail);
+            SendLogBg(I18N.AttachToV2rayCoreProcessFail);
             try
             {
                 VgcApis.Misc.Utils.KillProcessAndChildrens(v2rayCore.Id);
@@ -306,9 +306,9 @@ namespace V2RayGCon.Libs.V2Ray
             isReady = false;
 
             Interlocked.Decrement(ref curConcurrentV2RayCoreNum);
-            SendLog($"{I18N.ConcurrentV2RayCoreNum}{curConcurrentV2RayCoreNum}");
+            SendLogBg($"{I18N.ConcurrentV2RayCoreNum}{curConcurrentV2RayCoreNum}");
 
-            SendLog(I18N.CoreExit);
+            SendLogBg(I18N.CoreExit);
             ReleaseEvents(v2rayCore);
 
             try
@@ -372,7 +372,7 @@ namespace V2RayGCon.Libs.V2Ray
             v2rayCore.BeginErrorReadLine();
             v2rayCore.BeginOutputReadLine();
 
-            SendLog($"{I18N.ConcurrentV2RayCoreNum}{curConcurrentV2RayCoreNum}");
+            SendLogBg($"{I18N.ConcurrentV2RayCoreNum}{curConcurrentV2RayCoreNum}");
         }
 
         private void WriteConfigToStandardInput(string config)
@@ -398,7 +398,7 @@ namespace V2RayGCon.Libs.V2Ray
                 isReady = true;
             }
 
-            SendLog(msg);
+            SendLogBg(msg);
         }
 
         bool MatchAllReadyMarks(string message)
@@ -413,14 +413,17 @@ namespace V2RayGCon.Libs.V2Ray
             return true;
         }
 
-        void SendLog(string log)
+        void SendLogBg(string log)
         {
             var arg = new VgcApis.Models.Datas.StrEvent(log);
-            try
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                OnLog?.Invoke(this, arg);
-            }
-            catch { }
+                try
+                {
+                    OnLog?.Invoke(this, arg);
+                }
+                catch { }
+            });
         }
 
         #endregion

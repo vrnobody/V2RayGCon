@@ -1,40 +1,15 @@
-﻿namespace VgcApis.Libs.Tasks
+﻿using System.Threading;
+
+namespace VgcApis.Libs.Tasks
 {
     public class Bar
     {
-        bool isBlocking = false;
-        readonly object locker = new object();
+        readonly SemaphoreSlim mlocker = new SemaphoreSlim(1);
 
         public Bar() { }
 
-        public bool IsBlocking() => isBlocking;
+        public void Remove() => mlocker.Release();
 
-        public bool Remove()
-        {
-            lock (locker)
-            {
-                if (!isBlocking)
-                {
-                    return false;
-                }
-
-                isBlocking = false;
-                return true;
-            }
-        }
-
-        public bool Install()
-        {
-            lock (locker)
-            {
-                if (isBlocking)
-                {
-                    return false;
-                }
-
-                isBlocking = true;
-                return true;
-            }
-        }
+        public bool Install() => mlocker.Wait(0);
     }
 }

@@ -6,17 +6,19 @@ namespace VgcApis.Models.Datas
     {
         public string serverName, serverDescription, inboundAddress, mark, remark;
         public int inboundMode;
+        public double index;
         public bool isAutorun, isUntrack, isGlobalImport, isBypassCnSite;
 
         public CoreServSettings()
         {
             var em = string.Empty;
+
             serverName = em;
             serverDescription = em;
             inboundAddress = em;
             mark = em;
             remark = em;
-
+            index = 0;
             inboundMode = 0;
             isAutorun = false;
             isUntrack = false;
@@ -29,6 +31,7 @@ namespace VgcApis.Models.Datas
         {
             var cs = coreServ.GetCoreStates();
 
+            index = cs.GetIndex();
             mark = cs.GetMark();
             remark = cs.GetRemark();
             isAutorun = cs.IsAutoRun();
@@ -59,6 +62,7 @@ namespace VgcApis.Models.Datas
 
             var t = target as CoreServSettings;
             if (t.serverName != serverName
+                || (int)t.index != (int)index
                 || t.serverDescription != serverDescription
                 || t.inboundAddress != inboundAddress
                 || t.mark != mark

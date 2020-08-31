@@ -29,12 +29,16 @@ namespace V2RayGCon.Controllers
             this.coreInfo = coreInfo;
         }
 
+        Services.Servers serverServ = null;
+
         public void Run(
              Services.Cache cache,
              Services.Settings setting,
              Services.ConfigMgr configMgr,
              Services.Servers servers)
         {
+            serverServ = servers;
+
             //external dependency injection
             coreCtrl = new CoreServerComponent.CoreCtrl(setting, configMgr);
             states = new CoreServerComponent.CoreStates(servers, coreInfo);
@@ -138,6 +142,13 @@ namespace V2RayGCon.Controllers
             ci.isAutoRun = cs.isAutorun;
             ci.isUntrack = cs.isUntrack;
 
+            bool indexChanged = false;
+            if ((int)ci.index != (int)cs.index)
+            {
+                ci.index = cs.index - 0.01;
+                indexChanged = true;
+            }
+
             bool restartCore = SetCustomInboundInfo(cs);
             if (ci.isInjectImport != cs.isGlobalImport
                 || ci.isInjectSkipCNSite != cs.isBypassCnSite)
@@ -147,7 +158,13 @@ namespace V2RayGCon.Controllers
 
             ci.isInjectImport = cs.isGlobalImport;
             ci.isInjectSkipCNSite = cs.isBypassCnSite;
+
             GetConfiger().UpdateSummary();
+            if (indexChanged)
+            {
+                serverServ.RequireFormMainReload();
+            }
+
             if (restartCore && GetCoreCtrl().IsCoreRunning())
             {
                 GetCoreCtrl().RestartCore();

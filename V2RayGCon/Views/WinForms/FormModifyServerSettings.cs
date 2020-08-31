@@ -80,23 +80,10 @@ namespace V2RayGCon.Views.WinForms
 
         #region private methods
 
-        void SelectByText(ComboBox cbox, string text)
-        {
-            var idx = -1;
-            foreach (string item in cbox.Items)
-            {
-                idx++;
-                if (item.ToLower() == text)
-                {
-                    break;
-                }
-            }
-            cbox.SelectedIndex = idx;
-        }
-
         VgcApis.Models.Datas.CoreServSettings GetterSettings()
         {
             var result = new VgcApis.Models.Datas.CoreServSettings();
+            result.index = VgcApis.Misc.Utils.Str2Int(tboxServIndex.Text);
             result.serverName = tboxServerName.Text;
             result.serverDescription = tboxDescription.Text;
             result.inboundMode = cboxInboundMode.SelectedIndex;
@@ -113,6 +100,7 @@ namespace V2RayGCon.Views.WinForms
         void UpdateControls(VgcApis.Models.Datas.CoreServSettings coreServSettings)
         {
             var s = coreServSettings;
+            tboxServIndex.Text = s.index.ToString();
             tboxServerName.Text = s.serverName;
             tboxDescription.Text = s.serverDescription;
             cboxInboundMode.SelectedIndex = s.inboundMode;
@@ -124,8 +112,6 @@ namespace V2RayGCon.Views.WinForms
             chkGlobalImport.Checked = s.isGlobalImport;
             chkUntrack.Checked = s.isUntrack;
         }
-
-
 
         void UpdateShareLink()
         {

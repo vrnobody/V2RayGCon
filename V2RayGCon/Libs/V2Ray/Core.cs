@@ -208,8 +208,9 @@ namespace V2RayGCon.Libs.V2Ray
                 return;
             }
 
-            var success = VgcApis.Misc.Utils.SendStopSignal(v2rayCore);
-            if (!success)
+            // Ctrl + c is buggy
+            // var success = VgcApis.Misc.Utils.SendStopSignal(v2rayCore);
+            // if (!success)
             {
                 try
                 {
@@ -272,7 +273,7 @@ namespace V2RayGCon.Libs.V2Ray
             // src https://stackoverflow.com/questions/4344923/process-exit-code-when-process-is-killed-forcibly
 
             // ctrl + c not working
-            if (isForcedExit && exitCode == 1)
+            if (isForcedExit)
             {
                 return null;
             }

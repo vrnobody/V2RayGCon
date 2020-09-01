@@ -162,6 +162,7 @@ namespace V2RayGCon.Services
 
         public void SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons reason)
         {
+            VgcApis.Libs.Sys.FileLogger.Warn($"change shutdow reason to: {reason.ToString()}");
             this.shutdownReason = reason;
         }
 

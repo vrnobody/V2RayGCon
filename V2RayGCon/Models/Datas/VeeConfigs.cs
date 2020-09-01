@@ -76,7 +76,10 @@ namespace V2RayGCon.Models.Datas
                     socks.userPassword = auth2;
                     return socks.ToBytes();
                 case "shadowsocks":
-                    var ss = GetSsConfig();
+                    var ss = new VeeShareLinks.Ss1b(bs);
+                    ss.isUseOta = useOta;
+                    ss.password = auth1;
+                    ss.method = method;
                     return ss.ToBytes();
                 default:
                     break;
@@ -84,25 +87,6 @@ namespace V2RayGCon.Models.Datas
             return null;
         }
 
-        VeeShareLinks.Ss1a GetSsConfig()
-        {
-            var ss = new VeeShareLinks.Ss1a();
-            ss.alias = name;
-            ss.description = description;
-            ss.address = host;
-            ss.port = port;
-
-            ss.isUseTls = useTls;
-            ss.streamType = streamType;
-            ss.streamParam1 = streamParam1;
-            ss.streamParam2 = streamParam2;
-            ss.streamParam3 = streamParam3;
-
-            ss.isUseOta = useOta;
-            ss.password = auth1;
-            ss.method = method;
-            return ss;
-        }
 
         VeeShareLinks.BasicSettings GetBasicSettings()
         {
@@ -167,11 +151,14 @@ namespace V2RayGCon.Models.Datas
                 ParseBasicSettings(vless);
                 this.auth1 = vless.uuid.ToString();
             }
-            else if (lv == VeeShareLinks.Ss1a.SupportedVersion())
+            else if (lv == VeeShareLinks.Ss1b.SupportedVersion())
             {
                 this.proto = "shadowsocks";
-                var ss = new VeeShareLinks.Ss1a(bytes);
-                ParseSsConfig(ss);
+                var ss = new VeeShareLinks.Ss1b(bytes);
+                ParseBasicSettings(ss);
+                this.useOta = ss.isUseOta;
+                this.auth1 = ss.password;
+                this.method = ss.method;
             }
             else if (lv == VeeShareLinks.Http3a.SupportedVersion())
             {
@@ -191,26 +178,7 @@ namespace V2RayGCon.Models.Datas
             }
         }
 
-        void ParseSsConfig(VeeShareLinks.Ss1a bs)
-        {
 
-            name = bs.alias;
-            description = bs.description;
-
-            host = bs.address;
-            port = bs.port;
-
-            this.useTls = bs.isUseTls;
-            this.useSelfSignCert = false;
-            this.streamType = bs.streamType;
-
-            this.streamParam1 = bs.streamParam1;
-            this.streamParam2 = bs.streamParam2;
-            this.streamParam3 = bs.streamParam3;
-            this.useOta = bs.isUseOta;
-            this.auth1 = bs.password;
-            this.method = bs.method;
-        }
 
         #endregion
 

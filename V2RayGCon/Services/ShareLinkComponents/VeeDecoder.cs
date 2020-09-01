@@ -27,7 +27,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
         public override void Prepare()
         {
             AddChild(new VeeCodecs.Vmess0a(cache));
-            AddChild(new VeeCodecs.Ss1a(cache));
+            AddChild(new VeeCodecs.Ss1a(cache)); // support old decoder
+            AddChild(new VeeCodecs.Ss1b(cache));
             AddChild(new VeeCodecs.Socks2a(cache));
             AddChild(new VeeCodecs.Http3a(cache));
             AddChild(new VeeCodecs.Vless4a(cache));
@@ -108,7 +109,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     encoder = GetChild<VeeCodecs.Vmess0a>();
                     break;
                 case VgcApis.Models.Consts.Config.ProtocolNameSs:
-                    encoder = GetChild<VeeCodecs.Ss1a>();
+                    encoder = GetChild<VeeCodecs.Ss1b>();
                     break;
                 case VgcApis.Models.Consts.Config.ProtocolNameSocks:
                     encoder = GetChild<VeeCodecs.Socks2a>();

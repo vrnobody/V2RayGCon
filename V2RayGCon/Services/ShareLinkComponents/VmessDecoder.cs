@@ -106,6 +106,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 case "kcp":
                     vmess.type = GetStr(streamPrefix, "kcpSettings.header.type");
+                    vmess.path = GetStr(streamPrefix, "kcpSettings.seed");
                     break;
                 case "ws":
                     vmess.path = GetStr(streamPrefix, "wsSettings.path");
@@ -262,6 +263,10 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 case "kcp":
                     streamToken["kcpSettings"]["header"]["type"] = vmess.type;
+                    if (!string.IsNullOrEmpty(vmess.path))
+                    {
+                        streamToken["kcpSettings"]["seed"] = vmess.path;
+                    }
                     break;
                 case "ws":
                     streamToken["wsSettings"]["path"] =

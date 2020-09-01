@@ -33,10 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.4.4.4")]
+[assembly: AssemblyVersion("1.4.4.6")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.4.4.6 Update sharelink codecs.
+ * v1.4.4.5 Try to fix misleading error message 'v2ray-core fail to start'.
  * v1.4.4.4 Support changing index in FormModifyServerSettings.
  * v1.4.4.3 Kill core directly.
  * v1.4.4.2 Fix some potential deadlocks.

@@ -264,7 +264,7 @@ namespace V2RayGCon.Views.UserControls
 
             foreach (var control in roundLables)
             {
-                if (!control.Visible)
+                if (!control.Visible || control.IsDisposed)
                 {
                     continue;
                 }

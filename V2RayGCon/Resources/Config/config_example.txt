@@ -53,23 +53,21 @@
       {
         "id": "27848739-7e62-4138-9fd3-098a63964b6b",
         "level": 0,
-        "alterId": 100,
-        "email": "love@v2ray.com"
+        "email": "love@v2fly.org"
       }
     ],
     "decryption": "none",
-    "fallback": {
-      "addr": "127.0.0.1",
-      "port": 80,
-      "unix": "/dev/shm/domain.socket",
-      "xver": 0
-    },
-    "fallback_h2": {
-      "addr": "127.0.0.1",
-      "port": 80,
-      "unix": "/dev/shm/domain.socket",
-      "xver": 0
-    }
+    "fallbacks": [
+      {
+        "alpn": [
+          "h2",
+          "http/1.1"
+        ],
+        "path": "/dev/shm/domain.socket",
+        "dest": 80,
+        "xver": 0
+      }
+    ]
   },
   "inVmess": {
     "clients": [

@@ -275,6 +275,7 @@ namespace V2RayGCon.Libs.V2Ray
             // ctrl + c not working
             if (isForcedExit)
             {
+                isForcedExit = false;
                 return null;
             }
 
@@ -353,8 +354,6 @@ namespace V2RayGCon.Libs.V2Ray
         void StartCoreWorker(string config, Dictionary<string, string> envs = null)
         {
             isReady = false;
-            isForcedExit = false;
-
             v2rayCore = CreateV2RayCoreProcess(config);
             VgcApis.Misc.Utils.SetProcessEnvs(v2rayCore, envs);
 

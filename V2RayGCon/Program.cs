@@ -51,7 +51,6 @@ namespace V2RayGCon
                 MessageBox.Show(I18N.ExitOtherVGCFirst);
             }
 
-
             Libs.Sys.SafeNativeMethods.FreeLibrary(pShcoreDll);
         }
 

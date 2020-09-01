@@ -63,6 +63,7 @@ namespace V2RayGCon.Models.Datas
                 network="kcp",
                 paths=new List<string>{
                     "kcpSettings.header.type",
+                    "kcpSettings.seed",
                 },
                 options=new Dictionary<string,string>{
                     { "none", "kcp"},

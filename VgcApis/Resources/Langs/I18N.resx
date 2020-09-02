@@ -120,6 +120,9 @@
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
+  <data name="ConfirmLoadFileContent" xml:space="preserve">
+    <value>Load file [{0}]?</value>
+  </data>
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="Done" xml:space="preserve">
     <value>Done.</value>
+  </data>
+  <data name="FileIsEmpty" xml:space="preserve">
+    <value>File [{0}] is empty.</value>
   </data>
   <data name="KeywordIsTooLong" xml:space="preserve">
     <value>Max keyword length is 100 character.</value>

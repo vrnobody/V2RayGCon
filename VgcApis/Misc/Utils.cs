@@ -18,12 +18,76 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VgcApis.Resources.Langs;
 
 namespace VgcApis.Misc
 {
     public static class Utils
     {
         #region editor
+        public static void BindEditorDragDropEvent(Scintilla editor)
+        {
+            editor.AllowDrop = true;
+
+            editor.DragEnter += (s, a) =>
+            {
+                a.Effect = DragDropEffects.Move;
+            };
+
+            editor.DragDrop += (s, a) =>
+            {
+                var data = a.Data;
+                if (data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    var filenames = a.Data.GetData(DataFormats.FileDrop) as string[];
+                    VgcApis.Misc.Utils.HandleEditorFileDropEvent(editor, filenames);
+                }
+            };
+        }
+
+        public static void HandleEditorFileDropEvent(Scintilla editor, string[] filenames)
+        {
+            if (filenames == null)
+            {
+                return;
+            }
+
+            foreach (var filename in filenames)
+            {
+                if (!File.Exists(filename))
+                {
+                    continue;
+                }
+
+                string content;
+                string scriptName;
+
+                try
+                {
+                    content = File.ReadAllText(filename);
+                    scriptName = Path.GetFileName(filename);
+                }
+                catch
+                {
+                    continue;
+                }
+
+                var name = AutoEllipsis(scriptName, 40);
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    var err = string.Format(I18N.FileIsEmpty, name);
+                    UI.MsgBox(err);
+                    continue;
+                }
+
+                var msg = string.Format(I18N.ConfirmLoadFileContent, name);
+                if (string.IsNullOrEmpty(editor.Text) || VgcApis.Misc.UI.Confirm(msg))
+                {
+                    editor.Text = content;
+                }
+            }
+        }
+
         public static string GetWordFromCurPos(Scintilla editor)
         {
             var line = editor.Lines[editor.CurrentLine];

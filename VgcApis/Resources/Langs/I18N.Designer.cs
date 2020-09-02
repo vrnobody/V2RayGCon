@@ -70,6 +70,15 @@ namespace VgcApis.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Load file [{0}]? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmLoadFileContent {
+            get {
+                return ResourceManager.GetString("ConfirmLoadFileContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Copy 的本地化字符串。
         /// </summary>
         internal static string Copy {
@@ -102,6 +111,15 @@ namespace VgcApis.Resources.Langs {
         internal static string Done {
             get {
                 return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 File [{0}] is empty. 的本地化字符串。
+        /// </summary>
+        internal static string FileIsEmpty {
+            get {
+                return ResourceManager.GetString("FileIsEmpty", resourceCulture);
             }
         }
         

@@ -407,6 +407,8 @@ namespace Luna.Controllers.FormEditorCtrl
 
         private void BindEvents()
         {
+            VgcApis.Misc.Utils.BindEditorDragDropEvent(editor);
+
             btnShowSearchBox.Click += (s, a) => ShowFormSearch();
 
             btnGoto.Click += (s, a) => GotoLine();

@@ -514,8 +514,30 @@ namespace V2RayGCon.Views.UserControls
 
         void ShowPopupMenu(Control control)
         {
-            Point pos = new Point(control.Left, control.Top + control.Height);
-            ctxMenuStripMore.Show(this, pos);
+            Point ctrlPos = new Point(control.Left, control.Top + control.Height);
+            var scrBounds = Screen.FromControl(control).Bounds;
+            var ctrlScreenPos = this.PointToScreen(ctrlPos);
+
+            var menuBounds = ctxMenuStripMore.Size;
+
+            var left = Math.Min(scrBounds.X + scrBounds.Width - 10, ctrlScreenPos.X + menuBounds.Width) - menuBounds.Width;
+            var top = Math.Min(scrBounds.Y + scrBounds.Height - 10, ctrlScreenPos.Y + menuBounds.Height) - menuBounds.Height;
+
+            ctxMenuStripMore.Show(new Point(left, top));
+
+            var dir = left - scrBounds.X > scrBounds.Width / 2 ? ToolStripDropDownDirection.Left : ToolStripDropDownDirection.Right;
+            var items = ctxMenuStripMore.Items;
+            foreach (var item in items)
+            {
+                switch (item)
+                {
+                    case ToolStripMenuItem tmi:
+                        tmi.DropDownDirection = dir;
+                        break;
+                    default:
+                        continue;
+                }
+            }
         }
 
         #endregion

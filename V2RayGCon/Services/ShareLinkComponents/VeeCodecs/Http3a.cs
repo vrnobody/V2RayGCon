@@ -19,7 +19,8 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         #endregion
 
         #region public methods
-        public string GetSupportedVersion() => Models.VeeShareLinks.Http3a.SupportedVersion();
+        public bool IsDecoderFor(string version) => Models.VeeShareLinks.Http3a.IsDecoderFor(version);
+        public bool IsEncoderFor(string protocol) => Models.VeeShareLinks.Http3a.IsEncoderFor(protocol);
 
         public byte[] Config2Bytes(JObject config)
         {

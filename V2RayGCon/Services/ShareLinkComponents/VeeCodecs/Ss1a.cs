@@ -20,9 +20,10 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         #endregion
 
         #region public methods
-        public string GetSupportedVersion() =>
-           Models.VeeShareLinks.Ss1a.SupportedVersion();
+        public bool IsDecoderFor(string version) =>
+           Models.VeeShareLinks.Ss1a.IsDecoderFor(version);
 
+        public bool IsEncoderFor(string protocol) => Models.VeeShareLinks.Ss1a.IsEncoderFor(protocol);
         public byte[] Config2Bytes(JObject config)
         {
             var vee = Config2Vee(config);

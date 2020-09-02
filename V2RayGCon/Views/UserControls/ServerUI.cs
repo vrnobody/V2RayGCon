@@ -261,9 +261,15 @@ namespace V2RayGCon.Views.UserControls
         {
             var left = chkSelected.Left;
             var margin = chkSelected.Left / 2;
+            var flyPanel = this.Parent;
 
             foreach (var control in roundLables)
             {
+                if (flyPanel == null || flyPanel.IsDisposed)
+                {
+                    break;
+                }
+
                 if (!control.Visible || control.IsDisposed)
                 {
                     continue;
@@ -569,6 +575,7 @@ namespace V2RayGCon.Views.UserControls
             {
                 item.MouseEnter -= ShowCtrlBtn;
             }
+            toolTip1.RemoveAll();
         }
         #endregion
 

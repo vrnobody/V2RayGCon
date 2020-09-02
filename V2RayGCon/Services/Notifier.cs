@@ -353,9 +353,13 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.FileLogger.Error(
                 $"Invoke updater() error by control {control.Name}\n" +
                 $"Current thread info: [{th.ManagedThreadId}] {th.Name}\n" +
-                $"{ex}\n" +
+                $"{ex}\n"
 
-                $"{VgcApis.Misc.Utils.GetCurCallStack()}");
+#if DEBUG
+                + $"{VgcApis.Misc.Utils.GetCurCallStack()}"
+#endif
+
+                );
         }
 
         static void InvokeThenWorker(Control control, Action updater, Action next)
@@ -390,10 +394,12 @@ namespace V2RayGCon.Services
 
                 control.Invoke((MethodInvoker)delegate
                 {
+#if DEBUG
                     if (!VgcApis.Misc.UI.IsInUiThread())
                     {
                         VgcApis.Libs.Sys.FileLogger.DumpCallStack("!invoke error!");
                     }
+#endif
                     worker();
                     tail();
                 });

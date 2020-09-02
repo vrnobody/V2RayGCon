@@ -9,8 +9,9 @@ namespace V2RayGCon.Models.VeeShareLinks
 
         public string userName, userPassword;
 
-        static public string SupportedVersion() => version;
+        static public bool IsDecoderFor(string ver) => version == ver;
 
+        static public bool IsEncoderFor(string protocol) => protocol == "socks";
         public Socks2a() : base()
         {
             userName = string.Empty;

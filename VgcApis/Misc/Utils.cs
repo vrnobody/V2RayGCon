@@ -601,7 +601,9 @@ namespace VgcApis.Misc
                     if (UI.IsInUiThread())
                     {
                         Libs.Sys.FileLogger.Warn($"Task [{missionId}] running in UI thread");
+#if DEBUG
                         Libs.Sys.FileLogger.DumpCallStack("Caller stack:");
+#endif
                     }
                     worker?.Invoke();
                     if (UI.IsInUiThread())

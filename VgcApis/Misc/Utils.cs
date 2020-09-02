@@ -548,8 +548,14 @@ namespace VgcApis.Misc
             var port = -1;
             using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
             {
-                socket.Bind(_defaultLoopbackEndpoint);
-                port = ((IPEndPoint)socket.LocalEndPoint).Port;
+                try
+                {
+                    socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontLinger, true);
+                    socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+                    socket.Bind(_defaultLoopbackEndpoint);
+                    port = ((IPEndPoint)socket.LocalEndPoint).Port;
+                }
+                catch { }
             }
             return port;
         }

@@ -980,6 +980,15 @@
   <data name="toolStripMenuItemClearSpeedTestResults.Text" xml:space="preserve">
     <value>Clear speed test results</value>
   </data>
+  <data name="toolStripMenuItemClearStatisticsRecord.Size" type="System.Drawing.Size, System.Drawing">
+    <value>222, 30</value>
+  </data>
+  <data name="toolStripMenuItemClearStatisticsRecord.Text" xml:space="preserve">
+    <value>Clear statistics</value>
+  </data>
+  <data name="toolStripMenuItemClearStatisticsRecord.ToolTipText" xml:space="preserve">
+    <value>Clear download / upload record.</value>
+  </data>
   <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
     <value>219, 6</value>
   </data>
@@ -1763,6 +1772,12 @@
     <value>toolStripMenuItemClearSpeedTestResults</value>
   </data>
   <data name="&gt;&gt;toolStripMenuItemClearSpeedTestResults.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItemClearStatisticsRecord.Name" xml:space="preserve">
+    <value>toolStripMenuItemClearStatisticsRecord</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItemClearStatisticsRecord.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripMenuItem6.Name" xml:space="preserve">

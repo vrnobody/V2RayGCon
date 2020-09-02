@@ -193,6 +193,12 @@ namespace V2RayGCon.Views.UserControls
 
             Action worker = () =>
             {
+                var flyPanel = this.Parent;
+                if (flyPanel == null || flyPanel.IsDisposed)
+                {
+                    return;
+                }
+
                 var cs = csc.GetCoreStates();
                 var cc = csc.GetCoreCtrl();
 
@@ -261,16 +267,10 @@ namespace V2RayGCon.Views.UserControls
         {
             var left = chkSelected.Left;
             var margin = chkSelected.Left / 2;
-            var flyPanel = this.Parent;
 
             foreach (var control in roundLables)
             {
-                if (flyPanel == null || flyPanel.IsDisposed)
-                {
-                    break;
-                }
-
-                if (!control.Visible || control.IsDisposed)
+                if (!control.Visible)
                 {
                     continue;
                 }

@@ -31,6 +31,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem stopBatchSpeedtest,
             ToolStripMenuItem runBatchSpeedtest,
             ToolStripMenuItem clearSpeedtestResults,
+            ToolStripMenuItem clearStatisticRecord,
 
             ToolStripMenuItem modifySelected,
             ToolStripMenuItem stopSelected,
@@ -72,6 +73,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 runBatchSpeedtest,
                 stopBatchSpeedtest,
                 clearSpeedtestResults,
+                clearStatisticRecord,
 
                 modifySelected);
         }
@@ -83,6 +85,20 @@ namespace V2RayGCon.Controllers.FormMainComponent
         #endregion
 
         #region private method
+        void ClearSelectedServersStatRecord()
+        {
+            var servs = servers
+               .GetAllServersOrderByIndex()
+               .Where(s => s.GetCoreStates().IsSelected())
+               .ToList();
+
+            foreach (var serv in servs)
+            {
+                var cst = serv.GetCoreStates();
+                cst.SetDownlinkTotal(0);
+                cst.SetUplinkTotal(0);
+            }
+        }
         void ClearSelectedServersSpeedTestResults()
         {
             var servs = servers
@@ -117,9 +133,18 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem runBatchSpeedtest,
             ToolStripMenuItem stopBatchSpeedtest,
             ToolStripMenuItem clearSpeedtestResults,
+            ToolStripMenuItem clearStatisticsRecord,
 
             ToolStripMenuItem modifySelected)
         {
+            clearStatisticsRecord.Click += RunWhenSelectionIsNotEmptyHandler(() =>
+            {
+                if (Misc.UI.Confirm(I18N.ConfirmClearStat))
+                {
+                    ClearSelectedServersStatRecord();
+                }
+            });
+
             clearSpeedtestResults.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 if (Misc.UI.Confirm(I18N.ConfirmClearSpeedTestResults))

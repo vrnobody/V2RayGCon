@@ -33,10 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.4.4.10")]
+[assembly: AssemblyVersion("1.4.4.12")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.4.4.12 Add feature batch reset server's stat. record.
+ * v1.4.4.11 Refactor RestartCore() and StopCore().
  * v1.4.4.10 Lua editor supports file drag drop.
  * v1.4.4.9 Fix a dead lock in RestartCore().
  * v1.4.4.8 Show popup submenu in the same screen.

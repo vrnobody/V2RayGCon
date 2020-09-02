@@ -241,6 +241,7 @@ namespace V2RayGCon.Views.WinForms
                 toolStripMenuItemStopBatchSpeedTest,
                 toolStripMenuItemRunBatchSpeedTest,
                 toolStripMenuItemClearSpeedTestResults,
+                toolStripMenuItemClearStatisticsRecord,
 
                 toolStripMenuItemModifySettings,
                 toolStripMenuItemStopSelected,

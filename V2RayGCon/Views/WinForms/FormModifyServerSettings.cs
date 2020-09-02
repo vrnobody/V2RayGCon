@@ -227,15 +227,6 @@ namespace V2RayGCon.Views.WinForms
             Close();
         }
 
-        private void btnClearStat_Click(object sender, EventArgs e)
-        {
-            if (VgcApis.Misc.UI.Confirm(I18N.ConfirmClearStat))
-            {
-                var cst = coreServ.GetCoreStates();
-                cst.SetDownlinkTotal(0);
-                cst.SetUplinkTotal(0);
-            }
-        }
         #endregion
     }
 }

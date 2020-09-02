@@ -44,7 +44,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnClearStat = new System.Windows.Forms.Button();
+            this.tboxServIndex = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.tboxDescription = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -60,7 +60,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.tboxShareLink = new System.Windows.Forms.TextBox();
             this.lbServerTitle = new System.Windows.Forms.Label();
-            this.tboxServIndex = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pboxQrcode)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -159,13 +158,11 @@
             this.label5.Name = "label5";
             this.toolTip1.SetToolTip(this.label5, resources.GetString("label5.ToolTip"));
             // 
-            // btnClearStat
+            // tboxServIndex
             // 
-            resources.ApplyResources(this.btnClearStat, "btnClearStat");
-            this.btnClearStat.Name = "btnClearStat";
-            this.toolTip1.SetToolTip(this.btnClearStat, resources.GetString("btnClearStat.ToolTip"));
-            this.btnClearStat.UseVisualStyleBackColor = true;
-            this.btnClearStat.Click += new System.EventHandler(this.btnClearStat_Click);
+            resources.ApplyResources(this.tboxServIndex, "tboxServIndex");
+            this.tboxServIndex.Name = "tboxServIndex";
+            this.toolTip1.SetToolTip(this.tboxServIndex, resources.GetString("tboxServIndex.ToolTip"));
             // 
             // label7
             // 
@@ -199,7 +196,6 @@
             this.groupBox1.Controls.Add(this.tboxServIndex);
             this.groupBox1.Controls.Add(this.cboxInboundAddress);
             this.groupBox1.Controls.Add(this.cboxInboundMode);
-            this.groupBox1.Controls.Add(this.btnClearStat);
             this.groupBox1.Controls.Add(this.btnOK);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.chkGlobalImport);
@@ -292,12 +288,6 @@
             resources.ApplyResources(this.lbServerTitle, "lbServerTitle");
             this.lbServerTitle.Name = "lbServerTitle";
             // 
-            // tboxServIndex
-            // 
-            resources.ApplyResources(this.tboxServIndex, "tboxServIndex");
-            this.tboxServIndex.Name = "tboxServIndex";
-            this.toolTip1.SetToolTip(this.tboxServIndex, resources.GetString("tboxServIndex.ToolTip"));
-            // 
             // FormModifyServerSettings
             // 
             resources.ApplyResources(this, "$this");
@@ -351,7 +341,6 @@
         private System.Windows.Forms.TextBox tboxShareLink;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label lbServerTitle;
-        private System.Windows.Forms.Button btnClearStat;
         private System.Windows.Forms.TextBox tboxServIndex;
     }
 }

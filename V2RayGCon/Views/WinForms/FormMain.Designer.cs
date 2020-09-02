@@ -115,6 +115,7 @@ namespace V2RayGCon.Views.WinForms
             this.toolStripMenuItemRunBatchSpeedTest = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemStopBatchSpeedTest = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemClearSpeedTestResults = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemClearStatisticsRecord = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemModifySettings = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshSummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -570,6 +571,7 @@ namespace V2RayGCon.Views.WinForms
             this.toolStripMenuItemRunBatchSpeedTest,
             this.toolStripMenuItemStopBatchSpeedTest,
             this.toolStripMenuItemClearSpeedTestResults,
+            this.toolStripMenuItemClearStatisticsRecord,
             this.toolStripMenuItem6,
             this.toolStripMenuItemModifySettings,
             this.refreshSummaryToolStripMenuItem,
@@ -695,6 +697,11 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this.toolStripMenuItemClearSpeedTestResults, "toolStripMenuItemClearSpeedTestResults");
             this.toolStripMenuItemClearSpeedTestResults.Name = "toolStripMenuItemClearSpeedTestResults";
+            // 
+            // toolStripMenuItemClearStatisticsRecord
+            // 
+            this.toolStripMenuItemClearStatisticsRecord.Name = "toolStripMenuItemClearStatisticsRecord";
+            resources.ApplyResources(this.toolStripMenuItemClearStatisticsRecord, "toolStripMenuItemClearStatisticsRecord");
             // 
             // toolStripMenuItem6
             // 
@@ -995,5 +1002,6 @@ namespace V2RayGCon.Views.WinForms
         private ToolStripMenuItem toolStripMenuItemReverseByIndex;
         private ToolStripMenuItem toolStripMenuItemModifySettings;
         private ToolStripMenuItem toolStripMenuItemClearSpeedTestResults;
+        private ToolStripMenuItem toolStripMenuItemClearStatisticsRecord;
     }
 }

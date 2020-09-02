@@ -441,7 +441,8 @@ namespace Luna.Models.Apis
             {
                 if (!HasExited(proc))
                 {
-                    VgcApis.Misc.Utils.KillProcessAndChildrens(proc.Id);
+                    proc.Kill();
+                    // VgcApis.Misc.Utils.KillProcessAndChildrens(proc.Id);
                 }
             }
             catch { }
@@ -745,7 +746,8 @@ namespace Luna.Models.Apis
                 {
                     if (!p.HasExited)
                     {
-                        VgcApis.Misc.Utils.KillProcessAndChildrens(p.Id);
+                        p.Kill();
+                        // VgcApis.Misc.Utils.KillProcessAndChildrens(p.Id);
                     }
                 }
                 catch { }

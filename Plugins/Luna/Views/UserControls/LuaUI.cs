@@ -1,5 +1,4 @@
 ﻿using Luna.Resources.Langs;
-using Luna.Services;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,69 +8,109 @@ namespace Luna.Views.UserControls
     internal partial class LuaUI : UserControl
     {
         Controllers.LuaCoreCtrl luaCoreCtrl;
-        Services.LuaServer luaServer;
-        private readonly FormMgrSvc formMgrSvc;
         VgcApis.Libs.Tasks.LazyGuy lazyUpdater;
 
-        public LuaUI(
-            Services.LuaServer luaServer,
-            Services.FormMgrSvc formMgrSvc,
-            Controllers.LuaCoreCtrl luaCoreCtrl)
+        public LuaUI()
         {
-            this.luaCoreCtrl = luaCoreCtrl;
-            this.luaServer = luaServer;
-            this.formMgrSvc = formMgrSvc;
+
             InitializeComponent();
         }
 
         private void LuaUI_Load(object sender, EventArgs e)
         {
-            luaCoreCtrl.OnStateChange += OnLuaCoreStateChangeHandler;
             lazyUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateUiWorker, 300, 2000)
             {
                 Name = "Luna.UiPanelUpdater",
             };
-
-            UpdateUiLater();
         }
 
         #region public methods
-        public void SetIndex(double index)
+        Services.LuaServer luaServerSvc = null;
+        Services.FormMgrSvc formMgrSvc = null;
+        public void Reload(
+            Services.LuaServer luaServerSvc,
+            Services.FormMgrSvc formMgrSvc,
+
+            Controllers.LuaCoreCtrl luaCoreCtrl)
         {
-            luaCoreCtrl.index = index;
+            this.luaServerSvc = luaServerSvc;
+            this.formMgrSvc = formMgrSvc;
+
+            var org = this.luaCoreCtrl;
+            this.luaCoreCtrl = luaCoreCtrl;
+            ReleaseEvent(org);
+            BindEvent(luaCoreCtrl);
+            UpdateUiLater();
         }
 
-        public double GetIndex() => luaCoreCtrl.index;
+        public void SetIndex(double index)
+        {
+            var ctrl = luaCoreCtrl;
+            if (ctrl == null)
+            {
+                return;
+            }
+            ctrl.index = index;
+        }
+
+        public double GetIndex() => luaCoreCtrl?.index ?? -1;
 
         public void Cleanup()
         {
-            luaCoreCtrl.OnStateChange -= OnLuaCoreStateChangeHandler;
+            ReleaseEvent(this.luaCoreCtrl);
             lazyUpdater?.Dispose();
+            toolTip1.RemoveAll();
+            this.formMgrSvc = null;
+            this.luaServerSvc = null;
         }
-
         #endregion
 
         #region private methods
+        void BindEvent(Controllers.LuaCoreCtrl ctrl)
+        {
+            if (ctrl == null)
+            {
+                return;
+            }
+            ctrl.OnStateChange += OnLuaCoreStateChangeHandler;
+        }
+
+        void ReleaseEvent(Controllers.LuaCoreCtrl ctrl)
+        {
+            if (ctrl == null)
+            {
+                return;
+            }
+            ctrl.OnStateChange -= OnLuaCoreStateChangeHandler;
+        }
+
         void OnLuaCoreStateChangeHandler(object sender, EventArgs args)
         {
-            lazyUpdater.Deadline();
+            UpdateUiLater();
         }
 
         void UpdateUiWorker()
         {
             VgcApis.Misc.UI.Invoke(() =>
            {
-               UpdateNameLabel();
-               UpdateOptionsLabel();
-               UpdateRunningState();
+               var ctrl = this.luaCoreCtrl;
+
+               if (this.Parent == null || ctrl == null)
+               {
+                   return;
+               }
+
+               UpdateNameLabel(ctrl);
+               UpdateOptionsLabel(ctrl);
+               UpdateRunningState(ctrl);
            });
         }
 
         void UpdateUiLater() => lazyUpdater?.Deadline();
 
-        void UpdateNameLabel()
+        void UpdateNameLabel(Controllers.LuaCoreCtrl ctrl)
         {
-            var n = luaCoreCtrl.name;
+            var n = ctrl.name;
             if (lbName.Text != n)
             {
                 lbName.Text = n;
@@ -79,11 +118,11 @@ namespace Luna.Views.UserControls
             }
         }
 
-        void UpdateOptionsLabel()
+        void UpdateOptionsLabel(Controllers.LuaCoreCtrl ctrl)
         {
-            var a = luaCoreCtrl.isAutoRun ? "A" : @"";
-            var h = luaCoreCtrl.isHidden ? "H" : "";
-            var c = luaCoreCtrl.isLoadClr ? "C" : "";
+            var a = ctrl.isAutoRun ? "A" : @"";
+            var h = ctrl.isHidden ? "H" : "";
+            var c = ctrl.isLoadClr ? "C" : "";
             var text = $"{a}{c}{h}";
 
             if (string.IsNullOrEmpty(text))
@@ -97,9 +136,9 @@ namespace Luna.Views.UserControls
             }
         }
 
-        void UpdateRunningState()
+        void UpdateRunningState(Controllers.LuaCoreCtrl ctrl)
         {
-            var isRunning = luaCoreCtrl.isRunning;
+            var isRunning = ctrl.isRunning;
             var text = isRunning ? "ON" : "OFF";
             var color = isRunning ? Color.DarkOrange : Color.Green;
 
@@ -116,15 +155,14 @@ namespace Luna.Views.UserControls
 
         #region UI event handlers
 
-
         private void btnStop_Click(object sender, EventArgs e)
         {
-            luaCoreCtrl.Stop();
+            luaCoreCtrl?.Stop();
         }
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            luaCoreCtrl.Start();
+            luaCoreCtrl?.Start();
         }
 
 
@@ -148,33 +186,36 @@ namespace Luna.Views.UserControls
             Views.WinForms.FormLuaCoreSettings.ShowForm(luaCoreCtrl);
         }
 
-
-
         private void restartToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            luaCoreCtrl.Start();
+            luaCoreCtrl?.Start();
         }
 
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            luaCoreCtrl.Stop();
+            luaCoreCtrl?.Stop();
         }
 
         private void terminateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            luaCoreCtrl.Abort();
+            luaCoreCtrl?.Abort();
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var cs = luaCoreCtrl.GetCoreSettings();
-            formMgrSvc.CreateNewEditor(cs);
+            var ctrl = luaCoreCtrl;
+            if (ctrl == null)
+            {
+                VgcApis.Misc.UI.MsgBox(I18N.ScriptNotFound);
+                return;
+            }
+            var cs = ctrl.GetCoreSettings();
+            formMgrSvc?.CreateNewEditor(cs);
         }
 
         private void optionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Views.WinForms.FormLuaCoreSettings.ShowForm(luaCoreCtrl);
-
+            WinForms.FormLuaCoreSettings.ShowForm(luaCoreCtrl);
         }
 
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -188,12 +229,11 @@ namespace Luna.Views.UserControls
 
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                if (!luaServer.RemoveScriptByName(scriptName))
+                if (luaServerSvc?.RemoveScriptByName(scriptName) != true)
                 {
-                    VgcApis.Misc.UI.MsgBoxAsync("", I18N.ScriptNotFound);
+                    VgcApis.Misc.UI.MsgBoxAsync(I18N.ScriptNotFound);
                 }
             });
-
         }
 
         private void btnMenuMore_Click(object sender, EventArgs e)
@@ -202,8 +242,6 @@ namespace Luna.Views.UserControls
             Point pos = new Point(control.Left, control.Top + control.Height);
             contextMenuStripMore.Show(this, pos);
         }
-
-
         #endregion
     }
 }

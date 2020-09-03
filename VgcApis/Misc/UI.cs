@@ -17,6 +17,33 @@ namespace VgcApis.Misc
     public static class UI
     {
         #region Controls
+        public static List<T> DoHouseKeeping<T>(FlowLayoutPanel flyPanel, int num)
+           where T : Control, new()
+        {
+            var removed = new List<T>();
+            if (flyPanel == null || flyPanel.IsDisposed)
+            {
+                return removed;
+            }
+
+            var ctrls = flyPanel.Controls.OfType<T>().ToList();
+            var numAdd = num - ctrls.Count;
+            for (int i = 0; i < numAdd; i++)
+            {
+                flyPanel.Controls.Add(new T());
+            }
+
+            var numRemove = ctrls.Count - num;
+            ctrls.Reverse();
+            for (int i = 0; i < numRemove; i++)
+            {
+                var c = ctrls[i];
+                removed.Add(c);
+                flyPanel.Controls.Remove(c);
+            }
+            return removed;
+        }
+
         public static void SetSearchIndicator(Scintilla scintilla)
         {
             // indicator for search

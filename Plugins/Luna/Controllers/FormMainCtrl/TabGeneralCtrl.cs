@@ -25,7 +25,12 @@ namespace Luna.Controllers.FormMainCtrl
             Button btnImport,
             Button btnExport)
         {
-            BindControls(flyLuaUiPanel, btnStopAll, btnKillAll, btnDelAll, btnImport, btnExport);
+            this.btnStopAll = btnStopAll;
+            this.btnKillAll = btnKillAll;
+            this.flyLuaUiPanel = flyLuaUiPanel;
+            this.btnDelAll = btnDelAll;
+            this.btnImport = btnImport;
+            this.btnExport = btnExport;
         }
 
         #region public methods
@@ -39,14 +44,27 @@ namespace Luna.Controllers.FormMainCtrl
             this.luaServer = luaServer;
             this.formMgrSvc = formMgrSvc;
 
-            BindEvents(luaServer);
-            BindDragDropEvent();
+            BindControlsEvent(luaServer);
+            BindFlyPanelDragDropEvent();
 
             RefreshFlyPanel();
             luaServer.OnRequireFlyPanelUpdate += OnLuaCoreCtrlListChangeHandler;
         }
 
-        void BindDragDropEvent()
+
+        public void Cleanup()
+        {
+            luaServer.OnRequireFlyPanelUpdate -= OnLuaCoreCtrlListChangeHandler;
+            var list = flyLuaUiPanel.Controls;
+            foreach (Views.UserControls.LuaUI c in list)
+            {
+                c.Cleanup();
+            }
+        }
+        #endregion
+
+        #region private methods
+        void BindFlyPanelDragDropEvent()
         {
             flyLuaUiPanel.DragEnter += (s, a) =>
             {
@@ -134,7 +152,7 @@ namespace Luna.Controllers.FormMainCtrl
             panel.Invalidate();
         }
 
-        private void BindEvents(Services.LuaServer luaServer)
+        private void BindControlsEvent(Services.LuaServer luaServer)
         {
             btnDelAll.Click += (s, a) =>
             {
@@ -202,19 +220,6 @@ namespace Luna.Controllers.FormMainCtrl
                 }
             };
         }
-
-        public void Cleanup()
-        {
-            luaServer.OnRequireFlyPanelUpdate -= OnLuaCoreCtrlListChangeHandler;
-            var list = flyLuaUiPanel.Controls;
-            foreach (Views.UserControls.LuaUI c in list)
-            {
-                c.Cleanup();
-            }
-        }
-        #endregion
-
-        #region private methods
         void OnLuaCoreCtrlListChangeHandler(object sender, EventArgs args)
         {
             RefreshFlyPanel();
@@ -224,49 +229,34 @@ namespace Luna.Controllers.FormMainCtrl
         {
             VgcApis.Misc.UI.Invoke(() =>
            {
-               ClearFlyPanel();
-               AddLuaCoreCtrlToPanel();
+               var ctrls = luaServer.GetAllLuaCoreCtrls();
+               var removed = VgcApis.Misc.UI.DoHouseKeeping<LuaUI>(flyLuaUiPanel, ctrls.Count);
+               ReloadAllCtrls(ctrls);
+               DisposeRemovedCtrls(removed);
            });
         }
 
-        void AddLuaCoreCtrlToPanel()
+        void DisposeRemovedCtrls(List<LuaUI> rmCtrls)
         {
-            var ctrls = luaServer.GetAllLuaCoreCtrls();
-            foreach (var c in ctrls)
+            foreach (var ctrl in rmCtrls)
             {
-                var ui = new LuaUI(
-                    luaServer, formMgrSvc, c);
-                flyLuaUiPanel.Controls.Add(ui);
+                ctrl.Cleanup();
             }
         }
 
-        void ClearFlyPanel()
+        void ReloadAllCtrls(List<LuaCoreCtrl> ctrls)
         {
-            var list = flyLuaUiPanel.Controls;
-            foreach (Views.UserControls.LuaUI c in list)
+            var uis = flyLuaUiPanel.Controls.OfType<LuaUI>().ToList();
+            if (uis.Count() != ctrls.Count())
             {
-                c.Cleanup();
+                return;
             }
-            flyLuaUiPanel.Controls.Clear();
+
+            for (int i = 0; i < uis.Count(); i++)
+            {
+                uis[i].Reload(luaServer, formMgrSvc, ctrls[i]);
+            }
         }
-
-        private void BindControls(
-            FlowLayoutPanel flyLuaUiPanel,
-            Button btnStopAll,
-            Button btnKillAll,
-            Button btnDelAll,
-            Button btnImport,
-            Button btnExport)
-        {
-            this.btnStopAll = btnStopAll;
-            this.btnKillAll = btnKillAll;
-            this.flyLuaUiPanel = flyLuaUiPanel;
-            this.btnDelAll = btnDelAll;
-            this.btnImport = btnImport;
-            this.btnExport = btnExport;
-
-        }
-
         #endregion
     }
 }

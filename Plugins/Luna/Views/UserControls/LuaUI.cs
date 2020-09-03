@@ -59,7 +59,6 @@ namespace Luna.Views.UserControls
         {
             ReleaseEvent(this.luaCoreCtrl);
             lazyUpdater?.Dispose();
-            toolTip1.RemoveAll();
             this.formMgrSvc = null;
             this.luaServerSvc = null;
         }

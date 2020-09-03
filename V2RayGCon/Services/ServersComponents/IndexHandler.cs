@@ -40,6 +40,24 @@ namespace V2RayGCon.Services.ServersComponents
             }
         }
 
+        public void SortCoreServerCtrlListByDownloadTotal(
+         ref List<VgcApis.Interfaces.ICoreServCtrl> coreList)
+        {
+            lock (writeLocker)
+            {
+                SortServerItemList(ref coreList, DownloadTotalDecComparer);
+            }
+        }
+
+        public void SortCoreServerCtrlListByUploadTotal(
+         ref List<VgcApis.Interfaces.ICoreServCtrl> coreList)
+        {
+            lock (writeLocker)
+            {
+                SortServerItemList(ref coreList, UploadTotalDecComparer);
+            }
+        }
+
         public void SortCoreServerCtrlListByLastModifyDate(
          ref List<VgcApis.Interfaces.ICoreServCtrl> coreList)
         {
@@ -125,6 +143,24 @@ namespace V2RayGCon.Services.ServersComponents
             var spa = a.GetCoreStates().GetSpeedTestResult();
             var spb = b.GetCoreStates().GetSpeedTestResult();
             return spa.CompareTo(spb);
+        }
+
+        int DownloadTotalDecComparer(
+           VgcApis.Interfaces.ICoreServCtrl a,
+           VgcApis.Interfaces.ICoreServCtrl b)
+        {
+            var ticksA = a.GetCoreStates().GetDownlinkTotalInBytes();
+            var ticksB = b.GetCoreStates().GetDownlinkTotalInBytes();
+            return ticksB.CompareTo(ticksA);
+        }
+
+        int UploadTotalDecComparer(
+           VgcApis.Interfaces.ICoreServCtrl a,
+           VgcApis.Interfaces.ICoreServCtrl b)
+        {
+            var ticksA = a.GetCoreStates().GetUplinkTotalInBytes();
+            var ticksB = b.GetCoreStates().GetUplinkTotalInBytes();
+            return ticksB.CompareTo(ticksA);
         }
 
         int UtcTicksDecComparer(

@@ -597,7 +597,6 @@ namespace V2RayGCon.Views.UserControls
             {
                 item.MouseEnter -= ShowCtrlBtn;
             }
-            toolTip1.RemoveAll();
         }
         #endregion
 

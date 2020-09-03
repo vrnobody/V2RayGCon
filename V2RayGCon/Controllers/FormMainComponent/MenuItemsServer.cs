@@ -40,17 +40,23 @@ namespace V2RayGCon.Controllers.FormMainComponent
             // view
             ToolStripMenuItem moveToTop,
             ToolStripMenuItem moveToBottom,
+
+            ToolStripMenuItem reverseByIndex,
             ToolStripMenuItem sortBySpeed,
             ToolStripMenuItem sortByDate,
             ToolStripMenuItem sortBySummary,
-            ToolStripMenuItem reverseByIndex)
+          ToolStripMenuItem sortByDownloadTotal,
+             ToolStripMenuItem sortByUploadTotal)
         {
             cache = Services.Cache.Instance;
             servers = Services.Servers.Instance;
             slinkMgr = Services.ShareLinkMgr.Instance;
             settings = Services.Settings.Instance;
 
-            InitCtrlSorting(sortBySpeed, sortByDate, sortBySummary, reverseByIndex);
+            InitCtrlSorting(
+                reverseByIndex,
+                sortBySpeed, sortByDate, sortBySummary,
+                sortByDownloadTotal, sortByUploadTotal);
 
             InitCtrlView(moveToTop, moveToBottom);
 
@@ -282,11 +288,19 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         private void InitCtrlSorting(
+            ToolStripMenuItem reverseByIndex,
             ToolStripMenuItem sortBySpeed,
             ToolStripMenuItem sortByDate,
             ToolStripMenuItem sortBySummary,
-            ToolStripMenuItem reverseByIndex)
+             ToolStripMenuItem sortByDownloadTotal,
+             ToolStripMenuItem sortByUploadTotal)
         {
+            sortByDownloadTotal.Click += RunWhenSelectionIsNotEmptyHandler(
+               () => servers.SortSelectedByDownloadTotal());
+
+            sortByUploadTotal.Click += RunWhenSelectionIsNotEmptyHandler(
+               () => servers.SortSelectedByUploadTotal());
+
             reverseByIndex.Click += RunWhenSelectionIsNotEmptyHandler(
                 () => servers.ReverseSelectedByIndex());
 

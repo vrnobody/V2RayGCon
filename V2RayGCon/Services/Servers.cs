@@ -92,6 +92,15 @@ namespace V2RayGCon.Services
         {
             SortSelectedServers((list) => indexHandler.SortCoreServCtrlListBySpeedTestResult(ref list));
         }
+        public void SortSelectedByDownloadTotal()
+        {
+            SortSelectedServers((list) => indexHandler.SortCoreServerCtrlListByDownloadTotal(ref list));
+        }
+        public void SortSelectedByUploadTotal()
+        {
+            SortSelectedServers((list) => indexHandler.SortCoreServerCtrlListByUploadTotal(ref list));
+        }
+
 
         public void SortSelectedByLastModifiedDate()
         {

@@ -22,6 +22,8 @@ namespace ProxySetter.Services
         {
             orgSysProxySetting = Libs.Sys.ProxySetter.GetProxySetting();
 
+            Microsoft.Win32.SystemEvents.SessionEnding += SessionEndingHandler;
+
             FileLogger.Info("ProxySetter: remember current sys proxy settings");
 
             this.vgcApi = api;
@@ -60,6 +62,7 @@ namespace ProxySetter.Services
 
         public void Cleanup()
         {
+            Microsoft.Win32.SystemEvents.SessionEnding += SessionEndingHandler;
             FileLogger.Info("ProxySetting.Cleanup() begin");
             setting.SetIsDisposing(true);
             setting.DebugLog("call Luncher.cleanup");
@@ -77,6 +80,12 @@ namespace ProxySetter.Services
         #endregion
 
         #region private methods
+        void SessionEndingHandler(object sender, Microsoft.Win32.SessionEndingEventArgs args)
+        {
+            FileLogger.Warn($"ProxySetter: restore proxy setting due to power off");
+            Libs.Sys.ProxySetter.UpdateProxySettingOnDemand(orgSysProxySetting);
+        }
+
         ToolStripMenuItem miProxyModeDirect = null;
         ToolStripMenuItem miProxyModeGlobal = null;
         ToolStripMenuItem miProxyModePac = null;

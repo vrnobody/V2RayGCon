@@ -160,6 +160,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         readonly object genUidLocker = new object();
         public string GetUid()
         {
+            bool refresh = false;
             lock (genUidLocker)
             {
                 if (string.IsNullOrEmpty(coreInfo.uid))
@@ -175,8 +176,13 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     } while (uidList.Contains(newUid));
 
                     coreInfo.uid = newUid;
-                    GetParent().InvokeEventOnPropertyChange();
+                    refresh = true;
                 }
+            }
+
+            if (refresh)
+            {
+                GetParent().InvokeEventOnPropertyChange();
             }
             return coreInfo.uid;
         }

@@ -120,6 +120,9 @@
   <data name="Confirm" xml:space="preserve">
     <value>确认</value>
   </data>
+  <data name="ConfirmLoadFileContent" xml:space="preserve">
+    <value>载入 [{0}] 的内容？</value>
+  </data>
   <data name="Copy" xml:space="preserve">
     <value>复制</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="Done" xml:space="preserve">
     <value>完成</value>
+  </data>
+  <data name="FileIsEmpty" xml:space="preserve">
+    <value>文件 [{0}] 为空。</value>
   </data>
   <data name="KeywordIsTooLong" xml:space="preserve">
     <value>搜索内容太长了!</value>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -208,12 +209,25 @@ namespace V2RayGCon.Services
 
         void BindAppExitEvents()
         {
-            Application.ApplicationExit += (s, a) => context.ExitThread();
+            Application.ApplicationExit += (s, a) =>
+            {
+                VgcApis.Libs.Sys.FileLogger.Warn($"detect application exit event.");
+                context.ExitThread();
+            };
+
+            Microsoft.Win32.SystemEvents.SessionSwitch += (s, a) =>
+            {
+                VgcApis.Libs.Sys.FileLogger.Warn($"detect session switch event: {a.Reason}");
+            };
 
             Microsoft.Win32.SystemEvents.SessionEnding += (s, a) =>
             {
+                VgcApis.Libs.Sys.FileLogger.Warn($"receive session ending event.");
                 setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff);
-                context.ExitThread();
+                setting.SaveUserSettingsNow();
+
+                // let it go
+                // context.ExitThread();
             };
 
             Application.ThreadException += (s, a) => ShowExceptionDetailAndExit(a.Exception);

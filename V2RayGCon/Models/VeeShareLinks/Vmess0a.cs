@@ -8,7 +8,8 @@ namespace V2RayGCon.Models.VeeShareLinks
         // ver 0a is optimized for vmess protocol 
         const string version = @"0a";
 
-        public static string SupportedVersion() => version;
+        public static bool IsDecoderFor(string ver) => version == ver;
+        public static bool IsEncoderFor(string protocol) => protocol == "vmess";
 
         public int alterId; // 16 bit each
         public Guid uuid;
@@ -23,7 +24,6 @@ namespace V2RayGCon.Models.VeeShareLinks
         {
             CopyFrom(source);
         }
-
         #region public methods
 
         public Vmess0a(byte[] bytes) :

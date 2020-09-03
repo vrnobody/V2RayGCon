@@ -14,22 +14,37 @@ namespace V2RayGCon.Views.WinForms
         static readonly object formInstanLocker = new object();
         public static void ShowForm(ICoreServCtrl coreServ)
         {
+            FormModifyServerSettings form = null;
+
+            if (_instant == null || _instant.IsDisposed)
+            {
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    form = new FormModifyServerSettings();
+                });
+            }
+
             lock (formInstanLocker)
             {
                 if (_instant == null || _instant.IsDisposed)
                 {
-                    VgcApis.Misc.UI.Invoke(() =>
-                    {
-                        _instant = new FormModifyServerSettings();
-                    });
+                    _instant = form;
+                    form = null;
                 }
-                VgcApis.Misc.UI.Invoke(() =>
-                {
-                    _instant.InitControls(coreServ);
-                    _instant.Show();
-                    _instant.Activate();
-                });
             }
+
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                form?.Close();
+                var inst = _instant;
+                if (inst != null)
+                {
+                    inst.InitControls(coreServ);
+                    inst.Show();
+                    inst.Activate();
+                }
+            });
+
         }
         #endregion
 
@@ -65,23 +80,10 @@ namespace V2RayGCon.Views.WinForms
 
         #region private methods
 
-        void SelectByText(ComboBox cbox, string text)
-        {
-            var idx = -1;
-            foreach (string item in cbox.Items)
-            {
-                idx++;
-                if (item.ToLower() == text)
-                {
-                    break;
-                }
-            }
-            cbox.SelectedIndex = idx;
-        }
-
         VgcApis.Models.Datas.CoreServSettings GetterSettings()
         {
             var result = new VgcApis.Models.Datas.CoreServSettings();
+            result.index = VgcApis.Misc.Utils.Str2Int(tboxServIndex.Text);
             result.serverName = tboxServerName.Text;
             result.serverDescription = tboxDescription.Text;
             result.inboundMode = cboxInboundMode.SelectedIndex;
@@ -98,6 +100,7 @@ namespace V2RayGCon.Views.WinForms
         void UpdateControls(VgcApis.Models.Datas.CoreServSettings coreServSettings)
         {
             var s = coreServSettings;
+            tboxServIndex.Text = s.index.ToString();
             tboxServerName.Text = s.serverName;
             tboxDescription.Text = s.serverDescription;
             cboxInboundMode.SelectedIndex = s.inboundMode;
@@ -109,8 +112,6 @@ namespace V2RayGCon.Views.WinForms
             chkGlobalImport.Checked = s.isGlobalImport;
             chkUntrack.Checked = s.isUntrack;
         }
-
-
 
         void UpdateShareLink()
         {
@@ -226,15 +227,6 @@ namespace V2RayGCon.Views.WinForms
             Close();
         }
 
-        private void btnClearStat_Click(object sender, EventArgs e)
-        {
-            if (VgcApis.Misc.UI.Confirm(I18N.ConfirmClearStat))
-            {
-                var cst = coreServ.GetCoreStates();
-                cst.SetDownlinkTotal(0);
-                cst.SetUplinkTotal(0);
-            }
-        }
         #endregion
     }
 }

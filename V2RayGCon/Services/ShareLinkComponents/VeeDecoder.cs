@@ -27,7 +27,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
         public override void Prepare()
         {
             AddChild(new VeeCodecs.Vmess0a(cache));
-            AddChild(new VeeCodecs.Ss1a(cache));
+            AddChild(new VeeCodecs.Ss1a(cache)); // support old decoder
+            AddChild(new VeeCodecs.Ss1b(cache));
             AddChild(new VeeCodecs.Socks2a(cache));
             AddChild(new VeeCodecs.Http3a(cache));
             AddChild(new VeeCodecs.Vless4a(cache));
@@ -76,11 +77,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             var bytes = VeeLink2Bytes(shareLink);
             var linkVersion = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
-
-            foreach (var component in GetChildren())
+            var children = GetChildren();
+            foreach (var component in children)
             {
                 var decoder = component as VeeCodecs.IVeeDecoder;
-                if (decoder.GetSupportedVersion() == linkVersion)
+                if (decoder.IsDecoderFor(linkVersion))
                 {
                     return decoder.Bytes2Config(bytes);
                 }
@@ -97,31 +98,18 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            VeeCodecs.IVeeDecoder encoder;
             var protocol = Misc.Utils.GetProtocolFromConfig(json);
-            switch (protocol)
+            var codecs = GetChildren();
+            foreach (var codec in codecs)
             {
-                case VgcApis.Models.Consts.Config.ProtocolNameVless:
-                    encoder = GetChild<VeeCodecs.Vless4a>();
-                    break;
-                case VgcApis.Models.Consts.Config.ProtocolNameVmess:
-                    encoder = GetChild<VeeCodecs.Vmess0a>();
-                    break;
-                case VgcApis.Models.Consts.Config.ProtocolNameSs:
-                    encoder = GetChild<VeeCodecs.Ss1a>();
-                    break;
-                case VgcApis.Models.Consts.Config.ProtocolNameSocks:
-                    encoder = GetChild<VeeCodecs.Socks2a>();
-                    break;
-                case VgcApis.Models.Consts.Config.ProtocolNameHttp:
-                    encoder = GetChild<VeeCodecs.Http3a>();
-                    break;
-                default:
-                    return null;
+                var encoder = codec as VeeCodecs.IVeeDecoder;
+                if (encoder.IsEncoderFor(protocol))
+                {
+                    var bytes = encoder?.Config2Bytes(json);
+                    return Bytes2VeeLink(bytes);
+                }
             }
-
-            var bytes = encoder?.Config2Bytes(json);
-            return Bytes2VeeLink(bytes);
+            return null;
         }
 
         public static byte[] VeeLink2Bytes(string veeLink)

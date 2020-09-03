@@ -26,8 +26,6 @@ namespace V2RayGCon.Views.UserControls
 
         List<Control> roundLables;
 
-        readonly object bindCoreServLocker = new object();
-
         public ServerUI()
         {
             servers = Services.Servers.Instance;
@@ -81,9 +79,8 @@ namespace V2RayGCon.Views.UserControls
             CreateBgImgForButton(btnMenu, ButtonTypes.Menu);
         }
 
-        private void ReleaseCoreCtrlEvents()
+        private void ReleaseCoreCtrlEvents(VgcApis.Interfaces.ICoreServCtrl cs)
         {
-            var cs = coreServCtrl;
             if (cs == null)
             {
                 return;
@@ -93,9 +90,8 @@ namespace V2RayGCon.Views.UserControls
             cs.OnPropertyChanged -= OnCorePropertyChangesHandler;
         }
 
-        private void BindCoreCtrlEvents()
+        private void BindCoreCtrlEvents(VgcApis.Interfaces.ICoreServCtrl cs)
         {
-            var cs = coreServCtrl;
             if (cs == null)
             {
                 return;
@@ -189,21 +185,20 @@ namespace V2RayGCon.Views.UserControls
 
         void RefreshUiWorker(Action done)
         {
-            VgcApis.Interfaces.ICoreServCtrl csc = null;
-
-            lock (bindCoreServLocker)
-            {
-                csc = coreServCtrl;
-            }
-
+            var csc = coreServCtrl;
             if (csc == null)
             {
                 return;
             }
 
-
             Action worker = () =>
             {
+                var flyPanel = this.Parent;
+                if (flyPanel == null || flyPanel.IsDisposed)
+                {
+                    return;
+                }
+
                 var cs = csc.GetCoreStates();
                 var cc = csc.GetCoreCtrl();
 
@@ -302,15 +297,18 @@ namespace V2RayGCon.Views.UserControls
             btn.Text = string.Empty;
             btn.FlatAppearance.BorderSize = 0;
 
+            var ico = btnBgCaches[idx];
+            var size = btn.ClientSize;
+            if (ico == null || ico.Size != size)
+            {
+                ico = CreateBgCache(size, btnType);
+                btnBgCaches[idx] = ico;
+            }
+
             Bitmap clone;
             lock (drawImageLocker)
             {
-                var size = btn.ClientSize;
-                if (btnBgCaches[idx] == null || btnBgCaches[idx].Size != size)
-                {
-                    btnBgCaches[idx] = CreateBgCache(size, btnType);
-                }
-                clone = btnBgCaches[idx].Clone() as Bitmap;
+                clone = ico.Clone() as Bitmap;
             }
             btn.BackgroundImage = clone;
         }
@@ -516,8 +514,30 @@ namespace V2RayGCon.Views.UserControls
 
         void ShowPopupMenu(Control control)
         {
-            Point pos = new Point(control.Left, control.Top + control.Height);
-            ctxMenuStripMore.Show(this, pos);
+            Point ctrlPos = new Point(control.Left, control.Top + control.Height);
+            var scrBounds = Screen.FromControl(control).Bounds;
+            var ctrlScreenPos = this.PointToScreen(ctrlPos);
+
+            var menuBounds = ctxMenuStripMore.Size;
+
+            var left = Math.Min(scrBounds.X + scrBounds.Width - 10, ctrlScreenPos.X + menuBounds.Width) - menuBounds.Width;
+            var top = Math.Min(scrBounds.Y + scrBounds.Height - 10, ctrlScreenPos.Y + menuBounds.Height) - menuBounds.Height;
+
+            ctxMenuStripMore.Show(new Point(left, top));
+
+            var dir = left - scrBounds.X > scrBounds.Width / 2 ? ToolStripDropDownDirection.Left : ToolStripDropDownDirection.Right;
+            var items = ctxMenuStripMore.Items;
+            foreach (var item in items)
+            {
+                switch (item)
+                {
+                    case ToolStripMenuItem tmi:
+                        tmi.DropDownDirection = dir;
+                        break;
+                    default:
+                        continue;
+                }
+            }
         }
 
         #endregion
@@ -536,17 +556,10 @@ namespace V2RayGCon.Views.UserControls
         #region public method
         public void Rebind(VgcApis.Interfaces.ICoreServCtrl coreServCtrl)
         {
-            lock (bindCoreServLocker)
-            {
-                if (this.coreServCtrl != null)
-                {
-                    ReleaseCoreCtrlEvents();
-                }
-
-                this.coreServCtrl = coreServCtrl;
-                ResetControls();
-                BindCoreCtrlEvents();
-            }
+            ReleaseCoreCtrlEvents(this.coreServCtrl);
+            this.coreServCtrl = coreServCtrl;
+            ResetControls();
+            BindCoreCtrlEvents(coreServCtrl);
             RefreshUiLater();
         }
 
@@ -561,7 +574,7 @@ namespace V2RayGCon.Views.UserControls
             lazyHighlighter?.Deadline();
         }
 
-        public string GetConfig() => coreServCtrl.GetConfiger().GetConfig();
+        public string GetConfig() => coreServCtrl?.GetConfiger()?.GetConfig() ?? "";
 
         public void SetSelected(bool selected)
         {
@@ -577,11 +590,9 @@ namespace V2RayGCon.Views.UserControls
 
         public void Cleanup()
         {
+            ReleaseCoreCtrlEvents(this.coreServCtrl);
             lazyUiUpdater?.Dispose();
             lazyHighlighter?.Dispose();
-
-            ReleaseCoreCtrlEvents();
-
             foreach (Control item in this.Controls)
             {
                 item.MouseEnter -= ShowCtrlBtn;
@@ -639,12 +650,10 @@ namespace V2RayGCon.Views.UserControls
                 return;
             }
 
-            var config = GetConfig();
-            lock (bindCoreServLocker)
-            {
-                ReleaseCoreCtrlEvents();
-                this.coreServCtrl = null;
-            }
+            var csc = this.coreServCtrl;
+            this.coreServCtrl = null;
+            ReleaseCoreCtrlEvents(csc);
+            var config = csc?.GetConfiger()?.GetConfig() ?? "";
             servers.DeleteServerByConfig(config);
         }
 

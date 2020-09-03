@@ -196,9 +196,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 }
 
                 v2rayCore.title = coreStates.GetTitle();
-                v2rayCore.RestartCore(
-                    finalConfig.ToString(),
-                    Misc.Utils.GetEnvVarsFromConfig(finalConfig));
+                v2rayCore.RestartCore(finalConfig.ToString(), Misc.Utils.GetEnvVarsFromConfig(finalConfig));
                 bookKeeper?.Run();
             }
             finally

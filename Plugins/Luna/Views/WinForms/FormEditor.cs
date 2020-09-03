@@ -44,7 +44,7 @@ namespace Luna.Views.WinForms
             Services.LuaServer luaServer,
             Services.FormMgrSvc formMgr,
 
-            Models.Data.LuaCoreSetting initialCoreSettings)
+            LuaCoreSetting initialCoreSettings)
         {
             this.api = api;
             this.formMgr = formMgr;
@@ -58,6 +58,7 @@ namespace Luna.Views.WinForms
             title = string.Format(I18N.LunaScrEditor, Properties.Resources.Version);
 
             editor = Misc.UI.CreateLuaEditor(pnlScriptEditor);
+
             this.Text = title;
         }
 

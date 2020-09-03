@@ -150,6 +150,7 @@
     <Compile Include="Models\VeeShareLinks\Http3a.cs" />
     <Compile Include="Models\VeeShareLinks\Socks2a.cs" />
     <Compile Include="Models\VeeShareLinks\BasicSettings.cs" />
+    <Compile Include="Models\VeeShareLinks\Ss1b.cs" />
     <Compile Include="Models\VeeShareLinks\Vless4a.cs" />
     <Compile Include="Resources\Resx\StrConst.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -218,6 +219,7 @@
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Comm.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\IVeeDecoder.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Http3a.cs" />
+    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Ss1b.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Ss1a.cs" />
     <Compile Include="Models\VeeShareLinks\Vmess0a.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Socks2a.cs" />

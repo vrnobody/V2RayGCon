@@ -31,6 +31,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem stopBatchSpeedtest,
             ToolStripMenuItem runBatchSpeedtest,
             ToolStripMenuItem clearSpeedtestResults,
+            ToolStripMenuItem clearStatisticRecord,
 
             ToolStripMenuItem modifySelected,
             ToolStripMenuItem stopSelected,
@@ -39,17 +40,23 @@ namespace V2RayGCon.Controllers.FormMainComponent
             // view
             ToolStripMenuItem moveToTop,
             ToolStripMenuItem moveToBottom,
+
+            ToolStripMenuItem reverseByIndex,
             ToolStripMenuItem sortBySpeed,
             ToolStripMenuItem sortByDate,
             ToolStripMenuItem sortBySummary,
-            ToolStripMenuItem reverseByIndex)
+          ToolStripMenuItem sortByDownloadTotal,
+             ToolStripMenuItem sortByUploadTotal)
         {
             cache = Services.Cache.Instance;
             servers = Services.Servers.Instance;
             slinkMgr = Services.ShareLinkMgr.Instance;
             settings = Services.Settings.Instance;
 
-            InitCtrlSorting(sortBySpeed, sortByDate, sortBySummary, reverseByIndex);
+            InitCtrlSorting(
+                reverseByIndex,
+                sortBySpeed, sortByDate, sortBySummary,
+                sortByDownloadTotal, sortByUploadTotal);
 
             InitCtrlView(moveToTop, moveToBottom);
 
@@ -72,6 +79,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 runBatchSpeedtest,
                 stopBatchSpeedtest,
                 clearSpeedtestResults,
+                clearStatisticRecord,
 
                 modifySelected);
         }
@@ -83,6 +91,20 @@ namespace V2RayGCon.Controllers.FormMainComponent
         #endregion
 
         #region private method
+        void ClearSelectedServersStatRecord()
+        {
+            var servs = servers
+               .GetAllServersOrderByIndex()
+               .Where(s => s.GetCoreStates().IsSelected())
+               .ToList();
+
+            foreach (var serv in servs)
+            {
+                var cst = serv.GetCoreStates();
+                cst.SetDownlinkTotal(0);
+                cst.SetUplinkTotal(0);
+            }
+        }
         void ClearSelectedServersSpeedTestResults()
         {
             var servs = servers
@@ -117,9 +139,18 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem runBatchSpeedtest,
             ToolStripMenuItem stopBatchSpeedtest,
             ToolStripMenuItem clearSpeedtestResults,
+            ToolStripMenuItem clearStatisticsRecord,
 
             ToolStripMenuItem modifySelected)
         {
+            clearStatisticsRecord.Click += RunWhenSelectionIsNotEmptyHandler(() =>
+            {
+                if (Misc.UI.Confirm(I18N.ConfirmClearStat))
+                {
+                    ClearSelectedServersStatRecord();
+                }
+            });
+
             clearSpeedtestResults.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 if (Misc.UI.Confirm(I18N.ConfirmClearSpeedTestResults))
@@ -257,11 +288,19 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         private void InitCtrlSorting(
+            ToolStripMenuItem reverseByIndex,
             ToolStripMenuItem sortBySpeed,
             ToolStripMenuItem sortByDate,
             ToolStripMenuItem sortBySummary,
-            ToolStripMenuItem reverseByIndex)
+             ToolStripMenuItem sortByDownloadTotal,
+             ToolStripMenuItem sortByUploadTotal)
         {
+            sortByDownloadTotal.Click += RunWhenSelectionIsNotEmptyHandler(
+               () => servers.SortSelectedByDownloadTotal());
+
+            sortByUploadTotal.Click += RunWhenSelectionIsNotEmptyHandler(
+               () => servers.SortSelectedByUploadTotal());
+
             reverseByIndex.Click += RunWhenSelectionIsNotEmptyHandler(
                 () => servers.ReverseSelectedByIndex());
 

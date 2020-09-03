@@ -33,46 +33,67 @@ namespace Luna.Services
 
         public void CreateNewEditor(Models.Data.LuaCoreSetting initialCoreSettings)
         {
+            Views.WinForms.FormEditor form = null;
+
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                form = Views.WinForms.FormEditor.CreateForm(
+                    api, settings, luaServer, this,
+                    initialCoreSettings);
+
+                form.FormClosed += (s, a) =>
+                {
+                    var oldForm = form; // capture
+                    RemoveFormFromList(oldForm);
+                };
+                form.Show();
+            });
+
             lock (formLocker)
             {
-                VgcApis.Misc.UI.Invoke(() =>
+                if (form != null)
                 {
-                    var newForm = Views.WinForms.FormEditor.CreateForm(
-                        api, settings, luaServer, this,
-
-                        initialCoreSettings);
-
-                    newForm.FormClosed += (s, a) =>
-                    {
-                        var form = newForm; // capture
-                        RemoveFormFromList(form);
-                    };
-
-                    editors.Add(newForm);
-                    newForm.Show();
-                });
+                    editors.Add(form);
+                }
             }
         }
 
         public void ShowFormMain()
         {
-            lock (formLocker)
+            var form = formMain;
+            if (form == null)
             {
                 VgcApis.Misc.UI.Invoke(() =>
                 {
-                    if (formMain == null)
-                    {
-                        var form = Views.WinForms.FormMain.CreateForm(settings, luaServer, this);
-                        form.FormClosed += (s, a) =>
-                        {
-                            formMain = null;
-                        };
-                        formMain = form;
-                        formMain.Show();
-                    }
-                    formMain.Activate();
+                    form = Views.WinForms.FormMain.CreateForm(settings, luaServer, this);
                 });
             }
+
+            lock (formLocker)
+            {
+                if (formMain == null && form != null)
+                {
+                    formMain = form;
+                }
+            }
+
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                if (formMain == form && form != null)
+                {
+                    form.FormClosed += (s, a) =>
+                    {
+                        formMain = null;
+                    };
+                }
+                else
+                {
+                    form?.Close();
+                }
+
+                formMain?.Show();
+                formMain?.Activate();
+            });
         }
         public void ShowOrCreateFirstEditor()
         {

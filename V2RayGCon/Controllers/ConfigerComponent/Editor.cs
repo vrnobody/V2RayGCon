@@ -580,6 +580,9 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         void CreateEditor(Panel container)
         {
             var editor = Misc.UI.CreateScintilla(container);
+
+            VgcApis.Misc.Utils.BindEditorDragDropEvent(editor);
+
             this.editor = editor;
 
             // bind scintilla
@@ -592,6 +595,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 true,
                 DataSourceUpdateMode.OnPropertyChanged);
         }
+
         #endregion
     }
 }

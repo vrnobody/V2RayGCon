@@ -20,9 +20,10 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         #endregion
 
         #region public methods
-        public string GetSupportedVersion() =>
-           Models.VeeShareLinks.Ss1a.SupportedVersion();
+        public bool IsDecoderFor(string version) =>
+           Models.VeeShareLinks.Ss1a.IsDecoderFor(version);
 
+        public bool IsEncoderFor(string protocol) => Models.VeeShareLinks.Ss1a.IsEncoderFor(protocol);
         public byte[] Config2Bytes(JObject config)
         {
             var vee = Config2Vee(config);
@@ -79,6 +80,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             {
                 case "kcp":
                     mainParam = GetStr(subPrefix, "kcpSettings.header.type");
+                    vee.streamParam2 = GetStr(subPrefix, "kcpSettings.seed");
                     break;
                 case "ws":
                     mainParam = GetStr(subPrefix, "wsSettings.path");
@@ -160,6 +162,10 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
                 {
                     case "kcp":
                         streamToken["kcpSettings"]["header"]["type"] = mainParam;
+                        if (!string.IsNullOrEmpty(vee.streamParam2))
+                        {
+                            streamToken["kcpSettings"]["seed"] = vee.streamParam2;
+                        }
                         break;
                     case "ws":
                         streamToken["wsSettings"]["path"] = mainParam;

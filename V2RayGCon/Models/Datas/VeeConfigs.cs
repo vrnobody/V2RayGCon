@@ -51,58 +51,72 @@ namespace V2RayGCon.Models.Datas
 
         #region private methods
 
-
-        byte[] GenVeeShareLink()
+        object EncodeToBytes(VeeShareLinks.BasicSettings bs, string proto)
         {
-            var bs = GetBasicSettings();
-            switch (proto)
+            if (VeeShareLinks.Vmess0a.IsEncoderFor(proto))
             {
-                case "vmess":
-                    var vmess = new VeeShareLinks.Vmess0a(bs);
-                    vmess.uuid = Guid.Parse(auth1);
-                    return vmess.ToBytes();
-                case "vless":
-                    var vless = new VeeShareLinks.Vless4a(bs);
-                    vless.uuid = Guid.Parse(auth1);
-                    return vless.ToBytes();
-                case "http":
-                    var http = new VeeShareLinks.Http3a(bs);
-                    http.userName = auth1;
-                    http.userPassword = auth2;
-                    return http.ToBytes();
-                case "socks":
-                    var socks = new VeeShareLinks.Socks2a(bs);
-                    socks.userName = auth1;
-                    socks.userPassword = auth2;
-                    return socks.ToBytes();
-                case "shadowsocks":
-                    var ss = GetSsConfig();
-                    return ss.ToBytes();
-                default:
-                    break;
+                return new VeeShareLinks.Vmess0a(bs);
+            }
+            else if (VeeShareLinks.Vless4a.IsEncoderFor(proto))
+            {
+                return new VeeShareLinks.Vless4a(bs);
+            }
+            else if (VeeShareLinks.Ss1b.IsEncoderFor(proto))
+            {
+                return new VeeShareLinks.Ss1b(bs);
+            }
+            else if (VeeShareLinks.Socks2a.IsEncoderFor(proto))
+            {
+                return new VeeShareLinks.Socks2a(bs);
+            }
+            else if (VeeShareLinks.Http3a.IsEncoderFor(proto))
+            {
+                return new VeeShareLinks.Http3a(bs);
             }
             return null;
         }
 
-        VeeShareLinks.Ss1a GetSsConfig()
+        byte[] GenVeeShareLink()
         {
-            var ss = new VeeShareLinks.Ss1a();
-            ss.alias = name;
-            ss.description = description;
-            ss.address = host;
-            ss.port = port;
+            var bs = GetBasicSettings();
+            if (VeeShareLinks.Vmess0a.IsEncoderFor(proto))
+            {
+                var vmess = new VeeShareLinks.Vmess0a(bs);
+                vmess.uuid = Guid.Parse(auth1);
+                return vmess.ToBytes();
+            }
+            else if (VeeShareLinks.Vless4a.IsEncoderFor(proto))
+            {
+                var vless = new VeeShareLinks.Vless4a(bs);
+                vless.uuid = Guid.Parse(auth1);
+                return vless.ToBytes();
+            }
+            else if (VeeShareLinks.Ss1b.IsEncoderFor(proto))
+            {
+                var ss = new VeeShareLinks.Ss1b(bs);
+                ss.isUseOta = useOta;
+                ss.password = auth1;
+                ss.method = method;
+                return ss.ToBytes();
+            }
+            else if (VeeShareLinks.Socks2a.IsEncoderFor(proto))
+            {
+                var socks = new VeeShareLinks.Socks2a(bs);
+                socks.userName = auth1;
+                socks.userPassword = auth2;
+                return socks.ToBytes();
+            }
+            else if (VeeShareLinks.Http3a.IsEncoderFor(proto))
+            {
+                var http = new VeeShareLinks.Http3a(bs);
+                http.userName = auth1;
+                http.userPassword = auth2;
+                return http.ToBytes();
+            }
 
-            ss.isUseTls = useTls;
-            ss.streamType = streamType;
-            ss.streamParam1 = streamParam1;
-            ss.streamParam2 = streamParam2;
-            ss.streamParam3 = streamParam3;
-
-            ss.isUseOta = useOta;
-            ss.password = auth1;
-            ss.method = method;
-            return ss;
+            return null;
         }
+
 
         VeeShareLinks.BasicSettings GetBasicSettings()
         {
@@ -140,6 +154,33 @@ namespace V2RayGCon.Models.Datas
             streamParam3 = bs.streamParam3;
         }
 
+        object DecodeBytes(byte[] bytes)
+        {
+            var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
+            if (VeeShareLinks.Vmess0a.IsDecoderFor(ver))
+            {
+                return new VeeShareLinks.Vmess0a(bytes);
+            }
+            else if (VeeShareLinks.Vless4a.IsDecoderFor(ver))
+            {
+                return new VeeShareLinks.Vless4a(bytes);
+            }
+            else if (VeeShareLinks.Ss1b.IsDecoderFor(ver))
+            {
+                return new VeeShareLinks.Ss1b(bytes);
+            }
+            else if (VeeShareLinks.Socks2a.IsDecoderFor(ver))
+            {
+                return new VeeShareLinks.Socks2a(bytes);
+            }
+            else if (VeeShareLinks.Http3a.IsDecoderFor(ver))
+            {
+                return new VeeShareLinks.Http3a(bytes);
+            }
+
+            return null;
+        }
+
         void ParseConfig(string config)
         {
             var slinkMgr = Services.ShareLinkMgr.Instance;
@@ -151,66 +192,46 @@ namespace V2RayGCon.Models.Datas
             }
 
             var bytes = Services.ShareLinkComponents.VeeDecoder.VeeLink2Bytes(vee);
-            var lv = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
 
-            if (lv == VeeShareLinks.Vmess0a.SupportedVersion())
+            var linkModel = DecodeBytes(bytes);
+            if (linkModel == null)
             {
-                this.proto = "vmess";
-                var vmess = new VeeShareLinks.Vmess0a(bytes);
-                ParseBasicSettings(vmess);
-                this.auth1 = vmess.uuid.ToString();
+                return;
             }
-            else if (lv == VeeShareLinks.Vless4a.SupportedVersion())
+
+            ParseBasicSettings(linkModel as VeeShareLinks.BasicSettings);
+            switch (linkModel)
             {
-                this.proto = "vless";
-                var vless = new VeeShareLinks.Vless4a(bytes);
-                ParseBasicSettings(vless);
-                this.auth1 = vless.uuid.ToString();
-            }
-            else if (lv == VeeShareLinks.Ss1a.SupportedVersion())
-            {
-                this.proto = "shadowsocks";
-                var ss = new VeeShareLinks.Ss1a(bytes);
-                ParseSsConfig(ss);
-            }
-            else if (lv == VeeShareLinks.Http3a.SupportedVersion())
-            {
-                this.proto = "http";
-                var http = new VeeShareLinks.Http3a(bytes);
-                ParseBasicSettings(http);
-                this.auth1 = http.userName;
-                this.auth2 = http.userPassword;
-            }
-            else if (lv == VeeShareLinks.Socks2a.SupportedVersion())
-            {
-                this.proto = "socks";
-                var socks = new VeeShareLinks.Socks2a(bytes);
-                ParseBasicSettings(socks);
-                this.auth1 = socks.userName;
-                this.auth2 = socks.userPassword;
+                case VeeShareLinks.Vmess0a vmess:
+                    this.proto = "vmess";
+                    this.auth1 = vmess.uuid.ToString();
+                    break;
+                case VeeShareLinks.Vless4a vless:
+                    this.proto = "vless";
+                    this.auth1 = vless.uuid.ToString();
+                    break;
+                case VeeShareLinks.Ss1b ss:
+                    this.proto = "shadowsocks";
+                    this.useOta = ss.isUseOta;
+                    this.auth1 = ss.password;
+                    this.method = ss.method;
+                    break;
+                case VeeShareLinks.Http3a http:
+                    this.proto = "http";
+                    this.auth1 = http.userName;
+                    this.auth2 = http.userPassword;
+                    break;
+                case VeeShareLinks.Socks2a socks:
+                    this.proto = "socks";
+                    this.auth1 = socks.userName;
+                    this.auth2 = socks.userPassword;
+                    break;
+                default:
+                    break;
             }
         }
 
-        void ParseSsConfig(VeeShareLinks.Ss1a bs)
-        {
 
-            name = bs.alias;
-            description = bs.description;
-
-            host = bs.address;
-            port = bs.port;
-
-            this.useTls = bs.isUseTls;
-            this.useSelfSignCert = false;
-            this.streamType = bs.streamType;
-
-            this.streamParam1 = bs.streamParam1;
-            this.streamParam2 = bs.streamParam2;
-            this.streamParam3 = bs.streamParam3;
-            this.useOta = bs.isUseOta;
-            this.auth1 = bs.password;
-            this.method = bs.method;
-        }
 
         #endregion
 

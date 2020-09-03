@@ -33,20 +33,37 @@
         readonly object formLogLocker = new object();
         public void ShowFormLog()
         {
+            Views.WinForms.FormSingleServerLog form = null;
+
+            if (logForm == null)
+            {
+                var title = coreInfo.GetTitle();
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    form = Views.WinForms.FormSingleServerLog.CreateLogForm(title, qLogger);
+                });
+            }
+
             lock (formLogLocker)
             {
                 if (logForm == null)
                 {
-                    var title = coreInfo.GetSummary();
-                    VgcApis.Misc.UI.Invoke(() =>
-                    {
-                        logForm = Views.WinForms.FormSingleServerLog.CreateLogForm(title, qLogger);
-                        logForm.FormClosed += (s, a) => logForm = null;
-                        logForm.Show();
-                    });
+                    logForm = form;
                 }
-                VgcApis.Misc.UI.Invoke(() => logForm.Activate());
             }
+
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                if (logForm == form && form != null)
+                {
+                    form.FormClosed += (s, a) => logForm = null;
+                }
+                else
+                {
+                    form?.Close();
+                }
+                logForm?.Activate();
+            });
         }
         #endregion
 

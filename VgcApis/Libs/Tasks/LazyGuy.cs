@@ -211,9 +211,13 @@ namespace VgcApis.Libs.Tasks
                 }
                 catch (Exception ex)
                 {
+#if DEBUG
                     Sys.FileLogger.DumpCallStack(
                         $"DoTheJob() {Name} do single task error\n" +
                         $"{ex}");
+#else
+                    Sys.FileLogger.Warn($"DoTheJob() {Name} is running in UI thread");
+#endif
                 }
                 done();
                 return;

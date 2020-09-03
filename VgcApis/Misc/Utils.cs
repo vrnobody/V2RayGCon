@@ -18,12 +18,76 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VgcApis.Resources.Langs;
 
 namespace VgcApis.Misc
 {
     public static class Utils
     {
         #region editor
+        public static void BindEditorDragDropEvent(Scintilla editor)
+        {
+            editor.AllowDrop = true;
+
+            editor.DragEnter += (s, a) =>
+            {
+                a.Effect = DragDropEffects.Move;
+            };
+
+            editor.DragDrop += (s, a) =>
+            {
+                var data = a.Data;
+                if (data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    var filenames = a.Data.GetData(DataFormats.FileDrop) as string[];
+                    VgcApis.Misc.Utils.HandleEditorFileDropEvent(editor, filenames);
+                }
+            };
+        }
+
+        public static void HandleEditorFileDropEvent(Scintilla editor, string[] filenames)
+        {
+            if (filenames == null)
+            {
+                return;
+            }
+
+            foreach (var filename in filenames)
+            {
+                if (!File.Exists(filename))
+                {
+                    continue;
+                }
+
+                string content;
+                string scriptName;
+
+                try
+                {
+                    content = File.ReadAllText(filename);
+                    scriptName = Path.GetFileName(filename);
+                }
+                catch
+                {
+                    continue;
+                }
+
+                var name = AutoEllipsis(scriptName, 40);
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    var err = string.Format(I18N.FileIsEmpty, name);
+                    UI.MsgBox(err);
+                    continue;
+                }
+
+                var msg = string.Format(I18N.ConfirmLoadFileContent, name);
+                if (string.IsNullOrEmpty(editor.Text) || VgcApis.Misc.UI.Confirm(msg))
+                {
+                    editor.Text = content;
+                }
+            }
+        }
+
         public static string GetWordFromCurPos(Scintilla editor)
         {
             var line = editor.Lines[editor.CurrentLine];
@@ -478,18 +542,20 @@ namespace VgcApis.Misc
         }
 
         static readonly IPEndPoint _defaultLoopbackEndpoint = new IPEndPoint(IPAddress.Loopback, port: 0);
-        static readonly object getFreeTcpPortLocker = new object();
         public static int GetFreeTcpPort()
         {
             // https://stackoverflow.com/questions/138043/find-the-next-tcp-port-in-net
             var port = -1;
-            lock (getFreeTcpPortLocker)
+            using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
             {
-                using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+                try
                 {
+                    socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontLinger, true);
+                    socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
                     socket.Bind(_defaultLoopbackEndpoint);
                     port = ((IPEndPoint)socket.LocalEndPoint).Port;
                 }
+                catch { }
             }
             return port;
         }
@@ -605,7 +671,9 @@ namespace VgcApis.Misc
                     if (UI.IsInUiThread())
                     {
                         Libs.Sys.FileLogger.Warn($"Task [{missionId}] running in UI thread");
+#if DEBUG
                         Libs.Sys.FileLogger.DumpCallStack("Caller stack:");
+#endif
                     }
                     worker?.Invoke();
                     if (UI.IsInUiThread())

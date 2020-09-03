@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using Luna.Resources.Langs;
+using System.Windows.Forms;
 
 namespace Luna.Views.WinForms
 {
@@ -9,23 +10,36 @@ namespace Luna.Views.WinForms
         static readonly object formInstanLocker = new object();
         public static void ShowForm(Controllers.LuaCoreCtrl luaCoreCtrl)
         {
+            FormLuaCoreSettings f = null;
+
+            if (_instant == null || _instant.IsDisposed)
+            {
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    f = new FormLuaCoreSettings();
+                });
+            }
+
             lock (formInstanLocker)
             {
                 if (_instant == null || _instant.IsDisposed)
                 {
-                    VgcApis.Misc.UI.Invoke(() =>
-                    {
-                        _instant = new FormLuaCoreSettings();
-                    });
+                    _instant = f;
+                    f = null;
                 }
-
-                VgcApis.Misc.UI.Invoke(() =>
-                {
-                    _instant.InitControls(luaCoreCtrl);
-                    _instant.Show();
-                    _instant.Activate();
-                });
             }
+
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                f?.Close();
+                var inst = _instant;
+                if (inst != null)
+                {
+                    inst.InitControls(luaCoreCtrl);
+                    inst.Show();
+                    inst.Activate();
+                }
+            });
         }
         #endregion
 
@@ -52,10 +66,17 @@ namespace Luna.Views.WinForms
         {
             VgcApis.Misc.UI.Invoke(() =>
             {
-                tboxName.Text = luaCoreCtrl.name;
-                chkAutorun.Checked = luaCoreCtrl.isAutoRun;
-                chkHidden.Checked = luaCoreCtrl.isHidden;
-                chkClrSupports.Checked = luaCoreCtrl.isLoadClr;
+                var ctrl = this.luaCoreCtrl;
+                if (ctrl == null)
+                {
+                    VgcApis.Misc.UI.MsgBox(I18N.ScriptNotFound);
+                    return;
+                }
+
+                tboxName.Text = ctrl.name;
+                chkAutorun.Checked = ctrl.isAutoRun;
+                chkHidden.Checked = ctrl.isHidden;
+                chkClrSupports.Checked = ctrl.isLoadClr;
             });
         }
         #endregion
@@ -63,10 +84,16 @@ namespace Luna.Views.WinForms
         #region UI events
         private void btnSave_Click(object sender, System.EventArgs e)
         {
-            luaCoreCtrl.name = tboxName.Text;
-            luaCoreCtrl.isAutoRun = chkAutorun.Checked;
-            luaCoreCtrl.isHidden = chkHidden.Checked;
-            luaCoreCtrl.isLoadClr = chkClrSupports.Checked;
+            var ctrl = luaCoreCtrl;
+            if (ctrl == null)
+            {
+                VgcApis.Misc.UI.MsgBox(I18N.ScriptNotFound);
+                return;
+            }
+            ctrl.name = tboxName.Text;
+            ctrl.isAutoRun = chkAutorun.Checked;
+            ctrl.isHidden = chkHidden.Checked;
+            ctrl.isLoadClr = chkClrSupports.Checked;
             Close();
         }
         #endregion

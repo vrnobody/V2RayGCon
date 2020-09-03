@@ -8,7 +8,9 @@ namespace V2RayGCon.Models.VeeShareLinks
         // ver 0a is optimized for vmess protocol 
         const string version = @"4a";
 
-        public static string SupportedVersion() => version;
+        public static bool IsDecoderFor(string ver) => version == ver;
+
+        static public bool IsEncoderFor(string protocol) => protocol == "vless";
 
         public Guid uuid;
         public string encryption;

@@ -33,10 +33,26 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.4.4.0")]
+[assembly: AssemblyVersion("1.4.5.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * -----------------------------------------------------
+ * v1.4.4.15 Show title in single server log form.
+ * v1.4.4.14 Add sort by stat. total.
+ * v1.4.4.13 Fix Luna script manager flickering.
+ * v1.4.4.12 Add feature batch reset server's stat. record.
+ * v1.4.4.11 Refactor RestartCore() and StopCore().
+ * v1.4.4.10 Lua editor supports file drag drop.
+ * v1.4.4.9 Fix a dead lock in RestartCore().
+ * v1.4.4.8 Show popup submenu in the same screen.
+ * v1.4.4.7 Refactor sharelink codes.
+ * v1.4.4.6 Update sharelink codecs.
+ * v1.4.4.5 Try to fix misleading error message 'v2ray-core fail to start'.
+ * v1.4.4.4 Support changing index in FormModifyServerSettings.
+ * v1.4.4.3 Kill core directly.
+ * v1.4.4.2 Fix some potential deadlocks.
+ * v1.4.4.1 Try to fix a deadlock.
  * -------------------------------------------------
  * v1.4.3.5 Fix serverUI deletion bug.
  * v1.4.3.4 Tweak UI.

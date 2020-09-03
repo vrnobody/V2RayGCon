@@ -241,6 +241,7 @@ namespace V2RayGCon.Views.WinForms
                 toolStripMenuItemStopBatchSpeedTest,
                 toolStripMenuItemRunBatchSpeedTest,
                 toolStripMenuItemClearSpeedTestResults,
+                toolStripMenuItemClearStatisticsRecord,
 
                 toolStripMenuItemModifySettings,
                 toolStripMenuItemStopSelected,
@@ -253,10 +254,13 @@ namespace V2RayGCon.Views.WinForms
                 //ToolStripMenuItem sortBySummary)
                 toolStripMenuItemMoveToTop,
                 toolStripMenuItemMoveToBottom,
+
+                toolStripMenuItemReverseByIndex,
                 toolStripMenuItemSortBySpeedTest,
                 toolStripMenuItemSortByDateT,
                 toolStripMenuItemSortBySummary,
-                toolStripMenuItemReverseByIndex));
+                toolStripMenuItemSortByDownloadTotal,
+                toolStripMenuItemSortByUploadTotal));
 
             return ctrl;
         }

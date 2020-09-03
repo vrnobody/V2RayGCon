@@ -194,6 +194,11 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             Action worker = () =>
             {
+                if (flyPanel == null || flyPanel.IsDisposed)
+                {
+                    return;
+                }
+
                 flyPanel.SuspendLayout();
                 if (showWelcome)
                 {
@@ -204,7 +209,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 else
                 {
                     flyPanel.Controls.Remove(welcomeItem);
-                    AdjustServUiNum(removed, pagedList.Count);
+                    var rmServUis = VgcApis.Misc.UI.DoHouseKeeping<Views.UserControls.ServerUI>(flyPanel, pagedList.Count);
+                    removed.AddRange(rmServUis);
                     var servUis = GetAllServerControls();
                     BindServUiToCoreServCtrl(servUis, pagedList);
                 }
@@ -227,26 +233,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             for (int i = 0; i < servUis.Count; i++)
             {
                 servUis[i].Rebind(coreServs[i]);
-            }
-        }
-
-        private void AdjustServUiNum(List<Views.UserControls.ServerUI> removed, int num)
-        {
-            var ctrls = GetAllServerControls();
-
-            var numAdd = num - ctrls.Count;
-            for (int i = 0; i < numAdd; i++)
-            {
-                flyPanel.Controls.Add(new Views.UserControls.ServerUI());
-            }
-
-            var numRemove = ctrls.Count - num;
-            ctrls.Reverse();
-            for (int i = 0; i < numRemove; i++)
-            {
-                var c = ctrls[i];
-                removed.Add(c);
-                flyPanel.Controls.Remove(c);
             }
         }
 

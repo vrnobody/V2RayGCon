@@ -53,10 +53,16 @@ namespace V2RayGCon.Views.WinForms
 
         void UpdateLogBox()
         {
+            var logBox = rtBoxLogger;
+            if (logBox == null || logBox.IsDisposed)
+            {
+                return;
+            }
+
             repaintCtrl.DisableRepaintEvent();
-            rtBoxLogger.Text = qLogger.GetLogAsString(true);
-            rtBoxLogger.SelectionStart = rtBoxLogger.Text.Length;
-            rtBoxLogger.ScrollToCaret();
+            logBox.Text = qLogger.GetLogAsString(true);
+            logBox.SelectionStart = logBox.Text.Length;
+            logBox.ScrollToCaret();
             repaintCtrl.EnableRepaintEvent();
         }
 

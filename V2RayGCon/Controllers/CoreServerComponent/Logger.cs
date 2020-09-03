@@ -37,7 +37,7 @@
 
             if (logForm == null)
             {
-                var title = coreInfo.GetSummary();
+                var title = coreInfo.GetTitle();
                 VgcApis.Misc.UI.Invoke(() =>
                 {
                     form = Views.WinForms.FormSingleServerLog.CreateLogForm(title, qLogger);

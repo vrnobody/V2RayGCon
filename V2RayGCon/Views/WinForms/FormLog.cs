@@ -52,15 +52,16 @@ namespace V2RayGCon.Views.WinForms
 
         #region private methods
 
-        private void ScrollToBottom()
+        private void ScrollToBottom(VgcApis.UserControls.ExRichTextBox box)
         {
-            rtBoxLogger.SelectionStart = rtBoxLogger.Text.Length;
-            rtBoxLogger.ScrollToCaret();
+            box.SelectionStart = box.Text.Length;
+            box.ScrollToCaret();
         }
 
         void UpdateLog(object sender, EventArgs args)
         {
-            if (isPaused)
+            var logBox = rtBoxLogger;
+            if (isPaused || logBox == null || logBox.IsDisposed)
             {
                 return;
             }
@@ -81,8 +82,8 @@ namespace V2RayGCon.Views.WinForms
             try
             {
                 repaintCtrl.DisableRepaintEvent();
-                rtBoxLogger.Text = setting.GetLogContent();
-                ScrollToBottom();
+                logBox.Text = setting.GetLogContent();
+                ScrollToBottom(logBox);
                 updateTimeStamp = timestamp;
                 repaintCtrl.EnableRepaintEvent();
             }

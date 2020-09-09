@@ -53,6 +53,9 @@ namespace V2RayGCon.Services
             InitAllServices();
             BootUp();
 
+            var nv = Misc.Utils.GetAppNameAndVer();
+            setting.SendLog($"{nv} started.");
+
 #if DEBUG
             This_Function_Is_Used_For_Debugging();
 #endif

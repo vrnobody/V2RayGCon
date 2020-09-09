@@ -325,7 +325,9 @@ namespace V2RayGCon.Libs.V2Ray
             {
                 // Process.ExitCode may throw exceptions
                 msg = TranslateErrorCode(core.ExitCode);
-                core.Close();
+
+                // Close() could invoke CoreExit event
+                // core.Close();
             }
             catch { }
 
@@ -365,10 +367,12 @@ namespace V2RayGCon.Libs.V2Ray
             isReady = false;
             var core = CreateV2RayCoreProcess(config);
             VgcApis.Misc.Utils.SetProcessEnvs(core, envs);
+
             BindEvents(core, quiet);
-            core.Start();
-            this.v2rayCore = core;
             Interlocked.Increment(ref curConcurrentV2RayCoreNum);
+            this.v2rayCore = core;
+
+            core.Start();
 
             // Add to JOB object require win8+.
             VgcApis.Libs.Sys.ChildProcessTracker.AddProcess(core);

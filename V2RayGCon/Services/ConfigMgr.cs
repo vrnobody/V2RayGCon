@@ -434,10 +434,16 @@ namespace V2RayGCon.Services
             const int jiff = 300;
             int cycle = 30 * 1000 / jiff;
             int i;
-            for (i = 0; i < cycle && !core.isReady; i++)
+            for (i = 0; i < cycle && !core.isReady && core.isRunning; i++)
             {
                 VgcApis.Misc.Utils.Sleep(jiff);
             }
+
+            if (!core.isRunning)
+            {
+                return false;
+            }
+
             if (i < cycle)
             {
                 return true;
@@ -473,7 +479,7 @@ namespace V2RayGCon.Services
 
             try
             {
-                speedTester.RestartCore(config);
+                speedTester.RestartCoreIgnoreError(config);
                 if (WaitUntilCoreReady(speedTester))
                 {
                     var expectedSizeInKib = setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestExpectedSizeInKib : -1;

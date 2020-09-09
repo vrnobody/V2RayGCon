@@ -131,31 +131,11 @@ namespace V2RayGCon.Libs.V2Ray
         }
 
         // blocking
-        public void RestartCore(string config, Dictionary<string, string> env = null)
-        {
-            if (!IsExecutableExist())
-            {
-                VgcApis.Misc.UI.MsgBoxAsync(I18N.ExeNotFound);
-                InvokeEventOnCoreStatusChanged();
-                return;
-            }
+        public void RestartCore(string config, Dictionary<string, string> env = null) =>
+            RestartCoreWorker(config, env, false);
 
-            coreStartStopLocker.WaitOne();
-            StopCoreIgnoreError(this.v2rayCore);
-            try
-            {
-                StartCoreWorker(config, env);
-                coreStartStopLocker.Set();
-            }
-            catch
-            {
-                StopCoreIgnoreError(this.v2rayCore);
-                coreStartStopLocker.Set();
-            }
-
-            // do not run in background
-            InvokeEventOnCoreStatusChanged();
-        }
+        public void RestartCoreIgnoreError(string config) =>
+            RestartCoreWorker(config, null, true);
 
         // blocking
         public void StopCore()
@@ -168,6 +148,39 @@ namespace V2RayGCon.Libs.V2Ray
         #endregion
 
         #region private method
+        void RestartCoreWorker(string config, Dictionary<string, string> env, bool quiet)
+        {
+            if (!IsExecutableExist())
+            {
+                if (quiet)
+                {
+                    SendLogBg(I18N.ExeNotFound);
+                }
+                else
+                {
+                    VgcApis.Misc.UI.MsgBoxAsync(I18N.ExeNotFound);
+                }
+                InvokeEventOnCoreStatusChanged();
+                return;
+            }
+
+            coreStartStopLocker.WaitOne();
+            StopCoreIgnoreError(this.v2rayCore);
+            try
+            {
+                StartCore(config, env, quiet);
+                coreStartStopLocker.Set();
+            }
+            catch
+            {
+                StopCoreIgnoreError(this.v2rayCore);
+                coreStartStopLocker.Set();
+            }
+
+            // do not run in background
+            InvokeEventOnCoreStatusChanged();
+        }
+
         void StopCoreIgnoreError(Process core)
         {
             if (!IsProcRunning(core))
@@ -292,7 +305,13 @@ namespace V2RayGCon.Libs.V2Ray
             return msg;
         }
 
-        void OnCoreExited(object sender, EventArgs args)
+        void OnCoreExitedQuiet(object sender, EventArgs args) =>
+            OnCoreExitedHandler(sender, true);
+
+        void OnCoreExited(object sender, EventArgs args) =>
+            OnCoreExitedHandler(sender, false);
+
+        void OnCoreExitedHandler(object sender, bool quiet)
         {
             isReady = false;
 
@@ -306,7 +325,7 @@ namespace V2RayGCon.Libs.V2Ray
             {
                 // Process.ExitCode may throw exceptions
                 msg = TranslateErrorCode(core.ExitCode);
-                // v2rayCore.Close();
+                core.Close();
             }
             catch { }
 
@@ -316,40 +335,37 @@ namespace V2RayGCon.Libs.V2Ray
             // VgcApis.Misc.Utils.RunInBackground(() => InvokeEventOnCoreStatusChanged());
             InvokeEventOnCoreStatusChanged();
 
-            if (!string.IsNullOrEmpty(msg))
+            if (!quiet && !string.IsNullOrEmpty(msg))
             {
                 VgcApis.Misc.UI.MsgBoxAsync(msg);
             }
         }
 
-        void BindEvents(Process proc)
+        void BindEvents(Process proc, bool quiet)
         {
             try
             {
-                proc.Exited += OnCoreExited;
+                if (quiet)
+                {
+                    proc.Exited += OnCoreExitedQuiet;
+                }
+                else
+                {
+                    proc.Exited += OnCoreExited;
+                }
+
                 proc.ErrorDataReceived += SendLogHandler;
                 proc.OutputDataReceived += SendLogHandler;
             }
             catch { }
         }
 
-        void Obsolete_ReleaseEventsIgnoreError(Process proc)
-        {
-            try
-            {
-                proc.Exited -= OnCoreExited;
-                proc.ErrorDataReceived -= SendLogHandler;
-                proc.OutputDataReceived -= SendLogHandler;
-            }
-            catch { }
-        }
-
-        void StartCoreWorker(string config, Dictionary<string, string> envs = null)
+        void StartCore(string config, Dictionary<string, string> envs, bool quiet)
         {
             isReady = false;
             var core = CreateV2RayCoreProcess(config);
             VgcApis.Misc.Utils.SetProcessEnvs(core, envs);
-            BindEvents(core);
+            BindEvents(core, quiet);
             core.Start();
             this.v2rayCore = core;
             Interlocked.Increment(ref curConcurrentV2RayCoreNum);

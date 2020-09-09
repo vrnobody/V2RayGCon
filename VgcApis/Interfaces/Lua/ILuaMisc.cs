@@ -66,6 +66,7 @@ namespace VgcApis.Interfaces.Lua
 
         string ScanQrcode();
         string GetSubscriptionConfig();
+        void SetSubscriptionConfig(string cfgStr);
 
         // share among all scripts
         string ReadLocalStorage(string key);

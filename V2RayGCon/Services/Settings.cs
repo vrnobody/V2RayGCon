@@ -728,9 +728,9 @@ namespace V2RayGCon.Services
             return new List<Models.Datas.SubscriptionItem>();
         }
 
-        public void SaveSubscriptionItems(string options)
+        public void SetSubscriptionConfig(string cfgStr)
         {
-            userSettings.SubscribeUrls = options;
+            userSettings.SubscribeUrls = cfgStr;
             SaveSettingsLater();
         }
 

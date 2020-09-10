@@ -15,90 +15,55 @@ namespace V2RayGCon.Views.WinForms
         Services.Settings setting;
 
         VgcApis.UserControls.RepaintController repaintCtrl;
-        bool isPaused = false;
         long updateTimeStamp = DateTime.Now.Ticks;
-        Timer updateLogTimer = new Timer { Interval = 500 };
-        VgcApis.Libs.Tasks.Bar bar = new VgcApis.Libs.Tasks.Bar();
+
+        VgcApis.Libs.Tasks.Routine logDisplayer;
 
         public FormLog()
         {
-            setting = Services.Settings.Instance;
-
             InitializeComponent();
-
-            this.FormClosed += (s, e) =>
-            {
-                if (updateLogTimer != null)
-                {
-                    updateLogTimer.Stop();
-                    updateLogTimer.Tick -= UpdateLog;
-                    updateLogTimer.Dispose();
-                }
-            };
-
-            Misc.UI.SetFormLocation<FormLog>(this, Models.Datas.Enums.FormLocations.BottomLeft);
             VgcApis.Misc.UI.AutoSetFormIcon(this);
+
+            setting = Services.Settings.Instance;
+            this.FormClosed += (s, e) => logDisplayer?.Dispose();
+            Misc.UI.SetFormLocation<FormLog>(this, Models.Datas.Enums.FormLocations.BottomLeft);
         }
 
         private void FormLog_Load(object sender, EventArgs e)
         {
             repaintCtrl = new VgcApis.UserControls.RepaintController(rtBoxLogger);
-            updateLogTimer.Tick += UpdateLog;
-            updateLogTimer.Start();
-            SetIsPause(false);
-
+            logDisplayer = new VgcApis.Libs.Tasks.Routine(UpdateLog, 500);
+            logDisplayer.Run();
             // throw new NullReferenceException("for debugging");
         }
 
         #region private methods
-
-        private void ScrollToBottom(VgcApis.UserControls.ExRichTextBox box)
-        {
-            box.SelectionStart = box.Text.Length;
-            box.ScrollToCaret();
-        }
-
-        void UpdateLog(object sender, EventArgs args)
+        void UpdateLog()
         {
             var logBox = rtBoxLogger;
-            if (isPaused || logBox == null || logBox.IsDisposed)
-            {
-                return;
-            }
-
-            if (!bar.Install())
+            if (logBox == null || logBox.IsDisposed)
             {
                 return;
             }
 
             var timestamp = setting.GetLogTimestamp();
-
             if (updateTimeStamp == timestamp)
             {
-                bar.Remove();
                 return;
             }
 
-            try
+            updateTimeStamp = timestamp;
+            var text = setting.GetLogContent();
+            VgcApis.Misc.UI.Invoke(() =>
             {
                 repaintCtrl.DisableRepaintEvent();
-                logBox.Text = setting.GetLogContent();
-                ScrollToBottom(logBox);
-                updateTimeStamp = timestamp;
+                logBox.Text = text;
+                VgcApis.Misc.UI.ScrollToBottom(logBox);
                 repaintCtrl.EnableRepaintEvent();
-            }
-            catch { }
-            finally
-            {
-                bar.Remove();
-            }
+            });
         }
 
-        void SetIsPause(bool isPaused)
-        {
-            this.isPaused = isPaused;
-            pauseToolStripMenuItem.Checked = isPaused;
-        }
+
         #endregion
 
         #region UI events
@@ -109,11 +74,20 @@ namespace V2RayGCon.Views.WinForms
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetIsPause(!isPaused);
+            var pause = !pauseToolStripMenuItem.Checked;
+            pauseToolStripMenuItem.Checked = pause;
+            if (pause)
+            {
+                logDisplayer.Pause();
+            }
+            else
+            {
+                logDisplayer.Run();
+            }
         }
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var logs = setting.GetLogContent();
+            var logs = rtBoxLogger.Text;
             var msg = VgcApis.Misc.Utils.CopyToClipboard(logs) ?
                 Resources.Resx.I18N.CopySuccess :
                 Resources.Resx.I18N.CopyFail;

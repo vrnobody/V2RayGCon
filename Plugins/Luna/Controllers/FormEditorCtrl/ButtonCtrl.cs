@@ -365,31 +365,30 @@ namespace Luna.Controllers.FormEditorCtrl
         void Log(string content) => qLogger.Log(content);
 
         long updateOutputTimeStamp = 0;
-        VgcApis.Libs.Tasks.Bar bar = new VgcApis.Libs.Tasks.Bar();
 
         void UpdateOutput()
         {
-            if (!bar.Install())
-            {
-                return;
-            }
-
             var timestamp = qLogger.GetTimestamp();
             if (updateOutputTimeStamp == timestamp)
             {
-                bar.Remove();
                 return;
             }
 
-            VgcApis.Misc.UI.InvokeThen(
+            var logs = qLogger.GetLogAsString(true);
+            VgcApis.Misc.UI.Invoke(
                 () =>
                 {
+                    if (rtboxOutput == null || rtboxOutput.IsDisposed)
+                    {
+                        return;
+                    }
+
                     rtboxFreezer.DisableRepaintEvent();
-                    rtboxOutput.Text = qLogger.GetLogAsString(true);
+                    rtboxOutput.Text = logs;
                     VgcApis.Misc.UI.ScrollToBottom(rtboxOutput);
                     rtboxFreezer.EnableRepaintEvent();
                     updateOutputTimeStamp = timestamp;
-                }, () => bar.Remove());
+                });
         }
 
         void GotoLine()

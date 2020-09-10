@@ -48,10 +48,11 @@ namespace V2RayGCon.Views.WinForms
             }
 
             updateTimestamp = timestamp;
-            VgcApis.Misc.UI.Invoke(UpdateLogBox);
+            var logs = qLogger.GetLogAsString(true);
+            VgcApis.Misc.UI.Invoke(() => UpdateLogBox(logs));
         }
 
-        void UpdateLogBox()
+        void UpdateLogBox(string logs)
         {
             var logBox = rtBoxLogger;
             if (logBox == null || logBox.IsDisposed)
@@ -60,9 +61,8 @@ namespace V2RayGCon.Views.WinForms
             }
 
             repaintCtrl.DisableRepaintEvent();
-            logBox.Text = qLogger.GetLogAsString(true);
-            logBox.SelectionStart = logBox.Text.Length;
-            logBox.ScrollToCaret();
+            logBox.Text = logs;
+            VgcApis.Misc.UI.ScrollToBottom(logBox);
             repaintCtrl.EnableRepaintEvent();
         }
 

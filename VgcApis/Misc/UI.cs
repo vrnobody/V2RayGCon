@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -197,10 +198,15 @@ namespace VgcApis.Misc
             doubleBufferPropertyInfo.SetValue(control, enable, null);
         }
 
-        public static void ScrollToBottom(RichTextBox control)
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
+        private const int WM_VSCROLL = 277;
+        private const int SB_PAGEBOTTOM = 7;
+
+        public static void ScrollToBottom(RichTextBox richTextBox)
         {
-            control.SelectionStart = control.Text.Length;
-            control.ScrollToCaret();
+            SendMessage(richTextBox.Handle, WM_VSCROLL, (IntPtr)SB_PAGEBOTTOM, IntPtr.Zero);
+            richTextBox.SelectionStart = richTextBox.Text.Length;
         }
         #endregion
 

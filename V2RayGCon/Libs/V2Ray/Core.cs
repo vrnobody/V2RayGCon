@@ -169,11 +169,13 @@ namespace V2RayGCon.Libs.V2Ray
             try
             {
                 StartCore(config, env, quiet);
-                coreStartStopLocker.Set();
             }
             catch
             {
                 StopCoreIgnoreError(this.v2rayCore);
+            }
+            finally
+            {
                 coreStartStopLocker.Set();
             }
 
@@ -183,6 +185,8 @@ namespace V2RayGCon.Libs.V2Ray
 
         void StopCoreIgnoreError(Process core)
         {
+            this.v2rayCore = null;
+
             if (!IsProcRunning(core))
             {
                 return;
@@ -318,7 +322,19 @@ namespace V2RayGCon.Libs.V2Ray
             var core = sender as Process;
 
             Interlocked.Decrement(ref curConcurrentV2RayCoreNum);
-            // ReleaseEventsIgnoreError(v2rayCore);
+
+            try
+            {
+                if (quiet)
+                {
+                    core.Exited -= OnCoreExitedQuiet;
+                }
+                else
+                {
+                    core.Exited -= OnCoreExited;
+                }
+            }
+            catch { }
 
             string msg = null;
             try
@@ -327,12 +343,13 @@ namespace V2RayGCon.Libs.V2Ray
                 msg = TranslateErrorCode(core.ExitCode);
 
                 // Close() could invoke CoreExit event
-                // core.Close();
+                core.Close();
             }
             catch { }
 
             SendLogBg($"{I18N.ConcurrentV2RayCoreNum}{curConcurrentV2RayCoreNum}");
             SendLogBg(I18N.CoreExit);
+
             // do not run in background
             // VgcApis.Misc.Utils.RunInBackground(() => InvokeEventOnCoreStatusChanged());
             InvokeEventOnCoreStatusChanged();
@@ -370,9 +387,9 @@ namespace V2RayGCon.Libs.V2Ray
 
             BindEvents(core, quiet);
             Interlocked.Increment(ref curConcurrentV2RayCoreNum);
-            this.v2rayCore = core;
 
             core.Start();
+            this.v2rayCore = core;
 
             // Add to JOB object require win8+.
             VgcApis.Libs.Sys.ChildProcessTracker.AddProcess(core);

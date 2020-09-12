@@ -23,6 +23,9 @@ Require .net framework 4.5+.
 ### 演示 Demo
 ![Demo v1.4.3.5 GIF](https://vrnobody.github.io/V2RayGCon/images/forms/demo_basics_v1.4.3.5.gif)  
 
+### 杀毒软件报毒说明
+最近（2020年9月）Microsoft Defender（MD）又开始对这个软件报病毒。这段时间我逐步删模块排查是哪个功能引起报毒，但是直到删光所有插件MD还是报病毒。我都怀疑这个软件是不是有幸上了微软的“实体清单”，老是被针对。考虑到微软和苹果一样，都是遵纪守法的“好”公司，每次发布都提交误报申请也不是办法。所以报毒这个问题我也无能为力。  
+
 ### 引用按字母排序 Credits (in alphabetical order)  
 [2dust/v2rayN](https://github.com/2dust/v2rayN) vmess分享链接及订阅格式  
 [Ahmad45123/AutoCompleteMenu-ScintillaNET](https://github.com/Ahmad45123/AutoCompleteMenu-ScintillaNET) 自动补全  

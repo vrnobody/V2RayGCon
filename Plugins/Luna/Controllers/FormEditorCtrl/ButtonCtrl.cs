@@ -19,7 +19,6 @@ namespace Luna.Controllers.FormEditorCtrl
         private readonly FormEditor formEditor;
         VgcApis.WinForms.FormSearch formSearch = null;
 
-        VgcApis.UserControls.RepaintController rtboxFreezer;
         VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
 
         Scintilla editor = null;
@@ -101,7 +100,6 @@ namespace Luna.Controllers.FormEditorCtrl
             BindEvents();
             ReloadScriptName();
 
-            rtboxFreezer = new VgcApis.UserControls.RepaintController(rtboxOutput);
             logUpdater.Run();
 
             /*
@@ -375,6 +373,8 @@ namespace Luna.Controllers.FormEditorCtrl
             }
 
             var logs = qLogger.GetLogAsString(true);
+            updateOutputTimeStamp = timestamp;
+
             VgcApis.Misc.UI.Invoke(
                 () =>
                 {
@@ -383,11 +383,7 @@ namespace Luna.Controllers.FormEditorCtrl
                         return;
                     }
 
-                    rtboxFreezer.DisableRepaintEvent();
-                    rtboxOutput.Text = logs;
-                    VgcApis.Misc.UI.ScrollToBottom(rtboxOutput);
-                    rtboxFreezer.EnableRepaintEvent();
-                    updateOutputTimeStamp = timestamp;
+                    VgcApis.Misc.UI.UpdateRichTextBox(rtboxOutput, logs);
                 });
         }
 

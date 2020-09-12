@@ -200,14 +200,42 @@ namespace VgcApis.Misc
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
-        private const int WM_VSCROLL = 277;
-        private const int SB_PAGEBOTTOM = 7;
+        const int WM_VSCROLL = 277;
+        const int SB_PAGEBOTTOM = 7;
+        const int WM_SETREDRAW = 0x0b;
 
-        public static void ScrollToBottom(RichTextBox richTextBox)
+        public static void DisableRedraw(Control control)
         {
-            SendMessage(richTextBox.Handle, WM_VSCROLL, (IntPtr)SB_PAGEBOTTOM, IntPtr.Zero);
-            richTextBox.SelectionStart = richTextBox.Text.Length;
+            if (control == null)
+            {
+                return;
+            }
+            // Stop redrawing:
+            SendMessage(control.Handle, WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero);
         }
+
+        public static void EnableRedraw(Control control)
+        {
+            if (control == null)
+            {
+                return;
+            }
+            // turn on redrawing
+            SendMessage(control.Handle, WM_SETREDRAW, (IntPtr)1, IntPtr.Zero);
+            control.Invalidate();
+        }
+
+        public static void UpdateRichTextBox(RichTextBox box, string content)
+        {
+            DisableRedraw(box);
+
+            box.Text = content;
+            SendMessage(box.Handle, WM_VSCROLL, (IntPtr)SB_PAGEBOTTOM, IntPtr.Zero);
+            box.SelectionStart = box.Text.Length;
+
+            EnableRedraw(box);
+        }
+
         #endregion
 
         #region file

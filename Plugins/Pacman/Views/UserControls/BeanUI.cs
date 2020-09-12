@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Windows.Forms;
 
 namespace Pacman.Views.UserControls
@@ -8,18 +7,31 @@ namespace Pacman.Views.UserControls
     {
         Models.Data.Bean bean;
 
-        public BeanUI(Models.Data.Bean bean)
+        public BeanUI()
         {
-            this.bean = bean ?? throw new NoNullAllowedException("Bean must not null.");
             InitializeComponent();
         }
 
-        private void BeanUI_Load(object sender, EventArgs e)
+        private void BeanUI_Load(object sender, EventArgs e) { }
+
+        #region private methods
+        void UpdateLabels()
         {
-            lbTitle.Text = bean.title;
-            lbStatus.Text = bean.status;
-            chkTitle.Checked = bean.isSelected;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                var p = this.Parent;
+                if (p == null || p.IsDisposed)
+                {
+                    return;
+                }
+
+                lbTitle.Text = bean.title;
+                lbStatus.Text = bean.status;
+                chkTitle.Checked = bean.isSelected;
+            });
         }
+
+        #endregion
 
         #region properties
         public bool isSelected
@@ -35,7 +47,13 @@ namespace Pacman.Views.UserControls
         }
         #endregion
 
-        #region public event
+        #region public methods
+        public void Reload(Models.Data.Bean bean)
+        {
+            this.bean = bean;
+            UpdateLabels();
+        }
+
         public void InvertSelection()
         {
             chkTitle.Checked = !chkTitle.Checked;
@@ -72,7 +90,7 @@ namespace Pacman.Views.UserControls
         }
         #endregion
 
-        #region UI
+        #region UI events
         private void BeanUI_MouseDown(object sender, MouseEventArgs e)
         {
             DoDragDrop(this, DragDropEffects.Move);

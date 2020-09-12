@@ -14,7 +14,6 @@ namespace V2RayGCon.Views.WinForms
 
         Services.Settings setting;
 
-        VgcApis.UserControls.RepaintController repaintCtrl;
         long updateTimeStamp = DateTime.Now.Ticks;
 
         VgcApis.Libs.Tasks.Routine logDisplayer;
@@ -31,7 +30,6 @@ namespace V2RayGCon.Views.WinForms
 
         private void FormLog_Load(object sender, EventArgs e)
         {
-            repaintCtrl = new VgcApis.UserControls.RepaintController(rtBoxLogger);
             logDisplayer = new VgcApis.Libs.Tasks.Routine(UpdateLog, 500);
             logDisplayer.Run();
             // throw new NullReferenceException("for debugging");
@@ -56,10 +54,7 @@ namespace V2RayGCon.Views.WinForms
             var text = setting.GetLogContent();
             VgcApis.Misc.UI.Invoke(() =>
             {
-                repaintCtrl.DisableRepaintEvent();
-                logBox.Text = text;
-                VgcApis.Misc.UI.ScrollToBottom(logBox);
-                repaintCtrl.EnableRepaintEvent();
+                VgcApis.Misc.UI.UpdateRichTextBox(logBox, text);
             });
         }
 

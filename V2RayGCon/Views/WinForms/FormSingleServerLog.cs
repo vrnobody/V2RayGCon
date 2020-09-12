@@ -20,7 +20,6 @@ namespace V2RayGCon.Views.WinForms
         long updateTimestamp = -1;
         VgcApis.Libs.Tasks.Routine logUpdater;
         VgcApis.Libs.Sys.QueueLogger qLogger;
-        VgcApis.UserControls.RepaintController repaintCtrl;
 
         bool isPaused = false;
 
@@ -60,16 +59,12 @@ namespace V2RayGCon.Views.WinForms
                 return;
             }
 
-            repaintCtrl.DisableRepaintEvent();
-            logBox.Text = logs;
-            VgcApis.Misc.UI.ScrollToBottom(logBox);
-            repaintCtrl.EnableRepaintEvent();
+            VgcApis.Misc.UI.UpdateRichTextBox(logBox, logs);
         }
 
         private void FormSingleServerLog_Load(object sender, EventArgs e)
         {
             logUpdater.Run();
-            repaintCtrl = new VgcApis.UserControls.RepaintController(rtBoxLogger);
         }
 
         private void FormSingleServerLog_FormClosed(object sender, FormClosedEventArgs e)

@@ -82,7 +82,6 @@
     <Compile Include="Libs\Sys\NotepadHelper.cs" />
     <Compile Include="Libs\Tasks\Bar.cs" />
     <Compile Include="Libs\Tasks\Routine.cs" />
-    <Compile Include="UserControls\RepaintController.cs" />
     <Compile Include="BaseClasses\Disposable.cs" />
     <Compile Include="BaseClasses\AuxSiWinForm.cs" />
     <Compile Include="Libs\Sys\QueueLogger.cs" />

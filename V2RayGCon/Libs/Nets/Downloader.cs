@@ -12,7 +12,7 @@ namespace V2RayGCon.Libs.Nets
         public event EventHandler<VgcApis.Models.Datas.IntEvent> OnProgress;
 
         string _packageName;
-        string _version = @"v4.23.4";
+        string _version = @"v4.27.0";
         string _source = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(0);
         string _sha256sum = null;
         readonly object waitForDigest = new object();
@@ -174,9 +174,10 @@ namespace V2RayGCon.Libs.Nets
         void UpdateCore()
         {
             var servers = Services.Servers.Instance;
-            var pluginServ = Services.PluginsServer.Instance;
 
-            pluginServ.StopAllPlugins();
+            // var pluginServ = Services.PluginsServer.Instance;
+            // pluginServ.StopAllPlugins();
+
             VgcApis.Misc.Utils.Sleep(1000);
 
             var activeServerList = servers.GetRunningServers();
@@ -184,7 +185,9 @@ namespace V2RayGCon.Libs.Nets
             {
                 var status = UnzipPackage();
                 NotifyDownloadResults(status);
-                pluginServ.RestartAllPlugins();
+
+                // pluginServ.RestartAllPlugins();
+
                 if (activeServerList.Count > 0)
                 {
                     servers.RestartServersThen(activeServerList);

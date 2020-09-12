@@ -110,8 +110,9 @@ namespace V2RayGCon.Views.WinForms
             downloader.OnDownloadCompleted += (s, a) =>
             {
                 ResetUI(100);
-                VgcApis.Misc.Utils.RunInBackground(
-                    () => MessageBox.Show(I18N.DownloadCompleted));
+                VgcApis.Misc.Utils.RunInBackground(() => MessageBox.Show(I18N.DownloadCompleted));
+                VgcApis.Misc.Utils.Sleep(1000);
+                VgcApis.Misc.UI.Invoke(() => btnCheckVersion.PerformClick());
             };
 
             downloader.OnDownloadCancelled += (s, a) =>

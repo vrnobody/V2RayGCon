@@ -1,8 +1,12 @@
 {
-  "version": "1.4.5.0",
-  "md5": "6AF3BE5AB001D75A1334159AF334E682",
+  "version": "1.4.6.0",
+  "md5": "0473DDF7F7AFBCDDB3FE26AB37F23B29",
   "warnings": [],
   "changes": [
-    "修复v1.4.4出现的界面冻结问题"
+    "测速过程中遇到错误不再弹出提示窗口",
+    "更新v2ray-core时不重启插件",
+    "优化日志窗口刷新算法减少卡顿",
+    "优化多屏体验",
+    "Luna添加Misc:SetSubscriptionConfig(cfgStr)"
   ]
 }

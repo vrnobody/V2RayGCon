@@ -19,7 +19,6 @@ namespace Luna.Controllers.FormEditorCtrl
         private readonly FormEditor formEditor;
         VgcApis.WinForms.FormSearch formSearch = null;
 
-        VgcApis.UserControls.RepaintController rtboxFreezer;
         VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
 
         Scintilla editor = null;
@@ -101,7 +100,6 @@ namespace Luna.Controllers.FormEditorCtrl
             BindEvents();
             ReloadScriptName();
 
-            rtboxFreezer = new VgcApis.UserControls.RepaintController(rtboxOutput);
             logUpdater.Run();
 
             /*
@@ -365,31 +363,28 @@ namespace Luna.Controllers.FormEditorCtrl
         void Log(string content) => qLogger.Log(content);
 
         long updateOutputTimeStamp = 0;
-        VgcApis.Libs.Tasks.Bar bar = new VgcApis.Libs.Tasks.Bar();
 
         void UpdateOutput()
         {
-            if (!bar.Install())
-            {
-                return;
-            }
-
             var timestamp = qLogger.GetTimestamp();
             if (updateOutputTimeStamp == timestamp)
             {
-                bar.Remove();
                 return;
             }
 
-            VgcApis.Misc.UI.InvokeThen(
+            var logs = qLogger.GetLogAsString(true);
+            updateOutputTimeStamp = timestamp;
+
+            VgcApis.Misc.UI.Invoke(
                 () =>
                 {
-                    rtboxFreezer.DisableRepaintEvent();
-                    rtboxOutput.Text = qLogger.GetLogAsString(true);
-                    VgcApis.Misc.UI.ScrollToBottom(rtboxOutput);
-                    rtboxFreezer.EnableRepaintEvent();
-                    updateOutputTimeStamp = timestamp;
-                }, () => bar.Remove());
+                    if (rtboxOutput == null || rtboxOutput.IsDisposed)
+                    {
+                        return;
+                    }
+
+                    VgcApis.Misc.UI.UpdateRichTextBox(rtboxOutput, logs);
+                });
         }
 
         void GotoLine()

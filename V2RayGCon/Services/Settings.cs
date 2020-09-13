@@ -498,7 +498,7 @@ namespace V2RayGCon.Services
         public ReadOnlyCollection<string> GetV2RayCoreVersionList()
         {
             var result = userSettings.V2RayCoreDownloadVersionList ??
-                new List<string> { "v4.23.4", "v4.22.1", "v4.21.3" };
+                new List<string> { "v4.27.5", "v4.27.0", "v4.26.0", "v4.25.1" };
             return result.AsReadOnly();
         }
 
@@ -728,9 +728,9 @@ namespace V2RayGCon.Services
             return new List<Models.Datas.SubscriptionItem>();
         }
 
-        public void SaveSubscriptionItems(string options)
+        public void SetSubscriptionConfig(string cfgStr)
         {
-            userSettings.SubscribeUrls = options;
+            userSettings.SubscribeUrls = cfgStr;
             SaveSettingsLater();
         }
 

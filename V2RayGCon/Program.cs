@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -31,10 +30,10 @@ namespace V2RayGCon
         {
             Thread.CurrentThread.Name = VgcApis.Models.Consts.Libs.UiThreadName;
 
+            SetProcessDPIAware();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            IntPtr pShcoreDll = HiResSupport();
             if (mutex.WaitOne(TimeSpan.Zero, true))
             {
                 var app = new Services.Launcher();
@@ -50,25 +49,11 @@ namespace V2RayGCon
             {
                 MessageBox.Show(I18N.ExitOtherVGCFirst);
             }
-
-            Libs.Sys.SafeNativeMethods.FreeLibrary(pShcoreDll);
         }
 
         #region DPI awareness
-        // PROCESS_DPI_AWARENESS = 0/1/2 None/SystemAware/PerMonitorAware
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate int SetProcessDpiAwareness(int PROCESS_DPI_AWARENESS);
-        static IntPtr HiResSupport()
-        {
-            // load Shcore.dll and get high resolution support
-            IntPtr pDll = Libs.Sys.SafeNativeMethods.LoadLibrary(@"Shcore.DLL");
-            Libs.Sys.DllLoader.CallMethod(
-                pDll,
-                @"SetProcessDpiAwareness",
-                typeof(SetProcessDpiAwareness),
-                (method) => ((SetProcessDpiAwareness)method).Invoke(2));
-            return pDll;
-        }
+        [DllImport("user32.dll")]
+        public extern static IntPtr SetProcessDPIAware();
         #endregion
     }
 }

@@ -228,6 +228,8 @@ namespace Luna.Models.Apis.Components
 
         public string GetSubscriptionConfig() => vgcSettings.GetSubscriptionConfig();
 
+        public void SetSubscriptionConfig(string cfgStr) => vgcSettings.SetSubscriptionConfig(cfgStr);
+
         public long GetTimeoutValue() => VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
         public void RefreshFormMain() => vgcServer.RequireFormMainReload();

@@ -22,6 +22,8 @@ namespace V2RayGCon.Libs.Sys
         #endregion
 
         #region ui
+
+
         [DllImport("User32.dll")]
         public static extern IntPtr GetDC(IntPtr hwnd);
 

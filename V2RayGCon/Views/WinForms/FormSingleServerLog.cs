@@ -20,7 +20,6 @@ namespace V2RayGCon.Views.WinForms
         long updateTimestamp = -1;
         VgcApis.Libs.Tasks.Routine logUpdater;
         VgcApis.Libs.Sys.QueueLogger qLogger;
-        VgcApis.UserControls.RepaintController repaintCtrl;
 
         bool isPaused = false;
 
@@ -48,10 +47,11 @@ namespace V2RayGCon.Views.WinForms
             }
 
             updateTimestamp = timestamp;
-            VgcApis.Misc.UI.Invoke(UpdateLogBox);
+            var logs = qLogger.GetLogAsString(true);
+            VgcApis.Misc.UI.Invoke(() => UpdateLogBox(logs));
         }
 
-        void UpdateLogBox()
+        void UpdateLogBox(string logs)
         {
             var logBox = rtBoxLogger;
             if (logBox == null || logBox.IsDisposed)
@@ -59,17 +59,12 @@ namespace V2RayGCon.Views.WinForms
                 return;
             }
 
-            repaintCtrl.DisableRepaintEvent();
-            logBox.Text = qLogger.GetLogAsString(true);
-            logBox.SelectionStart = logBox.Text.Length;
-            logBox.ScrollToCaret();
-            repaintCtrl.EnableRepaintEvent();
+            VgcApis.Misc.UI.UpdateRichTextBox(logBox, logs);
         }
 
         private void FormSingleServerLog_Load(object sender, EventArgs e)
         {
             logUpdater.Run();
-            repaintCtrl = new VgcApis.UserControls.RepaintController(rtBoxLogger);
         }
 
         private void FormSingleServerLog_FormClosed(object sender, FormClosedEventArgs e)

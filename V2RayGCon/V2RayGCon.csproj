@@ -187,7 +187,6 @@
     <Compile Include="Libs\Lua\ApiComponents\UtilsApi.cs" />
     <Compile Include="Libs\Lua\ApiComponents\WebApi.cs" />
     <Compile Include="Libs\Lua\Apis.cs" />
-    <Compile Include="Libs\Sys\DllLoader.cs" />
     <Compile Include="Libs\QRCode\HybridBinarizer.cs" />
     <Compile Include="Libs\QRCode\QRCode.cs" />
     <Compile Include="Libs\Sys\SafeNativeMethods.cs" />
@@ -429,7 +428,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resx\I18N.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>I18N.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormBatchModifyServerSetting.resx">

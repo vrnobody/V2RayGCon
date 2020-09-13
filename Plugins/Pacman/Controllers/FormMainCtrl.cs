@@ -116,12 +116,14 @@ namespace Pacman.Controllers
                         {
                             // update title
                             control.SetTitle(bean.title);
+                            control.SetStatus(bean.status);
                             return;
                         }
                     }
 
-                    beanUI = new Views.UserControls.BeanUI(bean);
+                    beanUI = new Views.UserControls.BeanUI();
                     flyContent.Controls.Add(beanUI);
+                    beanUI.Reload(bean);
                 }
 
                 if (beanUI == null && a.Data.GetDataPresent(typeof(Views.UserControls.BeanUI)))
@@ -277,35 +279,60 @@ namespace Pacman.Controllers
                 if (found != null)
                 {
                     found.title = states.GetTitle();
+                    found.status = states.GetStatus();
                     continue;
                 }
                 curList.Add(new Models.Data.Bean
                 {
                     title = states.GetTitle(),
                     uid = serverCtrl.GetCoreStates().GetUid(),
+                    status = states.GetStatus(),
                 });
             }
             this.beanList = curList;
             RefreshFlyContent();
         }
 
+        void DoHouseKeeping(int exp)
+        {
+            flyContent.SuspendLayout();
+            var ctrls = flyContent.Controls.OfType<Views.UserControls.BeanUI>().ToList();
+            var cur = ctrls.Count;
+            for (int i = cur - 1; i >= exp; i++)
+            {
+                flyContent.Controls.Remove(ctrls[i]);
+            }
+
+            var beans = new List<Views.UserControls.BeanUI>();
+            for (int i = cur; i < exp; i++)
+            {
+                beans.Add(new Views.UserControls.BeanUI());
+            }
+            flyContent.Controls.AddRange(beans.ToArray());
+            flyContent.ResumeLayout();
+        }
+
         void RefreshFlyContent()
         {
-            flyContent.Controls.Clear();
-            if (beanList == null)
+            var clone = beanList?.ToList();
+
+            DoHouseKeeping(clone?.Count ?? 0);
+
+            if (clone == null)
             {
                 return;
             }
 
-            var beans = beanList
-                .OrderBy(b => b.index)
-                .Select(el => new Views.UserControls.BeanUI(el))
-                .ToArray();
+            var ctrls = flyContent.Controls.OfType<Views.UserControls.BeanUI>().ToList();
+            if (ctrls.Count != clone.Count)
+            {
+                return;
+            }
 
-            flyContent.SuspendLayout();
-            flyContent.Controls.AddRange(beans);
-            flyContent.ResumeLayout();
-
+            for (int i = 0; i < ctrls.Count; i++)
+            {
+                ctrls[i].Reload(clone[i]);
+            }
         }
 
         void PackageListSelectedIndexChanged()

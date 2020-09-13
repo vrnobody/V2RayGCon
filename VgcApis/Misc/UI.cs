@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -197,11 +198,44 @@ namespace VgcApis.Misc
             doubleBufferPropertyInfo.SetValue(control, enable, null);
         }
 
-        public static void ScrollToBottom(RichTextBox control)
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
+        const int WM_VSCROLL = 277;
+        const int SB_PAGEBOTTOM = 7;
+        const int WM_SETREDRAW = 0x0b;
+
+        public static void DisableRedraw(Control control)
         {
-            control.SelectionStart = control.Text.Length;
-            control.ScrollToCaret();
+            if (control == null)
+            {
+                return;
+            }
+            // Stop redrawing:
+            SendMessage(control.Handle, WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero);
         }
+
+        public static void EnableRedraw(Control control)
+        {
+            if (control == null)
+            {
+                return;
+            }
+            // turn on redrawing
+            SendMessage(control.Handle, WM_SETREDRAW, (IntPtr)1, IntPtr.Zero);
+            control.Invalidate();
+        }
+
+        public static void UpdateRichTextBox(RichTextBox box, string content)
+        {
+            DisableRedraw(box);
+
+            box.Text = content;
+            SendMessage(box.Handle, WM_VSCROLL, (IntPtr)SB_PAGEBOTTOM, IntPtr.Zero);
+            box.SelectionStart = box.Text.Length;
+
+            EnableRedraw(box);
+        }
+
         #endregion
 
         #region file

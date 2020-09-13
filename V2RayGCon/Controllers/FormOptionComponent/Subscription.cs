@@ -18,8 +18,6 @@ namespace V2RayGCon.Controllers.OptionComponent
         readonly Services.Servers servers;
         readonly Services.ShareLinkMgr slinkMgr;
 
-        string oldOptions;
-
         VgcApis.Libs.Tasks.LazyGuy lazyCounter;
 
         public Subscription(
@@ -71,10 +69,11 @@ namespace V2RayGCon.Controllers.OptionComponent
         public override bool SaveOptions()
         {
             string curOptions = GetCurOptions();
+            string oldOptions = setting.GetSubscriptionConfig();
 
             if (curOptions != oldOptions)
             {
-                setting.SaveSubscriptionItems(curOptions);
+                setting.SetSubscriptionConfig(curOptions);
                 oldOptions = curOptions;
                 return true;
             }
@@ -83,13 +82,14 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         public override bool IsOptionsChanged()
         {
+            var oldOptions = setting.GetSubscriptionConfig();
             return GetCurOptions() != oldOptions;
         }
 
         public void Merge(string rawSetting)
         {
             var mergedSettings = MergeIntoCurSubsItems(rawSetting);
-            setting.SaveSubscriptionItems(mergedSettings);
+            setting.SetSubscriptionConfig(mergedSettings);
             Misc.UI.ClearFlowLayoutPanel(this.flyPanel);
             InitPanel();
         }
@@ -259,8 +259,6 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             var subItemList = setting.GetSubscriptionItems();
             chkSubsIsAutoPatch.Checked = setting.isAutoPatchSubsInfo;
-
-            this.oldOptions = JsonConvert.SerializeObject(subItemList);
 
             if (subItemList.Count <= 0)
             {

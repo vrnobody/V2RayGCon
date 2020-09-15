@@ -9,10 +9,13 @@
 [7]: https://img.shields.io/github/license/vrnobody/V2RayGCon.svg "Licence Badge"
 [8]: https://github.com/vrnobody/V2RayGCon/blob/master/LICENSE "Licence"
 [9]: https://github.com/vrnobody/V2RayGCon/releases/latest "Latest release"
+[10]: https://vrnobody.github.io/V2RayGCon/ "github.io"
+[11]: https://github.com/vrnobody/V2RayGCon/issues "Issues"
+[12]: https://github.com/vrnobody/luna-scripts "Luna scripts"
 
 V2RayGCon是windows下[v2ray-core](https://v2ray.com)的图形(graphic)配置器(configer)。  
 
-[\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]](https://vrnobody.github.io/V2RayGCon/)&nbsp;&nbsp;
+[\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]][10]&nbsp;&nbsp;[\[唯一联系方式 issue\]][11]&nbsp;&nbsp;[\[脚本共享 scripts\]][12]  
 
 ### 安装 Install
 先安装.net framework 4.5+，然后下载解压[V2RayGCon-box.zip][9]到任意目录。  

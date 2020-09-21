@@ -255,7 +255,6 @@ namespace V2RayGCon.Services
 
         #endregion
 
-
         #region INotifier.WinForms
         public void ShowFormJsonEditor(string config)
         {
@@ -285,7 +284,6 @@ namespace V2RayGCon.Services
         public void ShowFormLog() => Views.WinForms.FormLog.ShowForm();
 
         #endregion
-
 
         #region public method
         public void BlockingWaitOne(AutoResetEvent autoEv) =>
@@ -639,13 +637,68 @@ namespace V2RayGCon.Services
 
             InvokeThen(() =>
             {
-                var miAllServers = ServerList2MenuItems(serverList);
-                var miGroupedServers = VgcApis.Misc.UI.AutoGroupMenuItems(miAllServers, groupSize);
-                var miTopNthServers = miAllServers.Count > groupSize ?
+                List<ToolStripMenuItem> miGroupedServers = null;
+                if (serverList.Count < VgcApis.Models.Consts.Config.MinDynamicMenuSize)
+                {
+                    var miAllServers = ServerList2MenuItems(serverList);
+                    miGroupedServers = VgcApis.Misc.UI.AutoGroupMenuItems(miAllServers, groupSize);
+                }
+                else
+                {
+                    miGroupedServers = CreateDynamicServerMenus(serverList, groupSize, 0, serverList.Count);
+                }
+
+                var miTopNthServers = serverList.Count > groupSize ?
                     ServerList2MenuItems(serverList.Take(num).ToList()) :
                     new List<ToolStripMenuItem>();
+
                 ReplaceServersMenuWith(miGroupedServers, miTopNthServers);
             }, done);
+        }
+
+        List<ToolStripMenuItem> CreateDynamicServerMenus(
+            IReadOnlyCollection<ICoreServCtrl> coreServs,
+            int groupSize, int start, int end)
+        {
+            var n = end - start;
+            var step = 1;
+            while (n > groupSize)
+            {
+                n = n / groupSize;
+                step = step * groupSize;
+            }
+
+            if (step == 1)
+            {
+                var cs = new List<ICoreServCtrl>();
+                var servs = coreServs.ToList();
+                for (int i = start; i < servs.Count && i < end; i++)
+                {
+                    cs.Add(servs[i]);
+                }
+                return ServerList2MenuItems(cs);
+            }
+
+            var gmis = new List<ToolStripMenuItem>();
+            for (int i = start; i < end; i += step)
+            {
+                var s = i;
+                var e = Math.Min(i + step, end);
+                var text = string.Format("{0,4:D4} - {1,4:D4}", s + 1, e);
+                var mi = new ToolStripMenuItem(text, null);
+                mi.DropDownOpening += (o, a) =>
+                {
+                    var root = mi.DropDownItems;
+                    if (root.Count < 1)
+                    {
+                        var dm = CreateDynamicServerMenus(coreServs, groupSize, s, e);
+                        root.AddRange(dm.ToArray());
+                    }
+                };
+                gmis.Add(mi);
+            }
+
+            return gmis;
         }
 
         enum SysTrayIconTypes

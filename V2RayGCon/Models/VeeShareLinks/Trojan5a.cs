@@ -4,7 +4,7 @@ namespace V2RayGCon.Models.VeeShareLinks
 {
     public sealed class Trojan5a : BasicSettings
     {
-        // ver 1a is optimized for shadowshocks protocol
+        // ver 5a is optimized for trojan protocol
 
         const string version = @"5a";
         static public bool IsDecoderFor(string ver) => version == ver;
@@ -83,7 +83,7 @@ namespace V2RayGCon.Models.VeeShareLinks
             return result;
         }
 
-        public bool EqTo(Ss1b vee)
+        public bool EqTo(Trojan5a vee)
         {
             if (!EqTo(vee as BasicSettings)
                 || password != vee.password)

@@ -645,7 +645,7 @@ namespace V2RayGCon.Services
                 }
                 else
                 {
-                    miGroupedServers = CreateDynamicServerMenus(serverList, groupSize, 0, serverList.Count);
+                    miGroupedServers = CreateDynamicServerMenus(groupSize, 0, serverList.Count);
                 }
 
                 var miTopNthServers = serverList.Count > groupSize ?
@@ -656,9 +656,7 @@ namespace V2RayGCon.Services
             }, done);
         }
 
-        List<ToolStripMenuItem> CreateDynamicServerMenus(
-            IReadOnlyCollection<ICoreServCtrl> coreServs,
-            int groupSize, int start, int end)
+        List<ToolStripMenuItem> CreateDynamicServerMenus(int groupSize, int start, int end)
         {
             var n = end - start;
             var step = 1;
@@ -671,7 +669,7 @@ namespace V2RayGCon.Services
             if (step == 1)
             {
                 var cs = new List<ICoreServCtrl>();
-                var servs = coreServs.ToList();
+                var servs = servers.GetAllServersOrderByIndex();
                 for (int i = start; i < servs.Count && i < end; i++)
                 {
                     cs.Add(servs[i]);
@@ -691,7 +689,7 @@ namespace V2RayGCon.Services
                     var root = mi.DropDownItems;
                     if (root.Count < 1)
                     {
-                        var dm = CreateDynamicServerMenus(coreServs, groupSize, s, e);
+                        var dm = CreateDynamicServerMenus(groupSize, s, e);
                         root.AddRange(dm.ToArray());
                     }
                 };

@@ -293,6 +293,7 @@ namespace V2RayGCon.Misc
                     protocol = "ss";
                     ipKey += ".settings.servers.0.address";
                     break;
+                case "trojan":
                 case "socks":
                 case "http":
                     ipKey += ".settings.servers.0.address";

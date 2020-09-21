@@ -32,6 +32,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             AddChild(new VeeCodecs.Socks2a(cache));
             AddChild(new VeeCodecs.Http3a(cache));
             AddChild(new VeeCodecs.Vless4a(cache));
+            AddChild(new VeeCodecs.Trojan5a(cache));
         }
 
         public Tuple<JObject, JToken> Decode(string shareLink)

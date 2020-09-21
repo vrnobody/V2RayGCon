@@ -97,8 +97,12 @@ namespace V2RayGCon.Views.UserControls
 
         void InitControls()
         {
-            Misc.UI.FillComboBox(cboxMethod, Models.Datas.Table.ssMethods);
+            var protocols = new List<string> {
+                "http", "shadowsocks", "socks", "trojan", "vless", "vmess"
+            };
+            Misc.UI.FillComboBox(cboxProtocol, protocols);
 
+            Misc.UI.FillComboBox(cboxMethod, Models.Datas.Table.ssMethods);
             var streamType = new List<string> { StreamTypeNone };
             foreach (var type in Models.Datas.Table.streamSettings)
             {
@@ -110,7 +114,8 @@ namespace V2RayGCon.Views.UserControls
                 streamType.Add(type.Value.network);
             }
             Misc.UI.FillComboBox(cboxStreamType, streamType);
-            cboxProtocol.SelectedIndex = 4;
+
+            cboxProtocol.SelectedIndex = 5;
         }
 
         Models.Datas.StreamComponent GetStreamComponet(string network)
@@ -207,6 +212,13 @@ namespace V2RayGCon.Views.UserControls
                     lbAuth2.Visible = true;
                     cboxMethod.Visible = true;
                     chkOTA.Visible = true;
+                    tboxAuth2.Visible = false;
+                    break;
+                case @"trojan":
+                    lbAuth1.Text = I18N.Password;
+                    lbAuth2.Visible = false;
+                    cboxMethod.Visible = false;
+                    chkOTA.Visible = false;
                     tboxAuth2.Visible = false;
                     break;
                 default:

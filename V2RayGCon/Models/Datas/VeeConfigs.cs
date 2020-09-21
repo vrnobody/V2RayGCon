@@ -79,7 +79,13 @@ namespace V2RayGCon.Models.Datas
         byte[] GenVeeShareLink()
         {
             var bs = GetBasicSettings();
-            if (VeeShareLinks.Vmess0a.IsEncoderFor(proto))
+            if (VeeShareLinks.Trojan5a.IsEncoderFor(proto))
+            {
+                var trojan = new VeeShareLinks.Trojan5a(bs);
+                trojan.password = auth1;
+                return trojan.ToBytes();
+            }
+            else if (VeeShareLinks.Vmess0a.IsEncoderFor(proto))
             {
                 var vmess = new VeeShareLinks.Vmess0a(bs);
                 vmess.uuid = Guid.Parse(auth1);
@@ -157,7 +163,11 @@ namespace V2RayGCon.Models.Datas
         object DecodeBytes(byte[] bytes)
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
-            if (VeeShareLinks.Vmess0a.IsDecoderFor(ver))
+            if (VeeShareLinks.Trojan5a.IsDecoderFor(ver))
+            {
+                return new VeeShareLinks.Trojan5a(bytes);
+            }
+            else if (VeeShareLinks.Vmess0a.IsDecoderFor(ver))
             {
                 return new VeeShareLinks.Vmess0a(bytes);
             }
@@ -202,6 +212,10 @@ namespace V2RayGCon.Models.Datas
             ParseBasicSettings(linkModel as VeeShareLinks.BasicSettings);
             switch (linkModel)
             {
+                case VeeShareLinks.Trojan5a trojan:
+                    this.proto = "trojan";
+                    this.auth1 = trojan.password;
+                    break;
                 case VeeShareLinks.Vmess0a vmess:
                     this.proto = "vmess";
                     this.auth1 = vmess.uuid.ToString();

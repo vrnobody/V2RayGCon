@@ -253,9 +253,12 @@
     <value>socks</value>
   </data>
   <data name="cboxProtocol.Items3" xml:space="preserve">
-    <value>vless</value>
+    <value>trojan</value>
   </data>
   <data name="cboxProtocol.Items4" xml:space="preserve">
+    <value>vless</value>
+  </data>
+  <data name="cboxProtocol.Items5" xml:space="preserve">
     <value>vmess</value>
   </data>
   <data name="cboxProtocol.Location" type="System.Drawing.Point, System.Drawing">

@@ -100,7 +100,8 @@
             resources.GetString("cboxProtocol.Items1"),
             resources.GetString("cboxProtocol.Items2"),
             resources.GetString("cboxProtocol.Items3"),
-            resources.GetString("cboxProtocol.Items4")});
+            resources.GetString("cboxProtocol.Items4"),
+            resources.GetString("cboxProtocol.Items5")});
             this.cboxProtocol.Name = "cboxProtocol";
             this.cboxProtocol.SelectedValueChanged += new System.EventHandler(this.cboxProtocol_SelectedValueChanged);
             // 

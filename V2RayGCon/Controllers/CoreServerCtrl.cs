@@ -145,8 +145,9 @@ namespace V2RayGCon.Controllers
             bool indexChanged = false;
             if ((int)ci.index != (int)cs.index)
             {
-                ci.index = cs.index - 0.01;
                 indexChanged = true;
+                var dt = ci.index > cs.index ? -0.01 : +0.01;
+                ci.index = cs.index + dt;
             }
 
             bool restartCore = SetCustomInboundInfo(cs);

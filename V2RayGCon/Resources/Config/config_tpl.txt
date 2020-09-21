@@ -254,6 +254,20 @@
       ]
     }
   },
+  "outbVeeTrojan5a": {
+    "protocol": "trojan",
+    "settings": {
+      "servers": [
+        {
+          "address": "127.0.0.1",
+          "port": 1080,
+          "password": ""
+        }
+      ]
+    },
+    "tag": "agentout",
+    "streamSettings": {}
+  },
   "outbVeeSs": {
     "protocol": "shadowsocks",
     "settings": {

@@ -153,7 +153,13 @@ namespace V2RayGCon.Services
             {
                 codecs.GetChild<ShareLinkComponents.VmessDecoder>(),
                 codecs.GetChild<ShareLinkComponents.VeeDecoder>(),
+
             };
+
+            if (setting.CustomDefImportTrojanShareLink)
+            {
+                decoders.Add(codecs.GetChild<ShareLinkComponents.TrojanDecoder>());
+            }
 
             if (setting.CustomDefImportSsShareLink)
             {

@@ -13,6 +13,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         CheckBox chkSetSpeedtestIsUse = null,
             chkImportSsShareLink = null,
+            chkImportTrojanShareLink = null,
             chkImportBypassCnSite = null,
             chkImportInjectGlobalImport = null,
             chkDefVmessDecodeTemplateEnabled = null;
@@ -29,6 +30,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             TextBox tboxDefImportAddr,
 
             CheckBox chkImportSsShareLink,
+            CheckBox chkImportTrojanShareLink,
             CheckBox chkImportBypassCnSite,
             CheckBox chkImportInjectGlobalImport,
 
@@ -54,6 +56,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.cboxDefImportMode = cboxDefImportMode;
             this.tboxDefImportAddr = tboxDefImportAddr;
             this.chkImportSsShareLink = chkImportSsShareLink;
+            this.chkImportTrojanShareLink = chkImportTrojanShareLink;
             this.chkImportBypassCnSite = chkImportBypassCnSite;
             this.chkImportInjectGlobalImport = chkImportInjectGlobalImport;
             this.chkSetSpeedtestIsUse = chkSetSpeedtestIsUse;
@@ -113,6 +116,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             setting.CustomDefImportMode = cboxDefImportMode.SelectedIndex;
 
             setting.CustomDefImportSsShareLink = chkImportSsShareLink.Checked;
+            setting.CustomDefImportTrojanShareLink = chkImportTrojanShareLink.Checked;
             setting.CustomDefImportGlobalImport = chkImportInjectGlobalImport.Checked;
             setting.CustomDefImportBypassCnSite = chkImportBypassCnSite.Checked;
 
@@ -137,6 +141,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                 || setting.CustomDefImportGlobalImport != chkImportInjectGlobalImport.Checked
                 || setting.CustomDefImportBypassCnSite != chkImportBypassCnSite.Checked
                 || setting.CustomDefImportSsShareLink != chkImportSsShareLink.Checked
+                || setting.CustomDefImportTrojanShareLink != chkImportTrojanShareLink.Checked
                 || setting.CustomDefImportIp != ip
                 || setting.CustomDefImportPort != port
                 || setting.CustomDefImportMode != cboxDefImportMode.SelectedIndex

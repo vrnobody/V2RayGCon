@@ -1297,22 +1297,22 @@ namespace V2RayGCon.Misc
             switch (linkType)
             {
                 case VgcApis.Models.Datas.Enums.LinkTypes.ss:
-                    pattern = GenLinkPrefix(linkType) + "://" +
-                        VgcApis.Models.Consts.Patterns.SsShareLinkContent;
+                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.SsShareLinkContent;
                     break;
                 case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
                 case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
                 case VgcApis.Models.Datas.Enums.LinkTypes.v:
-                    pattern = GenLinkPrefix(linkType) + "://" +
-                        VgcApis.Models.Consts.Patterns.Base64NonStandard;
+                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.Base64NonStandard;
                     break;
                 case VgcApis.Models.Datas.Enums.LinkTypes.http:
                 case VgcApis.Models.Datas.Enums.LinkTypes.https:
                     pattern = VgcApis.Models.Consts.Patterns.HttpUrl;
                     break;
+                case VgcApis.Models.Datas.Enums.LinkTypes.trojan:
+                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.TrojanUrlContent;
+                    break;
                 default:
-                    throw new NotSupportedException(
-                        $"Not supported link type {linkType.ToString()}:// ...");
+                    throw new NotSupportedException($"Not supported link type {linkType.ToString()}:// ...");
             }
 
             return VgcApis.Models.Consts.Patterns.NonAlphabets + pattern;

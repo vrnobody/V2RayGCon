@@ -333,6 +333,9 @@
   <data name="chkDefImportBypassCnSite.ToolTip" xml:space="preserve">
     <value>绕过CN网站</value>
   </data>
+  <data name="chkDefImportTrojanShareLink.ToolTip" xml:space="preserve">
+    <value>导入时包含Trojan分享链接</value>
+  </data>
   <data name="chkDefImportSsShareLink.ToolTip" xml:space="preserve">
     <value>导入时包含shadowsocks分享链接</value>
   </data>

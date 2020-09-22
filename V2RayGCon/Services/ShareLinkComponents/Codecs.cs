@@ -52,9 +52,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
             var v2cfgDecoder = new V2cfgDecoder();
             var vmessDecoder = new VmessDecoder(cache, setting);
             var veeDecoder = new VeeDecoder(cache, setting);
+            var trojanDecoder = new TrojanDecoder(veeDecoder);
 
             veeDecoder.Prepare();
 
+            AddChild(trojanDecoder);
             AddChild(ssDecoder);
             AddChild(v2cfgDecoder);
             AddChild(vmessDecoder);

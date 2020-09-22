@@ -59,6 +59,7 @@
             http = 3,
             https = 4,
             v = 5,
+            trojan = 6,
             unknow = 256, // for enum parse
         }
 

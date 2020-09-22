@@ -216,6 +216,7 @@
     <Compile Include="Services\ServersComponents\IndexHandler.cs" />
     <Compile Include="Services\ServersComponents\QueryHandler.cs" />
     <Compile Include="Services\ShareLinkComponents\Codecs.cs" />
+    <Compile Include="Services\ShareLinkComponents\TrojanDecoder.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Comm.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\IVeeDecoder.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Http3a.cs" />

@@ -105,6 +105,8 @@ namespace V2RayGCon.Views.WinForms
                     tboxDefImportAddr,
 
                     chkDefImportSsShareLink,
+                    chkDefImportTrojanShareLink,
+
                     chkDefImportBypassCnSite,
                     chkDefImportInjectGlobalImport,
 

@@ -259,6 +259,16 @@ namespace V2RayGCon.Services
             }
         }
 
+        public bool CustomDefImportTrojanShareLink
+        {
+            get => userSettings.ImportOptions.IsImportTrojanShareLink;
+            set
+            {
+                userSettings.ImportOptions.IsImportTrojanShareLink = value;
+                SaveSettingsLater();
+            }
+        }
+
         public bool CustomDefImportSsShareLink
         {
             get => userSettings.ImportOptions.IsImportSsShareLink;

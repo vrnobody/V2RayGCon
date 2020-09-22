@@ -2,6 +2,9 @@
 {
     public class ImportSharelinkOptions
     {
+
+        public bool IsImportTrojanShareLink { get; set; }
+
         public bool IsImportSsShareLink { get; set; }
         public bool IsInjectGlobalImport { get; set; }
         public bool IsBypassCnSite { get; set; }
@@ -12,7 +15,8 @@
 
         public ImportSharelinkOptions()
         {
-            IsImportSsShareLink = true;
+            IsImportTrojanShareLink = false;
+            IsImportSsShareLink = false;
             IsInjectGlobalImport = false;
             IsBypassCnSite = false;
 
@@ -24,6 +28,7 @@
         public bool Equals(ImportSharelinkOptions target)
         {
             if (target == null
+                || IsImportTrojanShareLink != target.IsImportTrojanShareLink
                 || IsImportSsShareLink != target.IsImportSsShareLink
                 || IsInjectGlobalImport != target.IsInjectGlobalImport
                 || IsBypassCnSite != target.IsBypassCnSite

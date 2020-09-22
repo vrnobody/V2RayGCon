@@ -627,89 +627,17 @@
   <metadata name="ctxMenuStripMore.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>119, 18</value>
   </metadata>
-  <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 22</value>
-  </data>
-  <data name="startToolStripMenuItem.Text" xml:space="preserve">
-    <value>Start</value>
-  </data>
-  <data name="startToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Stop all running servers and start this server.</value>
-  </data>
-  <data name="multiboxingToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 22</value>
-  </data>
-  <data name="multiboxingToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Multiboxing</value>
-  </data>
-  <data name="multiboxingToolStripMenuItem1.ToolTipText" xml:space="preserve">
-    <value>Start this server along with other started server. Inbound port should not duplicate.</value>
-  </data>
-  <data name="stopToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>145, 22</value>
-  </data>
-  <data name="stopToolStripMenuItem1.Text" xml:space="preserve">
-    <value>Stop</value>
-  </data>
-  <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
-    <value>Stop this server.</value>
-  </data>
   <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
     <value>201, 22</value>
   </data>
   <data name="toolStripMenuItem3.Text" xml:space="preserve">
     <value>Action</value>
   </data>
-  <data name="moveToTopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 22</value>
-  </data>
-  <data name="moveToTopToolStripMenuItem.Text" xml:space="preserve">
-    <value>Top</value>
-  </data>
-  <data name="moveToTopToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Move this server to top.</value>
-  </data>
-  <data name="moveToBottomToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 22</value>
-  </data>
-  <data name="moveToBottomToolStripMenuItem.Text" xml:space="preserve">
-    <value>Bottom</value>
-  </data>
-  <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Move this server to bottom.</value>
-  </data>
   <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
     <value>201, 22</value>
   </data>
   <data name="toolStripMenuItem6.Text" xml:space="preserve">
     <value>Move</value>
-  </data>
-  <data name="vToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 22</value>
-  </data>
-  <data name="vToolStripMenuItem.Text" xml:space="preserve">
-    <value>v:// ...</value>
-  </data>
-  <data name="vToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Contain main config information.</value>
-  </data>
-  <data name="vmessToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 22</value>
-  </data>
-  <data name="vmessToolStripMenuItem.Text" xml:space="preserve">
-    <value>vmess:// ...</value>
-  </data>
-  <data name="vmessToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Contain main config information.</value>
-  </data>
-  <data name="v2cfgToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 22</value>
-  </data>
-  <data name="v2cfgToolStripMenuItem.Text" xml:space="preserve">
-    <value>v2cfg:// ...</value>
-  </data>
-  <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Contain all config information.</value>
   </data>
   <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>201, 22</value>
@@ -785,6 +713,78 @@
   </data>
   <data name="&gt;&gt;ctxMenuStripMore.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 22</value>
+  </data>
+  <data name="startToolStripMenuItem.Text" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="startToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Stop all running servers and start this server.</value>
+  </data>
+  <data name="multiboxingToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 22</value>
+  </data>
+  <data name="multiboxingToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Multiboxing</value>
+  </data>
+  <data name="multiboxingToolStripMenuItem1.ToolTipText" xml:space="preserve">
+    <value>Start this server along with other started server. Inbound port should not duplicate.</value>
+  </data>
+  <data name="stopToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 22</value>
+  </data>
+  <data name="stopToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
+    <value>Stop this server.</value>
+  </data>
+  <data name="moveToTopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 22</value>
+  </data>
+  <data name="moveToTopToolStripMenuItem.Text" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="moveToTopToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Move this server to top.</value>
+  </data>
+  <data name="moveToBottomToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 22</value>
+  </data>
+  <data name="moveToBottomToolStripMenuItem.Text" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Move this server to bottom.</value>
+  </data>
+  <data name="vToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 22</value>
+  </data>
+  <data name="vToolStripMenuItem.Text" xml:space="preserve">
+    <value>v:// ...</value>
+  </data>
+  <data name="vToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Contain main config information.</value>
+  </data>
+  <data name="vmessToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 22</value>
+  </data>
+  <data name="vmessToolStripMenuItem.Text" xml:space="preserve">
+    <value>vmess:// ...</value>
+  </data>
+  <data name="vmessToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Contain main config information.</value>
+  </data>
+  <data name="v2cfgToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>138, 22</value>
+  </data>
+  <data name="v2cfgToolStripMenuItem.Text" xml:space="preserve">
+    <value>v2cfg:// ...</value>
+  </data>
+  <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Contain all config information.</value>
   </data>
   <data name="rtboxServerTitle.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 9pt</value>

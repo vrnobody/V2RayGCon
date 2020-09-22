@@ -187,7 +187,7 @@
             this.rlbLastModifyDate.ForeColor = System.Drawing.Color.DimGray;
             this.rlbLastModifyDate.Name = "rlbLastModifyDate";
             this.toolTip1.SetToolTip(this.rlbLastModifyDate, resources.GetString("rlbLastModifyDate.ToolTip"));
-            this.rlbLastModifyDate.Click += new System.EventHandler(this.rlbInboundMode_Click);
+            this.rlbLastModifyDate.Click += new System.EventHandler(this.rlbLastModifyDate_Click);
             // 
             // rlbInboundMode
             // 

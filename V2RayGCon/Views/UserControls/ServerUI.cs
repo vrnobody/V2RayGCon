@@ -115,6 +115,12 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region private method
+        private void ShowFormSimpleEditor()
+        {
+            var f = WinForms.FormSimpleEditor.GetForm();
+            f.LoadCoreServer(this.coreServCtrl);
+        }
+
 
         bool isCtrlBtnVisable = false;
         async Task SetCtrlButtonsVisiblityLater(bool isVisable)
@@ -784,8 +790,12 @@ namespace V2RayGCon.Views.UserControls
 
         private void simpleEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var f = WinForms.FormSimpleEditor.GetForm();
-            f.LoadCoreServer(this.coreServCtrl);
+            ShowFormSimpleEditor();
+        }
+
+        private void rlbLastModifyDate_Click(object sender, EventArgs e)
+        {
+            ShowFormSimpleEditor();
         }
 
         private void rlbRemark_Click(object sender, EventArgs e)

@@ -1,21 +1,12 @@
-﻿using System.Collections.Generic;
-
-namespace VgcApis.Interfaces.Services
+﻿namespace VgcApis.Interfaces.Services
 {
     public interface IShareLinkMgrService
     {
         string DecodeShareLinkToConfig(string shareLink);
 
-        string EncodeConfigToShareLink(
-            string config, Models.Datas.Enums.LinkTypes linkType);
+        string EncodeConfigToShareLink(string config, Models.Datas.Enums.LinkTypes linkType);
 
-        List<Interfaces.IShareLinkDecoder> GenDecoderList(
-            bool isIncludeV2cfgDecoder);
-
-        List<string[]> ImportLinksBatchMode(
-           IEnumerable<string[]> linkList,
-           IEnumerable<Interfaces.IShareLinkDecoder> decoders);
-
+        int ImportLinksWithOutV2cfgLinksSync(string links, string mark);
 
         int UpdateSubscriptions(int proxyPort);
     }

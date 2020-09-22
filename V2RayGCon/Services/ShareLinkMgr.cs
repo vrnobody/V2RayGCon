@@ -67,35 +67,10 @@ namespace V2RayGCon.Services
         #endregion
 
         #region public methods
-        /// <summary>
-        /// <para>linkList=List(string[]{0: text, 1: mark}>)</para>
-        /// <para>decoders = List(IShareLinkDecoder)</para>
-        /// </summary>
-        public List<string[]> ImportLinksBatchMode(
-            IEnumerable<string[]> linkList,
-            IEnumerable<VgcApis.Interfaces.IShareLinkDecoder> decoders) =>
-            ImportLinksBatchModeSync(linkList, decoders);
-
-        public List<VgcApis.Interfaces.IShareLinkDecoder> GenDecoderList(
-            bool isIncludeV2cfgDecoder)
+        public T GetCodec<T>()
+            where T : VgcApis.BaseClasses.ComponentOf<ShareLinkComponents.Codecs>
         {
-            var decoders = new List<VgcApis.Interfaces.IShareLinkDecoder>
-            {
-                codecs.GetChild<ShareLinkComponents.VmessDecoder>(),
-                codecs.GetChild<ShareLinkComponents.VeeDecoder>(),
-            };
-
-            if (setting.CustomDefImportSsShareLink)
-            {
-                decoders.Add(codecs.GetChild<ShareLinkComponents.SsDecoder>());
-            }
-
-            if (isIncludeV2cfgDecoder)
-            {
-                decoders.Add(codecs.GetChild<ShareLinkComponents.V2cfgDecoder>());
-            }
-
-            return decoders;
+            return codecs.GetChild<T>();
         }
 
         public int UpdateSubscriptions(int proxyPort)
@@ -105,6 +80,31 @@ namespace V2RayGCon.Services
             var decoders = GenDecoderList(false);
             var results = ImportLinksBatchModeSync(links, decoders);
             var count = results.Where(r => VgcApis.Misc.Utils.IsImportResultSuccess(r)).Count();
+            return count;
+        }
+
+        public int ImportLinksWithOutV2cfgLinksSync(string links, string mark)
+        {
+            if (string.IsNullOrEmpty(links))
+            {
+                return 0;
+            }
+
+            var pair = new string[] { links, mark ?? "" };
+            var linkList = new List<string[]> { pair };
+            var decoders = GenDecoderList(false);
+            var results = ImportLinksBatchModeSync(linkList, decoders);
+
+            servers.UpdateAllServersSummary();
+
+            var count = 0;
+            foreach (var result in results)
+            {
+                if (VgcApis.Misc.Utils.IsImportResultSuccess(result))
+                {
+                    count++;
+                }
+            }
             return count;
         }
 
@@ -146,6 +146,29 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+        List<VgcApis.Interfaces.IShareLinkDecoder> GenDecoderList(
+           bool isIncludeV2cfgDecoder)
+        {
+            var decoders = new List<VgcApis.Interfaces.IShareLinkDecoder>
+            {
+                codecs.GetChild<ShareLinkComponents.VmessDecoder>(),
+                codecs.GetChild<ShareLinkComponents.VeeDecoder>(),
+            };
+
+            if (setting.CustomDefImportSsShareLink)
+            {
+                decoders.Add(codecs.GetChild<ShareLinkComponents.SsDecoder>());
+            }
+
+            if (isIncludeV2cfgDecoder)
+            {
+                decoders.Add(codecs.GetChild<ShareLinkComponents.V2cfgDecoder>());
+            }
+
+            return decoders;
+        }
+
+
         void ImportLinksBatchModeThen(
             IEnumerable<string[]> linkList,
             IEnumerable<VgcApis.Interfaces.IShareLinkDecoder> decoders,

@@ -17,6 +17,20 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         #region properties
 
         #endregion
+        #region IVeeConfig
+        public byte[] VeeConfig2Bytes(Models.Datas.VeeConfigs veeConfig)
+        {
+            var vee = new Models.VeeShareLinks.Socks2a();
+            vee.CopyFromVeeConfig(veeConfig);
+            return vee.ToBytes();
+        }
+
+        public Models.Datas.VeeConfigs Bytes2VeeConfig(byte[] bytes)
+        {
+            var vee = new Models.VeeShareLinks.Socks2a(bytes);
+            return vee.ToVeeConfigs();
+        }
+        #endregion
 
         #region public methods
         public bool IsDecoderFor(string version) => Models.VeeShareLinks.Socks2a.IsDecoderFor(version);

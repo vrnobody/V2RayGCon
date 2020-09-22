@@ -6,12 +6,13 @@ namespace V2RayGCon.Models.VeeShareLinks
     {
         // ver 2a is optimized for socks protocol 
         const string version = @"2a";
+        const string proto = "socks";
 
         public string userName, userPassword;
 
         static public bool IsDecoderFor(string ver) => version == ver;
 
-        static public bool IsEncoderFor(string protocol) => protocol == "socks";
+        static public bool IsEncoderFor(string protocol) => protocol == proto;
         public Socks2a() : base()
         {
             userName = string.Empty;
@@ -24,6 +25,21 @@ namespace V2RayGCon.Models.VeeShareLinks
         }
 
         #region public methods
+        public override void CopyFromVeeConfig(Models.Datas.VeeConfigs vc)
+        {
+            base.CopyFromVeeConfig(vc);
+            userName = vc.auth1;
+            userPassword = vc.auth2;
+        }
+
+        public override Datas.VeeConfigs ToVeeConfigs()
+        {
+            var vc = base.ToVeeConfigs();
+            vc.proto = proto;
+            vc.auth1 = userName;
+            vc.auth2 = userPassword;
+            return vc;
+        }
 
         public Socks2a(byte[] bytes) :
             this()

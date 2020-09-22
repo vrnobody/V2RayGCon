@@ -136,7 +136,7 @@
     <value>42, 16</value>
   </data>
   <data name="chkOTA.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+    <value>5</value>
   </data>
   <data name="chkOTA.Text" xml:space="preserve">
     <value>OTA</value>
@@ -175,7 +175,7 @@
     <value>42, 16</value>
   </data>
   <data name="chkStreamUseTls.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>1</value>
   </data>
   <data name="chkStreamUseTls.Text" xml:space="preserve">
     <value>TLS</value>
@@ -202,7 +202,7 @@
     <value>151, 20</value>
   </data>
   <data name="cboxMethod.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;cboxMethod.Name" xml:space="preserve">
     <value>cboxMethod</value>
@@ -226,7 +226,7 @@
     <value>243, 20</value>
   </data>
   <data name="cboxStreamParma1.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;cboxStreamParma1.Name" xml:space="preserve">
     <value>cboxStreamParma1</value>
@@ -268,7 +268,7 @@
     <value>243, 20</value>
   </data>
   <data name="cboxProtocol.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;cboxProtocol.Name" xml:space="preserve">
     <value>cboxProtocol</value>
@@ -292,7 +292,7 @@
     <value>117, 20</value>
   </data>
   <data name="cboxStreamType.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;cboxStreamType.Name" xml:space="preserve">
     <value>cboxStreamType</value>
@@ -316,7 +316,7 @@
     <value>151, 21</value>
   </data>
   <data name="tboxHost.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;tboxHost.Name" xml:space="preserve">
     <value>tboxHost</value>
@@ -367,7 +367,7 @@
     <value>243, 21</value>
   </data>
   <data name="tboxAuth1.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;tboxAuth1.Name" xml:space="preserve">
     <value>tboxAuth1</value>
@@ -688,7 +688,7 @@
     <value>72, 16</value>
   </data>
   <data name="chkStreamUseSelfSignCert.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>2</value>
   </data>
   <data name="chkStreamUseSelfSignCert.Text" xml:space="preserve">
     <value>SelfSign</value>
@@ -778,7 +778,7 @@
     <value>243, 21</value>
   </data>
   <data name="tboxStreamParam2.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;tboxStreamParam2.Name" xml:space="preserve">
     <value>tboxStreamParam2</value>
@@ -802,7 +802,7 @@
     <value>243, 21</value>
   </data>
   <data name="tboxStreamParam3.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;tboxStreamParam3.Name" xml:space="preserve">
     <value>tboxStreamParam3</value>
@@ -826,7 +826,7 @@
     <value>51, 21</value>
   </data>
   <data name="tboxPort.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;tboxPort.Name" xml:space="preserve">
     <value>tboxPort</value>
@@ -883,7 +883,7 @@
     <value>314, 126</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
+    <value>3</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Stream settings</value>
@@ -910,7 +910,7 @@
     <value>314, 128</value>
   </data>
   <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
+    <value>2</value>
   </data>
   <data name="groupBox2.Text" xml:space="preserve">
     <value>Outbound</value>

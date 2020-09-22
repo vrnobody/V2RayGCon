@@ -73,6 +73,41 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 VgcApis.Models.Datas.Enums.LinkTypes.v);
         #endregion
 
+        #region IVeeLink2VeeConfig
+        public string VeeConfig2VeeLink(Models.Datas.VeeConfigs vc)
+        {
+            var proto = vc?.proto;
+            var codecs = GetChildren();
+            foreach (var codec in codecs)
+            {
+                var decoder = codec as VeeCodecs.IVeeDecoder;
+                if (decoder != null && decoder.IsEncoderFor(proto))
+                {
+                    var b = decoder.VeeConfig2Bytes(vc);
+                    return Bytes2VeeLink(b);
+                }
+            }
+            return null;
+        }
+
+        public Models.Datas.VeeConfigs VeeLink2VeeConfig(string veeLink)
+        {
+            var bytes = VeeLink2Bytes(veeLink);
+            var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
+
+            var codecs = GetChildren();
+            foreach (var codec in codecs)
+            {
+                var decoder = codec as VeeCodecs.IVeeDecoder;
+                if (decoder != null && decoder.IsDecoderFor(ver))
+                {
+                    return decoder.Bytes2VeeConfig(bytes);
+                }
+            }
+            return null;
+        }
+        #endregion
+
         #region private methods
         Tuple<JObject, JToken> DecodeWorker(string shareLink)
         {
@@ -113,7 +148,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return null;
         }
 
-        public static byte[] VeeLink2Bytes(string veeLink)
+        static byte[] VeeLink2Bytes(string veeLink)
         {
             // Do not use Misc.Utils.Base64Decode() 
             // Unicode encoder can not handle all possible byte values.
@@ -123,7 +158,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return Convert.FromBase64String(b64Padded);
         }
 
-        public static string Bytes2VeeLink(byte[] bytes)
+        static string Bytes2VeeLink(byte[] bytes)
         {
             if (bytes == null)
             {

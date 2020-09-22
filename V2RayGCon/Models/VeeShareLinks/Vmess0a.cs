@@ -7,9 +7,10 @@ namespace V2RayGCon.Models.VeeShareLinks
     {
         // ver 0a is optimized for vmess protocol 
         const string version = @"0a";
+        const string proto = "vmess";
 
         public static bool IsDecoderFor(string ver) => version == ver;
-        public static bool IsEncoderFor(string protocol) => protocol == "vmess";
+        public static bool IsEncoderFor(string protocol) => protocol == proto;
 
         public int alterId; // 16 bit each
         public Guid uuid;
@@ -25,6 +26,19 @@ namespace V2RayGCon.Models.VeeShareLinks
             CopyFrom(source);
         }
         #region public methods
+        public override void CopyFromVeeConfig(Models.Datas.VeeConfigs vc)
+        {
+            base.CopyFromVeeConfig(vc);
+            uuid = Guid.Parse(vc.auth1);
+        }
+
+        public override Datas.VeeConfigs ToVeeConfigs()
+        {
+            var vc = base.ToVeeConfigs();
+            vc.proto = proto;
+            vc.auth1 = uuid.ToString();
+            return vc;
+        }
 
         public Vmess0a(byte[] bytes) :
             this()

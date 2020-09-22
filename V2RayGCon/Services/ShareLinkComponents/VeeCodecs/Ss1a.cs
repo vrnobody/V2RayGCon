@@ -18,6 +18,17 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         #region properties
 
         #endregion
+        #region IVeeConfig
+        public byte[] VeeConfig2Bytes(Models.Datas.VeeConfigs veeConfig)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Models.Datas.VeeConfigs Bytes2VeeConfig(byte[] bytes)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
 
         #region public methods
         public bool IsDecoderFor(string version) =>

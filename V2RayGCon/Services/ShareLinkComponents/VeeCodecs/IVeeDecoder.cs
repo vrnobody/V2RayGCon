@@ -10,5 +10,8 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         bool IsDecoderFor(string version);
 
         bool IsEncoderFor(string protocol);
+
+        Models.Datas.VeeConfigs Bytes2VeeConfig(byte[] bytes);
+        byte[] VeeConfig2Bytes(Models.Datas.VeeConfigs veeConfig);
     }
 }

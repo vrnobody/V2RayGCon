@@ -731,19 +731,8 @@ namespace V2RayGCon.Misc
         /// <param name="json"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static T GetValue<T>(JToken json, string path)
-        {
-            var def = default(T) == null && typeof(T) == typeof(string) ?
-                (T)(object)string.Empty : default;
-
-            var node = GetKey(json, path);
-            try
-            {
-                return node == null ? def : node.Value<T>();
-            }
-            catch { }
-            return def;
-        }
+        public static T GetValue<T>(JToken json, string path) =>
+            VgcApis.Misc.Utils.GetValue<T>(json, path);
 
         public static Func<string, string, string> GetStringByPrefixAndKeyHelper(JObject json)
         {

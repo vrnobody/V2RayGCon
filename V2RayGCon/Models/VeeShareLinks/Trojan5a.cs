@@ -1,4 +1,5 @@
 ﻿using System;
+using V2RayGCon.Models.Datas;
 
 namespace V2RayGCon.Models.VeeShareLinks
 {
@@ -7,9 +8,11 @@ namespace V2RayGCon.Models.VeeShareLinks
         // ver 5a is optimized for trojan protocol
 
         const string version = @"5a";
+        const string proto = @"trojan";
+
         static public bool IsDecoderFor(string ver) => version == ver;
 
-        static public bool IsEncoderFor(string protocol) => protocol == "trojan";
+        static public bool IsEncoderFor(string protocol) => protocol == proto;
 
         public string password; // 256 bytes
 
@@ -51,11 +54,20 @@ namespace V2RayGCon.Models.VeeShareLinks
             }
         }
 
-        #region string table for compression 
-
-        #endregion
-
         #region public methods
+        public override void CopyFromVeeConfig(VeeConfigs vc)
+        {
+            base.CopyFromVeeConfig(vc);
+            password = vc.auth1;
+        }
+
+        public override VeeConfigs ToVeeConfigs()
+        {
+            var vc = base.ToVeeConfigs();
+            vc.proto = proto;
+            vc.auth1 = password;
+            return vc;
+        }
 
         public byte[] ToBytes()
         {

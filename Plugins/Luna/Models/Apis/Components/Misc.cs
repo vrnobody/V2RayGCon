@@ -124,31 +124,9 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc.ImportLinks     
-        public int ImportLinks(string links, string mark)
-        {
-            if (string.IsNullOrEmpty(links))
-            {
-                return 0;
-            }
+        public int ImportLinks(string links, string mark) =>
+            vgcSlinkMgr.ImportLinksWithOutV2cfgLinksSync(links, mark);
 
-            var pair = new string[] { links, mark ?? "" };
-            var linkList = new List<string[]> { pair };
-            var decoders = vgcSlinkMgr.GenDecoderList(false);
-            var results = vgcSlinkMgr.ImportLinksBatchMode(linkList, decoders);
-
-            GetSibling<VgcApis.Interfaces.Lua.ILuaServer>()
-                .UpdateAllSummary();
-
-            var count = 0;
-            foreach (var result in results)
-            {
-                if (VgcApis.Misc.Utils.IsImportResultSuccess(result))
-                {
-                    count++;
-                }
-            }
-            return count;
-        }
         #endregion
 
         #region ILuaMisc.Forms

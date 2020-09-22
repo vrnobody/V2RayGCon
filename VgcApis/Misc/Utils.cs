@@ -748,13 +748,17 @@ namespace VgcApis.Misc
                 (T)(object)string.Empty :
                 default;
 
-            if (key == null)
-            {
-                return def;
-            }
             try
             {
-                return key.Value<T>();
+                switch (key?.Type)
+                {
+                    case JTokenType.Object:
+                    case JTokenType.Array:
+                    case null:
+                        return def;
+                    default:
+                        return key.Value<T>();
+                }
             }
             catch { }
             return def;

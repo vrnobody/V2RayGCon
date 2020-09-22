@@ -41,6 +41,41 @@ namespace V2RayGCon.Models.VeeShareLinks
         #region public methods
 
         #endregion
+        public virtual void CopyFromVeeConfig(Datas.VeeConfigs vc)
+        {
+            alias = vc.name;
+            description = vc.description;
+
+            address = vc.host;
+            port = vc.port;
+
+            isUseTls = vc.useTls;
+            isSecTls = !vc.useSelfSignCert;
+            streamType = vc.streamType;
+
+            streamParam1 = vc.streamParam1;
+            streamParam2 = vc.streamParam2;
+            streamParam3 = vc.streamParam3;
+        }
+
+        public virtual Datas.VeeConfigs ToVeeConfigs()
+        {
+            var vc = new Datas.VeeConfigs();
+            vc.name = alias;
+            vc.description = description;
+
+            vc.host = address;
+            vc.port = port;
+
+            vc.useTls = isUseTls;
+            vc.useSelfSignCert = !isSecTls;
+            vc.streamType = streamType;
+
+            vc.streamParam1 = streamParam1;
+            vc.streamParam2 = streamParam2;
+            vc.streamParam3 = streamParam3;
+            return vc;
+        }
 
         public void CopyFrom(BasicSettings streamSettings)
         {

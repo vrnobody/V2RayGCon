@@ -15,7 +15,7 @@
   },
   "inTpl": {
     "port": 1080,
-    "listen": "127.0.0.1",
+    "listen": "0.0.0.0",
     "protocol": "协议名称",
     "settings": {},
     "streamSettings": {},
@@ -26,6 +26,19 @@
         "http",
         "tls"
       ]
+    }
+  },
+  "inTrojan": {
+    "clients": [
+      {
+        "password": "123456",
+        "email": "",
+        "level": ""
+      }
+    ],
+    "fallback": {
+      "dest": "80",
+      "type": ""
     }
   },
   "inSS": {
@@ -181,6 +194,17 @@
         "password": "密码",
         "ota": false,
         "level": 0
+      }
+    ]
+  },
+  "outTrojan": {
+    "servers": [
+      {
+        "address": "server.address",
+        "port": 443,
+        "password": "123456",
+        "email": "",
+        "level": ""
       }
     ]
   },

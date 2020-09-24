@@ -259,6 +259,12 @@ namespace V2RayGCon.Views.WinForms
                         case (Keys.Control | Keys.S):
                             configer.InjectConfigHelper(null);
                             break;
+                        case (Keys.Control | Keys.OemOpenBrackets):
+                            editor?.ZoomOut();
+                            break;
+                        case (Keys.Control | Keys.Oem6):
+                            editor?.ZoomIn();
+                            break;
                     }
                 }));
             return base.ProcessCmdKey(ref msg, keyCode);

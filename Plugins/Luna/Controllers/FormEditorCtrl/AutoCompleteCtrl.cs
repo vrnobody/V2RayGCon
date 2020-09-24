@@ -84,11 +84,11 @@ namespace Luna.Controllers.FormEditorCtrl
             {
                 switch (keyCode)
                 {
-                    case Keys.OemOpenBrackets:
+                    case Keys.OemMinus:
                         history.Backward();
                         ScrollLineToTheMiddle(history.Current());
                         break;
-                    case Keys.Oem6:
+                    case Keys.Oemplus:
                         history.Forward();
                         ScrollLineToTheMiddle(history.Current());
                         break;

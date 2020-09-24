@@ -434,13 +434,6 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             tpl["protocol"] = protocol;
             tpl["settings"] = cache.tpl.LoadExample(example[1]);
 
-            // issue #5
-            string[] servProto = { "vless", "vmess", "shadowsocks" };
-            if (isInbound && Array.IndexOf(servProto, protocol) >= 0)
-            {
-                tpl["listen"] = "0.0.0.0";
-            }
-
             return tpl.ToString();
         }
 

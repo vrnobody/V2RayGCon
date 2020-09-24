@@ -131,10 +131,10 @@ namespace Luna.Controllers.FormEditorCtrl
             {
                 switch (keyCode)
                 {
-                    case Keys.OemMinus:
+                    case Keys.OemOpenBrackets:
                         editor.ZoomOut();
                         break;
-                    case Keys.Oemplus:
+                    case Keys.Oem6:
                         editor.ZoomIn();
                         break;
                     case Keys.G:

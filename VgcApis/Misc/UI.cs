@@ -584,16 +584,18 @@ namespace VgcApis.Misc
         {
             var mi = menuItems;
             var menuSpan = groupSize;
+            var max = menuItems.Count;
+
             while (mi.Count() > groupSize)
             {
-                mi = AutoGroupMenuItemsWorker(mi, groupSize, menuSpan);
+                mi = AutoGroupMenuItemsWorker(mi, max, groupSize, menuSpan);
                 menuSpan *= groupSize;
             }
             return mi;
         }
 
         static List<ToolStripMenuItem> AutoGroupMenuItemsWorker(
-            IEnumerable<ToolStripMenuItem> menuItems, int groupSize, int menuSpan)
+            IEnumerable<ToolStripMenuItem> menuItems, int maxIdx, int groupSize, int menuSpan)
         {
             var count = menuItems.Count();
             if (count <= groupSize)
@@ -608,7 +610,8 @@ namespace VgcApis.Misc
             while (servIdx < count)
             {
                 var take = Math.Min(groupSize, count - servIdx);
-                var text = string.Format("{0,4} - {1,4}", pageIdx + 1, pageIdx + menuSpan);
+                var last = Math.Min(pageIdx + menuSpan, maxIdx);
+                var text = string.Format("{0,4} - {1,4}", pageIdx + 1, last);
                 var mis = menuItems.Skip(servIdx).Take(take).ToArray();
                 var mi = new ToolStripMenuItem(text, null, mis);
                 groups.Add(mi);

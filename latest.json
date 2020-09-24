@@ -1,12 +1,12 @@
 {
-  "version": "1.4.6.0",
-  "md5": "0473DDF7F7AFBCDDB3FE26AB37F23B29",
-  "warnings": [],
+  "version": "1.4.7.0",
+  "md5": "58079276CB0AA4BF8F1DC0DA664C5AE4",
+  "warnings": [
+    "Trojan相关功能要等v2fly PR #181合并后才可以使用"
+  ],
   "changes": [
-    "测速过程中遇到错误不再弹出提示窗口",
-    "更新v2ray-core时不重启插件",
-    "优化日志窗口刷新算法减少卡顿",
-    "优化多屏体验",
-    "Luna添加Misc:SetSubscriptionConfig(cfgStr)"
+    "服务器大于2048个时，托盘图标改用动态菜单以减少卡顿",
+    "点击“修改时间”标签时弹出“简单编辑器”",
+    "适配v2fly PR #181添加的Trojan协议"
   ]
 }

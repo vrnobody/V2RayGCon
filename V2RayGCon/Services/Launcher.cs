@@ -229,6 +229,9 @@ namespace V2RayGCon.Services
                 setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff);
                 setting.SaveUserSettingsNow();
 
+                setting.SetIsClosing(true);
+                setting.isSpeedtestCancelled = true;
+
                 // let it go
                 // context.ExitThread();
             };
@@ -292,7 +295,7 @@ namespace V2RayGCon.Services
                 isDisposing = true;
             }
 
-            setting.SetIsShutdown(true);
+            setting.SetIsClosing(true);
             setting.isSpeedtestCancelled = true;
 
             foreach (var service in services)

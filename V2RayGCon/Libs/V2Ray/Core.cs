@@ -75,7 +75,7 @@ namespace V2RayGCon.Libs.V2Ray
 
         public VgcApis.Models.Datas.StatsSample QueryStatsApi(int port)
         {
-            if (string.IsNullOrEmpty(v2ctl))
+            if (setting.IsClosing() || string.IsNullOrEmpty(v2ctl))
             {
                 return null;
             }
@@ -166,9 +166,13 @@ namespace V2RayGCon.Libs.V2Ray
 
             coreStartStopLocker.WaitOne();
             StopCoreIgnoreError(this.v2rayCore);
+
             try
             {
-                StartCore(config, env, quiet);
+                if (!setting.IsClosing())
+                {
+                    StartCore(config, env, quiet);
+                }
             }
             catch
             {

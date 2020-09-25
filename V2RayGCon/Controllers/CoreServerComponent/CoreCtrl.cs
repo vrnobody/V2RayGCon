@@ -75,15 +75,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region private methods
-        VgcApis.Models.Datas.StatsSample TakeStatisticsSample(int port)
-        {
-            if (!setting.isEnableStatistics || port <= 0)
-            {
-                return null;
-            }
-            return v2rayCore.QueryStatsApi(port);
-        }
-
         void RecordStatSample()
         {
             if (!setting.isEnableStatistics

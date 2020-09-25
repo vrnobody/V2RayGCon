@@ -515,7 +515,8 @@ namespace V2RayGCon.Services
         // ISettingService thing
         bool isClosing = false;
         public bool IsClosing() => isClosing;
-        public bool SetIsShutdown(bool isShutdown) => this.isClosing = isShutdown;
+
+        public bool SetIsClosing(bool isClosing) => this.isClosing = isClosing;
 
         /// <summary>
         /// return null if fail

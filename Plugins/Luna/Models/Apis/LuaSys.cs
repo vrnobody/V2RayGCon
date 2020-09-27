@@ -562,6 +562,8 @@ namespace Luna.Models.Apis
         public string GetOsVersion() => Environment.OSVersion.VersionString;
 
         public int SetWallpaper(string filename) => Libs.Sys.WinApis.SetWallpaper(filename);
+
+        public uint EmptyRecycle() => Libs.Sys.WinApis.EmptyRecycle();
         #endregion
 
         #region ILuaSys.File

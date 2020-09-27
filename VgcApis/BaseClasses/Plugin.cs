@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace VgcApis.BaseClasses
 {
-    public class Plugin : VgcApis.Interfaces.IPlugin
+    public class Plugin : Interfaces.IPlugin
     {
         public virtual string Name => throw new NotImplementedException();
         public virtual string Version => throw new NotImplementedException();

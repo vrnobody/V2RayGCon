@@ -113,6 +113,8 @@ namespace VgcApis.Interfaces.Lua
 
         int SetWallpaper(string filename);
 
+        uint EmptyRecycle();
+
         #endregion
 
         #region file system

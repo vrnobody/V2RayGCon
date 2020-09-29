@@ -229,11 +229,8 @@ namespace V2RayGCon.Services
                 setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff);
                 setting.SaveUserSettingsNow();
 
-                setting.SetIsClosing(true);
-                setting.isSpeedtestCancelled = true;
-
-                // let it go
-                // context.ExitThread();
+                // for win7 logoff
+                context.ExitThread();
             };
 
             Application.ThreadException += (s, a) => ShowExceptionDetailAndExit(a.Exception);

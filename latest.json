@@ -2,7 +2,7 @@
   "version": "1.4.7.0",
   "md5": "58079276CB0AA4BF8F1DC0DA664C5AE4",
   "warnings": [
-    "Trojan相关功能要等v2fly PR #181合并后才可以使用"
+    "Trojan相关功能需要更新v2ray-core至v4.30.0或更高版本"
   ],
   "changes": [
     "服务器大于2048个时，托盘图标改用动态菜单以减少卡顿",

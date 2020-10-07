@@ -10,7 +10,7 @@
     "routing": {
       "balancers": [
         {
-          "tag": "balancer",
+          "tag": "pacman",
           "selector": [
             "agentout"
           ]
@@ -22,7 +22,7 @@
           "inboundTag": [
             "agentin"
           ],
-          "balancerTag": "balancer"
+          "balancerTag": "pacman"
         }
       ]
     },

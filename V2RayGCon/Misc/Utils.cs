@@ -238,6 +238,12 @@ namespace V2RayGCon.Misc
 
         public static string GetSummaryFromConfig(JObject config)
         {
+            var tag = GetValue<string>(config, "routing.balancers.0.tag");
+            if (!string.IsNullOrEmpty(tag))
+            {
+                return $"balancer: {tag}";
+            }
+
             var result = GetSummaryFromConfig(config, "outbound");
 
             if (string.IsNullOrEmpty(result))

@@ -198,11 +198,33 @@ namespace VgcApis.Misc
             doubleBufferPropertyInfo.SetValue(control, enable, null);
         }
 
+        public static void UpdateRichTextBox(RichTextBox box, string content)
+        {
+            Invoke?.Invoke(() =>
+            {
+                if (box == null || box.IsDisposed)
+                {
+                    return;
+                }
+
+                DisableRedraw(box);
+                box.Text = content;
+                box.SelectionStart = box.Text.Length;
+                ScrollToBottom(box);
+                EnableRedraw(box);
+            });
+        }
+
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
         const int WM_VSCROLL = 277;
         const int SB_PAGEBOTTOM = 7;
         const int WM_SETREDRAW = 0x0b;
+
+        public static void ScrollToBottom(RichTextBox box)
+        {
+            SendMessage(box.Handle, WM_VSCROLL, (IntPtr)SB_PAGEBOTTOM, IntPtr.Zero);
+        }
 
         public static void DisableRedraw(Control control)
         {
@@ -223,17 +245,6 @@ namespace VgcApis.Misc
             // turn on redrawing
             SendMessage(control.Handle, WM_SETREDRAW, (IntPtr)1, IntPtr.Zero);
             control.Invalidate();
-        }
-
-        public static void UpdateRichTextBox(RichTextBox box, string content)
-        {
-            DisableRedraw(box);
-
-            box.Text = content;
-            SendMessage(box.Handle, WM_VSCROLL, (IntPtr)SB_PAGEBOTTOM, IntPtr.Zero);
-            box.SelectionStart = box.Text.Length;
-
-            EnableRedraw(box);
         }
 
         #endregion

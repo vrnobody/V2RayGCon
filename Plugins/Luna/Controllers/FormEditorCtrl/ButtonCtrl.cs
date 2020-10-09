@@ -375,16 +375,7 @@ namespace Luna.Controllers.FormEditorCtrl
             var logs = qLogger.GetLogAsString(true);
             updateOutputTimeStamp = timestamp;
 
-            VgcApis.Misc.UI.Invoke(
-                () =>
-                {
-                    if (rtboxOutput == null || rtboxOutput.IsDisposed)
-                    {
-                        return;
-                    }
-
-                    VgcApis.Misc.UI.UpdateRichTextBox(rtboxOutput, logs);
-                });
+            VgcApis.Misc.UI.UpdateRichTextBox(rtboxOutput, logs);
         }
 
         void GotoLine()

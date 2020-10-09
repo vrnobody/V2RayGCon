@@ -185,7 +185,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             Action next = () =>
             {
-                lazyStatusBarUpdater?.Postpone();
+                lazyStatusBarUpdater?.Deadline();
                 DisposeFlyPanelControlByList(removed);
                 var relex = flyPanelUpdateInterval - (DateTime.Now.Millisecond - start);
                 VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
@@ -268,7 +268,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void OnServerPropertyChangeHandler(object sender, EventArgs args)
         {
-            lazyStatusBarUpdater?.Postpone();
+            lazyStatusBarUpdater?.Deadline();
         }
 
         void SetSearchKeywords()

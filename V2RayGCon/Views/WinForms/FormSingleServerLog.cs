@@ -40,7 +40,6 @@ namespace V2RayGCon.Views.WinForms
         private void RefreshUi()
         {
             var timestamp = qLogger.GetTimestamp();
-
             if (updateTimestamp == timestamp)
             {
                 return;
@@ -48,18 +47,7 @@ namespace V2RayGCon.Views.WinForms
 
             updateTimestamp = timestamp;
             var logs = qLogger.GetLogAsString(true);
-            VgcApis.Misc.UI.Invoke(() => UpdateLogBox(logs));
-        }
-
-        void UpdateLogBox(string logs)
-        {
-            var logBox = rtBoxLogger;
-            if (logBox == null || logBox.IsDisposed)
-            {
-                return;
-            }
-
-            VgcApis.Misc.UI.UpdateRichTextBox(logBox, logs);
+            VgcApis.Misc.UI.UpdateRichTextBox(rtBoxLogger, logs);
         }
 
         private void FormSingleServerLog_Load(object sender, EventArgs e)

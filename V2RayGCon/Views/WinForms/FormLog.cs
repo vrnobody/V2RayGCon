@@ -38,24 +38,15 @@ namespace V2RayGCon.Views.WinForms
         #region private methods
         void UpdateLog()
         {
-            var logBox = rtBoxLogger;
-            if (logBox == null || logBox.IsDisposed)
-            {
-                return;
-            }
-
             var timestamp = setting.GetLogTimestamp();
             if (updateTimeStamp == timestamp)
             {
                 return;
             }
-
             updateTimeStamp = timestamp;
             var text = setting.GetLogContent();
-            VgcApis.Misc.UI.Invoke(() =>
-            {
-                VgcApis.Misc.UI.UpdateRichTextBox(logBox, text);
-            });
+
+            VgcApis.Misc.UI.UpdateRichTextBox(rtBoxLogger, text);
         }
 
 

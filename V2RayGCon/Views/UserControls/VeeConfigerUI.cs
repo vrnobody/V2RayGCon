@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
@@ -144,7 +145,6 @@ namespace V2RayGCon.Views.UserControls
 
         #region UI events
 
-
         private void cboxStreamType_SelectedValueChanged(object sender, EventArgs e)
         {
             var network = cboxStreamType.Text;
@@ -224,6 +224,8 @@ namespace V2RayGCon.Views.UserControls
                 default:
                     break;
             }
+
+            ValidateAuth1();
         }
 
         private void lbAuth1_Click(object sender, EventArgs e)
@@ -240,6 +242,26 @@ namespace V2RayGCon.Views.UserControls
                 tboxStreamParam2.Enabled = enable;
                 tboxStreamParam3.Enabled = enable;
             }
+        }
+
+        void ValidateAuth1()
+        {
+            var tag = lbAuth1.Text;
+            var c = Color.Black;
+            if (tag?.ToLower() == "uuid" && !Guid.TryParse(tboxAuth1.Text, out _))
+            {
+                c = Color.Red;
+            }
+
+            if (tboxAuth1.ForeColor != c)
+            {
+                tboxAuth1.ForeColor = c;
+            }
+        }
+
+        private void tboxAuth1_TextChanged(object sender, EventArgs e)
+        {
+            ValidateAuth1();
         }
         #endregion
 

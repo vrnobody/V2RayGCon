@@ -127,6 +127,7 @@
             // 
             resources.ApplyResources(this.tboxAuth1, "tboxAuth1");
             this.tboxAuth1.Name = "tboxAuth1";
+            this.tboxAuth1.TextChanged += new System.EventHandler(this.tboxAuth1_TextChanged);
             // 
             // lbStreamParam1
             // 

@@ -28,36 +28,49 @@ namespace V2RayGCon.Views.WinForms
     public partial class FormConfiger : Form
     {
 
-        public static void ShowConfig() => ShowConfig(null);
+        public static void ShowEmptyConfig() =>
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                new FormConfiger().Show();
+            });
+
         public static void ShowConfig(string orgConfig) =>
              VgcApis.Misc.UI.Invoke(() =>
              {
-                 new FormConfiger(orgConfig).Show();
+                 var f = new FormConfiger();
+                 f.Show();
+                 f.configer.LoadConfigString(orgConfig);
              });
+
+        public static void ShowServer(string uid) =>
+
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                var f = new FormConfiger();
+                f.Show();
+                f.configer.LoadConfigByUid(uid);
+                f.SetTitle(f.configer.GetAlias());
+            });
+
 
         Controllers.FormConfigerCtrl configer;
         Services.Settings setting;
-        Services.Servers servers;
 
         VgcApis.WinForms.FormSearch formSearch;
         ToolsPanelController toolsPanelController;
-        string originalConfigString;
         string formTitle;
         bool isShowPanel;
 
         ScintillaNET.Scintilla editor;
 
-        FormConfiger(string originalConfigString)
+        FormConfiger()
         {
             setting = Services.Settings.Instance;
-            servers = Services.Servers.Instance;
 
             isShowPanel = setting.isShowConfigerToolsPanel;
             formSearch = null;
             InitializeComponent();
             formTitle = this.Text;
-            this.originalConfigString = originalConfigString;
-
             VgcApis.Misc.UI.AutoSetFormIcon(this);
         }
 
@@ -78,7 +91,7 @@ namespace V2RayGCon.Views.WinForms
                 .GetEditor();
 
             editor.Click += OnMouseLeaveToolsPanel;
-            BindServerEvents();
+            BindConfigerEvents();
 
             this.FormClosing += (s, a) =>
             {
@@ -134,24 +147,10 @@ namespace V2RayGCon.Views.WinForms
 
         private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            configer.InjectConfigHelper(null);
-
-            switch (VgcApis.Misc.UI.ShowSaveFileDialog(
-                VgcApis.Models.Consts.Files.JsonExt,
-                configer.GetConfigFormated(),
-                out string filename))
+            var filename = configer.SaveToFile();
+            if (!string.IsNullOrEmpty(filename))
             {
-                case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Success:
-                    SetTitle(filename);
-                    configer.MarkOriginalFile();
-                    MessageBox.Show(I18N.Done);
-                    break;
-                case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Fail:
-                    MessageBox.Show(I18N.WriteFileFail);
-                    break;
-                case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Cancel:
-                    // do nothing
-                    break;
+                SetTitle(filename);
             }
         }
 
@@ -184,20 +183,14 @@ namespace V2RayGCon.Views.WinForms
                 return;
             }
 
-            if (configer.LoadJsonFromFile(json))
-            {
-                cboxConfigSection.SelectedIndex = 0;
-                SetTitle(filename);
-            }
-            else
-            {
-                MessageBox.Show(I18N.LoadJsonFail);
-            }
+            configer.LoadConfigString(json);
+            cboxConfigSection.SelectedIndex = 0;
+            SetTitle(filename);
         }
 
         private void NewWinToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            ShowConfig();
+            ShowEmptyConfig();
         }
 
         private void SearchBoxToolStripMenuItem_Click(object sender, EventArgs e)
@@ -209,7 +202,7 @@ namespace V2RayGCon.Views.WinForms
         {
             if (Misc.UI.Confirm(I18N.ConfirmSaveCurConfig))
             {
-                if (configer.SaveServer())
+                if (configer.SaveCurServer())
                 {
                     SetTitle(configer.GetAlias());
                 }
@@ -274,7 +267,7 @@ namespace V2RayGCon.Views.WinForms
         #region init
         Controllers.FormConfigerCtrl InitConfiger()
         {
-            var configer = new Controllers.FormConfigerCtrl(this.originalConfigString);
+            var configer = new Controllers.FormConfigerCtrl();
 
             configer
                 .Plug(new Controllers.ConfigerComponet.EnvImportMultiConf(
@@ -346,6 +339,7 @@ namespace V2RayGCon.Views.WinForms
 
                 .Plug(new Controllers.ConfigerComponet.MenuUpdater(
                     this,
+                    configToolStripMenuItem,
                     replaceExistServerToolStripMenuItem,
                     loadServerToolStripMenuItem));
 
@@ -399,12 +393,72 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         #region private method
-        private void ReleaseServerEvents()
+
+        void OnConfigerChangedHandler(object sender, EventArgs args)
         {
+            var configer = sender as Controllers.FormConfigerCtrl;
+
+            if (configer.IsConfigSaved())
+            {
+                RemoveTrailingStart();
+            }
+            else
+            {
+                AppendTitleWithStar();
+            }
         }
 
-        private void BindServerEvents()
+        const string trailingStar = " *";
+
+        void RemoveTrailingStart()
         {
+            var title = this.Text;
+            while (title.EndsWith(trailingStar))
+            {
+                title = title.Substring(0, title.Length - trailingStar.Length);
+            }
+
+            var f = this;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                if (this.Text != title)
+                {
+                    this.Text = title;
+                }
+            });
+        }
+
+        void AppendTitleWithStar()
+        {
+            var title = this.Text;
+            var f = this;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                if (!title.EndsWith(trailingStar))
+                {
+                    f.Text = title + trailingStar;
+                }
+            });
+
+        }
+
+        private void ReleaseServerEvents()
+        {
+            var c = this.configer;
+            if (c != null)
+            {
+
+                c.OnChanged -= OnConfigerChangedHandler;
+            }
+        }
+
+        private void BindConfigerEvents()
+        {
+            var c = this.configer;
+            if (c != null)
+            {
+                c.OnChanged += OnConfigerChangedHandler;
+            }
         }
 
         public void SetTitle(string name)

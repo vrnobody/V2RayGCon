@@ -1048,7 +1048,7 @@ namespace V2RayGCon.Services
                         new ToolStripMenuItem(
                             I18N.ConfigEditor,
                             Properties.Resources.EditWindow_16x,
-                            (s,a)=>Views.WinForms.FormConfiger.ShowConfig()),
+                            (s,a)=>Views.WinForms.FormConfiger.ShowEmptyConfig()),
                         new ToolStripMenuItem(
                             I18N.Log,
                             Properties.Resources.FSInteractiveWindow_16x,

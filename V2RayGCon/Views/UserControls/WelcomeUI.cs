@@ -92,7 +92,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbConfigEditor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Views.WinForms.FormConfiger.ShowConfig();
+            Views.WinForms.FormConfiger.ShowEmptyConfig();
         }
     }
 }

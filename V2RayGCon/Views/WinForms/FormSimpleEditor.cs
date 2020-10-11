@@ -102,7 +102,7 @@ namespace V2RayGCon.Views.WinForms
         }
         private void linkConfigEditor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            FormConfiger.ShowConfig();
+            FormConfiger.ShowEmptyConfig();
         }
 
         #endregion

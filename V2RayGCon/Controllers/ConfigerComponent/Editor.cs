@@ -24,7 +24,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         string ConfigDotJson = VgcApis.Models.Consts.Config.ConfigDotJson;
 
         public Editor(
-            Panel container,
+            Panel panel,
             ComboBox cboxSection,
             ComboBox cboxExample,
             Button btnFormat,
@@ -37,7 +37,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             this.btnFormat = btnFormat;
             this.btnRestore = btnRestore;
 
-            CreateEditor(container);
+            CreateEditor(panel);
         }
 
         #region properties
@@ -181,8 +181,12 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             }
 
             SaveChanges();
+            container.InvokeOnChanged();
+
             return true;
         }
+
+
 
         public override void Update(JObject config)
         {
@@ -223,12 +227,6 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 string curLineText = GetCurrentLineText(e.Position);
                 Match curIndentMatch = Regex.Match(curLineText, "^[ \\t]*");
                 string curIndent = curIndentMatch.Value;
-
-                var cline = curLineText
-                    .ToLower()
-                    .Replace("\r", "")
-                    .Replace("\n", "")
-                    .Trim();
 
                 e.Text = (e.Text + curIndent);
 
@@ -459,11 +457,14 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             }
         }
 
+
+
         bool IsReadyToSwitchSection()
         {
             if (CheckValid())
             {
                 SaveChanges();
+                container.InvokeOnChanged();
                 return true;
             }
 

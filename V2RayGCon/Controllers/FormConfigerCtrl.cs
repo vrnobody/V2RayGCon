@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -7,24 +8,48 @@ namespace V2RayGCon.Controllers
 {
     class FormConfigerCtrl : BaseClasses.FormController
     {
+        public event EventHandler OnChanged;
+
         Services.Servers servers;
 
         public JObject config;
-        string originalConfig, originalFile;
+        string uid, orgCfg;
         ConfigerComponet.Editor editor;
 
-        public FormConfigerCtrl(string originalConfig)
+        public FormConfigerCtrl()
         {
             servers = Services.Servers.Instance;
-
-            this.originalFile = string.Empty;
-            this.originalConfig = string.Empty;
-
-            LoadConfig(originalConfig);
+            config = ParseConfigString(null);
         }
 
         #region public method
 
+        public void InvokeOnChanged()
+        {
+            try
+            {
+                OnChanged?.Invoke(this, EventArgs.Empty);
+            }
+            catch { }
+        }
+
+        public void LoadConfigByUid(string uid)
+        {
+            this.uid = uid;
+            var cfg = GetConfigByUid(uid);
+
+            CacheOriginalConfig(cfg);
+            Update();
+            editor.ReloadSection();
+        }
+
+        public void LoadConfigString(string cfg)
+        {
+            uid = null;
+            CacheOriginalConfig(cfg);
+            Update();
+            editor.ReloadSection();
+        }
 
         public void Cleanup()
         {
@@ -37,7 +62,6 @@ namespace V2RayGCon.Controllers
         {
             editor = GetComponent<ConfigerComponet.Editor>();
             editor.Prepare();
-            Update();
         }
 
         public bool IsConfigSaved()
@@ -47,20 +71,19 @@ namespace V2RayGCon.Controllers
                 return false;
             }
 
-            if (string.IsNullOrEmpty(originalConfig)
-                && string.IsNullOrEmpty(originalFile))
+            if (string.IsNullOrEmpty(uid) && string.IsNullOrEmpty(orgCfg))
             {
                 return false;
             }
 
-            if (string.IsNullOrEmpty(originalFile))
+            var cfg = orgCfg;
+            if (!string.IsNullOrEmpty(uid))
             {
-                JObject orgConfig = JObject.Parse(originalConfig);
-                return JObject.DeepEquals(orgConfig, config);
+                cfg = GetConfigByUid(uid);
             }
 
-            JObject orgFile = JObject.Parse(originalFile);
-            return JObject.DeepEquals(orgFile, config);
+            JObject o = ParseConfigString(cfg);
+            return JObject.DeepEquals(o, config);
         }
 
         public string GetAlias()
@@ -72,112 +95,107 @@ namespace V2RayGCon.Controllers
         {
             foreach (var component in this.GetAllComponents())
             {
-                (component.Value as Controllers.ConfigerComponet.ConfigerComponentController)
+                (component.Value as ConfigerComponet.ConfigerComponentController)
                     .Update(config);
             }
         }
 
-        public bool SaveServer()
+        public string SaveToFile()
         {
-            return ReplaceServer(originalConfig);
+            InjectConfigHelper(null);
+
+            var cfg = FormatWithIndent();
+            var r = VgcApis.Misc.UI.ShowSaveFileDialog(
+                VgcApis.Models.Consts.Files.JsonExt,
+                cfg,
+                out string filename);
+
+            switch (r)
+            {
+                case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Success:
+                    uid = null;
+                    this.orgCfg = cfg;
+                    MessageBox.Show(I18N.Done);
+                    return filename;
+                case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Fail:
+                    MessageBox.Show(I18N.WriteFileFail);
+                    break;
+                case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Cancel:
+                    // do nothing
+                    break;
+            }
+            return null;
         }
 
-        public bool ReplaceServer(string originalConfig)
+        public bool SaveCurServer()
         {
-            if (!editor.Flush())
-            {
-                return false;
-            }
-            Update();
+            return ReplaceServer(uid);
+        }
 
-            var newConfig = Misc.Utils.Config2String(config);
-            if (originalConfig == newConfig
-                || servers.IsServerExist(newConfig))
-            {
-                MessageBox.Show(I18N.DuplicateServer);
-                return false;
-            }
-
-            if (servers.ReplaceServerConfig(originalConfig, newConfig))
-            {
-                MarkOriginalConfig();
-            }
-            else
+        public bool ReplaceServer(string uid)
+        {
+            if (string.IsNullOrEmpty(uid))
             {
                 MessageBox.Show(I18N.OrgServNotFound);
                 return false;
             }
 
+            if (!Flush())
+            {
+                return false;
+            }
+
+            var originalConfig = GetConfigByUid(uid);
+            var newConfig = Misc.Utils.Config2String(config);
+            if (originalConfig == newConfig || servers.IsServerExist(newConfig))
+            {
+                MessageBox.Show(I18N.DuplicateServer);
+                return false;
+            }
+
+            if (!servers.ReplaceServerConfig(originalConfig, newConfig))
+            {
+                MessageBox.Show(I18N.OrgServNotFound);
+                return false;
+            }
+
+            LoadConfigByUid(uid);
             return true;
         }
 
         public void AddNewServer()
         {
-            if (!editor.Flush())
+            if (!Flush())
             {
                 return;
             }
 
-            Update();
-
-            if (servers.AddServer(Misc.Utils.Config2String(config), ""))
-            {
-                MarkOriginalConfig();
-            }
-            else
+            if (!servers.AddServer(Misc.Utils.Config2String(config), ""))
             {
                 MessageBox.Show(I18N.DuplicateServer);
             }
+
+            var uid = servers.GetAllServersOrderByIndex()
+                    ?.FirstOrDefault(s =>
+                    {
+                        try
+                        {
+                            var o = ParseConfigString(s.GetConfiger()?.GetConfig());
+                            return JObject.DeepEquals(config, o);
+                        }
+                        catch { }
+                        return false;
+                    })
+                    ?.GetCoreStates()
+                    ?.GetUid();
+
+            LoadConfigByUid(uid);
         }
 
-        public void MarkOriginalConfig()
-        {
-            originalFile = string.Empty;
-            originalConfig = Misc.Utils.Config2String(config);
-        }
 
-        public void MarkOriginalFile()
-        {
-            originalConfig = string.Empty;
-            originalFile = GetConfigFormated();
-        }
-
-        public string GetConfigFormated()
+        public string FormatWithIndent()
         {
             return config.ToString(Newtonsoft.Json.Formatting.Indented);
-        }
-
-        public bool LoadJsonFromFile(string content)
-        {
-            if (string.IsNullOrEmpty(content))
-            {
-                return false;
-            }
-
-            try
-            {
-                var o = JObject.Parse(content);
-                if (o == null)
-                {
-                    return false;
-                }
-                config = o;
-                Update();
-                MarkOriginalFile();
-                editor.ReloadSection();
-                return true;
-            }
-            catch { }
-            return false;
-        }
-
-        public void LoadServer(string configString)
-        {
-            editor.DiscardChanges();
-            editor.ShowEntireConfig();
-            LoadConfig(configString);
-            Update();
-            editor.ReloadSection();
         }
 
         public void InjectConfigHelper(Action lambda)
@@ -196,25 +214,43 @@ namespace V2RayGCon.Controllers
         #endregion
 
         #region private method
-        void LoadConfig(string originalConfig)
+        bool Flush()
         {
-            JObject o = null;
+            if (!editor.Flush())
+            {
+                return false;
+            }
+            Update();
+            return true;
+        }
+
+        string GetConfigByUid(string uid) =>
+           servers.GetAllServersOrderByIndex()
+               ?.FirstOrDefault(s => s?.GetCoreStates()?.GetUid() == uid)
+               ?.GetConfiger()
+               ?.GetConfig();
+
+        void CacheOriginalConfig(string cfg)
+        {
+            this.orgCfg = cfg;
+            config = ParseConfigString(cfg);
+        }
+
+        JObject ParseConfigString(string cfgStr)
+        {
+            var empty = JObject.Parse(@"{}");
+
+            if (string.IsNullOrEmpty(cfgStr))
+            {
+                return empty;
+            }
+
             try
             {
-                if (!string.IsNullOrEmpty(originalConfig))
-                {
-                    o = JObject.Parse(originalConfig);
-                }
+                return JObject.Parse(cfgStr);
             }
             catch { }
-
-            if (o == null)
-            {
-                o = JObject.Parse(@"{}");
-            }
-
-            config = o;
-            MarkOriginalConfig();
+            return empty;
         }
         #endregion
     }

@@ -172,7 +172,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem miFormOptions)
         {
             // menu window
-            miFormConfigEditor.Click += (s, a) => Views.WinForms.FormConfiger.ShowConfig();
+            miFormConfigEditor.Click += (s, a) => Views.WinForms.FormConfiger.ShowEmptyConfig();
 
             miFormLog.Click += (s, a) => Views.WinForms.FormLog.ShowForm();
 

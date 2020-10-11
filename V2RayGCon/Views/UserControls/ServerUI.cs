@@ -627,8 +627,8 @@ namespace V2RayGCon.Views.UserControls
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var config = coreServCtrl.GetConfiger().GetConfig();
-            WinForms.FormConfiger.ShowConfig(config);
+            var uid = coreServCtrl.GetCoreStates().GetUid();
+            WinForms.FormConfiger.ShowServer(uid);
         }
 
         private void vmessToolStripMenuItem_Click(object sender, EventArgs e)

@@ -289,7 +289,7 @@ namespace V2RayGCon.Services
         public void BlockingWaitOne(AutoResetEvent autoEv) =>
             autoEv.WaitOne();
 
-        public void RefreshNotifyIconLater() => lazyNotifierMenuUpdater?.Postpone();
+        public void RefreshNotifyIconLater() => lazyNotifierMenuUpdater?.Deadline();
 
         public void ScanQrcode()
         {

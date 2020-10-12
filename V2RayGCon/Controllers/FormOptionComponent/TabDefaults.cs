@@ -78,6 +78,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             chkImportBypassCnSite.Checked = setting.CustomDefImportBypassCnSite;
             chkImportInjectGlobalImport.Checked = setting.CustomDefImportGlobalImport;
             chkImportSsShareLink.Checked = setting.CustomDefImportSsShareLink;
+            chkImportTrojanShareLink.Checked = setting.CustomDefImportTrojanShareLink;
 
             cboxDefImportMode.SelectedIndex = setting.CustomDefImportMode;
             tboxDefImportAddr.TextChanged += OnTboxImportAddrTextChanged;

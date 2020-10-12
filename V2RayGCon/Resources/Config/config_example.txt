@@ -31,14 +31,16 @@
   "inTrojan": {
     "clients": [
       {
-        "password": "123456",
-        "email": "",
-        "level": ""
+        "password": "password",
+        "email": "love@v2fly.org",
+        "level": 0
       }
     ],
     "fallback": {
-      "dest": "80",
-      "type": ""
+      "alpn": "",
+      "path": "",
+      "dest": 80,
+      "xver": 0
     }
   },
   "inSS": {
@@ -200,11 +202,11 @@
   "outTrojan": {
     "servers": [
       {
-        "address": "server.address",
-        "port": 443,
-        "password": "123456",
-        "email": "",
-        "level": ""
+        "address": "127.0.0.1",
+        "port": 1234,
+        "password": "password",
+        "email": "love@v2fly.org",
+        "level": 0
       }
     ]
   },

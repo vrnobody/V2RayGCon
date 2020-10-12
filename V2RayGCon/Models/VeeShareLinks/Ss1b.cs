@@ -72,18 +72,17 @@ namespace V2RayGCon.Models.VeeShareLinks
         public override void CopyFromVeeConfig(VeeConfigs vc)
         {
             base.CopyFromVeeConfig(vc);
-            isUseOta = vc.useOta;
+            isUseOta = false;
             password = vc.auth1;
-            method = vc.method;
+            method = vc.auth2;
         }
 
         public override VeeConfigs ToVeeConfigs()
         {
             var vc = base.ToVeeConfigs();
             vc.proto = proto;
-            vc.useOta = isUseOta;
             vc.auth1 = password;
-            vc.method = method;
+            vc.auth2 = method;
             return vc;
         }
 

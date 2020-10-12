@@ -273,7 +273,7 @@ namespace V2RayGCon.Misc
             }
 
             var sec = GetValue<string>(config, root + ".streamSettings.security")?.ToLower();
-            if (sec != null && sec.Equals(@"tls"))
+            if (!string.IsNullOrWhiteSpace(sec) && sec != "none")
             {
                 result += $".{sec}";
             }

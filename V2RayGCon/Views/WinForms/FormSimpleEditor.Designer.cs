@@ -34,9 +34,9 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.panelVeeImporter = new System.Windows.Forms.Panel();
+            this.veeConfigerUI1 = new V2RayGCon.Views.UserControls.VeeConfigerUI();
             this.linkConfigEditor = new System.Windows.Forms.LinkLabel();
             this.lbTitle = new System.Windows.Forms.Label();
-            this.veeConfigerUI1 = new V2RayGCon.Views.UserControls.VeeConfigerUI();
             this.panelVeeImporter.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,6 +60,11 @@
             this.panelVeeImporter.Controls.Add(this.veeConfigerUI1);
             this.panelVeeImporter.Name = "panelVeeImporter";
             // 
+            // veeConfigerUI1
+            // 
+            resources.ApplyResources(this.veeConfigerUI1, "veeConfigerUI1");
+            this.veeConfigerUI1.Name = "veeConfigerUI1";
+            // 
             // linkConfigEditor
             // 
             resources.ApplyResources(this.linkConfigEditor, "linkConfigEditor");
@@ -72,11 +77,6 @@
             // 
             resources.ApplyResources(this.lbTitle, "lbTitle");
             this.lbTitle.Name = "lbTitle";
-            // 
-            // veeConfigerUI1
-            // 
-            resources.ApplyResources(this.veeConfigerUI1, "veeConfigerUI1");
-            this.veeConfigerUI1.Name = "veeConfigerUI1";
             // 
             // FormSimpleEditor
             // 

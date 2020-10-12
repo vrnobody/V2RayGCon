@@ -118,103 +118,31 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="chkOTA.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="chkOTA.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkOTA.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="chkOTA.Location" type="System.Drawing.Point, System.Drawing">
-    <value>246, 102</value>
-  </data>
-  <data name="chkOTA.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 16</value>
-  </data>
-  <data name="chkOTA.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="chkOTA.Text" xml:space="preserve">
-    <value>OTA</value>
-  </data>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <data name="chkOTA.ToolTip" xml:space="preserve">
-    <value>One Time Authentification.</value>
-  </data>
-  <data name="&gt;&gt;chkOTA.Name" xml:space="preserve">
-    <value>chkOTA</value>
-  </data>
-  <data name="&gt;&gt;chkOTA.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkOTA.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;chkOTA.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="chkStreamUseTls.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="chkStreamUseTls.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkStreamUseTls.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkStreamUseTls.Location" type="System.Drawing.Point, System.Drawing">
-    <value>188, 22</value>
-  </data>
-  <data name="chkStreamUseTls.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 16</value>
-  </data>
-  <data name="chkStreamUseTls.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="chkStreamUseTls.Text" xml:space="preserve">
-    <value>TLS</value>
-  </data>
-  <data name="&gt;&gt;chkStreamUseTls.Name" xml:space="preserve">
-    <value>chkStreamUseTls</value>
-  </data>
-  <data name="&gt;&gt;chkStreamUseTls.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkStreamUseTls.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;chkStreamUseTls.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="cboxMethod.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="cboxAuth2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="cboxMethod.Location" type="System.Drawing.Point, System.Drawing">
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="cboxAuth2.Location" type="System.Drawing.Point, System.Drawing">
     <value>65, 100</value>
   </data>
-  <data name="cboxMethod.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 20</value>
+  <data name="cboxAuth2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>243, 20</value>
   </data>
-  <data name="cboxMethod.TabIndex" type="System.Int32, mscorlib">
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="cboxAuth2.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="&gt;&gt;cboxMethod.Name" xml:space="preserve">
-    <value>cboxMethod</value>
+  <data name="&gt;&gt;cboxAuth2.Name" xml:space="preserve">
+    <value>cboxAuth2</value>
   </data>
-  <data name="&gt;&gt;cboxMethod.Type" xml:space="preserve">
+  <data name="&gt;&gt;cboxAuth2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;cboxMethod.Parent" xml:space="preserve">
+  <data name="&gt;&gt;cboxAuth2.Parent" xml:space="preserve">
     <value>groupBox2</value>
   </data>
-  <data name="&gt;&gt;cboxMethod.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;cboxAuth2.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="cboxStreamParma1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -238,7 +166,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;cboxStreamParma1.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="cboxProtocol.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -280,7 +208,7 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;cboxProtocol.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>6</value>
   </data>
   <data name="cboxStreamType.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -289,7 +217,7 @@
     <value>65, 20</value>
   </data>
   <data name="cboxStreamType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 20</value>
+    <value>78, 20</value>
   </data>
   <data name="cboxStreamType.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -304,7 +232,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;cboxStreamType.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="tboxHost.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -328,34 +256,7 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;tboxHost.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="tboxAuth2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="tboxAuth2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 100</value>
-  </data>
-  <data name="tboxAuth2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 21</value>
-  </data>
-  <data name="tboxAuth2.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="tboxAuth2.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;tboxAuth2.Name" xml:space="preserve">
-    <value>tboxAuth2</value>
-  </data>
-  <data name="&gt;&gt;tboxAuth2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxAuth2.Parent" xml:space="preserve">
-    <value>groupBox2</value>
-  </data>
-  <data name="&gt;&gt;tboxAuth2.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>8</value>
   </data>
   <data name="tboxAuth1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -379,7 +280,7 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;tboxAuth1.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>7</value>
   </data>
   <data name="lbStreamParam1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -399,6 +300,9 @@
   <data name="lbStreamParam1.Text" xml:space="preserve">
     <value>Param.</value>
   </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <data name="lbStreamParam1.ToolTip" xml:space="preserve">
     <value>Stream setting main parameter.</value>
   </data>
@@ -412,7 +316,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;lbStreamParam1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="lbAuth2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -442,7 +346,7 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;lbAuth2.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="label14.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -472,7 +376,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>9</value>
   </data>
   <data name="lbAuth1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -502,7 +406,7 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;lbAuth1.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="label12.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -532,7 +436,7 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="label11.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -562,7 +466,7 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="tboxName.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -672,41 +576,41 @@
   <data name="&gt;&gt;tboxDescription.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="chkStreamUseSelfSignCert.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="chkTlsCertSelfSign.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="chkStreamUseSelfSignCert.AutoSize" type="System.Boolean, mscorlib">
+  <data name="chkTlsCertSelfSign.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="chkStreamUseSelfSignCert.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="chkTlsCertSelfSign.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="chkStreamUseSelfSignCert.Location" type="System.Drawing.Point, System.Drawing">
-    <value>236, 22</value>
+  <data name="chkTlsCertSelfSign.Location" type="System.Drawing.Point, System.Drawing">
+    <value>233, 22</value>
   </data>
-  <data name="chkStreamUseSelfSignCert.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="chkTlsCertSelfSign.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 16</value>
   </data>
-  <data name="chkStreamUseSelfSignCert.TabIndex" type="System.Int32, mscorlib">
+  <data name="chkTlsCertSelfSign.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="chkStreamUseSelfSignCert.Text" xml:space="preserve">
+  <data name="chkTlsCertSelfSign.Text" xml:space="preserve">
     <value>SelfSign</value>
   </data>
-  <data name="chkStreamUseSelfSignCert.ToolTip" xml:space="preserve">
+  <data name="chkTlsCertSelfSign.ToolTip" xml:space="preserve">
     <value>Self signed certification.</value>
   </data>
-  <data name="&gt;&gt;chkStreamUseSelfSignCert.Name" xml:space="preserve">
-    <value>chkStreamUseSelfSignCert</value>
+  <data name="&gt;&gt;chkTlsCertSelfSign.Name" xml:space="preserve">
+    <value>chkTlsCertSelfSign</value>
   </data>
-  <data name="&gt;&gt;chkStreamUseSelfSignCert.Type" xml:space="preserve">
+  <data name="&gt;&gt;chkTlsCertSelfSign.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;chkStreamUseSelfSignCert.Parent" xml:space="preserve">
+  <data name="&gt;&gt;chkTlsCertSelfSign.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-  <data name="&gt;&gt;chkStreamUseSelfSignCert.ZOrder" xml:space="preserve">
-    <value>7</value>
+  <data name="&gt;&gt;chkTlsCertSelfSign.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="lbStreamParam3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -736,7 +640,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;lbStreamParam3.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="lbStreamParam2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -766,7 +670,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;lbStreamParam2.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="tboxStreamParam2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -790,7 +694,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;tboxStreamParam2.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="tboxStreamParam3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -814,7 +718,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;tboxStreamParam3.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="tboxPort.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -838,7 +742,7 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;tboxPort.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>5</value>
   </data>
   <data name="label4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -871,16 +775,82 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>9</value>
   </data>
   <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
+  </data>
+  <data name="cboxTlsType.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="cboxTlsType.Items" xml:space="preserve">
+    <value>none</value>
+  </data>
+  <data name="cboxTlsType.Items1" xml:space="preserve">
+    <value>tls</value>
+  </data>
+  <data name="cboxTlsType.Items2" xml:space="preserve">
+    <value>xtls</value>
+  </data>
+  <data name="cboxTlsType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 20</value>
+  </data>
+  <data name="cboxTlsType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>52, 20</value>
+  </data>
+  <data name="cboxTlsType.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;cboxTlsType.Name" xml:space="preserve">
+    <value>cboxTlsType</value>
+  </data>
+  <data name="&gt;&gt;cboxTlsType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboxTlsType.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;cboxTlsType.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>149, 24</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 12</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>TLS</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>8</value>
   </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 191</value>
   </data>
   <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>314, 126</value>
+    <value>314, 127</value>
   </data>
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -934,7 +904,7 @@
     <value>6, 12</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>320, 319</value>
+    <value>320, 320</value>
   </data>
   <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
     <value>toolTip1</value>

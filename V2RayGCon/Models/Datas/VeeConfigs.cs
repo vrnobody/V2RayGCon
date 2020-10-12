@@ -9,14 +9,14 @@
         public int port = 0;
         public string auth1 = string.Empty;
         public string auth2 = string.Empty;
-        public string method = string.Empty;
-        public bool useOta = false;
-        public bool useSelfSignCert = false;
-        public bool useTls = false;
+
         public string streamType = string.Empty;
         public string streamParam1 = string.Empty;
         public string streamParam2 = string.Empty;
         public string streamParam3 = string.Empty;
+
+        public string tlsType = @"none";
+        public bool useSelfSignCert = false;
 
         public VeeConfigs() { }
 
@@ -40,13 +40,6 @@
             catch { }
         }
 
-        /* plan to delete
-        public VeeConfigs(JObject config) : this(config.ToString())
-        {
-
-        }
-        */
-
         public string ToVeeShareLink()
         {
             try
@@ -69,14 +62,14 @@
             port = source.port;
             auth1 = source.auth1;
             auth2 = source.auth2;
-            method = source.method;
-            useOta = source.useOta;
-            useSelfSignCert = source.useSelfSignCert;
-            useTls = source.useTls;
+
             streamType = source.streamType;
             streamParam1 = source.streamParam1;
             streamParam2 = source.streamParam2;
             streamParam3 = source.streamParam3;
+
+            tlsType = source.tlsType;
+            useSelfSignCert = source.useSelfSignCert;
         }
 
         #endregion

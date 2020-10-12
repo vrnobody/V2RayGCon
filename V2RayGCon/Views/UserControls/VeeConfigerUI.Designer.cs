@@ -30,14 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VeeConfigerUI));
-            this.chkOTA = new System.Windows.Forms.CheckBox();
-            this.chkStreamUseTls = new System.Windows.Forms.CheckBox();
-            this.cboxMethod = new System.Windows.Forms.ComboBox();
+            this.cboxAuth2 = new System.Windows.Forms.ComboBox();
             this.cboxStreamParma1 = new System.Windows.Forms.ComboBox();
             this.cboxProtocol = new System.Windows.Forms.ComboBox();
             this.cboxStreamType = new System.Windows.Forms.ComboBox();
             this.tboxHost = new System.Windows.Forms.TextBox();
-            this.tboxAuth2 = new System.Windows.Forms.TextBox();
             this.tboxAuth1 = new System.Windows.Forms.TextBox();
             this.lbStreamParam1 = new System.Windows.Forms.Label();
             this.lbAuth2 = new System.Windows.Forms.Label();
@@ -49,7 +46,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.tboxDescription = new System.Windows.Forms.TextBox();
-            this.chkStreamUseSelfSignCert = new System.Windows.Forms.CheckBox();
+            this.chkTlsCertSelfSign = new System.Windows.Forms.CheckBox();
             this.lbStreamParam3 = new System.Windows.Forms.Label();
             this.lbStreamParam2 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -59,29 +56,17 @@
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cboxTlsType = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // chkOTA
+            // cboxAuth2
             // 
-            resources.ApplyResources(this.chkOTA, "chkOTA");
-            this.chkOTA.Name = "chkOTA";
-            this.toolTip1.SetToolTip(this.chkOTA, resources.GetString("chkOTA.ToolTip"));
-            this.chkOTA.UseVisualStyleBackColor = true;
-            // 
-            // chkStreamUseTls
-            // 
-            resources.ApplyResources(this.chkStreamUseTls, "chkStreamUseTls");
-            this.chkStreamUseTls.Name = "chkStreamUseTls";
-            this.chkStreamUseTls.UseVisualStyleBackColor = true;
-            // 
-            // cboxMethod
-            // 
-            resources.ApplyResources(this.cboxMethod, "cboxMethod");
-            this.cboxMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxMethod.FormattingEnabled = true;
-            this.cboxMethod.Name = "cboxMethod";
+            resources.ApplyResources(this.cboxAuth2, "cboxAuth2");
+            this.cboxAuth2.FormattingEnabled = true;
+            this.cboxAuth2.Name = "cboxAuth2";
             // 
             // cboxStreamParma1
             // 
@@ -117,11 +102,6 @@
             // 
             resources.ApplyResources(this.tboxHost, "tboxHost");
             this.tboxHost.Name = "tboxHost";
-            // 
-            // tboxAuth2
-            // 
-            resources.ApplyResources(this.tboxAuth2, "tboxAuth2");
-            this.tboxAuth2.Name = "tboxAuth2";
             // 
             // tboxAuth1
             // 
@@ -182,12 +162,12 @@
             resources.ApplyResources(this.tboxDescription, "tboxDescription");
             this.tboxDescription.Name = "tboxDescription";
             // 
-            // chkStreamUseSelfSignCert
+            // chkTlsCertSelfSign
             // 
-            resources.ApplyResources(this.chkStreamUseSelfSignCert, "chkStreamUseSelfSignCert");
-            this.chkStreamUseSelfSignCert.Name = "chkStreamUseSelfSignCert";
-            this.toolTip1.SetToolTip(this.chkStreamUseSelfSignCert, resources.GetString("chkStreamUseSelfSignCert.ToolTip"));
-            this.chkStreamUseSelfSignCert.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.chkTlsCertSelfSign, "chkTlsCertSelfSign");
+            this.chkTlsCertSelfSign.Name = "chkTlsCertSelfSign";
+            this.toolTip1.SetToolTip(this.chkTlsCertSelfSign, resources.GetString("chkTlsCertSelfSign.ToolTip"));
+            this.chkTlsCertSelfSign.UseVisualStyleBackColor = true;
             // 
             // lbStreamParam3
             // 
@@ -222,24 +202,24 @@
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.cboxTlsType);
             this.groupBox1.Controls.Add(this.cboxStreamType);
             this.groupBox1.Controls.Add(this.lbStreamParam1);
+            this.groupBox1.Controls.Add(this.chkTlsCertSelfSign);
             this.groupBox1.Controls.Add(this.lbStreamParam3);
             this.groupBox1.Controls.Add(this.lbStreamParam2);
             this.groupBox1.Controls.Add(this.tboxStreamParam2);
             this.groupBox1.Controls.Add(this.tboxStreamParam3);
+            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label14);
-            this.groupBox1.Controls.Add(this.chkStreamUseSelfSignCert);
             this.groupBox1.Controls.Add(this.cboxStreamParma1);
-            this.groupBox1.Controls.Add(this.chkStreamUseTls);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 
             // groupBox2
             // 
             resources.ApplyResources(this.groupBox2, "groupBox2");
-            this.groupBox2.Controls.Add(this.chkOTA);
-            this.groupBox2.Controls.Add(this.cboxMethod);
+            this.groupBox2.Controls.Add(this.cboxAuth2);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.lbAuth2);
             this.groupBox2.Controls.Add(this.lbAuth1);
@@ -249,9 +229,25 @@
             this.groupBox2.Controls.Add(this.tboxAuth1);
             this.groupBox2.Controls.Add(this.tboxHost);
             this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.tboxAuth2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
+            // 
+            // cboxTlsType
+            // 
+            resources.ApplyResources(this.cboxTlsType, "cboxTlsType");
+            this.cboxTlsType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxTlsType.FormattingEnabled = true;
+            this.cboxTlsType.Items.AddRange(new object[] {
+            resources.GetString("cboxTlsType.Items"),
+            resources.GetString("cboxTlsType.Items1"),
+            resources.GetString("cboxTlsType.Items2")});
+            this.cboxTlsType.Name = "cboxTlsType";
+            this.cboxTlsType.SelectedValueChanged += new System.EventHandler(this.cboxTlsType_SelectedValueChanged);
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
             // 
             // VeeConfigerUI
             // 
@@ -275,14 +271,11 @@
         }
 
         #endregion
-        private System.Windows.Forms.CheckBox chkOTA;
-        private System.Windows.Forms.CheckBox chkStreamUseTls;
-        private System.Windows.Forms.ComboBox cboxMethod;
+        private System.Windows.Forms.ComboBox cboxAuth2;
         private System.Windows.Forms.ComboBox cboxStreamParma1;
         private System.Windows.Forms.ComboBox cboxProtocol;
         private System.Windows.Forms.ComboBox cboxStreamType;
         private System.Windows.Forms.TextBox tboxHost;
-        private System.Windows.Forms.TextBox tboxAuth2;
         private System.Windows.Forms.TextBox tboxAuth1;
         private System.Windows.Forms.Label lbStreamParam1;
         private System.Windows.Forms.Label lbAuth2;
@@ -294,7 +287,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tboxDescription;
-        private System.Windows.Forms.CheckBox chkStreamUseSelfSignCert;
+        private System.Windows.Forms.CheckBox chkTlsCertSelfSign;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label lbStreamParam3;
         private System.Windows.Forms.Label lbStreamParam2;
@@ -304,5 +297,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox cboxTlsType;
+        private System.Windows.Forms.Label label2;
     }
 }

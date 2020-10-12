@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.4.7.7")]
+[assembly: AssemblyVersion("1.4.7.8")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.4.7.8 Refactor form simple editor.
  * v1.4.7.7 Refactor form configer.
  * v1.4.7.6 Use red color to highlight invalid UUID in simple editor.
  * v1.4.7.5 Fix UI bugs. (form logger, page menu)

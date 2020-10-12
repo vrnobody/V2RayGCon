@@ -44,8 +44,15 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
             var subPrefix = root + "." + "streamSettings";
             result.streamType = GetStr(subPrefix, "network");
-            result.isUseTls = GetStr(subPrefix, "security")?.ToLower() == "tls";
-            result.isSecTls = GetStr(subPrefix, "tlsSettings.allowInsecure")?.ToLower() != "true";
+
+            var tt = GetStr(subPrefix, "security")?.ToLower();
+            result.tlsType = tt;
+            result.isUseTls = tt == "tls";
+            if (tt == "xtls" || tt == "tls")
+            {
+                var pfx = $"{tt}Settings";
+                result.isSecTls = GetStr(subPrefix, $"{pfx}.allowInsecure")?.ToLower() != "true";
+            }
 
             var mainParam = "";
             switch (result.streamType)
@@ -111,54 +118,55 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         public static JToken GenStreamSetting(
             Cache cache, Models.VeeShareLinks.BasicSettings streamSettings)
         {
+            var ss = streamSettings;
             // insert stream type
             string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic" };
-            string st = streamSettings?.streamType?.ToLower();
+            string st = ss?.streamType?.ToLower();
 
             if (!streamTypes.Contains(st))
             {
                 return JToken.Parse(@"{}");
             }
 
-            string mainParam = streamSettings.streamParam1;
+            string mainParam = ss.streamParam1;
             if (st == "tcp" && mainParam == "http")
             {
                 st = "tcp_http";
             }
-            var streamToken = cache.tpl.LoadTemplate(st);
+            var token = cache.tpl.LoadTemplate(st);
             try
             {
                 switch (st)
                 {
                     case "tcp":
-                        streamToken["tcpSettings"]["header"]["type"] = mainParam;
+                        token["tcpSettings"]["header"]["type"] = mainParam;
                         break;
                     case "tcp_http":
-                        streamToken["tcpSettings"]["header"]["type"] = mainParam;
-                        streamToken["tcpSettings"]["header"]["request"]["path"] =
-                            Misc.Utils.Str2JArray(string.IsNullOrEmpty(streamSettings.streamParam2) ? "/" : streamSettings.streamParam2);
-                        streamToken["tcpSettings"]["header"]["request"]["headers"]["Host"] =
-                            Misc.Utils.Str2JArray(streamSettings.streamParam3);
+                        token["tcpSettings"]["header"]["type"] = mainParam;
+                        token["tcpSettings"]["header"]["request"]["path"] =
+                            Misc.Utils.Str2JArray(string.IsNullOrEmpty(ss.streamParam2) ? "/" : ss.streamParam2);
+                        token["tcpSettings"]["header"]["request"]["headers"]["Host"] =
+                            Misc.Utils.Str2JArray(ss.streamParam3);
                         break;
                     case "kcp":
-                        streamToken["kcpSettings"]["header"]["type"] = mainParam;
-                        if (!string.IsNullOrEmpty(streamSettings.streamParam2))
+                        token["kcpSettings"]["header"]["type"] = mainParam;
+                        if (!string.IsNullOrEmpty(ss.streamParam2))
                         {
-                            streamToken["kcpSettings"]["seed"] = streamSettings.streamParam2;
+                            token["kcpSettings"]["seed"] = ss.streamParam2;
                         }
                         break;
                     case "ws":
-                        streamToken["wsSettings"]["path"] = mainParam;
-                        streamToken["wsSettings"]["headers"]["Host"] = streamSettings.streamParam2;
+                        token["wsSettings"]["path"] = mainParam;
+                        token["wsSettings"]["headers"]["Host"] = ss.streamParam2;
                         break;
                     case "h2":
-                        streamToken["httpSettings"]["path"] = mainParam;
-                        streamToken["httpSettings"]["host"] = Misc.Utils.Str2JArray(streamSettings.streamParam2);
+                        token["httpSettings"]["path"] = mainParam;
+                        token["httpSettings"]["host"] = Misc.Utils.Str2JArray(ss.streamParam2);
                         break;
                     case "quic":
-                        streamToken["quicSettings"]["header"]["type"] = mainParam;
-                        streamToken["quicSettings"]["security"] = streamSettings.streamParam2;
-                        streamToken["quicSettings"]["key"] = streamSettings.streamParam3;
+                        token["quicSettings"]["header"]["type"] = mainParam;
+                        token["quicSettings"]["security"] = ss.streamParam2;
+                        token["quicSettings"]["key"] = ss.streamParam3;
                         break;
                     default:
                         break;
@@ -166,16 +174,29 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             }
             catch { }
 
-            streamToken["security"] = streamSettings.isUseTls ? "tls" : "none";
-
-            if (streamSettings.isUseTls)
+            if (ss.isUseTls)
             {
-                streamToken["tlsSettings"] = streamSettings.isSecTls ?
-                     JObject.Parse(@"{allowInsecure: false}") :
-                     JObject.Parse(@"{allowInsecure: true}");
+                // backward compatible
+                token["security"] = "tls";
+                token["tlsSettings"] = ss.isSecTls ?
+                    JObject.Parse(@"{allowInsecure: false}") :
+                    JObject.Parse(@"{allowInsecure: true}");
+
+            }
+            else
+            {
+                var tt = ss.tlsType;
+                token["security"] = tt;
+                if (tt == "tls" || tt == "xtls")
+                {
+                    var k = $"{tt}Settings";
+                    var insecure = ss.isSecTls ? "false" : "true"; // lower case
+                    var v = $"{{ allowInsecure: {insecure} }}";
+                    token[k] = JObject.Parse(v);
+                }
             }
 
-            return streamToken;
+            return token;
         }
     }
 }

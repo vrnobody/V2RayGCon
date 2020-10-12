@@ -66,6 +66,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             var enc = GetStr(userInfoPrefix, "encryption");
             vless.encryption = string.IsNullOrEmpty(enc) ? "none" : enc;
             vless.uuid = Guid.Parse(GetStr(userInfoPrefix, "id"));
+            vless.flow = GetStr(userInfoPrefix, "flow");
             return vless;
         }
 
@@ -85,6 +86,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             node["address"] = vee.address;
             node["port"] = vee.port;
             node["users"][0]["id"] = vee.uuid;
+            node["users"][0]["flow"] = vee.flow;
             node["users"][0]["encryption"] = vee.encryption;
             var tpl = cache.tpl.LoadTemplate("tplImportVmess") as JObject;
             tpl["v2raygcon"]["alias"] = vee.alias;

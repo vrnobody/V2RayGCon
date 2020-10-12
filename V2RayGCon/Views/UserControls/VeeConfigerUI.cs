@@ -28,11 +28,12 @@ namespace V2RayGCon.Views.UserControls
             sc.host = tboxHost.Text;
             sc.port = VgcApis.Misc.Utils.Str2Int(tboxPort.Text);
             sc.auth1 = tboxAuth1.Text;
-            sc.method = cboxMethod.Text;
-            sc.useOta = chkOTA.Checked;
+            sc.auth2 = cboxAuth2.Text;
             sc.streamType = cboxStreamType.Text;
-            sc.useTls = chkStreamUseTls.Checked;
-            sc.useSelfSignCert = chkStreamUseSelfSignCert.Checked;
+
+            sc.tlsType = cboxTlsType.Text;
+            sc.useSelfSignCert = chkTlsCertSelfSign.Checked;
+
             sc.streamParam1 = cboxStreamParma1.Text;
             sc.streamParam2 = tboxStreamParam2.Text;
             sc.streamParam3 = tboxStreamParam3.Text;
@@ -50,17 +51,14 @@ namespace V2RayGCon.Views.UserControls
 
             tboxHost.Text = sc.host;
             tboxPort.Text = sc.port.ToString();
+
             tboxAuth1.Text = sc.auth1;
-
-            SelectByText(cboxMethod, sc.method);
-
-            chkOTA.Checked = sc.useOta;
+            cboxAuth2.Text = sc.auth2;
 
             var st = string.IsNullOrEmpty(sc.streamType) ? StreamTypeNone : sc.streamType;
             SelectByText(cboxStreamType, st);
 
-            chkStreamUseTls.Checked = sc.useTls;
-            chkStreamUseSelfSignCert.Checked = sc.useSelfSignCert;
+
             if (cboxStreamParma1.DropDownStyle == ComboBoxStyle.DropDownList)
             {
                 SelectByText(cboxStreamParma1, sc.streamParam1);
@@ -71,6 +69,10 @@ namespace V2RayGCon.Views.UserControls
             }
             tboxStreamParam2.Text = sc.streamParam2;
             tboxStreamParam3.Text = sc.streamParam3;
+
+            var tt = string.IsNullOrEmpty(sc.tlsType) ? StreamTypeNone : sc.tlsType;
+            SelectByText(cboxTlsType, tt);
+            chkTlsCertSelfSign.Checked = sc.useSelfSignCert;
         }
         #region public methods
 
@@ -103,7 +105,7 @@ namespace V2RayGCon.Views.UserControls
             };
             Misc.UI.FillComboBox(cboxProtocol, protocols);
 
-            Misc.UI.FillComboBox(cboxMethod, Models.Datas.Table.ssMethods);
+            Misc.UI.FillComboBox(cboxAuth2, Models.Datas.Table.ssMethods);
             var streamType = new List<string> { StreamTypeNone };
             foreach (var type in Models.Datas.Table.streamSettings)
             {
@@ -131,14 +133,85 @@ namespace V2RayGCon.Views.UserControls
             }
             return null;
         }
+
         void DisableStreamParamControlsWhenStreamTypeIsNone(bool isNone)
         {
             var enable = !isNone;
             cboxStreamParma1.Enabled = enable;
-            chkStreamUseTls.Enabled = enable;
-            chkStreamUseSelfSignCert.Enabled = enable;
+            cboxTlsType.Enabled = enable;
+            chkTlsCertSelfSign.Enabled = enable;
             tboxStreamParam2.Enabled = enable;
             tboxStreamParam3.Enabled = enable;
+        }
+
+        private void ToggleVisibilityOfControls()
+        {
+            var t = cboxProtocol.Text.ToLower();
+
+            switch (t)
+            {
+                case @"vmess":
+                case @"vless":
+                    lbAuth2.Visible = t == @"vless";
+                    cboxAuth2.Visible = t == @"vless";
+                    lbAuth1.Text = @"UUID";
+                    lbAuth2.Text = @"flow";
+                    break;
+                case @"socks":
+                case @"http":
+                    lbAuth1.Text = I18N.User;
+                    lbAuth2.Text = I18N.Password;
+                    lbAuth2.Visible = true;
+                    cboxAuth2.Visible = true;
+                    break;
+                case @"shadowsocks":
+                    lbAuth1.Text = I18N.Password;
+                    lbAuth2.Text = @"Method";
+                    lbAuth2.Visible = true;
+                    cboxAuth2.Visible = true;
+                    break;
+                case @"trojan":
+                    lbAuth1.Text = I18N.Password;
+                    lbAuth2.Visible = false;
+                    cboxAuth2.Visible = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        void FillCboxAuth2()
+        {
+            var items = cboxAuth2.Items;
+
+            var t = cboxProtocol.Text.ToLower();
+            items.Clear();
+            switch (t)
+            {
+                case @"vless":
+                    items.AddRange(new string[] {
+                        "xtls-rprx-origin",
+                        "xtls-rprx-origin-udp443",
+                        "xtls-rprx-direct",
+                        "xtls-rprx-direct-udp443",
+                    });
+                    break;
+
+                case @"shadowsocks":
+                    items.AddRange(new string[] {
+                        "none",
+                        "AES-256-GCM",
+                        "AES-128-GCM",
+                        "ChaCha20-Poly1305",
+                        "ChaCha20-IETF-Poly1305",
+                    });
+                    break;
+
+                default:
+                    break;
+            }
+            cboxAuth2.SelectedIndex = -1;
+            cboxAuth2.Text = @"";
         }
 
         #endregion
@@ -185,46 +258,8 @@ namespace V2RayGCon.Views.UserControls
 
         private void cboxProtocol_SelectedValueChanged(object sender, EventArgs e)
         {
-            var t = cboxProtocol.Text.ToLower();
-
-            switch (t)
-            {
-                case @"vmess":
-                case @"vless":
-                    lbAuth2.Visible = false;
-                    cboxMethod.Visible = false;
-                    chkOTA.Visible = false;
-                    tboxAuth2.Visible = false;
-                    lbAuth1.Text = @"UUID";
-                    break;
-                case @"socks":
-                case @"http":
-                    lbAuth1.Text = I18N.User;
-                    lbAuth2.Text = I18N.Password;
-                    lbAuth2.Visible = true;
-                    cboxMethod.Visible = false;
-                    chkOTA.Visible = false;
-                    tboxAuth2.Visible = true;
-                    break;
-                case @"shadowsocks":
-                    lbAuth1.Text = I18N.Password;
-                    lbAuth2.Text = @"Method";
-                    lbAuth2.Visible = true;
-                    cboxMethod.Visible = true;
-                    chkOTA.Visible = true;
-                    tboxAuth2.Visible = false;
-                    break;
-                case @"trojan":
-                    lbAuth1.Text = I18N.Password;
-                    lbAuth2.Visible = false;
-                    cboxMethod.Visible = false;
-                    chkOTA.Visible = false;
-                    tboxAuth2.Visible = false;
-                    break;
-                default:
-                    break;
-            }
-
+            ToggleVisibilityOfControls();
+            FillCboxAuth2();
             ValidateAuth1();
         }
 
@@ -232,7 +267,6 @@ namespace V2RayGCon.Views.UserControls
         {
             tboxAuth1.Text = Guid.NewGuid().ToString();
         }
-
 
         private void cboxStreamParma1_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -263,6 +297,13 @@ namespace V2RayGCon.Views.UserControls
         {
             ValidateAuth1();
         }
+
+        private void cboxTlsType_SelectedValueChanged(object sender, EventArgs e)
+        {
+            bool enable = cboxTlsType.Text != "none";
+            chkTlsCertSelfSign.Enabled = enable;
+        }
+
         #endregion
 
     }

@@ -13,6 +13,9 @@ namespace V2RayGCon.Models.VeeShareLinks
         public bool isUseTls, isSecTls;
         public string streamType, streamParam1, streamParam2, streamParam3;
 
+        // patch
+        public string tlsType;
+
         public BasicSettings()
         {
             alias = string.Empty;
@@ -27,6 +30,8 @@ namespace V2RayGCon.Models.VeeShareLinks
             streamParam1 = string.Empty;
             streamParam2 = string.Empty;
             streamParam3 = string.Empty;
+
+            tlsType = "none";
         }
 
         #region protected 
@@ -49,7 +54,11 @@ namespace V2RayGCon.Models.VeeShareLinks
             address = vc.host;
             port = vc.port;
 
-            isUseTls = vc.useTls;
+            // backward compatible
+            isUseTls = vc.tlsType != "none";
+
+            tlsType = vc.tlsType;
+
             isSecTls = !vc.useSelfSignCert;
             streamType = vc.streamType;
 
@@ -67,7 +76,15 @@ namespace V2RayGCon.Models.VeeShareLinks
             vc.host = address;
             vc.port = port;
 
-            vc.useTls = isUseTls;
+            if (isUseTls)
+            {
+                vc.tlsType = "tls";
+            }
+            else
+            {
+                vc.tlsType = tlsType;
+            }
+
             vc.useSelfSignCert = !isSecTls;
             vc.streamType = streamType;
 
@@ -77,24 +94,26 @@ namespace V2RayGCon.Models.VeeShareLinks
             return vc;
         }
 
-        public void CopyFrom(BasicSettings streamSettings)
+        public void CopyFrom(BasicSettings source)
         {
-            if (streamSettings == null)
+            if (source == null)
             {
                 return;
             }
 
-            alias = streamSettings.alias;
-            description = streamSettings.description;
-            port = streamSettings.port;
-            address = streamSettings.address;
+            alias = source.alias;
+            description = source.description;
+            port = source.port;
+            address = source.address;
 
-            isUseTls = streamSettings.isUseTls;
-            isSecTls = streamSettings.isSecTls;
-            streamType = streamSettings.streamType;
-            streamParam1 = streamSettings.streamParam1;
-            streamParam2 = streamSettings.streamParam2;
-            streamParam3 = streamSettings.streamParam3;
+            isUseTls = source.isUseTls;
+            tlsType = source.tlsType;
+
+            isSecTls = source.isSecTls;
+            streamType = source.streamType;
+            streamParam1 = source.streamParam1;
+            streamParam2 = source.streamParam2;
+            streamParam3 = source.streamParam3;
         }
 
         public bool EqTo(BasicSettings target)
@@ -105,6 +124,7 @@ namespace V2RayGCon.Models.VeeShareLinks
                 || port != target.port
                 || address != target.address
                 || isUseTls != target.isUseTls
+                || tlsType != target.tlsType
                 || isSecTls != target.isSecTls
                 || streamType != target.streamType
                 || streamParam1 != target.streamParam1

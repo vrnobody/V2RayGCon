@@ -83,7 +83,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             vc.auth1 = Uri.UnescapeDataString(pa[0]);
 
             vc.streamType = "tcp";
-            vc.useTls = true;
+            vc.tlsType = "tls";
             vc.streamParam1 = "none";
             return vc;
         }

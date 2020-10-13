@@ -18,13 +18,13 @@ jobs:
         boxAppend: box
         v2rayCorePkgName: 'v2ray-windows-64.zip'
         scriptPkgName: 'scripts-v1.0'
-        v2rayCoreVer: 'v4.28.2'
+        v2rayCoreVer: 'v4.31.0'
         # https://github.com/v2ray/v2ray-core/releases/download/v4.20.0/v2ray-windows-32.zip
-        v2rayCoreUrl: 'https://github.com/v2ray/v2ray-core/releases/download'
+        v2rayCoreUrl: 'https://github.com/v2fly/v2ray-core/releases/download'
 
     steps:
         - name: Checkout master
-          uses: actions/checkout@v2
+          uses: actions/checkout@v2.3.3
 
         - name: Show versions
           run: |
@@ -33,7 +33,7 @@ jobs:
             $Host.Version
 
         - name: Setup .net framework env
-          uses: vrnobody/Setup-DotNetFrameworkEnv@v1
+          uses: vrnobody/Setup-DotNetFrameworkEnv@v1.2.6
 
         - name: Restore packages
           run: nuget restore ${env:projName}.sln
@@ -67,9 +67,9 @@ jobs:
             $hv1 = $hash1.Hash
             $hv2 = $hash2.Hash
             $hv3 = $hash3.Hash
-            echo "::set-env name=hashVgcZip::${hv1}"
-            echo "::set-env name=hashVgcBoxZip::${hv2}"
-            echo "::set-env name=hashScriptPkgZip::${hv3}"
+            echo "hashVgcZip=${hv1}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+            echo "hashVgcBoxZip=${hv2}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+            echo "hashScriptPkgZip=${hv3}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
         - name: Create Release
           id: create_release

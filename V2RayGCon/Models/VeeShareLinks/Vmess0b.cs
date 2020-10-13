@@ -2,40 +2,34 @@
 
 namespace V2RayGCon.Models.VeeShareLinks
 {
-    public sealed class Vless4a :
+    public sealed class Vmess0b :
         BasicSettings
     {
         // ver 0a is optimized for vmess protocol 
-        const string version = @"4a";
-        const string proto = "vless";
+        const string version = @"0b";
+        const string proto = "vmess";
 
         public static bool IsDecoderFor(string ver) => version == ver;
+        public static bool IsEncoderFor(string protocol) => protocol == proto;
 
-        static public bool IsEncoderFor(string protocol) => protocol == proto;
-
+        public int alterId; // 16 bit each
         public Guid uuid;
-        public string encryption;
-        public string flow;
-        public string servName;
 
-        public Vless4a() : base()
+        public Vmess0b() : base()
         {
-            uuid = new Guid(); // zeros  
-            encryption = @"none";
-            flow = string.Empty;
+            alterId = 0;
+            uuid = new Guid(); // zeros   
         }
 
-        public Vless4a(BasicSettings source) : this()
+        public Vmess0b(BasicSettings source) : this()
         {
             CopyFrom(source);
         }
-
         #region public methods
-        public override void CopyFromVeeConfig(Datas.VeeConfigs vc)
+        public override void CopyFromVeeConfig(Models.Datas.VeeConfigs vc)
         {
             base.CopyFromVeeConfig(vc);
             uuid = Guid.Parse(vc.auth1);
-            flow = vc.auth2;
         }
 
         public override Datas.VeeConfigs ToVeeConfigs()
@@ -43,11 +37,10 @@ namespace V2RayGCon.Models.VeeShareLinks
             var vc = base.ToVeeConfigs();
             vc.proto = proto;
             vc.auth1 = uuid.ToString();
-            vc.auth2 = flow;
             return vc;
         }
 
-        public Vless4a(byte[] bytes) :
+        public Vmess0b(byte[] bytes) :
             this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
@@ -68,19 +61,13 @@ namespace V2RayGCon.Models.VeeShareLinks
                 tlsServName = bs.Read<string>();
 
                 port = bs.Read<int>();
-                encryption = bs.Read<string>();
+                alterId = bs.Read<int>();
                 uuid = bs.Read<Guid>();
-                flow = bs.Read<string>();
                 address = bs.ReadAddress();
                 streamType = readString();
                 streamParam1 = readString();
                 streamParam2 = readString();
                 streamParam3 = readString();
-            }
-
-            if (string.IsNullOrEmpty(encryption))
-            {
-                encryption = "none";
             }
         }
 
@@ -101,9 +88,8 @@ namespace V2RayGCon.Models.VeeShareLinks
                 bs.Write(tlsServName);
 
                 bs.Write(port);
-                bs.Write(encryption);
+                bs.Write(alterId);
                 bs.Write(uuid);
-                bs.Write(flow);
                 bs.WriteAddress(address);
                 writeString(streamType);
                 writeString(streamParam1);
@@ -116,12 +102,11 @@ namespace V2RayGCon.Models.VeeShareLinks
             return result;
         }
 
-        public bool EqTo(Vless4a veeLink)
+        public bool EqTo(Vmess0b veeLink)
         {
             if (!EqTo(veeLink as BasicSettings)
-                || encryption != veeLink.encryption
-                || uuid != veeLink.uuid
-                || flow != veeLink.flow)
+                || alterId != veeLink.alterId
+                || uuid != veeLink.uuid)
             {
                 return false;
             }

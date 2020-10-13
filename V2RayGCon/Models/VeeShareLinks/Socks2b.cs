@@ -2,25 +2,24 @@
 
 namespace V2RayGCon.Models.VeeShareLinks
 {
-    public class Http3a : BasicSettings
+    public class Socks2b : BasicSettings
     {
         // ver 2a is optimized for socks protocol 
-        const string version = @"3a";
-        const string proto = "http";
+        const string version = @"2b";
+        const string proto = "socks";
 
         public string userName, userPassword;
 
         static public bool IsDecoderFor(string ver) => version == ver;
 
         static public bool IsEncoderFor(string protocol) => protocol == proto;
-
-        public Http3a() : base()
+        public Socks2b() : base()
         {
             userName = string.Empty;
             userPassword = string.Empty;
         }
 
-        public Http3a(BasicSettings source) : this()
+        public Socks2b(BasicSettings source) : this()
         {
             CopyFrom(source);
         }
@@ -42,8 +41,7 @@ namespace V2RayGCon.Models.VeeShareLinks
             return vc;
         }
 
-
-        public Http3a(byte[] bytes) :
+        public Socks2b(byte[] bytes) :
             this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
@@ -58,8 +56,11 @@ namespace V2RayGCon.Models.VeeShareLinks
 
                 alias = bs.Read<string>();
                 description = readString();
-                isUseTls = bs.Read<bool>();
+
+                tlsType = bs.Read<string>();
                 isSecTls = bs.Read<bool>();
+                tlsServName = bs.Read<string>();
+
                 port = bs.Read<int>();
                 address = bs.ReadAddress();
                 userName = readString();
@@ -82,8 +83,11 @@ namespace V2RayGCon.Models.VeeShareLinks
 
                 bs.Write(alias);
                 writeString(description);
-                bs.Write(isUseTls);
+
+                bs.Write(tlsType);
                 bs.Write(isSecTls);
+                bs.Write(tlsServName);
+
                 bs.Write(port);
                 bs.WriteAddress(address);
                 writeString(userName);
@@ -99,7 +103,7 @@ namespace V2RayGCon.Models.VeeShareLinks
             return result;
         }
 
-        public bool EqTo(Socks2a target)
+        public bool EqTo(Socks2b target)
         {
             if (!EqTo(target as BasicSettings)
                 || userName != target.userName

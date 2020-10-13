@@ -16,6 +16,7 @@
         public string streamParam3 = string.Empty;
 
         public string tlsType = @"none";
+        public string tlsServName = @"";
         public bool useSelfSignCert = false;
 
         public VeeConfigs() { }
@@ -70,6 +71,7 @@
 
             tlsType = source.tlsType;
             useSelfSignCert = source.useSelfSignCert;
+            tlsServName = source.tlsServName;
         }
 
         #endregion

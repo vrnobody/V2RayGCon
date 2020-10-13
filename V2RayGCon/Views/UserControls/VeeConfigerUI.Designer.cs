@@ -50,16 +50,20 @@
             this.lbStreamParam3 = new System.Windows.Forms.Label();
             this.lbStreamParam2 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label5 = new System.Windows.Forms.Label();
             this.tboxStreamParam2 = new System.Windows.Forms.TextBox();
             this.tboxStreamParam3 = new System.Windows.Forms.TextBox();
             this.tboxPort = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cboxTlsType = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.tboxTlsServName = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // cboxAuth2
@@ -179,6 +183,12 @@
             resources.ApplyResources(this.lbStreamParam2, "lbStreamParam2");
             this.lbStreamParam2.Name = "lbStreamParam2";
             // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            this.toolTip1.SetToolTip(this.label5, resources.GetString("label5.ToolTip"));
+            // 
             // tboxStreamParam2
             // 
             resources.ApplyResources(this.tboxStreamParam2, "tboxStreamParam2");
@@ -202,19 +212,28 @@
             // groupBox1
             // 
             resources.ApplyResources(this.groupBox1, "groupBox1");
-            this.groupBox1.Controls.Add(this.cboxTlsType);
             this.groupBox1.Controls.Add(this.cboxStreamType);
             this.groupBox1.Controls.Add(this.lbStreamParam1);
-            this.groupBox1.Controls.Add(this.chkTlsCertSelfSign);
             this.groupBox1.Controls.Add(this.lbStreamParam3);
             this.groupBox1.Controls.Add(this.lbStreamParam2);
             this.groupBox1.Controls.Add(this.tboxStreamParam2);
             this.groupBox1.Controls.Add(this.tboxStreamParam3);
-            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.cboxStreamParma1);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            // 
+            // cboxTlsType
+            // 
+            resources.ApplyResources(this.cboxTlsType, "cboxTlsType");
+            this.cboxTlsType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxTlsType.FormattingEnabled = true;
+            this.cboxTlsType.Items.AddRange(new object[] {
+            resources.GetString("cboxTlsType.Items"),
+            resources.GetString("cboxTlsType.Items1"),
+            resources.GetString("cboxTlsType.Items2")});
+            this.cboxTlsType.Name = "cboxTlsType";
+            this.cboxTlsType.SelectedValueChanged += new System.EventHandler(this.cboxTlsType_SelectedValueChanged);
             // 
             // groupBox2
             // 
@@ -232,27 +251,32 @@
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             // 
-            // cboxTlsType
+            // groupBox3
             // 
-            resources.ApplyResources(this.cboxTlsType, "cboxTlsType");
-            this.cboxTlsType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxTlsType.FormattingEnabled = true;
-            this.cboxTlsType.Items.AddRange(new object[] {
-            resources.GetString("cboxTlsType.Items"),
-            resources.GetString("cboxTlsType.Items1"),
-            resources.GetString("cboxTlsType.Items2")});
-            this.cboxTlsType.Name = "cboxTlsType";
-            this.cboxTlsType.SelectedValueChanged += new System.EventHandler(this.cboxTlsType_SelectedValueChanged);
+            resources.ApplyResources(this.groupBox3, "groupBox3");
+            this.groupBox3.Controls.Add(this.tboxTlsServName);
+            this.groupBox3.Controls.Add(this.cboxTlsType);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Controls.Add(this.chkTlsCertSelfSign);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.TabStop = false;
             // 
-            // label2
+            // tboxTlsServName
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            resources.ApplyResources(this.tboxTlsServName, "tboxTlsServName");
+            this.tboxTlsServName.Name = "tboxTlsServName";
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
             // 
             // VeeConfigerUI
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tboxName);
@@ -265,6 +289,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -298,6 +324,9 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox cboxTlsType;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox tboxTlsServName;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label3;
     }
 }

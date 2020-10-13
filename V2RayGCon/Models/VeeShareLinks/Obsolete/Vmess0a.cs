@@ -1,47 +1,46 @@
 ﻿using System;
 
-namespace V2RayGCon.Models.VeeShareLinks
+namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 {
-    public class Socks2a : BasicSettings
+    public sealed class Vmess0a :
+        BasicSettings
     {
-        // ver 2a is optimized for socks protocol 
-        const string version = @"2a";
-        const string proto = "socks";
+        // ver 0a is optimized for vmess protocol 
+        const string version = @"0a";
+        const string proto = "vmess";
 
-        public string userName, userPassword;
+        public static bool IsDecoderFor(string ver) => version == ver;
+        public static bool IsEncoderFor(string protocol) => false; // obsolete
 
-        static public bool IsDecoderFor(string ver) => version == ver;
+        public int alterId; // 16 bit each
+        public Guid uuid;
 
-        static public bool IsEncoderFor(string protocol) => protocol == proto;
-        public Socks2a() : base()
+        public Vmess0a() : base()
         {
-            userName = string.Empty;
-            userPassword = string.Empty;
+            alterId = 0;
+            uuid = new Guid(); // zeros   
         }
 
-        public Socks2a(BasicSettings source) : this()
+        public Vmess0a(BasicSettings source) : this()
         {
             CopyFrom(source);
         }
-
         #region public methods
         public override void CopyFromVeeConfig(Models.Datas.VeeConfigs vc)
         {
             base.CopyFromVeeConfig(vc);
-            userName = vc.auth1;
-            userPassword = vc.auth2;
+            uuid = Guid.Parse(vc.auth1);
         }
 
         public override Datas.VeeConfigs ToVeeConfigs()
         {
             var vc = base.ToVeeConfigs();
             vc.proto = proto;
-            vc.auth1 = userName;
-            vc.auth2 = userPassword;
+            vc.auth1 = uuid.ToString();
             return vc;
         }
 
-        public Socks2a(byte[] bytes) :
+        public Vmess0a(byte[] bytes) :
             this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
@@ -59,9 +58,9 @@ namespace V2RayGCon.Models.VeeShareLinks
                 isUseTls = bs.Read<bool>();
                 isSecTls = bs.Read<bool>();
                 port = bs.Read<int>();
+                alterId = bs.Read<int>();
+                uuid = bs.Read<Guid>();
                 address = bs.ReadAddress();
-                userName = readString();
-                userPassword = readString();
                 streamType = readString();
                 streamParam1 = readString();
                 streamParam2 = readString();
@@ -83,9 +82,9 @@ namespace V2RayGCon.Models.VeeShareLinks
                 bs.Write(isUseTls);
                 bs.Write(isSecTls);
                 bs.Write(port);
+                bs.Write(alterId);
+                bs.Write(uuid);
                 bs.WriteAddress(address);
-                writeString(userName);
-                writeString(userPassword);
                 writeString(streamType);
                 writeString(streamParam1);
                 writeString(streamParam2);
@@ -97,14 +96,15 @@ namespace V2RayGCon.Models.VeeShareLinks
             return result;
         }
 
-        public bool EqTo(Socks2a target)
+        public bool EqTo(Vmess0a veeLink)
         {
-            if (!EqTo(target as BasicSettings)
-                || userName != target.userName
-                || userPassword != target.userPassword)
+            if (!EqTo(veeLink as BasicSettings)
+                || alterId != veeLink.alterId
+                || uuid != veeLink.uuid)
             {
                 return false;
             }
+
             return true;
         }
         #endregion

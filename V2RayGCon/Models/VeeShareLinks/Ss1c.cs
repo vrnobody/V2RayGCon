@@ -4,33 +4,31 @@ using V2RayGCon.Models.Datas;
 
 namespace V2RayGCon.Models.VeeShareLinks
 {
-    public sealed class Ss1b : BasicSettings
+    public sealed class Ss1c : BasicSettings
     {
         // ver 1a is optimized for shadowshocks protocol
 
-        const string version = @"1b";
+        const string version = @"1c";
         const string proto = "shadowsocks";
 
         static public bool IsDecoderFor(string ver) => version == ver;
 
         static public bool IsEncoderFor(string protocol) => protocol == proto;
-
-        public bool isUseOta;
         public string password, method; // 256 bytes
 
-        public Ss1b()
+        public Ss1c()
         {
             password = string.Empty;
             method = string.Empty;
-            isUseOta = false;
+
         }
 
-        public Ss1b(BasicSettings source) : this()
+        public Ss1c(BasicSettings source) : this()
         {
             CopyFrom(source);
         }
 
-        public Ss1b(byte[] bytes) :
+        public Ss1c(byte[] bytes) :
            this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
@@ -50,9 +48,11 @@ namespace V2RayGCon.Models.VeeShareLinks
                 port = bs.Read<int>();
                 password = bs.Read<string>();
                 method = readMethodString();
-                isUseOta = bs.Read<bool>();
-                isUseTls = bs.Read<bool>();
+
+                tlsType = bs.Read<string>();
                 isSecTls = bs.Read<bool>();
+                tlsServName = bs.Read<string>();
+
                 streamType = readString();
                 streamParam1 = readString();
                 streamParam2 = readString();
@@ -72,7 +72,6 @@ namespace V2RayGCon.Models.VeeShareLinks
         public override void CopyFromVeeConfig(VeeConfigs vc)
         {
             base.CopyFromVeeConfig(vc);
-            isUseOta = false;
             password = vc.auth1;
             method = vc.auth2;
         }
@@ -102,9 +101,11 @@ namespace V2RayGCon.Models.VeeShareLinks
                 bs.Write(port);
                 bs.Write(password);
                 writeMethodString(method);
-                bs.Write(isUseOta);
-                bs.Write(isUseTls);
+
+                bs.Write(tlsType);
                 bs.Write(isSecTls);
+                bs.Write(tlsServName);
+
                 writeBasicString(streamType);
                 writeBasicString(streamParam1);
                 writeBasicString(streamParam2);
@@ -115,10 +116,9 @@ namespace V2RayGCon.Models.VeeShareLinks
             return result;
         }
 
-        public bool EqTo(Ss1b vee)
+        public bool EqTo(Ss1c vee)
         {
             if (!EqTo(vee as BasicSettings)
-                || isUseOta != vee.isUseOta
                 || password != vee.password
                 || method != vee.method)
             {

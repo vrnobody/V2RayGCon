@@ -3,13 +3,13 @@ using System;
 
 namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 {
-    internal sealed class Vmess0a :
+    internal sealed class Ss1c :
         VgcApis.BaseClasses.ComponentOf<VeeDecoder>,
         IVeeDecoder
     {
         Cache cache;
 
-        public Vmess0a(Cache cache)
+        public Ss1c(Cache cache)
         {
             this.cache = cache;
         }
@@ -21,23 +21,22 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         #region IVeeConfig
         public byte[] VeeConfig2Bytes(Models.Datas.VeeConfigs veeConfig)
         {
-            var vee = new Models.VeeShareLinks.Vmess0a();
+            var vee = new Models.VeeShareLinks.Ss1c();
             vee.CopyFromVeeConfig(veeConfig);
             return vee.ToBytes();
         }
 
         public Models.Datas.VeeConfigs Bytes2VeeConfig(byte[] bytes)
         {
-            var vee = new Models.VeeShareLinks.Vmess0a(bytes);
+            var vee = new Models.VeeShareLinks.Ss1c(bytes);
             return vee.ToVeeConfigs();
         }
         #endregion
 
         #region public methods
-        public bool IsDecoderFor(string version) => Models.VeeShareLinks.Vmess0a.IsDecoderFor(version);
+        public bool IsDecoderFor(string version) => Models.VeeShareLinks.Ss1c.IsDecoderFor(version);
 
-        public bool IsEncoderFor(string protocol) => Models.VeeShareLinks.Vmess0a.IsEncoderFor(protocol);
-
+        public bool IsEncoderFor(string protocol) => Models.VeeShareLinks.Ss1c.IsEncoderFor(protocol);
         public byte[] Config2Bytes(JObject config)
         {
             var vee = Config2Vee(config);
@@ -46,55 +45,49 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
         public Tuple<JObject, JToken> Bytes2Config(byte[] bytes)
         {
-            var veeLink = new Models.VeeShareLinks.Vmess0a(bytes);
+            var veeLink = new Models.VeeShareLinks.Ss1c(bytes);
             return VeeToConfig(veeLink);
         }
 
         #endregion
 
         #region private methods
-        Models.VeeShareLinks.Vmess0a Config2Vee(JObject config)
+        Models.VeeShareLinks.Ss1c Config2Vee(JObject config)
         {
-            var bs = Comm.ExtractBasicConfig(config, @"vmess", @"vnext", out bool isUseV4, out string root);
-
+            var bs = Comm.ExtractBasicConfig(config, @"shadowsocks", @"servers", out bool isUseV4, out string root);
             if (bs == null)
             {
                 return null;
             }
 
             var GetStr = Misc.Utils.GetStringByPrefixAndKeyHelper(config);
+            var vmess = new Models.VeeShareLinks.Ss1c(bs);
 
-            var vmess = new Models.VeeShareLinks.Vmess0a(bs);
-            var userInfoPrefix = root + ".settings.vnext.0.users.0";
-            vmess.alterId = VgcApis.Misc.Utils.Str2Int(GetStr(userInfoPrefix, "alterId"));
-            vmess.uuid = Guid.Parse(GetStr(userInfoPrefix, "id"));
+            var prefix = root + "." + "settings.servers.0";
+            vmess.method = GetStr(prefix, "method");
+            vmess.password = GetStr(prefix, "password");
             return vmess;
         }
 
-
-        Tuple<JObject, JToken> VeeToConfig(Models.VeeShareLinks.Vmess0a vee)
+        Tuple<JObject, JToken> VeeToConfig(Models.VeeShareLinks.Ss1c vee)
         {
             if (vee == null)
             {
                 return null;
             }
 
-            var outVmess = cache.tpl.LoadTemplate("outbVeeVmess");
-            outVmess["streamSettings"] = Comm.GenStreamSetting(cache, vee);
-            var node = outVmess["settings"]["vnext"][0];
+            var outbSs = cache.tpl.LoadTemplate("outbVeeSs");
+            outbSs["streamSettings"] = Comm.GenStreamSetting(cache, vee);
+            var node = outbSs["settings"]["servers"][0];
             node["address"] = vee.address;
             node["port"] = vee.port;
-            node["users"][0]["id"] = vee.uuid;
+            node["method"] = string.IsNullOrEmpty(vee.method) ? "none" : vee.method;
+            node["password"] = vee.password;
 
-            if (vee.alterId > 0)
-            {
-                node["users"][0]["alterId"] = vee.alterId;
-            }
-
-            var tpl = cache.tpl.LoadTemplate("tplImportVmess") as JObject;
+            var tpl = cache.tpl.LoadTemplate("tplImportSS") as JObject;
             tpl["v2raygcon"]["alias"] = vee.alias;
             tpl["v2raygcon"]["description"] = vee.description;
-            return new Tuple<JObject, JToken>(tpl, outVmess);
+            return new Tuple<JObject, JToken>(tpl, outbSs);
         }
 
         #endregion

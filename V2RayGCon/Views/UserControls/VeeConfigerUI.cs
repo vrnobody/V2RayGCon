@@ -32,6 +32,7 @@ namespace V2RayGCon.Views.UserControls
             sc.streamType = cboxStreamType.Text;
 
             sc.tlsType = cboxTlsType.Text;
+            sc.tlsServName = tboxTlsServName.Text;
             sc.useSelfSignCert = chkTlsCertSelfSign.Checked;
 
             sc.streamParam1 = cboxStreamParma1.Text;
@@ -72,6 +73,8 @@ namespace V2RayGCon.Views.UserControls
 
             var tt = string.IsNullOrEmpty(sc.tlsType) ? StreamTypeNone : sc.tlsType;
             SelectByText(cboxTlsType, tt);
+            tboxTlsServName.Text = sc.tlsServName;
+
             chkTlsCertSelfSign.Checked = sc.useSelfSignCert;
         }
         #region public methods
@@ -137,8 +140,13 @@ namespace V2RayGCon.Views.UserControls
         void DisableStreamParamControlsWhenStreamTypeIsNone(bool isNone)
         {
             var enable = !isNone;
+
             cboxStreamParma1.Enabled = enable;
             cboxTlsType.Enabled = enable;
+            if (!enable)
+            {
+                SelectByText(cboxTlsType, "none");
+            }
             chkTlsCertSelfSign.Enabled = enable;
             tboxStreamParam2.Enabled = enable;
             tboxStreamParam3.Enabled = enable;
@@ -200,10 +208,10 @@ namespace V2RayGCon.Views.UserControls
                 case @"shadowsocks":
                     items.AddRange(new string[] {
                         "none",
-                        "AES-256-GCM",
-                        "AES-128-GCM",
-                        "ChaCha20-Poly1305",
-                        "ChaCha20-IETF-Poly1305",
+                        "aes-256-gcm",
+                        "aes-128-gcm",
+                        "chacha20-poly1305",
+                        "chacha20-ietf-poly1305",
                     });
                     break;
 
@@ -302,6 +310,7 @@ namespace V2RayGCon.Views.UserControls
         {
             bool enable = cboxTlsType.Text != "none";
             chkTlsCertSelfSign.Enabled = enable;
+            tboxTlsServName.Enabled = enable;
         }
 
         #endregion

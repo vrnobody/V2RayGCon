@@ -3,13 +3,13 @@ using System;
 
 namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 {
-    internal sealed class Http3a :
+    internal sealed class Http3b :
         VgcApis.BaseClasses.ComponentOf<VeeDecoder>,
         IVeeDecoder
     {
         Cache cache;
 
-        public Http3a(Cache cache)
+        public Http3b(Cache cache)
         {
             this.cache = cache;
         }
@@ -20,21 +20,21 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         #region IVeeConfig
         public byte[] VeeConfig2Bytes(Models.Datas.VeeConfigs veeConfig)
         {
-            var vee = new Models.VeeShareLinks.Http3a();
+            var vee = new Models.VeeShareLinks.Http3b();
             vee.CopyFromVeeConfig(veeConfig);
             return vee.ToBytes();
         }
 
         public Models.Datas.VeeConfigs Bytes2VeeConfig(byte[] bytes)
         {
-            var vee = new Models.VeeShareLinks.Http3a(bytes);
+            var vee = new Models.VeeShareLinks.Http3b(bytes);
             return vee.ToVeeConfigs();
         }
         #endregion
 
         #region public methods
-        public bool IsDecoderFor(string version) => Models.VeeShareLinks.Http3a.IsDecoderFor(version);
-        public bool IsEncoderFor(string protocol) => Models.VeeShareLinks.Http3a.IsEncoderFor(protocol);
+        public bool IsDecoderFor(string version) => Models.VeeShareLinks.Http3b.IsDecoderFor(version);
+        public bool IsEncoderFor(string protocol) => Models.VeeShareLinks.Http3b.IsEncoderFor(protocol);
 
         public byte[] Config2Bytes(JObject config)
         {
@@ -44,14 +44,14 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
         public Tuple<JObject, JToken> Bytes2Config(byte[] bytes)
         {
-            var veeLink = new Models.VeeShareLinks.Http3a(bytes);
+            var veeLink = new Models.VeeShareLinks.Http3b(bytes);
             return VeeToConfig(veeLink);
         }
 
         #endregion
 
         #region private methods
-        Models.VeeShareLinks.Http3a Config2Vee(JObject config)
+        Models.VeeShareLinks.Http3b Config2Vee(JObject config)
         {
             var bs = Comm.ExtractBasicConfig(
                 config, @"http", @"servers", out bool isUseV4, out string root);
@@ -63,14 +63,14 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
             var GetStr = Misc.Utils.GetStringByPrefixAndKeyHelper(config);
 
-            var http = new Models.VeeShareLinks.Http3a(bs);
+            var http = new Models.VeeShareLinks.Http3b(bs);
             var userInfoPrefix = root + ".settings.servers.0.users.0";
             http.userName = GetStr(userInfoPrefix, "user") ?? string.Empty;
             http.userPassword = GetStr(userInfoPrefix, "pass") ?? string.Empty;
             return http;
         }
 
-        Tuple<JObject, JToken> VeeToConfig(Models.VeeShareLinks.Http3a http)
+        Tuple<JObject, JToken> VeeToConfig(Models.VeeShareLinks.Http3b http)
         {
             if (http == null)
             {

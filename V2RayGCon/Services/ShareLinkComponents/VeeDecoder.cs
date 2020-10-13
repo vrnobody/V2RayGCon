@@ -26,13 +26,18 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #region public methods
         public override void Prepare()
         {
-            AddChild(new VeeCodecs.Vmess0a(cache));
-            AddChild(new VeeCodecs.Ss1a(cache)); // support old decoder
-            AddChild(new VeeCodecs.Ss1b(cache));
-            AddChild(new VeeCodecs.Socks2a(cache));
-            AddChild(new VeeCodecs.Http3a(cache));
+            AddChild(new VeeCodecs.Vmess0b(cache));
+            AddChild(new VeeCodecs.Ss1c(cache));
+            AddChild(new VeeCodecs.Socks2b(cache));
+            AddChild(new VeeCodecs.Http3b(cache));
             AddChild(new VeeCodecs.Vless4a(cache));
             AddChild(new VeeCodecs.Trojan5a(cache));
+            AddChild(new VeeCodecs.Obsolete.Vmess0a(cache));
+            AddChild(new VeeCodecs.Obsolete.Ss1a(cache)); // support old decoder
+            AddChild(new VeeCodecs.Obsolete.Ss1b(cache));
+            AddChild(new VeeCodecs.Obsolete.Socks2a(cache));
+            AddChild(new VeeCodecs.Obsolete.Http3a(cache));
+
         }
 
         public Tuple<JObject, JToken> Decode(string shareLink)

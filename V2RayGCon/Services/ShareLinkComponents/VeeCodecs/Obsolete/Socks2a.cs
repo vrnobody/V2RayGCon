@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 
-namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
+namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
 {
     internal sealed class Socks2a :
         VgcApis.BaseClasses.ComponentOf<VeeDecoder>,
@@ -20,22 +20,22 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         #region IVeeConfig
         public byte[] VeeConfig2Bytes(Models.Datas.VeeConfigs veeConfig)
         {
-            var vee = new Models.VeeShareLinks.Socks2a();
+            var vee = new Models.VeeShareLinks.Obsolete.Socks2a();
             vee.CopyFromVeeConfig(veeConfig);
             return vee.ToBytes();
         }
 
         public Models.Datas.VeeConfigs Bytes2VeeConfig(byte[] bytes)
         {
-            var vee = new Models.VeeShareLinks.Socks2a(bytes);
+            var vee = new Models.VeeShareLinks.Obsolete.Socks2a(bytes);
             return vee.ToVeeConfigs();
         }
         #endregion
 
         #region public methods
-        public bool IsDecoderFor(string version) => Models.VeeShareLinks.Socks2a.IsDecoderFor(version);
+        public bool IsDecoderFor(string version) => Models.VeeShareLinks.Obsolete.Socks2a.IsDecoderFor(version);
 
-        public bool IsEncoderFor(string protocol) => Models.VeeShareLinks.Socks2a.IsEncoderFor(protocol);
+        public bool IsEncoderFor(string protocol) => Models.VeeShareLinks.Obsolete.Socks2a.IsEncoderFor(protocol);
         public byte[] Config2Bytes(JObject config)
         {
             var vee = Config2Vee(config);
@@ -44,14 +44,14 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
         public Tuple<JObject, JToken> Bytes2Config(byte[] bytes)
         {
-            var veeLink = new Models.VeeShareLinks.Socks2a(bytes);
+            var veeLink = new Models.VeeShareLinks.Obsolete.Socks2a(bytes);
             return VeeToConfig(veeLink);
         }
 
         #endregion
 
         #region private methods
-        Models.VeeShareLinks.Socks2a Config2Vee(JObject config)
+        Models.VeeShareLinks.Obsolete.Socks2a Config2Vee(JObject config)
         {
             var bs = Comm.ExtractBasicConfig(
                 config, @"socks", @"servers", out bool isUseV4, out string root);
@@ -63,14 +63,14 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
             var GetStr = Misc.Utils.GetStringByPrefixAndKeyHelper(config);
 
-            var socks = new Models.VeeShareLinks.Socks2a(bs);
+            var socks = new Models.VeeShareLinks.Obsolete.Socks2a(bs);
             var userInfoPrefix = root + ".settings.servers.0.users.0";
             socks.userName = GetStr(userInfoPrefix, "user") ?? string.Empty;
             socks.userPassword = GetStr(userInfoPrefix, "pass") ?? string.Empty;
             return socks;
         }
 
-        Tuple<JObject, JToken> VeeToConfig(Models.VeeShareLinks.Socks2a socks)
+        Tuple<JObject, JToken> VeeToConfig(Models.VeeShareLinks.Obsolete.Socks2a socks)
         {
             if (socks == null)
             {

@@ -1,33 +1,36 @@
 ﻿using System;
+using System.Collections.Generic;
 using V2RayGCon.Models.Datas;
 
-namespace V2RayGCon.Models.VeeShareLinks
+namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 {
-    public sealed class Trojan5a : BasicSettings
+    public sealed class Ss1b : BasicSettings
     {
-        // ver 5a is optimized for trojan protocol
+        // ver 1a is optimized for shadowshocks protocol
 
-        const string version = @"5a";
-        const string proto = @"trojan";
+        const string version = @"1b";
+        const string proto = "shadowsocks";
 
         static public bool IsDecoderFor(string ver) => version == ver;
 
-        static public bool IsEncoderFor(string protocol) => protocol == proto;
+        static public bool IsEncoderFor(string protocol) => false; // obsolete
 
-        public string password; // 256 bytes
+        public bool isUseOta;
+        public string password, method; // 256 bytes
 
-        public Trojan5a()
+        public Ss1b()
         {
             password = string.Empty;
-
+            method = string.Empty;
+            isUseOta = false;
         }
 
-        public Trojan5a(BasicSettings source) : this()
+        public Ss1b(BasicSettings source) : this()
         {
             CopyFrom(source);
         }
 
-        public Trojan5a(byte[] bytes) :
+        public Ss1b(byte[] bytes) :
            this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
@@ -39,17 +42,17 @@ namespace V2RayGCon.Models.VeeShareLinks
             using (var bs = new VgcApis.Libs.Streams.BitStream(bytes))
             {
                 var readString = Utils.GenReadStringHelper(bs, strTable);
+                var readMethodString = Utils.GenReadStringHelper(bs, methodTable);
 
                 alias = bs.Read<string>();
                 description = readString();
                 address = bs.ReadAddress();
                 port = bs.Read<int>();
                 password = bs.Read<string>();
-
-                tlsType = bs.Read<string>();
+                method = readMethodString();
+                isUseOta = bs.Read<bool>();
+                isUseTls = bs.Read<bool>();
                 isSecTls = bs.Read<bool>();
-                tlsServName = bs.Read<string>();
-
                 streamType = readString();
                 streamParam1 = readString();
                 streamParam2 = readString();
@@ -57,11 +60,21 @@ namespace V2RayGCon.Models.VeeShareLinks
             }
         }
 
+        #region string table for compression 
+        List<string> methodTable = new List<string>{
+            "", "aes-256-cfb", "aes-128-cfb", "chacha20",
+            "chacha20-ietf","aes-256-gcm", "aes-128-gcm", "chacha20-poly1305" , "chacha20-ietf-poly1305"
+        };
+
+        #endregion
+
         #region public methods
         public override void CopyFromVeeConfig(VeeConfigs vc)
         {
             base.CopyFromVeeConfig(vc);
+            isUseOta = false;
             password = vc.auth1;
+            method = vc.auth2;
         }
 
         public override VeeConfigs ToVeeConfigs()
@@ -69,6 +82,7 @@ namespace V2RayGCon.Models.VeeShareLinks
             var vc = base.ToVeeConfigs();
             vc.proto = proto;
             vc.auth1 = password;
+            vc.auth2 = method;
             return vc;
         }
 
@@ -78,6 +92,7 @@ namespace V2RayGCon.Models.VeeShareLinks
             using (var bs = new VgcApis.Libs.Streams.BitStream())
             {
                 var writeBasicString = Utils.GenWriteStringHelper(bs, strTable);
+                var writeMethodString = Utils.GenWriteStringHelper(bs, methodTable);
 
                 bs.Clear();
 
@@ -86,11 +101,10 @@ namespace V2RayGCon.Models.VeeShareLinks
                 bs.WriteAddress(address);
                 bs.Write(port);
                 bs.Write(password);
-
-                bs.Write(tlsType);
+                writeMethodString(method);
+                bs.Write(isUseOta);
+                bs.Write(isUseTls);
                 bs.Write(isSecTls);
-                bs.Write(tlsServName);
-
                 writeBasicString(streamType);
                 writeBasicString(streamParam1);
                 writeBasicString(streamParam2);
@@ -101,10 +115,12 @@ namespace V2RayGCon.Models.VeeShareLinks
             return result;
         }
 
-        public bool EqTo(Trojan5a vee)
+        public bool EqTo(Ss1b vee)
         {
             if (!EqTo(vee as BasicSettings)
-                || password != vee.password)
+                || isUseOta != vee.isUseOta
+                || password != vee.password
+                || method != vee.method)
             {
                 return false;
             }

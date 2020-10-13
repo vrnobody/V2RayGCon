@@ -14,7 +14,7 @@ namespace V2RayGCon.Models.VeeShareLinks
         public string streamType, streamParam1, streamParam2, streamParam3;
 
         // patch
-        public string tlsType;
+        public string tlsType, tlsServName;
 
         public BasicSettings()
         {
@@ -32,6 +32,7 @@ namespace V2RayGCon.Models.VeeShareLinks
             streamParam3 = string.Empty;
 
             tlsType = "none";
+            tlsServName = @"";
         }
 
         #region protected 
@@ -58,6 +59,7 @@ namespace V2RayGCon.Models.VeeShareLinks
             isUseTls = vc.tlsType != "none";
 
             tlsType = vc.tlsType;
+            tlsServName = vc.tlsServName;
 
             isSecTls = !vc.useSelfSignCert;
             streamType = vc.streamType;
@@ -84,9 +86,11 @@ namespace V2RayGCon.Models.VeeShareLinks
             {
                 vc.tlsType = tlsType;
             }
+            vc.tlsServName = tlsServName;
 
             vc.useSelfSignCert = !isSecTls;
             vc.streamType = streamType;
+
 
             vc.streamParam1 = streamParam1;
             vc.streamParam2 = streamParam2;
@@ -108,6 +112,7 @@ namespace V2RayGCon.Models.VeeShareLinks
 
             isUseTls = source.isUseTls;
             tlsType = source.tlsType;
+            tlsServName = source.tlsServName;
 
             isSecTls = source.isSecTls;
             streamType = source.streamType;
@@ -125,6 +130,7 @@ namespace V2RayGCon.Models.VeeShareLinks
                 || address != target.address
                 || isUseTls != target.isUseTls
                 || tlsType != target.tlsType
+                || tlsServName != target.tlsServName
                 || isSecTls != target.isSecTls
                 || streamType != target.streamType
                 || streamParam1 != target.streamParam1

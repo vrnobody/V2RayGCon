@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace V2RayGCon.Models.VeeShareLinks
+namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 {
     public sealed class Ss1a
     {

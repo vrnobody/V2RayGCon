@@ -52,6 +52,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             {
                 var pfx = $"{tt}Settings";
                 result.isSecTls = GetStr(subPrefix, $"{pfx}.allowInsecure")?.ToLower() != "true";
+                result.tlsServName = GetStr(subPrefix, $"{pfx}.serverName") ?? "";
             }
 
             var mainParam = "";
@@ -191,7 +192,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
                 {
                     var k = $"{tt}Settings";
                     var insecure = ss.isSecTls ? "false" : "true"; // lower case
-                    var v = $"{{ allowInsecure: {insecure} }}";
+                    var v = $"{{ allowInsecure: {insecure}, serverName: \"{ss.tlsServName}\" }}";
                     token[k] = JObject.Parse(v);
                 }
             }

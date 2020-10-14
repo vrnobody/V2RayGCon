@@ -34,9 +34,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         #endregion
 
         #region public methods
-        public bool IsDecoderFor(string version) => Models.VeeShareLinks.Vmess0b.IsDecoderFor(version);
 
-        public bool IsEncoderFor(string protocol) => Models.VeeShareLinks.Vmess0b.IsEncoderFor(protocol);
+        public string GetSupportedVeeVersion() => Models.VeeShareLinks.Vmess0b.version;
+        public string GetSupportedEncodeProtocol() => Models.VeeShareLinks.Vmess0b.proto;
 
         public byte[] Config2Bytes(JObject config)
         {

@@ -6,11 +6,8 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
         BasicSettings
     {
         // ver 0a is optimized for vmess protocol 
-        const string version = @"0a";
-        const string proto = "vmess";
-
-        public static bool IsDecoderFor(string ver) => version == ver;
-        public static bool IsEncoderFor(string protocol) => false; // obsolete
+        public const string version = @"0a";
+        public const string proto = "vmess";
 
         public int alterId; // 16 bit each
         public Guid uuid;

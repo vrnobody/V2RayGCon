@@ -3,31 +3,27 @@ using V2RayGCon.Models.Datas;
 
 namespace V2RayGCon.Models.VeeShareLinks
 {
-    public sealed class Trojan5a : BasicSettings
+    public sealed class Trojan5b : BasicSettings
     {
         // ver 5a is optimized for trojan protocol
 
-        const string version = @"5a";
-        const string proto = @"trojan";
-
-        static public bool IsDecoderFor(string ver) => version == ver;
-
-        static public bool IsEncoderFor(string protocol) => protocol == proto;
+        public const string version = @"5b";
+        public const string proto = @"trojan";
 
         public string password; // 256 bytes
 
-        public Trojan5a()
+        public Trojan5b()
         {
             password = string.Empty;
 
         }
 
-        public Trojan5a(BasicSettings source) : this()
+        public Trojan5b(BasicSettings source) : this()
         {
             CopyFrom(source);
         }
 
-        public Trojan5a(byte[] bytes) :
+        public Trojan5b(byte[] bytes) :
            this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
@@ -101,7 +97,7 @@ namespace V2RayGCon.Models.VeeShareLinks
             return result;
         }
 
-        public bool EqTo(Trojan5a vee)
+        public bool EqTo(Trojan5b vee)
         {
             if (!EqTo(vee as BasicSettings)
                 || password != vee.password)

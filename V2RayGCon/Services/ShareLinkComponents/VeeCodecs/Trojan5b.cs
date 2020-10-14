@@ -3,13 +3,13 @@ using System;
 
 namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 {
-    internal sealed class Ss1c :
+    internal sealed class Trojan5b :
         VgcApis.BaseClasses.ComponentOf<VeeDecoder>,
         IVeeDecoder
     {
         Cache cache;
 
-        public Ss1c(Cache cache)
+        public Trojan5b(Cache cache)
         {
             this.cache = cache;
         }
@@ -18,25 +18,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
         #endregion
 
-        #region IVeeConfig
-        public byte[] VeeConfig2Bytes(Models.Datas.VeeConfigs veeConfig)
-        {
-            var vee = new Models.VeeShareLinks.Ss1c();
-            vee.CopyFromVeeConfig(veeConfig);
-            return vee.ToBytes();
-        }
-
-        public Models.Datas.VeeConfigs Bytes2VeeConfig(byte[] bytes)
-        {
-            var vee = new Models.VeeShareLinks.Ss1c(bytes);
-            return vee.ToVeeConfigs();
-        }
-        #endregion
-
         #region public methods
-        public string GetSupportedVeeVersion() => Models.VeeShareLinks.Ss1c.version;
-        public string GetSupportedEncodeProtocol() => Models.VeeShareLinks.Ss1c.proto;
-
+        public string GetSupportedVeeVersion() => Models.VeeShareLinks.Trojan5b.version;
+        public string GetSupportedEncodeProtocol() => Models.VeeShareLinks.Trojan5b.proto;
 
         public byte[] Config2Bytes(JObject config)
         {
@@ -46,43 +30,56 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
         public Tuple<JObject, JToken> Bytes2Config(byte[] bytes)
         {
-            var veeLink = new Models.VeeShareLinks.Ss1c(bytes);
+            var veeLink = new Models.VeeShareLinks.Trojan5b(bytes);
             return VeeToConfig(veeLink);
         }
 
         #endregion
 
-        #region private methods
-        Models.VeeShareLinks.Ss1c Config2Vee(JObject config)
+        #region IVeeConfig
+        public byte[] VeeConfig2Bytes(Models.Datas.VeeConfigs veeConfig)
         {
-            var bs = Comm.ExtractBasicConfig(config, @"shadowsocks", @"servers", out bool isUseV4, out string root);
+            var vee = new Models.VeeShareLinks.Trojan5b();
+            vee.CopyFromVeeConfig(veeConfig);
+            return vee.ToBytes();
+        }
+
+        public Models.Datas.VeeConfigs Bytes2VeeConfig(byte[] bytes)
+        {
+            var vee = new Models.VeeShareLinks.Trojan5b(bytes);
+            return vee.ToVeeConfigs();
+        }
+        #endregion
+
+        #region private methods
+        Models.VeeShareLinks.Trojan5b Config2Vee(JObject config)
+        {
+            var bs = Comm.ExtractBasicConfig(config, @"trojan", @"servers", out bool isUseV4, out string root);
             if (bs == null)
             {
                 return null;
             }
 
             var GetStr = Misc.Utils.GetStringByPrefixAndKeyHelper(config);
-            var vmess = new Models.VeeShareLinks.Ss1c(bs);
+            var vmess = new Models.VeeShareLinks.Trojan5b(bs);
 
             var prefix = root + "." + "settings.servers.0";
-            vmess.method = GetStr(prefix, "method");
             vmess.password = GetStr(prefix, "password");
             return vmess;
         }
 
-        Tuple<JObject, JToken> VeeToConfig(Models.VeeShareLinks.Ss1c vee)
+        Tuple<JObject, JToken> VeeToConfig(Models.VeeShareLinks.Trojan5b vee)
         {
             if (vee == null)
             {
                 return null;
             }
 
-            var outbSs = cache.tpl.LoadTemplate("outbVeeSs");
+            var outbSs = cache.tpl.LoadTemplate("outbVeeTrojan5a");
             outbSs["streamSettings"] = Comm.GenStreamSetting(cache, vee);
             var node = outbSs["settings"]["servers"][0];
             node["address"] = vee.address;
             node["port"] = vee.port;
-            node["method"] = string.IsNullOrEmpty(vee.method) ? "none" : vee.method;
             node["password"] = vee.password;
 
             var tpl = cache.tpl.LoadTemplate("tplImportSS") as JObject;

@@ -1,31 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using V2RayGCon.Models.Datas;
 
-namespace V2RayGCon.Models.VeeShareLinks
+namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 {
-    public sealed class Ss1c : BasicSettings
+    public sealed class Trojan5a : BasicSettings
     {
-        // ver 1a is optimized for shadowshocks protocol
+        // ver 5a is optimized for trojan protocol
 
-        public const string version = @"1c";
-        public const string proto = "shadowsocks";
+        public const string version = @"5a";
+        public const string proto = @"trojan";
 
-        public string password, method; // 256 bytes
+        public string password; // 256 bytes
 
-        public Ss1c()
+        public Trojan5a()
         {
             password = string.Empty;
-            method = string.Empty;
 
         }
 
-        public Ss1c(BasicSettings source) : this()
+        public Trojan5a(BasicSettings source) : this()
         {
             CopyFrom(source);
         }
 
-        public Ss1c(byte[] bytes) :
+        public Trojan5a(byte[] bytes) :
            this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
@@ -37,19 +35,14 @@ namespace V2RayGCon.Models.VeeShareLinks
             using (var bs = new VgcApis.Libs.Streams.BitStream(bytes))
             {
                 var readString = Utils.GenReadStringHelper(bs, strTable);
-                var readMethodString = Utils.GenReadStringHelper(bs, methodTable);
 
                 alias = bs.Read<string>();
                 description = readString();
                 address = bs.ReadAddress();
                 port = bs.Read<int>();
                 password = bs.Read<string>();
-                method = readMethodString();
-
-                tlsType = bs.Read<string>();
+                isUseTls = bs.Read<bool>();
                 isSecTls = bs.Read<bool>();
-                tlsServName = bs.Read<string>();
-
                 streamType = readString();
                 streamParam1 = readString();
                 streamParam2 = readString();
@@ -57,20 +50,11 @@ namespace V2RayGCon.Models.VeeShareLinks
             }
         }
 
-        #region string table for compression 
-        List<string> methodTable = new List<string>{
-            "", "aes-256-cfb", "aes-128-cfb", "chacha20",
-            "chacha20-ietf","aes-256-gcm", "aes-128-gcm", "chacha20-poly1305" , "chacha20-ietf-poly1305"
-        };
-
-        #endregion
-
         #region public methods
         public override void CopyFromVeeConfig(VeeConfigs vc)
         {
             base.CopyFromVeeConfig(vc);
             password = vc.auth1;
-            method = vc.auth2;
         }
 
         public override VeeConfigs ToVeeConfigs()
@@ -78,7 +62,6 @@ namespace V2RayGCon.Models.VeeShareLinks
             var vc = base.ToVeeConfigs();
             vc.proto = proto;
             vc.auth1 = password;
-            vc.auth2 = method;
             return vc;
         }
 
@@ -88,7 +71,6 @@ namespace V2RayGCon.Models.VeeShareLinks
             using (var bs = new VgcApis.Libs.Streams.BitStream())
             {
                 var writeBasicString = Utils.GenWriteStringHelper(bs, strTable);
-                var writeMethodString = Utils.GenWriteStringHelper(bs, methodTable);
 
                 bs.Clear();
 
@@ -97,12 +79,8 @@ namespace V2RayGCon.Models.VeeShareLinks
                 bs.WriteAddress(address);
                 bs.Write(port);
                 bs.Write(password);
-                writeMethodString(method);
-
-                bs.Write(tlsType);
+                bs.Write(isUseTls);
                 bs.Write(isSecTls);
-                bs.Write(tlsServName);
-
                 writeBasicString(streamType);
                 writeBasicString(streamParam1);
                 writeBasicString(streamParam2);
@@ -113,11 +91,10 @@ namespace V2RayGCon.Models.VeeShareLinks
             return result;
         }
 
-        public bool EqTo(Ss1c vee)
+        public bool EqTo(Trojan5a vee)
         {
             if (!EqTo(vee as BasicSettings)
-                || password != vee.password
-                || method != vee.method)
+                || password != vee.password)
             {
                 return false;
             }

@@ -5,14 +5,11 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
     public class Socks2a : BasicSettings
     {
         // ver 2a is optimized for socks protocol 
-        const string version = @"2a";
-        const string proto = "socks";
+        public const string version = @"2a";
+        public const string proto = "socks";
 
         public string userName, userPassword;
 
-        static public bool IsDecoderFor(string ver) => version == ver;
-
-        static public bool IsEncoderFor(string protocol) => false; // obsolete
         public Socks2a() : base()
         {
             userName = string.Empty;

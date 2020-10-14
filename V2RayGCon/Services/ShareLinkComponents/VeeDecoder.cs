@@ -24,20 +24,37 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region public methods
+        Dictionary<string, VeeCodecs.IVeeDecoder> decoders = new Dictionary<string, VeeCodecs.IVeeDecoder>();
+        Dictionary<string, VeeCodecs.IVeeDecoder> encoders = new Dictionary<string, VeeCodecs.IVeeDecoder>();
+
         public override void Prepare()
         {
             AddChild(new VeeCodecs.Vmess0b(cache));
             AddChild(new VeeCodecs.Ss1c(cache));
             AddChild(new VeeCodecs.Socks2b(cache));
             AddChild(new VeeCodecs.Http3b(cache));
-            AddChild(new VeeCodecs.Vless4a(cache));
-            AddChild(new VeeCodecs.Trojan5a(cache));
+            AddChild(new VeeCodecs.Vless4b(cache));
+            AddChild(new VeeCodecs.Trojan5b(cache));
             AddChild(new VeeCodecs.Obsolete.Vmess0a(cache));
             AddChild(new VeeCodecs.Obsolete.Ss1a(cache)); // support old decoder
             AddChild(new VeeCodecs.Obsolete.Ss1b(cache));
             AddChild(new VeeCodecs.Obsolete.Socks2a(cache));
             AddChild(new VeeCodecs.Obsolete.Http3a(cache));
+            AddChild(new VeeCodecs.Obsolete.Trojan5a(cache));
+            AddChild(new VeeCodecs.Obsolete.Vless4a(cache));
 
+            foreach (var child in this.GetChildren())
+            {
+                var codec = child as VeeCodecs.IVeeDecoder;
+                var ver = codec.GetSupportedVeeVersion();
+                var protocol = codec.GetSupportedEncodeProtocol();
+
+                decoders[ver] = codec;
+                if (!string.IsNullOrEmpty(protocol))
+                {
+                    encoders[protocol] = codec;
+                }
+            }
         }
 
         public Tuple<JObject, JToken> Decode(string shareLink)
@@ -82,15 +99,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
         public string VeeConfig2VeeLink(Models.Datas.VeeConfigs vc)
         {
             var proto = vc?.proto;
-            var codecs = GetChildren();
-            foreach (var codec in codecs)
+            if (encoders.ContainsKey(proto))
             {
-                var decoder = codec as VeeCodecs.IVeeDecoder;
-                if (decoder != null && decoder.IsEncoderFor(proto))
-                {
-                    var b = decoder.VeeConfig2Bytes(vc);
-                    return Bytes2VeeLink(b);
-                }
+                var encoder = encoders[proto];
+                var b = encoder.VeeConfig2Bytes(vc);
+                return Bytes2VeeLink(b);
             }
             return null;
         }
@@ -99,15 +112,10 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             var bytes = VeeLink2Bytes(veeLink);
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
-
-            var codecs = GetChildren();
-            foreach (var codec in codecs)
+            if (decoders.ContainsKey(ver))
             {
-                var decoder = codec as VeeCodecs.IVeeDecoder;
-                if (decoder != null && decoder.IsDecoderFor(ver))
-                {
-                    return decoder.Bytes2VeeConfig(bytes);
-                }
+                var decoder = decoders[ver];
+                return decoder.Bytes2VeeConfig(bytes);
             }
             return null;
         }
@@ -118,14 +126,10 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             var bytes = VeeLink2Bytes(shareLink);
             var linkVersion = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
-            var children = GetChildren();
-            foreach (var component in children)
+            if (decoders.ContainsKey(linkVersion))
             {
-                var decoder = component as VeeCodecs.IVeeDecoder;
-                if (decoder.IsDecoderFor(linkVersion))
-                {
-                    return decoder.Bytes2Config(bytes);
-                }
+                var decoder = decoders[linkVersion];
+                return decoder.Bytes2Config(bytes);
             }
 
             throw new NotSupportedException($"Not supported vee share link version {linkVersion}");
@@ -140,16 +144,13 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
 
             var protocol = Misc.Utils.GetProtocolFromConfig(json);
-            var codecs = GetChildren();
-            foreach (var codec in codecs)
+            if (encoders.ContainsKey(protocol))
             {
-                var encoder = codec as VeeCodecs.IVeeDecoder;
-                if (encoder.IsEncoderFor(protocol))
-                {
-                    var bytes = encoder?.Config2Bytes(json);
-                    return Bytes2VeeLink(bytes);
-                }
+                var encoder = encoders[protocol];
+                var bytes = encoder.Config2Bytes(json);
+                return Bytes2VeeLink(bytes);
             }
+
             return null;
         }
 

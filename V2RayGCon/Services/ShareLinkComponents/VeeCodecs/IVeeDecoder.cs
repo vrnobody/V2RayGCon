@@ -7,9 +7,8 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
     {
         Tuple<JObject, JToken> Bytes2Config(byte[] bytes);
         byte[] Config2Bytes(JObject config);
-        bool IsDecoderFor(string version);
-
-        bool IsEncoderFor(string protocol);
+        string GetSupportedVeeVersion();
+        string GetSupportedEncodeProtocol();
 
         Models.Datas.VeeConfigs Bytes2VeeConfig(byte[] bytes);
         byte[] VeeConfig2Bytes(Models.Datas.VeeConfigs veeConfig);

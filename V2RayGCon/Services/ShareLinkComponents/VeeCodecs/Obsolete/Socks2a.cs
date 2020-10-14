@@ -33,9 +33,8 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
         #endregion
 
         #region public methods
-        public bool IsDecoderFor(string version) => Models.VeeShareLinks.Obsolete.Socks2a.IsDecoderFor(version);
-
-        public bool IsEncoderFor(string protocol) => Models.VeeShareLinks.Obsolete.Socks2a.IsEncoderFor(protocol);
+        public string GetSupportedVeeVersion() => Models.VeeShareLinks.Obsolete.Socks2a.version;
+        public string GetSupportedEncodeProtocol() => @"";
         public byte[] Config2Bytes(JObject config)
         {
             var vee = Config2Vee(config);

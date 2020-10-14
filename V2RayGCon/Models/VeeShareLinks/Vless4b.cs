@@ -1,45 +1,48 @@
 ﻿using System;
 
-namespace V2RayGCon.Models.VeeShareLinks.Obsolete
+namespace V2RayGCon.Models.VeeShareLinks
 {
-    public class Http3a : BasicSettings
+    public sealed class Vless4b :
+        BasicSettings
     {
-        // ver 2a is optimized for socks protocol 
-        public const string version = @"3a";
-        public const string proto = "http";
+        // ver 0a is optimized for vmess protocol 
+        public const string version = @"4b";
+        public const string proto = "vless";
 
-        public string userName, userPassword;
+        public Guid uuid;
+        public string encryption;
+        public string flow;
 
-        public Http3a() : base()
+        public Vless4b() : base()
         {
-            userName = string.Empty;
-            userPassword = string.Empty;
+            uuid = new Guid(); // zeros  
+            encryption = @"none";
+            flow = string.Empty;
         }
 
-        public Http3a(BasicSettings source) : this()
+        public Vless4b(BasicSettings source) : this()
         {
             CopyFrom(source);
         }
 
         #region public methods
-        public override void CopyFromVeeConfig(Models.Datas.VeeConfigs vc)
+        public override void CopyFromVeeConfig(Datas.VeeConfigs vc)
         {
             base.CopyFromVeeConfig(vc);
-            userName = vc.auth1;
-            userPassword = vc.auth2;
+            uuid = Guid.Parse(vc.auth1);
+            flow = vc.auth2;
         }
 
         public override Datas.VeeConfigs ToVeeConfigs()
         {
             var vc = base.ToVeeConfigs();
             vc.proto = proto;
-            vc.auth1 = userName;
-            vc.auth2 = userPassword;
+            vc.auth1 = uuid.ToString();
+            vc.auth2 = flow;
             return vc;
         }
 
-
-        public Http3a(byte[] bytes) :
+        public Vless4b(byte[] bytes) :
             this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
@@ -54,16 +57,25 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 
                 alias = bs.Read<string>();
                 description = readString();
-                isUseTls = bs.Read<bool>();
+
+                tlsType = bs.Read<string>();
                 isSecTls = bs.Read<bool>();
+                tlsServName = bs.Read<string>();
+
                 port = bs.Read<int>();
+                encryption = bs.Read<string>();
+                uuid = bs.Read<Guid>();
+                flow = bs.Read<string>();
                 address = bs.ReadAddress();
-                userName = readString();
-                userPassword = readString();
                 streamType = readString();
                 streamParam1 = readString();
                 streamParam2 = readString();
                 streamParam3 = readString();
+            }
+
+            if (string.IsNullOrEmpty(encryption))
+            {
+                encryption = "none";
             }
         }
 
@@ -78,12 +90,16 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 
                 bs.Write(alias);
                 writeString(description);
-                bs.Write(isUseTls);
+
+                bs.Write(tlsType);
                 bs.Write(isSecTls);
+                bs.Write(tlsServName);
+
                 bs.Write(port);
+                bs.Write(encryption);
+                bs.Write(uuid);
+                bs.Write(flow);
                 bs.WriteAddress(address);
-                writeString(userName);
-                writeString(userPassword);
                 writeString(streamType);
                 writeString(streamParam1);
                 writeString(streamParam2);
@@ -95,14 +111,16 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
             return result;
         }
 
-        public bool EqTo(Socks2a target)
+        public bool EqTo(Vless4b veeLink)
         {
-            if (!EqTo(target as BasicSettings)
-                || userName != target.userName
-                || userPassword != target.userPassword)
+            if (!EqTo(veeLink as BasicSettings)
+                || encryption != veeLink.encryption
+                || uuid != veeLink.uuid
+                || flow != veeLink.flow)
             {
                 return false;
             }
+
             return true;
         }
         #endregion

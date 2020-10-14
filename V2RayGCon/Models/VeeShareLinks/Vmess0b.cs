@@ -6,11 +6,8 @@ namespace V2RayGCon.Models.VeeShareLinks
         BasicSettings
     {
         // ver 0a is optimized for vmess protocol 
-        const string version = @"0b";
-        const string proto = "vmess";
-
-        public static bool IsDecoderFor(string ver) => version == ver;
-        public static bool IsEncoderFor(string protocol) => protocol == proto;
+        public const string version = @"0b";
+        public const string proto = "vmess";
 
         public int alterId; // 16 bit each
         public Guid uuid;

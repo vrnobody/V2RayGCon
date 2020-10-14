@@ -5,14 +5,10 @@ namespace V2RayGCon.Models.VeeShareLinks
     public class Http3b : BasicSettings
     {
         // ver 2a is optimized for socks protocol 
-        const string version = @"3b";
-        const string proto = "http";
+        public const string version = @"3b";
+        public const string proto = "http";
 
         public string userName, userPassword;
-
-        static public bool IsDecoderFor(string ver) => version == ver;
-
-        static public bool IsEncoderFor(string protocol) => protocol == proto;
 
         public Http3b() : base()
         {

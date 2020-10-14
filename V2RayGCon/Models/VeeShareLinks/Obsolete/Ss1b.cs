@@ -8,12 +8,8 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
     {
         // ver 1a is optimized for shadowshocks protocol
 
-        const string version = @"1b";
-        const string proto = "shadowsocks";
-
-        static public bool IsDecoderFor(string ver) => version == ver;
-
-        static public bool IsEncoderFor(string protocol) => false; // obsolete
+        public const string version = @"1b";
+        public const string proto = "shadowsocks";
 
         public bool isUseOta;
         public string password, method; // 256 bytes

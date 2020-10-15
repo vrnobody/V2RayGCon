@@ -11,6 +11,15 @@ local packageMark = "服务器包"
 local Utils = require('lua.libs.utils')
 local Set = require('lua.modules.set')
 
+local function ScanScreenQrcode()
+    local text = Misc:ScanQrcode()
+    if string.isempty(text) then
+        Misc:Alert("没扫到二维码")
+    else
+        Misc:Input("解码结果：", text, 10)
+    end
+end
+
 local function ShowSelectedServNum(n)
     Misc:Alert("共选中 " .. tostring(n) .. " 个服务器")
 end
@@ -18,6 +27,7 @@ end
 local function UpdateSubsNow()
     local proxyPort = Web:GetProxyPort()
     Web:UpdateSubscriptions(proxyPort)
+    Server:UpdateAllSummary()
 end
 
 local function SelectDupServers()
@@ -125,6 +135,7 @@ local function Main()
         {"选中摘要重复的服务器", SelectDupServers},
         {"选中快速服务(<" .. tostring( maxTimeout ) .. "ms)", SelectFastServers},
         {"将选中的服务器打包为[" .. packageMark .. "]", PackSelectdServers},
+        {"扫描屏幕任意二维码", ScanScreenQrcode},
         {"更新订阅", UpdateSubsNow},
     }
     

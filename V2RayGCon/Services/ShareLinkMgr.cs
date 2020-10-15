@@ -75,8 +75,11 @@ namespace V2RayGCon.Services
 
         public int UpdateSubscriptions(int proxyPort)
         {
-            var subs = setting.GetSubscriptionItems();
-            var links = Misc.Utils.FetchLinksFromSubcriptions(subs, proxyPort);
+            var enabledSubs = setting.GetSubscriptionItems()
+                .Where(s => s.isUse)
+                .ToList();
+
+            var links = Misc.Utils.FetchLinksFromSubcriptions(enabledSubs, proxyPort);
             var decoders = GenDecoderList(false);
             var results = ImportLinksBatchModeSync(links, decoders);
             var count = results.Where(r => VgcApis.Misc.Utils.IsImportResultSuccess(r)).Count();
@@ -153,7 +156,6 @@ namespace V2RayGCon.Services
             {
                 codecs.GetChild<ShareLinkComponents.VmessDecoder>(),
                 codecs.GetChild<ShareLinkComponents.VeeDecoder>(),
-
             };
 
             if (setting.CustomDefImportTrojanShareLink)

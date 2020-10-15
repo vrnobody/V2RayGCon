@@ -102,19 +102,22 @@ function Main()
     while not Signal:Stop() do
         
         Misc:Sleep( speedtestTimespan * 1000 )
-        local coreServ = PickNext()
-        if coreServ ~= nil then
-            local coreState = coreServ:GetCoreStates()
-            local coreCtrl = coreServ:GetCoreCtrl()
-            print("测试: ", coreState:GetTitle())
-            coreCtrl:RunSpeedTest()
-        end
         
-        counter = counter + 1
-        if counter >= roundsPerPack then
-            print("打包")
-            counter = 0
-            PackFastServers()
+        if not Signal:ScreenLocked() then
+            local coreServ = PickNext()
+            if coreServ ~= nil then
+                local coreState = coreServ:GetCoreStates()
+                local coreCtrl = coreServ:GetCoreCtrl()
+                print("测试: ", coreState:GetTitle())
+                coreCtrl:RunSpeedTest()
+            end
+            
+            counter = counter + 1
+            if counter >= roundsPerPack then
+                print("打包")
+                counter = 0
+                PackFastServers()
+            end
         end
     end
 end

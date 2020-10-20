@@ -147,7 +147,6 @@ namespace V2RayGCon.Views.UserControls
             {
                 SelectByText(cboxTlsType, "none");
             }
-            chkTlsCertSelfSign.Enabled = enable;
             tboxStreamParam2.Enabled = enable;
             tboxStreamParam3.Enabled = enable;
         }
@@ -180,8 +179,8 @@ namespace V2RayGCon.Views.UserControls
                     break;
                 case @"trojan":
                     lbAuth1.Text = I18N.Password;
-                    lbAuth2.Visible = false;
-                    cboxAuth2.Visible = false;
+                    lbAuth2.Visible = true;
+                    cboxAuth2.Visible = true;
                     break;
                 default:
                     break;
@@ -197,6 +196,7 @@ namespace V2RayGCon.Views.UserControls
             switch (t)
             {
                 case @"vless":
+                case @"trojan":
                     items.AddRange(new string[] {
                         "xtls-rprx-origin",
                         "xtls-rprx-origin-udp443",

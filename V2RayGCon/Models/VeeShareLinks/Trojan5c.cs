@@ -1,29 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
 using V2RayGCon.Models.Datas;
 
 namespace V2RayGCon.Models.VeeShareLinks
 {
-    public sealed class Trojan5b : BasicSettings
+    public sealed class Trojan5c : BasicSettings
     {
         // ver 5a is optimized for trojan protocol
 
-        public const string version = @"5b";
+        public const string version = @"5c";
         public const string proto = @"trojan";
 
         public string password; // 256 bytes
+        public string flow; // v2fly PR #334
 
-        public Trojan5b()
+        public Trojan5c()
         {
             password = string.Empty;
-
+            flow = string.Empty;
         }
 
-        public Trojan5b(BasicSettings source) : this()
+        public Trojan5c(BasicSettings source) : this()
         {
             CopyFrom(source);
         }
 
-        public Trojan5b(byte[] bytes) :
+        List<string> flowTypesTable = new List<string>
+        {
+            "",
+            "xtls-rprx-origin",
+            "xtls-rprx-origin-udp443",
+            "xtls-rprx-direct",
+            "xtls-rprx-direct-udp443",
+        };
+
+        public Trojan5c(byte[] bytes) :
            this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
@@ -35,12 +46,14 @@ namespace V2RayGCon.Models.VeeShareLinks
             using (var bs = new VgcApis.Libs.Streams.BitStream(bytes))
             {
                 var readString = Utils.GenReadStringHelper(bs, strTable);
+                var readFlowType = Utils.GenReadStringHelper(bs, flowTypesTable);
 
                 alias = bs.Read<string>();
                 description = readString();
                 address = bs.ReadAddress();
                 port = bs.Read<int>();
                 password = bs.Read<string>();
+                flow = readFlowType();
 
                 tlsType = bs.Read<string>();
                 isSecTls = bs.Read<bool>();
@@ -58,6 +71,7 @@ namespace V2RayGCon.Models.VeeShareLinks
         {
             base.CopyFromVeeConfig(vc);
             password = vc.auth1;
+            flow = vc.auth2;
         }
 
         public override VeeConfigs ToVeeConfigs()
@@ -65,6 +79,7 @@ namespace V2RayGCon.Models.VeeShareLinks
             var vc = base.ToVeeConfigs();
             vc.proto = proto;
             vc.auth1 = password;
+            vc.auth2 = flow;
             return vc;
         }
 
@@ -74,6 +89,7 @@ namespace V2RayGCon.Models.VeeShareLinks
             using (var bs = new VgcApis.Libs.Streams.BitStream())
             {
                 var writeBasicString = Utils.GenWriteStringHelper(bs, strTable);
+                var writeFlowType = Utils.GenWriteStringHelper(bs, flowTypesTable);
 
                 bs.Clear();
 
@@ -82,6 +98,7 @@ namespace V2RayGCon.Models.VeeShareLinks
                 bs.WriteAddress(address);
                 bs.Write(port);
                 bs.Write(password);
+                writeFlowType(flow);
 
                 bs.Write(tlsType);
                 bs.Write(isSecTls);
@@ -97,10 +114,11 @@ namespace V2RayGCon.Models.VeeShareLinks
             return result;
         }
 
-        public bool EqTo(Trojan5b vee)
+        public bool EqTo(Trojan5c vee)
         {
             if (!EqTo(vee as BasicSettings)
-                || password != vee.password)
+                || password != vee.password
+                || flow != vee.flow)
             {
                 return false;
             }

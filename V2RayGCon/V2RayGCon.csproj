@@ -152,11 +152,12 @@
     <Compile Include="Models\VeeShareLinks\Obsolete\Socks2a.cs" />
     <Compile Include="Models\VeeShareLinks\Obsolete\Ss1a.cs" />
     <Compile Include="Models\VeeShareLinks\Obsolete\Ss1b.cs" />
+    <Compile Include="Models\VeeShareLinks\Obsolete\Trojan5b.cs" />
     <Compile Include="Models\VeeShareLinks\Obsolete\Vmess0a.cs" />
     <Compile Include="Models\VeeShareLinks\Socks2b.cs" />
     <Compile Include="Models\VeeShareLinks\BasicSettings.cs" />
     <Compile Include="Models\VeeShareLinks\Obsolete\Trojan5a.cs" />
-    <Compile Include="Models\VeeShareLinks\Trojan5b.cs" />
+    <Compile Include="Models\VeeShareLinks\Trojan5c.cs" />
     <Compile Include="Models\VeeShareLinks\Ss1c.cs" />
     <Compile Include="Models\VeeShareLinks\Obsolete\Vless4a.cs" />
     <Compile Include="Models\VeeShareLinks\Vless4b.cs" />
@@ -230,9 +231,10 @@
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Socks2a.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Ss1a.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Ss1b.cs" />
+    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Trojan5b.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Vmess0a.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Trojan5a.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Trojan5b.cs" />
+    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Trojan5c.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Ss1c.cs" />
     <Compile Include="Models\VeeShareLinks\Vmess0b.cs" />
     <Compile Include="Services\ShareLinkComponents\VeeCodecs\Socks2b.cs" />

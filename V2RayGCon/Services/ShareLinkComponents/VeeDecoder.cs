@@ -34,7 +34,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
             AddChild(new VeeCodecs.Socks2b(cache));
             AddChild(new VeeCodecs.Http3b(cache));
             AddChild(new VeeCodecs.Vless4b(cache));
-            AddChild(new VeeCodecs.Trojan5b(cache));
+            AddChild(new VeeCodecs.Trojan5c(cache));
+            AddChild(new VeeCodecs.Obsolete.Trojan5b(cache));
             AddChild(new VeeCodecs.Obsolete.Vmess0a(cache));
             AddChild(new VeeCodecs.Obsolete.Ss1a(cache)); // support old decoder
             AddChild(new VeeCodecs.Obsolete.Ss1b(cache));

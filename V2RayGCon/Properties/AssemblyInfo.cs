@@ -33,11 +33,10 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.4.8.2")]
+[assembly: AssemblyVersion("1.4.8.1")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
- * v1.4.8.2 Fix a UI freezing bug.
  * v1.4.8.1 Add option flow in Trojan outbound. (v2fly PR #334)
  * ------------------------------------------------------
  * v1.4.7.12 Fix Web:UpdateSubscriptions(port) ignore isUse setting problem.

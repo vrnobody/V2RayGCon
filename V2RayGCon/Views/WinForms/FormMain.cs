@@ -44,13 +44,7 @@ namespace V2RayGCon.Views.WinForms
             UpdateFormTitle(this, EventArgs.Empty);
         }
 
-        #region exit 
-        void Cleanup()
-        {
-            formMainCtrl?.Cleanup();
-        }
 
-        #endregion
 
         #region private method
 
@@ -280,6 +274,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            formMainCtrl?.Cleanup();
             setting.SaveFormRect(this);
             setting.LazyGC();
         }

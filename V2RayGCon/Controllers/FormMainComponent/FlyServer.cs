@@ -136,8 +136,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void UpdateStatusBarWorker(Action done)
         {
-            SetSearchKeywords();
-
             var start = DateTime.Now.Millisecond;
             int filteredListCount = GetFilteredList().Count;
             int allServersCount = servers.CountAllServers();
@@ -145,6 +143,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             // may cause dead lock in UI thread
             int selectedServersCount = servers.CountSelectedServers();
+
+            SetSearchKeywords();
 
             Action worker = () =>
             {
@@ -185,8 +185,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             Action next = () =>
             {
-                lazyStatusBarUpdater?.Deadline();
                 DisposeFlyPanelControlByList(removed);
+                lazyStatusBarUpdater?.Deadline();
                 var relex = flyPanelUpdateInterval - (DateTime.Now.Millisecond - start);
                 VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
                 done();
@@ -268,7 +268,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void OnServerPropertyChangeHandler(object sender, EventArgs args)
         {
-            lazyStatusBarUpdater?.Deadline();
+            VgcApis.Misc.Utils.RunInBackground(
+                () => lazyStatusBarUpdater?.Deadline());
         }
 
         void SetSearchKeywords()
@@ -483,28 +484,18 @@ namespace V2RayGCon.Controllers.FormMainComponent
             */
         }
 
-        List<Views.UserControls.ServerUI> GetDeletedControlList(
-            List<VgcApis.Interfaces.ICoreServCtrl> serverList)
+        object flyCtrlsLocker = new object();
+        List<Views.UserControls.ServerUI> GetAllServerControls()
         {
             var result = new List<Views.UserControls.ServerUI>();
-
-            foreach (var control in GetAllServerControls())
+            lock (flyCtrlsLocker)
             {
-                var config = control.GetConfig();
-                if (serverList.Where(s => s.GetConfiger().GetConfig() == config)
-                    .FirstOrDefault() == null)
-                {
-                    result.Add(control);
-                }
-                serverList.RemoveAll(s => s.GetConfiger().GetConfig() == config);
+                result = flyPanel.Controls
+                    .OfType<Views.UserControls.ServerUI>()
+                    .ToList();
             }
-
             return result;
         }
-
-        List<Views.UserControls.ServerUI> GetAllServerControls() => flyPanel.Controls
-                .OfType<Views.UserControls.ServerUI>()
-                .ToList();
 
         void OnRequireFlyPanelReloadHandler(object sender, EventArgs args) =>
             RefreshFlyPanelLater();

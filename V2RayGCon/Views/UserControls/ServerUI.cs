@@ -45,7 +45,7 @@ namespace V2RayGCon.Views.UserControls
                 rlbSpeedtest,
             };
 
-            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 150, 3000)
+            lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 400, 3000)
             {
                 Name = "ServerUi.RefreshPanel",
             };
@@ -187,7 +187,7 @@ namespace V2RayGCon.Views.UserControls
             servers.StopAllServersThen(() => server.GetCoreCtrl().RestartCoreThen(done));
         }
 
-        void RefreshUiLater() => lazyUiUpdater.Postpone();
+        void RefreshUiLater() => lazyUiUpdater?.Deadline();
 
         void RefreshUiWorker(Action done)
         {

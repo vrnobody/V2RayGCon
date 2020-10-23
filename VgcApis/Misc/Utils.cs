@@ -1087,23 +1087,27 @@ namespace VgcApis.Misc
         #endregion
 
         #region string processor
+
         /// <summary>
         /// Return empty list if some thing goes wrong.
         /// </summary>
-        public static List<string> ExtractBase64Strings(string text)
+        public static List<string> ExtractBase64Strings(string text, int minLen)
         {
             var b64s = new List<string>();
-
             try
             {
                 var matches = Regex.Matches(text, Models.Consts.Patterns.Base64NonStandard);
                 foreach (Match match in matches)
                 {
-                    b64s.Add(match.Value);
+                    var v = match.Value;
+                    if (string.IsNullOrEmpty(v) || v.Length < minLen)
+                    {
+                        continue;
+                    }
+                    b64s.Add(v);
                 }
             }
             catch { }
-
             return b64s;
         }
 

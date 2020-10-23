@@ -4,6 +4,7 @@ namespace VgcApis.Interfaces.Lua
 {
     public interface ILuaWeb
     {
+        List<string> ExtractBase64String(string text, int minLen);
         List<string> ExtractBase64String(string text);
         List<string> ExtractV2cfgLinks(string text);
         List<string> ExtractVmessLinks(string text);

@@ -981,13 +981,13 @@ namespace V2RayGCon.Misc
                     };
                 }
 
-                var links = new List<string>();
-                links.Add(subsString);
-                foreach (var substr in VgcApis.Misc.Utils.ExtractBase64Strings(subsString))
+                var links = new List<string> { subsString };
+                var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(subsString, 24);
+                foreach (var b64 in b64s)
                 {
                     try
                     {
-                        var text = Base64Decode(substr);
+                        var text = Base64Decode(b64);
                         links.Add(text);
                     }
                     catch { }

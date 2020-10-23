@@ -1,13 +1,10 @@
 {
-  "version": "1.4.8.0",
-  "md5": "85D5CFC315C661F568EA7C435E53B092",
+  "version": "1.4.9.0",
+  "md5": "8202280B514F2BD9C27E5275E8B844E9",
   "warnings": [],
   "changes": [
-    "调整简易编辑器，添加serverName配置项",
-    "服务器大于1024个时改用动态菜单（上一版是2048个）",
-    "修复订阅的'启用'选项对Luna脚本Web:UpdateSubscriptions()无效的问题",
-    "服务器包的摘要改为显示balancer的tag",
-    "优化程序退出时的清理步骤",
-    "Scripts包添加'托管（简单版）.lua'"
+    "支持Trojan协议的flow配置项(v2fly PR #334)",
+    "修复偶尔出现的100%CPU占用问题（观察中）",
+    "Luna插件添加Web:ExtractBase64String(text, minLen)函数"
   ]
 }

@@ -101,6 +101,8 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region system
+        void GarbageCollect();
+
         void VolumeUp();
 
         void VolumeDown();

@@ -556,7 +556,7 @@ namespace V2RayGCon.Services
 
         public void SaveUserSettingsNow() => SaveUserSettingsWorker();
 
-        public void LazyGC() => janitor?.Postpone();
+        public void LazyGC() => janitor?.Deadline();
 
         public void SaveServerTrackerSetting(Models.Datas.ServerTracker serverTrackerSetting)
         {

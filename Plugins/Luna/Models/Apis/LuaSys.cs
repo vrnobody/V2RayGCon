@@ -536,6 +536,7 @@ namespace Luna.Models.Apis
         #endregion
 
         #region ILuaSys.System
+        public void GarbageCollect() => GC.Collect();
         public void VolumeUp() => Libs.Sys.VolumeChanger.VolumeUp();
 
         public void VolumeDown() => Libs.Sys.VolumeChanger.VolumeDown();

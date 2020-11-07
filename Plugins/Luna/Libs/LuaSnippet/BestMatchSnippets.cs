@@ -9,7 +9,7 @@ namespace Luna.Libs.LuaSnippet
     internal sealed class BestMatchSnippets :
         IEnumerable<AutocompleteItem>
     {
-        private readonly Scintilla editor;
+        private Scintilla editor;
         string searchPattern = VgcApis.Models.Consts.Patterns.LuaSnippetSearchPattern;
 
         List<ApiFunctionSnippets> apiFunctions;
@@ -57,6 +57,11 @@ namespace Luna.Libs.LuaSnippet
             }
         }
 
+        public void Cleanup()
+        {
+            this.editor = null;
+        }
+
         #endregion
 
         #region private methods
@@ -67,10 +72,14 @@ namespace Luna.Libs.LuaSnippet
         private IEnumerable<AutocompleteItem> BuildList()
         {
             var fragment = "";
-            VgcApis.Misc.UI.Invoke(() =>
+            var editor = this.editor;
+            if (editor != null)
             {
-                fragment = VgcApis.Misc.Utils.GetFragment(editor, searchPattern);
-            });
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    fragment = VgcApis.Misc.Utils.GetFragment(editor, searchPattern);
+                });
+            }
 
             var snps = new List<AutocompleteItem>();
             if (!ignoredList.Contains(fragment))

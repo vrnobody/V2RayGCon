@@ -110,14 +110,18 @@ namespace Luna.Controllers.FormEditorCtrl
 
         public void Cleanup()
         {
+            ReleaseEvents();
             StopFileSystemWatcher();
             lazyAnalyser?.Dispose();
 
-            if (luaAcm != null)
+            var acm = luaAcm;
+            if (acm != null)
             {
-                luaAcm.TargetControlWrapper = null;
+                acm.TargetControlWrapper = null;
+                acm.SetAutocompleteItems(new string[] { });
+                bestMatchSnippets?.Cleanup();
+                bestMatchSnippets = null;
             }
-
         }
         #endregion
 
@@ -676,12 +680,33 @@ namespace Luna.Controllers.FormEditorCtrl
             smiLbCodeanalyze.Enabled = false;
         }
 
+        void ReleaseEvents()
+        {
+            var editor = this.editor;
+            if (editor == null)
+            {
+                return;
+            }
+
+            editor.TextChanged -= AnalyzeScriptLater;
+            editor.Click -= AddToHistory;
+        }
+
+        void AddToHistory(object sender, EventArgs args)
+        {
+            var editor = this.editor;
+            if (editor != null)
+            {
+                history.Add(editor.CurrentLine);
+            }
+        }
+
         void BindEvents()
         {
             fsWatcher = CreateFileSystemWatcher(@"lua");
 
             editor.TextChanged += AnalyzeScriptLater;
-            editor.Click += (s, a) => history.Add(editor.CurrentLine);
+            editor.Click += AddToHistory;
 
             miEanbleCodeAnalyze.Click += (s, a) =>
             {

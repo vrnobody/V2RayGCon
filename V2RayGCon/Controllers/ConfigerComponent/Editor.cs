@@ -74,6 +74,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             if (jsonAcm != null)
             {
                 jsonAcm.TargetControlWrapper = null;
+                jsonAcm.SetAutocompleteItems(new string[] { });
             }
         }
 

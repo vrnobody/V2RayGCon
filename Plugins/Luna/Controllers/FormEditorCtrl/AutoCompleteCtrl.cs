@@ -36,7 +36,7 @@ namespace Luna.Controllers.FormEditorCtrl
         private readonly ToolStripStatusLabel smiLbCodeanalyze;
 
         AutocompleteMenu luaAcm = null;
-        BestMatchSnippets bestMatchSnippets;
+        BestMatchSnippets bestMatchSnippets = null;
 
         VgcApis.Libs.Infr.Recorder history = new VgcApis.Libs.Infr.Recorder();
         VgcApis.Libs.Tasks.LazyGuy lazyAnalyser;
@@ -68,7 +68,7 @@ namespace Luna.Controllers.FormEditorCtrl
             this.settings = settings;
             lazyAnalyser = new VgcApis.Libs.Tasks.LazyGuy(AnalizeScriptWorker, 1000, 3000);
 
-            InitControls(settings);
+            InitControls();
             BindEvents();
 
             SetIsEnableCodeAnalyze(false);
@@ -114,6 +114,7 @@ namespace Luna.Controllers.FormEditorCtrl
             StopFileSystemWatcher();
             lazyAnalyser?.Dispose();
 
+            /*
             var acm = luaAcm;
             if (acm != null)
             {
@@ -122,6 +123,7 @@ namespace Luna.Controllers.FormEditorCtrl
                 bestMatchSnippets?.Cleanup();
                 bestMatchSnippets = null;
             }
+            */
         }
         #endregion
 
@@ -181,7 +183,7 @@ namespace Luna.Controllers.FormEditorCtrl
                         snps.Add(new LuaImportClrSnippets(scr));
                     }
                 }
-                bestMatchSnippets.UpdateRequireModuleSnippets(snps);
+                bestMatchSnippets?.UpdateRequireModuleSnippets(snps);
             }
             catch { }
         }
@@ -434,7 +436,7 @@ namespace Luna.Controllers.FormEditorCtrl
 
             var snps = new List<MatchItemBase>();
             BuildSnippets(ast, snps);
-            bestMatchSnippets.UpdateCustomScriptSnippets(snps);
+            bestMatchSnippets?.UpdateCustomScriptSnippets(snps);
         }
 
         Lua CreateAnalyser()
@@ -673,7 +675,7 @@ namespace Luna.Controllers.FormEditorCtrl
             return acm;
         }
 
-        private void InitControls(Settings settings)
+        private void InitControls()
         {
             luaAcm = CreateAcm(editor);
             miEanbleCodeAnalyze.Checked = false;

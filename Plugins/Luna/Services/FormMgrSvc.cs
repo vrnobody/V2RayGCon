@@ -41,9 +41,9 @@ namespace Luna.Services
                     api, settings, luaServer, this,
                     initialCoreSettings);
 
-                form.FormClosed += (s, a) =>
+                var oldForm = form; // capture
+                form.FormClosing += (s, a) =>
                 {
-                    var oldForm = form; // capture
                     RemoveFormFromList(oldForm);
                 };
                 form.Show();
@@ -95,14 +95,18 @@ namespace Luna.Services
                 formMain?.Activate();
             });
         }
+
         public void ShowOrCreateFirstEditor()
         {
-            if (editors.Count() > 0)
+            var form = editors.FirstOrDefault();
+            if (form == null)
             {
-                VgcApis.Misc.UI.Invoke(() => editors[0].Activate());
-                return;
+                CreateNewEditor();
             }
-            CreateNewEditor();
+            else
+            {
+                VgcApis.Misc.UI.Invoke(() => form.Activate());
+            }
         }
 
         #endregion

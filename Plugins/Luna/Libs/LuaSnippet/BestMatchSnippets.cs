@@ -43,23 +43,33 @@ namespace Luna.Libs.LuaSnippet
         #region public methods
         public void UpdateCustomScriptSnippets(List<MatchItemBase> snippets)
         {
-            if (snippets != null)
+            if (snippets == null)
             {
-                this.customScriptSnippets = snippets;
+                return;
+
             }
+            var old = this.customScriptSnippets;
+            this.customScriptSnippets = snippets;
+            old.Clear();
         }
 
         public void UpdateRequireModuleSnippets(List<LuaImportClrSnippets> snippets)
         {
-            if (snippets != null)
+            if (snippets == null)
             {
-                this.customRequireModuleSnippets = snippets;
+                return;
             }
+
+            var old = this.customRequireModuleSnippets;
+            this.customRequireModuleSnippets = snippets;
+            old.Clear();
         }
 
         public void Cleanup()
         {
             this.editor = null;
+            customRequireModuleSnippets?.Clear();
+            customScriptSnippets?.Clear();
         }
 
         #endregion

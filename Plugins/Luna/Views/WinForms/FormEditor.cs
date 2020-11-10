@@ -92,8 +92,8 @@ namespace Luna.Views.WinForms
                 editor,
                 cboxVarList,
                 cboxFunctionList,
-                 enableCodeAnalyzeToolStripMenuItem,
-                 toolStripStatusCodeAnalyze);
+                enableCodeAnalyzeToolStripMenuItem,
+                toolStripStatusCodeAnalyze);
 
             acmCtrl.Run(settings);
 
@@ -117,24 +117,25 @@ namespace Luna.Views.WinForms
             this.FormClosing += FormClosingHandler;
             this.FormClosed += (s, a) =>
             {
+                this.KeyDown -= KeyDownHandler;
                 acmCtrl.Cleanup();
                 editorCtrl.Cleanup();
             };
 
-            this.KeyDown += (s, a) =>
-            {
-                VgcApis.Misc.Utils.RunInBackground(
-                    () => VgcApis.Misc.UI.Invoke(() =>
-                    {
-                        editorCtrl?.KeyBoardShortcutHandler(a);
-                        acmCtrl?.KeyBoardShortcutHandler(a);
-                    }));
-            };
-
-
+            this.KeyDown += KeyDownHandler;
         }
 
         #region private methods
+        void KeyDownHandler(object sender, KeyEventArgs a)
+        {
+            VgcApis.Misc.Utils.RunInBackground(
+                () => VgcApis.Misc.UI.Invoke(() =>
+                {
+                    editorCtrl?.KeyBoardShortcutHandler(a);
+                    acmCtrl?.KeyBoardShortcutHandler(a);
+                }));
+        }
+
         void InitSplitPanel()
         {
             splitContainerTabEditor.SplitterDistance = this.Width * 6 / 10;

@@ -17,8 +17,6 @@ jobs:
 
         - name: Checkout master
           uses: actions/checkout@v2.3.3
-          with:
-            ref: dev
 
         - name: Show versions
           run: |

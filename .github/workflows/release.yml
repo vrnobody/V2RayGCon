@@ -1,9 +1,7 @@
 name: release
 
 on:
-  push:
-    tags:
-      - '*'
+  create
 
 jobs:
   build:

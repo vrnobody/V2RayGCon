@@ -1,9 +1,9 @@
-name: dev
+name: debug
 
 on: 
   push:
     branches:
-      - dev
+      - master
 
 jobs:
   build:

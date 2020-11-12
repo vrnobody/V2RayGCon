@@ -1,10 +1,8 @@
 {
-  "version": "1.4.9.0",
-  "md5": "8202280B514F2BD9C27E5275E8B844E9",
+  "version": "1.5.0.0",
+  "md5": "52E5F76ED202CA84CA7A670872FDFC06",
   "warnings": [],
   "changes": [
-    "支持Trojan协议的flow配置项(v2fly PR #334)",
-    "修复偶尔出现的100%CPU占用问题（观察中）",
-    "Luna插件添加Web:ExtractBase64String(text, minLen)函数"
+    "修复一处内存泄漏"
   ]
 }

@@ -78,10 +78,7 @@
         }
       ]
     },
-    "streamSettings": {},
-    "mux": {
-      "enabled": true
-    }
+    "streamSettings": {}   
   },
   "outbVeeVmess": {
     "protocol": "vmess",

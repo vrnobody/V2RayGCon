@@ -263,7 +263,7 @@ namespace V2RayGCon.Services
             cache.Run(setting);
             configMgr.Run(setting, cache);
             servers.Run(setting, cache, configMgr, notifier);
-            updater.Run(setting, servers, notifier);
+            updater.Run(setting, servers);
             slinkMgr.Run(setting, servers, cache);
             notifier.Run(setting, servers, slinkMgr, updater);
             pluginsServ.Run(setting, servers, configMgr, slinkMgr, notifier);

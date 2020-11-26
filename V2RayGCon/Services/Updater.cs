@@ -13,7 +13,6 @@ namespace V2RayGCon.Services
     {
         Settings setting;
         Servers servers;
-        Notifier notifier;
 
         VgcApis.Libs.Tasks.Bar updateBar = new VgcApis.Libs.Tasks.Bar();
         readonly string LoopBackIP = VgcApis.Models.Consts.Webs.LoopBackIP;
@@ -30,6 +29,7 @@ namespace V2RayGCon.Services
                 return;
             }
 
+            BindEventsOndemand();
             flagShowErrorWithMsgbox = isShowErrorWithMsgbox;
             AutoSetUpdaterProxy();
             AutoUpdater.Start(Properties.Resources.LatestVersionInfoUrl);
@@ -37,13 +37,10 @@ namespace V2RayGCon.Services
 
         public void Run(
             Settings setting,
-            Servers servers,
-            Notifier notifier)
+            Servers servers)
         {
-            this.notifier = notifier;
             this.setting = setting;
             this.servers = servers;
-            InitAutoUpdater();
         }
         #endregion
 
@@ -185,11 +182,20 @@ namespace V2RayGCon.Services
             }
         }
 
-        void InitAutoUpdater()
+        bool isBinded = false;
+        object bindEventsLocker = new object();
+        void BindEventsOndemand()
         {
-            AutoUpdater.ReportErrors = true;
-            AutoUpdater.ParseUpdateInfoEvent += AutoUpdaterOnParseUpdateInfoEvent;
-            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
+            lock (bindEventsLocker)
+            {
+                if (!isBinded)
+                {
+                    AutoUpdater.ReportErrors = true;
+                    AutoUpdater.ParseUpdateInfoEvent += AutoUpdaterOnParseUpdateInfoEvent;
+                    AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
+                    isBinded = true;
+                }
+            }
         }
         #endregion
 

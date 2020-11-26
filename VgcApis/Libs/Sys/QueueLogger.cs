@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace VgcApis.Libs.Sys
 {
@@ -19,8 +20,6 @@ namespace VgcApis.Libs.Sys
             lock (logWriteLocker)
             {
                 logCache = new Queue<string>();
-                listCacheUpdateTimestamp = -1;
-                stringCacheUpdateTimestamp = -1;
                 updateTimestamp = DateTime.Now.Ticks;
             }
         }
@@ -37,41 +36,22 @@ namespace VgcApis.Libs.Sys
             }
         }
 
-        long stringCacheUpdateTimestamp = -1;
-        string stringCache = "";
         public string GetLogAsString(bool addNewLineAtTheEnd)
         {
             lock (logWriteLocker)
             {
-                if (stringCacheUpdateTimestamp != updateTimestamp)
+                var sb = new StringBuilder();
+                foreach (var line in logCache)
                 {
-                    stringCache = string.Join(Environment.NewLine, logCache);
-                    if (addNewLineAtTheEnd)
-                    {
-                        stringCache += Environment.NewLine;
-                    }
-                    stringCacheUpdateTimestamp = updateTimestamp;
+                    sb.AppendLine(line);
                 }
-                return stringCache;
+                if (addNewLineAtTheEnd)
+                {
+                    sb.AppendLine();
+                }
+                return sb.ToString();
             }
         }
-
-        long listCacheUpdateTimestamp = -1;
-        List<string> listCache = new List<string>();
-        public IReadOnlyCollection<string> GetLogAsList()
-        {
-            lock (logWriteLocker)
-            {
-                if (listCacheUpdateTimestamp != updateTimestamp)
-                {
-                    listCache = logCache.ToList();
-                    listCacheUpdateTimestamp = updateTimestamp;
-                }
-
-                return listCache.AsReadOnly();
-            }
-        }
-
         #endregion
 
         #region private methods

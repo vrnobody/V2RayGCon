@@ -139,7 +139,7 @@
     <value>无法设置本地代理地址</value>
   </data>
   <data name="CoreExit" xml:space="preserve">
-    <value>v2ray-core 已关闭!</value>
+    <value>core已关闭!</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>v2ray-core图形配置编辑工具</value>
@@ -697,7 +697,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>当前测速延迟：</value>
   </data>
   <data name="ConcurrentV2RayCoreNum" xml:space="preserve">
-    <value>并发V2Ray-core数量：</value>
+    <value>并发core数量：</value>
   </data>
   <data name="StatusBarPagerMenuItemTpl" xml:space="preserve">
     <value>第{0,3}页 ({1,4} - {2,4})</value>

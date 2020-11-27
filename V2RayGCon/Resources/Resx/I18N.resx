@@ -142,7 +142,7 @@
     <value>Can not set local proxy address!</value>
   </data>
   <data name="CoreExit" xml:space="preserve">
-    <value>V2ray-core has stopped!</value>
+    <value>Core has stopped!</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Graphics configuration editor for v2ray-core.</value>
@@ -703,7 +703,7 @@ No, abort.</value>
     <value>Current speedtest delay: </value>
   </data>
   <data name="ConcurrentV2RayCoreNum" xml:space="preserve">
-    <value>Concurrent V2Ray-core number: </value>
+    <value>Concurrent cores: </value>
   </data>
   <data name="StatusBarPagerMenuItemTpl" xml:space="preserve">
     <value>Page {0,3} ({1,4} - {2,4})</value>

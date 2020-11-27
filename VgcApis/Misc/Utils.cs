@@ -40,7 +40,7 @@ namespace VgcApis.Misc
                 if (data.GetDataPresent(DataFormats.FileDrop))
                 {
                     var filenames = a.Data.GetData(DataFormats.FileDrop) as string[];
-                    VgcApis.Misc.Utils.HandleEditorFileDropEvent(editor, filenames);
+                    HandleEditorFileDropEvent(editor, filenames);
                 }
             };
         }

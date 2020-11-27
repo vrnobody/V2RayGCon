@@ -142,13 +142,13 @@ namespace Luna.Controllers.FormEditorCtrl
                         tboxGoto.SelectAll();
                         break;
                     case Keys.F:
-                        ShowFormSearch();
+                        ShowFormSearchHandler(this, EventArgs.Empty);
                         break;
                     case Keys.S:
-                        OnBtnSaveScriptClickHandler(false);
+                        SaveScript(false);
                         break;
                     case Keys.N:
-                        ClearEditor();
+                        ClearEditorHandler(this, EventArgs.Empty);
                         break;
                 }
                 return;
@@ -205,8 +205,8 @@ namespace Luna.Controllers.FormEditorCtrl
 
         public void Cleanup()
         {
+            ReleaseEvents();
             VgcApis.Misc.UI.CloseFormIgnoreError(formSearch);
-
             luaCoreCtrl?.AbortNow();
             logUpdater?.Dispose();
             qLogger?.Dispose();
@@ -318,7 +318,7 @@ namespace Luna.Controllers.FormEditorCtrl
                 || text == "repeat"
                 || Regex.IsMatch(text, "{\\s*$"))
             {
-                indent += 4;
+                indent = indent + 4;
             }
 
             e.Text = e.Text + new string(' ', Math.Max(0, indent));
@@ -348,7 +348,7 @@ namespace Luna.Controllers.FormEditorCtrl
         #region private methods
         void Invoke(Action action) => VgcApis.Misc.UI.Invoke(action);
 
-        void ShowFormSearch()
+        void ShowFormSearchHandler(object sender, EventArgs args)
         {
             if (formSearch != null)
             {
@@ -378,7 +378,7 @@ namespace Luna.Controllers.FormEditorCtrl
             VgcApis.Misc.UI.UpdateRichTextBox(rtboxOutput, logs);
         }
 
-        void GotoLine()
+        void GotoLineHandler(object sender, EventArgs args)
         {
             if (int.TryParse(tboxGoto.Text, out int lineNumber))
             {
@@ -391,23 +391,72 @@ namespace Luna.Controllers.FormEditorCtrl
             }
         }
 
+        void SelectAllHandler(object sender, EventArgs args)
+        {
+            tboxGoto.SelectAll();
+        }
+
+        void GotoBoxKeyDownHandler(object sender, KeyEventArgs args)
+        {
+            if (args.KeyCode == Keys.Enter)
+            {
+                Invoke(() => GotoLineHandler(this, EventArgs.Empty));
+            }
+        }
+
+        private void ReleaseEvents()
+        {
+            btnShowSearchBox.Click -= ShowFormSearchHandler;
+            btnGoto.Click -= GotoLineHandler;
+            tboxGoto.Click -= SelectAllHandler;
+            tboxGoto.KeyDown -= GotoBoxKeyDownHandler;
+            editor.InsertCheck -= Scintilla_InsertCheck;
+            editor.CharAdded -= Scintilla_CharAdded;
+            editor.TextChanged -= Scintilla_TextChanged;
+            editor.MouseClick -= Scintilla_MouseClicked;
+            editor.DoubleClick -= Scintilla_DoubleClick;
+            btnNewScript.Click -= ClearEditorHandler;
+
+            btnKillLuaCore.Click -= OnBtnKillLuaCoreClickHandler;
+
+            btnStopLuaCore.Click -= OnBtnStopLuaCoreClickHandler;
+
+            btnRunScript.Click -= OnBtnRunScriptClickHandler;
+
+            btnClearOutput.Click -= OnBtnClearOutputClickHandler;
+
+
+            btnSaveScript.Click -= OnBtnSaveScriptClickHandler;
+
+            cboxScriptName.DropDown -= OnCboxScriptNameDropDownHandler;
+
+            cboxScriptName.SelectedValueChanged -= CboxScriptNameChangedHandler;
+        }
+
+        void OnBtnRunScriptClickHandler(object sender, EventArgs args)
+        {
+            formEditor.SetOutputPanelCollapseState(false);
+
+            var name = cboxScriptName.Text;
+
+            luaCoreCtrl.Abort();
+            luaCoreCtrl.SetScriptName(string.IsNullOrEmpty(name) ? $"({I18N.Empty})" : name);
+            luaCoreCtrl.ReplaceScript(editor.Text);
+            luaCoreCtrl.isLoadClr = isLoadClrLib;
+            luaCoreCtrl.Start();
+        }
+
         private void BindEvents()
         {
             VgcApis.Misc.Utils.BindEditorDragDropEvent(editor);
 
-            btnShowSearchBox.Click += (s, a) => ShowFormSearch();
+            btnShowSearchBox.Click += ShowFormSearchHandler;
 
-            btnGoto.Click += (s, a) => GotoLine();
+            btnGoto.Click += GotoLineHandler;
 
-            tboxGoto.Click += (s, a) => tboxGoto.SelectAll();
+            tboxGoto.Click += SelectAllHandler;
 
-            tboxGoto.KeyDown += (s, a) =>
-            {
-                if (a.KeyCode == Keys.Enter)
-                {
-                    Invoke(GotoLine);
-                }
-            };
+            tboxGoto.KeyDown += GotoBoxKeyDownHandler;
 
             editor.InsertCheck += Scintilla_InsertCheck;
             editor.CharAdded += Scintilla_CharAdded;
@@ -415,39 +464,45 @@ namespace Luna.Controllers.FormEditorCtrl
             editor.MouseClick += Scintilla_MouseClicked;
             editor.DoubleClick += Scintilla_DoubleClick;
 
-            btnNewScript.Click += (s, a) => ClearEditor();
+            btnNewScript.Click += ClearEditorHandler;
 
-            btnKillLuaCore.Click += (s, a) => luaCoreCtrl.Abort();
+            btnKillLuaCore.Click += OnBtnKillLuaCoreClickHandler;
 
-            btnStopLuaCore.Click += (s, a) => luaCoreCtrl.Stop();
+            btnStopLuaCore.Click += OnBtnStopLuaCoreClickHandler;
 
-            btnRunScript.Click += (s, a) =>
-            {
-                formEditor.SetOutputPanelCollapseState(false);
+            btnRunScript.Click += OnBtnRunScriptClickHandler;
 
-                var name = cboxScriptName.Text;
-
-                luaCoreCtrl.Abort();
-                luaCoreCtrl.SetScriptName(string.IsNullOrEmpty(name) ? $"({I18N.Empty})" : name);
-                luaCoreCtrl.ReplaceScript(editor.Text);
-                luaCoreCtrl.isLoadClr = isLoadClrLib;
-                luaCoreCtrl.Start();
-            };
-
-            btnClearOutput.Click += (s, a) =>
-            {
-                qLogger?.Reset();
-            };
+            btnClearOutput.Click += OnBtnClearOutputClickHandler;
 
 
-            btnSaveScript.Click += (s, a) => OnBtnSaveScriptClickHandler(true);
+            btnSaveScript.Click += OnBtnSaveScriptClickHandler;
 
-            cboxScriptName.DropDown += (s, a) => ReloadScriptName();
+            cboxScriptName.DropDown += OnCboxScriptNameDropDownHandler;
 
             cboxScriptName.SelectedValueChanged += CboxScriptNameChangedHandler;
         }
+        void OnBtnStopLuaCoreClickHandler(object sender, EventArgs args)
+        {
+            luaCoreCtrl.Stop();
+        }
+        void OnBtnKillLuaCoreClickHandler(object sender, EventArgs args)
+        {
+            luaCoreCtrl.Abort();
+        }
+        void OnCboxScriptNameDropDownHandler(object sender, EventArgs args)
+        {
+            ReloadScriptName();
+        }
+        void OnBtnClearOutputClickHandler(object sender, EventArgs args)
+        {
+            qLogger?.Reset();
+        }
+        void OnBtnSaveScriptClickHandler(object sender, EventArgs args)
+        {
+            SaveScript(true);
+        }
 
-        private void OnBtnSaveScriptClickHandler(bool showResult)
+        private void SaveScript(bool showResult)
         {
             var name = cboxScriptName.Text;
             if (string.IsNullOrWhiteSpace(name)
@@ -487,7 +542,7 @@ namespace Luna.Controllers.FormEditorCtrl
             }
         }
 
-        private void ClearEditor()
+        private void ClearEditorHandler(object sender, EventArgs args)
         {
             if (IsChanged() && !VgcApis.Misc.UI.Confirm(I18N.DiscardUnsavedChanges))
             {

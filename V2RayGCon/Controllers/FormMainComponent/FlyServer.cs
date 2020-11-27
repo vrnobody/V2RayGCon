@@ -351,14 +351,15 @@ namespace V2RayGCon.Controllers.FormMainComponent
                         pn + 1,
                         pn * ps + 1,
                         pn * ps + ps);
-                var item = new ToolStripMenuItem(
-                    title, null,
-                    (s, a) =>
-                    {
-                        curPageNumber = pn;
-                        isFocusOnFormMain = true;
-                        RefreshFlyPanelLater();
-                    });
+
+                EventHandler onClick = (s, a) =>
+                {
+                    curPageNumber = pn;
+                    isFocusOnFormMain = true;
+                    RefreshFlyPanelLater();
+                };
+                var item = new ToolStripMenuItem(title, null, onClick);
+                item.Disposed += (s, a) => item.Click -= onClick;
                 mis.Add(item);
             }
             return mis;

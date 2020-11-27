@@ -120,6 +120,7 @@ namespace Luna.Views.WinForms
                 this.KeyDown -= KeyDownHandler;
                 acmCtrl.Cleanup();
                 editorCtrl.Cleanup();
+                menuCtrl.Cleanup();
             };
 
             this.KeyDown += KeyDownHandler;

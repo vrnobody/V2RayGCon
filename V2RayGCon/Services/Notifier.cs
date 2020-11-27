@@ -505,9 +505,10 @@ namespace V2RayGCon.Services
             }
 
             Action done = () => coreServ.GetCoreCtrl().RestartCoreThen();
-            Action onClick = () => servers.StopAllServersThen(done);
-            var item = new ToolStripMenuItem(title, null, (s, a) => onClick());
+            EventHandler onClick = (s, a) => servers.StopAllServersThen(done);
+            var item = new ToolStripMenuItem(title, null, onClick);
             item.Checked = coreServ.GetCoreCtrl().IsCoreRunning();
+            item.Disposed += (s, a) => item.Click -= onClick;
             return item;
         }
 

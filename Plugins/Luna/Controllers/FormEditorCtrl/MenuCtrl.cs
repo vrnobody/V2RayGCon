@@ -1,5 +1,6 @@
 ﻿using Luna.Resources.Langs;
 using Luna.Services;
+using System;
 using System.Windows.Forms;
 
 namespace Luna.Controllers.FormEditorCtrl
@@ -50,12 +51,15 @@ namespace Luna.Controllers.FormEditorCtrl
             this.formEditor = formEditor;
         }
 
+        FormMgrSvc formMgrService;
+
         public void Run(
             Services.FormMgrSvc formMgrService,
             Models.Data.LuaCoreSetting initialCoreSettings)
         {
+            this.formMgrService = formMgrService;
             InitControls();
-            BindEvents(formMgrService);
+            BindEvents();
 
             if (initialCoreSettings != null)
             {
@@ -71,76 +75,103 @@ namespace Luna.Controllers.FormEditorCtrl
             }
         }
 
+        public void Cleanup()
+        {
+            ReleaseEvents();
+        }
+
         #region private method
         private void InitControls()
         {
             miLoadClrLib.Checked = false;
             smiLbClrLib.Enabled = false;
         }
-
-        private void BindEvents(FormMgrSvc formMgrService)
+        void ReleaseEvents()
         {
-            miShowMgr.Click += (s, a) => formMgrService.ShowFormMain();
+            miShowMgr.Click -= OnMiShowMgrClickHandler;
+            miLoadClrLib.Click -= OnMiLoadClrLibClickHandler;
+            miNewWindow.Click -= OnMiNewWindowClickHandler;
+            miExit.Click -= OnMiExitClickHandler;
+            miLoad.Click -= OnMiLoadClickHandler;
+            miSaveAs.Click -= OnMiSaveAslickHandler;
+        }
 
-            miLoadClrLib.Click += (s, a) =>
-            {
-                var enable = !miLoadClrLib.Checked;
-                UpdateClrControlsEanbledState(enable);
-            };
+        void OnMiShowMgrClickHandler(object sender, EventArgs args)
+        {
+            formMgrService.ShowFormMain();
+        }
 
-            miNewWindow.Click += (s, a) =>
-                formMgrService.CreateNewEditor();
+        void OnMiLoadClrLibClickHandler(object sender, EventArgs args)
+        {
+            var enable = !miLoadClrLib.Checked;
+            UpdateClrControlsEanbledState(enable);
+        }
 
-            // event handling
-            miExit.Click += (s, a) =>
-                VgcApis.Misc.UI.CloseFormIgnoreError(formEditor);
+        void OnMiNewWindowClickHandler(object sender, EventArgs args)
+        {
+            formMgrService.CreateNewEditor();
+        }
 
-            miLoad.Click += (s, a) =>
-            {
-                if (editorCtrl.IsChanged()
+        void OnMiExitClickHandler(object sender, EventArgs args)
+        {
+            VgcApis.Misc.UI.CloseFormIgnoreError(formEditor);
+        }
+
+        void OnMiLoadClickHandler(object sender, EventArgs args)
+        {
+            if (editorCtrl.IsChanged()
                     && !VgcApis.Misc.UI.Confirm(I18N.DiscardUnsavedChanges))
-                {
-                    return;
-                }
-
-                var cf = VgcApis.Misc.UI.ReadFileFromDialog(VgcApis.Models.Consts.Files.LuaExt);
-                var script = cf.Item1;
-                var filename = cf.Item2;
-
-                if (script == null)
-                {
-                    return;
-                }
-
-                cboxScriptName.Text = @"";
-                editorCtrl.SetCurFileName(filename);
-                editorCtrl.SetCurrentEditorContent(script);
-                editorCtrl.SetScriptCache(script);
-            };
-
-            miSaveAs.Click += (s, a) =>
             {
-                var script = editorCtrl.GetCurrentEditorContent();
-                var err = VgcApis.Misc.UI.ShowSaveFileDialog(
-                    VgcApis.Models.Consts.Files.LuaExt,
-                    script,
-                    out var filename);
+                return;
+            }
 
-                switch (err)
-                {
-                    case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Success:
-                        if (string.IsNullOrEmpty(cboxScriptName.Text))
-                        {
-                            editorCtrl.SetCurFileName(filename);
-                            editorCtrl.SetScriptCache(script);
-                        }
-                        VgcApis.Misc.UI.MsgBoxAsync(I18N.Done);
-                        break;
-                    case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Fail:
-                        VgcApis.Misc.UI.MsgBoxAsync(I18N.WriteFileFail);
-                        break;
-                }
-            };
+            var cf = VgcApis.Misc.UI.ReadFileFromDialog(VgcApis.Models.Consts.Files.LuaExt);
+            var script = cf.Item1;
+            var filename = cf.Item2;
+
+            if (script == null)
+            {
+                return;
+            }
+
+            cboxScriptName.Text = @"";
+            editorCtrl.SetCurFileName(filename);
+            editorCtrl.SetCurrentEditorContent(script);
+            editorCtrl.SetScriptCache(script);
+        }
+
+        void OnMiSaveAslickHandler(object sender, EventArgs args)
+        {
+            var script = editorCtrl.GetCurrentEditorContent();
+            var err = VgcApis.Misc.UI.ShowSaveFileDialog(
+                VgcApis.Models.Consts.Files.LuaExt,
+                script,
+                out var filename);
+
+            switch (err)
+            {
+                case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Success:
+                    if (string.IsNullOrEmpty(cboxScriptName.Text))
+                    {
+                        editorCtrl.SetCurFileName(filename);
+                        editorCtrl.SetScriptCache(script);
+                    }
+                    VgcApis.Misc.UI.MsgBoxAsync(I18N.Done);
+                    break;
+                case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Fail:
+                    VgcApis.Misc.UI.MsgBoxAsync(I18N.WriteFileFail);
+                    break;
+            }
+        }
+
+        private void BindEvents()
+        {
+            miShowMgr.Click += OnMiShowMgrClickHandler;
+            miLoadClrLib.Click += OnMiLoadClrLibClickHandler;
+            miNewWindow.Click += OnMiNewWindowClickHandler;
+            miExit.Click += OnMiExitClickHandler;
+            miLoad.Click += OnMiLoadClickHandler;
+            miSaveAs.Click += OnMiSaveAslickHandler;
         }
 
         private void UpdateClrControlsEanbledState(bool enable)

@@ -446,6 +446,7 @@
     <EmbeddedResource Include="Resources\Resx\I18N.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>I18N1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormBatchModifyServerSetting.resx">
       <DependentUpon>FormBatchModifyServerSetting.cs</DependentUpon>

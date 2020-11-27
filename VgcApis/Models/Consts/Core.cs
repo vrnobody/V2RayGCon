@@ -29,6 +29,7 @@ stat: <
 
         public static string V2RayCtlExeFileName = "v2ctl.exe";
         public static string V2RayCoreExeFileName = "v2ray.exe";
+        public static string XrayCoreExeFileName = "xray.exe";
 
         public static string[] SourceUrls = new string[]
         {
@@ -68,10 +69,10 @@ stat: <
 
         public static List<string> ReadyLogMarks = new List<string>
         {
-            "[Warning]",
+            "[warning]",
             "started",
-            "ore:",
-            "V2Ray",
+            "core:",
+            "ray",
         };
 
     }

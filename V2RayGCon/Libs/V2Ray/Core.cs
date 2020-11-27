@@ -101,8 +101,17 @@ namespace V2RayGCon.Libs.V2Ray
                 return string.Empty;
             }
 
+            var exe = GetExecutablePath(VgcApis.Models.Consts.Core.XrayCoreExeFileName);
+            if (string.IsNullOrEmpty(exe))
+            {
+                exe = GetExecutablePath(VgcApis.Models.Consts.Core.V2RayCoreExeFileName);
+            }
+
             var timeout = VgcApis.Models.Consts.Core.GetVersionTimeout;
-            var output = Misc.Utils.GetOutputFromExecutable(GetExecutablePath(), "-version", timeout);
+            var output = Misc.Utils.GetOutputFromExecutable(
+                exe,
+                "-version",
+                timeout);
 
             // since 3.46.* v is deleted
             // Regex pattern = new Regex(@"(?<version>(\d+\.)+\d+)");
@@ -113,18 +122,30 @@ namespace V2RayGCon.Libs.V2Ray
 
         public bool IsExecutableExist()
         {
-            return !string.IsNullOrEmpty(GetExecutablePath());
+            var cores = new string[]{
+                VgcApis.Models.Consts.Core.XrayCoreExeFileName,
+                VgcApis.Models.Consts.Core.V2RayCoreExeFileName
+            };
+
+            foreach (var core in cores)
+            {
+                if (!string.IsNullOrEmpty(GetExecutablePath(core)))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        public string GetExecutablePath(string fileName = null)
+        public string GetExecutablePath(string fileName)
         {
             List<string> folders = GenV2RayCoreSearchPaths(setting.isPortable);
             for (var i = 0; i < folders.Count; i++)
             {
-                var file = Path.Combine(folders[i], fileName ?? VgcApis.Models.Consts.Core.V2RayCoreExeFileName);
-                if (File.Exists(file))
+                var p = Path.Combine(folders[i], fileName);
+                if (File.Exists(p))
                 {
-                    return file;
+                    return p;
                 }
             }
             return string.Empty;
@@ -248,13 +269,19 @@ namespace V2RayGCon.Libs.V2Ray
 
         Process CreateV2RayCoreProcess(string config)
         {
+            var exe = GetExecutablePath(VgcApis.Models.Consts.Core.XrayCoreExeFileName);
+            // var args = string.Empty;
             var args = Misc.Utils.GenCmdArgFromConfig(config);
+            if (string.IsNullOrEmpty(exe))
+            {
+                exe = GetExecutablePath(VgcApis.Models.Consts.Core.V2RayCoreExeFileName);
+            }
 
             var p = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = GetExecutablePath(),
+                    FileName = exe,
                     Arguments = args,
                     CreateNoWindow = true,
                     UseShellExecute = false,
@@ -435,9 +462,10 @@ namespace V2RayGCon.Libs.V2Ray
 
         bool MatchAllReadyMarks(string message)
         {
+            var lower = message.ToLower();
             foreach (var mark in VgcApis.Models.Consts.Core.ReadyLogMarks)
             {
-                if (!message.Contains(mark))
+                if (!lower.Contains(mark))
                 {
                     return false;
                 }

@@ -325,7 +325,7 @@ Please use [Add new server] or [Replace server].</value>
     <value>Add server fail, please check your settings.</value>
   </data>
   <data name="CurrentCoreVerIs" xml:space="preserve">
-    <value>Current v2ray-core version is v{0}</value>
+    <value>Current core version is v{0}</value>
   </data>
   <data name="GetCoreVerFail" xml:space="preserve">
     <value>Get v2ray-core version fail!</value>

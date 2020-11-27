@@ -320,7 +320,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>添加服务器失败，请检查你的设置。</value>
   </data>
   <data name="CurrentCoreVerIs" xml:space="preserve">
-    <value>当前v2ray-core版本是 v{0}</value>
+    <value>当前core版本是 v{0}</value>
   </data>
   <data name="GetCoreVerFail" xml:space="preserve">
     <value>获取v2ray-core版本失败！</value>

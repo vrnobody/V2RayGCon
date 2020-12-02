@@ -1132,13 +1132,13 @@ namespace V2RayGCon.Misc
                 {
                     if (!a.Cancelled)
                     {
-                        html = a.Result;
+                        html = a.Result.ToString();
                     }
                 }
                 catch { }
 
                 dlCompleted.Set();
-                wc.Dispose();
+                (s as WebClient)?.Dispose();
             };
 
             try

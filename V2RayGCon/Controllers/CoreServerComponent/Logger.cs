@@ -1,10 +1,14 @@
-﻿namespace V2RayGCon.Controllers.CoreServerComponent
+﻿using System;
+
+namespace V2RayGCon.Controllers.CoreServerComponent
 {
     sealed public class Logger :
         VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
         VgcApis.Interfaces.CoreCtrlComponents.ILogger
     {
-        VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
+        // VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
+        public event EventHandler<string> OnLog;
+
         Services.Settings setting;
 
         public Logger(Services.Settings setting)
@@ -15,10 +19,10 @@
         #region public methods
         public void Log(string message)
         {
-            qLogger.Log(message);
             try
             {
                 setting.SendLog($"[{coreInfo.GetIndex()}.{coreInfo.GetShortName()}] {message}");
+                OnLog?.Invoke(this, message);
             }
             catch { }
         }
@@ -40,7 +44,7 @@
                 var title = coreInfo.GetTitle();
                 VgcApis.Misc.UI.Invoke(() =>
                 {
-                    form = Views.WinForms.FormSingleServerLog.CreateLogForm(title, qLogger);
+                    form = Views.WinForms.FormSingleServerLog.CreateLogForm(title, this);
                 });
             }
 
@@ -75,7 +79,7 @@
         protected override void CleanupAfterChildrenDisposed()
         {
             VgcApis.Misc.UI.CloseFormIgnoreError(logForm);
-            qLogger.Dispose();
+            // qLogger.Dispose();
         }
         #endregion
     }

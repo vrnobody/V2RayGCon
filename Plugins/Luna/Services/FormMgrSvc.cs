@@ -41,11 +41,12 @@ namespace Luna.Services
                     api, settings, luaServer, this,
                     initialCoreSettings);
 
-                var oldForm = form; // capture
                 form.FormClosing += (s, a) =>
                 {
+                    var oldForm = s as Views.WinForms.FormEditor;
                     RemoveFormFromList(oldForm);
                 };
+
                 form.Show();
             });
 

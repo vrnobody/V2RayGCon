@@ -82,6 +82,8 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region utils
+        int GetSpeedtestQueueLength();
+
         string GetAppDir();
 
         string PredefinedFunctions();

@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
@@ -410,22 +411,22 @@ namespace V2RayGCon.Services
             bool isInjectActivateTpl,
             EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever)
         {
+            Interlocked.Increment(ref setting.SpeedtestCounter);
+
             // setting.SpeedTestPool may change while testing
             var pool = setting.SpeedTestPool;
             pool.Wait();
 
-            if (setting.isSpeedtestCancelled)
+            var result = new Tuple<long, long>(VgcApis.Models.Consts.Core.SpeedtestAbort, 0);
+            if (!setting.isSpeedtestCancelled)
             {
-                pool.Release();
-                return new Tuple<long, long>(
-                    VgcApis.Models.Consts.Core.SpeedtestAbort,
-                    0);
+                var port = VgcApis.Misc.Utils.GetFreeTcpPort();
+                var cfg = CreateSpeedTestConfig(rawConfig, port, isUseCache, isInjectSpeedTestTpl, isInjectActivateTpl);
+                result = DoSpeedTesting(title, testUrl, testTimeout, port, cfg, logDeliever);
             }
 
-            var port = VgcApis.Misc.Utils.GetFreeTcpPort();
-            var cfg = CreateSpeedTestConfig(rawConfig, port, isUseCache, isInjectSpeedTestTpl, isInjectActivateTpl);
-            var result = DoSpeedTesting(title, testUrl, testTimeout, port, cfg, logDeliever);
             pool.Release();
+            Interlocked.Decrement(ref setting.SpeedtestCounter);
             return result;
         }
 

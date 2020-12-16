@@ -51,6 +51,8 @@ namespace V2RayGCon.Services
         }
 
         #region Properties
+        public int SpeedtestCounter = 0;
+        public int GetSpeedtestQueueLength() => SpeedtestCounter;
 
         public bool CustomVmessDecodeTemplateEnabled
         {

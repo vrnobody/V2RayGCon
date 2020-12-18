@@ -96,7 +96,8 @@ namespace V2RayGCon.Models.Datas
             DecodeCache = string.Empty;
             SubscribeUrls = string.Empty;
 
-            PluginInfoItems = "[{\"filename\":\"ProxySetter\",\"isUse\":true}]";
+            // PluginInfoItems = "[{\"filename\":\"ProxySetter\",\"isUse\":true}]";
+            PluginInfoItems = string.Empty;
             PluginsSetting = string.Empty;
 
             Culture = string.Empty;

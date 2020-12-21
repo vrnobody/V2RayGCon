@@ -40,6 +40,10 @@ namespace V2RayGCon.Services
                     return codecs.Decode<ShareLinkComponents.VmessDecoder>(shareLink);
                 case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
                     return codecs.Decode<ShareLinkComponents.V2cfgDecoder>(shareLink);
+                case VgcApis.Models.Datas.Enums.LinkTypes.vless:
+                    return codecs.Decode<ShareLinkComponents.VlessDecoder>(shareLink);
+                case VgcApis.Models.Datas.Enums.LinkTypes.trojan:
+                    return codecs.Decode<ShareLinkComponents.TrojanDecoder>(shareLink);
                 default:
                     return null;
             }
@@ -154,6 +158,7 @@ namespace V2RayGCon.Services
         {
             var decoders = new List<VgcApis.Interfaces.IShareLinkDecoder>
             {
+                codecs.GetChild<ShareLinkComponents.VlessDecoder>(),
                 codecs.GetChild<ShareLinkComponents.VmessDecoder>(),
                 codecs.GetChild<ShareLinkComponents.VeeDecoder>(),
             };

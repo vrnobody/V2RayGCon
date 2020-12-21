@@ -22,6 +22,8 @@
 
         public const string TrojanUrlContent = @"[%\w\.\:\-\[\]@]+";
 
+        public const string UriContent = @"[\w\-\.\:\?\,\'\[\]+&amp;@%\$#_=]+";
+
         public const string HttpUrl =
            @"(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_=]*)?";
 

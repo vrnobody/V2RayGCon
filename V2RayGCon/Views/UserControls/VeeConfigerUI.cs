@@ -202,6 +202,8 @@ namespace V2RayGCon.Views.UserControls
                         "xtls-rprx-origin-udp443",
                         "xtls-rprx-direct",
                         "xtls-rprx-direct-udp443",
+                        "xtls-rprx-splice",
+                        "xtls-rprx-splice-udp443",
                     });
                     break;
 

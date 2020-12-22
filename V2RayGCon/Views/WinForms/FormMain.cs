@@ -226,7 +226,7 @@ namespace V2RayGCon.Views.WinForms
                 //ToolStripMenuItem copyAsVmessLinks,
                 //ToolStripMenuItem copyAsSubscriptions,
                 toolStripMenuItemCopyAsV2cfgLink,
-                toolStripMenuItemCopyAsVmessLink,
+                toolStripMenuItemCopyAsVmixLink,
                 toolStripMenuItemCopyAsVeeLink,
                 toolStripMenuItemCopyAsVmessSubscription,
                 toolStripMenuItemCopyAsVeeSubscription,

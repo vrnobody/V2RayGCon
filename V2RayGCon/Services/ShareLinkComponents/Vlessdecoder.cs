@@ -22,11 +22,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #region public methods
         public Tuple<JObject, JToken> Decode(string shareLink)
         {
-            /* 
-             * trojan://password@remote_host:remote_port
-             * in which the password is url-encoded in case it contains illegal characters.
-             */
-
             try
             {
                 var vc = ParseVlessUrl(shareLink);
@@ -43,7 +38,80 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public string Encode(string config)
         {
-            throw new NotImplementedException();
+            var vc = new Models.Datas.VeeConfigs(config);
+            if (vc.proto != @"vless")
+            {
+                return null;
+            }
+
+            var ps = new Dictionary<string, string>();
+            ps["type"] = vc.streamType;
+            ps["security"] = vc.tlsType;
+
+            if (!string.IsNullOrWhiteSpace(vc.auth2))
+            {
+                ps["flow"] = vc.auth2;
+            }
+
+            if (!string.IsNullOrWhiteSpace(vc.tlsServName))
+            {
+                ps["sni"] = vc.tlsServName;
+            }
+
+            switch (vc.streamType)
+            {
+                case "ws":
+                case "h2":
+                    if (!string.IsNullOrWhiteSpace(vc.streamParam1))
+                    {
+                        ps["path"] = vc.streamParam1;
+                    }
+                    if (!string.IsNullOrWhiteSpace(vc.streamParam2))
+                    {
+                        ps["host"] = vc.streamParam2;
+                    }
+                    break;
+                case "kcp":
+                    if (!string.IsNullOrWhiteSpace(vc.streamParam1))
+                    {
+                        ps["headerType"] = vc.streamParam1;
+                    }
+                    if (!string.IsNullOrWhiteSpace(vc.streamParam2))
+                    {
+                        ps["seed"] = vc.streamParam2;
+                    }
+                    break;
+                case "quic":
+                    if (!string.IsNullOrWhiteSpace(vc.streamParam2))
+                    {
+                        ps["quicSecurity"] = vc.streamParam2;
+                    }
+                    if (!string.IsNullOrWhiteSpace(vc.streamParam3))
+                    {
+                        ps["key"] = vc.streamParam3;
+                    }
+                    if (!string.IsNullOrWhiteSpace(vc.streamParam1))
+                    {
+                        ps["headerType"] = vc.streamParam1;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            var pms = ps
+                .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value)))
+                .ToList();
+
+            var url = string.Format(
+                "{0}://{1}@{2}:{3}?{4}#{5}",
+                vc.proto,
+                Uri.EscapeDataString(vc.auth1),
+                Uri.EscapeDataString(vc.host),
+                vc.port,
+                string.Join("&", pms),
+                Uri.EscapeDataString(vc.name));
+            return url;
         }
 
         public List<string> ExtractLinksFromText(string text) =>

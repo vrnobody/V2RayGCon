@@ -639,6 +639,39 @@
   <data name="toolStripMenuItem6.Text" xml:space="preserve">
     <value>Move</value>
   </data>
+  <data name="vToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="vToolStripMenuItem.Text" xml:space="preserve">
+    <value>v:// ...</value>
+  </data>
+  <data name="vToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Contain main config information.</value>
+  </data>
+  <data name="vlessToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="vlessToolStripMenuItem.Text" xml:space="preserve">
+    <value>vless:// ...</value>
+  </data>
+  <data name="vmessToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="vmessToolStripMenuItem.Text" xml:space="preserve">
+    <value>vmess:// ...</value>
+  </data>
+  <data name="vmessToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Contain main config information.</value>
+  </data>
+  <data name="v2cfgToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="v2cfgToolStripMenuItem.Text" xml:space="preserve">
+    <value>v2cfg:// ...</value>
+  </data>
+  <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Contain all config information.</value>
+  </data>
   <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>201, 22</value>
   </data>
@@ -706,7 +739,7 @@
     <value>The time it takes to download the test web page.</value>
   </data>
   <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>202, 236</value>
+    <value>202, 258</value>
   </data>
   <data name="&gt;&gt;ctxMenuStripMore.Name" xml:space="preserve">
     <value>ctxMenuStripMore</value>
@@ -758,33 +791,6 @@
   </data>
   <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Move this server to bottom.</value>
-  </data>
-  <data name="vToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 22</value>
-  </data>
-  <data name="vToolStripMenuItem.Text" xml:space="preserve">
-    <value>v:// ...</value>
-  </data>
-  <data name="vToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Contain main config information.</value>
-  </data>
-  <data name="vmessToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 22</value>
-  </data>
-  <data name="vmessToolStripMenuItem.Text" xml:space="preserve">
-    <value>vmess:// ...</value>
-  </data>
-  <data name="vmessToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Contain main config information.</value>
-  </data>
-  <data name="v2cfgToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 22</value>
-  </data>
-  <data name="v2cfgToolStripMenuItem.Text" xml:space="preserve">
-    <value>v2cfg:// ...</value>
-  </data>
-  <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Contain all config information.</value>
   </data>
   <data name="rtboxServerTitle.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 9pt</value>
@@ -961,6 +967,12 @@
     <value>runSpeedTestToolStripMenuItem1</value>
   </data>
   <data name="&gt;&gt;runSpeedTestToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;vlessToolStripMenuItem.Name" xml:space="preserve">
+    <value>vlessToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;vlessToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">

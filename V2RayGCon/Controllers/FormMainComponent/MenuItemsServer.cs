@@ -22,7 +22,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             // copy
             ToolStripMenuItem copyAsV2cfgLinks,
-            ToolStripMenuItem copyAsVmessLinks,
+            ToolStripMenuItem copyAsVmixLinks,
             ToolStripMenuItem copyAsVeeLinks,
             ToolStripMenuItem copyAsVmessSubscriptions,
             ToolStripMenuItem copyAsVeeSubscriptions,
@@ -62,7 +62,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             InitCtrlCopyToClipboard(
                 copyAsV2cfgLinks,
-                copyAsVmessLinks,
+                copyAsVmixLinks,
                 copyAsVeeLinks,
                 copyAsVmessSubscriptions,
                 copyAsVeeSubscriptions);
@@ -229,7 +229,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private void InitCtrlCopyToClipboard(
             ToolStripMenuItem copyAsV2cfgLinks,
-            ToolStripMenuItem copyAsVmessLinks,
+            ToolStripMenuItem copyAsVmixLinks,
             ToolStripMenuItem copyAsVeeLinks,
             ToolStripMenuItem copyAsVmessSubscriptions,
             ToolStripMenuItem copyAsVeeSubscriptions)
@@ -257,11 +257,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 Misc.Utils.CopyToClipboardAndPrompt(links);
             });
 
-            copyAsVmessLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
+            copyAsVmixLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                var links = EncodeAllServersIntoShareLinks(
+                var vmesses = EncodeAllServersIntoShareLinks(
                     VgcApis.Models.Datas.Enums.LinkTypes.vmess);
-                Misc.Utils.CopyToClipboardAndPrompt(links);
+                var vlesses = EncodeAllServersIntoShareLinks(
+                    VgcApis.Models.Datas.Enums.LinkTypes.vless);
+                Misc.Utils.CopyToClipboardAndPrompt(
+                    vlesses + Environment.NewLine + vmesses);
             });
 
             copyAsVeeLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>

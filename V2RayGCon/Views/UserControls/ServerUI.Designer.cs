@@ -65,6 +65,7 @@
             this.logOfThisServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runSpeedTestToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.rtboxServerTitle = new VgcApis.UserControls.ExRichTextBox();
+            this.vlessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxMenuStripMore.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -271,6 +272,7 @@
             // 
             this.copyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.vToolStripMenuItem,
+            this.vlessToolStripMenuItem,
             this.vmessToolStripMenuItem,
             this.v2cfgToolStripMenuItem});
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
@@ -357,6 +359,12 @@
             this.rtboxServerTitle.ReadOnly = true;
             this.rtboxServerTitle.Click += new System.EventHandler(this.rtboxServerTitle_Click);
             // 
+            // vlessToolStripMenuItem
+            // 
+            this.vlessToolStripMenuItem.Name = "vlessToolStripMenuItem";
+            resources.ApplyResources(this.vlessToolStripMenuItem, "vlessToolStripMenuItem");
+            this.vlessToolStripMenuItem.Click += new System.EventHandler(this.vlessToolStripMenuItem_Click);
+            // 
             // ServerUI
             // 
             resources.ApplyResources(this, "$this");
@@ -423,5 +431,6 @@
         private VgcApis.UserControls.RoundLabel rlbRemark;
         private VgcApis.UserControls.RoundLabel rlbLastModifyDate;
         private System.Windows.Forms.ToolStripMenuItem simpleEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem vlessToolStripMenuItem;
     }
 }

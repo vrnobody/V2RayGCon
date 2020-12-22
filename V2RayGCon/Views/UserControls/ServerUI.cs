@@ -798,6 +798,14 @@ namespace V2RayGCon.Views.UserControls
             ShowFormSimpleEditor();
         }
 
+        private void vlessToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var vlessLink = slinkMgr.EncodeConfigToShareLink(
+              GetConfig(),
+              VgcApis.Models.Datas.Enums.LinkTypes.vless);
+            Misc.Utils.CopyToClipboardAndPrompt(vlessLink);
+        }
+
         private void rlbRemark_Click(object sender, EventArgs e)
         {
             ShowModifyConfigsWinForm();

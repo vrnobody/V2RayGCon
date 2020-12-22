@@ -1,10 +1,11 @@
 {
-  "version": "1.5.1.0",
-  "md5": "92B13C9BC7D150BA2CF2C9C3CCDBB660",
+  "version": "1.5.2.0",
+  "md5": "18B2AF64FD9CDAD8677344673D5D42AF",
   "warnings": [],
   "changes": [
-    "导入socks协议时默认关闭mux",
-    "临时支持xray，把xray.exe解压到core目录内即可",
-    "到xray不兼容v2ray-core或者专用GUI发布后将不再支持"
+    "支持vless-0分享链接提案",
+    "“此服务器日志”在窗口打开后才开始记录日志",
+    "Luna插件添加Misc:GetSpeedtestQueueLength()函数",
+    "默认关闭ProxySetter插件（感谢Microsoft Defender）"
   ]
 }

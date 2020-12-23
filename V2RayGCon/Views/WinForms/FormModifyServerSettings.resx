@@ -751,6 +751,9 @@
     <value>vee</value>
   </data>
   <data name="cboxShareLinkType.Items1" xml:space="preserve">
+    <value>vless</value>
+  </data>
+  <data name="cboxShareLinkType.Items2" xml:space="preserve">
     <value>vmess</value>
   </data>
   <data name="cboxShareLinkType.Location" type="System.Drawing.Point, System.Drawing">

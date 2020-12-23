@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -61,7 +62,6 @@ namespace V2RayGCon.Views.WinForms
 
         private void FormModifyServerSettings_Load(object sender, System.EventArgs e)
         {
-            cboxShareLinkType.SelectedIndex = 1;
             cboxZoomMode.SelectedIndex = 0;
         }
 
@@ -75,10 +75,31 @@ namespace V2RayGCon.Views.WinForms
             cboxMark.Items.AddRange(marks);
             Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMark);
             UpdateControls(orgCoreServSettings);
+            AutoSelectShareLinkType();
             UpdateShareLink();
         }
 
         #region private methods
+        void AutoSelectShareLinkType()
+        {
+            var slinkMgr = Services.ShareLinkMgr.Instance;
+            var config = coreServ.GetConfiger().GetConfig();
+            var ts = new List<VgcApis.Models.Datas.Enums.LinkTypes> {
+                VgcApis.Models.Datas.Enums.LinkTypes.vmess,
+                VgcApis.Models.Datas.Enums.LinkTypes.vless,
+                VgcApis.Models.Datas.Enums.LinkTypes.v,
+            };
+
+            for (int i = 0; i < ts.Count; i++)
+            {
+                if (!string.IsNullOrEmpty(slinkMgr.EncodeConfigToShareLink(config, ts[i])))
+                {
+                    cboxShareLinkType.SelectedIndex = ts.Count - i - 1;
+                    return;
+                }
+            }
+            cboxShareLinkType.SelectedIndex = 0;
+        }
 
         VgcApis.Models.Datas.CoreServSettings GetterSettings()
         {
@@ -117,9 +138,18 @@ namespace V2RayGCon.Views.WinForms
         {
             var slinkMgr = Services.ShareLinkMgr.Instance;
             var config = coreServ.GetConfiger().GetConfig();
-            var ty = cboxShareLinkType.Text.ToLower() == "vee" ?
-                VgcApis.Models.Datas.Enums.LinkTypes.v :
-                VgcApis.Models.Datas.Enums.LinkTypes.vmess;
+            var ty = VgcApis.Models.Datas.Enums.LinkTypes.vmess;
+            switch (cboxShareLinkType.Text.ToLower())
+            {
+                case "vee":
+                    ty = VgcApis.Models.Datas.Enums.LinkTypes.v;
+                    break;
+                case "vless":
+                    ty = VgcApis.Models.Datas.Enums.LinkTypes.vless;
+                    break;
+                default:
+                    break;
+            }
             var link = slinkMgr.EncodeConfigToShareLink(config, ty);
             tboxShareLink.Text = link;
         }

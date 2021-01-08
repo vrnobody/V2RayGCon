@@ -11,6 +11,7 @@
 8.8.8.8
 8080
 Accept-Encoding
+acceptProxyProtocol
 AsIs
 Connection
 GET
@@ -73,8 +74,10 @@ concurrency
 congestion
 connIdle
 debug
+decryption
 default
 description
+dest
 destOverride
 detour
 direct
@@ -100,10 +103,12 @@ env
 env:PORT
 error
 ext:file:tag
+fallbacks
 false
 fc00::/7
 fe80::/10
 field
+flow
 followRedirect
 freedom
 full:v2ray.com
@@ -111,12 +116,19 @@ geoip:cn
 geosite:category-ads
 geosite:category-ads-all
 geosite:cn
+geosite:apple
 geosite:facebook
 geosite:geolocation-!cn
 geosite:geolocation-cn
 geosite:google
+geosite:microsoft
+geosite:twitter
+geosite:telegram
+geosite:geolocation-cn
+geosite:geolocation-!cn
 geosite:speedtest
 geosite:tld-cn
+geosite:tld-!cn
 gzip, deflate
 handshake
 header
@@ -211,7 +223,8 @@ tlsSettings
 to
 tproxy
 transport
-true 
+trojan
+true
 tti
 type
 udp
@@ -238,3 +251,12 @@ wireguard
 writeBufferSize
 ws
 wsSettings
+xtls
+xtls-rprx-direct
+xtls-rprx-direct-udp443
+xtls-rprx-origin
+xtls-rprx-origin-udp443
+xtls-rprx-splice
+xtls-rprx-splice-udp443
+xtlsSettings
+xver

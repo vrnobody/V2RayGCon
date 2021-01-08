@@ -19,29 +19,21 @@ namespace VgcApis.BaseClasses
 
         public TForm GetForm()
         {
-            TForm form = null;
-            if (instance == null || instance.IsDisposed)
+            lock (instanceLocker)
             {
                 Misc.UI.Invoke(() =>
                 {
-                    form = new TForm();
+                    if (instance == null || instance.IsDisposed)
+                    {
+                        instance = new TForm();
+                    }
+                    else
+                    {
+                        instance.Activate();
+                    }
                 });
-            }
 
-            lock (instanceLocker)
-            {
-                if (instance == null || instance.IsDisposed)
-                {
-                    instance = form;
-                    form = null;
-                }
             }
-
-            Misc.UI.Invoke(() =>
-            {
-                instance?.Activate();
-                form?.Close();
-            });
             return instance;
         }
 

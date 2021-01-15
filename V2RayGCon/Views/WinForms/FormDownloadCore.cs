@@ -96,8 +96,11 @@ namespace V2RayGCon.Views.WinForms
 
         void DownloadV2RayCore(int proxyPort)
         {
+            var idx = cboxDownloadSource.SelectedIndex;
+
             downloader = new Libs.Nets.Downloader(setting);
-            downloader.SetSource(cboxDownloadSource.SelectedIndex);
+            downloader.coreType = idx == 2 ? Libs.Nets.Downloader.CoreTypes.Xray : Libs.Nets.Downloader.CoreTypes.V2Ray;
+            downloader.SetSource(idx);
             downloader.SetArchitecture(cboxArch.SelectedIndex == 1);
             downloader.SetVersion(cboxVer.Text);
             downloader.proxyPort = proxyPort;

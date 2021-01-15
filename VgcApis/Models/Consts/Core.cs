@@ -35,6 +35,7 @@ stat: <
         {
             @"https://github.com/v2ray/v2ray-core/releases",
             @"https://github.com/v2fly/v2ray-core/releases",
+            @"https://github.com/XTLS/Xray-core/releases",
         };
 
         public static int GetIndexBySourceUrl(string url)

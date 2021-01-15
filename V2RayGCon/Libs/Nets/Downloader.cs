@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Net;
 using V2RayGCon.Resources.Resx;
 
@@ -11,10 +10,16 @@ namespace V2RayGCon.Libs.Nets
         public event EventHandler OnDownloadCompleted, OnDownloadCancelled, OnDownloadFail;
         public event EventHandler<VgcApis.Models.Datas.IntEvent> OnProgress;
 
+        public enum CoreTypes
+        {
+            Xray,
+            V2Ray,
+        }
+
+        public CoreTypes coreType = CoreTypes.V2Ray;
         string _packageName;
         string _version = @"v4.27.0";
         string _source = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(0);
-        string _sha256sum = null;
         readonly object waitForDigest = new object();
 
         public int proxyPort { get; set; } = -1;
@@ -38,7 +43,9 @@ namespace V2RayGCon.Libs.Nets
         public void SetArchitecture(bool win64 = false)
         {
             var arch = win64 ? "64" : "32";
-            _packageName = $"v2ray-windows-{arch}.zip";
+            _packageName = coreType == CoreTypes.Xray ?
+                $"Xray-windows-{arch}.zip" :
+                $"v2ray-windows-{arch}.zip";
         }
 
         public void SetVersion(string version)
@@ -75,16 +82,6 @@ namespace V2RayGCon.Libs.Nets
                 return false;
             }
 
-            lock (waitForDigest)
-            {
-                if (!string.IsNullOrEmpty(_sha256sum)
-                    && Misc.Utils.GetSha256SumFromFile(filename) != _sha256sum)
-                {
-                    setting.SendLog(I18N.FileCheckSumFail);
-                    return false;
-                }
-            }
-
             VgcApis.Misc.Utils.Sleep(1000);
             try
             {
@@ -114,10 +111,13 @@ namespace V2RayGCon.Libs.Nets
         #region private method
         void RemoveOldExe(string path)
         {
-            string[] exes = new string[] {
-                VgcApis.Models.Consts.Core.V2RayCoreExeFileName,
-                VgcApis.Models.Consts.Core.V2RayCtlExeFileName,
-            };
+            string[] exes =
+                new string[] {
+                    // remove all cores to support switching between v2ray and xray
+                    VgcApis.Models.Consts.Core.XrayCoreExeFileName,
+                    VgcApis.Models.Consts.Core.V2RayCoreExeFileName,
+                    VgcApis.Models.Consts.Core.V2RayCtlExeFileName,
+                };
 
             string prefix = "bak";
 
@@ -241,25 +241,6 @@ namespace V2RayGCon.Libs.Nets
             return string.IsNullOrEmpty(path) ? null : Path.Combine(path, _packageName);
         }
 
-        void GetSha256Sum(string url)
-        {
-            _sha256sum = null;
-
-            var dgst = Misc.Utils.Fetch(url, proxyPort, -1);
-            if (string.IsNullOrEmpty(dgst))
-            {
-                return;
-            }
-
-            _sha256sum = dgst
-                .ToLower()
-                .Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                .FirstOrDefault(s => s.StartsWith("sha256"))
-                ?.Substring(6)
-                ?.Replace("=", "")
-                ?.Trim();
-        }
-
         string GenReleaseUrl()
         {
             // tail =  "/releases/download/{0}/{1}";
@@ -270,17 +251,6 @@ namespace V2RayGCon.Libs.Nets
         void Download()
         {
             string url = GenReleaseUrl();
-
-            lock (waitForDigest)
-            {
-                VgcApis.Misc.Utils.RunInBackground(() =>
-                {
-                    lock (waitForDigest)
-                    {
-                        GetSha256Sum(url + ".dgst");
-                    }
-                });
-            }
 
             var filename = GetLocalFilename();
             if (string.IsNullOrEmpty(filename))

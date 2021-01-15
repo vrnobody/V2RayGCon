@@ -757,7 +757,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>上传：{0} MiB 下载：{1} MiB</value>
   </data>
   <data name="ConfirmUpgradeV2rayCore" xml:space="preserve">
-    <value>发现新版v2ray-core {0}是否升级？</value>
+    <value>发现新的core {0}是否升级？</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>密码</value>

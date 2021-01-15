@@ -445,7 +445,7 @@
     <value>github.com/v2fly/v2ray-core</value>
   </data>
   <data name="cboxDownloadSource.Items2" xml:space="preserve">
-    <value />
+    <value>github.com/XTLS/Xray-core</value>
   </data>
   <data name="cboxDownloadSource.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 20</value>

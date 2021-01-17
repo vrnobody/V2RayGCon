@@ -1,11 +1,10 @@
 {
-  "version": "1.5.2.0",
-  "md5": "18B2AF64FD9CDAD8677344673D5D42AF",
+  "version": "1.5.3.0",
+  "md5": "DCF839B76E0CB351BF6968762E5916A2",
   "warnings": [],
   "changes": [
-    "支持vless-0分享链接提案",
-    "“此服务器日志”在窗口打开后才开始记录日志",
-    "Luna插件添加Misc:GetSpeedtestQueueLength()函数",
-    "默认关闭ProxySetter插件（感谢Microsoft Defender）"
+    "支持从XTLS/Xray-core更新core",
+    "修复服务器面板按钮闪烁问题",
+    "服务器设置界面自动切换分享链接类型",
   ]
 }

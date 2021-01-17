@@ -20,7 +20,6 @@ namespace V2RayGCon.Libs.Nets
         string _packageName;
         string _version = @"v4.27.0";
         string _source = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(0);
-        readonly object waitForDigest = new object();
 
         public int proxyPort { get; set; } = -1;
         WebClient webClient;

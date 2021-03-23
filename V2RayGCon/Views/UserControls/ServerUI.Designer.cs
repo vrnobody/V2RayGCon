@@ -53,6 +53,7 @@
             this.moveToBottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vlessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vmessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.v2cfgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
@@ -65,7 +66,6 @@
             this.logOfThisServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runSpeedTestToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.rtboxServerTitle = new VgcApis.UserControls.ExRichTextBox();
-            this.vlessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxMenuStripMore.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -284,6 +284,12 @@
             resources.ApplyResources(this.vToolStripMenuItem, "vToolStripMenuItem");
             this.vToolStripMenuItem.Click += new System.EventHandler(this.vToolStripMenuItem_Click);
             // 
+            // vlessToolStripMenuItem
+            // 
+            this.vlessToolStripMenuItem.Name = "vlessToolStripMenuItem";
+            resources.ApplyResources(this.vlessToolStripMenuItem, "vlessToolStripMenuItem");
+            this.vlessToolStripMenuItem.Click += new System.EventHandler(this.vlessToolStripMenuItem_Click);
+            // 
             // vmessToolStripMenuItem
             // 
             this.vmessToolStripMenuItem.Name = "vmessToolStripMenuItem";
@@ -358,12 +364,6 @@
             this.rtboxServerTitle.Name = "rtboxServerTitle";
             this.rtboxServerTitle.ReadOnly = true;
             this.rtboxServerTitle.Click += new System.EventHandler(this.rtboxServerTitle_Click);
-            // 
-            // vlessToolStripMenuItem
-            // 
-            this.vlessToolStripMenuItem.Name = "vlessToolStripMenuItem";
-            resources.ApplyResources(this.vlessToolStripMenuItem, "vlessToolStripMenuItem");
-            this.vlessToolStripMenuItem.Click += new System.EventHandler(this.vlessToolStripMenuItem_Click);
             // 
             // ServerUI
             // 

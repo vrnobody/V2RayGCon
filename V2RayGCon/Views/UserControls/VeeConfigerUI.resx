@@ -123,10 +123,10 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="cboxAuth2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 100</value>
+    <value>83, 100</value>
   </data>
   <data name="cboxAuth2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 20</value>
+    <value>225, 20</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="cboxAuth2.TabIndex" type="System.Int32, mscorlib">
@@ -148,10 +148,10 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="cboxStreamParma1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 46</value>
+    <value>83, 46</value>
   </data>
   <data name="cboxStreamParma1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 20</value>
+    <value>225, 20</value>
   </data>
   <data name="cboxStreamParma1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -190,10 +190,10 @@
     <value>vmess</value>
   </data>
   <data name="cboxProtocol.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 20</value>
+    <value>83, 20</value>
   </data>
   <data name="cboxProtocol.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 20</value>
+    <value>225, 20</value>
   </data>
   <data name="cboxProtocol.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -214,10 +214,10 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="cboxStreamType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 20</value>
+    <value>83, 20</value>
   </data>
   <data name="cboxStreamType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 20</value>
+    <value>225, 20</value>
   </data>
   <data name="cboxStreamType.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -238,10 +238,10 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="tboxHost.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 46</value>
+    <value>83, 46</value>
   </data>
   <data name="tboxHost.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 21</value>
+    <value>133, 21</value>
   </data>
   <data name="tboxHost.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -262,10 +262,10 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="tboxAuth1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 73</value>
+    <value>83, 73</value>
   </data>
   <data name="tboxAuth1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 21</value>
+    <value>225, 21</value>
   </data>
   <data name="tboxAuth1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -472,10 +472,10 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="tboxName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 3</value>
+    <value>83, 3</value>
   </data>
   <data name="tboxName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 21</value>
+    <value>225, 21</value>
   </data>
   <data name="tboxName.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -556,10 +556,10 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="tboxDescription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 30</value>
+    <value>83, 30</value>
   </data>
   <data name="tboxDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 21</value>
+    <value>225, 21</value>
   </data>
   <data name="tboxDescription.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -652,13 +652,13 @@
     <value>6, 75</value>
   </data>
   <data name="lbStreamParam2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
+    <value>71, 12</value>
   </data>
   <data name="lbStreamParam2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="lbStreamParam2.Text" xml:space="preserve">
-    <value>Security</value>
+    <value>serviceName</value>
   </data>
   <data name="&gt;&gt;lbStreamParam2.Name" xml:space="preserve">
     <value>lbStreamParam2</value>
@@ -709,10 +709,10 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="tboxStreamParam2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 72</value>
+    <value>83, 72</value>
   </data>
   <data name="tboxStreamParam2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 21</value>
+    <value>225, 21</value>
   </data>
   <data name="tboxStreamParam2.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -733,10 +733,10 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="tboxStreamParam3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 99</value>
+    <value>83, 99</value>
   </data>
   <data name="tboxStreamParam3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 21</value>
+    <value>225, 21</value>
   </data>
   <data name="tboxStreamParam3.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -850,10 +850,10 @@
     <value>xtls</value>
   </data>
   <data name="cboxTlsType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 20</value>
+    <value>83, 20</value>
   </data>
   <data name="cboxTlsType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 20</value>
+    <value>133, 20</value>
   </data>
   <data name="cboxTlsType.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -904,10 +904,10 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="tboxTlsServName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 46</value>
+    <value>83, 46</value>
   </data>
   <data name="tboxTlsServName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 21</value>
+    <value>225, 21</value>
   </data>
   <data name="tboxTlsServName.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>

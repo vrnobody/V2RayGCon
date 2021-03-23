@@ -62,8 +62,8 @@ namespace V2RayGCon.Models.Datas
                 name="mKCP",
                 network="kcp",
                 paths=new List<string>{
-                    "kcpSettings.header.type",
-                    "kcpSettings.seed",
+                    "kcpSettings.header.type", // streamParam1 label text = [type]
+                    "kcpSettings.seed", // streamParam2 label text = [seed]
                 },
                 options=new Dictionary<string,string>{
                     { "none", "kcp"},
@@ -145,6 +145,21 @@ namespace V2RayGCon.Models.Datas
                     { "wechat-video", "quic_wechat-video" },
                     { "dtls", "quic_dtls"},
                     { "wireguard", "quic_wireguard"},
+                },
+            } },
+
+            // grpc
+            { 6, new StreamComponent{
+                dropDownStyle=true,
+                name="GRPC",
+                network="grpc",
+                paths=new List<string>{
+                    "grpcSettings.multiMode",
+                    "grpcSettings.serviceName",
+                },
+                options=new Dictionary<string,string>{
+                    { "true", "grpc_multi"},
+                    { "false", "grpc" },
                 },
             } },
         };

@@ -123,8 +123,12 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     }
                     catch { }
                     break;
-                default:
+                case "":
+                    // stream type none
                     break;
+                default:
+                    // unsupported stream type
+                    return null;
             }
             return vmess;
         }

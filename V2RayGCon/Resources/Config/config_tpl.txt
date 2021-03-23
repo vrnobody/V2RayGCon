@@ -78,7 +78,7 @@
         }
       ]
     },
-    "streamSettings": {}   
+    "streamSettings": {}
   },
   "outbVeeVmess": {
     "protocol": "vmess",
@@ -504,6 +504,22 @@
       "headers": {
         "Host": ""
       }
+    }
+  },
+  "grpc": {
+    "network": "grpc",
+    "security": "tls",
+    "grpcSettings": {
+      "serviceName": "name",
+      "multiMode": false
+    }
+  },
+  "grpc_multi": {
+    "network": "grpc",
+    "security": "tls",
+    "grpcSettings": {
+      "serviceName": "name",
+      "multiMode": true
     }
   },
   "dsock": {

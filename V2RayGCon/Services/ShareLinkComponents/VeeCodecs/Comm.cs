@@ -58,6 +58,10 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             var mainParam = "";
             switch (result.streamType)
             {
+                case "grpc":
+                    mainParam = GetStr(subPrefix, "grpcSettings.multiMode").ToLower();
+                    result.streamParam2 = GetStr(subPrefix, "grpcSettings.serviceName");
+                    break;
                 case "tcp":
                     mainParam = GetStr(subPrefix, "tcpSettings.header.type");
                     if (mainParam?.ToLower() == "http")
@@ -121,7 +125,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         {
             var ss = streamSettings;
             // insert stream type
-            string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic" };
+            string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic", "grpc" };
             string st = ss?.streamType?.ToLower();
 
             if (!streamTypes.Contains(st))
@@ -139,6 +143,10 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             {
                 switch (st)
                 {
+                    case "grpc":
+                        token["grpcSettings"]["multiMode"] = mainParam.ToLower() == "true";
+                        token["grpcSettings"]["serviceName"] = ss.streamParam2;
+                        break;
                     case "tcp":
                         token["tcpSettings"]["header"]["type"] = mainParam;
                         break;

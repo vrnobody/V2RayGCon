@@ -73,7 +73,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             streamParamText = index < 0 ? string.Empty :
                 GetStr(
                     prefix,
-                    Models.Datas.Table.streamSettings[index].paths[0]);
+                    Models.Datas.Table.streamSettings[index].paths[0])
+                .ToLower();
 
             isUseSockopt = Misc.Utils.GetKey(config, prefix + ".sockopt") != null;
             isUseTls = GetStr(prefix, "security") == "tls";

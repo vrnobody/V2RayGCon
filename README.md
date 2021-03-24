@@ -15,7 +15,7 @@
 
 V2RayGCon是windows下[v2ray-core](https://v2ray.com)的图形(graphic)配置器(configer)。  
 
-[\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]][10]&nbsp;&nbsp;[\[唯一联系方式 issue\]][11]&nbsp;&nbsp;[\[脚本共享 scripts\]][12]  
+[\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]][10]&nbsp;&nbsp;[\[唯一联系方式 issue\]][11]  
 
 ### 安装 Install
 先安装.net framework 4.5+，然后下载解压[V2RayGCon-box.zip][9]到任意目录。  
@@ -31,6 +31,7 @@ Require .net framework 4.5+.
 [Ahmad45123/AutoCompleteMenu-ScintillaNET](https://github.com/Ahmad45123/AutoCompleteMenu-ScintillaNET) 自动补全  
 [brunoos/luasec](https://github.com/brunoos/luasec.git) Lua https  
 [diegonehab/luasocket](https://github.com/diegonehab/luasocket.git) Lua socket  
+[DuckSoft](https://github.com/XTLS/Xray-core/issues/91) vless分享链接格式  
 [FourierTransformer/lua-complete](https://github.com/FourierTransformer/lua-complete.git) lua模块补全  
 [haf/DotNetZip.Semverd](https://github.com/haf/DotNetZip.Semverd) .net 4.0解压zip文件  
 [jacobslusser/ScintillaNET](https://github.com/jacobslusser/ScintillaNET) 编辑器  
@@ -45,3 +46,4 @@ Require .net framework 4.5+.
 [txthinking/blackwhite](https://github.com/txthinking/blackwhite) ProxySetter插件中的默认PAC  
 [v2ray/v2ray-core](https://github.com/v2ray/v2ray-core) v2ray-core服务端  
 [wilhelmy/lua-bencode](https://bitbucket.org/wilhelmy/lua-bencode) bencode(torrent)解释器  
+[XTLS/Xray-core](https://github.com/XTLS/Xray-core) Xray-core服务端  

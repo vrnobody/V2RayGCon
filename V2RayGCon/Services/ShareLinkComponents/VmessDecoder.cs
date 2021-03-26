@@ -89,9 +89,13 @@ namespace V2RayGCon.Services.ShareLinkComponents
             var streamPrefix = root + "." + "streamSettings";
             vmess.net = GetStr(streamPrefix, "network");
             vmess.tls = GetStr(streamPrefix, "security");
+            vmess.sni = GetStr(streamPrefix, "tlsSettings.serverName");
 
             switch (vmess.net)
             {
+                case "grpc":
+                    vmess.path = GetStr(streamPrefix, "grpcSettings.serviceName");
+                    break;
                 case "quic":
                     vmess.type = GetStr(streamPrefix, "quicSettings.header.type");
                     vmess.host = GetStr(streamPrefix, "quicSettings.security");
@@ -216,7 +220,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         JToken GenStreamSetting(Models.Datas.Vmess vmess)
         {
             // insert stream type
-            string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic" };
+            string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic", "grpc" };
             string streamType = vmess?.net?.ToLower();
 
             if (!streamTypes.Contains(streamType))
@@ -227,6 +231,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
             if (streamType == "tcp" && vmess.type == "http")
             {
                 streamType = "tcp_http";
+            }
+
+            if (streamType == "grpc")
+            {
+                streamType = "grpc_multi";
             }
 
             var streamToken = cache.tpl.LoadTemplate(streamType);
@@ -242,6 +251,17 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 streamToken["security"] = isUseTls ? "tls" : "none";
             }
             catch { }
+
+            if (isUseTls && !string.IsNullOrWhiteSpace(vmess.sni))
+            {
+                try
+                {
+                    streamToken["tlsSettings"] = JObject.Parse(@"{}");
+                    streamToken["tlsSettings"]["allowInsecure"] = false;
+                    streamToken["tlsSettings"]["serverName"] = vmess.sni;
+                }
+                catch { }
+            }
             return streamToken;
         }
 
@@ -249,6 +269,9 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             switch (streamType)
             {
+                case "grpc_multi":
+                    streamToken["grpcSettings"]["serviceName"] = vmess.path; // quic.type
+                    break;
                 case "quic":
                     streamToken["quicSettings"]["header"]["type"] = vmess.type; // quic.type
                     streamToken["quicSettings"]["security"] = vmess.host; // quic.security

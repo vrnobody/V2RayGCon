@@ -4,7 +4,7 @@ namespace V2RayGCon.Models.Datas
 {
     public class Vmess
     {
-        public string ps, add, port, id, aid, net, type, host, tls, v, path;
+        public string ps, add, port, id, aid, net, type, host, tls, v, path, sni;
 
         public Vmess()
         {
@@ -19,11 +19,13 @@ namespace V2RayGCon.Models.Datas
             host = string.Empty;    // v1: ws->path v2: ws->host h2->["host1","host2"]
             path = string.Empty;    // v1: "" v2: ws->path h2->path
             tls = string.Empty;     // streamSettings->security
+            sni = string.Empty;     // tlsSettings.serverName
         }
 
         public bool Equals(Vmess t)
         {
             if (t == null
+                || !t.sni.Equals(this.sni)
                 || !t.v.Equals(this.v)
                 || !t.ps.Equals(this.ps)
                 || !t.add.Equals(this.add)

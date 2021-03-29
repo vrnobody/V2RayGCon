@@ -152,7 +152,7 @@
 https://github.com/v2ray/v2ray-core</value>
   </data>
   <data name="DownloadV2rayCore" xml:space="preserve">
-    <value>下载v2ray-core</value>
+    <value>下载 V2Ray/Xray core</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>完成</value>

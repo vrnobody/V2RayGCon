@@ -115,7 +115,9 @@ namespace V2RayGCon.Libs.Nets
                     // remove all cores to support switching between v2ray and xray
                     VgcApis.Models.Consts.Core.XrayCoreExeFileName,
                     VgcApis.Models.Consts.Core.V2RayCoreExeFileName,
-                    VgcApis.Models.Consts.Core.V2RayCtlExeFileName,
+
+                    // statistic require v2ctl.exe
+                    // VgcApis.Models.Consts.Core.V2RayCtlExeFileName,
                 };
 
             string prefix = "bak";

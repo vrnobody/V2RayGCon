@@ -51,9 +51,10 @@
             // 
             // cboxVer
             // 
-            this.cboxVer.FormattingEnabled = true;
             resources.ApplyResources(this.cboxVer, "cboxVer");
+            this.cboxVer.FormattingEnabled = true;
             this.cboxVer.Name = "cboxVer";
+            this.toolTip1.SetToolTip(this.cboxVer, resources.GetString("cboxVer.ToolTip"));
             // 
             // btnRefreshVer
             // 
@@ -98,6 +99,7 @@
             // 
             resources.ApplyResources(this.btnExit, "btnExit");
             this.btnExit.Name = "btnExit";
+            this.toolTip1.SetToolTip(this.btnExit, resources.GetString("btnExit.ToolTip"));
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
@@ -105,38 +107,44 @@
             // 
             resources.ApplyResources(this.pgBarDownload, "pgBarDownload");
             this.pgBarDownload.Name = "pgBarDownload";
+            this.toolTip1.SetToolTip(this.pgBarDownload, resources.GetString("pgBarDownload.ToolTip"));
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
+            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // cboxArch
             // 
+            resources.ApplyResources(this.cboxArch, "cboxArch");
             this.cboxArch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxArch.FormattingEnabled = true;
             this.cboxArch.Items.AddRange(new object[] {
             resources.GetString("cboxArch.Items"),
             resources.GetString("cboxArch.Items1")});
-            resources.ApplyResources(this.cboxArch, "cboxArch");
             this.cboxArch.Name = "cboxArch";
+            this.toolTip1.SetToolTip(this.cboxArch, resources.GetString("cboxArch.ToolTip"));
             this.cboxArch.SelectedIndexChanged += new System.EventHandler(this.cboxArch_SelectedIndexChanged);
             // 
             // labelCoreVersion
             // 
             resources.ApplyResources(this.labelCoreVersion, "labelCoreVersion");
             this.labelCoreVersion.Name = "labelCoreVersion";
+            this.toolTip1.SetToolTip(this.labelCoreVersion, resources.GetString("labelCoreVersion.ToolTip"));
             // 
             // groupBox1
             // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.btnCheckVersion);
             this.groupBox1.Controls.Add(this.labelCoreVersion);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox1, resources.GetString("groupBox1.ToolTip"));
             // 
             // groupBox2
             // 
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.chkUseProxy);
             this.groupBox2.Controls.Add(this.btnExit);
             this.groupBox2.Controls.Add(this.btnDownload);
@@ -147,20 +155,21 @@
             this.groupBox2.Controls.Add(this.pgBarDownload);
             this.groupBox2.Controls.Add(this.btnRefreshVer);
             this.groupBox2.Controls.Add(this.cboxVer);
-            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox2, resources.GetString("groupBox2.ToolTip"));
             // 
             // cboxDownloadSource
             // 
+            resources.ApplyResources(this.cboxDownloadSource, "cboxDownloadSource");
             this.cboxDownloadSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxDownloadSource.FormattingEnabled = true;
             this.cboxDownloadSource.Items.AddRange(new object[] {
             resources.GetString("cboxDownloadSource.Items"),
             resources.GetString("cboxDownloadSource.Items1"),
             resources.GetString("cboxDownloadSource.Items2")});
-            resources.ApplyResources(this.cboxDownloadSource, "cboxDownloadSource");
             this.cboxDownloadSource.Name = "cboxDownloadSource";
+            this.toolTip1.SetToolTip(this.cboxDownloadSource, resources.GetString("cboxDownloadSource.ToolTip"));
             this.cboxDownloadSource.SelectedIndexChanged += new System.EventHandler(this.cboxDownloadSource_SelectedIndexChanged);
             // 
             // FormDownloadCore
@@ -173,6 +182,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormDownloadCore";
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Shown += new System.EventHandler(this.FormDownloadCore_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

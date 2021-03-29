@@ -75,10 +75,9 @@ namespace V2RayGCon.Services
                 }
 
                 decodedConfig = ParseImport(injectedConfig);
-                if (setting.isSupportSelfSignedCert)
-                {
-                    EnableAllowInsecureStreamSetting(ref decodedConfig);
-                }
+
+                MergeCustomTlsSettings(ref decodedConfig);
+
                 cache.core[coreConfig] = decodedConfig.ToString(Formatting.None);
             }
             catch { }
@@ -310,7 +309,7 @@ namespace V2RayGCon.Services
             {
                 var s = servList[i];
                 var parts = Misc.Utils.ExtractOutboundsFromConfig(
-                    s.GetConfiger().GetConfig());
+                    s.GetConfiger().GetFinalConfig());
                 var c = 0;
                 foreach (JObject p in parts)
                 {
@@ -358,7 +357,7 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
-        void EnableAllowInsecureStreamSetting(ref JObject config)
+        void MergeCustomTlsSettings(ref JObject config)
         {
             var outB = Misc.Utils.GetKey(config, "outbound") ??
                 Misc.Utils.GetKey(config, "outbounds.0");
@@ -374,8 +373,16 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            var mixIn = JObject.Parse(@"{tlsSettings: {allowInsecure: true}}");
-            Misc.Utils.MergeJson(ref streamSettings, mixIn);
+            if (setting.isSupportSelfSignedCert)
+            {
+                var selfSigned = JObject.Parse(@"{tlsSettings: {allowInsecure: true}}");
+                Misc.Utils.MergeJson(ref streamSettings, selfSigned);
+            }
+
+            var uTlsFingerprint = JObject.Parse(@"{tlsSettings: {}}");
+            uTlsFingerprint["tlsSettings"]["fingerprint"] = setting.uTlsFingerprint;
+            Misc.Utils.MergeJson(ref streamSettings, uTlsFingerprint);
+
         }
 
         int GetDefaultTimeout()

@@ -460,7 +460,7 @@
     <value>2</value>
   </data>
   <data name="groupBox8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 288</value>
+    <value>13, 314</value>
   </data>
   <data name="groupBox8.Size" type="System.Drawing.Size, System.Drawing">
     <value>449, 51</value>
@@ -583,7 +583,7 @@
     <value>2</value>
   </data>
   <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 238</value>
+    <value>13, 264</value>
   </data>
   <data name="groupBox2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -709,7 +709,7 @@
     <value>2</value>
   </data>
   <data name="groupBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 189</value>
+    <value>13, 215</value>
   </data>
   <data name="groupBox6.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -748,7 +748,7 @@
     <value>NoControl</value>
   </data>
   <data name="chkSetServStatistics.Location" type="System.Drawing.Point, System.Drawing">
-    <value>265, 66</value>
+    <value>123, 92</value>
   </data>
   <data name="chkSetServStatistics.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -784,7 +784,7 @@
     <value>NoControl</value>
   </data>
   <data name="chkSetSelfSignedCert.Location" type="System.Drawing.Point, System.Drawing">
-    <value>122, 66</value>
+    <value>206, 92</value>
   </data>
   <data name="chkSetSelfSignedCert.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 16</value>
@@ -793,7 +793,7 @@
     <value>8</value>
   </data>
   <data name="chkSetSelfSignedCert.Text" xml:space="preserve">
-    <value>Self-Signed cert</value>
+    <value>Self-signed cert</value>
   </data>
   <data name="chkSetSelfSignedCert.ToolTip" xml:space="preserve">
     <value>Supports self-signed certificate. </value>
@@ -809,6 +809,42 @@
   </data>
   <data name="&gt;&gt;chkSetSelfSignedCert.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="cboxSettingsUtlsFingerprint.Items" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxSettingsUtlsFingerprint.Items1" xml:space="preserve">
+    <value>chrome</value>
+  </data>
+  <data name="cboxSettingsUtlsFingerprint.Items2" xml:space="preserve">
+    <value>firefox</value>
+  </data>
+  <data name="cboxSettingsUtlsFingerprint.Items3" xml:space="preserve">
+    <value>safari</value>
+  </data>
+  <data name="cboxSettingsUtlsFingerprint.Items4" xml:space="preserve">
+    <value>randomized</value>
+  </data>
+  <data name="cboxSettingsUtlsFingerprint.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 67</value>
+  </data>
+  <data name="cboxSettingsUtlsFingerprint.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 20</value>
+  </data>
+  <data name="cboxSettingsUtlsFingerprint.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;cboxSettingsUtlsFingerprint.Name" xml:space="preserve">
+    <value>cboxSettingsUtlsFingerprint</value>
+  </data>
+  <data name="&gt;&gt;cboxSettingsUtlsFingerprint.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cboxSettingsUtlsFingerprint.Parent" xml:space="preserve">
+    <value>groupBox5</value>
+  </data>
+  <data name="&gt;&gt;cboxSettingsUtlsFingerprint.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="cboxSettingsRandomSelectServerLatency.Items" xml:space="preserve">
     <value>0</value>
@@ -847,7 +883,37 @@
     <value>groupBox5</value>
   </data>
   <data name="&gt;&gt;cboxSettingsRandomSelectServerLatency.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
+  </data>
+  <data name="label17.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label17.Location" type="System.Drawing.Point, System.Drawing">
+    <value>189, 71</value>
+  </data>
+  <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 12</value>
+  </data>
+  <data name="label17.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="label17.Text" xml:space="preserve">
+    <value>TLS fingerprint</value>
+  </data>
+  <data name="&gt;&gt;label17.Name" xml:space="preserve">
+    <value>label17</value>
+  </data>
+  <data name="&gt;&gt;label17.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label17.Parent" xml:space="preserve">
+    <value>groupBox5</value>
+  </data>
+  <data name="&gt;&gt;label17.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="label14.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -877,7 +943,7 @@
     <value>groupBox5</value>
   </data>
   <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="tboxSettingsMaxCoreNum.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 14</value>
@@ -898,7 +964,40 @@
     <value>groupBox5</value>
   </data>
   <data name="&gt;&gt;tboxSettingsMaxCoreNum.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
+  </data>
+  <data name="label16.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label16.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label16.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 71</value>
+  </data>
+  <data name="label16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 12</value>
+  </data>
+  <data name="label16.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="label16.Text" xml:space="preserve">
+    <value>uTLS</value>
+  </data>
+  <data name="label16.ToolTip" xml:space="preserve">
+    <value>uTLS fingerprint</value>
+  </data>
+  <data name="&gt;&gt;label16.Name" xml:space="preserve">
+    <value>label16</value>
+  </data>
+  <data name="&gt;&gt;label16.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label16.Parent" xml:space="preserve">
+    <value>groupBox5</value>
+  </data>
+  <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <data name="label15.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -931,13 +1030,13 @@
     <value>groupBox5</value>
   </data>
   <data name="&gt;&gt;label15.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>8</value>
   </data>
   <data name="chkSetServAutotrack.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="chkSetServAutotrack.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 66</value>
+    <value>17, 92</value>
   </data>
   <data name="chkSetServAutotrack.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -964,7 +1063,7 @@
     <value>groupBox5</value>
   </data>
   <data name="&gt;&gt;chkSetServAutotrack.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>9</value>
   </data>
   <data name="label13.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -994,7 +1093,7 @@
     <value>groupBox5</value>
   </data>
   <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>10</value>
   </data>
   <data name="label12.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1027,7 +1126,7 @@
     <value>groupBox5</value>
   </data>
   <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>11</value>
   </data>
   <data name="groupBox5.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 94</value>
@@ -1039,7 +1138,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="groupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 91</value>
+    <value>449, 117</value>
   </data>
   <data name="groupBox5.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>

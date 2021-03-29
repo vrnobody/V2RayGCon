@@ -10,6 +10,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         private readonly ComboBox
             cboxLanguage = null,
             cboxPageSize = null,
+            cboxSettingsUtlsFingerprint = null,
             cboxRandomSelectServerLatency = null;
 
         private readonly CheckBox
@@ -34,7 +35,10 @@ namespace V2RayGCon.Controllers.OptionComponent
             ComboBox cboxRandomSelectServerLatency,
             CheckBox chkPortableMode,
             CheckBox chkSetUseV4,
+
             CheckBox chkSetIsSupportSelfSignedCert,
+            ComboBox cboxSettingsUtlsFingerprint,
+
             CheckBox chkSetEnableStat,
             CheckBox chkSetUpdateUseProxy,
             CheckBox chkSetCheckVgcUpdateWhenAppStart,
@@ -55,7 +59,10 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.cboxRandomSelectServerLatency = cboxRandomSelectServerLatency;
             this.chkPortableMode = chkPortableMode;
             this.chkSetUseV4 = chkSetUseV4;
+
             this.chkSetIsSupportSelfSignedCert = chkSetIsSupportSelfSignedCert;
+            this.cboxSettingsUtlsFingerprint = cboxSettingsUtlsFingerprint;
+
             this.chkSetEnableStat = chkSetEnableStat;
 
             this.chkSetCheckVgcUpdateWhenAppStart = chkSetCheckVgcUpdateWhenAppStart;
@@ -83,7 +90,10 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             chkSetEnableStat.Checked = setting.isEnableStatistics;
             chkSetUseV4.Checked = setting.isUseV4;
+
             chkSetIsSupportSelfSignedCert.Checked = setting.isSupportSelfSignedCert;
+            cboxSettingsUtlsFingerprint.Text = setting.uTlsFingerprint;
+
             chkPortableMode.Checked = setting.isPortable;
             cboxLanguage.SelectedIndex = (int)setting.culture;
             cboxPageSize.Text = setting.serverPanelPageSize.ToString();
@@ -135,6 +145,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             setting.isCheckV2RayCoreUpdateWhenAppStart = chkSetCheckV2RayCoreUpdateWhenAppStart.Checked;
 
             setting.isSupportSelfSignedCert = chkSetIsSupportSelfSignedCert.Checked;
+            setting.uTlsFingerprint = cboxSettingsUtlsFingerprint.Text;
+
             setting.isPortable = chkPortableMode.Checked;
             setting.isUseV4 = chkSetUseV4.Checked;
 
@@ -148,6 +160,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         public override bool IsOptionsChanged()
         {
             if (setting.isUseV4 != chkSetUseV4.Checked
+                || setting.uTlsFingerprint != cboxSettingsUtlsFingerprint.Text
                 || setting.isEnableDebugLogFile != chkIsEnableDebugLogFile.Checked
                 || setting.DebugLogFilePath != tboxDebugLogFilePath.Text
                 || setting.isSupportSelfSignedCert != chkSetIsSupportSelfSignedCert.Checked

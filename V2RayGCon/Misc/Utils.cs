@@ -73,19 +73,14 @@ namespace V2RayGCon.Misc
         #endregion
 
         #region Json
-        public static JArray ExtractOutboundsFromConfig(string config)
+        public static JArray ExtractOutboundsFromConfig(JObject json)
         {
             var result = new JArray();
-            JObject json = null;
-            try
+            if (json == null)
             {
-                json = JObject.Parse(config);
-                if (json == null)
-                {
-                    return result;
-                }
+                return result;
             }
-            catch { }
+
             try
             {
                 var outbound = GetKey(json, "outbound");

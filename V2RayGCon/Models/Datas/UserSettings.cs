@@ -25,6 +25,7 @@ namespace V2RayGCon.Models.Datas
         public List<string> V2RayCoreDownloadVersionList = null;
 
         public bool isSupportSelfSignedCert { get; set; }
+        public string uTlsFingerprint { get; set; }
 
         public int ServerPanelPageSize { get; set; }
         public bool isEnableStat { get; set; } = false;
@@ -75,6 +76,8 @@ namespace V2RayGCon.Models.Datas
             QuickSwitchServerLatency = 0;
 
             isSupportSelfSignedCert = false;
+            uTlsFingerprint = @"";
+
 
             isAutoPatchSubsInfo = false;
 

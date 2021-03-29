@@ -87,7 +87,10 @@ namespace V2RayGCon.Views.WinForms
                     cboxSettingsRandomSelectServerLatency,
                     chkSetSysPortable,
                     chkSetUseV4,
+
                     chkSetSelfSignedCert,
+                    cboxSettingsUtlsFingerprint,
+
                     chkSetServStatistics,
                     chkSetUpgradeUseProxy,
                     chkSetCheckVgcUpdateWhenStart,

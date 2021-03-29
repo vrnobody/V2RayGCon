@@ -55,9 +55,12 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.chkSetServStatistics = new System.Windows.Forms.CheckBox();
             this.chkSetSelfSignedCert = new System.Windows.Forms.CheckBox();
+            this.cboxSettingsUtlsFingerprint = new System.Windows.Forms.ComboBox();
             this.cboxSettingsRandomSelectServerLatency = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.tboxSettingsMaxCoreNum = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.chkSetServAutotrack = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -304,9 +307,12 @@
             resources.ApplyResources(this.groupBox5, "groupBox5");
             this.groupBox5.Controls.Add(this.chkSetServStatistics);
             this.groupBox5.Controls.Add(this.chkSetSelfSignedCert);
+            this.groupBox5.Controls.Add(this.cboxSettingsUtlsFingerprint);
             this.groupBox5.Controls.Add(this.cboxSettingsRandomSelectServerLatency);
+            this.groupBox5.Controls.Add(this.label17);
             this.groupBox5.Controls.Add(this.label14);
             this.groupBox5.Controls.Add(this.tboxSettingsMaxCoreNum);
+            this.groupBox5.Controls.Add(this.label16);
             this.groupBox5.Controls.Add(this.label15);
             this.groupBox5.Controls.Add(this.chkSetServAutotrack);
             this.groupBox5.Controls.Add(this.label13);
@@ -328,6 +334,18 @@
             this.toolTip1.SetToolTip(this.chkSetSelfSignedCert, resources.GetString("chkSetSelfSignedCert.ToolTip"));
             this.chkSetSelfSignedCert.UseVisualStyleBackColor = true;
             // 
+            // cboxSettingsUtlsFingerprint
+            // 
+            this.cboxSettingsUtlsFingerprint.FormattingEnabled = true;
+            this.cboxSettingsUtlsFingerprint.Items.AddRange(new object[] {
+            resources.GetString("cboxSettingsUtlsFingerprint.Items"),
+            resources.GetString("cboxSettingsUtlsFingerprint.Items1"),
+            resources.GetString("cboxSettingsUtlsFingerprint.Items2"),
+            resources.GetString("cboxSettingsUtlsFingerprint.Items3"),
+            resources.GetString("cboxSettingsUtlsFingerprint.Items4")});
+            resources.ApplyResources(this.cboxSettingsUtlsFingerprint, "cboxSettingsUtlsFingerprint");
+            this.cboxSettingsUtlsFingerprint.Name = "cboxSettingsUtlsFingerprint";
+            // 
             // cboxSettingsRandomSelectServerLatency
             // 
             this.cboxSettingsRandomSelectServerLatency.FormattingEnabled = true;
@@ -341,6 +359,11 @@
             resources.ApplyResources(this.cboxSettingsRandomSelectServerLatency, "cboxSettingsRandomSelectServerLatency");
             this.cboxSettingsRandomSelectServerLatency.Name = "cboxSettingsRandomSelectServerLatency";
             // 
+            // label17
+            // 
+            resources.ApplyResources(this.label17, "label17");
+            this.label17.Name = "label17";
+            // 
             // label14
             // 
             resources.ApplyResources(this.label14, "label14");
@@ -350,6 +373,12 @@
             // 
             resources.ApplyResources(this.tboxSettingsMaxCoreNum, "tboxSettingsMaxCoreNum");
             this.tboxSettingsMaxCoreNum.Name = "tboxSettingsMaxCoreNum";
+            // 
+            // label16
+            // 
+            resources.ApplyResources(this.label16, "label16");
+            this.label16.Name = "label16";
+            this.toolTip1.SetToolTip(this.label16, resources.GetString("label16.ToolTip"));
             // 
             // label15
             // 
@@ -854,5 +883,8 @@
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.CheckBox chkSetCheckV2RayCoreUpdateWhenStart;
         private System.Windows.Forms.CheckBox chkDefImportTrojanShareLink;
+        private System.Windows.Forms.ComboBox cboxSettingsUtlsFingerprint;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
     }
 }

@@ -251,6 +251,17 @@ namespace V2RayGCon.Services
             }
         }
 
+        public string uTlsFingerprint
+        {
+            get => userSettings.uTlsFingerprint;
+            set
+            {
+                userSettings.uTlsFingerprint = value;
+                SaveSettingsLater();
+            }
+        }
+
+
         public bool isSupportSelfSignedCert
         {
             get => userSettings.isSupportSelfSignedCert;

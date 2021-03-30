@@ -379,10 +379,12 @@ namespace V2RayGCon.Services
                 Misc.Utils.MergeJson(ref streamSettings, selfSigned);
             }
 
-            var uTlsFingerprint = JObject.Parse(@"{tlsSettings: {}}");
-            uTlsFingerprint["tlsSettings"]["fingerprint"] = setting.uTlsFingerprint;
-            Misc.Utils.MergeJson(ref streamSettings, uTlsFingerprint);
-
+            if (setting.isEnableUtlsFingerprint)
+            {
+                var uTlsFingerprint = JObject.Parse(@"{tlsSettings: {}}");
+                uTlsFingerprint["tlsSettings"]["fingerprint"] = setting.uTlsFingerprint;
+                Misc.Utils.MergeJson(ref streamSettings, uTlsFingerprint);
+            }
         }
 
         int GetDefaultTimeout()

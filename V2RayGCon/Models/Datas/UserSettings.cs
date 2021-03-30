@@ -27,6 +27,8 @@ namespace V2RayGCon.Models.Datas
         public bool isSupportSelfSignedCert { get; set; }
         public string uTlsFingerprint { get; set; }
 
+        public bool isEnableUtlsFingerprint { get; set; }
+
         public int ServerPanelPageSize { get; set; }
         public bool isEnableStat { get; set; } = false;
         public bool isUseV4Format { get; set; }
@@ -77,7 +79,7 @@ namespace V2RayGCon.Models.Datas
 
             isSupportSelfSignedCert = false;
             uTlsFingerprint = @"";
-
+            isEnableUtlsFingerprint = false;
 
             isAutoPatchSubsInfo = false;
 

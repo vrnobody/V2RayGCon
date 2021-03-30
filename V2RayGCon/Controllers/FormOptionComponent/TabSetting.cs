@@ -20,7 +20,10 @@ namespace V2RayGCon.Controllers.OptionComponent
             chkSetEnableStat = null,
             chkSetUpdateUseProxy = null,
             chkSetCheckVgcUpdateWhenAppStart = null,
+            chkSetIsEnableUtlsFingerprint = null,
             chkSetIsSupportSelfSignedCert = null;
+
+
         private readonly CheckBox chkSetCheckV2RayCoreUpdateWhenAppStart;
         private readonly Button btnBrowseDebugLogFile;
         private readonly TextBox tboxDebugLogFilePath;
@@ -38,6 +41,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             CheckBox chkSetIsSupportSelfSignedCert,
             ComboBox cboxSettingsUtlsFingerprint,
+            CheckBox chkSettingsEnableUtlsFingerprint,
 
             CheckBox chkSetEnableStat,
             CheckBox chkSetUpdateUseProxy,
@@ -62,6 +66,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             this.chkSetIsSupportSelfSignedCert = chkSetIsSupportSelfSignedCert;
             this.cboxSettingsUtlsFingerprint = cboxSettingsUtlsFingerprint;
+            this.chkSetIsEnableUtlsFingerprint = chkSettingsEnableUtlsFingerprint;
 
             this.chkSetEnableStat = chkSetEnableStat;
 
@@ -93,6 +98,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             chkSetIsSupportSelfSignedCert.Checked = setting.isSupportSelfSignedCert;
             cboxSettingsUtlsFingerprint.Text = setting.uTlsFingerprint;
+            chkSetIsEnableUtlsFingerprint.Checked = setting.isEnableUtlsFingerprint;
 
             chkPortableMode.Checked = setting.isPortable;
             cboxLanguage.SelectedIndex = (int)setting.culture;
@@ -146,6 +152,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             setting.isSupportSelfSignedCert = chkSetIsSupportSelfSignedCert.Checked;
             setting.uTlsFingerprint = cboxSettingsUtlsFingerprint.Text;
+            setting.isEnableUtlsFingerprint = chkSetIsEnableUtlsFingerprint.Checked;
 
             setting.isPortable = chkPortableMode.Checked;
             setting.isUseV4 = chkSetUseV4.Checked;
@@ -160,6 +167,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         public override bool IsOptionsChanged()
         {
             if (setting.isUseV4 != chkSetUseV4.Checked
+                || setting.isEnableUtlsFingerprint != chkSetIsEnableUtlsFingerprint.Checked
                 || setting.uTlsFingerprint != cboxSettingsUtlsFingerprint.Text
                 || setting.isEnableDebugLogFile != chkIsEnableDebugLogFile.Checked
                 || setting.DebugLogFilePath != tboxDebugLogFilePath.Text

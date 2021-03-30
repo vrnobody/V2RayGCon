@@ -90,6 +90,7 @@ namespace V2RayGCon.Views.WinForms
 
                     chkSetSelfSignedCert,
                     cboxSettingsUtlsFingerprint,
+                    chkSettingsEnableUtlsFingerprint,
 
                     chkSetServStatistics,
                     chkSetUpgradeUseProxy,

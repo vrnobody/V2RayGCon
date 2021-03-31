@@ -1120,7 +1120,7 @@ namespace V2RayGCon.Services
 
             children.Add(
                I18N.CheckForVgcUpdate,
-               null,
+               Properties.Resources.CloudSearch_16x,
                (s, a) => updater.CheckForUpdate(true));
 
             children.Add(

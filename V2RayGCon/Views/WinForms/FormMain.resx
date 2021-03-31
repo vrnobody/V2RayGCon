@@ -1127,7 +1127,7 @@
     <value>23, 22</value>
   </data>
   <data name="toolStripMenuItemRemoveV2rayCore.Text" xml:space="preserve">
-    <value>Remove v2ray-core</value>
+    <value>Cleanup ProgramData</value>
   </data>
   <data name="&gt;&gt;toolStripComboBoxMarkFilter.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

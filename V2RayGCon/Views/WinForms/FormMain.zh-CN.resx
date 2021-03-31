@@ -869,7 +869,7 @@
     <value>192, 30</value>
   </data>
   <data name="toolStripMenuItemRemoveV2rayCore.Text" xml:space="preserve">
-    <value>删除v2ray-core</value>
+    <value>清理ProgramData目录</value>
   </data>
   <data name="toolStripMenuItemRemoveV2rayCore.ToolTipText" xml:space="preserve">
     <value>删除%ProgramData%中的V2RayGCon文件夹</value>

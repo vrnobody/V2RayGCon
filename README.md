@@ -5,7 +5,7 @@
 [3]: https://img.shields.io/github/release/vrnobody/V2RayGCon.svg "Release Badge"
 [4]: https://github.com/vrnobody/V2RayGCon/releases/latest "Releases"
 [5]: https://img.shields.io/github/downloads/vrnobody/V2RayGCon/total.svg "Total Downloads Badge"
-[6]: https://www.somsubhra.com/github-release-stats/?username=vrnobody&repository=V2RayGCon "Download Details"
+[6]: https://somsubhra.github.io/github-release-stats/?username=vrnobody&repository=V2RayGCon&per_page=30 "Download Details"
 [7]: https://img.shields.io/github/license/vrnobody/V2RayGCon.svg "Licence Badge"
 [8]: https://github.com/vrnobody/V2RayGCon/blob/master/LICENSE "Licence"
 [9]: https://github.com/vrnobody/V2RayGCon/releases/latest "Latest release"

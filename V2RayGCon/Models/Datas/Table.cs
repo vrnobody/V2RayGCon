@@ -15,9 +15,15 @@ namespace V2RayGCon.Models.Datas
         public static readonly string[] EnviromentVariablesName = new string[] {
             "V2RAY_BUF_READV",
             "V2RAY_LOCATION_ASSET",
-            "V2RAY_LOCATION_CONFIG",
             "V2RAY_LOCATION_CONFDIR",
+            "V2RAY_LOCATION_CONFIG",
             "V2RAY_RAY_BUFFER_SIZE",
+            "XRAY_BROWSER_DIALER",
+            "XRAY_LOCATION_ASSET",
+            "XRAY_LOCATION_CONFDIR",
+            "XRAY_LOCATION_CONFIG",
+            "XRAY_TROJAN_XTLS_SHOW",
+            "XRAY_VLESS_XTLS_SHOW",
         };
 
         public static readonly string[] customInbTypeNames = new string[] {

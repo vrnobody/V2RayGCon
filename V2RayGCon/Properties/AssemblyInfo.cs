@@ -33,10 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.5.3.6")]
+[assembly: AssemblyVersion("1.5.4.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /* 
+ * --------------------------------------------------------
+ * v1.5.3.7 Add some enviroment variables.
  * v1.5.3.6 Modify UI.
  * v1.5.3.5 Add enable-uTLS checkbox.
  * v1.5.3.4 Adjust UI.

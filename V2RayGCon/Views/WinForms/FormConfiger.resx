@@ -1201,10 +1201,10 @@
     <value>0</value>
   </data>
   <data name="tboxEnvValue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>216, 20</value>
+    <value>68, 46</value>
   </data>
   <data name="tboxEnvValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 21</value>
+    <value>243, 21</value>
   </data>
   <data name="tboxEnvValue.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1255,7 +1255,7 @@
     <value>NoControl</value>
   </data>
   <data name="label22.Location" type="System.Drawing.Point, System.Drawing">
-    <value>175, 24</value>
+    <value>10, 50</value>
   </data>
   <data name="label22.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 12</value>
@@ -1282,7 +1282,7 @@
     <value>68, 20</value>
   </data>
   <data name="cboxEnvName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 20</value>
+    <value>243, 20</value>
   </data>
   <data name="cboxEnvName.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1333,7 +1333,7 @@
     <value>9, 262</value>
   </data>
   <data name="groupBox8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>388, 53</value>
+    <value>388, 75</value>
   </data>
   <data name="groupBox8.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1564,7 +1564,7 @@
     <value>1</value>
   </data>
   <data name="groupBox5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 320</value>
+    <value>9, 342</value>
   </data>
   <data name="groupBox5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -1756,7 +1756,7 @@
     <value>22, 4</value>
   </data>
   <data name="tabPageMisc.Size" type="System.Drawing.Size, System.Drawing">
-    <value>402, 376</value>
+    <value>402, 396</value>
   </data>
   <data name="tabPageMisc.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2053,7 +2053,7 @@
     <value>0, 0</value>
   </data>
   <data name="tabCtrlToolPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>428, 384</value>
+    <value>428, 404</value>
   </data>
   <data name="tabCtrlToolPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2236,7 +2236,7 @@
     <value>7, 25</value>
   </data>
   <data name="pnlTools.Size" type="System.Drawing.Size, System.Drawing">
-    <value>428, 384</value>
+    <value>428, 404</value>
   </data>
   <data name="pnlTools.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -2404,7 +2404,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="panelScintilla.Size" type="System.Drawing.Size, System.Drawing">
-    <value>442, 360</value>
+    <value>442, 380</value>
   </data>
   <data name="panelScintilla.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2434,7 +2434,7 @@
     <value>2</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>442, 384</value>
+    <value>442, 404</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
@@ -2485,7 +2485,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="pnlEditor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>442, 384</value>
+    <value>442, 404</value>
   </data>
   <data name="pnlEditor.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2512,7 +2512,7 @@
     <value>6, 12</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>884, 416</value>
+    <value>884, 436</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>348, 344</value>

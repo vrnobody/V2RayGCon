@@ -47,7 +47,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbV2rayCoreGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var url = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(0);
+            var url = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(1);
             Misc.UI.VisitUrl(I18N.VisitV2rayCoreReleasePage, url);
         }
 

@@ -2,6 +2,12 @@
 {
     public class Enums
     {
+        public enum BalancerStrategies
+        {
+            Random = 0,
+            LeastPing = 1,
+        }
+
         public enum ModifierKeys
         {
             Alt = 1,

@@ -121,8 +121,8 @@
     <value>Pacman</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>0.0.5</value>
-    <comment>Optimize UI.</comment>
+    <value>0.0.6</value>
+    <comment>Supports least ping balancer strategy.</comment>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="pacman_x32" type="System.Resources.ResXFileRef, System.Windows.Forms">

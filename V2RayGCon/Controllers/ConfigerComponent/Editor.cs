@@ -454,8 +454,6 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             }
         }
 
-
-
         bool IsReadyToSwitchSection()
         {
             if (CheckValid())

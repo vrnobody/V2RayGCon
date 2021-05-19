@@ -17,6 +17,12 @@ namespace Luna.Models.Apis.Components
             vgcConfigMgr = api.GetConfigMgrService();
         }
 
+        #region balancer
+        public int balancerStrategyRandom { get; } = (int)VgcApis.Models.Datas.Enums.BalancerStrategies.Random;
+
+        public int balancerStrategyLeastPing { get; } = (int)VgcApis.Models.Datas.Enums.BalancerStrategies.LeastPing;
+        #endregion
+
         public void UpdateAllSummary() =>
             vgcServers.UpdateAllServersSummary();
 
@@ -51,8 +57,15 @@ namespace Luna.Models.Apis.Components
         public bool RunSpeedTestOnSelectedServers() =>
             vgcServers.RunSpeedTestOnSelectedServers();
 
-        public string PackSelectedServers(
-            string orgUid, string pkgName) =>
-            vgcServers.PackSelectedServersIntoV4Package(orgUid, pkgName);
+        public string PackSelectedServers(string orgUid, string pkgName) =>
+            vgcServers.PackSelectedServersIntoV4Package(
+                orgUid, pkgName,
+                VgcApis.Models.Datas.Enums.BalancerStrategies.Random);
+
+        public string PackSelectedServers(string orgUid, string pkgName, int strategy)
+        {
+            var st = (VgcApis.Models.Datas.Enums.BalancerStrategies)strategy;
+            return vgcServers.PackSelectedServersIntoV4Package(orgUid, pkgName, st);
+        }
     }
 }

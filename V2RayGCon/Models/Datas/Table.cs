@@ -199,6 +199,16 @@ namespace V2RayGCon.Models.Datas
             list.Add(SS("Empty", "cfgEmpty"));
             d.Add("config.json", list);
 
+            //"fakednsDefault"
+            list = NewList();
+            list.Add(SS(I18N.Default, "fakednsDefault"));
+            d.Add("fakedns", list);
+
+            // "browserForwarder"
+            list = NewList();
+            list.Add(SS(I18N.Default, "browserForwarderDefault"));
+            d.Add("browserForwarder", list);
+
             //{ 1, "log"},
             list = NewList();
             list.Add(SS(I18N.Default, "logFile"));
@@ -223,6 +233,11 @@ namespace V2RayGCon.Models.Datas
             // 20 inbounds
             d.Add("inbounds", list);
 
+            // "observatory"
+            list = NewList();
+            list.Add(SS(I18N.Default, "observatoryDefault"));
+            d.Add("observatory", list);
+
             //{ 3, "outbound"},
             list = NewList();
             list.Add(SSS("Freedom", "outFree", "freedom"));
@@ -241,10 +256,11 @@ namespace V2RayGCon.Models.Datas
             //{ 4, "routing"},
             list = NewList();
             list.Add(SS(I18N.Default, "routeAll"));
-            list.Add(SS("v4", "routeDefV4"));
+            list.Add(SS("Balancer least ping", "routeLeastPing"));
+            list.Add(SS("Inbound to Outbound", "routeIn2Out"));
             list.Add(SS("skip CN site", "routeCNIP"));
             list.Add(SS("skip CN site v4", "routeCnipV4"));
-            list.Add(SS("Inbound to Outbound", "routeIn2Out"));
+            list.Add(SS("v4", "routeDefV4"));
             d.Add("routing", list);
 
             //{ 5, "policy"},

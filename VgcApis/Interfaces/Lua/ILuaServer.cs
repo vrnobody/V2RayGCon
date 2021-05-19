@@ -4,8 +4,14 @@ namespace VgcApis.Interfaces.Lua
 {
     public interface ILuaServer
     {
+        int balancerStrategyRandom { get; }
+
+        int balancerStrategyLeastPing { get; }
+
         List<ICoreServCtrl> GetAllServers();
         string PackSelectedServers(string orgUid, string pkgName);
+
+        string PackSelectedServers(string orgUid, string pkgName, int strategy);
 
         // wont refresh form main
         void ResetIndexes();

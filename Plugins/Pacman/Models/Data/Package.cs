@@ -8,11 +8,14 @@ namespace Pacman.Models.Data
         public string uid { get; set; }
         public string name { get; set; }
 
+        public int strategy { get; set; }
+
         public Package()
         {
             beans = new List<Bean>();
             name = string.Empty;
             uid = string.Empty;
+            strategy = 0;
         }
     }
 }

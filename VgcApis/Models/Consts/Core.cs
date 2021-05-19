@@ -72,7 +72,6 @@ stat: <
         {
             "[warning]",
             "started",
-            "core:",
             "ray",
         };
 

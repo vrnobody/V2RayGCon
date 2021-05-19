@@ -50,6 +50,9 @@ namespace VgcApis.Models.Consts
                 { "stats", JsonObject},
                 { "transport", JsonObject},
                 { "reverse", JsonObject},
+                { "browserForwarder", JsonObject},
+                { "observatory",JsonObject },
+                { "fakedns", JsonArray},
             };
     }
 }

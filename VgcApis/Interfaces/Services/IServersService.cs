@@ -32,12 +32,14 @@ namespace VgcApis.Interfaces.Services
         void UpdateAllServersSummary();
 
         string PackSelectedServersIntoV4Package(
-            string orgUid, string pkgName);
+            string orgUid, string pkgName,
+            VgcApis.Models.Datas.Enums.BalancerStrategies strategy);
 
-        string PackServersIntoV4Package(
+        string PackServersIntoV4PackageUi(
             List<ICoreServCtrl> servList,
             string orgServerUid,
-            string packageName);
+            string packageName,
+            VgcApis.Models.Datas.Enums.BalancerStrategies strategy);
 
         ReadOnlyCollection<ICoreServCtrl> GetTrackableServerList();
         ReadOnlyCollection<ICoreServCtrl> GetAllServersOrderByIndex();

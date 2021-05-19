@@ -13,6 +13,7 @@ using VgcApis.Interfaces;
 
 namespace V2RayGCon.Services
 {
+
     public class Servers :
         BaseClasses.SingletonService<Servers>,
         VgcApis.Interfaces.Services.IServersService
@@ -364,14 +365,16 @@ namespace V2RayGCon.Services
             }
         }
 
-        public string PackSelectedServersIntoV4Package(string orgUid, string pkgName)
+        public string PackSelectedServersIntoV4Package(
+            string orgUid, string pkgName,
+            VgcApis.Models.Datas.Enums.BalancerStrategies strategy)
         {
             var servList = new List<VgcApis.Interfaces.ICoreServCtrl>();
             lock (serverListWriteLock)
             {
                 servList = queryHandler.GetSelectedServers().ToList();
             }
-            return PackServersIntoV4PackageWorker(servList, orgUid, pkgName, true);
+            return PackServersIntoV4PackageWorker(servList, orgUid, pkgName, strategy);
         }
 
         /// <summary>
@@ -379,12 +382,23 @@ namespace V2RayGCon.Services
         /// </summary>
         /// <param name="packageName"></param>
         /// <param name="servList"></param>
-        public string PackServersIntoV4Package(
+        public string PackServersIntoV4PackageUi(
             List<VgcApis.Interfaces.ICoreServCtrl> servList,
             string orgUid,
-            string packageName) =>
-            PackServersIntoV4PackageWorker(
-                servList, orgUid, packageName, false);
+            string packageName,
+            VgcApis.Models.Datas.Enums.BalancerStrategies strategy)
+        {
+            if (servList == null || servList.Count <= 0)
+            {
+                VgcApis.Misc.UI.MsgBoxAsync(I18N.ListIsEmpty);
+                return "";
+            }
+
+            var uid = PackServersIntoV4PackageWorker(servList, orgUid, packageName, strategy);
+            Misc.UI.ShowMessageBoxDoneAsync();
+            return uid;
+        }
+
 
         public bool RunSpeedTestOnSelectedServers()
         {
@@ -785,32 +799,44 @@ namespace V2RayGCon.Services
             }
         }
 
+        void InjectBalacerStrategy(
+            ref JObject config,
+            VgcApis.Models.Datas.Enums.BalancerStrategies strategy)
+        {
+            switch (strategy)
+            {
+                case VgcApis.Models.Datas.Enums.BalancerStrategies.LeastPing:
+                    try
+                    {
+                        config["observatory"] = JObject.Parse("{subjectSelector:['agentout']}");
+                        config["routing"]["balancers"][0]["strategy"] = JObject.Parse("{type:'leastPing'}");
+                    }
+                    catch { }
+                    break;
+                default:
+                    break;
+            }
+        }
+
         string PackServersIntoV4PackageWorker(
            List<ICoreServCtrl> servList,
            string orgUid,
            string packageName,
-           bool quiet)
+           VgcApis.Models.Datas.Enums.BalancerStrategies strategy)
         {
             if (servList == null || servList.Count <= 0)
             {
-                if (!quiet)
-                {
-                    VgcApis.Misc.UI.MsgBoxAsync(I18N.ListIsEmpty);
-                }
                 return "";
             }
 
             JObject package = configMgr.GenV4ServersPackage(servList, packageName);
+            InjectBalacerStrategy(ref package, strategy);
 
             var newConfig = package.ToString(Formatting.None);
             string newUid = ReplaceOrAddNewServer(orgUid, newConfig, @"PackageV4");
 
             UpdateMarkList();
             setting.SendLog(I18N.PackageDone);
-            if (!quiet)
-            {
-                Misc.UI.ShowMessageBoxDoneAsync();
-            }
             return newUid;
         }
 

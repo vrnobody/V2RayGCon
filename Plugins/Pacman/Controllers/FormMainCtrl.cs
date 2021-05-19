@@ -16,6 +16,7 @@ namespace Pacman.Controllers
         FlowLayoutPanel flyContent;
         ListBox lstBoxPackages;
         List<Models.Data.Bean> beanList;
+        ComboBox cboxBalancerStrategy;
 
         public FormMainCtrl(
             Services.Settings settings,
@@ -26,7 +27,9 @@ namespace Pacman.Controllers
             Button btnSave,
             Button btnDelete,
             Button btnPull,
-            Button btnImport,
+            Button btnPack,
+
+            ComboBox cboxBalancerStrategy,
 
             Button btnSelectAll,
             Button btnSelectInvert,
@@ -43,7 +46,8 @@ namespace Pacman.Controllers
                 btnSave,
                 btnDelete,
                 btnPull,
-                btnImport);
+                btnPack,
+                cboxBalancerStrategy);
 
             BindEvent(
                 btnSelectAll,
@@ -245,7 +249,8 @@ namespace Pacman.Controllers
                 .GetPackageList()
                 .FirstOrDefault(p => p.name == tboxName.Text);
 
-            var newUid = settings.Pack(servList, package?.uid, tboxName.Text);
+            var strategy = (VgcApis.Models.Datas.Enums.BalancerStrategies)cboxBalancerStrategy.SelectedIndex;
+            var newUid = settings.Pack(servList, package?.uid, tboxName.Text, strategy);
             if (package != null)
             {
                 package.uid = newUid;
@@ -298,7 +303,7 @@ namespace Pacman.Controllers
             flyContent.SuspendLayout();
             var ctrls = flyContent.Controls.OfType<Views.UserControls.BeanUI>().ToList();
             var cur = ctrls.Count;
-            for (int i = cur - 1; i >= exp; i++)
+            for (int i = cur - 1; i >= exp; i--)
             {
                 flyContent.Controls.Remove(ctrls[i]);
             }
@@ -345,6 +350,7 @@ namespace Pacman.Controllers
         void ShowPackage(Models.Data.Package package)
         {
             tboxName.Text = package.name;
+            cboxBalancerStrategy.SelectedIndex = package.strategy;
             beanList = package.beans.Select(b => b.Clone()).ToList();
             RefreshFlyContent();
         }
@@ -379,6 +385,7 @@ namespace Pacman.Controllers
             var package = new Models.Data.Package
             {
                 name = name,
+                strategy = cboxBalancerStrategy.SelectedIndex,
                 beans = GetFlyContentBeanList()
             };
 
@@ -402,7 +409,9 @@ namespace Pacman.Controllers
         #endregion
 
         #region UI 
-        private void BindControls(TextBox tboxName, FlowLayoutPanel flyContent, ListBox lstBoxPackages, Button btnSave, Button btnDelete, Button btnPull, Button btnGenerate)
+        private void BindControls(
+            TextBox tboxName, FlowLayoutPanel flyContent, ListBox lstBoxPackages, Button btnSave, Button btnDelete, Button btnPull, Button btnGenerate,
+            ComboBox cboxBalancerStrategy)
         {
             this.tboxName = tboxName;
             this.flyContent = flyContent;
@@ -411,6 +420,8 @@ namespace Pacman.Controllers
             this.btnImport = btnGenerate;
             this.btnPull = btnPull;
             this.btnSave = btnSave;
+            this.cboxBalancerStrategy = cboxBalancerStrategy;
+
         }
         #endregion
     }

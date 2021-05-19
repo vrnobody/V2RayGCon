@@ -56,6 +56,8 @@ namespace Pacman.Views.WinForms
                 btnPull,
                 btnImport,
 
+                cboxBalancerStrategy,
+
                 btnSelectAll,
                 btnSelectInvert,
                 btnSelectNone,

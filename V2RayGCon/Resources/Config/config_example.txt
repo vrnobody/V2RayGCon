@@ -1,4 +1,23 @@
 {
+  "fakednsDefault": [
+    {
+      "ipPool": "198.18.0.0/15",
+      "poolSize": 65535
+    },
+    {
+      "ipPool": "fc00::/18",
+      "poolSize": 65535
+    }
+  ],
+  "observatoryDefault": {
+    "subjectSelector": [
+      "outbound"
+    ]
+  },
+  "browserForwarderDefault": {
+    "listenAddr": "127.0.0.1",
+    "listenPort": 8080
+  },
   "reverseDefault": {
     "bridges": [
       {
@@ -422,6 +441,28 @@
         }
       ]
     }
+  },
+  "routeLeastPing": {
+    "balancers": [
+      {
+        "tag": "pacman",
+        "selector": [
+          "agentout"
+        ],
+        "strategy": {
+          "type": "leastPing"
+        }
+      }
+    ],
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "agentin"
+        ],
+        "balancerTag": "pacman"
+      }
+    ]
   },
   "routeAll": {
     "strategy": "rules",

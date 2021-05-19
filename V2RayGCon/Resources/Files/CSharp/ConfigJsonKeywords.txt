@@ -12,7 +12,9 @@
 8080
 Accept-Encoding
 acceptProxyProtocol
+agentout
 AsIs
+browserForwarder
 Connection
 GET
 grpc
@@ -106,6 +108,7 @@ env
 env:PORT
 error
 ext:file:tag
+fakedns
 fallbacks
 false
 fc00::/7
@@ -147,15 +150,19 @@ inboundTag
 inbounds
 info
 ip
+ipPool
 issue
 kcp
 kcpSettings
 keep-alive
 key
 keyFile
+leastPing
 level
 levels
 listen
+listenAddr
+listenPort
 log
 loglevel
 mark
@@ -167,6 +174,7 @@ network
 no-cache
 noauth
 none
+observatory
 off
 ota
 outboundTag
@@ -175,6 +183,7 @@ pass
 password
 path
 policy
+poolSize
 port
 portals
 protocol
@@ -215,6 +224,7 @@ statsUserUplink
 status
 strategy
 streamSettings
+subjectSelector
 system
 tag
 tcp

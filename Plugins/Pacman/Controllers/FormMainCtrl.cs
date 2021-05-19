@@ -251,7 +251,7 @@ namespace Pacman.Controllers
 
             var strategy = (VgcApis.Models.Datas.Enums.BalancerStrategies)cboxBalancerStrategy.SelectedIndex;
             var newUid = settings.Pack(servList, package?.uid, tboxName.Text, strategy);
-            if (package != null)
+            if (package != null && !string.IsNullOrEmpty(newUid))
             {
                 package.uid = newUid;
                 settings.SavePackage(package);

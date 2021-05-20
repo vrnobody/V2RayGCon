@@ -124,7 +124,7 @@
     <value>Are you sure want to remove this script?</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Lua Scripts manager.</value>
+    <value>Lua Scripts manager.（require 64bit system)</value>
   </data>
   <data name="DiscardUnsavedChanges" xml:space="preserve">
     <value>Discard unsaved changes?</value>

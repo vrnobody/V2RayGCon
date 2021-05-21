@@ -1,11 +1,10 @@
 {
-  "version": "1.5.4.0",
-  "md5": "E09D870EAF8B31A599D7C679B73E935F",
+  "version": "1.5.5.0",
+  "md5": "595713BDCA3D31876703B8AAAEB5B8C0",
   "warnings": [],
   "changes": [
-    "支持vmess分享链接中的sni及gRPC配置项",
-    "选项窗口添加uTLS指纹伪装配置项",
-    "添加XRAY_BROWSER_DIALER等几个环境变量",
-    "（环境变量可在Json编辑器的杂项面板中插入）"
+    "修复v2ray-core v4.35.1起出现的测速失败问题",
+    "Pacman插件添加leastPing均衡策略（需v2ray-core v4.38.0+)",
+    "Luna插件添加32位dll文件"
   ]
 }

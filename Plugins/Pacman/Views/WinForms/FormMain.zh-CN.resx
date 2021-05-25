@@ -123,17 +123,17 @@
   <data name="btnSave.ToolTip" xml:space="preserve">
     <value>新增或修改包裹设置</value>
   </data>
+  <data name="btnChain.Text" xml:space="preserve">
+    <value>串连</value>
+  </data>
+  <data name="btnChain.ToolTip" xml:space="preserve">
+    <value>串连选中的服务器</value>
+  </data>
   <data name="btnImport.Text" xml:space="preserve">
     <value>打包</value>
   </data>
   <data name="btnImport.ToolTip" xml:space="preserve">
     <value>打包当前选中的服务器</value>
-  </data>
-  <data name="btnPull.Text" xml:space="preserve">
-    <value>拉取</value>
-  </data>
-  <data name="btnPull.ToolTip" xml:space="preserve">
-    <value>从主窗口拉取选中的服务器</value>
   </data>
   <data name="btnDelete.Text" xml:space="preserve">
     <value>删除</value>
@@ -156,9 +156,6 @@
   <data name="groupBox2.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="flyContents.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="cboxBalancerStrategy.ToolTip" xml:space="preserve">
     <value />
   </data>
@@ -171,6 +168,17 @@
   </data>
   <data name="label2.ToolTip" xml:space="preserve">
     <value>均衡器策略</value>
+  </data>
+  <data name="btnPull.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAGxJREFUOE/NjNEJgDAMBTNbVnA3v1zDQZxE/cmv8oqBECm+VgQDR9PAnWDM7Oih
+        yBh8VLWJnwa2daegAzJMhXz/PjDOS3ljwG/gMQAJggd8pwNRjhE6kCNRBlQAQMwyoAM1qoEWboEeLv3N
+        iJxnTngNYdMDJwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="btnPull.ToolTip" xml:space="preserve">
+    <value>从主窗口拉取选中的服务器</value>
   </data>
   <data name="btnRefreshSelected.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -232,6 +240,12 @@
     <value>全选</value>
   </data>
   <data name="panel1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="flyContents.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel2.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="tableLayoutPanel3.ToolTip" xml:space="preserve">

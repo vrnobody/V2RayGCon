@@ -53,11 +53,12 @@ namespace Pacman.Views.WinForms
                 lstBoxPackages,
                 btnSave,
                 btnDelete,
-                btnPull,
+                btnChain,
                 btnImport,
 
                 cboxBalancerStrategy,
 
+                btnPull,
                 btnSelectAll,
                 btnSelectInvert,
                 btnSelectNone,
@@ -71,6 +72,6 @@ namespace Pacman.Views.WinForms
         {
             flyContents.Refresh();
         }
-        #endregion
+        #endregion        
     }
 }

@@ -41,6 +41,10 @@ namespace VgcApis.Interfaces.Services
             string packageName,
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy);
 
+        string ChainSelectedServersIntoV4Package(string orgUid, string pkgName);
+
+        string ChainServersIntoV4PackageUi(List<ICoreServCtrl> servList, string orgServerUid, string packageName);
+
         ReadOnlyCollection<ICoreServCtrl> GetTrackableServerList();
         ReadOnlyCollection<ICoreServCtrl> GetAllServersOrderByIndex();
     }

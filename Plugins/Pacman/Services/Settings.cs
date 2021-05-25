@@ -26,6 +26,12 @@ namespace Pacman.Services
         #endregion
 
         #region public methods
+        public string Chain(
+            List<VgcApis.Interfaces.ICoreServCtrl> servList, string orgServerUid, string packageName)
+        {
+            return vgcServers.ChainServersIntoV4PackageUi(servList, orgServerUid, packageName);
+        }
+
         public string Pack(
             List<VgcApis.Interfaces.ICoreServCtrl> servList,
             string orgServerUid,

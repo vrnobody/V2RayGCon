@@ -67,5 +67,8 @@ namespace Luna.Models.Apis.Components
             var st = (VgcApis.Models.Datas.Enums.BalancerStrategies)strategy;
             return vgcServers.PackSelectedServersIntoV4Package(orgUid, pkgName, st);
         }
+
+        public string ChainSelectedServers(string orgUid, string pkgName) =>
+            vgcServers.ChainSelectedServersIntoV4Package(orgUid, pkgName);
     }
 }

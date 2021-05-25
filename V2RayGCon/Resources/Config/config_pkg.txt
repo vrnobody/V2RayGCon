@@ -1,4 +1,23 @@
 ﻿{
+  "chainV4Tpl": {
+    "log": {
+      "loglevel": "warning"
+    },
+    "v2raygcon": {
+      "alias": "PackageV4",
+      "description": ""
+    },
+    "inbounds": [
+      {
+        "port": 1080,
+        "listen": "127.0.0.1",
+        "protocol": "socks",
+        "settings": {},
+        "tag": "agentin"
+      }
+    ],
+    "outbounds": []
+  },
   "pkgV4Tpl": {
     "log": {
       "loglevel": "warning"

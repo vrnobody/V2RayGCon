@@ -297,6 +297,54 @@ namespace V2RayGCon.Services
             return bootList;
         }
 
+        public JObject GenV4ServersChain(
+           List<VgcApis.Interfaces.ICoreServCtrl> servList,
+           string packageName)
+        {
+            var package = cache.tpl.LoadPackage("chainV4Tpl");
+            var outbounds = package["outbounds"] as JArray;
+            var description = new List<string>();
+
+            JObject prev = null;
+            for (var i = 0; i < servList.Count; i++)
+            {
+                var s = servList[i];
+                var parts = Misc.Utils.ExtractOutboundsFromConfig(
+                    s.GetConfiger().GetFinalConfig());
+                var c = 0;
+                foreach (JObject p in parts)
+                {
+                    var tag = $"node{i}s{c++}";
+                    p["tag"] = tag;
+                    if (prev != null)
+                    {
+                        prev["proxySettings"] = JObject.Parse(@"{tag: '',transportLayer: true}");
+                        prev["proxySettings"]["tag"] = tag;
+                        outbounds.Add(prev);
+                    }
+                    prev = p;
+                }
+                var name = s.GetCoreStates().GetName();
+                if (c == 0)
+                {
+                    setting.SendLog(I18N.PackageFail + ": " + name);
+                }
+                else
+                {
+                    description.Add($"{i}.[{name}]");
+                    setting.SendLog(I18N.PackageSuccess + ": " + name);
+                }
+            }
+            outbounds.Add(prev);
+
+            package["v2raygcon"]["alias"] = string.IsNullOrEmpty(packageName) ? "ChainV4" : packageName;
+            package["v2raygcon"]["description"] =
+                $"[Total: {description.Count()}] " +
+                string.Join(" ", description);
+
+            return package;
+        }
+
         public JObject GenV4ServersPackage(
             List<VgcApis.Interfaces.ICoreServCtrl> servList,
             string packageName)

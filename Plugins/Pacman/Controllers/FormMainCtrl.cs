@@ -11,7 +11,7 @@ namespace Pacman.Controllers
     {
         Services.Settings settings;
 
-        Button btnSave, btnDelete, btnPull, btnImport;
+        Button btnSave, btnDelete, btnPull, btnPack, btnChain;
         TextBox tboxName;
         FlowLayoutPanel flyContent;
         ListBox lstBoxPackages;
@@ -26,11 +26,12 @@ namespace Pacman.Controllers
             ListBox lstBoxPackages,
             Button btnSave,
             Button btnDelete,
-            Button btnPull,
+            Button btnChain,
             Button btnPack,
 
             ComboBox cboxBalancerStrategy,
 
+            Button btnPull,
             Button btnSelectAll,
             Button btnSelectInvert,
             Button btnSelectNone,
@@ -39,15 +40,15 @@ namespace Pacman.Controllers
         {
             this.settings = settings;
 
-            BindControls(
-                tboxName,
-                flyContent,
-                lstBoxPackages,
-                btnSave,
-                btnDelete,
-                btnPull,
-                btnPack,
-                cboxBalancerStrategy);
+            this.tboxName = tboxName;
+            this.flyContent = flyContent;
+            this.lstBoxPackages = lstBoxPackages;
+            this.btnDelete = btnDelete;
+            this.btnChain = btnChain;
+            this.btnPack = btnPack;
+            this.btnPull = btnPull;
+            this.btnSave = btnSave;
+            this.cboxBalancerStrategy = cboxBalancerStrategy;
 
             BindEvent(
                 btnSelectAll,
@@ -170,7 +171,8 @@ namespace Pacman.Controllers
             btnDelete.Click += (s, a) => DeletePackage();
             lstBoxPackages.SelectedIndexChanged += (s, a) => PackageListSelectedIndexChanged();
             btnPull.Click += (s, a) => PullSelectedServerFromMainWindow();
-            btnImport.Click += (s, a) => Pack();
+            btnPack.Click += (s, a) => Pack();
+            btnChain.Click += (s, a) => Chain();
         }
         #endregion
 
@@ -251,6 +253,31 @@ namespace Pacman.Controllers
 
             var strategy = (VgcApis.Models.Datas.Enums.BalancerStrategies)cboxBalancerStrategy.SelectedIndex;
             var newUid = settings.Pack(servList, package?.uid, tboxName.Text, strategy);
+            if (package != null && !string.IsNullOrEmpty(newUid))
+            {
+                package.uid = newUid;
+                settings.SavePackage(package);
+            }
+        }
+
+        void Chain()
+        {
+            var uidList = GetFlyContentBeanList()
+                .Where(b => b.isSelected)
+                .Select(b => b.uid)
+                .ToList();
+
+            var servList = settings
+                .GetAllServersList()
+                .Where(s => uidList.Contains(s.GetCoreStates().GetUid()))
+                .ToList();
+
+            var package = settings
+                .GetPackageList()
+                .FirstOrDefault(p => p.name == tboxName.Text);
+
+
+            var newUid = settings.Chain(servList, package?.uid, tboxName.Text);
             if (package != null && !string.IsNullOrEmpty(newUid))
             {
                 package.uid = newUid;
@@ -409,20 +436,7 @@ namespace Pacman.Controllers
         #endregion
 
         #region UI 
-        private void BindControls(
-            TextBox tboxName, FlowLayoutPanel flyContent, ListBox lstBoxPackages, Button btnSave, Button btnDelete, Button btnPull, Button btnGenerate,
-            ComboBox cboxBalancerStrategy)
-        {
-            this.tboxName = tboxName;
-            this.flyContent = flyContent;
-            this.lstBoxPackages = lstBoxPackages;
-            this.btnDelete = btnDelete;
-            this.btnImport = btnGenerate;
-            this.btnPull = btnPull;
-            this.btnSave = btnSave;
-            this.cboxBalancerStrategy = cboxBalancerStrategy;
 
-        }
         #endregion
     }
 }

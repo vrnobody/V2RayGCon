@@ -151,7 +151,7 @@
     <value>Top, Right</value>
   </data>
   <data name="lbStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>321, 4</value>
+    <value>323, 4</value>
   </data>
   <data name="lbStatus.Size" type="System.Drawing.Size, System.Drawing">
     <value>56, 16</value>
@@ -184,7 +184,7 @@
     <value>25, 4</value>
   </data>
   <data name="lbTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>290, 16</value>
+    <value>292, 16</value>
   </data>
   <data name="lbTitle.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -217,7 +217,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>380, 27</value>
+    <value>380, 26</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>BeanUI</value>

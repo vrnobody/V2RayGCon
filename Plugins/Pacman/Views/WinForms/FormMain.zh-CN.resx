@@ -127,13 +127,13 @@
     <value>串连</value>
   </data>
   <data name="btnChain.ToolTip" xml:space="preserve">
-    <value>串连选中的服务器</value>
+    <value>将选中的服务器串成一条代理链</value>
   </data>
   <data name="btnImport.Text" xml:space="preserve">
     <value>打包</value>
   </data>
   <data name="btnImport.ToolTip" xml:space="preserve">
-    <value>打包当前选中的服务器</value>
+    <value>将选中的服务器打包成带负载均衡功能的服务器包</value>
   </data>
   <data name="btnDelete.Text" xml:space="preserve">
     <value>删除</value>

@@ -287,7 +287,7 @@
     <value>1</value>
   </data>
   <data name="btnChain.ToolTip" xml:space="preserve">
-    <value>Chain selected servers.</value>
+    <value>Chain selected servers into a proxy chain.</value>
   </data>
   <data name="btnRefreshSelected.Location" type="System.Drawing.Point, System.Drawing">
     <value>395, 0</value>
@@ -928,7 +928,7 @@
     <value>2</value>
   </data>
   <data name="btnImport.ToolTip" xml:space="preserve">
-    <value>Pack current selected server.</value>
+    <value>Pack selected servers.</value>
   </data>
   <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
     <value>1</value>

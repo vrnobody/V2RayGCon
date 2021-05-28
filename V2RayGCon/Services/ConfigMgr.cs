@@ -297,9 +297,52 @@ namespace V2RayGCon.Services
             return bootList;
         }
 
-        public JObject GenV4ServersChain(
-           List<VgcApis.Interfaces.ICoreServCtrl> servList,
-           string packageName)
+        public JObject GenV4ServersPackageConfig(
+            List<VgcApis.Interfaces.ICoreServCtrl> servList,
+            string packageName,
+            VgcApis.Models.Datas.Enums.PackageTypes packageType)
+        {
+            JObject package;
+            switch (packageType)
+            {
+                case VgcApis.Models.Datas.Enums.PackageTypes.Chain:
+                    package = GenV4ChainConfig(servList, packageName);
+                    break;
+                case VgcApis.Models.Datas.Enums.PackageTypes.Balancer:
+                default:
+                    package = GenV4BalancerConfig(servList, packageName);
+                    break;
+            }
+
+            try
+            {
+                var finalConfig = GetGlobalImportConfigForPacking();
+                Misc.Utils.CombineConfigWithRoutingInTheEnd(ref finalConfig, package);
+                return finalConfig;
+            }
+            catch
+            {
+                setting.SendLog(I18N.InjectPackagingImportsFail);
+                return package;
+            }
+        }
+
+
+
+        public void Run(
+            Settings setting,
+            Cache cache)
+        {
+            this.setting = setting;
+            this.cache = cache;
+        }
+
+        #endregion
+
+        #region private methods
+        JObject GenV4ChainConfig(
+        List<VgcApis.Interfaces.ICoreServCtrl> servList,
+        string packageName)
         {
             var package = cache.tpl.LoadPackage("chainV4Tpl");
             var outbounds = package["outbounds"] as JArray;
@@ -345,9 +388,7 @@ namespace V2RayGCon.Services
             return package;
         }
 
-        public JObject GenV4ServersPackage(
-            List<VgcApis.Interfaces.ICoreServCtrl> servList,
-            string packageName)
+        private JObject GenV4BalancerConfig(List<VgcApis.Interfaces.ICoreServCtrl> servList, string packageName)
         {
             var package = cache.tpl.LoadPackage("pkgV4Tpl");
             var outbounds = package["outbounds"] as JArray;
@@ -380,31 +421,8 @@ namespace V2RayGCon.Services
             package["v2raygcon"]["description"] =
                 $"[Total: {description.Count()}] " +
                 string.Join(" ", description);
-
-            try
-            {
-                var finalConfig = GetGlobalImportConfigForPacking();
-                Misc.Utils.CombineConfigWithRoutingInTheEnd(ref finalConfig, package);
-                return finalConfig;
-            }
-            catch
-            {
-                setting.SendLog(I18N.InjectPackagingImportsFail);
-                return package;
-            }
+            return package;
         }
-
-        public void Run(
-            Settings setting,
-            Cache cache)
-        {
-            this.setting = setting;
-            this.cache = cache;
-        }
-
-        #endregion
-
-        #region private methods
         void MergeCustomTlsSettings(ref JObject config)
         {
             var outB = Misc.Utils.GetKey(config, "outbound") ??

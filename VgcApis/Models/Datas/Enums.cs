@@ -2,6 +2,12 @@
 {
     public class Enums
     {
+        public enum PackageTypes
+        {
+            Chain,
+            Balancer,
+        }
+
         public enum BalancerStrategies
         {
             Random = 0,

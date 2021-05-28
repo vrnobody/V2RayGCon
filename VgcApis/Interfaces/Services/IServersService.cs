@@ -31,19 +31,17 @@ namespace VgcApis.Interfaces.Services
 
         void UpdateAllServersSummary();
 
-        string PackSelectedServersIntoV4Package(
-            string orgUid, string pkgName,
-            VgcApis.Models.Datas.Enums.BalancerStrategies strategy);
+        string PackSelectedServersV4(
+              string orgUid, string pkgName,
+              VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
+              VgcApis.Models.Datas.Enums.PackageTypes packageType);
 
-        string PackServersIntoV4PackageUi(
-            List<ICoreServCtrl> servList,
-            string orgServerUid,
+        string PackServersV4Ui(
+            List<VgcApis.Interfaces.ICoreServCtrl> servList,
+            string orgUid,
             string packageName,
-            VgcApis.Models.Datas.Enums.BalancerStrategies strategy);
-
-        string ChainSelectedServersIntoV4Package(string orgUid, string pkgName);
-
-        string ChainServersIntoV4PackageUi(List<ICoreServCtrl> servList, string orgServerUid, string packageName);
+            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
+            VgcApis.Models.Datas.Enums.PackageTypes packageType);
 
         ReadOnlyCollection<ICoreServCtrl> GetTrackableServerList();
         ReadOnlyCollection<ICoreServCtrl> GetAllServersOrderByIndex();

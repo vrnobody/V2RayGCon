@@ -29,7 +29,10 @@ namespace Pacman.Services
         public string Chain(
             List<VgcApis.Interfaces.ICoreServCtrl> servList, string orgServerUid, string packageName)
         {
-            return vgcServers.ChainServersIntoV4PackageUi(servList, orgServerUid, packageName);
+            return vgcServers.PackServersV4Ui(
+                servList, orgServerUid, packageName,
+                VgcApis.Models.Datas.Enums.BalancerStrategies.Random,
+                VgcApis.Models.Datas.Enums.PackageTypes.Chain);
         }
 
         public string Pack(
@@ -38,8 +41,9 @@ namespace Pacman.Services
             string packageName,
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy)
         {
-            return vgcServers.PackServersIntoV4PackageUi(
-                servList, orgServerUid, packageName, strategy);
+            return vgcServers.PackServersV4Ui(
+                servList, orgServerUid, packageName, strategy,
+                VgcApis.Models.Datas.Enums.PackageTypes.Balancer);
         }
 
         public ReadOnlyCollection<VgcApis.Interfaces.ICoreServCtrl> GetAllServersList() =>

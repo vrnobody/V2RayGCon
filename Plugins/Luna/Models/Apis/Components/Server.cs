@@ -58,17 +58,22 @@ namespace Luna.Models.Apis.Components
             vgcServers.RunSpeedTestOnSelectedServers();
 
         public string PackSelectedServers(string orgUid, string pkgName) =>
-            vgcServers.PackSelectedServersIntoV4Package(
+            PackSelectedServers(
                 orgUid, pkgName,
-                VgcApis.Models.Datas.Enums.BalancerStrategies.Random);
+                (int)VgcApis.Models.Datas.Enums.BalancerStrategies.Random);
 
         public string PackSelectedServers(string orgUid, string pkgName, int strategy)
         {
             var st = (VgcApis.Models.Datas.Enums.BalancerStrategies)strategy;
-            return vgcServers.PackSelectedServersIntoV4Package(orgUid, pkgName, st);
+            return vgcServers.PackSelectedServersV4(
+                orgUid, pkgName, st,
+                VgcApis.Models.Datas.Enums.PackageTypes.Balancer);
         }
 
         public string ChainSelectedServers(string orgUid, string pkgName) =>
-            vgcServers.ChainSelectedServersIntoV4Package(orgUid, pkgName);
+            vgcServers.PackSelectedServersV4(
+                orgUid, pkgName,
+                VgcApis.Models.Datas.Enums.BalancerStrategies.Random,
+                VgcApis.Models.Datas.Enums.PackageTypes.Chain);
     }
 }

@@ -365,27 +365,18 @@ namespace V2RayGCon.Services
             }
         }
 
-        public string PackSelectedServersIntoV4Package(
+        public string PackSelectedServersV4(
             string orgUid, string pkgName,
-            VgcApis.Models.Datas.Enums.BalancerStrategies strategy)
+            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
+            VgcApis.Models.Datas.Enums.PackageTypes packageType)
         {
             var servList = new List<VgcApis.Interfaces.ICoreServCtrl>();
             lock (serverListWriteLock)
             {
                 servList = queryHandler.GetSelectedServers().ToList();
             }
-            return PackServersIntoV4PackageWorker(servList, orgUid, pkgName, strategy);
-        }
-
-        public string ChainSelectedServersIntoV4Package(
-            string orgUid, string pkgName)
-        {
-            var servList = new List<VgcApis.Interfaces.ICoreServCtrl>();
-            lock (serverListWriteLock)
-            {
-                servList = queryHandler.GetSelectedServers().ToList();
-            }
-            return ChainServersIntoV4PackageWorker(servList, orgUid, pkgName);
+            return PackServersIntoV4PackageWorker(
+                servList, orgUid, pkgName, strategy, packageType);
         }
 
         /// <summary>
@@ -393,11 +384,12 @@ namespace V2RayGCon.Services
         /// </summary>
         /// <param name="packageName"></param>
         /// <param name="servList"></param>
-        public string PackServersIntoV4PackageUi(
+        public string PackServersV4Ui(
             List<VgcApis.Interfaces.ICoreServCtrl> servList,
             string orgUid,
             string packageName,
-            VgcApis.Models.Datas.Enums.BalancerStrategies strategy)
+            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
+            VgcApis.Models.Datas.Enums.PackageTypes packageType)
         {
             if (servList == null || servList.Count < 1)
             {
@@ -405,27 +397,11 @@ namespace V2RayGCon.Services
                 return "";
             }
 
-            var uid = PackServersIntoV4PackageWorker(servList, orgUid, packageName, strategy);
+            var uid = PackServersIntoV4PackageWorker(
+                servList, orgUid, packageName, strategy, packageType);
             Misc.UI.ShowMessageBoxDoneAsync();
             return uid;
         }
-
-        public string ChainServersIntoV4PackageUi(
-           List<VgcApis.Interfaces.ICoreServCtrl> servList,
-           string orgUid,
-           string packageName)
-        {
-            if (servList == null || servList.Count < 1)
-            {
-                VgcApis.Misc.UI.MsgBoxAsync(I18N.ListIsEmpty);
-                return "";
-            }
-
-            var uid = ChainServersIntoV4PackageWorker(servList, orgUid, packageName);
-            Misc.UI.ShowMessageBoxDoneAsync();
-            return uid;
-        }
-
 
         public bool RunSpeedTestOnSelectedServers()
         {
@@ -845,42 +821,36 @@ namespace V2RayGCon.Services
             }
         }
 
-        string ChainServersIntoV4PackageWorker(
-           List<ICoreServCtrl> servList,
-           string orgUid,
-           string packageName)
-        {
-            if (servList == null || servList.Count < 1)
-            {
-                return "";
-            }
-
-            JObject package = configMgr.GenV4ServersChain(servList, packageName);
-
-            var newConfig = package.ToString(Formatting.None);
-            string newUid = ReplaceOrAddNewServer(orgUid, newConfig, @"ChainV4");
-
-            UpdateMarkList();
-            setting.SendLog(I18N.PackageDone);
-            return newUid;
-        }
-
         string PackServersIntoV4PackageWorker(
            List<ICoreServCtrl> servList,
            string orgUid,
            string packageName,
-           VgcApis.Models.Datas.Enums.BalancerStrategies strategy)
+           VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
+           VgcApis.Models.Datas.Enums.PackageTypes packageType)
         {
             if (servList == null || servList.Count < 1)
             {
                 return "";
             }
 
-            JObject package = configMgr.GenV4ServersPackage(servList, packageName);
-            InjectBalacerStrategy(ref package, strategy);
+            JObject package = configMgr.GenV4ServersPackageConfig(
+                servList, packageName, packageType);
+            string mark;
+
+            switch (packageType)
+            {
+                case VgcApis.Models.Datas.Enums.PackageTypes.Balancer:
+                    InjectBalacerStrategy(ref package, strategy);
+                    mark = @"PackageV4";
+                    break;
+                case VgcApis.Models.Datas.Enums.PackageTypes.Chain:
+                default:
+                    mark = @"ChainV4";
+                    break;
+            }
 
             var newConfig = package.ToString(Formatting.None);
-            string newUid = ReplaceOrAddNewServer(orgUid, newConfig, @"PackageV4");
+            string newUid = ReplaceOrAddNewServer(orgUid, newConfig, mark);
 
             UpdateMarkList();
             setting.SendLog(I18N.PackageDone);

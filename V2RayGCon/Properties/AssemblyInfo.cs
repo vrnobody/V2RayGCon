@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.5.5.3")]
+[assembly: AssemblyVersion("1.5.5.4")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /* 
+ * v1.5.5.4 Fix: form option prompt options were not saved.
  * v1.5.5.3 Refactoring.
  * v1.5.5.2 Adjust UI.
  * v1.5.5.1 Add server chaining feature for Pacman plug-in.

@@ -17,13 +17,13 @@ jobs:
         releaseNoteUrl: "https://vrnobody.github.io/V2RayGCon/04-dev/01-release-log/"
         verStr: '1.5.x'
         boxAppend: box
-        v2rayCorePkgName: 'Xray-windows-64.zip'
+        v2rayCorePkgName: 'v2ray-windows-32.zip'
         scriptPkgName: 'scripts-v1.0.1'
-        v2rayCoreVer: 'v1.4.2'
+        v2rayCoreVer: 'v4.39.2'
         # https://github.com/v2ray/v2ray-core/releases/download/v4.20.0/v2ray-windows-32.zip
         # https://github.com/XTLS/Xray-core/releases/download/v1.4.0/Xray-windows-64.zip
-        # v2rayCoreUrl: 'https://github.com/v2fly/v2ray-core/releases/download'
-        v2rayCoreUrl: 'https://github.com/XTLS/Xray-core/releases/download'
+        v2rayCoreUrl: 'https://github.com/v2fly/v2ray-core/releases/download'
+        # v2rayCoreUrl: 'https://github.com/XTLS/Xray-core/releases/download'
 
     steps:
         - name: Checkout master
@@ -94,7 +94,7 @@ jobs:
                 ${{ env.projName }}-${{ env.boxAppend }}.zip (${{ env.hashVgcBoxZip }})
                 ${{ env.scriptPkgName }}.zip (${{ env.hashScriptPkgZip }})
 
-                其中${{ env.projName }}-${{ env.boxAppend }}.zip打包了Xray-core-win64 ${{ env.v2rayCoreVer }}
+                其中${{ env.projName }}-${{ env.boxAppend }}.zip打包了v2ray-core-win32 ${{ env.v2rayCoreVer }}
                 ${{ env.scriptPkgName }}.zip解压后拖进Luna脚本管理器的空白区中即可食用
               draft: true
               prerelease: false

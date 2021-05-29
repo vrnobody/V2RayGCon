@@ -161,6 +161,11 @@
     <Compile Include="Models\VeeShareLinks\Ss1c.cs" />
     <Compile Include="Models\VeeShareLinks\Obsolete\Vless4a.cs" />
     <Compile Include="Models\VeeShareLinks\Vless4b.cs" />
+    <Compile Include="Resources\Resx\I18N1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>I18N.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Resx\StrConst.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -305,11 +310,6 @@
       <DependentUpon>I18N.zh-CN.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\Resx\I18N.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>I18N.resx</DependentUpon>
     </Compile>
     <Compile Include="Models\Datas\Vmess.cs" />
     <Compile Include="Services\Cache.cs" />

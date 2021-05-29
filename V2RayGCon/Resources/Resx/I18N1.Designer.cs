@@ -47,8 +47,8 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   重写当前线程的 CurrentUICulture 属性
-        ///   重写当前线程的 CurrentUICulture 属性。
+        ///   重写当前线程的 CurrentUICulture 属性，对
+        ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture {
@@ -250,7 +250,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Concurrent V2Ray-core number:  的本地化字符串。
+        ///   查找类似 Concurrent cores:  的本地化字符串。
         /// </summary>
         internal static string ConcurrentV2RayCoreNum {
             get {
@@ -514,7 +514,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Newer v2ray-core {0} is available, upgrade now? 的本地化字符串。
+        ///   查找类似 Newer core {0} is available, upgrade now? 的本地化字符串。
         /// </summary>
         internal static string ConfirmUpgradeV2rayCore {
             get {
@@ -568,7 +568,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 V2ray-core has stopped! 的本地化字符串。
+        ///   查找类似 Core has stopped! 的本地化字符串。
         /// </summary>
         internal static string CoreExit {
             get {
@@ -586,7 +586,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Current v2ray-core version is v{0} 的本地化字符串。
+        ///   查找类似 Current core version is v{0} 的本地化字符串。
         /// </summary>
         internal static string CurrentCoreVerIs {
             get {
@@ -757,7 +757,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Download v2ray-core 的本地化字符串。
+        ///   查找类似 Download V2Ray/Xray core 的本地化字符串。
         /// </summary>
         internal static string DownloadV2rayCore {
             get {

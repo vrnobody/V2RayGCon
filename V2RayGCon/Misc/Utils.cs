@@ -242,7 +242,14 @@ namespace V2RayGCon.Misc
             var tag = GetValue<string>(config, "routing.balancers.0.tag");
             if (!string.IsNullOrEmpty(tag))
             {
-                return $"balancer: random";
+                return @"balancer: random";
+            }
+
+            var proxy = GetValue<string>(config, "outbounds.0.proxySettings.tag");
+            if (!string.IsNullOrEmpty(proxy))
+            {
+                var count = config["outbounds"].Count();
+                return $"proxychain: {count}";
             }
 
             var result = GetSummaryFromConfig(config, "outbound");

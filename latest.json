@@ -1,10 +1,8 @@
 {
-  "version": "1.5.5.0",
-  "md5": "595713BDCA3D31876703B8AAAEB5B8C0",
+  "version": "1.5.6.0",
+  "md5": "82C6662FAC576A67232624E5B1A5CAC9",
   "warnings": [],
   "changes": [
-    "修复v2ray-core v4.35.1起出现的测速失败问题",
-    "Pacman插件添加leastPing均衡策略（需v2ray-core v4.38.0+)",
-    "Luna插件添加32位dll文件"
+    "Pacman插件添加将多个服务器串成一条代理链的功能"
   ]
 }

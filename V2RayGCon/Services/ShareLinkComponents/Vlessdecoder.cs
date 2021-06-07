@@ -60,6 +60,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             switch (vc.streamType)
             {
+                case "grpc":
+                    ps["serviceName"] = vc.streamParam2;
+                    ps["mode"] = vc.streamParam1 == @"false" ? "gun" : "multi";
+                    // 不知道guna怎么配置T.T
+                    break;
                 case "ws":
                 case "h2":
                     if (!string.IsNullOrWhiteSpace(vc.streamParam1))
@@ -121,6 +126,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region private methods
+
+
         Models.Datas.VeeConfigs ParseVlessUrl(string url)
         {
             var proto = "vless";
@@ -149,37 +156,49 @@ namespace V2RayGCon.Services.ShareLinkComponents
             vc.host = parts[1];
             vc.port = VgcApis.Misc.Utils.Str2Int(parts[2]);
             vc.auth1 = parts[0];
+
+            string GetValue(string key, string def)
+            {
+                return parts.Contains(key) ? parts[parts.IndexOf(key) + 1] : def;
+            }
+
             if (parts.Contains("flow"))
             {
                 vc.auth2 = parts[parts.IndexOf("flow") + 1];
             }
 
-            vc.streamType = parts.Contains("type") ? parts[parts.IndexOf("type") + 1] : "tcp";
-            vc.tlsType = parts.Contains("security") ? parts[parts.IndexOf("security") + 1] : "none";
-            vc.tlsServName = parts.Contains("sni") ? parts[parts.IndexOf("sni") + 1] : parts[1];
+            vc.streamType = GetValue("type", "tcp");
+
+            vc.tlsType = GetValue("security", "none");
+            vc.tlsServName = GetValue("sni", parts[1]);
 
             switch (vc.streamType)
             {
+                case "grpc":
+                    vc.streamParam2 = GetValue("serviceName", @"");
+                    vc.streamParam1 = (GetValue("mode", @"multi") == "multi").ToString().ToLower();
+                    // 不知道guna怎么配置T.T
+                    break;
                 case "ws":
                 case "h2":
-                    vc.streamParam2 = parts.Contains("host") ? parts[parts.IndexOf("host") + 1] : parts[1];
-                    vc.streamParam1 = parts.Contains("path") ? parts[parts.IndexOf("path") + 1] : "/";
+                    vc.streamParam2 = GetValue("host", parts[1]);
+                    vc.streamParam1 = GetValue("path", "/");
                     break;
                 case "tcp":
                     // 木有 tcp.http ??
                     vc.streamParam1 = "none";
                     break;
                 case "kcp":
-                    vc.streamParam1 = parts.Contains("headerType") ? parts[parts.IndexOf("headerType") + 1] : "none";
+                    vc.streamParam1 = GetValue("headerType", "none");
                     if (parts.Contains("seed"))
                     {
                         vc.streamParam2 = parts[parts.IndexOf("seed") + 1];
                     }
                     break;
                 case "quic":
-                    vc.streamParam2 = parts.Contains("quicSecurity") ? parts[parts.IndexOf("quicSecurity") + 1] : "none";
-                    vc.streamParam3 = parts.Contains("key") ? parts[parts.IndexOf("key") + 1] : "";
-                    vc.streamParam1 = parts.Contains("headerType") ? parts[parts.IndexOf("headerType") + 1] : "none";
+                    vc.streamParam2 = GetValue("quicSecurity", "none");
+                    vc.streamParam3 = GetValue("key", "");
+                    vc.streamParam1 = GetValue("headerType", "none");
                     break;
                 default:
                     break;

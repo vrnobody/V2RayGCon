@@ -19,6 +19,7 @@ namespace VgcApis.UserControls
             var error = Marshal.GetLastWin32Error();
             throw new Win32Exception(error);
         }
+
         protected override CreateParams CreateParams
         {
             get
@@ -26,12 +27,27 @@ namespace VgcApis.UserControls
                 var cp = base.CreateParams;
                 try
                 {
-                    LoadLibrary("MsftEdit.dll"); // Available since XP SP1
-                    cp.ClassName = "RichEdit50W";
+                    if (IsWin8OrHigher())
+                    {
+                        LoadLibrary("MsftEdit.dll"); // Available since XP SP1
+                        cp.ClassName = "RichEdit50W";
+                    }
                 }
                 catch { /* Windows XP without any Service Pack.*/ }
                 return cp;
             }
+        }
+
+        bool IsWin8OrHigher()
+        {
+            var v = Environment.OSVersion.Version;
+            if (v.Major > 6 || (v.Major == 6 && v.Minor > 1))
+            {
+                // win 8+
+                return true;
+            }
+            // win7-
+            return false;
         }
     }
 }

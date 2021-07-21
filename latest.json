@@ -1,8 +1,9 @@
 {
-  "version": "1.5.6.0",
-  "md5": "82C6662FAC576A67232624E5B1A5CAC9",
+  "version": "1.5.7.0",
+  "md5": "B4758ACF8E7514F0AFE49C504A3F03A8",
   "warnings": [],
   "changes": [
-    "Pacman插件添加将多个服务器串成一条代理链的功能"
+    "修复Win7下有些序号显示不全的问题",
+    "vless://...分享链接支持gRPC部分传输模式"
   ]
 }

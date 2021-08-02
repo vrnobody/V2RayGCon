@@ -11,9 +11,12 @@ namespace VgcApis.Interfaces.Lua
         List<ICoreServCtrl> GetAllServers();
         string PackSelectedServers(string orgUid, string pkgName);
 
-        string PackSelectedServers(string orgUid, string pkgName, int strategy);
+        string PackSelectedServers(
+            string orgUid, string pkgName, int strategy);
 
-        string PackSelectedServers(string orgUid, string pkgName, string interval, string url, int strategy);
+        string PackSelectedServers(
+            string orgUid, string pkgName, int strategy,
+            string interval, string url);
 
         string ChainSelectedServers(string orgUid, string pkgName);
 

@@ -817,8 +817,14 @@ namespace V2RayGCon.Services
                     try
                     {
                         config["observatory"] = JObject.Parse("{subjectSelector:['agentout']}");
-                        config["observatory"]["ProbeInterval"] = interval;
-                        config["observatory"]["probeURL"] = url;
+                        if (!string.IsNullOrWhiteSpace(interval))
+                        {
+                            config["observatory"]["ProbeInterval"] = interval;
+                        }
+                        if (!string.IsNullOrWhiteSpace(url))
+                        {
+                            config["observatory"]["probeURL"] = url;
+                        }
                         config["routing"]["balancers"][0]["strategy"] = JObject.Parse("{type:'leastPing'}");
                     }
                     catch { }

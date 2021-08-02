@@ -30,7 +30,11 @@ namespace Pacman.Services
             List<VgcApis.Interfaces.ICoreServCtrl> servList, string orgServerUid, string packageName)
         {
             return vgcServers.PackServersV4Ui(
-                servList, orgServerUid, packageName, string.Empty, string.Empty,
+                servList,
+                orgServerUid,
+                packageName,
+                string.Empty,
+                string.Empty,
                 VgcApis.Models.Datas.Enums.BalancerStrategies.Random,
                 VgcApis.Models.Datas.Enums.PackageTypes.Chain);
         }
@@ -44,8 +48,11 @@ namespace Pacman.Services
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy)
         {
             return vgcServers.PackServersV4Ui(
-                servList, orgServerUid, packageName,
-                interval, url,
+                servList,
+                orgServerUid,
+                packageName,
+                interval,
+                url,
                 strategy, VgcApis.Models.Datas.Enums.PackageTypes.Balancer);
         }
 

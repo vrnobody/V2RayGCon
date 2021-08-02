@@ -57,6 +57,8 @@ namespace Pacman.Views.WinForms
                 btnImport,
 
                 cboxBalancerStrategy,
+                cboxObsInterval,
+                cboxObsUrl,
 
                 btnPull,
                 btnSelectAll,
@@ -72,6 +74,14 @@ namespace Pacman.Views.WinForms
         {
             flyContents.Refresh();
         }
-        #endregion        
+
+        private void cboxBalancerStrategy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var visable = cboxBalancerStrategy.SelectedIndex == 1;
+            cboxObsInterval.Enabled = visable;
+            cboxObsUrl.Enabled = visable;
+        }
+        #endregion
+
     }
 }

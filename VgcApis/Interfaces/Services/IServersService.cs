@@ -33,6 +33,7 @@ namespace VgcApis.Interfaces.Services
 
         string PackSelectedServersV4(
               string orgUid, string pkgName,
+              string interval, string url,
               VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
               VgcApis.Models.Datas.Enums.PackageTypes packageType);
 
@@ -40,6 +41,8 @@ namespace VgcApis.Interfaces.Services
             List<VgcApis.Interfaces.ICoreServCtrl> servList,
             string orgUid,
             string packageName,
+            string interval,
+            string url,
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
             VgcApis.Models.Datas.Enums.PackageTypes packageType);
 

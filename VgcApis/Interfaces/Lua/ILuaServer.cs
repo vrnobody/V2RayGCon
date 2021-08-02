@@ -13,6 +13,8 @@ namespace VgcApis.Interfaces.Lua
 
         string PackSelectedServers(string orgUid, string pkgName, int strategy);
 
+        string PackSelectedServers(string orgUid, string pkgName, string interval, string url, int strategy);
+
         string ChainSelectedServers(string orgUid, string pkgName);
 
         // wont refresh form main

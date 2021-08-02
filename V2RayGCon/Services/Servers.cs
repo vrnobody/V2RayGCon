@@ -367,6 +367,7 @@ namespace V2RayGCon.Services
 
         public string PackSelectedServersV4(
             string orgUid, string pkgName,
+             string interval, string url,
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
             VgcApis.Models.Datas.Enums.PackageTypes packageType)
         {
@@ -376,7 +377,7 @@ namespace V2RayGCon.Services
                 servList = queryHandler.GetSelectedServers().ToList();
             }
             return PackServersIntoV4PackageWorker(
-                servList, orgUid, pkgName, strategy, packageType);
+                servList, orgUid, pkgName, interval, url, strategy, packageType);
         }
 
         /// <summary>
@@ -388,6 +389,8 @@ namespace V2RayGCon.Services
             List<VgcApis.Interfaces.ICoreServCtrl> servList,
             string orgUid,
             string packageName,
+            string interval,
+            string url,
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
             VgcApis.Models.Datas.Enums.PackageTypes packageType)
         {
@@ -398,7 +401,7 @@ namespace V2RayGCon.Services
             }
 
             var uid = PackServersIntoV4PackageWorker(
-                servList, orgUid, packageName, strategy, packageType);
+                servList, orgUid, packageName, interval, url, strategy, packageType);
             Misc.UI.ShowMessageBoxDoneAsync();
             return uid;
         }
@@ -804,6 +807,8 @@ namespace V2RayGCon.Services
 
         void InjectBalacerStrategy(
             ref JObject config,
+            string interval,
+            string url,
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy)
         {
             switch (strategy)
@@ -812,6 +817,8 @@ namespace V2RayGCon.Services
                     try
                     {
                         config["observatory"] = JObject.Parse("{subjectSelector:['agentout']}");
+                        config["observatory"]["ProbeInterval"] = interval;
+                        config["observatory"]["probeURL"] = url;
                         config["routing"]["balancers"][0]["strategy"] = JObject.Parse("{type:'leastPing'}");
                     }
                     catch { }
@@ -825,6 +832,8 @@ namespace V2RayGCon.Services
            List<ICoreServCtrl> servList,
            string orgUid,
            string packageName,
+           string interval,
+           string url,
            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
            VgcApis.Models.Datas.Enums.PackageTypes packageType)
         {
@@ -840,7 +849,7 @@ namespace V2RayGCon.Services
             switch (packageType)
             {
                 case VgcApis.Models.Datas.Enums.PackageTypes.Balancer:
-                    InjectBalacerStrategy(ref package, strategy);
+                    InjectBalacerStrategy(ref package, interval, url, strategy);
                     mark = @"PackageV4";
                     break;
                 case VgcApis.Models.Datas.Enums.PackageTypes.Chain:

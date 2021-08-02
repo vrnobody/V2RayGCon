@@ -186,6 +186,8 @@ policy
 poolSize
 port
 portals
+ProbeInterval
+probeURL
 protocol
 proxySettings
 quic

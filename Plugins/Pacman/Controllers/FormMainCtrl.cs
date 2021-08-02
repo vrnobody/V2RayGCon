@@ -16,7 +16,7 @@ namespace Pacman.Controllers
         FlowLayoutPanel flyContent;
         ListBox lstBoxPackages;
         List<Models.Data.Bean> beanList;
-        ComboBox cboxBalancerStrategy;
+        ComboBox cboxBalancerStrategy, cboxObsInterval, cboxObsUrl;
 
         public FormMainCtrl(
             Services.Settings settings,
@@ -30,6 +30,8 @@ namespace Pacman.Controllers
             Button btnPack,
 
             ComboBox cboxBalancerStrategy,
+            ComboBox cboxObsInterval,
+            ComboBox cboxObsUrl,
 
             Button btnPull,
             Button btnSelectAll,
@@ -49,6 +51,8 @@ namespace Pacman.Controllers
             this.btnPull = btnPull;
             this.btnSave = btnSave;
             this.cboxBalancerStrategy = cboxBalancerStrategy;
+            this.cboxObsInterval = cboxObsInterval;
+            this.cboxObsUrl = cboxObsUrl;
 
             BindEvent(
                 btnSelectAll,
@@ -252,7 +256,10 @@ namespace Pacman.Controllers
                 .FirstOrDefault(p => p.name == tboxName.Text);
 
             var strategy = (VgcApis.Models.Datas.Enums.BalancerStrategies)cboxBalancerStrategy.SelectedIndex;
-            var newUid = settings.Pack(servList, package?.uid, tboxName.Text, strategy);
+            var interval = cboxObsInterval.Text;
+            var url = cboxObsUrl.Text;
+
+            var newUid = settings.Pack(servList, package?.uid, tboxName.Text, interval, url, strategy);
             if (package != null && !string.IsNullOrEmpty(newUid))
             {
                 package.uid = newUid;
@@ -378,6 +385,8 @@ namespace Pacman.Controllers
         {
             tboxName.Text = package.name;
             cboxBalancerStrategy.SelectedIndex = package.strategy;
+            cboxObsInterval.Text = package.interval;
+            cboxObsUrl.Text = package.url;
             beanList = package.beans.Select(b => b.Clone()).ToList();
             RefreshFlyContent();
         }
@@ -413,6 +422,8 @@ namespace Pacman.Controllers
             {
                 name = name,
                 strategy = cboxBalancerStrategy.SelectedIndex,
+                interval = cboxObsInterval.Text,
+                url = cboxObsUrl.Text,
                 beans = GetFlyContentBeanList()
             };
 

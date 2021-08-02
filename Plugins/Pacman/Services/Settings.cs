@@ -30,7 +30,7 @@ namespace Pacman.Services
             List<VgcApis.Interfaces.ICoreServCtrl> servList, string orgServerUid, string packageName)
         {
             return vgcServers.PackServersV4Ui(
-                servList, orgServerUid, packageName,
+                servList, orgServerUid, packageName, string.Empty, string.Empty,
                 VgcApis.Models.Datas.Enums.BalancerStrategies.Random,
                 VgcApis.Models.Datas.Enums.PackageTypes.Chain);
         }
@@ -39,11 +39,14 @@ namespace Pacman.Services
             List<VgcApis.Interfaces.ICoreServCtrl> servList,
             string orgServerUid,
             string packageName,
+            string interval,
+            string url,
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy)
         {
             return vgcServers.PackServersV4Ui(
-                servList, orgServerUid, packageName, strategy,
-                VgcApis.Models.Datas.Enums.PackageTypes.Balancer);
+                servList, orgServerUid, packageName,
+                interval, url,
+                strategy, VgcApis.Models.Datas.Enums.PackageTypes.Balancer);
         }
 
         public ReadOnlyCollection<VgcApis.Interfaces.ICoreServCtrl> GetAllServersList() =>
@@ -95,6 +98,8 @@ namespace Pacman.Services
                     p.uid = package.uid;
                 }
                 p.strategy = package.strategy;
+                p.interval = package.interval;
+                p.url = package.url;
                 p.beans = package.beans;
             }
 

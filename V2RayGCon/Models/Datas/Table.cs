@@ -236,6 +236,7 @@ namespace V2RayGCon.Models.Datas
             // "observatory"
             list = NewList();
             list.Add(SS(I18N.Default, "observatoryDefault"));
+            list.Add(SS("URL+Interval", "observatoryUrlAndInterval"));
             d.Add("observatory", list);
 
             //{ 3, "outbound"},

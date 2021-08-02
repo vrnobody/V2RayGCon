@@ -64,15 +64,24 @@ namespace Luna.Models.Apis.Components
 
         public string PackSelectedServers(string orgUid, string pkgName, int strategy)
         {
+            var url = @"https://api.v2fly.org/checkConnection.svgz";
+            var interval = "8s";
+            return PackSelectedServers(orgUid, pkgName, interval, url, strategy);
+        }
+
+        public string PackSelectedServers(
+            string orgUid, string pkgName, string interval, string url, int strategy)
+        {
             var st = (VgcApis.Models.Datas.Enums.BalancerStrategies)strategy;
             return vgcServers.PackSelectedServersV4(
-                orgUid, pkgName, st,
+                orgUid, pkgName, interval, url, st,
                 VgcApis.Models.Datas.Enums.PackageTypes.Balancer);
         }
 
         public string ChainSelectedServers(string orgUid, string pkgName) =>
             vgcServers.PackSelectedServersV4(
                 orgUid, pkgName,
+                string.Empty, string.Empty,
                 VgcApis.Models.Datas.Enums.BalancerStrategies.Random,
                 VgcApis.Models.Datas.Enums.PackageTypes.Chain);
     }

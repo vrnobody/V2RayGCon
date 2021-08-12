@@ -75,7 +75,6 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.toolTip1.SetToolTip(this.tableLayoutPanel1, resources.GetString("tableLayoutPanel1.ToolTip"));
             // 
             // tableLayoutPanel2
             // 
@@ -83,20 +82,18 @@
             this.tableLayoutPanel2.Controls.Add(this.groupBox2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.groupBox3, 0, 1);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.toolTip1.SetToolTip(this.tableLayoutPanel2, resources.GetString("tableLayoutPanel2.ToolTip"));
             // 
             // groupBox2
             // 
-            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.btnSave);
             this.groupBox2.Controls.Add(this.btnChain);
             this.groupBox2.Controls.Add(this.btnImport);
             this.groupBox2.Controls.Add(this.btnDelete);
             this.groupBox2.Controls.Add(this.tboxName);
             this.groupBox2.Controls.Add(this.label1);
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
-            this.toolTip1.SetToolTip(this.groupBox2, resources.GetString("groupBox2.ToolTip"));
             // 
             // btnSave
             // 
@@ -130,13 +127,11 @@
             // 
             resources.ApplyResources(this.tboxName, "tboxName");
             this.tboxName.Name = "tboxName";
-            this.toolTip1.SetToolTip(this.tboxName, resources.GetString("tboxName.ToolTip"));
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // groupBox3
             // 
@@ -144,7 +139,6 @@
             this.groupBox3.Controls.Add(this.tableLayoutPanel3);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
-            this.toolTip1.SetToolTip(this.groupBox3, resources.GetString("groupBox3.ToolTip"));
             // 
             // tableLayoutPanel3
             // 
@@ -152,11 +146,9 @@
             this.tableLayoutPanel3.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.panel2, 0, 1);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.toolTip1.SetToolTip(this.tableLayoutPanel3, resources.GetString("tableLayoutPanel3.ToolTip"));
             // 
             // panel1
             // 
-            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Controls.Add(this.cboxObsUrl);
             this.panel1.Controls.Add(this.cboxObsInterval);
             this.panel1.Controls.Add(this.cboxBalancerStrategy);
@@ -169,8 +161,8 @@
             this.panel1.Controls.Add(this.btnSelectNone);
             this.panel1.Controls.Add(this.btnSelectInvert);
             this.panel1.Controls.Add(this.btnSelectAll);
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
-            this.toolTip1.SetToolTip(this.panel1, resources.GetString("panel1.ToolTip"));
             // 
             // cboxObsUrl
             // 
@@ -184,7 +176,6 @@
             resources.GetString("cboxObsUrl.Items4"),
             resources.GetString("cboxObsUrl.Items5")});
             this.cboxObsUrl.Name = "cboxObsUrl";
-            this.toolTip1.SetToolTip(this.cboxObsUrl, resources.GetString("cboxObsUrl.ToolTip"));
             // 
             // cboxObsInterval
             // 
@@ -199,18 +190,16 @@
             resources.GetString("cboxObsInterval.Items5"),
             resources.GetString("cboxObsInterval.Items6")});
             this.cboxObsInterval.Name = "cboxObsInterval";
-            this.toolTip1.SetToolTip(this.cboxObsInterval, resources.GetString("cboxObsInterval.ToolTip"));
             // 
             // cboxBalancerStrategy
             // 
-            resources.ApplyResources(this.cboxBalancerStrategy, "cboxBalancerStrategy");
             this.cboxBalancerStrategy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxBalancerStrategy.FormattingEnabled = true;
             this.cboxBalancerStrategy.Items.AddRange(new object[] {
             resources.GetString("cboxBalancerStrategy.Items"),
             resources.GetString("cboxBalancerStrategy.Items1")});
+            resources.ApplyResources(this.cboxBalancerStrategy, "cboxBalancerStrategy");
             this.cboxBalancerStrategy.Name = "cboxBalancerStrategy";
-            this.toolTip1.SetToolTip(this.cboxBalancerStrategy, resources.GetString("cboxBalancerStrategy.ToolTip"));
             this.cboxBalancerStrategy.SelectedIndexChanged += new System.EventHandler(this.cboxBalancerStrategy_SelectedIndexChanged);
             // 
             // label4
@@ -275,28 +264,25 @@
             // 
             // panel2
             // 
-            resources.ApplyResources(this.panel2, "panel2");
             this.panel2.Controls.Add(this.flyContents);
+            resources.ApplyResources(this.panel2, "panel2");
             this.panel2.Name = "panel2";
-            this.toolTip1.SetToolTip(this.panel2, resources.GetString("panel2.ToolTip"));
             // 
             // flyContents
             // 
-            resources.ApplyResources(this.flyContents, "flyContents");
             this.flyContents.AllowDrop = true;
+            resources.ApplyResources(this.flyContents, "flyContents");
             this.flyContents.BackColor = System.Drawing.SystemColors.Window;
             this.flyContents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flyContents.Name = "flyContents";
-            this.toolTip1.SetToolTip(this.flyContents, resources.GetString("flyContents.ToolTip"));
             this.flyContents.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flyContents_Scroll);
             // 
             // groupBox1
             // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.lstBoxPackages);
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
-            this.toolTip1.SetToolTip(this.groupBox1, resources.GetString("groupBox1.ToolTip"));
             // 
             // lstBoxPackages
             // 
@@ -307,7 +293,6 @@
             resources.GetString("lstBoxPackages.Items1"),
             resources.GetString("lstBoxPackages.Items2")});
             this.lstBoxPackages.Name = "lstBoxPackages";
-            this.toolTip1.SetToolTip(this.lstBoxPackages, resources.GetString("lstBoxPackages.ToolTip"));
             // 
             // FormMain
             // 
@@ -315,7 +300,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormMain";
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);

@@ -72,6 +72,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public bool IsCoreRunning() => v2rayCore.isRunning;
 
         public void RunSpeedTest() => SpeedTestWorker(configer.GetConfig());
+
+        public void RunSpeedTestThen() => VgcApis.Misc.Utils.RunInBackground(RunSpeedTest);
         #endregion
 
         #region private methods

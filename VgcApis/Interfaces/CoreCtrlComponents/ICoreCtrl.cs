@@ -7,6 +7,7 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         bool IsCoreRunning();
 
         void RunSpeedTest();
+        void RunSpeedTestThen();
 
         void StopCore();
 

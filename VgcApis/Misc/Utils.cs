@@ -419,33 +419,34 @@ namespace VgcApis.Misc
 
             try
             {
-                HttpClient hc = CreateHttpClient(port);
-                var opt = HttpCompletionOption.ResponseHeadersRead;
-
-                sw.Start();
-                using (hc)
-                using (var response = await hc.GetAsync(url, opt, token).ConfigureAwait(false))
+                using (HttpClient hc = CreateHttpClient(port))
                 {
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        return timeout;
-                    }
+                    var opt = HttpCompletionOption.ResponseHeadersRead;
+                    sw.Start();
 
-                    using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    using (var response = await hc.GetAsync(url, opt, token).ConfigureAwait(false))
                     {
-                        byte[] buffer = new byte[4096];
-                        long read;
-                        do
+                        if (!response.IsSuccessStatusCode)
                         {
-                            read = await stream.ReadAsync(buffer, 0, buffer.Length, token).ConfigureAwait(false);
-                            if (!onProgress.Invoke(read))
+                            return timeout;
+                        }
+
+                        using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                        {
+                            byte[] buffer = new byte[2048];
+                            long read;
+                            do
                             {
-                                break;
-                            }
-                        } while (read > 0);
+                                read = await stream.ReadAsync(buffer, 0, buffer.Length, token).ConfigureAwait(false);
+                                if (!onProgress.Invoke(read))
+                                {
+                                    break;
+                                }
+                            } while (read > 0);
+                        }
                     }
+                    sw.Stop();
                 }
-                sw.Stop();
                 return sw.ElapsedMilliseconds;
             }
             catch

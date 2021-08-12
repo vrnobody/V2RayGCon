@@ -552,7 +552,6 @@ namespace V2RayGCon.Services
 
             long latency = TIMEOUT;
             long len = 0;
-
             try
             {
                 speedTester.RestartCoreIgnoreError(config);
@@ -564,13 +563,12 @@ namespace V2RayGCon.Services
                     len = r.Item2;
                 }
                 speedTester.StopCore();
-                if (logDeliever != null)
-                {
-                    speedTester.OnLog -= logDeliever;
-                }
             }
             catch { }
-
+            if (logDeliever != null)
+            {
+                speedTester.OnLog -= logDeliever;
+            }
             return new Tuple<long, long>(latency, len);
         }
 

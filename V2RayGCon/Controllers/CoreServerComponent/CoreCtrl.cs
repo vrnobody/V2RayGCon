@@ -73,7 +73,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public void RunSpeedTest() => SpeedTestWorker(configer.GetConfig());
 
-        public void RunSpeedTestThen() => VgcApis.Misc.Utils.RunInBackground(RunSpeedTest);
+        public void RunSpeedTestThen() => VgcApis.Misc.Utils.RunInBackground(() =>
+        {
+            SpeedTestWorker(configer.GetConfig());
+        });
         #endregion
 
         #region private methods

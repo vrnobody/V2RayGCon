@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.5.7.6")]
+[assembly: AssemblyVersion("1.5.7.7")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /* 
+ * v1.5.7.7 Try to fix file cache bug.(but failed)
  * v1.5.7.6 Refactoring.
  * v1.5.7.5 Add coreCtrl:RunSpeedTestThen() in Luna plug-in.
  * v1.5.7.4 Tweak Pacman plug-in.

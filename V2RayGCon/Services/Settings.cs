@@ -21,6 +21,7 @@ namespace V2RayGCon.Services
 
         VgcApis.Libs.Tasks.LazyGuy janitor, lazyBookKeeper;
 
+        readonly object saveUserSettingsLocker = new object();
         string serializedUserSettingsCache = @"";
         public event EventHandler OnPortableModeChanged;
         VgcApis.Models.Datas.Enums.ShutdownReasons shutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.Undefined;
@@ -884,8 +885,11 @@ namespace V2RayGCon.Services
             try
             {
                 var serializedUserSettings = JsonConvert.SerializeObject(userSettings);
-                File.WriteAllText(mainUsFilename, serializedUserSettings);
-                File.WriteAllText(bakUsFilename, serializedUserSettings);
+                lock (saveUserSettingsLocker)
+                {
+                    VgcApis.Misc.Utils.WriteAllTextNow(mainUsFilename, serializedUserSettings);
+                    VgcApis.Misc.Utils.WriteAllTextNow(bakUsFilename, serializedUserSettings);
+                }
                 DebugSendLog("set portable option done");
                 return;
             }
@@ -921,13 +925,18 @@ namespace V2RayGCon.Services
             }
 
             VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() write file");
-            if (VgcApis.Misc.Utils.ClumsyWriter(
-                content,
-                Constants.Strings.MainUserSettingsFilename,
-                Constants.Strings.BackupUserSettingsFilename))
+
+            lock (saveUserSettingsLocker)
             {
-                serializedUserSettingsCache = content;
-                return;
+                var ok = VgcApis.Misc.Utils.ClumsyWriter(
+                    content,
+                    Constants.Strings.MainUserSettingsFilename,
+                    Constants.Strings.BackupUserSettingsFilename);
+                if (ok)
+                {
+                    serializedUserSettingsCache = content;
+                    return;
+                }
             }
 
             VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() failed");

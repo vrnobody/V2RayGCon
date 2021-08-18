@@ -928,14 +928,17 @@ namespace V2RayGCon.Services
 
             lock (saveUserSettingsLocker)
             {
-                var ok = VgcApis.Misc.Utils.ClumsyWriter(
-                    content,
-                    Constants.Strings.MainUserSettingsFilename,
-                    Constants.Strings.BackupUserSettingsFilename);
-                if (ok)
+                for (int i = 0; i < 2; i++)
                 {
-                    serializedUserSettingsCache = content;
-                    return;
+                    var ok = VgcApis.Misc.Utils.ClumsyWriter(
+                        content,
+                        Constants.Strings.MainUserSettingsFilename,
+                        Constants.Strings.BackupUserSettingsFilename);
+                    if (ok)
+                    {
+                        serializedUserSettingsCache = content;
+                        return;
+                    }
                 }
             }
 
@@ -952,13 +955,13 @@ namespace V2RayGCon.Services
         private void WarnUserSaveSettingsFailed(string content)
         {
             var msg = I18N.SaveUserSettingsToFileFail;
+
             if (isClosing)
             {
                 // 兄弟只能帮你到这了
                 VgcApis.Libs.Sys.NotepadHelper.ShowMessage(content, Properties.Resources.PortableUserSettingsFilename);
                 msg += Environment.NewLine + string.Format(I18N.AndThenSaveThisFileAs, Properties.Resources.PortableUserSettingsFilename);
             }
-
 
             msg += Environment.NewLine + I18N.OrDisablePortableMode;
             // do not block any function in background service

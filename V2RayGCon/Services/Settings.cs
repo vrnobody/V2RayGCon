@@ -887,8 +887,8 @@ namespace V2RayGCon.Services
                 var serializedUserSettings = JsonConvert.SerializeObject(userSettings);
                 lock (saveUserSettingsLocker)
                 {
-                    VgcApis.Misc.Utils.WriteAllTextNow(mainUsFilename, serializedUserSettings);
-                    VgcApis.Misc.Utils.WriteAllTextNow(bakUsFilename, serializedUserSettings);
+                    File.WriteAllText(mainUsFilename, serializedUserSettings);
+                    File.WriteAllText(bakUsFilename, serializedUserSettings);
                 }
                 DebugSendLog("set portable option done");
                 return;
@@ -928,17 +928,14 @@ namespace V2RayGCon.Services
 
             lock (saveUserSettingsLocker)
             {
-                for (int i = 0; i < 2; i++)
+                var ok = VgcApis.Misc.Utils.ClumsyWriter(
+                    content,
+                    Constants.Strings.MainUserSettingsFilename,
+                    Constants.Strings.BackupUserSettingsFilename);
+                if (ok)
                 {
-                    var ok = VgcApis.Misc.Utils.ClumsyWriter(
-                        content,
-                        Constants.Strings.MainUserSettingsFilename,
-                        Constants.Strings.BackupUserSettingsFilename);
-                    if (ok)
-                    {
-                        serializedUserSettingsCache = content;
-                        return;
-                    }
+                    serializedUserSettingsCache = content;
+                    return;
                 }
             }
 

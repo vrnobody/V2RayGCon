@@ -811,26 +811,15 @@ namespace VgcApis.Misc
 
         }
 
-        public static void WriteAllTextNow(string path, string contents)
-        {
-            // get the bytes
-            var data = Encoding.UTF8.GetBytes(contents);
-            // write the data to a temp file
-            using (var tempFile = File.Create(path, 4096, FileOptions.WriteThrough))
-            {
-                tempFile.Write(data, 0, data.Length);
-            }
-        }
-
         public static bool ClumsyWriter(string content, string mainFilename, string bakFilename)
         {
             try
             {
-                WriteAllTextNow(mainFilename, content);
+                File.WriteAllText(mainFilename, content);
                 var read = File.ReadAllText(mainFilename);
                 if (content.Equals(read))
                 {
-                    WriteAllTextNow(bakFilename, content);
+                    File.WriteAllText(bakFilename, content);
                     read = File.ReadAllText(bakFilename);
                     return content.Equals(read);
                 }

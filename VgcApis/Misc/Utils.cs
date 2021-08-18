@@ -811,17 +811,46 @@ namespace VgcApis.Misc
 
         }
 
+        public static bool WriteAllTextNow(string path, string contents)
+        {
+            // https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
+            try
+            {
+                // get the bytes
+                var data = Encoding.UTF8.GetBytes(contents);
+
+                // write the data to a temp file
+                using (var tempFile = File.Create(path, 4096, FileOptions.WriteThrough))
+                {
+                    tempFile.Write(data, 0, data.Length);
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Libs.Sys.FileLogger.Error($"WriteAllTextNow() exception: {e.ToString()}");
+            }
+            return false;
+        }
+
         public static bool ClumsyWriter(string content, string mainFilename, string bakFilename)
         {
             try
             {
-                File.WriteAllText(mainFilename, content);
-                var read = File.ReadAllText(mainFilename);
-                if (content.Equals(read))
+                if (WriteAllTextNow(mainFilename, content))
                 {
-                    File.WriteAllText(bakFilename, content);
-                    read = File.ReadAllText(bakFilename);
-                    return content.Equals(read);
+                    if (WriteAllTextNow(bakFilename, content))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        Libs.Sys.FileLogger.Error($"ClumsyWriter(): Write bak file failed!");
+                    }
+                }
+                else
+                {
+                    Libs.Sys.FileLogger.Error($"ClumsyWriter(): Write main file failed!");
                 }
             }
             catch { }

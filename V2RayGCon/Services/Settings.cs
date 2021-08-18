@@ -887,8 +887,10 @@ namespace V2RayGCon.Services
                 var serializedUserSettings = JsonConvert.SerializeObject(userSettings);
                 lock (saveUserSettingsLocker)
                 {
-                    File.WriteAllText(mainUsFilename, serializedUserSettings);
-                    File.WriteAllText(bakUsFilename, serializedUserSettings);
+                    VgcApis.Misc.Utils.ClumsyWriter(
+                        serializedUserSettings,
+                        mainUsFilename,
+                        bakUsFilename);
                 }
                 DebugSendLog("set portable option done");
                 return;
@@ -935,18 +937,15 @@ namespace V2RayGCon.Services
                 if (ok)
                 {
                     serializedUserSettingsCache = content;
+                    VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() success");
                     return;
                 }
             }
 
-            VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() failed");
+            VgcApis.Libs.Sys.FileLogger.Error("Settings.SaverUserSettingsToFile() failed");
             // main file or bak file write fail, clear cache
             serializedUserSettingsCache = @"";
-            if (GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
-            {
-                VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() notice user");
-                WarnUserSaveSettingsFailed(content);
-            }
+            WarnUserSaveSettingsFailed(content);
         }
 
         private void WarnUserSaveSettingsFailed(string content)

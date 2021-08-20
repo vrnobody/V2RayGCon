@@ -186,7 +186,7 @@ policy
 poolSize
 port
 portals
-ProbeInterval
+probeInterval
 probeURL
 protocol
 proxySettings

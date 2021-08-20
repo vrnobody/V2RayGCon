@@ -819,7 +819,7 @@ namespace V2RayGCon.Services
                         config["observatory"] = JObject.Parse("{subjectSelector:['agentout']}");
                         if (!string.IsNullOrWhiteSpace(interval))
                         {
-                            config["observatory"]["ProbeInterval"] = interval;
+                            config["observatory"]["probeInterval"] = interval;
                         }
                         if (!string.IsNullOrWhiteSpace(url))
                         {

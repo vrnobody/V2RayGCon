@@ -19,7 +19,7 @@
       "agentout"
     ],
     "probeURL": "https://api.v2fly.org/checkConnection.svgz",
-    "ProbeInterval": "5000ms"
+    "probeInterval": "5000ms"
   },
   "browserForwarderDefault": {
     "listenAddr": "127.0.0.1",

@@ -2,7 +2,9 @@
 {
     public interface ILogger
     {
-        // I don't remember what this func is used for. XD
+        /// <summary>
+        /// 调出此服务器日志窗口
+        /// </summary>
         void ShowFormLog();
     }
 }

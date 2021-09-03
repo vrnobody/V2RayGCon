@@ -106,7 +106,7 @@ namespace VgcApis.Interfaces.Lua
         /// <summary>
         /// 扫描屏幕上的二维码
         /// </summary>
-        /// <returns></returns>
+        /// <returns>二维码解码后的内容</returns>
         string ScanQrcode();
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace VgcApis.Interfaces.Lua
 
         #region utils
         /// <summary>
-        /// 获取当前并行测速队列服务器总数。不论选项窗口中设定测几次，一个服务器只记一次。
+        /// 获取当前并行测速队列服务器总数。一个服务器只记一次。
         /// </summary>
         /// <returns>测速队列长度</returns>
         int GetSpeedtestQueueLength();
@@ -175,7 +175,7 @@ namespace VgcApis.Interfaces.Lua
         /// <summary>
         /// 打印
         /// </summary>
-        /// <param name="contents"></param>
+        /// <param name="contents">若干内容</param>
         void Print(params object[] contents);
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace VgcApis.Interfaces.Lua
         /// 将Base64字符串解码
         /// </summary>
         /// <param name="b64Str">Base64字符串</param>
-        /// <returns>解码后的字符串（解码失败返回nil）</returns>
+        /// <returns>解码后的字符串（解码失败返回null）</returns>
         string Base64Decode(string b64Str);
 
         /// <summary>

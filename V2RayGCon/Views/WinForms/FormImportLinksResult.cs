@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace V2RayGCon.Views.WinForms
@@ -28,14 +29,17 @@ namespace V2RayGCon.Views.WinForms
 
         private void FormImportLinksResult_Shown(object sender, EventArgs e)
         {
-            lvResult.Items.Clear();
             int count = 1;
-            foreach (var result in results)
+            var items = results.Select(r =>
             {
-                result[0] = count.ToString();
-                lvResult.Items.Add(new ListViewItem(result));
+                r[0] = count.ToString();
                 count++;
-            }
+                return new ListViewItem(r);
+            }).ToArray();
+            lvResult.SuspendLayout();
+            lvResult.Items.Clear();
+            lvResult.Items.AddRange(items);
+            lvResult.ResumeLayout();
         }
 
         private void btnCopy_Click(object sender, EventArgs e)

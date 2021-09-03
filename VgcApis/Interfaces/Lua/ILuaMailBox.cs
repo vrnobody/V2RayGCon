@@ -3,8 +3,8 @@
     /// <summary>
     /// ILuaMailBox定义一个MailBox。它主要用在多个脚本之间收发信息。
     /// 首先通过local mailBox = Sys:CreateMailBox(name)申请一个名为name的邮箱。
-    /// 然后可以通过mailbox:Send(addr, title)向名为addr的邮箱发送一封主题为title的邮件。
-    /// 接收通过mailbox:Check()检查邮箱内是否有邮件。也可以通过mailbox:Wait()等待邮件到来。
+    /// 然后可以调用mailbox:Send(addr, title)向名为addr的邮箱发送一封主题为title的邮件。
+    /// 接收方可以调用mailbox:Check()检查邮箱内是否有邮件。也可以调用mailbox:Wait()等待邮件到来。
     /// 邮件的组成部分请看ILuaMail.
     /// </summary>
     public interface ILuaMailBox
@@ -16,7 +16,7 @@
         int Count();
 
         /// <summary>
-        /// 丢弃所有邮件
+        /// 丢弃所有剩下的邮件
         /// </summary>
         /// <returns></returns>
         bool Clear();
@@ -89,7 +89,7 @@
         bool Reply(ILuaMail mail, string title);
 
         /// <summary>
-        /// 向mail回复带标题种内容的邮件
+        /// 向mail回复带标题和内容的邮件
         /// </summary>
         /// <param name="mail">来源邮件</param>
         /// <param name="title">回复邮件的标题</param>

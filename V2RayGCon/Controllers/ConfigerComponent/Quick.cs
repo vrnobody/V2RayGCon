@@ -7,7 +7,6 @@ namespace V2RayGCon.Controllers.ConfigerComponet
     class Quick : ConfigerComponentController
     {
         Services.Cache cache;
-        Services.Servers servers;
         Services.ConfigMgr configMgr;
 
         bool isUseV4;
@@ -18,7 +17,6 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             CheckBox chkUseV4)
         {
             cache = Services.Cache.Instance;
-            servers = Services.Servers.Instance;
             configMgr = Services.ConfigMgr.Instance;
 
             isUseV4 = chkUseV4.Checked;

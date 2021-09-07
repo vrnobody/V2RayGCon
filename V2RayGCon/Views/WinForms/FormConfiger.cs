@@ -29,10 +29,7 @@ namespace V2RayGCon.Views.WinForms
     {
 
         public static void ShowEmptyConfig() =>
-            VgcApis.Misc.UI.Invoke(() =>
-            {
-                new FormConfiger().Show();
-            });
+            ShowConfig(@"{}");
 
         public static void ShowConfig(string orgConfig) =>
              VgcApis.Misc.UI.Invoke(() =>

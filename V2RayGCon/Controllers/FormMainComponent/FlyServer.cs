@@ -91,11 +91,31 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 return list.ToList();
             }
 
-            return list
-                .Where(serv => serv.GetCoreStates().GetterInfoForSearch(
-                    infos => infos.Any(
-                        info => VgcApis.Misc.Utils.PartialMatchCi(info, keyword))))
-                .ToList();
+            bool f(string[] s)
+            {
+                var kw = keyword;
+                for (int i = 0; i < s.Length; i++)
+                {
+                    var m = VgcApis.Misc.Utils.PartialMatchCi(s[i], kw);
+                    if (m)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            var r = new List<VgcApis.Interfaces.ICoreServCtrl>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                var s = list[i];
+                var m = s.GetCoreStates().GetterInfoForSearch(f);
+                if (m)
+                {
+                    r.Add(s);
+                }
+            }
+            return r;
         }
 
         public void LoopThroughAllServerUI(Action<Views.UserControls.ServerUI> operation)

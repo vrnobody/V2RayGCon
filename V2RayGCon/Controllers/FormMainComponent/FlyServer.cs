@@ -328,7 +328,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             if (totalPageNumber != cache.Count)
             {
                 cache = CreateStatusBarPagerMenuItems();
-                var groupedMenu = VgcApis.Misc.UI.AutoGroupMenuItems(cache, VgcApis.Models.Consts.Config.MenuItemGroupSize);
+                var groupedMenu = GroupPagerItems(cache, VgcApis.Models.Consts.Config.MenuItemGroupSize);
                 tsdbtnPager.DropDownItems.Clear();
                 tsdbtnPager.DropDownItems.AddRange(groupedMenu.ToArray());
                 pagerMenuItemCache = cache;
@@ -356,6 +356,54 @@ namespace V2RayGCon.Controllers.FormMainComponent
             tslbPrePage.Enabled = cpn > 0;
             tslbNextPage.Enabled = totalPageNumber > 1 && cpn < totalPageNumber - 1;
             tsdbtnPager.Text = string.Format(I18N.StatusBarPagerInfoTpl, cpn + 1, totalPageNumber);
+        }
+
+        public List<ToolStripMenuItem> GroupPagerItems(
+            List<ToolStripMenuItem> menuItems, int groupSize)
+        {
+            var mi = menuItems;
+            var menuSpan = groupSize;
+            var max = menuItems.Count;
+
+            while (mi.Count() > groupSize)
+            {
+                mi = GroupPagerItemsWorker(mi, max, groupSize, menuSpan);
+                menuSpan *= groupSize;
+            }
+            return mi;
+        }
+
+        List<ToolStripMenuItem> GroupPagerItemsWorker(
+            IEnumerable<ToolStripMenuItem> menuItems, int maxIdx, int groupSize, int menuSpan)
+        {
+            var count = menuItems.Count();
+            if (count <= groupSize)
+            {
+                return menuItems.ToList();
+            }
+
+            // grouping
+            var pageSize = setting.serverPanelPageSize;
+            var groups = new List<ToolStripMenuItem>();
+            var servIdx = 0;
+            var pageIdx = 0;
+            while (servIdx < count)
+            {
+                var take = Math.Min(groupSize, count - servIdx);
+                var last = Math.Min(pageIdx + menuSpan, maxIdx);
+                var pageRange = string.Format("{0,4}-{1,4}", pageIdx + 1, last);
+                var text = string.Format(
+                    I18N.StatusBarPagerMenuItemTpl,
+                    pageRange,
+                    pageIdx * pageSize + 1,
+                    last * pageSize);
+                var mis = menuItems.Skip(servIdx).Take(take).ToArray();
+                var mi = new ToolStripMenuItem(text, null, mis);
+                groups.Add(mi);
+                servIdx += groupSize;
+                pageIdx += menuSpan;
+            }
+            return groups;
         }
 
         List<ToolStripMenuItem> CreateStatusBarPagerMenuItems()

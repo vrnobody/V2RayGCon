@@ -37,7 +37,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /* 
- * v1.5.8.7 
+ * v1.5.8.7 Show index range in paging menu.
  * v1.5.8.6 Try to improve search performance.
  * v1.5.8.5 Supports web safe base64.
  * v1.5.8.4 Refactoring.

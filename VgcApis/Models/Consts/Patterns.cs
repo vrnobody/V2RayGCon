@@ -17,8 +17,8 @@
 
         public const string Base64NonStandard = @"[A-Za-z0-9+/_\-]+={0,3}";
 
-        public const string SsShareLinkContent = Base64NonStandard +
-            @"(#[a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$_]+)*";
+        // public const string SsShareLinkContent = Base64NonStandard + @"(#[a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$_]+)*";
+        public const string SsShareLinkContent = @"[@\w#\-\.\?\,\'\/\+&amp;%\$_\[\]\+:=]+";
 
         public const string TrojanUrlContent = @"[%\w\.\:\-\[\]@]+";
 

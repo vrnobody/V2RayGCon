@@ -29,7 +29,10 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var outbound = SsLink2Outbound(parts[0]);
+            string body = Misc.Utils.GetLinkBody(parts[0]);
+
+            var ss = Misc.Utils.TranslateSIP002Body(body);
+            var outbound = SsLink2Outbound(ss);
             if (outbound == null)
             {
                 return null;

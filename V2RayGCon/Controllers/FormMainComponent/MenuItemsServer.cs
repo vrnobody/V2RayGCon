@@ -236,7 +236,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             copyAsVeeSubscriptions.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                var links = EncodeAllServersIntoShareLinks(
+                var links = EncodeSelectedServersIntoShareLinks(
                     VgcApis.Models.Datas.Enums.LinkTypes.v);
                 var b64Links = Misc.Utils.Base64Encode(links);
                 Misc.Utils.CopyToClipboardAndPrompt(b64Links);
@@ -244,7 +244,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             copyAsVmessSubscriptions.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                var links = EncodeAllServersIntoShareLinks(
+                var links = EncodeSelectedServersIntoShareLinks(
                     VgcApis.Models.Datas.Enums.LinkTypes.vmess);
                 var b64Links = Misc.Utils.Base64Encode(links);
                 Misc.Utils.CopyToClipboardAndPrompt(b64Links);
@@ -252,16 +252,16 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             copyAsV2cfgLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                var links = EncodeAllServersIntoShareLinks(
+                var links = EncodeSelectedServersIntoShareLinks(
                     VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
                 Misc.Utils.CopyToClipboardAndPrompt(links);
             });
 
             copyAsVmixLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                var vmesses = EncodeAllServersIntoShareLinks(
+                var vmesses = EncodeSelectedServersIntoShareLinks(
                     VgcApis.Models.Datas.Enums.LinkTypes.vmess);
-                var vlesses = EncodeAllServersIntoShareLinks(
+                var vlesses = EncodeSelectedServersIntoShareLinks(
                     VgcApis.Models.Datas.Enums.LinkTypes.vless);
                 Misc.Utils.CopyToClipboardAndPrompt(
                     vlesses + Environment.NewLine + vmesses);
@@ -269,7 +269,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             copyAsVeeLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                var links = EncodeAllServersIntoShareLinks(
+                var links = EncodeSelectedServersIntoShareLinks(
                     VgcApis.Models.Datas.Enums.LinkTypes.v);
                 Misc.Utils.CopyToClipboardAndPrompt(links);
             });
@@ -338,7 +338,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             RemoveAllControlsAndRefreshFlyPanel();
         }
 
-        string EncodeAllServersIntoShareLinks(
+        string EncodeSelectedServersIntoShareLinks(
             VgcApis.Models.Datas.Enums.LinkTypes linkType)
         {
             var serverList = servers.GetAllServersOrderByIndex();

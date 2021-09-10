@@ -845,14 +845,29 @@ namespace V2RayGCon.Misc
             return null;
         }
 
-        public static Models.Datas.Shadowsocks SsLink2Ss(string ssLink)
+        public static string TranslateSIP002Body(string body)
         {
-            string b64 = GetLinkBody(ssLink);
+            if (!body.Contains("@"))
+            {
+                return body;
+            }
 
+            var parts = body.Split(new char[] { '@', '/', '?' });
+            if (parts.Length < 2)
+            {
+                return body;
+            }
+
+            var ss = Base64Decode(parts[0]) + "@" + parts[1];
+            return Base64Encode(ss);
+        }
+
+        public static Models.Datas.Shadowsocks SsLink2Ss(string body)
+        {
             try
             {
                 var ss = new Models.Datas.Shadowsocks();
-                var plainText = Base64Decode(b64);
+                var plainText = Base64Decode(body);
                 var parts = plainText.Split('@');
                 var mp = parts[0].Split(':');
                 if (parts[1].Length > 0 && mp[0].Length > 0 && mp[1].Length > 0)

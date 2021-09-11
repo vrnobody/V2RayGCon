@@ -552,6 +552,7 @@ namespace V2RayGCon.Services
             {
                 lazyServerSettingsRecorder.Deadline();
                 UpdateMarkList();
+                ResetIndexQuiet();
                 RequireFormMainReload();
                 InvokeEventOnServerCountChange(this, EventArgs.Empty);
                 speedTestingBar.Remove();
@@ -649,6 +650,7 @@ namespace V2RayGCon.Services
                 InvokeEventOnServerCountChange(this, EventArgs.Empty);
                 lazyServerSettingsRecorder.Deadline();
                 UpdateMarkList();
+                ResetIndexQuiet();
                 RequireFormMainReload();
                 speedTestingBar.Remove();
             });
@@ -706,9 +708,10 @@ namespace V2RayGCon.Services
             }
 
             BindEventsTo(newServer);
+            newServer.GetConfiger().UpdateSummary();
+
             if (!quiet)
             {
-                newServer.GetConfiger().UpdateSummary();
                 // UpdateSummaryThen will invoke OnServerPropertyChange.
                 InvokeEventOnServerCountChange(this, EventArgs.Empty);
                 RequireFormMainReload();

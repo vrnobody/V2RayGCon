@@ -697,12 +697,14 @@ namespace V2RayGCon.Views.UserControls
         private void moveToTopToolStripMenuItem_Click(object sender, EventArgs e)
         {
             coreServCtrl.GetCoreStates().SetIndex(0);
+            servers.ResetIndexQuiet();
             servers.RequireFormMainReload();
         }
 
         private void moveToBottomToolStripMenuItem_Click(object sender, EventArgs e)
         {
             coreServCtrl.GetCoreStates().SetIndex(double.MaxValue);
+            servers.ResetIndexQuiet();
             servers.RequireFormMainReload();
         }
 

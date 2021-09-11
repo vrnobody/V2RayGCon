@@ -29,7 +29,7 @@ namespace V2RayGCon.Controllers
             this.coreInfo = coreInfo;
         }
 
-        Services.Servers serverServ = null;
+        Services.Servers servSvc = null;
 
         public void Run(
              Services.Cache cache,
@@ -37,7 +37,7 @@ namespace V2RayGCon.Controllers
              Services.ConfigMgr configMgr,
              Services.Servers servers)
         {
-            serverServ = servers;
+            servSvc = servers;
 
             //external dependency injection
             coreCtrl = new CoreServerComponent.CoreCtrl(setting, configMgr);
@@ -163,7 +163,8 @@ namespace V2RayGCon.Controllers
             GetConfiger().UpdateSummary();
             if (indexChanged)
             {
-                serverServ.RequireFormMainReload();
+                servSvc.ResetIndexQuiet();
+                servSvc.RequireFormMainReload();
             }
 
             if (restartCore && GetCoreCtrl().IsCoreRunning())

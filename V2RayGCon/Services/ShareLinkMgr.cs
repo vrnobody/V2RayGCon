@@ -106,7 +106,7 @@ namespace V2RayGCon.Services
             var decoders = GenDecoderList(false);
             var results = ImportLinksBatchModeSync(linkList, decoders);
 
-            servers.UpdateAllServersSummary();
+            // servers.UpdateAllServersSummary();
 
             var count = 0;
             foreach (var result in results)
@@ -242,8 +242,8 @@ namespace V2RayGCon.Services
 
             if (IsAddNewServer(list))
             {
-                VgcApis.Misc.Utils.RunInBackground(
-                    servers.UpdateAllServersSummary);
+                servers.RequireFormMainReload();
+                // VgcApis.Misc.Utils.RunInBackground(servers.UpdateAllServersSummary);
             }
 
             VgcApis.Misc.Utils.RunInBackground(() =>

@@ -329,7 +329,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     return true;
                 })
                 .ToList(); // force linq to execute
-
+            servers.ResetIndexQuiet();
             RemoveAllControlsAndRefreshFlyPanel();
         }
 

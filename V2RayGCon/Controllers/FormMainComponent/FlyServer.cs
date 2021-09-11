@@ -185,7 +185,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void RefreshFlyPanelWorker(Action done)
         {
             var start = DateTime.Now.Millisecond;
-            servers.ResetIndex();
+            // servers.ResetIndex();
             var flatList = GetFilteredList();
             var pagedList = GenPagedServerList(flatList);
             var showWelcome = servers.CountAllServers() == 0;

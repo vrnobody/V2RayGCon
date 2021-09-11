@@ -151,8 +151,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void SelectCurPageWhere(Func<Views.UserControls.ServerUI, bool> condiction)
         {
-            var panel = GetFlyPanel();
-            panel.LoopThroughAllServerUI(s =>
+            GetFlyPanel().LoopThroughAllServerUI(s =>
             {
                 s.SetSelected(condiction(s));
             });
@@ -162,22 +161,11 @@ namespace V2RayGCon.Controllers.FormMainComponent
             Func<VgcApis.Interfaces.ICoreServCtrl, bool>
             condiction)
         {
-            var configs = GetFlyPanel().GetFilteredList()
-                .Select(s => s.GetConfiger().GetConfig())
-                .ToList();
-
-            servers.GetAllServersOrderByIndex()
-                .Select(s =>
-                {
-                    if (!configs.Contains(s.GetConfiger().GetConfig()))
-                    {
-                        s.GetCoreStates().SetIsSelected(false);
-                        return false;
-                    }
-                    s.GetCoreStates().SetIsSelected(condiction(s));
-                    return true;
-                })
-                .ToList();
+            GetFlyPanel().GetFilteredList().Select(s =>
+            {
+                s.GetCoreStates().SetIsSelected(condiction(s));
+                return true;
+            }).ToList();
         }
 
 
@@ -185,13 +173,11 @@ namespace V2RayGCon.Controllers.FormMainComponent
             Func<VgcApis.Interfaces.ICoreServCtrl, bool>
             condiction)
         {
-            servers.GetAllServersOrderByIndex()
-                .Select(s =>
-                {
-                    s.GetCoreStates().SetIsSelected(condiction(s));
-                    return true;
-                })
-                .ToList();
+            servers.GetAllServersOrderByIndex().Select(s =>
+            {
+                s.GetCoreStates().SetIsSelected(condiction(s));
+                return true;
+            }).ToList();
         }
 
         Controllers.FormMainComponent.FlyServer GetFlyPanel()

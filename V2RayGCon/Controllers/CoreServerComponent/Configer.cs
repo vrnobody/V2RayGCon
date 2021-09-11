@@ -67,26 +67,24 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GetConfig() => coreInfo.config;
 
-        public void UpdateSummary()
+        public void UpdateSummaryQuiet()
         {
             try
             {
-                var configString = coreInfo.isInjectImport ?
-                    configMgr.InjectImportTpls(coreInfo.config, false, true) :
-                    coreInfo.config;
-
-                JObject finalConfig = JObject.Parse(configString);
-                finalConfig = configMgr.ParseImport(configString);
-
-
-                if (finalConfig != null)
+                var c = GetFinalConfig();
+                if (c != null)
                 {
                     // update summary should not clear status
                     // this.status = string.Empty;
-                    UpdateSummary(finalConfig);
+                    UpdateSummary(c);
                 }
             }
             catch { }
+        }
+
+        public void UpdateSummary()
+        {
+            UpdateSummaryQuiet();
             GetParent().InvokeEventOnPropertyChange();
         }
 

@@ -38,6 +38,11 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         void UpdateSummary();
 
         /// <summary>
+        /// 更新服务器摘要但不刷新界面
+        /// </summary>
+        void UpdateSummaryQuiet();
+
+        /// <summary>
         /// 内部使用，脚本不使用此函数。
         /// </summary>
         /// <param name="next"></param>

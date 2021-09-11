@@ -9,8 +9,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 {
     class FlyServer : FormMainComponentController
     {
-        int statusBarUpdateInterval = 250;
-        int flyPanelUpdateInterval = 250;
+        int statusBarUpdateInterval = 1000;
+        int flyPanelUpdateInterval = 500;
 
         readonly Form formMain;
         readonly FlowLayoutPanel flyPanel;
@@ -91,26 +91,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 return list.ToList();
             }
 
-            bool f(string[] s)
-            {
-                var kw = keyword;
-                for (int i = 0; i < s.Length; i++)
-                {
-                    var m = VgcApis.Misc.Utils.PartialMatchCi(s[i], kw);
-                    if (m)
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-
             var r = new List<VgcApis.Interfaces.ICoreServCtrl>();
             for (int i = 0; i < list.Count; i++)
             {
                 var s = list[i];
-                var m = s.GetCoreStates().GetterInfoForSearch(f);
-                if (m)
+                var st = s.GetCoreStates();
+                if (VgcApis.Misc.Utils.PartialMatchCi(st.GetMark(), keyword)
+                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetRemark(), keyword)
+                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetTitle(), keyword))
                 {
                     r.Add(s);
                 }

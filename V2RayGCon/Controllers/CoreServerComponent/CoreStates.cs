@@ -117,27 +117,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
         }
 
-        public bool GetterInfoForSearch(Func<string[], bool> filter)
-        {
-            var ci = coreInfo;
-            return filter(new string[] {
-
-                // index 0
-                // use title instead of name + summary
-                GetTitle(),
-                // ci.name+ci.summary,
-                
-                // index 1
-                GetInProtocolNameByNumber(ci.customInbType)
-                + ci.inbIp + @":" + ci.inbPort.ToString(),
-
-                // index 2
-                ci.customMark??@"",
-
-                ci.customRemark??@"",
-            });
-        }
-
         public void SetIsInjectSkipCnSite(bool isInjectSkipCnSite)
         {
             SetSettingsPropertyOnDemand(ref coreInfo.isInjectSkipCNSite, true);

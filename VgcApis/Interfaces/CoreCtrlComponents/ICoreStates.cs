@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace VgcApis.Interfaces.CoreCtrlComponents
+﻿namespace VgcApis.Interfaces.CoreCtrlComponents
 {
     public interface ICoreStates
     {
@@ -33,12 +31,6 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         /// </summary>
         /// <param name="sizeInBytes">任意数值</param>
         void SetDownlinkTotal(long sizeInBytes);
-
-        /// <summary>
-        /// 内部使用，脚本一般用不到
-        /// </summary>
-        /// <returns></returns>
-        bool GetterInfoForSearch(Func<string[], bool> filter);
 
         /// <summary>
         /// 获取inbound地址（IP + Port)

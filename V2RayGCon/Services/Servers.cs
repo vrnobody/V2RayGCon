@@ -603,7 +603,7 @@ namespace V2RayGCon.Services
             {
                 try
                 {
-                    core.GetConfiger().UpdateSummaryQuiet();
+                    core.GetConfiger().UpdateSummary();
                     if (core.GetCoreStates().GetLastModifiedUtcTicks() == 0)
                     {
                         var utcTicks = DateTime.UtcNow.Ticks;

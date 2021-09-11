@@ -105,7 +105,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GetConfig() => coreInfo.config;
 
-        public void UpdateSummaryQuiet()
+        public void UpdateSummary()
         {
             try
             {
@@ -118,11 +118,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 }
             }
             catch { }
-        }
-
-        public void UpdateSummary()
-        {
-            UpdateSummaryQuiet();
             GetParent().InvokeEventOnPropertyChange();
         }
 

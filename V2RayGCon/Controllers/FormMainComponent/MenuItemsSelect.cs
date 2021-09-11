@@ -152,18 +152,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void SelectCurPageWhere(Func<Views.UserControls.ServerUI, bool> condiction)
         {
             var panel = GetFlyPanel();
-            var configs = panel.GetFilteredList().Select(s => s.GetConfiger().GetConfig());
-
-            // clear all not in current filtered list
-            servers.GetAllServersOrderByIndex()
-                .Where(s => !configs.Contains(s.GetConfiger().GetConfig()))
-                .Select(s =>
-                {
-                    s.GetCoreStates().SetIsSelected(false);
-                    return true;
-                })
-                .ToList();
-
             panel.LoopThroughAllServerUI(s =>
             {
                 s.SetSelected(condiction(s));

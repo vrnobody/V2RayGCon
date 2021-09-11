@@ -51,7 +51,26 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public string Encode(string config)
         {
-            throw new NotImplementedException();
+            var vc = new Models.Datas.VeeConfigs(config);
+            if (vc.proto != @"shadowsocks")
+            {
+                return null;
+            }
+
+            var auth = string.Format("{0}:{1}", vc.auth2, vc.auth1);
+            var userinfo = Misc.Utils.Base64Encode(auth)
+                .Replace("=", "")
+                .Replace('+', '-')
+                .Replace('/', '_');
+
+            var url = string.Format(
+                "ss://{0}@{1}:{2}#{3}",
+                userinfo,
+                Uri.EscapeDataString(vc.host),
+                vc.port,
+                Uri.EscapeDataString(vc.name));
+
+            return url;
         }
 
         public List<string> ExtractLinksFromText(string text) =>

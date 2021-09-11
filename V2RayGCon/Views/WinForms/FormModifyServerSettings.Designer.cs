@@ -240,7 +240,8 @@
             this.cboxShareLinkType.Items.AddRange(new object[] {
             resources.GetString("cboxShareLinkType.Items"),
             resources.GetString("cboxShareLinkType.Items1"),
-            resources.GetString("cboxShareLinkType.Items2")});
+            resources.GetString("cboxShareLinkType.Items2"),
+            resources.GetString("cboxShareLinkType.Items3")});
             resources.ApplyResources(this.cboxShareLinkType, "cboxShareLinkType");
             this.cboxShareLinkType.Name = "cboxShareLinkType";
             this.cboxShareLinkType.SelectedValueChanged += new System.EventHandler(this.cboxShareLinkType_SelectedValueChanged);

@@ -631,13 +631,10 @@ namespace V2RayGCon.Views.UserControls
             WinForms.FormConfiger.ShowServer(uid);
         }
 
-        private void vmessToolStripMenuItem_Click(object sender, EventArgs e)
+        private void autoShareLinkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var vmessLink = slinkMgr.EncodeConfigToShareLink(
-                GetConfig(),
-                VgcApis.Models.Datas.Enums.LinkTypes.vmess);
-
-            Misc.Utils.CopyToClipboardAndPrompt(vmessLink);
+            var url = coreServCtrl?.GetConfiger()?.GetShareLink();
+            Misc.Utils.CopyToClipboardAndPrompt(url);
         }
 
         private void v2cfgToolStripMenuItem_Click(object sender, EventArgs e)
@@ -796,14 +793,6 @@ namespace V2RayGCon.Views.UserControls
         private void rlbLastModifyDate_Click(object sender, EventArgs e)
         {
             ShowFormSimpleEditor();
-        }
-
-        private void vlessToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var vlessLink = slinkMgr.EncodeConfigToShareLink(
-              GetConfig(),
-              VgcApis.Models.Datas.Enums.LinkTypes.vless);
-            Misc.Utils.CopyToClipboardAndPrompt(vlessLink);
         }
 
         private void rlbRemark_Click(object sender, EventArgs e)

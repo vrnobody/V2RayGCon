@@ -244,8 +244,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             copyAsVmessSubscriptions.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                var links = EncodeSelectedServersIntoShareLinks(
-                    VgcApis.Models.Datas.Enums.LinkTypes.vmess);
+                var links = EncodeSelectedServersIntoVmixShareLinks();
                 var b64Links = Misc.Utils.Base64Encode(links);
                 Misc.Utils.CopyToClipboardAndPrompt(b64Links);
             });
@@ -259,12 +258,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             copyAsVmixLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                var vmesses = EncodeSelectedServersIntoShareLinks(
-                    VgcApis.Models.Datas.Enums.LinkTypes.vmess);
-                var vlesses = EncodeSelectedServersIntoShareLinks(
-                    VgcApis.Models.Datas.Enums.LinkTypes.vless);
-                Misc.Utils.CopyToClipboardAndPrompt(
-                    vlesses + Environment.NewLine + vmesses);
+                var links = EncodeSelectedServersIntoVmixShareLinks();
+                Misc.Utils.CopyToClipboardAndPrompt(links);
             });
 
             copyAsVeeLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
@@ -336,6 +331,32 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 .ToList(); // force linq to execute
 
             RemoveAllControlsAndRefreshFlyPanel();
+        }
+
+        string EncodeSelectedServersIntoVmixShareLinks()
+        {
+            var serverList = servers.GetAllServersOrderByIndex();
+
+            StringBuilder result = new StringBuilder("");
+
+            foreach (var server in serverList)
+            {
+                if (!server.GetCoreStates().IsSelected())
+                {
+                    continue;
+                }
+
+                var shareLink = server.GetConfiger().GetShareLink();
+
+                if (!string.IsNullOrEmpty(shareLink))
+                {
+                    result
+                        .Append(shareLink)
+                        .Append(Environment.NewLine);
+                }
+            }
+
+            return result.ToString();
         }
 
         string EncodeSelectedServersIntoShareLinks(

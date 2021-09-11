@@ -627,21 +627,6 @@
   <metadata name="ctxMenuStripMore.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>119, 18</value>
   </metadata>
-  <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>202, 236</value>
-  </data>
-  <data name="&gt;&gt;ctxMenuStripMore.Name" xml:space="preserve">
-    <value>ctxMenuStripMore</value>
-  </data>
-  <data name="&gt;&gt;ctxMenuStripMore.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>201, 22</value>
-  </data>
-  <data name="toolStripMenuItem3.Text" xml:space="preserve">
-    <value>Action</value>
-  </data>
   <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>145, 22</value>
   </data>
@@ -669,11 +654,11 @@
   <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>Stop this server.</value>
   </data>
-  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
     <value>201, 22</value>
   </data>
-  <data name="toolStripMenuItem6.Text" xml:space="preserve">
-    <value>Move</value>
+  <data name="toolStripMenuItem3.Text" xml:space="preserve">
+    <value>Action</value>
   </data>
   <data name="moveToTopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 22</value>
@@ -693,14 +678,23 @@
   <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Move this server to bottom.</value>
   </data>
-  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
     <value>201, 22</value>
   </data>
-  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
-    <value>Copy</value>
+  <data name="toolStripMenuItem6.Text" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="autoShareLinkToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="autoShareLinkToolStripMenuItem.Text" xml:space="preserve">
+    <value>ss / vless / vmess</value>
+  </data>
+  <data name="autoShareLinkToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Contain main config information.</value>
   </data>
   <data name="vToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="vToolStripMenuItem.Text" xml:space="preserve">
     <value>v:// ...</value>
@@ -708,29 +702,20 @@
   <data name="vToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Contain main config information.</value>
   </data>
-  <data name="vlessToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 22</value>
-  </data>
-  <data name="vlessToolStripMenuItem.Text" xml:space="preserve">
-    <value>vless:// ...</value>
-  </data>
-  <data name="vmessToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 22</value>
-  </data>
-  <data name="vmessToolStripMenuItem.Text" xml:space="preserve">
-    <value>vmess:// ...</value>
-  </data>
-  <data name="vmessToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Contain main config information.</value>
-  </data>
   <data name="v2cfgToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>138, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="v2cfgToolStripMenuItem.Text" xml:space="preserve">
     <value>v2cfg:// ...</value>
   </data>
   <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Contain all config information.</value>
+  </data>
+  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>201, 22</value>
+  </data>
+  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy</value>
   </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>198, 6</value>
@@ -791,6 +776,15 @@
   </data>
   <data name="runSpeedTestToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>The time it takes to download the test web page.</value>
+  </data>
+  <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 236</value>
+  </data>
+  <data name="&gt;&gt;ctxMenuStripMore.Name" xml:space="preserve">
+    <value>ctxMenuStripMore</value>
+  </data>
+  <data name="&gt;&gt;ctxMenuStripMore.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="rtboxServerTitle.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 9pt</value>
@@ -897,22 +891,16 @@
   <data name="&gt;&gt;copyToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;autoShareLinkToolStripMenuItem.Name" xml:space="preserve">
+    <value>autoShareLinkToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;autoShareLinkToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;vToolStripMenuItem.Name" xml:space="preserve">
     <value>vToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;vToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;vlessToolStripMenuItem.Name" xml:space="preserve">
-    <value>vlessToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;vlessToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;vmessToolStripMenuItem.Name" xml:space="preserve">
-    <value>vmessToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;vmessToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;v2cfgToolStripMenuItem.Name" xml:space="preserve">

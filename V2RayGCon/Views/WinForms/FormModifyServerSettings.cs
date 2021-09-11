@@ -85,6 +85,7 @@ namespace V2RayGCon.Views.WinForms
             var slinkMgr = Services.ShareLinkMgr.Instance;
             var config = coreServ.GetConfiger().GetConfig();
             var ts = new List<VgcApis.Models.Datas.Enums.LinkTypes> {
+                VgcApis.Models.Datas.Enums.LinkTypes.ss,
                 VgcApis.Models.Datas.Enums.LinkTypes.vmess,
                 VgcApis.Models.Datas.Enums.LinkTypes.vless,
                 VgcApis.Models.Datas.Enums.LinkTypes.v,
@@ -138,9 +139,12 @@ namespace V2RayGCon.Views.WinForms
         {
             var slinkMgr = Services.ShareLinkMgr.Instance;
             var config = coreServ.GetConfiger().GetConfig();
-            var ty = VgcApis.Models.Datas.Enums.LinkTypes.vmess;
+            var ty = VgcApis.Models.Datas.Enums.LinkTypes.ss;
             switch (cboxShareLinkType.Text.ToLower())
             {
+                case "vmess":
+                    ty = VgcApis.Models.Datas.Enums.LinkTypes.vmess;
+                    break;
                 case "vee":
                     ty = VgcApis.Models.Datas.Enums.LinkTypes.v;
                     break;

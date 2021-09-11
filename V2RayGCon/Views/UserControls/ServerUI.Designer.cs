@@ -52,9 +52,8 @@
             this.moveToTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToBottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.autoShareLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.vlessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.vmessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.v2cfgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.showSettingWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -271,30 +270,23 @@
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.autoShareLinkToolStripMenuItem,
             this.vToolStripMenuItem,
-            this.vlessToolStripMenuItem,
-            this.vmessToolStripMenuItem,
             this.v2cfgToolStripMenuItem});
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             resources.ApplyResources(this.copyToolStripMenuItem, "copyToolStripMenuItem");
+            // 
+            // autoShareLinkToolStripMenuItem
+            // 
+            this.autoShareLinkToolStripMenuItem.Name = "autoShareLinkToolStripMenuItem";
+            resources.ApplyResources(this.autoShareLinkToolStripMenuItem, "autoShareLinkToolStripMenuItem");
+            this.autoShareLinkToolStripMenuItem.Click += new System.EventHandler(this.autoShareLinkToolStripMenuItem_Click);
             // 
             // vToolStripMenuItem
             // 
             this.vToolStripMenuItem.Name = "vToolStripMenuItem";
             resources.ApplyResources(this.vToolStripMenuItem, "vToolStripMenuItem");
             this.vToolStripMenuItem.Click += new System.EventHandler(this.vToolStripMenuItem_Click);
-            // 
-            // vlessToolStripMenuItem
-            // 
-            this.vlessToolStripMenuItem.Name = "vlessToolStripMenuItem";
-            resources.ApplyResources(this.vlessToolStripMenuItem, "vlessToolStripMenuItem");
-            this.vlessToolStripMenuItem.Click += new System.EventHandler(this.vlessToolStripMenuItem_Click);
-            // 
-            // vmessToolStripMenuItem
-            // 
-            this.vmessToolStripMenuItem.Name = "vmessToolStripMenuItem";
-            resources.ApplyResources(this.vmessToolStripMenuItem, "vmessToolStripMenuItem");
-            this.vmessToolStripMenuItem.Click += new System.EventHandler(this.vmessToolStripMenuItem_Click);
             // 
             // v2cfgToolStripMenuItem
             // 
@@ -401,7 +393,7 @@
         private System.Windows.Forms.ContextMenuStrip ctxMenuStripMore;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem vmessToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem autoShareLinkToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem v2cfgToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
@@ -431,6 +423,5 @@
         private VgcApis.UserControls.RoundLabel rlbRemark;
         private VgcApis.UserControls.RoundLabel rlbLastModifyDate;
         private System.Windows.Forms.ToolStripMenuItem simpleEditorToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem vlessToolStripMenuItem;
     }
 }

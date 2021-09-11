@@ -183,10 +183,10 @@
   <data name="toolStripMenuItem6.Text" xml:space="preserve">
     <value>移动</value>
   </data>
-  <data name="vToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>包含主要配置信息</value>
+  <data name="autoShareLinkToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>只包含部分配置信息</value>
   </data>
-  <data name="vmessToolStripMenuItem.ToolTipText" xml:space="preserve">
+  <data name="vToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>包含主要配置信息</value>
   </data>
   <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">

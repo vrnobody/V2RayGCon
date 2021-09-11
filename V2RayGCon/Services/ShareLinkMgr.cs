@@ -58,6 +58,8 @@ namespace V2RayGCon.Services
         {
             switch (linkType)
             {
+                case VgcApis.Models.Datas.Enums.LinkTypes.ss:
+                    return codecs.Encode<ShareLinkComponents.SsDecoder>(config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.v:
                     return codecs.Encode<ShareLinkComponents.VeeDecoder>(config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.vmess:

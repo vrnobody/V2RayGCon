@@ -18,6 +18,12 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         string GetConfig();
 
         /// <summary>
+        /// 获取ss/vless/vmess分享链接
+        /// </summary>
+        /// <returns>分享链接</returns>
+        string GetShareLink();
+
+        /// <summary>
         /// 修改config.json
         /// </summary>
         /// <param name="newConfig">新的config.json</param>

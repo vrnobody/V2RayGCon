@@ -756,6 +756,9 @@
   <data name="cboxShareLinkType.Items2" xml:space="preserve">
     <value>vmess</value>
   </data>
+  <data name="cboxShareLinkType.Items3" xml:space="preserve">
+    <value>ss</value>
+  </data>
   <data name="cboxShareLinkType.Location" type="System.Drawing.Point, System.Drawing">
     <value>44, 20</value>
   </data>

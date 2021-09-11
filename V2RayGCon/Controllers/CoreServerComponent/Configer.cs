@@ -37,6 +37,44 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         #region public methods
+        public string GetShareLink()
+        {
+            var slinkMgr = Services.ShareLinkMgr.Instance;
+
+            string url = null;
+
+            try
+            {
+                var config = GetFinalConfig();
+                var proto = Misc.Utils.GetValue<string>(config, "outbounds.0.protocol")?.ToLower();
+                var cs = config?.ToString();
+                switch (proto)
+                {
+                    case "ss":
+                    case "shadowsocks":
+                        url = slinkMgr.EncodeConfigToShareLink(
+                            cs,
+                            VgcApis.Models.Datas.Enums.LinkTypes.ss);
+                        break;
+                    case "vmess":
+                        url = slinkMgr.EncodeConfigToShareLink(
+                            cs,
+                            VgcApis.Models.Datas.Enums.LinkTypes.vmess);
+                        break;
+                    case "vless":
+                        url = slinkMgr.EncodeConfigToShareLink(
+                            cs,
+                            VgcApis.Models.Datas.Enums.LinkTypes.vless);
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            catch { }
+
+            return url;
+        }
         public JObject GetFinalConfig()
         {
             JObject finalConfig = configMgr.DecodeConfig(

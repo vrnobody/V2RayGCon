@@ -622,7 +622,7 @@ namespace VgcApis.Misc
             {
                 var take = Math.Min(groupSize, count - servIdx);
                 var last = Math.Min(pageIdx + menuSpan, maxIdx);
-                var text = string.Format("{0,4} - {1,4}", pageIdx + 1, last);
+                var text = string.Format("{0,5} - {1,5}", pageIdx + 1, last);
                 var mis = menuItems.Skip(servIdx).Take(take).ToArray();
                 var mi = new ToolStripMenuItem(text, null, mis);
                 groups.Add(mi);

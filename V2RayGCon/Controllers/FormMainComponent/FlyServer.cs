@@ -379,7 +379,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 var take = Math.Min(groupSize, count - servIdx);
                 var last = Math.Min(pageIdx + menuSpan, maxIdx);
-                var pageRange = string.Format("{0,4}-{1,4}", pageIdx + 1, last);
+                var pageRange = string.Format("{0,5}-{1,5}", pageIdx + 1, last);
                 var text = string.Format(
                     I18N.StatusBarPagerMenuItemTpl,
                     pageRange,

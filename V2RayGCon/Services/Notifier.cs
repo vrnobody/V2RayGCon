@@ -683,7 +683,7 @@ namespace V2RayGCon.Services
             {
                 var s = i;
                 var e = Math.Min(i + step, end);
-                var text = string.Format("{0,4:D4} - {1,4:D4}", s + 1, e);
+                var text = string.Format("{0,5:D5} - {1,5:D5}", s + 1, e);
                 var mi = new ToolStripMenuItem(text, null);
                 mi.DropDownOpening += (o, a) =>
                 {

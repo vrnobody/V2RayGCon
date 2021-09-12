@@ -700,7 +700,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>并发core数量：</value>
   </data>
   <data name="StatusBarPagerMenuItemTpl" xml:space="preserve">
-    <value>第{0,3}页 ({1,4} - {2,4})</value>
+    <value>第{0}页 ({1,5:D5} - {2,5:D5})</value>
   </data>
   <data name="TotalNum" xml:space="preserve">
     <value>合计：</value>

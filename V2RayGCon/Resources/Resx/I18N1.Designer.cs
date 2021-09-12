@@ -1699,7 +1699,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Page {0,3} ({1,4} - {2,4}) 的本地化字符串。
+        ///   查找类似 Page {0} ({1,5:D5} - {2,5:D5}) 的本地化字符串。
         /// </summary>
         internal static string StatusBarPagerMenuItemTpl {
             get {

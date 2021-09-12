@@ -28,16 +28,27 @@ namespace V2RayGCon.Views.WinForms
 
         private void FormImportLinksResult_Shown(object sender, EventArgs e)
         {
-            var count = 0;
-            var items = results.Select(r =>
-            {
-                r[0] = (++count).ToString();
-                return new ListViewItem(r);
-            }).ToArray();
-            lvResult.SuspendLayout();
             lvResult.Items.Clear();
-            lvResult.Items.AddRange(items);
+            var max = results.Count();
+            if (max > 1000)
+            {
+                pbLoading.Visible = true;
+            }
+            lvResult.SuspendLayout();
+            var count = 0;
+            var range = max / 100;
+            foreach (var result in results)
+            {
+                if (count % range == 0)
+                {
+                    pbLoading.Value = count * 100 / max;
+                }
+                result[0] = (++count).ToString();
+                var item = new ListViewItem(result);
+                lvResult.Items.Add(item);
+            }
             lvResult.ResumeLayout();
+            pbLoading.Visible = false;
         }
 
         private void btnCopy_Click(object sender, EventArgs e)

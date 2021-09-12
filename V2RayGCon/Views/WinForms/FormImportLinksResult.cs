@@ -36,15 +36,18 @@ namespace V2RayGCon.Views.WinForms
             }
 
             var count = 0;
-            var step = total / 50;
+            var step = Math.Max(total / 50, 1);
             var max = pbLoading.Maximum;
+            var min = pbLoading.Minimum;
+            var t = Math.Max(total, 1);
 
             lvResult.SuspendLayout();
             foreach (var result in results)
             {
                 if (count % step == 0)
                 {
-                    pbLoading.Value = count * max / total;
+                    var p = Math.Max(min, Math.Min(count * max / t, max));
+                    pbLoading.Value = p;
                 }
                 result[0] = (++count).ToString();
                 var item = new ListViewItem(result);

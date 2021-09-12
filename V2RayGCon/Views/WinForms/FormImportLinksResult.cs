@@ -7,18 +7,17 @@ namespace V2RayGCon.Views.WinForms
 {
     public partial class FormImportLinksResult : Form
     {
-        public static void ShowResult(List<string[]> importResults) =>
+        public static void ShowResult(IEnumerable<string[]> importResults) =>
             VgcApis.Misc.UI.Invoke(
                 () => new FormImportLinksResult(importResults).Show());
 
 
-        List<string[]> results;
-        List<string> linksCache;
-        FormImportLinksResult(List<string[]> importResults)
+        IEnumerable<string[]> results;
+
+        FormImportLinksResult(IEnumerable<string[]> importResults)
         {
             InitializeComponent();
             results = importResults;
-            linksCache = new List<string>();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
         }
 
@@ -29,11 +28,10 @@ namespace V2RayGCon.Views.WinForms
 
         private void FormImportLinksResult_Shown(object sender, EventArgs e)
         {
-            int count = 1;
+            var count = 0;
             var items = results.Select(r =>
             {
-                r[0] = count.ToString();
-                count++;
+                r[0] = (++count).ToString();
                 return new ListViewItem(r);
             }).ToArray();
             lvResult.SuspendLayout();
@@ -44,7 +42,13 @@ namespace V2RayGCon.Views.WinForms
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
-            CopyToClipboard(linksCache);
+            var links = new List<string>();
+
+            foreach (ListViewItem item in lvResult.SelectedItems)
+            {
+                links.Add(ConvertListViewItemToString(item));
+            }
+            CopyToClipboard(links);
         }
 
         string ConvertListViewItemToString(ListViewItem item)
@@ -56,16 +60,6 @@ namespace V2RayGCon.Views.WinForms
                 list.Add(item.SubItems[i].Text);
             }
             return string.Join(",", list);
-        }
-
-        private void lvResult_Click(object sender, EventArgs e)
-        {
-            linksCache = new List<string>();
-
-            foreach (ListViewItem item in lvResult.SelectedItems)
-            {
-                linksCache.Add(ConvertListViewItemToString(item));
-            }
         }
 
         void CopyToClipboard(List<string> links) =>

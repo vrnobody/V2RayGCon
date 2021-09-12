@@ -55,7 +55,6 @@
             this.lvResult.Name = "lvResult";
             this.lvResult.UseCompatibleStateImageBehavior = false;
             this.lvResult.View = System.Windows.Forms.View.Details;
-            this.lvResult.Click += new System.EventHandler(this.lvResult_Click);
             // 
             // index
             // 

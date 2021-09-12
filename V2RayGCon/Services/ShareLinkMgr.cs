@@ -90,8 +90,7 @@ namespace V2RayGCon.Services
             var links = Misc.Utils.FetchLinksFromSubcriptions(enabledSubs, proxyPort);
             var decoders = GenDecoderList(false);
             var results = ImportLinksBatchModeSync(links, decoders);
-            var count = results.Where(r => VgcApis.Misc.Utils.IsImportResultSuccess(r)).Count();
-            return count;
+            return CountImportSuccessResult(results);
         }
 
         public int ImportLinksWithOutV2cfgLinksSync(string links, string mark)
@@ -108,15 +107,7 @@ namespace V2RayGCon.Services
 
             // servers.UpdateAllServersSummary();
 
-            var count = 0;
-            foreach (var result in results)
-            {
-                if (VgcApis.Misc.Utils.IsImportResultSuccess(result))
-                {
-                    count++;
-                }
-            }
-            return count;
+            return CountImportSuccessResult(results);
         }
 
         public void ImportLinkWithOutV2cfgLinksBatchMode(
@@ -157,6 +148,11 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+        int CountImportSuccessResult(IEnumerable<string[]> result)
+        {
+            return result.Where(r => VgcApis.Misc.Utils.IsImportResultSuccess(r)).Count();
+        }
+
         List<VgcApis.Interfaces.IShareLinkDecoder> GenDecoderList(
            bool isIncludeV2cfgDecoder)
         {
@@ -206,7 +202,7 @@ namespace V2RayGCon.Services
         /// <para>linkList=List(string[]{0: text, 1: mark}>)</para>
         /// <para>decoders = List(IShareLinkDecoder)</para>
         /// </summary>
-        List<string[]> ImportLinksBatchModeSync(
+        IEnumerable<string[]> ImportLinksBatchModeSync(
             IEnumerable<string[]> linkList,
             IEnumerable<VgcApis.Interfaces.IShareLinkDecoder> decoders)
         {
@@ -227,28 +223,27 @@ namespace V2RayGCon.Services
             }
 
             var results = Misc.Utils.ExecuteInParallel(jobs, worker);
-            return results.SelectMany(r => r).ToList();
+            return results.SelectMany(r => r);
         }
 
         void ShowImportResults(IEnumerable<string[]> results)
         {
-            var list = results.ToList();
+            var c = results.Count();
 
-            if (list.Count <= 0)
+            if (c <= 0)
             {
                 MessageBox.Show(I18N.NoLinkFound);
                 return;
             }
 
-            if (IsAddNewServer(list))
+            if (IsImportAnyServer(results))
             {
                 servers.RequireFormMainReload();
-                // VgcApis.Misc.Utils.RunInBackground(servers.UpdateAllServersSummary);
             }
 
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                Views.WinForms.FormImportLinksResult.ShowResult(list);
+                Views.WinForms.FormImportLinksResult.ShowResult(results);
             });
         }
 
@@ -274,16 +269,9 @@ namespace V2RayGCon.Services
             return results;
         }
 
-        bool IsAddNewServer(IEnumerable<string[]> importResults)
+        bool IsImportAnyServer(IEnumerable<string[]> importResults)
         {
-            foreach (var result in importResults)
-            {
-                if (VgcApis.Misc.Utils.IsImportResultSuccess(result))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return importResults.Any(r => VgcApis.Misc.Utils.IsImportResultSuccess(r));
         }
 
         private Tuple<bool, string> AddLinkToServerList(

@@ -1,12 +1,13 @@
 {
-  "version": "1.5.8.0",
-  "md5": "9F229CFEC00310A9F537BB698463FBE8",
-  "warnings": [
-    "修改配置文件存盘方式（测试中，注意多备份）"
-  ],
+  "version": "1.5.9.0",
+  "md5": "A38A5FE6B53EC3316C03D17C81F1875C",
+  "warnings": [],
   "changes": [
-    "scripts包添加一个SSH端口转发示例脚本",
-    "Pacman插件添加ProbeURL及ProbeInterval选项",
-    "Luna插件添加coreCtrl:RunSpeedTestThen()函数"
+    "支持使用web-safe编码的订阅",
+    "支持导入、分享shadowsocks SIP002标准的链接",
+    "分页菜单添加序号范围",
+    "导入结果窗口添加进度条",
+    "修复服务器较多(4k+)时搜索会卡顿的问题",
+    "修复当前页选择菜单会清除其他页面选中状态的问题"
   ]
 }

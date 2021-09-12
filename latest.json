@@ -1,9 +1,9 @@
 {
-  "version": "1.5.9.0",
-  "md5": "A38A5FE6B53EC3316C03D17C81F1875C",
+  "version": "1.5.9.1",
+  "md5": "1B8E5AD3310DF65EF280AA9A2847DE58",
   "warnings": [],
   "changes": [
-    "支持使用web-safe编码的订阅",
+    "支持使用web-safe base64编码的订阅",
     "支持导入、分享shadowsocks SIP002标准的链接",
     "分页菜单添加序号范围",
     "导入结果窗口添加进度条",

@@ -29,25 +29,29 @@ namespace V2RayGCon.Views.WinForms
         private void FormImportLinksResult_Shown(object sender, EventArgs e)
         {
             lvResult.Items.Clear();
-            var max = results.Count();
-            if (max > 1000)
+            var total = results.Count();
+            if (total > 1000)
             {
                 pbLoading.Visible = true;
             }
-            lvResult.SuspendLayout();
+
             var count = 0;
-            var range = max / 100;
+            var step = total / 50;
+            var max = pbLoading.Maximum;
+
+            lvResult.SuspendLayout();
             foreach (var result in results)
             {
-                if (count % range == 0)
+                if (count % step == 0)
                 {
-                    pbLoading.Value = count * 100 / max;
+                    pbLoading.Value = count * max / total;
                 }
                 result[0] = (++count).ToString();
                 var item = new ListViewItem(result);
                 lvResult.Items.Add(item);
             }
             lvResult.ResumeLayout();
+
             pbLoading.Visible = false;
         }
 

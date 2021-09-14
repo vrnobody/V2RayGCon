@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace VgcApis.Interfaces.Services
 {
@@ -46,7 +45,8 @@ namespace VgcApis.Interfaces.Services
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
             VgcApis.Models.Datas.Enums.PackageTypes packageType);
 
-        ReadOnlyCollection<ICoreServCtrl> GetTrackableServerList();
-        ReadOnlyCollection<ICoreServCtrl> GetAllServersOrderByIndex();
+        List<ICoreServCtrl> GetTrackableServerList();
+        List<ICoreServCtrl> GetAllServersOrderByIndex();
+        List<ICoreServCtrl> GetSelectedServers(bool descending = false);
     }
 }

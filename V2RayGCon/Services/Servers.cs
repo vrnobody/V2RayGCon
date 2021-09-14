@@ -116,13 +116,16 @@ namespace V2RayGCon.Services
         #endregion
 
         #region querys
-        public ReadOnlyCollection<ICoreServCtrl> GetRunningServers() =>
+        public List<ICoreServCtrl> GetSelectedServers(bool descending = false) =>
+            queryHandler.GetSelectedServers(descending);
+
+        public List<ICoreServCtrl> GetRunningServers() =>
             queryHandler.GetRunningServers();
 
-        public ReadOnlyCollection<ICoreServCtrl> GetAllServersOrderByIndex() =>
+        public List<ICoreServCtrl> GetAllServersOrderByIndex() =>
             queryHandler.GetAllServersOrderByIndex();
 
-        public ReadOnlyCollection<ICoreServCtrl> GetTrackableServerList() =>
+        public List<ICoreServCtrl> GetTrackableServerList() =>
             queryHandler.GetTrackableServerList();
 
         #endregion
@@ -254,9 +257,7 @@ namespace V2RayGCon.Services
 
             lock (serverListWriteLock)
             {
-                list = GetAllServersOrderByIndex()
-                    .Where(s => s.GetCoreCtrl().IsCoreRunning())
-                    .ToList();
+                list = GetRunningServers();
             }
 
             foreach (var serv in list)

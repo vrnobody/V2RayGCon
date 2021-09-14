@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using VgcApis.Interfaces;
 
@@ -20,21 +19,24 @@ namespace V2RayGCon.Services.ServersComponents
         }
 
         #region public methods
-        public ReadOnlyCollection<ICoreServCtrl> GetRunningServers()
+        public List<ICoreServCtrl> GetRunningServers()
         {
-            return AtomOp(() => GetAllServersOrderByIndex()
+            return AtomOp(() => coreServList
                 .Where(s => s.GetCoreCtrl().IsCoreRunning())
-                .ToList());
-        }
-
-        public ReadOnlyCollection<ICoreServCtrl> GetAllServersOrderByIndex()
-        {
-            return AtomOp(() => coreServList.Select(s => s as ICoreServCtrl)
                 .OrderBy(s => s.GetCoreStates().GetIndex())
+                .Select(s => s as ICoreServCtrl)
                 .ToList());
         }
 
-        public ReadOnlyCollection<ICoreServCtrl> GetSelectedServers(
+        public List<ICoreServCtrl> GetAllServersOrderByIndex()
+        {
+            return AtomOp(() => coreServList
+                .OrderBy(s => s.GetCoreStates().GetIndex())
+                .Select(s => s as ICoreServCtrl)
+                .ToList());
+        }
+
+        public List<ICoreServCtrl> GetSelectedServers(
            bool descending = false)
         {
             return AtomOp(() =>
@@ -51,7 +53,7 @@ namespace V2RayGCon.Services.ServersComponents
             });
         }
 
-        public ReadOnlyCollection<ICoreServCtrl> GetTrackableServerList()
+        public List<ICoreServCtrl> GetTrackableServerList()
         {
             return AtomOp(
                 () => coreServList
@@ -64,14 +66,14 @@ namespace V2RayGCon.Services.ServersComponents
 
         #region private methods
 
-        ReadOnlyCollection<ICoreServCtrl> AtomOp(Func<List<ICoreServCtrl>> op)
+        List<ICoreServCtrl> AtomOp(Func<List<ICoreServCtrl>> op)
         {
             List<ICoreServCtrl> r = null;
             lock (serverListWriteLock)
             {
                 r = op?.Invoke();
             }
-            return r.AsReadOnly();
+            return r;
         }
 
         #endregion

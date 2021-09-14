@@ -743,9 +743,7 @@ namespace V2RayGCon.Services
 
             try
             {
-                var list = servers.GetAllServersOrderByIndex()
-                    .Where(s => s.GetCoreCtrl().IsCoreRunning())
-                    .ToList();
+                var list = servers.GetRunningServers();
 
                 var iconType = AnalyzeSysTrayIconType(list);
 

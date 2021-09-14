@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Luna.Models.Apis.Components
 {
@@ -37,7 +36,7 @@ namespace Luna.Models.Apis.Components
             vgcConfigMgr.RunCustomSpeedTest(rawConfig, testUrl, testTimeout);
 
         public List<VgcApis.Interfaces.ICoreServCtrl> GetAllServers() =>
-            vgcServers.GetAllServersOrderByIndex().ToList();
+            vgcServers.GetAllServersOrderByIndex();
 
         public void ReverseSelectedByIndex() =>
             vgcServers.ReverseSelectedByIndex();

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -40,10 +39,7 @@ namespace V2RayGCon.Views.WinForms
             this.cboxMark.Items.Clear();
             cboxMark.Items.AddRange(servers.GetMarkList());
 
-            var firstCtrl = servers
-                .GetAllServersOrderByIndex()
-                .Where(s => s.GetCoreStates().IsSelected())
-                .FirstOrDefault();
+            var firstCtrl = servers.GetSelectedServers(false).FirstOrDefault();
             if (firstCtrl == null)
             {
                 return;
@@ -84,10 +80,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void btnModify_Click(object sender, EventArgs e)
         {
-            var list = servers
-                .GetAllServersOrderByIndex()
-                .Where(s => s.GetCoreStates().IsSelected())
-                .ToList();
+            var list = servers.GetSelectedServers(false);
 
             var newMode = chkInMode.Checked ? cboxInMode.SelectedIndex : -1;
             var newIP = chkInIP.Checked ? tboxInIP.Text : null;

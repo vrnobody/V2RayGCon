@@ -1,6 +1,5 @@
 ﻿using Pacman.Resources.Langs;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Pacman.Services
@@ -56,7 +55,7 @@ namespace Pacman.Services
                 strategy, VgcApis.Models.Datas.Enums.PackageTypes.Balancer);
         }
 
-        public ReadOnlyCollection<VgcApis.Interfaces.ICoreServCtrl> GetAllServersList() =>
+        public List<VgcApis.Interfaces.ICoreServCtrl> GetAllServersList() =>
             vgcServers.GetAllServersOrderByIndex();
 
         public List<Models.Data.Package> GetPackageList()

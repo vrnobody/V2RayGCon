@@ -139,29 +139,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         readonly object genUidLocker = new object();
         public string GetUid()
         {
-            bool refresh = false;
-
             if (string.IsNullOrEmpty(coreInfo.uid))
             {
-                var uidList = servers.GetAllServersOrderByIndex()
-                    .Select(s => s.GetCoreStates().GetRawUid())
-                    .ToList();
-
-                lock (genUidLocker)
-                {
-                    string newUid;
-                    do
-                    {
-                        newUid = VgcApis.Misc.Utils.RandomHex(16);
-                    } while (uidList.Contains(newUid));
-
-                    coreInfo.uid = newUid;
-                    refresh = true;
-                }
-            }
-
-            if (refresh)
-            {
+                coreInfo.uid = Guid.NewGuid().ToString();
                 GetParent().InvokeEventOnPropertyChange();
             }
             return coreInfo.uid;

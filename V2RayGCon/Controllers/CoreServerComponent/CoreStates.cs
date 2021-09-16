@@ -136,7 +136,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public VgcApis.Models.Datas.CoreInfo GetAllRawCoreInfo() => coreInfo;
 
-        readonly object genUidLocker = new object();
         public string GetUid()
         {
             if (string.IsNullOrEmpty(coreInfo.uid))

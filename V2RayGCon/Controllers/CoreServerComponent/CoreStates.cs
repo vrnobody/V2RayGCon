@@ -140,14 +140,15 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public string GetUid()
         {
             bool refresh = false;
-            lock (genUidLocker)
-            {
-                if (string.IsNullOrEmpty(coreInfo.uid))
-                {
-                    var uidList = servers.GetAllServersOrderByIndex()
-                        .Select(s => s.GetCoreStates().GetRawUid())
-                        .ToList();
 
+            if (string.IsNullOrEmpty(coreInfo.uid))
+            {
+                var uidList = servers.GetAllServersOrderByIndex()
+                    .Select(s => s.GetCoreStates().GetRawUid())
+                    .ToList();
+
+                lock (genUidLocker)
+                {
                     string newUid;
                     do
                     {

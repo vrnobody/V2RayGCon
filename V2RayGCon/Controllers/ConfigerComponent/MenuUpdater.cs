@@ -36,7 +36,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         {
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                VgcApis.Misc.Utils.Sleep(10);
+                // VgcApis.Misc.Utils.Sleep(10);
                 ReloadMenu();
             });
         }

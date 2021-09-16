@@ -141,6 +141,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             if (string.IsNullOrEmpty(coreInfo.uid))
             {
                 coreInfo.uid = Guid.NewGuid().ToString();
+
+                // 保存配置
                 GetParent().InvokeEventOnPropertyChange();
             }
             return coreInfo.uid;

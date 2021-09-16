@@ -146,7 +146,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             var start = DateTime.Now.Millisecond;
             int filteredListCount = GetFilteredList().Count;
-            int allServersCount = servers.CountAllServers();
+            int allServersCount = servers.Count();
             int serverControlCount = GetAllServerControls().Count();
 
             // may cause dead lock in UI thread
@@ -185,10 +185,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void RefreshFlyPanelWorker(Action done)
         {
             var start = DateTime.Now.Millisecond;
-            // servers.ResetIndex();
             var flatList = GetFilteredList();
             var pagedList = GenPagedServerList(flatList);
-            var showWelcome = servers.CountAllServers() == 0;
+            var showWelcome = servers.Count() == 0;
             List<Views.UserControls.ServerUI> removed = new List<Views.UserControls.ServerUI>();
 
             Action next = () =>

@@ -7,6 +7,8 @@ namespace VgcApis.Interfaces.Services
     {
         event EventHandler OnCoreStart, OnCoreClosing, OnCoreStop;
 
+        int Count();
+
         int GetAvailableHttpProxyPort();
         string ReplaceOrAddNewServer(string orgUid, string newConfig);
 

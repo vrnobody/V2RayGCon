@@ -282,7 +282,7 @@ namespace V2RayGCon.Services
             }
         }
 
-        public int CountAllServers() => coreServList.Count;
+        public int Count() => coreServList.Count;
 
         public void SetAllServerIsSelected(bool isSelected)
         {

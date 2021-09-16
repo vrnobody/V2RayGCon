@@ -254,7 +254,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             var ci = coreInfo;
             if (string.IsNullOrEmpty(ci.title))
             {
-                var result = $"{ci.index}.[{GetShortName()}] {ci.summary}";
+                var result = $"{GetIndex()}.[{GetShortName()}] {GetSummary()}";
                 ci.title = VgcApis.Misc.Utils.AutoEllipsis(result, VgcApis.Models.Consts.AutoEllipsis.ServerTitleMaxLength);
             }
             return ci.title;

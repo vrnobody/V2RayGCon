@@ -617,7 +617,6 @@ namespace V2RayGCon.Services
 
             RequireFormMainReload();
             setting.LazyGC();
-            lazyServerSettingsRecorder.Deadline();
             InvokeEventOnServerPropertyChange(this, EventArgs.Empty);
         }
 

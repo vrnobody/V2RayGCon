@@ -162,7 +162,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             {
                 coreCtrl.RestartCoreThen();
             }
-
         }
 
         public void GetterInfoForNotifyIconf(Action<string> next)
@@ -237,7 +236,13 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             var name = Misc.Utils.GetAliasFromConfig(config);
             coreInfo.name = name;
             coreInfo.summary = Misc.Utils.GetSummaryFromConfig(config);
+
+            // update title & longname 
             coreInfo.ClearCachedString();
+            var cs = GetSibling<CoreStates>();
+            cs.GetLongName();
+            cs.GetUid();
+            cs.GetTitle();
         }
 
         bool IsProtocolMatchProxyRequirment(bool isGlobalProxy, string protocol)

@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using VgcApis.Interfaces;
 
 namespace V2RayGCon.Services.ServersComponents
 {
     class QueryHandler
     {
-        object serverListWriteLock;
+        ReaderWriterLockSlim locker;
         List<Controllers.CoreServerCtrl> coreServList;
 
         public QueryHandler(
-            object serverListWriteLock,
+            ReaderWriterLockSlim locker,
             List<Controllers.CoreServerCtrl> coreServList)
         {
-            this.serverListWriteLock = serverListWriteLock;
+            this.locker = locker;
             this.coreServList = coreServList;
         }
 
         #region public methods
         public List<ICoreServCtrl> GetRunningServers()
         {
-            return AtomOp(() => coreServList
+            return AtomicReader(() => coreServList
                 .Where(s => s.GetCoreCtrl().IsCoreRunning())
                 .OrderBy(s => s.GetCoreStates().GetIndex())
                 .Select(s => s as ICoreServCtrl)
@@ -30,7 +31,7 @@ namespace V2RayGCon.Services.ServersComponents
 
         public List<ICoreServCtrl> GetAllServersOrderByIndex()
         {
-            return AtomOp(() => coreServList
+            return AtomicReader(() => coreServList
                 .OrderBy(s => s.GetCoreStates().GetIndex())
                 .Select(s => s as ICoreServCtrl)
                 .ToList());
@@ -39,7 +40,7 @@ namespace V2RayGCon.Services.ServersComponents
         public List<ICoreServCtrl> GetSelectedServers(
            bool descending = false)
         {
-            return AtomOp(() =>
+            return AtomicReader(() =>
             {
                 var list = coreServList.Where(s => s.GetCoreStates().IsSelected());
 
@@ -55,7 +56,7 @@ namespace V2RayGCon.Services.ServersComponents
 
         public List<ICoreServCtrl> GetTrackableServerList()
         {
-            return AtomOp(
+            return AtomicReader(
                 () => coreServList
                 .Where(s => s.GetCoreCtrl().IsCoreRunning() && !s.GetCoreStates().IsUntrack())
                 .Select(s => s as ICoreServCtrl)
@@ -66,12 +67,17 @@ namespace V2RayGCon.Services.ServersComponents
 
         #region private methods
 
-        List<ICoreServCtrl> AtomOp(Func<List<ICoreServCtrl>> op)
+        List<ICoreServCtrl> AtomicReader(Func<List<ICoreServCtrl>> op)
         {
             List<ICoreServCtrl> r = null;
-            lock (serverListWriteLock)
+            locker.EnterReadLock();
+            try
             {
                 r = op?.Invoke();
+            }
+            finally
+            {
+                locker.ExitReadLock();
             }
             return r;
         }

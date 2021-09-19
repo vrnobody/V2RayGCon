@@ -43,7 +43,7 @@ namespace V2RayGCon.Services
         ConcurrentDictionary<string, bool> markList = new ConcurrentDictionary<string, bool>();
 
         VgcApis.Libs.Tasks.LazyGuy lazyServerSettingsRecorder;
-        readonly object serverListWriteLock = new object();
+        ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
         VgcApis.Libs.Tasks.Bar speedTestingBar = new VgcApis.Libs.Tasks.Bar();
 
         Servers()
@@ -71,11 +71,11 @@ namespace V2RayGCon.Services
             UpdateMarkList();
 
             queryHandler = new ServersComponents.QueryHandler(
-                serverListWriteLock,
+                locker,
                 coreServList);
 
             indexHandler = new ServersComponents.IndexHandler(
-                serverListWriteLock,
+                locker,
                 coreServList);
         }
 
@@ -253,12 +253,7 @@ namespace V2RayGCon.Services
         /// <returns></returns>
         public int GetAvailableHttpProxyPort()
         {
-            List<ICoreServCtrl> list;
-
-            lock (serverListWriteLock)
-            {
-                list = GetRunningServers();
-            }
+            List<ICoreServCtrl> list = GetRunningServers();
 
             foreach (var serv in list)
             {
@@ -276,9 +271,14 @@ namespace V2RayGCon.Services
 
         public int CountSelectedServers()
         {
-            lock (serverListWriteLock)
+            locker.EnterReadLock();
+            try
             {
                 return coreServList.Count(s => s.GetCoreStates().IsSelected());
+            }
+            finally
+            {
+                locker.ExitReadLock();
             }
         }
 
@@ -288,9 +288,14 @@ namespace V2RayGCon.Services
         {
             List<Controllers.CoreServerCtrl> cache;
 
-            lock (serverListWriteLock)
+            locker.EnterReadLock();
+            try
             {
                 cache = coreServList.ToList();
+            }
+            finally
+            {
+                locker.ExitReadLock();
             }
 
             foreach (var c in cache)
@@ -318,9 +323,14 @@ namespace V2RayGCon.Services
         public void UpdateMarkList()
         {
             List<string> marks = null;
-            lock (serverListWriteLock)
+            locker.EnterReadLock();
+            try
             {
                 marks = coreServList.Select(s => s.GetCoreStates().GetMark()).ToList();
+            }
+            finally
+            {
+                locker.ExitReadLock();
             }
 
             markList.Clear();
@@ -339,12 +349,18 @@ namespace V2RayGCon.Services
         public void RestartServersWithImportMark()
         {
             var list = new List<Controllers.CoreServerCtrl>();
-            lock (serverListWriteLock)
+
+            locker.EnterReadLock();
+            try
             {
                 list = coreServList
                     .Where(s => s.GetCoreStates().IsInjectGlobalImport() && s.GetCoreCtrl().IsCoreRunning())
                     .OrderBy(s => s.GetCoreStates().GetIndex())
                     .ToList();
+            }
+            finally
+            {
+                locker.ExitReadLock();
             }
 
             RestartServersThen(list);
@@ -352,17 +368,28 @@ namespace V2RayGCon.Services
 
         public bool IsEmpty()
         {
-            lock (serverListWriteLock)
+
+            locker.EnterReadLock();
+            try
             {
                 return !(this.coreServList.Any());
+            }
+            finally
+            {
+                locker.ExitReadLock();
             }
         }
 
         public bool IsSelecteAnyServer()
         {
-            lock (serverListWriteLock)
+            locker.EnterReadLock();
+            try
             {
                 return coreServList.Any(s => s.GetCoreStates().IsSelected());
+            }
+            finally
+            {
+                locker.ExitReadLock();
             }
         }
 
@@ -372,11 +399,7 @@ namespace V2RayGCon.Services
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
             VgcApis.Models.Datas.Enums.PackageTypes packageType)
         {
-            var servList = new List<VgcApis.Interfaces.ICoreServCtrl>();
-            lock (serverListWriteLock)
-            {
-                servList = queryHandler.GetSelectedServers().ToList();
-            }
+            var servList = queryHandler.GetSelectedServers();
             return PackServersIntoV4PackageWorker(
                 servList, orgUid, pkgName, interval, url, strategy, packageType);
         }
@@ -431,9 +454,14 @@ namespace V2RayGCon.Services
             Action done = null)
         {
             var list = new List<VgcApis.Interfaces.ICoreServCtrl>();
-            lock (serverListWriteLock)
+            locker.EnterReadLock();
+            try
             {
                 list = servers.ToList();
+            }
+            finally
+            {
+                locker.ExitReadLock();
             }
             void worker(int index, Action next)
             {
@@ -497,9 +525,14 @@ namespace V2RayGCon.Services
         {
             List<Controllers.CoreServerCtrl> list;
 
-            lock (serverListWriteLock)
+            locker.EnterReadLock();
+            try
             {
                 list = coreServList.Where(c => c.GetCoreCtrl().IsCoreRunning()).ToList();
+            }
+            finally
+            {
+                locker.ExitReadLock();
             }
 
             foreach (var serv in list)
@@ -512,9 +545,14 @@ namespace V2RayGCon.Services
         {
             List<Controllers.CoreServerCtrl> list;
 
-            lock (serverListWriteLock)
+            locker.EnterReadLock();
+            try
             {
                 list = coreServList.Where(c => c.GetCoreCtrl().IsCoreRunning()).ToList();
+            }
+            finally
+            {
+                locker.ExitReadLock();
             }
 
             void worker(int index, Action next)
@@ -534,13 +572,18 @@ namespace V2RayGCon.Services
             }
 
             List<Controllers.CoreServerCtrl> coreServs;
-            lock (serverListWriteLock)
+            locker.EnterWriteLock();
+            try
             {
                 coreServs = coreServList.Where(cs => cs.GetCoreStates().IsSelected()).ToList();
                 foreach (var cs in coreServs)
                 {
                     coreServList.Remove(cs);
                 }
+            }
+            finally
+            {
+                locker.ExitWriteLock();
             }
 
             void worker(int index, Action next)
@@ -583,10 +626,15 @@ namespace V2RayGCon.Services
             }
 
             List<Controllers.CoreServerCtrl> servs;
-            lock (serverListWriteLock)
+            locker.EnterWriteLock();
+            try
             {
                 servs = coreServList.ToList();
                 coreServList.Clear();
+            }
+            finally
+            {
+                locker.ExitWriteLock();
             }
 
             void worker(int index, Action next)
@@ -629,13 +677,18 @@ namespace V2RayGCon.Services
             }
 
             Controllers.CoreServerCtrl coreServ;
-            lock (serverListWriteLock)
+            locker.EnterWriteLock();
+            try
             {
                 coreServ = coreServList.FirstOrDefault(cs => cs.GetConfiger().GetConfig() == config);
                 if (coreServ != null)
                 {
                     coreServList.Remove(coreServ);
                 }
+            }
+            finally
+            {
+                locker.ExitWriteLock();
             }
 
             if (coreServ == null)
@@ -658,10 +711,14 @@ namespace V2RayGCon.Services
 
         public bool IsServerExist(string config)
         {
-            lock (serverListWriteLock)
+            locker.EnterReadLock();
+            try
             {
-                return coreServList
-                    .Any(s => s.GetConfiger().GetConfig() == config);
+                return IsServerExistWorker(config);
+            }
+            finally
+            {
+                locker.ExitReadLock();
             }
         }
 
@@ -688,10 +745,11 @@ namespace V2RayGCon.Services
             newServer.Run(cache, setting, configMgr, this);
 
             bool duplicated = true;
-            lock (serverListWriteLock)
+            locker.EnterWriteLock();
+            try
             {
                 // double check
-                if (!IsServerExist(config))
+                if (!IsServerExistWorker(config))
                 {
                     coreServList.Add(newServer);
                     var idx = coreServList.Count();
@@ -699,6 +757,10 @@ namespace V2RayGCon.Services
                     AddNewMark(mark);
                     duplicated = false;
                 }
+            }
+            finally
+            {
+                locker.ExitWriteLock();
             }
 
             if (duplicated)
@@ -725,9 +787,14 @@ namespace V2RayGCon.Services
         {
             Controllers.CoreServerCtrl coreCtrl;
 
-            lock (serverListWriteLock)
+            locker.EnterReadLock();
+            try
             {
                 coreCtrl = coreServList.FirstOrDefault(cs => cs.GetConfiger().GetConfig() == orgConfig);
+            }
+            finally
+            {
+                locker.ExitReadLock();
             }
 
             if (coreCtrl == null)
@@ -747,13 +814,18 @@ namespace V2RayGCon.Services
         {
             string orgConfig = null;
 
-            lock (serverListWriteLock)
+            locker.EnterReadLock();
+            try
             {
                 var orgServ = coreServList.FirstOrDefault(s => s.GetCoreStates().GetUid() == orgUid);
                 if (orgServ != null)
                 {
                     orgConfig = orgServ.GetConfiger().GetConfig();
                 }
+            }
+            finally
+            {
+                locker.ExitReadLock();
             }
 
             if (orgConfig != null)
@@ -763,7 +835,8 @@ namespace V2RayGCon.Services
             }
 
             AddServer(newConfig, mark);
-            lock (serverListWriteLock)
+            locker.EnterReadLock();
+            try
             {
                 var newServ = coreServList.FirstOrDefault(s => s.GetConfiger().GetConfig() == newConfig);
                 if (newServ != null)
@@ -771,27 +844,42 @@ namespace V2RayGCon.Services
                     return newServ.GetCoreStates().GetUid();
                 }
             }
+            finally
+            {
+                locker.ExitReadLock();
+            }
 
             return string.Empty;
         }
         #endregion
 
         #region private methods
+        bool IsServerExistWorker(string config)
+        {
+            return coreServList
+                .Any(s => s.GetConfiger().GetConfig() == config);
+        }
+
         void SaveServersSettingsWorker()
         {
             List<VgcApis.Models.Datas.CoreInfo> coreInfoList;
-            lock (serverListWriteLock)
+            locker.EnterReadLock();
+            try
             {
                 coreInfoList = coreServList
                    .Select(s => s.GetCoreStates().GetAllRawCoreInfo())
                    .ToList();
+            }
+            finally
+            {
+                locker.ExitReadLock();
             }
             setting.SaveServerList(coreInfoList);
         }
 
         void SortSelectedServers(Action<List<ICoreServCtrl>> sorter)
         {
-            lock (serverListWriteLock)
+            lock (locker)
             {
                 var selectedServers = queryHandler.GetSelectedServers().ToList();
                 sorter?.Invoke(selectedServers);
@@ -802,10 +890,7 @@ namespace V2RayGCon.Services
 
         private List<ICoreServCtrl> GetSelectedServer()
         {
-            lock (serverListWriteLock)
-            {
-                return queryHandler.GetSelectedServers(false).ToList();
-            }
+            return queryHandler.GetSelectedServers(false);
         }
 
         void InjectBalacerStrategy(
@@ -900,7 +985,8 @@ namespace V2RayGCon.Services
 
         void InitServerCtrlList()
         {
-            lock (serverListWriteLock)
+            locker.EnterWriteLock();
+            try
             {
                 var coreInfoList = setting.LoadCoreInfoList();
                 foreach (var coreInfo in coreInfoList)
@@ -908,6 +994,10 @@ namespace V2RayGCon.Services
                     var server = new Controllers.CoreServerCtrl(coreInfo);
                     coreServList.Add(server);
                 }
+            }
+            finally
+            {
+                locker.ExitWriteLock();
             }
 
             foreach (var server in coreServList)

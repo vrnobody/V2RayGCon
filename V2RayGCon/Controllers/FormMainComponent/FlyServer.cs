@@ -319,17 +319,17 @@ namespace V2RayGCon.Controllers.FormMainComponent
             List<ToolStripMenuItem> menu;
             if (flist.Count < 5000)
             {
-                var items = CreateBasicMenuItems(flist, cpn, totalPageNumber, 0, totalPageNumber, pageSize);
+                var items = CreateBasicMenuItems(
+                    flist, cpn,
+                    0, totalPageNumber, pageSize);
                 menu = AutoGroupMenuItems(flist, items, groupSize);
             }
             else
             {
-                var start = 0;
-                var end = (int)Math.Ceiling((decimal)flist.Count() / pageSize);
                 menu = CreateDynamicPagingMenu(
                     flist,
-                    pageSize, cpn, end,
-                    groupSize, start, end);
+                    pageSize, cpn,
+                    groupSize, 0, totalPageNumber);
             }
             tsdbtnPager.DropDownItems.Clear();
             tsdbtnPager.DropDownItems.AddRange(menu.ToArray());
@@ -337,7 +337,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         List<ToolStripMenuItem> CreateDynamicPagingMenu(
             List<VgcApis.Interfaces.ICoreServCtrl> filteredList,
-            int pageSize, int currentPageNumber, int maxPageNumber,
+            int pageSize, int currentPageNumber,
             int groupSize, int start, int end)
         {
             var ps = pageSize;
@@ -353,7 +353,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 List<ToolStripMenuItem> mis = CreateBasicMenuItems(
                     filteredList,
-                    currentPageNumber, maxPageNumber,
+                    currentPageNumber,
                     start, end, ps);
                 return mis;
             }
@@ -378,7 +378,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     {
                         var dm = CreateDynamicPagingMenu(
                             filteredList,
-                            pageSize, currentPageNumber, maxPageNumber,
+                            pageSize, currentPageNumber,
                             groupSize, s, e);
                         root.AddRange(dm.ToArray());
                     }
@@ -391,12 +391,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private List<ToolStripMenuItem> CreateBasicMenuItems(
             List<VgcApis.Interfaces.ICoreServCtrl> filteredList,
-            int currentPageNumber, int maxPageNumber,
+            int currentPageNumber,
             int start, int end, int pageSize)
         {
             var mis = new List<ToolStripMenuItem>();
 
-            for (int i = start; i < maxPageNumber && i < end; i++)
+            for (int i = start; i < end; i++)
             {
                 var pn = i;
                 var title = string.Format(

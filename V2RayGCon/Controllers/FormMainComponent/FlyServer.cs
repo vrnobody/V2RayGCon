@@ -182,6 +182,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         #endregion
 
         #region private method
+
         void RefreshFlyPanelWorker(Action done)
         {
             var start = DateTime.Now.Millisecond;
@@ -308,28 +309,115 @@ namespace V2RayGCon.Controllers.FormMainComponent
             }
         }
 
-        List<ToolStripMenuItem> pagerMenuItemCache = new List<ToolStripMenuItem>();
         private void StatusBarPagerDropdownMenuOpeningHandler(object sender, EventArgs args)
         {
-            var flist = GetFilteredList();
-            var cache = pagerMenuItemCache;
-            if (totalPageNumber != cache.Count)
+            List<VgcApis.Interfaces.ICoreServCtrl> flist = GetFilteredList();
+            var cpn = VgcApis.Misc.Utils.Clamp(curPageNumber, 0, totalPageNumber);
+            var groupSize = VgcApis.Models.Consts.Config.MenuItemGroupSize;
+            var pageSize = setting.serverPanelPageSize;
+
+            List<ToolStripMenuItem> menu;
+            if (flist.Count < 5000)
             {
-                cache = CreateStatusBarPagerMenuItems(flist);
-                var groupedMenu = GroupPagerItems(
+                var items = CreateBasicMenuItems(flist, cpn, totalPageNumber, 0, totalPageNumber, pageSize);
+                menu = AutoGroupMenuItems(flist, items, groupSize);
+            }
+            else
+            {
+                var start = 0;
+                var end = (int)Math.Ceiling((decimal)flist.Count() / pageSize);
+                menu = CreateDynamicPagingMenu(
                     flist,
-                    cache,
-                    VgcApis.Models.Consts.Config.MenuItemGroupSize);
-                tsdbtnPager.DropDownItems.Clear();
-                tsdbtnPager.DropDownItems.AddRange(groupedMenu.ToArray());
-                pagerMenuItemCache = cache;
+                    pageSize, cpn, end,
+                    groupSize, start, end);
+            }
+            tsdbtnPager.DropDownItems.Clear();
+            tsdbtnPager.DropDownItems.AddRange(menu.ToArray());
+        }
+
+        List<ToolStripMenuItem> CreateDynamicPagingMenu(
+            List<VgcApis.Interfaces.ICoreServCtrl> filteredList,
+            int pageSize, int currentPageNumber, int maxPageNumber,
+            int groupSize, int start, int end)
+        {
+            var ps = pageSize;
+            var n = end - start;
+            var step = 1;
+            while (n > groupSize)
+            {
+                n = n / groupSize;
+                step = step * groupSize;
             }
 
-            var cpn = VgcApis.Misc.Utils.Clamp(curPageNumber, 0, totalPageNumber);
-            for (int i = 0; i < cache.Count; i++)
+            if (step == 1)
             {
-                cache[i].Checked = cpn == i;
+                List<ToolStripMenuItem> mis = CreateBasicMenuItems(
+                    filteredList,
+                    currentPageNumber, maxPageNumber,
+                    start, end, ps);
+                return mis;
             }
+
+            var gmis = new List<ToolStripMenuItem>();
+            for (int i = start; i < end; i += step)
+            {
+                var s = i;
+                var e = Math.Min(i + step, end);
+                var pageRange = string.Format("{0,5}-{1,5}", s + 1, e);
+                var text = string.Format(
+                    I18N.StatusBarPagerMenuItemTpl,
+                    pageRange,
+                    GetIndex(filteredList, s * pageSize),
+                    GetIndex(filteredList, e * pageSize - 1));
+
+                var mi = new ToolStripMenuItem(text, null);
+                mi.DropDownOpening += (o, a) =>
+                {
+                    var root = mi.DropDownItems;
+                    if (root.Count < 1)
+                    {
+                        var dm = CreateDynamicPagingMenu(
+                            filteredList,
+                            pageSize, currentPageNumber, maxPageNumber,
+                            groupSize, s, e);
+                        root.AddRange(dm.ToArray());
+                    }
+                };
+                gmis.Add(mi);
+            }
+
+            return gmis;
+        }
+
+        private List<ToolStripMenuItem> CreateBasicMenuItems(
+            List<VgcApis.Interfaces.ICoreServCtrl> filteredList,
+            int currentPageNumber, int maxPageNumber,
+            int start, int end, int pageSize)
+        {
+            var mis = new List<ToolStripMenuItem>();
+
+            for (int i = start; i < maxPageNumber && i < end; i++)
+            {
+                var pn = i;
+                var title = string.Format(
+                    I18N.StatusBarPagerMenuItemTpl,
+                    pn + 1,
+                    GetIndex(filteredList, pn * pageSize),
+                    GetIndex(filteredList, pn * pageSize + pageSize - 1));
+
+                EventHandler onClick = (s, a) =>
+                {
+                    curPageNumber = pn;
+                    isFocusOnFormMain = true;
+                    RefreshFlyPanelLater();
+                };
+                var item = new ToolStripMenuItem(title, null, onClick);
+                item.Disposed += (s, a) => item.Click -= onClick;
+                item.Checked = pn == currentPageNumber;
+                mis.Add(item);
+            }
+
+            return mis;
         }
 
         private void UpdateStatusBarPagerButtons()
@@ -349,7 +437,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             tsdbtnPager.Text = string.Format(I18N.StatusBarPagerInfoTpl, cpn + 1, totalPageNumber);
         }
 
-        public List<ToolStripMenuItem> GroupPagerItems(
+        public List<ToolStripMenuItem> AutoGroupMenuItems(
             List<VgcApis.Interfaces.ICoreServCtrl> filteredList,
             List<ToolStripMenuItem> menuItems,
             int groupSize)
@@ -409,34 +497,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var c = list[i];
             var r = c.GetCoreStates().GetIndex();
             return (int)r;
-        }
-
-        List<ToolStripMenuItem> CreateStatusBarPagerMenuItems(
-            List<VgcApis.Interfaces.ICoreServCtrl> filteredList)
-        {
-            var mis = new List<ToolStripMenuItem>();
-
-            var ps = setting.serverPanelPageSize;
-            for (int i = 0; i < totalPageNumber; i++)
-            {
-                var pn = i;
-                var title = string.Format(
-                    I18N.StatusBarPagerMenuItemTpl,
-                    pn + 1,
-                    GetIndex(filteredList, pn * ps),
-                    GetIndex(filteredList, pn * ps + ps - 1));
-
-                EventHandler onClick = (s, a) =>
-                {
-                    curPageNumber = pn;
-                    isFocusOnFormMain = true;
-                    RefreshFlyPanelLater();
-                };
-                var item = new ToolStripMenuItem(title, null, onClick);
-                item.Disposed += (s, a) => item.Click -= onClick;
-                mis.Add(item);
-            }
-            return mis;
         }
 
         string searchKeywords = "";

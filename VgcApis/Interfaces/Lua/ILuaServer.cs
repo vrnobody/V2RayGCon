@@ -15,6 +15,12 @@ namespace VgcApis.Interfaces.Lua
         int balancerStrategyLeastPing { get; }
 
         /// <summary>
+        /// 获取服务器总数
+        /// </summary>
+        /// <returns>服务器总数</returns>
+        int Count();
+
+        /// <summary>
         /// 获取全部服务器（操作服务器的脚本通常都从这个函数开始）
         /// </summary>
         /// <returns>全部服务器</returns>

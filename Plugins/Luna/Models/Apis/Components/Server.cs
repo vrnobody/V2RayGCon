@@ -22,6 +22,9 @@ namespace Luna.Models.Apis.Components
         public int balancerStrategyLeastPing { get; } = (int)VgcApis.Models.Datas.Enums.BalancerStrategies.LeastPing;
         #endregion
 
+        public int Count() =>
+            vgcServers.Count();
+
         public void UpdateAllSummary() =>
             vgcServers.UpdateAllServersSummary();
 

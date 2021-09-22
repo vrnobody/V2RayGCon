@@ -236,6 +236,38 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             GetParent().InvokeEventOnPropertyChange();
         }
 
+        public string GetTag1() => coreInfo.tag1;
+        public string GetTag2() => coreInfo.tag2;
+        public string GetTag3() => coreInfo.tag3;
+
+        public void SetTag1(string tag)
+        {
+            if (tag == coreInfo.tag1)
+            {
+                return;
+            }
+            coreInfo.tag1 = tag;
+            GetParent().InvokeEventOnPropertyChange();
+        }
+        public void SetTag2(string tag)
+        {
+            if (tag == coreInfo.tag2)
+            {
+                return;
+            }
+            coreInfo.tag2 = tag;
+            GetParent().InvokeEventOnPropertyChange();
+        }
+        public void SetTag3(string tag)
+        {
+            if (tag == coreInfo.tag3)
+            {
+                return;
+            }
+            coreInfo.tag3 = tag;
+            GetParent().InvokeEventOnPropertyChange();
+        }
+
         public string GetRemark() => coreInfo.customRemark;
 
         public string GetInboundIp() => coreInfo.inbIp;

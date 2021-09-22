@@ -7,12 +7,12 @@ namespace VgcApis.Interfaces.Lua
         /// <summary>
         /// 用于向PackSelectedServers传入打包策略。
         /// </summary>
-        int balancerStrategyRandom { get; }
+        int BalancerStrategyRandom { get; }
 
         /// <summary>
         /// 用于向PackSelectedServers传入打包策略。
         /// </summary>
-        int balancerStrategyLeastPing { get; }
+        int BalancerStrategyLeastPing { get; }
 
         /// <summary>
         /// 获取服务器总数

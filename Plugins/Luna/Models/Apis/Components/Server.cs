@@ -17,9 +17,9 @@ namespace Luna.Models.Apis.Components
         }
 
         #region balancer
-        public int balancerStrategyRandom { get; } = (int)VgcApis.Models.Datas.Enums.BalancerStrategies.Random;
+        public int BalancerStrategyRandom { get; } = (int)VgcApis.Models.Datas.Enums.BalancerStrategies.Random;
 
-        public int balancerStrategyLeastPing { get; } = (int)VgcApis.Models.Datas.Enums.BalancerStrategies.LeastPing;
+        public int BalancerStrategyLeastPing { get; } = (int)VgcApis.Models.Datas.Enums.BalancerStrategies.LeastPing;
         #endregion
 
         public int Count() =>

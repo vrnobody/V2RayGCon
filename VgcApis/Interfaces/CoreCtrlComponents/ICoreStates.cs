@@ -135,6 +135,24 @@
         string GetSummary();
 
         /// <summary>
+        /// 获取自定义标签1的内容
+        /// </summary>
+        /// <returns>标签内容</returns>
+        string GetTag1();
+
+        /// <summary>
+        /// 获取自定义标签2的内容
+        /// </summary>
+        /// <returns>标签内容</returns>
+        string GetTag2();
+
+        /// <summary>
+        /// 获取自定义标签3的内容
+        /// </summary>
+        /// <returns>标签内容</returns>
+        string GetTag3();
+
+        /// <summary>
         /// 获取服务器标题（序号+短名+摘要）
         /// </summary>
         /// <returns>标题</returns>
@@ -230,6 +248,24 @@
         /// </summary>
         /// <param name="latency">延迟</param>
         void SetSpeedTestResult(long latency);
+
+        /// <summary>
+        /// 设置自定义标签1的内容
+        /// </summary>
+        /// <param name="tag">标签内容</param>
+        void SetTag1(string tag);
+
+        /// <summary>
+        /// 设置自定义标签2的内容
+        /// </summary>
+        /// <param name="tag">标签内容</param>
+        void SetTag2(string tag);
+
+        /// <summary>
+        /// 设置自定义标签3的内容
+        /// </summary>
+        /// <param name="tag">标签内容</param>
+        void SetTag3(string tag);
 
         /// <summary>
         /// 设置服务器自启动选项

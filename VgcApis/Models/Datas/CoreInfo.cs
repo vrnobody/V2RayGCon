@@ -25,6 +25,8 @@
 
         public long totalUplinkInBytes, totalDownlinkInBytes;
 
+        public string tag1, tag2, tag3;
+
         public CoreInfo()
         {
             lastModifiedUtcTicks = System.DateTime.UtcNow.Ticks;
@@ -59,6 +61,10 @@
             customInbType = (int)Enums.ProxyTypes.HTTP;
             inbIp = Consts.Webs.LoopBackIP;
             inbPort = Consts.Webs.DefaultProxyPort;
+
+            tag1 = string.Empty;
+            tag2 = string.Empty;
+            tag3 = string.Empty;
         }
 
         public void ClearCachedString()

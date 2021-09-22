@@ -1,12 +1,14 @@
 {
-  "version": "1.5.9.1",
-  "md5": "1B8E5AD3310DF65EF280AA9A2847DE58",
+  "version": "1.6.0.0",
+  "md5": "7192A6EC2B338A5A56F57A9FAE4FBF3F",
   "warnings": [],
   "changes": [
-    "支持使用web-safe base64编码的订阅",
-    "支持导入、分享shadowsocks SIP002标准的链接",
-    "分页菜单添加序号范围",
-    "导入结果窗口添加进度条",
-    "修复当前页选择菜单会清除其他页面选中状态的问题"
+    "主窗口分页菜单显示实际的序号范围",
+    "修复服务器较多(4K+)时搜索卡顿及部分菜单无法弹出的问题",
+    "Luna插件添加Server:Count()",
+    "Luna插件的coreState添加tag1到3三个自定义标签",
+    "Luna插件Server.balancerStrategyRandom首字母b改成大写",
+    "Luna插件Server.balancerStrategyLeastPing首字母b改成大写",
+    "Scripts包添加“查询服务器所在国家.lua”"
   ]
 }

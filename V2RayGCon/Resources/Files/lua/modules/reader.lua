@@ -17,12 +17,17 @@ end
 
 -- https://stackoverflow.com/questions/15079914/lua-fastest-way-to-read-data
 function Reader:ReadAllLines()
-    local lines = assert(io.lines(self.filename))
+    local lines = self:GetLinesIter()
     local t = {}
     for line in lines do
        t[#t+1] = line
     end
     return t
+end
+
+-- for line in lines
+function Reader:GetLinesIter()
+    return assert(io.lines(self.filename))
 end
 
 function Reader.new(filename)

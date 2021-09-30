@@ -38,7 +38,8 @@ Require .net framework 4.5+.
 [JamesNK/Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) 处理json  
 [micjahn/ZXing.Net](https://github.com/micjahn/ZXing.Net/) 处理二维码  
 [mpeterv/luacheck](https://github.com/mpeterv/luacheck.git) lua语义解释  
-[msva/lua-htmlparser](https://github.com/msva/lua-htmlparser) html解释  
+[msva/lua-htmlparser](https://github.com/msva/lua-htmlparser) html解释器  
+[musva/V2RayW](https://github.com/musva/V2RayW) vless://...解码  
 [NLua/NLua](https://github.com/NLua/NLua) Luna插件中的lua解释器  
 [PoseidonM4A4/v2rayP](https://github.com/PoseidonM4A4/v2rayP) Launcher等多处代码参(抄)考(习)来源  
 [ravibpatel/AutoUpdater.NET](https://github.com/ravibpatel/AutoUpdater.NET) 自动更新功能  

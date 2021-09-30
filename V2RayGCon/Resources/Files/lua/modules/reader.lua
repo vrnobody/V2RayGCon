@@ -26,7 +26,7 @@ function Reader:ReadAllLines()
 end
 
 -- for line in lines
-function Reader:GetLinesIter()
+function Reader:GetIter()
     return assert(io.lines(self.filename))
 end
 

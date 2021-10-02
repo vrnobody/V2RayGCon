@@ -25,6 +25,7 @@ Require .net framework 4.5+.
 
 ### 演示 Demo
 ![Demo v1.4.3.5 GIF](https://vrnobody.github.io/V2RayGCon/images/forms/demo_basics_v1.4.3.5.gif)  
+更多使用说明请看[\[手册 manual\]][10]  
 
 ### 引用按字母排序 Credits (in alphabetical order)  
 [2dust/v2rayN](https://github.com/2dust/v2rayN) vmess分享链接及订阅格式  

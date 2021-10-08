@@ -38,7 +38,7 @@ namespace V2RayGCon.Services
         #region public method
         public bool Warmup()
         {
-            Misc.Utils.SupportProtocolTLS12();
+            Misc.Utils.EnableTls13Support();
             if (setting.GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
             {
                 return false;

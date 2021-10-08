@@ -1412,18 +1412,37 @@ namespace V2RayGCon.Misc
             return false;
         }
 
-        public static void SupportProtocolTLS12()
+        public static void EnableTls13Support()
         {
+            // https://www.medo64.com/2020/05/using-tls-1-3-from-net-4-0-application/
             try
-            {
-                ServicePointManager.SecurityProtocol =
-                    SecurityProtocolType.Tls12
-                    | SecurityProtocolType.Tls11
-                    | SecurityProtocolType.Tls;
+            { //try TLS 1.3
+                ServicePointManager.SecurityProtocol = (SecurityProtocolType)12288
+                                                     | (SecurityProtocolType)3072
+                                                     | (SecurityProtocolType)768
+                                                     | SecurityProtocolType.Tls;
             }
             catch (NotSupportedException)
             {
-                MessageBox.Show(I18N.SysNotSupportTLS12);
+                try
+                { //try TLS 1.2
+                    ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072
+                                                         | (SecurityProtocolType)768
+                                                         | SecurityProtocolType.Tls;
+                }
+                catch (NotSupportedException)
+                {
+                    try
+                    { //try TLS 1.1
+                        ServicePointManager.SecurityProtocol = (SecurityProtocolType)768
+                                                             | SecurityProtocolType.Tls;
+                    }
+                    catch (NotSupportedException)
+                    { //TLS 1.0
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+                    }
+                    MessageBox.Show(I18N.SysNotSupportTLS12);
+                }
             }
         }
 

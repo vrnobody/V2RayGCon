@@ -3,11 +3,11 @@
 --]]
 
 
--- 每3秒钟挑一个服务器出来测速
-local speedtestTimespan = 3
+-- 每20秒钟挑一个服务器出来测速
+local speedtestTimespan = 20
 
--- 每测3个服务器后打包一次
-local roundsPerPack = 3
+-- 每测100个服务器后打包一次
+local roundsPerPack = 100
 
 -- 打包延迟少于多少毫秒的服务器
 local maxLatency = 3000

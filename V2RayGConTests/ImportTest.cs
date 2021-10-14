@@ -160,16 +160,16 @@ namespace V2RayGCon.Test
             @"{'routing':{'a':2,'settings':{'rules':[{'b':1}]}}}",
             @"{'routing':{'a':2,'settings':{'rules':[{'b':1},{'b':2}]}}}")]
         [DataRow(
-            @"{'inboundDetour':[{'a':1}],'outboundDetour':null}",
-            @"{'inboundDetour':null,'outboundDetour':[{'b':1}]}",
-            @"{'inboundDetour':[{'a':1}],'outboundDetour':[{'b':1}]}")]
-        [DataRow(
             @"{'inboundDetour':[{'a':1}]}",
             @"{'inboundDetour':[{'b':1}]}",
             @"{'inboundDetour':[{'b':1},{'a':1}]}")]
         [DataRow(@"{'a':1,'b':1}", @"{'b':2}", @"{'a':1,'b':2}")]
         [DataRow(@"{'a':1}", @"{'b':1}", @"{'a':1,'b':1}")]
         [DataRow(@"{}", @"{}", @"{}")]
+        [DataRow(
+            @"{'inboundDetour':[{'a':1}],'outboundDetour':null}",
+            @"{'inboundDetour':null,'outboundDetour':[{'b':1}]}",
+            @"{'inboundDetour':[{'a':1}],'outboundDetour':[{'b':1}]}")]
         public void CombineConfigTest(string left, string right, string expect)
         {
             // outboundDetour inboundDetour
@@ -226,7 +226,7 @@ namespace V2RayGCon.Test
         public void MergeJson(string bodyStr, string mixinStr, string expect)
         {
             var body = JObject.Parse(bodyStr);
-            Misc.Utils.MergeJson(ref body, JObject.Parse(mixinStr));
+            Misc.Utils.MergeJson(body, JObject.Parse(mixinStr));
 
             var e = JObject.Parse(expect);
             Assert.AreEqual(true, JObject.DeepEquals(body, e));

@@ -50,7 +50,7 @@ namespace V2RayGCon.Services
                 isIncludeActivate,
                 false);
 
-            Misc.Utils.MergeJson(ref import, JObject.Parse(config));
+            Misc.Utils.MergeJson(import, JObject.Parse(config));
             return import.ToString();
         }
 
@@ -442,14 +442,14 @@ namespace V2RayGCon.Services
             if (setting.isSupportSelfSignedCert)
             {
                 var selfSigned = JObject.Parse(@"{tlsSettings: {allowInsecure: true}}");
-                Misc.Utils.MergeJson(ref streamSettings, selfSigned);
+                Misc.Utils.MergeJson(streamSettings, selfSigned);
             }
 
             if (setting.isEnableUtlsFingerprint)
             {
                 var uTlsFingerprint = JObject.Parse(@"{tlsSettings: {}}");
                 uTlsFingerprint["tlsSettings"]["fingerprint"] = setting.uTlsFingerprint;
-                Misc.Utils.MergeJson(ref streamSettings, uTlsFingerprint);
+                Misc.Utils.MergeJson(streamSettings, uTlsFingerprint);
             }
         }
 

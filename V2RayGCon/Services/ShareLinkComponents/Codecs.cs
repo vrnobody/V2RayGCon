@@ -96,8 +96,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 (isV4 ? "outbounds.0" : "outbound"),
                 outbound);
 
-            Misc.Utils.MergeJson(ref template, inb);
-            Misc.Utils.MergeJson(ref template, outb);
+            Misc.Utils.MergeJson(template, inb);
+            Misc.Utils.MergeJson(template, outb);
             return Misc.Utils.Config2String(template as JObject);
         }
         #endregion

@@ -199,7 +199,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             }
             catch (KeyNotFoundException) { }
 
-            Misc.Utils.MergeJson(ref config, stream);
+            Misc.Utils.MergeJson(config, stream);
         }
 
         JToken GetSettings()

@@ -61,7 +61,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 var json = Misc.Utils.CreateJObject("v2raygcon.configs");
                 json["v2raygcon"]["configs"][tboxMultiConfPath.Text] = cboxMultiConfAlias.Text;
                 container.InjectConfigHelper(() =>
-                    Misc.Utils.MergeJson(ref container.config, json));
+                    Misc.Utils.MergeJson(container.config, json));
             };
 
             cboxImportAlias.SelectedIndexChanged += (s, a) =>
@@ -78,7 +78,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 var json = Misc.Utils.CreateJObject("v2raygcon.import");
                 json["v2raygcon"]["import"][tboxImportUrl.Text] = cboxImportAlias.Text;
                 container.InjectConfigHelper(() =>
-                    Misc.Utils.MergeJson(ref container.config, json));
+                    Misc.Utils.MergeJson(container.config, json));
             };
 
             btnInsertEnv.Click += (s, a) =>
@@ -86,7 +86,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 var json = Misc.Utils.CreateJObject("v2raygcon.env");
                 json["v2raygcon"]["env"][cboxEnvName.Text] = tboxEnvValue.Text;
                 container.InjectConfigHelper(
-                    () => Misc.Utils.MergeJson(ref container.config, json));
+                    () => Misc.Utils.MergeJson(container.config, json));
             };
         }
 

@@ -153,7 +153,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
             var c = sections[key];
             var token = Misc.Utils.CreateJObject(key, JToken.Parse(c));
-            Misc.Utils.MergeJson(ref config, token);
+            Misc.Utils.MergeJson(config, token);
             content = c;
             RefreshSections();
         }
@@ -548,7 +548,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             else
             {
                 var mixin = Misc.Utils.CreateJObject(preSection, content);
-                Misc.Utils.MergeJson(ref config, mixin);
+                Misc.Utils.MergeJson(config, mixin);
             }
             RefreshSections();
         }

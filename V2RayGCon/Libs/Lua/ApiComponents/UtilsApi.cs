@@ -29,10 +29,10 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
             node.Replace(value);
 
         public void Union(JObject body, JObject mixin) =>
-            Misc.Utils.UnionJson(ref body, mixin);
+            Misc.Utils.UnionJson(body, mixin);
 
         public void Merge(JObject body, JObject mixin) =>
-            Misc.Utils.MergeJson(ref body, mixin);
+            Misc.Utils.MergeJson(body, mixin);
 
         public void CombineWithRoutingInTheEnd(JObject body, JObject mixin) =>
             Misc.Utils.CombineConfigWithRoutingInTheEnd(ref body, mixin);

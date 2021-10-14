@@ -19,7 +19,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                     var key = "v2raygcon";
                     var mixin = Misc.Utils.CreateJObject(key);
                     mixin[key] = GetSettings();
-                    Misc.Utils.MergeJson(ref container.config, mixin);
+                    Misc.Utils.MergeJson(container.config, mixin);
                 });
             };
         }

@@ -168,7 +168,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 Misc.Utils.RemoveKeyFromJObject(config, root + ".settings");
             }
             catch (KeyNotFoundException) { }
-            Misc.Utils.MergeJson(ref config, ss);
+            Misc.Utils.MergeJson(config, ss);
         }
 
         JToken GetSettings()

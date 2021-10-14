@@ -115,7 +115,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                     Misc.Utils.ImportItemList2JObject(
                         setting.GetGlobalImportItems(), false, true, false);
 
-                Misc.Utils.MergeJson(ref configWithGlobalImports, config);
+                Misc.Utils.MergeJson(configWithGlobalImports, config);
                 plainText = configWithGlobalImports.ToString();
             }
 

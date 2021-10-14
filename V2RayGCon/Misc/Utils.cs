@@ -550,7 +550,7 @@ namespace V2RayGCon.Misc
             (node as JObject).Property(key)?.Remove();
         }
 
-        static void ConcatJson(ref JObject body, JObject mixin)
+        static void ConcatJson(JObject body, JObject mixin)
         {
             body.Merge(mixin, new JsonMergeSettings
             {
@@ -559,7 +559,7 @@ namespace V2RayGCon.Misc
             });
         }
 
-        public static void UnionJson(ref JObject body, JObject mixin)
+        public static void UnionJson(JObject body, JObject mixin)
         {
             body.Merge(mixin, new JsonMergeSettings
             {
@@ -596,6 +596,46 @@ namespace V2RayGCon.Misc
             CombineConfigWorker(ref body, mixin, keys);
         }
 
+        static JObject CombineJArray(JObject body, JObject mixin, string key)
+        {
+            if (mixin == null)
+            {
+                return body;
+            }
+
+            if (body == null)
+            {
+                body = JObject.Parse(@"{}");
+                ConcatJson(body, mixin);
+                return body;
+            }
+
+            if (!(body[key] is JArray))
+            {
+                body[key] = JArray.Parse(@"[]");
+            }
+
+            foreach (JObject n in mixin[key])
+            {
+                void innerLoop()
+                {
+                    foreach (JObject m in body[key])
+                    {
+                        var mt = m["tag"];
+                        var nt = n["tag"];
+                        if (mt != null && nt != null && mt.ToString() == nt.ToString())
+                        {
+                            UnionJson(m, n);
+                            return;
+                        }
+                    }
+                    (body[key] as JArray).Insert(0, n);
+                }
+                innerLoop();
+            }
+            return body;
+        }
+
         static void CombineConfigWorker(
             ref JObject body,
             JObject mixin,
@@ -613,21 +653,33 @@ namespace V2RayGCon.Misc
 
                 if (TryExtractJObjectPart(mixin, key, out JObject nodeMixin))
                 {
-                    ConcatJson(ref backup, nodeMixin);
+                    ConcatJson(backup, nodeMixin);
                     RemoveKeyFromJObject(mixin, key);
-                    ConcatJson(ref body, nodeMixin);
+
+                    switch (key)
+                    {
+                        case "inbounds":
+                        case "outbounds":
+                        case "inboundDetour":
+                        case "outboundDetour":
+                            nodeBody = CombineJArray(nodeBody, nodeMixin, key);
+                            break;
+                        default:
+                            ConcatJson(body, nodeMixin);
+                            break;
+                    }
                 }
 
                 if (nodeBody != null)
                 {
-                    UnionJson(ref body, nodeBody);
+                    UnionJson(body, nodeBody);
                 }
             }
 
-            MergeJson(ref body, mixin);
+            MergeJson(body, mixin);
 
             // restore mixin
-            ConcatJson(ref mixin, backup);
+            ConcatJson(mixin, backup);
         }
 
         public static JObject ImportItemList2JObject(
@@ -654,7 +706,7 @@ namespace V2RayGCon.Misc
             return result;
         }
 
-        public static void MergeJson(ref JObject body, JObject mixin)
+        public static void MergeJson(JObject body, JObject mixin)
         {
             body.Merge(mixin, new JsonMergeSettings
             {

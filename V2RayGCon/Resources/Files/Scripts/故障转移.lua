@@ -35,21 +35,19 @@ end
 
 function SwitchToRandomServer()
     local servs = Server:GetAllServers()
-    local n = 1
+    local n = 0
+    local r = math.random(servs.Count)
     for coreServ in Each(servs) do
+        n = n + 1
         local coreState = coreServ:GetCoreStates()
         local latency = coreState:GetSpeedTestResult()
-        if maxLatency > latency then
-            n = n + 1
-            local m = math.random(n)
-            if m == 1 then
-                local title = coreState:GetTitle()
-                print("Switch to: ", title)
-                Server:StopAllServers()
-                local coreCtrl = coreServ:GetCoreCtrl()
-                coreCtrl:RestartCore()
-                return
-            end
+        if n >= r and maxLatency > latency then
+            local title = coreState:GetTitle()
+            print("Switch to: ", title)
+            Server:StopAllServers()
+            local coreCtrl = coreServ:GetCoreCtrl()
+            coreCtrl:RestartCore()
+            return
         end
     end
 end

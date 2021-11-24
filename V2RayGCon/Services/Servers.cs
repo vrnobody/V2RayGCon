@@ -724,6 +724,12 @@ namespace V2RayGCon.Services
 
         public bool AddServer(string config, string mark, bool quiet = false)
         {
+            // first check
+            if (IsServerExist(config))
+            {
+                return false;
+            }
+
             var coreInfo = new VgcApis.Models.Datas.CoreInfo
             {
                 isInjectImport = setting.CustomDefImportGlobalImport,
@@ -743,6 +749,7 @@ namespace V2RayGCon.Services
             locker.EnterWriteLock();
             try
             {
+                // double check
                 if (!IsServerExistWorker(config))
                 {
                     coreServList.Add(newServer);

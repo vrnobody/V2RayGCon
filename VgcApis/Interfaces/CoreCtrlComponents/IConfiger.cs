@@ -18,6 +18,12 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         string GetConfig();
 
         /// <summary>
+        /// 获取config的base64形式的MD5摘要
+        /// </summary>
+        /// <returns>MD5摘要</returns>
+        string GetHash();
+
+        /// <summary>
         /// 获取ss/vless/vmess分享链接
         /// </summary>
         /// <returns>分享链接</returns>

@@ -105,6 +105,15 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GetConfig() => coreInfo.config;
 
+        public string GetHash()
+        {
+            if (string.IsNullOrEmpty(coreInfo.hash))
+            {
+                coreInfo.UpdateHash();
+            }
+            return coreInfo.hash;
+        }
+
         public void UpdateSummary()
         {
             try
@@ -156,6 +165,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
 
             coreInfo.config = trimed;
+            coreInfo.UpdateHash();
             UpdateSummary();
 
             if (coreCtrl.IsCoreRunning())

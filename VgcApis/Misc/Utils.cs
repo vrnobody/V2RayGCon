@@ -13,6 +13,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -235,6 +236,19 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
+        public static string Md5Base64(string text)
+        {
+            var bytes = Md5Hash(text);
+            var b64 = Convert.ToBase64String(bytes);
+            return b64;
+        }
+
+        public static byte[] Md5Hash(string text)
+        {
+            MD5 md5Hasher = MD5.Create();
+            var hash = md5Hasher.ComputeHash(Encoding.UTF8.GetBytes(text));
+            return hash;
+        }
 
         public static string GetAppName() => Properties.Resources.AppName;
 

@@ -582,8 +582,7 @@ namespace VgcApis.Misc
 
         public static Color String2Color(string text)
         {
-            MD5 md5Hasher = MD5.Create();
-            var hashed = md5Hasher.ComputeHash(Encoding.UTF8.GetBytes(text));
+            var hashed = Utils.Md5Hash(text);
             var v = BitConverter.ToInt32(hashed, 0);
             var maxIdx = colorTable.Count();
             var idx = ((v % maxIdx) + maxIdx) % maxIdx;

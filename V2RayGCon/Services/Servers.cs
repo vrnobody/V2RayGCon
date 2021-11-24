@@ -724,12 +724,6 @@ namespace V2RayGCon.Services
 
         public bool AddServer(string config, string mark, bool quiet = false)
         {
-            // first check
-            if (IsServerExist(config))
-            {
-                return false;
-            }
-
             var coreInfo = new VgcApis.Models.Datas.CoreInfo
             {
                 isInjectImport = setting.CustomDefImportGlobalImport,
@@ -740,6 +734,7 @@ namespace V2RayGCon.Services
                 config = config,
                 customMark = mark,
             };
+            coreInfo.UpdateHash();
 
             var newServer = new Controllers.CoreServerCtrl(coreInfo);
             newServer.Run(cache, setting, configMgr, this);
@@ -748,7 +743,6 @@ namespace V2RayGCon.Services
             locker.EnterWriteLock();
             try
             {
-                // double check
                 if (!IsServerExistWorker(config))
                 {
                     coreServList.Add(newServer);
@@ -856,8 +850,9 @@ namespace V2RayGCon.Services
         #region private methods
         bool IsServerExistWorker(string config)
         {
+            var hash = VgcApis.Misc.Utils.Md5Base64(config);
             return coreServList
-                .Any(s => s.GetConfiger().GetConfig() == config);
+                .Any(s => s.GetConfiger().GetHash() == hash);
         }
 
         void SaveServersSettingsWorker()

@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.6.1.0")]
+[assembly: AssemblyVersion("1.6.1.1")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.6.1.1 Improve adding new servers performance.
  * -------------------------------------------------------------
  * v1.6.0.3 Merge elements with same tag in in(out)bound(Detour) of global import.
  * v1.6.0.2 Add failover.lua to scripts package.

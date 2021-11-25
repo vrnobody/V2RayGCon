@@ -53,14 +53,22 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region private methods
-        Models.Datas.VeeConfigs ParseTrojanUrl(string url)
+        Models.Datas.VeeConfigs ParseTrojanUrl(string link)
         {
             var proto = "trojan";
             var header = proto + "://";
 
-            if (!url.StartsWith(header))
+            if (!link.StartsWith(header))
             {
                 return null;
+            }
+
+            var parts = link.Split('#');
+            var url = parts[0];
+            var name = string.Empty;
+            if (parts.Length >= 2)
+            {
+                name = Uri.UnescapeDataString(parts[1]);
             }
 
             var port = url.Split(':').LastOrDefault();
@@ -77,6 +85,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
 
             var vc = new Models.Datas.VeeConfigs();
+            vc.name = name;
             vc.proto = proto;
             vc.host = pa[1];
             vc.port = VgcApis.Misc.Utils.Str2Int(port);

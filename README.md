@@ -1,3 +1,8 @@
+**感谢各位小伙伴一直以来的支持！  
+由于v2ray-core v5有较大变动，同时兼容v4和v5内核较为困难，所以本项目停止更新。  
+本项目支持的最高v2ray-core版本是`v4.44.0`**  
+  
+  
 [![Master Action Status][1]][2] [![Release][3]][4] [![Total Downloads][5]][6] [![License][7]][8]
 
 [1]: https://github.com/vrnobody/V2RayGCon/workflows/master/badge.svg "Build Status Badge"

@@ -490,10 +490,7 @@ namespace V2RayGCon.Services
         private ToolStripMenuItem CoreServ2MenuItem(ICoreServCtrl coreServ)
         {
             var coreState = coreServ.GetCoreStates();
-            var name = coreState.GetLongName();
-            var idx = ((int)coreState.GetIndex()).ToString();
-
-            var title = $"{idx}.{name}";
+            var title = coreState.GetTitle();
             var dely = coreState.GetSpeedTestResult();
             if (dely == SpeedtestTimeout)
             {

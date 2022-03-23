@@ -22,7 +22,7 @@ namespace V2RayGCon.Services
         VgcApis.Libs.Tasks.LazyGuy janitor, lazyBookKeeper;
 
         readonly object saveUserSettingsLocker = new object();
-        string serializedUserSettingsCache = @"";
+        string lastUserSettingsHash = @"";
         public event EventHandler OnPortableModeChanged;
         VgcApis.Models.Datas.Enums.ShutdownReasons shutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.Undefined;
 
@@ -920,7 +920,8 @@ namespace V2RayGCon.Services
 
         void SaveUserSettingsToFile(string content)
         {
-            if (content.Equals(serializedUserSettingsCache))
+            var hash = VgcApis.Misc.Utils.Md5Base64(content);
+            if (hash == lastUserSettingsHash)
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() no change, skip");
                 return;
@@ -936,7 +937,7 @@ namespace V2RayGCon.Services
                     Constants.Strings.BackupUserSettingsFilename);
                 if (ok)
                 {
-                    serializedUserSettingsCache = content;
+                    lastUserSettingsHash = hash;
                     VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() success");
                     return;
                 }
@@ -944,7 +945,7 @@ namespace V2RayGCon.Services
 
             VgcApis.Libs.Sys.FileLogger.Error("Settings.SaverUserSettingsToFile() failed");
             // main file or bak file write fail, clear cache
-            serializedUserSettingsCache = @"";
+            lastUserSettingsHash = @"";
             WarnUserSaveSettingsFailed(content);
         }
 
@@ -988,7 +989,7 @@ namespace V2RayGCon.Services
             try
             {
                 var content = File.ReadAllText(Constants.Strings.MainUserSettingsFilename);
-                serializedUserSettingsCache = content;
+                lastUserSettingsHash = VgcApis.Misc.Utils.Md5Base64(content);
                 result = JsonConvert.DeserializeObject<Models.Datas.UserSettings>(content);
             }
             catch { }

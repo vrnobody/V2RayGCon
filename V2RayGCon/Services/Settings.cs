@@ -611,11 +611,22 @@ namespace V2RayGCon.Services
         public List<VgcApis.Models.Datas.CoreInfo> LoadCoreInfoList()
         {
             List<VgcApis.Models.Datas.CoreInfo> coreInfos = null;
+
+            var s = string.Empty;
+            var cs = userSettings.CompressedCoreInfoList;
+            if (!string.IsNullOrEmpty(cs))
+            {
+                s = VgcApis.Libs.Infr.ZipExtensions.DecompressFromBase64(cs);
+            }
+            else
+            {
+                s = userSettings.CoreInfoList;
+            }
+
             try
             {
                 coreInfos = JsonConvert
-                    .DeserializeObject<List<VgcApis.Models.Datas.CoreInfo>>(
-                        userSettings.CoreInfoList);
+                    .DeserializeObject<List<VgcApis.Models.Datas.CoreInfo>>(s);
             }
             catch { }
 
@@ -772,8 +783,11 @@ namespace V2RayGCon.Services
         {
             string json = JsonConvert.SerializeObject(
                 coreInfoList ?? new List<VgcApis.Models.Datas.CoreInfo>());
+            string cs = VgcApis.Libs.Infr.ZipExtensions.CompressToBase64(json);
 
-            userSettings.CoreInfoList = json;
+            userSettings.CoreInfoList = string.Empty; // obsolete
+            userSettings.CompressedCoreInfoList = cs;
+
             SaveSettingsLater();
         }
         #endregion

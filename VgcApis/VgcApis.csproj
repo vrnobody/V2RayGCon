@@ -69,6 +69,7 @@
     <Compile Include="Interfaces\Lua\IRunnable.cs" />
     <Compile Include="Interfaces\Lua\IWinFormControl.cs" />
     <Compile Include="Libs\Infr\Recorder.cs" />
+    <Compile Include="Libs\Infr\ZipExtensions.cs" />
     <Compile Include="Libs\Streams\BitStream.cs" />
     <Compile Include="Libs\Streams\Crc8.cs" />
     <Compile Include="Libs\Streams\RawBitStream\Bytes.cs" />

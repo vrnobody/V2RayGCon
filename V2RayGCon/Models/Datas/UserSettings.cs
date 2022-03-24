@@ -51,6 +51,7 @@ namespace V2RayGCon.Models.Datas
 
         public string Culture { get; set; }
         public string CoreInfoList { get; set; }
+        public string CompressedCoreInfoList { get; set; }
         public string PacServerSettings { get; set; }
         public string SysProxySetting { get; set; }
         public string ServerTracker { get; set; }
@@ -106,7 +107,10 @@ namespace V2RayGCon.Models.Datas
             PluginsSetting = string.Empty;
 
             Culture = string.Empty;
+
             CoreInfoList = string.Empty;
+            CompressedCoreInfoList = string.Empty;
+
             PacServerSettings = string.Empty;
             SysProxySetting = string.Empty;
             ServerTracker = string.Empty;

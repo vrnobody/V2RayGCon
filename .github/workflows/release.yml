@@ -19,7 +19,7 @@ jobs:
         boxAppend: box
         v2rayCorePkgName: 'v2ray-windows-64.zip'
         scriptPkgName: 'scripts-v1.0.4'
-        v2rayCoreVer: 'v4.43.0'
+        v2rayCoreVer: 'v4.44.0'
         # https://github.com/v2ray/v2ray-core/releases/download/v4.20.0/v2ray-windows-32.zip
         # https://github.com/XTLS/Xray-core/releases/download/v1.4.0/Xray-windows-64.zip
         v2rayCoreUrl: 'https://github.com/v2fly/v2ray-core/releases/download'

@@ -612,21 +612,22 @@ namespace V2RayGCon.Services
         {
             List<VgcApis.Models.Datas.CoreInfo> coreInfos = null;
 
-            var s = string.Empty;
-            var cs = userSettings.CompressedCoreInfoList;
-            if (!string.IsNullOrEmpty(cs))
-            {
-                s = VgcApis.Libs.Infr.ZipExtensions.DecompressFromBase64(cs);
-            }
-            else
-            {
-                s = userSettings.CoreInfoList;
-            }
-
             try
             {
-                coreInfos = JsonConvert
-                    .DeserializeObject<List<VgcApis.Models.Datas.CoreInfo>>(s);
+                var cs = userSettings.CompressedCoreInfoList;
+                if (string.IsNullOrEmpty(cs))
+                {
+                    coreInfos = JsonConvert
+                        .DeserializeObject<List<VgcApis.Models.Datas.CoreInfo>>(
+                            userSettings.CoreInfoList);
+                }
+                else
+                {
+                    coreInfos = VgcApis.Libs.Infr.ZipExtensions
+                        .DeserializeObjectFromCompressedBase64<List<VgcApis.Models.Datas.CoreInfo>>(
+                            cs);
+                }
+
             }
             catch { }
 
@@ -781,9 +782,8 @@ namespace V2RayGCon.Services
 
         public void SaveServerList(List<VgcApis.Models.Datas.CoreInfo> coreInfoList)
         {
-            string json = JsonConvert.SerializeObject(
-                coreInfoList ?? new List<VgcApis.Models.Datas.CoreInfo>());
-            string cs = VgcApis.Libs.Infr.ZipExtensions.CompressToBase64(json);
+            var cil = coreInfoList ?? new List<VgcApis.Models.Datas.CoreInfo>();
+            string cs = VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedBase64(cil);
 
             userSettings.CoreInfoList = string.Empty; // obsolete
             userSettings.CompressedCoreInfoList = cs;

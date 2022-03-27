@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -10,6 +11,37 @@ namespace VgcApis.Libs.Infr
 {
     public static class ZipExtensions
     {
+
+        public static string SerializeObjectToCompressedBase64(object value)
+        {
+            using (var outputStream = new MemoryStream())
+            {
+                using (var gZipStream = new GZipStream(outputStream, CompressionMode.Compress))
+                {
+                    using (StreamWriter writer = new StreamWriter(gZipStream))
+                    using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
+                    {
+                        JsonSerializer ser = new JsonSerializer();
+                        ser.Serialize(jsonWriter, value);
+                    }
+                }
+                var o = outputStream.ToArray();
+                return Convert.ToBase64String(o);
+            }
+        }
+
+        public static T DeserializeObjectFromCompressedBase64<T>(string b64Str)
+        {
+            var b64Bytes = Convert.FromBase64String(b64Str);
+            using (var sourceStream = new MemoryStream(b64Bytes))
+            using (var gZipStream = new GZipStream(sourceStream, CompressionMode.Decompress))
+            using (StreamReader reader = new StreamReader(gZipStream))
+            using (JsonTextReader jsonReader = new JsonTextReader(reader))
+            {
+                JsonSerializer ser = new JsonSerializer();
+                return ser.Deserialize<T>(jsonReader);
+            }
+        }
 
         public static string CompressToBase64(string data)
         {

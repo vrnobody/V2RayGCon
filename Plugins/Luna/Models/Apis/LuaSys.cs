@@ -611,11 +611,11 @@ namespace Luna.Models.Apis
             {
                 try
                 {
-                    string msg = null;
-                    var bin = Encoding.Default.GetBytes(a.Data);
-                    msg = ec.GetString(bin);
-                    if (!string.IsNullOrEmpty(msg))
+                    var d = a.Data;
+                    if (!string.IsNullOrEmpty(d))
                     {
+                        var bin = Encoding.Default.GetBytes(d);
+                        var msg = ec.GetString(bin);
                         luaApis?.SendLog(msg);
                     }
                 }

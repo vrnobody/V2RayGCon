@@ -51,6 +51,7 @@ namespace Luna.Services
                 var mis = GenSubMenuItems();
                 var root = miRoot.DropDownItems;
                 root.Clear();
+                miRoot.DropDown.PerformLayout();
                 root.Add(miShowMgr);
                 root.Add(miShowEditor);
                 if (mis.Count > 0)

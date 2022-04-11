@@ -96,6 +96,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 var plugins = pluginServ.GetAllEnabledPlugins();
                 pluginToolStrip.DropDownItems.Clear();
+                pluginToolStrip.DropDown.PerformLayout();
 
                 if (plugins.Count <= 0)
                 {

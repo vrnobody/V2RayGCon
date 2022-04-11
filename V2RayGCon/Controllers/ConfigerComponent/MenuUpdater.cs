@@ -68,10 +68,10 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             // step 2 ui
             VgcApis.Misc.UI.Invoke(() =>
             {
-                var miRootReplace = miReplaceServer.DropDownItems;
-                var miRootLoad = miLoadServer.DropDownItems;
-                miRootReplace.Clear();
-                miRootLoad.Clear();
+                miReplaceServer.DropDownItems.Clear();
+                miReplaceServer.DropDown.PerformLayout();
+                miLoadServer.DropDownItems.Clear();
+                miLoadServer.DropDown.PerformLayout();
             });
 
             if (servInfos.Count <= 0)

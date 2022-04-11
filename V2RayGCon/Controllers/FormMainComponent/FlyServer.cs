@@ -136,6 +136,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 flyPanel.SuspendLayout();
                 flyPanel.Controls.Clear();
                 flyPanel.ResumeLayout();
+                flyPanel.PerformLayout();
                 VgcApis.Misc.Utils.RunInBackground(
                     () => DisposeFlyPanelControlByList(controlList));
             };
@@ -212,6 +213,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 {
                     removed = GetAllServerControls();
                     flyPanel.Controls.Clear();
+                    flyPanel.PerformLayout();
                     flyPanel.Controls.Add(welcomeItem);
                 }
                 else
@@ -332,6 +334,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     groupSize, 0, totalPageNumber);
             }
             tsdbtnPager.DropDownItems.Clear();
+            tsdbtnPager.DropDown.PerformLayout();
             tsdbtnPager.DropDownItems.AddRange(menu.ToArray());
         }
 

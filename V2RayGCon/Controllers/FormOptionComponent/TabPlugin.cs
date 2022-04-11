@@ -75,6 +75,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             var controls = flyPanel.Controls;
             flyPanel.Controls.Clear();
+            flyPanel.PerformLayout();
             foreach (Views.UserControls.PluginInfoUI control in controls)
             {
                 control.Dispose();

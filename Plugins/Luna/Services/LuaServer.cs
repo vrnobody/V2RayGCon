@@ -238,7 +238,7 @@ namespace Luna.Services
             InvokeOnRequireMenuUpdate();
         }
 
-        void Save() => settings.SaveUserSettingsNow();
+        void Save() => settings.SaveUserSettingsLater();
 
 
 

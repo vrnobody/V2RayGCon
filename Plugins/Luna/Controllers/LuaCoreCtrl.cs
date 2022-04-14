@@ -292,7 +292,7 @@ namespace Luna.Controllers
             return lua;
         }
 
-        void Save() => settings.SaveUserSettingsNow();
+        void Save() => settings.SaveUserSettingsLater();
 
         #endregion
     }

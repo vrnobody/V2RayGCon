@@ -808,23 +808,20 @@ namespace V2RayGCon.Services
             try
             {
                 serializedUserSettings = JsonConvert.SerializeObject(userSettings);
-                if (IsValid(serializedUserSettings))
+                if (userSettings.isPortable)
                 {
-                    if (userSettings.isPortable)
-                    {
-                        // DebugSendLog("Try save settings to file.");
-                        SaveUserSettingsToFile(serializedUserSettings);
-                    }
-                    else
-                    {
-                        // DebugSendLog("Try save settings to properties");
-                        SetUserSettingFileIsPortableToFalse();
-                        SaveUserSettingsToProperties(serializedUserSettings);
-                        VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsToProperties() done");
-                    }
-                    // VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() done");
-                    return;
+                    // DebugSendLog("Try save settings to file.");
+                    SaveUserSettingsToFile(serializedUserSettings);
                 }
+                else
+                {
+                    // DebugSendLog("Try save settings to properties");
+                    SetUserSettingFileIsPortableToFalse();
+                    SaveUserSettingsToProperties(serializedUserSettings);
+                    VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsToProperties() done");
+                }
+                // VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() done");
+                return;
             }
             catch { }
 
@@ -841,26 +838,6 @@ namespace V2RayGCon.Services
             var poolSize = userSettings.MaxConcurrentV2RayCoreNum;
             _speedTestPool = new SemaphoreSlim(poolSize, poolSize);
         }
-
-        bool IsValid(string serializedUserSettings)
-        {
-            if (string.IsNullOrEmpty(serializedUserSettings))
-            {
-                return false;
-            }
-            try
-            {
-                var json = JsonConvert.DeserializeObject<Models.Datas.UserSettings>(
-                    serializedUserSettings);
-                if (json != null)
-                {
-                    return true;
-                }
-            }
-            catch { }
-            return false;
-        }
-
 
         Dictionary<string, string> DeserializePluginsSetting()
         {

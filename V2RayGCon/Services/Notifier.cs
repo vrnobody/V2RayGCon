@@ -947,6 +947,7 @@ namespace V2RayGCon.Services
         {
             var count = list.Count;
             var texts = new List<string>();
+            texts.Add($"{Misc.Utils.GetAppNameAndVer()} - {I18N.Servers}: {servers.Count()}");
 
             void done()
             {

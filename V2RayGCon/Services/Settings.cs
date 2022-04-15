@@ -558,6 +558,7 @@ namespace V2RayGCon.Services
             return null;
         }
 
+        static object pluginsSettingWriteLock = new object();
         public void SavePluginsSetting(string pluginName, string value)
         {
             if (string.IsNullOrEmpty(pluginName))
@@ -565,15 +566,19 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            var pluginsSetting = DeserializePluginsSetting();
-            pluginsSetting[pluginName] = value;
-
-            try
+            lock (pluginsSettingWriteLock)
             {
-                userSettings.PluginsSetting =
-                    JsonConvert.SerializeObject(pluginsSetting);
+                var pluginsSetting = DeserializePluginsSetting();
+                pluginsSetting[pluginName] = value;
+
+                try
+                {
+                    userSettings.PluginsSetting = string.Empty;
+                    userSettings.CompressedPluginsSetting = VgcApis.Libs.Infr.ZipExtensions
+                        .SerializeObjectToCompressedBase64(pluginsSetting);
+                }
+                catch { }
             }
-            catch { }
             SaveSettingsLater();
         }
 
@@ -846,9 +851,18 @@ namespace V2RayGCon.Services
 
             try
             {
-                pluginsSetting = JsonConvert
-                    .DeserializeObject<Dictionary<string, string>>(
-                        userSettings.PluginsSetting);
+                if (string.IsNullOrEmpty(userSettings.CompressedPluginsSetting))
+                {
+                    pluginsSetting = JsonConvert
+                        .DeserializeObject<Dictionary<string, string>>(
+                            userSettings.PluginsSetting);
+                }
+                else
+                {
+                    pluginsSetting = VgcApis.Libs.Infr.ZipExtensions
+                        .DeserializeObjectFromCompressedBase64<Dictionary<string, string>>(
+                            userSettings.CompressedPluginsSetting);
+                }
             }
             catch { }
             if (pluginsSetting == null)

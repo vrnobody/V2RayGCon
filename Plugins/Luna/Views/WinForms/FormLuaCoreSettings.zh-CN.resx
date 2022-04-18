@@ -126,13 +126,20 @@
   <data name="btnSave.Text" xml:space="preserve">
     <value>保存</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkHidden.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 16</value>
+  </data>
   <data name="chkHidden.Text" xml:space="preserve">
     <value>(H)隐藏</value>
+  </data>
+  <data name="chkClrSupports.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 16</value>
   </data>
   <data name="chkClrSupports.Text" xml:space="preserve">
     <value>(C)加载CLR库</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>修改脚本设定</value>
+    <value>Luna - 修改脚本设定</value>
   </data>
 </root>

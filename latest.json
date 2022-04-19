@@ -1,10 +1,11 @@
 {
-  "version": "1.6.2.1",
-  "md5": "60BB073F8207E404BD6715F1F9C9D431",
+  "version": "1.6.3.0",
+  "md5": "0A9CCC6AF3102310500C0F0B1B3A6410",
   "warnings": [
     "本项目支持的最高v2ray-core版本是v4.44.0"
   ],
   "changes": [
-    "一丢丢优化"
+    "移除Luna插件所有Json相关的函数",
+    "优化Luna脚本内存占用"
   ]
 }

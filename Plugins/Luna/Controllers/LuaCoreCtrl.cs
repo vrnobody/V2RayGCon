@@ -244,17 +244,19 @@ namespace Luna.Controllers
 
             luaSignal.ResetAllSignals();
 
-            Lua core = CreateLuaCore(luaSys);
-            try
+            using (Lua core = CreateLuaCore(luaSys))
             {
-                core.DoString(coreSetting.script);
-            }
-            catch (Exception e)
-            {
-                SendLog($"[{coreSetting.name}] {e}");
-                if (core.UseTraceback)
+                try
                 {
-                    SendLog(core.GetDebugTraceback());
+                    core.DoString(coreSetting.script);
+                }
+                catch (Exception e)
+                {
+                    SendLog($"[{coreSetting.name}] {e}");
+                    if (core.UseTraceback)
+                    {
+                        SendLog(core.GetDebugTraceback());
+                    }
                 }
             }
 

@@ -1259,6 +1259,56 @@ namespace V2RayGCon.Misc
         #endregion
 
         #region files
+        internal static bool SerializeToFile(Models.Datas.UserSettings userSettings, string path)
+        {
+            // https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
+            try
+            {
+                // write the data to a temp file
+                using (var fs = File.Create(path, 64 * 1024, FileOptions.WriteThrough))
+                {
+                    using (StreamWriter sw = new StreamWriter(fs))
+                    {
+                        using (JsonTextWriter jw = new JsonTextWriter(sw))
+                        {
+                            JsonSerializer js = new JsonSerializer();
+                            js.Serialize(jw, userSettings);
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                VgcApis.Libs.Sys.FileLogger.Error($"WriteAllTextNow() exception: {e.ToString()}");
+            }
+            return false;
+        }
+
+        internal static bool ClumsyWriter(Models.Datas.UserSettings userSettings, string mainFilename, string bakFilename)
+        {
+            try
+            {
+                if (SerializeToFile(userSettings, mainFilename))
+                {
+                    if (SerializeToFile(userSettings, bakFilename))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        VgcApis.Libs.Sys.FileLogger.Error($"ClumsyWriter(): Write bak file failed!");
+                    }
+                }
+                else
+                {
+                    VgcApis.Libs.Sys.FileLogger.Error($"ClumsyWriter(): Write main file failed!");
+                }
+            }
+            catch { }
+            return false;
+        }
+
 
         public static string GetSha256SumFromFile(string file)
         {

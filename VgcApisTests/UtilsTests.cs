@@ -184,54 +184,6 @@ namespace VgcApisTests
 
         }
 
-        [TestMethod]
-        public void ClumsyWriterTest()
-        {
-            var rand = new Random();
-            var mainFile = "mainClumsyWriterTest.txt";
-            var bakFile = "bakClumsyWriterTest.txt";
-
-            int failCounter = 0;
-            int successCounter = 1;
-
-            string lastSuccess = null;
-
-            var cts = new CancellationTokenSource(1000);
-            Task.WaitAll(
-                RunInBackground(() =>
-                {
-                    while (!cts.Token.IsCancellationRequested)
-                    {
-                        var content = rand.Next().ToString();
-                        if (ClumsyWriter(content, mainFile, bakFile))
-                        {
-                            successCounter++;
-                            lastSuccess = content;
-                        }
-                        else
-                        {
-                            failCounter++;
-                        };
-                    }
-                }, true),
-                RunInBackground(() =>
-                {
-                    while (!cts.Token.IsCancellationRequested)
-                    {
-                        var content = rand.Next().ToString();
-                        try
-                        {
-                            File.WriteAllText(mainFile, content);
-                        }
-                        catch { }
-                    }
-                }, true));
-
-            Console.WriteLine($"success: {successCounter}, fail: {failCounter}");
-            var read = File.ReadAllText(bakFile);
-            Assert.IsTrue(read.Equals(lastSuccess));
-        }
-
         [DataTestMethod]
         [DataRow("a::b:1233333", false, "127.0.0.1", 1080)]
         [DataRow("a::b:123", true, "a::b", 123)]

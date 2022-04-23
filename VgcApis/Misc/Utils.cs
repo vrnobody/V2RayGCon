@@ -847,30 +847,6 @@ namespace VgcApis.Misc
             return false;
         }
 
-        public static bool ClumsyWriter(string content, string mainFilename, string bakFilename)
-        {
-            try
-            {
-                if (WriteAllTextNow(mainFilename, content))
-                {
-                    if (WriteAllTextNow(bakFilename, content))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        Libs.Sys.FileLogger.Error($"ClumsyWriter(): Write bak file failed!");
-                    }
-                }
-                else
-                {
-                    Libs.Sys.FileLogger.Error($"ClumsyWriter(): Write main file failed!");
-                }
-            }
-            catch { }
-            return false;
-        }
-
         /// <summary>
         /// return parsed T object
         /// </summary>

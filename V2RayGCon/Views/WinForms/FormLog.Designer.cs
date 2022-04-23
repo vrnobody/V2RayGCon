@@ -33,8 +33,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.actionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
@@ -43,56 +43,56 @@
             // 
             // rtBoxLogger
             // 
+            resources.ApplyResources(this.rtBoxLogger, "rtBoxLogger");
             this.rtBoxLogger.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtBoxLogger.DetectUrls = false;
-            resources.ApplyResources(this.rtBoxLogger, "rtBoxLogger");
             this.rtBoxLogger.Name = "rtBoxLogger";
             this.rtBoxLogger.ReadOnly = true;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.rtBoxLogger);
             resources.ApplyResources(this.panel1, "panel1");
+            this.panel1.Controls.Add(this.rtBoxLogger);
             this.panel1.Name = "panel1";
             // 
             // menuStrip1
             // 
+            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.actionToolStripMenuItem});
-            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Name = "menuStrip1";
             // 
             // actionToolStripMenuItem
             // 
+            resources.ApplyResources(this.actionToolStripMenuItem, "actionToolStripMenuItem");
             this.actionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyToolStripMenuItem,
             this.pauseToolStripMenuItem,
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.actionToolStripMenuItem.Name = "actionToolStripMenuItem";
-            resources.ApplyResources(this.actionToolStripMenuItem, "actionToolStripMenuItem");
-            // 
-            // pauseToolStripMenuItem
-            // 
-            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            resources.ApplyResources(this.pauseToolStripMenuItem, "pauseToolStripMenuItem");
-            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // copyToolStripMenuItem
             // 
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             resources.ApplyResources(this.copyToolStripMenuItem, "copyToolStripMenuItem");
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
+            // pauseToolStripMenuItem
+            // 
+            resources.ApplyResources(this.pauseToolStripMenuItem, "pauseToolStripMenuItem");
+            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             // 
             // exitToolStripMenuItem
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             resources.ApplyResources(this.exitToolStripMenuItem, "exitToolStripMenuItem");
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // FormLog

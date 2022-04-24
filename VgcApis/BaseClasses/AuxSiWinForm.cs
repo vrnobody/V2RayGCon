@@ -26,6 +26,7 @@ namespace VgcApis.BaseClasses
                     if (instance == null || instance.IsDisposed)
                     {
                         instance = new TForm();
+                        instance.FormClosed += (s, a) => instance = null;
                     }
                     else
                     {

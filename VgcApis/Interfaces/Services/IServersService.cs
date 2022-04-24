@@ -16,6 +16,9 @@ namespace VgcApis.Interfaces.Services
 
         void RequireFormMainReload();
         void ResetIndexQuiet();
+
+        void RestartOneServerByUid(string uid);
+
         bool RunSpeedTestOnSelectedServers();
 
         void ReverseSelectedByIndex();
@@ -25,6 +28,7 @@ namespace VgcApis.Interfaces.Services
         void SortSelectedBySpeedTest();
 
         void SortSelectedBySummary();
+
 
         void StopAllServers();
 

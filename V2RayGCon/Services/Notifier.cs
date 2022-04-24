@@ -492,18 +492,18 @@ namespace V2RayGCon.Services
         {
             var coreState = coreServ.GetCoreStates();
             var title = coreState.GetTitle();
-            var dely = coreState.GetSpeedTestResult();
-            if (dely == SpeedtestTimeout)
+            var uid = coreState.GetUid();
+            var delay = coreState.GetSpeedTestResult();
+            if (delay == SpeedtestTimeout)
             {
                 title = $"{title} - ({I18N.Timeout})";
             }
-            else if (dely > 0)
+            else if (delay > 0)
             {
-                title = $"{title} - ({dely}ms)";
+                title = $"{title} - ({delay}ms)";
             }
 
-            Action done = () => coreServ.GetCoreCtrl().RestartCoreThen();
-            EventHandler onClick = (s, a) => servers.StopAllServersThen(done);
+            EventHandler onClick = (s, a) => servers.RestartOneServerByUid(uid);
             var item = new ToolStripMenuItem(title, null, onClick);
             item.Checked = coreServ.GetCoreCtrl().IsCoreRunning();
             item.Disposed += (s, a) => item.Click -= onClick;

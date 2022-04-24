@@ -541,6 +541,16 @@ namespace V2RayGCon.Services
             }
         }
 
+        public void RestartOneServerByUid(string uid)
+        {
+            StopAllServers();
+            var core = coreServList.FirstOrDefault(c => c.GetCoreStates().GetUid() == uid);
+            if (core != null)
+            {
+                core.GetCoreCtrl().RestartCore();
+            }
+        }
+
         public void StopAllServersThen(Action lambda = null)
         {
             List<Controllers.CoreServerCtrl> list;

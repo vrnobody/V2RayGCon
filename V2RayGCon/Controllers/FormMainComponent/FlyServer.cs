@@ -611,15 +611,13 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 control.Cleanup();
             }
 
-            /* let runtime handle dispose
-            VgcApis.Misc.UI.RunInUiThread(formMain, () =>
+            VgcApis.Misc.UI.Invoke(() =>
             {
                 foreach (var control in controlList)
                 {
                     control.Dispose();
                 }
             });
-            */
         }
 
         object flyCtrlsLocker = new object();

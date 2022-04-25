@@ -603,6 +603,12 @@ namespace V2RayGCon.Views.UserControls
             {
                 item.MouseEnter -= ShowCtrlBtn;
             }
+            /*
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                rtboxServerTitle.Dispose();
+                toolTip1.Dispose();
+            });*/
             this.coreServCtrl = null;
         }
         #endregion

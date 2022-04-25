@@ -114,16 +114,9 @@ namespace Luna.Controllers.FormEditorCtrl
             StopFileSystemWatcher();
             lazyAnalyser?.Dispose();
 
-            /*
-            var acm = luaAcm;
-            if (acm != null)
-            {
-                acm.TargetControlWrapper = null;
-                acm.SetAutocompleteItems(new string[] { });
-                bestMatchSnippets?.Cleanup();
-                bestMatchSnippets = null;
-            }
-            */
+            luaAcm.SetAutocompleteMenu(editor, null);
+            luaAcm.Dispose();
+            luaAcm = null;
         }
         #endregion
 

@@ -71,7 +71,9 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
         public void Cleanup()
         {
-
+            jsonAcm.SetAutocompleteMenu(editor, null);
+            jsonAcm.Dispose();
+            jsonAcm = null;
         }
 
         public void DiscardChanges()

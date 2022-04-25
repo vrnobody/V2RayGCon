@@ -230,6 +230,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         public void Cleanup()
         {
             this.miRoot.DropDownOpening -= ServerMenuOpeningHandler;
+            this.formConfiger = null;
         }
 
         public override void Update(JObject config) { }

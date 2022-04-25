@@ -751,7 +751,7 @@ namespace V2RayGCon.Services
                 {
                     Invoke(() =>
                     {
-                        var icon = GetNotifyIconFromCache(iconType);
+                        var icon = CreateNotifyIconImage(iconType);
                         var org = ni.Icon;
                         ni.Icon = Icon.FromHandle(icon.GetHicon());
                         org?.Dispose();
@@ -801,17 +801,6 @@ namespace V2RayGCon.Services
             }
 
             return r;
-        }
-
-        ConcurrentDictionary<SysTrayIconTypes, Bitmap> sysTrayIconCache = new ConcurrentDictionary<SysTrayIconTypes, Bitmap>();
-        Bitmap GetNotifyIconFromCache(SysTrayIconTypes iconType)
-        {
-            if (!sysTrayIconCache.TryGetValue(iconType, out var icon))
-            {
-                icon = CreateNotifyIconImage(iconType);
-                sysTrayIconCache.TryAdd(iconType, icon);
-            }
-            return icon.Clone() as Bitmap;
         }
 
         private Bitmap CreateNotifyIconImage(SysTrayIconTypes iconType)

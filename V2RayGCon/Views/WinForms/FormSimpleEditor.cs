@@ -12,15 +12,21 @@ namespace V2RayGCon.Views.WinForms
 
         public static FormSimpleEditor GetForm()
         {
-            if (_instant == null || _instant.IsDisposed)
+
+            VgcApis.Misc.UI.Invoke(() =>
             {
-                VgcApis.Misc.UI.Invoke(
-                    () =>
-                    {
-                        _instant = new FormSimpleEditor();
-                        _instant.Show();
-                    });
-            }
+                if (_instant == null || _instant.IsDisposed)
+                {
+                    _instant = new FormSimpleEditor();
+                    _instant.FormClosed += (s, a) => _instant = null;
+                    _instant.Show();
+                }
+                else
+                {
+                    _instant.Activate();
+                }
+            });
+
             return _instant;
         }
         #endregion

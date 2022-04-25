@@ -48,6 +48,7 @@ namespace ProxySetter.Services
         {
             if (formMain != null)
             {
+                formMain.Activate();
                 return;
             }
 

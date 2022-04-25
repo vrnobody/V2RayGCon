@@ -61,8 +61,8 @@ namespace Luna.Services
 
         public void ShowFormMain()
         {
-            var form = formMain;
-            if (form == null)
+            Views.WinForms.FormMain form = null;
+            if (formMain == null || formMain.IsDisposed)
             {
                 VgcApis.Misc.UI.Invoke(() =>
                 {
@@ -72,26 +72,17 @@ namespace Luna.Services
 
             lock (formLocker)
             {
-                if (formMain == null && form != null)
+                if (form != null)
                 {
                     formMain = form;
+                    formMain.FormClosed += (s, a) => formMain = null;
+                    form = null;
                 }
             }
 
             VgcApis.Misc.UI.Invoke(() =>
             {
-                if (formMain == form && form != null)
-                {
-                    form.FormClosed += (s, a) =>
-                    {
-                        formMain = null;
-                    };
-                }
-                else
-                {
-                    form?.Close();
-                }
-
+                form?.Close();
                 formMain?.Show();
                 formMain?.Activate();
             });

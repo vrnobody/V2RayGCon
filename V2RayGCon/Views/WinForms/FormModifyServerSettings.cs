@@ -30,6 +30,7 @@ namespace V2RayGCon.Views.WinForms
                 if (_instant == null || _instant.IsDisposed)
                 {
                     _instant = form;
+                    form.FormClosed += (s, a) => _instant = null;
                     form = null;
                 }
             }
@@ -43,6 +44,7 @@ namespace V2RayGCon.Views.WinForms
                     inst.InitControls(coreServ);
                     inst.Show();
                     inst.Activate();
+
                 }
             });
 

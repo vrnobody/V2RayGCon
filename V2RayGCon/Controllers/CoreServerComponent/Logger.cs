@@ -39,7 +39,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             Views.WinForms.FormSingleServerLog form = null;
 
-            if (logForm == null)
+            if (logForm == null || logForm.IsDisposed)
             {
                 var title = coreInfo.GetTitle();
                 VgcApis.Misc.UI.Invoke(() =>
@@ -53,19 +53,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 if (logForm == null)
                 {
                     logForm = form;
+                    form.FormClosed += (s, a) => logForm = null;
+                    form = null;
                 }
             }
 
             VgcApis.Misc.UI.Invoke(() =>
             {
-                if (logForm == form && form != null)
-                {
-                    form.FormClosed += (s, a) => logForm = null;
-                }
-                else
-                {
-                    form?.Close();
-                }
+                form?.Close();
                 logForm?.Activate();
             });
         }

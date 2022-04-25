@@ -25,6 +25,7 @@ namespace Luna.Views.WinForms
                 if (_instant == null || _instant.IsDisposed)
                 {
                     _instant = f;
+                    f.FormClosed += (s, a) => _instant = null;
                     f = null;
                 }
             }

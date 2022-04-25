@@ -274,6 +274,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            setting.OnPortableModeChanged -= UpdateFormTitle;
             formMainCtrl?.Cleanup();
             setting.SaveFormRect(this);
             setting.LazyGC();

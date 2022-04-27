@@ -4,13 +4,13 @@ example:
 
 local url = "http://localhost:4000/"
 
-local haServ = require('lua.modules.httpApiServ').new()
+local haServ = require('lua.modules.httpServ').new()
 
 local handler = function(req)
     print("req: ", req)
     local resp = "ok"
     return resp
-}
+end
 
 local html = "<html><body><h1>index.html</h1></body></html>"
 haServ:Create(url, html, handler)

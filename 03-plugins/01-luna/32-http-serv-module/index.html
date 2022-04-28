@@ -1,4 +1,4 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>用网页控制服务器 - V2RayGCon手册</title><meta name=generator content="Hugo 0.62.2"><link href=https://vrnobody.github.io/V2RayGConindex.xml rel=alternate type=application/rss+xml><link rel=canonical href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/32-http-serv-module/><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/theme.min.css><script src=https://use.fontawesome.com/releases/v5.0.6/js/all.js></script><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/chroma.min.css><script src=https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js></script><script src=https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js></script><script src=https://vrnobody.github.io/V2RayGCon/js/bundle.js></script><style>:root{}.highlight{line-height:1.1}.highlight div{background-color:#eed!important}.highlight pre{background-color:#eed!important}</style><meta property="og:title" content="用网页控制服务器"><meta property="og:description" content="这个脚本需要用到V2RayGCon v1.6.4.1（未发布）新增的httpServ模块。 目前可以手动另存httpServ.lua到lua/m"><meta property="og:type" content="article"><meta property="og:url" content="https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/32-http-serv-module/"><meta property="article:published_time" content="2020-02-25T13:40:01+08:00"><meta property="article:modified_time" content="2020-02-25T13:40:01+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="用网页控制服务器"><meta name=twitter:description content="这个脚本需要用到V2RayGCon v1.6.4.1（未发布）新增的httpServ模块。 目前可以手动另存httpServ.lua到lua/m"><meta itemprop=name content="用网页控制服务器"><meta itemprop=description content="这个脚本需要用到V2RayGCon v1.6.4.1（未发布）新增的httpServ模块。 目前可以手动另存httpServ.lua到lua/m"><meta itemprop=datePublished content="2020-02-25T13:40:01+08:00"><meta itemprop=dateModified content="2020-02-25T13:40:01+08:00"><meta itemprop=wordCount content="565"><meta itemprop=keywords content></head><body><div class=container><header><h1>V2RayGCon手册</h1><img src=https://img.shields.io/github/release/vrnobody/V2RayGCon.svg alt="Release Badge"></header><div class=content-container><main><h1>用网页控制服务器</h1><p>这个脚本需要用到V2RayGCon v1.6.4.1（未发布）新增的httpServ模块。<br>目前可以手动另存<a href=https://raw.githubusercontent.com/vrnobody/V2RayGCon/master/V2RayGCon/Resources/Files/lua/modules/httpServ.lua>httpServ.lua</a>到<code>lua/modules/</code>目录内。</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>用网页控制服务器 - V2RayGCon手册</title><meta name=generator content="Hugo 0.62.2"><link href=https://vrnobody.github.io/V2RayGConindex.xml rel=alternate type=application/rss+xml><link rel=canonical href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/32-http-serv-module/><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/theme.min.css><script src=https://use.fontawesome.com/releases/v5.0.6/js/all.js></script><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/chroma.min.css><script src=https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js></script><script src=https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js></script><script src=https://vrnobody.github.io/V2RayGCon/js/bundle.js></script><style>:root{}.highlight{line-height:1.1}.highlight div{background-color:#eed!important}.highlight pre{background-color:#eed!important}</style><meta property="og:title" content="用网页控制服务器"><meta property="og:description" content="这个脚本需要用到V2RayGCon v1.6.4.1（未发布）新增的httpServ模块。 目前可以手动另存httpServ.lua到lua/m"><meta property="og:type" content="article"><meta property="og:url" content="https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/32-http-serv-module/"><meta property="article:published_time" content="2020-02-25T13:40:01+08:00"><meta property="article:modified_time" content="2020-02-25T13:40:01+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="用网页控制服务器"><meta name=twitter:description content="这个脚本需要用到V2RayGCon v1.6.4.1（未发布）新增的httpServ模块。 目前可以手动另存httpServ.lua到lua/m"><meta itemprop=name content="用网页控制服务器"><meta itemprop=description content="这个脚本需要用到V2RayGCon v1.6.4.1（未发布）新增的httpServ模块。 目前可以手动另存httpServ.lua到lua/m"><meta itemprop=datePublished content="2020-02-25T13:40:01+08:00"><meta itemprop=dateModified content="2020-02-25T13:40:01+08:00"><meta itemprop=wordCount content="699"><meta itemprop=keywords content></head><body><div class=container><header><h1>V2RayGCon手册</h1><img src=https://img.shields.io/github/release/vrnobody/V2RayGCon.svg alt="Release Badge"></header><div class=content-container><main><h1>用网页控制服务器</h1><p>这个脚本需要用到V2RayGCon v1.6.4.1（未发布）新增的httpServ模块。<br>目前可以手动另存<a href=https://raw.githubusercontent.com/vrnobody/V2RayGCon/master/V2RayGCon/Resources/Files/lua/modules/httpServ.lua>httpServ.lua</a>到<code>lua/modules/</code>目录内。</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
@@ -136,6 +136,48 @@
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">136
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">137
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">138
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">139
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">140
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">141
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">142
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">143
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">144
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">145
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">146
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">147
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">148
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">149
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">150
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">151
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">152
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">153
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">154
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">155
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">156
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">157
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">158
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">159
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">160
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">161
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">162
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">163
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">164
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">165
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">166
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">167
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">168
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">169
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">170
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">171
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">172
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">173
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">174
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">175
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">176
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">177
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">178
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">179
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">180
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=color:green>-- 如果4000端口已在使用，可修改为其他端口</span>
 <span style=color:#00f>local</span> url = <span style=color:#a31515>&#34;</span><span style=color:#a31515>http://localhost:4000/</span><span style=color:#a31515>&#34;</span>
 
@@ -155,30 +197,46 @@
     <span style=color:#00f>local</span> servs = Server:GetAllServers()
     <span style=color:#00f>for</span> coreServ <span style=color:#00f>in</span> Each(servs) <span style=color:#00f>do</span>
         <span style=color:#00f>local</span> coreState = coreServ:GetCoreStates()
+        <span style=color:#00f>local</span> coreCtrl = coreServ:GetCoreCtrl()
         <span style=color:#00f>local</span> t = {}
         t[<span style=color:#a31515>&#34;</span><span style=color:#a31515>title</span><span style=color:#a31515>&#34;</span>] = coreState:GetTitle()
         t[<span style=color:#a31515>&#34;</span><span style=color:#a31515>uid</span><span style=color:#a31515>&#34;</span>] = coreState:GetUid()
+        t[<span style=color:#a31515>&#34;</span><span style=color:#a31515>on</span><span style=color:#a31515>&#34;</span>] = coreCtrl:IsCoreRunning()
         table.insert(d, t)
     <span style=color:#00f>end</span>
     <span style=color:#00f>return</span> json.encode(d)
 <span style=color:#00f>end</span> 
+
+<span style=color:#00f>function</span> RestartServ(uid)
+    <span style=color:#00f>local</span> coreServ = utils.GetFirstServerWithUid(uid)
+    <span style=color:#00f>if</span> coreServ ~= <span style=color:#00f>nil</span> <span style=color:#00f>then</span>
+        <span style=color:#00f>local</span> coreCtrl = coreServ:GetCoreCtrl()
+        Server:StopAllServers()
+        coreCtrl:RestartCore()
+        <span style=color:#00f>return</span> <span style=color:#a31515>&#34;</span><span style=color:#a31515>ok</span><span style=color:#a31515>&#34;</span>
+    <span style=color:#00f>end</span>
+    <span style=color:#00f>return</span> <span style=color:#a31515>&#34;</span><span style=color:#a31515>unknow uid: </span><span style=color:#a31515>&#34;</span> .. uid
+<span style=color:#00f>end</span>
+
+<span style=color:#00f>function</span> StopServ(uid)
+    <span style=color:#00f>local</span> coreServ = utils.GetFirstServerWithUid(uid)
+    <span style=color:#00f>if</span> coreServ ~= <span style=color:#00f>nil</span> <span style=color:#00f>then</span>
+        <span style=color:#00f>local</span> coreCtrl = coreServ:GetCoreCtrl()
+        coreCtrl:StopCore()
+        <span style=color:#00f>return</span> <span style=color:#a31515>&#34;</span><span style=color:#a31515>ok</span><span style=color:#a31515>&#34;</span>
+    <span style=color:#00f>end</span>
+    <span style=color:#00f>return</span> <span style=color:#a31515>&#34;</span><span style=color:#a31515>unknow uid: </span><span style=color:#a31515>&#34;</span> .. uid
+<span style=color:#00f>end</span>
 
 <span style=color:#00f>function</span> handler(req)
     <span style=color:#00f>local</span> j = json.decode(req)
     <span style=color:#00f>local</span> op = j[<span style=color:#a31515>&#34;</span><span style=color:#a31515>op</span><span style=color:#a31515>&#34;</span>]
     <span style=color:#00f>if</span> op == <span style=color:#a31515>&#34;</span><span style=color:#a31515>RefreshServs</span><span style=color:#a31515>&#34;</span> <span style=color:#00f>then</span>
         <span style=color:#00f>return</span> ListAllServers()
-    <span style=color:#00f>end</span>
-    <span style=color:#00f>if</span> op == <span style=color:#a31515>&#34;</span><span style=color:#a31515>RestartServ</span><span style=color:#a31515>&#34;</span> <span style=color:#00f>then</span>
-        <span style=color:#00f>local</span> uid = j[<span style=color:#a31515>&#34;</span><span style=color:#a31515>p1</span><span style=color:#a31515>&#34;</span>]
-        <span style=color:#00f>local</span> coreServ = utils.GetFirstServerWithUid(uid)
-        <span style=color:#00f>if</span> coreServ ~= <span style=color:#00f>nil</span> <span style=color:#00f>then</span>
-            <span style=color:#00f>local</span> coreCtrl = coreServ:GetCoreCtrl()
-            Server:StopAllServers()
-            coreCtrl:RestartCore()
-            <span style=color:#00f>return</span> <span style=color:#a31515>&#34;</span><span style=color:#a31515>ok</span><span style=color:#a31515>&#34;</span>
-        <span style=color:#00f>end</span>
-        <span style=color:#00f>return</span> <span style=color:#a31515>&#34;</span><span style=color:#a31515>unknow uid: </span><span style=color:#a31515>&#34;</span> .. uid
+    <span style=color:#00f>elseif</span> op == <span style=color:#a31515>&#34;</span><span style=color:#a31515>RestartServ</span><span style=color:#a31515>&#34;</span> <span style=color:#00f>then</span>
+        <span style=color:#00f>return</span> RestartServ(j[<span style=color:#a31515>&#34;</span><span style=color:#a31515>p1</span><span style=color:#a31515>&#34;</span>])
+    <span style=color:#00f>elseif</span> op == <span style=color:#a31515>&#34;</span><span style=color:#a31515>StopServ</span><span style=color:#a31515>&#34;</span> <span style=color:#00f>then</span>
+        <span style=color:#00f>return</span> StopServ(j[<span style=color:#a31515>&#34;</span><span style=color:#a31515>p1</span><span style=color:#a31515>&#34;</span>])
     <span style=color:#00f>end</span>
     <span style=color:#00f>return</span> <span style=color:#a31515>&#34;</span><span style=color:#a31515>unknow req: </span><span style=color:#a31515>&#34;</span> .. req
 <span style=color:#00f>end</span>
@@ -197,6 +255,14 @@
 </span><span style=color:#a31515>        li:nth-child(odd) {
 </span><span style=color:#a31515>            background-color: ghostwhite;
 </span><span style=color:#a31515>        }
+</span><span style=color:#a31515>        .round-div {
+</span><span style=color:#a31515>            background-color: orange;
+</span><span style=color:#a31515>            display: inline-block;
+</span><span style=color:#a31515>            color: white;
+</span><span style=color:#a31515>            padding: 0px 5px;
+</span><span style=color:#a31515>            border-radius: 3px;
+</span><span style=color:#a31515>            cursor: pointer;
+</span><span style=color:#a31515>        }
 </span><span style=color:#a31515>    &lt;/style&gt;
 </span><span style=color:#a31515>&lt;/head&gt;
 </span><span style=color:#a31515>
@@ -205,6 +271,11 @@
 </span><span style=color:#a31515>        &lt;button @click=&#34;refreshServs()&#34;&gt;Refresh&lt;/button&gt;
 </span><span style=color:#a31515>        &lt;ul style=&#34;list-style-type: none;&#34;&gt;
 </span><span style=color:#a31515>            &lt;li v-for=&#34;serv in servs&#34; style=&#34;padding: 3px;&#34;&gt;
+</span><span style=color:#a31515>                &lt;div v-if=&#34;serv.on&#34;
+</span><span style=color:#a31515>                     @click=&#34;stopServ(serv.uid)&#34;
+</span><span style=color:#a31515>                     class=&#34;round-div&#34;&gt;
+</span><span style=color:#a31515>                     ON
+</span><span style=color:#a31515>                &lt;/div&gt;
 </span><span style=color:#a31515>                {{ serv.title }}
 </span><span style=color:#a31515>                &lt;button @click=&#34;restartServ(serv.uid)&#34;&gt;Restart&lt;/button&gt;
 </span><span style=color:#a31515>            &lt;/li&gt;
@@ -238,13 +309,26 @@
 </span><span style=color:#a31515>        data() {
 </span><span style=color:#a31515>            return {
 </span><span style=color:#a31515>                servs: [],
-</span><span style=color:#a31515>                resp: false,
 </span><span style=color:#a31515>            }
 </span><span style=color:#a31515>        },
 </span><span style=color:#a31515>        methods: {
-</span><span style=color:#a31515>            restartServ(uid) {
+</span><span style=color:#a31515>            stopServ(uid) {
+</span><span style=color:#a31515>                let that = this
 </span><span style=color:#a31515>                let done = function (msg) {
-</span><span style=color:#a31515>                    alert(msg)
+</span><span style=color:#a31515>                    that.refreshServs()
+</span><span style=color:#a31515>                    if(msg != &#34;ok&#34;){
+</span><span style=color:#a31515>                        alert(msg)
+</span><span style=color:#a31515>                    }
+</span><span style=color:#a31515>                }
+</span><span style=color:#a31515>                invoke(done, &#34;StopServ&#34;, uid)
+</span><span style=color:#a31515>            },
+</span><span style=color:#a31515>            restartServ(uid) {
+</span><span style=color:#a31515>                let that = this
+</span><span style=color:#a31515>                let done = function (msg) {
+</span><span style=color:#a31515>                    that.refreshServs()
+</span><span style=color:#a31515>                    if(msg != &#34;ok&#34;){
+</span><span style=color:#a31515>                        alert(msg)
+</span><span style=color:#a31515>                    }
 </span><span style=color:#a31515>                }
 </span><span style=color:#a31515>                invoke(done, &#34;RestartServ&#34;, uid)
 </span><span style=color:#a31515>            },

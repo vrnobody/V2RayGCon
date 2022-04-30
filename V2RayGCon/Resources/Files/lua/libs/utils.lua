@@ -12,11 +12,11 @@ u.SecPerDay = SecPerDay
 u.Timeout = Misc:GetTimeoutValue()
 
 -- helper functions 
-function AllServs()
+local function AllServs()
     return Each(Server:GetAllServers())
 end
 
-function FirstServerOf(servers)
+local function FirstServerOf(servers)
     assert(type(servers) == "table")
     if #servers > 0 then
         return servers[1]
@@ -24,7 +24,7 @@ function FirstServerOf(servers)
     return nil
 end
 
-function GetServsByMarks(marks, isRemark, isContainsMark)
+local function GetServsByMarks(marks, isRemark, isContainsMark)
     
     assert(type(marks) == "table")
     assert(type(isContainsMark), "boolean")
@@ -48,19 +48,19 @@ function GetServsByMarks(marks, isRemark, isContainsMark)
     end
 end
 
-function ToNumber(str)
+local function ToNumber(str)
     if string.isempty(str) then
         return 0
     end
     return tonumber(str)
 end
 
-function ToLuaTicks(cSharpTicks)
+local function ToLuaTicks(cSharpTicks)
     local t = ToNumber(cSharpTicks)
     return math.floor(t / 10000000 - 62135596800)
 end
 
-function IsInTable(haystack, needle)
+local function IsInTable(haystack, needle)
     assert(type(needle) == "string")
     assert(type(haystack) == "table")
 	for _, item in pairs(haystack)
@@ -72,20 +72,42 @@ function IsInTable(haystack, needle)
     return false
 end
 
-function Ticks2Minutes(ticks)
+local function Ticks2Minutes(ticks)
     local r = ToNumber(ticks) / 60
     return math.floor(r)
 end
 
-function Ticks2Hours(ticks)
+local function Ticks2Hours(ticks)
     local r = ToNumber(ticks) / SecPerHour
     return math.floor(r)
 end
 
-function Ticks2Days(ticks)
+local function Ticks2Days(ticks)
     local ticks8 = ToNumber(ticks) + TimeZone8
     local days = ticks8 / SecPerDay
     return math.floor(days)
+end
+
+--- Check if a file or directory exists in this path
+local function exists(file)
+   local ok, err, code = os.rename(file, file)
+   if not ok then
+      if code == 13 then
+         -- Permission denied, but it exists
+         return true
+      end
+   end
+   return ok, err
+end
+
+function u.exists(file)
+    return exists(file)
+end
+
+--- Check if a directory exists in this path
+function u.isdir(path)
+   -- "/" works on both Unix and Windows
+   return exists(path.."/")
 end
 
 -- utils

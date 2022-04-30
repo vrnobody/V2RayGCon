@@ -24,30 +24,6 @@ local function FirstServerOf(servers)
     return nil
 end
 
-local function GetServsByMarks(marks, isRemark, isContainsMark)
-    
-    assert(type(marks) == "table")
-    assert(type(isContainsMark), "boolean")
-    assert(type(isRemark), "boolean")
-    
-    local hasMark = {}
-    local noMark = {}
-    for coreServ in AllServs() do
-        local coreState = coreServ:GetCoreStates()
-        local mark = isRemark and coreState:GetRemark() or coreState:GetMark()
-        if IsInTable(marks, mark) then
-            table.insert(hasMark, coreServ)
-        else
-            table.insert(noMark, coreServ)
-        end
-    end
-    if isContainsMark then
-        return hasMark
-    else
-        return noMark
-    end
-end
-
 local function ToNumber(str)
     if string.isempty(str) then
         return 0
@@ -89,7 +65,7 @@ local function Ticks2Days(ticks)
 end
 
 --- Check if a file or directory exists in this path
-local function exists(file)
+local function Exists(file)
    local ok, err, code = os.rename(file, file)
    if not ok then
       if code == 13 then
@@ -100,17 +76,39 @@ local function exists(file)
    return ok, err
 end
 
-function u.exists(file)
-    return exists(file)
-end
-
---- Check if a directory exists in this path
-function u.isdir(path)
-   -- "/" works on both Unix and Windows
-   return exists(path.."/")
+local function GetServsByMarks(marks, isRemark, isContainsMark)
+    
+    assert(type(marks) == "table")
+    assert(type(isContainsMark), "boolean")
+    assert(type(isRemark), "boolean")
+    
+    local hasMark = {}
+    local noMark = {}
+    for coreServ in AllServs() do
+        local coreState = coreServ:GetCoreStates()
+        local mark = isRemark and coreState:GetRemark() or coreState:GetMark()
+        if IsInTable(marks, mark) then
+            table.insert(hasMark, coreServ)
+        else
+            table.insert(noMark, coreServ)
+        end
+    end
+    if isContainsMark then
+        return hasMark
+    else
+        return noMark
+    end
 end
 
 -- utils
+
+function u.Exists(file)
+    return Exists(file)
+end
+
+function u.IsDir(path)
+   return Exists(path.."/")
+end
 
 function u.GC()
     local prev = collectgarbage("count")

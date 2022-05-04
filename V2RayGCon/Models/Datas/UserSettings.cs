@@ -50,9 +50,13 @@ namespace V2RayGCon.Models.Datas
         public string PluginsSetting { get; set; }
         public string CompressedPluginsSetting { get; set; }
 
+        public string CompressedUnicodePluginsSetting { get; set; }
+
         public string Culture { get; set; }
         public string CoreInfoList { get; set; }
         public string CompressedCoreInfoList { get; set; }
+        public string CompressedUnicodeCoreInfoList { get; set; }
+
         public string PacServerSettings { get; set; }
         public string SysProxySetting { get; set; }
         public string ServerTracker { get; set; }
@@ -107,11 +111,13 @@ namespace V2RayGCon.Models.Datas
             PluginInfoItems = string.Empty;
             PluginsSetting = string.Empty;
             CompressedPluginsSetting = string.Empty;
+            CompressedUnicodePluginsSetting = string.Empty;
 
             Culture = string.Empty;
 
             CoreInfoList = string.Empty;
             CompressedCoreInfoList = string.Empty;
+            CompressedUnicodeCoreInfoList = string.Empty;
 
             PacServerSettings = string.Empty;
             SysProxySetting = string.Empty;

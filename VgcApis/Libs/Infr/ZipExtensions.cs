@@ -12,13 +12,13 @@ namespace VgcApis.Libs.Infr
     public static class ZipExtensions
     {
 
-        public static string SerializeObjectToCompressedBase64(object value)
+        public static string SerializeObjectToCompressedUnicodeBase64(object value)
         {
             using (var outputStream = new MemoryStream())
             {
                 using (var gZipStream = new GZipStream(outputStream, CompressionMode.Compress))
                 {
-                    using (StreamWriter writer = new StreamWriter(gZipStream))
+                    using (StreamWriter writer = new StreamWriter(gZipStream, Encoding.Unicode))
                     using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
                     {
                         JsonSerializer ser = new JsonSerializer();
@@ -30,8 +30,24 @@ namespace VgcApis.Libs.Infr
             }
         }
 
-        public static T DeserializeObjectFromCompressedBase64<T>(string b64Str)
+        public static T DeserializeObjectFromCompressedUnicodeBase64<T>(string b64Str)
         {
+
+            var b64Bytes = Convert.FromBase64String(b64Str);
+            using (var sourceStream = new MemoryStream(b64Bytes))
+            using (var gZipStream = new GZipStream(sourceStream, CompressionMode.Decompress))
+            using (StreamReader reader = new StreamReader(gZipStream, Encoding.Unicode))
+            using (JsonTextReader jsonReader = new JsonTextReader(reader))
+            {
+                JsonSerializer ser = new JsonSerializer();
+                return ser.Deserialize<T>(jsonReader);
+            }
+        }
+
+        // obsolete
+        public static T DeserializeObjectFromCompressedUtf8Base64<T>(string b64Str)
+        {
+
             var b64Bytes = Convert.FromBase64String(b64Str);
             using (var sourceStream = new MemoryStream(b64Bytes))
             using (var gZipStream = new GZipStream(sourceStream, CompressionMode.Decompress))
@@ -45,14 +61,14 @@ namespace VgcApis.Libs.Infr
 
         public static string CompressToBase64(string data)
         {
-            var b = Encoding.UTF8.GetBytes(data);
+            var b = Encoding.Unicode.GetBytes(data);
             return Convert.ToBase64String(Compress(b));
         }
 
         public static string DecompressFromBase64(string data)
         {
             var b64 = Convert.FromBase64String(data);
-            return Encoding.UTF8.GetString(Decompress(b64));
+            return Encoding.Unicode.GetString(Decompress(b64));
         }
 
         public static byte[] Compress(byte[] data)

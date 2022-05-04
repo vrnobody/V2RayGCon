@@ -83,6 +83,7 @@ jobs:
               tag_name: ${{ env.verStr }}
               release_name: 'v${{ env.verStr }}'
               body: |
+                本项目支持的最高v2ray-core版本是`v4.44.0`
                 [Release logs 发布记录](${{ env.releaseNoteUrl }})
                 
                 #### 变化：

@@ -20,7 +20,7 @@ V2RayGCon是windows下[v2ray-core](https://v2ray.com)的图形(graphic)配置器
 [\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]][10]&nbsp;&nbsp;[\[唯一联系方式 issue\]][11]  
 
 ### 安装 Install
-先安装.net framework 4.5+，然后下载解压[V2RayGCon-box.zip][9]到任意目录。  
+先安装.net framework 4.5+（win10自带），然后下载解压[V2RayGCon-box.zip][9]到任意目录。  
   
 Download and unzip [V2RayGCon-box.zip][9] to any directory you like.  
 Require .net framework 4.5+.  

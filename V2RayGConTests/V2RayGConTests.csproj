@@ -61,6 +61,7 @@
     <Compile Include="Base64Tests.cs" />
     <Compile Include="DecoderTests\VmessShareLinkTests.cs" />
     <Compile Include="Experiments\FileReadWriteTests.cs" />
+    <Compile Include="UtilsTest.cs" />
     <Compile Include="UITest.cs" />
     <Compile Include="CacheTest.cs" />
     <Compile Include="CoreServerTest.cs" />

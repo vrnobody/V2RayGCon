@@ -188,7 +188,7 @@ stat: <
         }
 
         [DataTestMethod]
-        [DataRow("http://www.baidu.com")]
+        [DataRow("https://www.baidu.com")]
         public void VisitWebPageSpeedTestTest(string url)
         {
             var r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, 1024 * 1024, -1);

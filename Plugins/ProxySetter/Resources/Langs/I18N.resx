@@ -145,10 +145,10 @@
     <value>Direct</value>
   </data>
   <data name="MiGlobal" xml:space="preserve">
-    <value>Global</value>
+    <value>System</value>
   </data>
   <data name="MiNone" xml:space="preserve">
-    <value>Untouched</value>
+    <value>Manual</value>
   </data>
   <data name="MiPAC" xml:space="preserve">
     <value>PAC</value>

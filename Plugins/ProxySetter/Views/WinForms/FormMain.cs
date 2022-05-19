@@ -181,10 +181,18 @@ namespace ProxySetter.Views.WinForms
         {
             this.Close();
         }
-
-
+        private void chkBasicUseCustomPac_CheckedChanged(object sender, EventArgs e)
+        {
+            var isChecked = chkBasicUseCustomPac.Checked;
+            chkBasicAutoUpdateSysProxy.Enabled = !isChecked;
+            tboxBasicGlobalPort.Enabled = !isChecked;
+            cboxBasicPacMode.Enabled = !isChecked;
+            cboxBasicPacProtocol.Enabled = !isChecked;
+            btnBasicDebugPacServer.Enabled = !isChecked;
+            rtboxPacWhiteList.Enabled = !isChecked;
+            rtboxPacBlackList.Enabled = !isChecked;
+            btnBasicViewInNotepad.Enabled = !isChecked;
+        }
         #endregion
-
-
     }
 }

@@ -64,10 +64,10 @@ namespace V2RayGCon.Views.UserControls
             var color = total > 0 ? Color.DarkGray : Color.Red;
             var text = $"{I18N.TotalNum}{total}";
             VgcApis.Misc.UI.Invoke(() =>
-           {
-               lbTotal.ForeColor = color;
-               lbTotal.Text = text;
-           });
+            {
+                lbTotal.ForeColor = color;
+                lbTotal.Text = text;
+            });
         }
 
         public bool IsEmpty() =>

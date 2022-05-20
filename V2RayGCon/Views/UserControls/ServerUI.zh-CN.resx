@@ -208,7 +208,7 @@
     <value>Json编辑器</value>
   </data>
   <data name="debugToolStripMenuItem.Text" xml:space="preserve">
-    <value>查看最终配置</value>
+    <value>查看最终配置(只读)</value>
   </data>
   <data name="debugToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>传给v2ray-core的最终配置</value>

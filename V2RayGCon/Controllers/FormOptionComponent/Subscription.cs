@@ -63,6 +63,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         public override void Cleanup()
         {
             ReleaseEvent();
+            lazyCounter?.ForgetIt();
             lazyCounter?.Dispose();
         }
 
@@ -406,8 +407,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             BindEventBtnSelections();
             BindEventFlyPanelDragDrop();
 
-            servers.OnServerCountChange += UpdateServUiTotal;
-            servers.OnServerPropertyChange += UpdateServUiTotal;
+            //servers.OnServerCountChange += UpdateServUiTotal;
+            //servers.OnServerPropertyChange += UpdateServUiTotal;
 
             chkSubsIsAutoPatch.CheckedChanged += (s, a) => setting.isAutoPatchSubsInfo = chkSubsIsAutoPatch.Checked;
 
@@ -419,8 +420,8 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         void ReleaseEvent()
         {
-            servers.OnServerCountChange -= UpdateServUiTotal;
-            servers.OnServerPropertyChange -= UpdateServUiTotal;
+            //servers.OnServerCountChange -= UpdateServUiTotal;
+            //servers.OnServerPropertyChange -= UpdateServUiTotal;
         }
 
         void UpdatePanelItemsIndex()

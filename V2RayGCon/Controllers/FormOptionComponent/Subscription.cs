@@ -338,8 +338,10 @@ namespace V2RayGCon.Controllers.OptionComponent
                         .Where(l => string.IsNullOrEmpty(l[0]))
                         .Select(l => l[1]));
 
-                    slinkMgr.ImportLinkWithOutV2cfgLinksBatchMode(
+                    slinkMgr.ImportLinkWithOutV2cfgLinksBatchModeSync(
                         links.Where(l => !string.IsNullOrEmpty(l[0])).ToList());
+
+                    UpdateServUiTotal(this, EventArgs.Empty);
 
                     VgcApis.Misc.UI.Invoke(() => this.btnUpdate.Enabled = true);
                 });

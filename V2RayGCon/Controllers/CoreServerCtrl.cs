@@ -91,7 +91,6 @@ namespace V2RayGCon.Controllers
                 var json = JObject.Parse(coreInfo.config);
                 json.Merge(node);
                 coreInfo.config = json.ToString(Formatting.None);
-                coreInfo.UpdateHash();
                 coreInfo.name = name;
                 coreInfo.ClearCachedString();
             }

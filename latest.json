@@ -1,12 +1,12 @@
 {
-  "version": "1.6.5.0",
-  "md5": "22A69639AB184132B21E904515AB128A",
+  "version": "1.6.6.0",
+  "md5": "D24BD32840E0B3C3E8C1C8994C5A372F",
   "warnings": [
-    "如果你正在使用的是v1.6.2至v1.6.4请尽快升级",
     "本项目支持的最高v2ray-core版本是v4.44.0"
   ],
   "changes": [
-    "Luna插件添加httpServ模块",
-    "修复v1.6.2起无法保存服务器信息的bug"
+    "提高导入、删除服务器速度",
+    "调整ProxySetter界面",
+    "删除coreConfiger:GetHash()"
   ]
 }

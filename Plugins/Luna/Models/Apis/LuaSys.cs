@@ -542,7 +542,11 @@ namespace Luna.Models.Apis
             VgcApis.Misc.Utils.RunInBackground(async () =>
             {
                 await Task.Delay(timeout);
-                mailbox.SendCode(mailbox.GetAddress(), id);
+                var addr = mailbox?.GetAddress();
+                if (!string.IsNullOrEmpty(addr))
+                {
+                    mailbox?.SendCode(addr, id);
+                }
             });
         }
 

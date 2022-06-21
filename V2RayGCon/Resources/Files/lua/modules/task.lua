@@ -61,8 +61,6 @@ function M:Wait(timeout)
     Sys:SetTimeout(self.mailbox, timeout, timerid)
     -- 挂起调用的任务线程
     coroutine.yield()
-    taskTimerPool[coroutine.running()] = nil
-    timerPool[timerid] = nil
 end
 
 function M:Run()

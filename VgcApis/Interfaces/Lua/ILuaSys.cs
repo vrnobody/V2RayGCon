@@ -295,6 +295,14 @@ namespace VgcApis.Interfaces.Lua
 
         #region system
         /// <summary>
+        /// 指定时间后向指定邮箱发送一封邮件
+        /// </summary>
+        /// <param name="mailbox">目标邮箱地址</param>
+        /// <param name="timeout">延迟</param>
+        /// <param name="id">事件代号</param>
+        void SetTimeout(ILuaMailBox mailbox, int timeout, double id);
+
+        /// <summary>
         /// 执行一次GC()
         /// </summary>
         void GarbageCollect();

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Luna.Models.Apis
@@ -536,6 +537,15 @@ namespace Luna.Models.Apis
         #endregion
 
         #region ILuaSys.System
+        public void SetTimeout(VgcApis.Interfaces.Lua.ILuaMailBox mailbox, int timeout, double id)
+        {
+            VgcApis.Misc.Utils.RunInBackground(async () =>
+            {
+                await Task.Delay(timeout);
+                mailbox.SendCode(mailbox.GetAddress(), id);
+            });
+        }
+
         public void GarbageCollect() => GC.Collect();
         public void VolumeUp() => Libs.Sys.VolumeChanger.VolumeUp();
 

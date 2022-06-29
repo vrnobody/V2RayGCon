@@ -1,12 +1,12 @@
 {
-  "version": "1.6.6.0",
-  "md5": "D24BD32840E0B3C3E8C1C8994C5A372F",
+  "version": "1.6.7.0",
+  "md5": "CFA7B1CC7E39A93D52824891654704B5",
   "warnings": [
     "本项目支持的最高v2ray-core版本是v4.44.0"
   ],
   "changes": [
-    "提高导入、删除服务器速度",
-    "调整ProxySetter界面",
-    "删除coreConfiger:GetHash()"
+    "添加task.lua模块，详见脚本内注释",
+    "Core下载器仅显示v4.x内核",
+    "更新多个NuGet包"
   ]
 }

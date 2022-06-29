@@ -5,7 +5,7 @@
     "本项目支持的最高v2ray-core版本是v4.44.0"
   ],
   "changes": [
-    "添加task.lua模块，详见脚本内注释",
+    "添加lua/modules/task.lua模块，详见脚本内注释",
     "Core下载器仅显示v4.x内核",
     "更新多个NuGet包"
   ]

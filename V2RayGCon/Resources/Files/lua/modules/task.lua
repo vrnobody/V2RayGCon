@@ -4,24 +4,33 @@
 
 local Task = require('lua.modules.task').new()
 
-function task1()
+function MainTask()
     for i = 1, 10 do
-        print("Task 1: ", i)
+        print("Main: ", i)
+        -- 让渡执行权
         Task:Wait(1000)
     end
+    -- 终结执行器
     Task:Stop()
 end
 
-function task2()
+function SubTask(name, delay)
     for i = 1, 10 do
-        print("Task 2: ", i)
-        Task:Wait(500)
+        print(name, ": ", i)
+        Task:Wait(delay)
     end
 end
 
-Task:Init(task1)
-Task:Init(task2)
+-- 初始化Task
+Task:Init(MainTask)
+
+-- 向Task传入参数
+Task:Init(SubTask, "Sub1", 500)
+Task:Init(SubTask, "Sub2", 250)
+
+-- 启动执行器
 Task:Run()
+
 print("Done!")
 
 ]]
@@ -67,11 +76,11 @@ function M:Run()
     repeat
         local mail = self.mailbox:Wait()
         if mail ~= nil then
-            local param = mail:GetCode()
-            if timerPool[param] then
-                local taskId = timerPool[param]
-                timerPool[param] = nil
-                if taskTimerPool[taskId] == param then
+            local timerid = mail:GetCode()
+            if timerPool[timerid] then
+                local taskId = timerPool[timerid]
+                timerPool[timerid] = nil
+                if taskTimerPool[taskId] == timerid then
                     taskTimerPool[taskId] = nil
                     coroutine.resume(taskId)
                 end

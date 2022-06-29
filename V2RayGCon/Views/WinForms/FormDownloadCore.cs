@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -167,6 +168,7 @@ namespace V2RayGCon.Views.WinForms
 
             var sourceUrl = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(cboxDownloadSource.SelectedIndex);
             int proxyPort = chkUseProxy.Checked ? servers.GetAvailableHttpProxyPort() : -1;
+            var isV2fly = cboxDownloadSource.SelectedIndex == 1;
 
             Action<List<string>> done = (versions) =>
             {
@@ -184,6 +186,12 @@ namespace V2RayGCon.Views.WinForms
             Action worker = () =>
             {
                 var versions = Misc.Utils.GetOnlineV2RayCoreVersionList(proxyPort, sourceUrl);
+
+                if (isV2fly)
+                {
+                    versions = versions.Where(v => v.StartsWith("v4.")).ToList();
+                }
+
                 if (versions != null && versions.Count > 0)
                 {
                     setting.SaveV2RayCoreVersionList(versions);

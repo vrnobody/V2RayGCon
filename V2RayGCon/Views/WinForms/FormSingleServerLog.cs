@@ -6,9 +6,7 @@ namespace V2RayGCon.Views.WinForms
 {
     public partial class FormSingleServerLog : Form
     {
-        public static FormSingleServerLog CreateLogForm(
-            string title,
-            Controllers.CoreServerComponent.Logger logger)
+        public static FormSingleServerLog CreateLogForm(string title, VgcApis.Libs.Sys.QueueLogger logger)
         {
             FormSingleServerLog logForm = null;
             VgcApis.Misc.UI.Invoke(() =>
@@ -21,19 +19,15 @@ namespace V2RayGCon.Views.WinForms
 
         long updateTimestamp = -1;
         VgcApis.Libs.Tasks.Routine logUpdater;
-        VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
-        Controllers.CoreServerComponent.Logger coreLogger;
+        VgcApis.Libs.Sys.QueueLogger qLogger;
 
         bool isPaused = false;
 
         FormSingleServerLog(
             string title,
-            Controllers.CoreServerComponent.Logger logger)
+            VgcApis.Libs.Sys.QueueLogger logger)
         {
-            coreLogger = logger;
-
-            coreLogger.OnLog += OnLogHandler;
-
+            this.qLogger = logger;
             logUpdater = new VgcApis.Libs.Tasks.Routine(
                 RefreshUi,
                 VgcApis.Models.Consts.Intervals.SiFormLogRefreshInterval);
@@ -41,11 +35,6 @@ namespace V2RayGCon.Views.WinForms
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             this.Text = I18N.Log + " - " + title;
-        }
-
-        void OnLogHandler(object sender, string msg)
-        {
-            qLogger.Log(msg);
         }
 
         private void RefreshUi()
@@ -69,8 +58,9 @@ namespace V2RayGCon.Views.WinForms
         private void FormSingleServerLog_FormClosed(object sender, FormClosedEventArgs e)
         {
             logUpdater.Dispose();
-            coreLogger.OnLog -= OnLogHandler;
-            qLogger?.Dispose();
+
+            // Potential memory leaks
+            // qLogger.Dispose();
         }
 
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)

@@ -1,6 +1,6 @@
 **本项目支持的最高v2ray-core版本是`v4.44.0`**  
   
-[![Master Action Status][1]][2] [![Release][3]][4] [![Total Downloads][5]][6] [![License][7]][8]
+[![Master Action Status][1]][2] [![Release][3]][4] [![Total Downloads][5]][6] [![License][7]][8] [![codebeat badge][13]][14]
 
 [1]: https://github.com/vrnobody/V2RayGCon/workflows/master/badge.svg "Build Status Badge"
 [2]: https://github.com/vrnobody/V2RayGCon/actions "Actions detail"
@@ -14,6 +14,8 @@
 [10]: https://vrnobody.github.io/V2RayGCon/ "github.io"
 [11]: https://github.com/vrnobody/V2RayGCon/issues "Issues"
 [12]: https://github.com/vrnobody/luna-scripts "Luna scripts"
+[13]: https://codebeat.co/badges/2877dcc5-5f53-4cb0-8178-6b39cd74e788 "codebeat badge"
+[14]: https://codebeat.co/projects/github-com-vrnobody-v2raygcon-master "codebeat report"
 
 V2RayGCon是windows下[v2ray-core](https://v2ray.com)的图形(graphic)配置器(configer)。  
 
@@ -27,9 +29,11 @@ Require .net framework 4.5+.
 
 ### 演示 Demo
 ![Demo v1.4.3.5 GIF](https://vrnobody.github.io/V2RayGCon/images/forms/demo_basics_v1.4.3.5.gif)  
-更多使用说明请看[\[手册 manual\]][10]  
+  
+  
+<details>
+<summary><b>引用按字母排序 Credits (in alphabetical order)</b></summary>  
 
-### 引用按字母排序 Credits (in alphabetical order)  
 [2dust/v2rayN](https://github.com/2dust/v2rayN) vmess分享链接及订阅格式  
 [Ahmad45123/AutoCompleteMenu-ScintillaNET](https://github.com/Ahmad45123/AutoCompleteMenu-ScintillaNET) 自动补全  
 [brunoos/luasec](https://github.com/brunoos/luasec.git) Lua https  
@@ -53,3 +57,4 @@ Require .net framework 4.5+.
 [v2ray/v2ray-core](https://github.com/v2ray/v2ray-core) v2ray-core服务端  
 [wilhelmy/lua-bencode](https://bitbucket.org/wilhelmy/lua-bencode) bencode(torrent)解释器  
 [XTLS/Xray-core](https://github.com/XTLS/Xray-core) Xray-core服务端  
+</details>

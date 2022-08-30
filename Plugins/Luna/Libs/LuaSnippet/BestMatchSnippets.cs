@@ -100,10 +100,7 @@ namespace Luna.Libs.LuaSnippet
             var snps = new List<AutocompleteItem>();
             if (!ignoredList.Contains(fragment))
             {
-                lock (this.customScriptSnippets)
-                {
-                    snps = CreateSnippets(fragment);
-                }
+                snps = CreateSnippets(fragment);
             }
 
             //return autocomplete items
@@ -113,12 +110,13 @@ namespace Luna.Libs.LuaSnippet
 
         private List<AutocompleteItem> CreateSnippets(string fragment)
         {
-            List<AutocompleteItem> snps;
-            var cache = customScriptSnippets;
-
-            List<MatchItemBase> candidates = cache
-                .Concat(GenCandidateList(fragment))
-                .ToList();
+            List<MatchItemBase> candidates;
+            lock (this.customScriptSnippets)
+            {
+                candidates = customScriptSnippets
+                   .Concat(GenCandidateList(fragment))
+                   .ToList();
+            }
 
             var table = new Dictionary<MatchItemBase, long>();
             foreach (var candidate in candidates)
@@ -130,7 +128,7 @@ namespace Luna.Libs.LuaSnippet
                 }
             }
 
-            snps = table
+            var snps = table
                 .OrderBy(kv => kv.Value)
                 .ThenBy(kv => kv.Key.GetLowerText())
                 .Select(kv => kv.Key as AutocompleteItem)

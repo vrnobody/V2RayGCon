@@ -46,11 +46,14 @@ namespace Luna.Libs.LuaSnippet
             if (snippets == null)
             {
                 return;
-
             }
-            var old = this.customScriptSnippets;
-            this.customScriptSnippets = snippets;
-            old.Clear();
+
+            lock (this.customScriptSnippets)
+            {
+                var old = this.customScriptSnippets;
+                this.customScriptSnippets = snippets;
+                old.Clear();
+            }
         }
 
         public void UpdateRequireModuleSnippets(List<LuaImportClrSnippets> snippets)
@@ -60,9 +63,12 @@ namespace Luna.Libs.LuaSnippet
                 return;
             }
 
-            var old = this.customRequireModuleSnippets;
-            this.customRequireModuleSnippets = snippets;
-            old.Clear();
+            lock (this.customRequireModuleSnippets)
+            {
+                var old = this.customRequireModuleSnippets;
+                this.customRequireModuleSnippets = snippets;
+                old.Clear();
+            }
         }
 
         public void Cleanup()
@@ -94,7 +100,10 @@ namespace Luna.Libs.LuaSnippet
             var snps = new List<AutocompleteItem>();
             if (!ignoredList.Contains(fragment))
             {
-                snps = CreateSnippets(fragment);
+                lock (this.customScriptSnippets)
+                {
+                    snps = CreateSnippets(fragment);
+                }
             }
 
             //return autocomplete items
@@ -146,7 +155,10 @@ namespace Luna.Libs.LuaSnippet
             }
             else if (fragment.Contains("("))
             {
-                items.AddRange(customRequireModuleSnippets);
+                lock (customRequireModuleSnippets)
+                {
+                    items.AddRange(customRequireModuleSnippets);
+                }
                 items.AddRange(luaImportClrs);
                 items.AddRange(luaFunctions);
             }

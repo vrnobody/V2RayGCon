@@ -2,7 +2,7 @@
   
 [![Master Action Status][1]][2] [![Release][3]][4] [![Total Downloads][5]][6] [![License][7]][8] [![codebeat badge][13]][14]
 
-[1]: https://github.com/vrnobody/V2RayGCon/workflows/master/badge.svg "Build Status Badge"
+[1]: https://github.com/vrnobody/V2RayGCon/actions/workflows/release.yml/badge.svg "Build Status Badge"
 [2]: https://github.com/vrnobody/V2RayGCon/actions "Actions detail"
 [3]: https://img.shields.io/github/release/vrnobody/V2RayGCon.svg "Release Badge"
 [4]: https://github.com/vrnobody/V2RayGCon/releases/latest "Releases"

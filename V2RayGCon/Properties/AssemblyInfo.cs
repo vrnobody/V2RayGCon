@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.6.7.3")]
+[assembly: AssemblyVersion("1.6.7.4")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.6.7.4 Update to Newtonsoft.Json v13.0.2
  * v1.6.7.3 Try to fix InvalidOperationException in BestMatchSnippets of Luna-plugin.
  * v1.6.7.2 Refactoring.
  * v1.6.7.1 Revert 09755e5137934e8511a04d26b6bafd8395130e96.

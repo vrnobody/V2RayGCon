@@ -1,12 +1,12 @@
 {
-  "version": "1.6.7.0",
-  "md5": "CFA7B1CC7E39A93D52824891654704B5",
+  "version": "1.6.7.4",
+  "md5": "427E0A352B37261FAFCE785FA5DD54D9",
   "warnings": [
     "本项目支持的最高v2ray-core版本是v4.44.0"
   ],
   "changes": [
-    "添加lua/modules/task.lua模块，详见脚本内注释",
-    "Core下载器仅显示v4.x内核",
-    "更新多个NuGet包"
+    "更新Newtonsoft.Json至v13.0.2",
+    "修复Luna插件自动补全的一个bug",
+    "恢复记录每个服务器各自的日志"
   ]
 }

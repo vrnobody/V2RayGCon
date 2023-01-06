@@ -19,7 +19,7 @@ jobs:
         boxAppend: box
         v2rayCorePkgName: 'v2ray-windows-64.zip'
         scriptPkgName: 'scripts-v1.0.4'
-        v2rayCoreVer: 'v4.44.0'
+        v2rayCoreVer: 'v4.45.2'
         # https://github.com/v2ray/v2ray-core/releases/download/v4.20.0/v2ray-windows-32.zip
         # https://github.com/XTLS/Xray-core/releases/download/v1.4.0/Xray-windows-64.zip
         v2rayCoreUrl: 'https://github.com/v2fly/v2ray-core/releases/download'
@@ -27,7 +27,7 @@ jobs:
 
     steps:
         - name: Checkout master
-          uses: actions/checkout@v2.3.3
+          uses: actions/checkout@v3
 
         - name: Show versions
           run: |
@@ -36,7 +36,7 @@ jobs:
             $Host.Version
 
         - name: Setup .net framework env
-          uses: vrnobody/Setup-DotNetFrameworkEnv@v1.2.6
+          uses: vrnobody/Setup-DotNetFrameworkEnv@v1.10.0
 
         - name: Restore packages
           run: nuget restore ${env:projName}.sln
@@ -74,57 +74,26 @@ jobs:
             echo "hashVgcBoxZip=${hv2}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
             echo "hashScriptPkgZip=${hv3}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
-        - name: Create Release
-          id: create_release
-          uses: actions/create-release@master
-          env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        - name: Publish Release
+          uses: ncipollo/release-action@v1.12.0
           with:
-              tag_name: ${{ env.verStr }}
-              release_name: 'v${{ env.verStr }}'
-              body: |
-                本项目支持的最高v2ray-core版本是`v4.44.0`
-                [Release logs 发布记录](${{ env.releaseNoteUrl }})
-                
-                #### 变化：
-                 * 变化1
-                
-                #### MD5:
-                ${{ env.projName }}.zip (${{ env.hashVgcZip }})
-                ${{ env.projName }}-${{ env.boxAppend }}.zip (${{ env.hashVgcBoxZip }})
-                ${{ env.scriptPkgName }}.zip (${{ env.hashScriptPkgZip }})
+            token: ${{ secrets.GITHUB_TOKEN }}
+            name: 'v${{ env.verStr }}'
+            tag: ${{ env.verStr }}
+            body: |
+              本项目支持的最高v2ray-core版本是`v4.45.2`
+              [Release logs 发布记录](${{ env.releaseNoteUrl }})
+              
+              #### 变化：
+               * 变化1
+              
+              #### MD5:
+              ${{ env.projName }}.zip (${{ env.hashVgcZip }})
+              ${{ env.projName }}-${{ env.boxAppend }}.zip (${{ env.hashVgcBoxZip }})
+              ${{ env.scriptPkgName }}.zip (${{ env.hashScriptPkgZip }})
 
-                其中${{ env.projName }}-${{ env.boxAppend }}.zip打包了v2ray-core-win64 ${{ env.v2rayCoreVer }}
-                ${{ env.scriptPkgName }}.zip解压后拖进Luna脚本管理器的空白区中即可食用
-              draft: true
-              prerelease: false
-
-        - name: Upload ${{ env.scriptPkgName }}.zip
-          uses: actions/upload-release-asset@v1.0.1
-          env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          with:
-              upload_url: ${{ steps.create_release.outputs.upload_url }} 
-              asset_path: ./${{ env.scriptPkgName }}.zip
-              asset_name: ${{ env.scriptPkgName }}.zip
-              asset_content_type: application/zip
-
-        - name: Upload ${{ env.projName }}.zip
-          uses: actions/upload-release-asset@v1.0.1
-          env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          with:
-              upload_url: ${{ steps.create_release.outputs.upload_url }} 
-              asset_path: ./${{ env.projName }}.zip
-              asset_name: ${{ env.projName }}.zip
-              asset_content_type: application/zip
-
-        - name: Upload ${{ env.projName }}-${{ env.boxAppend }}.zip
-          uses: actions/upload-release-asset@v1.0.1
-          env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          with:
-              upload_url: ${{ steps.create_release.outputs.upload_url }} 
-              asset_path: ./${{ env.projName }}-${{ env.boxAppend }}.zip
-              asset_name: ${{ env.projName }}-${{ env.boxAppend }}.zip
-              asset_content_type: application/zip
+              其中${{ env.projName }}-${{ env.boxAppend }}.zip打包了v2ray-core-win64 ${{ env.v2rayCoreVer }}
+              ${{ env.scriptPkgName }}.zip解压后拖进Luna脚本管理器的空白区中即可使用
+            draft: true
+            prerelease: false
+            artifacts: "${{ env.scriptPkgName }}.zip,${{ env.projName }}.zip,${{ env.projName }}-${{ env.boxAppend }}.zip"

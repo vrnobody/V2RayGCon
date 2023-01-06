@@ -1,4 +1,4 @@
-**本项目支持的最高v2ray-core版本是`v4.44.0`**  
+**本项目支持的最高v2ray-core版本是`v4.45.2`**  
   
 [![Master Action Status][1]][2] [![Release][3]][4] [![Total Downloads][5]][6] [![License][7]][8] [![codebeat badge][13]][14]
 

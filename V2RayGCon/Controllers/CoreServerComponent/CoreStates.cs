@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -38,6 +40,25 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region public methods
+
+        public void SetName(string name)
+        {
+            var root = "v2raygcon";
+            var node = JObject.Parse("{v2raygcon:{alias:\"\"}}");
+            node[root]["alias"] = name;
+
+            MergeNodeIntoConfigAndUpdateSummary(node, name);
+        }
+
+        public void SetNameAndDescription(string name, string description)
+        {
+            var root = "v2raygcon";
+            var node = JObject.Parse("{v2raygcon:{alias:\"\",description:\"\"}}");
+            node[root]["alias"] = name;
+            node[root]["description"] = description;
+
+            MergeNodeIntoConfigAndUpdateSummary(node, name);
+        }
 
         public void AddStatSample(VgcApis.Models.Datas.StatsSample sample)
         {
@@ -359,6 +380,22 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         #region private methods
 
+        // for modify name and description only
+        void MergeNodeIntoConfigAndUpdateSummary(JObject node, string name)
+        {
+            try
+            {
+                var json = JObject.Parse(coreInfo.config);
+                json.Merge(node);
+                coreInfo.config = json.ToString(Formatting.None);
+                coreInfo.name = name;
+                coreInfo.ClearCachedString();
+
+                // do not update here CoreServerCtrl may call this function
+                // configer.UpdateSummary();
+            }
+            catch { }
+        }
         void UpdateStatusWithSpeedTestResult()
         {
             var latency = GetSpeedTestResult();

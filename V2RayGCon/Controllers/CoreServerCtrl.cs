@@ -79,23 +79,6 @@ namespace V2RayGCon.Controllers
         #endregion
 
         #region private methods
-        void SetServerNameAndDescription(string name, string description)
-        {
-            var root = "v2raygcon";
-            var node = JObject.Parse("{v2raygcon:{alias:\"\",description:\"\"}}");
-            node[root]["alias"] = name;
-            node[root]["description"] = description;
-
-            try
-            {
-                var json = JObject.Parse(coreInfo.config);
-                json.Merge(node);
-                coreInfo.config = json.ToString(Formatting.None);
-                coreInfo.name = name;
-                coreInfo.ClearCachedString();
-            }
-            catch { }
-        }
 
         bool SetCustomInboundInfo(CoreServSettings cs)
         {
@@ -136,7 +119,7 @@ namespace V2RayGCon.Controllers
             var cs = coreServSettings;
             var ci = coreInfo;
 
-            SetServerNameAndDescription(cs.serverName, cs.serverDescription);
+            GetCoreStates().SetNameAndDescription(cs.serverName, cs.serverDescription);
             ci.customMark = cs.mark;
             ci.customRemark = cs.remark;
             ci.isAutoRun = cs.isAutorun;

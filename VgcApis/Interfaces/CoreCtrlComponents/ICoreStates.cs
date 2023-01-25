@@ -111,6 +111,18 @@
         string GetName();
 
         /// <summary>
+        /// 设置服务器全名
+        /// </summary>
+        /// <returns></returns>
+        void SetName(string name);
+
+        /// <summary>
+        /// 设置服务器全名及描述
+        /// </summary>
+        /// <returns></returns>
+        void SetNameAndDescription(string name, string description);
+
+        /// <summary>
         /// 获取服务器原始GUID（可能为空）
         /// </summary>
         /// <returns>GUID</returns>

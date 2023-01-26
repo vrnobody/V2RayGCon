@@ -120,7 +120,7 @@
         /// 设置服务器全名及描述
         /// </summary>
         /// <returns></returns>
-        void SetNameAndDescription(string name, string description);
+        void SetDescription(string description);
 
         /// <summary>
         /// 获取服务器原始GUID（可能为空）

@@ -37,6 +37,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.6.7.6 Add coreState:SetDescripton() in Luna plugin.
  * v1.6.7.5 Add coreState:SetName() in Luna plugin.
  * v1.6.7.4 Update to Newtonsoft.Json v13.0.2
  * v1.6.7.3 Try to fix InvalidOperationException in BestMatchSnippets of Luna-plugin.

@@ -118,8 +118,9 @@ namespace V2RayGCon.Controllers
 
             var cs = coreServSettings;
             var ci = coreInfo;
+            var cst = GetCoreStates();
 
-            GetCoreStates().SetNameAndDescription(cs.serverName, cs.serverDescription);
+            cst.SetDescription(cs.serverDescription);
             ci.customMark = cs.mark;
             ci.customRemark = cs.remark;
             ci.isAutoRun = cs.isAutorun;
@@ -143,7 +144,10 @@ namespace V2RayGCon.Controllers
             ci.isInjectImport = cs.isGlobalImport;
             ci.isInjectSkipCNSite = cs.isBypassCnSite;
 
-            GetConfiger().UpdateSummary();
+            cst.SetName(cs.serverName);
+            // SetName() will call UpdateSummary()
+            // GetConfiger().UpdateSummary();
+
             if (indexChanged)
             {
                 servSvc.ResetIndexQuiet();

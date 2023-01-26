@@ -39,7 +39,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         #endregion
 
-        #region public methods
+        #region public methods       
 
         public void SetName(string name)
         {
@@ -47,17 +47,20 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             var node = JObject.Parse("{v2raygcon:{alias:\"\"}}");
             node[root]["alias"] = name;
 
-            MergeNodeIntoConfigAndUpdateSummary(node, name);
+            if (MergeNodeIntoConfig(node))
+            {
+                coreInfo.name = name;
+                coreInfo.ClearCachedString();
+                configer.UpdateSummary();
+            }
         }
 
-        public void SetNameAndDescription(string name, string description)
+        public void SetDescription(string description)
         {
             var root = "v2raygcon";
-            var node = JObject.Parse("{v2raygcon:{alias:\"\",description:\"\"}}");
-            node[root]["alias"] = name;
+            var node = JObject.Parse("{v2raygcon:{description:\"\"}}");
             node[root]["description"] = description;
-
-            MergeNodeIntoConfigAndUpdateSummary(node, name);
+            MergeNodeIntoConfig(node);
         }
 
         public void AddStatSample(VgcApis.Models.Datas.StatsSample sample)
@@ -379,23 +382,19 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region private methods
-
-        // for modify name and description only
-        void MergeNodeIntoConfigAndUpdateSummary(JObject node, string name)
+        bool MergeNodeIntoConfig(JObject node)
         {
             try
             {
                 var json = JObject.Parse(coreInfo.config);
                 json.Merge(node);
                 coreInfo.config = json.ToString(Formatting.None);
-                coreInfo.name = name;
-                coreInfo.ClearCachedString();
-
-                // do not update here CoreServerCtrl may call this function
-                // configer.UpdateSummary();
+                return true;
             }
             catch { }
+            return false;
         }
+
         void UpdateStatusWithSpeedTestResult()
         {
             var latency = GetSpeedTestResult();

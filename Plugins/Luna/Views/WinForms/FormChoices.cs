@@ -28,6 +28,7 @@ namespace Luna.Views.WinForms
         private void FormChoice_Load(object sender, EventArgs e)
         {
             InitControls();
+            checkBoxes[0].Focus();
             this.FormClosed += (s, a) => done.Set();
         }
 
@@ -76,6 +77,14 @@ namespace Luna.Views.WinForms
                     AutoSize = true,
                 };
                 toolTip1.SetToolTip(control, choices[i]);
+
+                control.KeyDown += (s, a) =>
+                {
+                    if (a.KeyCode == Keys.Enter)
+                    {
+                        VgcApis.Misc.UI.Invoke(btnOk.PerformClick);
+                    }
+                };
 
                 Controls.Add(control);
                 checkBoxes.Add(control);

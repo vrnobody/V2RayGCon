@@ -52,16 +52,20 @@ namespace Luna.Views.WinForms
         bool Choose(int idx)
         {
             var len = radioButtons.Count;
-            if (idx >= len || idx < 0)
+            if (idx >= len)
             {
                 return false;
             }
+            if (idx < 0)
+            {
+                idx = 0;
+            }
 
             var btn = radioButtons[idx];
-            btn.Checked = true;
             VgcApis.Misc.UI.Invoke(() =>
             {
-                btnOk.Focus();
+                btn.Checked = true;
+                btn.Focus();
             });
             return true;
         }
@@ -122,6 +126,14 @@ namespace Luna.Views.WinForms
 
             control.MouseDoubleClick += (s, a) => VgcApis.Misc.UI.Invoke(btnOk.PerformClick);
 
+            control.KeyDown += (s, a) =>
+            {
+                if (a.KeyCode == Keys.Enter)
+                {
+                    VgcApis.Misc.UI.Invoke(btnOk.PerformClick);
+                }
+            };
+
             toolTip1.SetToolTip(control, choices[i]);
 
             return control;
@@ -147,9 +159,6 @@ namespace Luna.Views.WinForms
             {
                 case Keys.Escape:
                     VgcApis.Misc.UI.CloseFormIgnoreError(this);
-                    return;
-                case Keys.Enter:
-                    // VgcApis.Misc.UI.Invoke(btnOk.PerformClick);
                     return;
                 case Keys.D0:
                     Choose(9);

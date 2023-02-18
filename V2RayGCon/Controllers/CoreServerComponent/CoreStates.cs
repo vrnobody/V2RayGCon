@@ -43,6 +43,11 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public void SetName(string name)
         {
+            if (name == coreInfo.name)
+            {
+                return;
+            }
+
             var root = "v2raygcon";
             var node = JObject.Parse("{v2raygcon:{alias:\"\"}}");
             node[root]["alias"] = name;
@@ -51,7 +56,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             {
                 coreInfo.name = name;
                 coreInfo.ClearCachedString();
-                configer.UpdateSummary();
+                GetParent().InvokeEventOnPropertyChange();
             }
         }
 

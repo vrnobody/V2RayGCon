@@ -120,6 +120,7 @@ namespace V2RayGCon.Controllers
             var ci = coreInfo;
             var cst = GetCoreStates();
 
+            cst.SetName(cs.serverName);
             cst.SetDescription(cs.serverDescription);
             ci.customMark = cs.mark;
             ci.customRemark = cs.remark;
@@ -144,9 +145,7 @@ namespace V2RayGCon.Controllers
             ci.isInjectImport = cs.isGlobalImport;
             ci.isInjectSkipCNSite = cs.isBypassCnSite;
 
-            cst.SetName(cs.serverName);
-            // SetName() will call UpdateSummary()
-            // GetConfiger().UpdateSummary();
+            GetConfiger().UpdateSummary();
 
             if (indexChanged)
             {

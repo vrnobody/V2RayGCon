@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NLua;
+using System.Collections.Generic;
 
 namespace VgcApis.Interfaces.Lua
 {
@@ -19,6 +20,19 @@ namespace VgcApis.Interfaces.Lua
         /// </summary>
         /// <returns>服务器总数</returns>
         int Count();
+
+        /// <summary>
+        /// 危险操作！
+        /// </summary>
+        /// <param name="config"></param>
+        void DeleteServerByConfig(string config);
+
+        /// <summary>
+        /// 危险操作！！
+        /// </summary>
+        /// <param name="uids"></param>
+        void DeleteServerByUids(LuaTable uids);
+
 
         /// <summary>
         /// 获取全部服务器（操作服务器的脚本通常都从这个函数开始）

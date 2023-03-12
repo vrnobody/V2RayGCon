@@ -4,13 +4,13 @@ namespace Luna.Misc
 {
     public static class Utils
     {
-        public static List<string> LuaTableToList(NLua.LuaTable table, bool isShowKey)
+        public static List<string> LuaTableToList(NLua.LuaTable table, bool includeKey)
         {
             var r = new List<string>();
             foreach (KeyValuePair<object, object> de in table)
             {
                 var v = de.Value.ToString();
-                if (isShowKey)
+                if (includeKey)
                 {
                     v = $"{de.Key}.{v}";
                 }

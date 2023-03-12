@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NLua;
+using System.Collections.Generic;
 
 namespace Luna.Models.Apis.Components
 {
@@ -24,6 +25,19 @@ namespace Luna.Models.Apis.Components
 
         public int Count() =>
             vgcServers.Count();
+
+        public void DeleteServerByConfig(string config) =>
+            vgcServers.DeleteServerByConfig(config);
+
+        /// <summary>
+        /// 危险操作！！
+        /// </summary>
+        /// <param name="uids"></param>
+        public void DeleteServerByUids(LuaTable uids)
+        {
+            var list = global::Luna.Misc.Utils.LuaTableToList(uids, false);
+            vgcServers.DeleteServerByUids(list);
+        }
 
         public void UpdateAllSummary() =>
             vgcServers.UpdateAllServersSummary();

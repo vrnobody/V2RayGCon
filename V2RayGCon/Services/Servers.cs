@@ -564,6 +564,34 @@ namespace V2RayGCon.Services
             Misc.Utils.ChainActionHelperAsync(list.Count, worker, lambda);
         }
 
+        public void DeleteServerByUids(List<string> uids)
+        {
+            List<Controllers.CoreServerCtrl> coreServs;
+            locker.EnterWriteLock();
+            try
+            {
+                coreServs = coreServList.Where(cs => uids.Contains(cs.GetCoreStates().GetUid())).ToList();
+                foreach (var cs in coreServs)
+                {
+                    var cfg = cs.GetConfiger().GetConfig();
+                    configCache.TryRemove(cfg, out _);
+                    coreServList.Remove(cs);
+                }
+            }
+            finally
+            {
+                locker.ExitWriteLock();
+            }
+
+            foreach (var coreServ in coreServs)
+            {
+                ReleaseEventsFrom(coreServ);
+                coreServ.Dispose();
+            }
+
+            RefreshUiAfterCoreServersAreDeleted();
+        }
+
         public void DeleteSelectedServersThen(Action done = null)
         {
             if (!speedTestingBar.Install())
@@ -597,13 +625,8 @@ namespace V2RayGCon.Services
 
             void finish()
             {
-                lazyServerSettingsRecorder.Deadline();
-                UpdateMarkList();
-                ResetIndexQuiet();
-                RequireFormMainReload();
-                InvokeEventOnServerCountChange(this, EventArgs.Empty);
+                RefreshUiAfterCoreServersAreDeleted();
                 speedTestingBar.Remove();
-
                 done?.Invoke();
             }
 
@@ -862,6 +885,16 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+
+        void RefreshUiAfterCoreServersAreDeleted()
+        {
+            lazyServerSettingsRecorder.Deadline();
+            UpdateMarkList();
+            ResetIndexQuiet();
+            RequireFormMainReload();
+            InvokeEventOnServerCountChange(this, EventArgs.Empty);
+        }
+
         bool IsServerExistWorker(string config)
         {
             return configCache.ContainsKey(config);

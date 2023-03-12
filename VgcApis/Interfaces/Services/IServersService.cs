@@ -9,6 +9,9 @@ namespace VgcApis.Interfaces.Services
 
         int Count();
 
+        void DeleteServerByConfig(string config);
+        void DeleteServerByUids(List<string> uids);
+
         int GetAvailableHttpProxyPort();
         string ReplaceOrAddNewServer(string orgUid, string newConfig);
 

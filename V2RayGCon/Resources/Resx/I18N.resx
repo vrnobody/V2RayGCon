@@ -790,9 +790,9 @@ No, abort.</value>
     <value>Tag1: </value>
   </data>
   <data name="Tag2" xml:space="preserve">
-    <value>Tag2:</value>
+    <value>Tag2: </value>
   </data>
   <data name="Tag3" xml:space="preserve">
-    <value>Tag3:</value>
+    <value>Tag3: </value>
   </data>
 </root>

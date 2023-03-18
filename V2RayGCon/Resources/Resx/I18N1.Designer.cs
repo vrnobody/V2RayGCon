@@ -1818,7 +1818,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Tag2: 的本地化字符串。
+        ///   查找类似 Tag2:  的本地化字符串。
         /// </summary>
         internal static string Tag2 {
             get {
@@ -1827,7 +1827,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Tag3: 的本地化字符串。
+        ///   查找类似 Tag3:  的本地化字符串。
         /// </summary>
         internal static string Tag3 {
             get {

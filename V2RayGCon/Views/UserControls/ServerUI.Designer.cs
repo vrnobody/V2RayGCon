@@ -43,6 +43,9 @@
             this.rlbSpeedtest = new VgcApis.UserControls.RoundLabel();
             this.rlbLastModifyDate = new VgcApis.UserControls.RoundLabel();
             this.rlbInboundMode = new VgcApis.UserControls.RoundLabel();
+            this.rlbTag1 = new VgcApis.UserControls.RoundLabel();
+            this.rlbTag2 = new VgcApis.UserControls.RoundLabel();
+            this.rlbTag3 = new VgcApis.UserControls.RoundLabel();
             this.ctxMenuStripMore = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -200,6 +203,39 @@
             this.rlbInboundMode.Name = "rlbInboundMode";
             this.toolTip1.SetToolTip(this.rlbInboundMode, resources.GetString("rlbInboundMode.ToolTip"));
             this.rlbInboundMode.Click += new System.EventHandler(this.rlbInboundMode_Click);
+            // 
+            // rlbTag1
+            // 
+            this.rlbTag1._BackColor = System.Drawing.Color.PowderBlue;
+            this.rlbTag1.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbTag1, "rlbTag1");
+            this.rlbTag1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbTag1.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbTag1.Name = "rlbTag1";
+            this.toolTip1.SetToolTip(this.rlbTag1, resources.GetString("rlbTag1.ToolTip"));
+            this.rlbTag1.Click += new System.EventHandler(this.rlbRemark_Click);
+            // 
+            // rlbTag2
+            // 
+            this.rlbTag2._BackColor = System.Drawing.Color.PowderBlue;
+            this.rlbTag2.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbTag2, "rlbTag2");
+            this.rlbTag2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbTag2.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbTag2.Name = "rlbTag2";
+            this.toolTip1.SetToolTip(this.rlbTag2, resources.GetString("rlbTag2.ToolTip"));
+            this.rlbTag2.Click += new System.EventHandler(this.rlbRemark_Click);
+            // 
+            // rlbTag3
+            // 
+            this.rlbTag3._BackColor = System.Drawing.Color.PowderBlue;
+            this.rlbTag3.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbTag3, "rlbTag3");
+            this.rlbTag3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbTag3.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbTag3.Name = "rlbTag3";
+            this.toolTip1.SetToolTip(this.rlbTag3, resources.GetString("rlbTag3.ToolTip"));
+            this.rlbTag3.Click += new System.EventHandler(this.rlbRemark_Click);
             // 
             // ctxMenuStripMore
             // 
@@ -365,12 +401,15 @@
             this.Controls.Add(this.btnMenu);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
+            this.Controls.Add(this.rlbTag3);
+            this.Controls.Add(this.rlbTag2);
+            this.Controls.Add(this.rlbTag1);
+            this.Controls.Add(this.rlbSpeedtest);
             this.Controls.Add(this.rlbIsRunning);
             this.Controls.Add(this.rlbSetting);
             this.Controls.Add(this.rlbMark);
             this.Controls.Add(this.rlbRemark);
             this.Controls.Add(this.rlbTotalNetFlow);
-            this.Controls.Add(this.rlbSpeedtest);
             this.Controls.Add(this.rlbLastModifyDate);
             this.Controls.Add(this.rlbInboundMode);
             this.Controls.Add(this.chkSelected);
@@ -423,5 +462,8 @@
         private VgcApis.UserControls.RoundLabel rlbRemark;
         private VgcApis.UserControls.RoundLabel rlbLastModifyDate;
         private System.Windows.Forms.ToolStripMenuItem simpleEditorToolStripMenuItem;
+        private VgcApis.UserControls.RoundLabel rlbTag1;
+        private VgcApis.UserControls.RoundLabel rlbTag2;
+        private VgcApis.UserControls.RoundLabel rlbTag3;
     }
 }

@@ -1809,6 +1809,33 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Tag1:  的本地化字符串。
+        /// </summary>
+        internal static string Tag1 {
+            get {
+                return ResourceManager.GetString("Tag1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Tag2: 的本地化字符串。
+        /// </summary>
+        internal static string Tag2 {
+            get {
+                return ResourceManager.GetString("Tag2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Tag3: 的本地化字符串。
+        /// </summary>
+        internal static string Tag3 {
+            get {
+                return ResourceManager.GetString("Tag3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Testing  的本地化字符串。
         /// </summary>
         internal static string Testing {

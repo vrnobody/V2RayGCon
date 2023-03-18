@@ -43,6 +43,9 @@ namespace V2RayGCon.Views.UserControls
                 rlbTotalNetFlow,
                 rlbMark,
                 rlbSpeedtest,
+                rlbTag1,
+                rlbTag2,
+                rlbTag3,
             };
 
             lazyUiUpdater = new VgcApis.Libs.Tasks.LazyGuy(RefreshUiWorker, 400, 3000)
@@ -220,6 +223,9 @@ namespace V2RayGCon.Views.UserControls
                 UpdateInboundModeLabel(cs);
                 UpdateLastModifiedLable(cs.GetLastModifiedUtcTicks());
                 UpdateMarkLabel(cs.GetMark());
+                UpdateTag1Label(cs.GetTag1());
+                UpdateTag2Label(cs.GetTag2());
+                UpdateTag3Label(cs.GetTag3());
                 UpdateRemarkLabel(cs.GetRemark());
                 UpdateStatusLable(cs);
                 UpdateSettingsLable(cs);
@@ -441,6 +447,27 @@ namespace V2RayGCon.Views.UserControls
             var m = VgcApis.Misc.Utils.AutoEllipsis(mark, VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength);
             var tooltip = $"{I18N.Mark}{m}";
             UpdateControlTextAndTooltip(rlbMark, mark, tooltip);
+        }
+
+        void UpdateTag1Label(string tag)
+        {
+            var m = VgcApis.Misc.Utils.AutoEllipsis(tag, VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength);
+            var tooltip = $"{I18N.Tag1}{m}";
+            UpdateControlTextAndTooltip(rlbTag1, tag, tooltip);
+        }
+
+        void UpdateTag2Label(string tag)
+        {
+            var m = VgcApis.Misc.Utils.AutoEllipsis(tag, VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength);
+            var tooltip = $"{I18N.Tag2}{m}";
+            UpdateControlTextAndTooltip(rlbTag2, tag, tooltip);
+        }
+
+        void UpdateTag3Label(string tag)
+        {
+            var m = VgcApis.Misc.Utils.AutoEllipsis(tag, VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength);
+            var tooltip = $"{I18N.Tag3}{m}";
+            UpdateControlTextAndTooltip(rlbTag3, tag, tooltip);
         }
 
         void UpdateRemarkLabel(string remark)

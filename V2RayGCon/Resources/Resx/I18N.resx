@@ -786,4 +786,13 @@ No, abort.</value>
   <data name="ConfirmClearStat" xml:space="preserve">
     <value>Reset statistics data?</value>
   </data>
+  <data name="Tag1" xml:space="preserve">
+    <value>Tag1: </value>
+  </data>
+  <data name="Tag2" xml:space="preserve">
+    <value>Tag2:</value>
+  </data>
+  <data name="Tag3" xml:space="preserve">
+    <value>Tag3:</value>
+  </data>
 </root>

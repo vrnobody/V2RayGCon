@@ -777,4 +777,13 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="ConfirmClearStat" xml:space="preserve">
     <value>是否要把流量统计数据清零？</value>
   </data>
+  <data name="Tag1" xml:space="preserve">
+    <value>标签1：</value>
+  </data>
+  <data name="Tag2" xml:space="preserve">
+    <value>标签2：</value>
+  </data>
+  <data name="Tag3" xml:space="preserve">
+    <value>标签3：</value>
+  </data>
 </root>

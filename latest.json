@@ -1,12 +1,12 @@
 {
-  "version": "1.6.7.4",
-  "md5": "427E0A352B37261FAFCE785FA5DD54D9",
+  "version": "1.6.8.0",
+  "md5": "1D868206C1538E919FAF12664B406BA9",
   "warnings": [
-    "本项目支持的最高v2ray-core版本是v4.44.0"
+    "本项目支持的最高v2ray-core版本是v4.45.2"
   ],
   "changes": [
-    "更新Newtonsoft.Json至v13.0.2",
-    "修复Luna插件自动补全的一个bug",
-    "恢复记录每个服务器各自的日志"
+    "服务器面板显示Tag1-3（过滤对Tag无效）",
+    "添加Server:DeleteByUids()函数",
+    "添加coreState:SetName()函数"
   ]
 }

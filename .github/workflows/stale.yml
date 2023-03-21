@@ -1,13 +1,14 @@
 name: 'stale bot'
 on:
   schedule:
-    - cron: '30 1 * * *'
+    - cron: '0,15,30,45 * * * *'
+
+permissions:
+  issues: write
 
 jobs:
   stale:
-    runs-on: ubuntu-latest
-    permissions:
-      issues: write
+    runs-on: ubuntu-latest    
     steps:
       - uses: actions/stale@v7
         with:
@@ -16,4 +17,3 @@ jobs:
           days-before-issue-stale: 30
           days-before-issue-close: 7
           stale-issue-label: 'nobot'
-          repo-token: ${{ secrets.STALE_BOT }}

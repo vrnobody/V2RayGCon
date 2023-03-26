@@ -1,6 +1,3 @@
-很荣幸这个账号被GitHub选中参加双因子验证（2FA）测试，显然给这个账号绑个手机号并不现实，所以这个项目不再更新。  
-2023-03-21
-
 **本项目支持的最高v2ray-core版本是`v4.45.2`**  
   
 [![Master Action Status][1]][2] [![Release][3]][4] [![Total Downloads][5]][6] [![License][7]][8] [![codebeat badge][13]][14]

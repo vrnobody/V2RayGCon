@@ -37,6 +37,14 @@ namespace V2RayGCon.Services.ServersComponents
                 .ToList());
         }
 
+        public List<ICoreServCtrl> GetServersWithUids(IEnumerable<string> uids)
+        {
+            return AtomicReader(() => coreServList
+                .Where(cs => uids.Contains(cs.GetCoreStates().GetUid()))
+                .Select(cs => cs as ICoreServCtrl)
+                .ToList());
+        }
+
         public List<ICoreServCtrl> GetSelectedServers(
            bool descending = false)
         {

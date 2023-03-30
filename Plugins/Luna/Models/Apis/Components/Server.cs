@@ -102,6 +102,38 @@ namespace Luna.Models.Apis.Components
                 VgcApis.Models.Datas.Enums.PackageTypes.Balancer);
         }
 
+        public string PackServersWithUids(
+            LuaTable uids,
+            string orgUid, string pkgName, int strategy,
+            string interval, string url)
+        {
+            var st = (VgcApis.Models.Datas.Enums.BalancerStrategies)strategy;
+            var list = global::Luna.Misc.Utils.LuaTableToList(uids, false);
+            return vgcServers.PackServersWithUidsV4(
+                list,
+                orgUid,
+                pkgName,
+                interval,
+                url,
+                st,
+                VgcApis.Models.Datas.Enums.PackageTypes.Balancer);
+        }
+
+        public string ChainServersWithUids(
+            LuaTable uids, string orgUid, string pkgName)
+        {
+            var list = global::Luna.Misc.Utils.LuaTableToList(uids, false);
+            return vgcServers.PackServersWithUidsV4(
+                list,
+                orgUid,
+                pkgName,
+                string.Empty,
+                string.Empty,
+                VgcApis.Models.Datas.Enums.BalancerStrategies.Random,
+                VgcApis.Models.Datas.Enums.PackageTypes.Chain);
+        }
+
+
         public string ChainSelectedServers(string orgUid, string pkgName) =>
             vgcServers.PackSelectedServersV4(
                 orgUid,

@@ -39,6 +39,13 @@ namespace VgcApis.Interfaces.Services
 
         void UpdateAllServersSummary();
 
+        string PackServersWithUidsV4(
+            List<string> uids,
+            string orgUid, string pkgName,
+            string interval, string url,
+            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
+            VgcApis.Models.Datas.Enums.PackageTypes packageType);
+
         string PackSelectedServersV4(
               string orgUid, string pkgName,
               string interval, string url,

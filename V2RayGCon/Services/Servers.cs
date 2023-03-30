@@ -384,9 +384,21 @@ namespace V2RayGCon.Services
             }
         }
 
+        public string PackServersWithUidsV4(
+            List<string> uids,
+            string orgUid, string pkgName,
+            string interval, string url,
+            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
+            VgcApis.Models.Datas.Enums.PackageTypes packageType)
+        {
+            var coreServs = queryHandler.GetServersWithUids(uids);
+            return PackServersIntoV4PackageWorker(
+                coreServs, orgUid, pkgName, interval, url, strategy, packageType);
+        }
+
         public string PackSelectedServersV4(
             string orgUid, string pkgName,
-             string interval, string url,
+            string interval, string url,
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
             VgcApis.Models.Datas.Enums.PackageTypes packageType)
         {

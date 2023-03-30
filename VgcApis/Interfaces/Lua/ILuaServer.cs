@@ -44,17 +44,17 @@ namespace VgcApis.Interfaces.Lua
         /// 将选中的服务器打包成均衡策略为random的服务器包
         /// </summary>
         /// <param name="orgUid">原服务器uid（为空则添加新服务器）</param>
-        /// <param name="pkgName">新服务器名字</param>
-        /// <returns></returns>
+        /// <param name="pkgName">服务器新名字</param>
+        /// <returns>打包后新服务器的uid</returns>
         string PackSelectedServers(string orgUid, string pkgName);
 
         /// <summary>
         /// 将选中的服务器打包成均衡策略为random或leastPing的服务器包
         /// </summary>
         /// <param name="orgUid">原服务器uid（为空则添加新服务器）</param>
-        /// <param name="pkgName">新服务器名字</param>
+        /// <param name="pkgName">服务器新名字</param>
         /// <param name="strategy">均衡策略</param>
-        /// <returns></returns>
+        /// <returns>打包后新服务器的uid</returns>
         string PackSelectedServers(
             string orgUid, string pkgName, int strategy);
 
@@ -62,22 +62,46 @@ namespace VgcApis.Interfaces.Lua
         /// 将选中的服务器打包成均衡策略为leastPing的服务器包
         /// </summary>
         /// <param name="orgUid">原服务器uid（为空则添加新服务器）</param>
-        /// <param name="pkgName">新服务器名字</param>
+        /// <param name="pkgName">服务器新名字</param>
         /// <param name="strategy">均衡策略</param>
         /// <param name="interval">probeInterval</param>
         /// <param name="url">probeURL</param>
-        /// <returns></returns>
+        /// <returns>打包后新服务器的uid</returns>
         string PackSelectedServers(
+            string orgUid, string pkgName, int strategy,
+            string interval, string url);
+
+        /// <summary>
+        /// 将选中的服务器打包成均衡策略为leastPing的服务器包
+        /// </summary>
+        /// <param name="uids">要打包的服务器uid列表</param>
+        /// <param name="orgUid">原服务器uid（为空则添加新服务器）</param>
+        /// <param name="pkgName">服务器新名字</param>
+        /// <param name="strategy">均衡策略</param>
+        /// <param name="interval">probeInterval</param>
+        /// <param name="url">probeURL</param>
+        /// <returns>打包后新服务器的uid</returns>
+        string PackServersWithUids(
+            LuaTable uids,
             string orgUid, string pkgName, int strategy,
             string interval, string url);
 
         /// <summary>
         /// 将服务器打包成代理链
         /// </summary>
+        /// <param name="uids">要打包的服务器uid列表</param>
+        /// <param name="orgUid">原服务器uid（为空则添加新服务器）</param>
+        /// <param name="pkgName">服务器新名字</param>
+        /// <returns>打包后新服务器的uid</returns>
+        string ChainSelectedServers(string orgUid, string pkgName);
+
+        /// <summary>
+        /// 将服务器打包成代理链
+        /// </summary>
         /// <param name="orgUid">原服务器uid（为空则添加新服务器）</param>
         /// <param name="pkgName">新服务器名字</param>
-        /// <returns></returns>
-        string ChainSelectedServers(string orgUid, string pkgName);
+        /// <returns>打包后新服务器的uid</returns>
+        string ChainServersWithUids(LuaTable uids, string orgUid, string pkgName);
 
         // wont refresh form main
         /// <summary>

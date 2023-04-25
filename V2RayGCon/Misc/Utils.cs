@@ -1015,15 +1015,20 @@ namespace V2RayGCon.Misc
         {
             List<string> versions = new List<string> { };
 
-            string html = Misc.Utils.Fetch(sourceUrl, proxyPort, -1);
-            if (string.IsNullOrEmpty(html))
+            // dirty hack
+            // https://api.github.com/repos/XTLS/Xray-core/releases
+            // https://github.com/XTLS/Xray-core/releases",
+            var apiUrl = sourceUrl.Replace(@"github.com", @"api.github.com/repos");
+
+            string text = Misc.Utils.Fetch(apiUrl, proxyPort, -1);
+            if (string.IsNullOrEmpty(text))
             {
                 return versions;
             }
 
             string pattern = VgcApis.Models.Consts.Patterns.V2RayCoreReleaseAssets;
 
-            var matches = Regex.Matches(html, pattern, RegexOptions.IgnoreCase);
+            var matches = Regex.Matches(text, pattern, RegexOptions.IgnoreCase);
             foreach (Match match in matches)
             {
                 var v = match.Groups[1].Value;

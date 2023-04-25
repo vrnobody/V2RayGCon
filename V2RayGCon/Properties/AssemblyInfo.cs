@@ -37,6 +37,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.6.8.2 Fix core download not working bug.
  * v1.6.8.1 Add Server:[Pack/Chain]ServersWithUids() in Luna plug-in.
  * -------------------------------------------------------------
  * v1.6.7.10 Show custom tags in ServerUI.

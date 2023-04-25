@@ -47,7 +47,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
             var tt = GetStr(subPrefix, "security")?.ToLower();
             result.tlsType = tt;
-            result.isUseTls = tt == "tls";
+
+            result.isUseTls = tt == "tls"; // backward compatible
+
             if (tt == "xtls" || tt == "tls")
             {
                 var pfx = $"{tt}Settings";

@@ -2,38 +2,38 @@
 
 namespace V2RayGCon.Models.VeeShareLinks
 {
-    public sealed class Vless4b :
-        BasicSettings
+    public sealed class Vless4c :
+        BasicSettingsWithReality
     {
         // ver 0a is optimized for vmess protocol 
-        public const string version = @"4b";
+        public const string version = @"4c";
         public const string proto = "vless";
 
         public Guid uuid;
         public string encryption;
         public string flow;
 
-        public Vless4b() : base()
+        public Vless4c() : base()
         {
             uuid = new Guid(); // zeros  
             encryption = @"none";
             flow = string.Empty;
         }
 
-        public Vless4b(BasicSettings source) : this()
+        public Vless4c(BasicSettingsWithReality source) : this()
         {
             CopyFrom(source);
         }
 
         #region public methods
-        public override void CopyFromVeeConfig(Datas.VeeConfigs vc)
+        public override void CopyFromVeeConfig(Datas.VeeConfigsWithReality vc)
         {
             base.CopyFromVeeConfig(vc);
             uuid = Guid.Parse(vc.auth1);
             flow = vc.auth2;
         }
 
-        public override Datas.VeeConfigs ToVeeConfigs()
+        public new Datas.VeeConfigsWithReality ToVeeConfigs()
         {
             var vc = base.ToVeeConfigs();
             vc.proto = proto;
@@ -42,7 +42,7 @@ namespace V2RayGCon.Models.VeeShareLinks
             return vc;
         }
 
-        public Vless4b(byte[] bytes) :
+        public Vless4c(byte[] bytes) :
             this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
@@ -59,8 +59,13 @@ namespace V2RayGCon.Models.VeeShareLinks
                 description = readString();
 
                 tlsType = bs.Read<string>();
-                isSecTls = bs.Read<bool>();
                 tlsServName = bs.Read<string>();
+                tlsFingerPrint = bs.Read<string>();
+                tlsAlpn = bs.Read<string>();
+
+                tlsParam1 = bs.Read<string>();
+                tlsParam2 = bs.Read<string>();
+                tlsParam3 = bs.Read<string>();
 
                 port = bs.Read<int>();
                 encryption = bs.Read<string>();
@@ -73,6 +78,7 @@ namespace V2RayGCon.Models.VeeShareLinks
                 streamParam3 = readString();
             }
 
+            isSecTls = true;
             if (string.IsNullOrEmpty(encryption))
             {
                 encryption = "none";
@@ -92,8 +98,13 @@ namespace V2RayGCon.Models.VeeShareLinks
                 writeString(description);
 
                 bs.Write(tlsType);
-                bs.Write(isSecTls);
                 bs.Write(tlsServName);
+                bs.Write(tlsFingerPrint);
+                bs.Write(tlsAlpn);
+
+                bs.Write(tlsParam1);
+                bs.Write(tlsParam2);
+                bs.Write(tlsParam3);
 
                 bs.Write(port);
                 bs.Write(encryption);
@@ -111,9 +122,9 @@ namespace V2RayGCon.Models.VeeShareLinks
             return result;
         }
 
-        public bool EqTo(Vless4b veeLink)
+        public bool EqTo(Vless4c veeLink)
         {
-            if (!EqTo(veeLink as BasicSettings)
+            if (!base.EqTo(veeLink)
                 || encryption != veeLink.encryption
                 || uuid != veeLink.uuid
                 || flow != veeLink.flow)

@@ -342,7 +342,13 @@
             resources.GetString("cboxSettingsUtlsFingerprint.Items1"),
             resources.GetString("cboxSettingsUtlsFingerprint.Items2"),
             resources.GetString("cboxSettingsUtlsFingerprint.Items3"),
-            resources.GetString("cboxSettingsUtlsFingerprint.Items4")});
+            resources.GetString("cboxSettingsUtlsFingerprint.Items4"),
+            resources.GetString("cboxSettingsUtlsFingerprint.Items5"),
+            resources.GetString("cboxSettingsUtlsFingerprint.Items6"),
+            resources.GetString("cboxSettingsUtlsFingerprint.Items7"),
+            resources.GetString("cboxSettingsUtlsFingerprint.Items8"),
+            resources.GetString("cboxSettingsUtlsFingerprint.Items9"),
+            resources.GetString("cboxSettingsUtlsFingerprint.Items10")});
             resources.ApplyResources(this.cboxSettingsUtlsFingerprint, "cboxSettingsUtlsFingerprint");
             this.cboxSettingsUtlsFingerprint.Name = "cboxSettingsUtlsFingerprint";
             // 

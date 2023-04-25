@@ -5,7 +5,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 {
     public static class Comm
     {
-        public static Models.VeeShareLinks.BasicSettings ExtractBasicConfig(
+        #region public methods
+
+        public static Models.VeeShareLinks.BasicSettingsWithReality ExtractBasicConfig(
             JObject config, string protocol, string key, out bool isUseV4, out string root)
         {
             var GetStr = Misc.Utils.GetStringByPrefixAndKeyHelper(config);
@@ -23,7 +25,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
             var mainPrefix = root + "." + $"settings.{key}.0";
 
-            var result = new Models.VeeShareLinks.BasicSettings
+            var result = new Models.VeeShareLinks.BasicSettingsWithReality
             {
                 alias = GetStr("v2raygcon", "alias"),
                 address = GetStr(mainPrefix, "address"),
@@ -31,13 +33,179 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
                 description = GetStr("v2raygcon", "description"),
             };
 
-            FillInStreamSettings(result, config, isUseV4, root);
+            ExtractStreamSettings(result, config, isUseV4, root);
 
             return result;
         }
 
-        static void FillInStreamSettings(
-            Models.VeeShareLinks.BasicSettings result,
+        public static JToken GenStreamSetting(
+            Cache cache, Models.VeeShareLinks.BasicSettingsWithReality streamSettings)
+        {
+            var ss = streamSettings;
+            // insert stream type
+            string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic", "grpc" };
+            string st = ss?.streamType?.ToLower();
+
+            if (!streamTypes.Contains(st))
+            {
+                return JToken.Parse(@"{}");
+            }
+
+            string mainParam = ss.streamParam1;
+            if (st == "tcp" && mainParam == "http")
+            {
+                st = "tcp_http";
+            }
+            var token = cache.tpl.LoadTemplate(st);
+            try
+            {
+                FillInStreamSetting(ss, st, mainParam, token);
+                FillInTlsSetting(ss, token);
+            }
+            catch { }
+
+            return token;
+        }
+        #endregion
+
+        #region private methods
+        private static void FillInTlsSetting(Models.VeeShareLinks.BasicSettingsWithReality ss, JToken token)
+        {
+            if (ss.isUseTls)
+            {
+                // backward compatible
+                token["security"] = "tls";
+                token["tlsSettings"] = ss.isSecTls ?
+                    JObject.Parse(@"{allowInsecure: false}") :
+                    JObject.Parse(@"{allowInsecure: true}");
+                return;
+            }
+
+            var tt = ss.tlsType;
+            if (string.IsNullOrEmpty(tt))
+            {
+                tt = "none";
+            }
+            token["security"] = tt;
+            if (tt == "none")
+            {
+                return;
+            }
+
+            var o = new JObject();
+            if (!ss.isSecTls)
+            {
+                o["allowInsecure"] = true;
+            }
+
+            if (!string.IsNullOrEmpty(ss.tlsServName))
+            {
+                o["serverName"] = ss.tlsServName;
+            }
+
+            if (!string.IsNullOrEmpty(ss.tlsFingerPrint))
+            {
+                o["fingerprint"] = ss.tlsFingerPrint;
+            }
+
+            if (!string.IsNullOrEmpty(ss.tlsAlpn))
+            {
+                o["alpn"] = Misc.Utils.Str2JArray(ss.tlsAlpn);
+            }
+
+            if (tt == "reality")
+            {
+                o["publicKey"] = ss.tlsParam1;
+                o["shortId"] = ss.tlsParam2;
+                o["spiderX"] = ss.tlsParam3;
+            }
+
+            var k = $"{tt}Settings";
+            token[k] = o;
+        }
+
+        private static void FillInStreamSetting(Models.VeeShareLinks.BasicSettingsWithReality ss, string st, string mainParam, JToken token)
+        {
+            switch (st)
+            {
+                case "grpc":
+                    token["grpcSettings"]["multiMode"] = mainParam.ToLower() == "true";
+                    token["grpcSettings"]["serviceName"] = ss.streamParam2;
+                    break;
+                case "tcp":
+                    token["tcpSettings"]["header"]["type"] = mainParam;
+                    break;
+                case "tcp_http":
+                    token["tcpSettings"]["header"]["type"] = mainParam;
+                    token["tcpSettings"]["header"]["request"]["path"] =
+                        Misc.Utils.Str2JArray(string.IsNullOrEmpty(ss.streamParam2) ? "/" : ss.streamParam2);
+                    token["tcpSettings"]["header"]["request"]["headers"]["Host"] =
+                        Misc.Utils.Str2JArray(ss.streamParam3);
+                    break;
+                case "kcp":
+                    token["kcpSettings"]["header"]["type"] = mainParam;
+                    if (!string.IsNullOrEmpty(ss.streamParam2))
+                    {
+                        token["kcpSettings"]["seed"] = ss.streamParam2;
+                    }
+                    break;
+                case "ws":
+                    token["wsSettings"]["path"] = mainParam;
+                    token["wsSettings"]["headers"]["Host"] = ss.streamParam2;
+                    break;
+                case "h2":
+                    token["httpSettings"]["path"] = mainParam;
+                    token["httpSettings"]["host"] = Misc.Utils.Str2JArray(ss.streamParam2);
+                    break;
+                case "quic":
+                    token["quicSettings"]["header"]["type"] = mainParam;
+                    token["quicSettings"]["security"] = ss.streamParam2;
+                    token["quicSettings"]["key"] = ss.streamParam3;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        static void ExtractTlsSettings(
+            Models.VeeShareLinks.BasicSettingsWithReality result,
+            JObject config, System.Func<string, string, string> reader, string prefix)
+        {
+            var tt = reader(prefix, "security")?.ToLower();
+            result.tlsType = tt;
+
+            result.isUseTls = tt == "tls"; // backward compatible
+
+            if (tt != "xtls" && tt != "tls" && tt != "reality")
+            {
+                return;
+            }
+
+            result.isUseTls = false;
+            result.isSecTls = true;
+
+            var ts = $"{tt}Settings";
+            result.tlsServName = reader(prefix, $"{ts}.serverName") ?? "";
+            result.tlsFingerPrint = reader(prefix, $"{ts}.fingerprint") ?? "";
+
+            try
+            {
+                // do not support v3.x config
+                var alpn = config["outbounds"][0]["streamSettings"][ts]["alpn"];
+                result.tlsAlpn = Misc.Utils.JArray2Str(alpn as JArray);
+            }
+            catch { }
+
+            if (tt == "reality")
+            {
+                result.tlsParam1 = reader(prefix, $"{ts}.publicKey") ?? "";
+                result.tlsParam2 = reader(prefix, $"{ts}.shortId") ?? "";
+                result.tlsParam3 = reader(prefix, $"{ts}.spiderX") ?? "";
+            }
+        }
+
+        static void ExtractStreamSettings(
+            Models.VeeShareLinks.BasicSettingsWithReality result,
             JObject config, bool isUseV4, string root)
         {
             var GetStr = Misc.Utils.GetStringByPrefixAndKeyHelper(config);
@@ -45,17 +213,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             var subPrefix = root + "." + "streamSettings";
             result.streamType = GetStr(subPrefix, "network");
 
-            var tt = GetStr(subPrefix, "security")?.ToLower();
-            result.tlsType = tt;
-
-            result.isUseTls = tt == "tls"; // backward compatible
-
-            if (tt == "xtls" || tt == "tls")
-            {
-                var pfx = $"{tt}Settings";
-                result.isSecTls = GetStr(subPrefix, $"{pfx}.allowInsecure")?.ToLower() != "true";
-                result.tlsServName = GetStr(subPrefix, $"{pfx}.serverName") ?? "";
-            }
+            ExtractTlsSettings(result, config, GetStr, subPrefix);
 
             var mainParam = "";
             switch (result.streamType)
@@ -122,92 +280,6 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             catch { }
         }
 
-        public static JToken GenStreamSetting(
-            Cache cache, Models.VeeShareLinks.BasicSettings streamSettings)
-        {
-            var ss = streamSettings;
-            // insert stream type
-            string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic", "grpc" };
-            string st = ss?.streamType?.ToLower();
-
-            if (!streamTypes.Contains(st))
-            {
-                return JToken.Parse(@"{}");
-            }
-
-            string mainParam = ss.streamParam1;
-            if (st == "tcp" && mainParam == "http")
-            {
-                st = "tcp_http";
-            }
-            var token = cache.tpl.LoadTemplate(st);
-            try
-            {
-                switch (st)
-                {
-                    case "grpc":
-                        token["grpcSettings"]["multiMode"] = mainParam.ToLower() == "true";
-                        token["grpcSettings"]["serviceName"] = ss.streamParam2;
-                        break;
-                    case "tcp":
-                        token["tcpSettings"]["header"]["type"] = mainParam;
-                        break;
-                    case "tcp_http":
-                        token["tcpSettings"]["header"]["type"] = mainParam;
-                        token["tcpSettings"]["header"]["request"]["path"] =
-                            Misc.Utils.Str2JArray(string.IsNullOrEmpty(ss.streamParam2) ? "/" : ss.streamParam2);
-                        token["tcpSettings"]["header"]["request"]["headers"]["Host"] =
-                            Misc.Utils.Str2JArray(ss.streamParam3);
-                        break;
-                    case "kcp":
-                        token["kcpSettings"]["header"]["type"] = mainParam;
-                        if (!string.IsNullOrEmpty(ss.streamParam2))
-                        {
-                            token["kcpSettings"]["seed"] = ss.streamParam2;
-                        }
-                        break;
-                    case "ws":
-                        token["wsSettings"]["path"] = mainParam;
-                        token["wsSettings"]["headers"]["Host"] = ss.streamParam2;
-                        break;
-                    case "h2":
-                        token["httpSettings"]["path"] = mainParam;
-                        token["httpSettings"]["host"] = Misc.Utils.Str2JArray(ss.streamParam2);
-                        break;
-                    case "quic":
-                        token["quicSettings"]["header"]["type"] = mainParam;
-                        token["quicSettings"]["security"] = ss.streamParam2;
-                        token["quicSettings"]["key"] = ss.streamParam3;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            catch { }
-
-            if (ss.isUseTls)
-            {
-                // backward compatible
-                token["security"] = "tls";
-                token["tlsSettings"] = ss.isSecTls ?
-                    JObject.Parse(@"{allowInsecure: false}") :
-                    JObject.Parse(@"{allowInsecure: true}");
-
-            }
-            else
-            {
-                var tt = ss.tlsType;
-                token["security"] = tt;
-                if (tt == "tls" || tt == "xtls")
-                {
-                    var k = $"{tt}Settings";
-                    var insecure = ss.isSecTls ? "false" : "true"; // lower case
-                    var v = $"{{ allowInsecure: {insecure}, serverName: \"{ss.tlsServName}\" }}";
-                    token[k] = JObject.Parse(v);
-                }
-            }
-
-            return token;
-        }
+        #endregion
     }
 }

@@ -47,14 +47,15 @@
             {
                 var slinkMgr = Services.ShareLinkMgr.Instance;
                 var veeCodec = slinkMgr.GetCodec<Services.ShareLinkComponents.VeeDecoder>();
-                return veeCodec.VeeConfig2VeeLink(this);
+                var vcr = new VeeConfigsWithReality(this);
+                return veeCodec.VeeConfig2VeeLink(vcr);
             }
             catch { }
             return "";
         }
 
         #region private methods
-        void CopyFrom(VeeConfigs source)
+        protected void CopyFrom(VeeConfigs source)
         {
             name = source.name;
             description = source.description;

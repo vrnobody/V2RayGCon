@@ -10,7 +10,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         string GetSupportedVeeVersion();
         string GetSupportedEncodeProtocol();
 
-        Models.Datas.VeeConfigs Bytes2VeeConfig(byte[] bytes);
-        byte[] VeeConfig2Bytes(Models.Datas.VeeConfigs veeConfig);
+        Models.Datas.VeeConfigsWithReality Bytes2VeeConfig(byte[] bytes);
+        byte[] VeeConfig2Bytes(Models.Datas.VeeConfigsWithReality veeConfig);
     }
 }

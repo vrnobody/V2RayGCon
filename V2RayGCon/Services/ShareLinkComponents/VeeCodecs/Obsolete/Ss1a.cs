@@ -19,12 +19,12 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
 
         #endregion
         #region IVeeConfig
-        public byte[] VeeConfig2Bytes(Models.Datas.VeeConfigs veeConfig)
+        public byte[] VeeConfig2Bytes(Models.Datas.VeeConfigsWithReality veeConfig)
         {
             throw new NotImplementedException();
         }
 
-        public Models.Datas.VeeConfigs Bytes2VeeConfig(byte[] bytes)
+        public Models.Datas.VeeConfigsWithReality Bytes2VeeConfig(byte[] bytes)
         {
             throw new NotImplementedException();
         }

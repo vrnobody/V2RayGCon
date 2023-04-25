@@ -5,7 +5,6 @@ namespace V2RayGCon.Models.VeeShareLinks
     public class BasicSettings
     {
         // max string length is 256 bytes
-
         public string alias, description;
         public string address;
         public int port; // 16 bit each

@@ -38,26 +38,46 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public string Encode(string config)
         {
-            var vc = new Models.Datas.VeeConfigs(config);
+            var vc = new Models.Datas.VeeConfigsWithReality(config);
             if (vc.proto != @"vless")
             {
                 return null;
             }
 
             var ps = new Dictionary<string, string>();
-            ps["type"] = vc.streamType;
-            ps["security"] = vc.tlsType;
-
+            EncodeTlsSettings(vc, ps);
             if (!string.IsNullOrWhiteSpace(vc.auth2))
             {
                 ps["flow"] = vc.auth2;
             }
+            EncodeStreamSettings(vc, ps);
 
-            if (!string.IsNullOrWhiteSpace(vc.tlsServName))
-            {
-                ps["sni"] = vc.tlsServName;
-            }
+            var pms = ps
+                .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value)))
+                .ToList();
 
+            var url = string.Format(
+                "{0}://{1}@{2}:{3}?{4}#{5}",
+                vc.proto,
+                Uri.EscapeDataString(vc.auth1),
+                Uri.EscapeDataString(vc.host),
+                vc.port,
+                string.Join("&", pms),
+                Uri.EscapeDataString(vc.name));
+            return url;
+        }
+
+
+
+        public List<string> ExtractLinksFromText(string text) =>
+           Misc.Utils.ExtractLinks(
+               text,
+               VgcApis.Models.Datas.Enums.LinkTypes.vless);
+        #endregion
+
+        #region private methods
+        private static void EncodeStreamSettings(Models.Datas.VeeConfigsWithReality vc, Dictionary<string, string> ps)
+        {
             switch (vc.streamType)
             {
                 case "grpc":
@@ -103,32 +123,25 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 default:
                     break;
             }
-
-            var pms = ps
-                .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value)))
-                .ToList();
-
-            var url = string.Format(
-                "{0}://{1}@{2}:{3}?{4}#{5}",
-                vc.proto,
-                Uri.EscapeDataString(vc.auth1),
-                Uri.EscapeDataString(vc.host),
-                vc.port,
-                string.Join("&", pms),
-                Uri.EscapeDataString(vc.name));
-            return url;
         }
 
-        public List<string> ExtractLinksFromText(string text) =>
-           Misc.Utils.ExtractLinks(
-               text,
-               VgcApis.Models.Datas.Enums.LinkTypes.vless);
-        #endregion
+        private static void EncodeTlsSettings(Models.Datas.VeeConfigsWithReality vc, Dictionary<string, string> ps)
+        {
+            ps["type"] = vc.streamType;
+            ps["security"] = vc.tlsType;
+            ps["fp"] = vc.tlsFingerPrint;
+            ps["alpn"] = vc.tlsAlpn;
+            ps["pbk"] = vc.tlsParam1;
+            ps["sid"] = vc.tlsParam2;
+            ps["spx"] = vc.tlsParam3;
 
-        #region private methods
+            if (!string.IsNullOrWhiteSpace(vc.tlsServName))
+            {
+                ps["sni"] = vc.tlsServName;
+            }
+        }
 
-
-        Models.Datas.VeeConfigs ParseVlessUrl(string url)
+        Models.Datas.VeeConfigsWithReality ParseVlessUrl(string url)
         {
             var proto = "vless";
             var header = proto + "://";
@@ -141,7 +154,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             // 抄袭自： https://github.com/musva/V2RayW/commit/e54f387e8d8181da833daea8464333e41f0f19e6 GPLv3
             List<string> parts = url
                 .Substring(header.Length)
-                .Split(new char[6] { ':', '@', '?', '&', '#', '=' }, StringSplitOptions.RemoveEmptyEntries)
+                .Split(new char[6] { ':', '@', '?', '&', '#', '=' })
                 .Select(s => Uri.UnescapeDataString(s))
                 .ToList();
 
@@ -150,7 +163,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var vc = new Models.Datas.VeeConfigs();
+            var vc = new Models.Datas.VeeConfigsWithReality();
             vc.name = parts.Last();
             vc.proto = proto;
             vc.host = parts[1];
@@ -171,6 +184,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             vc.tlsType = GetValue("security", "none");
             vc.tlsServName = GetValue("sni", parts[1]);
+            vc.tlsFingerPrint = GetValue("fp", "");
+            vc.tlsAlpn = Uri.UnescapeDataString(GetValue("alpn", ""));
+            vc.tlsParam1 = GetValue("pbk", "");
+            vc.tlsParam2 = GetValue("sid", "");
+            vc.tlsParam3 = Uri.UnescapeDataString(GetValue("spx", ""));
 
             switch (vc.streamType)
             {
@@ -190,10 +208,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 case "kcp":
                     vc.streamParam1 = GetValue("headerType", "none");
-                    if (parts.Contains("seed"))
-                    {
-                        vc.streamParam2 = parts[parts.IndexOf("seed") + 1];
-                    }
+                    vc.streamParam2 = GetValue("seed", "");
                     break;
                 case "quic":
                     vc.streamParam2 = GetValue("quicSecurity", "none");

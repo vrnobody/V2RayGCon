@@ -823,6 +823,24 @@
     <value>safari</value>
   </data>
   <data name="cboxSettingsUtlsFingerprint.Items4" xml:space="preserve">
+    <value>edge</value>
+  </data>
+  <data name="cboxSettingsUtlsFingerprint.Items5" xml:space="preserve">
+    <value>android</value>
+  </data>
+  <data name="cboxSettingsUtlsFingerprint.Items6" xml:space="preserve">
+    <value>ios</value>
+  </data>
+  <data name="cboxSettingsUtlsFingerprint.Items7" xml:space="preserve">
+    <value>360</value>
+  </data>
+  <data name="cboxSettingsUtlsFingerprint.Items8" xml:space="preserve">
+    <value>qq</value>
+  </data>
+  <data name="cboxSettingsUtlsFingerprint.Items9" xml:space="preserve">
+    <value>random</value>
+  </data>
+  <data name="cboxSettingsUtlsFingerprint.Items10" xml:space="preserve">
     <value>randomized</value>
   </data>
   <data name="cboxSettingsUtlsFingerprint.Location" type="System.Drawing.Point, System.Drawing">

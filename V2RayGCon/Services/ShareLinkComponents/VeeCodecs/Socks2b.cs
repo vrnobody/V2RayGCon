@@ -18,17 +18,17 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
         #endregion
         #region IVeeConfig
-        public byte[] VeeConfig2Bytes(Models.Datas.VeeConfigs veeConfig)
+        public byte[] VeeConfig2Bytes(Models.Datas.VeeConfigsWithReality veeConfig)
         {
             var vee = new Models.VeeShareLinks.Socks2b();
             vee.CopyFromVeeConfig(veeConfig);
             return vee.ToBytes();
         }
 
-        public Models.Datas.VeeConfigs Bytes2VeeConfig(byte[] bytes)
+        public Models.Datas.VeeConfigsWithReality Bytes2VeeConfig(byte[] bytes)
         {
             var vee = new Models.VeeShareLinks.Socks2b(bytes);
-            return vee.ToVeeConfigs();
+            return new Models.Datas.VeeConfigsWithReality(vee.ToVeeConfigs());
         }
         #endregion
 
@@ -79,7 +79,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             }
 
             var outbSocks = cache.tpl.LoadTemplate("outbVeeSocks");
-            outbSocks["streamSettings"] = Comm.GenStreamSetting(cache, socks);
+
+            var rsocks = new Models.VeeShareLinks.BasicSettingsWithReality(socks);
+            outbSocks["streamSettings"] = Comm.GenStreamSetting(cache, rsocks);
             var node = outbSocks["settings"]["servers"][0];
             node["address"] = socks.address;
             node["port"] = socks.port;

@@ -33,7 +33,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             AddChild(new VeeCodecs.Ss1c(cache));
             AddChild(new VeeCodecs.Socks2b(cache));
             AddChild(new VeeCodecs.Http3b(cache));
-            AddChild(new VeeCodecs.Vless4b(cache));
+            AddChild(new VeeCodecs.Vless4c(cache));
             AddChild(new VeeCodecs.Trojan5c(cache));
             AddChild(new VeeCodecs.Obsolete.Trojan5b(cache));
             AddChild(new VeeCodecs.Obsolete.Vmess0a(cache));
@@ -43,6 +43,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             AddChild(new VeeCodecs.Obsolete.Http3a(cache));
             AddChild(new VeeCodecs.Obsolete.Trojan5a(cache));
             AddChild(new VeeCodecs.Obsolete.Vless4a(cache));
+            AddChild(new VeeCodecs.Obsolete.Vless4b(cache));
 
             foreach (var child in this.GetChildren())
             {
@@ -97,7 +98,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region IVeeLink2VeeConfig
-        public string VeeConfig2VeeLink(Models.Datas.VeeConfigs vc)
+        public string VeeConfig2VeeLink(Models.Datas.VeeConfigsWithReality vc)
         {
             var proto = vc?.proto;
             if (encoders.ContainsKey(proto))
@@ -109,7 +110,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return null;
         }
 
-        public Models.Datas.VeeConfigs VeeLink2VeeConfig(string veeLink)
+        public Models.Datas.VeeConfigsWithReality VeeLink2VeeConfig(string veeLink)
         {
             var bytes = VeeLink2Bytes(veeLink);
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);

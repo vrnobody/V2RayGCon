@@ -15,13 +15,10 @@ namespace V2RayGCon.Views.UserControls
             InitControls();
         }
 
-        private void VeeImporter_Load(object sender, EventArgs e)
-        {
-        }
-
+        #region public methods
         public string ToVeeShareLink()
         {
-            var sc = new Models.Datas.VeeConfigs();
+            var sc = new Models.Datas.VeeConfigsWithReality();
             sc.name = tboxName.Text;
             sc.description = tboxDescription.Text;
             sc.proto = cboxProtocol.Text;
@@ -34,6 +31,11 @@ namespace V2RayGCon.Views.UserControls
             sc.tlsType = cboxTlsType.Text;
             sc.tlsServName = tboxTlsServName.Text;
             sc.useSelfSignCert = chkTlsCertSelfSign.Checked;
+            sc.tlsAlpn = tboxTlsAlpn.Text;
+            sc.tlsFingerPrint = cboxTlsFingerprint.Text;
+            sc.tlsParam1 = tboxTlsPublicKey.Text;
+            sc.tlsParam2 = tboxTlsShortId.Text;
+            sc.tlsParam3 = tboxTlsSpiderX.Text;
 
             sc.streamParam1 = cboxStreamParma1.Text;
             sc.streamParam2 = tboxStreamParam2.Text;
@@ -44,7 +46,7 @@ namespace V2RayGCon.Views.UserControls
 
         public void FromCoreConfig(string config)
         {
-            var sc = new Models.Datas.VeeConfigs(config);
+            var sc = new Models.Datas.VeeConfigsWithReality(config);
             tboxName.Text = sc.name;
             tboxDescription.Text = sc.description;
 
@@ -74,11 +76,15 @@ namespace V2RayGCon.Views.UserControls
             var tt = string.IsNullOrEmpty(sc.tlsType) ? StreamTypeNone : sc.tlsType;
             SelectByText(cboxTlsType, tt);
             tboxTlsServName.Text = sc.tlsServName;
-
             chkTlsCertSelfSign.Checked = sc.useSelfSignCert;
-        }
-        #region public methods
 
+            tboxTlsAlpn.Text = sc.tlsAlpn;
+            cboxTlsFingerprint.Text = sc.tlsFingerPrint;
+            tboxTlsPublicKey.Text = sc.tlsParam1;
+            tboxTlsShortId.Text = sc.tlsParam2;
+            tboxTlsSpiderX.Text = sc.tlsParam3;
+
+        }
         #endregion
 
         #region private methods
@@ -198,12 +204,8 @@ namespace V2RayGCon.Views.UserControls
                 case @"vless":
                 case @"trojan":
                     items.AddRange(new string[] {
-                        "xtls-rprx-origin",
-                        "xtls-rprx-origin-udp443",
                         "xtls-rprx-direct",
-                        "xtls-rprx-direct-udp443",
                         "xtls-rprx-splice",
-                        "xtls-rprx-splice-udp443",
                     });
                     break;
 
@@ -310,9 +312,16 @@ namespace V2RayGCon.Views.UserControls
 
         private void cboxTlsType_SelectedValueChanged(object sender, EventArgs e)
         {
-            bool enable = cboxTlsType.Text != "none";
-            chkTlsCertSelfSign.Enabled = enable;
-            tboxTlsServName.Enabled = enable;
+            bool tlsDisabled = cboxTlsType.Text == "none";
+            bool realityEnabled = cboxTlsType.Text == "reality";
+
+            chkTlsCertSelfSign.Enabled = !tlsDisabled;
+            tboxTlsServName.Enabled = !tlsDisabled;
+            cboxTlsFingerprint.Enabled = !tlsDisabled;
+            tboxTlsAlpn.Enabled = !tlsDisabled;
+            tboxTlsPublicKey.Enabled = !tlsDisabled && realityEnabled;
+            tboxTlsShortId.Enabled = !tlsDisabled && realityEnabled;
+            tboxTlsSpiderX.Enabled = !tlsDisabled && realityEnabled;
         }
 
         #endregion

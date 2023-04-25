@@ -133,7 +133,14 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
                     token["grpcSettings"]["serviceName"] = ss.streamParam2;
                     break;
                 case "tcp":
-                    token["tcpSettings"]["header"]["type"] = mainParam;
+                    if (string.IsNullOrEmpty(mainParam) || mainParam == "none")
+                    {
+                        token["tcpSettings"] = new JObject();
+                    }
+                    else
+                    {
+                        token["tcpSettings"]["header"]["type"] = mainParam;
+                    }
                     break;
                 case "tcp_http":
                     token["tcpSettings"]["header"]["type"] = mainParam;

@@ -53,6 +53,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             EncodeStreamSettings(vc, ps);
 
             var pms = ps
+                .Where(kv => !string.IsNullOrEmpty(kv.Value))
                 .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value)))
                 .ToList();
 

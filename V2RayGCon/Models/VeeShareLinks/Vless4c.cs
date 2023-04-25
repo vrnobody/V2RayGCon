@@ -58,9 +58,9 @@ namespace V2RayGCon.Models.VeeShareLinks
                 alias = bs.Read<string>();
                 description = readString();
 
-                tlsType = bs.Read<string>();
+                tlsType = readString();
                 tlsServName = bs.Read<string>();
-                tlsFingerPrint = bs.Read<string>();
+                tlsFingerPrint = readString();
                 tlsAlpn = bs.Read<string>();
 
                 tlsParam1 = bs.Read<string>();
@@ -68,9 +68,9 @@ namespace V2RayGCon.Models.VeeShareLinks
                 tlsParam3 = bs.Read<string>();
 
                 port = bs.Read<int>();
-                encryption = bs.Read<string>();
+                encryption = readString();
                 uuid = bs.Read<Guid>();
-                flow = bs.Read<string>();
+                flow = readString();
                 address = bs.ReadAddress();
                 streamType = readString();
                 streamParam1 = readString();
@@ -78,7 +78,9 @@ namespace V2RayGCon.Models.VeeShareLinks
                 streamParam3 = readString();
             }
 
+            // share link should not allow insecure tls setting
             isSecTls = true;
+
             if (string.IsNullOrEmpty(encryption))
             {
                 encryption = "none";
@@ -97,9 +99,9 @@ namespace V2RayGCon.Models.VeeShareLinks
                 bs.Write(alias);
                 writeString(description);
 
-                bs.Write(tlsType);
+                writeString(tlsType);
                 bs.Write(tlsServName);
-                bs.Write(tlsFingerPrint);
+                writeString(tlsFingerPrint);
                 bs.Write(tlsAlpn);
 
                 bs.Write(tlsParam1);
@@ -107,9 +109,9 @@ namespace V2RayGCon.Models.VeeShareLinks
                 bs.Write(tlsParam3);
 
                 bs.Write(port);
-                bs.Write(encryption);
+                writeString(encryption);
                 bs.Write(uuid);
-                bs.Write(flow);
+                writeString(flow);
                 bs.WriteAddress(address);
                 writeString(streamType);
                 writeString(streamParam1);

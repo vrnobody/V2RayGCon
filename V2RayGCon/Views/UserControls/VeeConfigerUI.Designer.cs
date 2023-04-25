@@ -61,6 +61,16 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tboxTlsServName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tboxTlsAlpn = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tboxTlsPublicKey = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tboxTlsShortId = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tboxTlsSpiderX = new System.Windows.Forms.TextBox();
+            this.cboxTlsFingerprint = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -231,7 +241,8 @@
             this.cboxTlsType.Items.AddRange(new object[] {
             resources.GetString("cboxTlsType.Items"),
             resources.GetString("cboxTlsType.Items1"),
-            resources.GetString("cboxTlsType.Items2")});
+            resources.GetString("cboxTlsType.Items2"),
+            resources.GetString("cboxTlsType.Items3")});
             this.cboxTlsType.Name = "cboxTlsType";
             this.cboxTlsType.SelectedValueChanged += new System.EventHandler(this.cboxTlsType_SelectedValueChanged);
             // 
@@ -254,7 +265,17 @@
             // groupBox3
             // 
             resources.ApplyResources(this.groupBox3, "groupBox3");
+            this.groupBox3.Controls.Add(this.cboxTlsFingerprint);
+            this.groupBox3.Controls.Add(this.tboxTlsSpiderX);
+            this.groupBox3.Controls.Add(this.tboxTlsShortId);
+            this.groupBox3.Controls.Add(this.label10);
+            this.groupBox3.Controls.Add(this.tboxTlsPublicKey);
+            this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Controls.Add(this.tboxTlsAlpn);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.tboxTlsServName);
+            this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.cboxTlsType);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label3);
@@ -272,6 +293,74 @@
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
             // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            this.toolTip1.SetToolTip(this.label2, resources.GetString("label2.ToolTip"));
+            // 
+            // label6
+            // 
+            resources.ApplyResources(this.label6, "label6");
+            this.label6.Name = "label6";
+            this.toolTip1.SetToolTip(this.label6, resources.GetString("label6.ToolTip"));
+            // 
+            // tboxTlsAlpn
+            // 
+            resources.ApplyResources(this.tboxTlsAlpn, "tboxTlsAlpn");
+            this.tboxTlsAlpn.Name = "tboxTlsAlpn";
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
+            this.toolTip1.SetToolTip(this.label8, resources.GetString("label8.ToolTip"));
+            // 
+            // tboxTlsPublicKey
+            // 
+            resources.ApplyResources(this.tboxTlsPublicKey, "tboxTlsPublicKey");
+            this.tboxTlsPublicKey.Name = "tboxTlsPublicKey";
+            // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.Name = "label9";
+            this.toolTip1.SetToolTip(this.label9, resources.GetString("label9.ToolTip"));
+            // 
+            // tboxTlsShortId
+            // 
+            resources.ApplyResources(this.tboxTlsShortId, "tboxTlsShortId");
+            this.tboxTlsShortId.Name = "tboxTlsShortId";
+            // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.Name = "label10";
+            this.toolTip1.SetToolTip(this.label10, resources.GetString("label10.ToolTip"));
+            // 
+            // tboxTlsSpiderX
+            // 
+            resources.ApplyResources(this.tboxTlsSpiderX, "tboxTlsSpiderX");
+            this.tboxTlsSpiderX.Name = "tboxTlsSpiderX";
+            // 
+            // cboxTlsFingerprint
+            // 
+            resources.ApplyResources(this.cboxTlsFingerprint, "cboxTlsFingerprint");
+            this.cboxTlsFingerprint.FormattingEnabled = true;
+            this.cboxTlsFingerprint.Items.AddRange(new object[] {
+            resources.GetString("cboxTlsFingerprint.Items"),
+            resources.GetString("cboxTlsFingerprint.Items1"),
+            resources.GetString("cboxTlsFingerprint.Items2"),
+            resources.GetString("cboxTlsFingerprint.Items3"),
+            resources.GetString("cboxTlsFingerprint.Items4"),
+            resources.GetString("cboxTlsFingerprint.Items5"),
+            resources.GetString("cboxTlsFingerprint.Items6"),
+            resources.GetString("cboxTlsFingerprint.Items7"),
+            resources.GetString("cboxTlsFingerprint.Items8"),
+            resources.GetString("cboxTlsFingerprint.Items9"),
+            resources.GetString("cboxTlsFingerprint.Items10")});
+            this.cboxTlsFingerprint.Name = "cboxTlsFingerprint";
+            // 
             // VeeConfigerUI
             // 
             resources.ApplyResources(this, "$this");
@@ -284,7 +373,6 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.tboxDescription);
             this.Name = "VeeConfigerUI";
-            this.Load += new System.EventHandler(this.VeeImporter_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -328,5 +416,15 @@
         private System.Windows.Forms.TextBox tboxTlsServName;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cboxTlsFingerprint;
+        private System.Windows.Forms.TextBox tboxTlsSpiderX;
+        private System.Windows.Forms.TextBox tboxTlsShortId;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox tboxTlsPublicKey;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox tboxTlsAlpn;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label2;
     }
 }

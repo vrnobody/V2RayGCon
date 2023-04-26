@@ -89,6 +89,7 @@ namespace V2RayGCon.Views.WinForms
             var ts = new List<VgcApis.Models.Datas.Enums.LinkTypes> {
                 VgcApis.Models.Datas.Enums.LinkTypes.ss,
                 VgcApis.Models.Datas.Enums.LinkTypes.vmess,
+                VgcApis.Models.Datas.Enums.LinkTypes.trojan,
                 VgcApis.Models.Datas.Enums.LinkTypes.vless,
                 VgcApis.Models.Datas.Enums.LinkTypes.v,
             };
@@ -152,6 +153,9 @@ namespace V2RayGCon.Views.WinForms
                     break;
                 case "vless":
                     ty = VgcApis.Models.Datas.Enums.LinkTypes.vless;
+                    break;
+                case "trojan":
+                    ty = VgcApis.Models.Datas.Enums.LinkTypes.trojan;
                     break;
                 default:
                     break;

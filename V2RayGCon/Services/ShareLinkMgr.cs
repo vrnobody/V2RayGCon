@@ -68,6 +68,8 @@ namespace V2RayGCon.Services
                     return codecs.Encode<ShareLinkComponents.V2cfgDecoder>(config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.vless:
                     return codecs.Encode<ShareLinkComponents.VlessDecoder>(config);
+                case VgcApis.Models.Datas.Enums.LinkTypes.trojan:
+                    return codecs.Encode<ShareLinkComponents.TrojanDecoder>(config);
                 default:
                     return null;
             }

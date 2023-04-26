@@ -72,6 +72,7 @@ namespace V2RayGCon.Models.VeeShareLinks
                 uuid = bs.Read<Guid>();
                 flow = readString();
                 address = bs.ReadAddress();
+
                 streamType = readString();
                 streamParam1 = readString();
                 streamParam2 = readString();
@@ -113,6 +114,7 @@ namespace V2RayGCon.Models.VeeShareLinks
                 bs.Write(uuid);
                 writeString(flow);
                 bs.WriteAddress(address);
+
                 writeString(streamType);
                 writeString(streamParam1);
                 writeString(streamParam2);

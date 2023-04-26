@@ -204,8 +204,11 @@ namespace V2RayGCon.Views.UserControls
                 case @"vless":
                 case @"trojan":
                     items.AddRange(new string[] {
-                        "xtls-rprx-direct",
+                        "xtls-rprx-vision",
+                        "xtls-rprx-vision-udp443",
+                        "",
                         "xtls-rprx-splice",
+                        "xtls-rprx-splice-udp443",
                     });
                     break;
 

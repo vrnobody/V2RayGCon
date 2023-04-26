@@ -29,7 +29,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             try
             {
-                var vc = ParseTrojanUrl(shareLink);
+                var vc = VeeCodecs.Comm.ParseNonStandarUriShareLink("trojan", shareLink);
                 if (vc != null)
                 {
                     var vee = vc.ToVeeShareLink();
@@ -43,7 +43,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public string Encode(string config)
         {
-            throw new NotImplementedException();
+            return VeeCodecs.Comm.EncodeUriShareLink("trojan", config);
         }
 
         public List<string> ExtractLinksFromText(string text) =>
@@ -53,49 +53,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region private methods
-        Models.Datas.VeeConfigs ParseTrojanUrl(string link)
-        {
-            var proto = "trojan";
-            var header = proto + "://";
-
-            if (!link.StartsWith(header))
-            {
-                return null;
-            }
-
-            var parts = link.Split('#');
-            var url = parts[0];
-            var name = string.Empty;
-            if (parts.Length >= 2)
-            {
-                name = Uri.UnescapeDataString(parts[1]);
-            }
-
-            var port = url.Split(':').LastOrDefault();
-            if (string.IsNullOrEmpty(port))
-            {
-                return null;
-            }
-
-            var body = url.Substring(header.Length, url.Length - header.Length - port.Length - 1);
-            var pa = body.Split('@');
-            if (pa.Length != 2)
-            {
-                return null;
-            }
-
-            var vc = new Models.Datas.VeeConfigs();
-            vc.name = name;
-            vc.proto = proto;
-            vc.host = pa[1];
-            vc.port = VgcApis.Misc.Utils.Str2Int(port);
-            vc.auth1 = Uri.UnescapeDataString(pa[0]);
-
-            vc.streamType = "tcp";
-            vc.tlsType = "tls";
-            vc.streamParam1 = "none";
-            return vc;
-        }
         #endregion
 
         #region protected methods

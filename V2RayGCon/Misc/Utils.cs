@@ -1451,10 +1451,11 @@ namespace V2RayGCon.Misc
                     pattern = VgcApis.Models.Consts.Patterns.HttpUrl;
                     break;
                 case VgcApis.Models.Datas.Enums.LinkTypes.trojan:
-                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.TrojanUrlContent;
+                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.NoneStandarUriContent;
                     break;
                 case VgcApis.Models.Datas.Enums.LinkTypes.vless:
-                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.UriContent;
+                    // pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.UriContent;
+                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.NoneStandarUriContent;
                     break;
                 default:
                     throw new NotSupportedException($"Not supported link type {linkType.ToString()}:// ...");

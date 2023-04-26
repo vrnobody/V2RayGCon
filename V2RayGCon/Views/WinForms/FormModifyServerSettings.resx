@@ -754,9 +754,12 @@
     <value>vless</value>
   </data>
   <data name="cboxShareLinkType.Items2" xml:space="preserve">
-    <value>vmess</value>
+    <value>trojan</value>
   </data>
   <data name="cboxShareLinkType.Items3" xml:space="preserve">
+    <value>vmess</value>
+  </data>
+  <data name="cboxShareLinkType.Items4" xml:space="preserve">
     <value>ss</value>
   </data>
   <data name="cboxShareLinkType.Location" type="System.Drawing.Point, System.Drawing">

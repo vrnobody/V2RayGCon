@@ -66,6 +66,11 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                             cs,
                             VgcApis.Models.Datas.Enums.LinkTypes.vless);
                         break;
+                    case "trojan":
+                        url = slinkMgr.EncodeConfigToShareLink(
+                            cs,
+                            VgcApis.Models.Datas.Enums.LinkTypes.trojan);
+                        break;
                     default:
                         break;
                 }

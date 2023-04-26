@@ -37,6 +37,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.6.8.4 Refactoring.
  * v1.6.8.3 Fix share links decoding bugs.
  * v1.6.8.2 Fix core downloader not working bug.
  *          vless://... supports reality.

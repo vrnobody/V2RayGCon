@@ -17,15 +17,14 @@
 
         public const string Base64NonStandard = @"[A-Za-z0-9+/_\-]+={0,3}";
 
-        // public const string SsShareLinkContent = Base64NonStandard + @"(#[a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$_]+)*";
-        public const string SsShareLinkContent = @"[a-zA-Z0-9@#\-\.\?\,\'\/\+&amp;%\$_\[\]\+:=]+";
+        public const string SsShareLinkContent = @"[a-zA-Z0-9@#\-\.\?\,\'\/\+&;%\$_\[\]\+:=]+";
 
-        public const string UriContent = @"[\w\-\.\:\?\,\'\[\]+&amp;@%\$#_=]+";
+        public const string UriContent = @"[\w\-\.\:\?\,\'\[\]+&;@%\$#_=]+";
 
-        public const string NoneStandarUriContent = @"[\w\-\.\:\?\,\'\[\]+&amp;@%\$#_=/]+"; // [/]for alpn=http/1.1
+        public const string UriContentNonStandard = @"[\w\-\.\:\?\,\'\[\]+&;@%\$#_=/]+"; // [/]for alpn=http/1.1
 
         public const string HttpUrl =
-           @"(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_=]*)?";
+           @"(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&;%\$#_=]*)?";
 
         public const string Base64Standard =
             @"(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})";

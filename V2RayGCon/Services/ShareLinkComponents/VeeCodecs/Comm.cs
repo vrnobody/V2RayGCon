@@ -49,7 +49,6 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             // 抄袭自： https://github.com/musva/V2RayW/commit/e54f387e8d8181da833daea8464333e41f0f19e6 GPLv3
             List<string> parts = url
                 .Substring(header.Length)
-                .Replace("&amp;", "&")
                 .Split(new char[] { ':', '@', '?', '&', '#', '=' })
                 .Select(s => Uri.UnescapeDataString(s))
                 .ToList();

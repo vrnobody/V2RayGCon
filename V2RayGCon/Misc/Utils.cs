@@ -871,7 +871,8 @@ namespace V2RayGCon.Misc
 
                 foreach (Match match in matches)
                 {
-                    links.Add(match.Value.Substring(1));
+                    var link = match.Value.Substring(1).Replace("&amp;", "&");
+                    links.Add(link);
                 }
             }
             catch { }
@@ -1451,11 +1452,11 @@ namespace V2RayGCon.Misc
                     pattern = VgcApis.Models.Consts.Patterns.HttpUrl;
                     break;
                 case VgcApis.Models.Datas.Enums.LinkTypes.trojan:
-                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.NoneStandarUriContent;
+                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.UriContentNonStandard;
                     break;
                 case VgcApis.Models.Datas.Enums.LinkTypes.vless:
                     // pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.UriContent;
-                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.NoneStandarUriContent;
+                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.UriContentNonStandard;
                     break;
                 default:
                     throw new NotSupportedException($"Not supported link type {linkType.ToString()}:// ...");

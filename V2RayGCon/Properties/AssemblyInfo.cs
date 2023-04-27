@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.6.8.3")]
+[assembly: AssemblyVersion("1.6.8.5")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.6.8.5 Fix xray-core stat.
  * v1.6.8.4 Refactoring.
  * v1.6.8.3 Fix share links decoding bugs.
  * v1.6.8.2 Fix core downloader not working bug.

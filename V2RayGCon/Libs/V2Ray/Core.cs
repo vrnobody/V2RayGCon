@@ -30,16 +30,16 @@ namespace V2RayGCon.Libs.V2Ray
         }
 
         #region property
-        string _v2ctl = "";
-        string v2ctl
+        string statExe
         {
             get
             {
-                if (string.IsNullOrEmpty(_v2ctl))
+                var exe = GetExecutablePath(VgcApis.Models.Consts.Core.XrayCoreExeFileName);
+                if (string.IsNullOrEmpty(exe))
                 {
-                    _v2ctl = GetExecutablePath(VgcApis.Models.Consts.Core.V2RayCtlExeFileName);
+                    return GetExecutablePath(VgcApis.Models.Consts.Core.V2RayCtlExeFileName);
                 }
-                return _v2ctl;
+                return exe;
             }
         }
 
@@ -75,20 +75,25 @@ namespace V2RayGCon.Libs.V2Ray
 
         public VgcApis.Models.Datas.StatsSample QueryStatsApi(int port)
         {
-            if (setting.IsClosing() || string.IsNullOrEmpty(v2ctl))
+            var exe = statExe;
+            if (setting.IsClosing() || string.IsNullOrEmpty(exe))
             {
                 return null;
             }
 
-            var queryParam = string.Format(VgcApis.Models.Consts.Core.StatsQueryParamTpl, port.ToString());
+            var isXray = exe.EndsWith(VgcApis.Models.Consts.Core.XrayCoreExeFileName);
+            var queryTpl = isXray ?
+                VgcApis.Models.Consts.Core.XrayStatsQueryParamTpl :
+                VgcApis.Models.Consts.Core.V2RayStatsQueryParamTpl;
+            var queryParam = string.Format(queryTpl, port.ToString());
             try
             {
                 var output = Misc.Utils.GetOutputFromExecutable(
-                    v2ctl,
+                    exe,
                     queryParam,
                     VgcApis.Models.Consts.Core.GetStatisticsTimeout);
 
-                return Misc.Utils.ParseStatApiResult(output);
+                return Misc.Utils.ParseStatApiResult(isXray, output);
             }
             catch { }
             return null;

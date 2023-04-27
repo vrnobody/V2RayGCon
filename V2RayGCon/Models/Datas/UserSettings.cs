@@ -91,7 +91,7 @@ namespace V2RayGCon.Models.Datas
 
             ServerPanelPageSize = 8;
 
-            MaxConcurrentV2RayCoreNum = 20;
+            MaxConcurrentV2RayCoreNum = 12;
 
             isCheckUpdateWhenAppStart = false;
 

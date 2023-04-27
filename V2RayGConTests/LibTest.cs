@@ -13,7 +13,28 @@ namespace V2RayGCon.Test
         static long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
         [TestMethod]
-        public void ParseStatApiResultTest()
+        public void ParseStatApiResultTestXray()
+        {
+            var str =
+@"{
+    ""stat"":  [
+        {
+                ""name"":  ""inbound>>>agentin>>>traffic>>>uplink"",
+            ""value"":  ""12345""
+        },
+        {
+                ""name"":  ""inbound>>>agentin>>>traffic>>>downlink"",
+            ""value"":  ""098765""
+        }
+    ]
+}";
+            var result = ParseStatApiResult(true, str);
+            Assert.AreEqual(12345, result.statsUplink);
+            Assert.AreEqual(98765, result.statsDownlink);
+        }
+
+        [TestMethod]
+        public void ParseStatApiResultTestV2Ray()
         {
             var str =
 @"stat: <
@@ -51,7 +72,7 @@ stat: <
   value: 5
 >";
 
-            var result = ParseStatApiResult(str);
+            var result = ParseStatApiResult(false, str);
             Assert.AreEqual(8, result.statsUplink);
             Assert.AreEqual(7, result.statsDownlink);
         }

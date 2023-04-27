@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
+using VgcApis.Models.Datas;
 
 namespace V2RayGCon.Misc
 {
@@ -24,7 +25,50 @@ namespace V2RayGCon.Misc
 
         #region strings
 
-        public static VgcApis.Models.Datas.StatsSample ParseStatApiResult(string result)
+        public static VgcApis.Models.Datas.StatsSample ParseStatApiResult(bool isXray, string result)
+        {
+            return isXray ? ParseXrayStatApiResult(result) : ParseV2RayStatApiResult(result);
+        }
+
+        private static StatsSample ParseXrayStatApiResult(string result)
+        {
+            var up = 0;
+            var down = 0;
+            /*
+            {
+                "stat":  [
+                    {
+                        "name":  "inbound>>>agentin>>>traffic>>>uplink",
+                        "value":  "0"
+                    },
+                    {
+                        "name":  "inbound>>>agentin>>>traffic>>>downlink",
+                        "value":  "0"
+                    }
+                ]
+            }*/
+
+            try
+            {
+                var json = JObject.Parse(result);
+                foreach (JObject o in json["stat"])
+                {
+                    var name = o["name"].ToString();
+                    if (name.EndsWith("uplink"))
+                    {
+                        up = o["value"].Value<int>();
+                    }
+                    if (name.EndsWith("downlink"))
+                    {
+                        down = o["value"].Value<int>();
+                    }
+                }
+            }
+            catch { }
+            return new StatsSample(up, down);
+        }
+
+        private static StatsSample ParseV2RayStatApiResult(string result)
         {
             var pat = StrConst.StatApiResultPattern;
             Regex rgx = new Regex(pat, RegexOptions.Singleline);
@@ -55,7 +99,6 @@ namespace V2RayGCon.Misc
             }
             return new VgcApis.Models.Datas.StatsSample(up, down);
         }
-
 
         static string appNameAndVersion = null;
         public static string GetAppNameAndVer()

@@ -472,13 +472,13 @@ namespace VgcApis.Misc
         }
 
         /// <summary>
-        /// return (milSec, recvBytesLen)
+        /// return (ms, recvBytesLen)
         /// </summary>
         /// <param name="url"></param>
         /// <param name="port"></param>
         /// <param name="expectedSizeInKiB"></param>
         /// <param name="timeout"></param>
-        /// <returns>(milSec, recvBytesLen)</returns>
+        /// <returns>(ms, recvBytesLen)</returns>
         public static Tuple<long, long> TimedDownloadTest(
             string url, int port, int expectedSizeInKiB, int timeout)
         {
@@ -588,12 +588,12 @@ namespace VgcApis.Misc
             }
             catch { }
         }
-        public static void Sleep(int milSec)
+        public static void Sleep(int ms)
         {
             try
             {
-                // Task.Delay(milSec).Wait();
-                Thread.Sleep(milSec);
+                // Task.Delay(ms).Wait();
+                Thread.Sleep(ms);
             }
             catch { }
         }

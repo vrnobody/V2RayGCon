@@ -235,7 +235,7 @@ namespace Luna.Models.Apis.Components
 
         public string GetAppDir() => VgcApis.Misc.Utils.GetAppDir();
 
-        public void Sleep(int milSec) => VgcApis.Misc.Utils.Sleep(milSec);
+        public void Sleep(int ms) => VgcApis.Misc.Utils.Sleep(ms);
 
         public void Print(params object[] contents)
         {

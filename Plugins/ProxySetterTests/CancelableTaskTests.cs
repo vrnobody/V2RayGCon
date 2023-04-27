@@ -15,9 +15,9 @@ namespace ProxySetterTests
             }
         }
 
-        void Wait(int milSeconds)
+        void Wait(int ms)
         {
-            Task.Delay(milSeconds).Wait();
+            Task.Delay(ms).Wait();
         }
 
         [TestMethod]

@@ -53,9 +53,9 @@ namespace Luna.Models.Apis.SysCmpos
             return null;
         }
 
-        public VgcApis.Models.Datas.LuaMail Wait(int milSecs)
+        public VgcApis.Models.Datas.LuaMail Wait(int ms)
         {
-            if (TryTakeIgnoreError(mails, milSecs, out var mail))
+            if (TryTakeIgnoreError(mails, ms, out var mail))
             {
                 return mail;
             }

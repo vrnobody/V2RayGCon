@@ -69,7 +69,7 @@
         /// LuaMail 有邮件时返回一封最老的邮件<br/>
         /// nil 没邮件或邮箱关闭或超时后返回null
         /// </returns>
-        Models.Datas.LuaMail Wait(int milSecs);
+        Models.Datas.LuaMail Wait(int ms);
 
         /// <summary>
         /// 获取当前邮箱名字

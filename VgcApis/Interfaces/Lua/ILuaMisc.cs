@@ -144,8 +144,8 @@ namespace VgcApis.Interfaces.Lua
         /// <summary>
         /// 等待一段时间
         /// </summary>
-        /// <param name="milSec">毫秒</param>
-        void Sleep(int milSec);
+        /// <param name="ms">毫秒</param>
+        void Sleep(int ms);
 
         /// <summary>
         /// 查找替换字串中的内容

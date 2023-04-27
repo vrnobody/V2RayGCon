@@ -90,12 +90,12 @@ function coreEv:Check()
     return self:ExecMail(mail)
 end
 
-function coreEv:Wait(milSec)
+function coreEv:Wait(ms)
     local mail = nil
-    if milSec == nil then
+    if ms == nil then
         mail = self.mailbox:Wait()
     else
-        mail = self.mailbox:Wait(milSec)
+        mail = self.mailbox:Wait(ms)
     end
     return self:ExecMail(mail)
 end

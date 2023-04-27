@@ -25,6 +25,17 @@ function Each(o)
     end
 end
 
+string.split = function (text, sep)
+    if sep == nil then
+        sep = "%s"
+    end
+    local t={}
+    for s in string.gmatch(text, "([^"..sep.."]+)") do
+        table.insert(t, s)
+    end
+    return t
+end
+
 string.startswith = function (text, keyword)
     if text == nil or keyword == nil then   
         return false

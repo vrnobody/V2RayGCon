@@ -34,6 +34,7 @@ namespace VgcApis.Models.Consts
             " package.loaders package.seeall package.config package.searchers package.searchpath package.cpath package.loaded package.loadlib package.path package.preload";
 
         public static List<string> LuaPredefinedFunctionNames = new List<string>(){
+            "string.split(text, sep)",
             "string.endswith(text, keyword)",
             "string.isempty(text)",
             "string.startswith(text, keyword)",

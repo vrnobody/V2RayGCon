@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,6 +23,32 @@ namespace Luna.Models.Apis.Components
         }
 
         #region ILuaWeb thinggy
+        public long Ping(string dest) => Ping(dest, 5000);
+
+        public long Ping(string dest, int ms)
+        {
+            long r = -1;
+            Ping pinger = null;
+            try
+            {
+                pinger = new Ping();
+                var reply = pinger.Send(dest, ms);
+                if (reply.Status == IPStatus.Success)
+                {
+                    r = reply.RoundtripTime;
+                }
+            }
+            catch { }
+            finally
+            {
+                if (pinger != null)
+                {
+                    pinger.Dispose();
+                }
+            }
+            return r;
+        }
+
         public string Post(string url, string text) => Post(url, text, 20000);
 
         public string Post(string url, string text, int timeout)
@@ -47,13 +74,13 @@ namespace Luna.Models.Apis.Components
             return null;
         }
 
-        public bool Tcping(string url, int milSec) =>
-            Tcping(url, milSec, -1);
+        public bool Tcping(string url, int ms) =>
+            Tcping(url, ms, -1);
 
-        public bool Tcping(string url, int milSec, int proxyPort)
+        public bool Tcping(string url, int ms, int proxyPort)
         {
-            var timeout = TimedDownloadTesting(url, milSec, 0, proxyPort);
-            return timeout > 0 && timeout <= milSec;
+            var timeout = TimedDownloadTesting(url, ms, 0, proxyPort);
+            return timeout > 0 && timeout <= ms;
         }
 
         public long TimedDownloadTesting(string url, int timeout, int kib) =>

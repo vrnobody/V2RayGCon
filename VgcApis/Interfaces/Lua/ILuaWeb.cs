@@ -105,6 +105,21 @@ namespace VgcApis.Interfaces.Lua
         string PatchHref(string url, string href);
 
         /// <summary>
+        /// Ping("1.2.4.8", 3000) Ping("baidu.com", 1234)
+        /// </summary>
+        /// <param name="dest">IP 或者 host</param>
+        /// <param name="ms">超时(毫秒)</param>
+        /// <returns>成功: xx(ms) 失败: -1</returns>
+        long Ping(string dest, int ms);
+
+        /// <summary>
+        /// Ping("1.2.4.8") Ping("baidu.com")
+        /// </summary>
+        /// <param name="dest">IP 或者 host</param>
+        /// <returns>成功: xx(ms) 失败: -1</returns>
+        long Ping(string dest);
+
+        /// <summary>
         /// 向url发送post请求
         /// </summary>
         /// <param name="url">目标url</param>
@@ -124,9 +139,9 @@ namespace VgcApis.Interfaces.Lua
         // using bing.com to search sth.
         string Search(string keywords, int first, int proxyPort);
 
-        bool Tcping(string url, int milSec);
+        bool Tcping(string url, int ms);
 
-        bool Tcping(string url, int milSec, int proxyPort);
+        bool Tcping(string url, int ms, int proxyPort);
 
         /// <summary>
         /// 带超时的下载测试

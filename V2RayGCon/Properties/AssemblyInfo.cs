@@ -38,6 +38,7 @@ using System.Runtime.InteropServices;
 
 /*
  * v1.6.8.5 Fix xray-core stat.
+ *          Add shortId or spiderX ondemand.
  * v1.6.8.4 Refactoring.
  * v1.6.8.3 Fix share links decoding bugs.
  * v1.6.8.2 Fix core downloader not working bug.

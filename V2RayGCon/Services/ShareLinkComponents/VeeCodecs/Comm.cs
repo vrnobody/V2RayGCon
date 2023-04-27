@@ -259,11 +259,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
                 return;
             }
 
-            var tt = ss.tlsType;
-            if (string.IsNullOrEmpty(tt))
-            {
-                tt = "none";
-            }
+            var tt = string.IsNullOrEmpty(ss.tlsType) ? "none" : ss.tlsType;
             token["security"] = tt;
             if (tt == "none")
             {
@@ -276,15 +272,16 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
                 o["allowInsecure"] = true;
             }
 
-            if (!string.IsNullOrEmpty(ss.tlsServName))
+            void SetValue(string key, string value)
             {
-                o["serverName"] = ss.tlsServName;
+                if (!string.IsNullOrEmpty(value))
+                {
+                    o[key] = value;
+                }
             }
 
-            if (!string.IsNullOrEmpty(ss.tlsFingerPrint))
-            {
-                o["fingerprint"] = ss.tlsFingerPrint;
-            }
+            SetValue("serverName", ss.tlsServName);
+            SetValue("fingerprint", ss.tlsFingerPrint);
 
             if (!string.IsNullOrEmpty(ss.tlsAlpn))
             {
@@ -294,8 +291,8 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             if (tt == "reality")
             {
                 o["publicKey"] = ss.tlsParam1;
-                o["shortId"] = ss.tlsParam2;
-                o["spiderX"] = ss.tlsParam3;
+                SetValue("shortId", ss.tlsParam2);
+                SetValue("spiderX", ss.tlsParam3);
             }
 
             var k = $"{tt}Settings";

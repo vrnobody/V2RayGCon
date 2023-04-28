@@ -371,6 +371,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public long GetSpeedTestResult() => coreInfo.speedTestResult;
         public void SetSpeedTestResult(long latency)
         {
+            coreInfo.lastSpeedTestUtcTicks = DateTime.UtcNow.Ticks;
+
             // 0: testing <0: none long.max: timeout >0: ???ms
             if (coreInfo.speedTestResult == latency)
             {
@@ -378,7 +380,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
 
             coreInfo.speedTestResult = latency;
-            coreInfo.lastSpeedTestUtcTicks = DateTime.UtcNow.Ticks;
             UpdateStatusWithSpeedTestResult();
             GetParent().InvokeEventOnPropertyChange();
         }

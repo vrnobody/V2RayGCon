@@ -39,6 +39,7 @@ using System.Runtime.InteropServices;
 /*
  * v1.6.8.6 Luna add string.split() and Web:Ping().
  *          Fix lua.modules.reader.lua.
+ *          Fix coreState:SetSpeedTestResult().
  * v1.6.8.5 Fix xray-core stat.
  *          Add shortId or spiderX ondemand.
  * v1.6.8.4 Refactoring.

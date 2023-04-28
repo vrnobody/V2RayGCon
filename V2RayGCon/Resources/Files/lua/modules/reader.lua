@@ -17,7 +17,7 @@ end
 
 -- https://stackoverflow.com/questions/15079914/lua-fastest-way-to-read-data
 function Reader:ReadAllLines()
-    local lines = self:GetLinesIter()
+    local lines = self:GetIter()
     local t = {}
     for line in lines do
        t[#t+1] = line

@@ -17,6 +17,16 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="outbox">回复请求邮箱</param>
         /// <returns></returns>
         IRunnable CreateHttpServer(string url, ILuaMailBox inbox, ILuaMailBox outbox);
+
+        /// <summary>
+        /// 创建一个HTTP服务器，它将接收到的请求存入inbox，回复时使用outbox。
+        /// </summary>
+        /// <param name="url">服务器地址</param>
+        /// <param name="inbox">接收请求邮箱</param>
+        /// <param name="outbox">回复请求邮箱</param>
+        /// <param name="source">网页来源，可以是HTML字符串、文件路径、文件夹路径</param>
+        /// <returns></returns>
+        IRunnable CreateHttpServer(string url, ILuaMailBox inbox, ILuaMailBox outbox, string source);
         #endregion
 
         #region core event

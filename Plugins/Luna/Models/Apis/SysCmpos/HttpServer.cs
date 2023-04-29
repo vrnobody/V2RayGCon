@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
@@ -9,21 +10,133 @@ namespace Luna.Models.Apis.SysCmpos
         VgcApis.BaseClasses.Disposable,
         VgcApis.Interfaces.Lua.IRunnable
     {
+        enum SourceType
+        {
+            None,
+            HTML,
+            File,
+            Folder,
+        }
+
         HttpListener serv;
 
         private readonly VgcApis.Interfaces.Lua.ILuaMailBox inbox;
         private readonly VgcApis.Interfaces.Lua.ILuaMailBox outbox;
+        private readonly string source;
+        private readonly SourceType sourceType;
 
         public HttpServer(
             string url,
             VgcApis.Interfaces.Lua.ILuaMailBox inbox,
-            VgcApis.Interfaces.Lua.ILuaMailBox outbox)
+            VgcApis.Interfaces.Lua.ILuaMailBox outbox,
+            string source)
         {
             this.inbox = inbox;
             this.outbox = outbox;
+            this.source = source;
+
+            this.sourceType = SourceType.None;
+            if (File.Exists(source))
+            {
+                sourceType = SourceType.File;
+            }
+            else if (Directory.Exists(source))
+            {
+                sourceType = SourceType.Folder;
+            }
+            else if (!string.IsNullOrEmpty(source) && source.Length > 0)
+            {
+                sourceType = SourceType.HTML;
+            }
+
             serv = new HttpListener();
             serv.Prefixes.Add(url);
         }
+
+        #region static public folder
+
+        static string[] defaultDocuments =
+        {
+            "index.html",
+            "index.htm",
+            "default.html",
+            "default.htm"
+        };
+
+        static Dictionary<string, string> mimeTypeMaps =
+            new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
+            {
+                #region extension to MIME type list
+                {".asf", "video/x-ms-asf"},
+                {".asx", "video/x-ms-asf"},
+                {".avi", "video/x-msvideo"},
+                {".bin", "application/octet-stream"},
+                {".cco", "application/x-cocoa"},
+                {".crt", "application/x-x509-ca-cert"},
+                {".css", "text/css"},
+                {".deb", "application/octet-stream"},
+                {".der", "application/x-x509-ca-cert"},
+                {".dll", "application/octet-stream"},
+                {".dmg", "application/octet-stream"},
+                {".ear", "application/java-archive"},
+                {".eot", "application/octet-stream"},
+                {".exe", "application/octet-stream"},
+                {".flv", "video/x-flv"},
+                {".gif", "image/gif"},
+                {".hqx", "application/mac-binhex40"},
+                {".htc", "text/x-component"},
+                {".htm", "text/html"},
+                {".html", "text/html"},
+                {".ico", "image/x-icon"},
+                {".img", "application/octet-stream"},
+                {".iso", "application/octet-stream"},
+                {".jar", "application/java-archive"},
+                {".jardiff", "application/x-java-archive-diff"},
+                {".jng", "image/x-jng"},
+                {".jnlp", "application/x-java-jnlp-file"},
+                {".jpeg", "image/jpeg"},
+                {".jpg", "image/jpeg"},
+                {".js", "application/x-javascript"},
+                {".mml", "text/mathml"},
+                {".mng", "video/x-mng"},
+                {".mov", "video/quicktime"},
+                {".mp3", "audio/mpeg"},
+                {".mpeg", "video/mpeg"},
+                {".mpg", "video/mpeg"},
+                {".msi", "application/octet-stream"},
+                {".msm", "application/octet-stream"},
+                {".msp", "application/octet-stream"},
+                {".pdb", "application/x-pilot"},
+                {".pdf", "application/pdf"},
+                {".pem", "application/x-x509-ca-cert"},
+                {".pl", "application/x-perl"},
+                {".pm", "application/x-perl"},
+                {".png", "image/png"},
+                {".prc", "application/x-pilot"},
+                {".ra", "audio/x-realaudio"},
+                {".rar", "application/x-rar-compressed"},
+                {".rpm", "application/x-redhat-package-manager"},
+                {".rss", "text/xml"},
+                {".run", "application/x-makeself"},
+                {".sea", "application/x-sea"},
+                {".shtml", "text/html"},
+                {".sit", "application/x-stuffit"},
+                {".swf", "application/x-shockwave-flash"},
+                {".tcl", "application/x-tcl"},
+                {".tk", "application/x-tcl"},
+                {".txt", "text/plain"},
+                {".war", "application/java-archive"},
+                {".wbmp", "image/vnd.wap.wbmp"},
+                {".wmv", "video/x-ms-wmv"},
+                {".xml", "text/xml"},
+                {".xpi", "application/x-xpinstall"},
+                {".zip", "application/zip"},
+
+                #endregion
+            };
+
+
+        #endregion
 
         #region public methods
         public void Start()
@@ -132,31 +245,157 @@ namespace Luna.Models.Apis.SysCmpos
             });
         }
 
-        int HttpMethodToCode(string method)
+        HttpMethods GetHttpMethodFromContext(HttpListenerContext ctx)
         {
+            var method = ctx.Request.HttpMethod?.ToUpper();
             switch (method)
             {
+                case "GET":
+                    return HttpMethods.Get;
                 case "POST":
-                    return 1;
+                    return HttpMethods.Post;
                 default:
-                    return 0;
+                    return HttpMethods.Others;
             }
+        }
+
+        enum HttpMethods
+        {
+            Others = 0,
+            Post = 1,
+            Get = 2,
         }
 
         void HandleOneConnection(HttpListenerContext ctx)
         {
-            var req = ctx.Request;
-            var code = HttpMethodToCode(req.HttpMethod);
+            var method = GetHttpMethodFromContext(ctx);
+            if (method != HttpMethods.Get)
+            {
+                ConnInDefaultHandler(ctx);
+                return;
+            }
 
+            switch (sourceType)
+            {
+                case SourceType.Folder:
+                    ConnInFolderHandler(ctx);
+                    return;
+                case SourceType.File:
+                    ConnInFileHandler(ctx);
+                    return;
+                case SourceType.HTML:
+                    ConnInHtmlHandler(ctx);
+                    return;
+                case SourceType.None:
+                default:
+                    break;
+            }
+
+            ConnInDefaultHandler(ctx);
+        }
+
+        void ConnInFileHandler(HttpListenerContext context)
+        {
+            ResponseWithFile(context, source);
+            context.Response.OutputStream.Close();
+        }
+
+        void ConnInHtmlHandler(HttpListenerContext context)
+        {
+            try
+            {
+                var input = new MemoryStream();
+                var w = new StreamWriter(input);
+                w.Write(source);
+                w.Flush();
+                input.Position = 0;
+
+                context.Response.ContentType = "text/html";
+                ResponseWithStream(context, input, DateTime.Today);
+            }
+            catch
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            }
+            context.Response.OutputStream.Close();
+        }
+
+        void ConnInFolderHandler(HttpListenerContext context)
+        {
+            string filename = context.Request.Url.AbsolutePath;
+            filename = filename.Substring(1);
+
+            if (string.IsNullOrEmpty(filename))
+            {
+                foreach (string indexFile in defaultDocuments)
+                {
+                    if (File.Exists(Path.Combine(source, indexFile)))
+                    {
+                        filename = indexFile;
+                        break;
+                    }
+                }
+            }
+
+            filename = Path.Combine(source, filename);
+
+            ResponseWithFile(context, filename);
+            context.Response.OutputStream.Close();
+        }
+
+        void ResponseWithFile(HttpListenerContext context, string filename)
+        {
+            if (!File.Exists(filename))
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                return;
+            }
+
+            try
+            {
+                Stream input = new FileStream(filename, FileMode.Open);
+                string mime;
+                context.Response.ContentType = mimeTypeMaps.TryGetValue(Path.GetExtension(filename), out mime)
+                    ? mime
+                    : "application/octet-stream";
+                var lastModified = File.GetLastWriteTime(filename);
+                ResponseWithStream(context, input, lastModified);
+            }
+            catch
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            }
+        }
+
+        void ResponseWithStream(HttpListenerContext context, Stream input, DateTime lastModified)
+        {
+            context.Response.ContentLength64 = input.Length;
+            context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
+            context.Response.AddHeader("Last-Modified", lastModified.ToString("r"));
+
+            byte[] buffer = new byte[1024 * 32];
+            int nbytes;
+            while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
+                context.Response.OutputStream.Write(buffer, 0, nbytes);
+            input.Close();
+            context.Response.OutputStream.Flush();
+            context.Response.StatusCode = (int)HttpStatusCode.OK;
+        }
+
+        void ConnInDefaultHandler(HttpListenerContext context)
+        {
+            var req = context.Request;
             string text;
+
             using (var reader = new StreamReader(req.InputStream, req.ContentEncoding))
             {
                 text = reader.ReadToEnd();
             }
 
             var id = Guid.NewGuid().ToString();
-            contexts.TryAdd(id, ctx);
-            inbox.Send(inbox.GetAddress(), code, id, true, text ?? "");
+            contexts.TryAdd(id, context);
+            var code = GetHttpMethodFromContext(context);
+            inbox.Send(inbox.GetAddress(), (int)code, id, true, text ?? "");
         }
 
         #endregion

@@ -12,8 +12,9 @@ local handler = function(req)
     return resp
 end
 
-local html = "<html><body><h1>index.html</h1></body></html>"
-haServ:Create(url, html, handler)
+-- source can be file path or folder path or string of HTML
+local source = "<html><body><h1>index.html</h1></body></html>"
+haServ:Create(url, source, handler)
 
 print("Waiting for connections ...")
 haServ:Run()
@@ -34,7 +35,7 @@ local function CreateServer(self)
     self.outbox = outbox
     self.outadd = outbox:GetAddress()
     
-    local serv = Sys:CreateHttpServer(self.url, self.inbox, self.outbox)
+    local serv = Sys:CreateHttpServer(self.url, self.inbox, self.outbox, self.source)
     return serv
 end
 
@@ -57,8 +58,8 @@ local function HandleOneConn(self)
     
     local code = mail:GetCode()
     local title = mail:GetTitle()
-    if code ~= 1 and self.html ~= nil then
-        Response(self, title, self.html)
+    if code ~= 1 and self.source ~= nil then
+        Response(self, title, self.source)
     else
         local req = mail:GetContent()
         HandlePost(self, title, req)
@@ -67,14 +68,18 @@ local function HandleOneConn(self)
     return true
 end
 
-function M:Create(url, html, handler)
+function M:Create(url, source, handler)
     
     assert(type(url) == "string", "Param url should be string")
-    assert(type(handler) == "function", "Param handler should be a function")
-    assert(type(html) == "string", "Param index should be string.")
+    assert(type(source) == "string", "Param source should be string.")
+    assert(string.len(source) > 0, "Length of param source should greater then zero.")
+    
+    if handler == nil or type(handler) ~= "function" then
+        handler = function() end
+    end
     
     self.url = url
-    self.html = html
+    self.source = source
     self.handle = handler
     self.serv = CreateServer(self)
     

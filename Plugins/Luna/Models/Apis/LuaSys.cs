@@ -95,11 +95,18 @@ namespace Luna.Models.Apis
         public VgcApis.Interfaces.Lua.IRunnable CreateHttpServer(
             string url,
             VgcApis.Interfaces.Lua.ILuaMailBox inbox,
-            VgcApis.Interfaces.Lua.ILuaMailBox outbox)
+            VgcApis.Interfaces.Lua.ILuaMailBox outbox) =>
+            CreateHttpServer(url, inbox, outbox, null);
+
+        public VgcApis.Interfaces.Lua.IRunnable CreateHttpServer(
+            string url,
+            VgcApis.Interfaces.Lua.ILuaMailBox inbox,
+            VgcApis.Interfaces.Lua.ILuaMailBox outbox,
+            string source)
         {
             try
             {
-                var serv = new SysCmpos.HttpServer(url, inbox, outbox);
+                var serv = new SysCmpos.HttpServer(url, inbox, outbox, source);
                 lock (httpServs)
                 {
                     httpServs.Add(serv);

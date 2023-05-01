@@ -539,6 +539,7 @@
     <None Include="Resources\Files\lua\libs\utils.lua" />
     <None Include="Resources\Files\lua\modules\coreEvent.lua" />
     <None Include="Resources\Files\lua\modules\hotkey.lua" />
+    <None Include="Resources\Files\lua\modules\httpServ.lua" />
     <None Include="Resources\Files\lua\modules\logger.lua" />
     <None Include="Resources\Files\lua\modules\reader.lua" />
     <None Include="Resources\Files\lua\modules\set.lua" />

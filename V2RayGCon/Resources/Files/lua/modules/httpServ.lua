@@ -35,7 +35,7 @@ local function CreateServer(self)
     self.outbox = outbox
     self.outadd = outbox:GetAddress()
     
-    local serv = Sys:CreateHttpServer(self.url, self.inbox, self.outbox, self.source)
+    local serv = Sys:CreateHttpServer(self.url, self.inbox, self.outbox, self.source, self.allowCROS)
     return serv
 end
 
@@ -68,7 +68,12 @@ local function HandleOneConn(self)
     return true
 end
 
-function M:Create(url, source, handler)
+function M:Create(url, source, handler, allowCROS)
+    
+    self.allowCROS = false
+    if allowCROS == true then
+        self.allowCROS = true
+    end
     
     assert(type(url) == "string", "Param url should be string")
     assert(type(source) == "string", "Param source should be string.")

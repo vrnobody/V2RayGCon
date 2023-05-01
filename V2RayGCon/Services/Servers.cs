@@ -914,6 +914,12 @@ namespace V2RayGCon.Services
 
         void SaveServersSettingsWorker()
         {
+            List<VgcApis.Models.Datas.CoreInfo> coreInfoList = GetAllCoreInfos();
+            setting.SaveServerList(coreInfoList);
+        }
+
+        private List<VgcApis.Models.Datas.CoreInfo> GetAllCoreInfos()
+        {
             List<VgcApis.Models.Datas.CoreInfo> coreInfoList;
             locker.EnterReadLock();
             try
@@ -926,7 +932,8 @@ namespace V2RayGCon.Services
             {
                 locker.ExitReadLock();
             }
-            setting.SaveServerList(coreInfoList);
+
+            return coreInfoList;
         }
 
         void SortSelectedServers(Action<List<ICoreServCtrl>> sorter)

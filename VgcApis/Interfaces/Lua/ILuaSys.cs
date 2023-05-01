@@ -25,8 +25,9 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="inbox">接收请求邮箱</param>
         /// <param name="outbox">回复请求邮箱</param>
         /// <param name="source">网页来源，可以是HTML字符串、文件路径、文件夹路径</param>
+        /// <param name="allowCORS">允许跨域</param>
         /// <returns></returns>
-        IRunnable CreateHttpServer(string url, ILuaMailBox inbox, ILuaMailBox outbox, string source);
+        IRunnable CreateHttpServer(string url, ILuaMailBox inbox, ILuaMailBox outbox, string source, bool allowCORS);
         #endregion
 
         #region core event

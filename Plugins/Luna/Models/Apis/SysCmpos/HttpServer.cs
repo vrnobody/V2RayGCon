@@ -24,16 +24,19 @@ namespace Luna.Models.Apis.SysCmpos
         private readonly VgcApis.Interfaces.Lua.ILuaMailBox outbox;
         private readonly string source;
         private readonly SourceType sourceType;
+        private readonly bool allowCORS;
 
         public HttpServer(
             string url,
             VgcApis.Interfaces.Lua.ILuaMailBox inbox,
             VgcApis.Interfaces.Lua.ILuaMailBox outbox,
-            string source)
+            string source,
+            bool allowCORS)
         {
             this.inbox = inbox;
             this.outbox = outbox;
             this.source = source;
+            this.allowCORS = allowCORS;
 
             this.sourceType = SourceType.None;
             if (File.Exists(source))
@@ -206,6 +209,10 @@ namespace Luna.Models.Apis.SysCmpos
                 try
                 {
                     var resp = ctx.Response;
+                    if (allowCORS)
+                    {
+                        resp.AppendHeader("Access-Control-Allow-Origin", "*");
+                    }
                     var encoding = ctx.Request.ContentEncoding;
                     var buff = encoding.GetBytes(content ?? "");
                     resp.ContentLength64 = buff.Length;

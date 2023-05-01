@@ -15,5 +15,8 @@
         // for luna plug-in
         string GetSubscriptionConfig();
         void SetSubscriptionConfig(string cfgStr);
+
+        string GetUserSettings();
+        bool SetUserSettings(string userSettings);
     }
 }

@@ -131,6 +131,8 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region other ILuaMisc stuff
+        public string GetVersion() => vgcUtils.GetVersion();
+
         public int GetSpeedtestQueueLength() => vgcSettings.GetSpeedtestQueueLength();
 
         public string Replace(string text, string oldStr, string newStr) =>
@@ -139,6 +141,10 @@ namespace Luna.Models.Apis.Components
         public string RandomHex(int len) => VgcApis.Misc.Utils.RandomHex(len);
 
         public string NewGuid() => Guid.NewGuid().ToString();
+
+        public string GetUserSettings() => vgcSettings.GetUserSettings();
+
+        public bool SetUserSettings(string userSettings) => vgcSettings.SetUserSettings(userSettings);
 
         public string GetSubscriptionConfig() => vgcSettings.GetSubscriptionConfig();
 

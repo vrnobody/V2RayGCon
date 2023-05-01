@@ -96,17 +96,18 @@ namespace Luna.Models.Apis
             string url,
             VgcApis.Interfaces.Lua.ILuaMailBox inbox,
             VgcApis.Interfaces.Lua.ILuaMailBox outbox) =>
-            CreateHttpServer(url, inbox, outbox, null);
+            CreateHttpServer(url, inbox, outbox, null, false);
 
         public VgcApis.Interfaces.Lua.IRunnable CreateHttpServer(
             string url,
             VgcApis.Interfaces.Lua.ILuaMailBox inbox,
             VgcApis.Interfaces.Lua.ILuaMailBox outbox,
-            string source)
+            string source,
+            bool allowCORS)
         {
             try
             {
-                var serv = new SysCmpos.HttpServer(url, inbox, outbox, source);
+                var serv = new SysCmpos.HttpServer(url, inbox, outbox, source, allowCORS);
                 lock (httpServs)
                 {
                     httpServs.Add(serv);

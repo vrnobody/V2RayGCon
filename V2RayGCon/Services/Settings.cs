@@ -541,6 +541,18 @@ namespace V2RayGCon.Services
 
         public bool SetIsClosing(bool isClosing) => this.isClosing = isClosing;
 
+        public string GetUserSettings()
+        {
+            var us = JsonConvert.SerializeObject(userSettings);
+            return us;
+        }
+
+        public bool SetUserSettings(string userSettings)
+        {
+            // evil todo
+            return false;
+        }
+
         /// <summary>
         /// return null if fail
         /// </summary>

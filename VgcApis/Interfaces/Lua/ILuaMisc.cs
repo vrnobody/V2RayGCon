@@ -59,6 +59,8 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region vgc
+        string GetVersion();
+
         // timeout = long.MaxValue
         /// <summary>
         /// 获取测速超时的准确数值
@@ -71,6 +73,20 @@ namespace VgcApis.Interfaces.Lua
         /// </summary>
         /// <returns>二维码解码后的内容</returns>
         string ScanQrcode();
+
+        /// <summary>
+        /// 获取当前用户设置
+        /// </summary>
+        /// <returns>一个序列化的JObject</returns>
+        string GetUserSettings();
+
+        /// <summary>
+        /// 替换当前的用户配置（还没实现这个功能）
+        /// </summary>
+        /// <param name="userSettings">执行是否成功</param>
+        /// <returns></returns>
+        bool SetUserSettings(string userSettings);
+
 
         /// <summary>
         /// 获取全部订阅设置

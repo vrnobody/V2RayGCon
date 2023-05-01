@@ -41,6 +41,9 @@ using System.Runtime.InteropServices;
  *          Fix lua.modules.reader.lua.
  *          Fix coreState:SetSpeedTestResult().
  *          Luna add Sys:CreateHttpServer(url, inbox, outbox, source);
+ *          Add more functions in Luna-plugin.
+ *          Disable CORS.
+ *          Add a web UI.
  * v1.6.8.5 Fix xray-core stat.
  *          Add shortId or spiderX ondemand.
  * v1.6.8.4 Refactoring.

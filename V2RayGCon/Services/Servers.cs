@@ -1111,7 +1111,6 @@ namespace V2RayGCon.Services
         public void DbgFastRestartTest(int round)
         {
             var list = coreServList.ToList();
-            var rnd = new Random();
 
             var count = list.Count;
             VgcApis.Misc.Utils.RunInBackground(() =>
@@ -1119,8 +1118,8 @@ namespace V2RayGCon.Services
                 var taskList = new List<Task>();
                 for (int i = 0; i < round; i++)
                 {
-                    var index = rnd.Next(0, count);
-                    var isStopCore = rnd.Next(0, 2) == 0;
+                    var index = VgcApis.Libs.Infr.PseudoRandom.Next(0, count);
+                    var isStopCore = VgcApis.Libs.Infr.PseudoRandom.Next(0, 2) == 0;
                     var server = list[index];
 
                     var task = new Task(() =>

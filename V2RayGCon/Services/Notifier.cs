@@ -576,7 +576,7 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            var picked = list[new Random().Next(len)].GetCoreCtrl();
+            var picked = list[VgcApis.Libs.Infr.PseudoRandom.Next(len)].GetCoreCtrl();
             servers.StopAllServersThen(() => picked.RestartCore());
         }
 

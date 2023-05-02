@@ -22,7 +22,7 @@ namespace VgcApisTests
             bs1.WriteAddress("abc.com");
 
             var b1 = bs1.ToBytes("2b");
-            b1[0] = (byte)(b1[0]+1);
+            b1[0] = (byte)(b1[0] + 1);
             try
             {
                 var b2 = new VgcApis.Libs.Streams.BitStream(b1);
@@ -63,7 +63,6 @@ namespace VgcApisTests
         [TestMethod]
         public void ShortIntTest()
         {
-            var rand = new Random();
             for (int i = 0; i < 10; i++)
             {
                 bs.Clear();
@@ -71,7 +70,7 @@ namespace VgcApisTests
                 var source = new List<int>();
                 for (int j = 0; j < 3; j++)
                 {
-                    var val = rand.Next(127);
+                    var val = VgcApis.Libs.Infr.PseudoRandom.Next(127);
                     source.Add(val);
                     bs.WriteTinyInt(val, len);
                 }

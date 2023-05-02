@@ -176,7 +176,6 @@ namespace VgcApis.Misc
         #endregion
 
         #region List
-        static Random rngForShuffle = new Random();
 
         public static List<T> Shuffle<T>(IEnumerable<T> source)
         {
@@ -186,7 +185,7 @@ namespace VgcApis.Misc
             while (n > 1)
             {
                 n--;
-                int k = rngForShuffle.Next(n + 1);
+                int k = VgcApis.Libs.Infr.PseudoRandom.Next(n + 1);
                 T value = list[k];
                 list[k] = list[n];
                 list[n] = value;
@@ -220,11 +219,10 @@ namespace VgcApis.Misc
             using (var file = File.OpenText(filename))
             {
                 int numberSeen = 0;
-                var rng = new Random();
                 var lines = File.ReadLines(filename);
                 foreach (var line in lines)
                 {
-                    if (!string.IsNullOrEmpty(line) && rng.Next(++numberSeen) == 0)
+                    if (!string.IsNullOrEmpty(line) && VgcApis.Libs.Infr.PseudoRandom.Next(++numberSeen) == 0)
                     {
                         url = line;
                     }
@@ -1490,7 +1488,6 @@ namespace VgcApis.Misc
             return Math.Max(Math.Min(value, max - 1), min);
         }
 
-        static readonly Random randHexSource = new Random();
         public static string RandomHex(int length)
         {
             //  https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c
@@ -1504,14 +1501,13 @@ namespace VgcApis.Misc
 
             int rndIndex;
             StringBuilder sb = new StringBuilder("");
-            lock (randHexSource)
+
+            for (int i = 0; i < length; i++)
             {
-                for (int i = 0; i < length; i++)
-                {
-                    rndIndex = randHexSource.Next(charLen);
-                    sb.Append(chars[rndIndex]);
-                }
+                rndIndex = VgcApis.Libs.Infr.PseudoRandom.Next(charLen);
+                sb.Append(chars[rndIndex]);
             }
+
             return sb.ToString();
         }
         #endregion

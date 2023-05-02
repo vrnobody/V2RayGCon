@@ -39,8 +39,7 @@ namespace VgcApisTests
         [DataRow(@"200z")]
         public void VersionNormalTest(string version)
         {
-            var rand = new Random();
-            var lenMark = rand.Next(8);
+            var lenMark = VgcApis.Libs.Infr.PseudoRandom.Next(8);
 
             var bytes = new byte[InfoAreaLenInBytes + 1];
             bytes[SubVersionIndexInBytes] = (byte)lenMark;
@@ -58,8 +57,7 @@ namespace VgcApisTests
         [DataRow(@"023Z")]
         public void VersionFailTest2(string version)
         {
-            var rand = new Random();
-            var lenMark = rand.Next(8);
+            var lenMark = VgcApis.Libs.Infr.PseudoRandom.Next(8);
 
             var bytes = new byte[InfoAreaLenInBytes + 1];
             bytes[SubVersionIndexInBytes] = (byte)lenMark;
@@ -96,14 +94,13 @@ namespace VgcApisTests
         [TestMethod]
         public void UtilsBoolListTest()
         {
-            var rand = new Random();
 
             for (int i = 0; i < 60; i += 3)
             {
                 var source = new List<bool>();
                 for (var j = 0; j < i; j++)
                 {
-                    var v = rand.Next(2);
+                    var v = VgcApis.Libs.Infr.PseudoRandom.Next(2);
                     source.Add(v == 1);
                 }
 

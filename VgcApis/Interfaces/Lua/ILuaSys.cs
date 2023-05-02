@@ -7,6 +7,11 @@ namespace VgcApis.Interfaces.Lua
 {
     public interface ILuaSys
     {
+        /// <summary>
+        /// 获取V2RayGCon版本信息
+        /// </summary>
+        /// <returns>1.2.3.4</returns>
+        string GetAppVersion();
 
         #region Net
         /// <summary>

@@ -131,8 +131,6 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region other ILuaMisc stuff
-        public string GetVersion() => vgcUtils.GetVersion();
-
         public int GetSpeedtestQueueLength() => vgcSettings.GetSpeedtestQueueLength();
 
         public string Replace(string text, string oldStr, string newStr) =>

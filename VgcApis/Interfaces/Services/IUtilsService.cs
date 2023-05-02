@@ -7,7 +7,7 @@ namespace VgcApis.Interfaces.Services
     public interface IUtilsService
     {
         #region misc        
-        string GetVersion();
+        string GetAppVersion();
 
         string AddLinkPrefix(string linkBody, VgcApis.Models.Datas.Enums.LinkTypes type);
         string Base64Encode(string plainText);

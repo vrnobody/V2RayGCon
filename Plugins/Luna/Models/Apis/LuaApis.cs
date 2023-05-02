@@ -30,6 +30,9 @@ namespace Luna.Models.Apis
         public VgcApis.Interfaces.Services.IServersService GetVgcServerService() =>
             vgcApi.GetServersService();
 
+        public VgcApis.Interfaces.Services.IUtilsService GetVgcUtilsService() =>
+            vgcApi.GetUtilsService();
+
         public SysCmpos.PostOffice GetPostOffice() => postOffice;
 
         public string RegisterHotKey(Action hotKeyHandler,

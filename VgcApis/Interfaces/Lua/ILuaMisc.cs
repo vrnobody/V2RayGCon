@@ -59,7 +59,6 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region vgc
-        string GetVersion();
 
         // timeout = long.MaxValue
         /// <summary>

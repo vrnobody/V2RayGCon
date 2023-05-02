@@ -594,6 +594,12 @@ namespace Luna.Models.Apis
             return osReleaseId;
         }
 
+        public string GetAppVersion()
+        {
+            var vgcUtils = luaApis.GetVgcUtilsService();
+            return vgcUtils.GetAppVersion();
+        }
+
         public string GetOsVersion() => Environment.OSVersion.VersionString;
 
         public int SetWallpaper(string filename) => Libs.Sys.WinApis.SetWallpaper(filename);

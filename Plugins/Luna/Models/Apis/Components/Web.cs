@@ -14,15 +14,20 @@ namespace Luna.Models.Apis.Components
         VgcApis.Interfaces.Services.IWebService vgcWeb;
         VgcApis.Interfaces.Services.IServersService vgcServers;
         VgcApis.Interfaces.Services.IShareLinkMgrService vgcSlinkMgr;
+        VgcApis.Interfaces.Services.IConfigMgrService vgcCfgMgr;
 
         public Web(VgcApis.Interfaces.Services.IApiService api)
         {
             vgcWeb = api.GetWebService();
             vgcServers = api.GetServersService();
             vgcSlinkMgr = api.GetShareLinkMgrService();
+            vgcCfgMgr = api.GetConfigMgrService();
         }
 
         #region ILuaWeb thinggy
+
+        public int GetFreeTcpPort() => VgcApis.Misc.Utils.GetFreeTcpPort();
+
         public long Ping(string dest) => Ping(dest, 5000);
 
         public long Ping(string dest, int ms)
@@ -122,6 +127,16 @@ namespace Luna.Models.Apis.Components
 
         public string Fetch(string url, int proxyPort, int milliSeconds) =>
             vgcWeb.Fetch(url, proxyPort, milliSeconds);
+
+        public string FetchWithCustomConfig(string rawConfig, string url) =>
+            FetchWithCustomConfig(rawConfig, url, -1);
+
+        public string FetchWithCustomConfig(string rawConfig, string url, int timeout)
+        {
+            var title = "fetch wiht custom config";
+            var text = vgcCfgMgr.FetchWithCustomConfig(rawConfig, title, url, timeout);
+            return text ?? string.Empty;
+        }
 
         public int UpdateSubscriptions() =>
             vgcSlinkMgr.UpdateSubscriptions(-1);

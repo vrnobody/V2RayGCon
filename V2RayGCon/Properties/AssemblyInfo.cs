@@ -40,10 +40,13 @@ using System.Runtime.InteropServices;
  * v1.6.8.6 Luna add string.split() and Web:Ping().
  *          Fix lua.modules.reader.lua.
  *          Fix coreState:SetSpeedTestResult().
- *          Luna add Sys:CreateHttpServer(url, inbox, outbox, source);
+ *          Luna add Sys:CreateHttpServer(url, inbox, outbox, source, enableCORS);
  *          Add more functions in Luna-plugin.
  *          Disable CORS.
  *          Add a web UI.
+ *          Add Web:GetFreeTcpPort().
+ *          Add Sys:Start().
+ *          Add Web:FetchWithCustomConfig().
  * v1.6.8.5 Fix xray-core stat.
  *          Add shortId or spiderX ondemand.
  * v1.6.8.4 Refactoring.

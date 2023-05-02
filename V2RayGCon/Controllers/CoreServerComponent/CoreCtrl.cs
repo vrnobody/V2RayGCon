@@ -56,6 +56,18 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             v2rayCore.OnCoreStatusChanged -= OnCoreStateChangedHandler;
         }
 
+        public string Fetch(string url) =>
+            Fetch(url, -1);
+
+        public string Fetch(string url, int timeout)
+        {
+            var config = configer.GetConfig();
+            var title = coreStates.GetTitle();
+            var text = configMgr.FetchWithCustomConfig(config, title, url, timeout) ?? string.Empty;
+            coreStates.AddStatSample(new VgcApis.Models.Datas.StatsSample(0, text.Length));
+            return text;
+        }
+
         public void StopCore() => StopCoreWorker(null);
 
         public void StopCoreThen() => StopCoreThen(null);

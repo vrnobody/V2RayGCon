@@ -200,6 +200,8 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="proc">Sys:Run()创建的进程</param>
         void Kill(Process proc);
 
+        string Start(string param);
+
         /// <summary>
         /// 参考Process RunAndForgot(string exePath, string args, string stdin,
         /// LuaTable envs, bool hasWindow, bool redirectOutput,

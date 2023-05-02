@@ -5,6 +5,12 @@ namespace VgcApis.Interfaces.Lua
     public interface ILuaWeb
     {
         /// <summary>
+        /// 获取一个随机的空闲TCP端口
+        /// </summary>
+        /// <returns>-1: 没可用端口， number: 空闲端口号</returns>
+        int GetFreeTcpPort();
+
+        /// <summary>
         /// 从字符串中提取出Base64编码的内容
         /// </summary>
         /// <param name="text">一段字符串</param>
@@ -64,6 +70,23 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="milliSeconds">超时</param>
         /// <returns>指定网址的内容</returns>
         string Fetch(string url, int proxyPort, int milliSeconds);
+
+        /// <summary>
+        /// 用自定义配置下载网页内容
+        /// </summary>
+        /// <param name="rawConfig">自定义配置</param>
+        /// <param name="url">网址</param>
+        /// <returns></returns>
+        string FetchWithCustomConfig(string rawConfig, string url);
+
+        /// <summary>
+        /// 用自定义配置下载网页内容
+        /// </summary>
+        /// <param name="rawConfig">自定义配置</param>
+        /// <param name="url">网址</param>
+        /// <param name="timeout">超时（毫秒）</param>
+        /// <returns></returns>
+        string FetchWithCustomConfig(string rawConfig, string url, int timeout);
 
         // Download("http://baidu.com", "d:\index.html")
         /// <summary>

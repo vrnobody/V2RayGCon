@@ -24,6 +24,21 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         void RunSpeedTestThen();
 
         /// <summary>
+        /// 用这个core下载网页
+        /// </summary>
+        /// <param name="url">网址</param>
+        /// <returns></returns>
+        string Fetch(string url);
+
+        /// <summary>
+        /// 用这个core下载网页
+        /// </summary>
+        /// <param name="url">网址</param>
+        /// <param name="timeout">超时（毫秒）</param>
+        /// <returns></returns>
+        string Fetch(string url, int timeout);
+
+        /// <summary>
         /// 停止服务器并等待操作完成
         /// </summary>
         void StopCore();

@@ -20,6 +20,32 @@ namespace V2RayGCon.Services
         ConfigMgr() { }
 
         #region public methods
+        public string FetchWithCustomConfig(string rawConfig, string title, string url, int timeout)
+        {
+            var text = string.Empty;
+            var port = VgcApis.Misc.Utils.GetFreeTcpPort();
+            if (port < 0)
+            {
+                return text;
+            }
+            try
+            {
+                var config = CreateSpeedTestConfig(rawConfig, port, false, false, false);
+                var core = new Libs.V2Ray.Core(setting) { title = title };
+                core.RestartCoreIgnoreError(config);
+                if (WaitUntilCoreReady(core))
+                {
+                    text = Misc.Utils.Fetch(url, port, timeout);
+                }
+                core.StopCore();
+            }
+            catch
+            {
+                return string.Empty;
+            }
+            return text;
+        }
+
 
         public long RunCustomSpeedTest(string rawConfig, string testUrl, int testTimeout) =>
             QueuedSpeedTesting(rawConfig, "Custom speed-test", testUrl, testTimeout, false, false, false, null).Item1;

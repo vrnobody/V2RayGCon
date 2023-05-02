@@ -483,6 +483,19 @@ namespace Luna.Models.Apis
 
         public bool SendStopSignal(Process proc) => VgcApis.Misc.Utils.SendStopSignal(proc);
 
+        public string Start(string param)
+        {
+            try
+            {
+                Process.Start(param);
+            }
+            catch (Exception e)
+            {
+                return e.ToString();
+            }
+            return string.Empty;
+        }
+
         public Process RunAndForgot(string exePath) =>
           RunAndForgot(exePath, null);
 

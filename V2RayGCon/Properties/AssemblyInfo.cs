@@ -37,6 +37,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * ---
  * v1.6.8.7 Add PseudoRandom.cs.
  * v1.6.8.6 Luna add string.split().
  *          Fix lua.modules.reader.lua.

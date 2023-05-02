@@ -31,6 +31,13 @@ end
 
 function GetSerializedServers(pageNum)
     local servs = Server:GetAllServers()
+    if servs.Count < 1 then
+        return json.encode({
+            ["pages"] = 0,
+            ["data"] = {},
+        })
+    end
+    
     local min = 0
     local max = servs.Count - 1
     local first = Clamp((pageNum - 1) * pageSize, min, max)

@@ -133,6 +133,8 @@ local function Handler(req)
 end
 
 local function Main()
+    local ver = GetServerVersion()
+    print("server.lua v", ver)
     haServ:Create(url, public, Handler, false)
     print("请打开网址: ", url)
     haServ:Run()

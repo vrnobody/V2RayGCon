@@ -1,0 +1,1 @@
+import{_ as t,o as c,c as _,e as o,p as s,f as a,a as n}from"./index-9ab4a50f.js";const p={},d=e=>(s("data-v-e1e1ef48"),e=e(),a(),e),r=d(()=>n("br",null,null,-1));function l(e,u){return c(),_("p",null,[o(" WebUI v0.0.1"),r,o(" 2023-05-01 ")])}const i=t(p,[["render",l],["__scopeId","data-v-e1e1ef48"]]);export{i as default};

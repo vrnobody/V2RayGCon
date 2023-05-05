@@ -1,12 +1,15 @@
 {
-  "version": "1.6.8.0",
-  "md5": "1D868206C1538E919FAF12664B406BA9",
+  "version": "1.6.9.0",
+  "md5": "A115E5DAF9C08553983355DED642891A",
   "warnings": [
     "本项目支持的最高v2ray-core版本是v4.45.2"
   ],
   "changes": [
-    "服务器面板显示Tag1-3（过滤对Tag无效）",
-    "添加Server:DeleteByUids()函数",
-    "添加coreState:SetName()函数"
+    "修复core下载器无法使用的问题",
+    "支持Xray-core的reality（仅可用于vless和trojan协议）",
+    "添加一个网页版客户瑞，详见手册WebUI",
+    "修复lua.modules.reader.lua中的一个bug",
+    "Luna插件添加string.split(), Web:Ping()等多个函数",
+    "替换随机数生成器"
   ]
 }

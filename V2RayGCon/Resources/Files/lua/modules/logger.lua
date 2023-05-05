@@ -17,38 +17,39 @@ Logger.logLevels = {
     ["Error"] = 1,
 }
 
-function Logger:Warn(text)
+function Logger:Warn(...)
     if self.logLevel >= Logger.logLevels["Warn"] then
-        self:Log("Warn", text)
+        self:Log("Warn", ...)
     end
 end
 
-function Logger:Debug(text)
+function Logger:Debug(...)
     if self.logLevel >= Logger.logLevels["Debug"] then
-        self:Log("Debug", text)
+        self:Log("Debug", ...)
     end
 end
 
-function Logger:Error(text)
+function Logger:Error(...)
     if self.logLevel >= Logger.logLevels["Error"] then
-        self:Log("Error", text)
+        self:Log("Error", ...)
     end
 end
 
-function Logger:Info(text)
+function Logger:Info(...)
     if self.logLevel >= Logger.logLevels["Info"] then
-        self:Log("Info", text)
+        self:Log("Info", ...)
     end
 end
 
-function Logger:Log(prefix, content)
+function Logger:Log(prefix, ...)
 	if prefix == nil then
 		prefix = ""
 	else
-		prefix = " [" .. prefix .. "] "
+		prefix = "[" .. prefix .. "]"
 	end
 	local timestamp = os.date("[%Y-%m-%d %X]")
-	local line = timestamp .. prefix .. tostring(content)
+    local t = {timestamp, prefix, ...}
+	local line = table.concat(t, " ")
     if string.isempty(self.filename) then
         print(line)
     else

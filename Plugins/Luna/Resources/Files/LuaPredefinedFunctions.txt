@@ -1,4 +1,4 @@
-﻿-- Enable import on 2020-04-17
+-- Enable import on 2020-04-17
 -- import = function () end
 
 -- require path
@@ -11,8 +11,7 @@ else
     package.cpath = '.\\lua\\dll32\\?.dll'
 end
 
-
-print = function(...) Misc:Print(...) end
+print = function(...) Misc:Print(table.concat({...}, " ")) end
 os.exit = function() print("os.exit() is disabled") end
                 
 -- copy from NLua

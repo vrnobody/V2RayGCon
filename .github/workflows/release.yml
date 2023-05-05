@@ -17,6 +17,9 @@ jobs:
         releaseNoteUrl: "https://vrnobody.github.io/V2RayGCon/04-dev/01-release-log/"
         verStr: '1.6.x'
         boxAppend: box
+        webuiPkgName: 'webui.zip'
+        webuiVer: '0.0.1.0'
+        webuiUrl: 'https://github.com/vrnobody/WebUI/releases/download'
         # v2rayCorePkgName: 'v2ray-windows-64.zip'
         v2rayCorePkgName: 'Xray-windows-64.zip'
         scriptPkgName: 'scripts-v1.0.5'
@@ -61,6 +64,8 @@ jobs:
             $scriptsDir = "${env:projName}/Resources/Files/Scripts"
             Compress-Archive -Path ${scriptsDir}/* ${env:scriptPkgName}'.zip'
             $outdir = "${env:projName}/bin/${env:projCfg}"
+            Invoke-WebRequest -Uri "${env:webuiUrl}/${env:webuiVer}/${env:webuiPkgName}" -OutFile "${env:webuiPkgName}"
+            Expand-Archive "${env:webuiPkgName}" -DestinationPath "${outdir}/lua/webui"
             Compress-Archive -Path ${outdir}/* ${env:projName}'.zip'
             Invoke-WebRequest -Uri "${env:v2rayCoreUrl}/${env:v2rayCoreVer}/${env:v2rayCorePkgName}" -OutFile "${env:v2rayCorePkgName}"
             Expand-Archive "${env:v2rayCorePkgName}" -DestinationPath "${outdir}/core"

@@ -1,8 +1,0 @@
-把server.lua拖进Luna脚本编辑器运行，然后在浏览器中访问
-http://localhost:4000/
-
-需要V2RayGCon v1.6.9+
-
-小技巧：
-用下面的脚本加载server.lua，避免每次更新都要修改脚本。
-dofile('./lua/webui/server.lua')

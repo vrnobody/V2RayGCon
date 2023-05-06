@@ -11,7 +11,14 @@ else
     package.cpath = '.\\lua\\dll32\\?.dll'
 end
 
-print = function(...) Misc:Print(table.concat({...}, " ")) end
+print = function(...)
+    local t = {}
+    for _, v in pairs({...}) do
+        table.insert(t, tostring(v))
+    end
+    Misc:Print(table.concat(t, " "))
+end
+
 os.exit = function() print("os.exit() is disabled") end
                 
 -- copy from NLua

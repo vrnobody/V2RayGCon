@@ -48,7 +48,10 @@ function Logger:Log(prefix, ...)
 		prefix = "[" .. prefix .. "]"
 	end
 	local timestamp = os.date("[%Y-%m-%d %X]")
-    local t = {timestamp, prefix, ...}
+    local t = {}
+    for _, v in pairs({timestamp, prefix, ...}) do
+        table.insert(t, tostring(v))
+    end
 	local line = table.concat(t, " ")
     if string.isempty(self.filename) then
         print(line)

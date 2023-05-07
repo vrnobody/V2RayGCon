@@ -53,25 +53,34 @@ function Logger:Log(prefix, ...)
         table.insert(t, tostring(v))
     end
 	local line = table.concat(t, " ")
-    if string.isempty(self.filename) then
-        print(line)
-    else
+    local isEmpty = string.isempty(self.filename)
+    if not isEmpty then
         WriteLine(self.filename, line)
+    end
+    if self.isPrintLog or isEmpty then
+        print(line)
     end
 end
 
 function Logger:SetLogLevel(logLevel)
     if logLevel == nil or not table.contains(Logger.logLevels, logLevel) then
-        print("unsupported log level: ", logLevel)
-        logLevel = Logger.logLevels["Debug"]
+        local level = "Info"
+        logLevel = Logger.logLevels[level]
+        if string.isempty(self.filename) then
+            print("log level:", level)
+        else
+            print("log level:", level, ", file:", self.filename)
+        end
     end
     self.logLevel = logLevel
 end
 
-function Logger.new(filename, logLevel)
+function Logger.new(filename, logLevel, isPrintLog)
+    
 	local o = {
         filename = filename,
-        logLevel = Logger.logLevels["Debug"]
+        logLevel = Logger.logLevels.Info,
+        isPrintLog = isPrintLog or false,
     }
     
     setmetatable(o, {__index = Logger})

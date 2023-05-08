@@ -96,7 +96,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 var s = list[i];
                 var st = s.GetCoreStates();
-                if (VgcApis.Misc.Utils.PartialMatchCi(st.GetMark(), keyword)
+                if (VgcApis.Misc.Utils.PartialMatchCi(st.GetTag1(), keyword)
+                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetTag2(), keyword)
+                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetTag3(), keyword)
+                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetMark(), keyword)
                     || VgcApis.Misc.Utils.PartialMatchCi(st.GetRemark(), keyword)
                     || VgcApis.Misc.Utils.PartialMatchCi(st.GetTitle(), keyword))
                 {

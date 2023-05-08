@@ -37,8 +37,13 @@ local function ToLuaTicks(cSharpTicks)
 end
 
 local function IsInTable(haystack, needle)
-    assert(type(needle) == "string")
-    assert(type(haystack) == "table")
+    if string.isempty(needle) or #haystack < 1 then
+        return false
+    end
+    local tNeedle = type(needle)
+    local tHaystack = type(haystack)
+    assert(tNeedle == "string", "needle is " .. tNeedle)
+    assert(tHaystack == "table", "haystack is " .. tHaystack)
 	for _, item in pairs(haystack)
     do
         if string.lower(needle) == string.lower(item) then

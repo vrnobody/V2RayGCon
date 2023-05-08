@@ -38,6 +38,9 @@ using System.Runtime.InteropServices;
 
 /*
  * v1.6.9.1 Add space for print() in Luna plug-in.
+ *          Add Server:Add(config, mark) in Luna plug-in.
+ *          Filter in FormMain supports tag1 to tag3.
+ *          Fix a bug in utils.lua.
  * -------------------------------------------------------------
  * v1.6.8.7 Add PseudoRandom.cs.
  * v1.6.8.6 Luna add string.split().

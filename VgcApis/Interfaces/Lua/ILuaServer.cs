@@ -21,6 +21,10 @@ namespace VgcApis.Interfaces.Lua
         /// <returns>服务器总数</returns>
         int Count();
 
+        bool Add(string config);
+
+        bool Add(string config, string mark);
+
         /// <summary>
         /// 危险操作！
         /// </summary>

@@ -764,6 +764,9 @@ namespace V2RayGCon.Services
 
         public bool AddServer(string config, string mark, bool quiet = false)
         {
+            // unknow bug 2023-05-08
+            mark = mark ?? @"";
+
             // first check
             if (IsServerExist(config))
             {

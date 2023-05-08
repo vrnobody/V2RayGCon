@@ -13,6 +13,9 @@ namespace VgcApis.Interfaces.Services
         void DeleteServerByUids(List<string> uids);
 
         int GetAvailableHttpProxyPort();
+
+        bool AddServer(string config, string mark, bool quiet = false);
+
         string ReplaceOrAddNewServer(string orgUid, string newConfig);
 
         string ReplaceOrAddNewServer(string orgUid, string newConfig, string mark);

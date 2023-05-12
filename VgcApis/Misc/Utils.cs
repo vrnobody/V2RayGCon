@@ -984,12 +984,22 @@ namespace VgcApis.Misc
             }
         }
 
-        public static string TrimConfig(string config)
+        public static string ConfigToString(JObject config)
         {
             try
             {
-                var cfg = JObject.Parse(config);
-                return cfg?.ToString(Formatting.None);
+                return config?.ToString(Formatting.None);
+            }
+            catch { }
+            return null;
+        }
+
+        public static string FormatConfig(string config)
+        {
+            try
+            {
+                var j = JObject.Parse(config);
+                return ConfigToString(j);
             }
             catch { }
             return null;

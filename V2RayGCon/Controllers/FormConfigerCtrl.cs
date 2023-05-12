@@ -146,7 +146,7 @@ namespace V2RayGCon.Controllers
             }
 
             var originalConfig = GetConfigByUid(uid);
-            var newConfig = Misc.Utils.Config2String(config);
+            var newConfig = VgcApis.Misc.Utils.ConfigToString(config);
             if (originalConfig == newConfig || servers.IsServerExist(newConfig))
             {
                 MessageBox.Show(I18N.DuplicateServer);
@@ -170,7 +170,7 @@ namespace V2RayGCon.Controllers
                 return;
             }
 
-            if (!servers.AddServer(Misc.Utils.Config2String(config), ""))
+            if (!servers.AddServer(config.ToString(), ""))
             {
                 MessageBox.Show(I18N.DuplicateServer);
             }

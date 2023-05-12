@@ -77,7 +77,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             // special case for v2cfg:// ...
             if (tuple.Item2 == null)
             {
-                return Misc.Utils.Config2String(tuple.Item1);
+                return VgcApis.Misc.Utils.ConfigToString(tuple.Item1);
             }
 
             return InjectOutboundIntoTemplate(tuple.Item1, tuple.Item2);
@@ -98,7 +98,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             Misc.Utils.MergeJson(template, inb);
             Misc.Utils.MergeJson(template, outb);
-            return Misc.Utils.Config2String(template as JObject);
+            return VgcApis.Misc.Utils.ConfigToString(template as JObject);
         }
         #endregion
     }

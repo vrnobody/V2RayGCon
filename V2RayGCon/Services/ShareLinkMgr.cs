@@ -285,9 +285,9 @@ namespace V2RayGCon.Services
             {
                 return new Tuple<bool, string>(false, I18N.DecodeFail);
             }
-            var isSuccess = servers.AddServer(decodedConfig, mark, true);
-            var reason = isSuccess ? I18N.Success : I18N.DuplicateServer;
-            return new Tuple<bool, string>(isSuccess, reason);
+            var ok = servers.AddServer(decodedConfig, mark, true);
+            var reason = ok ? I18N.Success : I18N.DuplicateServer;
+            return new Tuple<bool, string>(ok, reason);
         }
 
         string[] GenImportResult(

@@ -767,8 +767,10 @@ namespace V2RayGCon.Services
             // unknow bug 2023-05-08
             mark = mark ?? @"";
 
+            config = VgcApis.Misc.Utils.FormatConfig(config);
+
             // first check
-            if (IsServerExist(config))
+            if (string.IsNullOrEmpty(config) || IsServerExist(config))
             {
                 return false;
             }
@@ -1014,7 +1016,7 @@ namespace V2RayGCon.Services
                     break;
             }
 
-            var newConfig = package.ToString(Formatting.None);
+            var newConfig = VgcApis.Misc.Utils.ConfigToString(package);
             string newUid = ReplaceOrAddNewServer(orgUid, newConfig, mark);
 
             UpdateMarkList();

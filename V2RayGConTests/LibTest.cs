@@ -385,22 +385,7 @@ stat: <
             }
         }
 
-        [TestMethod]
-        public void Str2ListStr()
-        {
-            var testData = new Dictionary<string, int> {
-                // string serial, int expectLength
-                {"",0 },
-                {",,,,",0 },
-                {"1.1,2.2,,3.3,,,4.4.4,", 4},
-            };
 
-            foreach (var item in testData)
-            {
-                var len = Misc.Utils.Str2ListStr(item.Key).Count;
-                Assert.AreEqual(item.Value, len);
-            }
-        }
 
 
 

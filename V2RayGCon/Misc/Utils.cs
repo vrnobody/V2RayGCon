@@ -871,30 +871,6 @@ namespace V2RayGCon.Misc
         #endregion
 
         #region convert
-        public static string Config2String(JObject config)
-        {
-            return config.ToString(Formatting.None);
-        }
-
-        public static string Config2Base64String(JObject config)
-        {
-            return Base64Encode(config.ToString(Formatting.None));
-        }
-
-        public static List<string> Str2ListStr(string serial)
-        {
-            var list = new List<string> { };
-            var items = serial.Split(',');
-            foreach (var item in items)
-            {
-                if (!string.IsNullOrEmpty(item))
-                {
-                    list.Add(item);
-                }
-
-            }
-            return list;
-        }
 
         /// <summary>
         /// http is equal to https

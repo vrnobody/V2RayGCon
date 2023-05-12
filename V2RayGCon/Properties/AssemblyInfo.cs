@@ -41,6 +41,7 @@ using System.Runtime.InteropServices;
  *          Add Server:Add(config, mark) in Luna plug-in.
  *          Filter in FormMain supports tag1 to tag3.
  *          Fix a bug in utils.lua.
+ *          Format config before adding new server.
  * -------------------------------------------------------------
  * v1.6.8.7 Add PseudoRandom.cs.
  * v1.6.8.6 Luna add string.split().

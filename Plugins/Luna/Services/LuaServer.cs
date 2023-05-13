@@ -15,6 +15,8 @@ namespace Luna.Services
         List<Controllers.LuaCoreCtrl> luaCoreCtrls = new List<Controllers.LuaCoreCtrl>();
         Models.Apis.LuaApis luaApis;
 
+        readonly object rwLock = new object();
+
         public LuaServer(Settings settings)
         {
             this.settings = settings;
@@ -71,12 +73,20 @@ namespace Luna.Services
             InvokeOnRequireMenuUpdate();
         }
 
+        public int Count()
+        {
+            lock (rwLock)
+            {
+                return luaCoreCtrls.Count;
+            }
+        }
+
         public List<Controllers.LuaCoreCtrl> GetAllLuaCoreCtrls()
         {
-            var list = luaCoreCtrls.ToList();
-            return list
-                .OrderBy(c => c.index)
-                .ToList();
+            lock (rwLock)
+            {
+                return luaCoreCtrls.OrderBy(c => c.index).ToList();
+            }
         }
 
         public List<Controllers.LuaCoreCtrl> GetVisibleCoreCtrls()
@@ -177,13 +187,17 @@ namespace Luna.Services
             var name = coreCtrl.name;
             coreCtrl.OnStateChange -= OnRequireMenuUpdateHandler;
             coreCtrl.Abort();
-            luaCoreCtrls.Remove(coreCtrl);
+            lock (rwLock)
+            {
+                luaCoreCtrls.Remove(coreCtrl);
+            }
             settings.GetLuaCoreSettings().RemoveAll(s => s.name == name);
         }
 
         bool AddOrReplaceScriptQuiet(string name, string script)
         {
-            var coreCtrl = GetAllLuaCoreCtrls().FirstOrDefault(c => c.name == name);
+            var cores = GetAllLuaCoreCtrls();
+            var coreCtrl = cores.FirstOrDefault(c => c.name == name);
             if (coreCtrl != null)
             {
                 coreCtrl.ReplaceScript(script);
@@ -192,6 +206,7 @@ namespace Luna.Services
 
             var coreState = new Models.Data.LuaCoreSetting
             {
+                index = cores.Count + 1,
                 name = name,
                 script = script,
             };
@@ -204,7 +219,10 @@ namespace Luna.Services
         void AddNewLuaCoreCtrl(Models.Data.LuaCoreSetting coreState)
         {
             var coreCtrl = new Controllers.LuaCoreCtrl(false);
-            luaCoreCtrls.Add(coreCtrl);
+            lock (rwLock)
+            {
+                luaCoreCtrls.Add(coreCtrl);
+            }
             coreCtrl.Run(luaApis, coreState);
             coreCtrl.OnStateChange += OnRequireMenuUpdateHandler;
         }

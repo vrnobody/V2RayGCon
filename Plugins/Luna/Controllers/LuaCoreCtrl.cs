@@ -26,11 +26,10 @@ namespace Luna.Controllers
         }
 
         public void Run(
-            Services.Settings settings,
-            Models.Data.LuaCoreSetting luaCoreState,
-            Models.Apis.LuaApis luaApis)
+            Models.Apis.LuaApis luaApis,
+            Models.Data.LuaCoreSetting luaCoreState)
         {
-            this.settings = settings;
+            this.settings = luaApis.formMgr.settings;
             this.coreSetting = luaCoreState;
             this.luaApis = luaApis;
             this.luaSignal = new Models.Apis.LuaSignal(settings);
@@ -112,19 +111,18 @@ namespace Luna.Controllers
             }
         }
 
-        bool _isRunning = false;
         public bool isRunning
         {
-            get => _isRunning;
+            get => coreSetting.isRunning;
             set
             {
-                if (_isRunning == value)
+                if (coreSetting.isRunning == value)
                 {
                     return;
                 }
 
-                _isRunning = value;
-                if (_isRunning == false)
+                coreSetting.isRunning = value;
+                if (value == false)
                 {
                     SendLog($"{coreSetting.name} {I18N.Stopped}");
                 }
@@ -240,7 +238,7 @@ namespace Luna.Controllers
         void RunLuaScript()
         {
             luaSys?.Dispose();
-            luaSys = new Models.Apis.LuaSys(luaApis, GetAllAssemblies);
+            luaSys = new Models.Apis.LuaSys(luaApis, GetAllAssemblies, isLoadClr);
 
             luaSignal.ResetAllSignals();
 

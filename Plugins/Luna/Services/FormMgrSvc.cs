@@ -11,21 +11,18 @@ namespace Luna.Services
         List<Views.WinForms.FormEditor> editors = new List<Views.WinForms.FormEditor>();
         readonly object formLocker = new object();
 
-        Settings settings;
-        LuaServer luaServer;
-        VgcApis.Interfaces.Services.IApiService api;
+        public Settings settings;
+        public LuaServer luaServer;
+        public VgcApis.Interfaces.Services.IApiService vgcApi;
 
-        public FormMgrSvc() { }
-
-        public void Run(
+        public FormMgrSvc(
             Settings settings,
             LuaServer luaServer,
-            VgcApis.Interfaces.Services.IApiService api)
+            VgcApis.Interfaces.Services.IApiService vgcApi)
         {
-
-            this.api = api;
-            this.settings = settings;
             this.luaServer = luaServer;
+            this.vgcApi = vgcApi;
+            this.settings = settings;
         }
 
         #region public methods
@@ -38,7 +35,7 @@ namespace Luna.Services
             VgcApis.Misc.UI.Invoke(() =>
             {
                 form = Views.WinForms.FormEditor.CreateForm(
-                    api, settings, luaServer, this,
+                    this,
                     initialCoreSettings);
 
                 form.FormClosing += (s, a) =>

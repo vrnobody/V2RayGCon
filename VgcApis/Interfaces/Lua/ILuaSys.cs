@@ -1,5 +1,6 @@
 ﻿using NLua;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
@@ -12,6 +13,41 @@ namespace VgcApis.Interfaces.Lua
         /// </summary>
         /// <returns>1.2.3.4</returns>
         string GetAppVersion();
+
+        #region Lua VM
+        string LuaServGetAllCoreInfos();
+        string LuaServGetCoreInfo(string name);
+
+        bool LuaServChangeSettings(string name, string settings);
+
+        bool LusServSetIndex(string name, double index);
+
+        bool LuaServRemove(string name);
+
+        void LuaServStart(string name);
+        void LuaServStop(string name);
+        bool LuaServAdd(string name, string script);
+        string LuaServGetAllScripts();
+        bool LuaVmRemove(string luavm);
+        void LuaVmWait(string luavm);
+
+        void LuaVmWait(string luavm, int delay);
+
+        string LuaVmCreate();
+
+        bool LuaVmRun(string luavm, string name, string script);
+
+        List<string> LuaVmGetAll();
+        void LuaVmAbort(string luavm);
+
+        void LuaVmStop(string luavm);
+
+        bool LuaVmIsRunning(string luavm);
+
+        void LuaVmClearLog(string luavm);
+
+        string LuaVmGetLog(string luavm);
+        #endregion
 
         #region Net
         /// <summary>

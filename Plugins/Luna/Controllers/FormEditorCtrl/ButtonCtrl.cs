@@ -13,7 +13,6 @@ namespace Luna.Controllers.FormEditorCtrl
     internal sealed class ButtonCtrl
     {
         Services.Settings settings;
-        Services.FormMgrSvc formMgr;
         Services.LuaServer luaServer;
 
         private readonly FormEditor formEditor;
@@ -82,20 +81,16 @@ namespace Luna.Controllers.FormEditorCtrl
 
         }
 
-        public void Run(
-            VgcApis.Interfaces.Services.IApiService api,
-            Services.Settings settings,
-            Services.FormMgrSvc formMgr,
-            Services.LuaServer luaServer)
+        public void Run(Services.FormMgrSvc formMgr)
         {
-            this.formMgr = formMgr;
-            this.settings = settings;
-            this.luaServer = luaServer;
 
-            this.luaCoreCtrl = CreateLuaCoreCtrl(settings, api);
+            this.settings = formMgr.settings;
+            this.luaServer = formMgr.luaServer;
 
+            // this.luaCoreCtrl = CreateLuaCoreCtrl(settings, api);
 
             isLoadClrLib = false;
+            this.luaCoreCtrl = Misc.Utils.CreateLuaCoreCtrl(formMgr, Log);
 
             BindEvents();
             ReloadScriptName();
@@ -185,23 +180,6 @@ namespace Luna.Controllers.FormEditorCtrl
 
         public bool IsChanged() =>
             editor.Text != preScriptContent;
-
-        LuaCoreCtrl CreateLuaCoreCtrl(
-           Services.Settings settings,
-           VgcApis.Interfaces.Services.IApiService api)
-        {
-            var luaApis = new Models.Apis.LuaApis(api, settings, formMgr);
-            luaApis.Prepare();
-            luaApis.SetRedirectLogWorker(Log);
-
-            var coreSettings = new Models.Data.LuaCoreSetting()
-            {
-                isLoadClr = isLoadClrLib,
-            };
-            var ctrl = new LuaCoreCtrl(true);
-            ctrl.Run(settings, coreSettings, luaApis);
-            return ctrl;
-        }
 
         public void Cleanup()
         {
@@ -438,12 +416,8 @@ namespace Luna.Controllers.FormEditorCtrl
             formEditor.SetOutputPanelCollapseState(false);
 
             var name = cboxScriptName.Text;
-
-            luaCoreCtrl.Abort();
-            luaCoreCtrl.SetScriptName(string.IsNullOrEmpty(name) ? $"({I18N.Empty})" : name);
-            luaCoreCtrl.ReplaceScript(editor.Text);
-            luaCoreCtrl.isLoadClr = isLoadClrLib;
-            luaCoreCtrl.Start();
+            var script = editor.Text;
+            Misc.Utils.DoString(luaCoreCtrl, name, script, isLoadClrLib);
         }
 
         private void BindEvents()

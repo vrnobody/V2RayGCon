@@ -9,20 +9,16 @@ namespace Luna.Models.Apis
         // this must be static!
         static SysCmpos.PostOffice postOffice = new SysCmpos.PostOffice();
 
-        Settings settings;
-        VgcApis.Interfaces.Services.IApiService vgcApi;
-        private readonly FormMgrSvc formMgr;
+        public readonly Settings settings;
+        public readonly VgcApis.Interfaces.Services.IApiService vgcApi;
+        public readonly FormMgrSvc formMgr;
         Action<string> redirectLogWorker;
 
-        public LuaApis(
-            VgcApis.Interfaces.Services.IApiService api,
-            Settings settings,
-            FormMgrSvc formMgr)
+        public LuaApis(FormMgrSvc formMgr)
         {
-            this.settings = settings;
+            settings = formMgr.settings;
             redirectLogWorker = settings.SendLog;
-
-            vgcApi = api;
+            vgcApi = formMgr.vgcApi;
             this.formMgr = formMgr;
         }
 

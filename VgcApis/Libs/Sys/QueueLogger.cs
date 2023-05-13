@@ -36,6 +36,14 @@ namespace VgcApis.Libs.Sys
             }
         }
 
+        public void Clear()
+        {
+            lock (logWriteLocker)
+            {
+                logCache.Clear();
+            }
+        }
+
         public string GetLogAsString(bool addNewLineAtTheEnd)
         {
             lock (logWriteLocker)

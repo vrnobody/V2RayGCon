@@ -1,4 +1,6 @@
-﻿using NLua;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using NLua;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -55,6 +57,12 @@ namespace Luna.Models.Apis
         }
     }
 
+    class LuaVm
+    {
+        public VgcApis.Libs.Sys.QueueLogger logger;
+        public Controllers.LuaCoreCtrl coreCtrl;
+    }
+
     internal class LuaSys :
         VgcApis.BaseClasses.Disposable,
         VgcApis.Interfaces.Lua.ILuaSys
@@ -63,7 +71,7 @@ namespace Luna.Models.Apis
 
         private readonly LuaApis luaApis;
         private readonly Func<List<Type>> getAllAssemblies;
-
+        private readonly bool isLoadClr;
         List<Process> processes = new List<Process>();
 
         List<VgcApis.Interfaces.Lua.ILuaMailBox>
@@ -74,20 +82,234 @@ namespace Luna.Models.Apis
 
         ConcurrentDictionary<string, CoreEvHook> coreEvHooks = new ConcurrentDictionary<string, CoreEvHook>();
         ConcurrentDictionary<string, GlobalEvHook> globalEvHooks = new ConcurrentDictionary<string, GlobalEvHook>();
+        ConcurrentDictionary<string, LuaVm> luaVms = new ConcurrentDictionary<string, LuaVm>();
 
         VgcApis.Interfaces.Services.IServersService vgcServerService;
 
         SysCmpos.PostOffice postOffice;
 
+        Services.LuaServer luaServer;
+
         public LuaSys(
             LuaApis luaApis,
-            Func<List<Type>> getAllAssemblies)
+            Func<List<Type>> getAllAssemblies,
+            bool isLoadClr)
         {
             this.luaApis = luaApis;
             this.getAllAssemblies = getAllAssemblies;
+            this.isLoadClr = isLoadClr;
             this.postOffice = luaApis.GetPostOffice();
             this.vgcServerService = luaApis.GetVgcServerService();
+            this.luaServer = luaApis.formMgr.luaServer;
         }
+
+        #region ILuaSys.LuaVm
+
+        Controllers.LuaCoreCtrl GetLuaCoreCtrlByName(string name)
+        {
+            return luaServer.GetAllLuaCoreCtrls()
+                .Where(core => core.name == name)
+                .FirstOrDefault();
+        }
+
+        public string LuaServGetAllCoreInfos()
+        {
+            var settings = luaServer.GetAllLuaCoreCtrls()
+                .Select(ctrl =>
+                {
+                    var s = ctrl.GetCoreSettings();
+                    return s;
+                })
+                .ToList();
+            return JsonConvert.SerializeObject(settings) ?? @"[]";
+        }
+
+        public string LuaServGetCoreInfo(string name)
+        {
+            var core = GetLuaCoreCtrlByName(name);
+            if (core != null)
+            {
+                var settings = core.GetCoreSettings();
+                return JsonConvert.SerializeObject(settings);
+            }
+            return string.Empty;
+        }
+
+        public bool LuaServChangeSettings(string name, string settings)
+        {
+            var core = GetLuaCoreCtrlByName(name);
+            var s = JsonConvert.DeserializeObject<Data.LuaCoreSetting>(settings);
+            if (core != null && s != null)
+            {
+                core.isHidden = s.isHidden;
+                core.isLoadClr = s.isLoadClr;
+                core.isAutoRun = s.isAutorun;
+                core.index = s.index;
+                core.name = s.name;
+                luaServer.ResetIndex();
+                luaServer.RefreshPanel();
+                return true;
+            }
+            return false;
+        }
+
+        public bool LusServSetIndex(string name, double index)
+        {
+            var core = GetLuaCoreCtrlByName(name);
+            if (core != null)
+            {
+                core.index = index;
+                luaServer.ResetIndex();
+                luaServer.RefreshPanel();
+                return true;
+            }
+            return false;
+        }
+
+        public bool LuaServRemove(string name)
+        {
+            return luaServer.RemoveScriptByName(name);
+        }
+
+        public void LuaServStart(string name)
+        {
+            GetLuaCoreCtrlByName(name)?.Start();
+        }
+
+        public void LuaServStop(string name)
+        {
+            GetLuaCoreCtrlByName(name)?.Stop();
+        }
+        public bool LuaServAdd(string name, string script)
+        {
+            return luaServer.AddOrReplaceScript(name, script);
+        }
+
+        public string LuaServGetAllScripts()
+        {
+            var scripts = luaServer.GetAllScripts();
+            var r = new Dictionary<string, string>();
+            foreach (var s in scripts)
+            {
+                r[s[0]] = s[1];
+            }
+            return JsonConvert.SerializeObject(r);
+        }
+
+        public bool LuaVmRemove(string luavm)
+        {
+            if (luaVms.TryRemove(luavm, out var vm))
+            {
+                vm.coreCtrl?.Cleanup();
+                return true;
+            }
+            return false;
+        }
+
+        public void LuaVmWait(string luavm) => LuaVmWait(luavm, 1000);
+
+        public void LuaVmWait(string luavm, int delay)
+        {
+            Controllers.LuaCoreCtrl core = null;
+            if (luaVms.TryGetValue(luavm, out var vm))
+            {
+                core = vm.coreCtrl;
+            }
+
+            if (core == null)
+            {
+                return;
+            }
+            while (core?.isRunning == true)
+            {
+                VgcApis.Misc.Utils.Sleep(delay);
+            }
+        }
+
+        public string LuaVmCreate()
+        {
+            var vm = new LuaVm()
+            {
+                logger = new VgcApis.Libs.Sys.QueueLogger(),
+            };
+
+            // 开始无限套娃
+            var formMgr = luaApis.formMgr;
+            var core = Misc.Utils.CreateLuaCoreCtrl(formMgr, vm.logger.Log);
+            if (core == null)
+            {
+                return null;
+            }
+            vm.coreCtrl = core;
+            var luavm = Guid.NewGuid().ToString();
+            if (!luaVms.TryAdd(luavm, vm))
+            {
+                return null;
+            }
+            return luavm;
+        }
+
+        public bool LuaVmRun(string luavm, string name, string script)
+        {
+            if (luaVms.TryGetValue(luavm, out var vm))
+            {
+                return Misc.Utils.DoString(vm.coreCtrl, name, script, isLoadClr);
+            }
+            return false;
+        }
+
+        public List<string> LuaVmGetAll()
+        {
+            return luaVms.Keys.ToList();
+        }
+
+        public void LuaVmAbort(string luavm)
+        {
+            if (luaVms.TryGetValue(luavm, out var vm))
+            {
+                vm.coreCtrl?.Abort();
+            }
+        }
+
+        public void LuaVmStop(string luavm)
+        {
+            if (luaVms.TryGetValue(luavm, out var vm))
+            {
+                vm.coreCtrl?.Stop();
+            }
+        }
+
+        public bool LuaVmIsRunning(string luavm)
+        {
+            if (luaVms.TryGetValue(luavm, out var vm))
+            {
+                var isRunning = vm.coreCtrl?.isRunning;
+                return isRunning == true;
+            }
+            return false;
+        }
+
+        public void LuaVmClearLog(string luavm)
+        {
+            if (luaVms.TryGetValue(luavm, out var vm))
+            {
+                vm.logger?.Clear();
+            }
+        }
+
+        public string LuaVmGetLog(string luavm)
+        {
+            if (luaVms.TryGetValue(luavm, out var vm))
+            {
+                var log = vm.logger
+                    ?.GetLogAsString(false)
+                    ?.TrimEnd(Environment.NewLine.ToCharArray());
+                return log ?? string.Empty;
+            }
+            return string.Empty;
+        }
+
+        #endregion
 
         #region ILuaSys.Net
         List<SysCmpos.HttpServer> httpServs = new List<SysCmpos.HttpServer>();
@@ -862,6 +1084,18 @@ namespace Luna.Models.Apis
                 }
             }
         }
+
+        void RemoveAllLuaVms()
+        {
+            var handles = luaVms.Keys;
+            foreach (var handle in handles)
+            {
+                if (luaVms.TryRemove(handle, out var luaVm))
+                {
+                    luaVm.coreCtrl?.Cleanup();
+                }
+            }
+        }
         #endregion
 
         #region protected methods
@@ -873,6 +1107,7 @@ namespace Luna.Models.Apis
             RemoveAllKeyboardHooks();
             CloseAllHttpServers();
             CloseAllMailBox();
+            RemoveAllLuaVms();
             KillAllProcesses();
         }
 

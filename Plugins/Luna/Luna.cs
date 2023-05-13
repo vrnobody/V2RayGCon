@@ -64,13 +64,13 @@ namespace Luna
             var vgcSettings = api.GetSettingService();
 
             settings = new Services.Settings();
-            luaServer = new Services.LuaServer();
-            formMgr = new Services.FormMgrSvc();
-            menuUpdater = new Services.MenuUpdater(settings);
-
             settings.Run(vgcSettings);
-            luaServer.Run(api, settings, formMgr);
-            formMgr.Run(settings, luaServer, api);
+
+            luaServer = new Services.LuaServer(settings);
+            formMgr = new Services.FormMgrSvc(settings, luaServer, api);
+            luaServer.Run(formMgr);
+
+            menuUpdater = new Services.MenuUpdater(settings);
             menuUpdater.Run(luaServer, miRoot, miShowMgr, miShowEditor);
 
             luaServer.WakeUpAutoRunScripts(TimeSpan.FromSeconds(2));

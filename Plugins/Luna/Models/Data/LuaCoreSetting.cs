@@ -2,7 +2,7 @@
 {
     public class LuaCoreSetting
     {
-
+        public bool isRunning { get; set; }
         public double index { get; set; }
         public bool isHidden { get; set; }
         public string name { get; set; }
@@ -13,6 +13,7 @@
 
         public LuaCoreSetting()
         {
+            isRunning = false;
             name = string.Empty;
             script = string.Empty;
             isAutorun = false;

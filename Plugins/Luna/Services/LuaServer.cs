@@ -15,19 +15,18 @@ namespace Luna.Services
         List<Controllers.LuaCoreCtrl> luaCoreCtrls = new List<Controllers.LuaCoreCtrl>();
         Models.Apis.LuaApis luaApis;
 
-        public LuaServer() { }
-
-        public void Run(
-            VgcApis.Interfaces.Services.IApiService api,
-           Settings settings,
-           FormMgrSvc formMgr)
+        public LuaServer(Settings settings)
         {
             this.settings = settings;
+        }
 
-            this.luaApis = new Models.Apis.LuaApis(api, settings, formMgr);
+        public void Run(FormMgrSvc formMgr)
+        {
+            this.luaApis = new Models.Apis.LuaApis(formMgr);
             this.luaApis.Prepare();
 
             InitLuaCores();
+            Save();
         }
 
         #region public methods
@@ -41,7 +40,7 @@ namespace Luna.Services
 
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                VgcApis.Misc.Utils.Sleep(1000);
+                VgcApis.Misc.Utils.Sleep(delay);
                 foreach (var core in list)
                 {
                     core.Start();
@@ -67,7 +66,7 @@ namespace Luna.Services
             var controls = GetAllLuaCoreCtrls();
             for (int i = 0; i < controls.Count; i++)
             {
-                controls[i].index = i;
+                controls[i].index = i + 1;
             }
             InvokeOnRequireMenuUpdate();
         }
@@ -117,15 +116,6 @@ namespace Luna.Services
             return true;
         }
 
-        void RemoveCoreCtrl(Controllers.LuaCoreCtrl coreCtrl)
-        {
-            var name = coreCtrl.name;
-            coreCtrl.OnStateChange -= OnRequireMenuUpdateHandler;
-            coreCtrl.Abort();
-            luaCoreCtrls.Remove(coreCtrl);
-            settings.GetLuaCoreSettings().RemoveAll(s => s.name == name);
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -166,6 +156,8 @@ namespace Luna.Services
             return true;
         }
 
+        public void RefreshPanel() => InvokeOnLuaCoreCtrlListChangeIgnoreError();
+
         #endregion
 
         #region protected methods
@@ -180,12 +172,15 @@ namespace Luna.Services
         #endregion
 
         #region private methods
-        /// <summary>
-        /// true: require refresh false: not need refresh
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="script"></param>
-        /// <returns></returns>
+        void RemoveCoreCtrl(Controllers.LuaCoreCtrl coreCtrl)
+        {
+            var name = coreCtrl.name;
+            coreCtrl.OnStateChange -= OnRequireMenuUpdateHandler;
+            coreCtrl.Abort();
+            luaCoreCtrls.Remove(coreCtrl);
+            settings.GetLuaCoreSettings().RemoveAll(s => s.name == name);
+        }
+
         bool AddOrReplaceScriptQuiet(string name, string script)
         {
             var coreCtrl = GetAllLuaCoreCtrls().FirstOrDefault(c => c.name == name);
@@ -210,7 +205,7 @@ namespace Luna.Services
         {
             var coreCtrl = new Controllers.LuaCoreCtrl(false);
             luaCoreCtrls.Add(coreCtrl);
-            coreCtrl.Run(settings, coreState, luaApis);
+            coreCtrl.Run(luaApis, coreState);
             coreCtrl.OnStateChange += OnRequireMenuUpdateHandler;
         }
 
@@ -241,14 +236,15 @@ namespace Luna.Services
         void Save() => settings.SaveUserSettingsLater();
 
 
-
         void InitLuaCores()
         {
             var coreStates = settings.GetLuaCoreSettings();
             foreach (var coreState in coreStates)
             {
+                coreState.isRunning = false;
                 AddNewLuaCoreCtrl(coreState);
             }
+            ResetIndex();
         }
         #endregion
     }

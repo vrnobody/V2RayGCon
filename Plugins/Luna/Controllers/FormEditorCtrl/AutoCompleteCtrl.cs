@@ -313,8 +313,10 @@ namespace Luna.Controllers.FormEditorCtrl
             try
             {
                 var code = File.ReadAllText(filename);
-                var mode = isEnableCodeAnalyze ? AnalyzeModes.ModuleEx : AnalyzeModes.Module;
-                return Analyze(code, mode);
+                var mode = isEnableCodeAnalyze ?
+                    Misc.Utils.AnalyzeModes.ModuleEx :
+                    Misc.Utils.AnalyzeModes.Module;
+                return Misc.Utils.Analyze(code, mode);
             }
             catch { }
             return null;
@@ -408,9 +410,10 @@ namespace Luna.Controllers.FormEditorCtrl
 
             if (ast == null)
             {
+                var mode = Misc.Utils.AnalyzeModes.SourceCode;
                 var st = srcs.Select(s =>
                     {
-                        var t = Analyze(s, AnalyzeModes.SourceCode);
+                        var t = Misc.Utils.Analyze(s, mode);
                         AddAstCodeCache(s, t);
                         return new Tuple<string, JObject>(s, t);
                     })
@@ -432,26 +435,7 @@ namespace Luna.Controllers.FormEditorCtrl
             bestMatchSnippets?.UpdateCustomScriptSnippets(snps);
         }
 
-        Lua CreateAnalyser()
-        {
-            Lua anz = new Lua()
-            {
-                UseTraceback = true,
-            };
 
-            anz.State.Encoding = Encoding.UTF8;
-
-            // phony
-            anz["Misc"] = new Mock<VgcApis.Interfaces.Lua.ILuaMisc>().Object;
-            anz["Signal"] = new Mock<VgcApis.Interfaces.Lua.ILuaSignal>().Object;
-            anz["Sys"] = new Mock<VgcApis.Interfaces.Lua.ILuaSys>().Object;
-            anz["Server"] = new Mock<VgcApis.Interfaces.Lua.ILuaServer>().Object;
-            anz["Web"] = new Mock<VgcApis.Interfaces.Lua.ILuaWeb>().Object;
-
-            anz.DoString(Resources.Files.Datas.LuaPredefinedFunctions);
-
-            return anz;
-        }
 
 
         void AnalyzeScriptLater(object sender, EventArgs e)
@@ -459,42 +443,6 @@ namespace Luna.Controllers.FormEditorCtrl
             lazyAnalyser?.Deadline();
         }
 
-
-        enum AnalyzeModes
-        {
-            SourceCode,
-            Module,
-            ModuleEx
-        }
-
-        JObject Analyze(string code, AnalyzeModes analyzeMode)
-        {
-            try
-            {
-                Lua state = CreateAnalyser();
-                state["code"] = code;
-
-                var fn = "analyzeCode";
-                if (analyzeMode == AnalyzeModes.Module)
-                {
-                    fn = "analyzeModule";
-                }
-                else if (analyzeMode == AnalyzeModes.ModuleEx)
-                {
-                    fn = "analyzeModuleEx";
-                }
-
-                string tpl = @"local analyzer = require('lua.libs.luacheck.analyzer').new();"
-                    + @"return analyzer.{0}(code)";
-
-                var script = string.Format(tpl, fn);
-                string r = state.DoString(script)[0] as string;
-
-                return JObject.Parse(r);
-            }
-            catch { }
-            return null;
-        }
         #endregion
 
 

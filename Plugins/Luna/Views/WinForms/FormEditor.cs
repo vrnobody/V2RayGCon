@@ -10,19 +10,15 @@ namespace Luna.Views.WinForms
         Controllers.FormEditorCtrl.AutoCompleteCtrl acmCtrl;
         Controllers.FormEditorCtrl.MenuCtrl menuCtrl;
 
-        Services.LuaServer luaServer;
         Services.Settings settings;
         Services.FormMgrSvc formMgr;
         private readonly LuaCoreSetting initialCoreSettings;
-        VgcApis.Interfaces.Services.IApiService api;
+
 
         ScintillaNET.Scintilla editor;
         string title = "";
 
         public static FormEditor CreateForm(
-            VgcApis.Interfaces.Services.IApiService api,
-            Services.Settings settings,
-            Services.LuaServer luaServer,
             Services.FormMgrSvc formMgr,
 
             Models.Data.LuaCoreSetting initialCoreSettings)
@@ -31,27 +27,20 @@ namespace Luna.Views.WinForms
             VgcApis.Misc.UI.Invoke(() =>
             {
                 r = new FormEditor(
-                    api, settings, luaServer, formMgr,
-
+                    formMgr,
                     initialCoreSettings);
             });
             return r;
         }
 
         FormEditor(
-            VgcApis.Interfaces.Services.IApiService api,
-            Services.Settings settings,
-            Services.LuaServer luaServer,
             Services.FormMgrSvc formMgr,
-
             LuaCoreSetting initialCoreSettings)
         {
-            this.api = api;
             this.formMgr = formMgr;
             this.initialCoreSettings = initialCoreSettings;
 
-            this.settings = settings;
-            this.luaServer = luaServer;
+            this.settings = formMgr.settings;
 
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
@@ -97,7 +86,7 @@ namespace Luna.Views.WinForms
 
             acmCtrl.Run(settings);
 
-            editorCtrl.Run(api, settings, formMgr, luaServer);
+            editorCtrl.Run(formMgr);
 
             menuCtrl = new Controllers.FormEditorCtrl.MenuCtrl(
                 this,

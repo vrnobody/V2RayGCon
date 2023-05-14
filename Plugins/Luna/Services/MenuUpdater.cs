@@ -10,11 +10,10 @@ namespace Luna.Services
         LuaServer luaServer;
         ToolStripMenuItem miRoot, miShowMgr, miShowEditor;
         VgcApis.Libs.Tasks.LazyGuy lazyMenuUpdater;
-        private readonly Settings settings;
 
-        public MenuUpdater(Settings settings)
+        public MenuUpdater()
         {
-            this.settings = settings;
+
         }
 
         public void Run(

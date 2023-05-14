@@ -39,6 +39,7 @@ using System.Runtime.InteropServices;
 /*
  * v1.6.9.2 Add Sys:Lua*() functions in Luna plug-in.
  *          Set index for new added Luna script.
+ *          Add Serverices.AstServer in Luna plug-in.
  * v1.6.9.1 Add space for print() in Luna plug-in.
  *          Add Server:Add(config, mark) in Luna plug-in.
  *          Filter in FormMain supports tag1 to tag3.

@@ -89,6 +89,7 @@ namespace Luna.Models.Apis
         SysCmpos.PostOffice postOffice;
 
         Services.LuaServer luaServer;
+        Services.AstServer astServer;
 
         public LuaSys(
             LuaApis luaApis,
@@ -100,7 +101,9 @@ namespace Luna.Models.Apis
             this.isLoadClr = isLoadClr;
             this.postOffice = luaApis.GetPostOffice();
             this.vgcServerService = luaApis.GetVgcServerService();
+
             this.luaServer = luaApis.formMgr.luaServer;
+            this.astServer = luaApis.formMgr.astServer;
         }
 
         #region ILuaSys.LuaVm
@@ -111,6 +114,27 @@ namespace Luna.Models.Apis
                 .Where(core => core.name == name)
                 .FirstOrDefault();
         }
+
+        public string LuaAnalyzeCode(string code)
+        {
+            var ast = astServer.AnalyzeCode(code);
+            return ast?.ToString(Formatting.None);
+        }
+
+        public string LuaAnalyzeModule(string name)
+        {
+            var ast = astServer.AnalyzeModule(name, false);
+            return ast?.ToString(Formatting.None);
+        }
+
+        public string LuaAnalyzeModuleEx(string name)
+        {
+            // this function is disabled for safety reason
+            // var ast = astServer.AnalyzeModule(name, true);
+            JObject ast = null;
+            return ast?.ToString(Formatting.None);
+        }
+
 
         public string LuaServGetAllCoreInfos()
         {

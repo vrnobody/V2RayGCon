@@ -13,13 +13,16 @@ namespace Luna.Services
 
         public Settings settings;
         public LuaServer luaServer;
+        public AstServer astServer;
         public VgcApis.Interfaces.Services.IApiService vgcApi;
 
         public FormMgrSvc(
             Settings settings,
             LuaServer luaServer,
+            AstServer astServer,
             VgcApis.Interfaces.Services.IApiService vgcApi)
         {
+            this.astServer = astServer;
             this.luaServer = luaServer;
             this.vgcApi = vgcApi;
             this.settings = settings;

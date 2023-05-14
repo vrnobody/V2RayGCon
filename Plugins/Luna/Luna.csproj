@@ -122,6 +122,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>I18N.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\AstServer.cs" />
     <Compile Include="Services\FormMgrSvc.cs" />
     <Compile Include="Services\LuaServer.cs" />
     <Compile Include="Services\MenuUpdater.cs" />

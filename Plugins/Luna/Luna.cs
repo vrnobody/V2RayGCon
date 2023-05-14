@@ -11,6 +11,7 @@ namespace Luna
         Services.Settings settings;
         Services.LuaServer luaServer;
         Services.FormMgrSvc formMgr;
+        Services.AstServer astServer;
         Services.MenuUpdater menuUpdater;
 
         readonly ToolStripMenuItem miRoot, miShowMgr, miShowEditor;
@@ -66,11 +67,14 @@ namespace Luna
             settings = new Services.Settings();
             settings.Run(vgcSettings);
 
+            astServer = new Services.AstServer();
+            astServer.Run();
+
             luaServer = new Services.LuaServer(settings);
-            formMgr = new Services.FormMgrSvc(settings, luaServer, api);
+            formMgr = new Services.FormMgrSvc(settings, luaServer, astServer, api);
             luaServer.Run(formMgr);
 
-            menuUpdater = new Services.MenuUpdater(settings);
+            menuUpdater = new Services.MenuUpdater();
             menuUpdater.Run(luaServer, miRoot, miShowMgr, miShowEditor);
 
             luaServer.WakeUpAutoRunScripts(TimeSpan.FromSeconds(2));

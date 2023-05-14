@@ -12,6 +12,7 @@ namespace Luna.Views.WinForms
 
         Services.Settings settings;
         Services.FormMgrSvc formMgr;
+
         private readonly LuaCoreSetting initialCoreSettings;
 
 
@@ -20,7 +21,6 @@ namespace Luna.Views.WinForms
 
         public static FormEditor CreateForm(
             Services.FormMgrSvc formMgr,
-
             Models.Data.LuaCoreSetting initialCoreSettings)
         {
             FormEditor r = null;
@@ -37,9 +37,9 @@ namespace Luna.Views.WinForms
             Services.FormMgrSvc formMgr,
             LuaCoreSetting initialCoreSettings)
         {
-            this.formMgr = formMgr;
             this.initialCoreSettings = initialCoreSettings;
 
+            this.formMgr = formMgr;
             this.settings = formMgr.settings;
 
             InitializeComponent();
@@ -78,6 +78,8 @@ namespace Luna.Views.WinForms
                 rtBoxOutput);
 
             acmCtrl = new Controllers.FormEditorCtrl.AutoCompleteCtrl(
+                formMgr.astServer,
+
                 editor,
                 cboxVarList,
                 cboxFunctionList,

@@ -1,74 +1,12 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using NLua;
-using Moq;
-using System.Text;
+
 
 namespace Luna.Misc
 {
     public static class Utils
     {
-        #region todo: lua ast should be a service 
-        internal enum AnalyzeModes
-        {
-            SourceCode,
-            Module,
-            ModuleEx
-        }
-
-        private static Lua CreateAnalyser()
-        {
-            Lua anz = new Lua()
-            {
-                UseTraceback = true,
-            };
-
-            anz.State.Encoding = Encoding.UTF8;
-
-            // phony
-            anz["Misc"] = new Mock<VgcApis.Interfaces.Lua.ILuaMisc>().Object;
-            anz["Signal"] = new Mock<VgcApis.Interfaces.Lua.ILuaSignal>().Object;
-            anz["Sys"] = new Mock<VgcApis.Interfaces.Lua.ILuaSys>().Object;
-            anz["Server"] = new Mock<VgcApis.Interfaces.Lua.ILuaServer>().Object;
-            anz["Web"] = new Mock<VgcApis.Interfaces.Lua.ILuaWeb>().Object;
-
-            anz.DoString(Resources.Files.Datas.LuaPredefinedFunctions);
-
-            return anz;
-        }
-        #endregion
-
         #region lua vm
-
-        internal static JObject Analyze(string code, AnalyzeModes analyzeMode)
-        {
-            try
-            {
-                Lua state = CreateAnalyser();
-                state["code"] = code;
-
-                var fn = "analyzeCode";
-                if (analyzeMode == AnalyzeModes.Module)
-                {
-                    fn = "analyzeModule";
-                }
-                else if (analyzeMode == AnalyzeModes.ModuleEx)
-                {
-                    fn = "analyzeModuleEx";
-                }
-
-                string tpl = @"local analyzer = require('lua.libs.luacheck.analyzer').new();"
-                    + @"return analyzer.{0}(code)";
-
-                var script = string.Format(tpl, fn);
-                string r = state.DoString(script)[0] as string;
-
-                return JObject.Parse(r);
-            }
-            catch { }
-            return null;
-        }
 
         internal static bool DoString(Controllers.LuaCoreCtrl coreCtrl, string name, string script, bool isLoadClr)
         {

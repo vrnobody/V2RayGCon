@@ -1,9 +1,7 @@
 ﻿using AutocompleteMenuNS;
 using Luna.Libs.LuaSnippet;
 using Luna.Services;
-using Moq;
 using Newtonsoft.Json.Linq;
-using NLua;
 using ScintillaNET;
 using System;
 using System.Collections.Concurrent;
@@ -18,49 +16,41 @@ namespace Luna.Controllers.FormEditorCtrl
 {
     internal sealed class AutoCompleteCtrl
     {
-        #region constants
-        string KEY_PARAMS = "params";
-        string KEY_PROPERTY = "props";
-        string KEY_FUNCTION = "funcs";
-        string KEY_VARS = "vars";
-        string KEY_MODULES = "modules";
-        string KEY_LINE_NUM = "line";  // line number
-        string KEY_METHODS = "methods";
-        string KEY_SUB_FUNCS = "subs";
-        #endregion
+
 
         private readonly Scintilla editor;
         private readonly ComboBox cboxVarList;
         private readonly ComboBox cboxFunctionList;
-        private readonly ToolStripMenuItem miEanbleCodeAnalyze;
+        private readonly ToolStripMenuItem miEanbleCodeAnalyzeEx;
         private readonly ToolStripStatusLabel smiLbCodeanalyze;
 
+        Services.AstServer astServer;
         AutocompleteMenu luaAcm = null;
         BestMatchSnippets bestMatchSnippets = null;
 
         VgcApis.Libs.Infr.Recorder history = new VgcApis.Libs.Infr.Recorder();
         VgcApis.Libs.Tasks.LazyGuy lazyAnalyser;
 
-        ConcurrentQueue<string> hotCacheKeys = new ConcurrentQueue<string>();
-        ConcurrentDictionary<string, JObject> astCodeCache = new ConcurrentDictionary<string, JObject>();
-        ConcurrentDictionary<string, JObject> astModuleCache = new ConcurrentDictionary<string, JObject>();
 
         public AutoCompleteCtrl(
+            AstServer astServer,
+
             Scintilla editor,
             ComboBox cboxVarList,
             ComboBox cboxFunctionList,
 
-            ToolStripMenuItem miEanbleCodeAnalyze,
+            ToolStripMenuItem miEanbleCodeAnalyzeEx,
             ToolStripStatusLabel smiLbCodeanalyze)
         {
+            this.astServer = astServer;
             this.editor = editor;
             this.cboxVarList = cboxVarList;
             this.cboxFunctionList = cboxFunctionList;
-            this.miEanbleCodeAnalyze = miEanbleCodeAnalyze;
+            this.miEanbleCodeAnalyzeEx = miEanbleCodeAnalyzeEx;
             this.smiLbCodeanalyze = smiLbCodeanalyze;
         }
 
-        bool isEnableCodeAnalyze;
+        bool isEnableCodeAnalyzeEx;
 
         Settings settings;
         public void Run(Settings settings)
@@ -71,7 +61,7 @@ namespace Luna.Controllers.FormEditorCtrl
             InitControls();
             BindEvents();
 
-            SetIsEnableCodeAnalyze(false);
+            EnableCodeAnalyzeEx(false);
             UpdateLuaRequireModuleNameSnippets();
         }
 
@@ -111,52 +101,17 @@ namespace Luna.Controllers.FormEditorCtrl
         public void Cleanup()
         {
             ReleaseEvents();
-            StopFileSystemWatcher();
             lazyAnalyser?.Dispose();
 
             luaAcm.SetAutocompleteMenu(editor, null);
             luaAcm.Dispose();
             luaAcm = null;
+            bestMatchSnippets?.Cleanup();
         }
         #endregion
 
 
         #region file watching
-        FileSystemWatcher fsWatcher;
-        void StopFileSystemWatcher()
-        {
-            if (fsWatcher == null)
-            {
-                return;
-            }
-            fsWatcher.EnableRaisingEvents = false;
-            fsWatcher.Dispose();
-            fsWatcher = null;
-        }
-
-        FileSystemWatcher CreateFileSystemWatcher(string relativeFileName)
-        {
-            if (!Directory.Exists(relativeFileName))
-            {
-                return null;
-            }
-
-            var fsw = new FileSystemWatcher
-            {
-                IncludeSubdirectories = true,
-                Path = relativeFileName,
-                Filter = "*.lua",
-            };
-
-            fsw.Changed += FileSystemEventHandler;
-            fsw.Created += FileSystemEventHandler;
-            fsw.Deleted += FileSystemEventHandler;
-            fsw.Renamed += FileSystemEventHandler;
-
-            fsw.EnableRaisingEvents = true;
-
-            return fsw;
-        }
 
         void UpdateLuaRequireModuleNameSnippets()
         {
@@ -181,18 +136,6 @@ namespace Luna.Controllers.FormEditorCtrl
             catch { }
         }
 
-        void FileSystemEventHandler(object sender, FileSystemEventArgs e)
-        {
-            UpdateLuaRequireModuleNameSnippets();
-            var mn = VgcApis.Misc.Utils.GetLuaModuleName(e.FullPath);
-            if (string.IsNullOrWhiteSpace(mn))
-            {
-                return;
-            }
-            astModuleCache.TryRemove(mn, out _);
-        }
-
-
         #endregion
 
         #region code analyzing
@@ -204,39 +147,39 @@ namespace Luna.Controllers.FormEditorCtrl
                 return;
             }
 
-            if (ast[KEY_VARS] is JObject)
+            if (ast[Services.AstServer.KEY_VARS] is JObject)
             {
-                foreach (var kv in ast[KEY_VARS] as JObject)
+                foreach (var kv in ast[Services.AstServer.KEY_VARS] as JObject)
                 {
                     snippets.Add(new LuaKeywordSnippets(kv.Key));
                 }
             }
 
-            if (ast[KEY_FUNCTION] is JObject)
+            if (ast[Services.AstServer.KEY_FUNCTION] is JObject)
             {
-                foreach (var kv in ast[KEY_FUNCTION] as JObject)
+                foreach (var kv in ast[Services.AstServer.KEY_FUNCTION] as JObject)
                 {
-                    var ps = (kv.Value as JObject)[KEY_PARAMS] as JArray;
+                    var ps = (kv.Value as JObject)[Services.AstServer.KEY_PARAMS] as JArray;
                     var sps = string.Join(", ", ps);
                     snippets.Add(new LuaFuncSnippets($"{kv.Key}({sps})"));
                 }
             }
 
-            if (ast[KEY_SUB_FUNCS] is JObject)
+            if (ast[Services.AstServer.KEY_SUB_FUNCS] is JObject)
             {
-                foreach (var kv in ast[KEY_SUB_FUNCS] as JObject)
+                foreach (var kv in ast[Services.AstServer.KEY_SUB_FUNCS] as JObject)
                 {
-                    var ps = (kv.Value as JObject)[KEY_PARAMS] as JArray;
+                    var ps = (kv.Value as JObject)[Services.AstServer.KEY_PARAMS] as JArray;
                     var sps = string.Join(", ", ps);
                     snippets.Add(new LuaSubFuncSnippets($"{kv.Key}({sps})", "."));
                 }
             }
 
-            if (ast[KEY_METHODS] is JObject)
+            if (ast[Services.AstServer.KEY_METHODS] is JObject)
             {
-                foreach (var kv in ast[KEY_METHODS] as JObject)
+                foreach (var kv in ast[Services.AstServer.KEY_METHODS] as JObject)
                 {
-                    var ps = (kv.Value as JObject)[KEY_PARAMS] as JArray;
+                    var ps = (kv.Value as JObject)[Services.AstServer.KEY_PARAMS] as JArray;
                     var sps = string.Join(", ", ps);
                     snippets.Add(new LuaSubFuncSnippets($"{kv.Key}({sps})", ":"));
                 }
@@ -247,46 +190,36 @@ namespace Luna.Controllers.FormEditorCtrl
 
         private void BuildModuleSnippets(JObject ast, List<MatchItemBase> snippets)
         {
-            if (!(ast[KEY_MODULES] is JObject))
+            if (!(ast[Services.AstServer.KEY_MODULES] is JObject))
             {
                 return;
             }
 
-            foreach (var kv in ast[KEY_MODULES] as JObject)
+            foreach (var kv in ast[Services.AstServer.KEY_MODULES] as JObject)
             {
                 var mn = kv.Value.ToString();
-                if (!astModuleCache.TryGetValue(mn, out var amc))
-                {
-                    CheckCacheSize(astModuleCache);
-                    var fn = mn.Replace('.', Path.DirectorySeparatorChar) + ".lua";
-                    amc = AnalyzeOneModule(fn);
-                    if (amc != null)
-                    {
-                        astModuleCache.TryAdd(mn, amc);
-                    }
-                }
-
-                if (amc == null)
+                var mAst = astServer.AnalyzeModule(mn, isEnableCodeAnalyzeEx);
+                if (mAst == null)
                 {
                     continue;
                 }
 
-                BuildOneModuleSnippets(kv.Key, amc, snippets);
+                BuildOneModuleSnippets(kv.Key, mAst, snippets);
             }
         }
 
         private void BuildOneModuleSnippets(string varName, JObject ast, List<MatchItemBase> snippets)
         {
             var fds = new Dictionary<string, string>() {
-                { KEY_FUNCTION,"." },
-                { KEY_METHODS ,":" },
+                { Services.AstServer.KEY_FUNCTION,"." },
+                { Services.AstServer.KEY_METHODS ,":" },
             };
 
             snippets.Add(new LuaKeywordSnippets(varName));
 
             foreach (var kv in ast)
             {
-                if (kv.Value is JArray && kv.Key == KEY_PROPERTY)
+                if (kv.Value is JArray && kv.Key == Services.AstServer.KEY_PROPERTY)
                 {
                     foreach (string prop in kv.Value as JArray)
                     {
@@ -306,61 +239,6 @@ namespace Luna.Controllers.FormEditorCtrl
                     }
                 }
             }
-        }
-
-        JObject AnalyzeOneModule(string filename)
-        {
-            try
-            {
-                var code = File.ReadAllText(filename);
-                var mode = isEnableCodeAnalyze ?
-                    Misc.Utils.AnalyzeModes.ModuleEx :
-                    Misc.Utils.AnalyzeModes.Module;
-                return Misc.Utils.Analyze(code, mode);
-            }
-            catch { }
-            return null;
-        }
-
-        void CheckCacheSize<TKey, TValue>(ConcurrentDictionary<TKey, TValue> cache)
-        {
-            try
-            {
-                var keep = 100;
-                var keys = cache.Keys.ToList();
-                if (keys.Count > keep * 2)
-                {
-                    var cut = keys.Count - keep;
-                    for (int i = 0; i < cut; i++)
-                    {
-                        cache.TryRemove(keys[i], out _);
-                    }
-                }
-            }
-            catch { }
-        }
-
-        void AddAstCodeCache(string key, JObject value)
-        {
-            while (hotCacheKeys.Count > 20)
-            {
-                hotCacheKeys.TryDequeue(out _);
-            }
-
-            if (astCodeCache.Count > 300)
-            {
-                var keys = astCodeCache.Keys;
-                var filterd = keys
-                    .Where(k => !hotCacheKeys.Contains(k))
-                    .Skip(150 - hotCacheKeys.Count)
-                    .ToList();
-                foreach (var k in filterd)
-                {
-                    astCodeCache.TryRemove(k, out _);
-                }
-            }
-
-            astCodeCache.TryAdd(key, value);
         }
 
         string GetAllTextExceptCurLine()
@@ -398,29 +276,12 @@ namespace Luna.Controllers.FormEditorCtrl
             string key = null;
             foreach (var src in srcs)
             {
-                if (astCodeCache.TryGetValue(src, out var cachedAst))
+                key = src;
+                ast = astServer.AnalyzeCode(src);
+                if (ast != null)
                 {
-                    currentCodeAst = cachedAst;
-                    hotCacheKeys.Enqueue(src);
-                    key = src;
-                    ast = cachedAst;
                     break;
                 }
-            }
-
-            if (ast == null)
-            {
-                var mode = Misc.Utils.AnalyzeModes.SourceCode;
-                var st = srcs.Select(s =>
-                    {
-                        var t = Misc.Utils.Analyze(s, mode);
-                        AddAstCodeCache(s, t);
-                        return new Tuple<string, JObject>(s, t);
-                    })
-                   .OrderByDescending(tp => ((tp.Item2?.ToString()) ?? "").Length)
-                   .First();
-                key = st.Item1;
-                ast = st.Item2;
             }
 
             if (ast != null)
@@ -436,8 +297,6 @@ namespace Luna.Controllers.FormEditorCtrl
         }
 
 
-
-
         void AnalyzeScriptLater(object sender, EventArgs e)
         {
             lazyAnalyser?.Deadline();
@@ -447,15 +306,13 @@ namespace Luna.Controllers.FormEditorCtrl
 
 
         #region private methods
-        void SetIsEnableCodeAnalyze(bool isEnable)
+        void EnableCodeAnalyzeEx(bool isEnable)
         {
-            isEnableCodeAnalyze = isEnable;
-            astModuleCache.Clear();
+            isEnableCodeAnalyzeEx = isEnable;
             AnalyzeScriptLater(this, EventArgs.Empty);
-
             Invoke(() =>
             {
-                miEanbleCodeAnalyze.Checked = isEnable;
+                miEanbleCodeAnalyzeEx.Checked = isEnable;
                 smiLbCodeanalyze.Enabled = isEnable;
             });
 
@@ -619,12 +476,13 @@ namespace Luna.Controllers.FormEditorCtrl
         private void InitControls()
         {
             luaAcm = CreateAcm(editor);
-            miEanbleCodeAnalyze.Checked = false;
+            miEanbleCodeAnalyzeEx.Checked = false;
             smiLbCodeanalyze.Enabled = false;
         }
 
         void ReleaseEvents()
         {
+            astServer.OnFileChanged -= UpdateLuaRequireModuleNameSnippets;
             var editor = this.editor;
             if (editor == null)
             {
@@ -646,15 +504,16 @@ namespace Luna.Controllers.FormEditorCtrl
 
         void BindEvents()
         {
-            fsWatcher = CreateFileSystemWatcher(@"lua");
+
+            astServer.OnFileChanged += UpdateLuaRequireModuleNameSnippets;
 
             editor.TextChanged += AnalyzeScriptLater;
             editor.Click += AddToHistory;
 
-            miEanbleCodeAnalyze.Click += (s, a) =>
+            miEanbleCodeAnalyzeEx.Click += (s, a) =>
             {
-                var enable = !miEanbleCodeAnalyze.Checked;
-                SetIsEnableCodeAnalyze(enable);
+                var enable = !miEanbleCodeAnalyzeEx.Checked;
+                EnableCodeAnalyzeEx(enable);
             };
 
             cboxVarList.DropDownClosed += (s, a) =>
@@ -689,9 +548,9 @@ namespace Luna.Controllers.FormEditorCtrl
             var debug = ast?.ToString();
 
             string[] keys = new string[] {
-                KEY_FUNCTION,
-                KEY_SUB_FUNCS,
-                KEY_METHODS,
+                Services.AstServer.KEY_FUNCTION,
+                Services.AstServer.KEY_SUB_FUNCS,
+                Services.AstServer.KEY_METHODS,
             };
 
             Dictionary<string, int> funcs = new Dictionary<string, int>();
@@ -702,8 +561,8 @@ namespace Luna.Controllers.FormEditorCtrl
                 {
                     foreach (var kv in ast[key] as JObject)
                     {
-                        var ps = (kv.Value as JObject)[KEY_PARAMS] as JArray;
-                        var luaLineNumber = (kv.Value as JObject)[KEY_LINE_NUM].Value<int>();
+                        var ps = (kv.Value as JObject)[Services.AstServer.KEY_PARAMS] as JArray;
+                        var luaLineNumber = (kv.Value as JObject)[Services.AstServer.KEY_LINE_NUM].Value<int>();
                         var sps = string.Join(", ", ps);
                         var fn = $"{kv.Key}({sps})";
                         funcs.Add(fn, luaLineNumber - 1);
@@ -729,9 +588,9 @@ namespace Luna.Controllers.FormEditorCtrl
             }
 
             var ast = currentCodeAst;
-            if (ast != null && ast[KEY_VARS] is JObject)
+            if (ast != null && ast[Services.AstServer.KEY_VARS] is JObject)
             {
-                foreach (var kv in ast[KEY_VARS] as JObject)
+                foreach (var kv in ast[Services.AstServer.KEY_VARS] as JObject)
                 {
                     if (kv.Key == v)
                     {
@@ -760,16 +619,14 @@ namespace Luna.Controllers.FormEditorCtrl
             return false;
         }
 
-
-
         private void OnCboxVarListDropDownHandler(object sender, EventArgs args)
         {
             history.Add(editor.CurrentLine);
             var ast = currentCodeAst;
             List<string> vars = new List<string>();
-            if (ast != null && ast["vars"] is JObject)
+            if (ast != null && ast[Services.AstServer.KEY_VARS] is JObject)
             {
-                foreach (var kv in ast[KEY_VARS] as JObject)
+                foreach (var kv in ast[Services.AstServer.KEY_VARS] as JObject)
                 {
                     vars.Add(kv.Key);
                 }

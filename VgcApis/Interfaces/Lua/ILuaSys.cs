@@ -15,6 +15,12 @@ namespace VgcApis.Interfaces.Lua
         string GetAppVersion();
 
         #region Lua VM
+        string LuaAnalyzeCode(string code);
+        string LuaAnalyzeModule(string name);
+
+        // this function is disabled for safety reason
+        string LuaAnalyzeModuleEx(string name);
+
         string LuaServGetAllCoreInfos();
         string LuaServGetCoreInfo(string name);
 

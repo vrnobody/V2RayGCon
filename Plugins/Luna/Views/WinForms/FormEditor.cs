@@ -86,7 +86,7 @@ namespace Luna.Views.WinForms
                 enableCodeAnalyzeToolStripMenuItem,
                 toolStripStatusCodeAnalyze);
 
-            acmCtrl.Run(settings);
+            acmCtrl.Run();
 
             editorCtrl.Run(formMgr);
 
@@ -132,7 +132,6 @@ namespace Luna.Views.WinForms
         {
             splitContainerTabEditor.SplitterDistance = this.Width * 6 / 10;
             SetOutputPanelCollapseState(true);
-
         }
         private void FormClosingHandler(object sender, FormClosingEventArgs e)
         {

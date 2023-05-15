@@ -15,6 +15,8 @@ namespace VgcApis.Interfaces.Lua
         string GetAppVersion();
 
         #region Lua VM
+        string LuaGenModuleSnippets(string code);
+        string LuaGetStaticSnippets();
         string LuaAnalyzeCode(string code);
         string LuaAnalyzeModule(string name);
 

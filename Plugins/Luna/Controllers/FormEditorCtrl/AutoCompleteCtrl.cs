@@ -16,8 +16,6 @@ namespace Luna.Controllers.FormEditorCtrl
 {
     internal sealed class AutoCompleteCtrl
     {
-
-
         private readonly Scintilla editor;
         private readonly ComboBox cboxVarList;
         private readonly ComboBox cboxFunctionList;
@@ -52,17 +50,16 @@ namespace Luna.Controllers.FormEditorCtrl
 
         bool isEnableCodeAnalyzeEx;
 
-        Settings settings;
-        public void Run(Settings settings)
+        public void Run()
         {
-            this.settings = settings;
+
             lazyAnalyser = new VgcApis.Libs.Tasks.LazyGuy(AnalizeScriptWorker, 1000, 3000);
 
             InitControls();
             BindEvents();
 
             EnableCodeAnalyzeEx(false);
-            UpdateLuaRequireModuleNameSnippets();
+            AstServerOnFileChangedHandler();
         }
 
         #region public methods
@@ -113,27 +110,11 @@ namespace Luna.Controllers.FormEditorCtrl
 
         #region file watching
 
-        void UpdateLuaRequireModuleNameSnippets()
+        void AstServerOnFileChangedHandler()
         {
-            try
-            {
-                List<LuaImportClrSnippets> snps = new List<LuaImportClrSnippets>();
-                string[] fileArray = Directory.GetFiles(@"lua", "*.lua", SearchOption.AllDirectories);
-                foreach (var file in fileArray)
-                {
-                    if (!string.IsNullOrEmpty(file) || !file.ToLower().EndsWith(".lua"))
-                    {
-                        var mn = file.Replace("\\", ".")
-                            .Replace("/", ".")
-                            .Substring(0, file.Length - ".lua".Length);
-
-                        var scr = $"require('{mn}')";
-                        snps.Add(new LuaImportClrSnippets(scr));
-                    }
-                }
-                bestMatchSnippets?.UpdateRequireModuleSnippets(snps);
-            }
-            catch { }
+            var modules = astServer.GetRequireModuleNames();
+            var ms = modules.Select(m => new LuaImportClrSnippets(m)).ToList();
+            bestMatchSnippets?.UpdateRequireModuleSnippets(ms);
         }
 
         #endregion
@@ -451,7 +432,7 @@ namespace Luna.Controllers.FormEditorCtrl
         AutocompleteMenu CreateAcm(Scintilla editor)
         {
 
-            bestMatchSnippets = settings?.CreateBestMatchSnippet(editor);
+            bestMatchSnippets = astServer?.CreateBestMatchSnippet(editor);
 
             var imageList = new ImageList();
             imageList.Images.AddRange(new Image[] {
@@ -482,7 +463,7 @@ namespace Luna.Controllers.FormEditorCtrl
 
         void ReleaseEvents()
         {
-            astServer.OnFileChanged -= UpdateLuaRequireModuleNameSnippets;
+            astServer.OnFileChanged -= AstServerOnFileChangedHandler;
             var editor = this.editor;
             if (editor == null)
             {
@@ -505,7 +486,7 @@ namespace Luna.Controllers.FormEditorCtrl
         void BindEvents()
         {
 
-            astServer.OnFileChanged += UpdateLuaRequireModuleNameSnippets;
+            astServer.OnFileChanged += AstServerOnFileChangedHandler;
 
             editor.TextChanged += AnalyzeScriptLater;
             editor.Click += AddToHistory;

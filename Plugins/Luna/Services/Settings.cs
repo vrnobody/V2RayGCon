@@ -11,7 +11,6 @@ namespace Luna.Services
 
         readonly string pluginName = Properties.Resources.Name;
         Models.Data.UserSettings userSettings;
-        Libs.LuaSnippet.SnippetsCache snpCache;
 
         VgcApis.Libs.Tasks.LazyGuy lazyBookKeeper;
 
@@ -33,12 +32,7 @@ namespace Luna.Services
 
         #endregion
 
-        #region internal methods
 
-        public Libs.LuaSnippet.BestMatchSnippets CreateBestMatchSnippet(ScintillaNET.Scintilla editor)
-            => snpCache?.CreateBestMatchSnippets(editor);
-
-        #endregion
 
         #region public methods
 
@@ -54,8 +48,6 @@ namespace Luna.Services
             VgcApis.Interfaces.Services.ISettingsService vgcSetting)
         {
             this.vgcSetting = vgcSetting;
-
-            this.snpCache = new Libs.LuaSnippet.SnippetsCache();
 
             userSettings = VgcApis.Misc.Utils
                 .LoadPluginSetting<Models.Data.UserSettings>(
@@ -124,7 +116,6 @@ namespace Luna.Services
         protected override void Cleanup()
         {
             lazyBookKeeper?.Dispose();
-            snpCache?.Dispose();
             SaveUserSettingsNow();
         }
         #endregion

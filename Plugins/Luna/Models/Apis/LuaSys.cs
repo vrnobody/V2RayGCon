@@ -61,6 +61,7 @@ namespace Luna.Models.Apis
     {
         public VgcApis.Libs.Sys.QueueLogger logger;
         public Controllers.LuaCoreCtrl coreCtrl;
+        public string lastLogSend = "";
     }
 
     internal class LuaSys :
@@ -107,6 +108,97 @@ namespace Luna.Models.Apis
         }
 
         #region ILuaSys.LuaVm
+        private void BuildOneModuleSnippets(string varName, JObject ast, List<Dictionary<string, string>> snippets)
+        {
+            var fds = new Dictionary<string, string>() {
+                { Services.AstServer.KEY_FUNCTION,"." },
+                { Services.AstServer.KEY_METHODS ,":" },
+            };
+
+            snippets.Add(ToSnippet(varName, "keyword"));
+
+            foreach (var kv in ast)
+            {
+                if (kv.Value is JArray && kv.Key == Services.AstServer.KEY_PROPERTY)
+                {
+                    foreach (string prop in kv.Value as JArray)
+                    {
+                        var snp = ToSnippet($"{varName}.{prop}", "snippet");
+                        snippets.Add(snp);
+                    }
+                    continue;
+                }
+
+                if (kv.Value is JObject && fds.Keys.Contains(kv.Key))
+                {
+                    foreach (var skv in kv.Value as JObject)
+                    {
+                        var ps = string.Join(", ", skv.Value as JArray);
+                        var sep = fds[kv.Key];
+                        snippets.Add(ToSnippet($"{varName}{sep}{skv.Key}({ps})", "snippet"));
+                    }
+                }
+            }
+        }
+
+        public string LuaGenModuleSnippets(string code)
+        {
+            var ast = astServer.AnalyzeCode(code);
+            if (ast == null)
+            {
+                return null;
+            }
+
+            if (!(ast[Services.AstServer.KEY_MODULES] is JObject))
+            {
+                return null;
+            }
+
+            var snippets = new List<Dictionary<string, string>>();
+
+            foreach (var kv in ast[Services.AstServer.KEY_MODULES] as JObject)
+            {
+                var mn = kv.Value.ToString();
+                var mAst = astServer.AnalyzeModule(mn, false);
+                if (mAst == null)
+                {
+                    continue;
+                }
+
+                BuildOneModuleSnippets(kv.Key, mAst, snippets);
+            }
+            return JsonConvert.SerializeObject(snippets);
+        }
+
+        Dictionary<string, string> ToSnippet(string caption, string meta)
+        {
+            /*
+             {
+                 caption: 'kvp', // 匹配关键词
+                 value: 'for k, v in ipairs(t) do\n    print(k, v)\nend',   // 把匹配到的替换为这个
+                 score: 100, // 越大越靠前
+                 meta: "snippet" // 随便写
+             }
+             */
+
+            return new Dictionary<string, string>
+                {
+                    {"caption", caption },
+                    {"value", caption },
+                    {"meta", meta },
+                };
+        }
+
+        public string LuaGetStaticSnippets()
+        {
+            var snippets = astServer.GetRequireModuleNames()
+                .Select(name => ToSnippet(name, "snippet"))
+                .Concat(astServer.GetWebUiLuaStaticSnippets())
+                .OrderBy(dict => dict["caption"])
+                .ToList();
+
+            return JsonConvert.SerializeObject(snippets);
+        }
 
         Controllers.LuaCoreCtrl GetLuaCoreCtrlByName(string name)
         {
@@ -134,7 +226,6 @@ namespace Luna.Models.Apis
             JObject ast = null;
             return ast?.ToString(Formatting.None);
         }
-
 
         public string LuaServGetAllCoreInfos()
         {
@@ -321,16 +412,25 @@ namespace Luna.Models.Apis
             }
         }
 
+        // return null or string.Empty will terminate WebUI log updater
         public string LuaVmGetLog(string luavm)
         {
+
             if (luaVms.TryGetValue(luavm, out var vm))
             {
                 var log = vm.logger
                     ?.GetLogAsString(false)
                     ?.TrimEnd(Environment.NewLine.ToCharArray());
-                return log ?? string.Empty;
+
+                if (!vm.coreCtrl.isRunning && vm.lastLogSend == log)
+                {
+                    return null;
+                }
+
+                vm.lastLogSend = log;
+                return string.IsNullOrEmpty(log) ? " " : log;
             }
-            return string.Empty;
+            return null;
         }
 
         #endregion

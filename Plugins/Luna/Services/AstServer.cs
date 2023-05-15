@@ -8,17 +8,22 @@ using Moq;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 
 namespace Luna.Services
 {
     internal class AstServer : VgcApis.BaseClasses.Disposable
     {
         public event Action OnFileChanged;
+        Libs.LuaSnippet.SnippetsCache snpCache;
 
         public AstServer() { }
 
         public void Run()
         {
+            this.snpCache = new Libs.LuaSnippet.SnippetsCache();
+            UpdateRequireModuleNameCache();
             fsWatcher = CreateFileSystemWatcher(@"lua");
         }
 
@@ -60,19 +65,19 @@ namespace Luna.Services
                 Filter = "*.lua",
             };
 
-            fsw.Changed += FileSystemEventHandler;
-            fsw.Created += FileSystemEventHandler;
-            fsw.Deleted += FileSystemEventHandler;
-            fsw.Renamed += FileSystemEventHandler;
+            fsw.Changed += LuaDirFileChangedHandler;
+            fsw.Created += LuaDirFileChangedHandler;
+            fsw.Deleted += LuaDirFileChangedHandler;
+            fsw.Renamed += LuaDirFileChangedHandler;
 
             fsw.EnableRaisingEvents = true;
 
             return fsw;
         }
 
-
-        void FileSystemEventHandler(object sender, FileSystemEventArgs e)
+        void LuaDirFileChangedHandler(object sender, FileSystemEventArgs e)
         {
+            UpdateRequireModuleNameCache();
             var mn = VgcApis.Misc.Utils.GetLuaModuleName(e.FullPath);
             if (string.IsNullOrWhiteSpace(mn))
             {
@@ -114,6 +119,14 @@ namespace Luna.Services
         #endregion
 
         #region public methods
+
+        public Libs.LuaSnippet.BestMatchSnippets CreateBestMatchSnippet(ScintillaNET.Scintilla editor)
+            => snpCache?.CreateBestMatchSnippets(editor);
+
+        public List<Dictionary<string, string>> GetWebUiLuaStaticSnippets() =>
+            snpCache?.GetWebUiLuaStaticSnippets();
+
+
         public JObject AnalyzeModule(string moduleName, bool isExMode)
         {
             var cache = isExMode ? astModuleExCache : astModuleCache;
@@ -150,11 +163,39 @@ namespace Luna.Services
         }
 
 
+        public ReadOnlyCollection<string> GetRequireModuleNames() => requireModuleNamesCache.AsReadOnly();
         #endregion
 
         #region private methods
         readonly object moduleCacheLock = new object();
         readonly object codeCacheLock = new object();
+
+        List<string> requireModuleNamesCache;
+
+        void UpdateRequireModuleNameCache()
+        {
+            var requiresNames = new List<string>();
+            try
+            {
+                string[] fileArray = Directory.GetFiles(@"lua", "*.lua", SearchOption.AllDirectories);
+                foreach (var file in fileArray)
+                {
+                    if (!string.IsNullOrEmpty(file) || !file.ToLower().EndsWith(".lua"))
+                    {
+                        var mn = file.Replace("\\", ".")
+                            .Replace("/", ".")
+                            .Substring(0, file.Length - ".lua".Length);
+                        requiresNames.Add($"require('{mn}')");
+                    }
+                }
+            }
+            catch { }
+
+            lock (moduleCacheLock)
+            {
+                requireModuleNamesCache = requiresNames;
+            }
+        }
 
         void TrimModuleAstCache<TKey, TValue>(ConcurrentDictionary<TKey, TValue> cache)
         {
@@ -268,6 +309,7 @@ namespace Luna.Services
         protected override void Cleanup()
         {
             StopFileSystemWatcher();
+            snpCache?.Dispose();
         }
         #endregion
     }

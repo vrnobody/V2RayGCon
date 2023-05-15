@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,12 +16,15 @@ namespace Luna.Libs.LuaSnippet
         List<LuaImportClrSnippets> importClrCache;
         List<ApiFunctionSnippets> apiFunctionCache;
 
+        List<Dictionary<string, string>> webUiLuaSnippetsCache = new List<Dictionary<string, string>>();
+
         public SnippetsCache()
         {
             GenSnippetCaches();
         }
 
         #region public methods
+        public List<Dictionary<string, string>> GetWebUiLuaStaticSnippets() => webUiLuaSnippetsCache;
 
         public BestMatchSnippets CreateBestMatchSnippets(ScintillaNET.Scintilla editor)
         {
@@ -57,7 +61,7 @@ namespace Luna.Libs.LuaSnippet
             ))
             .ToList();
 
-        List<string> GetAllAssembliesName()
+        IEnumerable<string> GetAllAssembliesName()
         {
             var nsps = GetAllNameapaces();
             return AppDomain.CurrentDomain.GetAssemblies()
@@ -65,8 +69,7 @@ namespace Luna.Libs.LuaSnippet
                 .Where(fn => !string.IsNullOrEmpty(fn) && nsps.Where(nsp => fn.StartsWith(nsp)).FirstOrDefault() != null)
                 .Union(nsps)
                 .OrderBy(n => n)
-                .Select(n => $"import('{n}')")
-                .ToList();
+                .Select(n => $"import('{n}')");
         }
 
         List<LuaImportClrSnippets> GenLuaImportClrSnippet() =>
@@ -84,8 +87,7 @@ namespace Luna.Libs.LuaSnippet
                 .ToList();
 
 
-        List<string> GenKeywords(
-            IEnumerable<string> initValues) =>
+        List<string> GenKeywords(IEnumerable<string> initValues) =>
             new StringBuilder(VgcApis.Models.Consts.Lua.LuaModules)
             .Append(@" ")
             .Append(VgcApis.Models.Consts.Lua.LuaKeywords)
@@ -119,17 +121,92 @@ namespace Luna.Libs.LuaSnippet
             .Union(append)
             .ToList();
 
+        List<Dictionary<string, string>> GenWebUiSnippets(List<Tuple<string, Type>> apis)
+        {
+
+            /*
+            {
+                caption: 'kvp', // 匹配关键词
+                value: 'for k, v in ipairs(t) do\n    print(k, v)\nend',   // 把匹配到的替换为这个
+                score: 100, // 越大越靠前
+                meta: "snippet" // 随便写
+            }
+            */
+
+            Dictionary<string, string> ToSnippetDict1(string s)
+            {
+                return new Dictionary<string, string>
+                {
+                    {"caption", s },
+                    {"value", s },
+                    {"meta", "snippet" },
+                };
+            }
+
+            Dictionary<string, string> ToKeywordDict(string s)
+            {
+                return new Dictionary<string, string>
+                {
+                    {"caption", s },
+                    {"value", s },
+                    {"meta", "keyword" },
+                };
+            }
+
+            Dictionary<string, string> ToSnippetDict2(string caption, string value)
+            {
+                return new Dictionary<string, string>
+                {
+                    {"caption", caption },
+                    {"value", value },
+                    {"meta", "snippet" },
+                };
+            }
+
+            var apiNames = apis.Select(tp => ToKeywordDict(tp.Item1));
+            // math.floor()
+            var luaSubFunctions = GetLuaSubFunctions();
+            var predefinedFunctions = VgcApis.Models.Consts.Lua.LuaPredefinedFunctionNames;
+            var apiEvents = apis.SelectMany(api => VgcApis.Misc.Utils.GetPublicEventsInfoOfType(api.Item2)
+                 .Select(infos => $"{api.Item1}.{infos.Item2}"));
+            var apiProps = apis.SelectMany(api => VgcApis.Misc.Utils.GetPublicPropsInfoOfType(api.Item2)
+                .Select(infos => $"{api.Item1}.{infos.Item2}"));
+            var importClrSnippet = GetAllAssembliesName();
+
+            var apiFuncs = apis.SelectMany(
+                api => VgcApis.Misc.Utils.GetPublicMethodNameAndParam(api.Item2)
+                    .Select(info =>
+                    {
+                        // void Misc:Stop(int ms)
+                        var t1 = $"{info.Item1} {api.Item1}:{info.Item2}({info.Item4})";
+                        // Misc:Stop(ms)
+                        var t2 = $"{api.Item1}:{info.Item2}({info.Item3})";
+                        return new Tuple<string, string>(t1, t2);
+                    }));
 
 
-        List<LuaSubFuncSnippets> GenLuaSubFunctionSnippet() =>
+            var snippets = (new List<IEnumerable<string>> { luaSubFunctions, predefinedFunctions, apiEvents, apiProps, importClrSnippet })
+                .SelectMany(el => el.Select(s => ToSnippetDict1(s)))
+                .Concat(apiNames)
+                .Concat(apiFuncs.Select(tp => ToSnippetDict2(tp.Item1, tp.Item2)))
+                .ToList();
+
+            return snippets;
+        }
+
+        IEnumerable<string> GetLuaSubFunctions() =>
             VgcApis.Models.Consts.Lua.LuaSubFunctions
             .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
             .OrderBy(s => s)
+            .Select(s => $"{s}()");
+
+        List<LuaSubFuncSnippets> GenLuaSubFunctionSnippet() =>
+            GetLuaSubFunctions()
             .Select(e =>
             {
                 try
                 {
-                    return new LuaSubFuncSnippets($"{e}()", ".");
+                    return new LuaSubFuncSnippets(e, ".");
                 }
                 catch { }
                 return null;
@@ -154,6 +231,8 @@ namespace Luna.Libs.LuaSnippet
                 new Tuple<string, Type>("coreState",typeof(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates)),
                 new Tuple<string, Type>("coreLogger",typeof(VgcApis.Interfaces.CoreCtrlComponents.ILogger)),
             };
+
+            webUiLuaSnippetsCache = GenWebUiSnippets(apis);
 
             keywordCache = GenKeywordSnippetItems(GenKeywords(apis.Select(e => e.Item1)));
             functionCache = GenLuaFunctionSnippet();

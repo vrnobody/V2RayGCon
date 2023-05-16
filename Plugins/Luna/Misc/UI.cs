@@ -59,9 +59,11 @@ namespace Luna.Misc
             // Basic Functions
 
             scintilla.SetKeywords(1,
-                VgcApis.Models.Consts.Lua.ApiFuncNames +
-                " " +
-                VgcApis.Models.Consts.Lua.LuaFunctions);
+                VgcApis.Models.Consts.Lua.ApiFuncNames
+                    + " "
+                    + string.Join(" ", VgcApis.Models.Consts.Lua.LuaPredefinedFunctions)
+                    + " "
+                    + VgcApis.Models.Consts.Lua.LuaFunctions);
 
             // String Manipulation & Mathematical
             // Input and Output Facilities and System Facilities

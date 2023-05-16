@@ -98,25 +98,32 @@ namespace Luna.Libs.LuaSnippet
             .OrderBy(e => e)
             .ToList();
 
-        List<LuaFuncSnippets> GenLuaFunctionSnippet() =>
-            VgcApis.Models.Consts.Lua.LuaFunctions
-            .Replace("dofile", "")
-            .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-            .OrderBy(s => s)
-            .Select(e =>
-            {
-                try
+        List<LuaFuncSnippets> GenLuaFunctionSnippet()
+        {
+            var funcs = string.Join(" ", VgcApis.Models.Consts.Lua.LuaPredefinedFunctions)
+                + " "
+                + VgcApis.Models.Consts.Lua.LuaFunctions;
+
+            var r = funcs
+                .Replace("dofile", "")
+                .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                .OrderBy(s => s)
+                .Select(e =>
                 {
-                    return new LuaFuncSnippets($"{e}()");
-                }
-                catch { }
-                return null;
-            })
-            .Where(e => e != null)
-            .ToList();
+                    try
+                    {
+                        return new LuaFuncSnippets($"{e}()");
+                    }
+                    catch { }
+                    return null;
+                })
+                .Where(e => e != null)
+                .ToList();
+            return r;
+        }
 
         List<LuaSubFuncSnippets> GenLuaPredefinedFuncSnippets(IEnumerable<LuaSubFuncSnippets> append) =>
-            VgcApis.Models.Consts.Lua.LuaPredefinedFunctionNames
+            VgcApis.Models.Consts.Lua.LuaPredefinedSubFunctions
             .Select(fn => new LuaSubFuncSnippets(fn, "."))
             .Union(append)
             .ToList();
@@ -166,7 +173,8 @@ namespace Luna.Libs.LuaSnippet
             var apiNames = apis.Select(tp => ToKeywordDict(tp.Item1));
             // math.floor()
             var luaSubFunctions = GetLuaSubFunctions();
-            var predefinedFunctions = VgcApis.Models.Consts.Lua.LuaPredefinedFunctionNames;
+            var predefinedFunctions = VgcApis.Models.Consts.Lua.LuaPredefinedSubFunctions
+                .Concat(VgcApis.Models.Consts.Lua.LuaPredefinedFunctions);
             var apiEvents = apis.SelectMany(api => VgcApis.Misc.Utils.GetPublicEventsInfoOfType(api.Item2)
                  .Select(infos => $"{api.Item1}.{infos.Item2}"));
             var apiProps = apis.SelectMany(api => VgcApis.Misc.Utils.GetPublicPropsInfoOfType(api.Item2)

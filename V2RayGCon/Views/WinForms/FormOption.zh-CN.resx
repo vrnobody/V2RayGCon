@@ -169,6 +169,9 @@
   <data name="flySubsUrlContainer.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="tabPageSubscribe.Size" type="System.Drawing.Size, System.Drawing">
+    <value>479, 397</value>
+  </data>
   <data name="tabPageSubscribe.Text" xml:space="preserve">
     <value>订阅</value>
   </data>
@@ -331,14 +334,38 @@
   <data name="groupBox5.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="chkIsEnableSystrayLeftClickCommand.Location" type="System.Drawing.Point, System.Drawing">
+    <value>395, 74</value>
+  </data>
+  <data name="chkIsEnableSystrayLeftClickCommand.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkIsEnableSystrayLeftClickCommand.Text" xml:space="preserve">
+    <value>启用</value>
+  </data>
+  <data name="chkIsEnableSystrayLeftClickCommand.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="cboxSettingPageSize.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="label8.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="tboxSystrayLeftClickCommand.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label3.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 12</value>
+  </data>
+  <data name="label17.Text" xml:space="preserve">
+    <value>托盘单击</value>
+  </data>
+  <data name="label17.ToolTip" xml:space="preserve">
+    <value>单击托盘图标时执行的命令（原默认命令是弹出主窗口）</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>
@@ -501,6 +528,9 @@
   <data name="groupBox3.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="tabPageDefaults.Size" type="System.Drawing.Size, System.Drawing">
+    <value>479, 397</value>
+  </data>
   <data name="tabPageDefaults.Text" xml:space="preserve">
     <value>默认值</value>
   </data>
@@ -516,6 +546,9 @@
   <data name="flyImportPanel.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="tabPageImport.Size" type="System.Drawing.Size, System.Drawing">
+    <value>479, 397</value>
+  </data>
   <data name="tabPageImport.Text" xml:space="preserve">
     <value>全局import</value>
   </data>
@@ -530,6 +563,9 @@
   </data>
   <data name="flyMultiConfPanel.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="tabPageMultiConf.Size" type="System.Drawing.Size, System.Drawing">
+    <value>479, 397</value>
   </data>
   <data name="tabPageMultiConf.Text" xml:space="preserve">
     <value>多文件配置</value>
@@ -548,6 +584,9 @@
   </data>
   <data name="flyPluginsItemsContainer.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="tabPagePlugins.Size" type="System.Drawing.Size, System.Drawing">
+    <value>479, 397</value>
   </data>
   <data name="tabPagePlugins.Text" xml:space="preserve">
     <value>插件</value>

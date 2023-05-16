@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace VgcApis.Interfaces.Lua
 {
-    public interface ILuaMisc
+    public interface ILuaMisc : ILogable
     {
         #region vgc.Forms
         /// <summary>
@@ -132,6 +132,14 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region utils
+        new void Log(string message);
+
+        /// <summary>
+        /// 获取日志窗口的内容
+        /// </summary>
+        /// <returns></returns>
+        string GetLogAsString();
+
         /// <summary>
         /// 获取当前并行测速队列服务器总数。一个服务器只记一次。
         /// </summary>

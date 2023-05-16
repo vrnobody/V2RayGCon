@@ -234,6 +234,8 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
+        public static string TrimTrailingNewLine(string content) =>
+            content?.TrimEnd(System.Environment.NewLine.ToCharArray());
         public static string Md5Base64(string text)
         {
             var bytes = Md5Hash(text);

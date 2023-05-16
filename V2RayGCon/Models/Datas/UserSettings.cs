@@ -5,6 +5,10 @@ namespace V2RayGCon.Models.Datas
     class UserSettings
     {
         #region public properties
+
+        public string SystrayLeftClickCommand { get; set; }
+        public bool isEnableSystrayLeftClickCommand { get; set; }
+
         public bool CustomVmessDecodeTemplateEnabled { get; set; }
         public string CustomVmessDecodeTemplateUrl { get; set; }
         public string CustomInbounds { get; set; }
@@ -69,6 +73,10 @@ namespace V2RayGCon.Models.Datas
         public UserSettings()
         {
             Normalized();
+
+            isEnableSystrayLeftClickCommand = false;
+
+            SystrayLeftClickCommand = "http://localhost:4000/";
 
             CustomVmessDecodeTemplateEnabled = false;
             CustomVmessDecodeTemplateUrl = @"";

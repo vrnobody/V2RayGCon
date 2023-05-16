@@ -412,16 +412,13 @@ namespace Luna.Models.Apis
             }
         }
 
-        // return null or string.Empty will terminate WebUI log updater
+
         public string LuaVmGetLog(string luavm)
         {
 
             if (luaVms.TryGetValue(luavm, out var vm))
             {
-                var log = vm.logger
-                    ?.GetLogAsString(false)
-                    ?.TrimEnd(Environment.NewLine.ToCharArray());
-
+                var log = VgcApis.Misc.Utils.TrimTrailingNewLine(vm.logger?.GetLogAsString(false));
                 if (!vm.coreCtrl.isRunning && vm.lastLogSend == log)
                 {
                     return null;
@@ -430,6 +427,8 @@ namespace Luna.Models.Apis
                 vm.lastLogSend = log;
                 return string.IsNullOrEmpty(log) ? " " : log;
             }
+
+            // return null or string.Empty will terminate WebUI log updater
             return null;
         }
 
@@ -862,7 +861,7 @@ namespace Luna.Models.Apis
             Encoding inputEncoding, Encoding outputEncoding) =>
             RunProcWrapper(false, exePath, args, stdin,
                 envs, hasWindow, redirectOutput,
-                inputEncoding, outputEncoding);
+                inputEncoding, outputEncoding, null);
 
         public Process Run(string exePath) =>
             Run(exePath, null);
@@ -877,14 +876,15 @@ namespace Luna.Models.Apis
             LuaTable envs, bool hasWindow, bool redirectOutput) =>
             Run(exePath, args, stdin,
                 envs, hasWindow, redirectOutput,
-                null, null);
+                null, null, null);
 
         public Process Run(string exePath, string args, string stdin,
             LuaTable envs, bool hasWindow, bool redirectOutput,
-            Encoding inputEncoding, Encoding outputEncoding) =>
+            Encoding inputEncoding, Encoding outputEncoding,
+            VgcApis.Interfaces.ILogable logable) =>
             RunProcWrapper(true, exePath, args, stdin,
                 envs, hasWindow, redirectOutput,
-                inputEncoding, outputEncoding);
+                inputEncoding, outputEncoding, logable);
 
         #endregion
 
@@ -989,37 +989,38 @@ namespace Luna.Models.Apis
         #endregion
 
         #region private methods
-        DataReceivedEventHandler CreateSendLogHandler(Encoding encoding)
+        DataReceivedEventHandler CreateLogHandler(Encoding encoding, VgcApis.Interfaces.ILogable logable)
         {
             var ec = encoding;
+            Func<string, string> decode = (s) => s;
+            if (ec != null)
+            {
+                decode = (s) =>
+                {
+                    var bin = Encoding.Default.GetBytes(s);
+                    return ec.GetString(bin);
+                };
+            }
+
+            Action<string> log = luaApis.SendLog;
+            if (logable != null)
+            {
+                log = logable.Log;
+            }
 
             return (s, a) =>
             {
                 try
                 {
-                    var d = a.Data;
-                    if (!string.IsNullOrEmpty(d))
+                    var msg = a.Data;
+                    if (string.IsNullOrEmpty(msg))
                     {
-                        var bin = Encoding.Default.GetBytes(d);
-                        var msg = ec.GetString(bin);
-                        luaApis?.SendLog(msg);
+                        return;
                     }
+                    log(decode(msg));
                 }
                 catch { }
             };
-        }
-
-        void SendLogHandler(object sender, DataReceivedEventArgs args)
-        {
-            try
-            {
-                string msg = null;
-                msg = args.Data; if (!string.IsNullOrEmpty(msg))
-                {
-                    luaApis?.SendLog(msg);
-                }
-            }
-            catch { }
         }
 
         void TrackdownProcess(Process proc)
@@ -1038,14 +1039,14 @@ namespace Luna.Models.Apis
         Process RunProcWrapper(
             bool isTracking, string exePath, string args, string stdin,
            LuaTable envs, bool hasWindow, bool redirectOutput,
-           Encoding inputEncoding, Encoding outputEncoding)
+           Encoding inputEncoding, Encoding outputEncoding, VgcApis.Interfaces.ILogable logable)
         {
             try
             {
                 return RunProcWorker(
                     isTracking, exePath, args, stdin,
                     envs, hasWindow, redirectOutput,
-                    inputEncoding, outputEncoding);
+                    inputEncoding, outputEncoding, logable);
             }
             catch { }
             return null;
@@ -1054,7 +1055,7 @@ namespace Luna.Models.Apis
         Process RunProcWorker(
             bool isTracking, string exePath, string args, string stdin,
             LuaTable envs, bool hasWindow, bool redirectOutput,
-            Encoding inputEncoding, Encoding outputEncoding)
+            Encoding inputEncoding, Encoding outputEncoding, VgcApis.Interfaces.ILogable logable)
         {
             var useStdIn = !string.IsNullOrEmpty(stdin);
             var p = new Process
@@ -1071,11 +1072,7 @@ namespace Luna.Models.Apis
                 }
             };
 
-            DataReceivedEventHandler logHandler = SendLogHandler;
-            if (outputEncoding != null)
-            {
-                logHandler = CreateSendLogHandler(outputEncoding);
-            }
+            DataReceivedEventHandler logHandler = CreateLogHandler(outputEncoding, logable);
 
             if (redirectOutput)
             {

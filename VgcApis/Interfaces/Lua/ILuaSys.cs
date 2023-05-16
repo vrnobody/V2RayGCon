@@ -336,10 +336,12 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="redirectOutput">是否接收stdout和stderror信息</param>
         /// <param name="inputEncoding">stdin的编码</param>
         /// <param name="outputEncoding">stdout的编码</param>
+        /// <param name="customLogger">自定义的Logger</param>
         /// <returns>进程句柄</returns>
         Process Run(string exePath, string args, string stdin,
            LuaTable envs, bool hasWindow, bool redirectOutput,
-           Encoding inputEncoding, Encoding outputEncoding);
+           Encoding inputEncoding, Encoding outputEncoding,
+           VgcApis.Interfaces.ILogable logable);
 
         /// <summary>
         /// 向进程发送Ctrl+C信号

@@ -441,7 +441,23 @@ namespace V2RayGCon.Services
                         // https://stackoverflow.com/questions/2208690/invoke-notifyicons-context-menu
                         // MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
                         // mi.Invoke(ni, null);
-                        Views.WinForms.FormMain.ShowForm();
+
+                        if (setting.isEnableSystrayLeftClickCommand)
+                        {
+                            try
+                            {
+                                var cmd = setting.SystrayLeftClickCommand;
+                                System.Diagnostics.Process.Start(cmd);
+                            }
+                            catch (Exception err)
+                            {
+                                VgcApis.Misc.UI.MsgBox(err.ToString());
+                            }
+                        }
+                        else
+                        {
+                            Views.WinForms.FormMain.ShowForm();
+                        }
                         break;
                 }
             };

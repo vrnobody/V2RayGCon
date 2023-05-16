@@ -1,4 +1,6 @@
-﻿namespace V2RayGCon.Controllers.CoreServerComponent
+﻿using System;
+
+namespace V2RayGCon.Controllers.CoreServerComponent
 {
     sealed public class Logger :
         VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
@@ -13,6 +15,14 @@
         }
 
         #region public methods
+        public Action<string> GetLoggerInstance() => Log;
+
+        public string GetLogAsString()
+        {
+            var logs = qLogger.GetLogAsString(false);
+            return VgcApis.Misc.Utils.TrimTrailingNewLine(logs);
+        }
+
         public void Log(string message)
         {
             qLogger.Log(message);

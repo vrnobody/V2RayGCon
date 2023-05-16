@@ -430,6 +430,32 @@ namespace V2RayGCon.Services
             }
         }
 
+        public string SystrayLeftClickCommand
+        {
+            get
+            {
+                return userSettings.SystrayLeftClickCommand;
+            }
+            set
+            {
+                userSettings.SystrayLeftClickCommand = value;
+                SaveSettingsLater();
+            }
+        }
+
+        public bool isEnableSystrayLeftClickCommand
+        {
+            get
+            {
+                return userSettings.isEnableSystrayLeftClickCommand;
+            }
+            set
+            {
+                userSettings.isEnableSystrayLeftClickCommand = value;
+                SaveSettingsLater();
+            }
+        }
+
         public bool isServerTrackerOn = false;
 
         public int serverPanelPageSize

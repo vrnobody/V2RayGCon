@@ -6,7 +6,8 @@ namespace V2RayGCon.Controllers.OptionComponent
     {
         Services.Settings setting;
         Services.Servers servers;
-
+        private readonly TextBox tboxSystrayLeftClickCommand;
+        private readonly CheckBox chkIsEnableSystrayLeftClickCommand;
         private readonly ComboBox
             cboxLanguage = null,
             cboxPageSize = null,
@@ -31,6 +32,9 @@ namespace V2RayGCon.Controllers.OptionComponent
         private readonly TextBox tboxMaxCoreNum = null;
 
         public TabSetting(
+            TextBox tboxSystrayLeftClickCommand,
+            CheckBox chkIsEnableSystrayLeftClickCommand,
+
             ComboBox cboxLanguage,
             ComboBox cboxPageSize,
             CheckBox chkServAutoTrack,
@@ -54,6 +58,9 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             this.setting = Services.Settings.Instance;
             this.servers = Services.Servers.Instance;
+
+            this.tboxSystrayLeftClickCommand = tboxSystrayLeftClickCommand;
+            this.chkIsEnableSystrayLeftClickCommand = chkIsEnableSystrayLeftClickCommand;
 
             // Do not put these lines of code into InitElement.
             this.cboxLanguage = cboxLanguage;
@@ -84,6 +91,9 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         private void InitElement()
         {
+            tboxSystrayLeftClickCommand.Text = setting.SystrayLeftClickCommand;
+            chkIsEnableSystrayLeftClickCommand.Checked = setting.isEnableSystrayLeftClickCommand;
+
             tboxDebugLogFilePath.Text = setting.DebugLogFilePath;
             chkIsEnableDebugLogFile.Checked = setting.isEnableDebugLogFile;
 
@@ -123,6 +133,9 @@ namespace V2RayGCon.Controllers.OptionComponent
                 setting.serverPanelPageSize = pageSize;
                 Services.Servers.Instance.RequireFormMainReload();
             }
+
+            setting.isEnableSystrayLeftClickCommand = chkIsEnableSystrayLeftClickCommand.Checked;
+            setting.SystrayLeftClickCommand = tboxSystrayLeftClickCommand.Text;
 
             setting.isEnableDebugLogFile = chkIsEnableDebugLogFile.Checked;
             setting.DebugLogFilePath = tboxDebugLogFilePath.Text;
@@ -167,6 +180,8 @@ namespace V2RayGCon.Controllers.OptionComponent
         public override bool IsOptionsChanged()
         {
             if (setting.isUseV4 != chkSetUseV4.Checked
+                || setting.isEnableSystrayLeftClickCommand != chkIsEnableSystrayLeftClickCommand.Checked
+                || setting.SystrayLeftClickCommand != tboxSystrayLeftClickCommand.Text
                 || setting.isEnableUtlsFingerprint != chkSetIsEnableUtlsFingerprint.Checked
                 || setting.uTlsFingerprint != cboxSettingsUtlsFingerprint.Text
                 || setting.isEnableDebugLogFile != chkIsEnableDebugLogFile.Checked

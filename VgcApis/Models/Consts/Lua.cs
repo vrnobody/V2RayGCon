@@ -15,8 +15,7 @@ namespace VgcApis.Models.Consts
         public static string ApiFuncNames = string.Join(@" ", GetterApiFuncNames());
 
         public static string LuaFunctions =
-            "Each" +
-            " assert collectgarbage dofile error _G getmetatable ipairs loadfile next pairs pcall print rawequal rawget rawset setmetatable tonumber tostring type _VERSION xpcall string table math coroutine io os debug" +
+            "assert collectgarbage dofile error _G getmetatable ipairs loadfile next pairs pcall print rawequal rawget rawset setmetatable tonumber tostring type _VERSION xpcall string table math coroutine io os debug" +
             " getfenv gcinfo load loadlib loadstring select setfenv unpack _LOADED LUA_PATH _REQUIREDNAME package rawlen package bit32 utf8 _ENV";
 
         public const string LuaSubFunctions =
@@ -33,7 +32,11 @@ namespace VgcApis.Models.Consts
             " os.clock os.date os.difftime os.execute os.exit os.getenv os.remove os.rename os.setlocale os.time os.tmpname" +
             " package.loaders package.seeall package.config package.searchers package.searchpath package.cpath package.loaded package.loadlib package.path package.preload";
 
-        public static List<string> LuaPredefinedFunctionNames = new List<string>(){
+        public static List<string> LuaPredefinedFunctions = new List<string>() {
+            "Each"
+        };
+
+        public static List<string> LuaPredefinedSubFunctions = new List<string>(){
             "string.split(text, sep)",
             "string.endswith(text, keyword)",
             "string.isempty(text)",

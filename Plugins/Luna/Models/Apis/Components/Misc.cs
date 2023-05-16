@@ -131,6 +131,14 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region other ILuaMisc stuff
+        public void Log(string message) => settings.SendLog(message);
+
+        public string GetLogAsString()
+        {
+            var log = vgcSettings.GetLogContent();
+            return VgcApis.Misc.Utils.TrimTrailingNewLine(log);
+        }
+
         public int GetSpeedtestQueueLength() => vgcSettings.GetSpeedtestQueueLength();
 
         public string Replace(string text, string oldStr, string newStr) =>

@@ -99,7 +99,7 @@ jobs:
               ${{ env.scriptPkgName }}.zip (${{ env.hashScriptPkgZip }})
 
               #### 备注:
-              WebUI v${{ webuiVer }}
+              WebUI v${{ env.webuiVer }}
               ${{ env.projName }}-${{ env.boxAppend }}.zip打包了Xray-core-win64 ${{ env.v2rayCoreVer }}
               ${{ env.scriptPkgName }}.zip解压后拖进Luna脚本管理器的空白区中即可使用
             draft: true

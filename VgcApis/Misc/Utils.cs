@@ -417,7 +417,9 @@ namespace VgcApis.Misc
             {
                 hc = new HttpClient();
             }
-            hc.DefaultRequestHeaders.Add(Models.Consts.Webs.UserAgentKey, Models.Consts.Webs.ChromeUserAgent);
+            hc.DefaultRequestHeaders.Add(
+                Models.Consts.Webs.UserAgentKey,
+                Models.Consts.Webs.CustomUserAgent);
             return hc;
         }
 

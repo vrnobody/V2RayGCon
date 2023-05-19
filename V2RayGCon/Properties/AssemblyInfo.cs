@@ -38,6 +38,7 @@ using System.Runtime.InteropServices;
 
 /*
  * v1.6.9.3 Add left click settings for systray icon.
+ *          Add user agent setting.
  * v1.6.9.2 Add Sys:Lua*() functions in Luna plug-in.
  *          Set index for new added Luna script.
  *          Add Serverices.AstServer in Luna plug-in.

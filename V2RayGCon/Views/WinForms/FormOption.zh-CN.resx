@@ -169,9 +169,6 @@
   <data name="flySubsUrlContainer.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="tabPageSubscribe.Size" type="System.Drawing.Size, System.Drawing">
-    <value>479, 397</value>
-  </data>
   <data name="tabPageSubscribe.Text" xml:space="preserve">
     <value>订阅</value>
   </data>
@@ -394,6 +391,27 @@
   <data name="tabPageSetting.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="cboxCustomUserAgent.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label18.ToolTip" xml:space="preserve">
+    <value>自定义user agent</value>
+  </data>
+  <data name="chkIsUseCustomUserAgent.Location" type="System.Drawing.Point, System.Drawing">
+    <value>392, 18</value>
+  </data>
+  <data name="chkIsUseCustomUserAgent.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkIsUseCustomUserAgent.Text" xml:space="preserve">
+    <value>使用</value>
+  </data>
+  <data name="chkIsUseCustomUserAgent.ToolTip" xml:space="preserve">
+    <value>使用自定义user agent</value>
+  </data>
+  <data name="groupBox9.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="groupBox7.Text" xml:space="preserve">
     <value>自定义inbounds</value>
   </data>
@@ -528,9 +546,6 @@
   <data name="groupBox3.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="tabPageDefaults.Size" type="System.Drawing.Size, System.Drawing">
-    <value>479, 397</value>
-  </data>
   <data name="tabPageDefaults.Text" xml:space="preserve">
     <value>默认值</value>
   </data>
@@ -546,9 +561,6 @@
   <data name="flyImportPanel.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="tabPageImport.Size" type="System.Drawing.Size, System.Drawing">
-    <value>479, 397</value>
-  </data>
   <data name="tabPageImport.Text" xml:space="preserve">
     <value>全局import</value>
   </data>
@@ -563,9 +575,6 @@
   </data>
   <data name="flyMultiConfPanel.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="tabPageMultiConf.Size" type="System.Drawing.Size, System.Drawing">
-    <value>479, 397</value>
   </data>
   <data name="tabPageMultiConf.Text" xml:space="preserve">
     <value>多文件配置</value>
@@ -584,9 +593,6 @@
   </data>
   <data name="flyPluginsItemsContainer.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="tabPagePlugins.Size" type="System.Drawing.Size, System.Drawing">
-    <value>479, 397</value>
   </data>
   <data name="tabPagePlugins.Text" xml:space="preserve">
     <value>插件</value>

@@ -5,8 +5,13 @@
         public static string Nobody3uVideoUrl = @"https://www.youtube.com/watch?v=BA7fdSkp8ds";
 
         public static string UserAgentKey = @"User-Agent";
-        public static string ChromeUserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36";
-        public readonly static string UserAgent = $"{UserAgentKey}: {ChromeUserAgent}";
+        public static string ChromeUserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36";
+
+        // this var will be modified by V2RayGCon.Services.Settings.
+        public static string CustomUserAgent = ChromeUserAgent;
+
+        // this var will be modified by V2RayGCon.Services.Settings.
+        public static string UserAgent = $"{UserAgentKey}: {ChromeUserAgent}";
 
         public static int CheckForUpdateDelay = 15 * 1000;
 

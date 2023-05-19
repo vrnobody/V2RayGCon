@@ -52,6 +52,35 @@ namespace V2RayGCon.Services
         }
 
         #region Properties
+        public bool isUseCustomUserAgent
+        {
+            get
+            {
+                return userSettings.isUseCustomUserAgent;
+            }
+            set
+            {
+                userSettings.isUseCustomUserAgent = value;
+                UpdateVgcApisUserAgent();
+                SaveSettingsLater();
+            }
+
+        }
+
+        public string CustomUserAgent
+        {
+            get
+            {
+                return userSettings.custormUserAgent;
+            }
+            set
+            {
+                userSettings.custormUserAgent = value;
+                UpdateVgcApisUserAgent();
+                SaveSettingsLater();
+            }
+        }
+
         public int SpeedtestCounter = 0;
         public int GetSpeedtestQueueLength() => SpeedtestCounter;
 
@@ -540,6 +569,7 @@ namespace V2RayGCon.Services
         #endregion
 
         #region public methods
+
         bool _isScreenLocked = false;
         public bool IsScreenLocked() => _isScreenLocked;
 
@@ -845,6 +875,17 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
+        void UpdateVgcApisUserAgent()
+        {
+            var cua = userSettings.isUseCustomUserAgent ?
+                userSettings.custormUserAgent :
+                VgcApis.Models.Consts.Webs.ChromeUserAgent;
+            var key = VgcApis.Models.Consts.Webs.UserAgentKey;
+            var ua = $"{key}: {cua}";
+            VgcApis.Models.Consts.Webs.CustomUserAgent = cua;
+            VgcApis.Models.Consts.Webs.UserAgent = ua;
+        }
+
         void UpdateFileLoggerSetting()
         {
             if (userSettings.isEnableDebugFile)

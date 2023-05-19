@@ -76,6 +76,10 @@
             this.cboxSettingLanguage = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPageDefaults = new System.Windows.Forms.TabPage();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.cboxCustomUserAgent = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.chkIsUseCustomUserAgent = new System.Windows.Forms.CheckBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.exRTBoxDefCustomInbounds = new VgcApis.UserControls.ExRichTextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -123,6 +127,7 @@
             this.groupBox5.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPageDefaults.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -517,12 +522,47 @@
             // tabPageDefaults
             // 
             resources.ApplyResources(this.tabPageDefaults, "tabPageDefaults");
+            this.tabPageDefaults.Controls.Add(this.groupBox9);
             this.tabPageDefaults.Controls.Add(this.groupBox7);
             this.tabPageDefaults.Controls.Add(this.groupBox4);
             this.tabPageDefaults.Controls.Add(this.groupBox3);
             this.tabPageDefaults.Name = "tabPageDefaults";
             this.toolTip1.SetToolTip(this.tabPageDefaults, resources.GetString("tabPageDefaults.ToolTip"));
             this.tabPageDefaults.UseVisualStyleBackColor = true;
+            // 
+            // groupBox9
+            // 
+            resources.ApplyResources(this.groupBox9, "groupBox9");
+            this.groupBox9.Controls.Add(this.cboxCustomUserAgent);
+            this.groupBox9.Controls.Add(this.label18);
+            this.groupBox9.Controls.Add(this.chkIsUseCustomUserAgent);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox9, resources.GetString("groupBox9.ToolTip"));
+            // 
+            // cboxCustomUserAgent
+            // 
+            resources.ApplyResources(this.cboxCustomUserAgent, "cboxCustomUserAgent");
+            this.cboxCustomUserAgent.FormattingEnabled = true;
+            this.cboxCustomUserAgent.Items.AddRange(new object[] {
+            resources.GetString("cboxCustomUserAgent.Items"),
+            resources.GetString("cboxCustomUserAgent.Items1"),
+            resources.GetString("cboxCustomUserAgent.Items2")});
+            this.cboxCustomUserAgent.Name = "cboxCustomUserAgent";
+            this.toolTip1.SetToolTip(this.cboxCustomUserAgent, resources.GetString("cboxCustomUserAgent.ToolTip"));
+            // 
+            // label18
+            // 
+            resources.ApplyResources(this.label18, "label18");
+            this.label18.Name = "label18";
+            this.toolTip1.SetToolTip(this.label18, resources.GetString("label18.ToolTip"));
+            // 
+            // chkIsUseCustomUserAgent
+            // 
+            resources.ApplyResources(this.chkIsUseCustomUserAgent, "chkIsUseCustomUserAgent");
+            this.chkIsUseCustomUserAgent.Name = "chkIsUseCustomUserAgent";
+            this.toolTip1.SetToolTip(this.chkIsUseCustomUserAgent, resources.GetString("chkIsUseCustomUserAgent.ToolTip"));
+            this.chkIsUseCustomUserAgent.UseVisualStyleBackColor = true;
             // 
             // groupBox7
             // 
@@ -860,6 +900,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPageDefaults.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -959,5 +1001,9 @@
         private System.Windows.Forms.CheckBox chkIsEnableSystrayLeftClickCommand;
         private System.Windows.Forms.TextBox tboxSystrayLeftClickCommand;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.ComboBox cboxCustomUserAgent;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.CheckBox chkIsUseCustomUserAgent;
     }
 }

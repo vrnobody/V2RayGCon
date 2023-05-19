@@ -6,6 +6,9 @@ namespace V2RayGCon.Models.Datas
     {
         #region public properties
 
+        public bool isUseCustomUserAgent { get; set; }
+        public string custormUserAgent { get; set; }
+
         public string SystrayLeftClickCommand { get; set; }
         public bool isEnableSystrayLeftClickCommand { get; set; }
 
@@ -73,6 +76,10 @@ namespace V2RayGCon.Models.Datas
         public UserSettings()
         {
             Normalized();
+
+            isUseCustomUserAgent = false;
+
+            custormUserAgent = VgcApis.Models.Consts.Webs.ChromeUserAgent;
 
             isEnableSystrayLeftClickCommand = false;
 

@@ -80,6 +80,9 @@ namespace V2RayGCon.Views.WinForms
 
             ctrl.Plug(
                 new Controllers.OptionComponent.TabSetting(
+                    cboxCustomUserAgent,
+                    chkIsUseCustomUserAgent,
+
                     tboxSystrayLeftClickCommand,
                     chkIsEnableSystrayLeftClickCommand,
 

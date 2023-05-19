@@ -6,6 +6,8 @@ namespace V2RayGCon.Controllers.OptionComponent
     {
         Services.Settings setting;
         Services.Servers servers;
+        private readonly ComboBox cboxCustomUserAgent;
+        private readonly CheckBox chkIsUseCustomUserAgent;
         private readonly TextBox tboxSystrayLeftClickCommand;
         private readonly CheckBox chkIsEnableSystrayLeftClickCommand;
         private readonly ComboBox
@@ -32,6 +34,9 @@ namespace V2RayGCon.Controllers.OptionComponent
         private readonly TextBox tboxMaxCoreNum = null;
 
         public TabSetting(
+            ComboBox cboxCustomUserAgent,
+            CheckBox chkIsUseCustomUserAgent,
+
             TextBox tboxSystrayLeftClickCommand,
             CheckBox chkIsEnableSystrayLeftClickCommand,
 
@@ -58,7 +63,8 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             this.setting = Services.Settings.Instance;
             this.servers = Services.Servers.Instance;
-
+            this.cboxCustomUserAgent = cboxCustomUserAgent;
+            this.chkIsUseCustomUserAgent = chkIsUseCustomUserAgent;
             this.tboxSystrayLeftClickCommand = tboxSystrayLeftClickCommand;
             this.chkIsEnableSystrayLeftClickCommand = chkIsEnableSystrayLeftClickCommand;
 
@@ -91,6 +97,9 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         private void InitElement()
         {
+            cboxCustomUserAgent.Text = setting.CustomUserAgent;
+            chkIsUseCustomUserAgent.Checked = setting.isUseCustomUserAgent;
+
             tboxSystrayLeftClickCommand.Text = setting.SystrayLeftClickCommand;
             chkIsEnableSystrayLeftClickCommand.Checked = setting.isEnableSystrayLeftClickCommand;
 
@@ -133,6 +142,9 @@ namespace V2RayGCon.Controllers.OptionComponent
                 setting.serverPanelPageSize = pageSize;
                 Services.Servers.Instance.RequireFormMainReload();
             }
+
+            setting.isUseCustomUserAgent = chkIsUseCustomUserAgent.Checked;
+            setting.CustomUserAgent = cboxCustomUserAgent.Text;
 
             setting.isEnableSystrayLeftClickCommand = chkIsEnableSystrayLeftClickCommand.Checked;
             setting.SystrayLeftClickCommand = tboxSystrayLeftClickCommand.Text;
@@ -180,6 +192,8 @@ namespace V2RayGCon.Controllers.OptionComponent
         public override bool IsOptionsChanged()
         {
             if (setting.isUseV4 != chkSetUseV4.Checked
+                || setting.CustomUserAgent != cboxCustomUserAgent.Text
+                || setting.isUseCustomUserAgent != chkIsUseCustomUserAgent.Checked
                 || setting.isEnableSystrayLeftClickCommand != chkIsEnableSystrayLeftClickCommand.Checked
                 || setting.SystrayLeftClickCommand != tboxSystrayLeftClickCommand.Text
                 || setting.isEnableUtlsFingerprint != chkSetIsEnableUtlsFingerprint.Checked

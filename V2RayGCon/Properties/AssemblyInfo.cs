@@ -37,6 +37,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.6.9.4 Fix custom user agent not working bug.
  * v1.6.9.3 Add left click settings for systray icon.
  *          Add user agent setting.
  * v1.6.9.2 Add Sys:Lua*() functions in Luna plug-in.

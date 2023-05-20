@@ -31,6 +31,8 @@ namespace V2RayGCon.Services
         {
             userSettings = LoadUserSettings();
             userSettings.Normalized();  // replace null with empty object.
+            UpdateVgcApisUserAgent();
+
             UpdateSpeedTestPool();
             UpdateFileLoggerSetting();
 
@@ -71,11 +73,11 @@ namespace V2RayGCon.Services
         {
             get
             {
-                return userSettings.custormUserAgent;
+                return userSettings.customUserAgent;
             }
             set
             {
-                userSettings.custormUserAgent = value;
+                userSettings.customUserAgent = value;
                 UpdateVgcApisUserAgent();
                 SaveSettingsLater();
             }
@@ -878,7 +880,7 @@ namespace V2RayGCon.Services
         void UpdateVgcApisUserAgent()
         {
             var cua = userSettings.isUseCustomUserAgent ?
-                userSettings.custormUserAgent :
+                userSettings.customUserAgent :
                 VgcApis.Models.Consts.Webs.ChromeUserAgent;
             var key = VgcApis.Models.Consts.Webs.UserAgentKey;
             var ua = $"{key}: {cua}";

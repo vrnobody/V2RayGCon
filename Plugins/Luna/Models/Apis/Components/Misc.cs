@@ -148,9 +148,11 @@ namespace Luna.Models.Apis.Components
 
         public string NewGuid() => Guid.NewGuid().ToString();
 
-        public string GetUserSettings() => vgcSettings.GetUserSettings();
+        public string GetUserSettings() => GetUserSettings(null);
 
-        public bool SetUserSettings(string userSettings) => vgcSettings.SetUserSettings(userSettings);
+        public string GetUserSettings(string props) => vgcSettings.GetUserSettings(props);
+
+        public bool SetUserSettings(string props) => vgcSettings.SetUserSettings(props);
 
         public string GetSubscriptionConfig() => vgcSettings.GetSubscriptionConfig();
 

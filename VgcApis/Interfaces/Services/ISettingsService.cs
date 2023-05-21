@@ -18,7 +18,8 @@
         string GetSubscriptionConfig();
         void SetSubscriptionConfig(string cfgStr);
 
-        string GetUserSettings();
-        bool SetUserSettings(string userSettings);
+        string GetUserSettings(string props);
+
+        bool SetUserSettings(string props);
     }
 }

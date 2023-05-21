@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
@@ -599,15 +600,65 @@ namespace V2RayGCon.Services
 
         public bool SetIsClosing(bool isClosing) => this.isClosing = isClosing;
 
-        public string GetUserSettings()
+        public string GetUserSettings(string props)
         {
-            var us = JsonConvert.SerializeObject(userSettings);
-            return us;
+            // backward compactible
+            if (string.IsNullOrEmpty(props))
+            {
+                return JsonConvert.SerializeObject(userSettings);
+            }
+
+            try
+            {
+                var names = JsonConvert.DeserializeObject<List<string>>(props);
+                var r = this.GetType().GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
+                    .Where(p => names.Contains(p.Name))
+                    .Select(p =>
+                    {
+                        var n = p.Name;
+                        var v = p.GetValue(this);
+                        return new KeyValuePair<string, object>(n, v);
+                    })
+                    .ToDictionary(kv => kv.Key, kv => kv.Value);
+                return JsonConvert.SerializeObject(r);
+            }
+            catch { }
+            return null;
         }
 
-        public bool SetUserSettings(string userSettings)
+        bool TryChangeUserSetting(Type type, string name, object value)
         {
-            // evil todo
+            try
+            {
+                var prop = type.GetProperty(name);
+                if (prop == null)
+                {
+                    return false;
+                }
+                var t = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+                object safeValue = (value == null) ? null : Convert.ChangeType(value, t);
+                prop.SetValue(this, safeValue);
+                return true;
+            }
+            catch { }
+            return false;
+        }
+
+        public bool SetUserSettings(string props)
+        {
+            try
+            {
+                var settings = JsonConvert.DeserializeObject<Dictionary<string, object>>(props);
+                var type = this.GetType();
+                foreach (var kv in settings)
+                {
+                    var name = kv.Key;
+                    var value = kv.Value;
+                    TryChangeUserSetting(type, name, value);
+                }
+                return true;
+            }
+            catch { }
             return false;
         }
 

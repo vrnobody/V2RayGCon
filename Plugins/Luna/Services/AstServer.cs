@@ -102,7 +102,6 @@ namespace Luna.Services
 
         #region properties
         FileSystemWatcher fsWatcher;
-        private readonly Settings settings;
 
         ConcurrentQueue<string> hotCacheKeys = new ConcurrentQueue<string>();
         ConcurrentDictionary<string, JObject> astCodeCache = new ConcurrentDictionary<string, JObject>();

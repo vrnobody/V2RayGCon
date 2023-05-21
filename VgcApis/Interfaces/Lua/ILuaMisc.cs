@@ -80,11 +80,18 @@ namespace VgcApis.Interfaces.Lua
         string GetUserSettings();
 
         /// <summary>
+        /// 获取当前用户设置
+        /// </summary>
+        /// <param name="props">属性列表['prop1', 'prop2', ...]</param>
+        /// <returns>一个序列化的JObject</returns>
+        string GetUserSettings(string props);
+
+        /// <summary>
         /// 替换当前的用户配置（还没实现这个功能）
         /// </summary>
-        /// <param name="userSettings">执行是否成功</param>
+        /// <param name="props">执行是否成功</param>
         /// <returns></returns>
-        bool SetUserSettings(string userSettings);
+        bool SetUserSettings(string props);
 
 
         /// <summary>

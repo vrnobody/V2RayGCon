@@ -291,6 +291,11 @@ namespace Luna.Models.Apis
             GetLuaCoreCtrlByName(name)?.Start();
         }
 
+        public void LuaServAbort(string name)
+        {
+            GetLuaCoreCtrlByName(name)?.Abort();
+        }
+
         public void LuaServStop(string name)
         {
             GetLuaCoreCtrlByName(name)?.Stop();

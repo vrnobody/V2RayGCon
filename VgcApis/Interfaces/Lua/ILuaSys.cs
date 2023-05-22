@@ -16,14 +16,18 @@ namespace VgcApis.Interfaces.Lua
 
         #region Lua VM
         string LuaGenModuleSnippets(string code);
+
         string LuaGetStaticSnippets();
+
         string LuaAnalyzeCode(string code);
+
         string LuaAnalyzeModule(string name);
 
         // this function is disabled for safety reason
         string LuaAnalyzeModuleEx(string name);
 
         string LuaServGetAllCoreInfos();
+
         string LuaServGetCoreInfo(string name);
 
         bool LuaServChangeSettings(string name, string settings);
@@ -33,10 +37,17 @@ namespace VgcApis.Interfaces.Lua
         bool LuaServRemove(string name);
 
         void LuaServStart(string name);
+
         void LuaServStop(string name);
+
+        void LuaServAbort(string name);
+
         bool LuaServAdd(string name, string script);
+
         string LuaServGetAllScripts();
+
         bool LuaVmRemove(string luavm);
+
         void LuaVmWait(string luavm);
 
         void LuaVmWait(string luavm, int delay);

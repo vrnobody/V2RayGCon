@@ -26,6 +26,9 @@ namespace Luna.Models.Apis.Components
         public int Count() =>
             vgcServers.Count();
 
+        public int CountSelected() =>
+            vgcServers.CountSelected();
+
         public bool Add(string config) => Add(config, "");
 
         public bool Add(string config, string mark)

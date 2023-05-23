@@ -9,6 +9,8 @@ namespace VgcApis.Interfaces.Services
 
         int Count();
 
+        int CountSelected();
+
         void DeleteServerByConfig(string config);
         void DeleteServerByUids(List<string> uids);
 

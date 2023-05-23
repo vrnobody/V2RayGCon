@@ -286,6 +286,15 @@ namespace Luna.Models.Apis
             return luaServer.RemoveScriptByName(name);
         }
 
+        public void LuaServRestart(string name)
+        {
+            var core = GetLuaCoreCtrlByName(name);
+            if (core != null)
+            {
+                core.Abort();
+                core.Start();
+            }
+        }
         public void LuaServStart(string name)
         {
             GetLuaCoreCtrlByName(name)?.Start();
@@ -977,6 +986,76 @@ namespace Luna.Models.Apis
             }
             catch { }
             return false;
+        }
+
+        public string CombinePath(string root, string path)
+        {
+            return Path.Combine(root, path);
+        }
+
+        public string Ls(string path) => Ls(path, null);
+
+        public string Ls(string path, string exts)
+        {
+            var spliters = new char[] { '\\', '/' };
+            var folders = new List<string>();
+            var files = new List<string>();
+
+            if (string.IsNullOrEmpty(path))
+            {
+                folders = DriveInfo.GetDrives()
+                    .Select(di => di.Name.Split(spliters).FirstOrDefault())
+                    .ToList();
+            }
+            else if (IsDirExists(path))
+            {
+
+                try
+                {
+                    folders = Directory.GetDirectories(path)
+                        .Select(f => f.Split(spliters).LastOrDefault())
+                        .ToList();
+                }
+                catch { }
+                try
+                {
+                    files = ListFiles(path, exts, spliters);
+                }
+                catch { }
+            }
+
+            var r = new Dictionary<string, List<string>>() {
+                {"folders", folders },
+                {"files", files },
+            };
+            return JsonConvert.SerializeObject(r);
+        }
+
+        List<string> ListFiles(string path, string exts, char[] spliters)
+        {
+            List<string> files;
+            var extList = exts?.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
+              .Select(e => "." + e.Trim().ToLower())
+              .Where(e => e.Length > 1)
+              .ToList();
+
+            if (extList != null && extList.Count > 0)
+            {
+                files = Directory.GetFiles(path)
+                    .Where(f => !string.IsNullOrEmpty(
+                        extList.FirstOrDefault(
+                            ext => f.ToLower().EndsWith(ext))))
+                    .Select(f => f.Split(spliters).LastOrDefault())
+                    .ToList();
+            }
+            else
+            {
+                files = Directory.GetFiles(path)
+                    .Select(f => f.Split(spliters).LastOrDefault())
+                    .ToList();
+            }
+
+            return files;
         }
         #endregion
 

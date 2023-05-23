@@ -36,6 +36,8 @@ namespace VgcApis.Interfaces.Lua
 
         bool LuaServRemove(string name);
 
+        void LuaServRestart(string name);
+
         void LuaServStart(string name);
 
         void LuaServStop(string name);
@@ -459,6 +461,27 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="path">文件夹路径</param>
         /// <returns>文件夹是否存在</returns>
         bool IsDirExists(string path);
+
+        /// <summary>
+        /// Path.Combine(root, path)
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        string CombinePath(string root, string path);
+
+        /// <summary>
+        /// 见 string Ls(string path, string exts);
+        /// </summary>
+        string Ls(string path);
+
+        /// <summary>
+        /// 列出path中的文件及文件夹
+        /// </summary>
+        /// <param name="path">C:\windows</param>
+        /// <param name="exts">txt|lua|json</param>
+        /// <returns>{folders:[...], files:[...]}</returns>
+        string Ls(string path, string exts);
         #endregion
     }
 }

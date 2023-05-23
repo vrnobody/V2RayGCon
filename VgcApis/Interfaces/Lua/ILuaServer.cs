@@ -21,6 +21,12 @@ namespace VgcApis.Interfaces.Lua
         /// <returns>服务器总数</returns>
         int Count();
 
+        /// <summary>
+        /// 获取选中的服务器总数
+        /// </summary>
+        /// <returns>选中的服务器总数</returns>
+        int CountSelected();
+
         bool Add(string config);
 
         bool Add(string config, string mark);

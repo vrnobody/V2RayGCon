@@ -281,12 +281,9 @@ namespace V2RayGCon.Services
             }
         }
 
-        public int Count() => coreServList.Count;
-
-        public void SetAllServerIsSelected(bool isSelected)
+        public int CountSelected()
         {
             List<Controllers.CoreServerCtrl> cache;
-
             locker.EnterReadLock();
             try
             {
@@ -297,15 +294,16 @@ namespace V2RayGCon.Services
                 locker.ExitReadLock();
             }
 
+            var count = 0;
             foreach (var c in cache)
             {
-                try
-                {
-                    c.GetCoreStates().SetIsSelected(isSelected);
-                }
-                catch { }
+                var isSelected = c.GetCoreStates().IsSelected();
+                count = count + (isSelected ? 1 : 0);
             }
+            return count;
         }
+
+        public int Count() => coreServList.Count;
 
         public string[] GetMarkList() =>
             markList.Keys.OrderBy(x => x).ToArray();

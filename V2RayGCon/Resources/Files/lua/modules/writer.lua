@@ -24,7 +24,8 @@ end
 
 function Writer:WriteAllText(content)
     local file = io.open(self.filename, "w+")
-    file:write(ToString(content))
+    local s = ToString(content):gsub('\r', '')
+    file:write(s)
     file:close()
 end
 

@@ -39,6 +39,9 @@ using System.Runtime.InteropServices;
 /*
  * v1.6.9.4 Fix custom user agent not working bug.
  *          Modify Misc:GetUserSettings().
+ *          Add Sys:LuaServAbort() in Luna plug-in.
+ *          Add Sys:Ls() Sys:LuaServRestart().
+ *          Fix a bug in writer.lua.
  * v1.6.9.3 Add left click settings for systray icon.
  *          Add user agent setting.
  * v1.6.9.2 Add Sys:Lua*() functions in Luna plug-in.

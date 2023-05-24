@@ -289,11 +289,16 @@ namespace Luna.Models.Apis
         public void LuaServRestart(string name)
         {
             var core = GetLuaCoreCtrlByName(name);
-            if (core != null)
+            if (core == null)
+            {
+                return;
+            }
+
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 core.Abort();
                 core.Start();
-            }
+            });
         }
         public void LuaServStart(string name)
         {

@@ -51,6 +51,17 @@ namespace Luna.Controllers
             }
         }
 
+        public string script
+        {
+            get => coreSetting.script;
+            set
+            {
+                coreSetting.script = value;
+                Save();
+            }
+        }
+
+
         public double index
         {
             get => coreSetting.index;
@@ -114,7 +125,7 @@ namespace Luna.Controllers
         public bool isRunning
         {
             get => coreSetting.isRunning;
-            set
+            private set
             {
                 if (coreSetting.isRunning == value)
                 {
@@ -143,17 +154,6 @@ namespace Luna.Controllers
         #region public methods
         public Models.Data.LuaCoreSetting GetCoreSettings() =>
             coreSetting;
-
-        public void SetScriptName(string name)
-        {
-            coreSetting.name = name;
-        }
-
-        public void ReplaceScript(string script)
-        {
-            coreSetting.script = script;
-            Save();
-        }
 
         public void Stop()
         {

@@ -14,9 +14,10 @@ namespace Luna.Misc
             {
                 return false;
             }
+            name = string.IsNullOrEmpty(name) ? $"({Resources.Langs.I18N.Empty})" : name;
             coreCtrl.Abort();
-            coreCtrl.SetScriptName(string.IsNullOrEmpty(name) ? $"({Resources.Langs.I18N.Empty})" : name);
-            coreCtrl.ReplaceScript(script);
+            coreCtrl.name = name;
+            coreCtrl.script = script;
             coreCtrl.isLoadClr = isLoadClr;
             coreCtrl.Start();
             return true;

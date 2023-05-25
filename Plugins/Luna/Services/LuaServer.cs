@@ -200,7 +200,7 @@ namespace Luna.Services
             var coreCtrl = cores.FirstOrDefault(c => c.name == name);
             if (coreCtrl != null)
             {
-                coreCtrl.ReplaceScript(script);
+                coreCtrl.script = script;
                 return false;
             }
 

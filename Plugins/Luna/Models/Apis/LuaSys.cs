@@ -330,6 +330,30 @@ namespace Luna.Models.Apis
             return JsonConvert.SerializeObject(r);
         }
 
+        public void LuaVmRemoveStopped()
+        {
+            var uids = luaVms.Keys.ToList();
+            foreach (var uid in uids)
+            {
+                if (luaVms.TryGetValue(uid, out var vm))
+                {
+                    if (vm.coreCtrl == null || !vm.coreCtrl.isRunning)
+                    {
+                        LuaVmRemove(uid);
+                    }
+                }
+            }
+        }
+
+        public string LuaVmGetScript(string luavm)
+        {
+            if (luaVms.TryGetValue(luavm, out var vm))
+            {
+                return vm.coreCtrl?.script ?? "";
+            }
+            return "";
+        }
+
         public bool LuaVmRemove(string luavm)
         {
             if (luaVms.TryRemove(luavm, out var vm))
@@ -392,9 +416,23 @@ namespace Luna.Models.Apis
             return false;
         }
 
-        public List<string> LuaVmGetAll()
+        public string LuaVmGetAllVmsInfo()
         {
-            return luaVms.Keys.ToList();
+            // uid: name, script, isRunning
+            var infos = new Dictionary<string, Dictionary<string, object>>();
+            var uids = luaVms.Keys.ToList();
+            foreach (var uid in uids)
+            {
+                if (luaVms.TryGetValue(uid, out var vm))
+                {
+                    var ctrl = vm.coreCtrl;
+                    infos[uid] = new Dictionary<string, object>() {
+                        {"name", ctrl.name},
+                        {"on", ctrl.isRunning },
+                    };
+                }
+            }
+            return JsonConvert.SerializeObject(infos);
         }
 
         public void LuaVmAbort(string luavm)

@@ -50,6 +50,11 @@ namespace VgcApis.Interfaces.Lua
 
         bool LuaVmRemove(string luavm);
 
+        void LuaVmRemoveStopped();
+
+        string LuaVmGetScript(string luavm);
+
+
         void LuaVmWait(string luavm);
 
         void LuaVmWait(string luavm, int delay);
@@ -58,7 +63,8 @@ namespace VgcApis.Interfaces.Lua
 
         bool LuaVmRun(string luavm, string name, string script);
 
-        List<string> LuaVmGetAll();
+        string LuaVmGetAllVmsInfo();
+
         void LuaVmAbort(string luavm);
 
         void LuaVmStop(string luavm);

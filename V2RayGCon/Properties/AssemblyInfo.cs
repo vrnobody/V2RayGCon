@@ -41,6 +41,7 @@ using System.Runtime.InteropServices;
  *          Modify Misc:GetUserSettings().
  *          Add Sys:LuaServAbort() in Luna plug-in.
  *          Add Sys:Ls() Sys:LuaServRestart().
+ *          Add Sys:LuaVmRemoveStopped(), Sys:LuaVmGetScript(), Sys:LuaVmGetAllVmsInfo().
  *          Fix a bug in writer.lua.
  * v1.6.9.3 Add left click settings for systray icon.
  *          Add user agent setting.

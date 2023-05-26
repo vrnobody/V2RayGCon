@@ -1,15 +1,16 @@
 {
-  "version": "1.6.9.0",
-  "md5": "A115E5DAF9C08553983355DED642891A",
+  "version": "1.7.0.0",
+  "md5": "CD93F01103AF443D6FFCD62BDE7D6723",
   "warnings": [
     "本项目支持的最高v2ray-core版本是v4.45.2"
   ],
   "changes": [
-    "修复core下载器无法使用的问题",
-    "支持Xray-core的reality（仅可用于vless和trojan协议）",
-    "添加一个网页版客户瑞，详见手册WebUI",
-    "修复lua.modules.reader.lua中的一个bug",
-    "Luna插件添加string.split(), Web:Ping()等多个函数",
-    "替换随机数生成器"
+    "WebUI基本功能已经完成，欢迎试用。详见手册。",
+    "主窗口过滤功能支持tag1-3",
+    "Luna print()输出多参数时用空格分隔",
+    "Luna Sys库添加一堆Lua相关函数",
+    "添加自定义user agent功能",
+    "添加单击托盘图标时执行自定义命令功能",
+    "修复lua.modules.writer.lua中的一个bug"
   ]
 }

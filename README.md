@@ -28,6 +28,10 @@ Download and unzip [V2RayGCon-box.zip][9] to any directory you like.
 Require .net framework 4.5+.  
 
 ### 演示 Demo
+Web UI [手册 manual](https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/40-web-ui/)  
+![Web UI light](https://vrnobody.github.io/V2RayGCon/images/luna/web_ui_light_v0.0.2.0.png)  
+
+WinForm UI  
 ![Demo v1.4.3.5 GIF](https://vrnobody.github.io/V2RayGCon/images/forms/demo_basics_v1.4.3.5.gif)  
   
   

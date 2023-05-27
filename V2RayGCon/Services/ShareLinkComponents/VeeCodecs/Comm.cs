@@ -49,11 +49,12 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             // 抄袭自： https://github.com/musva/V2RayW/commit/e54f387e8d8181da833daea8464333e41f0f19e6 GPLv3
             List<string> parts = url
                 .Substring(header.Length)
-                .Split(new char[] { ':', '@', '?', '&', '#', '=' })
+                .Replace("/?", "?") // 这些奇奇怪怪的链接是哪个天才生成出来的？
+                .Split(new char[] { '@', '?', '&', '#', '=' })
                 .Select(s => Uri.UnescapeDataString(s))
                 .ToList();
 
-            if (parts.Count < 5)
+            if (parts.Count < 2)
             {
                 return null;
             }
@@ -61,9 +62,15 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             var vc = new Models.Datas.VeeConfigsWithReality();
             vc.name = parts.Last();
             vc.proto = proto;
-            vc.host = parts[1];
-            vc.port = VgcApis.Misc.Utils.Str2Int(parts[2]);
             vc.auth1 = parts[0];
+
+            var addr = parts[1];
+
+            // 有些人啊，就是不按标准！IPv6的冒号不转义！
+            if (!VgcApis.Misc.Utils.TryParseAddress(addr, out vc.host, out vc.port))
+            {
+                return null;
+            }
 
             string GetValue(string key, string def)
             {

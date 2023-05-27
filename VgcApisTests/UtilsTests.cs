@@ -187,6 +187,7 @@ namespace VgcApisTests
         [DataTestMethod]
         [DataRow("a::b:1233333", false, "127.0.0.1", 1080)]
         [DataRow("a::b:123", true, "a::b", 123)]
+        [DataRow("[a::b]:123", true, "[a::b]", 123)]
         [DataRow("ab123", false, "127.0.0.1", 1080)]
         [DataRow("ab123:", false, "127.0.0.1", 1080)]
         [DataRow(":123", false, "127.0.0.1", 1080)]

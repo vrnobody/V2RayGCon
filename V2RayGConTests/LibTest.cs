@@ -129,7 +129,7 @@ stat: <
         }
 
         [DataTestMethod]
-        [DataRow("https://www.baidu.com/")]
+        [DataRow("https://www.sogou.com/")]
         public void FetchTest(string url)
         {
             var html = Misc.Utils.Fetch(url);
@@ -137,7 +137,7 @@ stat: <
         }
 
         [DataTestMethod]
-        [DataRow("https://www.baidu.com/", 3)]
+        [DataRow("https://www.sogou.com/", 3)]
         public void FetchBatchTest(string url, int times)
         {
             var urls = new List<string>();
@@ -209,7 +209,7 @@ stat: <
         }
 
         [DataTestMethod]
-        [DataRow("https://www.baidu.com")]
+        [DataRow("https://www.sogou.com")]
         public void VisitWebPageSpeedTestTest(string url)
         {
             var r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, 1024 * 1024, -1);

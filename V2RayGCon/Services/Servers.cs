@@ -606,10 +606,28 @@ namespace V2RayGCon.Services
 
         public void DeleteServerByUids(List<string> uids)
         {
-            var coreServs = queryHandler.GetServersWithUids(uids);
-            foreach (var iCoreServ in coreServs)
+            // bug: ICoreServCtrl can not cast to CoreServerCtrl
+            // var coreServs = queryHandler.GetServersWithUids(uids);
+
+            List<Controllers.CoreServerCtrl> coreServs;
+            locker.EnterWriteLock();
+            try
             {
-                var coreServ = iCoreServ as Controllers.CoreServerCtrl;
+                coreServs = coreServList.Where(cs => uids.Contains(cs.GetCoreStates().GetUid())).ToList();
+                foreach (var cs in coreServs)
+                {
+                    var cfg = cs.GetConfiger().GetConfig();
+                    configCache.TryRemove(cfg, out _);
+                    coreServList.Remove(cs);
+                }
+            }
+            finally
+            {
+                locker.ExitWriteLock();
+            }
+
+            foreach (var coreServ in coreServs)
+            {
                 ReleaseEventsFrom(coreServ);
                 coreServ.Dispose();
             }

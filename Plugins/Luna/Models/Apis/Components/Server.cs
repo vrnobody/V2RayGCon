@@ -83,6 +83,15 @@ namespace Luna.Models.Apis.Components
         public bool RunSpeedTestOnSelectedServers() =>
             vgcServers.RunSpeedTestOnSelectedServers();
 
+        public bool RunSpeedTestOnSelectedServersBgQuiet() =>
+            vgcServers.RunSpeedTestOnSelectedServersBgQuiet();
+
+        public void StopSpeedTest() =>
+            vgcServers.StopSpeedTest();
+
+        public bool IsRunningSpeedTest() =>
+            vgcServers.IsRunningSpeedTest();
+
         public string PackSelectedServers(string orgUid, string pkgName) =>
             PackSelectedServers(
                 orgUid, pkgName,

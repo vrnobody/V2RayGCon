@@ -29,6 +29,12 @@ namespace VgcApis.Interfaces.Services
 
         bool RunSpeedTestOnSelectedServers();
 
+        bool RunSpeedTestOnSelectedServersBgQuiet();
+
+        void StopSpeedTest();
+
+        bool IsRunningSpeedTest();
+
         void ReverseSelectedByIndex();
 
         void SortSelectedByLastModifiedDate();

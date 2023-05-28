@@ -143,6 +143,12 @@ namespace VgcApis.Interfaces.Lua
         /// <returns></returns>
         bool RunSpeedTestOnSelectedServers();
 
+        bool RunSpeedTestOnSelectedServersBgQuiet();
+
+        void StopSpeedTest();
+
+        bool IsRunningSpeedTest();
+
         /// <summary>
         /// 将选中的服务器按序号逆序排列
         /// </summary>

@@ -439,6 +439,26 @@ namespace V2RayGCon.Services
             return success;
         }
 
+        public bool RunSpeedTestOnSelectedServersBgQuiet()
+        {
+            return BatchSpeedTestWorkerThen(GetSelectedServer(), null);
+        }
+
+        public bool IsRunningSpeedTest()
+        {
+            var r = speedTestingBar.Install();
+            if (r)
+            {
+                speedTestingBar.Remove();
+            }
+            return !r;
+        }
+
+        public void StopSpeedTest()
+        {
+            setting.isSpeedtestCancelled = true;
+        }
+
         public void RunSpeedTestOnSelectedServersBg()
         {
             var success = BatchSpeedTestWorkerThen(

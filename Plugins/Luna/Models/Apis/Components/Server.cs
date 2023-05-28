@@ -80,6 +80,12 @@ namespace Luna.Models.Apis.Components
         public void StopAllServers() =>
             vgcServers.StopAllServers();
 
+        public bool RunSpeedTestByUids(LuaTable uids)
+        {
+            var list = global::Luna.Misc.Utils.LuaTableToList(uids, false);
+            return vgcServers.RunSpeedTestBgQuiet(list);
+        }
+
         public bool RunSpeedTestOnSelectedServers() =>
             vgcServers.RunSpeedTestOnSelectedServers();
 

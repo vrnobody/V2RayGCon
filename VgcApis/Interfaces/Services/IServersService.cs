@@ -31,6 +31,8 @@ namespace VgcApis.Interfaces.Services
 
         bool RunSpeedTestOnSelectedServersBgQuiet();
 
+        bool RunSpeedTestBgQuiet(List<string> uids);
+
         void StopSpeedTest();
 
         bool IsRunningSpeedTest();

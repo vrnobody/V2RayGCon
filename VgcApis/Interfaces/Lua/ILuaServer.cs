@@ -145,6 +145,8 @@ namespace VgcApis.Interfaces.Lua
 
         bool RunSpeedTestOnSelectedServersBgQuiet();
 
+        bool RunSpeedTestByUids(LuaTable uids);
+
         void StopSpeedTest();
 
         bool IsRunningSpeedTest();

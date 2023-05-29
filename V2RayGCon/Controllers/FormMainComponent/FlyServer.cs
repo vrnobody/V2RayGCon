@@ -154,7 +154,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             int serverControlCount = GetAllServerControls().Count();
 
             // may cause dead lock in UI thread
-            int selectedServersCount = servers.CountSelectedServers();
+            int selectedServersCount = servers.CountSelected();
 
             SetSearchKeywords();
 

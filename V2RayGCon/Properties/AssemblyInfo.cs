@@ -39,6 +39,7 @@ using System.Runtime.InteropServices;
 /*
  * v1.7.0.1 Parse NON-STANDARD IPv6 host in vless://... 
  *          Add Server:IsRunningSpeedTest() in Luna plug-in.
+ *          Cache Server:CountSelected().
  * -------------------------------------------------------------
  * v1.6.9.4 Fix custom user agent not working bug.
  *          Modify Misc:GetUserSettings().

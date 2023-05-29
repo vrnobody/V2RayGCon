@@ -158,6 +158,10 @@ namespace V2RayGCon.Services
 
         void InvokeEventOnServerPropertyChange(object sender, EventArgs arg)
         {
+            if (selectedServersCountCache != -1)
+            {
+                selectedServersCountCache = -1;
+            }
             lazyServerSettingsRecorder.Deadline();
             InvokeEventHandlerIgnoreError(OnServerPropertyChange, null, EventArgs.Empty);
         }
@@ -268,39 +272,23 @@ namespace V2RayGCon.Services
         public void OnAutoTrackingOptionChanged() =>
             ServerTrackingUpdateWorker(null, false);
 
-        public int CountSelectedServers()
-        {
-            locker.EnterReadLock();
-            try
-            {
-                return coreServList.Count(s => s.GetCoreStates().IsSelected());
-            }
-            finally
-            {
-                locker.ExitReadLock();
-            }
-        }
-
+        int selectedServersCountCache = -1;
         public int CountSelected()
         {
-            List<Controllers.CoreServerCtrl> cache;
-            locker.EnterReadLock();
-            try
+            if (selectedServersCountCache < 0)
             {
-                cache = coreServList.ToList();
-            }
-            finally
-            {
-                locker.ExitReadLock();
+                locker.EnterReadLock();
+                try
+                {
+                    selectedServersCountCache = coreServList.Count(s => s.GetCoreStates().IsSelected());
+                }
+                finally
+                {
+                    locker.ExitReadLock();
+                }
             }
 
-            var count = 0;
-            foreach (var c in cache)
-            {
-                var isSelected = c.GetCoreStates().IsSelected();
-                count = count + (isSelected ? 1 : 0);
-            }
-            return count;
+            return selectedServersCountCache;
         }
 
         public int Count() => coreServList.Count;

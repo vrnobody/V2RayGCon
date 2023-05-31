@@ -238,7 +238,7 @@ namespace Luna.Controllers
         void RunLuaScript()
         {
             luaSys?.Dispose();
-            luaSys = new Models.Apis.LuaSys(luaApis, GetAllAssemblies, isLoadClr);
+            luaSys = new Models.Apis.LuaSys(luaApis, GetAllAssemblies);
 
             luaSignal.ResetAllSignals();
 

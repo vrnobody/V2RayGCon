@@ -72,7 +72,6 @@ namespace Luna.Models.Apis
 
         private readonly LuaApis luaApis;
         private readonly Func<List<Type>> getAllAssemblies;
-        private readonly bool isLoadClr;
         List<Process> processes = new List<Process>();
 
         List<VgcApis.Interfaces.Lua.ILuaMailBox>
@@ -94,12 +93,10 @@ namespace Luna.Models.Apis
 
         public LuaSys(
             LuaApis luaApis,
-            Func<List<Type>> getAllAssemblies,
-            bool isLoadClr)
+            Func<List<Type>> getAllAssemblies)
         {
             this.luaApis = luaApis;
             this.getAllAssemblies = getAllAssemblies;
-            this.isLoadClr = isLoadClr;
             this.postOffice = luaApis.GetPostOffice();
             this.vgcServerService = luaApis.GetVgcServerService();
 
@@ -407,7 +404,10 @@ namespace Luna.Models.Apis
             return luavm;
         }
 
-        public bool LuaVmRun(string luavm, string name, string script)
+        public bool LuaVmRun(string luavm, string name, string script) =>
+            LuaVmRun(luavm, name, script, false);
+
+        public bool LuaVmRun(string luavm, string name, string script, bool isLoadClr)
         {
             if (luaVms.TryGetValue(luavm, out var vm))
             {

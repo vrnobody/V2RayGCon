@@ -61,6 +61,8 @@ namespace VgcApis.Interfaces.Lua
 
         string LuaVmCreate();
 
+        bool LuaVmRun(string luavm, string name, string script, bool isLoadClr);
+
         bool LuaVmRun(string luavm, string name, string script);
 
         string LuaVmGetAllVmsInfo();

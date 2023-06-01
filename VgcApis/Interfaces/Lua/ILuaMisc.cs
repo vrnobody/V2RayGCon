@@ -14,6 +14,13 @@ namespace VgcApis.Interfaces.Lua
         void Invoke(LuaFunction func);
 
         /// <summary>
+        /// 复制内容到剪切板
+        /// </summary>
+        /// <param name="content">字符串内容</param>
+        /// <returns></returns>
+        bool CopyToClipboard(string content);
+
+        /// <summary>
         /// 调出Json编辑器窗口
         /// </summary>
         /// <param name="config">预置内容</param>

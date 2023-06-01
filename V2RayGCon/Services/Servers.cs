@@ -132,8 +132,14 @@ namespace V2RayGCon.Services
 
         #region event relay
 
-        void InvokeEventOnServerCountChange(object sender, EventArgs args) =>
+        void InvokeEventOnServerCountChange(object sender, EventArgs args)
+        {
+            if (selectedServersCountCache != -1)
+            {
+                selectedServersCountCache = -1;
+            }
             InvokeEventHandlerIgnoreError(OnServerCountChange, sender, EventArgs.Empty);
+        }
 
         void InvokeEventHandlerIgnoreError(EventHandler handler, object sender, EventArgs args)
         {
@@ -592,8 +598,13 @@ namespace V2RayGCon.Services
             Misc.Utils.ChainActionHelperAsync(list.Count, worker, lambda);
         }
 
-        public void DeleteServerByUids(List<string> uids)
+        public int DeleteServerByUids(List<string> uids)
         {
+            if (uids == null || uids.Count < 1)
+            {
+                return 0;
+            }
+
             // bug: ICoreServCtrl can not cast to CoreServerCtrl
             // var coreServs = queryHandler.GetServersWithUids(uids);
 
@@ -614,72 +625,42 @@ namespace V2RayGCon.Services
                 locker.ExitWriteLock();
             }
 
-            foreach (var coreServ in coreServs)
+            void housekeeping()
             {
-                ReleaseEventsFrom(coreServ);
-                coreServ.Dispose();
+                foreach (var coreServ in coreServs)
+                {
+                    ReleaseEventsFrom(coreServ);
+                    coreServ.Dispose();
+                }
             }
+
+            VgcApis.Misc.Utils.RunInBackground(housekeeping);
             RefreshUiAfterCoreServersAreDeleted();
+            return coreServs.Count;
         }
 
-        public void DeleteSelectedServersThen(Action done = null)
+        public int DeleteSelectedServers()
         {
-            if (!speedTestingBar.Install())
-            {
-                MessageBox.Show(I18N.LastTestNoFinishYet);
-                return;
-            }
+            List<string> uids = null;
 
-            List<Controllers.CoreServerCtrl> coreServs;
-            locker.EnterWriteLock();
+            locker.EnterReadLock();
             try
             {
-                coreServs = coreServList.Where(cs => cs.GetCoreStates().IsSelected()).ToList();
-                foreach (var cs in coreServs)
-                {
-                    var cfg = cs.GetConfiger().GetConfig();
-                    configCache.TryRemove(cfg, out _);
-                    coreServList.Remove(cs);
-                }
+                uids = coreServList.Where(cs => cs.GetCoreStates().IsSelected())
+                    ?.Select(cs => cs.GetCoreStates().GetUid())
+                    ?.ToList();
             }
             finally
             {
-                locker.ExitWriteLock();
+                locker.ExitReadLock();
             }
 
-            void worker(int index, Action next)
-            {
-                var cs = coreServs[index];
-                DisposeCoreServThen(cs, next);
-            }
-
-            void finish()
-            {
-                RefreshUiAfterCoreServersAreDeleted();
-                speedTestingBar.Remove();
-                done?.Invoke();
-            }
-
-            Misc.Utils.ChainActionHelperAsync(coreServs.Count, worker, finish);
+            return DeleteServerByUids(uids);
         }
 
-        public void DeleteAllServersThen(Action done = null)
+        public void DeleteAllServers()
         {
-            if (!speedTestingBar.Install())
-            {
-                MessageBox.Show(I18N.LastTestNoFinishYet);
-                return;
-            }
-
-            void finish()
-            {
-                lazyServerSettingsRecorder.Deadline();
-                UpdateMarkList();
-                RequireFormMainReload();
-                InvokeEventOnServerCountChange(this, EventArgs.Empty);
-                speedTestingBar.Remove();
-                done?.Invoke();
-            }
+            setting.isSpeedtestCancelled = true;
 
             List<Controllers.CoreServerCtrl> servs;
             locker.EnterWriteLock();
@@ -694,13 +675,17 @@ namespace V2RayGCon.Services
                 locker.ExitWriteLock();
             }
 
-            void worker(int index, Action next)
+            void housekeeping()
             {
-                var cs = servs[index];
-                DisposeCoreServThen(cs, next);
+                foreach (var serv in servs)
+                {
+                    ReleaseEventsFrom(serv);
+                    serv.Dispose();
+                }
             }
 
-            Misc.Utils.ChainActionHelperAsync(servs.Count, worker, finish);
+            VgcApis.Misc.Utils.RunInBackground(housekeeping);
+            RefreshUiAfterCoreServersAreDeleted();
         }
 
         public void UpdateAllServersSummary()
@@ -725,46 +710,31 @@ namespace V2RayGCon.Services
             InvokeEventOnServerPropertyChange(this, EventArgs.Empty);
         }
 
-        public void DeleteServerByConfig(string config)
+        public bool DeleteServerByConfig(string config, bool isQuiet)
         {
-            if (!speedTestingBar.Install())
-            {
-                MessageBox.Show(I18N.LastTestNoFinishYet);
-                return;
-            }
-
-            Controllers.CoreServerCtrl coreServ;
-            locker.EnterWriteLock();
+            config = VgcApis.Misc.Utils.FormatConfig(config);
+            string uid;
+            locker.EnterReadLock();
             try
             {
-                coreServ = coreServList.FirstOrDefault(cs => cs.GetConfiger().GetConfig() == config);
-                if (coreServ != null)
-                {
-                    configCache.TryRemove(config, out _);
-                    coreServList.Remove(coreServ);
-                }
+                uid = coreServList.FirstOrDefault(cs => cs.GetConfiger().GetConfig() == config)
+                    ?.GetCoreStates()?.GetUid();
             }
             finally
             {
-                locker.ExitWriteLock();
+                locker.ExitReadLock();
             }
 
-            if (coreServ == null)
+            if (string.IsNullOrEmpty(uid))
             {
-                MessageBox.Show(I18N.CantFindOrgServDelFail);
-                speedTestingBar.Remove();
-                return;
+                if (!isQuiet)
+                {
+                    MessageBox.Show(I18N.CantFindOrgServDelFail);
+                }
+                return false;
             }
 
-            DisposeCoreServThen(coreServ, () =>
-            {
-                InvokeEventOnServerCountChange(this, EventArgs.Empty);
-                lazyServerSettingsRecorder.Deadline();
-                UpdateMarkList();
-                ResetIndexQuiet();
-                RequireFormMainReload();
-                speedTestingBar.Remove();
-            });
+            return DeleteServerByUids(new List<string>() { uid }) == 1;
         }
 
         public bool IsServerExist(string config)
@@ -788,7 +758,7 @@ namespace V2RayGCon.Services
             config = VgcApis.Misc.Utils.FormatConfig(config);
 
             // first check
-            if (string.IsNullOrEmpty(config) || IsServerExist(config))
+            if (IsServerExistWorker(config))
             {
                 return false;
             }
@@ -923,15 +893,19 @@ namespace V2RayGCon.Services
 
         void RefreshUiAfterCoreServersAreDeleted()
         {
-            lazyServerSettingsRecorder.Deadline();
             UpdateMarkList();
             ResetIndexQuiet();
-            RequireFormMainReload();
             InvokeEventOnServerCountChange(this, EventArgs.Empty);
+            RequireFormMainReload();
+            lazyServerSettingsRecorder.Deadline();
         }
 
         bool IsServerExistWorker(string config)
         {
+            if (string.IsNullOrEmpty(config))
+            {
+                return true;
+            }
             return configCache.ContainsKey(config);
         }
 
@@ -1089,18 +1063,6 @@ namespace V2RayGCon.Services
                 configCache.TryAdd(cfg, true);
                 BindEventsTo(server);
             }
-        }
-
-        void DisposeCoreServThen(Controllers.CoreServerCtrl coreServ, Action next = null)
-        {
-            var copy = coreServ;
-
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                ReleaseEventsFrom(copy);
-                copy.Dispose();
-                next?.Invoke();
-            });
         }
 
         #endregion

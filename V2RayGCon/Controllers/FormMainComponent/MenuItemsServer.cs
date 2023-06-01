@@ -207,7 +207,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 {
                     return;
                 }
-                Services.Servers.Instance.DeleteAllServersThen();
+                Services.Servers.Instance.DeleteAllServers();
                 Services.Cache.Instance.core.Clear();
             };
 
@@ -217,7 +217,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 {
                     return;
                 }
-                servers.DeleteSelectedServersThen();
+                servers.DeleteSelectedServers();
             });
         }
 

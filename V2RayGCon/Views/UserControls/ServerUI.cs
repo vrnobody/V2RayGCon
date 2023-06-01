@@ -691,7 +691,7 @@ namespace V2RayGCon.Views.UserControls
             this.coreServCtrl = null;
             ReleaseCoreCtrlEvents(csc);
             var config = csc?.GetConfiger()?.GetConfig() ?? "";
-            servers.DeleteServerByConfig(config);
+            servers.DeleteServerByConfig(config, false);
         }
 
         private void logOfThisServerToolStripMenuItem_Click(object sender, EventArgs e)

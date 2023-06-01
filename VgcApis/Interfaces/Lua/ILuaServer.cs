@@ -35,13 +35,13 @@ namespace VgcApis.Interfaces.Lua
         /// 危险操作！
         /// </summary>
         /// <param name="config"></param>
-        void DeleteServerByConfig(string config);
+        bool DeleteServerByConfig(string config);
 
         /// <summary>
         /// 危险操作！！
         /// </summary>
         /// <param name="uids"></param>
-        void DeleteServerByUids(LuaTable uids);
+        int DeleteServerByUids(LuaTable uids);
 
 
         /// <summary>

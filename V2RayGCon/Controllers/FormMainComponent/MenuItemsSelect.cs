@@ -161,11 +161,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
             Func<VgcApis.Interfaces.ICoreServCtrl, bool>
             condiction)
         {
-            GetFlyPanel().GetFilteredList().Select(s =>
-            {
-                s.GetCoreStates().SetIsSelected(condiction(s));
-                return true;
-            }).ToList();
+            GetFlyPanel().GetFilteredList()
+                .AsParallel()
+                .ForAll(s => s.GetCoreStates().SetIsSelected(condiction(s)));
         }
 
 
@@ -173,11 +171,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
             Func<VgcApis.Interfaces.ICoreServCtrl, bool>
             condiction)
         {
-            servers.GetAllServersOrderByIndex().Select(s =>
-            {
-                s.GetCoreStates().SetIsSelected(condiction(s));
-                return true;
-            }).ToList();
+            servers.GetAllServersOrderByIndex()
+                .AsParallel()
+                .ForAll(s => s.GetCoreStates().SetIsSelected(condiction(s)));
         }
 
         Controllers.FormMainComponent.FlyServer GetFlyPanel()

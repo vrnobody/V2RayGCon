@@ -11,8 +11,9 @@ namespace VgcApis.Interfaces.Services
 
         int CountSelected();
 
-        void DeleteServerByConfig(string config);
-        void DeleteServerByUids(List<string> uids);
+        bool DeleteServerByConfig(string config, bool isQuiet);
+
+        int DeleteServerByUids(List<string> uids);
 
         int GetAvailableHttpProxyPort();
 

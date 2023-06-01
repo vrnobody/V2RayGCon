@@ -40,6 +40,16 @@ namespace Luna.Models.Apis.Components
         #region ILuaMisc.WinForms
         public void Invoke(LuaFunction func) => VgcApis.Misc.UI.Invoke(() => func.Call());
 
+        public bool CopyToClipboard(string content)
+        {
+            bool ok = false;
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                ok = VgcApis.Misc.Utils.CopyToClipboard(content);
+            });
+            return ok;
+        }
+
         public void ShowFormJsonEditor(string config) => vgcNotifier.ShowFormJsonEditor(config);
 
         public void ShowFormServerSettings(ICoreServCtrl coreServ) => vgcNotifier.ShowFormServerSettings(coreServ);

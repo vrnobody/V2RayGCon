@@ -17,9 +17,6 @@ local function AllServs()
 end
 
 local function ToNumber(s)
-    if type(s) ~= "string" or string.isempty(s) then
-        return 0
-    end
     return tonumber(s) or 0
 end
 
@@ -257,7 +254,7 @@ function u.SelectAllTimeouted()
     for coreServ in Each(servs) do
         local coreState = coreServ:GetCoreStates()
         local latency = coreState:GetSpeedTestResult()
-        local isTimeout = latency == Timeout
+        local isTimeout = latency == u.Timeout
         coreState:SetIsSelected(isTimeout)
     end
 end

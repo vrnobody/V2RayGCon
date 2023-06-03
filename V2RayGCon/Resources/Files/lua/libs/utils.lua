@@ -16,19 +16,11 @@ local function AllServs()
     return Each(Server:GetAllServers())
 end
 
-local function FirstServerOf(servers)
-    assert(type(servers) == "table")
-    if #servers > 0 then
-        return servers[1]
-    end
-    return nil
-end
-
 local function ToNumber(str)
-    if string.isempty(str) then
+    if type(s) ~= "string" or string.isempty(s) then
         return 0
     end
-    return tonumber(str)
+    return tonumber(s) or 0
 end
 
 local function ToLuaTicks(cSharpTicks)
@@ -44,8 +36,7 @@ local function IsInTable(haystack, needle)
     local tHaystack = type(haystack)
     assert(tNeedle == "string", "needle is " .. tNeedle)
     assert(tHaystack == "table", "haystack is " .. tHaystack)
-	for _, item in pairs(haystack)
-    do
+	for _, item in pairs(haystack) do
         if string.lower(needle) == string.lower(item) then
             return true
         end
@@ -69,52 +60,54 @@ local function Ticks2Days(ticks)
     return math.floor(days)
 end
 
---- Check if a file or directory exists in this path
-local function Exists(file)
-   local ok, err, code = os.rename(file, file)
-   if not ok then
-      if code == 13 then
-         -- Permission denied, but it exists
-         return true
-      end
-   end
-   return ok, err
-end
-
-local function GetServsByMarks(marks, isRemark, isContainsMark)
+local function GetServsByMarks(marks, isRemark, isContains)
     
     assert(type(marks) == "table")
-    assert(type(isContainsMark), "boolean")
+    assert(type(isContains), "boolean")
     assert(type(isRemark), "boolean")
     
-    local hasMark = {}
-    local noMark = {}
+    local with = {}
+    local without = {}
     for coreServ in AllServs() do
         local coreState = coreServ:GetCoreStates()
         local mark = isRemark and coreState:GetRemark() or coreState:GetMark()
         if IsInTable(marks, mark) then
-            table.insert(hasMark, coreServ)
+            table.insert(with, coreServ)
         else
-            table.insert(noMark, coreServ)
+            table.insert(without, coreServ)
         end
     end
-    if isContainsMark then
-        return hasMark
+    if isContains then
+        return with
     else
-        return noMark
+        return without
     end
+end
+
+local function GetFirstServerWith(marks, isRemark, isContains)
+    
+    assert(type(marks) == "table")
+    assert(type(isRemark), "boolean")
+    assert(type(isContains), "boolean")
+    
+    for coreServ in AllServs() do
+        local coreState = coreServ:GetCoreStates()
+        local mark = isRemark and coreState:GetRemark() or coreState:GetMark()
+        local has = IsInTable(marks, mark)
+        if isContains then
+            if has then
+                return coreServ
+            end
+        else
+            if not has then
+                return coreServ
+            end
+        end
+    end
+    return nil
 end
 
 -- utils
-
-function u.Exists(file)
-    return Exists(file)
-end
-
-function u.IsDir(path)
-   return Exists(path.."/")
-end
-
 function u.GC()
     local prev = collectgarbage("count")
     collectgarbage("collect")
@@ -182,23 +175,19 @@ function u.GetServersWithoutRemarks(remarks)
 end
 
 function u.GetFirstServerWithMarks(marks)
-    local servs = GetServsByMarks(marks, false, true)
-    return FirstServerOf(servs)
+    return GetFirstServerWith(marks, false, true)
 end
 
 function u.GetFirstServerWithRemarks(remarks)
-    local servs = GetServsByMarks(remarks, true, true)
-    return FirstServerOf(servs)
+    return GetFirstServerWith(remarks, true, true)
 end
 
 function u.GetFirstServerWithoutMarks(marks)
-    local servs = GetServsByMarks(marks, false, false)
-    return FirstServerOf(servs)
+    return GetFirstServerWith(marks, false, false)
 end
 
 function u.GetFirstServerWithoutRemarks(remarks)
-    local servs = GetServsByMarks(remarks, true, false)
-    return FirstServerOf(servs)
+    return GetFirstServerWith(remarks, false, false)
 end
 
 function u.GetFirstServerWithName(name)
@@ -260,6 +249,16 @@ function u.SelectServers(servers)
             local coreState = coreServ:GetCoreStates()
             coreState:SetIsSelected(true)
         end
+    end
+end
+
+function u.SelectAllTimeouted()
+    local servs = Server:GetAllServers()
+    for coreServ in Each(servs) do
+        local coreState = coreServ:GetCoreStates()
+        local latency = coreState:GetSpeedTestResult()
+        local isTimeout = latency == Timeout
+        coreState:SetIsSelected(isTimeout)
     end
 end
 

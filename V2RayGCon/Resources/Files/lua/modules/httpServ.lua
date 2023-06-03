@@ -4,7 +4,7 @@ example:
 
 local url = "http://localhost:4000/"
 
-local haServ = require('lua.modules.httpServ').new()
+local httpServ = require('lua.modules.httpServ').new()
 
 local handler = function(req)
     print("req: ", req)
@@ -14,10 +14,10 @@ end
 
 -- source can be file path or folder path or string of HTML
 local source = "<html><body><h1>index.html</h1></body></html>"
-haServ:Create(url, source, handler)
+httpServ:Create(url, source, handler)
 
 print("Waiting for connections ...")
-haServ:Run()
+httpServ:Run()
 
 --]]
 
@@ -35,7 +35,7 @@ local function CreateServer(self)
     self.outbox = outbox
     self.outadd = outbox:GetAddress()
     
-    local serv = Sys:CreateHttpServer(self.url, self.inbox, self.outbox, self.source, self.allowCROS)
+    local serv = Sys:CreateHttpServer(self.url, self.inbox, self.outbox, self.source, self.allowCORS)
     return serv
 end
 
@@ -68,12 +68,9 @@ local function HandleOneConn(self)
     return true
 end
 
-function M:Create(url, source, handler, allowCROS)
+function M:Create(url, source, handler, allowCORS)
     
-    self.allowCROS = false
-    if allowCROS == true then
-        self.allowCROS = true
-    end
+    self.allowCORS = allowCORS == true
     
     assert(type(url) == "string", "Param url should be string")
     assert(type(source) == "string", "Param source should be string.")

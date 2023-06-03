@@ -22,7 +22,7 @@ jobs:
         webuiUrl: 'https://github.com/vrnobody/WebUI/releases/download'
         # v2rayCorePkgName: 'v2ray-windows-64.zip'
         v2rayCorePkgName: 'Xray-windows-64.zip'
-        scriptPkgName: 'scripts-v1.0.5'
+        scriptPkgName: 'scripts-v1.0.6'
         v2rayCoreVer: 'v1.8.1'
         # https://github.com/v2ray/v2ray-core/releases/download/v4.20.0/v2ray-windows-32.zip
         # https://github.com/XTLS/Xray-core/releases/download/v1.4.0/Xray-windows-64.zip

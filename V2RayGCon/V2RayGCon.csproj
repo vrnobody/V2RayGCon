@@ -549,7 +549,7 @@
     <None Include="Resources\Files\Scripts\托管（简单版）.lua" />
     <None Include="Resources\Files\Scripts\故障转移.lua" />
     <None Include="Resources\Files\Scripts\服务器小工具.lua" />
-    <None Include="Resources\Files\Scripts\查询服务器所在国家.lua" />
+    <None Include="Resources\Files\Scripts\查询服务器出入口地区.lua" />
     <None Include="Resources\Files\Scripts\每月清空流量统计数据.lua" />
     <None Include="Resources\Files\Scripts\热键切换服务器.lua" />
     <None Include="Resources\Files\Scripts\监听服务器事件.lua" />
@@ -561,7 +561,7 @@
   <ItemGroup>
     <Content Include="icon_dark.ico" />
     <Content Include="Resources\Files\CSharp\ConfigJsonKeywords.txt" />
-    <Content Include="Resources\Files\Scripts\使用说明-v1.0.5.txt" />
+    <Content Include="Resources\Files\Scripts\使用说明-v1.0.6.txt" />
     <None Include="Resources\Icon\FormMainToolStrip\CloudSearch_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\AddField_16x.png" />
     <None Include="Resources\Icon\TaskTray\SFTPConnection_16x.png" />

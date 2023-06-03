@@ -16,7 +16,7 @@ local function AllServs()
     return Each(Server:GetAllServers())
 end
 
-local function ToNumber(str)
+local function ToNumber(s)
     if type(s) ~= "string" or string.isempty(s) then
         return 0
     end

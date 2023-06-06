@@ -140,6 +140,24 @@ namespace Luna.Models.Apis.Components
 
         #endregion
 
+        #region ILuaMisc.Encodings
+        public string Md5(string str)
+        {
+            var b = VgcApis.Misc.Utils.Md5Hash(str);
+            return VgcApis.Misc.Utils.ToHexString(b);
+        }
+        public string Sha256(string str)
+        {
+            var b = VgcApis.Misc.Utils.Sha256Hash(str);
+            return VgcApis.Misc.Utils.ToHexString(b);
+        }
+        public string Sha512(string str)
+        {
+            var b = VgcApis.Misc.Utils.Sha512Hash(str);
+            return VgcApis.Misc.Utils.ToHexString(b);
+        }
+        #endregion
+
         #region other ILuaMisc stuff
         public void Log(string message) => settings.SendLog(message);
 

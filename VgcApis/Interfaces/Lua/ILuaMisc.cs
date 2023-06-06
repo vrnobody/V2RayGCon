@@ -356,6 +356,11 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region encode decode
+
+        string Md5(string str);
+        string Sha256(string str);
+        string Sha512(string str);
+
         // GetLinkBody("vmess://abcdefg") == "abcdefg"
         /// <summary>
         /// vmess://abcdefg => abcdefg

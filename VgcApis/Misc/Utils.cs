@@ -236,18 +236,52 @@ namespace VgcApis.Misc
         #region string
         public static string TrimTrailingNewLine(string content) =>
             content?.TrimEnd(System.Environment.NewLine.ToCharArray());
-        public static string Md5Base64(string text)
+
+        public static string ToHexString(byte[] bytes)
         {
-            var bytes = Md5Hash(text);
-            var b64 = Convert.ToBase64String(bytes);
-            return b64;
+            if (bytes == null)
+            {
+                return null;
+            }
+
+            // js hash function return lower case hex string
+            return BitConverter.ToString(bytes)
+                ?.Replace("-", "")
+                ?.ToLower();
+        }
+
+        public static byte[] Sha512Hash(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return null;
+            }
+            using (SHA512 shaM = new SHA512Managed())
+            {
+                var bytes = Encoding.UTF8.GetBytes(text);
+                return shaM.ComputeHash(bytes);
+            }
+        }
+
+        public static byte[] Sha256Hash(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return null;
+            }
+            using (SHA256 shaM = new SHA256Managed())
+            {
+                var bytes = Encoding.UTF8.GetBytes(text);
+                return shaM.ComputeHash(bytes);
+            }
         }
 
         public static byte[] Md5Hash(string text)
         {
-            MD5 md5Hasher = MD5.Create();
-            var hash = md5Hasher.ComputeHash(Encoding.UTF8.GetBytes(text));
-            return hash;
+            using (MD5 md5Hasher = MD5.Create())
+            {
+                return md5Hasher.ComputeHash(Encoding.UTF8.GetBytes(text));
+            }
         }
 
         public static string GetAppName() => Properties.Resources.AppName;

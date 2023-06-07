@@ -605,19 +605,16 @@ namespace V2RayGCon.Services
                 return 0;
             }
 
-            // bug: ICoreServCtrl can not cast to CoreServerCtrl
-            // var coreServs = queryHandler.GetServersWithUids(uids);
-
-            List<Controllers.CoreServerCtrl> coreServs;
+            var coreServs = queryHandler.GetServersWithUids(uids);
             locker.EnterWriteLock();
             try
             {
-                coreServs = coreServList.Where(cs => uids.Contains(cs.GetCoreStates().GetUid())).ToList();
-                foreach (var cs in coreServs)
+                foreach (var item in coreServs)
                 {
-                    var cfg = cs.GetConfiger().GetConfig();
+                    var coreServ = (Controllers.CoreServerCtrl)item;
+                    var cfg = coreServ.GetConfiger().GetConfig();
                     configCache.TryRemove(cfg, out _);
-                    coreServList.Remove(cs);
+                    coreServList.Remove(coreServ);
                 }
             }
             finally
@@ -627,8 +624,9 @@ namespace V2RayGCon.Services
 
             void housekeeping()
             {
-                foreach (var coreServ in coreServs)
+                foreach (var item in coreServs)
                 {
+                    var coreServ = (Controllers.CoreServerCtrl)item;
                     ReleaseEventsFrom(coreServ);
                     coreServ.Dispose();
                 }

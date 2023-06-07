@@ -89,29 +89,67 @@ namespace V2RayGCon.Services
             SortSelectedServers((list) => indexHandler.ReverseCoreservCtrlListByIndex(ref list));
         }
 
+        public void ReverseServersByIndex(List<string> uids)
+        {
+            var coreServs = queryHandler.GetServersByUids(uids);
+            SortServers(coreServs, (list) => indexHandler.ReverseCoreservCtrlListByIndex(ref list));
+        }
+
         public void SortSelectedBySpeedTest()
         {
             SortSelectedServers((list) => indexHandler.SortCoreServCtrlListBySpeedTestResult(ref list));
         }
+
+        public void SortServersBySpeedTest(List<string> uids)
+        {
+            var coreServs = queryHandler.GetServersByUids(uids);
+            SortServers(coreServs, (list) => indexHandler.SortCoreServCtrlListBySpeedTestResult(ref list));
+        }
+
         public void SortSelectedByDownloadTotal()
         {
             SortSelectedServers((list) => indexHandler.SortCoreServerCtrlListByDownloadTotal(ref list));
         }
+
+        public void SortServersByDownloadTotal(List<string> uids)
+        {
+            var coreServs = queryHandler.GetServersByUids(uids);
+            SortServers(coreServs, (list) => indexHandler.SortCoreServerCtrlListByDownloadTotal(ref list));
+        }
+
         public void SortSelectedByUploadTotal()
         {
             SortSelectedServers((list) => indexHandler.SortCoreServerCtrlListByUploadTotal(ref list));
         }
 
+        public void SortServersByUploadTotal(List<string> uids)
+        {
+            var coreServs = queryHandler.GetServersByUids(uids);
+            SortServers(coreServs, (list) => indexHandler.SortCoreServerCtrlListByUploadTotal(ref list));
+        }
 
         public void SortSelectedByLastModifiedDate()
         {
             SortSelectedServers((list) => indexHandler.SortCoreServerCtrlListByLastModifyDate(ref list));
         }
 
+        public void SortServersByLastModifiedDate(List<string> uids)
+        {
+            var coreServs = queryHandler.GetServersByUids(uids);
+            SortServers(coreServs, (list) => indexHandler.SortCoreServerCtrlListByLastModifyDate(ref list));
+        }
+
         public void SortSelectedBySummary()
         {
             SortSelectedServers((list) => indexHandler.SortCoreServCtrlListBySummary(ref list));
         }
+
+        public void SortServersBySummary(List<string> uids)
+        {
+            var coreServs = queryHandler.GetServersByUids(uids);
+            SortServers(coreServs, (list) => indexHandler.SortCoreServCtrlListBySummary(ref list));
+        }
+
 
         #endregion
 
@@ -124,6 +162,11 @@ namespace V2RayGCon.Services
 
         public List<ICoreServCtrl> GetAllServersOrderByIndex() =>
             queryHandler.GetAllServersOrderByIndex();
+
+        public List<ICoreServCtrl> GetServersByUidsOrderByIndex(IEnumerable<string> uids) =>
+            queryHandler.GetServersByUids(uids)
+                .OrderBy(cs => cs.GetCoreStates().GetIndex())
+                .ToList();
 
         public List<ICoreServCtrl> GetTrackableServerList() =>
             queryHandler.GetTrackableServerList();
@@ -383,7 +426,7 @@ namespace V2RayGCon.Services
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
             VgcApis.Models.Datas.Enums.PackageTypes packageType)
         {
-            var coreServs = queryHandler.GetServersWithUids(uids);
+            var coreServs = queryHandler.GetServersByUids(uids);
             return PackServersIntoV4PackageWorker(
                 coreServs, orgUid, pkgName, interval, url, strategy, packageType);
         }
@@ -435,7 +478,7 @@ namespace V2RayGCon.Services
 
         public bool RunSpeedTestBgQuiet(List<string> uids)
         {
-            var coreServs = queryHandler.GetServersWithUids(uids);
+            var coreServs = queryHandler.GetServersByUids(uids);
             if (coreServs == null || coreServs.Count < 1)
             {
                 return false;
@@ -605,7 +648,7 @@ namespace V2RayGCon.Services
                 return 0;
             }
 
-            var coreServs = queryHandler.GetServersWithUids(uids);
+            var coreServs = queryHandler.GetServersByUids(uids);
             locker.EnterWriteLock();
             try
             {
@@ -931,15 +974,18 @@ namespace V2RayGCon.Services
             return coreInfoList;
         }
 
-        void SortSelectedServers(Action<List<ICoreServCtrl>> sorter)
+        void SortServers(List<ICoreServCtrl> coreServs, Action<List<ICoreServCtrl>> sorter)
         {
-            lock (locker)
-            {
-                var selectedServers = queryHandler.GetSelectedServers().ToList();
-                sorter?.Invoke(selectedServers);
-            }
+            // do not lock here, sorter will apply write lock itself
+            sorter?.Invoke(coreServs);
             RequireFormMainReload();
             InvokeEventOnServerPropertyChange(this, EventArgs.Empty);
+        }
+
+        void SortSelectedServers(Action<List<ICoreServCtrl>> sorter)
+        {
+            var selectedServers = queryHandler.GetSelectedServers();
+            SortServers(selectedServers, sorter);
         }
 
         private List<ICoreServCtrl> GetSelectedServer()

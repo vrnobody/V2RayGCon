@@ -46,6 +46,23 @@ namespace VgcApis.Interfaces.Services
 
         void SortSelectedBySummary();
 
+        void SortSelectedByDownloadTotal();
+
+        void SortSelectedByUploadTotal();
+
+
+        void ReverseServersByIndex(List<string> uids);
+
+        void SortServersByLastModifiedDate(List<string> uids);
+
+        void SortServersBySpeedTest(List<string> uids);
+
+        void SortServersBySummary(List<string> uids);
+
+        void SortServersByDownloadTotal(List<string> uids);
+
+        void SortServersByUploadTotal(List<string> uids);
+
 
         void StopAllServers();
 
@@ -77,6 +94,9 @@ namespace VgcApis.Interfaces.Services
 
         List<ICoreServCtrl> GetTrackableServerList();
         List<ICoreServCtrl> GetAllServersOrderByIndex();
+
+        List<ICoreServCtrl> GetServersByUidsOrderByIndex(IEnumerable<string> uids);
+
         List<ICoreServCtrl> GetSelectedServers(bool descending = false);
     }
 }

@@ -65,6 +65,12 @@ namespace Luna.Models.Apis.Components
         public List<VgcApis.Interfaces.ICoreServCtrl> GetAllServers() =>
             vgcServers.GetAllServersOrderByIndex();
 
+        public List<VgcApis.Interfaces.ICoreServCtrl> GetServersByUids(LuaTable uids)
+        {
+            var list = global::Luna.Misc.Utils.LuaTableToList(uids, false);
+            return vgcServers.GetServersByUidsOrderByIndex(list);
+        }
+
         public void ReverseSelectedByIndex() =>
             vgcServers.ReverseSelectedByIndex();
 
@@ -76,6 +82,48 @@ namespace Luna.Models.Apis.Components
 
         public void SortSelectedServersBySpeedTest() =>
             vgcServers.SortSelectedBySpeedTest();
+
+        public void SortSelectedByDownloadTotal() =>
+            vgcServers.SortSelectedByDownloadTotal();
+
+        public void SortSelectedByUploadTotal() =>
+            vgcServers.SortSelectedByUploadTotal();
+
+        public void ReverseServersByIndex(LuaTable uids)
+        {
+            var list = global::Luna.Misc.Utils.LuaTableToList(uids, false);
+            vgcServers.ReverseServersByIndex(list);
+        }
+
+        public void SortServersByLastModifiedDate(LuaTable uids)
+        {
+            var list = global::Luna.Misc.Utils.LuaTableToList(uids, false);
+            vgcServers.SortServersByLastModifiedDate(list);
+        }
+
+        public void SortServersBySpeedTest(LuaTable uids)
+        {
+            var list = global::Luna.Misc.Utils.LuaTableToList(uids, false);
+            vgcServers.SortServersBySpeedTest(list);
+        }
+
+        public void SortServersBySummary(LuaTable uids)
+        {
+            var list = global::Luna.Misc.Utils.LuaTableToList(uids, false);
+            vgcServers.SortServersBySummary(list);
+        }
+
+        public void SortServersByDownloadTotal(LuaTable uids)
+        {
+            var list = global::Luna.Misc.Utils.LuaTableToList(uids, false);
+            vgcServers.SortServersByDownloadTotal(list);
+        }
+
+        public void SortServersByUploadTotal(LuaTable uids)
+        {
+            var list = global::Luna.Misc.Utils.LuaTableToList(uids, false);
+            vgcServers.SortServersByUploadTotal(list);
+        }
 
         public void StopAllServers() =>
             vgcServers.StopAllServers();

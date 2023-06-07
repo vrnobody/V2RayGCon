@@ -51,6 +51,14 @@ namespace VgcApis.Interfaces.Lua
         List<ICoreServCtrl> GetAllServers();
 
         /// <summary>
+        /// 根据uids获取服务器
+        /// </summary>
+        /// <param name="uids">uid列表</param>
+        /// <returns>服务器</returns>
+
+        List<VgcApis.Interfaces.ICoreServCtrl> GetServersByUids(LuaTable uids);
+
+        /// <summary>
         /// 将选中的服务器打包成均衡策略为random的服务器包
         /// </summary>
         /// <param name="orgUid">原服务器uid（为空则添加新服务器）</param>
@@ -170,6 +178,22 @@ namespace VgcApis.Interfaces.Lua
         /// 按摘要排序选中的服务器
         /// </summary>
         void SortSelectedServersBySummary();
+
+        void SortSelectedByDownloadTotal();
+
+        void SortSelectedByUploadTotal();
+
+        void ReverseServersByIndex(LuaTable uids);
+
+        void SortServersByLastModifiedDate(LuaTable uids);
+
+        void SortServersBySpeedTest(LuaTable uids);
+
+        void SortServersBySummary(LuaTable uids);
+
+        void SortServersByDownloadTotal(LuaTable uids);
+
+        void SortServersByUploadTotal(LuaTable uids);
 
         /// <summary>
         /// 停止所有服务器

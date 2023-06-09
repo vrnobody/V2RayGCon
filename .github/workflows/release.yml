@@ -18,7 +18,7 @@ jobs:
         verStr: '1.7.x'
         boxAppend: box
         webuiPkgName: 'webui.zip'
-        webuiVer: '0.0.2.0'
+        webuiVer: '0.0.3.0'
         webuiUrl: 'https://github.com/vrnobody/WebUI/releases/download'
         # v2rayCorePkgName: 'v2ray-windows-64.zip'
         v2rayCorePkgName: 'Xray-windows-64.zip'

@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.7.0.6")]
+[assembly: AssemblyVersion("1.7.1.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * -------------------------------------------------------------
  * v1.7.0.6 Add Services.Server.SortServersBy*(uids).
  * v1.7.0.5 Add Sha256Hash() and Sha512Hash().
  * v1.7.0.4 Update lua.libs.utils.lua.

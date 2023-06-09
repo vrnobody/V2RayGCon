@@ -1,16 +1,11 @@
 {
-  "version": "1.7.0.0",
-  "md5": "CD93F01103AF443D6FFCD62BDE7D6723",
+  "version": "1.7.1.0",
+  "md5": "7629963AEC960FF21DC9AD017FFB8B68",
   "warnings": [
     "本项目支持的最高v2ray-core版本是v4.45.2"
   ],
   "changes": [
-    "WebUI基本功能已经完成，欢迎试用。详见手册。",
-    "主窗口过滤功能支持tag1-3",
-    "Luna print()输出多参数时用空格分隔",
-    "Luna Sys库添加一堆Lua相关函数",
-    "添加自定义user agent功能",
-    "添加单击托盘图标时执行自定义命令功能",
-    "修复lua.modules.writer.lua中的一个bug"
+    "更新至WebUI v0.0.3",
+    "scripts包添加查询服务器出入口地区的脚本"
   ]
 }

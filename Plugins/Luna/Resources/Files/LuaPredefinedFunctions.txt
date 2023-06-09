@@ -103,9 +103,15 @@ table.length = function(T)
     return count
 end
 
-table.dump = function(t, indent, header, level)
+table.dump = function(t, indent, header, level, maxLevel)
 
+    maxLevel = maxLevel or 9
     level = level or 0
+    
+    if level > maxLevel then
+        return "<exceed max level: " .. maxLevel .. ">"
+    end
+    
     indent = indent or "    "
     
     local tailIndent = string.rep(indent, level)
@@ -141,7 +147,7 @@ table.dump = function(t, indent, header, level)
         end
         
         local np = header and header .. '[' .. is .. ']' or header
-        local vs = table.dump(val, indent, np, level + 1)
+        local vs = table.dump(val, indent, np, level + 1, maxLevel)
         
         str = str .. keyIndent  .. '[' .. is .. '] = ' .. vs .. ",\n" 
     end

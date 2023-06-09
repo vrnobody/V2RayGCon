@@ -50,6 +50,8 @@ namespace VgcApis.Models.Consts
             "table.dump(t)",
             "table.dump(t, indent)",
             "table.dump(t, indent, header)",
+            "table.dump(t, indent, header, level)",
+            "table.dump(t, indent, header, level, maxLevel)",
         };
 
         static List<string> GetterApiFuncNames()

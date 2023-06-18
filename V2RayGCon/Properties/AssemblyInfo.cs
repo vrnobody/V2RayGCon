@@ -37,6 +37,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * -------------------------------------------------------------
  * v1.7.1.1 Fix a bug in table.dump().
  * -------------------------------------------------------------
  * v1.7.0.6 Add Services.Server.SortServersBy*(uids).

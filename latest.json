@@ -1,11 +1,11 @@
 {
-  "version": "1.7.1.0",
-  "md5": "7629963AEC960FF21DC9AD017FFB8B68",
+  "version": "1.7.1.1",
+  "md5": "DF147C8C14C2A6B8C24CB85110B329FB",
   "warnings": [
     "本项目支持的最高v2ray-core版本是v4.45.2"
   ],
   "changes": [
-    "更新至WebUI v0.0.3",
-    "scripts包添加查询服务器出入口地区的脚本"
+    "更新至WebUI v0.0.4",
+    "调整table.dump()默认递归深度成9"
   ]
 }

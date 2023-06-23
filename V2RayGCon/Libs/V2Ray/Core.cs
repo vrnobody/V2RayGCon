@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -157,11 +158,11 @@ namespace V2RayGCon.Libs.V2Ray
         }
 
         // blocking
-        public void RestartCore(string config, Dictionary<string, string> env = null) =>
-            RestartCoreWorker(config, env, false);
+        public void RestartCore(string config, Dictionary<string, string> envs = null) =>
+            RestartCoreWorker(config, envs, false);
 
-        public void RestartCoreIgnoreError(string config) =>
-            RestartCoreWorker(config, null, true);
+        public void RestartCoreIgnoreError(string config, Dictionary<string, string> envs = null) =>
+            RestartCoreWorker(config, envs, true);
 
         // blocking
         public void StopCore()

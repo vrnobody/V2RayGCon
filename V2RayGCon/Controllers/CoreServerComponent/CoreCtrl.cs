@@ -75,11 +75,13 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public void StopCoreThen(Action next) =>
             VgcApis.Misc.Utils.RunInBackground(() => StopCoreWorker(next));
 
-        public void RestartCore() => RestartCoreWorker(null);
+        public void RestartCore() => RestartCoreWorker(null, false);
+
+        public void RestartCoreIgnoreError() => RestartCoreWorker(null, true);
 
         public void RestartCoreThen() => RestartCoreThen(null);
         public void RestartCoreThen(Action next) =>
-            VgcApis.Misc.Utils.RunInBackground(() => RestartCoreWorker(next));
+            VgcApis.Misc.Utils.RunInBackground(() => RestartCoreWorker(next, false));
 
         public bool IsCoreRunning() => v2rayCore.isRunning;
 
@@ -192,7 +194,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
         }
 
-        void RestartCoreWorker(Action next)
+        void RestartCoreWorker(Action next, bool isQuiet)
         {
             try
             {
@@ -204,7 +206,16 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 }
 
                 v2rayCore.title = coreStates.GetTitle();
-                v2rayCore.RestartCore(finalConfig.ToString(), Misc.Utils.GetEnvVarsFromConfig(finalConfig));
+                var envs = Misc.Utils.GetEnvVarsFromConfig(finalConfig);
+                var cfg = finalConfig.ToString();
+                if (isQuiet)
+                {
+                    v2rayCore.RestartCoreIgnoreError(cfg, envs);
+                }
+                else
+                {
+                    v2rayCore.RestartCore(finalConfig.ToString(), envs);
+                }
                 bookKeeper?.Run();
             }
             finally

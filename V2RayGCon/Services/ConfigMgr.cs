@@ -31,8 +31,9 @@ namespace V2RayGCon.Services
             try
             {
                 var config = CreateSpeedTestConfig(rawConfig, port, false, false, false);
+                var envs = Misc.Utils.GetEnvVarsFromConfig(JObject.Parse(config));
                 var core = new Libs.V2Ray.Core(setting) { title = title };
-                core.RestartCoreIgnoreError(config);
+                core.RestartCoreIgnoreError(config, envs);
                 if (WaitUntilCoreReady(core))
                 {
                     text = Misc.Utils.Fetch(url, port, timeout);
@@ -580,7 +581,8 @@ namespace V2RayGCon.Services
             long len = 0;
             try
             {
-                speedTester.RestartCoreIgnoreError(config);
+                var envs = Misc.Utils.GetEnvVarsFromConfig(JObject.Parse(config));
+                speedTester.RestartCoreIgnoreError(config, envs);
                 if (WaitUntilCoreReady(speedTester))
                 {
                     var expectedSizeInKib = setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestExpectedSizeInKib : -1;

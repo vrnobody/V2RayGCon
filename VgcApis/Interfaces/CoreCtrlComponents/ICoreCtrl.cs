@@ -60,6 +60,11 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         void RestartCore();
 
         /// <summary>
+        /// 重启服务器（不弹窗）并等待操作完成
+        /// </summary>
+        void RestartCoreIgnoreError();
+
+        /// <summary>
         /// 重启服务器但不等待操作完成
         /// </summary>
         void RestartCoreThen();

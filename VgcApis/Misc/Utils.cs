@@ -234,6 +234,21 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
+
+        public static string DecodeAmpersand(string source)
+        {
+            if (string.IsNullOrEmpty(source))
+            {
+                return string.Empty;
+            }
+            const string amp = "&amp;";
+            while (source.IndexOf(amp) >= 0)
+            {
+                source = source.Replace(amp, "&");
+            }
+            return source;
+        }
+
         public static string TrimTrailingNewLine(string content) =>
             content?.TrimEnd(System.Environment.NewLine.ToCharArray());
 

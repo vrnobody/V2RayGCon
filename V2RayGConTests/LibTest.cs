@@ -96,6 +96,9 @@ stat: <
 
         [DataTestMethod]
         [DataRow(
+            @"<td>vless://399ce595-894d-4d40-add1-7d87f1a3bd10@qv2ray.net:41971?type=kcp&amp;amp;amp;headerType=wireguard&amp;seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeedWG</td>",
+            @"vless://399ce595-894d-4d40-add1-7d87f1a3bd10@qv2ray.net:41971?type=kcp&headerType=wireguard&seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeedWG")]
+        [DataRow(
             @"[#f00]vless://b0dd64e4-0fbd-4038-9139-d1f32a68a0dc@qv2ray.net:3279?security=xtls&flow=xtls-rprx-splice#VLESSTCPXTLSSplice [/#f00]",
             @"vless://b0dd64e4-0fbd-4038-9139-d1f32a68a0dc@qv2ray.net:3279?security=xtls&flow=xtls-rprx-splice#VLESSTCPXTLSSplice")]
         [DataRow(

@@ -890,7 +890,7 @@ namespace V2RayGCon.Misc
 
                 foreach (Match match in matches)
                 {
-                    var link = match.Value.Substring(1).Replace("&amp;", "&");
+                    var link = VgcApis.Misc.Utils.DecodeAmpersand(match.Value.Substring(1));
                     links.Add(link);
                 }
             }

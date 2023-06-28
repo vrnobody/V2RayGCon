@@ -29,6 +29,21 @@ namespace VgcApisTests
             Assert.AreEqual(expect, result);
         }
 
+        [DataTestMethod]
+        [DataRow(
+            "<td>vless://abcd@1.2.3.4:443?security=reality&amp;amp;encryption=none&amp;amp;pbk=a1b2&amp;amp;headerType=none&amp;amp;fp=chrome&amp;amp;spx=%2F&amp;amp;type=tcp&amp;amp;flow=xtls-rprx-vision&amp;amp;sni=baidu.com#test</td>",
+            "<td>vless://abcd@1.2.3.4:443?security=reality&encryption=none&pbk=a1b2&headerType=none&fp=chrome&spx=%2F&type=tcp&flow=xtls-rprx-vision&sni=baidu.com#test</td>")]
+        [DataRow("&amp;amp;amp;amp;", "&")]
+        /*
+        [DataRow(null, "")]
+        [DataRow("", "")]
+        [DataRow("&amp;", "&")]
+        */
+        public void DecodeAmpersandTest(string source, string expect)
+        {
+            var result = DecodeAmpersand(source);
+            Assert.AreEqual(expect, result);
+        }
 
         [DataTestMethod]
         [DataRow("D1", true, true, false, true, 3u, 49u)]

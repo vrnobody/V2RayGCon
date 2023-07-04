@@ -172,7 +172,8 @@ namespace Luna.Models.Apis.SysCmpos
         #endregion
 
         #region private methods
-        const int MaxContextLen = 10240;
+        const int FinalStageConnInLimit = 1024 * 30;
+        const int FirstStageConnInLimit = 1024 * 15;
 
         ConcurrentDictionary<string, HttpListenerContext> contexts = new ConcurrentDictionary<string, HttpListenerContext>();
 
@@ -234,13 +235,27 @@ namespace Luna.Models.Apis.SysCmpos
                 {
                     while (serv.IsListening)
                     {
-                        if (contexts.Keys.Count > MaxContextLen)
+                        var ctx = serv.GetContext();
+
+                        if (contexts.Keys.Count > FirstStageConnInLimit)
                         {
                             VgcApis.Misc.Utils.Sleep(100);
+                        }
+
+                        if (contexts.Keys.Count > FinalStageConnInLimit)
+                        {
+                            VgcApis.Misc.Utils.RunInBackground(() =>
+                            {
+                                try
+                                {
+                                    ctx.Response.StatusCode = (int)HttpStatusCode.RequestTimeout;
+                                    ctx.Response.OutputStream.Close();
+                                }
+                                catch { }
+                            });
                             continue;
                         }
 
-                        var ctx = serv.GetContext();
                         try
                         {
                             HandleOneConnection(ctx);

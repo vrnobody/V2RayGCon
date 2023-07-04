@@ -1,5 +1,3 @@
-**本项目支持的最高v2ray-core版本是`v4.45.2`**  
-  
 [![Master Action Status][1]][2] [![Release][3]][4] [![Total Downloads][5]][6] [![License][7]][8] [![codebeat badge][13]][14]
 
 [1]: https://github.com/vrnobody/V2RayGCon/actions/workflows/release.yml/badge.svg "Build Status Badge"
@@ -18,6 +16,7 @@
 [14]: https://codebeat.co/projects/github-com-vrnobody-v2raygcon-master "codebeat report"
 
 V2RayGCon是windows下[v2ray-core](https://v2ray.com)的图形(graphic)配置器(configer)。  
+本项目支持的最高v2ray-core版本是`v4.45.2`  
 
 [\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]][10]&nbsp;&nbsp;[\[唯一联系方式 issue\]][11]  
 
@@ -28,10 +27,10 @@ Download and unzip [V2RayGCon-box.zip][9] to any directory you like.
 Require .net framework 4.5+.  
 
 ### 演示 Demo
-Web UI [手册 manual](https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/40-web-ui/)  
+WebUI [手册manual](https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/40-web-ui/)  
 ![Web UI light](https://vrnobody.github.io/V2RayGCon/images/luna/web_ui_light_v0.0.2.0.png)  
 
-WinForm UI  
+WinFormUI  
 ![Demo v1.4.3.5 GIF](https://vrnobody.github.io/V2RayGCon/images/forms/demo_basics_v1.4.3.5.gif)  
   
   

@@ -234,6 +234,17 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
+        public static string UnescapeUnicode(string source)
+        {
+            // https://stackoverflow.com/questions/8558671/how-to-unescape-unicode-string-in-c-sharp
+            return Regex.Replace(
+                source,
+                @"\\[Uu]([0-9A-Fa-f]{4})",
+                m => char.ToString(
+                    (char)ushort.Parse(
+                        m.Groups[1].Value,
+                        System.Globalization.NumberStyles.AllowHexSpecifier)));
+        }
 
         public static string DecodeAmpersand(string source)
         {

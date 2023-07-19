@@ -21,7 +21,9 @@
 
         public const string UriContent = @"[\w\-\.\:\?\,\'\[\]+&;@%\$#_=]+";
 
-        public const string UriContentNonStandard = @"[\w\-\.\:\?\,\'\[\]+&;@%\$#_=/]+"; // [/]for alpn=http/1.1
+        // [/]for alpn=http/1.1
+        // \u0026 => &
+        public const string UriContentNonStandard = @"[\w\-\.\:\?\,\'\[\]+&;@%\$#_=/\\]+";
 
         public const string HttpUrl =
            @"(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&;%\$#_=]*)?";

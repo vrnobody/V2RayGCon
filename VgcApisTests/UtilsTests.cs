@@ -16,6 +16,23 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+
+        [DataTestMethod]
+        [DataRow(
+            @"vless://1234@[1::2:3:4]:1234?security=reality\u0026encryption=none\u0026headerType=none\u0026type=tcp\u0026flow=xtls-rprx-vision#1aA中😀",
+            @"vless://1234@[1::2:3:4]:1234?security=reality&encryption=none&headerType=none&type=tcp&flow=xtls-rprx-vision#1aA中😀")]
+        [DataRow(
+            @"\u8ba1\u7b97\u673a\u2022\u7f51\u7edc\u2022\u6280\u672f\u7c7b",
+            "计算机•网络•技术类")]
+        [DataRow(null, null)]
+        [DataRow("", "")]
+        [DataRow("1aA中😀", "1aA中😀")]
+        public void UnescapeUnicodeTest(string unicodeString, string expect)
+        {
+            var result = UnescapeUnicode(unicodeString);
+            Assert.AreEqual(expect, result);
+        }
+
         [DataTestMethod]
         [DataRow("lua", "lua")]
         [DataRow("lua\\hello", "lua.hello")]

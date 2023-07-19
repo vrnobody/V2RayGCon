@@ -236,6 +236,11 @@ namespace VgcApis.Misc
         #region string
         public static string UnescapeUnicode(string source)
         {
+            if (string.IsNullOrEmpty(source))
+            {
+                return source;
+            }
+
             // https://stackoverflow.com/questions/8558671/how-to-unescape-unicode-string-in-c-sharp
             return Regex.Replace(
                 source,

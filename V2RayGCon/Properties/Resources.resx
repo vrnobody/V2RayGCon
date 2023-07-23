@@ -209,4 +209,10 @@
   <data name="CloudSearch_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icon\FormMainToolStrip\CloudSearch_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="UpdaterFolder" xml:space="preserve">
+    <value>updater</value>
+  </data>
+  <data name="UpdaterName" xml:space="preserve">
+    <value>ZipExtractor.exe</value>
+  </data>
 </root>

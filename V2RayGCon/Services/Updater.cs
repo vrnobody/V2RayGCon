@@ -1,7 +1,5 @@
-﻿using AutoUpdaterDotNET;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Net;
 using System.Text;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
@@ -15,13 +13,11 @@ namespace V2RayGCon.Services
         Servers servers;
 
         VgcApis.Libs.Tasks.Bar updateBar = new VgcApis.Libs.Tasks.Bar();
-        readonly string LoopBackIP = VgcApis.Models.Consts.Webs.LoopBackIP;
-        Models.Datas.UpdateInfo rawUpdateInfo = null;
 
         Updater() { }
 
         #region public methods
-        public void CheckForUpdate(bool isShowErrorWithMsgbox)
+        public void CheckForUpdate(bool isShowErrorUsingMessageBox)
         {
             if (!updateBar.Install())
             {
@@ -29,10 +25,8 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            BindEventsOndemand();
-            flagShowErrorWithMsgbox = isShowErrorWithMsgbox;
-            AutoSetUpdaterProxy();
-            AutoUpdater.Start(Properties.Resources.LatestVersionInfoUrl);
+            VgcApis.Misc.Utils.RunInBackground(
+                () => Update(!isShowErrorUsingMessageBox));
         }
 
         public void Run(
@@ -45,30 +39,58 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
-        bool flagShowErrorWithMsgbox = true;
-        bool CheckUpdateInfoArgs(UpdateInfoEventArgs args)
+        void Update(bool isQuiet)
         {
-            if (args != null && args.IsUpdateAvailable)
+            var port = GetAvailableProxyPort(isQuiet);
+            var source = Properties.Resources.LatestVersionInfoUrl;
+            var info = GetUpdateInfoFrom(source, port);
+            UpdateWorker(info, isQuiet);
+        }
+
+        Models.Datas.UpdateInfo GetUpdateInfoFrom(string url, int port)
+        {
+            var timeout = VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
+            var str = Misc.Utils.Fetch(url, port, timeout);
+            if (string.IsNullOrEmpty(str))
+            {
+                return null;
+            }
+            try
+            {
+                return JsonConvert.DeserializeObject<Models.Datas.UpdateInfo>(str);
+            }
+            catch { }
+            return null;
+        }
+
+        bool CheckUpdateInfo(Models.Datas.UpdateInfo infos, bool isQuiet)
+        {
+            if (infos == null)
+            {
+                if (!isQuiet)
+                {
+                    MessageBox.Show(
+                       I18N.FetchUpdateInfoFail,
+                       I18N.Error,
+                       MessageBoxButtons.OK,
+                       MessageBoxIcon.Error);
+                }
+                return false;
+            }
+
+            var curVer = System.Reflection.Assembly.GetEntryAssembly().GetName().Version;
+            var newVer = new Version(infos.version);
+            if (newVer > curVer)
             {
                 return true;
             }
 
-            if (!flagShowErrorWithMsgbox)
+            if (isQuiet)
             {
                 setting.SendLog(
-                    args == null ?
+                    infos == null ?
                     I18N.FetchUpdateInfoFail :
                     I18N.NoUpdateTryLater);
-                return false;
-            }
-
-            if (args == null)
-            {
-                MessageBox.Show(
-                   I18N.FetchUpdateInfoFail,
-                   I18N.Error,
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
             }
             else
             {
@@ -77,9 +99,9 @@ namespace V2RayGCon.Services
             return false;
         }
 
-        void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
+        void UpdateWorker(Models.Datas.UpdateInfo info, bool isQuiet)
         {
-            if (!CheckUpdateInfoArgs(args) || !ConfirmUpdate())
+            if (!CheckUpdateInfo(info, isQuiet) || !ConfirmUpdate(info))
             {
                 // must confirm first
                 updateBar.Remove();
@@ -91,11 +113,19 @@ namespace V2RayGCon.Services
 
             try
             {
-                if (AutoUpdater.DownloadUpdate())
+                VgcApis.Misc.UI.Invoke(() =>
                 {
-                    setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser);
-                    Application.Exit();
-                }
+                    var form = new Views.Updater.FormDownloader();
+                    form.FormClosed += (s, e) =>
+                    {
+                        if (form.DialogResult == DialogResult.OK)
+                        {
+                            setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser);
+                            Application.Exit();
+                        }
+                    };
+                    form.Init(info);
+                });
             }
             catch (Exception exception)
             {
@@ -107,19 +137,19 @@ namespace V2RayGCon.Services
             }
         }
 
-        bool ConfirmUpdate()
+        bool ConfirmUpdate(Models.Datas.UpdateInfo info)
         {
-            if (rawUpdateInfo == null)
+            if (info == null)
             {
                 return false;
             }
 
-            var tag = Misc.Utils.TrimVersionString(rawUpdateInfo.version);
+            var tag = Misc.Utils.TrimVersionString(info.version);
             StringBuilder msg = new StringBuilder(
                 string.Format(I18N.ConfirmUpgradeVgc, tag));
 
-            var warnings = rawUpdateInfo.warnings;
-            var changes = rawUpdateInfo.changes;
+            var warnings = info.warnings;
+            var changes = info.changes;
             var nl = Environment.NewLine;
 
             if (warnings != null && warnings.Count > 0)
@@ -137,73 +167,36 @@ namespace V2RayGCon.Services
             return VgcApis.Misc.UI.Confirm(msg.ToString());
         }
 
-        void AutoUpdaterOnParseUpdateInfoEvent(ParseUpdateInfoEventArgs args)
+        int GetAvailableProxyPort(bool isQuiet)
         {
-            rawUpdateInfo = JsonConvert
-                .DeserializeObject<Models.Datas.UpdateInfo>(
-                    args.RemoteData);
-
-            var url = string.Format(
-                VgcApis.Models.Consts.Webs.ReleaseDownloadUrlTpl,
-                Misc.Utils.TrimVersionString(rawUpdateInfo.version));
-
-            args.UpdateInfo = new UpdateInfoEventArgs
+            if (setting.isUpdateUseProxy)
             {
-                CurrentVersion = new Version(rawUpdateInfo.version),
-                Mandatory = false,
-                DownloadURL = url,
-                HashingAlgorithm = "MD5",
-                Checksum = rawUpdateInfo.md5,
-            };
-        }
 
-        void AutoSetUpdaterProxy()
-        {
-            if (!setting.isUpdateUseProxy)
-            {
-                return;
+                var port = servers.GetAvailableHttpProxyPort();
+                if (port > 0)
+                {
+                    return port;
+                }
             }
 
-            var port = servers.GetAvailableHttpProxyPort();
-            if (port > 0)
-            {
-                var proxy = new WebProxy($"{LoopBackIP}:{port}", true);
-                AutoUpdater.Proxy = proxy;
-                return;
-            }
-
-            if (flagShowErrorWithMsgbox)
-            {
-                MessageBox.Show(I18N.NoQualifyProxyServer);
-            }
-            else
+            if (isQuiet)
             {
                 setting.SendLog(I18N.NoQualifyProxyServer);
             }
+            else
+            {
+                MessageBox.Show(I18N.NoQualifyProxyServer);
+            }
+
+            return -1;
         }
 
-        bool isBinded = false;
-        object bindEventsLocker = new object();
-        void BindEventsOndemand()
-        {
-            lock (bindEventsLocker)
-            {
-                if (!isBinded)
-                {
-                    AutoUpdater.ReportErrors = true;
-                    AutoUpdater.ParseUpdateInfoEvent += AutoUpdaterOnParseUpdateInfoEvent;
-                    AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
-                    isBinded = true;
-                }
-            }
-        }
         #endregion
 
         #region protected methods
         protected override void Cleanup()
         {
-            AutoUpdater.ParseUpdateInfoEvent -= AutoUpdaterOnParseUpdateInfoEvent;
-            AutoUpdater.CheckForUpdateEvent -= AutoUpdaterOnCheckForUpdateEvent;
+
         }
         #endregion
     }

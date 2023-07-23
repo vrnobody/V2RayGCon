@@ -115,6 +115,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 [Administrator] 的本地化字符串。
+        /// </summary>
+        internal static string AdministratorMode {
+            get {
+                return ResourceManager.GetString("AdministratorMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 All 的本地化字符串。
         /// </summary>
         internal static string All {
@@ -246,6 +255,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string CheckForVgcUpdate {
             get {
                 return ResourceManager.GetString("CheckForVgcUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 MD5 sum not match! 的本地化字符串。
+        /// </summary>
+        internal static string CheckMd5SumFailed {
+            get {
+                return ResourceManager.GetString("CheckMd5SumFailed", resourceCulture);
             }
         }
         
@@ -483,6 +501,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string ConfirmRestoreSubscriptionSettings {
             get {
                 return ResourceManager.GetString("ConfirmRestoreSubscriptionSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Start V2RayGCon under priviledge mode? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmRunAsAdmin {
+            get {
+                return ResourceManager.GetString("ConfirmRunAsAdmin", resourceCulture);
             }
         }
         
@@ -753,6 +780,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string DownloadProgress {
             get {
                 return ResourceManager.GetString("DownloadProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Downloading at {0}/s 的本地化字符串。
+        /// </summary>
+        internal static string DownloadSpeedMessage {
+            get {
+                return ResourceManager.GetString("DownloadSpeedMessage", resourceCulture);
             }
         }
         
@@ -1898,6 +1934,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string TryManualDownload {
             get {
                 return ResourceManager.GetString("TryManualDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unable to determine the filename of the update file! 的本地化字符串。
+        /// </summary>
+        internal static string UnableToDetermineFilenameMessage {
+            get {
+                return ResourceManager.GetString("UnableToDetermineFilenameMessage", resourceCulture);
             }
         }
         

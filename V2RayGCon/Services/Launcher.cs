@@ -82,10 +82,10 @@ namespace V2RayGCon.Services
 #if DEBUG
         void This_Function_Is_Used_For_Debugging()
         {
-            ShowPlugin(@"Luna");
+            // ShowPlugin(@"Luna");
 
             // Views.WinForms.FormLog.ShowForm();
-            // Views.WinForms.FormMain.ShowForm();
+            Views.WinForms.FormMain.ShowForm();
 
             //notifier.InjectDebugMenuItem(new ToolStripMenuItem(
             //    "Debug",

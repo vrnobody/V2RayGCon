@@ -3,6 +3,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# https://learn.microsoft.com/en-us/nuget/consume-packages/migrate-packages-config-to-package-reference
+MigrationBackup/
+
+# add 2023-07-23
+V2RayGCon/Resources/Files/updater/
+
 # User-specific files
 *.suo
 *.user

@@ -247,12 +247,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Files\LuaPredefinedFunctions.txt" />
     <Content Include="Resources\Icons\App\EditWindow_16x.png" />
     <Content Include="Resources\Icons\App\Lua-Logo_32x32.png" />
+    <None Include="packages.config" />
     <None Include="Resources\Icons\App\StoredProcedureScript_16x.png" />
     <None Include="Resources\Icons\editor\Method_16x.png" />
     <None Include="Resources\Icons\editor\KeyDown_16x.png" />

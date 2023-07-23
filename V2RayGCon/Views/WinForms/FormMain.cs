@@ -68,7 +68,12 @@ namespace V2RayGCon.Views.WinForms
             var title = formTitle;
             if (setting.isPortable)
             {
-                title += " - " + I18N.Portable;
+                title += " " + I18N.Portable;
+            }
+
+            if (Misc.Utils.IsAdmin())
+            {
+                title += " " + I18N.AdministratorMode;
             }
 
             VgcApis.Misc.UI.Invoke(() =>

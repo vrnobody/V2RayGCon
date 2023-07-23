@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -22,6 +23,19 @@ namespace V2RayGCon.Misc
 {
     public static class Utils
     {
+        #region sec
+        static public bool IsAdmin()
+        {
+            bool isElevated;
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            {
+                WindowsPrincipal principal = new WindowsPrincipal(identity);
+                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+            return isElevated;
+        }
+        #endregion
+
 
         #region strings
 
@@ -1205,6 +1219,23 @@ namespace V2RayGCon.Misc
         public static bool DownloadFile(string url, string filename, int proxyPort, int timeout) =>
             DownloadFileWorker(url, filename, proxyPort, timeout);
 
+        public static WebClient CreateWebClient(int proxyPort)
+        {
+            WebClient wc = new WebClient
+            {
+                Encoding = Encoding.UTF8,
+            };
+
+            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
+
+            if (proxyPort > 0 && proxyPort < 65536)
+            {
+                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, proxyPort);
+            }
+
+            return wc;
+        }
+
         /// <summary>
         /// Download through http://127.0.0.1:proxyPort. Return string.Empty if sth. goes wrong.
         /// </summary>
@@ -1221,17 +1252,7 @@ namespace V2RayGCon.Misc
                 timeout = VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
             }
 
-            WebClient wc = new WebClient
-            {
-                Encoding = Encoding.UTF8,
-            };
-
-            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
-
-            if (proxyPort > 0 && proxyPort < 65536)
-            {
-                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, proxyPort);
-            }
+            WebClient wc = CreateWebClient(proxyPort);
 
             AutoResetEvent dlCompleted = new AutoResetEvent(false);
             wc.DownloadStringCompleted += (s, a) =>

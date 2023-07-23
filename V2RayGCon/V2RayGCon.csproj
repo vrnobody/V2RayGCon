@@ -11,6 +11,9 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,9 +29,6 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -87,9 +87,6 @@
   <ItemGroup>
     <Reference Include="AutocompleteMenu-ScintillaNET, Version=1.3.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoCompleteMenu-ScintillaNET.1.6.1\lib\net40\AutocompleteMenu-ScintillaNET.dll</HintPath>
-    </Reference>
-    <Reference Include="AutoUpdater.NET, Version=1.5.8.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autoupdater.NET.Official.1.5.8\lib\net40\AutoUpdater.NET.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.4.4.1\lib\net45\Castle.Core.dll</HintPath>
@@ -259,6 +256,16 @@
     <Compile Include="Services\ShareLinkComponents\V2cfgDecoder.cs" />
     <Compile Include="Services\ShareLinkMgr.cs" />
     <Compile Include="Services\Updater.cs" />
+    <Compile Include="Views\Updater\FormDownloader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Updater\FormDownloader.Designer.cs">
+      <DependentUpon>FormDownloader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Updater\MyWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Views\Updater\PasteArguments.cs" />
     <Compile Include="Views\UserControls\MultiConfUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -393,6 +400,12 @@
     <EmbeddedResource Include="Resources\Resx\StrConst.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>StrConst.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Updater\FormDownloader.resx">
+      <DependentUpon>FormDownloader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Updater\FormDownloader.zh-CN.resx">
+      <DependentUpon>FormDownloader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\MultiConfUI.resx">
       <DependentUpon>MultiConfUI.cs</DependentUpon>
@@ -597,8 +610,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\3rd\ZipExtractor\ZipExtractor.csproj">
+      <Project>{91de558c-6db8-429b-a069-c0491dcff15b}</Project>
+      <Name>ZipExtractor</Name>
+      <Private>False</Private>
+    </ProjectReference>
     <ProjectReference Include="..\Plugins\Luna\Luna.csproj">
       <Project>{2d29f9e2-f358-4b07-8f50-1cbe4291eed8}</Project>
       <Name>Luna</Name>
@@ -616,11 +633,15 @@
       <Name>VgcApis</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Files\updater\" />
+    <Folder Include="Resources\Pkg\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set "libsDir=libs\"
-set "copyFolderList=lua templates"
-set "allDlls=KeraLua liblua53 lua53 Nlua AutocompleteMenu-ScintillaNET Luna ProxySetter Pacman DotNetZip Newtonsoft ScintillaNET VgcApis zxing AutoUpdater.NET Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
+set "copyFolderList=lua templates updater"
+set "allDlls=KeraLua liblua53 lua53 Nlua AutocompleteMenu-ScintillaNET Luna ProxySetter Pacman DotNetZip Newtonsoft ScintillaNET VgcApis zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
 
 call:CreateFoldersOnDemand "%25libsDir%25 %25copyFolderList%25"
 call:MoveFilesByList "%25allDlls%25"

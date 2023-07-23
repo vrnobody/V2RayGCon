@@ -334,6 +334,24 @@ namespace V2RayGCon.Properties {
         }
         
         /// <summary>
+        ///   查找类似 updater 的本地化字符串。
+        /// </summary>
+        internal static string UpdaterFolder {
+            get {
+                return ResourceManager.GetString("UpdaterFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 ZipExtractor.exe 的本地化字符串。
+        /// </summary>
+        internal static string UpdaterName {
+            get {
+                return ResourceManager.GetString("UpdaterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 https://vrnobody.github.io/V2RayGCon 的本地化字符串。
         /// </summary>
         internal static string WikiLink {

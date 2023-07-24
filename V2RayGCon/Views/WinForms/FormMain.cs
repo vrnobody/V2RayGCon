@@ -71,7 +71,7 @@ namespace V2RayGCon.Views.WinForms
                 title += " " + I18N.Portable;
             }
 
-            if (Misc.Utils.IsAdmin())
+            if (VgcApis.Misc.Utils.IsAdmin())
             {
                 title += " " + I18N.AdministratorMode;
             }

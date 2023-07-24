@@ -2,12 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 {
     public static class Comm
     {
         #region public methods
+
+
         public static string EncodeUriShareLink(string protocol, string config)
         {
             var vc = new Models.Datas.VeeConfigsWithReality(config);
@@ -30,7 +33,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
                 "{0}://{1}@{2}:{3}?{4}#{5}",
                 vc.proto,
                 Uri.EscapeDataString(vc.auth1),
-                Uri.EscapeDataString(vc.host),
+                VgcApis.Misc.Utils.FormatHost(vc.host),
                 vc.port,
                 string.Join("&", pms),
                 Uri.EscapeDataString(vc.name));

@@ -23,20 +23,6 @@ namespace V2RayGCon.Misc
 {
     public static class Utils
     {
-        #region sec
-        static public bool IsAdmin()
-        {
-            bool isElevated;
-            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
-            {
-                WindowsPrincipal principal = new WindowsPrincipal(identity);
-                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
-            }
-            return isElevated;
-        }
-        #endregion
-
-
         #region strings
 
         public static VgcApis.Models.Datas.StatsSample ParseStatApiResult(bool isXray, string result)
@@ -353,30 +339,30 @@ namespace V2RayGCon.Misc
                 return string.Empty;
             }
 
-            string ipKey = root;
+            string addrKey = root;
             switch (protocol)
             {
                 case "vless":
                 case "vmess":
-                    ipKey += ".settings.vnext.0.address";
+                    addrKey += ".settings.vnext.0.address";
                     break;
                 case "shadowsocks":
                     protocol = "ss";
-                    ipKey += ".settings.servers.0.address";
+                    addrKey += ".settings.servers.0.address";
                     break;
                 case "trojan":
                 case "socks":
                 case "http":
-                    ipKey += ".settings.servers.0.address";
+                    addrKey += ".settings.servers.0.address";
                     break;
             }
 
-            string ip = GetValue<string>(config, ipKey);
+            string addr = GetValue<string>(config, addrKey);
             string streamType = GetStreamSettingInfo(config, root);
 
             return protocol
                 + (string.IsNullOrEmpty(streamType) ? "" : $".{streamType}")
-                + (string.IsNullOrEmpty(ip) ? "" : @"@" + ip);
+                + (string.IsNullOrEmpty(addr) ? "" : "@" + VgcApis.Misc.Utils.FormatHost(addr));
         }
 
         static bool Contains(JProperty main, JProperty sub)

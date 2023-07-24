@@ -14,6 +14,7 @@ using System.Net.Http;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -132,6 +133,17 @@ namespace VgcApis.Misc
 
 
         #region system
+        static public bool IsAdmin()
+        {
+            bool isElevated;
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            {
+                WindowsPrincipal principal = new WindowsPrincipal(identity);
+                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+            return isElevated;
+        }
+
         public static string GetCurCallStack()
         {
             var s = new List<string>();
@@ -465,7 +477,17 @@ namespace VgcApis.Misc
         #endregion
 
         #region net
-
+        public static string FormatHost(string host)
+        {
+            if (IPAddress.TryParse(host, out var address))
+            {
+                if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                {
+                    return $"[{address.ToString()}]";
+                }
+            }
+            return host;
+        }
 
         static HttpClient CreateHttpClient(int port)
         {

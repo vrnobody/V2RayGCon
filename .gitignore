@@ -7,7 +7,7 @@
 MigrationBackup/
 
 # add 2023-07-23
-V2RayGCon/Resources/Files/updater/
+V2RayGCon/Resources/Files/binaries/
 
 # User-specific files
 *.suo

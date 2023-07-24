@@ -334,7 +334,7 @@ namespace V2RayGCon.Properties {
         }
         
         /// <summary>
-        ///   查找类似 updater 的本地化字符串。
+        ///   查找类似 binaries 的本地化字符串。
         /// </summary>
         internal static string UpdaterFolder {
             get {

@@ -29,11 +29,6 @@ namespace V2RayGCon
         [STAThread]
         static void Main()
         {
-            if (Misc.Utils.IsAdmin() && !VgcApis.Misc.UI.Confirm(I18N.ConfirmRunAsAdmin))
-            {
-                return;
-            }
-
             Thread.CurrentThread.Name = VgcApis.Models.Consts.Libs.UiThreadName;
 
             SetProcessDPIAware();

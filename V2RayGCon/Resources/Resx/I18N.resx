@@ -801,9 +801,6 @@ No, abort.</value>
   <data name="CheckMd5SumFailed" xml:space="preserve">
     <value>MD5 sum not match!</value>
   </data>
-  <data name="ConfirmRunAsAdmin" xml:space="preserve">
-    <value>Start V2RayGCon under priviledge mode?</value>
-  </data>
   <data name="DownloadSpeedMessage" xml:space="preserve">
     <value>Downloading at {0}/s</value>
   </data>

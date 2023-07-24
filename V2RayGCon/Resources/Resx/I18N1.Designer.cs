@@ -505,15 +505,6 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Start V2RayGCon under priviledge mode? 的本地化字符串。
-        /// </summary>
-        internal static string ConfirmRunAsAdmin {
-            get {
-                return ResourceManager.GetString("ConfirmRunAsAdmin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Save current config? 的本地化字符串。
         /// </summary>
         internal static string ConfirmSaveCurConfig {

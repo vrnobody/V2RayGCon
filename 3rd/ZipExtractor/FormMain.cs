@@ -33,6 +33,7 @@ namespace ZipExtractor
             string updatedExe = null;
             var clearAppDirectory = false;
             string commandLineArgs = null;
+            bool isElevated = false;
 
             _logBuilder.AppendLine(DateTime.Now.ToString("F"));
             _logBuilder.AppendLine();
@@ -58,6 +59,9 @@ namespace ZipExtractor
                         break;
                     case "--clear":
                         clearAppDirectory = true;
+                        break;
+                    case "--runas":
+                        isElevated = true;
                         break;
                     case "--args":
                         commandLineArgs = args[index + 1];
@@ -264,6 +268,19 @@ namespace ZipExtractor
                 textBoxInformation.SelectionLength = 0;
             };
 
+            void StartAsAdmin(string executablePath, string commandLineArgs)
+            {
+                var processStartInfo = new ProcessStartInfo(executablePath);
+                if (!string.IsNullOrEmpty(commandLineArgs))
+                {
+                    processStartInfo.Arguments = commandLineArgs;
+                }
+
+                processStartInfo.Verb = "runas";
+
+                Process.Start(processStartInfo);
+            }
+
             _backgroundWorker.RunWorkerCompleted += (_, eventArgs) =>
             {
                 try
@@ -284,13 +301,15 @@ namespace ZipExtractor
                         string executablePath = string.IsNullOrWhiteSpace(updatedExe)
                             ? currentExe
                             : Path.Combine(extractionPath, updatedExe);
-                        var processStartInfo = new ProcessStartInfo(executablePath);
-                        if (!string.IsNullOrEmpty(commandLineArgs))
-                        {
-                            processStartInfo.Arguments = commandLineArgs;
-                        }
 
-                        Process.Start(processStartInfo);
+                        if (isElevated)
+                        {
+                            StartAsAdmin(executablePath, commandLineArgs);
+                        }
+                        else
+                        {
+                            SystemUtility.ExecuteProcessUnElevated(executablePath, commandLineArgs);
+                        }
 
                         _logBuilder.AppendLine("Successfully launched the updated application.");
                     }

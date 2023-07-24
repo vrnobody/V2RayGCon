@@ -792,9 +792,6 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="CheckMd5SumFailed" xml:space="preserve">
     <value>MD5校验失败！</value>
   </data>
-  <data name="ConfirmRunAsAdmin" xml:space="preserve">
-    <value>确定要以管理员权限启动V2RayGCon吗？</value>
-  </data>
   <data name="DownloadSpeedMessage" xml:space="preserve">
     <value>以{0}/s下载</value>
   </data>

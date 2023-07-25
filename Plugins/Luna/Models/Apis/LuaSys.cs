@@ -475,7 +475,7 @@ namespace Luna.Models.Apis
 
             if (luaVms.TryGetValue(luavm, out var vm))
             {
-                var log = VgcApis.Misc.Utils.TrimTrailingNewLine(vm.logger?.GetLogAsString(false));
+                var log = vm.logger?.GetLogAsString(false);
                 if (!vm.coreCtrl.isRunning && vm.lastLogSend == log)
                 {
                     return null;

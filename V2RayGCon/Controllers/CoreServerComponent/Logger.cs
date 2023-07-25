@@ -19,8 +19,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GetLogAsString()
         {
-            var logs = qLogger.GetLogAsString(false);
-            return VgcApis.Misc.Utils.TrimTrailingNewLine(logs);
+            return qLogger.GetLogAsString(false);
         }
 
         public void Log(string message)

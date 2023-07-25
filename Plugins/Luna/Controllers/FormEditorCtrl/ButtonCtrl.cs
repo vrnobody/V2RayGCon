@@ -469,7 +469,7 @@ namespace Luna.Controllers.FormEditorCtrl
         }
         void OnBtnClearOutputClickHandler(object sender, EventArgs args)
         {
-            qLogger?.Reset();
+            qLogger?.Clear();
         }
         void OnBtnSaveScriptClickHandler(object sender, EventArgs args)
         {

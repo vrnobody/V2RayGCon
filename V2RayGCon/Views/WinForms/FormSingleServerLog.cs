@@ -67,7 +67,7 @@ namespace V2RayGCon.Views.WinForms
         {
             if (VgcApis.Misc.UI.Confirm(I18N.ConfirmClearLog))
             {
-                qLogger.Reset();
+                qLogger.Clear();
             }
         }
 

@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.7.1.8")]
+[assembly: AssemblyVersion("1.7.1.9")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.7.1.9 Refactor QueueLogger.
  * v1.7.1.8 Surround IPv6 with square brackets.
  * v1.7.1.7 Restart app with user privileges after app updated.
  * v1.7.1.6 WIP: Remove AutoUpdater.NET

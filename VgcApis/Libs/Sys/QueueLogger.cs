@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,17 +10,20 @@ namespace VgcApis.Libs.Sys
         BaseClasses.Disposable
     {
         long updateTimestamp = DateTime.Now.Ticks;
-        Queue<string> logCache = new Queue<string>();
-        object logWriteLocker = new object();
+
+        ConcurrentQueue<string> logCache = new ConcurrentQueue<string>();
+        object logCacheWLock = new object();
 
         public QueueLogger() { }
 
         #region public methods
-        public void Reset()
+        public int Count() => logCache.Count;
+
+        public void Clear()
         {
-            lock (logWriteLocker)
+            lock (logCacheWLock)
             {
-                logCache = new Queue<string>();
+                logCache = new ConcurrentQueue<string>();
                 updateTimestamp = DateTime.Now.Ticks;
             }
         }
@@ -28,54 +32,69 @@ namespace VgcApis.Libs.Sys
 
         public void Log(string message)
         {
-            lock (logWriteLocker)
-            {
-                logCache.Enqueue(message ?? @"");
-                updateTimestamp = DateTime.Now.Ticks;
-                TrimLogCache();
-            }
+            logCache.Enqueue(message ?? @"");
+            updateTimestamp = DateTime.Now.Ticks;
+            TrimLogCache();
         }
 
-        public void Clear()
+        public string GetLogAsString(bool hasNewLineAtTheEnd)
         {
-            lock (logWriteLocker)
-            {
-                logCache.Clear();
-            }
+            return CachedGetLogAsString(hasNewLineAtTheEnd);
         }
 
-        public string GetLogAsString(bool addNewLineAtTheEnd)
-        {
-            lock (logWriteLocker)
-            {
-                var sb = new StringBuilder();
-                foreach (var line in logCache)
-                {
-                    sb.AppendLine(line);
-                }
-                if (addNewLineAtTheEnd)
-                {
-                    sb.AppendLine();
-                }
-                return sb.ToString();
-            }
-        }
         #endregion
 
         #region private methods
+        string strCache = string.Empty;
+        string trimedStrCache = string.Empty;
+        long strCacheTimestamp = -1;
+        object strCacheLock = new object();
+
+        string CachedGetLogAsString(bool hasNewLineAtTheEnd)
+        {
+            lock (strCacheLock)
+            {
+                if (updateTimestamp != strCacheTimestamp)
+                {
+
+                    var sb = new StringBuilder();
+                    lock (logCacheWLock)
+                    {
+                        foreach (var line in logCache)
+                        {
+                            sb.AppendLine(line);
+                        }
+                    }
+                    sb.AppendLine();
+                    strCache = sb.ToString();
+                    trimedStrCache = Misc.Utils.TrimTrailingNewLine(strCache);
+                    strCacheTimestamp = updateTimestamp;
+                }
+            }
+            return hasNewLineAtTheEnd ? strCache : trimedStrCache;
+        }
+
+        Tasks.Bar bar = new Tasks.Bar();
         void TrimLogCache()
         {
-            var count = logCache.Count();
+            if (!bar.Install())
+            {
+                return;
+            }
+
+            var count = logCache.Count;
             if (count < Models.Consts.Libs.MaxCacheLoggerLineNumber)
             {
+                bar.Remove();
                 return;
             }
 
             var len = count - Models.Consts.Libs.MinCacheLoggerLineNumber;
             for (int i = 0; i < len; i++)
             {
-                logCache.Dequeue();
+                logCache.TryDequeue(out _);
             }
+            bar.Remove();
         }
 
         #endregion

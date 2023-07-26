@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace V2RayGCon.Services.Caches
 {
@@ -75,10 +76,15 @@ namespace V2RayGCon.Services.Caches
 
         void TrimDownCache()
         {
-            var keys = new List<string>(data.Keys);
             var cacheSize = VgcApis.Models.Consts.Import.DecodeCacheSize;
+            var count = data.Keys.Count;
+            if (count < cacheSize)
+            {
+                return;
+            }
 
-            for (var i = 0; i < keys.Count - cacheSize; i++)
+            var keys = VgcApis.Misc.Utils.Shuffle(data.Keys).Take(count / 2).ToList();
+            for (var i = 0; i < keys.Count; i++)
             {
                 if (data.ContainsKey(keys[i]))
                 {

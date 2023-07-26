@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 
 namespace V2RayGCon.Services.Caches
 {
@@ -18,6 +19,7 @@ namespace V2RayGCon.Services.Caches
             {
                 if (!ContainsKey(url))
                 {
+                    TrimHalf(VgcApis.Models.Consts.Import.HtmlCacheSize);
                     data[url] = new Models.Datas.LockValuePair<string>();
                 }
             }

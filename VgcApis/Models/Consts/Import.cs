@@ -4,6 +4,8 @@
     {
         public const int DecodeCacheSize = 10;
 
+        public const int HtmlCacheSize = 30;
+
         public const int ParseImportTimeout = 12 * 1000;
 
         public const int ParseImportDepth = 5;

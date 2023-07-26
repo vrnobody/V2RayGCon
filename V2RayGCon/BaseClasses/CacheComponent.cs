@@ -15,6 +15,27 @@ namespace V2RayGCon.BaseClasses
         }
 
         #region public method
+        public void TrimHalf(int maxSize)
+        {
+            lock (writeLock)
+            {
+                var count = data.Keys.Count;
+                if (count < maxSize)
+                {
+                    return;
+                }
+
+                var keys = VgcApis.Misc.Utils.Shuffle(data.Keys).Take(count / 2).ToList();
+                for (var i = 0; i < keys.Count; i++)
+                {
+                    if (data.ContainsKey(keys[i]))
+                    {
+                        data.Remove(keys[i]);
+                    }
+                }
+            }
+        }
+
         public bool ContainsKey(TKey key)
         {
             return data.ContainsKey(key);

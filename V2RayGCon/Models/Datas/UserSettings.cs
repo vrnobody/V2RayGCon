@@ -52,6 +52,7 @@ namespace V2RayGCon.Models.Datas
 
         public string ImportUrls { get; set; }
         public string DecodeCache { get; set; }
+        public string CompressedUnicodeDecodeCache { get; set; }
         public string SubscribeUrls { get; set; }
 
         public string PluginInfoItems { get; set; }
@@ -123,6 +124,8 @@ namespace V2RayGCon.Models.Datas
             MultiConfItems = string.Empty;
             ImportUrls = string.Empty;
             DecodeCache = string.Empty;
+            CompressedUnicodeDecodeCache = string.Empty;
+
             SubscribeUrls = @"[]";
 
             // PluginInfoItems = "[{\"filename\":\"ProxySetter\",\"isUse\":true}]";

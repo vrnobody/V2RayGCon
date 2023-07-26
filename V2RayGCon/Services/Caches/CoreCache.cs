@@ -96,14 +96,9 @@ namespace V2RayGCon.Services.Caches
         Dictionary<string, string> LoadDecodeCache()
         {
             var result = new Dictionary<string, string>();
-            var decodeRawStr = setting.decodeCache;
             try
             {
-                var temp = JsonConvert.DeserializeObject<Dictionary<string, string>>(decodeRawStr);
-                if (temp == null)
-                {
-                    return result;
-                }
+                var temp = setting.decodeCache;
                 foreach (var item in temp)
                 {
                     try
@@ -123,8 +118,7 @@ namespace V2RayGCon.Services.Caches
 
         void SaveDecodeCache()
         {
-            string json = JsonConvert.SerializeObject(data);
-            setting.decodeCache = json;
+            setting.decodeCache = data;
         }
         #endregion
     }

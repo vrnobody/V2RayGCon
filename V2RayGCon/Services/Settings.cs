@@ -231,15 +231,31 @@ namespace V2RayGCon.Services
             }
         }
 
-        public string decodeCache
+        public Dictionary<string, string> decodeCache
         {
             get
             {
-                return userSettings.DecodeCache;
+                Dictionary<string, string> r = null;
+                try
+                {
+                    r = VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<Dictionary<string, string>>(userSettings.CompressedUnicodeDecodeCache);
+                }
+                catch { }
+                if (r != null)
+                {
+                    return r;
+                }
+                try
+                {
+                    r = JsonConvert.DeserializeObject<Dictionary<string, string>>(userSettings.DecodeCache);
+                }
+                catch { }
+                return r ?? new Dictionary<string, string>();
             }
             set
             {
-                userSettings.DecodeCache = value;
+                userSettings.CompressedUnicodeDecodeCache = VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(value);
+                userSettings.DecodeCache = string.Empty;
                 SaveSettingsLater();
             }
         }
@@ -707,8 +723,12 @@ namespace V2RayGCon.Services
                 {
                     userSettings.PluginsSetting = string.Empty; // obsolete
                     userSettings.CompressedPluginsSetting = string.Empty; // obsolete and buggy
-                    userSettings.CompressedUnicodePluginsSetting = VgcApis.Libs.Infr.ZipExtensions
-                        .SerializeObjectToCompressedUnicodeBase64(pluginsSetting);
+                    var s = VgcApis.Libs.Infr.ZipExtensions
+                            .SerializeObjectToCompressedUnicodeBase64(pluginsSetting);
+                    lock (userSettings.CompressedUnicodePluginsSetting)
+                    {
+                        userSettings.CompressedUnicodePluginsSetting = s;
+                    }
                 }
                 catch { }
             }
@@ -721,6 +741,11 @@ namespace V2RayGCon.Services
 
         public void SaveServerTrackerSetting(Models.Datas.ServerTracker serverTrackerSetting)
         {
+            if (!isServerTrackerOn)
+            {
+                serverTrackerSetting = new Models.Datas.ServerTracker();
+                serverTrackerSetting.isTrackerOn = false;
+            }
             userSettings.ServerTracker = JsonConvert.SerializeObject(serverTrackerSetting);
             SaveSettingsLater();
         }
@@ -925,15 +950,13 @@ namespace V2RayGCon.Services
             SaveSettingsLater();
         }
 
+        List<VgcApis.Models.Datas.CoreInfo> coreInfoCache = new List<VgcApis.Models.Datas.CoreInfo>();
         public void SaveServerList(List<VgcApis.Models.Datas.CoreInfo> coreInfoList)
         {
-            var cil = coreInfoList ?? new List<VgcApis.Models.Datas.CoreInfo>();
-            string ucs = VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(cil);
-
-            userSettings.CoreInfoList = string.Empty; // obsolete
-            userSettings.CompressedCoreInfoList = string.Empty; // obsolete and buggy
-            userSettings.CompressedUnicodeCoreInfoList = ucs;
-
+            lock (saveUserSettingsLocker)
+            {
+                coreInfoCache = coreInfoList;
+            }
             SaveSettingsLater();
         }
         #endregion
@@ -1003,7 +1026,12 @@ namespace V2RayGCon.Services
 
             try
             {
-                var ucps = userSettings.CompressedUnicodePluginsSetting;
+                string ucps;
+                lock (userSettings.CompressedUnicodePluginsSetting)
+                {
+                    ucps = userSettings.CompressedUnicodePluginsSetting;
+                }
+
                 var cps = userSettings.CompressedPluginsSetting; // obsolete and buggy
                 if (!string.IsNullOrEmpty(ucps))
                 {
@@ -1054,6 +1082,7 @@ namespace V2RayGCon.Services
                 {
                     Misc.Utils.ClumsyWriter(
                         userSettings,
+                        null,
                         mainUsFilename,
                         bakUsFilename);
                 }
@@ -1074,6 +1103,11 @@ namespace V2RayGCon.Services
         {
             try
             {
+                var cil = coreInfoCache ?? new List<VgcApis.Models.Datas.CoreInfo>();
+                string ucs = VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(cil);
+                userSettings.CoreInfoList = string.Empty; // obsolete
+                userSettings.CompressedCoreInfoList = string.Empty; // obsolete and buggy
+                userSettings.CompressedUnicodeCoreInfoList = ucs;
                 var us = JsonConvert.SerializeObject(userSettings);
                 Properties.Settings.Default.UserSettings = us;
                 Properties.Settings.Default.Save();
@@ -1092,6 +1126,7 @@ namespace V2RayGCon.Services
             {
                 var ok = Misc.Utils.ClumsyWriter(
                     userSettings,
+                    coreInfoCache,
                     Constants.Strings.MainUserSettingsFilename,
                     Constants.Strings.BackupUserSettingsFilename);
                 if (ok)

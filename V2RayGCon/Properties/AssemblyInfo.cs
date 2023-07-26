@@ -37,7 +37,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
- * v1.7.1.12 Use memory stream to cache servers setting.
+ * v1.7.1.12 Modify write file logic of user settings file.
  * v1.7.1.11 Move local storage out of plug-in settings.
  * v1.7.1.10 Add HTML cache size limit.
  * v1.7.1.9 Refactor QueueLogger.

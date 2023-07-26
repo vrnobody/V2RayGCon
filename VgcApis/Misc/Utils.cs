@@ -208,6 +208,17 @@ namespace VgcApis.Misc
         #endregion
 
         #region files
+        public static void ClearFile(string path)
+        {
+            using (FileStream fs = File.Open(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                lock (fs)
+                {
+                    fs.SetLength(0);
+                }
+            }
+        }
+
         public static string GetImageResolution(string filename)
         {
             try
@@ -246,6 +257,25 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
+
+        public static List<int> FindAll(string haystack, string needle)
+        {
+            List<int> indexes = new List<int>();
+            if (!string.IsNullOrEmpty(haystack) && haystack.Length > 0 && !String.IsNullOrEmpty(needle))
+            {
+                for (int index = 0; ; index += needle.Length)
+                {
+                    index = haystack.IndexOf(needle, index);
+                    if (index == -1)
+                    {
+                        break;
+                    }
+                    indexes.Add(index);
+                }
+            }
+            return indexes;
+        }
+
         public static string UnescapeUnicode(string source)
         {
             if (string.IsNullOrEmpty(source))

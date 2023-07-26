@@ -165,8 +165,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             if (trackerSetting.isTrackerOn != keepTracking)
             {
                 trackerSetting.isTrackerOn = keepTracking;
-                setting.SaveServerTrackerSetting(trackerSetting);
                 setting.isServerTrackerOn = keepTracking;
+                setting.SaveServerTrackerSetting(trackerSetting);
                 servers.OnAutoTrackingOptionChanged();
             }
 

@@ -1293,23 +1293,41 @@ namespace V2RayGCon.Misc
         #endregion
 
         #region files
-        internal static bool SerializeToFile(Models.Datas.UserSettings userSettings, string path)
+        internal static bool SerializeToFile(
+            Models.Datas.UserSettings userSettings,
+            List<VgcApis.Models.Datas.CoreInfo> coreInfos,
+            string path)
         {
-            // https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
+            const string coreInfoPlaceHolder = @"core infos V中G文C😀！😋。🧡353033a2-3064-486b-8ee0-e3afa622f186";
+            const string pluginPlaceHolder = @"plugins V中G文C😀！😋。🧡179b3c85-f32b-4740-81d0-4473886834a7";
+
+            List<string> parts = new List<string>();
+            lock (userSettings.CompressedUnicodePluginsSetting)
+            {
+                parts = SplitSerializedUserSettings(userSettings,
+                    coreInfoPlaceHolder,
+                    pluginPlaceHolder);
+            }
+
             try
             {
-                // write the data to a temp file
-                using (var fs = File.Create(path, 64 * 1024, FileOptions.WriteThrough))
+                if (parts.Count != 5)
                 {
-                    using (StreamWriter sw = new StreamWriter(fs))
-                    {
-                        using (JsonTextWriter jw = new JsonTextWriter(sw))
-                        {
-                            JsonSerializer js = new JsonSerializer();
-                            js.Serialize(jw, userSettings);
-                        }
-                    }
+                    // backward compactible
+                    WriteToFileAtOnce(path, userSettings);
                 }
+                else
+                {
+                    VgcApis.Misc.Utils.ClearFile(path);
+                    WriteToFileInParts(
+                        path,
+                        parts,
+                        coreInfos,
+                        userSettings.CompressedUnicodePluginsSetting,
+                        coreInfoPlaceHolder,
+                        pluginPlaceHolder);
+                }
+
                 return true;
             }
             catch (Exception e)
@@ -1319,13 +1337,115 @@ namespace V2RayGCon.Misc
             return false;
         }
 
-        internal static bool ClumsyWriter(Models.Datas.UserSettings userSettings, string mainFilename, string bakFilename)
+        // must lock userSettings.CompressedUnicodePluginsSetting first!
+        static List<string> SplitSerializedUserSettings(
+             Models.Datas.UserSettings userSettings,
+             string coreInfoPlaceHolder,
+             string pluginPlaceHolder)
+        {
+            var parts = new List<string>();
+            var pluginSettings = userSettings.CompressedUnicodePluginsSetting;
+            var coreInfoSettings = userSettings.CompressedUnicodeCoreInfoList;
+
+            userSettings.CompressedUnicodeCoreInfoList = coreInfoPlaceHolder;
+            userSettings.CompressedUnicodePluginsSetting = pluginPlaceHolder;
+            try
+            {
+                var str = JsonConvert.SerializeObject(userSettings, Formatting.Indented);
+                if (VgcApis.Misc.Utils.FindAll(str, pluginPlaceHolder).Count == 1)
+                {
+                    var option = StringSplitOptions.RemoveEmptyEntries;
+                    var p = str.Split(new string[] { pluginPlaceHolder }, option);
+                    if (p.Length == 2)
+                    {
+                        if (VgcApis.Misc.Utils.FindAll(p[0], coreInfoPlaceHolder).Count == 1)
+                        {
+                            var pp = p[0].Split(new string[] { coreInfoPlaceHolder }, option);
+                            parts.Add(pp[0]);
+                            parts.Add(coreInfoPlaceHolder);
+                            parts.Add(pp[1]);
+                            parts.Add(pluginPlaceHolder);
+                            parts.Add(p[1]);
+                        }
+                        else if (VgcApis.Misc.Utils.FindAll(p[1], coreInfoPlaceHolder).Count == 1)
+                        {
+                            var pp = p[1].Split(new string[] { coreInfoPlaceHolder }, option);
+                            parts.Add(p[0]);
+                            parts.Add(pluginPlaceHolder);
+                            parts.Add(pp[0]);
+                            parts.Add(coreInfoPlaceHolder);
+                            parts.Add(pp[1]);
+                        }
+                    }
+                }
+            }
+            catch { }
+
+            userSettings.CompressedUnicodeCoreInfoList = coreInfoSettings; // may be not need to recover this property
+            userSettings.CompressedUnicodePluginsSetting = pluginSettings;
+            return parts;
+        }
+
+        private static void WriteToFileAtOnce(string path, Models.Datas.UserSettings userSettings)
+        {
+            // https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
+            using (var fs = File.Create(path, 64 * 1024, FileOptions.WriteThrough))
+            {
+                using (StreamWriter sw = new StreamWriter(fs))
+                {
+                    using (JsonTextWriter jw = new JsonTextWriter(sw))
+                    {
+                        JsonSerializer js = new JsonSerializer();
+                        js.Serialize(jw, userSettings);
+                    }
+                }
+            }
+        }
+
+        private static void WriteToFileInParts(
+            string path,
+            List<string> parts,
+            List<CoreInfo> coreInfos,
+            string pluginsSetting,
+            string coreInfoPlaceHolder,
+            string pluginPlaceHolder)
+        {
+
+            foreach (var part in parts)
+            {
+                if (part == pluginPlaceHolder)
+                {
+                    using (var writer = File.AppendText(path))
+                    {
+                        writer.Write(pluginsSetting);
+                    }
+
+                }
+                else if (part == coreInfoPlaceHolder)
+                {
+                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectAsCompressedUnicodeBase64StringToFile(path, coreInfos);
+                }
+                else
+                {
+                    using (var writer = File.AppendText(path))
+                    {
+                        writer.Write(part);
+                    }
+                }
+
+            }
+        }
+
+        internal static bool ClumsyWriter(
+            Models.Datas.UserSettings userSettings,
+            List<VgcApis.Models.Datas.CoreInfo> coreInfos,
+            string mainFilename, string bakFilename)
         {
             try
             {
-                if (SerializeToFile(userSettings, mainFilename))
+                if (SerializeToFile(userSettings, coreInfos, mainFilename))
                 {
-                    if (SerializeToFile(userSettings, bakFilename))
+                    if (SerializeToFile(userSettings, coreInfos, bakFilename))
                     {
                         return true;
                     }

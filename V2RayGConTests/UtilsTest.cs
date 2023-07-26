@@ -29,7 +29,7 @@ namespace V2RayGCon.Test
 
             var us = new Models.Datas.UserSettings();
             us.DecodeCache = s;
-            ClumsyWriter(us, f1, f2);
+            ClumsyWriter(us, null, f1, f2);
 
             var us1 = LoadUserSettingsFromFile(f1);
             var us2 = LoadUserSettingsFromFile(f2);

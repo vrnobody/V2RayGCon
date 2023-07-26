@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,25 @@ namespace VgcApis.Libs.Infr
 {
     public static class ZipExtensions
     {
+
+        public static void SerializeObjectAsCompressedUnicodeBase64StringToFile(string path, object value)
+        {
+            using (var file = File.Open(path, FileMode.Append))
+            {
+                using (CryptoStream base64Stream = new CryptoStream(file, new ToBase64Transform(), CryptoStreamMode.Write))
+                {
+                    using (var gZipStream = new GZipStream(base64Stream, CompressionMode.Compress))
+                    {
+                        using (StreamWriter writer = new StreamWriter(gZipStream, Encoding.Unicode))
+                        using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
+                        {
+                            JsonSerializer ser = new JsonSerializer();
+                            ser.Serialize(jsonWriter, value);
+                        }
+                    }
+                }
+            }
+        }
 
         public static string SerializeObjectToCompressedUnicodeBase64(object value)
         {

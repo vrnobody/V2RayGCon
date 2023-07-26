@@ -4,7 +4,10 @@ namespace Luna.Models.Data
 {
     class UserSettings
     {
+        // obsolete but do not delete!
         public Dictionary<string, string> luaShareMemory;
+
+
         public List<LuaCoreSetting> luaServers;
 
 

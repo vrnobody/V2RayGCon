@@ -662,6 +662,17 @@ namespace V2RayGCon.Services
             return false;
         }
 
+        public string GetLocalStorage()
+        {
+            return userSettings.localStorage;
+        }
+
+        public void SaveLocalStorage(string value)
+        {
+            userSettings.localStorage = value;
+            SaveSettingsLater();
+        }
+
         /// <summary>
         /// return null if fail
         /// </summary>

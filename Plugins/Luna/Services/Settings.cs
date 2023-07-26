@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
+using VgcApis.Interfaces.Services;
 
 namespace Luna.Services
 {
@@ -11,12 +13,18 @@ namespace Luna.Services
 
         readonly string pluginName = Properties.Resources.Name;
         Models.Data.UserSettings userSettings;
+        Dictionary<string, string> localStorage;
 
-        VgcApis.Libs.Tasks.LazyGuy lazyBookKeeper;
+        VgcApis.Libs.Tasks.LazyGuy lazyBookKeeper, lazyRecorder;
 
 
         public Settings()
         {
+            lazyRecorder = new VgcApis.Libs.Tasks.LazyGuy(
+                SaveLocalStorageNow,
+                VgcApis.Models.Consts.Intervals.LazySaveLunaSettingsInterval,
+                3000);
+
             lazyBookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveUserSettingsNow,
                 VgcApis.Models.Consts.Intervals.LazySaveLunaSettingsInterval,
@@ -31,7 +39,6 @@ namespace Luna.Services
 
 
         #endregion
-
 
 
         #region public methods
@@ -54,22 +61,23 @@ namespace Luna.Services
                     pluginName, vgcSetting);
 
             userSettings.NormalizeData();
+
+            InitLocalStorage(vgcSetting);
         }
 
         public string GetLuaShareMemory(string key)
         {
-            if (string.IsNullOrEmpty(key) || !userSettings.luaShareMemory.ContainsKey(key))
+            if (string.IsNullOrEmpty(key) || !localStorage.ContainsKey(key))
             {
                 return @"";
             }
-            return userSettings.luaShareMemory[key];
+            return localStorage[key];
         }
 
         readonly object shareMemoryLocker = new object();
         public bool RemoveShareMemory(string key)
         {
-            if (string.IsNullOrEmpty(key)
-                || !userSettings.luaShareMemory.ContainsKey(key))
+            if (string.IsNullOrEmpty(key) || !localStorage.ContainsKey(key))
             {
                 return false;
             }
@@ -77,9 +85,9 @@ namespace Luna.Services
             bool success;
             lock (shareMemoryLocker)
             {
-                success = userSettings.luaShareMemory.Remove(key);
+                success = localStorage.Remove(key);
             }
-            SaveUserSettingsLater();
+            SaveLocalStorageLater();
             return success;
         }
 
@@ -87,7 +95,7 @@ namespace Luna.Services
         {
             lock (shareMemoryLocker)
             {
-                return userSettings.luaShareMemory.Keys.ToList();
+                return localStorage.Keys.ToList();
             }
         }
 
@@ -100,9 +108,9 @@ namespace Luna.Services
 
             lock (shareMemoryLocker)
             {
-                userSettings.luaShareMemory[key] = value;
+                localStorage[key] = value;
             }
-            SaveUserSettingsLater();
+            SaveLocalStorageLater();
         }
 
         public List<Models.Data.LuaCoreSetting> GetLuaCoreSettings() =>
@@ -110,17 +118,50 @@ namespace Luna.Services
 
         public void SaveUserSettingsLater() =>
             lazyBookKeeper?.Deadline();
+
+        public void SaveLocalStorageLater() =>
+            lazyRecorder?.Deadline();
         #endregion
 
         #region protected methods
         protected override void Cleanup()
         {
+            lazyRecorder?.Dispose();
             lazyBookKeeper?.Dispose();
+
+            SaveLocalStorageNow();
             SaveUserSettingsNow();
+
         }
         #endregion
 
         #region private methods
+        private void InitLocalStorage(ISettingsService vgcSetting)
+        {
+            Dictionary<string, string> storage = null;
+            try
+            {
+                var compressedStr = vgcSetting.GetLocalStorage();
+                storage = VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<Dictionary<string, string>>(compressedStr);
+            }
+            catch { }
+
+            if (storage == null || storage.Count < 1)
+            {
+                storage = userSettings.luaShareMemory;
+            }
+
+            localStorage = storage ?? new Dictionary<string, string>();
+            userSettings.luaShareMemory = new Dictionary<string, string>();
+        }
+
+        void SaveLocalStorageNow()
+        {
+            var str = VgcApis.Libs.Infr.ZipExtensions
+                        .SerializeObjectToCompressedUnicodeBase64(localStorage);
+            vgcSetting.SaveLocalStorage(str);
+        }
+
         void SaveUserSettingsNow() =>
             VgcApis.Misc.Utils.SavePluginSetting(
                 pluginName, userSettings, vgcSetting);

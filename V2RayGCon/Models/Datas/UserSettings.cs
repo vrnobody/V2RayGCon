@@ -5,6 +5,7 @@ namespace V2RayGCon.Models.Datas
     class UserSettings
     {
         #region public properties
+        public string localStorage { get; set; }
 
         public bool isUseCustomUserAgent { get; set; }
         public string customUserAgent { get; set; }
@@ -76,6 +77,8 @@ namespace V2RayGCon.Models.Datas
         public UserSettings()
         {
             Normalized();
+
+            localStorage = string.Empty;
 
             isUseCustomUserAgent = false;
 

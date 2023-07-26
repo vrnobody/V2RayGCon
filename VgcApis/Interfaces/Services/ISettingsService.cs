@@ -14,6 +14,10 @@
         void SavePluginsSetting(string pluginName, string value);
         string GetPluginsSetting(string pluginName);
 
+        string GetLocalStorage();
+
+        void SaveLocalStorage(string value);
+
         // for luna plug-in
         string GetSubscriptionConfig();
         void SetSubscriptionConfig(string cfgStr);

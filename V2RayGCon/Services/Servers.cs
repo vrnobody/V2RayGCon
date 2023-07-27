@@ -40,7 +40,7 @@ namespace V2RayGCon.Services
             new List<Controllers.CoreServerCtrl>();
 
         ConcurrentDictionary<string, bool> markList = new ConcurrentDictionary<string, bool>();
-        ConcurrentDictionary<string, bool> configCache = new ConcurrentDictionary<string, bool>();
+        ConcurrentDictionary<string, string> configCache = new ConcurrentDictionary<string, string>();
 
         VgcApis.Libs.Tasks.LazyGuy lazyServerSettingsRecorder;
         ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
@@ -813,6 +813,7 @@ namespace V2RayGCon.Services
                 inbPort = setting.CustomDefImportPort,
                 config = config,
                 customMark = mark,
+                uid = Guid.NewGuid().ToString(),
             };
 
             var newServer = new Controllers.CoreServerCtrl(coreInfo);
@@ -825,7 +826,7 @@ namespace V2RayGCon.Services
                 // double check
                 if (!IsServerExistWorker(config))
                 {
-                    configCache.TryAdd(config, true);
+                    configCache.TryAdd(config, coreInfo.uid);
                     coreServList.Add(newServer);
                     var idx = coreServList.Count();
                     newServer.GetCoreStates().SetIndexQuiet(idx);
@@ -860,27 +861,28 @@ namespace V2RayGCon.Services
 
         public bool ReplaceServerConfig(string orgConfig, string newConfig)
         {
-            Controllers.CoreServerCtrl coreCtrl;
+            Controllers.CoreServerCtrl coreServ;
 
             locker.EnterReadLock();
             try
             {
-                coreCtrl = coreServList.FirstOrDefault(cs => cs.GetConfiger().GetConfig() == orgConfig);
+                coreServ = coreServList.FirstOrDefault(cs => cs.GetConfiger().GetConfig() == orgConfig);
             }
             finally
             {
                 locker.ExitReadLock();
             }
 
-            if (coreCtrl == null)
+            if (coreServ == null)
             {
                 return false;
             }
 
+            var coreState = coreServ.GetCoreStates();
             configCache.TryRemove(orgConfig, out _);
-            configCache.TryAdd(newConfig, true);
-            coreCtrl.GetConfiger().SetConfig(newConfig);
-            coreCtrl.GetCoreStates().SetLastModifiedUtcTicks(DateTime.UtcNow.Ticks);
+            configCache.TryAdd(newConfig, coreState.GetUid());
+            coreServ.GetConfiger().SetConfig(newConfig);
+            coreState.SetLastModifiedUtcTicks(DateTime.UtcNow.Ticks);
             return true;
         }
 
@@ -1100,12 +1102,12 @@ namespace V2RayGCon.Services
                 locker.ExitWriteLock();
             }
 
-            foreach (var server in coreServList)
+            foreach (var coreServ in coreServList)
             {
-                server.Run(cache, setting, configMgr, this);
-                var cfg = server.GetConfiger().GetConfig();
-                configCache.TryAdd(cfg, true);
-                BindEventsTo(server);
+                coreServ.Run(cache, setting, configMgr, this);
+                var cfg = coreServ.GetConfiger().GetConfig();
+                configCache.TryAdd(cfg, coreServ.GetCoreStates().GetUid());
+                BindEventsTo(coreServ);
             }
         }
 

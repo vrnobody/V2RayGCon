@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.7.1.12")]
+[assembly: AssemblyVersion("1.7.1.13")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.7.1.13 Refactoring.
  * v1.7.1.12 Modify write file logic of user settings file.
  * v1.7.1.11 Move local storage out of plug-in settings.
  * v1.7.1.10 Add HTML cache size limit.

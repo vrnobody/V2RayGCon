@@ -5,7 +5,7 @@ namespace V2RayGCon.Models.Datas
     class UserSettings
     {
         #region public properties
-        public string localStorage { get; set; }
+        public string CompressedUnicodeLocalStorage { get; set; }
 
         public bool isUseCustomUserAgent { get; set; }
         public string customUserAgent { get; set; }
@@ -51,19 +51,22 @@ namespace V2RayGCon.Models.Datas
         public string MultiConfItems { get; set; }
 
         public string ImportUrls { get; set; }
-        public string DecodeCache { get; set; }
+
+        public string DecodeCache { get; set; } // obsolete
         public string CompressedUnicodeDecodeCache { get; set; }
+
         public string SubscribeUrls { get; set; }
 
         public string PluginInfoItems { get; set; }
-        public string PluginsSetting { get; set; }
-        public string CompressedPluginsSetting { get; set; }
 
+        public string PluginsSetting { get; set; } // obsolete
+        public string CompressedPluginsSetting { get; set; } // obsolete
         public string CompressedUnicodePluginsSetting { get; set; }
 
         public string Culture { get; set; }
-        public string CoreInfoList { get; set; }
-        public string CompressedCoreInfoList { get; set; }
+
+        public string CoreInfoList { get; set; } // obsolete
+        public string CompressedCoreInfoList { get; set; } // obsolete
         public string CompressedUnicodeCoreInfoList { get; set; }
 
         public string PacServerSettings { get; set; }
@@ -79,7 +82,7 @@ namespace V2RayGCon.Models.Datas
         {
             Normalized();
 
-            localStorage = string.Empty;
+            CompressedUnicodeLocalStorage = string.Empty;
 
             isUseCustomUserAgent = false;
 
@@ -130,6 +133,7 @@ namespace V2RayGCon.Models.Datas
 
             // PluginInfoItems = "[{\"filename\":\"ProxySetter\",\"isUse\":true}]";
             PluginInfoItems = string.Empty;
+
             PluginsSetting = string.Empty;
             CompressedPluginsSetting = string.Empty;
             CompressedUnicodePluginsSetting = string.Empty;

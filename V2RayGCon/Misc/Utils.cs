@@ -1294,40 +1294,27 @@ namespace V2RayGCon.Misc
 
         #region files
         internal static bool SerializeToFile(
+            string path,
             Models.Datas.UserSettings userSettings,
-            List<VgcApis.Models.Datas.CoreInfo> coreInfos,
-            string path)
+            List<CoreInfo> coreInfos,
+            Dictionary<string, string> pluginsSetting)
         {
-            const string coreInfoPlaceHolder = @"core infos V中G文C😀！😋。🧡353033a2-3064-486b-8ee0-e3afa622f186";
-            const string pluginPlaceHolder = @"plugins V中G文C😀！😋。🧡179b3c85-f32b-4740-81d0-4473886834a7";
-
-            List<string> parts = new List<string>();
-            lock (userSettings.CompressedUnicodePluginsSetting)
-            {
-                parts = SplitSerializedUserSettings(userSettings,
-                    coreInfoPlaceHolder,
-                    pluginPlaceHolder);
-            }
-
             try
             {
-                if (parts.Count != 5)
+                // for debugging
+                if (coreInfos == null && pluginsSetting == null)
                 {
-                    // backward compactible
                     WriteToFileAtOnce(path, userSettings);
-                }
-                else
-                {
-                    VgcApis.Misc.Utils.ClearFile(path);
-                    WriteToFileInParts(
-                        path,
-                        parts,
-                        coreInfos,
-                        userSettings.CompressedUnicodePluginsSetting,
-                        coreInfoPlaceHolder,
-                        pluginPlaceHolder);
+                    return true;
                 }
 
+                List<string> parts = SplitSerializedUserSettings(userSettings);
+                if (parts.Count != 5)
+                {
+                    return false;
+                }
+                VgcApis.Misc.Utils.ClearFile(path);
+                WriteToFileInParts(path, parts, coreInfos, pluginsSetting);
                 return true;
             }
             catch (Exception e)
@@ -1338,51 +1325,51 @@ namespace V2RayGCon.Misc
         }
 
         // must lock userSettings.CompressedUnicodePluginsSetting first!
-        static List<string> SplitSerializedUserSettings(
-             Models.Datas.UserSettings userSettings,
-             string coreInfoPlaceHolder,
-             string pluginPlaceHolder)
+        static List<string> SplitSerializedUserSettings(Models.Datas.UserSettings userSettings)
         {
-            var parts = new List<string>();
-            var pluginSettings = userSettings.CompressedUnicodePluginsSetting;
-            var coreInfoSettings = userSettings.CompressedUnicodeCoreInfoList;
+            var coreInfoPlaceHolder = VgcApis.Models.Consts.Libs.coreInfoPlaceHolder;
+            var pluginPlaceHolder = VgcApis.Models.Consts.Libs.pluginPlaceHolder;
 
-            userSettings.CompressedUnicodeCoreInfoList = coreInfoPlaceHolder;
             userSettings.CompressedUnicodePluginsSetting = pluginPlaceHolder;
+            userSettings.CompressedUnicodeCoreInfoList = coreInfoPlaceHolder;
+
+            var parts = new List<string>();
             try
             {
-                var str = JsonConvert.SerializeObject(userSettings, Formatting.Indented);
-                if (VgcApis.Misc.Utils.FindAll(str, pluginPlaceHolder).Count == 1)
+                var json = JsonConvert.SerializeObject(userSettings, Formatting.Indented);
+                if (VgcApis.Misc.Utils.FindAll(json, pluginPlaceHolder).Count != 1)
                 {
-                    var option = StringSplitOptions.RemoveEmptyEntries;
-                    var p = str.Split(new string[] { pluginPlaceHolder }, option);
-                    if (p.Length == 2)
-                    {
-                        if (VgcApis.Misc.Utils.FindAll(p[0], coreInfoPlaceHolder).Count == 1)
-                        {
-                            var pp = p[0].Split(new string[] { coreInfoPlaceHolder }, option);
-                            parts.Add(pp[0]);
-                            parts.Add(coreInfoPlaceHolder);
-                            parts.Add(pp[1]);
-                            parts.Add(pluginPlaceHolder);
-                            parts.Add(p[1]);
-                        }
-                        else if (VgcApis.Misc.Utils.FindAll(p[1], coreInfoPlaceHolder).Count == 1)
-                        {
-                            var pp = p[1].Split(new string[] { coreInfoPlaceHolder }, option);
-                            parts.Add(p[0]);
-                            parts.Add(pluginPlaceHolder);
-                            parts.Add(pp[0]);
-                            parts.Add(coreInfoPlaceHolder);
-                            parts.Add(pp[1]);
-                        }
-                    }
+                    return parts;
                 }
+
+                var option = StringSplitOptions.RemoveEmptyEntries;
+                var p = json.Split(new string[] { pluginPlaceHolder }, option);
+                if (p.Length != 2)
+                {
+                    return parts;
+                }
+
+                if (VgcApis.Misc.Utils.FindAll(p[0], coreInfoPlaceHolder).Count == 1)
+                {
+                    var pp = p[0].Split(new string[] { coreInfoPlaceHolder }, option);
+                    parts.Add(pp[0]);
+                    parts.Add(coreInfoPlaceHolder);
+                    parts.Add(pp[1]);
+                    parts.Add(pluginPlaceHolder);
+                    parts.Add(p[1]);
+                }
+                else if (VgcApis.Misc.Utils.FindAll(p[1], coreInfoPlaceHolder).Count == 1)
+                {
+                    var pp = p[1].Split(new string[] { coreInfoPlaceHolder }, option);
+                    parts.Add(p[0]);
+                    parts.Add(pluginPlaceHolder);
+                    parts.Add(pp[0]);
+                    parts.Add(coreInfoPlaceHolder);
+                    parts.Add(pp[1]);
+                }
+
             }
             catch { }
-
-            userSettings.CompressedUnicodeCoreInfoList = coreInfoSettings; // may be not need to recover this property
-            userSettings.CompressedUnicodePluginsSetting = pluginSettings;
             return parts;
         }
 
@@ -1406,20 +1393,16 @@ namespace V2RayGCon.Misc
             string path,
             List<string> parts,
             List<CoreInfo> coreInfos,
-            string pluginsSetting,
-            string coreInfoPlaceHolder,
-            string pluginPlaceHolder)
+            Dictionary<string, string> pluginsSetting)
         {
+            var pluginPlaceHolder = VgcApis.Models.Consts.Libs.pluginPlaceHolder;
+            var coreInfoPlaceHolder = VgcApis.Models.Consts.Libs.coreInfoPlaceHolder;
 
             foreach (var part in parts)
             {
                 if (part == pluginPlaceHolder)
                 {
-                    using (var writer = File.AppendText(path))
-                    {
-                        writer.Write(pluginsSetting);
-                    }
-
+                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectAsCompressedUnicodeBase64StringToFile(path, pluginsSetting);
                 }
                 else if (part == coreInfoPlaceHolder)
                 {
@@ -1432,20 +1415,20 @@ namespace V2RayGCon.Misc
                         writer.Write(part);
                     }
                 }
-
             }
         }
 
         internal static bool ClumsyWriter(
             Models.Datas.UserSettings userSettings,
             List<VgcApis.Models.Datas.CoreInfo> coreInfos,
+            Dictionary<string, string> pluginsSetting,
             string mainFilename, string bakFilename)
         {
             try
             {
-                if (SerializeToFile(userSettings, coreInfos, mainFilename))
+                if (SerializeToFile(mainFilename, userSettings, coreInfos, pluginsSetting))
                 {
-                    if (SerializeToFile(userSettings, coreInfos, bakFilename))
+                    if (SerializeToFile(bakFilename, userSettings, coreInfos, pluginsSetting))
                     {
                         return true;
                     }

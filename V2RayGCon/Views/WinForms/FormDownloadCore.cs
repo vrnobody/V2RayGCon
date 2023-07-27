@@ -40,7 +40,6 @@ namespace V2RayGCon.Views.WinForms
             this.FormClosed += (s, e) =>
             {
                 downloader?.Cleanup();
-                setting.LazyGC();
             };
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);

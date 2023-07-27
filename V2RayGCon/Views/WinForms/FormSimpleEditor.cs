@@ -44,11 +44,6 @@ namespace V2RayGCon.Views.WinForms
             slinkMgr = Services.ShareLinkMgr.Instance;
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);
-
-            this.FormClosed += (s, a) =>
-            {
-                setting.LazyGC();
-            };
         }
 
         private void FormSimpleEditor_Load(object sender, EventArgs e)

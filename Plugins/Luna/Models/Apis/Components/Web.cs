@@ -144,6 +144,26 @@ namespace Luna.Models.Apis.Components
         public int UpdateSubscriptions(int proxyPort) =>
             vgcSlinkMgr.UpdateSubscriptions(proxyPort);
 
+        public List<string> ExtractAllShareLinks(string text)
+        {
+            var formats = new VgcApis.Models.Datas.Enums.LinkTypes[]
+            {
+                VgcApis.Models.Datas.Enums.LinkTypes.ss,
+                VgcApis.Models.Datas.Enums.LinkTypes.trojan,
+                VgcApis.Models.Datas.Enums.LinkTypes.v,
+                VgcApis.Models.Datas.Enums.LinkTypes.v2cfg,
+                VgcApis.Models.Datas.Enums.LinkTypes.vless,
+                VgcApis.Models.Datas.Enums.LinkTypes.vmess,
+            };
+
+            var r = new List<string>();
+            foreach (var format in formats)
+            {
+                r.AddRange(vgcWeb.ExtractLinks(text, format));
+            }
+            return r;
+        }
+
         public List<string> ExtractV2cfgLinks(string text) =>
             vgcWeb.ExtractLinks(
                 text, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);

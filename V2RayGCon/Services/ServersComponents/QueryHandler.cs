@@ -9,41 +9,53 @@ namespace V2RayGCon.Services.ServersComponents
     class QueryHandler
     {
         ReaderWriterLockSlim locker;
-        List<Controllers.CoreServerCtrl> coreServList;
+        Dictionary<string, Controllers.CoreServerCtrl> coreServCache;
 
         public QueryHandler(
             ReaderWriterLockSlim locker,
-            List<Controllers.CoreServerCtrl> coreServList)
+            Dictionary<string, Controllers.CoreServerCtrl> coreServList)
         {
             this.locker = locker;
-            this.coreServList = coreServList;
+            this.coreServCache = coreServList;
         }
 
         #region public methods
         public List<ICoreServCtrl> GetRunningServers()
         {
-            return AtomicReader(() => coreServList
-                .Where(s => s.GetCoreCtrl().IsCoreRunning())
+            return AtomicReader(() => coreServCache
+                .Where(kv => kv.Value.GetCoreCtrl().IsCoreRunning())
+                .Select(kv => kv.Value as ICoreServCtrl)
                 .OrderBy(s => s.GetCoreStates().GetIndex())
-                .Select(s => s as ICoreServCtrl)
                 .ToList());
         }
 
         public List<ICoreServCtrl> GetAllServersOrderByIndex()
         {
-            return AtomicReader(() => coreServList
+            return AtomicReader(() => coreServCache
+                .Select(kv => kv.Value as ICoreServCtrl)
                 .OrderBy(s => s.GetCoreStates().GetIndex())
-                .Select(s => s as ICoreServCtrl)
                 .ToList());
         }
 
         public List<ICoreServCtrl> GetServersByUids(IEnumerable<string> uids)
         {
-            var set = new HashSet<string>(uids);
-            return AtomicReader(() => coreServList
-                .Where(cs => set.Contains(cs.GetCoreStates().GetUid()))
-                .Select(cs => cs as ICoreServCtrl)
-                .ToList());
+            var r = new List<ICoreServCtrl>();
+            locker.EnterReadLock();
+            try
+            {
+                foreach (var uid in uids)
+                {
+                    if (!string.IsNullOrEmpty(uid) && coreServCache.TryGetValue(uid, out var coreServ))
+                    {
+                        r.Add(coreServ);
+                    }
+                }
+            }
+            finally
+            {
+                locker.ExitReadLock();
+            }
+            return r;
         }
 
         public List<ICoreServCtrl> GetSelectedServers(
@@ -51,14 +63,14 @@ namespace V2RayGCon.Services.ServersComponents
         {
             return AtomicReader(() =>
             {
-                var list = coreServList.Where(s => s.GetCoreStates().IsSelected());
+                var list = coreServCache.Where(kv => kv.Value.GetCoreStates().IsSelected());
 
                 var orderedList = descending ?
-                    list.OrderByDescending(s => s.GetCoreStates().GetIndex()) :
-                    list.OrderBy(s => s.GetCoreStates().GetIndex());
+                    list.OrderByDescending(kv => kv.Value.GetCoreStates().GetIndex()) :
+                    list.OrderBy(kv => kv.Value.GetCoreStates().GetIndex());
 
                 return orderedList
-                    .Select(s => s as ICoreServCtrl)
+                    .Select(kv => kv.Value as ICoreServCtrl)
                     .ToList();
             });
         }
@@ -66,9 +78,9 @@ namespace V2RayGCon.Services.ServersComponents
         public List<ICoreServCtrl> GetTrackableServerList()
         {
             return AtomicReader(
-                () => coreServList
-                .Where(s => s.GetCoreCtrl().IsCoreRunning() && !s.GetCoreStates().IsUntrack())
-                .Select(s => s as ICoreServCtrl)
+                () => coreServCache
+                .Where(kv => kv.Value.GetCoreCtrl().IsCoreRunning() && !kv.Value.GetCoreStates().IsUntrack())
+                .Select(kv => kv.Value as ICoreServCtrl)
                 .ToList());
         }
 

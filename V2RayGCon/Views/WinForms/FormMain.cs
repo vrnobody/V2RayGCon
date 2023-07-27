@@ -282,7 +282,6 @@ namespace V2RayGCon.Views.WinForms
             setting.OnPortableModeChanged -= UpdateFormTitle;
             formMainCtrl?.Cleanup();
             setting.SaveFormRect(this);
-            setting.LazyGC();
         }
         #endregion
     }

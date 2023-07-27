@@ -1,4 +1,6 @@
-﻿namespace VgcApis.Interfaces.Services
+﻿using System.Collections.Generic;
+
+namespace VgcApis.Interfaces.Services
 {
     public interface IShareLinkMgrService
     {

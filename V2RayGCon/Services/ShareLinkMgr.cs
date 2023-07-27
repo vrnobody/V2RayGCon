@@ -45,8 +45,9 @@ namespace V2RayGCon.Services
                 case VgcApis.Models.Datas.Enums.LinkTypes.trojan:
                     return codecs.Decode<ShareLinkComponents.TrojanDecoder>(shareLink);
                 default:
-                    return null;
+                    break;
             }
+            return null;
         }
 
         /// <summary>
@@ -78,7 +79,7 @@ namespace V2RayGCon.Services
 
         #region public methods
         public T GetCodec<T>()
-            where T : VgcApis.BaseClasses.ComponentOf<ShareLinkComponents.Codecs>
+          where T : VgcApis.BaseClasses.ComponentOf<ShareLinkComponents.Codecs>
         {
             return codecs.GetChild<T>();
         }

@@ -40,7 +40,6 @@ namespace V2RayGCon.Views.WinForms
             this.FormClosed += (s, a) =>
             {
                 optionCtrl.Cleanup();
-                Services.Settings.Instance.LazyGC();
             };
         }
 

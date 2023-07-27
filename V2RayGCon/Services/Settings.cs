@@ -20,7 +20,7 @@ namespace V2RayGCon.Services
     {
         Models.Datas.UserSettings userSettings;
 
-        VgcApis.Libs.Tasks.LazyGuy janitor, lazyBookKeeper;
+        VgcApis.Libs.Tasks.LazyGuy lazyBookKeeper;
 
         readonly object saveUserSettingsLocker = new object();
 
@@ -42,14 +42,6 @@ namespace V2RayGCon.Services
 
             UpdateSpeedTestPool();
             UpdateFileLoggerSetting();
-
-            janitor = new VgcApis.Libs.Tasks.LazyGuy(
-                () => GC.Collect(),
-                VgcApis.Models.Consts.Intervals.LazyGcDelay,
-                5000)
-            {
-                Name = "Settings.GC()",
-            };
 
             lazyBookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveUserSettingsWorker,
@@ -729,15 +721,8 @@ namespace V2RayGCon.Services
 
         public void SaveUserSettingsNow() => SaveUserSettingsWorker();
 
-        public void LazyGC() => janitor?.Deadline();
-
         public void SaveServerTrackerSetting(Models.Datas.ServerTracker serverTrackerSetting)
         {
-            if (!isServerTrackerOn)
-            {
-                serverTrackerSetting = new Models.Datas.ServerTracker();
-                serverTrackerSetting.isTrackerOn = false;
-            }
             userSettings.ServerTracker = JsonConvert.SerializeObject(serverTrackerSetting);
             SaveSettingsLater();
         }
@@ -751,9 +736,11 @@ namespace V2RayGCon.Services
                 result = JsonConvert
                     .DeserializeObject<Models.Datas.ServerTracker>(
                         userSettings.ServerTracker);
-                if (result != null && result.serverList == null)
+
+                if (result != null)
                 {
-                    result.serverList = new List<string>();
+                    result.serverList = result.serverList ?? new List<string>();
+                    result.uids = result.uids ?? new List<string>();
                 }
             }
             catch
@@ -1246,7 +1233,6 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.FileLogger.Info("Settings.Cleanup() begin");
             lazyBookKeeper?.Dispose();
             SaveUserSettingsNow();
-            janitor?.Dispose();
             qLogger.Dispose();
             VgcApis.Libs.Sys.FileLogger.Info("Settings.Cleanup() done");
         }

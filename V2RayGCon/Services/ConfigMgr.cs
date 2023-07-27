@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using V2RayGCon.Resources.Resx;
@@ -254,74 +255,6 @@ namespace V2RayGCon.Services
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// update running servers list
-        /// </summary>
-        /// <param name="includeCurServer"></param>
-        public Models.Datas.ServerTracker GenCurTrackerSetting(
-            IEnumerable<Controllers.CoreServerCtrl> servers,
-            string curServerConfig,
-            bool isStart)
-        {
-            var trackerSetting = setting.GetServerTrackerSetting();
-            var tracked = trackerSetting.serverList;
-
-            var running = servers
-                .Where(s => s.GetCoreCtrl().IsCoreRunning()
-                    && !s.GetCoreStates().IsUntrack())
-                .Select(s => s.GetConfiger().GetConfig())
-                .ToList();
-
-            tracked.RemoveAll(c => !running.Any(r => r == c));  // remove stopped
-            running.RemoveAll(r => tracked.Any(t => t == r));
-            tracked.AddRange(running);
-            tracked.Remove(curServerConfig);
-
-            if (isStart)
-            {
-                trackerSetting.curServer = curServerConfig;
-            }
-            else
-            {
-                trackerSetting.curServer = null;
-            }
-
-            trackerSetting.serverList = tracked;
-            return trackerSetting;
-        }
-
-        public List<Controllers.CoreServerCtrl> GenServersBootList(
-            IEnumerable<Controllers.CoreServerCtrl> serverList)
-        {
-            var trackerSetting = setting.GetServerTrackerSetting();
-            if (!trackerSetting.isTrackerOn)
-            {
-                return serverList.Where(s => s.GetCoreStates().IsAutoRun()).ToList();
-            }
-
-            setting.isServerTrackerOn = true;
-            var trackList = trackerSetting.serverList;
-
-            var bootList = serverList
-                .Where(s => s.GetCoreStates().IsAutoRun()
-                || trackList.Contains(s.GetConfiger().GetConfig()))
-                .ToList();
-
-            if (string.IsNullOrEmpty(trackerSetting.curServer))
-            {
-                return bootList;
-            }
-
-            bootList.RemoveAll(s => s.GetConfiger().GetConfig() == trackerSetting.curServer);
-            var lastServer = serverList.FirstOrDefault(
-                    s => s.GetConfiger().GetConfig() == trackerSetting.curServer);
-            if (lastServer != null && !lastServer.GetCoreStates().IsUntrack())
-            {
-                bootList.Insert(0, lastServer);
-            }
-            return bootList;
         }
 
         public JObject GenV4ServersPackageConfig(

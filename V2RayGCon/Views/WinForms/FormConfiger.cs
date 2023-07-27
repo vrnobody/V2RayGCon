@@ -107,7 +107,6 @@ namespace V2RayGCon.Views.WinForms
                 configer.Cleanup();
                 editor?.Dispose();
                 setting.SaveFormRect(this);
-                setting.LazyGC();
             };
         }
 

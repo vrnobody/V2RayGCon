@@ -25,6 +25,8 @@ namespace VgcApis.Interfaces.Lua
         /// <returns>Base64编码的内容</returns>
         List<string> ExtractBase64String(string text);
 
+        List<string> ExtractAllShareLinks(string text);
+
         /// <summary>
         /// 从字符串中提取出全部v2cfg://...链接
         /// </summary>

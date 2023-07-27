@@ -443,6 +443,8 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="mark">标记</param>
         /// <returns>成功导入的链接数</returns>
         int ImportLinks(string links, string mark);
+
+
         #endregion
     }
 }

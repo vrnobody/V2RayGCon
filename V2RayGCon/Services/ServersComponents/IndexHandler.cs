@@ -8,14 +8,14 @@ namespace V2RayGCon.Services.ServersComponents
     internal sealed class IndexHandler
     {
         ReaderWriterLockSlim locker;
-        List<Controllers.CoreServerCtrl> coreServList;
+        Dictionary<string, Controllers.CoreServerCtrl> coreServCache;
 
         public IndexHandler(
             ReaderWriterLockSlim locker,
-            List<Controllers.CoreServerCtrl> coreServList)
+            Dictionary<string, Controllers.CoreServerCtrl> coreServList)
         {
             this.locker = locker;
-            this.coreServList = coreServList;
+            this.coreServCache = coreServList;
         }
 
         #region properties
@@ -59,67 +59,51 @@ namespace V2RayGCon.Services.ServersComponents
             SortServerItemList(ref coreList, SummaryComparer);
         }
 
+        public void ResetIndex() => ResetIndexWorker(false);
 
-        public void ResetIndex()
-        {
-            var pkgs = new List<Tuple<double, VgcApis.Interfaces.CoreCtrlComponents.ICoreStates>>();
+        public void ResetIndexQuiet() => ResetIndexWorker(true);
 
-            locker.EnterReadLock();
-            try
-            {
-                List<VgcApis.Interfaces.CoreCtrlComponents.ICoreStates> coreStates = coreServList
-                   .OrderBy(c => c.GetCoreStates().GetIndex())
-                   .Select(c => c.GetCoreStates())
-                   .ToList();
-                double idx = 0;
-                foreach (var coreState in coreStates)
-                {
-                    var pkg = new Tuple<double, VgcApis.Interfaces.CoreCtrlComponents.ICoreStates>(++idx, coreState);
-                    pkgs.Add(pkg);
-                }
-            }
-            finally
-            {
-                locker.ExitReadLock();
-            }
-
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                foreach (var pkg in pkgs)
-                {
-                    var coreState = pkg.Item2;
-                    var idx = pkg.Item1;
-                    coreState.SetIndex(idx);
-                }
-            });
-        }
-
-        public void ResetIndexQuiet()
-        {
-            List<Controllers.CoreServerCtrl> sortedServers = new List<Controllers.CoreServerCtrl>();
-            locker.EnterReadLock();
-            try
-            {
-                sortedServers = coreServList
-                    .OrderBy(c => c.GetCoreStates().GetIndex())
-                    .ToList();
-            }
-            finally
-            {
-                locker.ExitReadLock();
-            }
-
-            for (int i = 0; i < sortedServers.Count(); i++)
-            {
-                var index = i + 1.0; // closure
-                sortedServers[i]
-                    .GetCoreStates()
-                    .SetIndexQuiet(index);
-            }
-        }
         #endregion
 
         #region private methods
+        void ResetIndexWorker(bool isQuiet)
+        {
+            var pkgs = new List<VgcApis.Interfaces.CoreCtrlComponents.ICoreStates>();
+
+            locker.EnterReadLock();
+            try
+            {
+                pkgs = coreServCache
+                   .OrderBy(kv => kv.Value.GetCoreStates().GetIndex())
+                   .Select(kv => kv.Value.GetCoreStates())
+                   .ToList();
+            }
+            finally
+            {
+                locker.ExitReadLock();
+            }
+
+            Action quiet = () =>
+            {
+                double idx = 0;
+                foreach (var pkg in pkgs)
+                {
+                    pkg.SetIndexQuiet(++idx);
+                }
+            };
+
+            Action notify = () =>
+            {
+                double idx = 0;
+                foreach (var pkg in pkgs)
+                {
+                    pkg.SetIndex(++idx);
+                }
+            };
+
+            VgcApis.Misc.Utils.RunInBackground(isQuiet ? quiet : notify);
+        }
+
         int ReverseIndexComparer(
            VgcApis.Interfaces.ICoreServCtrl a,
            VgcApis.Interfaces.ICoreServCtrl b)

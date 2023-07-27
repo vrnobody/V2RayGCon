@@ -166,8 +166,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             {
                 trackerSetting.isTrackerOn = keepTracking;
                 setting.isServerTrackerOn = keepTracking;
-                setting.SaveServerTrackerSetting(trackerSetting);
-                servers.OnAutoTrackingOptionChanged();
+                servers.UpdateServerTrackerSettings(keepTracking);
             }
 
             setting.QuickSwitchServerLantency = VgcApis.Misc.Utils.Str2Int(cboxRandomSelectServerLatency.Text);

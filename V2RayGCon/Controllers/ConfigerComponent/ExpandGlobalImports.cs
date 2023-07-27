@@ -122,8 +122,6 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 string result = ParseConfig(plainText);
-                setting.LazyGC();
-
                 VgcApis.Misc.UI.Invoke(() => content = result);
             });
         }

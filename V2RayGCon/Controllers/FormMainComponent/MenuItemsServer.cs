@@ -93,7 +93,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         #region private method
         void ClearSelectedServersStatRecord()
         {
-            var servs = servers.GetSelectedServers(false);
+            var servs = servers.GetSelectedServers();
 
             foreach (var serv in servs)
             {
@@ -104,7 +104,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
         void ClearSelectedServersSpeedTestResults()
         {
-            var servs = servers.GetSelectedServers(false);
+            var servs = servers.GetSelectedServers();
 
             foreach (var serv in servs)
             {
@@ -315,7 +315,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void SetServerItemsIndex(double index)
         {
-            servers.GetSelectedServers(false)
+            servers.GetSelectedServers()
                 .Select(s =>
                 {
                     s.GetCoreStates().SetIndex(index);

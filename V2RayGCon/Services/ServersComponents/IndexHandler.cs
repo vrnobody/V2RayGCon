@@ -59,21 +59,19 @@ namespace V2RayGCon.Services.ServersComponents
             SortServerItemList(ref coreList, SummaryComparer);
         }
 
-        public void ResetIndex() => ResetIndexWorker(false);
-
-        public void ResetIndexQuiet() => ResetIndexWorker(true);
+        public void ResetIndex(bool isQuiet) => ResetIndexWorker(isQuiet);
 
         #endregion
 
         #region private methods
         void ResetIndexWorker(bool isQuiet)
         {
-            var pkgs = new List<VgcApis.Interfaces.CoreCtrlComponents.ICoreStates>();
+            var coreServs = new List<VgcApis.Interfaces.CoreCtrlComponents.ICoreStates>();
 
             locker.EnterReadLock();
             try
             {
-                pkgs = coreServCache
+                coreServs = coreServCache
                    .OrderBy(kv => kv.Value.GetCoreStates().GetIndex())
                    .Select(kv => kv.Value.GetCoreStates())
                    .ToList();
@@ -86,16 +84,16 @@ namespace V2RayGCon.Services.ServersComponents
             Action quiet = () =>
             {
                 double idx = 0;
-                foreach (var pkg in pkgs)
+                foreach (var coreServ in coreServs)
                 {
-                    pkg.SetIndexQuiet(++idx);
+                    coreServ.SetIndexQuiet(++idx);
                 }
             };
 
             Action notify = () =>
             {
                 double idx = 0;
-                foreach (var pkg in pkgs)
+                foreach (var pkg in coreServs)
                 {
                     pkg.SetIndex(++idx);
                 }
@@ -105,8 +103,8 @@ namespace V2RayGCon.Services.ServersComponents
         }
 
         int ReverseIndexComparer(
-           VgcApis.Interfaces.ICoreServCtrl a,
-           VgcApis.Interfaces.ICoreServCtrl b)
+            VgcApis.Interfaces.ICoreServCtrl a,
+            VgcApis.Interfaces.ICoreServCtrl b)
         {
             var idxA = a.GetCoreStates().GetIndex();
             var idxB = b.GetCoreStates().GetIndex();
@@ -186,7 +184,7 @@ namespace V2RayGCon.Services.ServersComponents
             {
                 locker.ExitWriteLock();
             }
-            ResetIndexQuiet();
+            ResetIndexWorker(true);
         }
         #endregion
 

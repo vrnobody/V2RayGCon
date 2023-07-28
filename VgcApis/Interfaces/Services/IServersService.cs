@@ -97,6 +97,6 @@ namespace VgcApis.Interfaces.Services
 
         List<ICoreServCtrl> GetServersByUidsOrderByIndex(IEnumerable<string> uids);
 
-        List<ICoreServCtrl> GetSelectedServers(bool descending = false);
+        List<ICoreServCtrl> GetSelectedServers();
     }
 }

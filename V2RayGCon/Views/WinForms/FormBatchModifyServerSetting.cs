@@ -45,7 +45,10 @@ namespace V2RayGCon.Views.WinForms
             this.cboxMark.Items.Clear();
             cboxMark.Items.AddRange(servers.GetMarkList());
 
-            var firstCtrl = servers.GetSelectedServers(false).FirstOrDefault();
+            var firstCtrl = servers.GetSelectedServers()
+                .OrderBy(s => s.GetCoreStates().GetIndex())
+                .FirstOrDefault();
+
             if (firstCtrl == null)
             {
                 return;
@@ -86,7 +89,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void btnModify_Click(object sender, EventArgs e)
         {
-            var list = servers.GetSelectedServers(false);
+            var list = servers.GetSelectedServers();
 
             var newMode = chkInMode.Checked ? cboxInMode.SelectedIndex : -1;
             var newIP = chkInIP.Checked ? tboxInIP.Text : null;
@@ -97,7 +100,6 @@ namespace V2RayGCon.Views.WinForms
             var newSkipCN = chkIsInjectSkipCNSite.Checked ? cboxIsInjectSkipCNSite.SelectedIndex : -1;
             var isPortAutoIncrease = chkIncrement.Checked;
             var newRemark = chkRemark.Checked ? tboxRemark.Text : null;
-
 
             ModifyServersSetting(
                 list,

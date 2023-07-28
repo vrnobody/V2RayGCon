@@ -81,9 +81,9 @@ namespace V2RayGCon.Services
         }
 
         #region sort
-        public void ResetIndex() => indexHandler.ResetIndex();
+        public void ResetIndex() => indexHandler.ResetIndex(false);
 
-        public void ResetIndexQuiet() => indexHandler.ResetIndexQuiet();
+        public void ResetIndexQuiet() => indexHandler.ResetIndex(true);
 
         public void ReverseSelectedByIndex()
         {
@@ -155,14 +155,14 @@ namespace V2RayGCon.Services
         #endregion
 
         #region querys
-        public List<ICoreServCtrl> GetSelectedServers(bool descending = false) =>
-            queryHandler.GetSelectedServers(descending);
+        public List<ICoreServCtrl> GetSelectedServers() =>
+            queryHandler.GetSelectedServers();
 
         public List<ICoreServCtrl> GetRunningServers() =>
             queryHandler.GetRunningServers();
 
         public List<ICoreServCtrl> GetAllServersOrderByIndex() =>
-            queryHandler.GetAllServersOrderByIndex();
+            queryHandler.GetAllServers(false);
 
         public List<ICoreServCtrl> GetServersByUidsOrderByIndex(IEnumerable<string> uids) =>
             queryHandler.GetServersByUids(uids)
@@ -369,22 +369,8 @@ namespace V2RayGCon.Services
 
         public void RestartServersWithImportMark()
         {
-            var list = new List<Controllers.CoreServerCtrl>();
-
-            locker.EnterReadLock();
-            try
-            {
-                list = coreServCache
-                    .Where(kv => kv.Value.GetCoreStates().IsInjectGlobalImport() && kv.Value.GetCoreCtrl().IsCoreRunning())
-                    .Select(kv => kv.Value)
-                    .OrderBy(s => s.GetCoreStates().GetIndex())
-                    .ToList();
-            }
-            finally
-            {
-                locker.ExitReadLock();
-            }
-
+            var list = queryHandler.GetServers(
+                kv => kv.Value.GetCoreStates().IsInjectGlobalImport() && kv.Value.GetCoreCtrl().IsCoreRunning());
             RestartServersThen(list);
         }
 
@@ -432,7 +418,7 @@ namespace V2RayGCon.Services
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
             VgcApis.Models.Datas.Enums.PackageTypes packageType)
         {
-            var servList = queryHandler.GetSelectedServers();
+            var servList = GetSelectedServers();
             return PackServersIntoV4PackageWorker(
                 servList, orgUid, pkgName, interval, url, strategy, packageType);
         }
@@ -513,25 +499,22 @@ namespace V2RayGCon.Services
         }
 
         public void RestartServersThen(
-            IEnumerable<VgcApis.Interfaces.ICoreServCtrl> servers,
+            List<VgcApis.Interfaces.ICoreServCtrl> coreServs,
             Action done = null)
         {
-            var list = new List<VgcApis.Interfaces.ICoreServCtrl>();
-            locker.EnterReadLock();
-            try
-            {
-                list = servers.ToList();
-            }
-            finally
-            {
-                locker.ExitReadLock();
-            }
             void worker(int index, Action next)
             {
-                list[index].GetCoreCtrl().RestartCoreThen(next);
+                var coreServ = coreServs[index];
+                if (coreServ == null)
+                {
+                    next();
+                }
+                else
+                {
+                    coreServ.GetCoreCtrl().RestartCoreThen(next);
+                }
             }
-
-            Misc.Utils.ChainActionHelperAsync(list.Count, worker, done);
+            Misc.Utils.ChainActionHelperAsync(coreServs.Count, worker, done);
         }
 
         public void WakeupServersInBootList()
@@ -570,49 +553,22 @@ namespace V2RayGCon.Services
 
         public void StopAllServers()
         {
-            List<Controllers.CoreServerCtrl> list;
-
-            locker.EnterReadLock();
-            try
+            var coreServs = GetRunningServers();
+            foreach (var coreServ in coreServs)
             {
-                list = coreServCache.Where(kv => kv.Value.GetCoreCtrl().IsCoreRunning())
-                    .Select(kv => kv.Value)
-                    .ToList();
-            }
-            finally
-            {
-                locker.ExitReadLock();
-            }
-
-            foreach (var serv in list)
-            {
-                serv.GetCoreCtrl().StopCore();
+                coreServ.GetCoreCtrl().StopCore();
             }
         }
 
         public void RestartOneServerByUid(string uid)
         {
             StopAllServers();
-            Controllers.CoreServerCtrl coreServ = null;
-            locker.EnterReadLock();
-            try
-            {
-                if (coreServCache.ContainsKey(uid))
-                {
-                    coreServ = coreServCache[uid];
-                }
-            }
-            finally
-            {
-                locker.ExitReadLock();
-            }
-
-            coreServ?.GetCoreCtrl().RestartCore();
+            queryHandler.GetServersByUid(uid)?.GetCoreCtrl().RestartCore();
         }
 
         public void StopAllServersThen(Action lambda = null)
         {
-            var list = queryHandler.GetRunningServers();
+            var list = GetRunningServers();
             void worker(int index, Action next)
             {
                 list[index].GetCoreCtrl().StopCoreThen(next);
@@ -633,15 +589,15 @@ namespace V2RayGCon.Services
             {
                 foreach (var uid in uids)
                 {
-                    if (!coreServCache.ContainsKey(uid))
+                    if (!string.IsNullOrEmpty(uid)
+                        && coreServCache.TryGetValue(uid, out var coreServ)
+                        && coreServ != null)
                     {
-                        continue;
+                        var cfg = coreServ.GetConfiger().GetConfig();
+                        configCache.TryRemove(cfg, out _);
+                        coreServCache.Remove(uid);
+                        coreServs.Add(coreServ);
                     }
-                    var coreServ = coreServCache[uid];
-                    var cfg = coreServ.GetConfiger().GetConfig();
-                    configCache.TryRemove(cfg, out _);
-                    coreServCache.Remove(uid);
-                    coreServs.Add(coreServ);
                 }
             }
             finally
@@ -665,7 +621,7 @@ namespace V2RayGCon.Services
 
         public int DeleteSelectedServers()
         {
-            List<string> uids = queryHandler.GetSelectedServers()
+            List<string> uids = GetSelectedServers()
                     .Select(s => s.GetCoreStates().GetUid())
                     .ToList();
             return DeleteServerByUids(uids);
@@ -674,13 +630,14 @@ namespace V2RayGCon.Services
         public void DeleteAllServers()
         {
             setting.isSpeedtestCancelled = true;
+            var servs = queryHandler.GetAllServers();
 
-            List<ICoreServCtrl> servs = GetAllServersOrderByIndex(); ;
             locker.EnterWriteLock();
             try
             {
                 configCache.Clear();
                 coreServCache.Clear();
+                selectedServersCountCache = 0;
             }
             finally
             {
@@ -703,21 +660,15 @@ namespace V2RayGCon.Services
 
         public void UpdateAllServersSummary()
         {
-            var list = GetAllServersOrderByIndex(); // clone
+            var list = queryHandler.GetAllServers(); // clone
             foreach (var core in list)
             {
                 try
                 {
                     core.GetConfiger().UpdateSummary();
-                    if (core.GetCoreStates().GetLastModifiedUtcTicks() == 0)
-                    {
-                        var utcTicks = DateTime.UtcNow.Ticks;
-                        core.GetCoreStates().SetLastModifiedUtcTicks(utcTicks);
-                    }
                 }
                 catch { }
             }
-
             RequireFormMainReload();
             InvokeEventOnServerPropertyChange(this, EventArgs.Empty);
         }
@@ -762,6 +713,7 @@ namespace V2RayGCon.Services
                 config = config,
                 customMark = mark,
                 uid = Guid.NewGuid().ToString(),
+                lastModifiedUtcTicks = DateTime.UtcNow.Ticks,
             };
 
             var newServer = new Controllers.CoreServerCtrl(coreInfo);
@@ -814,7 +766,7 @@ namespace V2RayGCon.Services
             locker.EnterReadLock();
             try
             {
-                if (configCache.TryGetValue(orgConfig, out uid))
+                if (configCache.TryGetValue(orgConfig, out uid) && !string.IsNullOrEmpty(uid))
                 {
                     coreServCache.TryGetValue(uid, out coreServ);
                 }
@@ -941,23 +893,10 @@ namespace V2RayGCon.Services
             setting.SaveServerList(coreInfoList);
         }
 
-        private List<VgcApis.Models.Datas.CoreInfo> GetAllCoreInfos()
-        {
-            List<VgcApis.Models.Datas.CoreInfo> infos;
-            locker.EnterReadLock();
-            try
-            {
-                infos = coreServCache
-                   .Select(kv => kv.Value.GetCoreStates().GetAllRawCoreInfo())
-                   .ToList();
-            }
-            finally
-            {
-                locker.ExitReadLock();
-            }
-
-            return infos;
-        }
+        private List<VgcApis.Models.Datas.CoreInfo> GetAllCoreInfos() =>
+             queryHandler.GetAllServers()
+                .Select(s => s.GetCoreStates().GetAllRawCoreInfo())
+                .ToList();
 
         void SortServers(List<ICoreServCtrl> coreServs, Action<List<ICoreServCtrl>> sorter)
         {
@@ -969,7 +908,7 @@ namespace V2RayGCon.Services
 
         void SortSelectedServers(Action<List<ICoreServCtrl>> sorter)
         {
-            var selectedServers = queryHandler.GetSelectedServers();
+            var selectedServers = GetSelectedServers();
             SortServers(selectedServers, sorter);
         }
 
@@ -1120,7 +1059,7 @@ namespace V2RayGCon.Services
 #if DEBUG
         public void DbgFastRestartTest(int round)
         {
-            var list = GetAllServersOrderByIndex();
+            var list = queryHandler.GetAllServers();
 
             var count = list.Count;
             VgcApis.Misc.Utils.RunInBackground(() =>

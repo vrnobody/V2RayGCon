@@ -257,19 +257,13 @@ namespace V2RayGCon.Services
             VgcApis.Interfaces.IShareLinkDecoder decoder)
         {
             var links = decoder.ExtractLinksFromText(text);
-
-            // Do not use ExecuteInParallel here!
-            // Because server's order may changes!
-
-            var results = new List<string[]>();
-            foreach (var link in links)
-            {
-                var decodedConfig = codecs.Decode(link, decoder);
-                var msg = AddLinkToServerList(mark, decodedConfig);
-                var result = GenImportResult(link, msg.Item1, msg.Item2, mark);
-                results.Add(result);
-            }
-
+            var results = links.AsParallel().AsOrdered()
+                .Select(link =>
+                {
+                    var formatedConfig = codecs.Decode(link, decoder);
+                    var msg = AddLinkToServerList(mark, formatedConfig);
+                    return GenImportResult(link, msg.Item1, msg.Item2, mark);
+                }).ToList();
             return results;
         }
 
@@ -280,13 +274,13 @@ namespace V2RayGCon.Services
 
         private Tuple<bool, string> AddLinkToServerList(
             string mark,
-            string decodedConfig)
+            string formatedConfig)
         {
-            if (string.IsNullOrEmpty(decodedConfig))
+            if (string.IsNullOrEmpty(formatedConfig))
             {
                 return new Tuple<bool, string>(false, I18N.DecodeFail);
             }
-            var ok = servers.AddServer(decodedConfig, mark, true);
+            var ok = servers.AddServerWithFormatedConfig(formatedConfig, mark, true);
             var reason = ok ? I18N.Success : I18N.DuplicateServer;
             return new Tuple<bool, string>(ok, reason);
         }

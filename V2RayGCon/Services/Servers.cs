@@ -676,6 +676,7 @@ namespace V2RayGCon.Services
         public bool DeleteServerByConfig(string config, bool isQuiet)
         {
             config = VgcApis.Misc.Utils.FormatConfig(config);
+
             if (configCache.TryGetValue(config, out var uid) && !string.IsNullOrEmpty(uid))
             {
                 return DeleteServerByUids(new List<string>() { uid }) == 1;
@@ -688,17 +689,74 @@ namespace V2RayGCon.Services
             return false;
         }
 
-        public bool IsServerExist(string config) => IsServerExistWorker(config);
+        public VgcApis.Interfaces.ICoreServCtrl GetServerByUid(string uid)
+        {
+            if (!string.IsNullOrEmpty(uid) && coreServCache.TryGetValue(uid, out var coreServ))
+            {
+                return coreServ;
+            }
+            return null;
+        }
+
+        public bool IsServerExist(string config)
+        {
+            config = VgcApis.Misc.Utils.FormatConfig(config);
+            return IsFormatedConfigInCache(config);
+        }
 
         public bool AddServer(string config, string mark, bool quiet = false)
+        {
+            config = VgcApis.Misc.Utils.FormatConfig(config);
+            return AddServerWithFormatedConfig(config, mark, quiet);
+        }
+
+        public bool ReplaceServerConfig(string orgConfig, string newConfig)
+        {
+            orgConfig = VgcApis.Misc.Utils.FormatConfig(orgConfig);
+            newConfig = VgcApis.Misc.Utils.FormatConfig(newConfig);
+            return ReplaceServerWithFormatedConfig(orgConfig, newConfig);
+        }
+
+        public ICoreServCtrl GetServerByConfig(string config)
+        {
+            config = VgcApis.Misc.Utils.FormatConfig(config);
+            return GetServerByFormatedConfig(config);
+        }
+
+        public string ReplaceOrAddNewServer(string orgUid, string newConfig) =>
+            ReplaceOrAddNewServer(orgUid, newConfig, @"");
+
+        public string ReplaceOrAddNewServer(string orgUid, string newConfig, string mark)
+        {
+            newConfig = VgcApis.Misc.Utils.FormatConfig(newConfig);
+            if (!string.IsNullOrEmpty(orgUid) && coreServCache.TryGetValue(orgUid, out var coreServ))
+            {
+                var oldConfig = coreServ.GetConfiger().GetConfig();
+
+                ReplaceServerWithFormatedConfig(oldConfig, newConfig);
+                return orgUid;
+            }
+
+            AddServerWithFormatedConfig(newConfig, mark);
+            if (configCache.TryGetValue(newConfig, out var uid))
+            {
+                return uid;
+            }
+            return string.Empty;
+        }
+
+        public bool AddServerWithFormatedConfig(string config, string mark, bool quiet = false) =>
+            AddServerWithFormatedConfigWorker(config, mark, quiet);
+        #endregion
+
+        #region private methods
+        bool AddServerWithFormatedConfigWorker(string config, string mark, bool quiet = false)
         {
             // unknow bug 2023-05-08
             mark = mark ?? @"";
 
-            config = VgcApis.Misc.Utils.FormatConfig(config);
-
             // first check
-            if (IsServerExistWorker(config))
+            if (IsFormatedConfigInCache(config))
             {
                 return false;
             }
@@ -724,7 +782,7 @@ namespace V2RayGCon.Services
             try
             {
                 // double check
-                if (!IsServerExist(config))
+                if (!IsFormatedConfigInCache(config))
                 {
                     configCache.TryAdd(config, coreInfo.uid);
                     coreServCache.Add(coreInfo.uid, newServer);
@@ -758,7 +816,7 @@ namespace V2RayGCon.Services
             return true;
         }
 
-        public bool ReplaceServerConfig(string orgConfig, string newConfig)
+        bool ReplaceServerWithFormatedConfig(string orgConfig, string newConfig)
         {
             Controllers.CoreServerCtrl coreServ = null;
             string uid;
@@ -788,28 +846,18 @@ namespace V2RayGCon.Services
             return true;
         }
 
-        public string ReplaceOrAddNewServer(string orgUid, string newConfig) =>
-            ReplaceOrAddNewServer(orgUid, newConfig, @"");
-
-        public string ReplaceOrAddNewServer(string orgUid, string newConfig, string mark)
+        ICoreServCtrl GetServerByFormatedConfig(string config)
         {
-            if (!string.IsNullOrEmpty(orgUid) && coreServCache.TryGetValue(orgUid, out var coreServ))
+            if (configCache.TryGetValue(config, out var uid) && !string.IsNullOrEmpty(uid))
             {
-                var oldConfig = coreServ.GetConfiger().GetConfig();
-                ReplaceServerConfig(oldConfig, newConfig);
-                return orgUid;
+                if (coreServCache.TryGetValue(uid, out var coreServ))
+                {
+                    return coreServ;
+                }
             }
-
-            AddServer(newConfig, mark);
-            if (configCache.TryGetValue(newConfig, out var uid))
-            {
-                return uid;
-            }
-            return string.Empty;
+            return null;
         }
-        #endregion
 
-        #region private methods
         void AddToBootList(HashSet<Controllers.CoreServerCtrl> set, string config)
         {
             if (string.IsNullOrEmpty(config))
@@ -878,7 +926,7 @@ namespace V2RayGCon.Services
             lazyServerSettingsRecorder.Deadline();
         }
 
-        bool IsServerExistWorker(string config)
+        bool IsFormatedConfigInCache(string config)
         {
             if (string.IsNullOrEmpty(config))
             {
@@ -971,7 +1019,7 @@ namespace V2RayGCon.Services
                     break;
             }
 
-            var newConfig = VgcApis.Misc.Utils.ConfigToString(package);
+            var newConfig = VgcApis.Misc.Utils.FormatConfig(package);
             string newUid = ReplaceOrAddNewServer(orgUid, newConfig, mark);
 
             UpdateMarkList();

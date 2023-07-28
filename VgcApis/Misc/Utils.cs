@@ -1105,7 +1105,7 @@ namespace VgcApis.Misc
             }
         }
 
-        public static string ConfigToString(JObject config)
+        public static string FormatConfig(JObject config)
         {
             try
             {
@@ -1120,7 +1120,7 @@ namespace VgcApis.Misc
             try
             {
                 var j = JObject.Parse(config);
-                return ConfigToString(j);
+                return FormatConfig(j);
             }
             catch { }
             return null;

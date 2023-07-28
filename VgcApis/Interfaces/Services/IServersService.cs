@@ -95,6 +95,10 @@ namespace VgcApis.Interfaces.Services
         List<ICoreServCtrl> GetTrackableServerList();
         List<ICoreServCtrl> GetAllServersOrderByIndex();
 
+        ICoreServCtrl GetServerByConfig(string config);
+
+        ICoreServCtrl GetServerByUid(string uid);
+
         List<ICoreServCtrl> GetServersByUidsOrderByIndex(IEnumerable<string> uids);
 
         List<ICoreServCtrl> GetSelectedServers();

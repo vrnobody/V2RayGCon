@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
@@ -146,7 +147,8 @@ namespace V2RayGCon.Controllers
             }
 
             var originalConfig = GetConfigByUid(uid);
-            var newConfig = VgcApis.Misc.Utils.ConfigToString(config);
+            var newConfig = VgcApis.Misc.Utils.FormatConfig(config);
+
             if (originalConfig == newConfig || servers.IsServerExist(newConfig))
             {
                 MessageBox.Show(I18N.DuplicateServer);
@@ -225,8 +227,7 @@ namespace V2RayGCon.Controllers
         }
 
         string GetConfigByUid(string uid) =>
-           servers.GetAllServersOrderByIndex()
-               ?.FirstOrDefault(s => s?.GetCoreStates()?.GetUid() == uid)
+           servers.GetServerByUid(uid)
                ?.GetConfiger()
                ?.GetConfig();
 

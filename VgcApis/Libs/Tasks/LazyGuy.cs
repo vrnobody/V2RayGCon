@@ -209,16 +209,20 @@ namespace VgcApis.Libs.Tasks
                 {
                     singleTask?.Invoke();
                 }
+#if DEBUG
                 catch (Exception ex)
                 {
-#if DEBUG
+
                     Sys.FileLogger.DumpCallStack(
                         $"DoTheJob() {Name} do single task error\n" +
                         $"{ex}");
-#else
-                    Sys.FileLogger.Warn($"DoTheJob() {Name} is running in UI thread");
-#endif
                 }
+#else
+                catch
+                {
+                    Sys.FileLogger.Warn($"DoTheJob() {Name} is running in UI thread");
+                }
+#endif
                 done();
                 return;
             }

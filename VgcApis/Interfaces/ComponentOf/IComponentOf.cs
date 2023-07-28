@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace VgcApis.Interfaces.ComponentOf
 {
     // has container
     internal interface IComponentOf<TParent> :
+        IDisposable,
         IChildComponent,
         IParentComponent
         where TParent : class, IParentComponent

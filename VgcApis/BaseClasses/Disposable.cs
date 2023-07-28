@@ -1,47 +1,78 @@
 ﻿using System;
 
 namespace VgcApis.BaseClasses
-
 {
+    // A base class that implements IDisposable.
+    // By implementing IDisposable, you are announcing that
+    // instances of this type allocate scarce resources.
     public class Disposable : IDisposable
     {
         protected virtual void Cleanup() { }
+        protected virtual void CleanupUnmanagedResources() { }
 
-        #region IDisposable Support
-        private bool disposedValue = false; // 要检测冗余调用
 
-        protected virtual void Dispose(bool disposing)
+        private bool disposed = false;
+
+        // The class constructor.
+        public Disposable() { }
+
+        // Implement IDisposable.
+        // Do not make this method virtual.
+        // A derived class should not be able to override this method.
+        public void Dispose()
         {
-            if (!disposedValue)
+            Dispose(disposing: true);
+            // This object will be cleaned up by the Dispose method.
+            // Therefore, you should call GC.SuppressFinalize to
+            // take this object off the finalization queue
+            // and prevent finalization code for this object
+            // from executing a second time.
+            GC.SuppressFinalize(this);
+        }
+
+        // Dispose(bool disposing) executes in two distinct scenarios.
+        // If disposing equals true, the method has been called directly
+        // or indirectly by a user's code. Managed and unmanaged resources
+        // can be disposed.
+        // If disposing equals false, the method has been called by the
+        // runtime from inside the finalizer and you should not reference
+        // other objects. Only unmanaged resources can be disposed.
+        private void Dispose(bool disposing)
+        {
+            // Check to see if Dispose has already been called.
+            if (!this.disposed)
             {
+                // If disposing equals true, dispose all managed
+                // and unmanaged resources.
                 if (disposing)
                 {
+                    // Dispose managed resources.
                     Cleanup();
                 }
 
-                // TODO: 释放未托管的资源(未托管的对象)并在以下内容中替代终结器。
-                // TODO: 将大型字段设置为 null。
+                // Call the appropriate methods to clean up
+                // unmanaged resources here.
+                // If disposing is false,
+                // only the following code is executed.
+                CleanupUnmanagedResources();
 
-                disposedValue = true;
+                // Note disposing has been done.
+                disposed = true;
             }
         }
 
-        // TODO: 仅当以上 Dispose(bool disposing) 拥有用于释放未托管资源的代码时才替代终结器。
-        // ~Disposable() {
-        //   // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
-        //   Dispose(false);
-        // }
-
-        // 添加此代码以正确实现可处置模式。
-        public void Dispose()
+        // Use C# finalizer syntax for finalization code.
+        // This finalizer will run only if the Dispose method
+        // does not get called.
+        // It gives your base class the opportunity to finalize.
+        // Do not provide finalizer in types derived from this class.
+        ~Disposable()
         {
-            // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
-            Dispose(true);
-            // TODO: 如果在以上内容中替代了终结器，则取消注释以下行。
-            // GC.SuppressFinalize(this);
+            // Do not re-create Dispose clean-up code here.
+            // Calling Dispose(disposing: false) is optimal in terms of
+            // readability and maintainability.
+            Dispose(disposing: false);
         }
-        #endregion
-
-
     }
+
 }

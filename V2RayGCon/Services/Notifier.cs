@@ -90,7 +90,7 @@ namespace V2RayGCon.Services
             BindServerEvents();
             RefreshNotifyIconLater();
 
-            NotifyIconMenuOpenHandler(this, EventArgs.Empty);
+            OnNotifyIconMenuOpeningHandler(this, EventArgs.Empty);
         }
 
         #region hotkey window
@@ -462,10 +462,24 @@ namespace V2RayGCon.Services
                 }
             };
 
-            ni.ContextMenuStrip.Opening += NotifyIconMenuOpenHandler;
+            ni.ContextMenuStrip.Opening += OnNotifyIconMenuOpeningHandler;
+            ni.ContextMenuStrip.Closed += OnNotifyIconMenuClosedHandler;
         }
 
-        void NotifyIconMenuOpenHandler(object sender, EventArgs args)
+        void OnNotifyIconMenuClosedHandler(object sender, EventArgs args)
+        {
+            var menus = new List<ToolStripMenuItem>() {
+                qsMenuCompos[qsMenuNames.QuickSwitchMenuRoot],
+                miServersRoot,
+            };
+
+            foreach (var menu in menus)
+            {
+                menu.DropDownItems.Clear();
+            }
+        }
+
+        void OnNotifyIconMenuOpeningHandler(object sender, EventArgs args)
         {
             VgcApis.Misc.Utils.RunInBackground(() =>
             {

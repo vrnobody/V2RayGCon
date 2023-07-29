@@ -37,7 +37,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
- * v1.7.1.15 Refactoring.
+ * v1.7.1.15 Filter control chars in server's name.
  * v1.7.1.14 Replace List<T> coreServList with Dict<T> coreServCache in Servers service.
  * v1.7.1.13 Refactoring.
  * v1.7.1.12 Modify write file logic of user settings file.

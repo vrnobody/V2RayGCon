@@ -1105,14 +1105,23 @@ namespace VgcApis.Misc
             }
         }
 
+        public static string FilterControlChars(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return string.Empty;
+            }
+            return Regex.Replace(str, @"\p{Cc}+", string.Empty);
+        }
+
         public static string FormatConfig(JObject config)
         {
             try
             {
-                return config?.ToString(Formatting.None);
+                return config?.ToString(Formatting.None) ?? string.Empty;
             }
             catch { }
-            return null;
+            return string.Empty;
         }
 
         public static string FormatConfig(string config)
@@ -1123,7 +1132,7 @@ namespace VgcApis.Misc
                 return FormatConfig(j);
             }
             catch { }
-            return null;
+            return string.Empty;
         }
 
         public static bool TryParseJObject(

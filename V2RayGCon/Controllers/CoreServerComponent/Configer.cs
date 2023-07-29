@@ -239,8 +239,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         void UpdateSummary(JObject config)
         {
             var name = Misc.Utils.GetAliasFromConfig(config);
-            coreInfo.name = name;
-            coreInfo.summary = Misc.Utils.GetSummaryFromConfig(config);
+            coreInfo.name = VgcApis.Misc.Utils.FilterControlChars(name);
+
+            var summary = Misc.Utils.GetSummaryFromConfig(config);
+            coreInfo.summary = VgcApis.Misc.Utils.FilterControlChars(summary);
 
             // update title & longname 
             coreInfo.ClearCachedString();

@@ -83,6 +83,7 @@
     <Compile Include="Libs\Sys\ChildProcessTracker.cs" />
     <Compile Include="Libs\Sys\ConsoleCtrls.cs" />
     <Compile Include="Libs\Sys\NotepadHelper.cs" />
+    <Compile Include="Libs\Sys\ScreenExtensions.cs" />
     <Compile Include="Libs\Tasks\Bar.cs" />
     <Compile Include="Libs\Tasks\Routine.cs" />
     <Compile Include="BaseClasses\Disposable.cs" />

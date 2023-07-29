@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace V2RayGCon.Views.WinForms
@@ -21,41 +22,72 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.AutoSetFormIcon(this);
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         private void FormImportLinksResult_Shown(object sender, EventArgs e)
         {
             lvResult.Items.Clear();
+            lvResult.SuspendLayout();
+
             var total = results.Count();
             if (total > 1000)
             {
                 pbLoading.Visible = true;
             }
 
-            var count = 0;
-            var step = Math.Max(total / 50, 1);
             var max = pbLoading.Maximum;
             var min = pbLoading.Minimum;
             var t = Math.Max(total, 1);
 
-            lvResult.SuspendLayout();
-            foreach (var result in results)
+            Task.Run(() =>
             {
-                if (count % step == 0)
-                {
-                    var p = Math.Max(min, Math.Min(count * max / t, max));
-                    pbLoading.Value = p;
-                }
-                result[0] = (++count).ToString();
-                var item = new ListViewItem(result);
-                lvResult.Items.Add(item);
-            }
-            lvResult.ResumeLayout();
+                ResultLoader(t, min, max);
+            });
+        }
 
-            pbLoading.Visible = false;
+        #region loader
+        private void ResultLoader(int total, int min, int max)
+        {
+            int count = 0;
+            int seg = 500;
+
+            var it = results.GetEnumerator();
+
+            bool stop = false;
+            while (!stop)
+            {
+                Invoke((MethodInvoker)delegate
+                {
+                    var p = Math.Max(min, Math.Min(count * max / total, max));
+                    pbLoading.Value = p;
+                    for (int i = 0; i < seg; i++)
+                    {
+                        if (!it.MoveNext())
+                        {
+                            stop = true;
+                            break;
+                        }
+                        var result = it.Current;
+                        result[0] = (++count).ToString();
+                        var item = new ListViewItem(result);
+                        lvResult.Items.Add(item);
+                    }
+                });
+                Task.Delay(100).Wait();
+            }
+
+            Invoke((MethodInvoker)delegate
+            {
+                lvResult.ResumeLayout();
+                lvResult.Items[lvResult.Items.Count - 1].EnsureVisible();
+                pbLoading.Visible = false;
+            });
+        }
+        #endregion
+
+        #region UI events
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void btnCopy_Click(object sender, EventArgs e)
@@ -96,5 +128,6 @@ namespace V2RayGCon.Views.WinForms
 
             CopyToClipboard(links);
         }
+        #endregion
     }
 }

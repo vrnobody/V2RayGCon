@@ -43,6 +43,20 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="uids"></param>
         int DeleteServerByUids(LuaTable uids);
 
+        // 下面那个GetAllServers()的简化版
+        List<ICoreServ> GetAllServs();
+
+        // 下面那个名字很像的函数的简化版
+        ICoreServ GetServByIndex(int index);
+
+        // 下面那个名字很像的函数的简化版
+        ICoreServ GetServByUid(string uid);
+
+        // 下面那个名字很像的函数的简化版
+        ICoreServ GetServByConfig(string config);
+
+        // 下面那个名字很像的函数的简化版
+        List<ICoreServ> GetServsByUids(LuaTable uids);
 
         /// <summary>
         /// 获取全部服务器（操作服务器的脚本通常都从这个函数开始）
@@ -51,12 +65,36 @@ namespace VgcApis.Interfaces.Lua
         List<ICoreServCtrl> GetAllServers();
 
         /// <summary>
-        /// 根据uids获取服务器
+        /// 根据index获取单个服务器
+        /// </summary>
+        /// <param name="index">index</param>
+        /// <returns>服务器或者null</returns>
+
+        ICoreServCtrl GetServerByIndex(int index);
+
+        /// <summary>
+        /// 根据uid获取单个服务器
+        /// </summary>
+        /// <param name="uid">uid</param>
+        /// <returns>服务器或者null</returns>
+
+        ICoreServCtrl GetServerByUid(string uid);
+
+        /// <summary>
+        /// 根据config获取单个服务器
+        /// </summary>
+        /// <param name="config">config</param>
+        /// <returns>服务器或者null</returns>
+
+        ICoreServCtrl GetServerByConfig(string config);
+
+        /// <summary>
+        /// 根据uids获取服务器，跳过不存在的服务器
         /// </summary>
         /// <param name="uids">uid列表</param>
         /// <returns>服务器</returns>
 
-        List<VgcApis.Interfaces.ICoreServCtrl> GetServersByUids(LuaTable uids);
+        List<ICoreServCtrl> GetServersByUids(LuaTable uids);
 
         /// <summary>
         /// 将选中的服务器打包成均衡策略为random的服务器包

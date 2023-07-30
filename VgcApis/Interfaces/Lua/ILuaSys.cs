@@ -14,7 +14,12 @@ namespace VgcApis.Interfaces.Lua
         /// <returns>1.2.3.4</returns>
         string GetAppVersion();
 
+
         #region Lua VM
+
+        // 这堆Lua***()函数是给WebUI的Luna功能提供支持用的。
+        // 函数名随时可能改变，不建议在脚本中使用这些的函数。
+
         string LuaGenModuleSnippets(string code);
 
         string LuaGetStaticSnippets();
@@ -100,6 +105,15 @@ namespace VgcApis.Interfaces.Lua
         IRunnable CreateHttpServer(string url, ILuaMailBox inbox, ILuaMailBox outbox, string source, bool allowCORS);
         #endregion
 
+        #region VGC
+        /// <summary>
+        /// 立即存盘把当前的全部配置数据。
+        /// V2RayGCon作者的硬盘非常辣鸡，默认情况下每隔5分钟（如果有数据变化）才写一次盘。
+        /// 如果突然蓝屏、死机、断电什么的可能会丢失5分钟内的数据。
+        /// </summary>
+        void SaveV2RayGConSettingsNow();
+        #endregion
+
         #region core event
         /// <summary>
         /// 用于RegisterGlobalEvent中的evType参数
@@ -121,7 +135,12 @@ namespace VgcApis.Interfaces.Lua
         /// </summary>
         int CoreEvPropertyChanged { get; }
 
-
+        /// <summary>
+        /// 注销全部服务器事钩子
+        /// </summary>
+        /// <param name="mailbox">接收事件的邮箱</param>
+        /// <param name="handle">注册事件时返回的句柄</param>
+        /// <returns>成功、失败</returns>
         bool UnregisterGlobalEvent(ILuaMailBox mailbox, string handle);
 
         /// <summary>
@@ -182,6 +201,9 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region reflection
+        // 这几个函数用来查询CLR中的对象信息
+        // 比如 list.Count，list.Count()，list:Count()
+
         string GetPublicInfosOfType(Type type);
         string GetPublicInfosOfObject(object @object);
         string GetChildrenInfosOfNamespace(string @namespace);
@@ -196,7 +218,7 @@ namespace VgcApis.Interfaces.Lua
         ILuaMailBox ApplyRandomMailBox();
 
         /// <summary>
-        /// 检测邮箱是否存在
+        /// 检测邮箱是否有权使用（只有拥有邮箱的脚本才有权收邮件及注销邮箱）
         /// </summary>
         /// <param name="mailbox"></param>
         /// <returns></returns>
@@ -270,6 +292,11 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="proc">Sys:Run()创建的进程</param>
         void Kill(Process proc);
 
+        /// <summary>
+        /// 相当到windows的win+R，不过没设置PATH，所以功能差点。
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         string Start(string param);
 
         /// <summary>
@@ -388,12 +415,12 @@ namespace VgcApis.Interfaces.Lua
         void SetTimeout(ILuaMailBox mailbox, int timeout, double id);
 
         /// <summary>
-        /// 执行一次GC()
+        /// 执行一次GC()，其实没什么实际效果。
         /// </summary>
         void GarbageCollect();
 
         /// <summary>
-        /// 调高系统音量
+        /// 调高系统音量（我的键盘默认没这个功能T.T）
         /// </summary>
         void VolumeUp();
 

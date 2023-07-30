@@ -1,5 +1,8 @@
 ﻿using NLua;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using VgcApis.Interfaces;
 
 namespace Luna.Models.Apis.Components
 {
@@ -39,6 +42,44 @@ namespace Luna.Models.Apis.Components
         public bool DeleteServerByConfig(string config) =>
             vgcServers.DeleteServerByConfig(config, true);
 
+        public ICoreServ GetServByIndex(int index)
+        {
+            return CoreServWrapper.Wrap<ICoreServ>(GetServerByIndex(index));
+        }
+
+        public ICoreServ GetServByUid(string uid)
+        {
+            return CoreServWrapper.Wrap<ICoreServ>(GetServerByUid(uid));
+        }
+
+        public List<ICoreServ> GetServsByUids(LuaTable uids)
+        {
+            var servs = GetServersByUids(uids)
+                .Select(s => CoreServWrapper.Wrap<ICoreServ>(s))
+                .ToList();
+            return servs;
+        }
+
+        public ICoreServ GetServByConfig(string config)
+        {
+            return CoreServWrapper.Wrap<ICoreServ>(GetServerByConfig(config));
+        }
+
+        public ICoreServCtrl GetServerByConfig(string config)
+        {
+            return vgcServers.GetServerByConfig(config);
+        }
+
+        public ICoreServCtrl GetServerByIndex(int index)
+        {
+            return vgcServers.GetServerByIndex(index);
+        }
+
+        public ICoreServCtrl GetServerByUid(string uid)
+        {
+            return vgcServers.GetServerByUid(uid);
+        }
+
         /// <summary>
         /// 危险操作！！
         /// </summary>
@@ -64,6 +105,15 @@ namespace Luna.Models.Apis.Components
 
         public List<VgcApis.Interfaces.ICoreServCtrl> GetAllServers() =>
             vgcServers.GetAllServersOrderByIndex();
+
+        public List<VgcApis.Interfaces.ICoreServ> GetAllServs()
+        {
+            var servs = vgcServers.GetAllServersOrderByIndex();
+            var coreServs = servs
+                .Select(s => CoreServWrapper.Wrap<VgcApis.Interfaces.ICoreServ>(s))
+                .ToList();
+            return coreServs;
+        }
 
         public List<VgcApis.Interfaces.ICoreServCtrl> GetServersByUids(LuaTable uids)
         {
@@ -215,5 +265,6 @@ namespace Luna.Models.Apis.Components
                 string.Empty,
                 VgcApis.Models.Datas.Enums.BalancerStrategies.Random,
                 VgcApis.Models.Datas.Enums.PackageTypes.Chain);
+
     }
 }

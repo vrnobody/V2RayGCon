@@ -1213,12 +1213,10 @@ namespace V2RayGCon.Misc
             };
 
             wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
-
             if (proxyPort > 0 && proxyPort < 65536)
             {
                 wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, proxyPort);
             }
-
             return wc;
         }
 
@@ -1238,7 +1236,16 @@ namespace V2RayGCon.Misc
                 timeout = VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
             }
 
-            WebClient wc = CreateWebClient(proxyPort);
+            WebClient wc = null;
+            if (!VgcApis.Misc.Utils.IsHttpLink(url))
+            {
+                url = VgcApis.Misc.Utils.RelativePath2FullPath(url);
+                wc = CreateWebClient(-1);
+            }
+            else
+            {
+                wc = CreateWebClient(proxyPort);
+            }
 
             AutoResetEvent dlCompleted = new AutoResetEvent(false);
             wc.DownloadStringCompleted += (s, a) =>
@@ -1258,10 +1265,7 @@ namespace V2RayGCon.Misc
 
             try
             {
-                if (!VgcApis.Misc.Utils.IsHttpLink(url))
-                {
-                    url = VgcApis.Misc.Utils.RelativePath2FullPath(url);
-                }
+
 
                 wc.DownloadStringAsync(new Uri(url));
                 // 收到信号为True

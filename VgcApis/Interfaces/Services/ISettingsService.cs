@@ -2,6 +2,8 @@
 {
     public interface ISettingsService
     {
+        void SaveUserSettingsNow();
+
         int GetSpeedtestQueueLength();
 
         bool IsScreenLocked();

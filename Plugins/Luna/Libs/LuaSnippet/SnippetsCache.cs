@@ -233,11 +233,17 @@ namespace Luna.Libs.LuaSnippet
                 new Tuple<string,Type>("Server", typeof(VgcApis.Interfaces.Lua.ILuaServer)),
                 new Tuple<string,Type>("Web", typeof(VgcApis.Interfaces.Lua.ILuaWeb)),
                 new Tuple<string,Type>("Signal", typeof(VgcApis.Interfaces.Lua.ILuaSignal)),
+                new Tuple<string, Type>("cserv",typeof(VgcApis.Interfaces.ICoreServ)),
+
+                // obsolete
+
+                /*
                 new Tuple<string, Type>("coreServ",typeof(VgcApis.Interfaces.ICoreServCtrl)),
                 new Tuple<string, Type>("coreConfiger",typeof(VgcApis.Interfaces.CoreCtrlComponents.IConfiger)),
                 new Tuple<string, Type>("coreCtrl",typeof(VgcApis.Interfaces.CoreCtrlComponents.ICoreCtrl)),
                 new Tuple<string, Type>("coreState",typeof(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates)),
                 new Tuple<string, Type>("coreLogger",typeof(VgcApis.Interfaces.CoreCtrlComponents.ILogger)),
+                */
             };
 
             webUiLuaSnippetsCache = GenWebUiSnippets(apis);

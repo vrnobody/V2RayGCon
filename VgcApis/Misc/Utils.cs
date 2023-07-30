@@ -1557,11 +1557,7 @@ namespace VgcApis.Misc
 
         public static bool IsHttpLink(string link)
         {
-            if (string.IsNullOrEmpty(link))
-            {
-                return false;
-            }
-            if (link.ToLower().StartsWith("http"))
+            if (!string.IsNullOrEmpty(link) && link.ToLower().StartsWith("http"))
             {
                 return true;
             }

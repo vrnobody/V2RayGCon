@@ -33,8 +33,14 @@ namespace V2RayGCon.Services.Caches
                     i < retry && string.IsNullOrEmpty(c.content);
                     i++)
                 {
+                    var port = -1;
+                    if (Settings.Instance.isUpdateUseProxy)
+                    {
+                        port = Servers.Instance.GetAvailableHttpProxyPort();
+                    }
                     c.content = Misc.Utils.Fetch(
                         url,
+                        port,
                         VgcApis.Models.Consts.Import.ParseImportTimeout);
                 }
             }

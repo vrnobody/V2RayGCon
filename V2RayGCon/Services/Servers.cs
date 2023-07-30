@@ -689,6 +689,19 @@ namespace V2RayGCon.Services
             return false;
         }
 
+        public ICoreServCtrl GetServerByIndex(int index)
+        {
+            locker.EnterReadLock();
+            try
+            {
+                return coreServCache.FirstOrDefault(kv => (int)kv.Value.GetCoreStates().GetIndex() == index).Value;
+            }
+            finally
+            {
+                locker.ExitReadLock();
+            }
+        }
+
         public VgcApis.Interfaces.ICoreServCtrl GetServerByUid(string uid)
         {
             if (!string.IsNullOrEmpty(uid) && coreServCache.TryGetValue(uid, out var coreServ))

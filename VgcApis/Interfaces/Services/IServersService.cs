@@ -97,6 +97,8 @@ namespace VgcApis.Interfaces.Services
 
         ICoreServCtrl GetServerByConfig(string config);
 
+        ICoreServCtrl GetServerByIndex(int index);
+
         ICoreServCtrl GetServerByUid(string uid);
 
         List<ICoreServCtrl> GetServersByUidsOrderByIndex(IEnumerable<string> uids);

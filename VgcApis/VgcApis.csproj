@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\ICoreServ.cs" />
     <Compile Include="Interfaces\ILogable.cs" />
     <Compile Include="Interfaces\Lua\ILuaSys.cs" />
     <Compile Include="Interfaces\Lua\ILuaMail.cs" />

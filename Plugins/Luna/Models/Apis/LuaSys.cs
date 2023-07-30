@@ -85,6 +85,7 @@ namespace Luna.Models.Apis
         ConcurrentDictionary<string, LuaVm> luaVms = new ConcurrentDictionary<string, LuaVm>();
 
         VgcApis.Interfaces.Services.IServersService vgcServerService;
+        VgcApis.Interfaces.Services.ISettingsService vgcSettingsService;
 
         SysCmpos.PostOffice postOffice;
 
@@ -99,9 +100,11 @@ namespace Luna.Models.Apis
             this.getAllAssemblies = getAllAssemblies;
             this.postOffice = luaApis.GetPostOffice();
             this.vgcServerService = luaApis.GetVgcServerService();
+            vgcSettingsService = luaApis.formMgr.vgcApi.GetSettingService();
 
             this.luaServer = luaApis.formMgr.luaServer;
             this.astServer = luaApis.formMgr.astServer;
+
         }
 
         #region ILuaSys.LuaVm
@@ -995,6 +998,11 @@ namespace Luna.Models.Apis
                 osReleaseId = $"{name} {arch} {id} build {build}";
             }
             return osReleaseId;
+        }
+
+        public void SaveV2RayGConSettingsNow()
+        {
+            vgcSettingsService.SaveUserSettingsNow();
         }
 
         public string GetAppVersion()

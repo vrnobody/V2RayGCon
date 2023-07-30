@@ -34,9 +34,17 @@ namespace V2RayGCon.Services.Caches
                     i++)
                 {
                     var port = -1;
-                    if (Settings.Instance.isUpdateUseProxy)
+                    try
                     {
-                        port = Servers.Instance.GetAvailableHttpProxyPort();
+                        if (Settings.Instance.isUpdateUseProxy)
+                        {
+                            port = Servers.Instance.GetAvailableHttpProxyPort();
+                        }
+                    }
+                    catch
+                    {
+                        // under unit tests Service.Servers is not initialized
+                        // the code above will throw a NullReferenceException
                     }
                     c.content = Misc.Utils.Fetch(
                         url,

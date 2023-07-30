@@ -15,7 +15,7 @@
 [13]: https://codebeat.co/badges/2877dcc5-5f53-4cb0-8178-6b39cd74e788 "codebeat badge"
 [14]: https://codebeat.co/projects/github-com-vrnobody-v2raygcon-master "codebeat report"
 
-V2RayGCon是windows下[v2ray-core](https://v2ray.com)的图形(graphic)配置器(configer)。  
+V2RayGCon是windows下[v2ray-core](https://www.v2fly.org)的图形(graphic)配置器(configer)。  
 本项目支持的最高v2ray-core版本是`v4.45.2`  
 
 [\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]][10]&nbsp;&nbsp;[\[唯一联系方式 issue\]][11]  
@@ -24,7 +24,7 @@ V2RayGCon是windows下[v2ray-core](https://v2ray.com)的图形(graphic)配置器
 先安装.net framework 4.5+（win10自带），然后下载解压[V2RayGCon-box.zip][9]到任意目录。  
   
 Download and unzip [V2RayGCon-box.zip][9] to any directory you like.  
-Require .net framework 4.5+.  
+Require .net framework 4.5+  
 
 ### 演示 Demo
 WebUI [手册manual](https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/40-web-ui/)  
@@ -36,17 +36,19 @@ WinFormUI
   
 <details>
 <summary><b>引用按字母排序 Credits (in alphabetical order)</b></summary>  
-
+  
 [2dust/v2rayN](https://github.com/2dust/v2rayN) vmess分享链接及订阅格式  
 [Ahmad45123/AutoCompleteMenu-ScintillaNET](https://github.com/Ahmad45123/AutoCompleteMenu-ScintillaNET) 自动补全  
 [brunoos/luasec](https://github.com/brunoos/luasec.git) Lua https  
 [diegonehab/luasocket](https://github.com/diegonehab/luasocket.git) Lua socket  
 [DuckSoft](https://github.com/XTLS/Xray-core/issues/91) vless分享链接格式  
+[ekonbenefits/impromptu-interface](https://github.com/ekonbenefits/impromptu-interface) 代理对象  
 [FourierTransformer/lua-complete](https://github.com/FourierTransformer/lua-complete.git) Lua模块补全  
 [haf/DotNetZip.Semverd](https://github.com/haf/DotNetZip.Semverd) .net 4.0解压zip文件  
 [jacobslusser/ScintillaNET](https://github.com/jacobslusser/ScintillaNET) 编辑器  
 [JamesNK/Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) 处理json  
 [micjahn/ZXing.Net](https://github.com/micjahn/ZXing.Net/) 处理二维码  
+[moq/moq4](https://github.com/moq/moq4) 自动补全  
 [mpeterv/luacheck](https://github.com/mpeterv/luacheck.git) lua语义解释  
 [msva/lua-htmlparser](https://github.com/msva/lua-htmlparser) html解释器  
 [musva/V2RayW](https://github.com/musva/V2RayW) vless://...解码  
@@ -60,4 +62,19 @@ WinFormUI
 [v2ray/v2ray-core](https://github.com/v2ray/v2ray-core) v2ray-core服务端  
 [wilhelmy/lua-bencode](https://bitbucket.org/wilhelmy/lua-bencode) bencode(torrent)解释器  
 [XTLS/Xray-core](https://github.com/XTLS/Xray-core) Xray-core服务端  
+  
+以及上面的部分包的依赖包。  
+  
+<b>WebUI引用到的包</b>  
+[ajaxorg/ace](https://github.com/ajaxorg/ace) 代码编辑器  
+[anish2690/vue-draggable-next](https://github.com/anish2690/vue-draggable-next) 拖放排序  
+[EHfive/v2ray-jsonschema](https://github.com/EHfive/v2ray-jsonschema) config.json自动补全  
+[HENNGE/vue3-pagination](https://github.com/HENNGE/vue3-pagination) 分页  
+[neocotic/qrious](https://github.com/neocotic/qrious) 二维码生成  
+[selimdoyranli/v-dropdown-menu](https://github.com/selimdoyranli/v-dropdown-menu) 弹出式菜单  
+[sweetalert2/sweetalert2](https://github.com/sweetalert2/sweetalert2) 网页内弹窗  
+[yangss3/vue3-i18n](https://github.com/yangss3/vue3-i18n) 多语言支持  
+  
+当然还有 vue, pinia, eslint, tailwind, prettier, fontawesome 等等。  
+  
 </details>

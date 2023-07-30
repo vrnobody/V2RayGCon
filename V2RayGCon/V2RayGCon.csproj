@@ -569,6 +569,7 @@
     <None Include="Resources\Files\templates\basic\basic.json" />
     <None Include="Resources\Files\templates\custom\vmessDecodeTemplate.json" />
     <None Include="Resources\Files\templates\routing\whitelist.json" />
+    <None Include="Resources\Files\tests\stress-test-01.lua" />
     <None Include="V2RayGCon.ruleset" />
   </ItemGroup>
   <ItemGroup>

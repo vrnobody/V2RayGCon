@@ -33,10 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.7.1.17")]
+[assembly: AssemblyVersion("1.7.1.18")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.7.1.18 Fix Wrap(null) bug.
  * v1.7.1.17 Intorduce cserv:***(), which is a simpler but slower version of coreServ:***().
  * v1.7.1.16 Refactor QRCode and import-result-form.
  * v1.7.1.15 Filter control chars in server's name.

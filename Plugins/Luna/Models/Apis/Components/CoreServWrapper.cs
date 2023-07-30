@@ -16,8 +16,14 @@ namespace Luna.Models.Apis.Components
             where TInterface : class
         {
             if (!typeof(TInterface).IsInterface)
+            {
                 throw new ArgumentException("TInterface must be an Interface");
+            }
 
+            if (instance == null)
+            {
+                return null;
+            }
             return new CoreServWrapper(instance).ActLike<TInterface>();
         }
 

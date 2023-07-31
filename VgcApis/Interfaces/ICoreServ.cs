@@ -8,6 +8,9 @@ namespace VgcApis.Interfaces
          CoreCtrlComponents.ICoreStates,
          CoreCtrlComponents.ILogger
     {
+        // 注意 ICore*** 系列接口不要有同名而且参数个数相同的方法
+        // 不然反射是会匹配成错误的函数
+
         #region IConfiger
         new JObject GetFinalConfig();
         new string GetConfig();

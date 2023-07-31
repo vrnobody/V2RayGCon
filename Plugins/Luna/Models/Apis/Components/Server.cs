@@ -80,10 +80,11 @@ namespace Luna.Models.Apis.Components
             return vgcServers.GetServerByUid(uid);
         }
 
-        /// <summary>
-        /// 危险操作！！
-        /// </summary>
-        /// <param name="uids"></param>
+        public bool DeleteServerByUid(string uid)
+        {
+            return vgcServers.DeleteServerByUid(uid);
+        }
+
         public int DeleteServerByUids(LuaTable uids)
         {
             var list = global::Luna.Misc.Utils.LuaTableToList(uids, false);

@@ -26,6 +26,38 @@ namespace VgcApis.Misc
 {
     public static class Utils
     {
+        #region collections
+        public static bool TryGetDictValue<T>(Dictionary<string[], T> dict, string[] key, out T value)
+        {
+            value = default;
+
+            foreach (var kv in dict)
+            {
+                var dkey = kv.Key;
+                if (dkey.Length != key.Length)
+                {
+                    continue;
+                }
+
+                bool isEqual = true;
+                for (var i = 0; i < key.Length; i++)
+                {
+                    if (key[i] != dkey[i])
+                    {
+                        isEqual = false;
+                        break;
+                    }
+                }
+                if (isEqual)
+                {
+                    value = kv.Value;
+                    return true;
+                }
+            }
+            return false;
+        }
+        #endregion
+
         #region editor
         public static void BindEditorDragDropEvent(Scintilla editor)
         {

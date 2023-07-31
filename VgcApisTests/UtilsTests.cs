@@ -16,6 +16,45 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+        [DataTestMethod]
+        [DataRow(",,,1中2,❤文？,,,", ",,,1中2,❤文？,,")]
+        [DataRow(",,,", ",,")]
+        [DataRow("1中2,❤文？,,,", "1中2,❤文？,,,")]
+        [DataRow(",,,1中2,❤文？,,,", ",,,1中2,❤文？,,,")]
+        [DataRow(",,,", ",,,")]
+        [DataRow("", "")]
+        public void TryGetDictValueTest(string src, string exp)
+        {
+            var key = src?.Split(',')?.ToArray() ?? new string[] { };
+            var dkey = exp?.Split(',')?.ToArray() ?? new string[] { };
+
+            var dict = new Dictionary<string[], bool>();
+            if (TryGetDictValue(dict, key, out _))
+            {
+                Assert.Fail();
+            }
+
+            dict[dkey] = true;
+            var eq = src == exp;
+            if (TryGetDictValue(dict, key, out var v) && eq)
+            {
+                Assert.AreEqual(true, v);
+            }
+            else
+            {
+                Assert.AreEqual(false, v);
+            }
+
+            if (!eq && TryGetDictValue(dict, key, out _))
+            {
+                Assert.Fail();
+            }
+
+            if (eq && !TryGetDictValue(dict, key, out _))
+            {
+                Assert.Fail();
+            }
+        }
 
         [DataTestMethod]
         [DataRow(

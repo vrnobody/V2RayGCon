@@ -576,6 +576,28 @@ namespace V2RayGCon.Services
             Misc.Utils.ChainActionHelperAsync(list.Count, worker, lambda);
         }
 
+        public bool DeleteServerByUid(string uid)
+        {
+            Controllers.CoreServerCtrl coreServ = null;
+            locker.EnterWriteLock();
+            try
+            {
+                coreServ = DeleteServerByUidWorker(uid);
+            }
+            finally
+            {
+                locker.ExitWriteLock();
+            }
+
+            if (coreServ != null)
+            {
+                ReleaseEventsFrom(coreServ);
+                coreServ.Dispose();
+                RefreshUiAfterCoreServersAreDeleted();
+            }
+            return coreServ != null;
+        }
+
         public int DeleteServerByUids(List<string> uids)
         {
             if (uids == null || uids.Count < 1)
@@ -589,13 +611,9 @@ namespace V2RayGCon.Services
             {
                 foreach (var uid in uids)
                 {
-                    if (!string.IsNullOrEmpty(uid)
-                        && coreServCache.TryGetValue(uid, out var coreServ)
-                        && coreServ != null)
+                    var coreServ = DeleteServerByUidWorker(uid);
+                    if (coreServ != null)
                     {
-                        var cfg = coreServ.GetConfiger().GetConfig();
-                        configCache.TryRemove(cfg, out _);
-                        coreServCache.Remove(uid);
                         coreServs.Add(coreServ);
                     }
                 }
@@ -763,6 +781,20 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+        Controllers.CoreServerCtrl DeleteServerByUidWorker(string uid)
+        {
+            if (!string.IsNullOrEmpty(uid)
+                && coreServCache.TryGetValue(uid, out var coreServ)
+                && coreServ != null)
+            {
+                var cfg = coreServ.GetConfiger().GetConfig();
+                configCache.TryRemove(cfg, out _);
+                coreServCache.Remove(uid);
+                return coreServ;
+            }
+            return null;
+        }
+
         bool AddServerWithFormatedConfigWorker(string config, string mark, bool quiet = false)
         {
             // unknow bug 2023-05-08

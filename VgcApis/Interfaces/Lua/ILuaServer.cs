@@ -50,21 +50,6 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="uids"></param>
         int DeleteServerByUids(LuaTable uids);
 
-        // 下面那个GetAllServers()的简化版
-        List<ICoreServ> GetAllServs();
-
-        // 下面那个名字很像的函数的简化版
-        ICoreServ GetServByIndex(int index);
-
-        // 下面那个名字很像的函数的简化版
-        ICoreServ GetServByUid(string uid);
-
-        // 下面那个名字很像的函数的简化版
-        ICoreServ GetServByConfig(string config);
-
-        // 下面那个名字很像的函数的简化版
-        List<ICoreServ> GetServsByUids(LuaTable uids);
-
         /// <summary>
         /// 获取全部服务器（操作服务器的脚本通常都从这个函数开始）
         /// </summary>

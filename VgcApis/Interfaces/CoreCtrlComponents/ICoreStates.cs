@@ -224,6 +224,9 @@
         /// <param name="selected">是否选中</param>
         void SetIsSelected(bool selected);
 
+        void SetInboundIp(string ip);
+        void SetInboundPort(int port);
+
         /// <summary>
         /// 设置服务器inbound地址
         /// </summary>

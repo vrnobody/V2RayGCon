@@ -42,29 +42,6 @@ namespace Luna.Models.Apis.Components
         public bool DeleteServerByConfig(string config) =>
             vgcServers.DeleteServerByConfig(config, true);
 
-        public ICoreServ GetServByIndex(int index)
-        {
-            return CoreServWrapper.Wrap<ICoreServ>(GetServerByIndex(index));
-        }
-
-        public ICoreServ GetServByUid(string uid)
-        {
-            return CoreServWrapper.Wrap<ICoreServ>(GetServerByUid(uid));
-        }
-
-        public List<ICoreServ> GetServsByUids(LuaTable uids)
-        {
-            var servs = GetServersByUids(uids)
-                .Select(s => CoreServWrapper.Wrap<ICoreServ>(s))
-                .ToList();
-            return servs;
-        }
-
-        public ICoreServ GetServByConfig(string config)
-        {
-            return CoreServWrapper.Wrap<ICoreServ>(GetServerByConfig(config));
-        }
-
         public ICoreServCtrl GetServerByConfig(string config)
         {
             return vgcServers.GetServerByConfig(config);
@@ -104,19 +81,10 @@ namespace Luna.Models.Apis.Components
         public long RunCustomSpeedTest(string rawConfig, string testUrl, int testTimeout) =>
             vgcConfigMgr.RunCustomSpeedTest(rawConfig, testUrl, testTimeout);
 
-        public List<VgcApis.Interfaces.ICoreServCtrl> GetAllServers() =>
+        public List<ICoreServCtrl> GetAllServers() =>
             vgcServers.GetAllServersOrderByIndex();
 
-        public List<VgcApis.Interfaces.ICoreServ> GetAllServs()
-        {
-            var servs = vgcServers.GetAllServersOrderByIndex();
-            var coreServs = servs
-                .Select(s => CoreServWrapper.Wrap<VgcApis.Interfaces.ICoreServ>(s))
-                .ToList();
-            return coreServs;
-        }
-
-        public List<VgcApis.Interfaces.ICoreServCtrl> GetServersByUids(LuaTable uids)
+        public List<ICoreServCtrl> GetServersByUids(LuaTable uids)
         {
             var list = global::Luna.Misc.Utils.LuaTableToList(uids, false);
             return vgcServers.GetServersByUidsOrderByIndex(list);

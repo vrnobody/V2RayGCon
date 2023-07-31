@@ -41,10 +41,11 @@ end
 function RemoveServ()
     while true do
         RandomWait()
-        local cserv = Server:GetServByIndex(1)
-        if cserv ~= nil then
-            local uid = cserv:GetUid()
-            local title = cserv:GetTitle()
+        local coreServ = Server:GetServerByIndex(1)
+        if coreServ ~= nil then
+            local coreState = coreServ:GetCoreStates()
+            local uid = coreState:GetUid()
+            local title = coreState:GetTitle()
             Server:DeleteServerByUids({uid})
             print("remove server:", title)
         end
@@ -56,10 +57,11 @@ function SetServIndex()
         RandomWait()
         local count = Server:Count()
         local old = RandomPick(count)
-        local cserv = Server:GetServByIndex(old)
-        if cserv ~= nil then        
+        local coreServ = Server:GetServerByIndex(old)
+        if coreServ ~= nil then
+            local coreState = coreServ:GetCoreStates()
             local new = RandomPick(count)
-            cserv:SetIndex(nex)
+            coreState:SetIndex(new)
             print("set index from", old, "to", new)
         end
     end
@@ -71,12 +73,14 @@ function StartServ()
         Server:StopAllServers()
         local count = Server:Count()
         local index = RandomPick(count)
-        local cserv = Server:GetServByIndex(index)
-        if cserv ~= nil then
+        local coreServ = Server:GetServerByIndex(index)
+        if coreServ ~= nil then
             local port = math.random(10000, 60000)
-            cserv:SetInboundAddr("127.0.0.1", port)
-            cserv:RestartCore()
-            local title = cserv:GetTitle()
+            local coreState = coreServ:GetCoreStates()
+            coreState:SetInboundAddr("127.0.0.1", port)
+            local coreCtrl = coreServ:GetCoreCtrl()
+            coreCtrl:RestartCore()
+            local title = coreState:GetTitle()
             print("start server:", title)
         end
     end

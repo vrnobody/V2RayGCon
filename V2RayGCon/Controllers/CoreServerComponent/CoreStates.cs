@@ -203,6 +203,24 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             GetParent().InvokeEventOnPropertyChange();
         }
 
+        public void SetInboundIp(string ip)
+        {
+            if (ip != coreInfo.inbIp)
+            {
+                coreInfo.inbIp = ip;
+                GetParent().InvokeEventOnPropertyChange();
+            }
+        }
+
+        public void SetInboundPort(int port)
+        {
+            if (port != coreInfo.inbPort)
+            {
+                coreInfo.inbPort = port;
+                GetParent().InvokeEventOnPropertyChange();
+            }
+        }
+
         public void SetInboundAddr(string ip, int port)
         {
             var changed = false;

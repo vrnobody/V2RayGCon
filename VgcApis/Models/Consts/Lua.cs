@@ -67,15 +67,15 @@ namespace VgcApis.Models.Consts
                 typeof(Interfaces.Lua.ILuaWeb),
                 typeof(Interfaces.Lua.ILuaMailBox),
                 typeof(Interfaces.Lua.ILuaMail),
-                typeof(Interfaces.ICoreServ),
-                //obsolete
-                /*
+
+                // 性能太差，禁用2023-07
+                // typeof(Interfaces.ICoreServ),
+                
                 typeof(Interfaces.ICoreServCtrl),
                 typeof(Interfaces.CoreCtrlComponents.IConfiger),
                 typeof(Interfaces.CoreCtrlComponents.ICoreCtrl),
                 typeof(Interfaces.CoreCtrlComponents.ICoreStates),
                 typeof(Interfaces.CoreCtrlComponents.ILogger),
-                */
             };
 
             foreach (var t in types)

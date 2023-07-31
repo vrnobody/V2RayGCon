@@ -2,7 +2,7 @@
 using System;
 namespace VgcApis.Interfaces
 {
-    public interface ICoreServ :
+    public interface ICoreServWrapper :
          CoreCtrlComponents.IConfiger,
          CoreCtrlComponents.ICoreCtrl,
          CoreCtrlComponents.ICoreStates,

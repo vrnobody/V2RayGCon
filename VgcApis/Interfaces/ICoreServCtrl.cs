@@ -25,5 +25,7 @@ namespace VgcApis.Interfaces
 
         //内部使用，脚本一般用不到
         void UpdateCoreSettings(Models.Datas.CoreServSettings coreServSettings);
+
+        IWrappedCoreServCtrl Wrap();
     }
 }

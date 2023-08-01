@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -10,6 +9,7 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
         VgcApis.Interfaces.Services.IUtilsService
     {
         #region misc
+
         public string GetAppVersion() => Misc.Utils.GetAssemblyVersion();
 
         public string AddLinkPrefix(string linkBody, VgcApis.Models.Datas.Enums.LinkTypes type) =>

@@ -236,5 +236,12 @@ namespace VgcApis.Interfaces.Lua
         /// </summary>
         void UpdateAllSummary();
 
+        #region wrap interface
+        List<IWrappedCoreServCtrl> GetAllWrappedServers();
+        IWrappedCoreServCtrl GetWrappedServerByIndex(int index);
+        IWrappedCoreServCtrl GetWrappedServerByUid(string uid);
+        IWrappedCoreServCtrl GetWrappedServerByConfig(string config);
+        List<IWrappedCoreServCtrl> GetWrappedServersByUids(LuaTable uids);
+        #endregion
     }
 }

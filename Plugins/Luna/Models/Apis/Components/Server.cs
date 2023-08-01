@@ -235,5 +235,21 @@ namespace Luna.Models.Apis.Components
                 VgcApis.Models.Datas.Enums.BalancerStrategies.Random,
                 VgcApis.Models.Datas.Enums.PackageTypes.Chain);
 
+        #region wrap interface
+        public List<IWrappedCoreServCtrl> GetAllWrappedServers() =>
+            GetAllServers().Select(c => c.Wrap()).ToList();
+
+        public IWrappedCoreServCtrl GetWrappedServerByIndex(int index) =>
+            GetServerByIndex(index).Wrap();
+
+        public IWrappedCoreServCtrl GetWrappedServerByUid(string uid) =>
+            GetServerByUid(uid).Wrap();
+
+        public IWrappedCoreServCtrl GetWrappedServerByConfig(string config) =>
+            GetServerByConfig(config).Wrap();
+
+        public List<IWrappedCoreServCtrl> GetWrappedServersByUids(LuaTable uids) =>
+            GetServersByUids(uids).Select(c => c.Wrap()).ToList();
+        #endregion
     }
 }

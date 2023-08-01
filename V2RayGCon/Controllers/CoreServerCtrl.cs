@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using VgcApis.Interfaces;
 using VgcApis.Interfaces.CoreCtrlComponents;
 using VgcApis.Models.Datas;
 
@@ -127,6 +128,11 @@ namespace V2RayGCon.Controllers
         #endregion
 
         #region public methods
+        public IWrappedCoreServCtrl Wrap()
+        {
+            return CoreServerComponent.Wrapper.Wrap(this);
+        }
+
         public void UpdateCoreSettings(CoreServSettings coreServSettings)
         {
             if (isDisposed)
@@ -207,8 +213,6 @@ namespace V2RayGCon.Controllers
             coreCtrl?.StopCore();
             coreCtrl?.ReleaseEvents();
         }
-
-
         #endregion
     }
 }

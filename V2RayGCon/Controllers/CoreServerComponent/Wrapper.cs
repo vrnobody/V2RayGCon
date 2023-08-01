@@ -5,33 +5,27 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 
-namespace Luna.Models.Apis.Components
+namespace V2RayGCon.Controllers.CoreServerComponent
 {
-    public class CoreServWrapper : DynamicObject
+    public class Wrapper : DynamicObject
     {
         private readonly VgcApis.Interfaces.ICoreServCtrl coreServCtrl;
 
         #region public exports
-        public static TInterface Wrap<TInterface>(VgcApis.Interfaces.ICoreServCtrl coreServCtrl)
-            where TInterface : class
+        public static VgcApis.Interfaces.IWrappedCoreServCtrl Wrap(VgcApis.Interfaces.ICoreServCtrl coreServCtrl)
         {
-            if (!typeof(TInterface).IsInterface)
-            {
-                throw new ArgumentException("TInterface must be an Interface");
-            }
-
             if (coreServCtrl == null)
             {
                 return null;
             }
 
-            return new CoreServWrapper(coreServCtrl).ActLike<TInterface>();
+            return new Wrapper(coreServCtrl).ActLike<VgcApis.Interfaces.IWrappedCoreServCtrl>();
         }
 
         #endregion
 
         #region ctor
-        private CoreServWrapper(VgcApis.Interfaces.ICoreServCtrl coreServCtrl)
+        private Wrapper(VgcApis.Interfaces.ICoreServCtrl coreServCtrl)
         {
             this.coreServCtrl = coreServCtrl;
         }
@@ -56,6 +50,11 @@ namespace Luna.Models.Apis.Components
                         result = minf.Invoke(comp, args);
                         return true;
                     }
+                }
+                else if (funcName == "Unwrap")
+                {
+                    result = coreServCtrl;
+                    return true;
                 }
             }
             catch

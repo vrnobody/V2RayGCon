@@ -80,6 +80,9 @@ namespace V2RayGCon.Services
                 coreServCache);
         }
 
+        #region reflection
+        #endregion
+
         #region sort
         public void ResetIndex() => indexHandler.ResetIndex(false);
 

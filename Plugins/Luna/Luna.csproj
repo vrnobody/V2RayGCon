@@ -42,12 +42,6 @@
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Castle.Core.4.4.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Dynamitey, Version=2.0.9.136, Culture=neutral, PublicKeyToken=cbf53ea3aeb972c6, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Dynamitey.2.0.9.136\lib\net40\Dynamitey.dll</HintPath>
-    </Reference>
-    <Reference Include="ImpromptuInterface, Version=7.0.1.0, Culture=neutral, PublicKeyToken=0b1781c923b2975b, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\ImpromptuInterface.7.0.1\lib\net40\ImpromptuInterface.dll</HintPath>
-    </Reference>
     <Reference Include="KeraLua, Version=1.0.26.0, Culture=neutral, PublicKeyToken=6a194c04b9c89217, processorArchitecture=MSIL">
       <HintPath>..\..\packages\KeraLua.1.0.26\lib\net45\KeraLua.dll</HintPath>
     </Reference>
@@ -101,7 +95,6 @@
     <Compile Include="Misc\UI.cs" />
     <Compile Include="Luna.cs" />
     <Compile Include="Misc\Utils.cs" />
-    <Compile Include="Models\Apis\Components\CoreServWrapper.cs" />
     <Compile Include="Models\Apis\LuaSignal.cs" />
     <Compile Include="Models\Apis\Components\Server.cs" />
     <Compile Include="Models\Apis\Components\Misc.cs" />

@@ -234,14 +234,14 @@ namespace Luna.Libs.LuaSnippet
                 new Tuple<string,Type>("Web", typeof(VgcApis.Interfaces.Lua.ILuaWeb)),
                 new Tuple<string,Type>("Signal", typeof(VgcApis.Interfaces.Lua.ILuaSignal)),
 
-                // 性能太差，暂时禁用 2023-07
-                // new Tuple<string, Type>("cserv",typeof(VgcApis.Interfaces.ICoreServ)),
+                // 2023-08-01 测试结果 Wrap()开销9ns，Invoke()开销2ns，还可以接受。
+                new Tuple<string, Type>("wserv", typeof(VgcApis.Interfaces.IWrappedCoreServCtrl)),
 
-                new Tuple<string, Type>("coreServ",typeof(VgcApis.Interfaces.ICoreServCtrl)),
-                new Tuple<string, Type>("coreConfiger",typeof(VgcApis.Interfaces.CoreCtrlComponents.IConfiger)),
-                new Tuple<string, Type>("coreCtrl",typeof(VgcApis.Interfaces.CoreCtrlComponents.ICoreCtrl)),
-                new Tuple<string, Type>("coreState",typeof(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates)),
-                new Tuple<string, Type>("coreLogger",typeof(VgcApis.Interfaces.CoreCtrlComponents.ILogger)),
+                new Tuple<string, Type>("coreServ", typeof(VgcApis.Interfaces.ICoreServCtrl)),
+                new Tuple<string, Type>("coreConfiger", typeof(VgcApis.Interfaces.CoreCtrlComponents.IConfiger)),
+                new Tuple<string, Type>("coreCtrl", typeof(VgcApis.Interfaces.CoreCtrlComponents.ICoreCtrl)),
+                new Tuple<string, Type>("coreState", typeof(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates)),
+                new Tuple<string, Type>("coreLogger", typeof(VgcApis.Interfaces.CoreCtrlComponents.ILogger)),
             };
 
             webUiLuaSnippetsCache = GenWebUiSnippets(apis);

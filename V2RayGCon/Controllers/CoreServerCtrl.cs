@@ -8,7 +8,8 @@ namespace V2RayGCon.Controllers
 {
     public class CoreServerCtrl :
         VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
-        VgcApis.Interfaces.ICoreServCtrl
+        VgcApis.Interfaces.ICoreServCtrl,
+        IComparable
     {
         public event EventHandler
             OnPropertyChanged,
@@ -108,6 +109,23 @@ namespace V2RayGCon.Controllers
         }
         #endregion
 
+        #region IComparable
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+            {
+                return 1;
+            }
+
+            if (obj is VgcApis.Interfaces.ICoreServCtrl target)
+            {
+                return this.GetCoreStates().GetIndex().CompareTo(target.GetCoreStates().GetIndex());
+            }
+
+            throw new ArgumentException("Object is not a VgcApis.Interfaces.ICoreServCtrl");
+        }
+        #endregion
+
         #region public methods
         public void UpdateCoreSettings(CoreServSettings coreServSettings)
         {
@@ -189,6 +207,8 @@ namespace V2RayGCon.Controllers
             coreCtrl?.StopCore();
             coreCtrl?.ReleaseEvents();
         }
+
+
         #endregion
     }
 }

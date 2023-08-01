@@ -87,7 +87,7 @@ namespace Luna.Models.Apis.Components
         public List<ICoreServCtrl> GetServersByUids(LuaTable uids)
         {
             var list = global::Luna.Misc.Utils.LuaTableToList(uids, false);
-            return vgcServers.GetServersByUidsOrderByIndex(list);
+            return vgcServers.GetServersByUids(list);
         }
 
         public void ReverseSelectedByIndex() =>

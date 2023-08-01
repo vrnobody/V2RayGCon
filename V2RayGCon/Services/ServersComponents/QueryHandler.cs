@@ -23,7 +23,7 @@ namespace V2RayGCon.Services.ServersComponents
 
         public List<ICoreServCtrl> GetServers(
            Func<KeyValuePair<string, Controllers.CoreServerCtrl>, bool> predicate,
-           bool? descending = null)
+           bool? isDescending = null)
         {
             return AtomicReader(() =>
             {
@@ -34,11 +34,11 @@ namespace V2RayGCon.Services.ServersComponents
                     list = list.Where(predicate);
                 }
 
-                if (descending != null)
+                if (isDescending != null)
                 {
-                    list = descending == false ?
-                        list.OrderBy(kv => kv.Value.GetCoreStates().GetIndex()) :
-                        list.OrderByDescending(kv => kv.Value.GetCoreStates().GetIndex());
+                    list = isDescending == false ?
+                        list.OrderBy(kv => kv.Value) :
+                        list.OrderByDescending(kv => kv.Value);
                 }
                 return list
                     .Select(kv => kv.Value as ICoreServCtrl)
@@ -49,8 +49,8 @@ namespace V2RayGCon.Services.ServersComponents
         public List<ICoreServCtrl> GetRunningServers() =>
             GetServers(kv => kv.Value.GetCoreCtrl().IsCoreRunning());
 
-        public List<ICoreServCtrl> GetAllServers(bool? descending = null) =>
-            GetServers(null, descending);
+        public List<ICoreServCtrl> GetAllServers(bool? isDescending = null) =>
+            GetServers(null, isDescending);
 
         public ICoreServCtrl GetServersByUid(string uid)
         {

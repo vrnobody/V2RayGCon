@@ -72,7 +72,7 @@ namespace V2RayGCon.Services.ServersComponents
             try
             {
                 coreServs = coreServCache
-                   .OrderBy(kv => kv.Value.GetCoreStates().GetIndex())
+                   .OrderBy(kv => kv.Value)
                    .Select(kv => kv.Value.GetCoreStates())
                    .ToList();
             }
@@ -172,7 +172,7 @@ namespace V2RayGCon.Services.ServersComponents
             try
             {
                 selectedServers.Sort(comparer);
-                var minIndex = selectedServers.Select(s => s.GetCoreStates().GetIndex()).Min();
+                var minIndex = selectedServers.Min(s => s.GetCoreStates().GetIndex());
                 var delta = 1.0 / 2 / selectedServers.Count;
                 for (int i = 0; i < selectedServers.Count; i++)
                 {

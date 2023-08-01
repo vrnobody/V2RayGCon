@@ -46,7 +46,7 @@ namespace V2RayGCon.Views.WinForms
             cboxMark.Items.AddRange(servers.GetMarkList());
 
             var firstCtrl = servers.GetSelectedServers()
-                .OrderBy(s => s.GetCoreStates().GetIndex())
+                .OrderBy(s => s)
                 .FirstOrDefault();
 
             if (firstCtrl == null)

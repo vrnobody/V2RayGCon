@@ -164,10 +164,8 @@ namespace V2RayGCon.Services
         public List<ICoreServCtrl> GetAllServersOrderByIndex() =>
             queryHandler.GetAllServers(false);
 
-        public List<ICoreServCtrl> GetServersByUidsOrderByIndex(IEnumerable<string> uids) =>
-            queryHandler.GetServersByUids(uids)
-                .OrderBy(cs => cs.GetCoreStates().GetIndex())
-                .ToList();
+        public List<ICoreServCtrl> GetServersByUids(IEnumerable<string> uids) =>
+            queryHandler.GetServersByUids(uids);
 
         public List<ICoreServCtrl> GetTrackableServerList() =>
             queryHandler.GetTrackableServerList();
@@ -720,7 +718,7 @@ namespace V2RayGCon.Services
             }
         }
 
-        public VgcApis.Interfaces.ICoreServCtrl GetServerByUid(string uid)
+        public ICoreServCtrl GetServerByUid(string uid)
         {
             if (!string.IsNullOrEmpty(uid) && coreServCache.TryGetValue(uid, out var coreServ))
             {

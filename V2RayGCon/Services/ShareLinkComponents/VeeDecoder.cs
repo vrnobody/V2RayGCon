@@ -164,7 +164,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             // Unicode encoder can not handle all possible byte values.
 
             string b64Body = Misc.Utils.GetLinkBody(veeLink);
-            string b64Padded = Misc.Utils.Base64PadRight(b64Body);
+            string b64Padded = VgcApis.Misc.Utils.Base64PadRight(b64Body);
             return Convert.FromBase64String(b64Padded);
         }
 

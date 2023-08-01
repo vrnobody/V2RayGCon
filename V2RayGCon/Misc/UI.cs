@@ -267,12 +267,7 @@ namespace V2RayGCon.Misc
             // Enable automatic folding
             scintilla.AutomaticFold = (AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change);
 
-            // key binding
-
-            // clear default keyboard shortcut
-            scintilla.ClearCmdKey(Keys.Control | Keys.P);
-            scintilla.ClearCmdKey(Keys.Control | Keys.S);
-            scintilla.ClearCmdKey(Keys.Control | Keys.F);
+            VgcApis.Misc.Utils.ClearControlKeys(scintilla, null);
 
             // Configure a margin to display line number
             if (!readOnlyMode)
@@ -286,6 +281,8 @@ namespace V2RayGCon.Misc
 
             return scintilla;
         }
+
+
 
         public static void FillComboBox(ComboBox cbox, Dictionary<int, string> table)
         {

@@ -73,7 +73,7 @@ namespace V2RayGCon.Controllers
                 serverString += @" "
                     + VgcApis.Models.Datas.Enums.LinkTypes.v2cfg.ToString()
                     + @"://"
-                    + Misc.Utils.Base64Encode(server.GetConfiger().GetConfig())
+                    + VgcApis.Misc.Utils.Base64EncodeString(server.GetConfiger().GetConfig())
                     + Environment.NewLine;
             }
 

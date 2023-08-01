@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Luna.Resources.Langs;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLua;
 using System;
@@ -345,18 +346,18 @@ namespace Luna.Models.Apis
             }
         }
 
-        public string LuaVmGetScript(string luavm)
+        public string LuaVmGetScript(string vmh)
         {
-            if (luaVms.TryGetValue(luavm, out var vm))
+            if (luaVms.TryGetValue(vmh, out var vm))
             {
                 return vm.coreCtrl?.script ?? "";
             }
             return "";
         }
 
-        public bool LuaVmRemove(string luavm)
+        public bool LuaVmRemove(string vmh)
         {
-            if (luaVms.TryRemove(luavm, out var vm))
+            if (luaVms.TryRemove(vmh, out var vm))
             {
                 vm.coreCtrl?.Cleanup();
                 return true;
@@ -364,12 +365,21 @@ namespace Luna.Models.Apis
             return false;
         }
 
-        public void LuaVmWait(string luavm) => LuaVmWait(luavm, 1000);
+        public string LuaVmGetResult(string vmh)
+        {
+            if (luaVms.TryGetValue(vmh, out var vm))
+            {
+                return vm.coreCtrl.GetResult();
+            }
+            return null;
+        }
 
-        public void LuaVmWait(string luavm, int delay)
+        public void LuaVmWait(string vmh) => LuaVmWait(vmh, -1);
+
+        public void LuaVmWait(string vmh, int ms)
         {
             Controllers.LuaCoreCtrl core = null;
-            if (luaVms.TryGetValue(luavm, out var vm))
+            if (luaVms.TryGetValue(vmh, out var vm))
             {
                 core = vm.coreCtrl;
             }
@@ -378,26 +388,36 @@ namespace Luna.Models.Apis
             {
                 return;
             }
-            while (core?.isRunning == true)
-            {
-                VgcApis.Misc.Utils.Sleep(delay);
-            }
+
+            core.Wait(ms);
         }
 
-        public string LuaVmCreate()
+        public string LuaVmCreate() => LuaVmCreate(string.Empty);
+
+        public string LuaVmCreate(string name)
         {
             var vm = new LuaVm()
             {
                 logger = new VgcApis.Libs.Sys.QueueLogger(),
             };
 
+            Action<string> log = (msg) =>
+            {
+                var n = vm.coreCtrl.name;
+                var m = string.IsNullOrEmpty(n) ? msg : $"[{n}] {msg}";
+                luaApis.SendLog(m);
+                vm.logger.Log(msg);
+            };
+
             // 开始无限套娃
             var formMgr = luaApis.formMgr;
-            var core = Misc.Utils.CreateLuaCoreCtrl(formMgr, vm.logger.Log);
+            var core = Misc.Utils.CreateLuaCoreCtrl(formMgr, log);
             if (core == null)
             {
                 return null;
             }
+
+            core.name = name;
             vm.coreCtrl = core;
             var luavm = Guid.NewGuid().ToString();
             if (!luaVms.TryAdd(luavm, vm))
@@ -407,14 +427,26 @@ namespace Luna.Models.Apis
             return luavm;
         }
 
-        public bool LuaVmRun(string luavm, string name, string script) =>
-            LuaVmRun(luavm, name, script, false);
+        public bool LuaVmRun(string vmh, string script) =>
+            LuaVmRun(vmh, script, false);
 
-        public bool LuaVmRun(string luavm, string name, string script, bool isLoadClr)
+        public bool LuaVmRun(string vmh, string script, bool isLoadClr)
         {
-            if (luaVms.TryGetValue(luavm, out var vm))
+            if (luaVms.TryGetValue(vmh, out var vm))
             {
-                return Misc.Utils.DoString(vm.coreCtrl, name, script, isLoadClr);
+                return Misc.Utils.DoString(vm.coreCtrl, script, isLoadClr);
+            }
+            return false;
+        }
+
+        // obsolete backward compatible
+        public bool LuaVmRun(string vmh, string name, string script, bool isLoadClr)
+        {
+            if (luaVms.TryGetValue(vmh, out var vm))
+            {
+                var empty = $"({I18N.Empty})";
+                vm.coreCtrl.name = string.IsNullOrEmpty(name) ? empty : name;
+                return Misc.Utils.DoString(vm.coreCtrl, script, isLoadClr);
             }
             return false;
         }
@@ -438,25 +470,25 @@ namespace Luna.Models.Apis
             return JsonConvert.SerializeObject(infos);
         }
 
-        public void LuaVmAbort(string luavm)
+        public void LuaVmAbort(string vmh)
         {
-            if (luaVms.TryGetValue(luavm, out var vm))
+            if (luaVms.TryGetValue(vmh, out var vm))
             {
                 vm.coreCtrl?.Abort();
             }
         }
 
-        public void LuaVmStop(string luavm)
+        public void LuaVmStop(string vmh)
         {
-            if (luaVms.TryGetValue(luavm, out var vm))
+            if (luaVms.TryGetValue(vmh, out var vm))
             {
                 vm.coreCtrl?.Stop();
             }
         }
 
-        public bool LuaVmIsRunning(string luavm)
+        public bool LuaVmIsRunning(string vmh)
         {
-            if (luaVms.TryGetValue(luavm, out var vm))
+            if (luaVms.TryGetValue(vmh, out var vm))
             {
                 var isRunning = vm.coreCtrl?.isRunning;
                 return isRunning == true;
@@ -464,19 +496,18 @@ namespace Luna.Models.Apis
             return false;
         }
 
-        public void LuaVmClearLog(string luavm)
+        public void LuaVmClearLog(string vmh)
         {
-            if (luaVms.TryGetValue(luavm, out var vm))
+            if (luaVms.TryGetValue(vmh, out var vm))
             {
                 vm.logger?.Clear();
             }
         }
 
-
-        public string LuaVmGetLog(string luavm)
+        public string LuaVmGetLog(string vmh)
         {
 
-            if (luaVms.TryGetValue(luavm, out var vm))
+            if (luaVms.TryGetValue(vmh, out var vm))
             {
                 var log = vm.logger?.GetLogAsString(false);
                 if (!vm.coreCtrl.isRunning && vm.lastLogSend == log)

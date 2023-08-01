@@ -137,6 +137,7 @@ namespace Luna.Controllers.FormEditorCtrl
                         tboxGoto.SelectAll();
                         break;
                     case Keys.F:
+                    case Keys.H:
                         ShowFormSearchHandler(this, EventArgs.Empty);
                         break;
                     case Keys.S:
@@ -417,7 +418,9 @@ namespace Luna.Controllers.FormEditorCtrl
 
             var name = cboxScriptName.Text;
             var script = editor.Text;
-            Misc.Utils.DoString(luaCoreCtrl, name, script, isLoadClrLib);
+
+            luaCoreCtrl.name = string.IsNullOrEmpty(name) ? $"({I18N.Empty})" : name;
+            Misc.Utils.DoString(luaCoreCtrl, script, isLoadClrLib);
         }
 
         private void BindEvents()

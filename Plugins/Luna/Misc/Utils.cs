@@ -8,15 +8,13 @@ namespace Luna.Misc
     {
         #region lua vm
 
-        internal static bool DoString(Controllers.LuaCoreCtrl coreCtrl, string name, string script, bool isLoadClr)
+        internal static bool DoString(Controllers.LuaCoreCtrl coreCtrl, string script, bool isLoadClr)
         {
             if (coreCtrl == null)
             {
                 return false;
             }
-            name = string.IsNullOrEmpty(name) ? $"({Resources.Langs.I18N.Empty})" : name;
             coreCtrl.Abort();
-            coreCtrl.name = name;
             coreCtrl.script = script;
             coreCtrl.isLoadClr = isLoadClr;
             coreCtrl.Start();

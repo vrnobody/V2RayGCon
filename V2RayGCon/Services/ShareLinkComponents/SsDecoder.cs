@@ -58,7 +58,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
 
             var auth = string.Format("{0}:{1}", vc.auth2, vc.auth1);
-            var userinfo = Misc.Utils.Base64Encode(auth)
+            var userinfo = VgcApis.Misc.Utils.Base64EncodeString(auth)
                 .Replace("=", "")
                 .Replace('+', '-')
                 .Replace('/', '_');

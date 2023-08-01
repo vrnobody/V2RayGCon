@@ -72,7 +72,6 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base64Tests.cs" />
     <Compile Include="DecoderTests\VmessShareLinkTests.cs" />
     <Compile Include="Experiments\CoreServCtrlWrapperPerfTests.cs" />
     <Compile Include="Experiments\FileReadWriteTests.cs" />

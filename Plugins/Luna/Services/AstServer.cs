@@ -237,8 +237,10 @@ namespace Luna.Services
 
                 var script = string.Format(tpl, fn);
                 string r = state.DoString(script)[0] as string;
-
-                return JObject.Parse(r);
+                if (!string.IsNullOrEmpty(r))
+                {
+                    return JObject.Parse(r);
+                }
             }
             catch { }
             return null;

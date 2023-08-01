@@ -904,7 +904,8 @@ namespace V2RayGCon.Misc
         {
             try
             {
-                string plainText = Base64Decode(GetLinkBody(link));
+
+                string plainText = VgcApis.Misc.Utils.Base64DecodeToString(GetLinkBody(link));
                 var vmess = JsonConvert.DeserializeObject<Models.Datas.Vmess>(plainText);
                 if (!string.IsNullOrEmpty(vmess.add)
                     && !string.IsNullOrEmpty(vmess.port)
@@ -932,8 +933,8 @@ namespace V2RayGCon.Misc
                 return body;
             }
 
-            var ss = Base64Decode(parts[0]) + "@" + parts[1];
-            return Base64Encode(ss);
+            var ss = VgcApis.Misc.Utils.Base64DecodeToString(parts[0]) + "@" + parts[1];
+            return VgcApis.Misc.Utils.Base64EncodeString(ss);
         }
 
         public static Models.Datas.Shadowsocks SsLink2Ss(string body)
@@ -941,7 +942,7 @@ namespace V2RayGCon.Misc
             try
             {
                 var ss = new Models.Datas.Shadowsocks();
-                var plainText = Base64Decode(body);
+                var plainText = VgcApis.Misc.Utils.Base64DecodeToString(body);
                 var parts = plainText.Split('@');
                 var mp = parts[0].Split(':');
                 if (parts[1].Length > 0 && mp[0].Length > 0 && mp[1].Length > 0)
@@ -997,38 +998,6 @@ namespace V2RayGCon.Misc
             }
             return string.Join(",", s);
         }
-
-        public static string Base64Encode(string plainText)
-        {
-            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-            return Convert.ToBase64String(plainTextBytes);
-        }
-
-        public static string Base64PadRight(string base64)
-        {
-            // 一位顾客点了一份炒饭，酒吧炸了
-            var str = base64
-                .Replace('_', '/')
-                .Replace('-', '+')
-                .Replace("\r", "")
-                .Replace("\n", "")
-                .Replace("=", "");
-
-            var len = str.Length;
-            return str.PadRight(len + (4 - len % 4) % 4, '=');
-        }
-
-        public static string Base64Decode(string base64EncodedData)
-        {
-            if (string.IsNullOrEmpty(base64EncodedData))
-            {
-                return string.Empty;
-            }
-            var padded = Base64PadRight(base64EncodedData);
-            var base64EncodedBytes = Convert.FromBase64String(padded);
-            return Encoding.UTF8.GetString(base64EncodedBytes);
-        }
-
         #endregion
 
         #region net
@@ -1095,7 +1064,7 @@ namespace V2RayGCon.Misc
                 {
                     try
                     {
-                        var text = Base64Decode(b64);
+                        var text = VgcApis.Misc.Utils.Base64DecodeToString(b64);
                         links.Add(text);
                     }
                     catch { }

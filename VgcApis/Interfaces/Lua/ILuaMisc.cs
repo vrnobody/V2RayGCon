@@ -407,6 +407,9 @@ namespace VgcApis.Interfaces.Lua
         /// <returns>解码后的字符串（解码失败返回null）</returns>
         string Base64Decode(string b64Str);
 
+        string Basse64EncodeBytes(byte[] bytes);
+        byte[] Base64DecodeToBytes(string b64Str);
+
         /// <summary>
         /// 将config编码为v2cfg链接
         /// </summary>

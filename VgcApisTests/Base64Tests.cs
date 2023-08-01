@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace V2RayGCon.Test
+namespace VgcApisTests
 {
     [TestClass]
     public class Base64Tests
@@ -21,16 +21,16 @@ namespace V2RayGCon.Test
         {
             foreach (var str in normalStrings)
             {
-                var encoded = Misc.Utils.Base64Encode(str);
-                var decoded = Misc.Utils.Base64Decode(encoded);
+                var encoded = VgcApis.Misc.Utils.Base64EncodeString(str);
+                var decoded = VgcApis.Misc.Utils.Base64DecodeToString(encoded);
                 Assert.AreEqual(str, decoded);
             }
 
             for (int i = 0; i < 100; i++)
             {
                 var str = GenRandHex();
-                var encoded = Misc.Utils.Base64Encode(str);
-                var decoded = Misc.Utils.Base64Decode(encoded);
+                var encoded = VgcApis.Misc.Utils.Base64EncodeString(str);
+                var decoded = VgcApis.Misc.Utils.Base64DecodeToString(encoded);
                 Assert.AreEqual(str, decoded);
             }
         }

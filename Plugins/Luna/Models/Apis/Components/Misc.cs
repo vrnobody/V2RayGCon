@@ -258,13 +258,19 @@ namespace Luna.Models.Apis.Components
         /// null: failed
         /// </summary>
         public string Base64Encode(string text) =>
-            vgcUtils.Base64Encode(text);
+            VgcApis.Misc.Utils.Base64EncodeString(text);
+
+        public string Basse64EncodeBytes(byte[] bytes) =>
+            VgcApis.Misc.Utils.Base64EncodeBytes(bytes);
+
+        public byte[] Base64DecodeToBytes(string b64Str) =>
+            VgcApis.Misc.Utils.Base64DecodeToBytes(b64Str);
 
         /// <summary>
         /// null: failed
         /// </summary>
         public string Base64Decode(string b64Str) =>
-            vgcUtils.Base64Decode(b64Str);
+            VgcApis.Misc.Utils.Base64DecodeToString(b64Str);
 
         public string GetLinkBody(string link) =>
             vgcUtils.GetLinkBody(link);

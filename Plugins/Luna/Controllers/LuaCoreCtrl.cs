@@ -1,4 +1,5 @@
 ﻿using Luna.Resources.Langs;
+using Newtonsoft.Json;
 using NLua;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,9 @@ namespace Luna.Controllers
         Models.Apis.LuaSignal luaSignal;
         Models.Apis.LuaSys luaSys = null;
 
+        string result = null;
+        ManualResetEvent coreStopBar = new ManualResetEvent(true);
+
         Thread luaCoreThread;
         private readonly bool enableTracebackFeature;
 
@@ -33,6 +37,8 @@ namespace Luna.Controllers
             this.coreSetting = luaCoreState;
             this.luaApis = luaApis;
             this.luaSignal = new Models.Apis.LuaSignal(settings);
+
+            isRunning = false;
         }
 
         #region properties 
@@ -60,7 +66,6 @@ namespace Luna.Controllers
                 Save();
             }
         }
-
 
         public double index
         {
@@ -127,13 +132,22 @@ namespace Luna.Controllers
             get => coreSetting.isRunning;
             private set
             {
+                if (value)
+                {
+                    coreStopBar.Reset();
+                }
+                else
+                {
+                    coreStopBar.Set();
+                }
+
                 if (coreSetting.isRunning == value)
                 {
                     return;
                 }
 
                 coreSetting.isRunning = value;
-                if (value == false)
+                if (value == false && !string.IsNullOrEmpty(name))
                 {
                     SendLog($"{coreSetting.name} {I18N.Stopped}");
                 }
@@ -155,6 +169,20 @@ namespace Luna.Controllers
         public Models.Data.LuaCoreSetting GetCoreSettings() =>
             coreSetting;
 
+        public string GetResult() => result;
+
+        public void Wait(int ms)
+        {
+            if (ms > 0)
+            {
+                coreStopBar.WaitOne(ms);
+            }
+            else
+            {
+                coreStopBar.WaitOne();
+            }
+        }
+
         public void Stop()
         {
             if (!isRunning)
@@ -162,7 +190,10 @@ namespace Luna.Controllers
                 return;
             }
 
-            SendLog($"{I18N.SendStopSignalTo} {coreSetting.name}");
+            if (!string.IsNullOrEmpty(name))
+            {
+                SendLog($"{I18N.SendStopSignalTo} {coreSetting.name}");
+            }
             luaSignal.SetStopSignal(true);
             luaSys?.OnSignalStop();
         }
@@ -180,7 +211,10 @@ namespace Luna.Controllers
 
             isRunning = true;
 
-            SendLog($"{I18N.Start} {coreSetting.name}");
+            if (!string.IsNullOrEmpty(name))
+            {
+                SendLog($"{I18N.Start} {coreSetting.name}");
+            }
 
             luaCoreThread = new Thread(RunLuaScript)
             {
@@ -193,7 +227,10 @@ namespace Luna.Controllers
 
         public void Cleanup()
         {
-            AbortNow();
+            if (isRunning)
+            {
+                AbortNow();
+            }
         }
         #endregion
 
@@ -237,6 +274,8 @@ namespace Luna.Controllers
 
         void RunLuaScript()
         {
+            result = null;
+
             luaSys?.Dispose();
             luaSys = new Models.Apis.LuaSys(luaApis, GetAllAssemblies);
 
@@ -246,7 +285,11 @@ namespace Luna.Controllers
             {
                 try
                 {
-                    core.DoString(coreSetting.script);
+                    var results = core.DoString(coreSetting.script);
+                    if (results != null && results.Length > 0)
+                    {
+                        result = JsonConvert.SerializeObject(results);
+                    }
                 }
                 catch (Exception e)
                 {

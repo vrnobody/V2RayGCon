@@ -243,6 +243,7 @@ namespace V2RayGCon.Views.WinForms
                             ToggleToolsPanel(!isShowPanel);
                             break;
                         case (Keys.Control | Keys.F):
+                        case (Keys.Control | Keys.H):
                             ShowSearchBox();
                             break;
                         case (Keys.Control | Keys.S):

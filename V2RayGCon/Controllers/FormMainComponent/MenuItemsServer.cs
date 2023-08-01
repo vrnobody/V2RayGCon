@@ -232,14 +232,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 var links = EncodeSelectedServersIntoShareLinks(
                     VgcApis.Models.Datas.Enums.LinkTypes.v);
-                var b64Links = Misc.Utils.Base64Encode(links);
+                var b64Links = VgcApis.Misc.Utils.Base64EncodeString(links);
                 Misc.Utils.CopyToClipboardAndPrompt(b64Links);
             });
 
             copyAsVmessSubscriptions.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 var links = EncodeSelectedServersIntoVmixShareLinks();
-                var b64Links = Misc.Utils.Base64Encode(links);
+                var b64Links = VgcApis.Misc.Utils.Base64EncodeString(links);
                 Misc.Utils.CopyToClipboardAndPrompt(b64Links);
             });
 

@@ -15,26 +15,6 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
         public string AddLinkPrefix(string linkBody, VgcApis.Models.Datas.Enums.LinkTypes type) =>
             Misc.Utils.AddLinkPrefix(linkBody, type);
 
-        public string Base64Encode(string plainText)
-        {
-            try
-            {
-                return Misc.Utils.Base64Encode(plainText);
-            }
-            catch { }
-            return null;
-        }
-
-        public string Base64Decode(string b64String)
-        {
-            try
-            {
-                return Misc.Utils.Base64Decode(b64String);
-            }
-            catch { }
-            return null;
-        }
-
         public string GetLinkBody(string link) =>
             Misc.Utils.GetLinkBody(link);
 

@@ -20,7 +20,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             try
             {
                 var linkBody = Misc.Utils.GetLinkBody(shareLink);
-                var plainText = Misc.Utils.Base64Decode(linkBody);
+                var plainText = VgcApis.Misc.Utils.Base64DecodeToString(linkBody);
                 var config = JObject.Parse(plainText);
                 if (config != null)
                 {
@@ -38,7 +38,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var body = Misc.Utils.Base64Encode(config);
+            var body = VgcApis.Misc.Utils.Base64EncodeString(config);
 
             return Misc.Utils.AddLinkPrefix(
                 body,

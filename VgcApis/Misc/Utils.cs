@@ -59,6 +59,27 @@ namespace VgcApis.Misc
         #endregion
 
         #region editor
+        public static void ClearControlKeys(Scintilla scintilla, List<Keys> extra)
+        {
+            // key binding
+            var keys = new List<Keys>() {
+                Keys.F, Keys.G, Keys.H, Keys.N, Keys.P, Keys.S,
+            };
+
+            if (extra != null && extra.Count() > 0)
+            {
+                keys.AddRange(extra);
+            }
+
+            foreach (var key in keys)
+            {
+                // clear default keyboard shortcut
+                scintilla.ClearCmdKey(Keys.Control | key);
+                // assign null action
+                scintilla.AssignCmdKey(Keys.Control | key, Command.Null);
+            }
+        }
+
         public static void BindEditorDragDropEvent(Scintilla editor)
         {
             editor.AllowDrop = true;
@@ -1277,6 +1298,50 @@ namespace VgcApis.Misc
         #endregion
 
         #region string processor
+        public static string Base64EncodeBytes(byte[] bytes) =>
+            Convert.ToBase64String(bytes);
+
+        public static string Base64EncodeString(string plainText)
+        {
+            var utf8Bytes = Encoding.UTF8.GetBytes(plainText);
+            return Base64EncodeBytes(utf8Bytes);
+        }
+
+        public static string Base64PadRight(string base64)
+        {
+            // 一位顾客点了一份炒饭，酒吧炸了
+            var str = base64
+                .Replace('_', '/')
+                .Replace('-', '+')
+                .Replace("\r", "")
+                .Replace("\n", "")
+                .Replace("=", "");
+
+            var len = str.Length;
+            return str.PadRight(len + (4 - len % 4) % 4, '=');
+        }
+
+        public static byte[] Base64DecodeToBytes(string b64Str)
+        {
+            if (string.IsNullOrEmpty(b64Str))
+            {
+                return null;
+            }
+            var padded = Base64PadRight(b64Str);
+            return Convert.FromBase64String(padded);
+        }
+
+        public static string Base64DecodeToString(string b64Str)
+        {
+            if (string.IsNullOrEmpty(b64Str))
+            {
+                return string.Empty;
+            }
+            var padded = Base64PadRight(b64Str);
+            var base64EncodedBytes = Convert.FromBase64String(padded);
+            return Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
 
         /// <summary>
         /// Return empty list if some thing goes wrong.

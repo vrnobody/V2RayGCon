@@ -1,4 +1,5 @@
 ﻿using ScintillaNET;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -101,14 +102,14 @@ namespace Luna.Misc
             scintilla.AutomaticFold = (AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change);
 
             // Disable cmd
-            scintilla.ClearCmdKey(Keys.Control | Keys.G);
-            scintilla.ClearCmdKey(Keys.Control | Keys.OemOpenBrackets);
-            scintilla.ClearCmdKey(Keys.Control | Keys.Oem6);
-            scintilla.ClearCmdKey(Keys.Control | Keys.OemMinus);
-            scintilla.ClearCmdKey(Keys.Control | Keys.Oemplus);
-            scintilla.ClearCmdKey(Keys.Control | Keys.F);
-            scintilla.ClearCmdKey(Keys.Control | Keys.S);
-            scintilla.ClearCmdKey(Keys.Control | Keys.N);
+            var extra = new List<Keys>() {
+                Keys.OemOpenBrackets,
+                Keys.Oem6,
+                Keys.OemMinus,
+                Keys.Oemplus,
+            };
+            VgcApis.Misc.Utils.ClearControlKeys(scintilla, extra);
+
 
             // Configure a margin to display line number
             scintilla.Margins[0].Type = MarginType.Number;

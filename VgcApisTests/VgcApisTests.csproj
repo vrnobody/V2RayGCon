@@ -58,6 +58,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base64Tests.cs" />
     <Compile Include="ZipExtensionsTests.cs" />
     <Compile Include="BitStreamTests.cs" />
     <Compile Include="RecorderTests.cs" />

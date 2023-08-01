@@ -17,8 +17,12 @@ namespace VgcApis.Interfaces.Lua
 
         #region Lua VM
 
-        // 这堆Lua***()函数是给WebUI的Luna功能提供支持用的。
-        // 函数名随时可能改变，不建议在脚本中使用这些的函数。
+        // 这堆Lua***()函数给WebUI的Luna功能提供支持用的。
+        // 函数名随时可能改变，目前不建议在脚本中使用这些的函数。
+
+        // vmh: lua virtual machine handle
+        // LuaServ***() 对应winform中的脚本管理器
+        // LuaVm***() 对应winform中的脚本编辑器
 
         string LuaGenModuleSnippets(string code);
 
@@ -53,34 +57,40 @@ namespace VgcApis.Interfaces.Lua
 
         string LuaServGetAllScripts();
 
-        bool LuaVmRemove(string luavm);
+        bool LuaVmRemove(string vmh);
 
         void LuaVmRemoveStopped();
 
-        string LuaVmGetScript(string luavm);
+        string LuaVmGetScript(string vmh);
 
+        void LuaVmWait(string vmh);
 
-        void LuaVmWait(string luavm);
-
-        void LuaVmWait(string luavm, int delay);
+        void LuaVmWait(string vmh, int ms);
 
         string LuaVmCreate();
 
-        bool LuaVmRun(string luavm, string name, string script, bool isLoadClr);
+        // tag for logging
+        string LuaVmCreate(string tag);
 
-        bool LuaVmRun(string luavm, string name, string script);
+        string LuaVmGetResult(string vmh);
+
+        bool LuaVmRun(string vmh, string script);
+        bool LuaVmRun(string vmh, string script, bool isLoadClr);
+
+        // obsolete backward compatible
+        bool LuaVmRun(string vmh, string name, string script, bool isLoadClr);
 
         string LuaVmGetAllVmsInfo();
 
-        void LuaVmAbort(string luavm);
+        void LuaVmAbort(string vmh);
 
-        void LuaVmStop(string luavm);
+        void LuaVmStop(string vmh);
 
-        bool LuaVmIsRunning(string luavm);
+        bool LuaVmIsRunning(string vmh);
 
-        void LuaVmClearLog(string luavm);
+        void LuaVmClearLog(string vmh);
 
-        string LuaVmGetLog(string luavm);
+        string LuaVmGetLog(string vmh);
         #endregion
 
         #region Net

@@ -10,8 +10,7 @@ namespace VgcApis.Interfaces.Services
         string GetAppVersion();
 
         string AddLinkPrefix(string linkBody, VgcApis.Models.Datas.Enums.LinkTypes type);
-        string Base64Encode(string plainText);
-        string Base64Decode(string b64String);
+
         string GetLinkBody(string link);
 
         void ExecuteInParallel<TParam>(

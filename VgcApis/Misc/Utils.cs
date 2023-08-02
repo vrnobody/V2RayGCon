@@ -1323,23 +1323,31 @@ namespace VgcApis.Misc
 
         public static byte[] Base64DecodeToBytes(string b64Str)
         {
-            if (string.IsNullOrEmpty(b64Str))
+            if (!string.IsNullOrEmpty(b64Str))
             {
-                return null;
+                try
+                {
+                    var padded = Base64PadRight(b64Str);
+                    return Convert.FromBase64String(padded);
+                }
+                catch { }
             }
-            var padded = Base64PadRight(b64Str);
-            return Convert.FromBase64String(padded);
+            return null;
         }
 
         public static string Base64DecodeToString(string b64Str)
         {
-            if (string.IsNullOrEmpty(b64Str))
+            if (!string.IsNullOrEmpty(b64Str))
             {
-                return string.Empty;
+                try
+                {
+                    var padded = Base64PadRight(b64Str);
+                    var bytes = Convert.FromBase64String(padded);
+                    return Encoding.UTF8.GetString(bytes);
+                }
+                catch { }
             }
-            var padded = Base64PadRight(b64Str);
-            var base64EncodedBytes = Convert.FromBase64String(padded);
-            return Encoding.UTF8.GetString(base64EncodedBytes);
+            return null;
         }
 
 

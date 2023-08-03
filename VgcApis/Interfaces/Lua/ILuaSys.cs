@@ -18,6 +18,12 @@ namespace VgcApis.Interfaces.Lua
         void SetWarnOnExit(bool isOn);
         #endregion
 
+        #region ILuaSys.SnapCache
+        string SnapCacheGetToken();
+        object SnapCacheGet(string token, string key);
+        bool SnapCacheSet(string token, string key, object value);
+        #endregion
+
         #region Lua VM
 
         // 这堆Lua***()函数给WebUI的Luna功能提供支持用的。

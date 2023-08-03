@@ -104,6 +104,7 @@
     <Compile Include="Models\Apis\SysCmpos\HttpServer.cs" />
     <Compile Include="Models\Apis\SysCmpos\MailBox.cs" />
     <Compile Include="Models\Apis\SysCmpos\PostOffice.cs" />
+    <Compile Include="Models\Apis\SysCmpos\SnapCache.cs" />
     <Compile Include="Models\Data\LuaCoreSetting.cs" />
     <Compile Include="Models\Data\UserSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

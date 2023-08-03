@@ -62,7 +62,7 @@ namespace Luna.Models.Apis
     class LuaVm
     {
         public VgcApis.Libs.Sys.QueueLogger logger;
-        public Controllers.LuaCoreCtrl coreCtrl;
+        public LuaCoreCtrl coreCtrl;
         public string lastLogSend = "";
     }
 
@@ -94,6 +94,8 @@ namespace Luna.Models.Apis
         Services.LuaServer luaServer;
         Services.AstServer astServer;
 
+        SysCmpos.SnapCache snapCache = new SysCmpos.SnapCache();
+
         public LuaSys(
             LuaCoreCtrl luaCoreCtrl,
             LuaApis luaApis,
@@ -110,6 +112,20 @@ namespace Luna.Models.Apis
             this.astServer = luaApis.formMgr.astServer;
 
         }
+
+        #region ILuaSys.SnapCache
+        public string SnapCacheGetToken() => snapCache.GetToken();
+
+        public object SnapCacheGet(string token, string key)
+        {
+            return snapCache.Get(token, key);
+        }
+
+        public bool SnapCacheSet(string token, string key, object value)
+        {
+            return snapCache.Set(token, key, value);
+        }
+        #endregion
 
         #region ILuaSys.LuaCoreCtrl
         public void SetWarnOnExit(bool isOn) => luaCoreCtrl.isWarnOnExit = isOn;
@@ -1403,6 +1419,8 @@ namespace Luna.Models.Apis
             CloseAllMailBox();
             RemoveAllLuaVms();
             KillAllProcesses();
+
+            snapCache?.Dispose();
         }
 
         #endregion

@@ -26,6 +26,7 @@ local t1 = thread.new(counter)
 local t2 = thread.new(counter, "T2")
 
 -- 因为跨线程需要序列化，所以参数只可以是简单类型
+-- 也不可以有nil, false等table内认定为空的值
 -- 对应 counter(name, value)
 t1:Start("#1", 100)
 t2:Start("#2", 200)
@@ -46,23 +47,18 @@ local json = require('lua.libs.json')
 
 local M = {}
 
+-- 这么写是为了减少污染 _G 全局变量
 local tpl = [[
-local base64 = require('lua.libs.base64')
-local json = require('lua.libs.json')
-
-local sp = "{param}"
-local sf = "{function}"
-
-local ps = json.decode(base64.decode(sp))
-local f = base64.decode_func(sf)
-
-return f(table.unpack(ps))
+return require('lua.libs.base64').decode_func("{function}")(
+    table.unpack(
+        require('lua.libs.json').decode(
+            require('lua.libs.base64').decode("{param}"))))
 ]]
 
 local function replace_params(script, ...)
     local sp = json.encode({...})
 
-    -- 引号转义问题
+    -- 避免引号转义问题
     local b64 = base64.encode(sp)
     
     return string.gsub(script, "{param}", b64)
@@ -118,7 +114,7 @@ local function StopAll(...)
     end
 end
 
--- 只可以用于不用传参数的线程
+-- 只能用于不需要传入参数的线程
 local function StartAll(...)
     for k, v in pairs({...}) do
         v:Start()
@@ -136,8 +132,8 @@ M.WaitAll = WaitAll
 
 function M.new(func, tag)
     
-    assert(type(func), "function", "func must be function")
-    assert(tag == nil or type(tag), "string", "tag must be string or nil")
+    assert(type(func) == "function", "func must be function")
+    assert(tag == nil or type(tag) == "string", "tag must be string or nil")
     
     local script = replace_func(tpl, func)
     assert(type(script) == "string", "parse function failed")

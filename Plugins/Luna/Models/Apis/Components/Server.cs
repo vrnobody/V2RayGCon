@@ -237,19 +237,23 @@ namespace Luna.Models.Apis.Components
 
         #region wrap interface
         public List<IWrappedCoreServCtrl> GetAllWrappedServers() =>
-            GetAllServers().Select(c => c.Wrap()).ToList();
+            GetAllServers().Select(c => c?.Wrap())
+                .Where(c => c != null)
+                .ToList();
 
         public IWrappedCoreServCtrl GetWrappedServerByIndex(int index) =>
-            GetServerByIndex(index).Wrap();
+            GetServerByIndex(index)?.Wrap();
 
         public IWrappedCoreServCtrl GetWrappedServerByUid(string uid) =>
-            GetServerByUid(uid).Wrap();
+            GetServerByUid(uid)?.Wrap();
 
         public IWrappedCoreServCtrl GetWrappedServerByConfig(string config) =>
-            GetServerByConfig(config).Wrap();
+            GetServerByConfig(config)?.Wrap();
 
         public List<IWrappedCoreServCtrl> GetWrappedServersByUids(LuaTable uids) =>
-            GetServersByUids(uids).Select(c => c.Wrap()).ToList();
+            GetServersByUids(uids).Select(c => c?.Wrap())
+                .Where(c => c != null)
+                .ToList();
         #endregion
     }
 }

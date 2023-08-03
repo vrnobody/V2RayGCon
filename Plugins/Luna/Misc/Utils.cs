@@ -40,6 +40,10 @@ namespace Luna.Misc
         public static List<string> LuaTableToList(NLua.LuaTable table, bool includeKey)
         {
             var r = new List<string>();
+            if (table == null)
+            {
+                return r;
+            }
             foreach (KeyValuePair<object, object> de in table)
             {
                 var v = de.Value.ToString();
@@ -55,6 +59,10 @@ namespace Luna.Misc
         public static Dictionary<string, string> LuaTableToDictionary(NLua.LuaTable data)
         {
             var r = new Dictionary<string, string>();
+            if (data == null)
+            {
+                return r;
+            }
             foreach (KeyValuePair<object, object> de in data)
             {
                 r[de.Key.ToString()] = de.Value.ToString();

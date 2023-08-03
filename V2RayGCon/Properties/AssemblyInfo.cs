@@ -39,6 +39,7 @@ using System.Runtime.InteropServices;
 /*
  * v1.7.1.25 Add Sys:SetWarnOnExit().
  *           Add SnapCache().
+ *           Fix null ref bug.
  * v1.7.1.24 Add thread.lua.
  * v1.7.1.23 Move ICoreServCtrlWrapper from Luna plug-in to V2RayGCon project and rename to IWrappedCoreServCtrl.
  *           Add "wserv" snippet keyword.

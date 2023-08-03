@@ -12,10 +12,6 @@ u.SecPerDay = SecPerDay
 u.Timeout = Misc:GetTimeoutValue()
 
 -- helper functions 
-local function AllServs()
-    return Each(Server:GetAllServers())
-end
-
 local function ToNumber(s)
     return tonumber(s) or 0
 end
@@ -57,6 +53,26 @@ local function Ticks2Days(ticks)
     return math.floor(days)
 end
 
+local function GetAllServs()
+    local servs = {}
+    local et = Server:GetAllServers():GetEnumerator()
+    while et:MoveNext() do
+        table.insert(servs, et.Current)
+    end
+    et:Dispose()
+    return servs
+end
+
+local function GetAllWrappedServs()
+    local servs = {}
+    local et = Server:GetAllWrappedServers():GetEnumerator()
+    while et:MoveNext() do
+        table.insert(servs, et.Current)
+    end
+    et:Dispose()
+    return servs
+end
+
 local function GetServsByMarks(marks, isRemark, isContains)
     
     assert(type(marks) == "table")
@@ -65,9 +81,9 @@ local function GetServsByMarks(marks, isRemark, isContains)
     
     local with = {}
     local without = {}
-    for coreServ in AllServs() do
-        local coreState = coreServ:GetCoreStates()
-        local mark = isRemark and coreState:GetRemark() or coreState:GetMark()
+    for _, coreServ in ipairs(GetAllServs()) do
+        local wserv = coreServ:Wrap()
+        local mark = isRemark and wserv:GetRemark() or wserv:GetMark()
         if IsInTable(marks, mark) then
             table.insert(with, coreServ)
         else
@@ -87,7 +103,7 @@ local function GetFirstServerWith(marks, isRemark, isContains)
     assert(type(isRemark), "boolean")
     assert(type(isContains), "boolean")
     
-    for coreServ in AllServs() do
+    for _, coreServ in ipairs(GetAllServs()) do
         local coreState = coreServ:GetCoreStates()
         local mark = isRemark and coreState:GetRemark() or coreState:GetMark()
         local has = IsInTable(marks, mark)
@@ -105,12 +121,14 @@ local function GetFirstServerWith(marks, isRemark, isContains)
 end
 
 -- utils
-function u.GC()
+function u.GC(hideStats)
     local prev = collectgarbage("count")
     collectgarbage("collect")
-    local cur = math.floor(collectgarbage("count"))
-    local diff = math.floor(prev - cur)
-    print("Mem stat: collected ", diff, " KiB current ", cur, " KiB")
+    if hideStats ~= true then
+        local cur = math.floor(collectgarbage("count"))
+        local diff = math.floor(prev - cur)
+        print("Mem stat: collected ", diff, " KiB current ", cur, " KiB")
+    end
 end
 
 function u.ToNumber(str)
@@ -189,7 +207,7 @@ end
 
 function u.GetFirstServerWithName(name)
     assert(type(name) == "string")
-    for coreServ in AllServs() do
+    for _, coreServ in ipairs(GetAllServs()) do
         local coreState = coreServ:GetCoreStates()
         if coreState:GetName() == name then
             return coreServ
@@ -200,29 +218,17 @@ end
 
 function u.GetFirstServerWithUid(uid)
     assert(type(uid) == "string")
-    for coreServ in AllServs() do
-        local coreState = coreServ:GetCoreStates()
-        if coreState:GetUid() == uid then
-            return coreServ
-        end
-    end
-    return nil
+    return Server:GetServerByUid(uid)
 end
 
 function u.GetServerByIndex(index)
     assert(type(index) == "number")
-    for coreServ in AllServs() do
-        local coreState = coreServ:GetCoreStates()
-        if coreState:GetIndex() == index then
-            return coreServ
-        end
-    end
-    return nil
+    return Server:GetServerByIndex(index)
 end
 
-function u.InvertServersSelection(servers)
-    assert(type(servers) == "table")
-    for k, coreServ in pairs(servers) do
+function u.InvertServersSelection(coreServs)
+    assert(type(coreServs) == "table")
+    for k, coreServ in pairs(coreServs) do
         local coreState = coreServ:GetCoreStates()
         local selected = coreState:IsSelected()
         coreState:SetIsSelected(not selected)
@@ -250,8 +256,7 @@ function u.SelectServers(servers)
 end
 
 function u.SelectAllTimeouted()
-    local servs = Server:GetAllServers()
-    for coreServ in Each(servs) do
+    for _, coreServ in ipairs(GetAllServs()) do
         local coreState = coreServ:GetCoreStates()
         local latency = coreState:GetSpeedTestResult()
         local isTimeout = latency == u.Timeout
@@ -260,14 +265,14 @@ function u.SelectAllTimeouted()
 end
 
 function u.SelectAll()
-    for coreServ in AllServs() do
+    for _, coreServ in ipairs(GetAllServs()) do
         local coreState = coreServ:GetCoreStates()
         coreState:SetIsSelected(true)
     end
 end
 
 function u.InvertSelection()
-    for coreServ in AllServs() do
+    for _, coreServ in ipairs(GetAllServs()) do
         local coreState = coreServ:GetCoreStates()
         local selected = coreState:IsSelected()
         coreState:SetIsSelected(not selected)
@@ -275,7 +280,7 @@ function u.InvertSelection()
 end
 
 function u.SelectNone()
-    for coreServ in AllServs() do
+    for _, coreServ in ipairs(GetAllServs()) do
         local coreState = coreServ:GetCoreStates()
         coreState:SetIsSelected(false)
     end
@@ -313,5 +318,8 @@ function u.ToLuaDate(cSharpTicks)
     local t = ToLuaTicks(cSharpTicks)
     return os.date('%Y-%m-%d %H:%M:%S', t)
 end
+
+u.GetAllServers = GetAllServs
+u.GetAllWrappedServers = GetAllWrappedServs
 
 return u

@@ -1,4 +1,5 @@
-﻿using Luna.Resources.Langs;
+﻿using Luna.Controllers;
+using Luna.Resources.Langs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLua;
@@ -70,7 +71,7 @@ namespace Luna.Models.Apis
         VgcApis.Interfaces.Lua.ILuaSys
     {
         readonly object procLocker = new object();
-
+        private readonly LuaCoreCtrl luaCoreCtrl;
         private readonly LuaApis luaApis;
         private readonly Func<List<Type>> getAllAssemblies;
         List<Process> processes = new List<Process>();
@@ -94,9 +95,11 @@ namespace Luna.Models.Apis
         Services.AstServer astServer;
 
         public LuaSys(
+            LuaCoreCtrl luaCoreCtrl,
             LuaApis luaApis,
             Func<List<Type>> getAllAssemblies)
         {
+            this.luaCoreCtrl = luaCoreCtrl;
             this.luaApis = luaApis;
             this.getAllAssemblies = getAllAssemblies;
             this.postOffice = luaApis.GetPostOffice();
@@ -107,6 +110,10 @@ namespace Luna.Models.Apis
             this.astServer = luaApis.formMgr.astServer;
 
         }
+
+        #region ILuaSys.LuaCoreCtrl
+        public void SetWarnOnExit(bool isOn) => luaCoreCtrl.isWarnOnExit = isOn;
+        #endregion
 
         #region ILuaSys.LuaVm
         private void BuildOneModuleSnippets(string varName, JObject ast, List<Dictionary<string, string>> snippets)

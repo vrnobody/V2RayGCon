@@ -14,6 +14,9 @@ namespace VgcApis.Interfaces.Lua
         /// <returns>1.2.3.4</returns>
         string GetAppVersion();
 
+        #region ILuaSys.LuaCoreCtrl
+        void SetWarnOnExit(bool isOn);
+        #endregion
 
         #region Lua VM
 

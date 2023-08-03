@@ -42,6 +42,8 @@ namespace Luna.Controllers
         }
 
         #region properties 
+        public bool isWarnOnExit = false;
+
         public string name
         {
             get => coreSetting.name;
@@ -190,6 +192,9 @@ namespace Luna.Controllers
                 return;
             }
 
+            // disable warn is user click stop button
+            isWarnOnExit = false;
+
             if (!string.IsNullOrEmpty(name))
             {
                 SendLog($"{I18N.SendStopSignalTo} {coreSetting.name}");
@@ -210,6 +215,7 @@ namespace Luna.Controllers
             }
 
             isRunning = true;
+            isWarnOnExit = false;
 
             if (!string.IsNullOrEmpty(name))
             {
@@ -277,7 +283,7 @@ namespace Luna.Controllers
             result = null;
 
             luaSys?.Dispose();
-            luaSys = new Models.Apis.LuaSys(luaApis, GetAllAssemblies);
+            luaSys = new Models.Apis.LuaSys(this, luaApis, GetAllAssemblies);
 
             luaSignal.ResetAllSignals();
 
@@ -293,11 +299,9 @@ namespace Luna.Controllers
                 }
                 catch (Exception e)
                 {
-                    SendLog($"[{coreSetting.name}] {e}");
-                    if (core.UseTraceback)
-                    {
-                        SendLog(core.GetDebugTraceback());
-                    }
+                    var isTraceOn = core.UseTraceback;
+                    var coreErr = core.GetDebugTraceback();
+                    ShowErrorMessageToUser(isTraceOn, coreErr, e.ToString());
                 }
             }
 
@@ -305,6 +309,24 @@ namespace Luna.Controllers
             luaSys = null;
 
             isRunning = false;
+        }
+
+        private void ShowErrorMessageToUser(bool isTraceOn, string coreErr, string ex)
+        {
+            SendLog($"[{coreSetting.name}] {ex}");
+            if (isTraceOn)
+            {
+                SendLog(coreErr);
+            }
+
+            if (isWarnOnExit)
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine($"Luna script: [{coreSetting.name}]");
+                sb.AppendLine(ex);
+                sb.AppendLine(coreErr);
+                VgcApis.Misc.UI.MsgBoxAsync(sb.ToString());
+            }
         }
 
         Lua CreateLuaCore(Models.Apis.LuaSys luaSys)

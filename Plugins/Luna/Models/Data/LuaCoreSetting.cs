@@ -2,13 +2,16 @@
 {
     public class LuaCoreSetting
     {
-        public bool isRunning { get; set; }
         public double index { get; set; }
-        public bool isHidden { get; set; }
         public string name { get; set; }
         public string script { get; set; }
 
+        public bool isRunning { get; set; }
+
+        public bool isHidden { get; set; }
+
         public bool isLoadClr { get; set; }
+
         public bool isAutorun { get; set; }
 
         public LuaCoreSetting()

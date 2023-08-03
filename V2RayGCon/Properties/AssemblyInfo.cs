@@ -37,6 +37,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.7.1.25 Add Sys:SetWarnOnExit().
  * v1.7.1.24 Add thread.lua.
  * v1.7.1.23 Move ICoreServCtrlWrapper from Luna plug-in to V2RayGCon project and rename to IWrappedCoreServCtrl.
  *           Add "wserv" snippet keyword.

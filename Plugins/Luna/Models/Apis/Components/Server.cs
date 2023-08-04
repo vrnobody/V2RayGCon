@@ -236,11 +236,6 @@ namespace Luna.Models.Apis.Components
                 VgcApis.Models.Datas.Enums.PackageTypes.Chain);
 
         #region wrap interface
-        public List<IWrappedCoreServCtrl> GetAllWrappedServers() =>
-            GetAllServers().Select(c => c?.Wrap())
-                .Where(c => c != null)
-                .ToList();
-
         public IWrappedCoreServCtrl GetWrappedServerByIndex(int index) =>
             GetServerByIndex(index)?.Wrap();
 

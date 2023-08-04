@@ -53,6 +53,16 @@ local function Ticks2Days(ticks)
     return math.floor(days)
 end
 
+local function ToLuaTable(ienum)
+    local r = {}
+    local et = ienum:GetEnumerator()
+    while et:MoveNext() do
+        table.insert(r, et.Current)
+    end
+    et:Dispose()
+    return r
+end
+
 local function GetAllServs()
     local servs = {}
     local et = Server:GetAllServers():GetEnumerator()
@@ -65,9 +75,9 @@ end
 
 local function GetAllWrappedServs()
     local servs = {}
-    local et = Server:GetAllWrappedServers():GetEnumerator()
+    local et = Server:GetAllServers():GetEnumerator()
     while et:MoveNext() do
-        table.insert(servs, et.Current)
+        table.insert(servs, et.Current:Wrap())
     end
     et:Dispose()
     return servs
@@ -319,6 +329,7 @@ function u.ToLuaDate(cSharpTicks)
     return os.date('%Y-%m-%d %H:%M:%S', t)
 end
 
+u.ToLuaTable = ToLuaTable
 u.GetAllServers = GetAllServs
 u.GetAllWrappedServers = GetAllWrappedServs
 

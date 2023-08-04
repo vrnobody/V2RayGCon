@@ -237,7 +237,6 @@ namespace VgcApis.Interfaces.Lua
         void UpdateAllSummary();
 
         #region wrap interface
-        List<IWrappedCoreServCtrl> GetAllWrappedServers();
         IWrappedCoreServCtrl GetWrappedServerByIndex(int index);
         IWrappedCoreServCtrl GetWrappedServerByUid(string uid);
         IWrappedCoreServCtrl GetWrappedServerByConfig(string config);

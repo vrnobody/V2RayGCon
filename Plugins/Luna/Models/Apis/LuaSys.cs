@@ -382,7 +382,7 @@ namespace Luna.Models.Apis
         {
             if (luaVms.TryRemove(vmh, out var vm))
             {
-                vm.coreCtrl?.Cleanup();
+                vm.coreCtrl?.Dispose();
                 return true;
             }
             return false;
@@ -1402,7 +1402,7 @@ namespace Luna.Models.Apis
             {
                 if (luaVms.TryRemove(handle, out var luaVm))
                 {
-                    luaVm.coreCtrl?.Cleanup();
+                    luaVm.coreCtrl?.Dispose();
                 }
             }
         }

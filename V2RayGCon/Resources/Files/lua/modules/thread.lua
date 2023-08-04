@@ -85,6 +85,10 @@ function M:GetResult()
     local r = json.decode(j)
     return table.unpack(r)
 end
+
+function M:Cleanup()
+    return Sys:LuaVmRemove(self.vmh)
+end
     
 function M:IsRunning()
     return Sys:LuaVmIsRunning(self.vmh)

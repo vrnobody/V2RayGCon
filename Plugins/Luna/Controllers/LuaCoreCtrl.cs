@@ -8,7 +8,8 @@ using System.Threading;
 
 namespace Luna.Controllers
 {
-    internal class LuaCoreCtrl
+    internal class LuaCoreCtrl :
+        VgcApis.BaseClasses.Disposable
     {
         public EventHandler OnStateChange;
 
@@ -230,14 +231,6 @@ namespace Luna.Controllers
 
             luaCoreThread.Start();
         }
-
-        public void Cleanup()
-        {
-            if (isRunning)
-            {
-                AbortNow();
-            }
-        }
         #endregion
 
         #region private methods
@@ -359,6 +352,16 @@ namespace Luna.Controllers
 
         void Save() => settings.SaveUserSettingsLater();
 
+        #endregion
+
+        #region protected methods
+        protected override void Cleanup()
+        {
+            if (isRunning)
+            {
+                AbortNow();
+            }
+        }
         #endregion
     }
 }

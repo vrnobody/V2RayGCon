@@ -176,7 +176,7 @@ namespace Luna.Services
             var coreCtrls = GetAllLuaCoreCtrls();
             foreach (var ctrl in coreCtrls)
             {
-                ctrl.Cleanup();
+                ctrl.Dispose();
             }
         }
         #endregion
@@ -186,12 +186,13 @@ namespace Luna.Services
         {
             var name = coreCtrl.name;
             coreCtrl.OnStateChange -= OnRequireMenuUpdateHandler;
-            coreCtrl.Abort();
             lock (rwLock)
             {
                 luaCoreCtrls.Remove(coreCtrl);
             }
             settings.GetLuaCoreSettings().RemoveAll(s => s.name == name);
+
+            coreCtrl.Dispose();
         }
 
         bool AddOrReplaceScriptQuiet(string name, string script)

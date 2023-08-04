@@ -53,8 +53,11 @@ local function Ticks2Days(ticks)
     return math.floor(days)
 end
 
-local function ToLuaTable(ienum)
+function u.ToLuaTable(ienum)
     local r = {}
+    if ienum == nil or type(ienum) ~= "userdata" then
+        return r
+    end
     local et = ienum:GetEnumerator()
     while et:MoveNext() do
         table.insert(r, et.Current)
@@ -329,8 +332,13 @@ function u.ToLuaDate(cSharpTicks)
     return os.date('%Y-%m-%d %H:%M:%S', t)
 end
 
-u.ToLuaTable = ToLuaTable
-u.GetAllServers = GetAllServs
-u.GetAllWrappedServers = GetAllWrappedServs
+-- 这样写有代码提示
+function u.GetAllServers()
+    return GetAllServs()
+end
+
+function u.GetAllWrappedServers()
+    return GetAllWrappedServs()
+end
 
 return u

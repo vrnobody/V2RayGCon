@@ -63,7 +63,12 @@ function M.decode_func(str)
     return load(bytes)
 end
 
-M.encode = encode
-M.decode = decode
+function M.encode(data)
+    return encode(data)
+end
+
+function M.decode(data)
+    return decode(data)
+end
 
 return M

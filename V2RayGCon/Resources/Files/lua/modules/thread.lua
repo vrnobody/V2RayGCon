@@ -108,14 +108,14 @@ function M:Wait(ms)
     Sys:LuaVmWait(self.vmh, ms)
 end
 
-local function StopAll(...)
+function M.StopAll(...)
     for k, v in pairs({...}) do
         v:Stop()
     end
 end
 
 -- 只能用于不需要传入参数的线程
-local function StartAll(...)
+function M.StartAll(...)
     for k, v in pairs({...}) do
         v:Start()
     end
@@ -126,9 +126,6 @@ local function WaitAll(...)
         v:Wait()
     end
 end
-
-M.StopAll = StopAll
-M.WaitAll = WaitAll
 
 function M.new(func, tag)
     

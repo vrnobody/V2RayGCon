@@ -102,9 +102,6 @@
     <Compile Include="Models\Apis\LuaApis.cs" />
     <Compile Include="Models\Apis\LuaSys.cs" />
     <Compile Include="Models\Apis\SysCmpos\HttpServer.cs" />
-    <Compile Include="Models\Apis\SysCmpos\MailBox.cs" />
-    <Compile Include="Models\Apis\SysCmpos\PostOffice.cs" />
-    <Compile Include="Models\Apis\SysCmpos\SnapCache.cs" />
     <Compile Include="Models\Data\LuaCoreSetting.cs" />
     <Compile Include="Models\Data\UserSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -262,8 +259,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>rem copy lua native dll
-rem xcopy /s /y "$(SolutionDir)packages\NLua.1.3.2.1\lib\native\*.*" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\..\packages\KeraLua.1.0.29\build\net45\KeraLua.targets" Condition="Exists('..\..\packages\KeraLua.1.0.29\build\net45\KeraLua.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

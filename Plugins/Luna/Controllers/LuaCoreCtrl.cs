@@ -284,10 +284,16 @@ namespace Luna.Controllers
             {
                 try
                 {
-                    var results = core.DoString(coreSetting.script);
+                    var sb = new StringBuilder();
+                    sb.AppendLine(Resources.Files.Datas.LuaPredefinedFunctions);
+                    sb.AppendLine(script);
+                    var src = sb.ToString();
+
+                    var results = core.DoString(src);
                     if (results != null && results.Length > 0)
                     {
-                        result = JsonConvert.SerializeObject(results);
+                        var r0 = results[0].ToString();
+                        result = r0;
                     }
                 }
                 catch (Exception e)
@@ -336,17 +342,12 @@ namespace Luna.Controllers
 
             lua.State.Encoding = Encoding.UTF8;
 
-            // bug: lua can access all public functions
-            var misc = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaMisc>();
-
             lua["Signal"] = luaSignal;
             lua["Sys"] = luaSys;
-
-            lua["Misc"] = misc;
-            lua["Server"] = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaServer>();
+            lua["Misc"] = luaApis.GetChild<VgcApis.Interfaces.Lua.NLua.ILuaMisc>();
+            lua["Server"] = luaApis.GetChild<VgcApis.Interfaces.Lua.NLua.ILuaServer>();
             lua["Web"] = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaWeb>();
 
-            lua.DoString(misc.PredefinedFunctions());
             return lua;
         }
 

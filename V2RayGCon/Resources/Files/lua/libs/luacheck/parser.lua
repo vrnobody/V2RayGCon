@@ -165,6 +165,7 @@ local opening_token_to_closing = {
    ["while"] = "end",
    ["repeat"] = "until",
    ["for"] = "end",
+   ["foreach"] = "end",
    ["function"] = "end"
 }
 
@@ -729,6 +730,39 @@ statements["for"] = function(state)
       check_and_skip_token(state, "do")
       ast_node[#ast_node + 1] = parse_block(state, start_range, "for")
    elseif state.token == "," or state.token == "in" then
+      -- Generic "for" loop.
+      tag = "Forin"
+
+      local iter_vars = {first_var}
+      while test_and_skip_token(state, ",") do
+         iter_vars[#iter_vars + 1] = parse_id(state)
+      end
+
+      ast_node[1] = iter_vars
+      check_and_skip_token(state, "in")
+      ast_node[2] = parse_expression_list(state)
+      check_and_skip_token(state, "do")
+      ast_node[3] = parse_block(state, start_range, "for")
+   else
+      parse_error(state, "expected '=', ',' or 'in'")
+   end
+
+   new_inner_node(start_range, state, tag, ast_node)
+   -- Skip "end".
+   skip_token(state)
+   return ast_node
+end
+
+statements["foreach"] = function(state)
+   local start_range = copy_range(state)
+   -- Skip "for".
+   skip_token(state)
+
+   local ast_node = {}
+   local tag
+   local first_var = parse_id(state)
+
+   if state.token == "in" then
       -- Generic "for" loop.
       tag = "Forin"
 

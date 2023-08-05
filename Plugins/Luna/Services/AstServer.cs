@@ -214,36 +214,45 @@ namespace Luna.Services
             catch { }
         }
 
-
         JObject AnalyzeCore(string code, AnalyzeModes analyzeMode)
         {
-            try
+            using (Lua state = CreateAnalyser())
             {
-                Lua state = CreateAnalyser();
                 state["code"] = code;
-
-                var fn = "analyzeCode";
-                if (analyzeMode == AnalyzeModes.Module)
+                var script = CreateAnalyzeTemplateScript(analyzeMode);
+                try
                 {
-                    fn = "analyzeModule";
+                    string r = state.DoString(script)[0]?.ToString();
+                    if (!string.IsNullOrEmpty(r))
+                    {
+                        return JObject.Parse(r);
+                    }
                 }
-                else if (analyzeMode == AnalyzeModes.ModuleEx)
-                {
-                    fn = "analyzeModuleEx";
-                }
-
-                string tpl = @"local analyzer = require('lua.libs.luacheck.analyzer').new();"
-                    + @"return analyzer.{0}(code)";
-
-                var script = string.Format(tpl, fn);
-                string r = state.DoString(script)[0] as string;
-                if (!string.IsNullOrEmpty(r))
-                {
-                    return JObject.Parse(r);
-                }
+                catch { }
             }
-            catch { }
             return null;
+        }
+
+        string CreateAnalyzeTemplateScript(AnalyzeModes analyzeMode)
+        {
+            var fn = "analyzeCode";
+            if (analyzeMode == AnalyzeModes.Module)
+            {
+                fn = "analyzeModule";
+            }
+            else if (analyzeMode == AnalyzeModes.ModuleEx)
+            {
+                fn = "analyzeModuleEx";
+            }
+
+            string tpl = @"local analyzer = require('lua.libs.luacheck.analyzer').new();"
+                + @"return analyzer.{0}(code)";
+            var script = string.Format(tpl, fn);
+
+            var sb = new StringBuilder();
+            sb.AppendLine(Resources.Files.Datas.LuaPredefinedFunctions);
+            sb.AppendLine(script);
+            return sb.ToString();
         }
 
         void AddToAstCodeCache(string key, JObject value)
@@ -284,24 +293,25 @@ namespace Luna.Services
             return null;
         }
 
+        readonly static Dictionary<string, object> mockApis = new Dictionary<string, object>()
+        {
+            {"Misc", new Mock<VgcApis.Interfaces.Lua.NLua.ILuaMisc>().Object},
+            {"Signal", new Mock<VgcApis.Interfaces.Lua.ILuaSignal>().Object},
+            {"Sys", new Mock<VgcApis.Interfaces.Lua.NLua.ILuaSys>().Object},
+            {"Server", new Mock<VgcApis.Interfaces.Lua.NLua.ILuaServer>().Object},
+            {"Web", new Mock<VgcApis.Interfaces.Lua.ILuaWeb>().Object},
+        };
+
         Lua CreateAnalyser()
         {
-            Lua anz = new Lua()
-            {
-                UseTraceback = true,
-            };
+            Lua anz = new Lua();
 
             anz.State.Encoding = Encoding.UTF8;
 
-            // phony
-            anz["Misc"] = new Mock<VgcApis.Interfaces.Lua.ILuaMisc>().Object;
-            anz["Signal"] = new Mock<VgcApis.Interfaces.Lua.ILuaSignal>().Object;
-            anz["Sys"] = new Mock<VgcApis.Interfaces.Lua.ILuaSys>().Object;
-            anz["Server"] = new Mock<VgcApis.Interfaces.Lua.ILuaServer>().Object;
-            anz["Web"] = new Mock<VgcApis.Interfaces.Lua.ILuaWeb>().Object;
-
-            anz.DoString(Resources.Files.Datas.LuaPredefinedFunctions);
-
+            foreach (var kv in mockApis)
+            {
+                anz[kv.Key] = kv.Value;
+            }
             return anz;
         }
         #endregion

@@ -90,7 +90,7 @@ namespace Luna.Libs.LuaSnippet
         List<string> GenKeywords(IEnumerable<string> initValues) =>
             new StringBuilder(VgcApis.Models.Consts.Lua.LuaModules)
             .Append(@" ")
-            .Append(VgcApis.Models.Consts.Lua.LuaKeywords)
+            .Append(VgcApis.Models.Consts.Lua.NLuaKeyWords)
             .ToString()
             .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
             .Union(initValues)
@@ -100,7 +100,7 @@ namespace Luna.Libs.LuaSnippet
 
         List<LuaFuncSnippets> GenLuaFunctionSnippet()
         {
-            var funcs = string.Join(" ", VgcApis.Models.Consts.Lua.LuaPredefinedFunctions)
+            var funcs = string.Join(" ", VgcApis.Models.Consts.Lua.NLuaPredefinedFunctions)
                 + " "
                 + VgcApis.Models.Consts.Lua.LuaFunctions;
 
@@ -174,7 +174,7 @@ namespace Luna.Libs.LuaSnippet
             // math.floor()
             var luaSubFunctions = GetLuaSubFunctions();
             var predefinedFunctions = VgcApis.Models.Consts.Lua.LuaPredefinedSubFunctions
-                .Concat(VgcApis.Models.Consts.Lua.LuaPredefinedFunctions);
+                .Concat(VgcApis.Models.Consts.Lua.NLuaPredefinedFunctions);
             var apiEvents = apis.SelectMany(api => VgcApis.Misc.Utils.GetPublicEventsInfoOfType(api.Item2)
                  .Select(infos => $"{api.Item1}.{infos.Item2}"));
             var apiProps = apis.SelectMany(api => VgcApis.Misc.Utils.GetPublicPropsInfoOfType(api.Item2)
@@ -228,9 +228,9 @@ namespace Luna.Libs.LuaSnippet
             {
                 new Tuple<string,Type>("mailbox", typeof(VgcApis.Interfaces.Lua.ILuaMailBox)),
                 new Tuple<string,Type>("mail", typeof(VgcApis.Interfaces.Lua.ILuaMail)),
-                new Tuple<string,Type>("Sys", typeof(VgcApis.Interfaces.Lua.ILuaSys)),
-                new Tuple<string,Type>("Misc", typeof(VgcApis.Interfaces.Lua.ILuaMisc)),
-                new Tuple<string,Type>("Server", typeof(VgcApis.Interfaces.Lua.ILuaServer)),
+                new Tuple<string,Type>("Sys", typeof(VgcApis.Interfaces.Lua.NLua.ILuaSys)),
+                new Tuple<string,Type>("Misc", typeof(VgcApis.Interfaces.Lua.NLua.ILuaMisc)),
+                new Tuple<string,Type>("Server", typeof(VgcApis.Interfaces.Lua.NLua.ILuaServer)),
                 new Tuple<string,Type>("Web", typeof(VgcApis.Interfaces.Lua.ILuaWeb)),
                 new Tuple<string,Type>("Signal", typeof(VgcApis.Interfaces.Lua.ILuaSignal)),
 

@@ -68,7 +68,7 @@ namespace Luna.Models.Apis
 
     internal class LuaSys :
         VgcApis.BaseClasses.Disposable,
-        VgcApis.Interfaces.Lua.ILuaSys
+        VgcApis.Interfaces.Lua.NLua.ILuaSys
     {
         readonly object procLocker = new object();
         private readonly LuaCoreCtrl luaCoreCtrl;
@@ -89,12 +89,12 @@ namespace Luna.Models.Apis
         VgcApis.Interfaces.Services.IServersService vgcServerService;
         VgcApis.Interfaces.Services.ISettingsService vgcSettingsService;
 
-        SysCmpos.PostOffice postOffice;
+        VgcApis.Interfaces.Services.IPostOffice postOffice;
 
         Services.LuaServer luaServer;
         Services.AstServer astServer;
 
-        SysCmpos.SnapCache snapCache = new SysCmpos.SnapCache();
+        List<string> snapCacheTokens = new List<string>();
 
         public LuaSys(
             LuaCoreCtrl luaCoreCtrl,
@@ -104,27 +104,32 @@ namespace Luna.Models.Apis
             this.luaCoreCtrl = luaCoreCtrl;
             this.luaApis = luaApis;
             this.getAllAssemblies = getAllAssemblies;
-            this.postOffice = luaApis.GetPostOffice();
+            this.postOffice = luaApis.GetPostOfficeService();
             this.vgcServerService = luaApis.GetVgcServerService();
             vgcSettingsService = luaApis.formMgr.vgcApi.GetSettingService();
 
             this.luaServer = luaApis.formMgr.luaServer;
             this.astServer = luaApis.formMgr.astServer;
-
         }
 
         #region ILuaSys.SnapCache
-        public string SnapCacheGetToken() => snapCache.GetToken();
+        public bool SnapCacheRemove(string token) => postOffice.SnapCacheRemove(token);
 
-        public object SnapCacheGet(string token, string key)
+        public bool SnapCacheCreate(string token) => postOffice.SnapCacheCreate(token);
+
+        public string SnapCacheApply()
         {
-            return snapCache.Get(token, key);
+            var token = postOffice.SnapCacheApply();
+            lock (snapCacheTokens)
+            {
+                snapCacheTokens.Add(token);
+            }
+            return token;
         }
 
-        public bool SnapCacheSet(string token, string key, object value)
-        {
-            return snapCache.Set(token, key, value);
-        }
+        public object SnapCacheGet(string token, string key) => postOffice.SnapCacheGet(token, key);
+
+        public bool SnapCacheSet(string token, string key, object value) => postOffice.SnapCacheSet(token, key, value);
         #endregion
 
         #region ILuaSys.LuaCoreCtrl
@@ -856,13 +861,20 @@ namespace Luna.Models.Apis
             return postOffice.RemoveMailBox(mailbox);
         }
 
+        const int defMailBoxCapacity = 1000;
 
-        public VgcApis.Interfaces.Lua.ILuaMailBox ApplyRandomMailBox()
+        public VgcApis.Interfaces.Lua.ILuaMailBox ApplyRandomMailBox() =>
+            ApplyRandomMailBox(defMailBoxCapacity);
+
+        public VgcApis.Interfaces.Lua.ILuaMailBox CreateMailBox(string name) =>
+            CreateMailBox(name, defMailBoxCapacity);
+
+        public VgcApis.Interfaces.Lua.ILuaMailBox ApplyRandomMailBox(int capacity)
         {
             for (int failsafe = 0; failsafe < 10000; failsafe++)
             {
                 var name = Guid.NewGuid().ToString();
-                var mailbox = CreateMailBox(name);
+                var mailbox = CreateMailBox(name, capacity);
                 if (mailbox != null)
                 {
                     return mailbox;
@@ -873,10 +885,9 @@ namespace Luna.Models.Apis
             return null;
         }
 
-
-        public VgcApis.Interfaces.Lua.ILuaMailBox CreateMailBox(string name)
+        public VgcApis.Interfaces.Lua.ILuaMailBox CreateMailBox(string name, int capacity)
         {
-            var mailbox = postOffice.CreateMailBox(name);
+            var mailbox = postOffice.CreateMailBox(name, capacity);
             if (mailbox == null)
             {
                 return null;
@@ -1406,6 +1417,17 @@ namespace Luna.Models.Apis
                 }
             }
         }
+        private void RemoveAllSnapCacheTokens()
+        {
+            lock (snapCacheTokens)
+            {
+                foreach (var token in snapCacheTokens)
+                {
+                    postOffice.SnapCacheRemove(token);
+                }
+                snapCacheTokens.Clear();
+            }
+        }
         #endregion
 
         #region protected methods
@@ -1418,11 +1440,9 @@ namespace Luna.Models.Apis
             CloseAllHttpServers();
             CloseAllMailBox();
             RemoveAllLuaVms();
+            RemoveAllSnapCacheTokens();
             KillAllProcesses();
-
-            snapCache?.Dispose();
         }
-
         #endregion
     }
 }

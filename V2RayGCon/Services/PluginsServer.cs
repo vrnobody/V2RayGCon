@@ -138,17 +138,18 @@ namespace V2RayGCon.Services
         {
             // Original design of plug-in system would load dll files from hard drive.
             // That is why loading logic looks so complex.
-            var pluginList = new Dictionary<string, VgcApis.Interfaces.IPlugin>();
+
             var plugins = new List<VgcApis.Interfaces.IPlugin>();
 
             plugins.Add(new Luna.Luna());
+            plugins.Add(new NeoLuna.NeoLuna());
             plugins.Add(new Pacman.Pacman());
 
             // Many thanks to windows defender
             plugins.Add(new ProxySetter.ProxySetter());
 
-            // plugins.Add(new Statistics.Statistics());
 
+            var pluginList = new Dictionary<string, VgcApis.Interfaces.IPlugin>();
             foreach (var plugin in plugins)
             {
                 pluginList.Add(plugin.Name, plugin);

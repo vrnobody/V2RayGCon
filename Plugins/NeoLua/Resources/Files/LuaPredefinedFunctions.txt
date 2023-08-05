@@ -1,0 +1,160 @@
+-- Enable import on 2020-04-17
+-- import = function () end
+
+-- require path
+-- package.path = ".\\?.lua;.\\?\\init.lua"
+
+print = function(...)
+    local t = {}
+    for _, v in pairs({...}) do
+        table.insert(t, tostring(v))
+    end
+    std.Misc:Print(table.concat(t, " "))
+end
+
+-- exit is not writable
+-- os.exit = function() print("os.exit() is disabled") end
+
+-- copy from NLua
+function each(o)
+    local e = o:GetEnumerator()
+    return function()
+        if e:MoveNext() then
+            return e.Current
+        end
+    end
+end
+
+string.split = function (text, sep)
+    if sep == nil then
+        sep = "%s"
+    end
+    local t={}
+    for s in string.gmatch(text, "([^"..sep.."]+)") do
+        table.insert(t, s)
+    end
+    return t
+end
+
+string.startswith = function (text, keyword)
+    if text == nil or keyword == nil then   
+        return false
+    end
+    local t = string.lower(text)
+    local kw ='^' .. string.lower(keyword)
+    return string.find(t, kw) ~= nil
+end
+
+string.endswith = function (text, keyword)
+    if text == nil or keyword == nil then   
+        return false
+    end
+    local t = string.lower(text)
+    local kw = string.lower(keyword) .. '$'
+    return string.find(t, kw) ~= nil
+end
+
+string.isempty = function(text)
+    return text == nil or text == ''
+end
+
+table.contains = function(haystack, needle)
+    assert(type(haystack) == "table", 'table.contains(haystack, needle): param type error')
+	for _, item in pairs(haystack)
+    do
+        if needle == item then
+            return true
+        end
+    end
+    return false
+end
+
+table.keys = function(t)
+    assert(type(t) == "table", "param t must be table")
+    local numKeys = {}
+    local strKeys = {}
+    for k, v in pairs(t) do
+        if type(k) == "number" then
+            table.insert(numKeys, k)
+        else
+            table.insert(strKeys, tostring(k))
+        end
+    end
+    table.sort(numKeys)
+    table.sort(strKeys)
+    for k, v in pairs(strKeys) do
+        table.insert(numKeys, v)
+    end
+    return numKeys
+end
+
+table.length = function(T)
+    if T == nil or type(T) ~= "table" then
+        return -1
+    end
+    local count = 0
+    for _ in pairs(T) do count = count + 1 end
+    return count
+end
+
+table.dump = function(t, indent, header, level, maxLevel)
+
+    maxLevel = maxLevel or 9
+    level = level or 0
+    
+    if level > maxLevel then
+        return "<exceed max level: " .. maxLevel .. ">"
+    end
+    
+    indent = indent or "    "
+    
+    local tailIndent = string.rep(indent, level)
+    local keyIndent = tailIndent .. indent
+    
+    local tt = type(t)
+    if tt ~= "table" then
+        if tt == "string" then
+            return '"' .. t .. '"'
+        elseif tt == "nil" or tt == "boolean" or tt == "number" then
+            return tostring(t)
+        else
+            return tt
+        end
+    end
+    
+    if table.length(t) == 0 then
+        return "{}"
+    end
+        
+    local str ='{' .. (header and header or "") .. "\n"
+    
+    local sorted = table.keys(t)
+    
+    for _, idx in pairs(sorted) do
+        local val = t[idx]
+        local it = type(idx)
+        local is = ""
+        if it == "number" then
+            is = tostring(idx)
+        elseif it == "string" then
+            is = '"' .. idx .. '"'
+        end
+        
+        local np = header and header .. '[' .. is .. ']' or header
+        local vs = table.dump(val, indent, np, level + 1, maxLevel)
+        
+        str = str .. keyIndent  .. '[' .. is .. '] = ' .. vs .. ",\n" 
+    end
+    return str .. tailIndent .. "}"
+end
+
+table.load = function(str)
+    local func, err = load("return " .. str)
+    if func then
+        local ok, t = pcall(func)
+        if ok then
+            return t
+        end
+    end
+    return nil
+end

@@ -52,8 +52,10 @@ namespace Luna.Controllers.FormEditorCtrl
 
         public void Run()
         {
-
-            lazyAnalyser = new VgcApis.Libs.Tasks.LazyGuy(AnalizeScriptWorker, 1000, 3000);
+            lazyAnalyser = new VgcApis.Libs.Tasks.LazyGuy(
+                AnalizeScriptWorker,
+                VgcApis.Models.Consts.Intervals.AnalizeLuaScriptDelay,
+                3000);
 
             InitControls();
             BindEvents();

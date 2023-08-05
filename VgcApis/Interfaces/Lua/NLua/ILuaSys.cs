@@ -1,10 +1,9 @@
 ﻿using NLua;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace VgcApis.Interfaces.Lua
+namespace VgcApis.Interfaces.Lua.NLua
 {
     public interface ILuaSys
     {
@@ -19,8 +18,17 @@ namespace VgcApis.Interfaces.Lua
         #endregion
 
         #region ILuaSys.SnapCache
-        string SnapCacheGetToken();
+
+        // 申请者退出时自动清理
+        string SnapCacheApply();
+
+
+        // 注意要手动清理
+        bool SnapCacheCreate(string token);
+        bool SnapCacheRemove(string token);
+
         object SnapCacheGet(string token, string key);
+
         bool SnapCacheSet(string token, string key, object value);
         #endregion
 
@@ -253,6 +261,9 @@ namespace VgcApis.Interfaces.Lua
         /// </returns>
         ILuaMailBox CreateMailBox(string name);
 
+        ILuaMailBox ApplyRandomMailBox(int capacity);
+        ILuaMailBox CreateMailBox(string name, int capacity);
+
         /// <summary>
         /// 注销一个邮箱
         /// </summary>
@@ -345,7 +356,7 @@ namespace VgcApis.Interfaces.Lua
         /// Encoding inputEncoding, Encoding outputEncoding);
         /// </summary>
         Process RunAndForgot(string exePath, string args, string stdin,
-            NLua.LuaTable envs, bool hasWindow, bool redirectOutput);
+            global::NLua.LuaTable envs, bool hasWindow, bool redirectOutput);
 
         /// <summary>
         /// 创建进程后撒手不管（脚本结束进程也继续运行）
@@ -390,7 +401,7 @@ namespace VgcApis.Interfaces.Lua
         /// Encoding inputEncoding, Encoding outputEncoding);
         /// </summary>
         Process Run(string exePath, string args, string stdin,
-            NLua.LuaTable envs, bool hasWindow, bool redirectOutput);
+            global::NLua.LuaTable envs, bool hasWindow, bool redirectOutput);
 
         /// <summary>
         /// 创建进程。在脚本结束时进程也会被杀死。

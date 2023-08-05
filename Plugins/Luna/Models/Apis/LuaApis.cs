@@ -6,9 +6,6 @@ namespace Luna.Models.Apis
     internal class LuaApis :
         VgcApis.BaseClasses.ComponentOf<LuaApis>
     {
-        // this must be static!
-        static SysCmpos.PostOffice postOffice = new SysCmpos.PostOffice();
-
         public readonly Settings settings;
         public readonly VgcApis.Interfaces.Services.IApiService vgcApi;
         public readonly FormMgrSvc formMgr;
@@ -29,7 +26,7 @@ namespace Luna.Models.Apis
         public VgcApis.Interfaces.Services.IUtilsService GetVgcUtilsService() =>
             vgcApi.GetUtilsService();
 
-        public SysCmpos.PostOffice GetPostOffice() => postOffice;
+        public VgcApis.Interfaces.Services.IPostOffice GetPostOfficeService() => vgcApi.GetPostOfficeService();
 
         public string RegisterHotKey(Action hotKeyHandler,
               string keyName, bool hasAlt, bool hasCtrl, bool hasShift)

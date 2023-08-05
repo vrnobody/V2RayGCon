@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
@@ -29,6 +30,7 @@ namespace V2RayGCon.Services
 
         List<VgcApis.Models.Datas.CoreInfo> coreInfoCache = new List<VgcApis.Models.Datas.CoreInfo>();
         Dictionary<string, string> pluginsSettingCache = new Dictionary<string, string>();
+        ConcurrentDictionary<string, string> localStorageCache = new ConcurrentDictionary<string, string>();
 
         // Singleton need this private ctor.
         Settings()
@@ -36,6 +38,7 @@ namespace V2RayGCon.Services
             userSettings = LoadUserSettings();
             userSettings.Normalized();  // replace null with empty object.
             InitCoreInfoCache();
+            InitLocalStorageCache(); // must init before plug-ins setting
             InitPluginsSettingCache();
 
             UpdateVgcApisUserAgent();
@@ -676,17 +679,39 @@ namespace V2RayGCon.Services
             return false;
         }
 
-        public string GetLocalStorage()
+        public List<string> GetLocalStorageKeys()
         {
-            return userSettings.CompressedUnicodeLocalStorage;
+            return localStorageCache.Keys.ToList();
         }
 
-        public void SaveLocalStorage(string value)
+        public bool RemoveLocalStorage(string key)
         {
-            userSettings.CompressedUnicodeLocalStorage = value;
+            if (string.IsNullOrEmpty(key))
+            {
+                return false;
+            }
+
+            var r = localStorageCache.TryRemove(key, out var _);
             SaveSettingsLater();
+            return r;
         }
 
+
+        public string ReadLocalStorage(string key)
+        {
+            if (!string.IsNullOrEmpty(key) && localStorageCache.TryGetValue(key, out string s))
+            {
+                return s;
+            }
+            return null;
+        }
+
+        public string WriteLocalStorage(string key, string value)
+        {
+            var r = localStorageCache.AddOrUpdate(key, value, (_, __) => value);
+            SaveSettingsLater();
+            return r;
+        }
 
         /// <summary>
         /// return null if fail
@@ -894,6 +919,19 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
+        void InitLocalStorageCache()
+        {
+            try
+            {
+                var ls = VgcApis.Libs.Infr.ZipExtensions
+                        .DeserializeObjectFromCompressedUnicodeBase64
+                            <ConcurrentDictionary<string, string>>(
+                                userSettings.CompressedUnicodeLocalStorage);
+                localStorageCache = ls;
+            }
+            catch { }
+        }
+
         void InitCoreInfoCache()
         {
             List<VgcApis.Models.Datas.CoreInfo> coreInfos = null;
@@ -970,6 +1008,11 @@ namespace V2RayGCon.Services
             // VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() begin");
             try
             {
+                // local storage is design for storing small values
+                userSettings.CompressedUnicodeLocalStorage =
+                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
+                        localStorageCache);
+
                 if (userSettings.isPortable)
                 {
                     lock (saveUserSettingsLocker)
@@ -1088,8 +1131,14 @@ namespace V2RayGCon.Services
         {
             try
             {
-                userSettings.CompressedUnicodeCoreInfoList = VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(coreInfoCache);
-                userSettings.CompressedUnicodePluginsSetting = VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(pluginsSettingCache);
+                userSettings.CompressedUnicodeCoreInfoList =
+                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
+                        coreInfoCache);
+
+                userSettings.CompressedUnicodePluginsSetting =
+                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
+                        pluginsSettingCache);
+
                 var us = JsonConvert.SerializeObject(userSettings);
                 Properties.Settings.Default.UserSettings = us;
                 Properties.Settings.Default.Save();

@@ -3,13 +3,13 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Luna.Models.Apis.SysCmpos
+namespace V2RayGCon.Services.PostOfficeComponents
+
 {
-    public class SnapCache : VgcApis.BaseClasses.Disposable
+    public class SnapCache
     {
-        readonly static ConcurrentDictionary<string, ConcurrentDictionary<string, object>> cache = new ConcurrentDictionary<string, ConcurrentDictionary<string, object>>();
-        string token = null;
-        readonly object locker = new object();
+        readonly static ConcurrentDictionary<string, ConcurrentDictionary<string, object>> cache =
+            new ConcurrentDictionary<string, ConcurrentDictionary<string, object>>();
 
         public SnapCache()
         { }
@@ -19,21 +19,35 @@ namespace Luna.Models.Apis.SysCmpos
         #endregion
 
         #region public methods
-        public string GetToken()
+        public bool RemoveCache(string token)
         {
-            lock (locker)
+            if (!string.IsNullOrEmpty(token))
             {
-                if (string.IsNullOrEmpty(token))
-                {
-                    var handle = Guid.NewGuid().ToString();
-                    var dict = new ConcurrentDictionary<string, object>();
-                    if (cache.TryAdd(handle, dict))
-                    {
-                        token = handle;
-                    }
-                }
+                return cache.TryRemove(token, out var _);
             }
-            return token;
+            return false;
+        }
+
+        public bool CreateCache(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                return false;
+            }
+            var dict = new ConcurrentDictionary<string, object>();
+            cache.TryAdd(token, dict);
+            return true;
+        }
+
+        public string ApplyNewCache()
+        {
+            var token = Guid.NewGuid().ToString();
+            var dict = new ConcurrentDictionary<string, object>();
+            if (cache.TryAdd(token, dict))
+            {
+                return token;
+            }
+            return null;
         }
 
         public bool Set(string token, string key, object value)
@@ -71,13 +85,6 @@ namespace Luna.Models.Apis.SysCmpos
         #endregion
 
         #region protected override
-        protected override void Cleanup()
-        {
-            if (!string.IsNullOrEmpty(token))
-            {
-                cache.TryRemove(token, out _);
-            }
-        }
         #endregion
     }
 }

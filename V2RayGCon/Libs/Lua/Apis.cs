@@ -33,6 +33,9 @@ namespace V2RayGCon.Libs.Lua
         }
 
         #region IApi interfaces
+        public IPostOffice GetPostOfficeService() =>
+            Services.PostOffice.Instance;
+
         public INotifierService GetNotifierService()
             => this.notifierService;
 
@@ -59,8 +62,6 @@ namespace V2RayGCon.Libs.Lua
             utilsService?.Dispose();
             webService?.Dispose();
         }
-
-
         #endregion
     }
 }

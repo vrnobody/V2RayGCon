@@ -9,22 +9,16 @@ namespace Luna.Services
         VgcApis.BaseClasses.Disposable
 
     {
-        VgcApis.Interfaces.Services.ISettingsService vgcSetting;
+        ISettingsService vgcSetting;
 
         readonly string pluginName = Properties.Resources.Name;
         Models.Data.UserSettings userSettings;
-        Dictionary<string, string> localStorage;
 
-        VgcApis.Libs.Tasks.LazyGuy lazyBookKeeper, lazyRecorder;
+        VgcApis.Libs.Tasks.LazyGuy lazyBookKeeper;
 
 
         public Settings()
         {
-            lazyRecorder = new VgcApis.Libs.Tasks.LazyGuy(
-                SaveLocalStorageNow,
-                VgcApis.Models.Consts.Intervals.LazySaveLunaSettingsInterval,
-                3000);
-
             lazyBookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveUserSettingsNow,
                 VgcApis.Models.Consts.Intervals.LazySaveLunaSettingsInterval,
@@ -51,8 +45,7 @@ namespace Luna.Services
 
         public bool IsClosing() => _isDisposing || vgcSetting.IsClosing();
 
-        public void Run(
-            VgcApis.Interfaces.Services.ISettingsService vgcSetting)
+        public void Run(ISettingsService vgcSetting)
         {
             this.vgcSetting = vgcSetting;
 
@@ -62,55 +55,27 @@ namespace Luna.Services
 
             userSettings.NormalizeData();
 
-            InitLocalStorage(vgcSetting);
+            MigrateLocalStorageToVgcSettings(vgcSetting);
         }
 
         public string GetLuaShareMemory(string key)
         {
-            if (string.IsNullOrEmpty(key) || !localStorage.ContainsKey(key))
-            {
-                return @"";
-            }
-            return localStorage[key];
+            return vgcSetting.ReadLocalStorage(key);
         }
 
-        readonly object shareMemoryLocker = new object();
         public bool RemoveShareMemory(string key)
         {
-            if (string.IsNullOrEmpty(key) || !localStorage.ContainsKey(key))
-            {
-                return false;
-            }
-
-            bool success;
-            lock (shareMemoryLocker)
-            {
-                success = localStorage.Remove(key);
-            }
-            SaveLocalStorageLater();
-            return success;
+            return vgcSetting.RemoveLocalStorage(key);
         }
 
         public List<string> ShareMemoryKeys()
         {
-            lock (shareMemoryLocker)
-            {
-                return localStorage.Keys.ToList();
-            }
+            return vgcSetting.GetLocalStorageKeys();
         }
 
         public void SetLuaShareMemory(string key, string value)
         {
-            if (string.IsNullOrEmpty(key))
-            {
-                return;
-            }
-
-            lock (shareMemoryLocker)
-            {
-                localStorage[key] = value;
-            }
-            SaveLocalStorageLater();
+            vgcSetting.WriteLocalStorage(key, value);
         }
 
         public List<Models.Data.LuaCoreSetting> GetLuaCoreSettings() =>
@@ -118,48 +83,30 @@ namespace Luna.Services
 
         public void SaveUserSettingsLater() =>
             lazyBookKeeper?.Deadline();
-
-        public void SaveLocalStorageLater() =>
-            lazyRecorder?.Deadline();
         #endregion
 
         #region protected methods
         protected override void Cleanup()
         {
-            lazyRecorder?.Dispose();
             lazyBookKeeper?.Dispose();
-
-            SaveLocalStorageNow();
             SaveUserSettingsNow();
-
         }
         #endregion
 
         #region private methods
-        private void InitLocalStorage(ISettingsService vgcSetting)
+        private void MigrateLocalStorageToVgcSettings(ISettingsService vgcSetting)
         {
-            Dictionary<string, string> storage = null;
-            try
+            if (userSettings.luaShareMemory.Count <= 0)
             {
-                var compressedStr = vgcSetting.GetLocalStorage();
-                storage = VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<Dictionary<string, string>>(compressedStr);
-            }
-            catch { }
-
-            if (storage == null || storage.Count < 1)
-            {
-                storage = userSettings.luaShareMemory;
+                return;
             }
 
-            localStorage = storage ?? new Dictionary<string, string>();
-            userSettings.luaShareMemory = new Dictionary<string, string>();
-        }
-
-        void SaveLocalStorageNow()
-        {
-            var str = VgcApis.Libs.Infr.ZipExtensions
-                        .SerializeObjectToCompressedUnicodeBase64(localStorage);
-            vgcSetting.SaveLocalStorage(str);
+            // 如果以前有存数据就复制进新的位置
+            foreach (var kv in userSettings.luaShareMemory)
+            {
+                vgcSetting.WriteLocalStorage(kv.Key, kv.Value);
+            }
+            userSettings.luaShareMemory.Clear();
         }
 
         void SaveUserSettingsNow() =>

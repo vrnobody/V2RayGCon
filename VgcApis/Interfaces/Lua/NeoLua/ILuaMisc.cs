@@ -1,18 +1,12 @@
-﻿using Newtonsoft.Json.Linq;
-using NLua;
+﻿using Neo.IronLua;
+
 using System.Collections.Generic;
 
-namespace VgcApis.Interfaces.Lua
+namespace VgcApis.Interfaces.Lua.NeoLua
 {
     public interface ILuaMisc : ILogable
     {
-        #region vgc.Forms
-        /// <summary>
-        /// 在UI线程中执行一个函数
-        /// </summary>
-        /// <param name="func"></param>
-        void Invoke(LuaFunction func);
-
+        #region winform things
         /// <summary>
         /// 复制内容到剪切板
         /// </summary>
@@ -261,7 +255,7 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="columns">列标题</param>
         /// <param name="rows">内容行</param>
         /// <returns></returns>
-        string ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows);
+        string ShowData(string title, LuaTable columns, LuaTable rows);
 
         /// <summary>
         /// 调出数据展示窗口
@@ -271,7 +265,7 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="rows">内容行</param>
         /// <param name="defColumn">初始选定列号</param>
         /// <returns></returns>
-        string ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows, int defColumn);
+        string ShowData(string title, LuaTable columns, LuaTable rows, int defColumn);
 
         // 18 choices max
         /// <summary>
@@ -288,7 +282,7 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="title">标题</param>
         /// <param name="choices">各选项</param>
         /// <returns>选中行号集合</returns>
-        List<int> Choices(string title, NLua.LuaTable choices);
+        List<int> Choices(string title, LuaTable choices);
 
         /// <summary>
         /// 调出多选窗口
@@ -297,7 +291,7 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="choices">各选项</param>
         /// <param name="isShowKey">是否显示行号</param>
         /// <returns>选中行号集合</returns>
-        List<int> Choices(string title, NLua.LuaTable choices, bool isShowKey);
+        List<int> Choices(string title, LuaTable choices, bool isShowKey);
 
         /// <summary>
         /// 调整单选窗口
@@ -313,7 +307,7 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="title">标题</param>
         /// <param name="choices">各选项</param>
         /// <returns>选中行号</returns>
-        int Choice(string title, NLua.LuaTable choices);
+        int Choice(string title, LuaTable choices);
 
         /// <summary>
         /// 调整单选窗口
@@ -322,7 +316,7 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="choices">各选项</param>
         /// <param name="isShowKey">是否显示行号</param>
         /// <returns>选中行号</returns>
-        int Choice(string title, NLua.LuaTable choices, bool isShowKey);
+        int Choice(string title, LuaTable choices, bool isShowKey);
 
         /// <summary>
         /// 调整单选窗口
@@ -332,7 +326,7 @@ namespace VgcApis.Interfaces.Lua
         /// <param name="isShowKey">是否显示行号</param>
         /// <param name="selected">默认选中行号</param>
         /// <returns>选中行号</returns>
-        int Choice(string title, NLua.LuaTable choices, bool isShowKey, int selected);
+        int Choice(string title, LuaTable choices, bool isShowKey, int selected);
 
         /// <summary>
         /// 调出确认窗口

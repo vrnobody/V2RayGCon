@@ -2,6 +2,8 @@
 {
     static public class Intervals
     {
+        public const int AnalizeLuaScriptDelay = 5000;
+
         public const int GetStartCoreTokenInterval = 391;
 
         // Service.Setting 

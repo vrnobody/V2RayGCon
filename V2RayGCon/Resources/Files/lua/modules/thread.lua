@@ -37,6 +37,7 @@ Misc:Sleep(5000)
 thread.StopAll(t1, t2)
 
 -- 等待停止并接收返回值
+-- 只可以返回一个string类型的值，多余的被丢弃
 print("result1:", t1:WaitResult())
 print("result2:", t2:WaitResult())
 
@@ -81,9 +82,8 @@ function M:Start(...)
 end
 
 function M:GetResult()
-    local j = Sys:LuaVmGetResult(self.vmh)
-    local r = json.decode(j)
-    return table.unpack(r)
+    local s = Sys:LuaVmGetResult(self.vmh)
+    return s
 end
 
 function M:Cleanup()

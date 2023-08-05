@@ -8,7 +8,7 @@ namespace Luna.Models.Apis.Components
 {
     internal sealed class Server :
         VgcApis.BaseClasses.ComponentOf<LuaApis>,
-        VgcApis.Interfaces.Lua.ILuaServer
+        VgcApis.Interfaces.Lua.NLua.ILuaServer
     {
         VgcApis.Interfaces.Services.IServersService vgcServers;
         VgcApis.Interfaces.Services.IConfigMgrService vgcConfigMgr;

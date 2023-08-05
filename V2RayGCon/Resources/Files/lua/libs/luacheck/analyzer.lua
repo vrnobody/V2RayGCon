@@ -66,7 +66,6 @@ function anz.parse(s)
     if s == nil or type(s) ~= "string" then
         return nil
     end
-    
     local ast
     local index
     repeat
@@ -184,7 +183,6 @@ function anz.analyzeModule(src)
     if mn == nil then
         return nil
     end
-    -- print( table.dump(ast) )
     local r = GetModuleInfo(ast, mn)
     return json.encode(r)
 end
@@ -500,7 +498,17 @@ end
 return m
 ]]
 
+local function testHugeModule()
+    local file = '3rd/neolua/cmpts/CoreServsMgr.lua'
+    local reader = require('lua.modules.reader').new(file)
+    local txt = reader:ReadAllText()
+    local ast = anz.parse(txt)    
+    local r = anz.analyzeModule(txt)
+    local o = json.decode(r)
+    print( DumpTable(o) )
+end
 
+-- testHugeModule()
 
 local function testCodeToAst(src)
     local ast = anz.parse(src)

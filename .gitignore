@@ -7,7 +7,9 @@
 MigrationBackup/
 
 # add 2023-07-23
-V2RayGCon/Resources/Files/3rd/
+V2RayGCon/Resources/Files/3rd/bins/
+V2RayGCon/Resources/Files/3rd/core/
+
 
 # User-specific files
 *.suo

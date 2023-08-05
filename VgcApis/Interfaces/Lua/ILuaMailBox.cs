@@ -9,6 +9,10 @@
     /// </summary>
     public interface ILuaMailBox
     {
+        bool Add(Models.Datas.LuaMail mail);
+
+        bool TryAdd(VgcApis.Models.Datas.LuaMail mail);
+
         /// <summary>
         /// 邮箱内未收取的邮件总数
         /// </summary>
@@ -245,5 +249,7 @@
         /// false 遇到对方邮箱已关闭等各种问题
         /// </returns>
         bool Send(string address, double code, string title, bool state, string content);
+
+        bool SendAndWait(string address, double code, string title, bool state, string content);
     }
 }

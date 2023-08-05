@@ -1,7 +1,7 @@
 ﻿using NLua;
 using System.Collections.Generic;
 
-namespace VgcApis.Interfaces.Lua
+namespace VgcApis.Interfaces.Lua.NLua
 {
     public interface ILuaServer
     {

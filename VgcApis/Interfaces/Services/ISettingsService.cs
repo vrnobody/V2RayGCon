@@ -1,4 +1,6 @@
-﻿namespace VgcApis.Interfaces.Services
+﻿using System.Collections.Generic;
+
+namespace VgcApis.Interfaces.Services
 {
     public interface ISettingsService
     {
@@ -16,9 +18,13 @@
         void SavePluginsSetting(string pluginName, string value);
         string GetPluginsSetting(string pluginName);
 
-        string GetLocalStorage();
+        List<string> GetLocalStorageKeys();
 
-        void SaveLocalStorage(string value);
+        bool RemoveLocalStorage(string key);
+
+        string ReadLocalStorage(string key);
+
+        string WriteLocalStorage(string key, string value);
 
         // for luna plug-in
         string GetSubscriptionConfig();

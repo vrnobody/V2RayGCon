@@ -68,7 +68,7 @@ jobs:
             Expand-Archive "${env:webuiPkgName}" -DestinationPath "${outdir}/lua/webui"
             Compress-Archive -Path ${outdir}/* ${env:projName}'.zip'
             Invoke-WebRequest -Uri "${env:v2rayCoreUrl}/${env:v2rayCoreVer}/${env:v2rayCorePkgName}" -OutFile "${env:v2rayCorePkgName}"
-            Expand-Archive "${env:v2rayCorePkgName}" -DestinationPath "${outdir}/core"
+            Expand-Archive "${env:v2rayCorePkgName}" -DestinationPath "${outdir}/3rd/core"
             Compress-Archive -Path ${outdir}/* ${env:projName}'-'${env:boxAppend}'.zip'
             $hash1 = Get-FileHash "${env:projName}.zip" -Algorithm MD5
             $hash2 = Get-FileHash "${env:projName}-${env:boxAppend}.zip" -Algorithm MD5

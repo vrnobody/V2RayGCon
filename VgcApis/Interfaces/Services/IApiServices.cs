@@ -3,6 +3,8 @@
 {
     public interface IApiService
     {
+        IPostOffice GetPostOfficeService();
+
         INotifierService GetNotifierService();
 
         ISettingsService GetSettingService();

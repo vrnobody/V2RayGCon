@@ -83,7 +83,7 @@ namespace Luna.Libs.LuaSnippet
         #region private methods
         HashSet<string> ignoredList =
             new HashSet<string>(
-                VgcApis.Models.Consts.Lua.LuaKeywords.Split(' '));
+                VgcApis.Models.Consts.Lua.NLuaKeyWords.Split(' '));
 
         private IEnumerable<AutocompleteItem> BuildList()
         {

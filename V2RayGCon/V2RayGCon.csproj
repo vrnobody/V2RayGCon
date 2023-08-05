@@ -233,6 +233,8 @@
     <Compile Include="Services\ConfigMgr.cs" />
     <Compile Include="Services\Launcher.cs" />
     <Compile Include="Services\PluginsServer.cs" />
+    <Compile Include="Services\PostOffice.cs" />
+    <Compile Include="Services\PostOfficeComponents\SnapCache.cs" />
     <Compile Include="Services\ServersComponents\IndexHandler.cs" />
     <Compile Include="Services\ServersComponents\QueryHandler.cs" />
     <Compile Include="Services\ShareLinkComponents\Codecs.cs" />
@@ -628,6 +630,10 @@
       <Project>{2d29f9e2-f358-4b07-8f50-1cbe4291eed8}</Project>
       <Name>Luna</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Plugins\NeoLua\NeoLuna.csproj">
+      <Project>{1f2fd9d2-2230-49f1-a163-3987e2c9929c}</Project>
+      <Name>NeoLuna</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Plugins\Pacman\Pacman.csproj">
       <Project>{78aaefc7-621e-45c8-8524-3aba221336f6}</Project>
       <Name>Pacman</Name>
@@ -643,20 +649,22 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Files\3rd\bins\" />
+    <Folder Include="Resources\Files\3rd\neolua\libs\" />
+    <Folder Include="Resources\Files\3rd\neolua\mods\" />
     <Folder Include="Resources\Pkg\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set "libsDir=libs\"
 set "copyFolderList=lua 3rd"
-set "allDlls=ImpromptuInterface Dynamitey KeraLua liblua53 lua53 Nlua AutocompleteMenu-ScintillaNET Luna ProxySetter Pacman DotNetZip Newtonsoft ScintillaNET VgcApis zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
+set "allDlls=Neo.Lua NeoLuna ImpromptuInterface Dynamitey KeraLua liblua53 lua53 Nlua AutocompleteMenu-ScintillaNET Luna ProxySetter Pacman DotNetZip Newtonsoft ScintillaNET VgcApis zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
 
 call:CreateFoldersOnDemand "%25libsDir%25 %25copyFolderList%25"
 call:MoveFilesByList "%25allDlls%25"
 call:CopyFolders "%25copyFolderList%25"
 
-rem NLua v1.4+
-set "luaFolders=x86 x64"
+rem NLua v1.4+ NeoLua.I18N
+set "luaFolders=de x86 x64"
 call:MoveFolders "%25luaFolders%25"
 
 goto:eof

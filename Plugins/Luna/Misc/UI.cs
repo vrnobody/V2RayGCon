@@ -55,14 +55,14 @@ namespace Luna.Misc
             // Console.WriteLine(scintilla.DescribeKeywordSets());
 
             // Keywords
-            scintilla.SetKeywords(0, VgcApis.Models.Consts.Lua.LuaKeywords);
+            scintilla.SetKeywords(0, VgcApis.Models.Consts.Lua.NLuaKeyWords);
 
             // Basic Functions
 
             scintilla.SetKeywords(1,
                 VgcApis.Models.Consts.Lua.ApiFuncNames
                     + " "
-                    + string.Join(" ", VgcApis.Models.Consts.Lua.LuaPredefinedFunctions)
+                    + string.Join(" ", VgcApis.Models.Consts.Lua.NLuaPredefinedFunctions)
                     + " "
                     + VgcApis.Models.Consts.Lua.LuaFunctions);
 

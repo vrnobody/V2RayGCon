@@ -7,10 +7,11 @@ namespace VgcApis.Models.Consts
     {
         public const string LuaModules = "require module import";
 
-        public const string LuaKeywords =
-            "Signal Misc Server Web Sys"
-            // + " coreServ coreConfiger coreCtrl coreState coreLogger" 
-            + " and break do else elseif end for function if in local nil not or repeat return then until while false true goto";
+        public const string NeoLuaKeyWords = "std std.Signal std.Misc std.Server std.Web std.Sys" + LuaKeywords;
+
+        public const string NLuaKeyWords = "Signal Misc Server Web Sys" + LuaKeywords;
+
+        const string LuaKeywords = " and break do else elseif end for foreach function if in local nil not or repeat return then until while false true goto";
 
         public static string ApiFuncNames = string.Join(@" ", GetterApiFuncNames());
 
@@ -32,7 +33,11 @@ namespace VgcApis.Models.Consts
             " os.clock os.date os.difftime os.execute os.exit os.getenv os.remove os.rename os.setlocale os.time os.tmpname" +
             " package.loaders package.seeall package.config package.searchers package.searchpath package.cpath package.loaded package.loadlib package.path package.preload";
 
-        public static List<string> LuaPredefinedFunctions = new List<string>() {
+        public static List<string> NeoLuaPredefinedFunctions = new List<string>() {
+            "Each",
+        };
+
+        public static List<string> NLuaPredefinedFunctions = new List<string>() {
             "Each"
         };
 
@@ -60,17 +65,19 @@ namespace VgcApis.Models.Consts
 
             var types = new List<Type>
             {
-                typeof(Interfaces.Lua.ILuaSys),
+                typeof(Interfaces.Lua.NLua.ILuaSys),
+                typeof(Interfaces.Lua.NLua.ILuaMisc),
+                typeof(Interfaces.Lua.NLua.ILuaServer),
+
+                typeof(Interfaces.Lua.NeoLua.ILuaSys),
+                typeof(Interfaces.Lua.NeoLua.ILuaMisc),
+                typeof(Interfaces.Lua.NeoLua.ILuaServer),
+
                 typeof(Interfaces.Lua.ILuaSignal),
-                typeof(Interfaces.Lua.ILuaMisc),
-                typeof(Interfaces.Lua.ILuaServer),
                 typeof(Interfaces.Lua.ILuaWeb),
                 typeof(Interfaces.Lua.ILuaMailBox),
                 typeof(Interfaces.Lua.ILuaMail),
 
-                // 性能太差，禁用2023-07
-                // typeof(Interfaces.ICoreServ),
-                
                 typeof(Interfaces.ICoreServCtrl),
                 typeof(Interfaces.CoreCtrlComponents.IConfiger),
                 typeof(Interfaces.CoreCtrlComponents.ICoreCtrl),

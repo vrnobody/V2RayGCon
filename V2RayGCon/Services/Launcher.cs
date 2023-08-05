@@ -82,7 +82,7 @@ namespace V2RayGCon.Services
 #if DEBUG
         void This_Function_Is_Used_For_Debugging()
         {
-            ShowPlugin(@"Luna");
+            ShowPlugin(@"NeoLuna");
 
             Views.WinForms.FormLog.ShowForm();
             // Views.WinForms.FormMain.ShowForm();
@@ -257,6 +257,7 @@ namespace V2RayGCon.Services
                 servers,
                 configMgr,
                 setting,
+                PostOffice.Instance,
             };
 
             // dependency injection

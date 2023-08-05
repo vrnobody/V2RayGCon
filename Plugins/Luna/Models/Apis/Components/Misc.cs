@@ -12,7 +12,7 @@ namespace Luna.Models.Apis.Components
 {
     internal sealed class Misc :
         VgcApis.BaseClasses.ComponentOf<LuaApis>,
-        VgcApis.Interfaces.Lua.ILuaMisc
+        VgcApis.Interfaces.Lua.NLua.ILuaMisc
     {
         Services.Settings settings;
         private readonly FormMgrSvc formMgr;

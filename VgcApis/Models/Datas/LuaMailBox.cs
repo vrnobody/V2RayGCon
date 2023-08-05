@@ -1,19 +1,19 @@
 ﻿using System.Collections.Concurrent;
 
-namespace Luna.Models.Apis.SysCmpos
+namespace VgcApis.Models.Datas
 {
-    public class MailBox : VgcApis.Interfaces.Lua.ILuaMailBox
+    public class LuaMailBox : Interfaces.Lua.ILuaMailBox
     {
         private readonly string myAddress;
-        private readonly PostOffice postOffice;
+        private readonly Interfaces.Services.IPostOffice postOffice;
 
-        BlockingCollection<VgcApis.Models.Datas.LuaMail> mails =
-            new BlockingCollection<VgcApis.Models.Datas.LuaMail>();
+        readonly BlockingCollection<LuaMail> mails;
 
-        public MailBox(string myAddress, PostOffice postOffice)
+        public LuaMailBox(string myAddress, Interfaces.Services.IPostOffice postOffice, int capacity)
         {
             this.myAddress = myAddress;
             this.postOffice = postOffice;
+            mails = new BlockingCollection<LuaMail>(capacity);
         }
 
         #region properties
@@ -128,6 +128,20 @@ namespace Luna.Models.Apis.SysCmpos
             return postOffice.Send(address, mail);
         }
 
+        public bool SendAndWait(string address, double code, string title, bool state, string content)
+        {
+            var mail = new LuaMail
+            {
+                from = myAddress,
+                title = title,
+                content = content,
+                code = code,
+                state = state,
+            };
+
+            return postOffice.SendAndWait(address, mail);
+        }
+
         public bool IsCompleted()
         {
             try
@@ -153,7 +167,19 @@ namespace Luna.Models.Apis.SysCmpos
             mails.CompleteAdding();
         }
 
-        public bool TryAdd(VgcApis.Models.Datas.LuaMail mail)
+        public bool Add(LuaMail mail)
+        {
+            try
+            {
+                mails.Add(mail);
+                return true;
+            }
+            catch (System.ObjectDisposedException) { }
+            catch (System.InvalidOperationException) { }
+            return false;
+        }
+
+        public bool TryAdd(LuaMail mail)
         {
             try
             {

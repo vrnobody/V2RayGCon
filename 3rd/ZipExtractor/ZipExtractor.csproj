@@ -22,14 +22,14 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>..\..\V2RayGCon\Resources\Files\binaries</OutputPath>
+    <OutputPath>..\..\V2RayGCon\Resources\Files\3rd\bins</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>..\..\V2RayGCon\Resources\Files\binaries</OutputPath>
+    <OutputPath>..\..\V2RayGCon\Resources\Files\3rd\bins</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <DebugType>none</DebugType>

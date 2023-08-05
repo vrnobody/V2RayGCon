@@ -175,7 +175,7 @@ namespace V2RayGCon.Views.Updater
         {
             string exe = Properties.Resources.UpdaterName;
             string dest = Path.Combine(tempPath, exe);
-            string src = Path.Combine(Properties.Resources.UpdaterFolder, exe);
+            string src = Path.Combine(Properties.Resources.BinsFolder, exe);
             File.Copy(src, dest, true);
             return dest;
         }

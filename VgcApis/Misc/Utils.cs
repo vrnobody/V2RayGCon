@@ -1717,7 +1717,7 @@ namespace VgcApis.Misc
         }
 
         public static string GetCoreFolderFullPath() =>
-            Path.Combine(GetAppDir(), Models.Consts.Files.CoreFolderName);
+            Path.Combine(GetAppDir(), Models.Consts.Files.CoreFolderNameInside3rd);
 
         public static string GetAppDir() => appDirCache;
 

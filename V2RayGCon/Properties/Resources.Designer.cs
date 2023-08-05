@@ -91,6 +91,15 @@ namespace V2RayGCon.Properties {
         }
         
         /// <summary>
+        ///   查找类似 3rd/bins 的本地化字符串。
+        /// </summary>
+        internal static string BinsFolder {
+            get {
+                return ResourceManager.GetString("BinsFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
         internal static System.Drawing.Bitmap CloseSolution_16x {
@@ -330,15 +339,6 @@ namespace V2RayGCon.Properties {
         internal static string Text {
             get {
                 return ResourceManager.GetString("Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 binaries 的本地化字符串。
-        /// </summary>
-        internal static string UpdaterFolder {
-            get {
-                return ResourceManager.GetString("UpdaterFolder", resourceCulture);
             }
         }
         

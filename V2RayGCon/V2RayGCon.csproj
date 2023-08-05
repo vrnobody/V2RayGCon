@@ -573,9 +573,9 @@
     <None Include="Resources\Files\Scripts\每月清空流量统计数据.lua" />
     <None Include="Resources\Files\Scripts\热键切换服务器.lua" />
     <None Include="Resources\Files\Scripts\监听服务器事件.lua" />
-    <None Include="Resources\Files\templates\basic\basic.json" />
-    <None Include="Resources\Files\templates\custom\vmessDecodeTemplate.json" />
-    <None Include="Resources\Files\templates\routing\whitelist.json" />
+    <None Include="Resources\Files\3rd\templates\basic\basic.json" />
+    <None Include="Resources\Files\3rd\templates\custom\vmessDecodeTemplate.json" />
+    <None Include="Resources\Files\3rd\templates\routing\whitelist.json" />
     <None Include="Resources\Files\tests\stress-test-01.lua" />
     <None Include="V2RayGCon.ruleset" />
   </ItemGroup>
@@ -642,13 +642,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Files\binaries\" />
+    <Folder Include="Resources\Files\3rd\bins\" />
     <Folder Include="Resources\Pkg\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set "libsDir=libs\"
-set "copyFolderList=lua templates binaries"
+set "copyFolderList=lua 3rd"
 set "allDlls=ImpromptuInterface Dynamitey KeraLua liblua53 lua53 Nlua AutocompleteMenu-ScintillaNET Luna ProxySetter Pacman DotNetZip Newtonsoft ScintillaNET VgcApis zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
 
 call:CreateFoldersOnDemand "%25libsDir%25 %25copyFolderList%25"

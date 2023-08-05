@@ -249,10 +249,18 @@ namespace V2RayGCon.Libs.V2Ray
         }
         static List<string> GenV2RayCoreSearchPaths(bool isPortable)
         {
+            var appRoot = VgcApis.Misc.Utils.GetAppDir();
+
             var folders = new List<string>{
                 Misc.Utils.GetSysAppDataFolder(), // %appdata%
-                VgcApis.Misc.Utils.GetAppDir(),
+
+                // 兼容
+                appRoot,
+                Path.Combine(appRoot, VgcApis.Models.Consts.Files.CoreFolderName),
+
+                // 整合
                 VgcApis.Misc.Utils.GetCoreFolderFullPath(),
+
             };
 
             if (isPortable)

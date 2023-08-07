@@ -1298,11 +1298,22 @@ namespace VgcApis.Misc
         #endregion
 
         #region string processor
-        public static string Base64EncodeBytes(byte[] bytes) =>
-            Convert.ToBase64String(bytes);
+        public static string Base64EncodeBytes(byte[] bytes)
+        {
+            if (bytes == null || bytes.Length < 1)
+            {
+                return "";
+            }
+            return Convert.ToBase64String(bytes);
+        }
 
         public static string Base64EncodeString(string plainText)
         {
+            if (string.IsNullOrEmpty(plainText))
+            {
+                return plainText;
+            }
+
             var utf8Bytes = Encoding.UTF8.GetBytes(plainText);
             return Base64EncodeBytes(utf8Bytes);
         }

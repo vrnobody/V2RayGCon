@@ -1085,6 +1085,7 @@ namespace NeoLuna.Models.Apis
         {
             try
             {
+                text = VgcApis.Misc.Utils.FilterControlChars(text);
                 File.AppendAllText(file, text);
                 return true;
             }
@@ -1105,7 +1106,15 @@ namespace NeoLuna.Models.Apis
 
         public bool WriteLine(string file, string text)
         {
-            return WriteAllText(file, text + Environment.NewLine);
+            try
+            {
+                text = VgcApis.Misc.Utils.FilterControlChars(text);
+                File.AppendAllText(file, text + Environment.NewLine);
+                return true;
+            }
+            catch { }
+            return false;
+
         }
         public string ReadAllText(string file)
         {

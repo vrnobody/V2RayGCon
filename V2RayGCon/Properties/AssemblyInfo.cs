@@ -38,7 +38,7 @@ using System.Runtime.InteropServices;
 
 /*
  * v1.7.1.32 Add header and attachment properties in LuaMailBox.
- * 
+ *           Filter non-pritable chars before writing logs.
  * v1.7.1.31 Fix UTC ticks bug in utils.lua of NeoLuna plug-in.
  * v1.7.1.30 Move snap cache to post office.
  * v1.7.1.29 Add capacity to MailBox.

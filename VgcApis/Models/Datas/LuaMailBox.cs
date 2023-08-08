@@ -114,21 +114,11 @@ namespace VgcApis.Models.Datas
         public bool SendState(string address, bool state, string content) =>
             Send(address, 0, null, state, content);
 
-        public bool Send(string address, double code, string title, bool state, string content)
-        {
-            var mail = new VgcApis.Models.Datas.LuaMail
-            {
-                from = myAddress,
-                title = title,
-                content = content,
-                code = code,
-                state = state,
-            };
+        // backward compactable
+        public bool Send(string address, double code, string title, bool state, string content) =>
+            Send(address, code, title, state, content, null, null);
 
-            return postOffice.Send(address, mail);
-        }
-
-        public bool SendAndWait(string address, double code, string title, bool state, string content)
+        public bool Send(string address, double code, string title, bool state, string content, string header, object attachment)
         {
             var mail = new LuaMail
             {
@@ -137,6 +127,27 @@ namespace VgcApis.Models.Datas
                 content = content,
                 code = code,
                 state = state,
+                header = header,
+                attachment = attachment,
+            };
+
+            return postOffice.Send(address, mail);
+        }
+
+        public bool SendAndWait(string address, double code, string title, bool state, string content) =>
+            SendAndWait(address, code, title, state, content);
+
+        public bool SendAndWait(string address, double code, string title, bool state, string content, string header, object attachment)
+        {
+            var mail = new LuaMail
+            {
+                from = myAddress,
+                title = title,
+                content = content,
+                code = code,
+                state = state,
+                header = header,
+                attachment = attachment,
             };
 
             return postOffice.SendAndWait(address, mail);

@@ -9,8 +9,15 @@
 
         public bool state { get; set; }
 
+        public string header { get; set; }
+
+        public object attachment { get; set; }
+
         public LuaMail() { }
 
+        public string GetHeader() => header;
+
+        public object GetAttachment() => attachment;
 
         public bool GetState() => state;
         public string GetAddress() => from;

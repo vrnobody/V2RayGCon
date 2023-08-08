@@ -33,10 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.7.1.31")]
+[assembly: AssemblyVersion("1.7.1.32")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.7.1.32 Add header and attachment properties in LuaMailBox.
+ * 
  * v1.7.1.31 Fix UTC ticks bug in utils.lua of NeoLuna plug-in.
  * v1.7.1.30 Move snap cache to post office.
  * v1.7.1.29 Add capacity to MailBox.

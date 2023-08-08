@@ -37,5 +37,9 @@
         /// </summary>
         /// <returns></returns>
         double GetCode();
+
+        string GetHeader();
+
+        object GetAttachment();
     }
 }

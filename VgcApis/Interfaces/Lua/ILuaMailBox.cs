@@ -251,5 +251,11 @@
         bool Send(string address, double code, string title, bool state, string content);
 
         bool SendAndWait(string address, double code, string title, bool state, string content);
+
+        // 跨插件发送attachment时会显示成userdata，猜测是lua实现方式不同导致
+
+        bool Send(string address, double code, string title, bool state, string content, string header, object attachment);
+
+        bool SendAndWait(string address, double code, string title, bool state, string content, string header, object attachment);
     }
 }

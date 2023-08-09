@@ -18,19 +18,21 @@ namespace NeoLuna.Misc
         static public void FixTableStringMath(LuaGlobal g)
         {
             // https://github.com/neolithos/neolua/pull/148/files
-            InitializeMathLibrary(g);
-            InitializeStringLibrary(g);
-            InitializeTableLibrary(g);
+            g["string"] = strLibCache;
+            g["table"] = tableLibCache;
+
+            // 没这需求.
+            // g["math"] = mathLibCache;
         }
         #endregion
 
         #region private methods
         #region --- Math Lib ----------------------------------------------------------
 
-        private static void InitializeMathLibrary(LuaGlobal g)
+        readonly static LuaTable mathLibCache = CreateMathLibrary();
+        private static LuaTable CreateMathLibrary()
         {
             LuaTable math = new LuaTable();
-            g["math"] = math;
 
             math["huge"] = LuaLibraryMath.huge;
             math["pi"] = LuaLibraryMath.pi;
@@ -68,6 +70,8 @@ namespace NeoLuna.Misc
             math["type"] = new Func<object, string>(LuaLibraryMath.type);
             math["tointeger"] = new Func<object, object>(LuaLibraryMath.tointeger);
             math["ult"] = new Func<long, long, bool>(LuaLibraryMath.ult);
+
+            return math;
         }
         #endregion
 
@@ -77,11 +81,11 @@ namespace NeoLuna.Misc
         private delegate LuaResult byteDelg(string s, int? i = null, int? j = null);
         private delegate string charDelg(params int[] chars);
         private delegate string formatDelg(string format, params object[] prms);
-
-        private static void InitializeStringLibrary(LuaGlobal g)
+        readonly static LuaTable strLibCache = CreateStringLibrary();
+        private static LuaTable CreateStringLibrary()
         {
             LuaTable str = new LuaTable();
-            g["string"] = str;
+
             str["byte"] = new byteDelg(Neo.IronLua.LuaLibraryString.@byte);
             str["char"] = new charDelg(Neo.IronLua.LuaLibraryString.@char);
             str["dump"] = new Func<Delegate, string>(Neo.IronLua.LuaLibraryString.dump);
@@ -96,6 +100,7 @@ namespace NeoLuna.Misc
             str["reverse"] = new Func<string, string>(Neo.IronLua.LuaLibraryString.reverse);
             str["sub"] = new Func<string, int, int, string>(Neo.IronLua.LuaLibraryString.sub);
             str["upper"] = new Func<string, string>(Neo.IronLua.LuaLibraryString.upper);
+            return str;
         }
         #endregion
 
@@ -103,17 +108,18 @@ namespace NeoLuna.Misc
 
         private delegate string concatDelg(LuaTable t, string sep = null, int? i = null, int? j = null);
 
-        private static void InitializeTableLibrary(LuaGlobal g)
+        readonly static LuaTable tableLibCache = CreateTableLibrary();
+        private static LuaTable CreateTableLibrary()
         {
             LuaTable tbl = new LuaTable();
-            g["table"] = tbl;
             tbl["concat"] = new concatDelg(LuaTable.concat);
             tbl["insert"] = new Action<LuaTable, object, object>(LuaTable.insert);
             tbl["move"] = new Action<LuaTable, int, int, int, LuaTable>(LuaTable.move);
             tbl["pack"] = new Func<object[], LuaTable>(LuaTable.pack);
             tbl["remove"] = new Func<LuaTable, int, object>(LuaTable.remove);
             tbl["sort"] = new Action<LuaTable, object>(LuaTable.sort);
-            tbl["unpack"] = new Func<LuaTable, int, int, LuaResult>(LuaTable.unpack);
+            tbl["unpack"] = new Func<LuaTable, LuaResult>(LuaTable.unpack);
+            return tbl;
         }
         #endregion
 

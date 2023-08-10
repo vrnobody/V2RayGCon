@@ -18,7 +18,7 @@ jobs:
         verStr: '1.7.x'
         boxAppend: box
         webuiPkgName: 'webui.zip'
-        webuiVer: '0.0.4.0'
+        webuiVer: '0.0.5.0'
         webuiUrl: 'https://github.com/vrnobody/WebUI/releases/download'
         # v2rayCorePkgName: 'v2ray-windows-64.zip'
         v2rayCorePkgName: 'Xray-windows-64.zip'
@@ -65,7 +65,7 @@ jobs:
             Compress-Archive -Path ${scriptsDir}/* ${env:scriptPkgName}'.zip'
             $outdir = "${env:projName}/bin/${env:projCfg}"
             Invoke-WebRequest -Uri "${env:webuiUrl}/${env:webuiVer}/${env:webuiPkgName}" -OutFile "${env:webuiPkgName}"
-            Expand-Archive "${env:webuiPkgName}" -DestinationPath "${outdir}/lua/webui"
+            Expand-Archive "${env:webuiPkgName}" -DestinationPath "${outdir}/3rd/neolua/webui"
             Compress-Archive -Path ${outdir}/* ${env:projName}'.zip'
             Invoke-WebRequest -Uri "${env:v2rayCoreUrl}/${env:v2rayCoreVer}/${env:v2rayCorePkgName}" -OutFile "${env:v2rayCorePkgName}"
             Expand-Archive "${env:v2rayCorePkgName}" -DestinationPath "${outdir}/3rd/core"

@@ -17,8 +17,6 @@ namespace NeoLuna.Libs.LuaSnippet
         List<LuaKeywordSnippets> luaKeywords;
         List<LuaSubFuncSnippets> luaSubFunctions;
 
-        List<LuaImportClrSnippets> luaImportClrs;
-
         List<LuaImportClrSnippets> customRequireModuleSnippets = new List<LuaImportClrSnippets>();
         List<MatchItemBase> customScriptSnippets = new List<MatchItemBase>();
 
@@ -28,8 +26,7 @@ namespace NeoLuna.Libs.LuaSnippet
             List<ApiFunctionSnippets> apiFunctions,
             List<LuaFuncSnippets> luaFunctions,
             List<LuaKeywordSnippets> luaKeywords,
-            List<LuaSubFuncSnippets> luaSubFunctions,
-            List<LuaImportClrSnippets> luaImportClrs)
+            List<LuaSubFuncSnippets> luaSubFunctions)
         {
             this.editor = editor;
 
@@ -37,7 +34,6 @@ namespace NeoLuna.Libs.LuaSnippet
             this.luaFunctions = luaFunctions;
             this.luaKeywords = luaKeywords;
             this.luaSubFunctions = luaSubFunctions;
-            this.luaImportClrs = luaImportClrs;
         }
 
         #region public methods
@@ -145,10 +141,6 @@ namespace NeoLuna.Libs.LuaSnippet
             }
             else if (fragment.Contains("."))
             {
-                if (fragment.Contains("("))
-                {
-                    items.AddRange(luaImportClrs);
-                }
                 items.AddRange(luaSubFunctions);
             }
             else if (fragment.Contains("("))
@@ -157,7 +149,6 @@ namespace NeoLuna.Libs.LuaSnippet
                 {
                     items.AddRange(customRequireModuleSnippets);
                 }
-                items.AddRange(luaImportClrs);
                 items.AddRange(luaFunctions);
             }
             else

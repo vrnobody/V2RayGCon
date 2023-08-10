@@ -13,7 +13,6 @@ namespace NeoLuna.Libs.LuaSnippet
         List<LuaKeywordSnippets> keywordCache;
         List<LuaFuncSnippets> functionCache;
         List<LuaSubFuncSnippets> subFunctionCache;
-        List<LuaImportClrSnippets> importClrCache;
         List<ApiFunctionSnippets> apiFunctionCache;
 
         List<Dictionary<string, string>> webUiLuaSnippetsCache = new List<Dictionary<string, string>>();
@@ -34,58 +33,12 @@ namespace NeoLuna.Libs.LuaSnippet
                 apiFunctionCache,
                 functionCache,
                 keywordCache,
-                subFunctionCache,
-                importClrCache);
+                subFunctionCache);
         }
 
         #endregion
 
         #region private methods
-
-        List<string> GetAllNameapaces() => VgcApis.Misc.Utils.GetAllAssembliesType()
-            .Select(t => t.Namespace)
-            .Distinct()
-            .Where(n => !(
-                string.IsNullOrEmpty(n)
-                || n.StartsWith("<")
-                || n.StartsWith("AutocompleteMenuNS")
-                || n.StartsWith("AutoUpdaterDotNET")
-                || n.StartsWith("Internal.Cryptography")
-                || n.StartsWith("Luna")
-                || n.StartsWith("Pacman")
-                || n.StartsWith("ProxySetter")
-                || n.StartsWith("ResourceEmbedderCompilerGenerated")
-                || n.StartsWith("Statistics")
-                || n.StartsWith("V2RayGCon")
-                || n.StartsWith("VgcApis")
-            ))
-            .ToList();
-
-        IEnumerable<string> GetAllAssembliesName()
-        {
-            var nsps = GetAllNameapaces();
-            return AppDomain.CurrentDomain.GetAssemblies()
-                .Select(asm => asm.FullName)
-                .Where(fn => !string.IsNullOrEmpty(fn) && nsps.Where(nsp => fn.StartsWith(nsp)).FirstOrDefault() != null)
-                .Union(nsps)
-                .OrderBy(n => n)
-                .Select(n => $"import('{n}')");
-        }
-
-        List<LuaImportClrSnippets> GenLuaImportClrSnippet() =>
-            GetAllAssembliesName()
-                .Select(e =>
-                {
-                    try
-                    {
-                        return new LuaImportClrSnippets(e);
-                    }
-                    catch { }
-                    return null;
-                })
-                .Where(e => e != null)
-                .ToList();
-
 
         List<string> GenKeywords(IEnumerable<string> initValues) =>
             new StringBuilder(VgcApis.Models.Consts.Lua.LuaModules)
@@ -179,7 +132,6 @@ namespace NeoLuna.Libs.LuaSnippet
                  .Select(infos => $"{api.Item1}.{infos.Item2}"));
             var apiProps = apis.SelectMany(api => VgcApis.Misc.Utils.GetPublicPropsInfoOfType(api.Item2)
                 .Select(infos => $"{api.Item1}.{infos.Item2}"));
-            var importClrSnippet = GetAllAssembliesName();
 
             var apiFuncs = apis.SelectMany(
                 api => VgcApis.Misc.Utils.GetPublicMethodNameAndParam(api.Item2)
@@ -193,11 +145,15 @@ namespace NeoLuna.Libs.LuaSnippet
                     }));
 
 
-            var snippets = (new List<IEnumerable<string>> { luaSubFunctions, predefinedFunctions, apiEvents, apiProps, importClrSnippet })
-                .SelectMany(el => el.Select(s => ToSnippetDict1(s)))
-                .Concat(apiNames)
-                .Concat(apiFuncs.Select(tp => ToSnippetDict2(tp.Item1, tp.Item2)))
-                .ToList();
+            var snippets = (new List<IEnumerable<string>> {
+                luaSubFunctions,
+                predefinedFunctions,
+                apiEvents,
+                apiProps, })
+                    .SelectMany(el => el.Select(s => ToSnippetDict1(s)))
+                    .Concat(apiNames)
+                    .Concat(apiFuncs.Select(tp => ToSnippetDict2(tp.Item1, tp.Item2)))
+                    .ToList();
 
             return snippets;
         }
@@ -258,8 +214,6 @@ namespace NeoLuna.Libs.LuaSnippet
                 .Concat(apiEvSnippets)
                 .Concat(GenLuaPredefinedFuncSnippets(orgLuaSubFuncSnippet))
                 .ToList();
-
-            importClrCache = GenLuaImportClrSnippet();
 
             apiFunctionCache = apis
                .SelectMany(api => GenApiFunctionSnippetItems(api.Item1, api.Item2))

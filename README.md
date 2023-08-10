@@ -52,6 +52,7 @@ WinFormUI
 [mpeterv/luacheck](https://github.com/mpeterv/luacheck.git) lua语义解释  
 [msva/lua-htmlparser](https://github.com/msva/lua-htmlparser) html解释器  
 [musva/V2RayW](https://github.com/musva/V2RayW) vless://...解码  
+[neolithos/neolua](https://github.com/neolithos/neolua.git) NeoLuna插件中的lua解释器  
 [NLua/NLua](https://github.com/NLua/NLua) Luna插件中的lua解释器  
 [openLuat/LuatOS](https://github.com/openLuat/LuatOS) Lua脚本支持task  
 [PoseidonM4A4/v2rayP](https://github.com/PoseidonM4A4/v2rayP) Launcher等多处代码参(抄)考(习)来源  

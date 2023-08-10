@@ -1,11 +1,22 @@
 {
-  "version": "1.7.1.1",
-  "md5": "DF147C8C14C2A6B8C24CB85110B329FB",
+  "version": "1.8.0.0",
+  "md5": "0B8AAD8EFAB7829E91E68A392B3196B3",
   "warnings": [
     "本项目支持的最高v2ray-core版本是v4.45.2"
   ],
   "changes": [
-    "更新至WebUI v0.0.4",
-    "调整table.dump()默认递归深度成9"
+    "新增一个NeoLuna插件（测试中）",
+    "处理vless://...中的&amp;amp;以及\\u0026等奇葩问题",
+    "魔改了一下第三方自动升级包的代码",
+    "修改userSettings.json的写盘方式，降低内存占用",
+    "修复显示器缩放引起的扫描二维码红框偏移问题",
+    "Lua插件添加wserv关键词，通过coreServ:Wrap()得到，是coreServ的简化版",
+    "Lua插件添加Sys:SetWarnOnExit()，脚本非预期结束时弹个消息框",
+    "Lua插件添加Sys:SnapCache***()函数，跨脚本、跨插件共享键值对用",
+    "Luna添加thread.lua，可以把function序列化到新线程执行",
+    "LuaMail添加一个attachment属性，用于发送object类型对象",
+    "LuaMailBox添加capacity参数，用于SendAndWait()函数",
+    "增加3rd文件夹，用来存放core, NeoLuna脚本, 升级辅助程序等等",
+    "WebUI搬迁到3rd/neoluna/webui里面，需在NeoLuna插件中启动"
   ]
 }

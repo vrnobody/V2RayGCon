@@ -268,11 +268,12 @@ namespace ZipExtractor
                 textBoxInformation.SelectionLength = 0;
             };
 
-            void StartAsAdmin(string executablePath, string commandLineArgs)
+            void StartAsAdmin(string executablePath, string commandLineArgs, string dir)
             {
                 var processStartInfo = new ProcessStartInfo(executablePath);
                 if (!string.IsNullOrEmpty(commandLineArgs))
                 {
+                    processStartInfo.WorkingDirectory = dir;
                     processStartInfo.Arguments = commandLineArgs;
                 }
 
@@ -302,13 +303,14 @@ namespace ZipExtractor
                             ? currentExe
                             : Path.Combine(extractionPath, updatedExe);
 
+                        var dir = Path.GetDirectoryName(executablePath);
                         if (isElevated)
                         {
-                            StartAsAdmin(executablePath, commandLineArgs);
+                            StartAsAdmin(executablePath, commandLineArgs, dir);
                         }
                         else
                         {
-                            SystemUtility.ExecuteProcessUnElevated(executablePath, commandLineArgs);
+                            SystemUtility.ExecuteProcessUnElevated(executablePath, commandLineArgs, dir);
                         }
 
                         _logBuilder.AppendLine("Successfully launched the updated application.");

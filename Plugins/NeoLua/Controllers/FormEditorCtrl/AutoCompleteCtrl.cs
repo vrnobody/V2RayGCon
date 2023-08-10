@@ -283,7 +283,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
 
         void AnalyzeScriptLater(object sender, EventArgs e)
         {
-            lazyAnalyser?.Deadline();
+            lazyAnalyser?.Throttle();
         }
 
         #endregion

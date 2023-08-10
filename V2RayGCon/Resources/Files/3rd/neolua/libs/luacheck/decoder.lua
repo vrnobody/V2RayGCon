@@ -38,7 +38,7 @@ local function hexadecimal_escaper(byte)
 end
 
 function LatinChars:get_printable_substring(from, to)
-   return (sgsub(ssub(self._bytes, from, to), "[^\32-\126]", hexadecimal_escaper))
+   return (sgsub(ssub(self._bytes, from, to), "([^\x20-\x7e])", hexadecimal_escaper))
 end
 
 function LatinChars:get_length()

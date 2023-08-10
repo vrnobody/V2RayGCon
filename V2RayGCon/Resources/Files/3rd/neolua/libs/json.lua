@@ -97,34 +97,11 @@ local function encode_table(val, stack)
   end
 end
 
-local patch_escape_chars = {
-    ['"'] = true, 
-    ['\\'] = true,
-    ["\0"] = true, ["\1"] = true, ["\2"] = true, ["\3"] = true, ["\4"] = true, 
-    ["\5"] = true, ["\6"] = true, ["\7"] = true, ["\8"] = true, ["\9"] = true, 
-    ["\10"] = true, ["\11"] = true, ["\12"] = true, ["\13"] = true, ["\14"] = true, 
-    ["\15"] = true, ["\16"] = true, ["\17"] = true, ["\18"] = true, ["\19"] = true, 
-    ["\20"] = true, ["\21"] = true, ["\22"] = true, ["\23"] = true, ["\24"] = true, 
-    ["\25"] = true, ["\26"] = true, ["\27"] = true, ["\28"] = true, ["\29"] = true,     
-}
-
-local function patch_escape_str(s)
-    local r = ""
-    for i = 1, #s do
-        local c = s:sub(i,i)
-        if patch_escape_chars[c] then
-            r = r .. escape_char(c)
-        else
-            r = r .. c
-        end
-    end
-    return r
-end
-
 local function encode_string(val)
   -- return '"' .. val:gsub('[%z\1-\31\\"]', escape_char) .. '"'  
-  -- NeoLua use CSharp regex in gsub. 2023-08-05
-  return '"' .. patch_escape_str(val) .. '"'
+  -- NeoLua use CSharp regex in gsub. 2023-08-10
+  local s = val:gsub('([\x00-\x1f\\"])', escape_char)
+  return '"' .. s .. '"'
 end
 
 

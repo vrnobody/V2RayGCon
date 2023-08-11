@@ -733,19 +733,21 @@ namespace VgcApis.Misc
         {
             // https://stackoverflow.com/questions/138043/find-the-next-tcp-port-in-net
             var port = -1;
-            using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+
+            lock (_defaultLoopbackEndpoint)
             {
-                lock (_defaultLoopbackEndpoint)
+                try
                 {
-                    try
+                    using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
                     {
-                        socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontLinger, true);
+                        // socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontLinger, true);
                         // socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
                         socket.Bind(_defaultLoopbackEndpoint);
-                        port = ((IPEndPoint)socket.LocalEndPoint).Port;
+                        var ep = (IPEndPoint)socket.LocalEndPoint;
+                        port = ep.Port;
                     }
-                    catch { }
                 }
+                catch { }
             }
             return port;
         }

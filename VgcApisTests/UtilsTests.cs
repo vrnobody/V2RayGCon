@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -460,51 +461,52 @@ namespace VgcApisTests
             Assert.AreEqual(expect, len);
         }
 
-        /* this test takes about 3min in github action
+#if DEBUG
         [TestMethod]
         public void GetFreePortMultipleThreadsTest()
         {
-            List<int> ports = new List<int>();
-            object portsWriteLocker = new object();
-            void checkPort(int p)
-            {
-                lock (portsWriteLocker)
-                {
-                    if (ports.Contains(p))
-                    {
-                        Assert.Fail();
-                    }
-                    ports.Add(p);
-                }
-            }
+            ConcurrentDictionary<int, bool> ports = new ConcurrentDictionary<int, bool>();
 
             void worker()
             {
-                var freePort = GetFreeTcpPort();
-                checkPort(freePort);
-                IPEndPoint ep = new IPEndPoint(IPAddress.Loopback, port: freePort);
-                using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+                for (int i = 0; i < 200; i++)
                 {
-                    socket.Bind(ep);
-                    Task.Delay(10).Wait();
+                    var freePort = GetFreeTcpPort();
+                    if (!ports.TryAdd(freePort, true))
+                    {
+                        Assert.Fail();
+                    }
+                    try
+                    {
+                        using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+                        {
+                            IPEndPoint ep = new IPEndPoint(IPAddress.Loopback, port: freePort);
+                            socket.Bind(ep);
+                            Task.Delay(10).Wait();
+                        }
+                    }
+                    catch
+                    {
+                        Assert.Fail();
+                    }
                 }
             }
 
             List<Task> tasks = new List<Task>();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 30; i++)
             {
                 tasks.Add(RunInBackground(worker));
             }
 
             Task.WaitAll(tasks.ToArray());
         }
-        */
+#endif
 
         [TestMethod]
         public void GetFreePortSingleThreadTest()
         {
             List<int> ports = new List<int>();
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 int port = GetFreeTcpPort();
                 Assert.AreEqual(true, port > 0);

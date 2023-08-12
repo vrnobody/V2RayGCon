@@ -60,7 +60,7 @@ namespace Luna.Misc
             // Basic Functions
 
             scintilla.SetKeywords(1,
-                VgcApis.Models.Consts.Lua.ApiFuncNames
+                VgcApis.Models.Consts.Lua.NLuaApiFuncNames
                     + " "
                     + string.Join(" ", VgcApis.Models.Consts.Lua.NLuaPredefinedFunctions)
                     + " "

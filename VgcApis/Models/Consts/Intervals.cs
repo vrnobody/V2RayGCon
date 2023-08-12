@@ -2,7 +2,7 @@
 {
     static public class Intervals
     {
-        public const int AnalizeLuaScriptDelay = 5000;
+        public const int AnalizeLuaScriptDelay = 3000;
 
         public const int GetStartCoreTokenInterval = 391;
 

@@ -45,14 +45,15 @@ WinFormUI
 [ekonbenefits/impromptu-interface](https://github.com/ekonbenefits/impromptu-interface) 代理对象  
 [FourierTransformer/lua-complete](https://github.com/FourierTransformer/lua-complete.git) Lua模块补全  
 [haf/DotNetZip.Semverd](https://github.com/haf/DotNetZip.Semverd) .net 4.0解压zip文件  
+[Html Agility Pack](https://html-agility-pack.net/) HTML解释器  
 [jacobslusser/ScintillaNET](https://github.com/jacobslusser/ScintillaNET) 编辑器  
 [JamesNK/Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) 处理json  
 [micjahn/ZXing.Net](https://github.com/micjahn/ZXing.Net/) 处理二维码  
 [moq/moq4](https://github.com/moq/moq4) 自动补全  
-[mpeterv/luacheck](https://github.com/mpeterv/luacheck.git) lua语义解释  
-[msva/lua-htmlparser](https://github.com/msva/lua-htmlparser) html解释器  
+[mpeterv/luacheck](https://github.com/mpeterv/luacheck.git) Lua语义解释  
+[msva/lua-htmlparser](https://github.com/msva/lua-htmlparser) HTML解释器  
 [musva/V2RayW](https://github.com/musva/V2RayW) vless://...解码  
-[neolithos/neolua](https://github.com/neolithos/neolua.git) NeoLuna插件中的lua解释器  
+[neolithos/neolua](https://github.com/neolithos/neolua.git) NeoLuna插件中的Lua解释器  
 [NLua/NLua](https://github.com/NLua/NLua) Luna插件中的lua解释器  
 [openLuat/LuatOS](https://github.com/openLuat/LuatOS) Lua脚本支持task  
 [PoseidonM4A4/v2rayP](https://github.com/PoseidonM4A4/v2rayP) Launcher等多处代码参(抄)考(习)来源  

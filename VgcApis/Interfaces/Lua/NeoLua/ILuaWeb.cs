@@ -1,9 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using HtmlAgilityPack;
+using System.Collections.Generic;
 
-namespace VgcApis.Interfaces.Lua
+namespace VgcApis.Interfaces.Lua.NeoLua
 {
     public interface ILuaWeb
     {
+        /// <summary>
+        /// html-agility-pack
+        /// </summary>
+        /// <param name="html">string content</param>
+        /// <returns>HtmlNode</returns>
+        HtmlNode ParseHtml(string html);
+
+        /// <summary>
+        /// html-agility-pack
+        /// </summary>
+        /// <returns>html-agility-pack HtmlDocument</returns>
+        HtmlDocument GetHtmlParser();
+
         /// <summary>
         /// 获取一个随机的空闲TCP端口
         /// </summary>

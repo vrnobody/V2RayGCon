@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.NetworkInformation;
@@ -9,7 +10,7 @@ namespace NeoLuna.Models.Apis.Components
 {
     internal sealed class Web :
         VgcApis.BaseClasses.ComponentOf<LuaApis>,
-        VgcApis.Interfaces.Lua.ILuaWeb
+        VgcApis.Interfaces.Lua.NeoLua.ILuaWeb
     {
         VgcApis.Interfaces.Services.IWebService vgcWeb;
         VgcApis.Interfaces.Services.IServersService vgcServers;
@@ -182,8 +183,20 @@ namespace NeoLuna.Models.Apis.Components
         public string PatchHref(string url, string href) =>
             vgcWeb.PatchHref(url, href);
 
+        public HtmlNode ParseHtml(string html)
+        {
+            try
+            {
+                var htmlDoc = new HtmlDocument();
+                htmlDoc.LoadHtml(html);
+                var docNode = htmlDoc.DocumentNode;
+                return docNode;
+            }
+            catch { }
+            return null;
+        }
 
-
+        public HtmlDocument GetHtmlParser() => new HtmlDocument();
         #endregion
     }
 }

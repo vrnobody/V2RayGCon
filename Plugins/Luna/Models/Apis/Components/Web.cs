@@ -9,7 +9,7 @@ namespace Luna.Models.Apis.Components
 {
     internal sealed class Web :
         VgcApis.BaseClasses.ComponentOf<LuaApis>,
-        VgcApis.Interfaces.Lua.ILuaWeb
+        VgcApis.Interfaces.Lua.NLua.ILuaWeb
     {
         VgcApis.Interfaces.Services.IWebService vgcWeb;
         VgcApis.Interfaces.Services.IServersService vgcServers;

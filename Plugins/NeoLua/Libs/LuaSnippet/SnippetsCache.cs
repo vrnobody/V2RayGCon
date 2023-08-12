@@ -187,7 +187,7 @@ namespace NeoLuna.Libs.LuaSnippet
                 new Tuple<string,Type>("std.Sys", typeof(VgcApis.Interfaces.Lua.NeoLua.ILuaSys)),
                 new Tuple<string,Type>("std.Misc", typeof(VgcApis.Interfaces.Lua.NeoLua.ILuaMisc)),
                 new Tuple<string,Type>("std.Server", typeof(VgcApis.Interfaces.Lua.NeoLua.ILuaServer)),
-                new Tuple<string,Type>("std.Web", typeof(VgcApis.Interfaces.Lua.ILuaWeb)),
+                new Tuple<string,Type>("std.Web", typeof(VgcApis.Interfaces.Lua.NeoLua.ILuaWeb)),
                 new Tuple<string,Type>("std.Signal", typeof(VgcApis.Interfaces.Lua.ILuaSignal)),
 
                 // 2023-08-01 测试结果 Wrap()开销9ns，Invoke()开销2ns，还可以接受。

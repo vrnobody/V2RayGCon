@@ -346,7 +346,7 @@ namespace Luna.Controllers
             lua["Sys"] = luaSys;
             lua["Misc"] = luaApis.GetChild<VgcApis.Interfaces.Lua.NLua.ILuaMisc>();
             lua["Server"] = luaApis.GetChild<VgcApis.Interfaces.Lua.NLua.ILuaServer>();
-            lua["Web"] = luaApis.GetChild<VgcApis.Interfaces.Lua.ILuaWeb>();
+            lua["Web"] = luaApis.GetChild<VgcApis.Interfaces.Lua.NLua.ILuaWeb>();
 
             return lua;
         }

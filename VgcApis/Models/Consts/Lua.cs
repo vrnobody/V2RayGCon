@@ -13,7 +13,9 @@ namespace VgcApis.Models.Consts
 
         const string LuaKeywords = " and break do else elseif end for foreach function if in local nil not or repeat return then until while false true goto";
 
-        public static string ApiFuncNames = string.Join(@" ", GetterApiFuncNames());
+        public static string NLuaApiFuncNames = string.Join(@" ", GetterApiFuncNames(ApiTypes.NLua));
+
+        public static string NeoLuaApiFuncNames = string.Join(@" ", GetterApiFuncNames(ApiTypes.NeoLua));
 
         public static string LuaFunctions =
             "assert collectgarbage dofile error _G getmetatable ipairs loadfile next pairs pcall print rawequal rawget rawset setmetatable tonumber tostring type _VERSION xpcall string table math coroutine io os debug" +
@@ -59,22 +61,20 @@ namespace VgcApis.Models.Consts
             "table.dump(t, indent, header, level, maxLevel)",
         };
 
-        static List<string> GetterApiFuncNames()
+        enum ApiTypes
+        {
+            NLua,
+            NeoLua,
+        }
+
+        static List<string> GetterApiFuncNames(ApiTypes apiType)
         {
             var luaKeywords = new List<string>();
 
             var types = new List<Type>
             {
-                typeof(Interfaces.Lua.NLua.ILuaSys),
-                typeof(Interfaces.Lua.NLua.ILuaMisc),
-                typeof(Interfaces.Lua.NLua.ILuaServer),
-
-                typeof(Interfaces.Lua.NeoLua.ILuaSys),
-                typeof(Interfaces.Lua.NeoLua.ILuaMisc),
-                typeof(Interfaces.Lua.NeoLua.ILuaServer),
-
                 typeof(Interfaces.Lua.ILuaSignal),
-                typeof(Interfaces.Lua.ILuaWeb),
+
                 typeof(Interfaces.Lua.ILuaMailBox),
                 typeof(Interfaces.Lua.ILuaMail),
 
@@ -84,6 +84,29 @@ namespace VgcApis.Models.Consts
                 typeof(Interfaces.CoreCtrlComponents.ICoreStates),
                 typeof(Interfaces.CoreCtrlComponents.ILogger),
             };
+
+            switch (apiType)
+            {
+                case ApiTypes.NeoLua:
+                    types.AddRange(new List<Type>
+                    {
+                        typeof(Interfaces.Lua.NeoLua.ILuaSys),
+                        typeof(Interfaces.Lua.NeoLua.ILuaMisc),
+                        typeof(Interfaces.Lua.NeoLua.ILuaServer),
+                        typeof(Interfaces.Lua.NeoLua.ILuaWeb),
+                    });
+                    break;
+
+                default:
+                    types.AddRange(new List<Type>
+                    {
+                        typeof(Interfaces.Lua.NLua.ILuaSys),
+                        typeof(Interfaces.Lua.NLua.ILuaMisc),
+                        typeof(Interfaces.Lua.NLua.ILuaServer),
+                        typeof(Interfaces.Lua.NLua.ILuaWeb),
+                    });
+                    break;
+            }
 
             foreach (var t in types)
             {

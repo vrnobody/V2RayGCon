@@ -299,7 +299,7 @@ namespace Luna.Services
             {"Signal", new Mock<VgcApis.Interfaces.Lua.ILuaSignal>().Object},
             {"Sys", new Mock<VgcApis.Interfaces.Lua.NLua.ILuaSys>().Object},
             {"Server", new Mock<VgcApis.Interfaces.Lua.NLua.ILuaServer>().Object},
-            {"Web", new Mock<VgcApis.Interfaces.Lua.ILuaWeb>().Object},
+            {"Web", new Mock<VgcApis.Interfaces.Lua.NLua.ILuaWeb>().Object},
         };
 
         Lua CreateAnalyser()

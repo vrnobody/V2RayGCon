@@ -117,7 +117,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
         {
             var modules = astServer.GetRequireModuleNames();
             var ms = modules.Select(m => new LuaImportClrSnippets(m)).ToList();
-            bestMatchSnippets?.UpdateRequireModuleSnippets(ms);
+            bestMatchSnippets?.UpdateRequireModuleNameSnippets(ms);
         }
 
         #endregion
@@ -181,25 +181,26 @@ namespace NeoLuna.Controllers.FormEditorCtrl
 
             foreach (var kv in ast[Services.AstServer.KEY_MODULES] as JObject)
             {
-                var mn = kv.Value.ToString();
-                var mAst = astServer.AnalyzeModule(mn, isEnableCodeAnalyzeEx);
-                if (mAst == null)
+                var name = kv.Key;
+                var path = kv.Value.ToString();
+                var modAst = astServer.AnalyzeModule(path, isEnableCodeAnalyzeEx);
+                if (modAst == null)
                 {
                     continue;
                 }
 
-                BuildOneModuleSnippets(kv.Key, mAst, snippets);
+                BuildOneModuleSnippets(name, modAst, snippets);
             }
         }
 
-        private void BuildOneModuleSnippets(string varName, JObject ast, List<MatchItemBase> snippets)
+        private void BuildOneModuleSnippets(string name, JObject ast, List<MatchItemBase> snippets)
         {
             var fds = new Dictionary<string, string>() {
                 { Services.AstServer.KEY_FUNCTION,"." },
                 { Services.AstServer.KEY_METHODS ,":" },
             };
 
-            snippets.Add(new LuaKeywordSnippets(varName));
+            snippets.Add(new LuaKeywordSnippets(name));
 
             foreach (var kv in ast)
             {
@@ -207,7 +208,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
                 {
                     foreach (string prop in kv.Value as JArray)
                     {
-                        var snp = new LuaKeywordSnippets($"{varName}.{prop}");
+                        var snp = new LuaKeywordSnippets($"{name}.{prop}");
                         snippets.Add(snp);
                     }
                     continue;
@@ -219,7 +220,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
                     {
                         var ps = string.Join(", ", skv.Value as JArray);
                         var sep = fds[kv.Key];
-                        snippets.Add(new LuaSubFuncSnippets($"{varName}{sep}{skv.Key}({ps})", sep));
+                        snippets.Add(new LuaSubFuncSnippets($"{name}{sep}{skv.Key}({ps})", sep));
                     }
                 }
             }
@@ -277,7 +278,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
 
             var snps = new List<MatchItemBase>();
             BuildSnippets(ast, snps);
-            bestMatchSnippets?.UpdateCustomScriptSnippets(snps);
+            bestMatchSnippets?.UpdateScriptSnippetCache(snps);
         }
 
 

@@ -124,22 +124,22 @@ namespace NeoLuna.Services
         public List<Dictionary<string, string>> GetWebUiLuaStaticSnippets() =>
             snpCache?.GetWebUiLuaStaticSnippets();
 
-        public JObject AnalyzeModule(string moduleName, bool isExMode)
+        public JObject AnalyzeModule(string path, bool isExMode)
         {
             var cache = isExMode ? astModuleExCache : astModuleCache;
-            if (cache.TryGetValue(moduleName, out var ast))
+            if (cache.TryGetValue(path, out var ast))
             {
                 return ast;
             }
 
             var mode = isExMode ? AnalyzeModes.ModuleEx : AnalyzeModes.Module;
-            var mAst = AnalyzeModuleCore(moduleName, mode);
+            var mAst = AnalyzeModuleCore(path, mode);
             if (mAst != null)
             {
                 lock (moduleCacheLock)
                 {
                     TrimModuleAstCache(cache);
-                    cache.TryAdd(moduleName, mAst);
+                    cache.TryAdd(path, mAst);
                 }
             }
             return mAst;
@@ -298,11 +298,13 @@ namespace NeoLuna.Services
             }
         }
 
-        JObject AnalyzeModuleCore(string moduleName, AnalyzeModes mode)
+        JObject AnalyzeModuleCore(string path, AnalyzeModes mode)
         {
             try
             {
-                var fn = moduleName.Replace('.', Path.DirectorySeparatorChar) + ".lua";
+                var p = path.Replace('.', Path.DirectorySeparatorChar)
+                    .Replace('/', Path.DirectorySeparatorChar);
+                var fn = p + ".lua";
                 var code = File.ReadAllText(fn);
                 return AnalyzeCore(code, mode);
             }
@@ -316,7 +318,7 @@ namespace NeoLuna.Services
             {"Signal", new Mock<VgcApis.Interfaces.Lua.ILuaSignal>().Object},
             {"Sys", new Mock<VgcApis.Interfaces.Lua.NeoLua.ILuaSys>().Object},
             {"Server", new Mock<VgcApis.Interfaces.Lua.NeoLua.ILuaServer>().Object},
-            {"Web", new Mock<VgcApis.Interfaces.Lua.ILuaWeb>().Object},
+            {"Web", new Mock<VgcApis.Interfaces.Lua.NeoLua.ILuaWeb>().Object},
         };
 
         LuaGlobal CreateAnalyser(Lua anz)

@@ -657,7 +657,7 @@
   <PropertyGroup>
     <PostBuildEvent>set "libsDir=libs\"
 set "copyFolderList=lua 3rd"
-set "allDlls=Neo.Lua NeoLuna ImpromptuInterface Dynamitey KeraLua liblua53 lua53 Nlua AutocompleteMenu-ScintillaNET Luna ProxySetter Pacman DotNetZip Newtonsoft ScintillaNET VgcApis zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
+set "allDlls=HtmlAgilityPack Neo.Lua NeoLuna ImpromptuInterface Dynamitey KeraLua liblua53 lua53 Nlua AutocompleteMenu-ScintillaNET Luna ProxySetter Pacman DotNetZip Newtonsoft ScintillaNET VgcApis zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
 
 call:CreateFoldersOnDemand "%25libsDir%25 %25copyFolderList%25"
 call:MoveFilesByList "%25allDlls%25"

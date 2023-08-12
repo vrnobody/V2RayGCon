@@ -17,8 +17,8 @@ namespace NeoLuna.Libs.LuaSnippet
         List<LuaKeywordSnippets> luaKeywords;
         List<LuaSubFuncSnippets> luaSubFunctions;
 
-        List<LuaImportClrSnippets> customRequireModuleSnippets = new List<LuaImportClrSnippets>();
-        List<MatchItemBase> customScriptSnippets = new List<MatchItemBase>();
+        List<LuaImportClrSnippets> customModuleNamesSnippets = new List<LuaImportClrSnippets>();
+        List<MatchItemBase> customScriptSnippetCache = new List<MatchItemBase>();
 
         public BestMatchSnippets(
             Scintilla editor,
@@ -37,32 +37,32 @@ namespace NeoLuna.Libs.LuaSnippet
         }
 
         #region public methods
-        public void UpdateCustomScriptSnippets(List<MatchItemBase> snippets)
+        public void UpdateScriptSnippetCache(List<MatchItemBase> snippets)
         {
             if (snippets == null)
             {
                 return;
             }
 
-            lock (this.customScriptSnippets)
+            lock (this.customScriptSnippetCache)
             {
-                var old = this.customScriptSnippets;
-                this.customScriptSnippets = snippets;
+                var old = this.customScriptSnippetCache;
+                this.customScriptSnippetCache = snippets;
                 old.Clear();
             }
         }
 
-        public void UpdateRequireModuleSnippets(List<LuaImportClrSnippets> snippets)
+        public void UpdateRequireModuleNameSnippets(List<LuaImportClrSnippets> snippets)
         {
             if (snippets == null)
             {
                 return;
             }
 
-            lock (this.customRequireModuleSnippets)
+            lock (this.customModuleNamesSnippets)
             {
-                var old = this.customRequireModuleSnippets;
-                this.customRequireModuleSnippets = snippets;
+                var old = this.customModuleNamesSnippets;
+                this.customModuleNamesSnippets = snippets;
                 old.Clear();
             }
         }
@@ -70,8 +70,8 @@ namespace NeoLuna.Libs.LuaSnippet
         public void Cleanup()
         {
             this.editor = null;
-            customRequireModuleSnippets?.Clear();
-            customScriptSnippets?.Clear();
+            customModuleNamesSnippets?.Clear();
+            customScriptSnippetCache?.Clear();
         }
 
         #endregion
@@ -107,9 +107,9 @@ namespace NeoLuna.Libs.LuaSnippet
         private List<AutocompleteItem> CreateSnippets(string fragment)
         {
             List<MatchItemBase> candidates;
-            lock (this.customScriptSnippets)
+            lock (this.customScriptSnippetCache)
             {
-                candidates = customScriptSnippets
+                candidates = customScriptSnippetCache
                    .Concat(GenCandidateList(fragment))
                    .ToList();
             }
@@ -145,9 +145,9 @@ namespace NeoLuna.Libs.LuaSnippet
             }
             else if (fragment.Contains("("))
             {
-                lock (customRequireModuleSnippets)
+                lock (customModuleNamesSnippets)
                 {
-                    items.AddRange(customRequireModuleSnippets);
+                    items.AddRange(customModuleNamesSnippets);
                 }
                 items.AddRange(luaFunctions);
             }

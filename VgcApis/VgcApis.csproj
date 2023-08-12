@@ -38,6 +38,9 @@
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.11.51.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.51\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="KeraLua, Version=1.0.29.0, Culture=neutral, PublicKeyToken=6a194c04b9c89217, processorArchitecture=MSIL">
       <HintPath>..\packages\KeraLua.1.0.29\lib\net45\KeraLua.dll</HintPath>
     </Reference>
@@ -68,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Interfaces\IWrappedCoreServCtrl.cs" />
     <Compile Include="Interfaces\ILogable.cs" />
+    <Compile Include="Interfaces\Lua\NLua\ILuaWeb.cs" />
     <Compile Include="Interfaces\Services\IPostOffice.cs" />
     <Compile Include="Interfaces\Lua\NeoLua\ILuaMisc.cs" />
     <Compile Include="Interfaces\Lua\NeoLua\ILuaServer.cs" />
@@ -122,7 +126,7 @@
     <Compile Include="Interfaces\IShareLinkDecoder.cs" />
     <Compile Include="Interfaces\Lua\NLua\ILuaServer.cs" />
     <Compile Include="Interfaces\Lua\NLua\ILuaMisc.cs" />
-    <Compile Include="Interfaces\Lua\ILuaWeb.cs" />
+    <Compile Include="Interfaces\Lua\NeoLua\ILuaWeb.cs" />
     <Compile Include="Interfaces\Services\IApiServices.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Libs\Tasks\CancelableTimeout.cs" />

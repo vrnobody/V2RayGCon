@@ -137,6 +137,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
             coreInfo.index = index;
             coreInfo.title = string.Empty;
+            GetParent().InvokeEventOnIndexChange();
             if (!quiet)
             {
                 GetParent().InvokeEventOnPropertyChange();

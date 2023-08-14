@@ -16,7 +16,8 @@ namespace V2RayGCon.Controllers
             OnPropertyChanged,
             OnCoreClosing,
             OnCoreStop,
-            OnCoreStart;
+            OnCoreStart,
+            OnIndexChanged;
 
         CoreInfo coreInfo;
         CoreServerComponent.CoreStates states;
@@ -68,6 +69,9 @@ namespace V2RayGCon.Controllers
         #region event relay
         public void InvokeEventOnCoreClosing() =>
             OnCoreClosing?.Invoke(this, EventArgs.Empty);
+
+        public void InvokeEventOnIndexChange() =>
+            InvokeEmptyEventIgnoreError(OnIndexChanged);
 
         public void InvokeEventOnPropertyChange() =>
             InvokeEmptyEventIgnoreError(OnPropertyChanged);

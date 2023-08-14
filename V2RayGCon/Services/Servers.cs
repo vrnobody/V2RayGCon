@@ -164,8 +164,21 @@ namespace V2RayGCon.Services
         public List<ICoreServCtrl> GetRunningServers() =>
             queryHandler.GetRunningServers();
 
-        public List<ICoreServCtrl> GetAllServersOrderByIndex() =>
-            queryHandler.GetAllServers(false);
+        List<ICoreServCtrl> sortedCoreServListCache = null;
+        readonly object sortedCoreServListCacheLocker = new object();
+
+        public List<ICoreServCtrl> GetAllServersOrderByIndex()
+        {
+            lock (sortedCoreServListCacheLocker)
+            {
+                if (sortedCoreServListCache == null)
+                {
+                    sortedCoreServListCache = queryHandler.GetAllServers(false);
+                }
+                // copy
+                return sortedCoreServListCache.ToList();
+            }
+        }
 
         public List<ICoreServCtrl> GetServersByUids(IEnumerable<string> uids) =>
             queryHandler.GetServersByUids(uids);
@@ -229,6 +242,7 @@ namespace V2RayGCon.Services
             server.OnCoreStart += OnTrackCoreStartHandler;
             server.OnCoreStop += OnTrackCoreStopHandler;
             server.OnPropertyChanged += InvokeEventOnServerPropertyChange;
+            server.OnIndexChanged += OnCoreServIndexChangedHandler;
         }
 
         void ReleaseEventsFrom(Controllers.CoreServerCtrl server)
@@ -237,7 +251,10 @@ namespace V2RayGCon.Services
             server.OnCoreStart -= OnTrackCoreStartHandler;
             server.OnCoreStop -= OnTrackCoreStopHandler;
             server.OnPropertyChanged -= InvokeEventOnServerPropertyChange;
+            server.OnIndexChanged -= OnCoreServIndexChangedHandler;
         }
+
+
         #endregion
 
         #region server tracking
@@ -782,6 +799,17 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+        void OnCoreServIndexChangedHandler(object sender, EventArgs args)
+        {
+            if (sortedCoreServListCache != null)
+            {
+                lock (sortedCoreServListCache)
+                {
+                    sortedCoreServListCache = null;
+                }
+            }
+        }
+
         Controllers.CoreServerCtrl DeleteServerByUidWorker(string uid)
         {
             if (!string.IsNullOrEmpty(uid)
@@ -851,6 +879,9 @@ namespace V2RayGCon.Services
 
             BindEventsTo(newServer);
             newServer.GetConfiger().UpdateSummary();
+
+            // clear sorted core serv list cache
+            OnCoreServIndexChangedHandler(newServer, EventArgs.Empty);
 
             if (!quiet)
             {
@@ -967,6 +998,7 @@ namespace V2RayGCon.Services
         {
             UpdateMarkList();
             ResetIndexQuiet();
+            OnCoreServIndexChangedHandler(null, EventArgs.Empty);
             InvokeEventOnServerCountChange(this, EventArgs.Empty);
             RequireFormMainReload();
             lazyServerSettingsRecorder.Deadline();

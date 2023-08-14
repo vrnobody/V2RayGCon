@@ -8,6 +8,8 @@ namespace NeoLuna.Services
     {
 
         Views.WinForms.FormMain formMain = null;
+        Views.WinForms.FormLog formLog = null;
+
         List<Views.WinForms.FormEditor> editors = new List<Views.WinForms.FormEditor>();
         readonly object formLocker = new object();
 
@@ -85,6 +87,36 @@ namespace NeoLuna.Services
                 form?.Close();
                 formMain?.Show();
                 formMain?.Activate();
+            });
+        }
+
+        public void ShowFormLog()
+        {
+            Views.WinForms.FormLog form = null;
+            if (formLog == null || formLog.IsDisposed)
+            {
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    var logger = settings.GetLogger();
+                    form = new Views.WinForms.FormLog(logger);
+                });
+            }
+
+            lock (formLocker)
+            {
+                if (form != null)
+                {
+                    formLog = form;
+                    formLog.FormClosed += (s, a) => formLog = null;
+                    form = null;
+                }
+            }
+
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                form?.Close();
+                formLog?.Show();
+                formLog?.Activate();
             });
         }
 

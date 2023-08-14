@@ -174,6 +174,12 @@
     <Compile Include="Views\WinForms\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\WinForms\FormLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormLog.Designer.cs">
+      <DependentUpon>FormLog.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\VgcApis\VgcApis.csproj">
@@ -244,6 +250,12 @@
     <EmbeddedResource Include="Views\WinForms\FormMain.zh-CN.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormLog.resx">
+      <DependentUpon>FormLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormLog.zh-CN.resx">
+      <DependentUpon>FormLog.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -251,6 +263,7 @@
   <ItemGroup>
     <Content Include="Resources\Files\LuaPredefinedFunctions.txt" />
     <Content Include="Resources\Icons\App\EditWindow_16x.png" />
+    <Content Include="Resources\Icons\App\FSInteractiveWindow_16x.png" />
     <None Include="Resources\Icons\App\lua-lang.png" />
     <None Include="packages.config" />
     <None Include="Resources\Icons\App\StoredProcedureScript_16x.png" />

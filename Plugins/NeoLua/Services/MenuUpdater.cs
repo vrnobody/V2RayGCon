@@ -8,25 +8,24 @@ namespace NeoLuna.Services
         VgcApis.BaseClasses.Disposable
     {
         LuaServer luaServer;
-        ToolStripMenuItem miRoot, miShowMgr, miShowEditor;
+        ToolStripMenuItem miRoot, miShowMgr, miShowEditor, miShowLog;
         VgcApis.Libs.Tasks.LazyGuy lazyMenuUpdater;
 
-        public MenuUpdater()
-        {
-
-        }
+        public MenuUpdater() { }
 
         public void Run(
             LuaServer luaServer,
             ToolStripMenuItem miRoot,
             ToolStripMenuItem miShowMgr,
-            ToolStripMenuItem miShowEditor)
+            ToolStripMenuItem miShowEditor,
+            ToolStripMenuItem miShowLog)
         {
             this.luaServer = luaServer;
 
             this.miRoot = miRoot;
             this.miShowMgr = miShowMgr;
             this.miShowEditor = miShowEditor;
+            this.miShowLog = miShowLog;
 
             lazyMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(UpdateMenuWorker, 500, 3000)
             {
@@ -53,6 +52,7 @@ namespace NeoLuna.Services
                 miRoot.DropDown.PerformLayout();
                 root.Add(miShowMgr);
                 root.Add(miShowEditor);
+                root.Add(miShowLog);
                 if (mis.Count > 0)
                 {
                     root.Add(new ToolStripSeparator());

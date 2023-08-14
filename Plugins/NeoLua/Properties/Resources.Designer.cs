@@ -83,6 +83,16 @@ namespace NeoLuna.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap FSInteractiveWindow_16x {
+            get {
+                object obj = ResourceManager.GetObject("FSInteractiveWindow_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap KeyDown_16x {
             get {
                 object obj = ResourceManager.GetObject("KeyDown_16x", resourceCulture);

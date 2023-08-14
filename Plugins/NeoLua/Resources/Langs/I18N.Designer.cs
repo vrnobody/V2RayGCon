@@ -61,6 +61,15 @@ namespace NeoLuna.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Clear logs? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmClearLog {
+            get {
+                return ResourceManager.GetString("ConfirmClearLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Delete all scripts? 的本地化字符串。
         /// </summary>
         internal static string ConfirmDeleteAllScripts {
@@ -174,6 +183,15 @@ namespace NeoLuna.Resources.Langs {
         internal static string LunaScrMgr {
             get {
                 return ResourceManager.GetString("LunaScrMgr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Open log window 的本地化字符串。
+        /// </summary>
+        internal static string OpenLogWindow {
+            get {
+                return ResourceManager.GetString("OpenLogWindow", resourceCulture);
             }
         }
         

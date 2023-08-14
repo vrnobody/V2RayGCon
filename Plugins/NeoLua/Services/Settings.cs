@@ -16,6 +16,8 @@ namespace NeoLuna.Services
 
         VgcApis.Libs.Tasks.LazyGuy lazyBookKeeper;
 
+        readonly VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
+
 
         public Settings()
         {
@@ -36,11 +38,13 @@ namespace NeoLuna.Services
 
 
         #region public methods
+        public VgcApis.Libs.Sys.QueueLogger GetLogger() => qLogger;
 
-        public void SendLog(string contnet)
+        public void SendLog(string content)
         {
             var name = Properties.Resources.Name;
-            vgcSetting.SendLog(string.Format("[{0}] {1}", name, contnet));
+            qLogger.Log(content);
+            vgcSetting.SendLog(string.Format("[{0}] {1}", name, content));
         }
 
         public bool IsClosing() => _isDisposing || vgcSetting.IsClosing();

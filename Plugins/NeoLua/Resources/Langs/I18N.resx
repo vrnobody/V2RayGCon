@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConfirmClearLog" xml:space="preserve">
+    <value>Clear logs?</value>
+  </data>
   <data name="ConfirmDeleteAllScripts" xml:space="preserve">
     <value>Delete all scripts?</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="LunaScrMgr" xml:space="preserve">
     <value>NeoLuna v{0} - script manager</value>
+  </data>
+  <data name="OpenLogWindow" xml:space="preserve">
+    <value>Open log window</value>
   </data>
   <data name="OpenScriptEditor" xml:space="preserve">
     <value>Open script editor</value>

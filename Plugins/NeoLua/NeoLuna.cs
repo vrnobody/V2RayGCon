@@ -14,10 +14,10 @@ namespace NeoLuna
         Services.AstServer astServer;
         Services.MenuUpdater menuUpdater;
 
-        readonly ToolStripMenuItem miRoot, miShowMgr, miShowEditor;
+        readonly ToolStripMenuItem miRoot, miShowMgr, miShowEditor, miShowLog;
         public NeoLuna()
         {
-            ToolStripMenuItem mr = null, msw = null, mse = null;
+            ToolStripMenuItem mr = null, msw = null, mse = null, mlog = null;
             VgcApis.Misc.UI.Invoke(() =>
             {
                 mr = new ToolStripMenuItem(this.Name, this.Icon);
@@ -32,11 +32,17 @@ namespace NeoLuna
                     Properties.Resources.EditWindow_16x,
                     (s, a) => formMgr?.ShowOrCreateFirstEditor());
 
+                mlog = new ToolStripMenuItem(
+                    I18N.OpenLogWindow,
+                    Properties.Resources.FSInteractiveWindow_16x,
+                    (s, a) => formMgr?.ShowFormLog());
+
             });
 
             miRoot = mr;
             miShowMgr = msw;
             miShowEditor = mse;
+            miShowLog = mlog;
         }
 
         #region properties
@@ -75,7 +81,7 @@ namespace NeoLuna
             luaServer.Run(formMgr);
 
             menuUpdater = new Services.MenuUpdater();
-            menuUpdater.Run(luaServer, miRoot, miShowMgr, miShowEditor);
+            menuUpdater.Run(luaServer, miRoot, miShowMgr, miShowEditor, miShowLog);
 
             luaServer.WakeUpAutoRunScripts(TimeSpan.FromSeconds(2));
         }

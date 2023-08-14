@@ -117,79 +117,53 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfirmClearLog" xml:space="preserve">
-    <value>清空日志？</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="pauseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 22</value>
   </data>
-  <data name="ConfirmDeleteAllScripts" xml:space="preserve">
-    <value>删除所有脚本？</value>
+  <data name="pauseToolStripMenuItem.Text" xml:space="preserve">
+    <value>暂停</value>
   </data>
-  <data name="ConfirmRemoveScript" xml:space="preserve">
-    <value>真的要删除这个脚本吗？</value>
+  <data name="pauseToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>暂停接收日志</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>NeoLua脚本管理器。</value>
+  <data name="resumeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 22</value>
   </data>
-  <data name="DiscardUnsavedChanges" xml:space="preserve">
-    <value>放弃未保存的修改?</value>
+  <data name="resumeToolStripMenuItem.Text" xml:space="preserve">
+    <value>继续</value>
   </data>
-  <data name="Done" xml:space="preserve">
-    <value>完成</value>
+  <data name="resumeToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>继续接收日志</value>
   </data>
-  <data name="Empty" xml:space="preserve">
-    <value>空白</value>
+  <data name="clearToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 22</value>
   </data>
-  <data name="ExportScriptsFail" xml:space="preserve">
-    <value>导出脚本失败！</value>
+  <data name="clearToolStripMenuItem.Text" xml:space="preserve">
+    <value>清空</value>
   </data>
-  <data name="Fail" xml:space="preserve">
-    <value>失败</value>
+  <data name="clearToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>清空日志</value>
   </data>
-  <data name="ImportScriptsFail" xml:space="preserve">
-    <value>导入脚本失败！</value>
+  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>97, 6</value>
   </data>
-  <data name="ImportScriptsSuccess" xml:space="preserve">
-    <value>导入脚本完成！</value>
+  <data name="closeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 22</value>
   </data>
-  <data name="LuaCtrlOptionNone" xml:space="preserve">
-    <value>无</value>
+  <data name="closeToolStripMenuItem.Text" xml:space="preserve">
+    <value>关闭</value>
   </data>
-  <data name="LunaScrEditor" xml:space="preserve">
-    <value>NeoLuna v{0} - 脚本编辑器</value>
+  <data name="closeToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>关闭此窗口</value>
   </data>
-  <data name="LunaScrMgr" xml:space="preserve">
-    <value>NeoLuna v{0} - 脚本管理器</value>
+  <data name="actionToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 22</value>
   </data>
-  <data name="OpenLogWindow" xml:space="preserve">
-    <value>打开日志窗口</value>
+  <data name="actionToolStripMenuItem.Text" xml:space="preserve">
+    <value>操作</value>
   </data>
-  <data name="OpenScriptEditor" xml:space="preserve">
-    <value>打开脚本编辑器</value>
-  </data>
-  <data name="OpenScriptManger" xml:space="preserve">
-    <value>打开脚本管理器</value>
-  </data>
-  <data name="ReplaceScript" xml:space="preserve">
-    <value>替换现有脚本：</value>
-  </data>
-  <data name="ScriptNameNotSet" xml:space="preserve">
-    <value>脚本名没设置！</value>
-  </data>
-  <data name="ScriptNotFound" xml:space="preserve">
-    <value>找不到这个脚本！</value>
-  </data>
-  <data name="SendStopSignalTo" xml:space="preserve">
-    <value>发送停止信号至</value>
-  </data>
-  <data name="Start" xml:space="preserve">
-    <value>启动</value>
-  </data>
-  <data name="Stopped" xml:space="preserve">
-    <value>已结束</value>
-  </data>
-  <data name="Terminate" xml:space="preserve">
-    <value>终止</value>
-  </data>
-  <data name="WriteFileFail" xml:space="preserve">
-    <value>写入文件失败！</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>V2RayGCon - 日志</value>
   </data>
 </root>

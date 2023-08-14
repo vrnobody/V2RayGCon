@@ -183,21 +183,14 @@
   <data name="toolStripContainer1.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="showEditorToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
-  </data>
   <data name="showEditorToolStripMenuItem.Text" xml:space="preserve">
     <value>脚本编辑器</value>
   </data>
   <data name="showEditorToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>打开脚本编辑器</value>
   </data>
-  <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 6</value>
-  </data>
-  <data name="closeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+  <data name="showLogToolStripMenuItem.Text" xml:space="preserve">
+    <value>查看日志</value>
   </data>
   <data name="closeToolStripMenuItem.Text" xml:space="preserve">
     <value>关闭窗口</value>
@@ -205,6 +198,7 @@
   <data name="closeToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>关闭这个窗口</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="windowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 21</value>
   </data>

@@ -75,6 +75,11 @@ namespace NeoLuna.Views.WinForms
             formMgr.ShowOrCreateFirstEditor();
         }
 
+        private void showLogToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            formMgr.ShowFormLog();
+        }
+
         private void closeToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             this.Close();
@@ -83,6 +88,7 @@ namespace NeoLuna.Views.WinForms
         {
             formMgr.CreateNewEditor();
         }
+
         #endregion
 
 

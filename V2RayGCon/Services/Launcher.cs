@@ -54,7 +54,9 @@ namespace V2RayGCon.Services
             BootUp();
 
             var nv = Misc.Utils.GetAppNameAndVer();
+            var dir = VgcApis.Misc.Utils.GetAppDir(); // init VgcApi.dll
             setting.SendLog($"{nv} started.");
+            setting.SendLog($"{dir}");
 
 #if DEBUG
             This_Function_Is_Used_For_Debugging();

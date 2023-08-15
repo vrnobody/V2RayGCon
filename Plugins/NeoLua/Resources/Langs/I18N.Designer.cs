@@ -88,6 +88,24 @@ namespace NeoLuna.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Copy failed. 的本地化字符串。
+        /// </summary>
+        internal static string CopyFail {
+            get {
+                return ResourceManager.GetString("CopyFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Copy success. 的本地化字符串。
+        /// </summary>
+        internal static string CopySuccess {
+            get {
+                return ResourceManager.GetString("CopySuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Lua Scripts manager. 的本地化字符串。
         /// </summary>
         internal static string Description {

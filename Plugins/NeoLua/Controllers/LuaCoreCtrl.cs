@@ -280,9 +280,9 @@ namespace NeoLuna.Controllers
 
             luaSignal.ResetAllSignals();
 
-            using (Lua core = new Lua())
+            try
             {
-                try
+                using (Lua core = new Lua())
                 {
                     var g = CreateLuaCore(core, luaSys);
 
@@ -306,16 +306,15 @@ namespace NeoLuna.Controllers
                         result = results[0].ToString();
                     }
                 }
-                catch (Exception e)
-                {
-                    var str = TraceException(e);
-                    ShowErrorMessageToUser(str);
-                }
+            }
+            catch (Exception e)
+            {
+                var str = TraceException(e);
+                ShowErrorMessageToUser(str);
             }
 
             luaSys?.Dispose();
             luaSys = null;
-
             isRunning = false;
         }
 
@@ -343,7 +342,7 @@ namespace NeoLuna.Controllers
         {
             SendLog(ex);
 
-            if (isWarnOnExit)
+            if (isWarnOnExit || isAutoRun)
             {
                 var sb = new StringBuilder();
                 sb.AppendLine($"Luna script: [{coreSetting.name}]");

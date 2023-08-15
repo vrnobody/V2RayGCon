@@ -126,6 +126,12 @@
   <data name="ConfirmRemoveScript" xml:space="preserve">
     <value>真的要删除这个脚本吗？</value>
   </data>
+  <data name="CopyFail" xml:space="preserve">
+    <value>复制失败！</value>
+  </data>
+  <data name="CopySuccess" xml:space="preserve">
+    <value>复制成功！</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>NeoLua脚本管理器。</value>
   </data>

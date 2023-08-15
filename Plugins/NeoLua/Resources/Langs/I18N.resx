@@ -126,6 +126,12 @@
   <data name="ConfirmRemoveScript" xml:space="preserve">
     <value>Are you sure want to remove this script?</value>
   </data>
+  <data name="CopyFail" xml:space="preserve">
+    <value>Copy failed.</value>
+  </data>
+  <data name="CopySuccess" xml:space="preserve">
+    <value>Copy success.</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Lua Scripts manager.</value>
   </data>

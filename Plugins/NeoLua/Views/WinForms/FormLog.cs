@@ -6,8 +6,6 @@ namespace NeoLuna.Views.WinForms
 {
     public partial class FormLog : Form
     {
-
-
         long updateTimestamp = -1;
         VgcApis.Libs.Tasks.Routine logUpdater;
         VgcApis.Libs.Sys.QueueLogger qLogger;
@@ -23,7 +21,6 @@ namespace NeoLuna.Views.WinForms
 
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
-            this.Text = Properties.Resources.Name;
         }
 
         private void RefreshUi()
@@ -86,6 +83,15 @@ namespace NeoLuna.Views.WinForms
             isPaused = false;
             pauseToolStripMenuItem.Checked = isPaused;
             logUpdater.Run();
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var logs = rtBoxLogger.Text;
+            var msg = VgcApis.Misc.Utils.CopyToClipboard(logs) ?
+                I18N.CopySuccess :
+                I18N.CopyFail;
+            VgcApis.Misc.UI.MsgBoxAsync(msg);
         }
     }
 }

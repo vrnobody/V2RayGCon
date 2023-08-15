@@ -43,8 +43,6 @@ namespace NeoLuna.Controllers
         }
 
         #region properties 
-        public bool isWarnOnExit = false;
-
         public string name
         {
             get => coreSetting.name;
@@ -193,9 +191,6 @@ namespace NeoLuna.Controllers
                 return;
             }
 
-            // disable warn is user click stop button
-            isWarnOnExit = false;
-
             if (!string.IsNullOrEmpty(name))
             {
                 SendLog($"{I18N.SendStopSignalTo} {coreSetting.name}");
@@ -216,7 +211,6 @@ namespace NeoLuna.Controllers
             }
 
             isRunning = true;
-            isWarnOnExit = false;
 
             if (!string.IsNullOrEmpty(name))
             {
@@ -342,7 +336,7 @@ namespace NeoLuna.Controllers
         {
             SendLog(ex);
 
-            if (isWarnOnExit || isAutoRun)
+            if (!luaSignal.Stop() && isAutoRun)
             {
                 var sb = new StringBuilder();
                 sb.AppendLine($"Luna script: [{coreSetting.name}]");

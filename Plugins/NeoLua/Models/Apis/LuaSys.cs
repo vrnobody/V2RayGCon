@@ -132,10 +132,6 @@ namespace NeoLuna.Models.Apis
         public bool SnapCacheSet(string token, string key, object value) => postOffice.SnapCacheSet(token, key, value);
         #endregion
 
-        #region ILuaSys.LuaCoreCtrl
-        public void SetWarnOnExit(bool isOn) => luaCoreCtrl.isWarnOnExit = isOn;
-        #endregion
-
         #region ILuaSys.LuaVm
         private void BuildOneModuleSnippets(string varName, JObject ast, List<Dictionary<string, string>> snippets)
         {

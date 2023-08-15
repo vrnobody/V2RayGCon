@@ -15,10 +15,6 @@ namespace VgcApis.Interfaces.Lua.NeoLua
         /// <returns>1.2.3.4</returns>
         string GetAppVersion();
 
-        #region ILuaSys.LuaCoreCtrl
-        void SetWarnOnExit(bool isOn);
-        #endregion
-
         #region ILuaSys.SnapCache
 
         // 申请者退出时自动清理

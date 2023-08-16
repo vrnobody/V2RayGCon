@@ -83,30 +83,16 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         public List<VgcApis.Interfaces.ICoreServCtrl> GetFilteredList()
         {
-            var list = servers.GetAllServersOrderByIndex();
             var keyword = searchKeywords?.Replace(@" ", "");
-
             if (string.IsNullOrEmpty(keyword))
             {
-                return list.ToList();
+                return servers.GetAllServersOrderByIndex();
             }
-
-            var r = new List<VgcApis.Interfaces.ICoreServCtrl>();
-            for (int i = 0; i < list.Count; i++)
+            else if (keyword[0] == '#')
             {
-                var s = list[i];
-                var st = s.GetCoreStates();
-                if (VgcApis.Misc.Utils.PartialMatchCi(st.GetTag1(), keyword)
-                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetTag2(), keyword)
-                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetTag3(), keyword)
-                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetMark(), keyword)
-                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetRemark(), keyword)
-                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetTitle(), keyword))
-                {
-                    r.Add(s);
-                }
+                return SearchIndex(keyword);
             }
-            return r;
+            return SearchAllInfos(keyword);
         }
 
         public void LoopThroughAllServerUI(Action<Views.UserControls.ServerUI> operation)
@@ -186,6 +172,41 @@ namespace V2RayGCon.Controllers.FormMainComponent
         #endregion
 
         #region private method
+        List<VgcApis.Interfaces.ICoreServCtrl> SearchIndex(string keyword)
+        {
+            var r = new List<VgcApis.Interfaces.ICoreServCtrl>();
+            if (!int.TryParse(keyword.Substring(1), out var index))
+            {
+                return r;
+            }
+            var s = servers.GetServerByIndex(index);
+            if (s != null)
+            {
+                r.Add(s);
+            }
+            return r;
+        }
+
+        List<VgcApis.Interfaces.ICoreServCtrl> SearchAllInfos(string keyword)
+        {
+            var list = servers.GetAllServersOrderByIndex();
+            var r = new List<VgcApis.Interfaces.ICoreServCtrl>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                var s = list[i];
+                var st = s.GetCoreStates();
+                if (VgcApis.Misc.Utils.PartialMatchCi(st.GetTag1(), keyword)
+                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetTag2(), keyword)
+                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetTag3(), keyword)
+                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetMark(), keyword)
+                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetRemark(), keyword)
+                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetTitle(), keyword))
+                {
+                    r.Add(s);
+                }
+            }
+            return r;
+        }
 
         void RefreshFlyPanelWorker(Action done)
         {

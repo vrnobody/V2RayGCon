@@ -38,14 +38,20 @@ namespace VgcApis.Interfaces.Lua.NeoLua
         void ShowFormOption();
 
         /// <summary>
-        /// 调出Luna脚本管理器窗口
+        /// 调出NeoLuna脚本管理器窗口
         /// </summary>
-        void ShowFormLunaMgr();
+        void ShowFormNeoLunaMgr();
 
         /// <summary>
-        /// 调出Luna脚本编辑器窗口
+        /// 调出NeoLuna脚本编辑器窗口
         /// </summary>
-        void ShowFormLunaEditor();
+        void ShowFormNeoLunaEditor();
+
+        /// <summary>
+        /// 调出NeoLuna日志窗口
+        /// </summary>
+        void ShowFormNeoLunaLog();
+
 
         /// <summary>
         /// 调出主窗口

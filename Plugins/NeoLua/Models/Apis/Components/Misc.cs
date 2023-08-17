@@ -57,9 +57,11 @@ namespace NeoLuna.Models.Apis.Components
 
         public void ShowFormOption() => vgcNotifier.ShowFormOption();
 
-        public void ShowFormLunaMgr() => formMgr.ShowFormMain();
+        public void ShowFormNeoLunaMgr() => formMgr.ShowFormMain();
 
-        public void ShowFormLunaEditor() => formMgr.ShowOrCreateFirstEditor();
+        public void ShowFormNeoLunaEditor() => formMgr.ShowOrCreateFirstEditor();
+
+        public void ShowFormNeoLunaLog() => formMgr.ShowFormLog();
 
         public void ShowFormMain() => vgcNotifier.ShowFormMain();
 

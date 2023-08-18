@@ -106,7 +106,7 @@ namespace NeoLuna.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 Lua Scripts manager. 的本地化字符串。
+        ///   查找类似 NeoLua scripting environment. 的本地化字符串。
         /// </summary>
         internal static string Description {
             get {

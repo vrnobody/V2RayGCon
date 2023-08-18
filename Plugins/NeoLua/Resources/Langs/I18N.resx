@@ -133,7 +133,7 @@
     <value>Copy success.</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Lua Scripts manager.</value>
+    <value>NeoLua scripting environment.</value>
   </data>
   <data name="DiscardUnsavedChanges" xml:space="preserve">
     <value>Discard unsaved changes?</value>

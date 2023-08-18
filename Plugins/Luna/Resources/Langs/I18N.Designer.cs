@@ -79,7 +79,7 @@ namespace Luna.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 Lua Scripts manager.（require 64bit system) 的本地化字符串。
+        ///   查找类似 NLua Scripting environment.（require 64bit system) 的本地化字符串。
         /// </summary>
         internal static string Description {
             get {

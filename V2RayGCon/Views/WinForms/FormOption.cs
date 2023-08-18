@@ -154,16 +154,6 @@ namespace V2RayGCon.Views.WinForms
             MessageBox.Show(I18N.Done);
         }
 
-        private void btnBakBackup_Click(object sender, System.EventArgs e)
-        {
-            optionCtrl.BackupOptions();
-        }
-
-        private void btnBakRestore_Click(object sender, System.EventArgs e)
-        {
-            optionCtrl.RestoreOptions();
-        }
-
         private void flySubsUrlContainer_Scroll(object sender, ScrollEventArgs e)
         {
             flySubsUrlContainer.Refresh();

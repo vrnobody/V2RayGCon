@@ -124,7 +124,7 @@
     <value>真的要删除这个脚本吗？</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Lua脚本管理器。（仅支持64位系统）</value>
+    <value>NLua脚本管理器。（仅支持64位系统）</value>
   </data>
   <data name="DiscardUnsavedChanges" xml:space="preserve">
     <value>放弃未保存的修改?</value>

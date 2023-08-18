@@ -57,11 +57,6 @@ function Logger:SetLogLevel(logLevel)
     if logLevel == nil or not table.contains(Logger.logLevels, logLevel) then
         local level = "Info"
         logLevel = Logger.logLevels[level]
-        if string.isempty(self.filename) then
-            print("log level:", level)
-        else
-            print("log level:", level, ", file:", self.filename)
-        end
     end
     self.logLevel = logLevel
 end

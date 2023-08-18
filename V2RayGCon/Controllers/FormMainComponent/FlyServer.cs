@@ -22,7 +22,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         readonly VgcApis.Libs.Tasks.LazyGuy
             lazyStatusBarUpdater,
-            lazySearchResultDisplayer,
             lazyFlyPanelUpdater;
 
         readonly Views.UserControls.WelcomeUI welcomeItem = null;
@@ -34,7 +33,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         public FlyServer(
             Form formMain,
             FlowLayoutPanel panel,
-            ToolStripLabel lbMarkFilter,
+            ToolStripLabel lbMarkSearch,
             ToolStripComboBox cboxMarkeFilter,
             ToolStripStatusLabel tslbTotal,
             ToolStripDropDownButton tsdbtnPager,
@@ -67,13 +66,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 Name = "FormMain.UpdateStatusBarWorker()", // disable debug logging
             };
 
-            lazySearchResultDisplayer = new VgcApis.Libs.Tasks.LazyGuy(
-                ShowSearchResultNow, 1300, 1000)
-            {
-                Name = "FormMain.ShowSearchResultNow()",
-            };
-
-            InitFormControls(lbMarkFilter, miResizeFormMain);
+            InitFormControls(lbMarkSearch, miResizeFormMain);
             BindDragDropEvent();
             RefreshFlyPanelLater();
             WatchServers();
@@ -112,7 +105,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             lazyFlyPanelUpdater?.Dispose();
             lazyStatusBarUpdater?.Dispose();
-            lazySearchResultDisplayer?.Dispose();
 
             RemoveAllServersConrol();
         }
@@ -187,19 +179,34 @@ namespace V2RayGCon.Controllers.FormMainComponent
             return r;
         }
 
+        bool IsPartialMatchCi(Dictionary<string, bool> cache, string content, string keyword)
+        {
+            if (string.IsNullOrEmpty(content))
+            {
+                return false;
+            }
+            if (!cache.ContainsKey(content))
+            {
+                cache[content] = VgcApis.Misc.Utils.PartialMatchCi(content, keyword);
+            }
+            return cache[content];
+        }
+
         List<VgcApis.Interfaces.ICoreServCtrl> SearchAllInfos(string keyword)
         {
+            Dictionary<string, bool> cache = new Dictionary<string, bool>();
+
             var list = servers.GetAllServersOrderByIndex();
             var r = new List<VgcApis.Interfaces.ICoreServCtrl>();
             for (int i = 0; i < list.Count; i++)
             {
                 var s = list[i];
                 var st = s.GetCoreStates();
-                if (VgcApis.Misc.Utils.PartialMatchCi(st.GetTag1(), keyword)
-                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetTag2(), keyword)
-                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetTag3(), keyword)
-                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetMark(), keyword)
-                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetRemark(), keyword)
+                if (IsPartialMatchCi(cache, st.GetTag1(), keyword)
+                    || IsPartialMatchCi(cache, st.GetTag2(), keyword)
+                    || IsPartialMatchCi(cache, st.GetTag3(), keyword)
+                    || IsPartialMatchCi(cache, st.GetMark(), keyword)
+                    || IsPartialMatchCi(cache, st.GetRemark(), keyword)
                     || VgcApis.Misc.Utils.PartialMatchCi(st.GetTitle(), keyword))
                 {
                     r.Add(s);
@@ -308,11 +315,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void SetSearchKeywords()
         {
+            var keyword = string.IsNullOrEmpty(searchKeywords) ?
+                string.Empty :
+                (searchKeywords.StartsWith("#") ? searchKeywords.Substring(1) : searchKeywords);
             // bug
             var controls = GetAllServerControls();
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                controls.ForEach(c => c.SetKeywords(searchKeywords));
+                controls.ForEach(c => c.SetKeywords(keyword));
             });
         }
 
@@ -528,22 +538,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         string searchKeywords = "";
 
-        void ShowSearchResultNow()
-        {
-            // 2020-08-14 现在不会乱序了
-            // 如果不RemoveAll会乱序
-            // RemoveAllServersConrol();
-
-            // 2020-06-09 改为保留选中状态
-            // servers.SetAllServerIsSelected(false);
-
-            lazyFlyPanelUpdater?.Postpone();
-        }
-
-        void ShowSearchResultLater() => lazySearchResultDisplayer?.Postpone();
-
         private void InitFormControls(
-            ToolStripLabel lbMarkFilter,
+            ToolStripLabel lbMarkSearch,
             ToolStripMenuItem miResizeFormMain)
         {
             InitComboBoxMarkFilter();
@@ -564,7 +560,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 lazyFlyPanelUpdater?.Postpone();
             };
 
-            lbMarkFilter.Click += (s, a) => this.cboxMarkFilter.Text = string.Empty;
+            lbMarkSearch.Click += (s, a) => PerformSearch();
             miResizeFormMain.Click += (s, a) => ResizeFormMain();
         }
 
@@ -610,11 +606,26 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMarkFilter);
             };
 
-            cboxMarkFilter.TextChanged += (s, a) =>
+            cboxMarkFilter.SelectedIndexChanged += (s, e) =>
             {
-                searchKeywords = cboxMarkFilter.Text;
-                ShowSearchResultLater();
+                PerformSearch();
             };
+
+            cboxMarkFilter.KeyDown += (s, e) =>
+            {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    PerformSearch();
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+            };
+        }
+
+        void PerformSearch()
+        {
+            searchKeywords = cboxMarkFilter.Text;
+            lazyFlyPanelUpdater?.Postpone();
         }
 
         void UpdateMarkFilterItemList(ToolStripComboBox marker)

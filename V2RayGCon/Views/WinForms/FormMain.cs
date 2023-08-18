@@ -134,7 +134,7 @@ namespace V2RayGCon.Views.WinForms
             ctrl.Plug(new Controllers.FormMainComponent.FlyServer(
                 this,
                 flyServerListContainer,
-                toolStripLabelMarkFilter,
+                toolStripLabelSearch,
                 toolStripComboBoxMarkFilter,
                 toolStripStatusLabelTotal,
                 toolStripDropDownButtonPager,

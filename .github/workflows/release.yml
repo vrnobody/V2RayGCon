@@ -22,7 +22,6 @@ jobs:
         webuiUrl: 'https://github.com/vrnobody/WebUI/releases/download'
         # v2rayCorePkgName: 'v2ray-windows-64.zip'
         v2rayCorePkgName: 'Xray-windows-64.zip'
-        scriptPkgName: 'scripts-v1.0.6'
         v2rayCoreVer: 'v1.8.3'
         # https://github.com/v2ray/v2ray-core/releases/download/v4.20.0/v2ray-windows-32.zip
         # https://github.com/XTLS/Xray-core/releases/download/v1.4.0/Xray-windows-64.zip
@@ -61,8 +60,6 @@ jobs:
         - name: Create assets
           shell: pwsh
           run: |
-            $scriptsDir = "${env:projName}/Resources/Files/Scripts"
-            Compress-Archive -Path ${scriptsDir}/* ${env:scriptPkgName}'.zip'
             $outdir = "${env:projName}/bin/${env:projCfg}"
             Invoke-WebRequest -Uri "${env:webuiUrl}/${env:webuiVer}/${env:webuiPkgName}" -OutFile "${env:webuiPkgName}"
             Expand-Archive "${env:webuiPkgName}" -DestinationPath "${outdir}/3rd/neolua/webui"
@@ -72,13 +69,10 @@ jobs:
             Compress-Archive -Path ${outdir}/* ${env:projName}'-'${env:boxAppend}'.zip'
             $hash1 = Get-FileHash "${env:projName}.zip" -Algorithm MD5
             $hash2 = Get-FileHash "${env:projName}-${env:boxAppend}.zip" -Algorithm MD5
-            $hash3 = Get-FileHash "${env:scriptPkgName}.zip" -Algorithm MD5
             $hv1 = $hash1.Hash
             $hv2 = $hash2.Hash
-            $hv3 = $hash3.Hash
             echo "hashVgcZip=${hv1}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
             echo "hashVgcBoxZip=${hv2}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-            echo "hashScriptPkgZip=${hv3}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
         - name: Publish Release
           uses: ncipollo/release-action@v1.12.0
@@ -96,12 +90,10 @@ jobs:
               #### MD5:
               ${{ env.projName }}.zip (${{ env.hashVgcZip }})
               ${{ env.projName }}-${{ env.boxAppend }}.zip (${{ env.hashVgcBoxZip }})
-              ${{ env.scriptPkgName }}.zip (${{ env.hashScriptPkgZip }})
 
               #### 备注:
               WebUI v${{ env.webuiVer }}
               ${{ env.projName }}-${{ env.boxAppend }}.zip打包了Xray-core-win64 ${{ env.v2rayCoreVer }}
-              ${{ env.scriptPkgName }}.zip解压后拖进Luna脚本管理器的空白区中即可使用
             draft: true
             prerelease: false
-            artifacts: "${{ env.scriptPkgName }}.zip,${{ env.projName }}.zip,${{ env.projName }}-${{ env.boxAppend }}.zip"
+            artifacts: "${{ env.projName }}.zip,${{ env.projName }}-${{ env.boxAppend }}.zip"

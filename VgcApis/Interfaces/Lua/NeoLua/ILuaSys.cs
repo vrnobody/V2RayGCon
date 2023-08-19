@@ -328,15 +328,16 @@ namespace VgcApis.Interfaces.Lua.NeoLua
         string Start(string param);
 
         /// <summary>
-        /// 执行程序并返回标准输出的内容
+        /// 创建匿名管道并传给子进程（试验失败2023-08-19）
         /// </summary>
+        /// <param name="hasWindow">是否显示命令行窗口</param>
         /// <param name="workingDir">为空时表示当前目录</param>
-        /// <param name="exeFileName">执行文件的绝对路径或者相对于workingDir的路径</param>
-        /// <param name="args"></param>
+        /// <param name="exeFileName">执行文件的绝对路径或者本软件目录内的相对路径</param>
+        /// <param name="args">除-pipe=name外，传给子程序的参数</param>
         /// <param name="ms">超时</param>
-        /// <param name="encoding">stdout编码</param>
+        /// <param name="encoding">pipe传递字符串的编码</param>
         /// <returns></returns>
-        string Execute(string workingDir, string exeFileName, string args, int ms, Encoding encoding);
+        string RunWithPipe(bool hasWindow, string workingDir, string exeFileName, string args, int ms, Encoding encoding);
 
 
         /// <summary>

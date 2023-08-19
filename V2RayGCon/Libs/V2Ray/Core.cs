@@ -89,8 +89,7 @@ namespace V2RayGCon.Libs.V2Ray
             var queryParam = string.Format(queryTpl, port.ToString());
             try
             {
-                var output = VgcApis.Misc.Utils.Execute(
-                    string.Empty,
+                var output = VgcApis.Misc.Utils.ExecuteAndGetStdOut(
                     exe,
                     queryParam,
                     VgcApis.Models.Consts.Core.GetStatisticsTimeout,
@@ -116,8 +115,7 @@ namespace V2RayGCon.Libs.V2Ray
             }
 
             var timeout = VgcApis.Models.Consts.Core.GetVersionTimeout;
-            var output = VgcApis.Misc.Utils.Execute(
-                string.Empty,
+            var output = VgcApis.Misc.Utils.ExecuteAndGetStdOut(
                 exe,
                 "-version",
                 timeout,

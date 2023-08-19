@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
 using System.Management;
 using System.Net;
@@ -186,6 +187,128 @@ namespace VgcApis.Misc
 
 
         #region system
+        static void ReadPipe(
+            AnonymousPipeServerStream pipe,
+            StringBuilder sb,
+            Encoding encoding,
+            ManualResetEvent onFinished)
+        {
+            try
+            {
+                var len = 1024;
+                var buff = new char[len];
+                encoding = encoding ?? Encoding.UTF8;
+                using (var sr = new StreamReader(pipe, encoding))
+                {
+                    int c = 1;
+                    while (c > 0)
+                    {
+                        c = sr.Read(buff, 0, len);
+                        if (c > 0)
+                        {
+                            lock (sb)
+                            {
+                                sb.Append(buff, 0, c);
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
+            onFinished.Set();
+        }
+
+        static void KillProcessLater(Process proc, int ms)
+        {
+            proc.WaitForExit(ms);
+            if (!proc.HasExited)
+            {
+                try
+                {
+                    proc.Kill();
+                }
+                catch { }
+            }
+        }
+
+        public static string ExecuteWithAnonymousPipe(
+            bool hasWindow,
+            string workingDir,
+            string exe,
+            string args,
+            int ms,
+            Encoding encoding)
+        {
+            var sb = new StringBuilder();
+            try
+            {
+                using (AnonymousPipeServerStream pipe =
+                    new AnonymousPipeServerStream(
+                        PipeDirection.In,
+                        HandleInheritability.Inheritable))
+                {
+                    var finished = new ManualResetEvent(false);
+                    var child = CreateProcessWithAnonymousPipe(pipe, hasWindow, workingDir, exe, args);
+                    child.Exited += (s, e) => finished.Set();
+                    child.Start();
+                    pipe.DisposeLocalCopyOfClientHandle();
+                    RunInBackground(() => ReadPipe(pipe, sb, encoding, finished));
+                    if (ms > 0)
+                    {
+                        finished.WaitOne(ms);
+                    }
+                    else
+                    {
+                        finished.WaitOne();
+                    }
+                    RunInBackground(() => KillProcessLater(child, 10000));
+                }
+            }
+#if DEBUG
+            catch (Exception e)
+            {
+                Libs.Sys.FileLogger.Debug(e.ToString());
+            }
+#else
+            catch{}
+#endif
+            string result = string.Empty;
+            lock (sb)
+            {
+                result = sb.ToString();
+            }
+
+            return result;
+        }
+
+        static Process CreateProcessWithAnonymousPipe(
+            AnonymousPipeServerStream pipe,
+            bool hasWindow,
+            string workingDir,
+            string exe,
+            string args)
+        {
+            var pipeName = pipe.GetClientHandleAsString();
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = exe,
+                Arguments = $"-pipe={pipeName} {args}",
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                CreateNoWindow = !hasWindow,
+            };
+
+            if (!string.IsNullOrEmpty(workingDir))
+            {
+                startInfo.WorkingDirectory = workingDir;
+            }
+
+            return new Process
+            {
+                StartInfo = startInfo,
+            };
+        }
+
         /// <summary>
         /// UseShellExecute = false,
         /// RedirectStandardOutput = true,
@@ -195,7 +318,6 @@ namespace VgcApis.Misc
         /// <param name="args"></param>
         /// <returns></returns>
         public static Process CreateHeadlessProcess(
-            string workingDir,
             string exeFileName,
             string args,
             Encoding encoding)
@@ -214,25 +336,19 @@ namespace VgcApis.Misc
                 startInfo.StandardOutputEncoding = encoding;
             }
 
-            if (!string.IsNullOrEmpty(workingDir))
-            {
-                startInfo.WorkingDirectory = workingDir;
-            }
-
             return new Process
             {
                 StartInfo = startInfo,
             };
         }
 
-        public static string Execute(
-            string workingDir,
+        public static string ExecuteAndGetStdOut(
             string exeFileName,
             string args,
             int timeout,
             Encoding encoding)
         {
-            var p = CreateHeadlessProcess(workingDir, exeFileName, args, encoding);
+            var p = CreateHeadlessProcess(exeFileName, args, encoding);
             try
             {
                 p.Start();

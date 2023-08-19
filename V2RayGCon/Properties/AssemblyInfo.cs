@@ -37,7 +37,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
- * v1.8.1.12 Add std.Sys:Execute().
+ * v1.8.1.12 Add std.Sys:RunWithPipe().
  * v1.8.1.11 Fix call GetFilteredList() twice in one search.
  * v1.8.1.10 Improve search algorithm.
  * v1.8.1.9 Adjust FormOption.

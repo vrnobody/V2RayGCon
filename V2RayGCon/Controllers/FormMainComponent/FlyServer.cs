@@ -77,15 +77,21 @@ namespace V2RayGCon.Controllers.FormMainComponent
         public List<VgcApis.Interfaces.ICoreServCtrl> GetFilteredList()
         {
             var keyword = searchKeywords?.Replace(@" ", "");
+            List<VgcApis.Interfaces.ICoreServCtrl> r;
             if (string.IsNullOrEmpty(keyword))
             {
-                return servers.GetAllServersOrderByIndex();
+                r = servers.GetAllServersOrderByIndex();
             }
             else if (keyword[0] == '#')
             {
-                return SearchIndex(keyword);
+                r = SearchIndex(keyword);
             }
-            return SearchAllInfos(keyword);
+            else
+            {
+                r = SearchAllInfos(keyword);
+            }
+            matchCountCache = r.Count;
+            return r;
         }
 
         public void LoopThroughAllServerUI(Action<Views.UserControls.ServerUI> operation)
@@ -127,7 +133,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void UpdateStatusBarWorker(Action done)
         {
             var start = DateTime.Now.Millisecond;
-            int filteredListCount = GetFilteredList().Count;
+            int filteredListCount = matchCountCache;
             int allServersCount = servers.Count();
             int serverControlCount = GetAllServerControls().Count();
 
@@ -194,6 +200,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         List<VgcApis.Interfaces.ICoreServCtrl> SearchAllInfos(string keyword)
         {
+            // setting.SendLog($"Call SearchAllInfos({keyword})");
+
             Dictionary<string, bool> cache = new Dictionary<string, bool>();
 
             var list = servers.GetAllServersOrderByIndex();
@@ -537,6 +545,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         string searchKeywords = "";
+        int matchCountCache = 0;
 
         private void InitFormControls(
             ToolStripLabel lbMarkSearch,

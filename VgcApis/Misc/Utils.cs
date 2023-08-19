@@ -186,6 +186,67 @@ namespace VgcApis.Misc
 
 
         #region system
+        /// <summary>
+        /// UseShellExecute = false,
+        /// RedirectStandardOutput = true,
+        /// CreateNoWindow = true,
+        /// </summary>
+        /// <param name="exeFileName"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static Process CreateHeadlessProcess(
+            string workingDir,
+            string exeFileName,
+            string args,
+            Encoding encoding)
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = exeFileName,
+                Arguments = args,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                CreateNoWindow = true,
+            };
+
+            if (encoding != null)
+            {
+                startInfo.StandardOutputEncoding = encoding;
+            }
+
+            if (!string.IsNullOrEmpty(workingDir))
+            {
+                startInfo.WorkingDirectory = workingDir;
+            }
+
+            return new Process
+            {
+                StartInfo = startInfo,
+            };
+        }
+
+        public static string Execute(
+            string workingDir,
+            string exeFileName,
+            string args,
+            int timeout,
+            Encoding encoding)
+        {
+            var p = CreateHeadlessProcess(workingDir, exeFileName, args, encoding);
+            try
+            {
+                p.Start();
+                if (!p.WaitForExit(timeout))
+                {
+                    p.Kill();
+                }
+                return p.StandardOutput.ReadToEnd() ?? string.Empty;
+            }
+            catch { }
+            return string.Empty;
+        }
+
+
         static public bool IsAdmin()
         {
             bool isElevated;

@@ -958,6 +958,9 @@ namespace NeoLuna.Models.Apis
             return string.Empty;
         }
 
+        public string Execute(string workingDir, string exeFileName, string args, int ms, Encoding encoding) =>
+            VgcApis.Misc.Utils.Execute(workingDir, exeFileName, args, ms, encoding);
+
         public Process RunAndForgot(string exePath) =>
           RunAndForgot(exePath, null);
 

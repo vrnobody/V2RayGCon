@@ -33,17 +33,18 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.8.1.11")]
+[assembly: AssemblyVersion("1.8.1.12")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
+ * v1.8.1.12 Add std.Sys:Execute().
  * v1.8.1.11 Fix call GetFilteredList() twice in one search.
  * v1.8.1.10 Improve search algorithm.
  * v1.8.1.9 Adjust FormOption.
  * v1.8.1.8 Remove scripts.zip.
- * v1.8.1.7 Add Misc:ShowFormNeoLunaLog().
+ * v1.8.1.7 Add std.Misc:ShowFormNeoLunaLog().
  * v1.8.1.6 Filter of FormMain supports #index.
- * v1.8.1.5 Remove Sys:SetWarnOnExit().
+ * v1.8.1.5 Remove std.Sys:SetWarnOnExit().
  * v1.8.1.4 Add copy-log-menu-item in FormLog of NeoLuna plug-in.
  * v1.8.1.3 Add FormLog in NeoLuna plug-in.
  * v1.8.1.2 Add sortedCoreCtrlServListCache in Services.Servers.

@@ -328,6 +328,18 @@ namespace VgcApis.Interfaces.Lua.NeoLua
         string Start(string param);
 
         /// <summary>
+        /// 执行程序并返回标准输出的内容
+        /// </summary>
+        /// <param name="workingDir">为空时表示当前目录</param>
+        /// <param name="exeFileName">执行文件的绝对路径或者相对于workingDir的路径</param>
+        /// <param name="args"></param>
+        /// <param name="ms">超时</param>
+        /// <param name="encoding">stdout编码</param>
+        /// <returns></returns>
+        string Execute(string workingDir, string exeFileName, string args, int ms, Encoding encoding);
+
+
+        /// <summary>
         /// 参考Process RunAndForgot(string exePath, string args, string stdin,
         /// LuaTable envs, bool hasWindow, bool redirectOutput,
         /// Encoding inputEncoding, Encoding outputEncoding);

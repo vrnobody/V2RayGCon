@@ -89,10 +89,12 @@ namespace V2RayGCon.Libs.V2Ray
             var queryParam = string.Format(queryTpl, port.ToString());
             try
             {
-                var output = Misc.Utils.GetOutputFromExecutable(
+                var output = VgcApis.Misc.Utils.Execute(
+                    string.Empty,
                     exe,
                     queryParam,
-                    VgcApis.Models.Consts.Core.GetStatisticsTimeout);
+                    VgcApis.Models.Consts.Core.GetStatisticsTimeout,
+                    null);
 
                 return Misc.Utils.ParseStatApiResult(isXray, output);
             }
@@ -114,10 +116,12 @@ namespace V2RayGCon.Libs.V2Ray
             }
 
             var timeout = VgcApis.Models.Consts.Core.GetVersionTimeout;
-            var output = Misc.Utils.GetOutputFromExecutable(
+            var output = VgcApis.Misc.Utils.Execute(
+                string.Empty,
                 exe,
                 "-version",
-                timeout);
+                timeout,
+                null);
 
             // since 3.46.* v is deleted
             // Regex pattern = new Regex(@"(?<version>(\d+\.)+\d+)");

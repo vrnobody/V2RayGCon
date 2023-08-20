@@ -215,13 +215,22 @@ namespace VgcApis.Misc
             onFinished.Set();
         }
 
-        static void KillProcessLater(Process proc, int ms)
+        static void KillProcessLater(Process proc, Thread thread, int ms)
         {
             proc.WaitForExit(ms);
+            if (!thread.Join(1))
+            {
+                try
+                {
+                    thread.Abort();
+                }
+                catch { }
+            }
             if (!proc.HasExited)
             {
                 try
                 {
+                    proc.Close();
                     proc.Kill();
                 }
                 catch { }
@@ -249,7 +258,8 @@ namespace VgcApis.Misc
                     child.Exited += (s, e) => finished.Set();
                     child.Start();
                     pipe.DisposeLocalCopyOfClientHandle();
-                    RunInBackground(() => ReadPipe(pipe, sb, encoding, finished));
+                    var reader = new Thread(() => ReadPipe(pipe, sb, encoding, finished));
+                    reader.Start();
                     if (ms > 0)
                     {
                         finished.WaitOne(ms);
@@ -258,7 +268,7 @@ namespace VgcApis.Misc
                     {
                         finished.WaitOne();
                     }
-                    RunInBackground(() => KillProcessLater(child, 10000));
+                    RunInBackground(() => KillProcessLater(child, reader, 5000));
                 }
             }
 #if DEBUG
@@ -267,7 +277,7 @@ namespace VgcApis.Misc
                 Libs.Sys.FileLogger.Debug(e.ToString());
             }
 #else
-            catch{}
+            catch { }
 #endif
             string result = string.Empty;
             lock (sb)
@@ -291,7 +301,8 @@ namespace VgcApis.Misc
                 FileName = exe,
                 Arguments = $"-pipe={pipeName} {args}",
                 UseShellExecute = false,
-                RedirectStandardOutput = true,
+                RedirectStandardOutput = false,
+                RedirectStandardError = false,
                 CreateNoWindow = !hasWindow,
             };
 

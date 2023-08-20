@@ -193,23 +193,20 @@ namespace VgcApis.Misc
             Encoding encoding,
             ManualResetEvent onFinished)
         {
+            encoding = encoding ?? Encoding.Unicode;
+            var len = 1024;
+            var buff = new byte[len];
             try
             {
-                var len = 1024;
-                var buff = new char[len];
-                encoding = encoding ?? Encoding.UTF8;
-                using (var sr = new StreamReader(pipe, encoding))
+                for (int c = 1; c > 0;)
                 {
-                    int c = 1;
-                    while (c > 0)
+                    c = pipe.Read(buff, 0, len);
+                    if (c > 0)
                     {
-                        c = sr.Read(buff, 0, len);
-                        if (c > 0)
+                        lock (sb)
                         {
-                            lock (sb)
-                            {
-                                sb.Append(buff, 0, c);
-                            }
+                            var s = encoding.GetString(buff, 0, c);
+                            sb.Append(s);
                         }
                     }
                 }

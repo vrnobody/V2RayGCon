@@ -12,9 +12,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
+using System.IO.Pipes;
 
 namespace NeoLuna.Models.Apis
 {
+    #region structs
     enum CoreEvTypes
     {
         CoreStart = 1,
@@ -66,6 +69,10 @@ namespace NeoLuna.Models.Apis
         public string lastLogSend = "";
     }
 
+
+
+    #endregion
+
     internal class LuaSys :
         VgcApis.BaseClasses.Disposable,
         VgcApis.Interfaces.Lua.NeoLua.ILuaSys
@@ -85,6 +92,7 @@ namespace NeoLuna.Models.Apis
         ConcurrentDictionary<string, CoreEvHook> coreEvHooks = new ConcurrentDictionary<string, CoreEvHook>();
         ConcurrentDictionary<string, GlobalEvHook> globalEvHooks = new ConcurrentDictionary<string, GlobalEvHook>();
         ConcurrentDictionary<string, LuaVm> luaVms = new ConcurrentDictionary<string, LuaVm>();
+
 
         VgcApis.Interfaces.Services.IServersService vgcServerService;
         VgcApis.Interfaces.Services.ISettingsService vgcSettingsService;
@@ -957,10 +965,6 @@ namespace NeoLuna.Models.Apis
             }
             return string.Empty;
         }
-
-        public string RunWithPipe(bool hasWindow, string workingDir, string exeFileName, string args, int ms, Encoding encoding) =>
-            VgcApis.Misc.Utils.ExecuteWithAnonymousPipe(hasWindow, workingDir, exeFileName, args, ms, encoding);
-
         public Process RunAndForgot(string exePath) =>
           RunAndForgot(exePath, null);
 
@@ -1007,6 +1011,66 @@ namespace NeoLuna.Models.Apis
                 inputEncoding, outputEncoding, logable);
 
         #endregion
+
+
+        #region ILuasys.PipedProc()
+        ConcurrentDictionary<string, SysCmpos.PipedProcess> pipedProcs = new ConcurrentDictionary<string, SysCmpos.PipedProcess>();
+
+        public string PipedProcRead(string handle)
+        {
+            if (!string.IsNullOrEmpty(handle) && pipedProcs.TryGetValue(handle, out var pipedProc))
+            {
+                return pipedProc.Read();
+            }
+            return null;
+        }
+
+        public bool PipedProcWrite(string handle, string content)
+        {
+            if (!string.IsNullOrEmpty(handle) && pipedProcs.TryGetValue(handle, out var pipedProc))
+            {
+                return pipedProc.Write(content);
+            }
+            return false;
+        }
+
+        public bool PipedProcRemove(string handle)
+        {
+            if (!string.IsNullOrEmpty(handle) && pipedProcs.TryRemove(handle, out var pipedProc))
+            {
+                pipedProc?.Dispose();
+                return true;
+            }
+            return false;
+        }
+
+        public string PipedProcCreate(bool hasWindow, string workingDir, string exe, string args)
+        {
+            var handle = Guid.NewGuid().ToString();
+            try
+            {
+                var pwp = new SysCmpos.PipedProcess(hasWindow, workingDir, exe, args);
+                pipedProcs.TryAdd(handle, pwp);
+                return handle;
+            }
+            catch { }
+            return null;
+        }
+
+        void DisposeAllPipedProcs()
+        {
+            var handles = pipedProcs.Keys.ToList();
+            foreach (var handle in handles)
+            {
+                if (pipedProcs.TryRemove(handle, out var pipedProc))
+                {
+                    pipedProc?.Dispose();
+                }
+            }
+        }
+        #endregion
+
+
 
         #region ILuaSys.Encoding
         public Encoding GetEncoding(int codepage) => Encoding.GetEncoding(codepage);
@@ -1492,7 +1556,7 @@ namespace NeoLuna.Models.Apis
             }
         }
 
-        void RemoveAllLuaVms()
+        void DisposeAllLuaVms()
         {
             var handles = luaVms.Keys;
             foreach (var handle in handles)
@@ -1525,7 +1589,8 @@ namespace NeoLuna.Models.Apis
             RemoveAllKeyboardHooks();
             CloseAllHttpServers();
             CloseAllMailBox();
-            RemoveAllLuaVms();
+            DisposeAllLuaVms();
+            DisposeAllPipedProcs();
             RemoveAllSnapCacheTokens();
             KillAllProcesses();
         }

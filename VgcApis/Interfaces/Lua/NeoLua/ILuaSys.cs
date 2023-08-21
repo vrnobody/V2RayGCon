@@ -287,6 +287,22 @@ namespace VgcApis.Interfaces.Lua.NeoLua
         Encoding EncodingUnicode { get; }
         #endregion
 
+
+        #region PipedProcess
+
+        // 创建匿名管道并传给子进程
+        string PipedProcCreate(bool hasWindow, string workingDir, string exe, string args);
+
+        bool PipedProcRemove(string handle);
+
+        string PipedProcRead(string handle);
+
+        bool PipedProcWrite(string handle, string content);
+
+        #endregion
+
+
+
         #region process
 
         /// <summary>
@@ -326,19 +342,6 @@ namespace VgcApis.Interfaces.Lua.NeoLua
         /// <param name="param"></param>
         /// <returns></returns>
         string Start(string param);
-
-        /// <summary>
-        /// 创建匿名管道并传给子进程（试验失败2023-08-19）
-        /// </summary>
-        /// <param name="hasWindow">是否显示命令行窗口</param>
-        /// <param name="workingDir">为空时表示当前目录</param>
-        /// <param name="exeFileName">执行文件的绝对路径或者本软件目录内的相对路径</param>
-        /// <param name="args">除-pipe=name外，传给子程序的参数</param>
-        /// <param name="ms">超时</param>
-        /// <param name="encoding">pipe传递字符串的编码</param>
-        /// <returns></returns>
-        string RunWithPipe(bool hasWindow, string workingDir, string exeFileName, string args, int ms, Encoding encoding);
-
 
         /// <summary>
         /// 参考Process RunAndForgot(string exePath, string args, string stdin,

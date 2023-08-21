@@ -59,8 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base64Tests.cs" />
-    <Compile Include="ZipExtensionsTests.cs" />
     <Compile Include="BitStreamTests.cs" />
+    <Compile Include="ZipExtensionsTests.cs" />
+    <Compile Include="StringReadWriterTests.cs" />
     <Compile Include="RecorderTests.cs" />
     <Compile Include="Crc8Tests.cs" />
     <Compile Include="IComponentOfTests\CompLv3.cs" />

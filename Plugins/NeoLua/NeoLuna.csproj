@@ -94,6 +94,7 @@
     <Compile Include="Libs\Sys\WinApis.cs" />
     <Compile Include="Misc\Patches.cs" />
     <Compile Include="Misc\UI.cs" />
+    <Compile Include="Models\Apis\SysCmpos\PipedProcess.cs" />
     <Compile Include="NeoLuna.cs" />
     <Compile Include="Misc\Utils.cs" />
     <Compile Include="Models\Apis\LuaSignal.cs" />

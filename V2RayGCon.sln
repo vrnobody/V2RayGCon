@@ -40,6 +40,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZipExtractor", "3rd\ZipExtr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeoLuna", "Plugins\NeoLua\NeoLuna.csproj", "{1F2FD9D2-2230-49F1-A163-3987E2C9929C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyFetch", "3rd\DyFetch\DyFetch.csproj", "{8BA9615F-D7DC-4FAA-85DC-176BA51809DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +88,10 @@ Global
 		{1F2FD9D2-2230-49F1-A163-3987E2C9929C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F2FD9D2-2230-49F1-A163-3987E2C9929C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F2FD9D2-2230-49F1-A163-3987E2C9929C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BA9615F-D7DC-4FAA-85DC-176BA51809DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BA9615F-D7DC-4FAA-85DC-176BA51809DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BA9615F-D7DC-4FAA-85DC-176BA51809DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BA9615F-D7DC-4FAA-85DC-176BA51809DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +104,7 @@ Global
 		{06808754-0544-40BD-B456-6E724FF1B812} = {E979CF30-7516-4408-9B4C-40FEA1B9558E}
 		{91DE558C-6DB8-429B-A069-C0491DCFF15B} = {DFBD2D2B-0418-4C19-9527-FF6260F541AC}
 		{1F2FD9D2-2230-49F1-A163-3987E2C9929C} = {AAA70B17-54E7-4366-BC8E-467169010D30}
+		{8BA9615F-D7DC-4FAA-85DC-176BA51809DF} = {DFBD2D2B-0418-4C19-9527-FF6260F541AC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {08E9C5F7-B4F0-4978-BD02-6F1FF74A184A}

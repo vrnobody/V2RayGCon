@@ -92,6 +92,8 @@
     <Compile Include="Libs\Streams\RawBitStream\Numbers.cs" />
     <Compile Include="Libs\Streams\RawBitStream\Utils.cs" />
     <Compile Include="Libs\Streams\RawBitStream\Uuids.cs" />
+    <Compile Include="Libs\Streams\StringWriter.cs" />
+    <Compile Include="Libs\Streams\StringReader.cs" />
     <Compile Include="Libs\Sys\ChildProcessTracker.cs" />
     <Compile Include="Libs\Sys\ConsoleCtrls.cs" />
     <Compile Include="Libs\Sys\NotepadHelper.cs" />

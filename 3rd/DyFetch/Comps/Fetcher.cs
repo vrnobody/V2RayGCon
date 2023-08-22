@@ -76,17 +76,22 @@ namespace DyFetch.Comps
             Console.WriteLine("Not match!");
             return false;
         }
+
         ChromeOptions CreateOptions(Models.Configs configs)
         {
+            // 复制粘贴网上的几个初始化参数
+
             var options = new ChromeOptions();
-            if (configs.port > 0)
+
+            options.AddArgument("--window-size=1920,1080");
+
+            if (!string.IsNullOrEmpty(configs.proxy))
             {
-                var addr = $"127.0.0.1:{configs.port}";
                 var proxy = new Proxy();
                 proxy.Kind = ProxyKind.Manual;
                 proxy.IsAutoDetect = false;
-                proxy.HttpProxy = addr;
-                proxy.SslProxy = addr;
+                proxy.HttpProxy = configs.proxy;
+                proxy.SslProxy = configs.proxy;
                 options.Proxy = proxy;
             }
 
@@ -95,8 +100,10 @@ namespace DyFetch.Comps
                 options.AddArgument("--headless");
             }
 
-            options.AddArgument("--window-size=1920,1080");
-            options.AddArgument("ignore-certificate-errors");
+            if (configs.ignoreCertError)
+            {
+                options.AddArgument("ignore-certificate-errors");
+            }
             return options;
         }
         #endregion

@@ -22,7 +22,9 @@ namespace NeoLuna.Models.Apis.SysCmpos
             var handleIn = pipeIn.GetClientHandleAsString();
             var handleOut = pipeOut.GetClientHandleAsString();
 
-            proc = CreateProcessWithAnonymousPipe(handleIn, handleOut, hasWindow, workingDir, exe, args);
+            args = string.Format(args, handleOut, handleIn); // in out 反过来
+            proc = CreateProcessWithAnonymousPipe(hasWindow, workingDir, exe, args);
+
             reader = new VgcApis.Libs.Streams.StringReader(pipeIn);
             writer = new VgcApis.Libs.Streams.StringWriter(pipeOut);
             proc.Start();
@@ -59,8 +61,6 @@ namespace NeoLuna.Models.Apis.SysCmpos
 
         #region private methods
         Process CreateProcessWithAnonymousPipe(
-           string handleIn,
-           string handleOut,
            bool hasWindow,
            string workingDir,
            string exe,
@@ -69,10 +69,7 @@ namespace NeoLuna.Models.Apis.SysCmpos
             var startInfo = new ProcessStartInfo
             {
                 FileName = exe,
-
-                // in out 反过来
-                Arguments = $"-pipein={handleOut} -pipeout={handleIn} {args}",
-
+                Arguments = args,
                 UseShellExecute = false,
                 RedirectStandardOutput = false,
                 RedirectStandardError = false,

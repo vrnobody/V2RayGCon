@@ -1044,7 +1044,7 @@ namespace NeoLuna.Models.Apis
             return false;
         }
 
-        public string PipedProcCreate(bool hasWindow, string workingDir, string exe, string args)
+        public string PipedProcRun(bool hasWindow, string workingDir, string exe, string args)
         {
             var handle = Guid.NewGuid().ToString();
             try

@@ -291,7 +291,7 @@ namespace VgcApis.Interfaces.Lua.NeoLua
         #region PipedProcess
 
         // 创建匿名管道并传给子进程
-        string PipedProcCreate(bool hasWindow, string workingDir, string exe, string args);
+        string PipedProcRun(bool hasWindow, string workingDir, string exe, string args);
 
         bool PipedProcRemove(string handle);
 

@@ -65,15 +65,22 @@ namespace DyFetch.Comps
             string str;
             do
             {
+                // 从输入管道读取命令，格式详见Models.Message.cs
                 str = reader.Read();
                 if (str != null)
                 {
                     var msg = JsonConvert.DeserializeObject<Models.Message>(str);
                     Console.WriteLine($"Fetch:{msg.url}");
+
+                    // 调用selenium访问命令指定的url
                     var html = fetcher.Fetch(msg.url, msg.csses, msg.timeout, msg.wait);
                     Console.WriteLine($"Send:{html.Length}");
+
+                    // 把结果写到输出管道
                     writer.Write(html);
                 }
+
+                // 如果父进程结束StringReader.Read()将得到null
             } while (str != null);
             Console.WriteLine("Read end.");
         }

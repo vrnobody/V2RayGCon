@@ -23,7 +23,7 @@ namespace DyFetch
                 var pout = configs.pipeOut;
                 if (string.IsNullOrEmpty(pin) || string.IsNullOrEmpty(pout))
                 {
-                    var html = fetcher.Fetch(configs.url, configs.csses, configs.timeout);
+                    var html = fetcher.Fetch(configs.url, configs.csses, configs.timeout, configs.wait);
                     Console.WriteLine(html);
                 }
                 else

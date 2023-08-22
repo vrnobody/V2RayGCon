@@ -15,6 +15,7 @@ namespace DyFetch.Models
         public List<string> csses = new List<string>();
         public int timeout = -1;
         public string url = null;
+        public int wait = -1;
 
         readonly OptionSet opts = null;
 
@@ -29,11 +30,13 @@ namespace DyFetch.Models
             {
                 { "pipein=", "input anonymous pipe handle", v => pipeIn = v },
                 { "pipeout=", "output anonymous pipe handle", v => pipeOut = v },
-                { "p|port=", "proxy port number", (int v) => port = v },
-                { "u|url=", "the URL to download", v => url = v  },
                 { "s|headless", "headless mode", v => headless = v != null },
-                { "c|css=", "wait until one of the css selectors match", v => csses.Add(v) },
+                { "u|url=", "the URL to download", v => url = v  },
+                { "p|port=", "proxy port number", (int v) => port = v },
                 { "t|timeout=",  "wait timeout in milliseconds", (int v) => timeout = v },
+                { "c|css=", "wait until one of the css selectors match", v => csses.Add(v) },
+                { "w|wait=", "wait after match in milliseconds", (int v) => wait = v },
+
                 { "h|help", "show help", v => help = v != null },
             };
         }

@@ -4,6 +4,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace DyFetch.Comps
 {
@@ -23,16 +24,20 @@ namespace DyFetch.Comps
         #endregion
 
         #region public methods
-        public string Fetch(string url, List<string> csses, int ms)
+        public string Fetch(string url, List<string> csses, int timeout, int wait)
         {
-            ms = ms > 0 ? ms : Models.Consts.MinFetchTimeout;
+            timeout = timeout > 0 ? timeout : Models.Consts.DefaultFetchTimeout;
             try
             {
-                var wait = new WebDriverWait(driver, TimeSpan.FromMilliseconds(ms));
+                var w = new WebDriverWait(driver, TimeSpan.FromMilliseconds(timeout));
                 driver.Navigate().GoToUrl(url);
-                if (csses.Count > 0)
+                if (csses != null && csses.Count > 0)
                 {
-                    WaitForOneOfCsses(csses, wait);
+                    WaitForOneOfCsses(csses, w);
+                }
+                if (wait > 0)
+                {
+                    Thread.Sleep(wait);
                 }
                 // driver.GetScreenshot().SaveAsFile("c:/dyfetch-debug.png");
                 return driver.PageSource;

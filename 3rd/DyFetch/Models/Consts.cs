@@ -14,7 +14,7 @@ namespace DyFetch.Models
         #endregion
 
         #region public methods
-        public static int MinFetchTimeout = 15 * 1000;
+        public static int DefaultFetchTimeout = 15 * 1000;
         #endregion
 
         #region private methods

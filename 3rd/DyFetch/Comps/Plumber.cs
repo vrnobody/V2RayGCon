@@ -70,7 +70,7 @@ namespace DyFetch.Comps
                 {
                     var msg = JsonConvert.DeserializeObject<Models.Message>(str);
                     Console.WriteLine($"Fetch:{msg.url}");
-                    var html = fetcher.Fetch(msg.url, msg.csses, msg.timeout);
+                    var html = fetcher.Fetch(msg.url, msg.csses, msg.timeout, msg.wait);
                     Console.WriteLine($"Send:{html.Length}");
                     writer.Write(html);
                 }

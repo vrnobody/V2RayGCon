@@ -286,6 +286,11 @@ namespace V2RayGCon.Services
         #endregion
 
         #region public method
+        public void Notify(string title, string content, int timeout)
+        {
+            Invoke(() => ni.ShowBalloonTip(timeout, title, content, ToolTipIcon.None));
+        }
+
         public void BlockingWaitOne(AutoResetEvent autoEv) =>
             autoEv.WaitOne();
 

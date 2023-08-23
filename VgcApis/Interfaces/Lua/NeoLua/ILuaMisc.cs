@@ -8,6 +8,14 @@ namespace VgcApis.Interfaces.Lua.NeoLua
     {
         #region winform things
         /// <summary>
+        /// 在托盘弹个消息
+        /// </summary>
+        /// <param name="title">标题</param>
+        /// <param name="content">内容</param>
+        /// <param name="ms">持续时间</param>
+        void Notify(string title, string content, int ms);
+
+        /// <summary>
         /// 复制内容到剪切板
         /// </summary>
         /// <param name="content">字符串内容</param>

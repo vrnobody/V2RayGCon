@@ -13,6 +13,8 @@ namespace VgcApis.Interfaces.Services
         void ShowFormLog();
         #endregion
 
+        void Notify(string title, string content, int timeout);
+
         string RegisterHotKey(Action hotKeyHandler,
             string keyName, bool hasAlt, bool hasCtrl, bool hasShift);
 

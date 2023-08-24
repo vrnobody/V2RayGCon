@@ -1,22 +1,18 @@
 {
-  "version": "1.8.1.0",
-  "md5": "CDCF093A42873900FB19CD741F54A8A6",
+  "version": "1.8.2.0",
+  "md5": "31AE39804C83229474EE055B330E216D",
   "warnings": [
     "本项目支持的最高v2ray-core版本是v4.45.2"
   ],
   "changes": [
-    "新增一个NeoLuna插件（测试中）",
-    "处理vless://...中的&amp;amp;以及\\u0026等奇葩问题",
-    "魔改了一下第三方自动升级包的代码",
-    "修改userSettings.json的写盘方式，降低内存占用",
-    "修复显示器缩放引起的扫描二维码红框偏移问题",
-    "Lua插件添加wserv关键词，通过coreServ:Wrap()得到，是coreServ的简化版",
-    "Lua插件添加Sys:SetWarnOnExit()，脚本非预期结束时弹个消息框",
-    "Lua插件添加Sys:SnapCache***()函数，跨脚本、跨插件共享键值对用",
-    "Luna添加thread.lua，可以把function序列化到新线程执行",
-    "LuaMail添加一个attachment属性，用于发送object类型对象",
-    "LuaMailBox添加capacity参数，用于SendAndWait()函数",
-    "增加3rd文件夹，用来存放core, NeoLuna脚本, 升级辅助程序等等",
-    "WebUI搬迁到3rd/neoluna/webui里面，需在NeoLuna插件中启动"
+    "停止发布scripts.zip脚本包",
+    "删除std.Sys:SetWarnOnExit()",
+    "主窗口可以输入 #序号 来定位服务器",
+    "优化主窗口搜索速度",
+    "NeoLuna插件添加日志窗口",
+    "添加std.Misc:Notify()托盘气泡消息",
+    "添加std.Web:ParseHtml()",
+    "添加std.Sys:PipedPorc***()几个函数",
+    "用法见3rd/DyFetch项目源码"
   ]
 }

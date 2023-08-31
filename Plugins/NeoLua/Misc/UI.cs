@@ -55,22 +55,22 @@ namespace NeoLuna.Misc
             // Console.WriteLine(scintilla.DescribeKeywordSets());
 
             // Keywords
-            scintilla.SetKeywords(0, VgcApis.Models.Consts.Lua.NeoLuaKeyWords);
+            scintilla.SetKeywords(0, Models.Consts.Lua.NeoLuaKeyWords);
 
             // Basic Functions
 
             scintilla.SetKeywords(1,
-                VgcApis.Models.Consts.Lua.NeoLuaApiFuncNames
+                Models.Consts.Lua.NeoLuaApiFuncNames
                     + " "
-                    + string.Join(" ", VgcApis.Models.Consts.Lua.NeoLuaPredefinedFunctions)
+                    + string.Join(" ", Models.Consts.Lua.NeoLuaPredefinedFunctions)
                     + " "
-                    + VgcApis.Models.Consts.Lua.LuaFunctions);
+                    + Models.Consts.Lua.LuaFunctions);
 
             // String Manipulation & Mathematical
             // Input and Output Facilities and System Facilities
-            scintilla.SetKeywords(2, VgcApis.Models.Consts.Lua.LuaSubFunctions);
+            scintilla.SetKeywords(2, Models.Consts.Lua.LuaSubFunctions);
 
-            scintilla.SetKeywords(3, VgcApis.Models.Consts.Lua.LuaModules);
+            scintilla.SetKeywords(3, Models.Consts.Lua.LuaModules);
 
             // Instruct the lexer to calculate folding
             scintilla.SetProperty("fold", "1");

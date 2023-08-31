@@ -7,8 +7,8 @@ namespace V2RayGCon.Services
         VgcApis.Interfaces.Services.IPostOffice
     {
 
-        readonly static ConcurrentDictionary<string, VgcApis.Interfaces.Lua.ILuaMailBox> mailboxes =
-              new ConcurrentDictionary<string, VgcApis.Interfaces.Lua.ILuaMailBox>();
+        readonly static ConcurrentDictionary<string, VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox> mailboxes =
+              new ConcurrentDictionary<string, VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>();
 
         readonly static PostOfficeComponents.SnapCache snapCache = new PostOfficeComponents.SnapCache();
 
@@ -37,7 +37,7 @@ namespace V2RayGCon.Services
 
         #region public methods
 
-        public bool RemoveMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailbox)
+        public bool RemoveMailBox(VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox)
         {
             if (mailboxes.TryRemove(mailbox.GetAddress(), out var box))
             {
@@ -47,7 +47,7 @@ namespace V2RayGCon.Services
             return false;
         }
 
-        public bool ValidateMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailbox)
+        public bool ValidateMailBox(VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox)
         {
             if (mailbox == null)
             {
@@ -64,7 +64,7 @@ namespace V2RayGCon.Services
             return true;
         }
 
-        public VgcApis.Interfaces.Lua.ILuaMailBox CreateMailBox(string address, int capacity)
+        public VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox CreateMailBox(string address, int capacity)
         {
             if (string.IsNullOrEmpty(address) || capacity < 1)
             {

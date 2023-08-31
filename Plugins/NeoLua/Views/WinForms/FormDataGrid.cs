@@ -12,7 +12,7 @@ namespace NeoLuna.Views.WinForms
 {
     public partial class FormDataGrid :
         Form,
-        VgcApis.Interfaces.Lua.IWinFormControl<string>
+        Interfaces.IWinFormControl<string>
 
     {
         readonly int MAX_TITLE_LEN = 60;

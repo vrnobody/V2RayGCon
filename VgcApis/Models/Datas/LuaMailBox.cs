@@ -2,7 +2,7 @@
 
 namespace VgcApis.Models.Datas
 {
-    public class LuaMailBox : Interfaces.Lua.ILuaMailBox
+    public class LuaMailBox : Interfaces.PostOfficeComponents.ILuaMailBox
     {
         private readonly string myAddress;
         private readonly Interfaces.Services.IPostOffice postOffice;
@@ -76,25 +76,25 @@ namespace VgcApis.Models.Datas
             return null;
         }
 
-        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, string title) =>
+        public bool Reply(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, string title) =>
             Reply(mail, title, null);
 
-        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, string title, string content) =>
+        public bool Reply(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, string title, string content) =>
             Reply(mail, 0, title, false, content);
 
-        public bool ReplyCode(VgcApis.Interfaces.Lua.ILuaMail mail, double code) =>
+        public bool ReplyCode(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, double code) =>
             ReplyCode(mail, code, null);
 
-        public bool ReplyCode(VgcApis.Interfaces.Lua.ILuaMail mail, double code, string content) =>
+        public bool ReplyCode(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, double code, string content) =>
             Reply(mail, code, null, false, content);
 
-        public bool ReplyState(VgcApis.Interfaces.Lua.ILuaMail mail, bool state) =>
+        public bool ReplyState(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, bool state) =>
             ReplyState(mail, state, null);
 
-        public bool ReplyState(VgcApis.Interfaces.Lua.ILuaMail mail, bool state, string content) =>
+        public bool ReplyState(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, bool state, string content) =>
             Reply(mail, 0, null, state, content);
 
-        public bool Reply(VgcApis.Interfaces.Lua.ILuaMail mail, double code, string title, bool state, string content) =>
+        public bool Reply(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, double code, string title, bool state, string content) =>
             Send(mail.GetAddress(), code, title, state, content);
 
         public bool Send(string address, string title) =>

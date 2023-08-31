@@ -10,7 +10,7 @@ namespace NeoLuna.Models.Apis.Components
 {
     internal sealed class Web :
         VgcApis.BaseClasses.ComponentOf<LuaApis>,
-        VgcApis.Interfaces.Lua.NeoLua.ILuaWeb
+        Interfaces.ILuaWeb
     {
         VgcApis.Interfaces.Services.IWebService vgcWeb;
         VgcApis.Interfaces.Services.IServersService vgcServers;

@@ -100,17 +100,11 @@
     <Reference Include="ImpromptuInterface, Version=7.0.1.0, Culture=neutral, PublicKeyToken=0b1781c923b2975b, processorArchitecture=MSIL">
       <HintPath>..\packages\ImpromptuInterface.7.0.1\lib\net40\ImpromptuInterface.dll</HintPath>
     </Reference>
-    <Reference Include="KeraLua, Version=1.0.29.0, Culture=neutral, PublicKeyToken=6a194c04b9c89217, processorArchitecture=MSIL">
-      <HintPath>..\packages\KeraLua.1.0.29\lib\net45\KeraLua.dll</HintPath>
-    </Reference>
     <Reference Include="Moq, Version=4.14.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.14.1\lib\net45\Moq.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NLua, Version=1.4.32.0, Culture=neutral, PublicKeyToken=6a194c04b9c89217, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLua.1.4.32\lib\net45\NLua.dll</HintPath>
     </Reference>
     <Reference Include="ScintillaNET, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\jacobslusser.ScintillaNET.3.6.3\lib\net40\ScintillaNET.dll</HintPath>
@@ -550,22 +544,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\Files\lua\libs\json.lua" />
-    <None Include="Resources\Files\lua\libs\luacheck\analyzer.lua" />
-    <None Include="Resources\Files\lua\libs\luacheck\decoder.lua" />
-    <None Include="Resources\Files\lua\libs\luacheck\lexer.lua" />
-    <None Include="Resources\Files\lua\libs\luacheck\parser.lua" />
-    <None Include="Resources\Files\lua\libs\luacheck\unicode.lua" />
-    <None Include="Resources\Files\lua\libs\luacheck\unicode_prntbnd.lua" />
-    <None Include="Resources\Files\lua\libs\luacheck\utils.lua" />
-    <None Include="Resources\Files\lua\libs\utils.lua" />
-    <None Include="Resources\Files\lua\modules\coreEvent.lua" />
-    <None Include="Resources\Files\lua\modules\hotkey.lua" />
-    <None Include="Resources\Files\lua\modules\httpServ.lua" />
-    <None Include="Resources\Files\lua\modules\logger.lua" />
-    <None Include="Resources\Files\lua\modules\reader.lua" />
-    <None Include="Resources\Files\lua\modules\set.lua" />
-    <None Include="Resources\Files\lua\modules\writer.lua" />
     <None Include="Resources\Files\3rd\templates\basic\basic.json" />
     <None Include="Resources\Files\3rd\templates\custom\vmessDecodeTemplate.json" />
     <None Include="Resources\Files\3rd\templates\routing\whitelist.json" />
@@ -574,6 +552,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon_dark.ico" />
+    <Content Include="Resources\Files\3rd\plugins\readme.txt" />
     <Content Include="Resources\Files\CSharp\ConfigJsonKeywords.txt" />
     <None Include="Resources\Icon\FormMainToolStrip\CloudSearch_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\AddField_16x.png" />
@@ -616,10 +595,6 @@
       <Name>ZipExtractor</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Plugins\Luna\Luna.csproj">
-      <Project>{2d29f9e2-f358-4b07-8f50-1cbe4291eed8}</Project>
-      <Name>Luna</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Plugins\NeoLua\NeoLuna.csproj">
       <Project>{1f2fd9d2-2230-49f1-a163-3987e2c9929c}</Project>
       <Name>NeoLuna</Name>
@@ -646,17 +621,29 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set "libsDir=libs\"
-set "copyFolderList=lua 3rd"
-set "allDlls=HtmlAgilityPack Neo.Lua NeoLuna ImpromptuInterface Dynamitey KeraLua liblua53 lua53 Nlua AutocompleteMenu-ScintillaNET Luna ProxySetter Pacman DotNetZip Newtonsoft ScintillaNET VgcApis zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
+set "copyFolderList=3rd"
+set "allDlls=HtmlAgilityPack Neo.Lua NeoLuna ImpromptuInterface Dynamitey AutocompleteMenu-ScintillaNET ProxySetter Pacman DotNetZip Newtonsoft ScintillaNET VgcApis zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
+
+call:CopyLunaAssets
 
 call:CreateFoldersOnDemand "%25libsDir%25 %25copyFolderList%25"
 call:MoveFilesByList "%25allDlls%25"
 call:CopyFolders "%25copyFolderList%25"
 
-rem NLua v1.4+ NeoLua.I18N
-set "luaFolders=de x86 x64"
-call:MoveFolders "%25luaFolders%25"
+rem NeoLua.I18N-DE
+rd /s /q "de"
 
+del /q /f "3rd\bins\ZipExtractor.pdb"
+
+rem cleanup libs folder
+cd libs
+del /s /q /f *.pdb
+del /s /q /f *.xml
+
+goto:eof
+
+:CopyLunaAssets
+	xcopy /s /e /y "$(SolutionDir)3rd\Luna\bin\$(ConfigurationName)"
 goto:eof
 
 :CopyFolders
@@ -700,11 +687,8 @@ goto:eof
   ) 
 goto:eof</PostBuildEvent>
   </PropertyGroup>
-  <Import Project="..\packages\KeraLua.1.0.29\build\net45\KeraLua.targets" Condition="Exists('..\packages\KeraLua.1.0.29\build\net45\KeraLua.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\KeraLua.1.0.29\build\net45\KeraLua.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\KeraLua.1.0.29\build\net45\KeraLua.targets'))" />
-  </Target>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>

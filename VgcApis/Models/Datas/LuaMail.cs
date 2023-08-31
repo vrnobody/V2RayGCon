@@ -1,6 +1,6 @@
 ﻿namespace VgcApis.Models.Datas
 {
-    public class LuaMail : Interfaces.Lua.ILuaMail
+    public class LuaMail : Interfaces.PostOfficeComponents.ILuaMail
     {
         public string from { get; set; }
         public string title { get; set; }

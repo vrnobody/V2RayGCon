@@ -41,9 +41,9 @@ namespace NeoLuna.Libs.LuaSnippet
         #region private methods
 
         List<string> GenKeywords(IEnumerable<string> initValues) =>
-            new StringBuilder(VgcApis.Models.Consts.Lua.LuaModules)
+            new StringBuilder(Models.Consts.Lua.LuaModules)
             .Append(@" ")
-            .Append(VgcApis.Models.Consts.Lua.NeoLuaKeyWords)
+            .Append(Models.Consts.Lua.NeoLuaKeyWords)
             .ToString()
             .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
             .Union(initValues)
@@ -53,9 +53,9 @@ namespace NeoLuna.Libs.LuaSnippet
 
         List<LuaFuncSnippets> GenLuaFunctionSnippet()
         {
-            var funcs = string.Join(" ", VgcApis.Models.Consts.Lua.NeoLuaPredefinedFunctions)
+            var funcs = string.Join(" ", Models.Consts.Lua.NeoLuaPredefinedFunctions)
                 + " "
-                + VgcApis.Models.Consts.Lua.LuaFunctions;
+                + Models.Consts.Lua.LuaFunctions;
 
             var r = funcs
                 .Replace("dofile", "")
@@ -76,7 +76,7 @@ namespace NeoLuna.Libs.LuaSnippet
         }
 
         List<LuaSubFuncSnippets> GenLuaPredefinedFuncSnippets(IEnumerable<LuaSubFuncSnippets> append) =>
-            VgcApis.Models.Consts.Lua.LuaPredefinedSubFunctions
+            Models.Consts.Lua.LuaPredefinedSubFunctions
             .Select(fn => new LuaSubFuncSnippets(fn, "."))
             .Union(append)
             .ToList();
@@ -126,8 +126,8 @@ namespace NeoLuna.Libs.LuaSnippet
             var apiNames = apis.Select(tp => ToKeywordDict(tp.Item1));
             // math.floor()
             var luaSubFunctions = GetLuaSubFunctions();
-            var predefinedFunctions = VgcApis.Models.Consts.Lua.LuaPredefinedSubFunctions
-                .Concat(VgcApis.Models.Consts.Lua.NeoLuaPredefinedFunctions);
+            var predefinedFunctions = Models.Consts.Lua.LuaPredefinedSubFunctions
+                .Concat(Models.Consts.Lua.NeoLuaPredefinedFunctions);
             var apiEvents = apis.SelectMany(api => VgcApis.Misc.Utils.GetPublicEventsInfoOfType(api.Item2)
                  .Select(infos => $"{api.Item1}.{infos.Item2}"));
             var apiProps = apis.SelectMany(api => VgcApis.Misc.Utils.GetPublicPropsInfoOfType(api.Item2)
@@ -159,7 +159,7 @@ namespace NeoLuna.Libs.LuaSnippet
         }
 
         IEnumerable<string> GetLuaSubFunctions() =>
-            VgcApis.Models.Consts.Lua.LuaSubFunctions
+            Models.Consts.Lua.LuaSubFunctions
             .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
             .OrderBy(s => s)
             .Select(s => $"{s}()");
@@ -182,13 +182,13 @@ namespace NeoLuna.Libs.LuaSnippet
         {
             var apis = new List<Tuple<string, Type>>
             {
-                new Tuple<string,Type>("mailbox", typeof(VgcApis.Interfaces.Lua.ILuaMailBox)),
-                new Tuple<string,Type>("mail", typeof(VgcApis.Interfaces.Lua.ILuaMail)),
-                new Tuple<string,Type>("std.Sys", typeof(VgcApis.Interfaces.Lua.NeoLua.ILuaSys)),
-                new Tuple<string,Type>("std.Misc", typeof(VgcApis.Interfaces.Lua.NeoLua.ILuaMisc)),
-                new Tuple<string,Type>("std.Server", typeof(VgcApis.Interfaces.Lua.NeoLua.ILuaServer)),
-                new Tuple<string,Type>("std.Web", typeof(VgcApis.Interfaces.Lua.NeoLua.ILuaWeb)),
-                new Tuple<string,Type>("std.Signal", typeof(VgcApis.Interfaces.Lua.ILuaSignal)),
+                new Tuple<string,Type>("mailbox", typeof(VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox)),
+                new Tuple<string,Type>("mail", typeof(VgcApis.Interfaces.PostOfficeComponents.ILuaMail)),
+                new Tuple<string,Type>("std.Sys", typeof(Interfaces.ILuaSys)),
+                new Tuple<string,Type>("std.Misc", typeof(Interfaces.ILuaMisc)),
+                new Tuple<string,Type>("std.Server", typeof(Interfaces.ILuaServer)),
+                new Tuple<string,Type>("std.Web", typeof(Interfaces.ILuaWeb)),
+                new Tuple<string,Type>("std.Signal", typeof(Interfaces.ILuaSignal)),
 
                 // 2023-08-01 测试结果 Wrap()开销9ns，Invoke()开销2ns，还可以接受。
                 new Tuple<string, Type>("wserv", typeof(VgcApis.Interfaces.IWrappedCoreServCtrl)),

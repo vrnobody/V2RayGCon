@@ -7,7 +7,7 @@ namespace NeoLuna.Models.Apis.Components
 {
     internal sealed class Server :
         VgcApis.BaseClasses.ComponentOf<LuaApis>,
-        VgcApis.Interfaces.Lua.NeoLua.ILuaServer
+        Interfaces.ILuaServer
     {
         VgcApis.Interfaces.Services.IServersService vgcServers;
         VgcApis.Interfaces.Services.IConfigMgrService vgcConfigMgr;

@@ -2,6 +2,8 @@
 {
     public static class Files
     {
+        public static readonly string PluginsDir = "3rd\\plugins";
+
         public static readonly string CoreFolderNameInside3rd = "3rd\\core";
 
         public static readonly string CoreFolderName = "core";

@@ -240,7 +240,7 @@ namespace NeoLuna.Services
                         }
                     }
                 }
-                catch (Exception e)
+                catch
                 {
                     // do nothing
                 }
@@ -314,11 +314,11 @@ namespace NeoLuna.Services
 
         readonly static LuaTable mockApis = new LuaTable()
         {
-            {"Misc", new Mock<VgcApis.Interfaces.Lua.NeoLua.ILuaMisc>().Object},
-            {"Signal", new Mock<VgcApis.Interfaces.Lua.ILuaSignal>().Object},
-            {"Sys", new Mock<VgcApis.Interfaces.Lua.NeoLua.ILuaSys>().Object},
-            {"Server", new Mock<VgcApis.Interfaces.Lua.NeoLua.ILuaServer>().Object},
-            {"Web", new Mock<VgcApis.Interfaces.Lua.NeoLua.ILuaWeb>().Object},
+            {"Misc", new Mock<Interfaces.ILuaMisc>().Object},
+            {"Signal", new Mock<Interfaces.ILuaSignal>().Object},
+            {"Sys", new Mock<Interfaces.ILuaSys>().Object},
+            {"Server", new Mock<Interfaces.ILuaServer>().Object},
+            {"Web", new Mock<Interfaces.ILuaWeb>().Object},
         };
 
         LuaGlobal CreateAnalyser(Lua anz)

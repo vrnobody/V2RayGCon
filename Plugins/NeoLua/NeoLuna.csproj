@@ -82,6 +82,13 @@
     <Compile Include="Controllers\FormEditorCtrl\ButtonCtrl.cs" />
     <Compile Include="Controllers\LuaCoreCtrl.cs" />
     <Compile Include="Controllers\FormMainCtrl\TabGeneralCtrl.cs" />
+    <Compile Include="Interfaces\ILuaMisc.cs" />
+    <Compile Include="Interfaces\ILuaServer.cs" />
+    <Compile Include="Interfaces\ILuaSignal.cs" />
+    <Compile Include="Interfaces\ILuaSys.cs" />
+    <Compile Include="Interfaces\ILuaWeb.cs" />
+    <Compile Include="Interfaces\IRunnable.cs" />
+    <Compile Include="Interfaces\IWinFormControl.cs" />
     <Compile Include="Libs\LuaSnippet\BestMatchSnippets.cs" />
     <Compile Include="Libs\LuaSnippet\LuaImportClrSnippets.cs" />
     <Compile Include="Libs\LuaSnippet\MatchItemBase.cs" />
@@ -95,6 +102,7 @@
     <Compile Include="Misc\Patches.cs" />
     <Compile Include="Misc\UI.cs" />
     <Compile Include="Models\Apis\SysCmpos\PipedProcess.cs" />
+    <Compile Include="Models\Consts\Lua.cs" />
     <Compile Include="NeoLuna.cs" />
     <Compile Include="Misc\Utils.cs" />
     <Compile Include="Models\Apis\LuaSignal.cs" />

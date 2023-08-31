@@ -2,7 +2,7 @@
 
 namespace NeoLuna.Models.Apis
 {
-    internal class LuaSignal : VgcApis.Interfaces.Lua.ILuaSignal
+    internal class LuaSignal : Interfaces.ILuaSignal
     {
         bool signalStop;
         private readonly Settings settings;

@@ -12,7 +12,7 @@ namespace NeoLuna.Models.Apis.Components
 {
     internal sealed class Misc :
         VgcApis.BaseClasses.ComponentOf<LuaApis>,
-        VgcApis.Interfaces.Lua.NeoLua.ILuaMisc
+        Interfaces.ILuaMisc
     {
         Services.Settings settings;
         private readonly FormMgrSvc formMgr;
@@ -387,7 +387,7 @@ namespace NeoLuna.Models.Apis.Components
         }
 
         static TResult GetResult<TForm, TResult>(Func<AutoResetEvent, TForm> creater)
-             where TForm : Form, VgcApis.Interfaces.Lua.IWinFormControl<TResult>
+             where TForm : Form, Interfaces.IWinFormControl<TResult>
         {
             AutoResetEvent done = new AutoResetEvent(false);
             TResult r = default;

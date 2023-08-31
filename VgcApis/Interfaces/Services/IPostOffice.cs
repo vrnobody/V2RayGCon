@@ -1,5 +1,5 @@
 ﻿using VgcApis.Models.Datas;
-using VgcApis.Interfaces.Lua;
+using VgcApis.Interfaces.PostOfficeComponents;
 
 namespace VgcApis.Interfaces.Services
 {

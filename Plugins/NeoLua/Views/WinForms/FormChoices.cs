@@ -7,7 +7,7 @@ namespace NeoLuna.Views.WinForms
 {
     public partial class FormChoices :
         Form,
-        VgcApis.Interfaces.Lua.IWinFormControl<List<int>>
+        Interfaces.IWinFormControl<List<int>>
     {
         readonly int MAX_TITLE_LEN = 60;
         readonly int MAX_CHOICE_LEN = 50;

@@ -352,9 +352,9 @@ namespace NeoLuna.Controllers
             {
                 { "Signal", luaSignal},
                 { "Sys", luaSys},
-                { "Misc", luaApis.GetChild<VgcApis.Interfaces.Lua.NeoLua.ILuaMisc>()},
-                { "Server", luaApis.GetChild<VgcApis.Interfaces.Lua.NeoLua.ILuaServer>()},
-                { "Web", luaApis.GetChild<VgcApis.Interfaces.Lua.NeoLua.ILuaWeb>()},
+                { "Misc", luaApis.GetChild<Interfaces.ILuaMisc>()},
+                { "Server", luaApis.GetChild<Interfaces.ILuaServer>()},
+                { "Web", luaApis.GetChild<Interfaces.ILuaWeb>()},
             };
             Misc.Patches.FixTableStringMath(g);
             return g;

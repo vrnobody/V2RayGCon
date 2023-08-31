@@ -8,7 +8,7 @@ namespace NeoLuna.Models.Apis.SysCmpos
 {
     public class HttpServer :
         VgcApis.BaseClasses.Disposable,
-        VgcApis.Interfaces.Lua.IRunnable
+        Interfaces.IRunnable
     {
         enum SourceType
         {
@@ -20,16 +20,16 @@ namespace NeoLuna.Models.Apis.SysCmpos
 
         HttpListener serv;
 
-        private readonly VgcApis.Interfaces.Lua.ILuaMailBox inbox;
-        private readonly VgcApis.Interfaces.Lua.ILuaMailBox outbox;
+        private readonly VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox inbox;
+        private readonly VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox outbox;
         private readonly string source;
         private readonly SourceType sourceType;
         private readonly bool allowCORS;
 
         public HttpServer(
             string url,
-            VgcApis.Interfaces.Lua.ILuaMailBox inbox,
-            VgcApis.Interfaces.Lua.ILuaMailBox outbox,
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox inbox,
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox outbox,
             string source,
             bool allowCORS)
         {

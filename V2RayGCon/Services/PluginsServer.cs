@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace V2RayGCon.Services
@@ -134,20 +136,48 @@ namespace V2RayGCon.Services
             notifier.UpdatePluginMenu(children);
         }
 
-        public Dictionary<string, VgcApis.Interfaces.IPlugin> LoadAllPlugins()
+        VgcApis.Interfaces.IPlugin LoadPluginFromFile(string dllFile)
         {
-            // Original design of plug-in system would load dll files from hard drive.
-            // That is why loading logic looks so complex.
+            var iName = nameof(VgcApis.Interfaces.IPlugin);
+            try
+            {
+                var assembly = Assembly.LoadFrom(dllFile);
+                foreach (var ty in assembly.GetExportedTypes())
+                {
+                    if (ty.GetInterface(iName, false) != null)
+                    {
+                        return Activator.CreateInstance(ty) as VgcApis.Interfaces.IPlugin;
+                    }
+                }
+            }
+            catch { }
+            return null;
+        }
 
-            var plugins = new List<VgcApis.Interfaces.IPlugin>();
+        List<VgcApis.Interfaces.IPlugin> LoadAllPluginFromDir(string dir)
+        {
+            var r = new List<VgcApis.Interfaces.IPlugin>();
+            foreach (string file in Directory.GetFiles(dir, @"*.dll"))
+            {
+                var p = LoadPluginFromFile(file);
+                if (p != null)
+                {
+                    r.Add(p);
+                }
+            }
+            return r;
+        }
 
-            plugins.Add(new Luna.Luna());
-            plugins.Add(new NeoLuna.NeoLuna());
-            plugins.Add(new Pacman.Pacman());
+        Dictionary<string, VgcApis.Interfaces.IPlugin> LoadAllPlugins()
+        {
+            var plugins = new List<VgcApis.Interfaces.IPlugin>() {
+                new NeoLuna.NeoLuna(),
+                new Pacman.Pacman(),
+                new ProxySetter.ProxySetter(),
+            };
 
-            // Many thanks to windows defender
-            plugins.Add(new ProxySetter.ProxySetter());
-
+            var dir = VgcApis.Models.Consts.Files.PluginsDir;
+            plugins.AddRange(LoadAllPluginFromDir(dir));
 
             var pluginList = new Dictionary<string, VgcApis.Interfaces.IPlugin>();
             foreach (var plugin in plugins)

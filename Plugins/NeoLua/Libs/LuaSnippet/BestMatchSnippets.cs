@@ -79,7 +79,7 @@ namespace NeoLuna.Libs.LuaSnippet
         #region private methods
         HashSet<string> ignoredList =
             new HashSet<string>(
-                VgcApis.Models.Consts.Lua.NeoLuaKeyWords.Split(' '));
+                Models.Consts.Lua.NeoLuaKeyWords.Split(' '));
 
         private IEnumerable<AutocompleteItem> BuildList()
         {

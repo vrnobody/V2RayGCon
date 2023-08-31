@@ -30,11 +30,11 @@ namespace NeoLuna.Models.Apis
     {
         public CoreEvTypes evType { get; set; }
 
-        public VgcApis.Interfaces.Lua.ILuaMailBox mailBox { get; set; }
+        public VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailBox { get; set; }
         public EventHandler evHandler { get; set; }
         public GlobalEvHook(
             CoreEvTypes evType,
-            VgcApis.Interfaces.Lua.ILuaMailBox mailBox,
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailBox,
             EventHandler evHandler)
         {
             this.evType = evType;
@@ -47,12 +47,12 @@ namespace NeoLuna.Models.Apis
     {
         public CoreEvTypes evType { get; set; }
         public VgcApis.Interfaces.ICoreServCtrl coreServCtrl { get; set; }
-        public VgcApis.Interfaces.Lua.ILuaMailBox mailBox { get; set; }
+        public VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailBox { get; set; }
         public EventHandler evHandler { get; set; }
         public CoreEvHook(
             CoreEvTypes evType,
             VgcApis.Interfaces.ICoreServCtrl coreServCtrl,
-            VgcApis.Interfaces.Lua.ILuaMailBox mailBox,
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailBox,
             EventHandler evHandler)
         {
             this.evType = evType;
@@ -75,7 +75,7 @@ namespace NeoLuna.Models.Apis
 
     internal class LuaSys :
         VgcApis.BaseClasses.Disposable,
-        VgcApis.Interfaces.Lua.NeoLua.ILuaSys
+        Interfaces.ILuaSys
     {
         readonly object procLocker = new object();
         private readonly LuaCoreCtrl luaCoreCtrl;
@@ -83,11 +83,11 @@ namespace NeoLuna.Models.Apis
         private readonly Func<List<Type>> getAllAssemblies;
         List<Process> processes = new List<Process>();
 
-        List<VgcApis.Interfaces.Lua.ILuaMailBox>
-            mailboxs = new List<VgcApis.Interfaces.Lua.ILuaMailBox>();
+        List<VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>
+            mailboxs = new List<VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>();
 
-        ConcurrentDictionary<string, VgcApis.Interfaces.Lua.ILuaMailBox>
-            hotkeys = new ConcurrentDictionary<string, VgcApis.Interfaces.Lua.ILuaMailBox>();
+        ConcurrentDictionary<string, VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>
+            hotkeys = new ConcurrentDictionary<string, VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>();
 
         ConcurrentDictionary<string, CoreEvHook> coreEvHooks = new ConcurrentDictionary<string, CoreEvHook>();
         ConcurrentDictionary<string, GlobalEvHook> globalEvHooks = new ConcurrentDictionary<string, GlobalEvHook>();
@@ -560,16 +560,16 @@ namespace NeoLuna.Models.Apis
         #region ILuaSys.Net
         List<SysCmpos.HttpServer> httpServs = new List<SysCmpos.HttpServer>();
 
-        public VgcApis.Interfaces.Lua.IRunnable CreateHttpServer(
+        public Interfaces.IRunnable CreateHttpServer(
             string url,
-            VgcApis.Interfaces.Lua.ILuaMailBox inbox,
-            VgcApis.Interfaces.Lua.ILuaMailBox outbox) =>
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox inbox,
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox outbox) =>
             CreateHttpServer(url, inbox, outbox, null, false);
 
-        public VgcApis.Interfaces.Lua.IRunnable CreateHttpServer(
+        public Interfaces.IRunnable CreateHttpServer(
             string url,
-            VgcApis.Interfaces.Lua.ILuaMailBox inbox,
-            VgcApis.Interfaces.Lua.ILuaMailBox outbox,
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox inbox,
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox outbox,
             string source,
             bool allowCORS)
         {
@@ -597,7 +597,7 @@ namespace NeoLuna.Models.Apis
         public int CoreEvStop { get; } = (int)CoreEvTypes.CoreStop;
         public int CoreEvPropertyChanged { get; } = (int)CoreEvTypes.PropertyChanged;
 
-        public bool UnregisterCoreEvent(VgcApis.Interfaces.Lua.ILuaMailBox mailbox, string handle)
+        public bool UnregisterCoreEvent(VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox, string handle)
         {
             if (!postOffice.ValidateMailBox(mailbox))
             {
@@ -634,7 +634,7 @@ namespace NeoLuna.Models.Apis
             return false;
         }
 
-        public bool UnregisterGlobalEvent(VgcApis.Interfaces.Lua.ILuaMailBox mailbox, string handle)
+        public bool UnregisterGlobalEvent(VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox, string handle)
         {
             if (postOffice.ValidateMailBox(mailbox)
                && globalEvHooks.TryRemove(handle, out var evhook))
@@ -661,7 +661,7 @@ namespace NeoLuna.Models.Apis
         }
 
         public string RegisterGlobalEvent(
-            VgcApis.Interfaces.Lua.ILuaMailBox mailbox,
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox,
             int evType, int evCode)
         {
             if (!postOffice.ValidateMailBox(mailbox))
@@ -704,7 +704,7 @@ namespace NeoLuna.Models.Apis
 
         public string RegisterCoreEvent(
             VgcApis.Interfaces.ICoreServCtrl coreServ,
-            VgcApis.Interfaces.Lua.ILuaMailBox mailbox,
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox,
             int evType,
             int evCode)
         {
@@ -752,7 +752,7 @@ namespace NeoLuna.Models.Apis
             return string.Join(@", ", Enum.GetNames(typeof(Keys)));
         }
 
-        public bool UnregisterHotKey(VgcApis.Interfaces.Lua.ILuaMailBox mailbox, string handle)
+        public bool UnregisterHotKey(VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox, string handle)
         {
             if (postOffice.ValidateMailBox(mailbox)
                 && hotkeys.TryGetValue(handle, out var mb)
@@ -765,7 +765,7 @@ namespace NeoLuna.Models.Apis
         }
 
         public string RegisterHotKey(
-            VgcApis.Interfaces.Lua.ILuaMailBox mailbox, int evCode,
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox, int evCode,
             string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
         {
             // 无权访问
@@ -844,10 +844,10 @@ namespace NeoLuna.Models.Apis
         #endregion
 
         #region ILuaSys.PostOffice
-        public bool ValidateMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailbox) =>
+        public bool ValidateMailBox(VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox) =>
             postOffice.ValidateMailBox(mailbox);
 
-        public bool RemoveMailBox(VgcApis.Interfaces.Lua.ILuaMailBox mailbox)
+        public bool RemoveMailBox(VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox)
         {
             if (!postOffice.ValidateMailBox(mailbox))
             {
@@ -867,13 +867,13 @@ namespace NeoLuna.Models.Apis
 
         const int defMailBoxCapacity = 1000;
 
-        public VgcApis.Interfaces.Lua.ILuaMailBox ApplyRandomMailBox() =>
+        public VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox ApplyRandomMailBox() =>
             ApplyRandomMailBox(defMailBoxCapacity);
 
-        public VgcApis.Interfaces.Lua.ILuaMailBox CreateMailBox(string name) =>
+        public VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox CreateMailBox(string name) =>
             CreateMailBox(name, defMailBoxCapacity);
 
-        public VgcApis.Interfaces.Lua.ILuaMailBox ApplyRandomMailBox(int capacity)
+        public VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox ApplyRandomMailBox(int capacity)
         {
             var name = Guid.NewGuid().ToString();
             var mailbox = CreateMailBox(name, capacity);
@@ -885,7 +885,7 @@ namespace NeoLuna.Models.Apis
         }
 
 
-        public VgcApis.Interfaces.Lua.ILuaMailBox CreateMailBox(string name, int capacity)
+        public VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox CreateMailBox(string name, int capacity)
         {
             var mailbox = postOffice.CreateMailBox(name, capacity);
             if (mailbox == null)
@@ -1088,7 +1088,7 @@ namespace NeoLuna.Models.Apis
         #endregion
 
         #region ILuaSys.System
-        public void SetTimeout(VgcApis.Interfaces.Lua.ILuaMailBox mailbox, int timeout, double id)
+        public void SetTimeout(VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox, int timeout, double id)
         {
             Task.Delay(timeout).ContinueWith((task) =>
             {
@@ -1507,7 +1507,7 @@ namespace NeoLuna.Models.Apis
 
         void CloseAllMailBox()
         {
-            List<VgcApis.Interfaces.Lua.ILuaMailBox> boxes;
+            List<VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox> boxes;
             lock (procLocker)
             {
                 boxes = mailboxs.ToList();

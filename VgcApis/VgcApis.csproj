@@ -41,17 +41,8 @@
     <Reference Include="HtmlAgilityPack, Version=1.11.51.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.51\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="KeraLua, Version=1.0.29.0, Culture=neutral, PublicKeyToken=6a194c04b9c89217, processorArchitecture=MSIL">
-      <HintPath>..\packages\KeraLua.1.0.29\lib\net45\KeraLua.dll</HintPath>
-    </Reference>
-    <Reference Include="Neo.Lua, Version=5.3.0.0, Culture=neutral, PublicKeyToken=fdb0cd4fe8a6e3b2, processorArchitecture=MSIL">
-      <HintPath>..\packages\NeoLua.1.3.14\lib\net45\Neo.Lua.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NLua, Version=1.4.32.0, Culture=neutral, PublicKeyToken=6a194c04b9c89217, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLua.1.4.32\lib\net45\NLua.dll</HintPath>
     </Reference>
     <Reference Include="ScintillaNET, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\jacobslusser.ScintillaNET.3.6.3\lib\net40\ScintillaNET.dll</HintPath>
@@ -71,16 +62,9 @@
   <ItemGroup>
     <Compile Include="Interfaces\IWrappedCoreServCtrl.cs" />
     <Compile Include="Interfaces\ILogable.cs" />
-    <Compile Include="Interfaces\Lua\NLua\ILuaWeb.cs" />
+    <Compile Include="Interfaces\PostOfficeComponents\ILuaMail.cs" />
+    <Compile Include="Interfaces\PostOfficeComponents\ILuaMailBox.cs" />
     <Compile Include="Interfaces\Services\IPostOffice.cs" />
-    <Compile Include="Interfaces\Lua\NeoLua\ILuaMisc.cs" />
-    <Compile Include="Interfaces\Lua\NeoLua\ILuaServer.cs" />
-    <Compile Include="Interfaces\Lua\NeoLua\ILuaSys.cs" />
-    <Compile Include="Interfaces\Lua\NLua\ILuaSys.cs" />
-    <Compile Include="Interfaces\Lua\ILuaMail.cs" />
-    <Compile Include="Interfaces\Lua\ILuaMailBox.cs" />
-    <Compile Include="Interfaces\Lua\IRunnable.cs" />
-    <Compile Include="Interfaces\Lua\IWinFormControl.cs" />
     <Compile Include="Libs\Infr\Recorder.cs" />
     <Compile Include="Libs\Infr\PseudoRandom.cs" />
     <Compile Include="Libs\Infr\ZipExtensions.cs" />
@@ -107,7 +91,6 @@
     <Compile Include="Models\Consts\BitStream.cs" />
     <Compile Include="Models\Consts\Config.cs" />
     <Compile Include="Models\Consts\Core.cs" />
-    <Compile Include="Models\Consts\Lua.cs" />
     <Compile Include="Models\Consts\AutoEllipsis.cs" />
     <Compile Include="Models\Consts\Patterns.cs" />
     <Compile Include="Models\Consts\Import.cs" />
@@ -126,9 +109,6 @@
     <Compile Include="Interfaces\ComponentOf\IParentComponent.cs" />
     <Compile Include="Interfaces\ComponentOf\IComponentOf.cs" />
     <Compile Include="Interfaces\IShareLinkDecoder.cs" />
-    <Compile Include="Interfaces\Lua\NLua\ILuaServer.cs" />
-    <Compile Include="Interfaces\Lua\NLua\ILuaMisc.cs" />
-    <Compile Include="Interfaces\Lua\NeoLua\ILuaWeb.cs" />
     <Compile Include="Interfaces\Services\IApiServices.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Libs\Tasks\CancelableTimeout.cs" />
@@ -138,7 +118,6 @@
     <Compile Include="Models\Datas\DataEvent.cs" />
     <Compile Include="Interfaces\ICoreServCtrl.cs" />
     <Compile Include="Interfaces\IDropableControl.cs" />
-    <Compile Include="Interfaces\Lua\ILuaSignal.cs" />
     <Compile Include="Interfaces\Services\INotifierService.cs" />
     <Compile Include="Interfaces\Services\IShareLinkMgr.cs" />
     <Compile Include="Interfaces\Services\IConfigMgr.cs" />
@@ -210,11 +189,4 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <Import Project="..\packages\KeraLua.1.0.29\build\net45\KeraLua.targets" Condition="Exists('..\packages\KeraLua.1.0.29\build\net45\KeraLua.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\KeraLua.1.0.29\build\net45\KeraLua.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\KeraLua.1.0.29\build\net45\KeraLua.targets'))" />
-  </Target>
 </Project>

@@ -194,9 +194,9 @@ namespace VgcApisTests
         }
 
         [DataTestMethod]
-        [DataRow(@"abc", @"https://www.sogou.com/abc/a/b/c/d.html")]
-        [DataRow(@"a1中b2文", @"https://www.sogou.com/a1中b2文/a/b/c/d.html")]
-        [DataRow(@"index.html", @"https://www.sogou.com/index.html")]
+        [DataRow(@"abc", @"https://www.github.com/abc/a/b/c/d.html")]
+        [DataRow(@"a1中b2文", @"https://www.github.com/a1中b2文/a/b/c/d.html")]
+        [DataRow(@"index.html", @"https://www.github.com/index.html")]
         [DataRow(@"a1中b2文?", @"fttp::ssh:://%20#2@&/a1中b2文?/a/b/c/d.html?#a=1&value=10")]
 
         public void TryExtractAliasFromSubsUrlNormalTest(string expected, string url)
@@ -213,9 +213,9 @@ namespace VgcApisTests
         }
 
         [DataTestMethod]
-        [DataRow(@"https://www.sogou.com")]
-        [DataRow(@"https://www.sogou.com//")]
-        [DataRow(@"https://www.sogou.com/")]
+        [DataRow(@"https://www.github.com")]
+        [DataRow(@"https://www.github.com//")]
+        [DataRow(@"https://www.github.com/")]
         [DataRow(@"abcd1234")]
         public void TryExtractAliasFromSubsUrlFailTest(string url)
         {

@@ -14,7 +14,10 @@ namespace V2RayGCon.Controllers.OptionComponent
         string oldOptions;
         List<Models.Datas.PluginInfoItem> curPluginInfos;
 
-        public TabPlugin(FlowLayoutPanel flyPanel)
+        public TabPlugin(
+            Button btnRefreshPluginsPanel,
+            CheckBox chkIsLoad3rdPartyPlugins,
+            FlowLayoutPanel flyPanel)
         {
             setting = Services.Settings.Instance;
             pluginServ = Services.PluginsServer.Instance;
@@ -25,7 +28,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             setting.SavePluginInfoItems(curPluginInfos);
             MarkdownCurOption();
 
-            InitPanel();
+            InitControls(btnRefreshPluginsPanel, chkIsLoad3rdPartyPlugins);
         }
 
         #region public method
@@ -82,7 +85,29 @@ namespace V2RayGCon.Controllers.OptionComponent
             }
         }
 
-        void InitPanel()
+        void InitControls(
+            Button btnRefreshPluginsPanel,
+            CheckBox chkIsLoad3rdPartyPlugins)
+        {
+            chkIsLoad3rdPartyPlugins.Checked = setting.isLoad3rdPartyPlugins;
+
+            chkIsLoad3rdPartyPlugins.CheckedChanged += (s, a) =>
+            {
+                setting.isLoad3rdPartyPlugins = chkIsLoad3rdPartyPlugins.Checked;
+            };
+
+            btnRefreshPluginsPanel.Click += (s, a) =>
+            {
+                pluginServ.RefreshPluginList();
+                curPluginInfos = pluginServ.GetterAllPluginsInfo();
+                setting.SavePluginInfoItems(curPluginInfos);
+                RefreshPluginsPanel();
+            };
+
+            RefreshPluginsPanel();
+        }
+
+        private void RefreshPluginsPanel()
         {
             RemoveAllControls();
             foreach (var item in curPluginInfos)

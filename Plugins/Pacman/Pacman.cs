@@ -21,8 +21,13 @@ namespace Pacman
         #endregion
 
         #region protected overrides
-        protected override void Popup()
+        public override void ShowMainForm()
         {
+            if (!GetState())
+            {
+                return;
+            }
+
             VgcApis.Misc.UI.Invoke(() =>
             {
                 if (formMain != null)
@@ -37,14 +42,24 @@ namespace Pacman
             });
         }
 
-        protected override void Start(VgcApis.Interfaces.Services.IApiService api)
+        public override void Run(VgcApis.Interfaces.Services.IApiService api)
         {
+            if (!SetState(true))
+            {
+                return;
+            }
+
             settings = new Services.Settings();
             settings.Run(api);
         }
 
-        protected override void Stop()
+        public override void Stop()
         {
+            if (!SetState(false))
+            {
+                return;
+            }
+
             VgcApis.Misc.UI.CloseFormIgnoreError(formMain);
             settings?.Cleanup();
         }

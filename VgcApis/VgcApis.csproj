@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IWrappedCoreServCtrl.cs" />
-    <Compile Include="Interfaces\ILogable.cs" />
+    <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Interfaces\PostOfficeComponents\ILuaMail.cs" />
     <Compile Include="Interfaces\PostOfficeComponents\ILuaMailBox.cs" />
     <Compile Include="Interfaces\Services\IPostOffice.cs" />
@@ -110,7 +110,7 @@
     <Compile Include="Interfaces\ComponentOf\IComponentOf.cs" />
     <Compile Include="Interfaces\IShareLinkDecoder.cs" />
     <Compile Include="Interfaces\Services\IApiServices.cs" />
-    <Compile Include="Interfaces\IPlugin.cs" />
+    <Compile Include="Interfaces\ILogable.cs" />
     <Compile Include="Libs\Tasks\CancelableTimeout.cs" />
     <Compile Include="Libs\Tasks\LazyGuy.cs" />
     <Compile Include="Libs\Sys\FileLogger.cs" />

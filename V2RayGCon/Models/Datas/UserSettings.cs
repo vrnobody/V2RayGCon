@@ -5,6 +5,8 @@ namespace V2RayGCon.Models.Datas
     class UserSettings
     {
         #region public properties
+
+        public bool isLoad3rdPartyPlugins { get; set; }
         public string CompressedUnicodeLocalStorage { get; set; }
 
         public bool isUseCustomUserAgent { get; set; }
@@ -81,6 +83,9 @@ namespace V2RayGCon.Models.Datas
         public UserSettings()
         {
             Normalized();
+
+            // 20230901 兼容考虑暂时设为true, 预计在v1.8.5将改成false
+            isLoad3rdPartyPlugins = true;
 
             CompressedUnicodeLocalStorage = string.Empty;
 

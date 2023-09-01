@@ -622,28 +622,37 @@
   <PropertyGroup>
     <PostBuildEvent>set "libsDir=libs\"
 set "copyFolderList=3rd"
-set "allDlls=HtmlAgilityPack Neo.Lua NeoLuna ImpromptuInterface Dynamitey AutocompleteMenu-ScintillaNET ProxySetter Pacman DotNetZip Newtonsoft ScintillaNET VgcApis zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
+set "pluginDlls=VgcApis NeoLuna Pacman ProxySetter"
+set "otherDlls=HtmlAgilityPack Neo.Lua ImpromptuInterface Dynamitey AutocompleteMenu-ScintillaNET DotNetZip Newtonsoft ScintillaNET zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
+
+call:RemoveDbgFiles "%25otherDlls%25"
 
 call:CopyLunaAssets
 
 call:CreateFoldersOnDemand "%25libsDir%25 %25copyFolderList%25"
-call:MoveFilesByList "%25allDlls%25"
+call:MoveFilesByList "%25pluginDlls%25 %25otherDlls%25"
 call:CopyFolders "%25copyFolderList%25"
 
-rem NeoLua.I18N-DE
-rd /s /q "de"
-
-del /q /f "3rd\bins\ZipExtractor.pdb"
-
-rem cleanup libs folder
-cd libs
-del /s /q /f *.pdb
-del /s /q /f *.xml
+call:RemoveOtherFiles
 
 goto:eof
 
+:RemoveOtherFiles
+  rem NeoLua.I18N-DE
+  rd /s /q "de"
+  
+  del /q /f "3rd\bins\ZipExtractor.pdb"
+goto:eof
+
+:RemoveDbgFiles
+  for %25%25i in (%25~1) do ( 
+    del /s /q /f "%25%25i*.pdb"
+	del /s /q /f "%25%25i*.xml"
+  ) 
+goto:eof
+
 :CopyLunaAssets
-	xcopy /s /e /y "$(SolutionDir)3rd\Luna\bin\$(ConfigurationName)"
+  xcopy /s /e /y "$(SolutionDir)3rd\Luna\bin\$(ConfigurationName)"
 goto:eof
 
 :CopyFolders

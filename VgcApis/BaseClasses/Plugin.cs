@@ -6,63 +6,90 @@ namespace VgcApis.BaseClasses
 {
     public class Plugin : Interfaces.IPlugin
     {
+        #region properties
         public virtual string Name => throw new NotImplementedException();
         public virtual string Version => throw new NotImplementedException();
         public virtual string Description => throw new NotImplementedException();
         public virtual Image Icon => throw new NotImplementedException();
+        #endregion
 
-        public virtual ToolStripMenuItem GetMenu()
+        #region IPlugin
+        public virtual void ShowMainForm() => throw new NotImplementedException();
+
+        public virtual void Stop() => throw new NotImplementedException();
+
+        public virtual void Run(Interfaces.Services.IApiService api) => throw new NotImplementedException();
+
+        public virtual ToolStripMenuItem GetToolStripMenu()
         {
-            var menu = new ToolStripMenuItem(Name, Icon, (s, a) => Popup());
+            var menu = new ToolStripMenuItem(Name, Icon, (s, a) => ShowMainForm());
             menu.ToolTipText = Description;
             return menu;
         }
+        #endregion
 
-        protected virtual void Start(Interfaces.Services.IApiService api) { }
-        protected virtual void Stop() { }
-        protected virtual void Popup() { }
+        #region protected
 
-        bool isPluginRunning;
-        object isRunningLocker = new object();
-        public void Cleanup()
+        object locker = new object();
+        bool isPluginRunning = false;
+
+        protected bool GetState() => isPluginRunning && !disposedValue;
+
+        protected bool SetState(bool isRunning)
         {
-            lock (isRunningLocker)
+            if (disposedValue && isRunning)
             {
-                if (!isPluginRunning)
-                {
-                    return;
-                }
-                isPluginRunning = false;
+                return false;
             }
 
-            Stop();
-        }
-
-        public void Run(Interfaces.Services.IApiService api)
-        {
-            lock (isRunningLocker)
+            lock (locker)
             {
-                if (isPluginRunning)
+                if (isPluginRunning == isRunning)
                 {
-                    return;
+                    return false;
                 }
-                isPluginRunning = true;
+                isPluginRunning = isRunning;
+                return true;
             }
-
-            Start(api);
         }
+        #endregion
 
-        public void Show()
+        #region IDisposable
+
+        private bool disposedValue;
+
+        protected virtual void Dispose(bool disposing)
         {
-            lock (isRunningLocker)
+            if (!disposedValue)
             {
-                if (!isPluginRunning)
+                if (disposing)
                 {
-                    return;
+                    // TODO: 释放托管状态(托管对象)
+                    if (GetState())
+                    {
+                        Stop();
+                    }
                 }
-            }
 
-            Popup();
+                // TODO: 释放未托管的资源(未托管的对象)并重写终结器
+                // TODO: 将大型字段设置为 null
+                disposedValue = true;
+            }
         }
+
+        // // TODO: 仅当“Dispose(bool disposing)”拥有用于释放未托管资源的代码时才替代终结器
+        // ~Plugin()
+        // {
+        //     // 不要更改此代码。请将清理代码放入“Dispose(bool disposing)”方法中
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // 不要更改此代码。请将清理代码放入“Dispose(bool disposing)”方法中
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

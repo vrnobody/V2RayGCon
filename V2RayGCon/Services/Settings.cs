@@ -56,6 +56,16 @@ namespace V2RayGCon.Services
         }
 
         #region Properties
+        public bool isLoad3rdPartyPlugins
+        {
+            get => userSettings.isLoad3rdPartyPlugins;
+            set
+            {
+                userSettings.isLoad3rdPartyPlugins = value;
+                SaveSettingsLater();
+            }
+        }
+
         public bool isUseCustomUserAgent
         {
             get

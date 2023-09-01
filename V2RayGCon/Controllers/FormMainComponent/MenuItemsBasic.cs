@@ -106,7 +106,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
                 foreach (var plugin in plugins)
                 {
-                    var mi = new ToolStripMenuItem(plugin.Name, plugin.Icon, (s, a) => plugin.Show());
+                    var mi = new ToolStripMenuItem(plugin.Name, plugin.Icon, (s, a) => plugin.ShowMainForm());
                     pluginToolStrip.DropDownItems.Add(mi);
                     mi.ToolTipText = plugin.Description;
                 }

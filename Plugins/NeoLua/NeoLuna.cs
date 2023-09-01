@@ -25,7 +25,7 @@ namespace NeoLuna
                 msw = new ToolStripMenuItem(
                     I18N.OpenScriptManger,
                     Properties.Resources.StoredProcedureScript_16x,
-                    (s, a) => Show());
+                    (s, a) => ShowMainForm());
 
                 mse = new ToolStripMenuItem(
                     I18N.OpenScriptEditor,
@@ -55,19 +55,25 @@ namespace NeoLuna
         #endregion
 
         #region public overrides
-        public override ToolStripMenuItem GetMenu() => miRoot;
+        public override ToolStripMenuItem GetToolStripMenu() => miRoot;
 
-        #endregion
-
-        #region protected overrides
-        protected override void Popup()
+        public override void ShowMainForm()
         {
+            if (!GetState())
+            {
+                return;
+            }
             // formMgr.ShowOrCreateFirstEditor();
             formMgr.ShowFormMain();
         }
 
-        protected override void Start(VgcApis.Interfaces.Services.IApiService api)
+        public override void Run(VgcApis.Interfaces.Services.IApiService api)
         {
+            if (!SetState(true))
+            {
+                return;
+            }
+
             var vgcSettings = api.GetSettingService();
 
             settings = new Services.Settings();
@@ -86,8 +92,13 @@ namespace NeoLuna
             luaServer.WakeUpAutoRunScripts(TimeSpan.FromSeconds(2));
         }
 
-        protected override void Stop()
+        public override void Stop()
         {
+            if (!SetState(false))
+            {
+                return;
+            }
+
             VgcApis.Libs.Sys.FileLogger.Info("NeoLuna.Cleanup() begin");
             settings?.SetIsDisposing(true);
             menuUpdater?.Dispose();

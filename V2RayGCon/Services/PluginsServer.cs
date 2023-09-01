@@ -17,12 +17,16 @@ namespace V2RayGCon.Services
 
         Libs.Lua.Apis vgcApis = new Libs.Lua.Apis();
 
-        readonly Dictionary<string, VgcApis.Interfaces.IPlugin> plugins =
+        readonly object pluginsLocker = new object();
+
+        Dictionary<string, VgcApis.Interfaces.IPlugin> pluginList =
              new Dictionary<string, VgcApis.Interfaces.IPlugin>();
+
+        List<string> internalPluginNames = new List<string>();
 
         PluginsServer()
         {
-            plugins = LoadAllPlugins();
+
         }
 
         public void Run(
@@ -34,6 +38,8 @@ namespace V2RayGCon.Services
         {
             this.setting = setting;
             this.notifier = notifier;
+
+            LoadAllPlugins();
             vgcApis.Run(setting, servers, configMgr, slinkMgr, notifier);
         }
 
@@ -47,11 +53,11 @@ namespace V2RayGCon.Services
             var enabledList = GetCurEnabledPluginFileNames();
             foreach (var filename in enabledList)
             {
-                if (!plugins.ContainsKey(filename))
+                if (!pluginList.ContainsKey(filename))
                 {
                     continue;
                 }
-                result.Add(plugins[filename]);
+                result.Add(pluginList[filename]);
             }
             return result.AsReadOnly();
         }
@@ -60,15 +66,17 @@ namespace V2RayGCon.Services
         {
             var enabledList = GetCurEnabledPluginFileNames();
 
-            foreach (var p in plugins)
+            foreach (var kv in pluginList)
             {
-                if (enabledList.Contains(p.Key))
+                var name = kv.Key;
+                var p = kv.Value;
+                if (enabledList.Contains(name))
                 {
-                    p.Value.Run(vgcApis);
+                    p.Run(vgcApis);
                 }
                 else
                 {
-                    p.Value.Cleanup();
+                    p.Stop();
                 }
             }
 
@@ -76,23 +84,62 @@ namespace V2RayGCon.Services
             InvokeEventOnRequireMenuUpdateIgnoreError();
         }
 
-        public void StopAllPlugins()
-        {
-            foreach (var p in plugins)
-            {
-                p.Value.Cleanup();
-            }
-            UpdateNotifierMenu(null);
-        }
-
         public List<Models.Datas.PluginInfoItem> GetterAllPluginsInfo()
         {
-            return GetPluginInfoFrom(plugins);
+            return GetPluginInfoFrom(pluginList);
         }
 
+        public void RefreshPluginList()
+        {
+            var extPlugins = setting.isLoad3rdPartyPlugins ?
+                LoadAllPluginFromDir() :
+                new List<VgcApis.Interfaces.IPlugin>();
+
+            var extNames = extPlugins.Select(p => p.Name).ToList();
+            var curNames = pluginList.Keys.Where(k => !internalPluginNames.Contains(k)).ToList();
+            RemoveMissingPlugins(extNames, curNames);
+            lock (pluginsLocker)
+            {
+                foreach (var ep in extPlugins)
+                {
+                    var name = ep.Name;
+                    if (!pluginList.ContainsKey(name))
+                    {
+                        pluginList.Add(name, ep);
+                    }
+                }
+            }
+
+            var enabledList = GetCurEnabledPluginFileNames();
+            UpdateNotifierMenu(enabledList);
+        }
         #endregion
 
         #region private methods
+        void RemoveMissingPlugins(List<string> extNames, List<string> curNames)
+        {
+            var names = curNames.Where(n => !extNames.Contains(n)).ToList();
+
+            var ps = pluginList.Where(kv => names.Contains(kv.Key))
+                .Select(kv => kv.Value)
+                .ToList();
+
+            lock (pluginsLocker)
+            {
+                foreach (var name in names)
+                {
+                    pluginList.Remove(name);
+                }
+            }
+
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                foreach (var p in ps)
+                {
+                    p.Dispose();
+                }
+            });
+        }
 
         void InvokeEventOnRequireMenuUpdateIgnoreError()
         {
@@ -121,13 +168,13 @@ namespace V2RayGCon.Services
             var children = new List<ToolStripMenuItem>();
             foreach (var fileName in enabledList)
             {
-                if (!plugins.ContainsKey(fileName))
+                if (!pluginList.ContainsKey(fileName))
                 {
                     continue;
                 }
 
-                var plugin = plugins[fileName];
-                var mi = plugin.GetMenu();
+                var plugin = pluginList[fileName];
+                var mi = plugin.GetToolStripMenu();
                 mi.ImageScaling = ToolStripItemImageScaling.SizeToFit;
                 mi.ToolTipText = plugin.Description;
                 children.Add(mi);
@@ -141,6 +188,8 @@ namespace V2RayGCon.Services
             var iName = nameof(VgcApis.Interfaces.IPlugin);
             try
             {
+                // 不要用File.ReadAllBytes()然后Assembly.Load(bytes)
+                // 多次加载相同插件时，对象名称后面会多个"_2"
                 var assembly = Assembly.LoadFrom(dllFile);
                 foreach (var ty in assembly.GetExportedTypes())
                 {
@@ -154,46 +203,51 @@ namespace V2RayGCon.Services
             return null;
         }
 
-        List<VgcApis.Interfaces.IPlugin> LoadAllPluginFromDir(string dir)
+        List<VgcApis.Interfaces.IPlugin> LoadAllPluginFromDir()
         {
+            var dir = VgcApis.Models.Consts.Files.PluginsDir;
             var r = new List<VgcApis.Interfaces.IPlugin>();
-            foreach (string file in Directory.GetFiles(dir, @"*.dll"))
+            try
             {
-                var p = LoadPluginFromFile(file);
-                if (p != null)
+                foreach (string file in Directory.GetFiles(dir, @"*.dll", SearchOption.AllDirectories))
                 {
-                    r.Add(p);
+                    var p = LoadPluginFromFile(file);
+                    if (p != null)
+                    {
+                        r.Add(p);
+                    }
                 }
             }
+            catch { }
             return r;
         }
 
-        Dictionary<string, VgcApis.Interfaces.IPlugin> LoadAllPlugins()
+        void LoadAllPlugins()
         {
-            var plugins = new List<VgcApis.Interfaces.IPlugin>() {
+            var ps = new List<VgcApis.Interfaces.IPlugin>() {
                 new NeoLuna.NeoLuna(),
                 new Pacman.Pacman(),
                 new ProxySetter.ProxySetter(),
             };
 
-            var dir = VgcApis.Models.Consts.Files.PluginsDir;
-            plugins.AddRange(LoadAllPluginFromDir(dir));
+            internalPluginNames = ps.Select(p => p.Name).ToList();
 
-            var pluginList = new Dictionary<string, VgcApis.Interfaces.IPlugin>();
-            foreach (var plugin in plugins)
+            if (setting.isLoad3rdPartyPlugins)
             {
-                pluginList.Add(plugin.Name, plugin);
+
+                ps.AddRange(LoadAllPluginFromDir());
             }
-            return pluginList;
+
+            pluginList = ps.ToDictionary(p => p.Name);
         }
 
-        void CleanupPlugins(List<string> fileNames)
+        void DisposePlugins(List<string> fileNames)
         {
             foreach (var fileName in fileNames)
             {
-                if (plugins.ContainsKey(fileName))
+                if (pluginList.ContainsKey(fileName))
                 {
-                    plugins[fileName].Cleanup();
+                    pluginList[fileName].Dispose();
                 }
             }
         }
@@ -239,8 +293,8 @@ namespace V2RayGCon.Services
         protected override void Cleanup()
         {
             VgcApis.Libs.Sys.FileLogger.Info("PluginsServer.Cleanup() begin");
-            CleanupPlugins(plugins.Keys.ToList());
-            plugins.Clear();
+            DisposePlugins(pluginList.Keys.ToList());
+            pluginList.Clear();
             vgcApis.Dispose();
             VgcApis.Libs.Sys.FileLogger.Info("PluginsServer.Cleanup() done");
         }

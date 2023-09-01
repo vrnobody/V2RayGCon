@@ -76,7 +76,7 @@ namespace V2RayGCon.Services
             {
                 if (name == plugin.Name)
                 {
-                    VgcApis.Misc.UI.Invoke(() => plugin.Show());
+                    VgcApis.Misc.UI.Invoke(() => plugin.ShowMainForm());
                 }
             }
         }

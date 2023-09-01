@@ -165,7 +165,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             VgcApis.Misc.UI.InvokeThen(worker, next);
         }
 
-        public void RefreshFlyPanelLater() => lazyFlyPanelUpdater?.Postpone();
+        public void RefreshFlyPanelLater() => lazyFlyPanelUpdater?.Deadline();
 
         #endregion
 
@@ -634,7 +634,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void PerformSearch()
         {
             searchKeywords = cboxMarkFilter.Text;
-            lazyFlyPanelUpdater?.Postpone();
+            lazyFlyPanelUpdater?.Throttle();
         }
 
         void UpdateMarkFilterItemList(ToolStripComboBox marker)

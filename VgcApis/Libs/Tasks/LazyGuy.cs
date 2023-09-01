@@ -16,6 +16,7 @@ namespace VgcApis.Libs.Tasks
         AutoResetEvent waitToken = new AutoResetEvent(true);
 
         bool isCancelled = false;
+        Action retry = null;
 
         public string Name = @"";
 
@@ -62,26 +63,12 @@ namespace VgcApis.Libs.Tasks
                 return;
             }
 
+            retry = Deadline;
             Misc.Utils.RunInBackground(() =>
             {
                 Misc.Utils.Sleep(interval);
-                TryDoTheJob(Deadline);
+                TryDoTheJob();
             });
-        }
-
-        private long checkpoint;
-
-        void PostponeWorker()
-        {
-            while (true)
-            {
-                var delay = checkpoint - DateTime.Now.Ticks;
-                if (delay < 1)
-                {
-                    break;
-                }
-                Misc.Utils.Sleep(TimeSpan.FromTicks(delay));
-            }
         }
 
         /// <summary>
@@ -95,10 +82,11 @@ namespace VgcApis.Libs.Tasks
                 return;
             }
 
+            retry = Postpone;
             Misc.Utils.RunInBackground(() =>
             {
                 PostponeWorker();
-                TryDoTheJob(Postpone);
+                TryDoTheJob();
             });
         }
 
@@ -112,9 +100,10 @@ namespace VgcApis.Libs.Tasks
                 return;
             }
 
+            retry = Deadline;
             Misc.Utils.RunInBackground(() =>
             {
-                TryDoTheJob(Deadline);
+                TryDoTheJob();
             });
         }
 
@@ -136,7 +125,22 @@ namespace VgcApis.Libs.Tasks
         #endregion
 
         #region private method
-        void TryDoTheJob(Action retry)
+        private long checkpoint;
+
+        void PostponeWorker()
+        {
+            while (true)
+            {
+                var delay = checkpoint - DateTime.Now.Ticks;
+                if (delay < 1)
+                {
+                    break;
+                }
+                Misc.Utils.Sleep(TimeSpan.FromTicks(delay));
+            }
+        }
+
+        void TryDoTheJob()
         {
             var ready = jobToken.WaitOne(expectedWorkTime);
             waitToken.Set();
@@ -146,20 +150,16 @@ namespace VgcApis.Libs.Tasks
             }
             else
             {
-                if (expectedWorkTime > 1000)
+                // disabled
+                if (false && expectedWorkTime > 1000)
                 {
-                    // LogSuspectableDeadLock("TryDoTheJob");
+                    if (!string.IsNullOrEmpty(Name))
+                    {
+                        var text = $"!suspectable deadlock! {Name} - TryDoTheJob()";
+                        Sys.FileLogger.Error(text);
+                    }
                 }
                 retry?.Invoke();
-            }
-        }
-
-        void LogSuspectableDeadLock(string evName)
-        {
-            if (!string.IsNullOrEmpty(Name))
-            {
-                var text = $"!suspectable deadlock! {Name} - {evName}";
-                Sys.FileLogger.Error(text);
             }
         }
 

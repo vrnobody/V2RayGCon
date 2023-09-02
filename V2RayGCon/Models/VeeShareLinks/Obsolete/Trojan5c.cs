@@ -20,7 +20,8 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
             flow = string.Empty;
         }
 
-        public Trojan5c(BasicSettings source) : this()
+        public Trojan5c(BasicSettings source)
+            : this()
         {
             CopyFrom(source);
         }
@@ -34,8 +35,8 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
             "xtls-rprx-direct-udp443",
         };
 
-        public Trojan5c(byte[] bytes) :
-           this()
+        public Trojan5c(byte[] bytes)
+            : this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
             if (ver != version)
@@ -116,9 +117,7 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 
         public bool EqTo(Trojan5c vee)
         {
-            if (!EqTo(vee as BasicSettings)
-                || password != vee.password
-                || flow != vee.flow)
+            if (!EqTo(vee as BasicSettings) || password != vee.password || flow != vee.flow)
             {
                 return false;
             }
@@ -131,6 +130,5 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 
 
         #endregion
-
     }
 }

@@ -7,6 +7,7 @@ namespace ProxySetter
     public class ProxySetter : VgcApis.BaseClasses.Plugin
     {
         Services.PsLuncher luncher;
+
         public ProxySetter() { }
 
         #region private methods
@@ -15,6 +16,7 @@ namespace ProxySetter
 
         #region properties
         ToolStripMenuItem menuItemCache = null;
+
         public override ToolStripMenuItem GetToolStripMenu()
         {
             if (menuItemCache != null)
@@ -28,10 +30,13 @@ namespace ProxySetter
                 menuItemCache.ToolTipText = Description;
 
                 var children = menuItemCache.DropDownItems;
-                children.Add(new ToolStripMenuItem(
-                    I18N.Options,
-                    Properties.Resources.WebConfiguration_16x,
-                    (s, a) => ShowMainForm()));
+                children.Add(
+                    new ToolStripMenuItem(
+                        I18N.Options,
+                        Properties.Resources.WebConfiguration_16x,
+                        (s, a) => ShowMainForm()
+                    )
+                );
                 children.Add(new ToolStripSeparator());
                 children.AddRange(luncher?.GetSubMenu());
             });

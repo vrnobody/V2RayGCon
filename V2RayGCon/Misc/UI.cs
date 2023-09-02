@@ -11,9 +11,10 @@ namespace V2RayGCon.Misc
 {
     public static class UI
     {
-        #region winform 
+        #region winform
 
-        public static IEnumerable<TResult> GetAllControls<TResult>(Control control) where TResult : Control
+        public static IEnumerable<TResult> GetAllControls<TResult>(Control control)
+            where TResult : Control
         {
             var controls = control.Controls.Cast<Control>();
 
@@ -64,8 +65,9 @@ namespace V2RayGCon.Misc
             foreach (var menu in menuList)
             {
                 menu.ImageScalingSize = new Size(
-                        (int)((baseLine < 0 ? menu.ImageScalingSize.Width : baseLine) * factor),
-                        (int)((baseLine < 0 ? menu.ImageScalingSize.Height : baseLine) * factor));
+                    (int)((baseLine < 0 ? menu.ImageScalingSize.Width : baseLine) * factor),
+                    (int)((baseLine < 0 ? menu.ImageScalingSize.Height : baseLine) * factor)
+                );
 
                 foreach (var cbox in GetAllControls<ComboBox>(menu))
                 {
@@ -123,10 +125,12 @@ namespace V2RayGCon.Misc
 
         public static bool UpdateControlOnDemand(Control control, string value)
         {
-            if (!(control is TextBox)
+            if (
+                !(control is TextBox)
                 && !(control is Label)
                 && !(control is RichTextBox)
-                && !(control is ComboBox))
+                && !(control is ComboBox)
+            )
             {
                 throw new ArgumentException("Unsupported control type");
             }
@@ -142,7 +146,8 @@ namespace V2RayGCon.Misc
 
         public static void ResetComboBoxDropdownMenuWidth(ToolStripComboBox cbox)
         {
-            int maxWidth = 0, tempWidth = 0;
+            int maxWidth = 0,
+                tempWidth = 0;
             var font = cbox.Font;
 
             foreach (var item in cbox.Items)
@@ -153,12 +158,16 @@ namespace V2RayGCon.Misc
                     maxWidth = tempWidth;
                 }
             }
-            cbox.DropDownWidth = Math.Max(cbox.Width, maxWidth + SystemInformation.VerticalScrollBarWidth);
+            cbox.DropDownWidth = Math.Max(
+                cbox.Width,
+                maxWidth + SystemInformation.VerticalScrollBarWidth
+            );
         }
 
         public static void ResetComboBoxDropdownMenuWidth(ComboBox cbox)
         {
-            int maxWidth = 0, tempWidth = 0;
+            int maxWidth = 0,
+                tempWidth = 0;
             var font = cbox.Font;
 
             foreach (var item in cbox.Items)
@@ -169,7 +178,10 @@ namespace V2RayGCon.Misc
                     maxWidth = tempWidth;
                 }
             }
-            cbox.DropDownWidth = Math.Max(cbox.Width, maxWidth + SystemInformation.VerticalScrollBarWidth);
+            cbox.DropDownWidth = Math.Max(
+                cbox.Width,
+                maxWidth + SystemInformation.VerticalScrollBarWidth
+            );
         }
 
         public static void ClearFlowLayoutPanel(FlowLayoutPanel panel)
@@ -265,7 +277,9 @@ namespace V2RayGCon.Misc
             scintilla.Markers[Marker.FolderTail].Symbol = MarkerSymbol.LCorner;
 
             // Enable automatic folding
-            scintilla.AutomaticFold = (AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change);
+            scintilla.AutomaticFold = (
+                AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change
+            );
 
             VgcApis.Misc.Utils.ClearControlKeys(scintilla, null);
 
@@ -281,8 +295,6 @@ namespace V2RayGCon.Misc
 
             return scintilla;
         }
-
-
 
         public static void FillComboBox(ComboBox cbox, Dictionary<int, string> table)
         {
@@ -312,7 +324,7 @@ namespace V2RayGCon.Misc
         }
         #endregion
 
-        #region popup 
+        #region popup
 
         public static bool Confirm(string content)
         {
@@ -321,7 +333,8 @@ namespace V2RayGCon.Misc
                 I18N.Confirm,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button2);
+                MessageBoxDefaultButton.Button2
+            );
 
             return confirm == DialogResult.Yes;
         }
@@ -335,13 +348,13 @@ namespace V2RayGCon.Misc
             }
         }
 
-
         #endregion
 
         #region DEBUG
 
         [Conditional("DEBUG")]
-        public static void SetFormLocation<T>(T form, Models.Datas.Enums.FormLocations location) where T : Form
+        public static void SetFormLocation<T>(T form, Models.Datas.Enums.FormLocations location)
+            where T : Form
         {
             var width = Screen.PrimaryScreen.WorkingArea.Width;
             var height = Screen.PrimaryScreen.WorkingArea.Height;

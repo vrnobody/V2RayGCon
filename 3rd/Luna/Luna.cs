@@ -14,10 +14,15 @@ namespace Luna
         Services.AstServer astServer;
         Services.MenuUpdater menuUpdater;
 
-        readonly ToolStripMenuItem miRoot, miShowMgr, miShowEditor;
+        readonly ToolStripMenuItem miRoot,
+            miShowMgr,
+            miShowEditor;
+
         public Luna()
         {
-            ToolStripMenuItem mr = null, msw = null, mse = null;
+            ToolStripMenuItem mr = null,
+                msw = null,
+                mse = null;
             VgcApis.Misc.UI.Invoke(() =>
             {
                 mr = new ToolStripMenuItem(this.Name, this.Icon);
@@ -25,13 +30,14 @@ namespace Luna
                 msw = new ToolStripMenuItem(
                     I18N.OpenScriptManger,
                     Properties.Resources.StoredProcedureScript_16x,
-                    (s, a) => ShowMainForm());
+                    (s, a) => ShowMainForm()
+                );
 
                 mse = new ToolStripMenuItem(
                     I18N.OpenScriptEditor,
                     Properties.Resources.EditWindow_16x,
-                    (s, a) => formMgr?.ShowOrCreateFirstEditor());
-
+                    (s, a) => formMgr?.ShowOrCreateFirstEditor()
+                );
             });
 
             miRoot = mr;

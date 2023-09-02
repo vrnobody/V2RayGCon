@@ -1,16 +1,14 @@
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.IO.Pipes;
-using System.Linq;
 
 namespace DyFetch.Comps
 {
     internal class Plumber : IDisposable
     {
         private readonly Fetcher fetcher;
-        readonly AnonymousPipeClientStream pipeIn, pipeOut;
+        readonly AnonymousPipeClientStream pipeIn,
+            pipeOut;
         private bool disposedValue;
 
         public Plumber(string pipeIn, string pipeOut, Fetcher fetcher)

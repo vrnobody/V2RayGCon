@@ -14,10 +14,17 @@ namespace NeoLuna
         Services.AstServer astServer;
         Services.MenuUpdater menuUpdater;
 
-        readonly ToolStripMenuItem miRoot, miShowMgr, miShowEditor, miShowLog;
+        readonly ToolStripMenuItem miRoot,
+            miShowMgr,
+            miShowEditor,
+            miShowLog;
+
         public NeoLuna()
         {
-            ToolStripMenuItem mr = null, msw = null, mse = null, mlog = null;
+            ToolStripMenuItem mr = null,
+                msw = null,
+                mse = null,
+                mlog = null;
             VgcApis.Misc.UI.Invoke(() =>
             {
                 mr = new ToolStripMenuItem(this.Name, this.Icon);
@@ -25,18 +32,20 @@ namespace NeoLuna
                 msw = new ToolStripMenuItem(
                     I18N.OpenScriptManger,
                     Properties.Resources.StoredProcedureScript_16x,
-                    (s, a) => ShowMainForm());
+                    (s, a) => ShowMainForm()
+                );
 
                 mse = new ToolStripMenuItem(
                     I18N.OpenScriptEditor,
                     Properties.Resources.EditWindow_16x,
-                    (s, a) => formMgr?.ShowOrCreateFirstEditor());
+                    (s, a) => formMgr?.ShowOrCreateFirstEditor()
+                );
 
                 mlog = new ToolStripMenuItem(
                     I18N.OpenLogWindow,
                     Properties.Resources.FSInteractiveWindow_16x,
-                    (s, a) => formMgr?.ShowFormLog());
-
+                    (s, a) => formMgr?.ShowFormLog()
+                );
             });
 
             miRoot = mr;

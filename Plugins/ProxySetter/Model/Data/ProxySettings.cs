@@ -3,7 +3,8 @@
     public class ProxySettings
     {
         // ProxyServer ProxyEnable AutoConfigURL ProxyOverride
-        public string proxyAddr, pacUrl;
+        public string proxyAddr,
+            pacUrl;
         public int proxyMode; // WinInet.PerConnFlags
 
         public ProxySettings()
@@ -16,9 +17,11 @@
 
         public bool IsEqualTo(ProxySettings target)
         {
-            if (target.proxyMode != this.proxyMode
+            if (
+                target.proxyMode != this.proxyMode
                 || target.proxyAddr != this.proxyAddr
-                || target.pacUrl != this.pacUrl)
+                || target.pacUrl != this.pacUrl
+            )
             {
                 return false;
             }

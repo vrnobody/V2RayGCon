@@ -15,9 +15,9 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
 {
-    public class Settings :
-        BaseClasses.SingletonService<Settings>,
-        VgcApis.Interfaces.Services.ISettingsService
+    public class Settings
+        : BaseClasses.SingletonService<Settings>,
+            VgcApis.Interfaces.Services.ISettingsService
     {
         Models.Datas.UserSettings userSettings;
 
@@ -26,17 +26,24 @@ namespace V2RayGCon.Services
         readonly object saveUserSettingsLocker = new object();
 
         public event EventHandler OnPortableModeChanged;
-        VgcApis.Models.Datas.Enums.ShutdownReasons shutdownReason = VgcApis.Models.Datas.Enums.ShutdownReasons.Undefined;
+        VgcApis.Models.Datas.Enums.ShutdownReasons shutdownReason = VgcApis
+            .Models
+            .Datas
+            .Enums
+            .ShutdownReasons
+            .Undefined;
 
-        List<VgcApis.Models.Datas.CoreInfo> coreInfoCache = new List<VgcApis.Models.Datas.CoreInfo>();
+        List<VgcApis.Models.Datas.CoreInfo> coreInfoCache =
+            new List<VgcApis.Models.Datas.CoreInfo>();
         Dictionary<string, string> pluginsSettingCache = new Dictionary<string, string>();
-        ConcurrentDictionary<string, string> localStorageCache = new ConcurrentDictionary<string, string>();
+        ConcurrentDictionary<string, string> localStorageCache =
+            new ConcurrentDictionary<string, string>();
 
         // Singleton need this private ctor.
         Settings()
         {
             userSettings = LoadUserSettings();
-            userSettings.Normalized();  // replace null with empty object.
+            userSettings.Normalized(); // replace null with empty object.
             InitCoreInfoCache();
             InitLocalStorageCache(); // must init before plug-ins setting
             InitPluginsSettingCache();
@@ -49,7 +56,8 @@ namespace V2RayGCon.Services
             lazyBookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveUserSettingsWorker,
                 VgcApis.Models.Consts.Intervals.LazySaveUserSettingsDelay,
-                500)
+                500
+            )
             {
                 Name = "Settings.SaveSettings",
             };
@@ -68,25 +76,18 @@ namespace V2RayGCon.Services
 
         public bool isUseCustomUserAgent
         {
-            get
-            {
-                return userSettings.isUseCustomUserAgent;
-            }
+            get { return userSettings.isUseCustomUserAgent; }
             set
             {
                 userSettings.isUseCustomUserAgent = value;
                 UpdateVgcApisUserAgent();
                 SaveSettingsLater();
             }
-
         }
 
         public string CustomUserAgent
         {
-            get
-            {
-                return userSettings.customUserAgent;
-            }
+            get { return userSettings.customUserAgent; }
             set
             {
                 userSettings.customUserAgent = value;
@@ -96,6 +97,7 @@ namespace V2RayGCon.Services
         }
 
         public int SpeedtestCounter = 0;
+
         public int GetSpeedtestQueueLength() => SpeedtestCounter;
 
         public bool CustomVmessDecodeTemplateEnabled
@@ -169,10 +171,7 @@ namespace V2RayGCon.Services
 
         public int QuickSwitchServerLantency
         {
-            get
-            {
-                return Math.Max(0, userSettings.QuickSwitchServerLatency);
-            }
+            get { return Math.Max(0, userSettings.QuickSwitchServerLatency); }
             set
             {
                 var d = Math.Max(0, value);
@@ -249,7 +248,10 @@ namespace V2RayGCon.Services
                 Dictionary<string, string> r = null;
                 try
                 {
-                    r = VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<Dictionary<string, string>>(userSettings.CompressedUnicodeDecodeCache);
+                    r =
+                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                            Dictionary<string, string>
+                        >(userSettings.CompressedUnicodeDecodeCache);
                 }
                 catch { }
                 if (r != null)
@@ -258,14 +260,17 @@ namespace V2RayGCon.Services
                 }
                 try
                 {
-                    r = JsonConvert.DeserializeObject<Dictionary<string, string>>(userSettings.DecodeCache);
+                    r = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+                        userSettings.DecodeCache
+                    );
                 }
                 catch { }
                 return r ?? new Dictionary<string, string>();
             }
             set
             {
-                userSettings.CompressedUnicodeDecodeCache = VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(value);
+                userSettings.CompressedUnicodeDecodeCache =
+                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(value);
                 userSettings.DecodeCache = string.Empty;
                 SaveSettingsLater();
             }
@@ -473,10 +478,7 @@ namespace V2RayGCon.Services
 
         public bool isPortable
         {
-            get
-            {
-                return userSettings.isPortable;
-            }
+            get { return userSettings.isPortable; }
             set
             {
                 userSettings.isPortable = value;
@@ -491,10 +493,7 @@ namespace V2RayGCon.Services
 
         public string SystrayLeftClickCommand
         {
-            get
-            {
-                return userSettings.SystrayLeftClickCommand;
-            }
+            get { return userSettings.SystrayLeftClickCommand; }
             set
             {
                 userSettings.SystrayLeftClickCommand = value;
@@ -504,10 +503,7 @@ namespace V2RayGCon.Services
 
         public bool isEnableSystrayLeftClickCommand
         {
-            get
-            {
-                return userSettings.isEnableSystrayLeftClickCommand;
-            }
+            get { return userSettings.isEnableSystrayLeftClickCommand; }
             set
             {
                 userSettings.isEnableSystrayLeftClickCommand = value;
@@ -549,8 +545,11 @@ namespace V2RayGCon.Services
         public CultureInfo orgCulture = null;
 
         VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
+
         public long GetLogTimestamp() => qLogger.GetTimestamp();
+
         public string GetLogContent() => qLogger.GetLogAsString(true);
+
         public void SendLog(string log) => qLogger.Log(log);
 
         public Models.Datas.Enums.Cultures culture
@@ -567,7 +566,6 @@ namespace V2RayGCon.Services
 
                 return cultures.Where(s => s.Value == c).First().Key;
             }
-
             set
             {
                 var cultures = Models.Datas.Table.Cultures;
@@ -583,10 +581,7 @@ namespace V2RayGCon.Services
 
         public bool isShowConfigerToolsPanel
         {
-            get
-            {
-                return userSettings.CfgShowToolPanel == true;
-            }
+            get { return userSettings.CfgShowToolPanel == true; }
             set
             {
                 userSettings.CfgShowToolPanel = value;
@@ -601,12 +596,14 @@ namespace V2RayGCon.Services
         #region public methods
 
         bool _isScreenLocked = false;
+
         public bool IsScreenLocked() => _isScreenLocked;
 
         public void SetScreenLockingState(bool isLocked)
         {
             _isScreenLocked = isLocked;
         }
+
         public void SaveV2RayCoreVersionList(List<string> versions)
         {
             // clone version list
@@ -616,13 +613,15 @@ namespace V2RayGCon.Services
 
         public ReadOnlyCollection<string> GetV2RayCoreVersionList()
         {
-            var result = userSettings.V2RayCoreDownloadVersionList ??
-                new List<string> { "v4.27.5", "v4.27.0", "v4.26.0", "v4.25.1" };
+            var result =
+                userSettings.V2RayCoreDownloadVersionList
+                ?? new List<string> { "v4.27.5", "v4.27.0", "v4.26.0", "v4.25.1" };
             return result.AsReadOnly();
         }
 
         // ISettingService thing
         bool isClosing = false;
+
         public bool IsClosing() => isClosing;
 
         public bool SetIsClosing(bool isClosing) => this.isClosing = isClosing;
@@ -638,7 +637,10 @@ namespace V2RayGCon.Services
             try
             {
                 var names = JsonConvert.DeserializeObject<List<string>>(props);
-                var r = this.GetType().GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
+                var r = this.GetType()
+                    .GetProperties(
+                        BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance
+                    )
                     .Where(p => names.Contains(p.Name))
                     .Select(p =>
                     {
@@ -706,7 +708,6 @@ namespace V2RayGCon.Services
             return r;
         }
 
-
         public string ReadLocalStorage(string key)
         {
             if (!string.IsNullOrEmpty(key) && localStorageCache.TryGetValue(key, out string s))
@@ -768,9 +769,9 @@ namespace V2RayGCon.Services
             Models.Datas.ServerTracker result;
             try
             {
-                result = JsonConvert
-                    .DeserializeObject<Models.Datas.ServerTracker>(
-                        userSettings.ServerTracker);
+                result = JsonConvert.DeserializeObject<Models.Datas.ServerTracker>(
+                    userSettings.ServerTracker
+                );
 
                 if (result != null)
                 {
@@ -786,7 +787,6 @@ namespace V2RayGCon.Services
         }
 
         public List<VgcApis.Models.Datas.CoreInfo> LoadCoreInfoList() => coreInfoCache;
-
 
         public void SaveFormRect(Form form)
         {
@@ -820,16 +820,17 @@ namespace V2RayGCon.Services
         {
             try
             {
-                var items = JsonConvert
-                    .DeserializeObject<List<Models.Datas.MultiConfItem>>(
-                        userSettings.MultiConfItems);
+                var items = JsonConvert.DeserializeObject<List<Models.Datas.MultiConfItem>>(
+                    userSettings.MultiConfItems
+                );
 
                 if (items != null)
                 {
                     return items;
                 }
             }
-            catch { };
+            catch { }
+            ;
             return new List<Models.Datas.MultiConfItem>();
         }
 
@@ -843,16 +844,17 @@ namespace V2RayGCon.Services
         {
             try
             {
-                var items = JsonConvert
-                    .DeserializeObject<List<Models.Datas.ImportItem>>(
-                        userSettings.ImportUrls);
+                var items = JsonConvert.DeserializeObject<List<Models.Datas.ImportItem>>(
+                    userSettings.ImportUrls
+                );
 
                 if (items != null)
                 {
                     return items;
                 }
             }
-            catch { };
+            catch { }
+            ;
             return new List<Models.Datas.ImportItem>();
         }
 
@@ -866,16 +868,17 @@ namespace V2RayGCon.Services
         {
             try
             {
-                var items = JsonConvert
-                    .DeserializeObject<List<Models.Datas.PluginInfoItem>>(
-                        userSettings.PluginInfoItems);
+                var items = JsonConvert.DeserializeObject<List<Models.Datas.PluginInfoItem>>(
+                    userSettings.PluginInfoItems
+                );
 
                 if (items != null)
                 {
                     return items;
                 }
             }
-            catch { };
+            catch { }
+            ;
             return new List<Models.Datas.PluginInfoItem>();
         }
 
@@ -883,11 +886,11 @@ namespace V2RayGCon.Services
         /// Feel free to pass null.
         /// </summary>
         /// <param name="itemList"></param>
-        public void SavePluginInfoItems(
-            List<Models.Datas.PluginInfoItem> itemList)
+        public void SavePluginInfoItems(List<Models.Datas.PluginInfoItem> itemList)
         {
             string json = JsonConvert.SerializeObject(
-                itemList ?? new List<Models.Datas.PluginInfoItem>());
+                itemList ?? new List<Models.Datas.PluginInfoItem>()
+            );
 
             userSettings.PluginInfoItems = json;
             SaveSettingsLater();
@@ -899,16 +902,17 @@ namespace V2RayGCon.Services
         {
             try
             {
-                var items = JsonConvert
-                    .DeserializeObject<List<Models.Datas.SubscriptionItem>>(
-                        userSettings.SubscribeUrls);
+                var items = JsonConvert.DeserializeObject<List<Models.Datas.SubscriptionItem>>(
+                    userSettings.SubscribeUrls
+                );
 
                 if (items != null)
                 {
                     return items;
                 }
             }
-            catch { };
+            catch { }
+            ;
             return new List<Models.Datas.SubscriptionItem>();
         }
 
@@ -933,10 +937,10 @@ namespace V2RayGCon.Services
         {
             try
             {
-                var ls = VgcApis.Libs.Infr.ZipExtensions
-                        .DeserializeObjectFromCompressedUnicodeBase64
-                            <ConcurrentDictionary<string, string>>(
-                                userSettings.CompressedUnicodeLocalStorage);
+                var ls =
+                    VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                        ConcurrentDictionary<string, string>
+                    >(userSettings.CompressedUnicodeLocalStorage);
                 localStorageCache = ls;
             }
             catch { }
@@ -952,24 +956,30 @@ namespace V2RayGCon.Services
                 var cs = userSettings.CompressedCoreInfoList;
                 if (!string.IsNullOrEmpty(ucs))
                 {
-                    coreInfos = VgcApis.Libs.Infr.ZipExtensions
-                        .DeserializeObjectFromCompressedUnicodeBase64
-                            <List<VgcApis.Models.Datas.CoreInfo>>(ucs);
+                    coreInfos =
+                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                            List<VgcApis.Models.Datas.CoreInfo>
+                        >(ucs);
                 }
                 else if (!string.IsNullOrEmpty(cs))
                 {
-                    coreInfos = VgcApis.Libs.Infr.ZipExtensions
-                        .DeserializeObjectFromCompressedUtf8Base64
-                            <List<VgcApis.Models.Datas.CoreInfo>>(cs);
+                    coreInfos =
+                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUtf8Base64<
+                            List<VgcApis.Models.Datas.CoreInfo>
+                        >(cs);
                 }
                 else
                 {
-                    coreInfos = JsonConvert
-                        .DeserializeObject<List<VgcApis.Models.Datas.CoreInfo>>(
-                            userSettings.CoreInfoList);
+                    coreInfos = JsonConvert.DeserializeObject<List<VgcApis.Models.Datas.CoreInfo>>(
+                        userSettings.CoreInfoList
+                    );
                 }
 
-                userSettings.CompressedUnicodeCoreInfoList = VgcApis.Models.Consts.Libs.coreInfoPlaceHolder;
+                userSettings.CompressedUnicodeCoreInfoList = VgcApis
+                    .Models
+                    .Consts
+                    .Libs
+                    .coreInfoPlaceHolder;
                 userSettings.CompressedCoreInfoList = string.Empty;
                 userSettings.CoreInfoList = string.Empty;
             }
@@ -981,24 +991,26 @@ namespace V2RayGCon.Services
             }
 
             // make sure every config of server can be parsed correctly
-            var result = coreInfos.Where(c =>
-            {
-                try
+            var result = coreInfos
+                .Where(c =>
                 {
-                    return JObject.Parse(c.config) != null;
-                }
-                catch { }
-                return false;
-            }).ToList();
+                    try
+                    {
+                        return JObject.Parse(c.config) != null;
+                    }
+                    catch { }
+                    return false;
+                })
+                .ToList();
 
             coreInfoCache = coreInfos;
         }
 
         void UpdateVgcApisUserAgent()
         {
-            var cua = userSettings.isUseCustomUserAgent ?
-                userSettings.customUserAgent :
-                VgcApis.Models.Consts.Webs.ChromeUserAgent;
+            var cua = userSettings.isUseCustomUserAgent
+                ? userSettings.customUserAgent
+                : VgcApis.Models.Consts.Webs.ChromeUserAgent;
             var key = VgcApis.Models.Consts.Webs.UserAgentKey;
             var ua = $"{key}: {cua}";
             VgcApis.Models.Consts.Webs.CustomUserAgent = cua;
@@ -1021,7 +1033,8 @@ namespace V2RayGCon.Services
                 // local storage is design for storing small values
                 userSettings.CompressedUnicodeLocalStorage =
                     VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
-                        localStorageCache);
+                        localStorageCache
+                    );
 
                 if (userSettings.isPortable)
                 {
@@ -1039,7 +1052,9 @@ namespace V2RayGCon.Services
                         SetUserSettingFileIsPortableToFalse();
                         SaveUserSettingsToProperties();
                     }
-                    VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsToProperties() done");
+                    VgcApis.Libs.Sys.FileLogger.Info(
+                        "Settings.SaveUserSettingsToProperties() done"
+                    );
                 }
                 // VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() done");
                 return;
@@ -1073,24 +1088,30 @@ namespace V2RayGCon.Services
 
                 if (!string.IsNullOrEmpty(ucps))
                 {
-                    pluginsSetting = VgcApis.Libs.Infr.ZipExtensions
-                        .DeserializeObjectFromCompressedUnicodeBase64
-                            <Dictionary<string, string>>(ucps);
+                    pluginsSetting =
+                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                            Dictionary<string, string>
+                        >(ucps);
                 }
                 else if (!string.IsNullOrEmpty(cps))
                 {
-                    pluginsSetting = VgcApis.Libs.Infr.ZipExtensions
-                        .DeserializeObjectFromCompressedUtf8Base64
-                            <Dictionary<string, string>>(cps);
+                    pluginsSetting =
+                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUtf8Base64<
+                            Dictionary<string, string>
+                        >(cps);
                 }
                 else
                 {
-                    pluginsSetting = JsonConvert
-                        .DeserializeObject<Dictionary<string, string>>(
-                            userSettings.PluginsSetting);
+                    pluginsSetting = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+                        userSettings.PluginsSetting
+                    );
                 }
 
-                userSettings.CompressedUnicodePluginsSetting = VgcApis.Models.Consts.Libs.pluginPlaceHolder;
+                userSettings.CompressedUnicodePluginsSetting = VgcApis
+                    .Models
+                    .Consts
+                    .Libs
+                    .pluginPlaceHolder;
                 userSettings.CompressedPluginsSetting = string.Empty;
                 userSettings.PluginsSetting = string.Empty;
             }
@@ -1122,7 +1143,8 @@ namespace V2RayGCon.Services
                         null,
                         null,
                         mainUsFilename,
-                        bakUsFilename);
+                        bakUsFilename
+                    );
                 }
                 DebugSendLog("set portable option done");
                 return;
@@ -1143,11 +1165,13 @@ namespace V2RayGCon.Services
             {
                 userSettings.CompressedUnicodeCoreInfoList =
                     VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
-                        coreInfoCache);
+                        coreInfoCache
+                    );
 
                 userSettings.CompressedUnicodePluginsSetting =
                     VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
-                        pluginsSettingCache);
+                        pluginsSettingCache
+                    );
 
                 var us = JsonConvert.SerializeObject(userSettings);
                 Properties.Settings.Default.UserSettings = us;
@@ -1170,7 +1194,8 @@ namespace V2RayGCon.Services
                     coreInfoCache,
                     pluginsSettingCache,
                     Constants.Strings.MainUserSettingsFilename,
-                    Constants.Strings.BackupUserSettingsFilename);
+                    Constants.Strings.BackupUserSettingsFilename
+                );
                 if (ok)
                 {
                     VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() success");
@@ -1192,8 +1217,16 @@ namespace V2RayGCon.Services
             {
                 // 兄弟只能帮你到这了
                 var content = JsonConvert.SerializeObject(userSettings);
-                VgcApis.Libs.Sys.NotepadHelper.ShowMessage(content, Properties.Resources.PortableUserSettingsFilename);
-                msg += Environment.NewLine + string.Format(I18N.AndThenSaveThisFileAs, Properties.Resources.PortableUserSettingsFilename);
+                VgcApis.Libs.Sys.NotepadHelper.ShowMessage(
+                    content,
+                    Properties.Resources.PortableUserSettingsFilename
+                );
+                msg +=
+                    Environment.NewLine
+                    + string.Format(
+                        I18N.AndThenSaveThisFileAs,
+                        Properties.Resources.PortableUserSettingsFilename
+                    );
             }
 
             msg += Environment.NewLine + I18N.OrDisablePortableMode;
@@ -1206,7 +1239,9 @@ namespace V2RayGCon.Services
             try
             {
                 var serializedUserSettings = Properties.Settings.Default.UserSettings;
-                var us = JsonConvert.DeserializeObject<Models.Datas.UserSettings>(serializedUserSettings);
+                var us = JsonConvert.DeserializeObject<Models.Datas.UserSettings>(
+                    serializedUserSettings
+                );
                 if (us != null)
                 {
                     DebugSendLog("Read user settings from Properties.Usersettings");
@@ -1233,7 +1268,8 @@ namespace V2RayGCon.Services
             if (result == null)
             {
                 result = VgcApis.Misc.Utils.LoadAndParseJsonFile<Models.Datas.UserSettings>(
-                    Constants.Strings.BackupUserSettingsFilename);
+                    Constants.Strings.BackupUserSettingsFilename
+                );
             }
 
             if (result != null && result.isPortable)
@@ -1249,9 +1285,11 @@ namespace V2RayGCon.Services
             var bakUsFile = Constants.Strings.BackupUserSettingsFilename;
 
             var result = LoadUserSettingsFromFile() ?? LoadUserSettingsFromPorperties();
-            if (result == null
+            if (
+                result == null
                 && (File.Exists(mainUsFile) || File.Exists(bakUsFile))
-                && !Misc.UI.Confirm(I18N.ConfirmLoadDefaultUserSettings))
+                && !Misc.UI.Confirm(I18N.ConfirmLoadDefaultUserSettings)
+            )
             {
                 SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.Abort);
             }
@@ -1262,6 +1300,7 @@ namespace V2RayGCon.Services
         void SaveSettingsLater() => lazyBookKeeper?.Deadline();
 
         Dictionary<string, Rectangle> winFormRectListCache = null;
+
         Dictionary<string, Rectangle> GetWinFormRectList()
         {
             if (winFormRectListCache != null)
@@ -1271,9 +1310,9 @@ namespace V2RayGCon.Services
 
             try
             {
-                winFormRectListCache = JsonConvert
-                    .DeserializeObject<Dictionary<string, Rectangle>>(
-                        userSettings.WinFormPosList);
+                winFormRectListCache = JsonConvert.DeserializeObject<Dictionary<string, Rectangle>>(
+                    userSettings.WinFormPosList
+                );
             }
             catch { }
 

@@ -9,8 +9,10 @@ namespace V2RayGCon.Views.WinForms
         #region Sigleton
         static readonly VgcApis.BaseClasses.AuxSiWinForm<FormOption> auxSiForm =
             new VgcApis.BaseClasses.AuxSiWinForm<FormOption>();
-        static public FormOption GetForm() => auxSiForm.GetForm();
-        static public void ShowForm() => auxSiForm.ShowForm();
+
+        public static FormOption GetForm() => auxSiForm.GetForm();
+
+        public static void ShowForm() => auxSiForm.ShowForm();
         #endregion
 
         Controllers.FormOptionCtrl optionCtrl;
@@ -54,14 +56,10 @@ namespace V2RayGCon.Views.WinForms
             var ctrl = new Controllers.FormOptionCtrl();
 
             ctrl.Plug(
-                new Controllers.OptionComponent.TabMultiConf(
-                    flyMultiConfPanel,
-                    btnMultiConfAdd));
+                new Controllers.OptionComponent.TabMultiConf(flyMultiConfPanel, btnMultiConfAdd)
+            );
 
-            ctrl.Plug(
-                new Controllers.OptionComponent.TabImport(
-                    flyImportPanel,
-                    btnImportAdd));
+            ctrl.Plug(new Controllers.OptionComponent.TabImport(flyImportPanel, btnImportAdd));
 
             ctrl.Plug(
                 new Controllers.OptionComponent.Subscription(
@@ -71,22 +69,24 @@ namespace V2RayGCon.Views.WinForms
                     chkSubsIsUseProxy,
                     chkSubsIsAutoPatch,
                     btnSubsUseAll,
-                    btnSubsInvertSelection));
+                    btnSubsInvertSelection
+                )
+            );
 
             ctrl.Plug(
                 new Controllers.OptionComponent.TabPlugin(
                     btnRefreshPluginsPanel,
                     chkIsLoad3rdPartyPlugins,
-                    flyPluginsItemsContainer));
+                    flyPluginsItemsContainer
+                )
+            );
 
             ctrl.Plug(
                 new Controllers.OptionComponent.TabSetting(
                     cboxCustomUserAgent,
                     chkIsUseCustomUserAgent,
-
                     tboxSystrayLeftClickCommand,
                     chkIsEnableSystrayLeftClickCommand,
-
                     cboxSettingLanguage,
                     cboxSettingPageSize,
                     chkSetServAutotrack,
@@ -94,44 +94,38 @@ namespace V2RayGCon.Views.WinForms
                     cboxSettingsRandomSelectServerLatency,
                     chkSetSysPortable,
                     chkSetUseV4,
-
                     chkSetSelfSignedCert,
                     cboxSettingsUtlsFingerprint,
                     chkSettingsEnableUtlsFingerprint,
-
                     chkSetServStatistics,
                     chkSetUpgradeUseProxy,
                     chkSetCheckVgcUpdateWhenStart,
                     chkSetCheckV2RayCoreUpdateWhenStart,
-
                     btnSetBrowseDebugFile,
                     tboxSetDebugFilePath,
-                    chkSetEnableDebugFile));
+                    chkSetEnableDebugFile
+                )
+            );
 
             ctrl.Plug(
                 new Controllers.OptionComponent.TabDefaults(
-
                     // def import share link mode
                     cboxDefImportMode,
                     tboxDefImportAddr,
-
                     chkDefImportSsShareLink,
                     chkDefImportTrojanShareLink,
-
                     chkDefImportBypassCnSite,
                     chkDefImportInjectGlobalImport,
-
-                    // speedtest 
+                    // speedtest
                     chkDefSpeedtestIsUse,
                     cboxDefSpeedTestUrl,
                     tboxDefSpeedtestCycles,
                     cboxDefSpeedTestExpectedSize,
                     tboxDefSpeedtestTimeout,
-
                     tboxDefImportVmessDecodeTemplateUrl,
                     chkDefImportIsUseVmessDecodeTemplate,
-
-                    exRTBoxDefCustomInbounds)
+                    exRTBoxDefCustomInbounds
+                )
             );
 
             return ctrl;
@@ -180,6 +174,5 @@ namespace V2RayGCon.Views.WinForms
             }
         }
         #endregion
-
     }
 }

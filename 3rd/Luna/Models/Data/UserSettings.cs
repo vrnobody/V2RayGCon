@@ -7,9 +7,7 @@ namespace Luna.Models.Data
         // obsolete but do not delete!
         public Dictionary<string, string> luaShareMemory;
 
-
         public List<LuaCoreSetting> luaServers;
-
 
         public UserSettings()
         {

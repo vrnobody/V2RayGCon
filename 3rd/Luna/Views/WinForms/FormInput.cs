@@ -4,10 +4,7 @@ using System.Windows.Forms;
 
 namespace Luna.Views.WinForms
 {
-    public partial class FormInput :
-        Form,
-        Interfaces.IWinFormControl<string>
-
+    public partial class FormInput : Form, Interfaces.IWinFormControl<string>
     {
         readonly int MAX_TITLE_LEN = 60;
         readonly int MAX_LINE_NUM = 25;
@@ -15,7 +12,6 @@ namespace Luna.Views.WinForms
         private readonly string title;
         private readonly string content;
         private readonly int lines;
-
 
         public FormInput(AutoResetEvent done, string title, string content, int lines)
         {
@@ -36,6 +32,7 @@ namespace Luna.Views.WinForms
 
         #region public methods
         string result = null;
+
         public string GetResult() => result;
         #endregion
 
@@ -84,7 +81,5 @@ namespace Luna.Views.WinForms
             }
         }
         #endregion
-
-
     }
 }

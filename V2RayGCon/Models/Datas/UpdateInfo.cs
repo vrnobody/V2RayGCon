@@ -6,7 +6,8 @@ namespace V2RayGCon.Models.Datas
     {
         public string version;
         public string md5;
-        public List<string> warnings, changes;
+        public List<string> warnings,
+            changes;
 
         public UpdateInfo()
         {

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -49,21 +48,17 @@ namespace V2RayGCon.Libs.V2Ray
         {
             get
             {
-                return string.IsNullOrEmpty(_title) ?
-                    string.Empty :
-                    VgcApis.Misc.Utils.AutoEllipsis(_title, VgcApis.Models.Consts.AutoEllipsis.V2rayCoreTitleMaxLength);
+                return string.IsNullOrEmpty(_title)
+                    ? string.Empty
+                    : VgcApis.Misc.Utils.AutoEllipsis(
+                        _title,
+                        VgcApis.Models.Consts.AutoEllipsis.V2rayCoreTitleMaxLength
+                    );
             }
-            set
-            {
-                _title = value;
-            }
+            set { _title = value; }
         }
 
-        public bool isReady
-        {
-            get;
-            private set;
-        }
+        public bool isReady { get; private set; }
 
         public bool isRunning
         {
@@ -83,9 +78,9 @@ namespace V2RayGCon.Libs.V2Ray
             }
 
             var isXray = exe.EndsWith(VgcApis.Models.Consts.Core.XrayCoreExeFileName);
-            var queryTpl = isXray ?
-                VgcApis.Models.Consts.Core.XrayStatsQueryParamTpl :
-                VgcApis.Models.Consts.Core.V2RayStatsQueryParamTpl;
+            var queryTpl = isXray
+                ? VgcApis.Models.Consts.Core.XrayStatsQueryParamTpl
+                : VgcApis.Models.Consts.Core.V2RayStatsQueryParamTpl;
             var queryParam = string.Format(queryTpl, port.ToString());
             try
             {
@@ -93,7 +88,8 @@ namespace V2RayGCon.Libs.V2Ray
                     exe,
                     queryParam,
                     VgcApis.Models.Consts.Core.GetStatisticsTimeout,
-                    null);
+                    null
+                );
 
                 return Misc.Utils.ParseStatApiResult(isXray, output);
             }
@@ -115,22 +111,23 @@ namespace V2RayGCon.Libs.V2Ray
             }
 
             var timeout = VgcApis.Models.Consts.Core.GetVersionTimeout;
-            var output = VgcApis.Misc.Utils.ExecuteAndGetStdOut(
-                exe,
-                "-version",
-                timeout,
-                null);
+            var output = VgcApis.Misc.Utils.ExecuteAndGetStdOut(exe, "-version", timeout, null);
 
             // since 3.46.* v is deleted
             // Regex pattern = new Regex(@"(?<version>(\d+\.)+\d+)");
             // Regex pattern = new Regex(@"v(?<version>[\d\.]+)");
-            var ver = VgcApis.Misc.Utils.ExtractStringWithPattern("version", @"(\d+\.)+\d+", output);
+            var ver = VgcApis.Misc.Utils.ExtractStringWithPattern(
+                "version",
+                @"(\d+\.)+\d+",
+                output
+            );
             return ver;
         }
 
         public bool IsExecutableExist()
         {
-            var cores = new string[]{
+            var cores = new string[]
+            {
                 VgcApis.Models.Consts.Core.XrayCoreExeFileName,
                 VgcApis.Models.Consts.Core.V2RayCoreExeFileName
             };
@@ -249,20 +246,19 @@ namespace V2RayGCon.Libs.V2Ray
             catch { }
             return false;
         }
+
         static List<string> GenV2RayCoreSearchPaths(bool isPortable)
         {
             var appRoot = VgcApis.Misc.Utils.GetAppDir();
 
-            var folders = new List<string>{
+            var folders = new List<string>
+            {
                 Misc.Utils.GetSysAppDataFolder(), // %appdata%
-
                 // 兼容
                 appRoot,
                 Path.Combine(appRoot, VgcApis.Models.Consts.Files.CoreFolderName),
-
                 // 整合
                 VgcApis.Misc.Utils.GetCoreFolderFullPath(),
-
             };
 
             if (isPortable)
@@ -272,7 +268,6 @@ namespace V2RayGCon.Libs.V2Ray
 
             return folders;
         }
-
 
         void InvokeEventOnCoreStatusChanged()
         {
@@ -304,7 +299,6 @@ namespace V2RayGCon.Libs.V2Ray
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     RedirectStandardInput = true,
-
                     // 定时炸弹
                     StandardOutputEncoding = ioEncoding,
                     StandardErrorEncoding = ioEncoding,
@@ -316,7 +310,6 @@ namespace V2RayGCon.Libs.V2Ray
 
         string TranslateErrorCode(int exitCode)
         {
-
             if (exitCode == 0)
             {
                 return null;
@@ -356,11 +349,9 @@ namespace V2RayGCon.Libs.V2Ray
             return msg;
         }
 
-        void OnCoreExitedQuiet(object sender, EventArgs args) =>
-            OnCoreExitedHandler(sender, true);
+        void OnCoreExitedQuiet(object sender, EventArgs args) => OnCoreExitedHandler(sender, true);
 
-        void OnCoreExited(object sender, EventArgs args) =>
-            OnCoreExitedHandler(sender, false);
+        void OnCoreExited(object sender, EventArgs args) => OnCoreExitedHandler(sender, false);
 
         void OnCoreExitedHandler(object sender, bool quiet)
         {

@@ -21,7 +21,8 @@ namespace VgcApis.Libs.Streams.RawBitStream
             if (bytes == null || bytes.Length < InfoAreaLenInBytes)
             {
                 throw new ArgumentOutOfRangeException(
-                    $"Bytes length must bigger then {InfoAreaLenInBytes}!");
+                    $"Bytes length must bigger then {InfoAreaLenInBytes}!"
+                );
             }
         }
 
@@ -29,8 +30,7 @@ namespace VgcApis.Libs.Streams.RawBitStream
         {
             if (major < 0 || major > 255)
             {
-                throw new ArgumentOutOfRangeException(
-                    @"Major version out of range!");
+                throw new ArgumentOutOfRangeException(@"Major version out of range!");
             }
         }
 
@@ -38,8 +38,7 @@ namespace VgcApis.Libs.Streams.RawBitStream
         {
             if (sub < 0 || sub > 26)
             {
-                throw new ArgumentOutOfRangeException(
-                        @"Sub version out of range!");
+                throw new ArgumentOutOfRangeException(@"Sub version out of range!");
             }
         }
 
@@ -54,8 +53,7 @@ namespace VgcApis.Libs.Streams.RawBitStream
                 var c = version[i];
                 if (!char.IsNumber(c))
                 {
-                    throw new ArgumentOutOfRangeException(
-                        @"Major version must be number!");
+                    throw new ArgumentOutOfRangeException(@"Major version must be number!");
                 }
                 major *= pow;
                 major += c - '0';
@@ -72,8 +70,7 @@ namespace VgcApis.Libs.Streams.RawBitStream
         {
             if (verLen < 2 || verLen > 4)
             {
-                throw new ArgumentOutOfRangeException(
-                    @"Version length must between 2 and 4.");
+                throw new ArgumentOutOfRangeException(@"Version length must between 2 and 4.");
             }
         }
 
@@ -91,7 +88,6 @@ namespace VgcApis.Libs.Streams.RawBitStream
             return $"{major}{c}";
         }
 
-
         public static void WriteVersion(string version, byte[] bytes)
         {
             CheckByteLengthIsBiggerThenThree(bytes);
@@ -101,8 +97,7 @@ namespace VgcApis.Libs.Streams.RawBitStream
             bytes[SubVersionByteIndex] = (byte)(ver.Item2 * BitsPerByte + len);
         }
 
-        public static byte[] BoolList2Bytes(
-            IEnumerable<bool> stream)
+        public static byte[] BoolList2Bytes(IEnumerable<bool> stream)
         {
             // The first byte is crc8 checksum.
             // The second byte (decimal 256) is reserved for major version.
@@ -120,7 +115,10 @@ namespace VgcApis.Libs.Streams.RawBitStream
             var cacheLen = InfoAreaLenInBytes + byteLen + (lastByteLen == 0 ? 0 : 1);
             var cache = new byte[cacheLen];
 
-            int i = 0, j = InfoAreaLenInBytes - 1, sum = 0, pow = 1;
+            int i = 0,
+                j = InfoAreaLenInBytes - 1,
+                sum = 0,
+                pow = 1;
             foreach (var bit in stream)
             {
                 if (i % BitsPerByte == 0)
@@ -136,7 +134,9 @@ namespace VgcApis.Libs.Streams.RawBitStream
             cache[cacheLen - 1] = (byte)sum;
 
             int lenMark = cache[SubVersionByteIndex];
-            cache[SubVersionByteIndex] = (byte)(((lenMark >> LastByteLenInBits) << LastByteLenInBits) + lastByteLen);
+            cache[SubVersionByteIndex] = (byte)(
+                ((lenMark >> LastByteLenInBits) << LastByteLenInBits) + lastByteLen
+            );
             return cache;
         }
 

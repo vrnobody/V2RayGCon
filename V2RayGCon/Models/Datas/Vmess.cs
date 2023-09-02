@@ -4,27 +4,39 @@ namespace V2RayGCon.Models.Datas
 {
     public class Vmess
     {
-        public string ps, add, port, id, aid, net, type, host, tls, v, path, sni;
+        public string ps,
+            add,
+            port,
+            id,
+            aid,
+            net,
+            type,
+            host,
+            tls,
+            v,
+            path,
+            sni;
 
         public Vmess()
         {
-            v = string.Empty;       // v1:"" v2:"2"
-            ps = string.Empty;      // alias
-            add = string.Empty;     // ip,hostname
-            port = string.Empty;    // port
-            id = string.Empty;      // user id
+            v = string.Empty; // v1:"" v2:"2"
+            ps = string.Empty; // alias
+            add = string.Empty; // ip,hostname
+            port = string.Empty; // port
+            id = string.Empty; // user id
             aid = string.Empty;
-            net = string.Empty;     // ws,tcp,kcp
-            type = string.Empty;    // kcp->header
-            host = string.Empty;    // v1: ws->path v2: ws->host h2->["host1","host2"]
-            path = string.Empty;    // v1: "" v2: ws->path h2->path
-            tls = string.Empty;     // streamSettings->security
-            sni = string.Empty;     // tlsSettings.serverName
+            net = string.Empty; // ws,tcp,kcp
+            type = string.Empty; // kcp->header
+            host = string.Empty; // v1: ws->path v2: ws->host h2->["host1","host2"]
+            path = string.Empty; // v1: "" v2: ws->path h2->path
+            tls = string.Empty; // streamSettings->security
+            sni = string.Empty; // tlsSettings.serverName
         }
 
         public bool Equals(Vmess t)
         {
-            if (t == null
+            if (
+                t == null
                 || !t.sni.Equals(this.sni)
                 || !t.v.Equals(this.v)
                 || !t.ps.Equals(this.ps)
@@ -36,7 +48,8 @@ namespace V2RayGCon.Models.Datas
                 || !t.type.Equals(this.type)
                 || !t.host.Equals(this.host)
                 || !t.path.Equals(this.path)
-                || !t.tls.Equals(this.tls))
+                || !t.tls.Equals(this.tls)
+            )
             {
                 return false;
             }
@@ -54,7 +67,8 @@ namespace V2RayGCon.Models.Datas
             string content = JsonConvert.SerializeObject(vmess);
             return Misc.Utils.AddLinkPrefix(
                 VgcApis.Misc.Utils.Base64EncodeString(content),
-                VgcApis.Models.Datas.Enums.LinkTypes.vmess);
+                VgcApis.Models.Datas.Enums.LinkTypes.vmess
+            );
         }
     }
 }

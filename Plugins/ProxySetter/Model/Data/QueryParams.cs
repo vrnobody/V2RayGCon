@@ -4,14 +4,20 @@ namespace ProxySetter.Model.Data
 {
     public class QueryParams
     {
-
-        Dictionary<Enum.PacListModes, string> pacTypeName = new Dictionary<Enum.PacListModes, string>
+        Dictionary<Enum.PacListModes, string> pacTypeName = new Dictionary<
+            Enum.PacListModes,
+            string
+        >
         {
             { Enum.PacListModes.WhiteList, "whitelist" },
             { Enum.PacListModes.BlackList, "blacklist" },
         };
 
-        Dictionary<Enum.PacProtocols, string> pacProtocolName = new Dictionary<Enum.PacProtocols, string> {
+        Dictionary<Enum.PacProtocols, string> pacProtocolName = new Dictionary<
+            Enum.PacProtocols,
+            string
+        >
+        {
             { Enum.PacProtocols.HTTP, "http" },
             { Enum.PacProtocols.SOCKS, "socks" },
         };
@@ -29,14 +35,14 @@ namespace ProxySetter.Model.Data
         {
             port = basicSetting.proxyPort.ToString();
             type =
-                basicSetting.pacMode == (int)Enum.PacListModes.WhiteList ?
-                pacTypeName[Enum.PacListModes.WhiteList] :
-                pacTypeName[Enum.PacListModes.BlackList];
+                basicSetting.pacMode == (int)Enum.PacListModes.WhiteList
+                    ? pacTypeName[Enum.PacListModes.WhiteList]
+                    : pacTypeName[Enum.PacListModes.BlackList];
 
             proto =
-                basicSetting.pacProtocol == (int)Enum.PacProtocols.SOCKS ?
-                pacProtocolName[Enum.PacProtocols.SOCKS] :
-                pacProtocolName[Enum.PacProtocols.HTTP];
+                basicSetting.pacProtocol == (int)Enum.PacProtocols.SOCKS
+                    ? pacProtocolName[Enum.PacProtocols.SOCKS]
+                    : pacProtocolName[Enum.PacProtocols.HTTP];
         }
 
         public void ReplaceNullValueWith(QueryParams defaultValues)
@@ -56,8 +62,7 @@ namespace ProxySetter.Model.Data
             return new PacUrlParams
             {
                 ip = (Misc.Utils.IsIP(ip) ? ip : VgcApis.Models.Consts.Webs.LoopBackIP),
-                port = VgcApis.Misc.Utils.Clamp(
-                    VgcApis.Misc.Utils.Str2Int(port), 0, 65536),
+                port = VgcApis.Misc.Utils.Clamp(VgcApis.Misc.Utils.Str2Int(port), 0, 65536),
                 isSocks = proto?.ToLower() == pacProtocolName[Enum.PacProtocols.SOCKS],
                 isWhiteList = type?.ToLower() != pacTypeName[Enum.PacListModes.BlackList],
                 isDebug = debug?.ToLower() == "true",

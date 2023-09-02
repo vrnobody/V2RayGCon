@@ -153,7 +153,6 @@ namespace V2RayGCon.Models.Datas
             SysProxySetting = string.Empty;
             ServerTracker = string.Empty;
             WinFormPosList = string.Empty;
-
         }
 
         #region public methods

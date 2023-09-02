@@ -13,16 +13,14 @@ namespace Luna.Libs.LuaSnippet
         {
             if (!luaImportClrStr.Contains(seperator))
             {
-                throw new System.ArgumentException(
-                    $"luaSubFuncStr must contains {seperator}");
+                throw new System.ArgumentException($"luaSubFuncStr must contains {seperator}");
             }
 
             var pairs = luaImportClrStr.Split(seperator[0]);
 
             if (pairs == null || pairs.Length != 2)
             {
-                throw new System.ArgumentException(
-                    @"luaSubFuncStr split fail!");
+                throw new System.ArgumentException(@"luaSubFuncStr split fail!");
             }
 
             // import('System')
@@ -31,8 +29,7 @@ namespace Luna.Libs.LuaSnippet
 
             if (string.IsNullOrEmpty(strImport) || string.IsNullOrEmpty(clrName))
             {
-                throw new System.ArgumentNullException(
-                    @"param must not null!");
+                throw new System.ArgumentNullException(@"param must not null!");
             }
 
             ImageIndex = 2;
@@ -54,15 +51,16 @@ namespace Luna.Libs.LuaSnippet
             return clrName.Substring(1, clrName.Length - 3);
         }
 
-        string GenText(string parent, string fnName) =>
-            $"{parent}{seperator}{fnName}";
+        string GenText(string parent, string fnName) => $"{parent}{seperator}{fnName}";
 
         public override CompareResult Compare(string fragmentText)
         {
             if (fragmentText == Text)
                 return CompareResult.VisibleAndSelected;
-            if (fragmentText.Contains(seperator)
-                && VgcApis.Misc.Utils.PartialMatch(lowerText, fragmentText.ToLower()))
+            if (
+                fragmentText.Contains(seperator)
+                && VgcApis.Misc.Utils.PartialMatch(lowerText, fragmentText.ToLower())
+            )
                 // && lowerText.Contains(fragmentText.ToLower()))
                 return CompareResult.Visible;
             return CompareResult.Hidden;

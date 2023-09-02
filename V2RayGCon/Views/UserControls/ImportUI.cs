@@ -83,7 +83,5 @@ namespace V2RayGCon.Views.UserControls
             DoDragDrop((ImportUI)sender, DragDropEffects.Move);
         }
         #endregion
-
-
     }
 }

@@ -1,23 +1,27 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
-using System.Linq;
 
 namespace NeoLuna.Models.Apis.SysCmpos
 {
     internal class PipedProcess : VgcApis.BaseClasses.Disposable
     {
         readonly Process proc;
-        readonly AnonymousPipeServerStream pipeIn, pipeOut;
+        readonly AnonymousPipeServerStream pipeIn,
+            pipeOut;
         readonly VgcApis.Libs.Streams.StringReader reader;
         readonly VgcApis.Libs.Streams.StringWriter writer;
 
         public PipedProcess(bool hasWindow, string workingDir, string exe, string args)
         {
-            pipeIn = new AnonymousPipeServerStream(PipeDirection.In, HandleInheritability.Inheritable);
-            pipeOut = new AnonymousPipeServerStream(PipeDirection.Out, HandleInheritability.Inheritable);
+            pipeIn = new AnonymousPipeServerStream(
+                PipeDirection.In,
+                HandleInheritability.Inheritable
+            );
+            pipeOut = new AnonymousPipeServerStream(
+                PipeDirection.Out,
+                HandleInheritability.Inheritable
+            );
 
             var handleIn = pipeIn.GetClientHandleAsString();
             var handleOut = pipeOut.GetClientHandleAsString();
@@ -61,10 +65,11 @@ namespace NeoLuna.Models.Apis.SysCmpos
 
         #region private methods
         Process CreateProcessWithAnonymousPipe(
-           bool hasWindow,
-           string workingDir,
-           string exe,
-           string args)
+            bool hasWindow,
+            string workingDir,
+            string exe,
+            string args
+        )
         {
             var startInfo = new ProcessStartInfo
             {
@@ -81,10 +86,7 @@ namespace NeoLuna.Models.Apis.SysCmpos
                 startInfo.WorkingDirectory = workingDir;
             }
 
-            return new Process
-            {
-                StartInfo = startInfo,
-            };
+            return new Process { StartInfo = startInfo, };
         }
 
         #endregion

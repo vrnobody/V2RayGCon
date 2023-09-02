@@ -6,30 +6,25 @@ namespace ProxySetter.Controllers.VGCPluginComponents
 {
     class TabStatus : ComponentCtrl
     {
-        Label lbPacUrl, lbPacServerStatus;
+        Label lbPacUrl,
+            lbPacServerStatus;
         Services.PacServer pacServer;
 
         public TabStatus(
             Services.PacServer pacServer,
-
             Label lbPacServerStatus,
             Label lbPacUrl,
             Button btnRestart,
             Button btnStop,
             Button btnViewInNotepad,
             Button btnDebug,
-            Button btnCopy)
+            Button btnCopy
+        )
         {
             this.pacServer = pacServer;
 
             BindControls(lbPacServerStatus, lbPacUrl);
-            BindEvents(
-                pacServer,
-                btnRestart,
-                btnStop,
-                btnViewInNotepad,
-                btnDebug,
-                btnCopy);
+            BindEvents(pacServer, btnRestart, btnStop, btnViewInNotepad, btnDebug, btnCopy);
 
             OnPacServerStateChangedHandler(null, EventArgs.Empty);
 
@@ -42,15 +37,15 @@ namespace ProxySetter.Controllers.VGCPluginComponents
             Button btnStop,
             Button btnViewInNotepad,
             Button btnDebug,
-            Button btnCopy)
+            Button btnCopy
+        )
         {
             btnViewInNotepad.Click += (s, a) =>
             {
                 try
                 {
                     var content = pacServer.GetCurPacFileContent();
-                    VgcApis.Libs.Sys.NotepadHelper.ShowMessage(
-                        content, @"PAC.js");
+                    VgcApis.Libs.Sys.NotepadHelper.ShowMessage(content, @"PAC.js");
                 }
                 catch
                 {
@@ -62,15 +57,16 @@ namespace ProxySetter.Controllers.VGCPluginComponents
 
             btnStop.Click += (s, a) => pacServer.StopPacServer();
 
-            btnDebug.Click +=
-                (s, a) => VgcApis.Misc.UI.VisitUrl(
-                    I18N.VisitPacDebugger, GetDebugUrl());
+            btnDebug.Click += (s, a) =>
+                VgcApis.Misc.UI.VisitUrl(I18N.VisitPacDebugger, GetDebugUrl());
 
             btnCopy.Click += (s, a) =>
             {
                 MessageBox.Show(
-                    VgcApis.Misc.Utils.CopyToClipboard(this.lbPacUrl.Text) ?
-                    I18N.CopySuccess : I18N.CopyFail);
+                    VgcApis.Misc.Utils.CopyToClipboard(this.lbPacUrl.Text)
+                        ? I18N.CopySuccess
+                        : I18N.CopyFail
+                );
             };
         }
 
@@ -109,6 +105,5 @@ namespace ProxySetter.Controllers.VGCPluginComponents
             pacServer.OnPACServerStateChanged -= OnPacServerStateChangedHandler;
         }
         #endregion
-
     }
 }

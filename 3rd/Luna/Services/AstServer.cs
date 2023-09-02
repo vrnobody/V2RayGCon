@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using NLua;
 using Moq;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
-using Newtonsoft.Json;
 
 namespace Luna.Services
 {
@@ -33,7 +31,7 @@ namespace Luna.Services
         public static string KEY_FUNCTION = "funcs";
         public static string KEY_VARS = "vars";
         public static string KEY_MODULES = "modules";
-        public static string KEY_LINE_NUM = "line";  // line number
+        public static string KEY_LINE_NUM = "line"; // line number
         public static string KEY_METHODS = "methods";
         public static string KEY_SUB_FUNCS = "subs";
         #endregion
@@ -97,17 +95,18 @@ namespace Luna.Services
             catch { }
         }
 
-
         #endregion
 
         #region properties
         FileSystemWatcher fsWatcher;
 
         ConcurrentQueue<string> hotCacheKeys = new ConcurrentQueue<string>();
-        ConcurrentDictionary<string, JObject> astCodeCache = new ConcurrentDictionary<string, JObject>();
-        ConcurrentDictionary<string, JObject> astModuleCache = new ConcurrentDictionary<string, JObject>();
-        ConcurrentDictionary<string, JObject> astModuleExCache = new ConcurrentDictionary<string, JObject>();
-
+        ConcurrentDictionary<string, JObject> astCodeCache =
+            new ConcurrentDictionary<string, JObject>();
+        ConcurrentDictionary<string, JObject> astModuleCache =
+            new ConcurrentDictionary<string, JObject>();
+        ConcurrentDictionary<string, JObject> astModuleExCache =
+            new ConcurrentDictionary<string, JObject>();
 
         internal enum AnalyzeModes
         {
@@ -119,12 +118,12 @@ namespace Luna.Services
 
         #region public methods
 
-        public Libs.LuaSnippet.BestMatchSnippets CreateBestMatchSnippet(ScintillaNET.Scintilla editor)
-            => snpCache?.CreateBestMatchSnippets(editor);
+        public Libs.LuaSnippet.BestMatchSnippets CreateBestMatchSnippet(
+            ScintillaNET.Scintilla editor
+        ) => snpCache?.CreateBestMatchSnippets(editor);
 
         public List<Dictionary<string, string>> GetWebUiLuaStaticSnippets() =>
             snpCache?.GetWebUiLuaStaticSnippets();
-
 
         public JObject AnalyzeModule(string moduleName, bool isExMode)
         {
@@ -147,7 +146,6 @@ namespace Luna.Services
             return mAst;
         }
 
-
         public JObject AnalyzeCode(string code)
         {
             if (astCodeCache.TryGetValue(code, out var cachedAst))
@@ -161,8 +159,8 @@ namespace Luna.Services
             return ast;
         }
 
-
-        public ReadOnlyCollection<string> GetRequireModuleNames() => requireModuleNamesCache.AsReadOnly();
+        public ReadOnlyCollection<string> GetRequireModuleNames() =>
+            requireModuleNamesCache.AsReadOnly();
         #endregion
 
         #region private methods
@@ -176,7 +174,11 @@ namespace Luna.Services
             var requiresNames = new List<string>();
             try
             {
-                string[] fileArray = Directory.GetFiles(@"lua", "*.lua", SearchOption.AllDirectories);
+                string[] fileArray = Directory.GetFiles(
+                    @"lua",
+                    "*.lua",
+                    SearchOption.AllDirectories
+                );
                 foreach (var file in fileArray)
                 {
                     if (!string.IsNullOrEmpty(file) || !file.ToLower().EndsWith(".lua"))
@@ -245,7 +247,8 @@ namespace Luna.Services
                 fn = "analyzeModuleEx";
             }
 
-            string tpl = @"local analyzer = require('lua.libs.luacheck.analyzer').new();"
+            string tpl =
+                @"local analyzer = require('lua.libs.luacheck.analyzer').new();"
                 + @"return analyzer.{0}(code)";
             var script = string.Format(tpl, fn);
 
@@ -267,8 +270,7 @@ namespace Luna.Services
                 if (astCodeCache.Count > 200)
                 {
                     var keys = astCodeCache.Keys;
-                    var filterd = keys
-                        .Where(k => !hotCacheKeys.Contains(k))
+                    var filterd = keys.Where(k => !hotCacheKeys.Contains(k))
                         .Skip(100 - hotCacheKeys.Count)
                         .ToList();
                     foreach (var k in filterd)
@@ -293,13 +295,13 @@ namespace Luna.Services
             return null;
         }
 
-        readonly static Dictionary<string, object> mockApis = new Dictionary<string, object>()
+        static readonly Dictionary<string, object> mockApis = new Dictionary<string, object>()
         {
-            {"Misc", new Mock<Interfaces.ILuaMisc>().Object},
-            {"Signal", new Mock<Interfaces.ILuaSignal>().Object},
-            {"Sys", new Mock<Interfaces.ILuaSys>().Object},
-            {"Server", new Mock<Interfaces.ILuaServer>().Object},
-            {"Web", new Mock<Interfaces.ILuaWeb>().Object},
+            { "Misc", new Mock<Interfaces.ILuaMisc>().Object },
+            { "Signal", new Mock<Interfaces.ILuaSignal>().Object },
+            { "Sys", new Mock<Interfaces.ILuaSys>().Object },
+            { "Server", new Mock<Interfaces.ILuaServer>().Object },
+            { "Web", new Mock<Interfaces.ILuaWeb>().Object },
         };
 
         Lua CreateAnalyser()

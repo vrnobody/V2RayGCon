@@ -5,12 +5,7 @@ namespace VgcApisTests
     [TestClass]
     public class Base64Tests
     {
-        string[] normalStrings = new string[] {
-            @"1234",
-            @"abcd",
-            @"1中23 文",
-            @"中123ac文"
-        };
+        string[] normalStrings = new string[] { @"1234", @"abcd", @"1中23 文", @"中123ac文" };
 
         string GenRandHex() => VgcApis.Misc.Utils.RandomHex(7);
 
@@ -26,7 +21,6 @@ namespace VgcApisTests
         [TestMethod]
         public void NormalEncodingTest()
         {
-
             foreach (var str in normalStrings)
             {
                 var encoded = VgcApis.Misc.Utils.Base64EncodeString(str);
@@ -42,7 +36,5 @@ namespace VgcApisTests
                 Assert.AreEqual(str, decoded);
             }
         }
-
-
     }
 }

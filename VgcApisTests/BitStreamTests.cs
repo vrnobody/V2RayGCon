@@ -57,7 +57,6 @@ namespace VgcApisTests
             {
                 Assert.AreEqual(b2[i], b1[i]);
             }
-
         }
 
         [TestMethod]

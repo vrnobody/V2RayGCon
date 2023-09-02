@@ -15,6 +15,5 @@
         public const string MarkImportSuccess = @"√";
 
         public const string MarkImportFail = @"×";
-
     }
 }

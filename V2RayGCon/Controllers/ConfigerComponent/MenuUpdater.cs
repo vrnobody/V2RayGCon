@@ -11,13 +11,16 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         Services.Servers servers;
 
         Views.WinForms.FormConfiger formConfiger;
-        ToolStripMenuItem miRoot, miReplaceServer, miLoadServer;
+        ToolStripMenuItem miRoot,
+            miReplaceServer,
+            miLoadServer;
 
         public MenuUpdater(
             Views.WinForms.FormConfiger formConfiger,
             ToolStripMenuItem miRoot,
             ToolStripMenuItem miReplaceServer,
-            ToolStripMenuItem miLoadServer)
+            ToolStripMenuItem miLoadServer
+        )
         {
             servers = Services.Servers.Instance;
             this.formConfiger = formConfiger;
@@ -49,10 +52,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 var coreServ = serverList[i];
                 var coreState = coreServ.GetCoreStates();
 
-                var name = string.Format(
-                    "{0}.{1}",
-                    coreState.GetIndex(),
-                    coreState.GetLongName());
+                var name = string.Format("{0}.{1}", coreState.GetIndex(), coreState.GetLongName());
 
                 var uid = coreServ.GetCoreStates().GetUid();
                 servInfos.Add(new string[] { name, uid });
@@ -92,7 +92,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                     return;
                 }
 
-                List<ToolStripMenuItem> misLoadServ, misReplaceServ;
+                List<ToolStripMenuItem> misLoadServ,
+                    misReplaceServ;
                 GenGroupedMenuItemList(servInfos, out misLoadServ, out misReplaceServ);
                 var miRootReplace = miReplaceServer.DropDownItems;
                 var miRootLoad = miLoadServer.DropDownItems;
@@ -106,27 +107,40 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         private void GenGroupedMenuItemList(
             List<string[]> servInfos,
             out List<ToolStripMenuItem> groupedMiLoad,
-            out List<ToolStripMenuItem> groupedMiReplace)
+            out List<ToolStripMenuItem> groupedMiReplace
+        )
         {
             var groupSize = VgcApis.Models.Consts.Config.MenuItemGroupSize;
             var minDynMenuSize = VgcApis.Models.Consts.Config.MinDynamicMenuSize;
 
             if (servInfos.Count < minDynMenuSize)
             {
-                GenStaticServerMenuItems(servInfos, groupSize, out groupedMiLoad, out groupedMiReplace);
+                GenStaticServerMenuItems(
+                    servInfos,
+                    groupSize,
+                    out groupedMiLoad,
+                    out groupedMiReplace
+                );
                 return;
             }
 
             var c = servInfos.Count;
             groupedMiLoad = CreateDynamicServerMenus(servInfos, GenMenuItemLoad, groupSize, 0, c);
-            groupedMiReplace = CreateDynamicServerMenus(servInfos, GenMenuItemReplace, groupSize, 0, c);
+            groupedMiReplace = CreateDynamicServerMenus(
+                servInfos,
+                GenMenuItemReplace,
+                groupSize,
+                0,
+                c
+            );
         }
 
         private void GenStaticServerMenuItems(
             List<string[]> servInfos,
             int groupSize,
             out List<ToolStripMenuItem> groupedMiLoad,
-            out List<ToolStripMenuItem> groupedMiReplace)
+            out List<ToolStripMenuItem> groupedMiReplace
+        )
         {
             var loadServMiList = new List<ToolStripMenuItem>();
             var replaceServMiList = new List<ToolStripMenuItem>();
@@ -144,7 +158,10 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         List<ToolStripMenuItem> CreateDynamicServerMenus(
             List<string[]> servInofs,
             Func<string, string, ToolStripMenuItem> handlerGenerator,
-            int groupSize, int start, int end)
+            int groupSize,
+            int start,
+            int end
+        )
         {
             var n = end - start;
             var step = 1;
@@ -179,8 +196,12 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                     if (root.Count < 1)
                     {
                         var dm = CreateDynamicServerMenus(
-                            servInofs, handlerGenerator,
-                            groupSize, s, e);
+                            servInofs,
+                            handlerGenerator,
+                            groupSize,
+                            s,
+                            e
+                        );
                         root.AddRange(dm.ToArray());
                     }
                 };
@@ -195,16 +216,19 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             var configer = container;
             var uid = orgUid;
 
-            return new ToolStripMenuItem(name, null, (s, a) =>
-            {
-                if (!configer.IsConfigSaved()
-                && !Misc.UI.Confirm(I18N.ConfirmLoadNewServer))
+            return new ToolStripMenuItem(
+                name,
+                null,
+                (s, a) =>
                 {
-                    return;
+                    if (!configer.IsConfigSaved() && !Misc.UI.Confirm(I18N.ConfirmLoadNewServer))
+                    {
+                        return;
+                    }
+                    configer.LoadConfigByUid(uid);
+                    formConfiger.SetTitle(configer.GetAlias());
                 }
-                configer.LoadConfigByUid(uid);
-                formConfiger.SetTitle(configer.GetAlias());
-            });
+            );
         }
 
         private ToolStripMenuItem GenMenuItemReplace(string name, string orgUid)
@@ -212,16 +236,20 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             var configer = container;
             var uid = orgUid;
 
-            return new ToolStripMenuItem(name, null, (s, a) =>
-            {
-                if (Misc.UI.Confirm(I18N.ReplaceServer))
+            return new ToolStripMenuItem(
+                name,
+                null,
+                (s, a) =>
                 {
-                    if (configer.ReplaceServer(uid))
+                    if (Misc.UI.Confirm(I18N.ReplaceServer))
                     {
-                        formConfiger.SetTitle(configer.GetAlias());
+                        if (configer.ReplaceServer(uid))
+                        {
+                            formConfiger.SetTitle(configer.GetAlias());
+                        }
                     }
                 }
-            });
+            );
         }
         #endregion
 

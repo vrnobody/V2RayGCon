@@ -72,9 +72,7 @@ namespace V2RayGCon.BaseClasses
         {
             lock (writeLock)
             {
-                data = new Dictionary<
-                    TKey,
-                    Models.Datas.LockValuePair<TValue>>();
+                data = new Dictionary<TKey, Models.Datas.LockValuePair<TValue>>();
             }
         }
 

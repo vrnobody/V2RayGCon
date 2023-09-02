@@ -2,7 +2,6 @@
 {
     public class ImportSharelinkOptions
     {
-
         public bool IsImportTrojanShareLink { get; set; }
 
         public bool IsImportSsShareLink { get; set; }
@@ -27,14 +26,16 @@
 
         public bool Equals(ImportSharelinkOptions target)
         {
-            if (target == null
+            if (
+                target == null
                 || IsImportTrojanShareLink != target.IsImportTrojanShareLink
                 || IsImportSsShareLink != target.IsImportSsShareLink
                 || IsInjectGlobalImport != target.IsInjectGlobalImport
                 || IsBypassCnSite != target.IsBypassCnSite
                 || Mode != target.Mode
                 || !Ip.Equals(target.Ip)
-                || Port != target.Port)
+                || Port != target.Port
+            )
             {
                 return false;
             }

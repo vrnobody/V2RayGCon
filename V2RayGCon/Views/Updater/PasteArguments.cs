@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace V2RayGCon.Views.Updater
 {
@@ -39,34 +36,34 @@ namespace V2RayGCon.Views.Updater
                     switch (c)
                     {
                         case Backslash:
+                        {
+                            var numBackSlash = 1;
+                            while (idx < argument.Length && argument[idx] == Backslash)
                             {
-                                var numBackSlash = 1;
-                                while (idx < argument.Length && argument[idx] == Backslash)
-                                {
-                                    idx++;
-                                    numBackSlash++;
-                                }
-
-                                if (idx == argument.Length)
-                                {
-                                    // We'll emit an end quote after this so must double the number of backslashes.
-                                    stringBuilder.Append(Backslash, numBackSlash * 2);
-                                }
-                                else if (argument[idx] == Quote)
-                                {
-                                    // Backslashes will be followed by a quote. Must double the number of backslashes.
-                                    stringBuilder.Append(Backslash, numBackSlash * 2 + 1);
-                                    stringBuilder.Append(Quote);
-                                    idx++;
-                                }
-                                else
-                                {
-                                    // Backslash will not be followed by a quote, so emit as normal characters.
-                                    stringBuilder.Append(Backslash, numBackSlash);
-                                }
-
-                                continue;
+                                idx++;
+                                numBackSlash++;
                             }
+
+                            if (idx == argument.Length)
+                            {
+                                // We'll emit an end quote after this so must double the number of backslashes.
+                                stringBuilder.Append(Backslash, numBackSlash * 2);
+                            }
+                            else if (argument[idx] == Quote)
+                            {
+                                // Backslashes will be followed by a quote. Must double the number of backslashes.
+                                stringBuilder.Append(Backslash, numBackSlash * 2 + 1);
+                                stringBuilder.Append(Quote);
+                                idx++;
+                            }
+                            else
+                            {
+                                // Backslash will not be followed by a quote, so emit as normal characters.
+                                stringBuilder.Append(Backslash, numBackSlash);
+                            }
+
+                            continue;
+                        }
                         case Quote:
                             // Escape the quote so it appears as a literal. This also guarantees that we won't end up generating a closing quote followed
                             // by another quote (which parses differently pre-2008 vs. post-2008.)

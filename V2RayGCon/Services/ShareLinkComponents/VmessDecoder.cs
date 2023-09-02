@@ -6,16 +6,14 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
-    internal sealed class VmessDecoder :
-        VgcApis.BaseClasses.ComponentOf<Codecs>,
-        VgcApis.Interfaces.IShareLinkDecoder
+    internal sealed class VmessDecoder
+        : VgcApis.BaseClasses.ComponentOf<Codecs>,
+            VgcApis.Interfaces.IShareLinkDecoder
     {
         Cache cache;
         private readonly Settings setting;
 
-        public VmessDecoder(
-            Cache cache,
-            Settings setting)
+        public VmessDecoder(Cache cache, Settings setting)
         {
             this.cache = cache;
             this.setting = setting;
@@ -31,8 +29,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return Vmess2Config(vmess);
         }
 
-        public string Encode(string config) =>
-            ConfigString2Vmess(config)?.ToVmessLink();
+        public string Encode(string config) => ConfigString2Vmess(config)?.ToVmessLink();
 
         public List<string> ExtractLinksFromText(string text) =>
             Misc.Utils.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
@@ -54,7 +51,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
         bool TryDetectConfigVersion(
             Func<string, string, string> GetStr,
             out bool isUseV4,
-            out string root)
+            out string root
+        )
         {
             isUseV4 = (GetStr("outbounds.0", "protocol")?.ToLower()) == "vmess";
             root = isUseV4 ? "outbounds.0" : "outbound";
@@ -120,9 +118,9 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     try
                     {
                         vmess.path = GetStr(streamPrefix, "httpSettings.path");
-                        var hosts = isUseV4 ?
-                            json["outbounds"][0]["streamSettings"]["httpSettings"]["host"] :
-                            json["outbound"]["streamSettings"]["httpSettings"]["host"];
+                        var hosts = isUseV4
+                            ? json["outbounds"][0]["streamSettings"]["httpSettings"]["host"]
+                            : json["outbound"]["streamSettings"]["httpSettings"]["host"];
                         vmess.host = Misc.Utils.JArray2Str(hosts as JArray);
                     }
                     catch { }
@@ -141,24 +139,31 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             try
             {
-                var path = isUseV4 ?
-                    json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"]["request"]["path"] :
-                    json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"]["path"];
+                var path = isUseV4
+                    ? json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"]["request"][
+                        "path"
+                    ]
+                    : json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"][
+                        "path"
+                    ];
                 vmess.path = Misc.Utils.JArray2Str(path as JArray);
             }
             catch { }
             try
             {
-                var hosts = isUseV4 ?
-                    json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"]["request"]["headers"]["Host"] :
-                    json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"]["headers"]["Host"];
+                var hosts = isUseV4
+                    ? json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"]["request"][
+                        "headers"
+                    ]["Host"]
+                    : json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"][
+                        "headers"
+                    ]["Host"];
                 vmess.host = Misc.Utils.JArray2Str(hosts as JArray);
             }
             catch { }
         }
 
-        Models.Datas.Vmess ExtractBasicInfo(
-            Func<string, string, string> GetStr, string prefix)
+        Models.Datas.Vmess ExtractBasicInfo(Func<string, string, string> GetStr, string prefix)
         {
             Models.Datas.Vmess vmess = new Models.Datas.Vmess
             {
@@ -216,7 +221,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
         }
 
-
         JToken GenStreamSetting(Models.Datas.Vmess vmess)
         {
             // insert stream type
@@ -265,7 +269,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return streamToken;
         }
 
-        private static void FillStreamSettingsDetail(Models.Datas.Vmess vmess, string streamType, JToken streamToken)
+        private static void FillStreamSettingsDetail(
+            Models.Datas.Vmess vmess,
+            string streamType,
+            JToken streamToken
+        )
         {
             switch (streamType)
             {
@@ -283,8 +291,9 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 case "tcp_http":
                     streamToken["tcpSettings"]["header"]["type"] = vmess.type;
-                    streamToken["tcpSettings"]["header"]["request"]["path"] =
-                        Misc.Utils.Str2JArray(string.IsNullOrEmpty(vmess.path) ? "/" : vmess.path);
+                    streamToken["tcpSettings"]["header"]["request"]["path"] = Misc.Utils.Str2JArray(
+                        string.IsNullOrEmpty(vmess.path) ? "/" : vmess.path
+                    );
                     streamToken["tcpSettings"]["header"]["request"]["headers"]["Host"] =
                         Misc.Utils.Str2JArray(vmess.host);
                     break;
@@ -296,8 +305,9 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     }
                     break;
                 case "ws":
-                    streamToken["wsSettings"]["path"] =
-                        string.IsNullOrEmpty(vmess.v) ? vmess.host : vmess.path;
+                    streamToken["wsSettings"]["path"] = string.IsNullOrEmpty(vmess.v)
+                        ? vmess.host
+                        : vmess.path;
                     if (vmess.v == "2" && !string.IsNullOrEmpty(vmess.host))
                     {
                         streamToken["wsSettings"]["headers"]["Host"] = vmess.host;

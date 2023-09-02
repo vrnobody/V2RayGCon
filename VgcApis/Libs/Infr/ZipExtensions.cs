@@ -1,23 +1,28 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace VgcApis.Libs.Infr
 {
     public static class ZipExtensions
     {
-
-        public static void SerializeObjectAsCompressedUnicodeBase64StringToFile(string path, object value)
+        public static void SerializeObjectAsCompressedUnicodeBase64StringToFile(
+            string path,
+            object value
+        )
         {
             using (var file = File.Open(path, FileMode.Append))
             {
-                using (CryptoStream base64Stream = new CryptoStream(file, new ToBase64Transform(), CryptoStreamMode.Write))
+                using (
+                    CryptoStream base64Stream = new CryptoStream(
+                        file,
+                        new ToBase64Transform(),
+                        CryptoStreamMode.Write
+                    )
+                )
                 {
                     using (var gZipStream = new GZipStream(base64Stream, CompressionMode.Compress))
                     {
@@ -52,7 +57,6 @@ namespace VgcApis.Libs.Infr
 
         public static T DeserializeObjectFromCompressedUnicodeBase64<T>(string b64Str)
         {
-
             var b64Bytes = Convert.FromBase64String(b64Str);
             using (var sourceStream = new MemoryStream(b64Bytes))
             using (var gZipStream = new GZipStream(sourceStream, CompressionMode.Decompress))
@@ -67,7 +71,6 @@ namespace VgcApis.Libs.Infr
         // obsolete
         public static T DeserializeObjectFromCompressedUtf8Base64<T>(string b64Str)
         {
-
             var b64Bytes = Convert.FromBase64String(b64Str);
             using (var sourceStream = new MemoryStream(b64Bytes))
             using (var gZipStream = new GZipStream(sourceStream, CompressionMode.Decompress))

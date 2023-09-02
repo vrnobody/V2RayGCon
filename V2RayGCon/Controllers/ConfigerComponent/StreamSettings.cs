@@ -7,6 +7,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
     class StreamSettings : ConfigerComponentController
     {
         Services.Cache cache;
+
         public StreamSettings(
             ComboBox type,
             ComboBox param,
@@ -14,7 +15,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             CheckBox v4mode,
             Button insert,
             CheckBox tls,
-            CheckBox sockopt)
+            CheckBox sockopt
+        )
         {
             cache = Services.Cache.Instance;
             isServer = false;
@@ -70,11 +72,10 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
             var index = GetIndexByNetwork(GetStr(prefix, "network"));
             streamType = index;
-            streamParamText = index < 0 ? string.Empty :
-                GetStr(
-                    prefix,
-                    Models.Datas.Table.streamSettings[index].paths[0])
-                .ToLower();
+            streamParamText =
+                index < 0
+                    ? string.Empty
+                    : GetStr(prefix, Models.Datas.Table.streamSettings[index].paths[0]).ToLower();
 
             isUseSockopt = Misc.Utils.GetKey(config, prefix + ".sockopt") != null;
             isUseTls = GetStr(prefix, "security") == "tls";
@@ -123,10 +124,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             };
         }
 
-        void AttachEvent(
-            RadioButton inbound,
-            CheckBox v4mode,
-            Button insert)
+        void AttachEvent(RadioButton inbound, CheckBox v4mode, Button insert)
         {
             v4mode.CheckedChanged += (s, a) =>
             {
@@ -149,11 +147,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             };
         }
 
-        void DataBinding(
-            ComboBox type,
-            ComboBox param,
-            CheckBox tls,
-            CheckBox sockopt)
+        void DataBinding(ComboBox type, ComboBox param, CheckBox tls, CheckBox sockopt)
         {
             var bs = new BindingSource();
             bs.DataSource = this;
@@ -163,28 +157,32 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 bs,
                 nameof(this.isUseTls),
                 true,
-                DataSourceUpdateMode.OnPropertyChanged);
+                DataSourceUpdateMode.OnPropertyChanged
+            );
 
             sockopt.DataBindings.Add(
-               nameof(CheckBox.Checked),
-               bs,
-               nameof(this.isUseSockopt),
-               true,
-               DataSourceUpdateMode.OnPropertyChanged);
+                nameof(CheckBox.Checked),
+                bs,
+                nameof(this.isUseSockopt),
+                true,
+                DataSourceUpdateMode.OnPropertyChanged
+            );
 
             type.DataBindings.Add(
                 nameof(ComboBox.SelectedIndex),
                 bs,
                 nameof(this.streamType),
                 true,
-                DataSourceUpdateMode.OnValidation);
+                DataSourceUpdateMode.OnValidation
+            );
 
             param.DataBindings.Add(
                 nameof(ComboBox.Text),
                 bs,
                 nameof(this.streamParamText),
                 true,
-                DataSourceUpdateMode.OnPropertyChanged);
+                DataSourceUpdateMode.OnPropertyChanged
+            );
         }
 
         void Inject(ref JObject config)
@@ -204,10 +202,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
         JToken GetSettings()
         {
-            streamType = Misc.Utils.Clamp(
-                streamType,
-                0,
-                Models.Datas.Table.streamSettings.Count);
+            streamType = Misc.Utils.Clamp(streamType, 0, Models.Datas.Table.streamSettings.Count);
 
             var key = "none";
             var s = Models.Datas.Table.streamSettings[streamType];
@@ -249,8 +244,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         {
             if (isUseSockopt)
             {
-                streamSettings["sockopt"] =
-                    JToken.Parse(@"{mark:0,tcpFastOpen:true,tproxy:'off'}");
+                streamSettings["sockopt"] = JToken.Parse(@"{mark:0,tcpFastOpen:true,tproxy:'off'}");
                 return;
             }
         }
@@ -269,7 +263,5 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             }
         }
         #endregion
-
     }
-
 }

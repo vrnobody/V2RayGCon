@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
-
 namespace V2RayGCon.Views.WinForms
 {
     #region auto hide tools panel
@@ -15,7 +14,8 @@ namespace V2RayGCon.Views.WinForms
         public Rectangle panel;
         public Rectangle page;
 
-        public Libs.Sys.CancelableTimeout timerHide, timerShow;
+        public Libs.Sys.CancelableTimeout timerHide,
+            timerShow;
 
         public void Dispose()
         {
@@ -27,20 +27,17 @@ namespace V2RayGCon.Views.WinForms
 
     public partial class FormConfiger : Form
     {
-
-        public static void ShowEmptyConfig() =>
-            ShowConfig(@"{}");
+        public static void ShowEmptyConfig() => ShowConfig(@"{}");
 
         public static void ShowConfig(string orgConfig) =>
-             VgcApis.Misc.UI.Invoke(() =>
-             {
-                 var f = new FormConfiger();
-                 f.Show();
-                 f.configer.LoadConfigString(orgConfig);
-             });
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                var f = new FormConfiger();
+                f.Show();
+                f.configer.LoadConfigString(orgConfig);
+            });
 
         public static void ShowServer(string uid) =>
-
             VgcApis.Misc.UI.Invoke(() =>
             {
                 var f = new FormConfiger();
@@ -48,7 +45,6 @@ namespace V2RayGCon.Views.WinForms
                 f.configer.LoadConfigByUid(uid);
                 f.SetTitle(f.configer.GetAlias());
             });
-
 
         Controllers.FormConfigerCtrl configer;
         Services.Settings setting;
@@ -83,9 +79,7 @@ namespace V2RayGCon.Views.WinForms
 
             chkIsV4.Checked = setting.isUseV4;
 
-            editor = configer
-                .GetComponent<Controllers.ConfigerComponet.Editor>()
-                .GetEditor();
+            editor = configer.GetComponent<Controllers.ConfigerComponet.Editor>().GetEditor();
 
             editor.Click += OnMouseLeaveToolsPanel;
             BindConfigerEvents();
@@ -161,14 +155,12 @@ namespace V2RayGCon.Views.WinForms
 
         private void LoadJsonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!configer.IsConfigSaved()
-                && !Misc.UI.Confirm(I18N.ConfirmLoadNewServer))
+            if (!configer.IsConfigSaved() && !Misc.UI.Confirm(I18N.ConfirmLoadNewServer))
             {
                 return;
             }
 
-            var tuple = VgcApis.Misc.UI.ReadFileFromDialog(
-                VgcApis.Models.Consts.Files.JsonExt);
+            var tuple = VgcApis.Misc.UI.ReadFileFromDialog(VgcApis.Models.Consts.Files.JsonExt);
 
             var json = tuple.Item1;
             var filename = tuple.Item2;
@@ -235,28 +227,30 @@ namespace V2RayGCon.Views.WinForms
         protected override bool ProcessCmdKey(ref Message msg, Keys keyCode)
         {
             VgcApis.Misc.Utils.RunInBackground(
-                () => VgcApis.Misc.UI.Invoke(() =>
-                {
-                    switch (keyCode)
+                () =>
+                    VgcApis.Misc.UI.Invoke(() =>
                     {
-                        case (Keys.Control | Keys.P):
-                            ToggleToolsPanel(!isShowPanel);
-                            break;
-                        case (Keys.Control | Keys.F):
-                        case (Keys.Control | Keys.H):
-                            ShowSearchBox();
-                            break;
-                        case (Keys.Control | Keys.S):
-                            configer.InjectConfigHelper(null);
-                            break;
-                        case (Keys.Control | Keys.OemOpenBrackets):
-                            editor?.ZoomOut();
-                            break;
-                        case (Keys.Control | Keys.Oem6):
-                            editor?.ZoomIn();
-                            break;
-                    }
-                }));
+                        switch (keyCode)
+                        {
+                            case (Keys.Control | Keys.P):
+                                ToggleToolsPanel(!isShowPanel);
+                                break;
+                            case (Keys.Control | Keys.F):
+                            case (Keys.Control | Keys.H):
+                                ShowSearchBox();
+                                break;
+                            case (Keys.Control | Keys.S):
+                                configer.InjectConfigHelper(null);
+                                break;
+                            case (Keys.Control | Keys.OemOpenBrackets):
+                                editor?.ZoomOut();
+                                break;
+                            case (Keys.Control | Keys.Oem6):
+                                editor?.ZoomIn();
+                                break;
+                        }
+                    })
+            );
             return base.ProcessCmdKey(ref msg, keyCode);
         }
         #endregion
@@ -267,78 +261,85 @@ namespace V2RayGCon.Views.WinForms
             var configer = new Controllers.FormConfigerCtrl();
 
             configer
-                .Plug(new Controllers.ConfigerComponet.EnvImportMultiConf(
-                    cboxMultiConfAlias,
-                    tboxMultiConfPath,
-                    btnInsertMultiConf,
-
-                    cboxImportAlias,
-                    tboxImportURL,
-                    btnInsertImport,
-
-                    cboxEnvName,
-                    tboxEnvValue,
-                    btnInsertEnv))
-
-                .Plug(new Controllers.ConfigerComponet.Editor(
-                    panelScintilla,
-                    cboxConfigSection,
-                    cboxExamples,
-                    btnFormat,
-                    btnClearModify))
-
-                .Plug(new Controllers.ConfigerComponet.Vmess(
-                    tboxVMessID,
-                    tboxVMessLevel,
-                    tboxVMessAid,
-                    tboxVMessIPaddr,
-                    rbtnIsServerMode,
-                    chkIsV4,
-                    btnVMessGenUUID,
-                    btnVMessInsertClient))
-
-                .Plug(new Controllers.ConfigerComponet.VGC(
-                    tboxVGCAlias,
-                    tboxVGCDesc,
-                    btnInsertVGC))
-
-                .Plug(new Controllers.ConfigerComponet.StreamSettings(
-                    cboxStreamType,
-                    cboxStreamParam,
-                    rbtnIsServerMode,
-                    chkIsV4,
-                    btnInsertStream,
-                    chkStreamUseTls,
-                    chkStreamUseSockopt))
-
-                .Plug(new Controllers.ConfigerComponet.Shadowsocks(
-                    rbtnIsServerMode,
-                    chkIsV4,
-                    tboxSSAddr,
-                    tboxSSPassword,
-                    chkSSIsShowPassword,
-                    cboxSSMethod,
-                    chkSSIsUseOTA,
-                    btnInsertSSSettings))
-
-                .Plug(new Controllers.ConfigerComponet.ExpandGlobalImports(
-                    panelExpandConfig,
-                    cboxGlobalImport,
-                    btnExpandImport,
-                    btnImportClearCache,
-                    btnCopyExpansedConfig,
-                    btnSaveExpansedConfigToFile))
-
-                .Plug(new Controllers.ConfigerComponet.Quick(
-                    btnQConSkipCN,
-                    btnQConMTProto,
-                    chkIsV4))
-
-                .Plug(new Controllers.ConfigerComponet.MenuUpdater(
-                    this,
-                    configToolStripMenuItem,
-                    replaceExistServerToolStripMenuItem,
-                    loadServerToolStripMenuItem));
+                .Plug(
+                    new Controllers.ConfigerComponet.EnvImportMultiConf(
+                        cboxMultiConfAlias,
+                        tboxMultiConfPath,
+                        btnInsertMultiConf,
+                        cboxImportAlias,
+                        tboxImportURL,
+                        btnInsertImport,
+                        cboxEnvName,
+                        tboxEnvValue,
+                        btnInsertEnv
+                    )
+                )
+                .Plug(
+                    new Controllers.ConfigerComponet.Editor(
+                        panelScintilla,
+                        cboxConfigSection,
+                        cboxExamples,
+                        btnFormat,
+                        btnClearModify
+                    )
+                )
+                .Plug(
+                    new Controllers.ConfigerComponet.Vmess(
+                        tboxVMessID,
+                        tboxVMessLevel,
+                        tboxVMessAid,
+                        tboxVMessIPaddr,
+                        rbtnIsServerMode,
+                        chkIsV4,
+                        btnVMessGenUUID,
+                        btnVMessInsertClient
+                    )
+                )
+                .Plug(new Controllers.ConfigerComponet.VGC(tboxVGCAlias, tboxVGCDesc, btnInsertVGC))
+                .Plug(
+                    new Controllers.ConfigerComponet.StreamSettings(
+                        cboxStreamType,
+                        cboxStreamParam,
+                        rbtnIsServerMode,
+                        chkIsV4,
+                        btnInsertStream,
+                        chkStreamUseTls,
+                        chkStreamUseSockopt
+                    )
+                )
+                .Plug(
+                    new Controllers.ConfigerComponet.Shadowsocks(
+                        rbtnIsServerMode,
+                        chkIsV4,
+                        tboxSSAddr,
+                        tboxSSPassword,
+                        chkSSIsShowPassword,
+                        cboxSSMethod,
+                        chkSSIsUseOTA,
+                        btnInsertSSSettings
+                    )
+                )
+                .Plug(
+                    new Controllers.ConfigerComponet.ExpandGlobalImports(
+                        panelExpandConfig,
+                        cboxGlobalImport,
+                        btnExpandImport,
+                        btnImportClearCache,
+                        btnCopyExpansedConfig,
+                        btnSaveExpansedConfigToFile
+                    )
+                )
+                .Plug(
+                    new Controllers.ConfigerComponet.Quick(btnQConSkipCN, btnQConMTProto, chkIsV4)
+                )
+                .Plug(
+                    new Controllers.ConfigerComponet.MenuUpdater(
+                        this,
+                        configToolStripMenuItem,
+                        replaceExistServerToolStripMenuItem,
+                        loadServerToolStripMenuItem
+                    )
+                );
 
             configer.Prepare();
             return configer;
@@ -368,7 +369,8 @@ namespace V2RayGCon.Views.WinForms
                 pnlTools.Location.X + page.Left,
                 pnlTools.Location.Y + page.Top,
                 page.Width,
-                page.Height);
+                page.Height
+            );
 
             for (int i = 0; i < tabCtrlToolPanel.TabCount; i++)
             {
@@ -436,7 +438,6 @@ namespace V2RayGCon.Views.WinForms
                     f.Text = title + trailingStar;
                 }
             });
-
         }
 
         private void ReleaseServerEvents()
@@ -444,7 +445,6 @@ namespace V2RayGCon.Views.WinForms
             var c = this.configer;
             if (c != null)
             {
-
                 c.OnChanged -= OnConfigerChangedHandler;
             }
         }
@@ -504,7 +504,6 @@ namespace V2RayGCon.Views.WinForms
             isShowPanel = visible;
         }
 
-
         void OnMouseEnterToolsPanel(object sender, EventArgs e)
         {
             toolsPanelController.timerHide.Cancel();
@@ -544,8 +543,6 @@ namespace V2RayGCon.Views.WinForms
             formSearch.FormClosed += (s, a) => formSearch = null;
         }
 
-
         #endregion
-
     }
 }

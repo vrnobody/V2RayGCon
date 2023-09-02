@@ -13,6 +13,7 @@ namespace V2RayGCon.Views.WinForms
         #region Sigleton
         static FormModifyServerSettings _instant;
         static readonly object formInstanLocker = new object();
+
         public static void ShowForm(ICoreServCtrl coreServ)
         {
             FormModifyServerSettings form = null;
@@ -44,10 +45,8 @@ namespace V2RayGCon.Views.WinForms
                     inst.InitControls(coreServ);
                     inst.Show();
                     inst.Activate();
-
                 }
             });
-
         }
         #endregion
 
@@ -86,7 +85,8 @@ namespace V2RayGCon.Views.WinForms
         {
             var slinkMgr = Services.ShareLinkMgr.Instance;
             var config = coreServ.GetConfiger().GetConfig();
-            var ts = new List<VgcApis.Models.Datas.Enums.LinkTypes> {
+            var ts = new List<VgcApis.Models.Datas.Enums.LinkTypes>
+            {
                 VgcApis.Models.Datas.Enums.LinkTypes.ss,
                 VgcApis.Models.Datas.Enums.LinkTypes.vmess,
                 VgcApis.Models.Datas.Enums.LinkTypes.trojan,
@@ -199,8 +199,10 @@ namespace V2RayGCon.Views.WinForms
                 return;
             }
 
-            Tuple<Bitmap, Libs.QRCode.QRCode.WriteErrors> r =
-               Libs.QRCode.QRCode.GenQRCode(text, 320);
+            Tuple<Bitmap, Libs.QRCode.QRCode.WriteErrors> r = Libs.QRCode.QRCode.GenQRCode(
+                text,
+                320
+            );
 
             switch (r.Item2)
             {
@@ -216,7 +218,6 @@ namespace V2RayGCon.Views.WinForms
                     MessageBox.Show(I18N.DataTooBig);
                     break;
             }
-
         }
 
         private void cboxShareLinkType_SelectedValueChanged(object sender, System.EventArgs e)
@@ -226,9 +227,10 @@ namespace V2RayGCon.Views.WinForms
 
         private void cboxZoomMode_SelectedValueChanged(object sender, System.EventArgs e)
         {
-            pboxQrcode.SizeMode = cboxZoomMode.Text.ToLower() == "none" ?
-                PictureBoxSizeMode.CenterImage :
-                PictureBoxSizeMode.Zoom;
+            pboxQrcode.SizeMode =
+                cboxZoomMode.Text.ToLower() == "none"
+                    ? PictureBoxSizeMode.CenterImage
+                    : PictureBoxSizeMode.Zoom;
         }
 
         private void btnCopyShareLink_Click(object sender, EventArgs e)

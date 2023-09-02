@@ -8,8 +8,10 @@ namespace V2RayGCon.Views.WinForms
         #region Sigleton
         static readonly VgcApis.BaseClasses.AuxSiWinForm<FormLog> auxSiForm =
             new VgcApis.BaseClasses.AuxSiWinForm<FormLog>();
-        static public FormLog GetForm() => auxSiForm.GetForm();
-        static public void ShowForm() => auxSiForm.ShowForm();
+
+        public static FormLog GetForm() => auxSiForm.GetForm();
+
+        public static void ShowForm() => auxSiForm.ShowForm();
         #endregion
 
         Services.Settings setting;
@@ -49,7 +51,6 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.UpdateRichTextBox(rtBoxLogger, text);
         }
 
-
         #endregion
 
         #region UI events
@@ -71,17 +72,16 @@ namespace V2RayGCon.Views.WinForms
                 logDisplayer.Run();
             }
         }
+
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var logs = rtBoxLogger.Text;
-            var msg = VgcApis.Misc.Utils.CopyToClipboard(logs) ?
-                Resources.Resx.I18N.CopySuccess :
-                Resources.Resx.I18N.CopyFail;
+            var msg = VgcApis.Misc.Utils.CopyToClipboard(logs)
+                ? Resources.Resx.I18N.CopySuccess
+                : Resources.Resx.I18N.CopyFail;
             VgcApis.Misc.UI.MsgBoxAsync(msg);
         }
 
         #endregion
-
-
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using V2RayGCon.Models.Datas;
 
 namespace V2RayGCon.Models.VeeShareLinks
@@ -20,13 +19,14 @@ namespace V2RayGCon.Models.VeeShareLinks
             flow = string.Empty;
         }
 
-        public Trojan5d(BasicSettingsWithReality source) : this()
+        public Trojan5d(BasicSettingsWithReality source)
+            : this()
         {
             CopyFrom(source);
         }
 
-        public Trojan5d(byte[] bytes) :
-           this()
+        public Trojan5d(byte[] bytes)
+            : this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
             if (ver != version)
@@ -117,9 +117,7 @@ namespace V2RayGCon.Models.VeeShareLinks
 
         public bool EqTo(Trojan5d vee)
         {
-            if (!EqTo(vee as BasicSettings)
-                || password != vee.password
-                || flow != vee.flow)
+            if (!EqTo(vee as BasicSettings) || password != vee.password || flow != vee.flow)
             {
                 return false;
             }
@@ -132,6 +130,5 @@ namespace V2RayGCon.Models.VeeShareLinks
 
 
         #endregion
-
     }
 }

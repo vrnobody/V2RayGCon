@@ -21,21 +21,16 @@ namespace Luna.Controllers.FormEditorCtrl
 
         public MenuCtrl(
             Views.WinForms.FormEditor formEditor,
-
             ButtonCtrl editorCtrl,
             ToolStripMenuItem miNewWindow,
             ToolStripMenuItem miShowMgr,
             ToolStripMenuItem miLoad,
             ToolStripMenuItem miSaveAs,
             ToolStripMenuItem miExit,
-
             ToolStripMenuItem miLoadClrLib,
-
-
             ToolStripStatusLabel smiLbClrLib,
-
-
-            ComboBox cboxScriptName)
+            ComboBox cboxScriptName
+        )
         {
             this.editorCtrl = editorCtrl;
             this.miNewWindow = miNewWindow;
@@ -55,7 +50,8 @@ namespace Luna.Controllers.FormEditorCtrl
 
         public void Run(
             Services.FormMgrSvc formMgrService,
-            Models.Data.LuaCoreSetting initialCoreSettings)
+            Models.Data.LuaCoreSetting initialCoreSettings
+        )
         {
             this.formMgrService = formMgrService;
             InitControls();
@@ -86,6 +82,7 @@ namespace Luna.Controllers.FormEditorCtrl
             miLoadClrLib.Checked = false;
             smiLbClrLib.Enabled = false;
         }
+
         void ReleaseEvents()
         {
             miShowMgr.Click -= OnMiShowMgrClickHandler;
@@ -119,8 +116,7 @@ namespace Luna.Controllers.FormEditorCtrl
 
         void OnMiLoadClickHandler(object sender, EventArgs args)
         {
-            if (editorCtrl.IsChanged()
-                    && !VgcApis.Misc.UI.Confirm(I18N.DiscardUnsavedChanges))
+            if (editorCtrl.IsChanged() && !VgcApis.Misc.UI.Confirm(I18N.DiscardUnsavedChanges))
             {
                 return;
             }
@@ -146,7 +142,8 @@ namespace Luna.Controllers.FormEditorCtrl
             var err = VgcApis.Misc.UI.ShowSaveFileDialog(
                 VgcApis.Models.Consts.Files.LuaExt,
                 script,
-                out var filename);
+                out var filename
+            );
 
             switch (err)
             {

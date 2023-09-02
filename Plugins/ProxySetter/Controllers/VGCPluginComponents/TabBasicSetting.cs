@@ -11,20 +11,26 @@ namespace ProxySetter.Controllers.VGCPluginComponents
         Model.Data.BasicSettings basicSettings;
         Services.ServerTracker servTracker;
 
-        ComboBox cboxBasicSysProxyMode, cboxBasicPacMode, cboxBasicPacProtocol;
-        TextBox tboxBasicProxyPort, tboxBaiscPacPort, tboxBasicCustomPacPath;
-        CheckBox chkBasicAutoUpdateSysProxy, chkBasicPacAlwaysOn, chkBasicUseCustomPac;
-
+        ComboBox cboxBasicSysProxyMode,
+            cboxBasicPacMode,
+            cboxBasicPacProtocol;
+        TextBox tboxBasicProxyPort,
+            tboxBaiscPacPort,
+            tboxBasicCustomPacPath;
+        CheckBox chkBasicAutoUpdateSysProxy,
+            chkBasicPacAlwaysOn,
+            chkBasicUseCustomPac;
 
         #region hotkey winform controls
-        private readonly CheckBox chkBaiscUseHotkey, chkBaiscUseAlt, chkBaiscUseShift;
+        private readonly CheckBox chkBaiscUseHotkey,
+            chkBaiscUseAlt,
+            chkBaiscUseShift;
         private readonly TextBox tboxBasicHotkeyStr;
         #endregion
 
         public TabBasicSetting(
             Services.PsSettings setting,
             Services.ServerTracker servTracker,
-
             ComboBox cboxBasicPacProtocol,
             ComboBox cboxBasicSysProxyMode,
             TextBox tboxBasicProxyPort,
@@ -35,11 +41,11 @@ namespace ProxySetter.Controllers.VGCPluginComponents
             CheckBox chkBasicPacAlwaysOn,
             CheckBox chkBasicUseCustomPac,
             Button btnBasicBrowseCustomPac,
-
             CheckBox chkBaiscUseHotkey,
             CheckBox chkBaiscUseAlt,
             CheckBox chkBaiscUseShift,
-            TextBox tboxBasicHotkeyStr)
+            TextBox tboxBasicHotkeyStr
+        )
         {
             this.setting = setting;
             this.servTracker = servTracker;
@@ -116,7 +122,8 @@ namespace ProxySetter.Controllers.VGCPluginComponents
             btnBasicBrowseCustomPac.Click += (s, a) =>
             {
                 var filename = VgcApis.Misc.UI.ShowSelectFileDialog(
-                    VgcApis.Models.Consts.Files.JsExt);
+                    VgcApis.Models.Consts.Files.JsExt
+                );
 
                 if (!string.IsNullOrEmpty(filename))
                 {
@@ -144,7 +151,6 @@ namespace ProxySetter.Controllers.VGCPluginComponents
                 isAutoUpdateSysProxy = chkBasicAutoUpdateSysProxy.Checked,
                 isAlwaysStartPacServ = chkBasicPacAlwaysOn.Checked,
                 isUseCustomPac = chkBasicUseCustomPac.Checked,
-
                 isUseHotkey = chkBaiscUseHotkey.Checked,
                 isUseAlt = chkBaiscUseAlt.Checked,
                 isUseShift = chkBaiscUseShift.Checked,
@@ -175,7 +181,6 @@ namespace ProxySetter.Controllers.VGCPluginComponents
             {
                 tboxBasicHotkeyStr.Text = hotkey.ToString();
             }
-
         }
 
         #endregion

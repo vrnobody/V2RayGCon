@@ -5,14 +5,16 @@ namespace V2RayGCon.Models.Datas
 {
     class Table
     {
-        public static readonly Dictionary<Models.Datas.Enums.Cultures, string> Cultures = new Dictionary<Enums.Cultures, string>
-        {
-            { Enums.Cultures.auto,"auto" },
-            { Enums.Cultures.enUS,"en" },
-            { Enums.Cultures.zhCN,"cn" },
-        };
+        public static readonly Dictionary<Models.Datas.Enums.Cultures, string> Cultures =
+            new Dictionary<Enums.Cultures, string>
+            {
+                { Enums.Cultures.auto, "auto" },
+                { Enums.Cultures.enUS, "en" },
+                { Enums.Cultures.zhCN, "cn" },
+            };
 
-        public static readonly string[] EnviromentVariablesName = new string[] {
+        public static readonly string[] EnviromentVariablesName = new string[]
+        {
             "V2RAY_BUF_READV",
             "V2RAY_LOCATION_ASSET",
             "V2RAY_LOCATION_CONFDIR",
@@ -26,7 +28,8 @@ namespace V2RayGCon.Models.Datas
             "XRAY_VLESS_XTLS_SHOW",
         };
 
-        public static readonly string[] customInbTypeNames = new string[] {
+        public static readonly string[] customInbTypeNames = new string[]
+        {
             "config",
             "http",
             "socks",
@@ -35,26 +38,30 @@ namespace V2RayGCon.Models.Datas
 
         public static readonly Dictionary<int, string> ssMethods = new Dictionary<int, string>
         {
-            { 0,"aes-128-cfb"},
-            { 1,"aes-128-gcm"},
-            { 2,"aes-256-cfb"},
-            { 3,"aes-256-gcm"},
-            { 4,"chacha20"},
-            { 5,"chacha20-ietf"},
-            { 6,"chacha20-poly1305"},
-            { 7,"chacha20-ietf-poly1305"},
+            { 0, "aes-128-cfb" },
+            { 1, "aes-128-gcm" },
+            { 2, "aes-256-cfb" },
+            { 3, "aes-256-gcm" },
+            { 4, "chacha20" },
+            { 5, "chacha20-ietf" },
+            { 6, "chacha20-poly1305" },
+            { 7, "chacha20-ietf-poly1305" },
         };
 
-        public static readonly Dictionary<int, string> kcpTypes = new Dictionary<int, string> {
-            {0, "none" },
-            {1, "srtp" },
-            {2, "utp" },
-            {3, "wechat-video" },
-            {4, "dtls" },
-            {5, "wireguard" },
+        public static readonly Dictionary<int, string> kcpTypes = new Dictionary<int, string>
+        {
+            { 0, "none" },
+            { 1, "srtp" },
+            { 2, "utp" },
+            { 3, "wechat-video" },
+            { 4, "dtls" },
+            { 5, "wireguard" },
         };
 
-        public static readonly Dictionary<int, StreamComponent> streamSettings = new Dictionary<int, Models.Datas.StreamComponent>
+        public static readonly Dictionary<int, StreamComponent> streamSettings = new Dictionary<
+            int,
+            Models.Datas.StreamComponent
+        >
         {
             //public bool dropDownStyle;
             //public string name;
@@ -63,115 +70,134 @@ namespace V2RayGCon.Models.Datas
             //public Dictionary<string, string> options;
 
             // kcp
-            { 0, new StreamComponent{
-                dropDownStyle=true,
-                name="mKCP",
-                network="kcp",
-                paths=new List<string>{
-                    "kcpSettings.header.type", // streamParam1 label text = [type]
-                    "kcpSettings.seed", // streamParam2 label text = [seed]
-                },
-                options=new Dictionary<string,string>{
-                    { "none", "kcp"},
-                    { "srtp", "kcp_srtp" },
-                    { "utp", "kcp_utp"},
-                    { "wechat-video", "kcp_wechat-video" },
-                    { "dtls", "kcp_dtls"},
-                    { "wireguard", "kcp_wireguard"},
-                },
-            } },
-
+            {
+                0,
+                new StreamComponent
+                {
+                    dropDownStyle = true,
+                    name = "mKCP",
+                    network = "kcp",
+                    paths = new List<string>
+                    {
+                        "kcpSettings.header.type", // streamParam1 label text = [type]
+                        "kcpSettings.seed", // streamParam2 label text = [seed]
+                    },
+                    options = new Dictionary<string, string>
+                    {
+                        { "none", "kcp" },
+                        { "srtp", "kcp_srtp" },
+                        { "utp", "kcp_utp" },
+                        { "wechat-video", "kcp_wechat-video" },
+                        { "dtls", "kcp_dtls" },
+                        { "wireguard", "kcp_wireguard" },
+                    },
+                }
+            },
             // tcp
-            { 1, new StreamComponent{
-                dropDownStyle=true,
-                name="TCP",
-                network="tcp",
-                paths=new List<string>{
-                    "tcpSettings.header.type",
-                    "tcpSettings.header.request.path",
-                    "tcpSettings.header.request.headers.Host",
-                },
-                options=new Dictionary<string, string>{
-                    { "none","tcp" },
-                    { "http","tcp_http" },
-                },
-            } },
-
+            {
+                1,
+                new StreamComponent
+                {
+                    dropDownStyle = true,
+                    name = "TCP",
+                    network = "tcp",
+                    paths = new List<string>
+                    {
+                        "tcpSettings.header.type",
+                        "tcpSettings.header.request.path",
+                        "tcpSettings.header.request.headers.Host",
+                    },
+                    options = new Dictionary<string, string>
+                    {
+                        { "none", "tcp" },
+                        { "http", "tcp_http" },
+                    },
+                }
+            },
             // h2 ws dsock
-            { 2, new StreamComponent{
-                dropDownStyle=false,
-                name="HTTP/2",
-                network="h2",
-                paths=new List<string>{
-                    "httpSettings.path",
-                    "httpSettings.host",
-                },
-                options=new Dictionary<string, string>{
-                    { "none","h2" },
-                },
-            } },
-            { 3, new StreamComponent{
-                dropDownStyle=false,
-                name="WebSocket",
-                network="ws",
-                paths=new List<string>{
-                    "wsSettings.path",
-                    "wsSettings.headers.Host",
-                },
-                options=new Dictionary<string, string>{
-                    { "none","ws" },
-                },
-            } },
-            { 4, new StreamComponent{
-                dropDownStyle=false,
-                name="DomainSocket",
-                network="domainsocket",
-                paths=new List<string>{
-                    "dsSettings.path",
-                },
-                options=new Dictionary<string, string>{
-                    { "none","dsock" },
-                },
-            } },
-
+            {
+                2,
+                new StreamComponent
+                {
+                    dropDownStyle = false,
+                    name = "HTTP/2",
+                    network = "h2",
+                    paths = new List<string> { "httpSettings.path", "httpSettings.host", },
+                    options = new Dictionary<string, string> { { "none", "h2" }, },
+                }
+            },
+            {
+                3,
+                new StreamComponent
+                {
+                    dropDownStyle = false,
+                    name = "WebSocket",
+                    network = "ws",
+                    paths = new List<string> { "wsSettings.path", "wsSettings.headers.Host", },
+                    options = new Dictionary<string, string> { { "none", "ws" }, },
+                }
+            },
+            {
+                4,
+                new StreamComponent
+                {
+                    dropDownStyle = false,
+                    name = "DomainSocket",
+                    network = "domainsocket",
+                    paths = new List<string> { "dsSettings.path", },
+                    options = new Dictionary<string, string> { { "none", "dsock" }, },
+                }
+            },
             // quic
-            { 5, new StreamComponent{
-                dropDownStyle=true,
-                name="QUIC",
-                network="quic",
-                paths=new List<string>{
-                    "quicSettings.header.type",
-                    "quicSettings.security",
-                    "quicSettings.key",
-                },
-                options=new Dictionary<string,string>{
-                    { "none", "quic"},
-                    { "srtp", "quic_srtp" },
-                    { "utp", "quic_utp"},
-                    { "wechat-video", "quic_wechat-video" },
-                    { "dtls", "quic_dtls"},
-                    { "wireguard", "quic_wireguard"},
-                },
-            } },
-
+            {
+                5,
+                new StreamComponent
+                {
+                    dropDownStyle = true,
+                    name = "QUIC",
+                    network = "quic",
+                    paths = new List<string>
+                    {
+                        "quicSettings.header.type",
+                        "quicSettings.security",
+                        "quicSettings.key",
+                    },
+                    options = new Dictionary<string, string>
+                    {
+                        { "none", "quic" },
+                        { "srtp", "quic_srtp" },
+                        { "utp", "quic_utp" },
+                        { "wechat-video", "quic_wechat-video" },
+                        { "dtls", "quic_dtls" },
+                        { "wireguard", "quic_wireguard" },
+                    },
+                }
+            },
             // grpc
-            { 6, new StreamComponent{
-                dropDownStyle=true,
-                name="GRPC",
-                network="grpc",
-                paths=new List<string>{
-                    "grpcSettings.multiMode",
-                    "grpcSettings.serviceName",
-                },
-                options=new Dictionary<string,string>{
-                    { "true", "grpc_multi"},
-                    { "false", "grpc" },
-                },
-            } },
+            {
+                6,
+                new StreamComponent
+                {
+                    dropDownStyle = true,
+                    name = "GRPC",
+                    network = "grpc",
+                    paths = new List<string>
+                    {
+                        "grpcSettings.multiMode",
+                        "grpcSettings.serviceName",
+                    },
+                    options = new Dictionary<string, string>
+                    {
+                        { "true", "grpc_multi" },
+                        { "false", "grpc" },
+                    },
+                }
+            },
         };
 
         // editor examples
         public static readonly Dictionary<string, List<string[]>> examples = ExampleHelper();
+
         static Dictionary<string, List<string[]>> ExampleHelper()
         {
             string[] SS(string description, string key)
@@ -298,7 +324,7 @@ namespace V2RayGCon.Models.Datas
             list.Add(SS(I18N.Default, "reverseDefault"));
             d.Add("reverse", list);
 
-            //{ 22,"inboundDetour"}, 
+            //{ 22,"inboundDetour"},
             list = NewList();
             list.Add(SS(I18N.Default, "inDtrDefault"));
             d.Add("inboundDetour", list);

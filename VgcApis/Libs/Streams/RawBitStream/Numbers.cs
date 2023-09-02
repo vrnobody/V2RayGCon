@@ -2,19 +2,16 @@
 
 namespace VgcApis.Libs.Streams.RawBitStream
 {
-    public sealed class Numbers :
-        BaseClasses.ComponentOf<RawBitStream>
+    public sealed class Numbers : BaseClasses.ComponentOf<RawBitStream>
     {
-
         const int BitsPerPort = Models.Consts.BitStream.BitsPerInt;
+
         public Numbers() { }
 
         #region public methods
-        public void WritePortNum(int val) =>
-            Write(val, BitsPerPort);
+        public void WritePortNum(int val) => Write(val, BitsPerPort);
 
-        public int ReadPortNum() =>
-            Read(BitsPerPort);
+        public int ReadPortNum() => Read(BitsPerPort);
 
         public void Write(int val, int len)
         {

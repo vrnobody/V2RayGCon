@@ -12,7 +12,8 @@ namespace V2RayGCon.Services.ServersComponents
 
         public IndexHandler(
             ReaderWriterLockSlim locker,
-            Dictionary<string, Controllers.CoreServerCtrl> coreServList)
+            Dictionary<string, Controllers.CoreServerCtrl> coreServList
+        )
         {
             this.locker = locker;
             this.coreServCache = coreServList;
@@ -24,37 +25,43 @@ namespace V2RayGCon.Services.ServersComponents
 
         #region public methods
         public void SortCoreServCtrlListBySpeedTestResult(
-            ref List<VgcApis.Interfaces.ICoreServCtrl> coreList)
+            ref List<VgcApis.Interfaces.ICoreServCtrl> coreList
+        )
         {
             SortServerItemList(ref coreList, SpeedTestComparer);
         }
 
         public void ReverseCoreservCtrlListByIndex(
-            ref List<VgcApis.Interfaces.ICoreServCtrl> coreList)
+            ref List<VgcApis.Interfaces.ICoreServCtrl> coreList
+        )
         {
             SortServerItemList(ref coreList, ReverseIndexComparer);
         }
 
         public void SortCoreServerCtrlListByDownloadTotal(
-            ref List<VgcApis.Interfaces.ICoreServCtrl> coreList)
+            ref List<VgcApis.Interfaces.ICoreServCtrl> coreList
+        )
         {
             SortServerItemList(ref coreList, DownloadTotalDecComparer);
         }
 
         public void SortCoreServerCtrlListByUploadTotal(
-            ref List<VgcApis.Interfaces.ICoreServCtrl> coreList)
+            ref List<VgcApis.Interfaces.ICoreServCtrl> coreList
+        )
         {
             SortServerItemList(ref coreList, UploadTotalDecComparer);
         }
 
         public void SortCoreServerCtrlListByLastModifyDate(
-            ref List<VgcApis.Interfaces.ICoreServCtrl> coreList)
+            ref List<VgcApis.Interfaces.ICoreServCtrl> coreList
+        )
         {
             SortServerItemList(ref coreList, UtcTicksDecComparer);
         }
 
         public void SortCoreServCtrlListBySummary(
-            ref List<VgcApis.Interfaces.ICoreServCtrl> coreList)
+            ref List<VgcApis.Interfaces.ICoreServCtrl> coreList
+        )
         {
             SortServerItemList(ref coreList, SummaryComparer);
         }
@@ -72,9 +79,9 @@ namespace V2RayGCon.Services.ServersComponents
             try
             {
                 coreServs = coreServCache
-                   .OrderBy(kv => kv.Value)
-                   .Select(kv => kv.Value.GetCoreStates())
-                   .ToList();
+                    .OrderBy(kv => kv.Value)
+                    .Select(kv => kv.Value.GetCoreStates())
+                    .ToList();
             }
             finally
             {
@@ -104,7 +111,8 @@ namespace V2RayGCon.Services.ServersComponents
 
         int ReverseIndexComparer(
             VgcApis.Interfaces.ICoreServCtrl a,
-            VgcApis.Interfaces.ICoreServCtrl b)
+            VgcApis.Interfaces.ICoreServCtrl b
+        )
         {
             var idxA = a.GetCoreStates().GetIndex();
             var idxB = b.GetCoreStates().GetIndex();
@@ -113,7 +121,8 @@ namespace V2RayGCon.Services.ServersComponents
 
         int SpeedTestComparer(
             VgcApis.Interfaces.ICoreServCtrl a,
-            VgcApis.Interfaces.ICoreServCtrl b)
+            VgcApis.Interfaces.ICoreServCtrl b
+        )
         {
             var spa = a.GetCoreStates().GetSpeedTestResult();
             var spb = b.GetCoreStates().GetSpeedTestResult();
@@ -121,8 +130,9 @@ namespace V2RayGCon.Services.ServersComponents
         }
 
         int DownloadTotalDecComparer(
-           VgcApis.Interfaces.ICoreServCtrl a,
-           VgcApis.Interfaces.ICoreServCtrl b)
+            VgcApis.Interfaces.ICoreServCtrl a,
+            VgcApis.Interfaces.ICoreServCtrl b
+        )
         {
             var ticksA = a.GetCoreStates().GetDownlinkTotalInBytes();
             var ticksB = b.GetCoreStates().GetDownlinkTotalInBytes();
@@ -130,8 +140,9 @@ namespace V2RayGCon.Services.ServersComponents
         }
 
         int UploadTotalDecComparer(
-           VgcApis.Interfaces.ICoreServCtrl a,
-           VgcApis.Interfaces.ICoreServCtrl b)
+            VgcApis.Interfaces.ICoreServCtrl a,
+            VgcApis.Interfaces.ICoreServCtrl b
+        )
         {
             var ticksA = a.GetCoreStates().GetUplinkTotalInBytes();
             var ticksB = b.GetCoreStates().GetUplinkTotalInBytes();
@@ -139,17 +150,16 @@ namespace V2RayGCon.Services.ServersComponents
         }
 
         int UtcTicksDecComparer(
-           VgcApis.Interfaces.ICoreServCtrl a,
-           VgcApis.Interfaces.ICoreServCtrl b)
+            VgcApis.Interfaces.ICoreServCtrl a,
+            VgcApis.Interfaces.ICoreServCtrl b
+        )
         {
             var ticksA = a.GetCoreStates().GetLastModifiedUtcTicks();
             var ticksB = b.GetCoreStates().GetLastModifiedUtcTicks();
             return ticksB.CompareTo(ticksA);
         }
 
-        int SummaryComparer(
-            VgcApis.Interfaces.ICoreServCtrl a,
-            VgcApis.Interfaces.ICoreServCtrl b)
+        int SummaryComparer(VgcApis.Interfaces.ICoreServCtrl a, VgcApis.Interfaces.ICoreServCtrl b)
         {
             var sma = a.GetCoreStates().GetSummary();
             var smb = b.GetCoreStates().GetSummary();
@@ -161,8 +171,9 @@ namespace V2RayGCon.Services.ServersComponents
         }
 
         void SortServerItemList(
-             ref List<VgcApis.Interfaces.ICoreServCtrl> selectedServers,
-             Comparison<VgcApis.Interfaces.ICoreServCtrl> comparer)
+            ref List<VgcApis.Interfaces.ICoreServCtrl> selectedServers,
+            Comparison<VgcApis.Interfaces.ICoreServCtrl> comparer
+        )
         {
             if (selectedServers == null || selectedServers.Count() < 2)
             {
@@ -176,8 +187,7 @@ namespace V2RayGCon.Services.ServersComponents
                 var delta = 1.0 / 2 / selectedServers.Count;
                 for (int i = 0; i < selectedServers.Count; i++)
                 {
-                    selectedServers[i].GetCoreStates()
-                        .SetIndexQuiet(minIndex + delta * (i + 1));
+                    selectedServers[i].GetCoreStates().SetIndexQuiet(minIndex + delta * (i + 1));
                 }
             }
             finally

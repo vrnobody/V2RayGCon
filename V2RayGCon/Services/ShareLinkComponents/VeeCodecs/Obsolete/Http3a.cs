@@ -3,9 +3,7 @@ using System;
 
 namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
 {
-    internal sealed class Http3a :
-        VgcApis.BaseClasses.ComponentOf<VeeDecoder>,
-        IVeeDecoder
+    internal sealed class Http3a : VgcApis.BaseClasses.ComponentOf<VeeDecoder>, IVeeDecoder
     {
         Cache cache;
 
@@ -34,6 +32,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
 
         #region public methods
         public string GetSupportedVeeVersion() => Models.VeeShareLinks.Obsolete.Http3a.version;
+
         public string GetSupportedEncodeProtocol() => @"";
 
         public byte[] Config2Bytes(JObject config)
@@ -54,7 +53,12 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
         Models.VeeShareLinks.Obsolete.Http3a Config2Vee(JObject config)
         {
             var bs = Comm.ExtractBasicConfig(
-                config, @"http", @"servers", out bool isUseV4, out string root);
+                config,
+                @"http",
+                @"servers",
+                out bool isUseV4,
+                out string root
+            );
 
             if (bs == null)
             {
@@ -88,8 +92,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
             if (!string.IsNullOrEmpty(http.userName) || !string.IsNullOrEmpty(http.userPassword))
             {
                 node["users"] = JToken.Parse(
-                    $"[{{user: \"{http.userName ?? string.Empty}\"," +
-                    $"pass:\"{http.userPassword ?? string.Empty}\"}}]");
+                    $"[{{user: \"{http.userName ?? string.Empty}\","
+                        + $"pass:\"{http.userPassword ?? string.Empty}\"}}]"
+                );
             }
 
             var tpl = cache.tpl.LoadTemplate("tplImportVmess") as JObject;

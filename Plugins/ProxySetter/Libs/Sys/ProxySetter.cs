@@ -7,14 +7,17 @@ namespace ProxySetter.Libs.Sys
     {
         #region public method
         static string LoopBackIP = VgcApis.Models.Consts.Webs.LoopBackIP;
+
         public static void SetPacProxy(string pacUrl)
         {
             var url = pacUrl + "?&t=" + RandomHex(8);
-            WinInet.SetProxySettings(new Model.Data.ProxySettings
-            {
-                proxyMode = (int)WinInet.ProxyModes.PAC,
-                pacUrl = url ?? "",
-            });
+            WinInet.SetProxySettings(
+                new Model.Data.ProxySettings
+                {
+                    proxyMode = (int)WinInet.ProxyModes.PAC,
+                    pacUrl = url ?? "",
+                }
+            );
         }
 
         public static void ClearSysProxy() =>
@@ -22,10 +25,7 @@ namespace ProxySetter.Libs.Sys
 
         public static void SetGlobalProxy(int port)
         {
-            var proxyUrl = string.Format(
-                "{0}:{1}",
-                LoopBackIP,
-                Clamp(port, 0, 65536));
+            var proxyUrl = string.Format("{0}:{1}", LoopBackIP, Clamp(port, 0, 65536));
 
             var proxySetting = new Model.Data.ProxySettings
             {
@@ -43,8 +43,7 @@ namespace ProxySetter.Libs.Sys
             }
         }
 
-        public static Model.Data.ProxySettings GetProxySetting() =>
-            WinInet.GetProxySettings();
+        public static Model.Data.ProxySettings GetProxySetting() => WinInet.GetProxySettings();
 
         #endregion
     }

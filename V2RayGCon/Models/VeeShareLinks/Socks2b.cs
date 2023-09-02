@@ -4,19 +4,22 @@ namespace V2RayGCon.Models.VeeShareLinks
 {
     public class Socks2b : BasicSettings
     {
-        // ver 2a is optimized for socks protocol 
+        // ver 2a is optimized for socks protocol
         public const string version = @"2b";
         public const string proto = "socks";
 
-        public string userName, userPassword;
+        public string userName,
+            userPassword;
 
-        public Socks2b() : base()
+        public Socks2b()
+            : base()
         {
             userName = string.Empty;
             userPassword = string.Empty;
         }
 
-        public Socks2b(BasicSettings source) : this()
+        public Socks2b(BasicSettings source)
+            : this()
         {
             CopyFrom(source);
         }
@@ -38,8 +41,8 @@ namespace V2RayGCon.Models.VeeShareLinks
             return vc;
         }
 
-        public Socks2b(byte[] bytes) :
-            this()
+        public Socks2b(byte[] bytes)
+            : this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
             if (ver != version)
@@ -102,15 +105,16 @@ namespace V2RayGCon.Models.VeeShareLinks
 
         public bool EqTo(Socks2b target)
         {
-            if (!EqTo(target as BasicSettings)
+            if (
+                !EqTo(target as BasicSettings)
                 || userName != target.userName
-                || userPassword != target.userPassword)
+                || userPassword != target.userPassword
+            )
             {
                 return false;
             }
             return true;
         }
         #endregion
-
     }
 }

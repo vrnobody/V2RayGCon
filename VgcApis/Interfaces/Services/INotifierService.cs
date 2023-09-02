@@ -15,8 +15,13 @@ namespace VgcApis.Interfaces.Services
 
         void Notify(string title, string content, int timeout);
 
-        string RegisterHotKey(Action hotKeyHandler,
-            string keyName, bool hasAlt, bool hasCtrl, bool hasShift);
+        string RegisterHotKey(
+            Action hotKeyHandler,
+            string keyName,
+            bool hasAlt,
+            bool hasCtrl,
+            bool hasShift
+        );
 
         bool UnregisterHotKey(string hotKeyHandle);
 
@@ -25,6 +30,5 @@ namespace VgcApis.Interfaces.Services
         void Invoke(Action updater);
 
         void InvokeThen(Action updater, Action next);
-
     }
 }

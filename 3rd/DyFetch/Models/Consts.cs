@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace DyFetch.Models
 {
     internal static class Consts
     {
-        static Consts()
-        { }
+        static Consts() { }
 
         #region properties
 

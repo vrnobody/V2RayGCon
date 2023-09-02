@@ -11,22 +11,23 @@ namespace V2RayGCon.Models.VeeShareLinks
         public const string version = @"1c";
         public const string proto = "shadowsocks";
 
-        public string password, method; // 256 bytes
+        public string password,
+            method; // 256 bytes
 
         public Ss1c()
         {
             password = string.Empty;
             method = string.Empty;
-
         }
 
-        public Ss1c(BasicSettings source) : this()
+        public Ss1c(BasicSettings source)
+            : this()
         {
             CopyFrom(source);
         }
 
-        public Ss1c(byte[] bytes) :
-           this()
+        public Ss1c(byte[] bytes)
+            : this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
             if (ver != version)
@@ -57,10 +58,18 @@ namespace V2RayGCon.Models.VeeShareLinks
             }
         }
 
-        #region string table for compression 
-        List<string> methodTable = new List<string>{
-            "", "aes-256-cfb", "aes-128-cfb", "chacha20",
-            "chacha20-ietf","aes-256-gcm", "aes-128-gcm", "chacha20-poly1305" , "chacha20-ietf-poly1305"
+        #region string table for compression
+        List<string> methodTable = new List<string>
+        {
+            "",
+            "aes-256-cfb",
+            "aes-128-cfb",
+            "chacha20",
+            "chacha20-ietf",
+            "aes-256-gcm",
+            "aes-128-gcm",
+            "chacha20-poly1305",
+            "chacha20-ietf-poly1305"
         };
 
         #endregion
@@ -115,9 +124,7 @@ namespace V2RayGCon.Models.VeeShareLinks
 
         public bool EqTo(Ss1c vee)
         {
-            if (!EqTo(vee as BasicSettings)
-                || password != vee.password
-                || method != vee.method)
+            if (!EqTo(vee as BasicSettings) || password != vee.password || method != vee.method)
             {
                 return false;
             }
@@ -130,6 +137,5 @@ namespace V2RayGCon.Models.VeeShareLinks
 
 
         #endregion
-
     }
 }

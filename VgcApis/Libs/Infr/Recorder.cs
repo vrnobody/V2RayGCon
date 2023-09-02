@@ -7,14 +7,12 @@ namespace VgcApis.Libs.Infr
     {
         readonly object locker = new object();
         private readonly int capacity;
-        int startIndex = 0, curIndex = 0;
+        int startIndex = 0,
+            curIndex = 0;
         List<int> datas = new List<int>() { 0 };
 
-        public Recorder() :
-            this(500)
-        {
-
-        }
+        public Recorder()
+            : this(500) { }
 
         public Recorder(int capacity)
         {

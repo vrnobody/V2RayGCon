@@ -79,7 +79,7 @@ namespace DyFetch.Comps
 
         ChromeOptions CreateOptions(Models.Configs configs)
         {
-            // ¸´ÖÆÕ³ÌùÍøÉÏµÄ¼¸¸ö³õÊ¼»¯²ÎÊý
+            // ï¿½ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÄ¼ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
             var options = new ChromeOptions();
 
@@ -115,27 +115,27 @@ namespace DyFetch.Comps
             {
                 if (disposing)
                 {
-                    // TODO: ÊÍ·ÅÍÐ¹Ü×´Ì¬(ÍÐ¹Ü¶ÔÏó)
+                    // TODO: ï¿½Í·ï¿½ï¿½Ð¹ï¿½×´Ì¬(ï¿½Ð¹Ü¶ï¿½ï¿½ï¿½)
                     driver?.Close();
                     driver?.Dispose();
                 }
 
-                // TODO: ÊÍ·ÅÎ´ÍÐ¹ÜµÄ×ÊÔ´(Î´ÍÐ¹ÜµÄ¶ÔÏó)²¢ÖØÐ´ÖÕ½áÆ÷
-                // TODO: ½«´óÐÍ×Ö¶ÎÉèÖÃÎª null
+                // TODO: ï¿½Í·ï¿½Î´ï¿½Ð¹Üµï¿½ï¿½ï¿½Ô´(Î´ï¿½Ð¹ÜµÄ¶ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½Ð´ï¿½Õ½ï¿½ï¿½ï¿½
+                // TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½ï¿½Îª null
                 disposedValue = true;
             }
         }
 
-        // // TODO: ½öµ±¡°Dispose(bool disposing)¡±ÓµÓÐÓÃÓÚÊÍ·ÅÎ´ÍÐ¹Ü×ÊÔ´µÄ´úÂëÊ±²ÅÌæ´úÖÕ½áÆ÷
+        // // TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Dispose(bool disposing)ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½Î´ï¿½Ð¹ï¿½ï¿½ï¿½Ô´ï¿½Ä´ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½
         // ~Fetcher()
         // {
-        //     // ²»Òª¸ü¸Ä´Ë´úÂë¡£Çë½«ÇåÀí´úÂë·ÅÈë¡°Dispose(bool disposing)¡±·½·¨ÖÐ
+        //     // ï¿½ï¿½Òªï¿½ï¿½ï¿½Ä´Ë´ï¿½ï¿½ë¡£ï¿½ë½«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¡°Dispose(bool disposing)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         //     Dispose(disposing: false);
         // }
 
         public void Dispose()
         {
-            // ²»Òª¸ü¸Ä´Ë´úÂë¡£Çë½«ÇåÀí´úÂë·ÅÈë¡°Dispose(bool disposing)¡±·½·¨ÖÐ
+            // ï¿½ï¿½Òªï¿½ï¿½ï¿½Ä´Ë´ï¿½ï¿½ë¡£ï¿½ë½«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¡°Dispose(bool disposing)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }

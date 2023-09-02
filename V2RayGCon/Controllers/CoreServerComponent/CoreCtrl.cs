@@ -3,9 +3,9 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
 {
-    sealed public class CoreCtrl :
-        VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
-        VgcApis.Interfaces.CoreCtrlComponents.ICoreCtrl
+    public sealed class CoreCtrl
+        : VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
+            VgcApis.Interfaces.CoreCtrlComponents.ICoreCtrl
     {
         Libs.V2Ray.Core v2rayCore;
         Services.Settings setting;
@@ -17,9 +17,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         VgcApis.Libs.Tasks.Bar isRecording = new VgcApis.Libs.Tasks.Bar();
 
-        public CoreCtrl(
-            Services.Settings setting,
-            Services.ConfigMgr configMgr)
+        public CoreCtrl(Services.Settings setting, Services.ConfigMgr configMgr)
         {
             this.setting = setting;
             this.configMgr = configMgr;
@@ -41,7 +39,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         #region public mehtods
-        // 非正常终止时调用 
+        // 非正常终止时调用
         public void SetTitle(string title) => v2rayCore.title = title;
 
         public void BindEvents()
@@ -49,6 +47,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             v2rayCore.OnLog += OnLogHandler;
             v2rayCore.OnCoreStatusChanged += OnCoreStateChangedHandler;
         }
+
         public void ReleaseEvents()
         {
             bookKeeper?.Dispose();
@@ -56,8 +55,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             v2rayCore.OnCoreStatusChanged -= OnCoreStateChangedHandler;
         }
 
-        public string Fetch(string url) =>
-            Fetch(url, -1);
+        public string Fetch(string url) => Fetch(url, -1);
 
         public string Fetch(string url, int timeout)
         {
@@ -80,6 +78,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public void RestartCoreIgnoreError() => RestartCoreWorker(null, true);
 
         public void RestartCoreThen() => RestartCoreThen(null);
+
         public void RestartCoreThen(Action next) =>
             VgcApis.Misc.Utils.RunInBackground(() => RestartCoreWorker(next, false));
 
@@ -87,20 +86,23 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public void RunSpeedTest() => SpeedTestWorker(configer.GetConfig());
 
-        public void RunSpeedTestThen() => VgcApis.Misc.Utils.RunInBackground(() =>
-        {
-            SpeedTestWorker(configer.GetConfig());
-        });
+        public void RunSpeedTestThen() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                SpeedTestWorker(configer.GetConfig());
+            });
         #endregion
 
         #region private methods
         void RecordStatSample()
         {
-            if (!setting.isEnableStatistics
+            if (
+                !setting.isEnableStatistics
                 || !IsCoreRunning()
                 || setting.IsScreenLocked()
                 || setting.IsClosing()
-                || !isRecording.Install())
+                || !isRecording.Install()
+            )
             {
                 return;
             }
@@ -137,7 +139,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             long avgDelay = -1;
             long curDelay = SpeedtestTimeout;
-            var cycles = Math.Max(1, setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestCycles : 1);
+            var cycles = Math.Max(
+                1,
+                setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestCycles : 1
+            );
 
             coreStates.SetSpeedTestResult(0);
             coreStates.SetStatus(I18N.Testing);
@@ -145,7 +150,11 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             logger.Log(I18N.Testing);
             for (int i = 0; i < cycles && !setting.isSpeedtestCancelled; i++)
             {
-                var sr = configMgr.RunDefaultSpeedTest(rawConfig, coreStates.GetTitle(), (s, a) => logger.Log(a.Data));
+                var sr = configMgr.RunDefaultSpeedTest(
+                    rawConfig,
+                    coreStates.GetTitle(),
+                    (s, a) => logger.Log(a.Data)
+                );
                 curDelay = sr.Item1;
                 coreStates.AddStatSample(new VgcApis.Models.Datas.StatsSample(0, sr.Item2));
                 ShowCurrentSpeedtestResult(I18N.CurSpeedtestResult, curDelay);
@@ -154,10 +163,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     continue;
                 }
 
-                avgDelay = VgcApis.Misc.Utils.SpeedtestMean(avgDelay, curDelay, VgcApis.Models.Consts.Config.CustomSpeedtestMeanWeight);
+                avgDelay = VgcApis.Misc.Utils.SpeedtestMean(
+                    avgDelay,
+                    curDelay,
+                    VgcApis.Models.Consts.Config.CustomSpeedtestMeanWeight
+                );
             }
 
-            // all speedtest timeout 
+            // all speedtest timeout
             if (avgDelay <= 0)
             {
                 avgDelay = SpeedtestTimeout;
@@ -177,8 +190,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             logger.Log($"{prefix}{text}");
         }
 
-        void OnLogHandler(object sender, VgcApis.Models.Datas.StrEvent arg) =>
-            logger.Log(arg.Data);
+        void OnLogHandler(object sender, VgcApis.Models.Datas.StrEvent arg) => logger.Log(arg.Data);
 
         void StopCoreWorker(Action next)
         {

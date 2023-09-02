@@ -11,11 +11,7 @@ namespace ProxySetter.Misc
         #region pac
         public static Model.Data.Enum.Overlaps Overlaps(long[] a, long[] b)
         {
-            if (a.Length != b.Length
-                || a.Length != 2
-                || a[0] > a[1]
-                || b[0] > b[1]
-                || b[0] > a[1])
+            if (a.Length != b.Length || a.Length != 2 || a[0] > a[1] || b[0] > b[1] || b[0] > a[1])
             {
                 // skip if error happened
                 return Model.Data.Enum.Overlaps.None;
@@ -66,10 +62,10 @@ namespace ProxySetter.Misc
             {
                 var query = new Uri(url).Query;
                 arguments = query
-                 .Substring(1) // Remove '?'
-                 .Split('&')
-                 .Select(q => q.Split('='))
-                 .ToDictionary(q => q.FirstOrDefault(), q => q.Skip(1).FirstOrDefault());
+                    .Substring(1) // Remove '?'
+                    .Split('&')
+                    .Select(q => q.Split('='))
+                    .ToDictionary(q => q.FirstOrDefault(), q => q.Skip(1).FirstOrDefault());
             }
             catch { }
 
@@ -161,10 +157,12 @@ namespace ProxySetter.Misc
         public static List<long[]> GetPacCidrList(bool isWhiteList)
         {
             var result = new List<long[]>();
-            foreach (var item in
-                (isWhiteList ? StrConst.white_cidr : StrConst.black_cidr)
-                .Split(new char[] { '\n', '\r' },
-                    StringSplitOptions.RemoveEmptyEntries))
+            foreach (
+                var item in (isWhiteList ? StrConst.white_cidr : StrConst.black_cidr).Split(
+                    new char[] { '\n', '\r' },
+                    StringSplitOptions.RemoveEmptyEntries
+                )
+            )
             {
                 result.Add(Cidr2RangeArray(item));
             }
@@ -211,9 +209,7 @@ namespace ProxySetter.Misc
 
         public static long IP2Long(string ip)
         {
-            var c = ip.Split('.')
-                .Select(el => (long)VgcApis.Misc.Utils.Str2Int(el))
-                .ToList();
+            var c = ip.Split('.').Select(el => (long)VgcApis.Misc.Utils.Str2Int(el)).ToList();
 
             if (c.Count < 4)
             {
@@ -230,7 +226,10 @@ namespace ProxySetter.Misc
                 return false;
             }
 
-            return Regex.IsMatch(address, @"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+            return Regex.IsMatch(
+                address,
+                @"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+            );
         }
 
         #endregion

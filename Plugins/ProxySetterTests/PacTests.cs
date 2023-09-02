@@ -39,10 +39,7 @@ namespace ProxySetterTests
             long[] rangeParser(string rangeArray)
             {
                 var v = rangeArray.Split(',');
-                return new long[] {
-                    (long)Str2Int(v[0]),
-                    (long)Str2Int(v[1]),
-                };
+                return new long[] { (long)Str2Int(v[0]), (long)Str2Int(v[1]), };
             }
 
             List<long[]> listParser(string listString)
@@ -70,18 +67,13 @@ namespace ProxySetterTests
 
         [DataTestMethod]
         [DataRow(null, ",,,,")]
-        [DataRow(
-           "type=blacklist&ip=8.7.6.5&port=4321&proto=http",
-           "blacklist,http,8.7.6.5,4321,")]
+        [DataRow("type=blacklist&ip=8.7.6.5&port=4321&proto=http", "blacklist,http,8.7.6.5,4321,")]
         //// url = "type,proto,ip,port,debug"
         public void GetProxyParamsFromUrlTest(string url, string expect)
         {
             var proxyParams = ProxySetter.Misc.Utils.GetQureryParamsFrom(
-                url == null ? null : (
-                "http://localhost:3000/pac/?&"
-                + url
-                + "&key="
-                + RandomHex(8)));
+                url == null ? null : ("http://localhost:3000/pac/?&" + url + "&key=" + RandomHex(8))
+            );
 
             var expParts = expect.Split(',');
 
@@ -90,7 +82,8 @@ namespace ProxySetterTests
                 || (proxyParams.proto ?? "") != expParts[1]
                 || (proxyParams.ip ?? "") != expParts[2]
                 || (proxyParams.port ?? "") != expParts[3]
-                || (proxyParams.debug ?? "") != expParts[4])
+                || (proxyParams.debug ?? "") != expParts[4]
+            )
             {
                 Assert.Fail();
             }
@@ -106,7 +99,13 @@ namespace ProxySetterTests
         [DataRow(-10, -1, -5, -3, Enum.Overlaps.Middle)]
         [DataRow(1, 4, 3, 3, Enum.Overlaps.Middle)]
         [DataRow(1, 2, 3, 4, Enum.Overlaps.None)]
-        public void OverlapsTest(long aStart, long aEnd, long bStart, long bEnd, Enum.Overlaps expect)
+        public void OverlapsTest(
+            long aStart,
+            long aEnd,
+            long bStart,
+            long bEnd,
+            Enum.Overlaps expect
+        )
         {
             var a = new long[] { aStart, aEnd };
             var b = new long[] { bStart, bEnd };

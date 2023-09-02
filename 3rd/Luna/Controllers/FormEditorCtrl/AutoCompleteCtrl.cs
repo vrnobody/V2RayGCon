@@ -4,10 +4,8 @@ using Luna.Services;
 using Newtonsoft.Json.Linq;
 using ScintillaNET;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -29,16 +27,14 @@ namespace Luna.Controllers.FormEditorCtrl
         VgcApis.Libs.Infr.Recorder history = new VgcApis.Libs.Infr.Recorder();
         VgcApis.Libs.Tasks.LazyGuy lazyAnalyser;
 
-
         public AutoCompleteCtrl(
             AstServer astServer,
-
             Scintilla editor,
             ComboBox cboxVarList,
             ComboBox cboxFunctionList,
-
             ToolStripMenuItem miEanbleCodeAnalyzeEx,
-            ToolStripStatusLabel smiLbCodeanalyze)
+            ToolStripStatusLabel smiLbCodeanalyze
+        )
         {
             this.astServer = astServer;
             this.editor = editor;
@@ -55,7 +51,8 @@ namespace Luna.Controllers.FormEditorCtrl
             lazyAnalyser = new VgcApis.Libs.Tasks.LazyGuy(
                 AnalizeScriptWorker,
                 VgcApis.Models.Consts.Intervals.AnalizeLuaScriptDelay,
-                3000);
+                3000
+            );
 
             InitControls();
             BindEvents();
@@ -93,9 +90,7 @@ namespace Luna.Controllers.FormEditorCtrl
                     ScrollToDefinition(w);
                     break;
             }
-
         }
-
 
         public void Cleanup()
         {
@@ -191,11 +186,16 @@ namespace Luna.Controllers.FormEditorCtrl
             }
         }
 
-        private void BuildOneModuleSnippets(string varName, JObject ast, List<MatchItemBase> snippets)
+        private void BuildOneModuleSnippets(
+            string varName,
+            JObject ast,
+            List<MatchItemBase> snippets
+        )
         {
-            var fds = new Dictionary<string, string>() {
-                { Services.AstServer.KEY_FUNCTION,"." },
-                { Services.AstServer.KEY_METHODS ,":" },
+            var fds = new Dictionary<string, string>()
+            {
+                { Services.AstServer.KEY_FUNCTION, "." },
+                { Services.AstServer.KEY_METHODS, ":" },
             };
 
             snippets.Add(new LuaKeywordSnippets(varName));
@@ -245,6 +245,7 @@ namespace Luna.Controllers.FormEditorCtrl
         }
 
         JObject currentCodeAst = null;
+
         void AnalizeScriptWorker()
         {
             List<string> srcs = new List<string>();
@@ -297,7 +298,6 @@ namespace Luna.Controllers.FormEditorCtrl
                 miEanbleCodeAnalyzeEx.Checked = isEnable;
                 smiLbCodeanalyze.Enabled = isEnable;
             });
-
         }
 
         void Invoke(Action action) => VgcApis.Misc.UI.Invoke(action);
@@ -336,12 +336,14 @@ namespace Luna.Controllers.FormEditorCtrl
 
         bool FallbackScrollToFunction(string text)
         {
-            text = text?.Replace(":", ".")?.Replace(" ", "")
+            text = text?.Replace(":", ".")
+                ?.Replace(" ", "")
                 ?.Replace("['", ".")
                 ?.Replace("[\"", ".")
                 ?.Replace("\"]", "")
                 ?.Replace("']", "")
-                ?.Split('(')?.FirstOrDefault();
+                ?.Split('(')
+                ?.FirstOrDefault();
 
             if (string.IsNullOrWhiteSpace(text))
             {
@@ -417,7 +419,8 @@ namespace Luna.Controllers.FormEditorCtrl
                 }
 
                 var trimed = RemoveLocalPrefix(t, true);
-                var first = trimed?.Split(new char[] { ' ', '.', '=', ',', '\r', '\n', '(' })
+                var first = trimed
+                    ?.Split(new char[] { ' ', '.', '=', ',', '\r', '\n', '(' })
                     ?.FirstOrDefault(s => s == text);
 
                 if (first != null)
@@ -432,15 +435,17 @@ namespace Luna.Controllers.FormEditorCtrl
 
         AutocompleteMenu CreateAcm(Scintilla editor)
         {
-
             bestMatchSnippets = astServer?.CreateBestMatchSnippet(editor);
 
             var imageList = new ImageList();
-            imageList.Images.AddRange(new Image[] {
-                Properties.Resources.KeyDown_16x,
-                Properties.Resources.Method_16x,
-                Properties.Resources.Class_16x,
-            });
+            imageList.Images.AddRange(
+                new Image[]
+                {
+                    Properties.Resources.KeyDown_16x,
+                    Properties.Resources.Method_16x,
+                    Properties.Resources.Class_16x,
+                }
+            );
 
             var acm = new AutocompleteMenu()
             {
@@ -486,7 +491,6 @@ namespace Luna.Controllers.FormEditorCtrl
 
         void BindEvents()
         {
-
             astServer.OnFileChanged += AstServerOnFileChangedHandler;
 
             editor.TextChanged += AnalyzeScriptLater;
@@ -517,7 +521,6 @@ namespace Luna.Controllers.FormEditorCtrl
                 });
 
             cboxFunctionList.DropDown += OnCboxFunctionListDropDownHandler;
-
         }
 
         Dictionary<string, int> funcDefTable = new Dictionary<string, int>();
@@ -529,7 +532,8 @@ namespace Luna.Controllers.FormEditorCtrl
             var ast = currentCodeAst;
             var debug = ast?.ToString();
 
-            string[] keys = new string[] {
+            string[] keys = new string[]
+            {
                 Services.AstServer.KEY_FUNCTION,
                 Services.AstServer.KEY_SUB_FUNCS,
                 Services.AstServer.KEY_METHODS,
@@ -544,7 +548,9 @@ namespace Luna.Controllers.FormEditorCtrl
                     foreach (var kv in ast[key] as JObject)
                     {
                         var ps = (kv.Value as JObject)[Services.AstServer.KEY_PARAMS] as JArray;
-                        var luaLineNumber = (kv.Value as JObject)[Services.AstServer.KEY_LINE_NUM].Value<int>();
+                        var luaLineNumber = (kv.Value as JObject)[
+                            Services.AstServer.KEY_LINE_NUM
+                        ].Value<int>();
                         var sps = string.Join(", ", ps);
                         var fn = $"{kv.Key}({sps})";
                         funcs.Add(fn, luaLineNumber - 1);
@@ -590,7 +596,9 @@ namespace Luna.Controllers.FormEditorCtrl
                 if (text.Contains(v))
                 {
                     var trimed = RemoveLocalPrefix(text, false);
-                    var first = trimed?.Split(new char[] { ' ', '=', ',', '\r', '\n' }).FirstOrDefault();
+                    var first = trimed
+                        ?.Split(new char[] { ' ', '=', ',', '\r', '\n' })
+                        .FirstOrDefault();
                     if (first == v)
                     {
                         ScrollToLine(line.Index);
@@ -624,6 +632,5 @@ namespace Luna.Controllers.FormEditorCtrl
         }
 
         #endregion
-
     }
 }

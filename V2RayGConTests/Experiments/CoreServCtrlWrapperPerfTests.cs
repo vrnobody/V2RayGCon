@@ -1,12 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace V2RayGCon.Test.Experiments
 {
@@ -103,7 +98,6 @@ namespace V2RayGCon.Test.Experiments
             }
             sw.Stop();
             Log(sw, len, "wServ.GetName");
-
 
             names = new List<string>();
             sw.Restart();

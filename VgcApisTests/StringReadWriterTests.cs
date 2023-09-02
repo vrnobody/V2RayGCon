@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -8,9 +7,7 @@ namespace VgcApisTests
     [TestClass]
     public class StringReadWriterTests
     {
-        public StringReadWriterTests()
-        {
-        }
+        public StringReadWriterTests() { }
 
         [DataTestMethod]
         [DataRow(@"")]
@@ -18,7 +15,6 @@ namespace VgcApisTests
         [DataRow(@"abcd1🎈🎆🧨234中文")]
         [DataRow(@"中文abc1{23+}-./")]
         [DataRow(@"a中文abc1{23+}-./")]
-
         public void ReadWriteNormalTest(string content)
         {
             var stream = new MemoryStream();
@@ -50,13 +46,7 @@ namespace VgcApisTests
             s = reader.Read();
             Assert.AreEqual(@"", s);
 
-
-            var strs = new List<string>() {
-                null,
-                "123",
-                @"",
-                @"abcd1🎈🎆🧨234中文",
-            };
+            var strs = new List<string>() { null, "123", @"", @"abcd1🎈🎆🧨234中文", };
             stream.Position = 0;
             foreach (var str in strs)
             {

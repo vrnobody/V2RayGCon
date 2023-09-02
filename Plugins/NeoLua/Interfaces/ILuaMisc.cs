@@ -61,7 +61,6 @@ namespace NeoLuna.Interfaces
         /// </summary>
         void ShowFormNeoLunaLog();
 
-
         /// <summary>
         /// 调出主窗口
         /// </summary>
@@ -108,7 +107,6 @@ namespace NeoLuna.Interfaces
         /// <param name="props">执行是否成功</param>
         /// <returns></returns>
         bool SetUserSettings(string props);
-
 
         /// <summary>
         /// 获取全部订阅设置
@@ -455,7 +453,6 @@ namespace NeoLuna.Interfaces
         /// <param name="mark">标记</param>
         /// <returns>成功导入的链接数</returns>
         int ImportLinks(string links, string mark);
-
 
         #endregion
     }

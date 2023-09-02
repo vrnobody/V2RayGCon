@@ -26,20 +26,20 @@ namespace VgcApis.Libs.Tasks
         /// <param name="chainedTask">(done)=>{... done();}</param>
         /// <param name="interval">millisecond</param>
         /// <param name="expectedWorkTime">millisecond</param>
-        public LazyGuy(Action<Action> chainedTask, int interval, int expectedWorkTime) :
-            this(interval, expectedWorkTime)
+        public LazyGuy(Action<Action> chainedTask, int interval, int expectedWorkTime)
+            : this(interval, expectedWorkTime)
         {
             this.chainedTask = chainedTask;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="singleTask">()=>{ ... }</param>
         /// <param name="interval">millisecond</param>
         /// <param name="expectedWorkTime">millisecond</param>
-        public LazyGuy(Action singleTask, int interval, int expectedWorkTime) :
-            this(interval, expectedWorkTime)
+        public LazyGuy(Action singleTask, int interval, int expectedWorkTime)
+            : this(interval, expectedWorkTime)
         {
             this.singleTask = singleTask;
         }
@@ -190,8 +190,10 @@ namespace VgcApis.Libs.Tasks
                 var workTime = TimeSpan.FromTicks(end - start).TotalMilliseconds;
                 if (workTime > 2 * expectedWorkTime)
                 {
-                    Sys.FileLogger.Warn($"DoTheJob() overtime {Name}\n" +
-                        $"exp: {expectedWorkTime}ms, act: {workTime}ms");
+                    Sys.FileLogger.Warn(
+                        $"DoTheJob() overtime {Name}\n"
+                            + $"exp: {expectedWorkTime}ms, act: {workTime}ms"
+                    );
                 }
             };
 
@@ -212,10 +214,9 @@ namespace VgcApis.Libs.Tasks
 #if DEBUG
                 catch (Exception ex)
                 {
-
                     Sys.FileLogger.DumpCallStack(
-                        $"DoTheJob() {Name} do single task error\n" +
-                        $"{ex}");
+                        $"DoTheJob() {Name} do single task error\n" + $"{ex}"
+                    );
                 }
 #else
                 catch
@@ -247,6 +248,5 @@ namespace VgcApis.Libs.Tasks
             this.chainedTask = null;
         }
         #endregion
-
     }
 }

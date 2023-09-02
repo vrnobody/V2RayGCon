@@ -31,7 +31,7 @@ namespace NeoLuna.Services
         public static string KEY_FUNCTION = "funcs";
         public static string KEY_VARS = "vars";
         public static string KEY_MODULES = "modules";
-        public static string KEY_LINE_NUM = "line";  // line number
+        public static string KEY_LINE_NUM = "line"; // line number
         public static string KEY_METHODS = "methods";
         public static string KEY_SUB_FUNCS = "subs";
         #endregion
@@ -76,8 +76,7 @@ namespace NeoLuna.Services
         void LuaDirFileChangedHandler(object sender, FileSystemEventArgs e)
         {
             UpdateRequireModuleNameCache(); // for require(...) snippets
-            var mn = VgcApis.Misc.Utils.GetLuaModuleName(e.FullPath)
-                .Replace(".", "/");
+            var mn = VgcApis.Misc.Utils.GetLuaModuleName(e.FullPath).Replace(".", "/");
             if (string.IsNullOrWhiteSpace(mn))
             {
                 return;
@@ -96,17 +95,18 @@ namespace NeoLuna.Services
             catch { }
         }
 
-
         #endregion
 
         #region properties
         FileSystemWatcher fsWatcher;
 
         ConcurrentQueue<string> hotCacheKeys = new ConcurrentQueue<string>();
-        ConcurrentDictionary<string, JObject> astCodeCache = new ConcurrentDictionary<string, JObject>();
-        ConcurrentDictionary<string, JObject> astModuleCache = new ConcurrentDictionary<string, JObject>();
-        ConcurrentDictionary<string, JObject> astModuleExCache = new ConcurrentDictionary<string, JObject>();
-
+        ConcurrentDictionary<string, JObject> astCodeCache =
+            new ConcurrentDictionary<string, JObject>();
+        ConcurrentDictionary<string, JObject> astModuleCache =
+            new ConcurrentDictionary<string, JObject>();
+        ConcurrentDictionary<string, JObject> astModuleExCache =
+            new ConcurrentDictionary<string, JObject>();
 
         internal enum AnalyzeModes
         {
@@ -118,8 +118,9 @@ namespace NeoLuna.Services
 
         #region public methods
 
-        public Libs.LuaSnippet.BestMatchSnippets CreateBestMatchSnippet(ScintillaNET.Scintilla editor)
-            => snpCache?.CreateBestMatchSnippets(editor);
+        public Libs.LuaSnippet.BestMatchSnippets CreateBestMatchSnippet(
+            ScintillaNET.Scintilla editor
+        ) => snpCache?.CreateBestMatchSnippets(editor);
 
         public List<Dictionary<string, string>> GetWebUiLuaStaticSnippets() =>
             snpCache?.GetWebUiLuaStaticSnippets();
@@ -158,7 +159,8 @@ namespace NeoLuna.Services
             return ast;
         }
 
-        public ReadOnlyCollection<string> GetRequireModuleNames() => requireModuleNamesCache.AsReadOnly();
+        public ReadOnlyCollection<string> GetRequireModuleNames() =>
+            requireModuleNamesCache.AsReadOnly();
         #endregion
 
         #region private methods
@@ -172,13 +174,16 @@ namespace NeoLuna.Services
             var requiresNames = new List<string>();
             try
             {
-                string[] fileArray = Directory.GetFiles(@"3rd/neolua", "*.lua", SearchOption.AllDirectories);
+                string[] fileArray = Directory.GetFiles(
+                    @"3rd/neolua",
+                    "*.lua",
+                    SearchOption.AllDirectories
+                );
                 foreach (var file in fileArray)
                 {
                     if (!string.IsNullOrEmpty(file) || !file.ToLower().EndsWith(".lua"))
                     {
-                        var mn = file.Replace("\\", "/")
-                            .Substring(0, file.Length - ".lua".Length);
+                        var mn = file.Replace("\\", "/").Substring(0, file.Length - ".lua".Length);
                         requiresNames.Add($"require('{mn}')");
                     }
                 }
@@ -224,11 +229,8 @@ namespace NeoLuna.Services
                     var chunk = state.CompileChunk(
                         script,
                         name,
-                        new LuaCompileOptions()
-                        {
-                            ClrEnabled = false,
-                            DebugEngine = null,
-                        });
+                        new LuaCompileOptions() { ClrEnabled = false, DebugEngine = null, }
+                    );
 
                     var rs = g.DoChunk(chunk);
                     if (rs != null && rs.Count > 0)
@@ -260,7 +262,8 @@ namespace NeoLuna.Services
             {
                 fn = "analyzeModuleEx";
             }
-            string tpl = @"local analyzer = require('3rd/neolua/libs/luacheck/analyzer').new();"
+            string tpl =
+                @"local analyzer = require('3rd/neolua/libs/luacheck/analyzer').new();"
                 + @"return analyzer.{0}(code)";
 
             var s = string.Format(tpl, fn);
@@ -284,8 +287,7 @@ namespace NeoLuna.Services
                 if (astCodeCache.Count > 200)
                 {
                     var keys = astCodeCache.Keys;
-                    var filterd = keys
-                        .Where(k => !hotCacheKeys.Contains(k))
+                    var filterd = keys.Where(k => !hotCacheKeys.Contains(k))
                         .Skip(100 - hotCacheKeys.Count)
                         .ToList();
                     foreach (var k in filterd)
@@ -312,13 +314,13 @@ namespace NeoLuna.Services
             return null;
         }
 
-        readonly static LuaTable mockApis = new LuaTable()
+        static readonly LuaTable mockApis = new LuaTable()
         {
-            {"Misc", new Mock<Interfaces.ILuaMisc>().Object},
-            {"Signal", new Mock<Interfaces.ILuaSignal>().Object},
-            {"Sys", new Mock<Interfaces.ILuaSys>().Object},
-            {"Server", new Mock<Interfaces.ILuaServer>().Object},
-            {"Web", new Mock<Interfaces.ILuaWeb>().Object},
+            { "Misc", new Mock<Interfaces.ILuaMisc>().Object },
+            { "Signal", new Mock<Interfaces.ILuaSignal>().Object },
+            { "Sys", new Mock<Interfaces.ILuaSys>().Object },
+            { "Server", new Mock<Interfaces.ILuaServer>().Object },
+            { "Web", new Mock<Interfaces.ILuaWeb>().Object },
         };
 
         LuaGlobal CreateAnalyser(Lua anz)

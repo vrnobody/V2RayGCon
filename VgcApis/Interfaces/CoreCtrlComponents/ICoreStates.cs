@@ -305,6 +305,5 @@
         /// </summary>
         /// <param name="isInjectSkipCnSite">是否绕过CN网站</param>
         void SetIsInjectSkipCnSite(bool isInjectSkipCnSite);
-
     }
 }

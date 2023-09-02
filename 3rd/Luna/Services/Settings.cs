@@ -1,13 +1,9 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using VgcApis.Interfaces.Services;
 
 namespace Luna.Services
 {
-    internal class Settings :
-        VgcApis.BaseClasses.Disposable
-
+    internal class Settings : VgcApis.BaseClasses.Disposable
     {
         ISettingsService vgcSetting;
 
@@ -16,21 +12,21 @@ namespace Luna.Services
 
         VgcApis.Libs.Tasks.LazyGuy lazyBookKeeper;
 
-
         public Settings()
         {
             lazyBookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveUserSettingsNow,
                 VgcApis.Models.Consts.Intervals.LazySaveLunaSettingsInterval,
-                3000);
+                3000
+            );
         }
 
         #region properties
         bool _isDisposing = false;
+
         public void SetIsDisposing(bool value) => _isDisposing = value;
 
         public bool isScreenLocked => vgcSetting.IsScreenLocked();
-
 
         #endregion
 
@@ -49,9 +45,10 @@ namespace Luna.Services
         {
             this.vgcSetting = vgcSetting;
 
-            userSettings = VgcApis.Misc.Utils
-                .LoadPluginSetting<Models.Data.UserSettings>(
-                    pluginName, vgcSetting);
+            userSettings = VgcApis.Misc.Utils.LoadPluginSetting<Models.Data.UserSettings>(
+                pluginName,
+                vgcSetting
+            );
 
             userSettings.NormalizeData();
 
@@ -78,11 +75,9 @@ namespace Luna.Services
             vgcSetting.WriteLocalStorage(key, value);
         }
 
-        public List<Models.Data.LuaCoreSetting> GetLuaCoreSettings() =>
-            userSettings.luaServers;
+        public List<Models.Data.LuaCoreSetting> GetLuaCoreSettings() => userSettings.luaServers;
 
-        public void SaveUserSettingsLater() =>
-            lazyBookKeeper?.Deadline();
+        public void SaveUserSettingsLater() => lazyBookKeeper?.Deadline();
         #endregion
 
         #region protected methods
@@ -110,11 +105,8 @@ namespace Luna.Services
         }
 
         void SaveUserSettingsNow() =>
-            VgcApis.Misc.Utils.SavePluginSetting(
-                pluginName, userSettings, vgcSetting);
+            VgcApis.Misc.Utils.SavePluginSetting(pluginName, userSettings, vgcSetting);
 
         #endregion
-
-
     }
 }

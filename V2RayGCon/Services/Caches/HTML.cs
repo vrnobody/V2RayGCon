@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System.Net;
 
 namespace V2RayGCon.Services.Caches
 {
@@ -29,9 +28,7 @@ namespace V2RayGCon.Services.Caches
             {
                 var retry = VgcApis.Models.Consts.Import.ParseImportRetry;
 
-                for (var i = 0;
-                    i < retry && string.IsNullOrEmpty(c.content);
-                    i++)
+                for (var i = 0; i < retry && string.IsNullOrEmpty(c.content); i++)
                 {
                     var port = -1;
                     try
@@ -49,7 +46,8 @@ namespace V2RayGCon.Services.Caches
                     c.content = Misc.Utils.Fetch(
                         url,
                         port,
-                        VgcApis.Models.Consts.Import.ParseImportTimeout);
+                        VgcApis.Models.Consts.Import.ParseImportTimeout
+                    );
                 }
             }
 

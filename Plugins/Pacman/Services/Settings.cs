@@ -26,7 +26,10 @@ namespace Pacman.Services
 
         #region public methods
         public string Chain(
-            List<VgcApis.Interfaces.ICoreServCtrl> servList, string orgServerUid, string packageName)
+            List<VgcApis.Interfaces.ICoreServCtrl> servList,
+            string orgServerUid,
+            string packageName
+        )
         {
             return vgcServers.PackServersV4Ui(
                 servList,
@@ -35,7 +38,8 @@ namespace Pacman.Services
                 string.Empty,
                 string.Empty,
                 VgcApis.Models.Datas.Enums.BalancerStrategies.Random,
-                VgcApis.Models.Datas.Enums.PackageTypes.Chain);
+                VgcApis.Models.Datas.Enums.PackageTypes.Chain
+            );
         }
 
         public string Pack(
@@ -44,7 +48,8 @@ namespace Pacman.Services
             string packageName,
             string interval,
             string url,
-            VgcApis.Models.Datas.Enums.BalancerStrategies strategy)
+            VgcApis.Models.Datas.Enums.BalancerStrategies strategy
+        )
         {
             return vgcServers.PackServersV4Ui(
                 servList,
@@ -52,7 +57,9 @@ namespace Pacman.Services
                 packageName,
                 interval,
                 url,
-                strategy, VgcApis.Models.Datas.Enums.PackageTypes.Balancer);
+                strategy,
+                VgcApis.Models.Datas.Enums.PackageTypes.Balancer
+            );
         }
 
         public List<VgcApis.Interfaces.ICoreServCtrl> GetAllServersList() =>
@@ -123,10 +130,7 @@ namespace Pacman.Services
             catch { }
         }
 
-        public void Cleanup()
-        {
-
-        }
+        public void Cleanup() { }
         #endregion
 
         #region private methods
@@ -141,9 +145,9 @@ namespace Pacman.Services
 
             try
             {
-                var result = VgcApis.Misc.Utils
-                    .DeserializeObject<Models.Data.UserSettings>(
-                        userSettingString);
+                var result = VgcApis.Misc.Utils.DeserializeObject<Models.Data.UserSettings>(
+                    userSettingString
+                );
                 return result ?? empty;
             }
             catch { }

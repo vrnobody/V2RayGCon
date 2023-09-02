@@ -16,7 +16,7 @@ namespace V2RayGCon.Test
         public void ParseStatApiResultTestXray()
         {
             var str =
-@"{
+                @"{
     ""stat"":  [
         {
                 ""name"":  ""inbound>>>agentin>>>traffic>>>uplink"",
@@ -37,7 +37,7 @@ namespace V2RayGCon.Test
         public void ParseStatApiResultTestV2Ray()
         {
             var str =
-@"stat: <
+                @"stat: <
   name: ""inbound>>>agentin>>>traffic>>>uplink""
 >
 stat: <
@@ -77,7 +77,6 @@ stat: <
             Assert.AreEqual(7, result.statsDownlink);
         }
 
-
         [DataTestMethod]
         [DataRow(@"http://abc.com", @"abc.com")]
         [DataRow(@"v://abc.com", @"abc.com")]
@@ -91,25 +90,29 @@ stat: <
         {
             var body = GetLinkBody(link);
             Assert.AreEqual(expect, body);
-
         }
 
         [DataTestMethod]
         [DataRow(
             @"<td>vless://399ce595-894d-4d40-add1-7d87f1a3bd10@qv2ray.net:41971?type=kcp&amp;amp;amp;headerType=wireguard&amp;seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeedWG</td>",
-            @"vless://399ce595-894d-4d40-add1-7d87f1a3bd10@qv2ray.net:41971?type=kcp&headerType=wireguard&seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeedWG")]
+            @"vless://399ce595-894d-4d40-add1-7d87f1a3bd10@qv2ray.net:41971?type=kcp&headerType=wireguard&seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeedWG"
+        )]
         [DataRow(
             @"[#f00]vless://b0dd64e4-0fbd-4038-9139-d1f32a68a0dc@qv2ray.net:3279?security=xtls&flow=xtls-rprx-splice#VLESSTCPXTLSSplice [/#f00]",
-            @"vless://b0dd64e4-0fbd-4038-9139-d1f32a68a0dc@qv2ray.net:3279?security=xtls&flow=xtls-rprx-splice#VLESSTCPXTLSSplice")]
+            @"vless://b0dd64e4-0fbd-4038-9139-d1f32a68a0dc@qv2ray.net:3279?security=xtls&flow=xtls-rprx-splice#VLESSTCPXTLSSplice"
+        )]
         [DataRow(
             @"1.vless://399ce595-894d-4d40-add1-7d87f1a3bd10@qv2ray.net:50288?type=kcp&seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeed",
-            @"vless://399ce595-894d-4d40-add1-7d87f1a3bd10@qv2ray.net:50288?type=kcp&seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeed")]
+            @"vless://399ce595-894d-4d40-add1-7d87f1a3bd10@qv2ray.net:50288?type=kcp&seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeed"
+        )]
         [DataRow(
             @"<td>vless://399ce595-894d-4d40-add1-7d87f1a3bd10@qv2ray.net:41971?type=kcp&headerType=wireguard&seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeedWG</td>",
-            @"vless://399ce595-894d-4d40-add1-7d87f1a3bd10@qv2ray.net:41971?type=kcp&headerType=wireguard&seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeedWG")]
+            @"vless://399ce595-894d-4d40-add1-7d87f1a3bd10@qv2ray.net:41971?type=kcp&headerType=wireguard&seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeedWG"
+        )]
         [DataRow(
             @"### vless://399ce595-894d-4d40-add1-7d87f1a3bd10@%5B%3A%3A1%5D:50288?type=kcp&seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeed ###",
-            @"vless://399ce595-894d-4d40-add1-7d87f1a3bd10@%5B%3A%3A1%5D:50288?type=kcp&seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeed")]
+            @"vless://399ce595-894d-4d40-add1-7d87f1a3bd10@%5B%3A%3A1%5D:50288?type=kcp&seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeed"
+        )]
         public void ExtractVless0ShareLinksTest(string text, string expected)
         {
             // var encoded = Uri.EscapeDataString(expected);
@@ -127,7 +130,10 @@ stat: <
             {
                 var body = GetLinkBody(link);
             }
-            catch { return; }
+            catch
+            {
+                return;
+            }
             Assert.Fail();
         }
 
@@ -152,10 +158,13 @@ stat: <
             List<string> htmls = new List<string>();
             try
             {
-                htmls = ExecuteInParallel(urls, (u) =>
-                {
-                    return Fetch(u);
-                });
+                htmls = ExecuteInParallel(
+                    urls,
+                    (u) =>
+                    {
+                        return Fetch(u);
+                    }
+                );
             }
             catch
             {
@@ -239,14 +248,13 @@ stat: <
             Assert.AreEqual(expect, r);
         }
 
-
         [TestMethod]
         public void CreateDeleteAppFolderTest()
         {
             var appFolder = Misc.Utils.GetSysAppDataFolder();
             Assert.AreEqual(false, string.IsNullOrEmpty(appFolder));
 
-            // do not run these tests 
+            // do not run these tests
             // Misc.Utils.CreateAppDataFolder();
             // Assert.AreEqual(true, Directory.Exists(appFolder));
             // Misc.Utils.DeleteAppDataFolder();
@@ -350,24 +358,21 @@ stat: <
         [TestMethod]
         public void GetValue_GetBoolFromString_ReturnDefault()
         {
-            var json = Services.Cache.Instance.
-                tpl.LoadMinConfig();
+            var json = Services.Cache.Instance.tpl.LoadMinConfig();
             Assert.AreEqual(default(bool), GetValue<bool>(json, "log.loglevel"));
         }
 
         [TestMethod]
         public void GetValue_GetStringNotExist_ReturnNull()
         {
-            var json = Services.Cache.Instance.
-                tpl.LoadMinConfig();
+            var json = Services.Cache.Instance.tpl.LoadMinConfig();
             Assert.AreEqual(string.Empty, GetValue<string>(json, "log.keyNotExist"));
         }
 
         [TestMethod]
         public void GetValue_KeyNotExist_ReturnDefault()
         {
-            var json = Services.Cache.Instance.
-                tpl.LoadMinConfig();
+            var json = Services.Cache.Instance.tpl.LoadMinConfig();
             var value = Misc.Utils.GetValue<int>(json, "log.key_not_exist");
             Assert.AreEqual(default(int), value);
         }
@@ -388,25 +393,24 @@ stat: <
             }
         }
 
-
-
-
-
         [TestMethod]
         public void ExtractLinks_HttpLink()
         {
             var html = "http://abc.com https://def.com";
 
-            var httpLinks = Misc.Utils.ExtractLinks(html,
-                VgcApis.Models.Datas.Enums.LinkTypes.http);
+            var httpLinks = Misc.Utils.ExtractLinks(
+                html,
+                VgcApis.Models.Datas.Enums.LinkTypes.http
+            );
 
-            var httpsLinks = Misc.Utils.ExtractLinks(html,
-                VgcApis.Models.Datas.Enums.LinkTypes.https);
+            var httpsLinks = Misc.Utils.ExtractLinks(
+                html,
+                VgcApis.Models.Datas.Enums.LinkTypes.https
+            );
 
             Assert.AreEqual(2, httpLinks.Count());
             Assert.AreEqual(2, httpsLinks.Count());
         }
-
 
         [DataTestMethod]
         [DataRow("ss://ZHVtbXkwMA==", "ss://ZHVtbXkwMA==")]
@@ -426,7 +430,10 @@ stat: <
         public void ExtractLinks_FromLinksTxt()
         {
             var content = TestConst.links;
-            var links = Misc.Utils.ExtractLinks(content, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
+            var links = Misc.Utils.ExtractLinks(
+                content,
+                VgcApis.Models.Datas.Enums.LinkTypes.vmess
+            );
             Assert.AreEqual(2, links.Count);
         }
 
@@ -434,14 +441,17 @@ stat: <
         public void ExtractLink_FromEmptyString_Return_EmptyList()
         {
             var content = "";
-            var links = Misc.Utils.ExtractLinks(content, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
+            var links = Misc.Utils.ExtractLinks(
+                content,
+                VgcApis.Models.Datas.Enums.LinkTypes.vmess
+            );
             Assert.AreEqual(0, links.Count);
         }
 
         [TestMethod]
         public void GetRemoteCoreVersions()
         {
-            // skip this time consuming test 
+            // skip this time consuming test
             // List<string> versions = Misc.Utils.GetCoreVersions(-1);
             // Assert.AreEqual(true, versions.Count > 0);
         }
@@ -449,7 +459,7 @@ stat: <
         [TestMethod]
         public void GetVGCVersions()
         {
-            // skip this time consuming test 
+            // skip this time consuming test
             //var version = Misc.Utils.GetLatestVGCVersion();
             //Assert.AreNotEqual(string.Empty, version);
         }

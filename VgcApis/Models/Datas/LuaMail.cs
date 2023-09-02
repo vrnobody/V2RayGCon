@@ -20,9 +20,13 @@
         public object GetAttachment() => attachment;
 
         public bool GetState() => state;
+
         public string GetAddress() => from;
+
         public string GetTitle() => title;
+
         public string GetContent() => content;
+
         public double GetCode() => code;
     }
 }

@@ -3,7 +3,6 @@ using System.Windows.Forms;
 
 namespace ZipExtractor
 {
-
     internal static class Program
     {
         /// <summary>
@@ -17,5 +16,4 @@ namespace ZipExtractor
             Application.Run(new FormMain());
         }
     }
-
 }

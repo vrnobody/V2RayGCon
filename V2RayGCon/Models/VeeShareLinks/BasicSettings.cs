@@ -5,15 +5,21 @@ namespace V2RayGCon.Models.VeeShareLinks
     public class BasicSettings
     {
         // max string length is 256 bytes
-        public string alias, description;
+        public string alias,
+            description;
         public string address;
         public int port; // 16 bit each
 
-        public bool isUseTls, isSecTls;
-        public string streamType, streamParam1, streamParam2, streamParam3;
+        public bool isUseTls,
+            isSecTls;
+        public string streamType,
+            streamParam1,
+            streamParam2,
+            streamParam3;
 
         // patch
-        public string tlsType, tlsServName;
+        public string tlsType,
+            tlsServName;
 
         public BasicSettings()
         {
@@ -34,11 +40,21 @@ namespace V2RayGCon.Models.VeeShareLinks
             tlsServName = @"";
         }
 
-        #region protected 
-        protected readonly List<string> strTable = new List<string>{
-            "ws", "tcp", "kcp", "h2", "quic",
-            "none", "srtp", "utp", "wechat-video",
-            "dtls", "wireguard", "",
+        #region protected
+        protected readonly List<string> strTable = new List<string>
+        {
+            "ws",
+            "tcp",
+            "kcp",
+            "h2",
+            "quic",
+            "none",
+            "srtp",
+            "utp",
+            "wechat-video",
+            "dtls",
+            "wireguard",
+            "",
         };
 
         #endregion
@@ -90,7 +106,6 @@ namespace V2RayGCon.Models.VeeShareLinks
             vc.useSelfSignCert = !isSecTls;
             vc.streamType = streamType;
 
-
             vc.streamParam1 = streamParam1;
             vc.streamParam2 = streamParam2;
             vc.streamParam3 = streamParam3;
@@ -122,7 +137,8 @@ namespace V2RayGCon.Models.VeeShareLinks
 
         public bool EqTo(BasicSettings target)
         {
-            if (target == null
+            if (
+                target == null
                 || alias != target.alias
                 || description != target.description
                 || port != target.port
@@ -134,7 +150,8 @@ namespace V2RayGCon.Models.VeeShareLinks
                 || streamType != target.streamType
                 || streamParam1 != target.streamParam1
                 || streamParam2 != target.streamParam2
-                || streamParam3 != target.streamParam3)
+                || streamParam3 != target.streamParam3
+            )
             {
                 return false;
             }

@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace VgcApis.Libs.Sys
-
 {
     /// <summary>
     /// Allows processes to be automatically killed if this parent process unexpectedly quits.
@@ -61,8 +60,14 @@ namespace VgcApis.Libs.Sys
             {
                 Marshal.StructureToPtr(extendedInfo, extendedInfoPtr, false);
 
-                if (!SetInformationJobObject(s_jobHandle, JobObjectInfoType.ExtendedLimitInformation,
-                    extendedInfoPtr, (uint)length))
+                if (
+                    !SetInformationJobObject(
+                        s_jobHandle,
+                        JobObjectInfoType.ExtendedLimitInformation,
+                        extendedInfoPtr,
+                        (uint)length
+                    )
+                )
                 {
                     throw new Win32Exception();
                 }
@@ -77,8 +82,12 @@ namespace VgcApis.Libs.Sys
         static extern IntPtr CreateJobObject(IntPtr lpJobAttributes, string name);
 
         [DllImport("kernel32.dll")]
-        static extern bool SetInformationJobObject(IntPtr job, JobObjectInfoType infoType,
-            IntPtr lpJobObjectInfo, uint cbJobObjectInfoLength);
+        static extern bool SetInformationJobObject(
+            IntPtr job,
+            JobObjectInfoType infoType,
+            IntPtr lpJobObjectInfo,
+            uint cbJobObjectInfoLength
+        );
 
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern bool AssignProcessToJobObject(IntPtr job, IntPtr process);

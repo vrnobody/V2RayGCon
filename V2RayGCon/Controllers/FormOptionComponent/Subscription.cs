@@ -11,7 +11,10 @@ namespace V2RayGCon.Controllers.OptionComponent
     public class Subscription : OptionComponentController
     {
         readonly FlowLayoutPanel flyPanel;
-        readonly Button btnAdd, btnUpdate, btnUseAll, btnInvertSelection;
+        readonly Button btnAdd,
+            btnUpdate,
+            btnUseAll,
+            btnInvertSelection;
         readonly CheckBox chkSubsIsUseProxy;
         private readonly CheckBox chkSubsIsAutoPatch;
         readonly Services.Settings setting;
@@ -27,7 +30,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             CheckBox chkSubsIsUseProxy,
             CheckBox chkSubsIsAutoPatch,
             Button btnUseAll,
-            Button btnInvertSelection)
+            Button btnInvertSelection
+        )
         {
             this.setting = Services.Settings.Instance;
             this.servers = Services.Servers.Instance;
@@ -57,8 +61,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         }
 
         #region public method
-        public void UpdateServUiTotal(object sender, EventArgs args) =>
-            lazyCounter?.Deadline();
+        public void UpdateServUiTotal(object sender, EventArgs args) => lazyCounter?.Deadline();
 
         public override void Cleanup()
         {
@@ -213,7 +216,9 @@ namespace V2RayGCon.Controllers.OptionComponent
             var subs = new List<Models.Datas.SubscriptionItem>();
             try
             {
-                var items = JsonConvert.DeserializeObject<List<Models.Datas.SubscriptionItem>>(rawSubsSetting);
+                var items = JsonConvert.DeserializeObject<List<Models.Datas.SubscriptionItem>>(
+                    rawSubsSetting
+                );
                 if (items != null)
                 {
                     subs = items;
@@ -332,14 +337,17 @@ namespace V2RayGCon.Controllers.OptionComponent
                 VgcApis.Misc.Utils.RunInBackground(() =>
                 {
                     var links = Misc.Utils.FetchLinksFromSubcriptions(
-                        subs, GetAvailableHttpProxyPort());
+                        subs,
+                        GetAvailableHttpProxyPort()
+                    );
 
-                    LogDownloadFails(links
-                        .Where(l => string.IsNullOrEmpty(l[0]))
-                        .Select(l => l[1]));
+                    LogDownloadFails(
+                        links.Where(l => string.IsNullOrEmpty(l[0])).Select(l => l[1])
+                    );
 
                     slinkMgr.ImportLinkWithOutV2cfgLinksBatchModeSync(
-                        links.Where(l => !string.IsNullOrEmpty(l[0])).ToList());
+                        links.Where(l => !string.IsNullOrEmpty(l[0])).ToList()
+                    );
 
                     UpdateServUiTotal(this, EventArgs.Empty);
 
@@ -357,9 +365,9 @@ namespace V2RayGCon.Controllers.OptionComponent
             }
 
             downloadFailUrls.Insert(0, "");
-            setting.SendLog(string.Join(
-                Environment.NewLine + I18N.DownloadFail + @" ",
-                downloadFailUrls));
+            setting.SendLog(
+                string.Join(Environment.NewLine + I18N.DownloadFail + @" ", downloadFailUrls)
+            );
         }
 
         private List<Models.Datas.SubscriptionItem> GetSubsIsInUse()
@@ -371,8 +379,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             foreach (var subUi in subsUi)
             {
                 var subItem = subUi.GetValue();
-                if (!subItem.isUse
-                    || urlCache.Contains(subItem.url))
+                if (!subItem.isUse || urlCache.Contains(subItem.url))
                 {
                     continue;
                 }
@@ -390,7 +397,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             {
                 // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
 
-                var subject = a.Data.GetData(typeof(Views.UserControls.SubscriptionUI))
+                var subject =
+                    a.Data.GetData(typeof(Views.UserControls.SubscriptionUI))
                     as Views.UserControls.SubscriptionUI;
 
                 var container = s as FlowLayoutPanel;
@@ -412,7 +420,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             //servers.OnServerCountChange += UpdateServUiTotal;
             //servers.OnServerPropertyChange += UpdateServUiTotal;
 
-            chkSubsIsAutoPatch.CheckedChanged += (s, a) => setting.isAutoPatchSubsInfo = chkSubsIsAutoPatch.Checked;
+            chkSubsIsAutoPatch.CheckedChanged += (s, a) =>
+                setting.isAutoPatchSubsInfo = chkSubsIsAutoPatch.Checked;
 
             this.flyPanel.DragEnter += (s, a) =>
             {

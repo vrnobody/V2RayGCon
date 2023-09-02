@@ -12,7 +12,8 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
         public const string proto = "shadowsocks";
 
         public bool isUseOta;
-        public string password, method; // 256 bytes
+        public string password,
+            method; // 256 bytes
 
         public Ss1b()
         {
@@ -21,13 +22,14 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
             isUseOta = false;
         }
 
-        public Ss1b(BasicSettings source) : this()
+        public Ss1b(BasicSettings source)
+            : this()
         {
             CopyFrom(source);
         }
 
-        public Ss1b(byte[] bytes) :
-           this()
+        public Ss1b(byte[] bytes)
+            : this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
             if (ver != version)
@@ -56,10 +58,18 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
             }
         }
 
-        #region string table for compression 
-        List<string> methodTable = new List<string>{
-            "", "aes-256-cfb", "aes-128-cfb", "chacha20",
-            "chacha20-ietf","aes-256-gcm", "aes-128-gcm", "chacha20-poly1305" , "chacha20-ietf-poly1305"
+        #region string table for compression
+        List<string> methodTable = new List<string>
+        {
+            "",
+            "aes-256-cfb",
+            "aes-128-cfb",
+            "chacha20",
+            "chacha20-ietf",
+            "aes-256-gcm",
+            "aes-128-gcm",
+            "chacha20-poly1305",
+            "chacha20-ietf-poly1305"
         };
 
         #endregion
@@ -113,10 +123,12 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 
         public bool EqTo(Ss1b vee)
         {
-            if (!EqTo(vee as BasicSettings)
+            if (
+                !EqTo(vee as BasicSettings)
                 || isUseOta != vee.isUseOta
                 || password != vee.password
-                || method != vee.method)
+                || method != vee.method
+            )
             {
                 return false;
             }
@@ -129,6 +141,5 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 
 
         #endregion
-
     }
 }

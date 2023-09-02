@@ -26,7 +26,8 @@ namespace V2RayGCon.Test.Resource
             };
         }
 
-        public static Func<string, string> testData = StringLoader("V2RayGCon.Test.Resource.Resx.Data");
-
+        public static Func<string, string> testData = StringLoader(
+            "V2RayGCon.Test.Resource.Resx.Data"
+        );
     }
 }

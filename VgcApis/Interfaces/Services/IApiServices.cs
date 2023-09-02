@@ -1,5 +1,4 @@
 ﻿namespace VgcApis.Interfaces.Services
-
 {
     public interface IApiService
     {

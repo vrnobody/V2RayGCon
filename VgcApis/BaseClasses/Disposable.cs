@@ -8,8 +8,8 @@ namespace VgcApis.BaseClasses
     public class Disposable : IDisposable
     {
         protected virtual void Cleanup() { }
-        protected virtual void CleanupUnmanagedResources() { }
 
+        protected virtual void CleanupUnmanagedResources() { }
 
         private bool disposed = false;
 
@@ -74,5 +74,4 @@ namespace VgcApis.BaseClasses
             Dispose(disposing: false);
         }
     }
-
 }

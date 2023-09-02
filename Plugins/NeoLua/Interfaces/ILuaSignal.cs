@@ -2,7 +2,6 @@
 {
     public interface ILuaSignal
     {
-
         /// <summary>
         /// 检测用户是否按下了"■"停止按钮
         /// </summary>

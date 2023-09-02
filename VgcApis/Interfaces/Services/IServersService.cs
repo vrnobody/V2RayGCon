@@ -5,7 +5,9 @@ namespace VgcApis.Interfaces.Services
 {
     public interface IServersService
     {
-        event EventHandler OnCoreStart, OnCoreClosing, OnCoreStop;
+        event EventHandler OnCoreStart,
+            OnCoreClosing,
+            OnCoreStop;
 
         int Count();
 
@@ -52,7 +54,6 @@ namespace VgcApis.Interfaces.Services
 
         void SortSelectedByUploadTotal();
 
-
         void ReverseServersByIndex(List<string> uids);
 
         void SortServersByLastModifiedDate(List<string> uids);
@@ -65,7 +66,6 @@ namespace VgcApis.Interfaces.Services
 
         void SortServersByUploadTotal(List<string> uids);
 
-
         void StopAllServers();
 
         void StopAllServersThen(Action lambda = null);
@@ -74,16 +74,22 @@ namespace VgcApis.Interfaces.Services
 
         string PackServersWithUidsV4(
             List<string> uids,
-            string orgUid, string pkgName,
-            string interval, string url,
+            string orgUid,
+            string pkgName,
+            string interval,
+            string url,
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
-            VgcApis.Models.Datas.Enums.PackageTypes packageType);
+            VgcApis.Models.Datas.Enums.PackageTypes packageType
+        );
 
         string PackSelectedServersV4(
-              string orgUid, string pkgName,
-              string interval, string url,
-              VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
-              VgcApis.Models.Datas.Enums.PackageTypes packageType);
+            string orgUid,
+            string pkgName,
+            string interval,
+            string url,
+            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
+            VgcApis.Models.Datas.Enums.PackageTypes packageType
+        );
 
         string PackServersV4Ui(
             List<VgcApis.Interfaces.ICoreServCtrl> servList,
@@ -92,7 +98,8 @@ namespace VgcApis.Interfaces.Services
             string interval,
             string url,
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
-            VgcApis.Models.Datas.Enums.PackageTypes packageType);
+            VgcApis.Models.Datas.Enums.PackageTypes packageType
+        );
 
         List<ICoreServCtrl> GetTrackableServerList();
         List<ICoreServCtrl> GetAllServersOrderByIndex();

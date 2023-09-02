@@ -10,6 +10,7 @@ namespace V2RayGCon.Views.WinForms
     {
         #region Sigleton
         static FormDownloadCore _instant;
+
         public static FormDownloadCore ShowForm()
         {
             if (_instant == null || _instant.IsDisposed)
@@ -75,12 +76,11 @@ namespace V2RayGCon.Views.WinForms
             {
                 var core = new Libs.V2Ray.Core(setting);
                 var version = core.GetCoreVersion();
-                var msg = string.IsNullOrEmpty(version) ?
-                    I18N.GetCoreVerFail :
-                    string.Format(I18N.CurrentCoreVerIs, version);
+                var msg = string.IsNullOrEmpty(version)
+                    ? I18N.GetCoreVerFail
+                    : string.Format(I18N.CurrentCoreVerIs, version);
 
                 VgcApis.Misc.UI.Invoke(() => el.Text = msg);
-
             });
         }
 
@@ -100,7 +100,10 @@ namespace V2RayGCon.Views.WinForms
             var idx = cboxDownloadSource.SelectedIndex;
 
             downloader = new Libs.Nets.Downloader(setting);
-            downloader.coreType = idx == 2 ? Libs.Nets.Downloader.CoreTypes.Xray : Libs.Nets.Downloader.CoreTypes.V2Ray;
+            downloader.coreType =
+                idx == 2
+                    ? Libs.Nets.Downloader.CoreTypes.Xray
+                    : Libs.Nets.Downloader.CoreTypes.V2Ray;
             downloader.SetSource(idx);
             downloader.SetArchitecture(cboxArch.SelectedIndex == 1);
             downloader.SetVersion(cboxVer.Text);
@@ -122,15 +125,13 @@ namespace V2RayGCon.Views.WinForms
             downloader.OnDownloadCancelled += (s, a) =>
             {
                 ResetUI(0);
-                VgcApis.Misc.Utils.RunInBackground(
-                    () => MessageBox.Show(I18N.DownloadCancelled));
+                VgcApis.Misc.Utils.RunInBackground(() => MessageBox.Show(I18N.DownloadCancelled));
             };
 
             downloader.OnDownloadFail += (s, a) =>
             {
                 ResetUI(0);
-                VgcApis.Misc.Utils.RunInBackground(
-                    () => MessageBox.Show(I18N.TryManualDownload));
+                VgcApis.Misc.Utils.RunInBackground(() => MessageBox.Show(I18N.TryManualDownload));
             };
 
             downloader.DownloadV2RayCore();
@@ -165,7 +166,9 @@ namespace V2RayGCon.Views.WinForms
         {
             btnRefreshVer.Enabled = false;
 
-            var sourceUrl = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(cboxDownloadSource.SelectedIndex);
+            var sourceUrl = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(
+                cboxDownloadSource.SelectedIndex
+            );
             int proxyPort = chkUseProxy.Checked ? servers.GetAvailableHttpProxyPort() : -1;
             var isV2fly = cboxDownloadSource.SelectedIndex == 1;
 
@@ -216,8 +219,8 @@ namespace V2RayGCon.Views.WinForms
                 if (proxyPort <= 0)
                 {
                     VgcApis.Misc.Utils.RunInBackground(
-                        () => MessageBox.Show(
-                            I18N.NoQualifyProxyServer));
+                        () => MessageBox.Show(I18N.NoQualifyProxyServer)
+                    );
                 }
             }
 
@@ -237,7 +240,6 @@ namespace V2RayGCon.Views.WinForms
         {
             RefreshLocalV2RayCoreVersion();
         }
-
 
         private void cboxArch_SelectedIndexChanged(object sender, System.EventArgs e)
         {
@@ -263,6 +265,5 @@ namespace V2RayGCon.Views.WinForms
             setting.v2rayCoreDownloadSource = url;
         }
         #endregion
-
     }
 }

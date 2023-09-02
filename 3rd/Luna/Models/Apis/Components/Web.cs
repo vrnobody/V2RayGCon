@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace Luna.Models.Apis.Components
 {
-    internal sealed class Web :
-        VgcApis.BaseClasses.ComponentOf<LuaApis>,
-        Interfaces.ILuaWeb
+    internal sealed class Web : VgcApis.BaseClasses.ComponentOf<LuaApis>, Interfaces.ILuaWeb
     {
         VgcApis.Interfaces.Services.IWebService vgcWeb;
         VgcApis.Interfaces.Services.IServersService vgcServers;
@@ -79,8 +77,7 @@ namespace Luna.Models.Apis.Components
             return null;
         }
 
-        public bool Tcping(string url, int ms) =>
-            Tcping(url, ms, -1);
+        public bool Tcping(string url, int ms) => Tcping(url, ms, -1);
 
         public bool Tcping(string url, int ms, int proxyPort)
         {
@@ -105,14 +102,11 @@ namespace Luna.Models.Apis.Components
         public List<string> ExtractBase64String(string text, int minLen) =>
             VgcApis.Misc.Utils.ExtractBase64Strings(text, minLen);
 
-        public List<string> ExtractBase64String(string text) =>
-            ExtractBase64String(text, 1);
+        public List<string> ExtractBase64String(string text) => ExtractBase64String(text, 1);
 
-        public int GetProxyPort() =>
-            vgcServers.GetAvailableHttpProxyPort();
+        public int GetProxyPort() => vgcServers.GetAvailableHttpProxyPort();
 
-        public bool Download(string url, string filename) =>
-            vgcWeb.Download(url, filename, -1, -1);
+        public bool Download(string url, string filename) => vgcWeb.Download(url, filename, -1, -1);
 
         public bool Download(string url, string filename, int millSecond) =>
             vgcWeb.Download(url, filename, -1, millSecond);
@@ -122,8 +116,7 @@ namespace Luna.Models.Apis.Components
 
         public string Fetch(string url) => vgcWeb.Fetch(url, -1, -1);
 
-        public string Fetch(string url, int milliSeconds) =>
-            vgcWeb.Fetch(url, -1, milliSeconds);
+        public string Fetch(string url, int milliSeconds) => vgcWeb.Fetch(url, -1, milliSeconds);
 
         public string Fetch(string url, int proxyPort, int milliSeconds) =>
             vgcWeb.Fetch(url, proxyPort, milliSeconds);
@@ -138,11 +131,9 @@ namespace Luna.Models.Apis.Components
             return text ?? string.Empty;
         }
 
-        public int UpdateSubscriptions() =>
-            vgcSlinkMgr.UpdateSubscriptions(-1);
+        public int UpdateSubscriptions() => vgcSlinkMgr.UpdateSubscriptions(-1);
 
-        public int UpdateSubscriptions(int proxyPort) =>
-            vgcSlinkMgr.UpdateSubscriptions(proxyPort);
+        public int UpdateSubscriptions(int proxyPort) => vgcSlinkMgr.UpdateSubscriptions(proxyPort);
 
         public List<string> ExtractAllShareLinks(string text)
         {
@@ -165,24 +156,18 @@ namespace Luna.Models.Apis.Components
         }
 
         public List<string> ExtractV2cfgLinks(string text) =>
-            vgcWeb.ExtractLinks(
-                text, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
+            vgcWeb.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
 
         public List<string> ExtractVmessLinks(string text) =>
-            vgcWeb.ExtractLinks(
-                text, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
+            vgcWeb.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
 
         public List<string> ExtractSsLinks(string text) =>
-            vgcWeb.ExtractLinks(
-                text, VgcApis.Models.Datas.Enums.LinkTypes.ss);
+            vgcWeb.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.ss);
 
         public string Search(string keywords, int first, int proxyPort) =>
             vgcWeb.Search(keywords, first, proxyPort, 20 * 1000);
 
-        public string PatchHref(string url, string href) =>
-            vgcWeb.PatchHref(url, href);
-
-
+        public string PatchHref(string url, string href) => vgcWeb.PatchHref(url, href);
 
         #endregion
     }

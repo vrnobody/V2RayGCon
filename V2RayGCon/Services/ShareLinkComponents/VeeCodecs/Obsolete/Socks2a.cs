@@ -3,9 +3,7 @@ using System;
 
 namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
 {
-    internal sealed class Socks2a :
-        VgcApis.BaseClasses.ComponentOf<VeeDecoder>,
-        IVeeDecoder
+    internal sealed class Socks2a : VgcApis.BaseClasses.ComponentOf<VeeDecoder>, IVeeDecoder
     {
         Cache cache;
 
@@ -34,7 +32,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
 
         #region public methods
         public string GetSupportedVeeVersion() => Models.VeeShareLinks.Obsolete.Socks2a.version;
+
         public string GetSupportedEncodeProtocol() => @"";
+
         public byte[] Config2Bytes(JObject config)
         {
             var vee = Config2Vee(config);
@@ -53,7 +53,12 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
         Models.VeeShareLinks.Obsolete.Socks2a Config2Vee(JObject config)
         {
             var bs = Comm.ExtractBasicConfig(
-                config, @"socks", @"servers", out bool isUseV4, out string root);
+                config,
+                @"socks",
+                @"servers",
+                out bool isUseV4,
+                out string root
+            );
 
             if (bs == null)
             {
@@ -86,8 +91,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
             if (!string.IsNullOrEmpty(socks.userName) || !string.IsNullOrEmpty(socks.userPassword))
             {
                 node["users"] = JToken.Parse(
-                    $"[{{user: \"{socks.userName ?? string.Empty}\"," +
-                    $"pass:\"{socks.userPassword ?? string.Empty}\"}}]");
+                    $"[{{user: \"{socks.userName ?? string.Empty}\","
+                        + $"pass:\"{socks.userPassword ?? string.Empty}\"}}]"
+                );
             }
 
             var tpl = cache.tpl.LoadTemplate("tplImportVmess") as JObject;

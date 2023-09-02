@@ -14,13 +14,13 @@ namespace Luna.Libs.LuaSnippet
             string functionName,
             string defParam,
             string defParmaWithTypeInfo,
-            string description)
+            string description
+        )
             : base(GenApiFuncName(parent, functionName))
         {
             if (string.IsNullOrEmpty(parent) || string.IsNullOrEmpty(functionName))
             {
-                throw new System.ArgumentNullException(
-                    @"param must not null!");
+                throw new System.ArgumentNullException(@"param must not null!");
             }
 
             ImageIndex = 2;
@@ -44,8 +44,10 @@ namespace Luna.Libs.LuaSnippet
         {
             if (fragmentText == Text)
                 return CompareResult.VisibleAndSelected;
-            if (fragmentText.Contains(seperator)
-                && VgcApis.Misc.Utils.PartialMatch(lowerText, fragmentText.ToLower()))
+            if (
+                fragmentText.Contains(seperator)
+                && VgcApis.Misc.Utils.PartialMatch(lowerText, fragmentText.ToLower())
+            )
                 return CompareResult.Visible;
             return CompareResult.Hidden;
         }

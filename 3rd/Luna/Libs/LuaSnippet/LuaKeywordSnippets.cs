@@ -5,9 +5,7 @@ namespace Luna.Libs.LuaSnippet
 {
     internal sealed class LuaKeywordSnippets : MatchItemBase
     {
-        static readonly List<string> hiddenList = new List<string>() {
-            "end",
-        };
+        static readonly List<string> hiddenList = new List<string>() { "end", };
 
         string lowerText;
 
@@ -15,8 +13,7 @@ namespace Luna.Libs.LuaSnippet
             : base(luaKeyword)
         {
             ImageIndex = 0;
-            ToolTipTitle = luaKeyword
-                ?? throw new System.ArgumentException(@"luaKeyword is null!");
+            ToolTipTitle = luaKeyword ?? throw new System.ArgumentException(@"luaKeyword is null!");
             ToolTipText = @"";
             Text = luaKeyword;
 
@@ -41,7 +38,5 @@ namespace Luna.Libs.LuaSnippet
             }
             return CompareResult.Hidden;
         }
-
-
     }
 }

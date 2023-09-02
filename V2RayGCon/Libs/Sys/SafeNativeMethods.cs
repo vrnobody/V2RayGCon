@@ -9,11 +9,19 @@ namespace V2RayGCon.Libs.Sys
     {
         #region dll loader
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA2101:SpecifyMarshalingForPInvokeStringArguments", MessageId = "0")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Globalization",
+            "CA2101:SpecifyMarshalingForPInvokeStringArguments",
+            MessageId = "0"
+        )]
         [DllImport("kernel32.dll")]
         public static extern IntPtr LoadLibrary(string dllToLoad);
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA2101:SpecifyMarshalingForPInvokeStringArguments", MessageId = "1")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Microsoft.Globalization",
+            "CA2101:SpecifyMarshalingForPInvokeStringArguments",
+            MessageId = "1"
+        )]
         [DllImport("kernel32.dll")]
         public static extern IntPtr GetProcAddress(IntPtr hModule, string procedureName);
 

@@ -21,12 +21,16 @@
 
         public VeeConfigs() { }
 
-        public VeeConfigs(string config) : this()
+        public VeeConfigs(string config)
+            : this()
         {
             try
             {
                 var slinkMgr = Services.ShareLinkMgr.Instance;
-                var vee = slinkMgr.EncodeConfigToShareLink(config, VgcApis.Models.Datas.Enums.LinkTypes.v);
+                var vee = slinkMgr.EncodeConfigToShareLink(
+                    config,
+                    VgcApis.Models.Datas.Enums.LinkTypes.v
+                );
                 if (vee == null)
                 {
                     return;
@@ -76,6 +80,5 @@
         }
 
         #endregion
-
     }
 }

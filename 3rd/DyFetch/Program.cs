@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DyFetch
 {
@@ -30,7 +26,12 @@ namespace DyFetch
                 {
                     // 在命令行窗口中运行，没有指定管道参数时
                     // 例如：DyFetch.exe -u "https://www.bing.com"
-                    var html = fetcher.Fetch(configs.url, configs.csses, configs.timeout, configs.wait);
+                    var html = fetcher.Fetch(
+                        configs.url,
+                        configs.csses,
+                        configs.timeout,
+                        configs.wait
+                    );
                     Console.WriteLine(html);
                 }
                 else

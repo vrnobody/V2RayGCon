@@ -2,8 +2,7 @@
 
 namespace VgcApisTests.IComponentOfTests
 {
-    public class Container :
-        VgcApis.BaseClasses.ComponentOf<Container>
+    public class Container : VgcApis.BaseClasses.ComponentOf<Container>
     {
         public Container() { }
 
@@ -13,6 +12,5 @@ namespace VgcApisTests.IComponentOfTests
         {
             Debug.WriteLine("Container disposed.");
         }
-
     }
 }

@@ -9,7 +9,11 @@ namespace VgcApis.Models.Datas
 
         readonly BlockingCollection<LuaMail> mails;
 
-        public LuaMailBox(string myAddress, Interfaces.Services.IPostOffice postOffice, int capacity)
+        public LuaMailBox(
+            string myAddress,
+            Interfaces.Services.IPostOffice postOffice,
+            int capacity
+        )
         {
             this.myAddress = myAddress;
             this.postOffice = postOffice;
@@ -79,37 +83,49 @@ namespace VgcApis.Models.Datas
         public bool Reply(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, string title) =>
             Reply(mail, title, null);
 
-        public bool Reply(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, string title, string content) =>
-            Reply(mail, 0, title, false, content);
+        public bool Reply(
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail,
+            string title,
+            string content
+        ) => Reply(mail, 0, title, false, content);
 
         public bool ReplyCode(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, double code) =>
             ReplyCode(mail, code, null);
 
-        public bool ReplyCode(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, double code, string content) =>
-            Reply(mail, code, null, false, content);
+        public bool ReplyCode(
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail,
+            double code,
+            string content
+        ) => Reply(mail, code, null, false, content);
 
         public bool ReplyState(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, bool state) =>
             ReplyState(mail, state, null);
 
-        public bool ReplyState(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, bool state, string content) =>
-            Reply(mail, 0, null, state, content);
+        public bool ReplyState(
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail,
+            bool state,
+            string content
+        ) => Reply(mail, 0, null, state, content);
 
-        public bool Reply(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, double code, string title, bool state, string content) =>
-            Send(mail.GetAddress(), code, title, state, content);
+        public bool Reply(
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail,
+            double code,
+            string title,
+            bool state,
+            string content
+        ) => Send(mail.GetAddress(), code, title, state, content);
 
-        public bool Send(string address, string title) =>
-            Send(address, title, null);
+        public bool Send(string address, string title) => Send(address, title, null);
 
         public bool Send(string address, string title, string content) =>
             Send(address, 0, title, false, content);
 
-        public bool SendCode(string address, double code) =>
-            SendCode(address, code, null);
+        public bool SendCode(string address, double code) => SendCode(address, code, null);
+
         public bool SendCode(string address, double code, string content) =>
             Send(address, code, null, false, content);
 
-        public bool SendState(string address, bool state) =>
-            SendState(address, state, null);
+        public bool SendState(string address, bool state) => SendState(address, state, null);
 
         public bool SendState(string address, bool state, string content) =>
             Send(address, 0, null, state, content);
@@ -118,7 +134,15 @@ namespace VgcApis.Models.Datas
         public bool Send(string address, double code, string title, bool state, string content) =>
             Send(address, code, title, state, content, null, null);
 
-        public bool Send(string address, double code, string title, bool state, string content, string header, object attachment)
+        public bool Send(
+            string address,
+            double code,
+            string title,
+            bool state,
+            string content,
+            string header,
+            object attachment
+        )
         {
             var mail = new LuaMail
             {
@@ -134,10 +158,23 @@ namespace VgcApis.Models.Datas
             return postOffice.Send(address, mail);
         }
 
-        public bool SendAndWait(string address, double code, string title, bool state, string content) =>
-            SendAndWait(address, code, title, state, content);
+        public bool SendAndWait(
+            string address,
+            double code,
+            string title,
+            bool state,
+            string content
+        ) => SendAndWait(address, code, title, state, content);
 
-        public bool SendAndWait(string address, double code, string title, bool state, string content, string header, object attachment)
+        public bool SendAndWait(
+            string address,
+            double code,
+            string title,
+            bool state,
+            string content,
+            string header,
+            object attachment
+        )
         {
             var mail = new LuaMail
             {

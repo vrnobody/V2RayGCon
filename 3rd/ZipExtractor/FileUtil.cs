@@ -6,8 +6,6 @@ using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 namespace ZipExtractor
 {
-
-
     // https://stackoverflow.com/a/20623302/1273550
     public static class FileUtil
     {
@@ -16,26 +14,34 @@ namespace ZipExtractor
         private const int CCH_RM_MAX_SVC_NAME = 63;
 
         [DllImport("rstrtmgr.dll", CharSet = CharSet.Unicode)]
-        private static extern int RmRegisterResources(uint pSessionHandle,
+        private static extern int RmRegisterResources(
+            uint pSessionHandle,
             uint nFiles,
             string[] rgsFilenames,
             uint nApplications,
             [In] RM_UNIQUE_PROCESS[] rgApplications,
             uint nServices,
-            string[] rgsServiceNames);
+            string[] rgsServiceNames
+        );
 
         [DllImport("rstrtmgr.dll", CharSet = CharSet.Auto)]
-        private static extern int RmStartSession(out uint pSessionHandle, int dwSessionFlags, string strSessionKey);
+        private static extern int RmStartSession(
+            out uint pSessionHandle,
+            int dwSessionFlags,
+            string strSessionKey
+        );
 
         [DllImport("rstrtmgr.dll")]
         private static extern int RmEndSession(uint pSessionHandle);
 
         [DllImport("rstrtmgr.dll")]
-        private static extern int RmGetList(uint dwSessionHandle,
+        private static extern int RmGetList(
+            uint dwSessionHandle,
             out uint pnProcInfoNeeded,
             ref uint pnProcInfo,
-            [In][Out] RM_PROCESS_INFO[] rgAffectedApps,
-            ref uint lpdwRebootReasons);
+            [In] [Out] RM_PROCESS_INFO[] rgAffectedApps,
+            ref uint lpdwRebootReasons
+        );
 
         /// <summary>
         ///     Find out what process(es) have a lock on the specified file.
@@ -56,7 +62,9 @@ namespace ZipExtractor
 
             if (res != 0)
             {
-                throw new Exception("Could not begin restart session.  Unable to determine file locker.");
+                throw new Exception(
+                    "Could not begin restart session.  Unable to determine file locker."
+                );
             }
 
             try
@@ -67,7 +75,15 @@ namespace ZipExtractor
 
                 string[] resources = { path }; // Just checking on one resource.
 
-                res = RmRegisterResources(handle, (uint)resources.Length, resources, 0, null, 0, null);
+                res = RmRegisterResources(
+                    handle,
+                    (uint)resources.Length,
+                    resources,
+                    0,
+                    null,
+                    0,
+                    null
+                );
 
                 if (res != 0)
                 {
@@ -77,7 +93,13 @@ namespace ZipExtractor
                 //Note: there's a race condition here -- the first call to RmGetList() returns
                 //      the total number of process. However, when we call RmGetList() again to get
                 //      the actual processes this number may have increased.
-                res = RmGetList(handle, out uint pnProcInfoNeeded, ref pnProcInfo, null, ref lpdwRebootReasons);
+                res = RmGetList(
+                    handle,
+                    out uint pnProcInfoNeeded,
+                    ref pnProcInfo,
+                    null,
+                    ref lpdwRebootReasons
+                );
 
                 if (res == ERROR_MORE_DATA)
                 {
@@ -86,23 +108,29 @@ namespace ZipExtractor
                     pnProcInfo = pnProcInfoNeeded;
 
                     // Get the list
-                    res = RmGetList(handle, out pnProcInfoNeeded, ref pnProcInfo, processInfo, ref lpdwRebootReasons);
+                    res = RmGetList(
+                        handle,
+                        out pnProcInfoNeeded,
+                        ref pnProcInfo,
+                        processInfo,
+                        ref lpdwRebootReasons
+                    );
 
                     if (res == 0)
                     {
                         processes = new List<Process>((int)pnProcInfo);
 
-                        // Enumerate all of the results and add them to the 
+                        // Enumerate all of the results and add them to the
                         // list to be returned
                         for (var i = 0; i < pnProcInfo; i++)
                             try
                             {
-                                processes.Add(Process.GetProcessById(processInfo[i].Process.dwProcessId));
+                                processes.Add(
+                                    Process.GetProcessById(processInfo[i].Process.dwProcessId)
+                                );
                             }
                             // catch the error -- in case the process is no longer running
-                            catch (ArgumentException)
-                            {
-                            }
+                            catch (ArgumentException) { }
                     }
                     else
                     {
@@ -111,7 +139,9 @@ namespace ZipExtractor
                 }
                 else if (res != 0)
                 {
-                    throw new Exception("Could not list processes locking resource. Failed to get size of result.");
+                    throw new Exception(
+                        "Could not list processes locking resource. Failed to get size of result."
+                    );
                 }
             }
             finally
@@ -154,8 +184,9 @@ namespace ZipExtractor
             public readonly RM_APP_TYPE ApplicationType;
             public readonly uint AppStatus;
             public readonly uint TSSessionId;
-            [MarshalAs(UnmanagedType.Bool)] public readonly bool bRestartable;
+
+            [MarshalAs(UnmanagedType.Bool)]
+            public readonly bool bRestartable;
         }
     }
-
 }

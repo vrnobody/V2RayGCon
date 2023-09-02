@@ -8,6 +8,7 @@ namespace NeoLuna.Views.WinForms
         #region Sigleton
         static FormLuaCoreSettings _instant;
         static readonly object formInstanLocker = new object();
+
         public static void ShowForm(Controllers.LuaCoreCtrl luaCoreCtrl)
         {
             FormLuaCoreSettings f = null;
@@ -98,6 +99,5 @@ namespace NeoLuna.Views.WinForms
             Close();
         }
         #endregion
-
     }
 }

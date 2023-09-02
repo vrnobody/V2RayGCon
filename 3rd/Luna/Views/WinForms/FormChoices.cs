@@ -5,9 +5,7 @@ using System.Windows.Forms;
 
 namespace Luna.Views.WinForms
 {
-    public partial class FormChoices :
-        Form,
-        Interfaces.IWinFormControl<List<int>>
+    public partial class FormChoices : Form, Interfaces.IWinFormControl<List<int>>
     {
         readonly int MAX_TITLE_LEN = 60;
         readonly int MAX_CHOICE_LEN = 50;
@@ -34,6 +32,7 @@ namespace Luna.Views.WinForms
 
         #region public methods
         List<int> results = null;
+
         public List<int> GetResult() => results;
         #endregion
 
@@ -51,6 +50,7 @@ namespace Luna.Views.WinForms
         }
 
         List<CheckBox> checkBoxes = new List<CheckBox>();
+
         void InitControls()
         {
             lbTitle.Text = VgcApis.Misc.Utils.AutoEllipsis(title, MAX_TITLE_LEN);
@@ -112,6 +112,5 @@ namespace Luna.Views.WinForms
             }
         }
         #endregion
-
     }
 }

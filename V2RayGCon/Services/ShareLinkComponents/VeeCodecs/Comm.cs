@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 
 namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 {
@@ -24,8 +23,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             ps["flow"] = vc.auth2;
             EncodeStreamSettings(vc, ps);
 
-            var pms = ps
-                .Where(kv => !string.IsNullOrEmpty(kv.Value))
+            var pms = ps.Where(kv => !string.IsNullOrEmpty(kv.Value))
                 .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value)))
                 .ToList();
 
@@ -36,11 +34,15 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
                 VgcApis.Misc.Utils.FormatHost(vc.host),
                 vc.port,
                 string.Join("&", pms),
-                Uri.EscapeDataString(vc.name));
+                Uri.EscapeDataString(vc.name)
+            );
             return url;
         }
 
-        public static Models.Datas.VeeConfigsWithReality ParseNonStandarUriShareLink(string proto, string url)
+        public static Models.Datas.VeeConfigsWithReality ParseNonStandarUriShareLink(
+            string proto,
+            string url
+        )
         {
             var header = proto + "://";
 
@@ -50,8 +52,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             }
 
             // 抄袭自： https://github.com/musva/V2RayW/commit/e54f387e8d8181da833daea8464333e41f0f19e6 GPLv3
-            List<string> parts = url
-                .Substring(header.Length)
+            List<string> parts = url.Substring(header.Length)
                 .Replace("/?", "?")
                 .Split(new char[] { '@', '?', '&', '#', '=' })
                 .Select(s => Uri.UnescapeDataString(s))
@@ -129,7 +130,12 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         }
 
         public static Models.VeeShareLinks.BasicSettingsWithReality ExtractBasicConfig(
-            JObject config, string protocol, string key, out bool isUseV4, out string root)
+            JObject config,
+            string protocol,
+            string key,
+            out bool isUseV4,
+            out string root
+        )
         {
             var GetStr = Misc.Utils.GetStringByPrefixAndKeyHelper(config);
 
@@ -160,7 +166,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         }
 
         public static JToken GenStreamSetting(
-            Cache cache, Models.VeeShareLinks.BasicSettingsWithReality streamSettings)
+            Cache cache,
+            Models.VeeShareLinks.BasicSettingsWithReality streamSettings
+        )
         {
             var ss = streamSettings;
             // insert stream type
@@ -190,7 +198,10 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         #endregion
 
         #region private methods
-        private static void EncodeStreamSettings(Models.Datas.VeeConfigsWithReality vc, Dictionary<string, string> ps)
+        private static void EncodeStreamSettings(
+            Models.Datas.VeeConfigsWithReality vc,
+            Dictionary<string, string> ps
+        )
         {
             switch (vc.streamType)
             {
@@ -239,7 +250,10 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             }
         }
 
-        private static void EncodeTlsSettings(Models.Datas.VeeConfigsWithReality vc, Dictionary<string, string> ps)
+        private static void EncodeTlsSettings(
+            Models.Datas.VeeConfigsWithReality vc,
+            Dictionary<string, string> ps
+        )
         {
             ps["type"] = vc.streamType;
             ps["security"] = vc.tlsType;
@@ -255,15 +269,18 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             }
         }
 
-        private static void FillInTlsSetting(Models.VeeShareLinks.BasicSettingsWithReality ss, JToken token)
+        private static void FillInTlsSetting(
+            Models.VeeShareLinks.BasicSettingsWithReality ss,
+            JToken token
+        )
         {
             if (ss.isUseTls)
             {
                 // backward compatible
                 token["security"] = "tls";
-                token["tlsSettings"] = ss.isSecTls ?
-                    JObject.Parse(@"{allowInsecure: false}") :
-                    JObject.Parse(@"{allowInsecure: true}");
+                token["tlsSettings"] = ss.isSecTls
+                    ? JObject.Parse(@"{allowInsecure: false}")
+                    : JObject.Parse(@"{allowInsecure: true}");
                 return;
             }
 
@@ -307,7 +324,12 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             token[k] = o;
         }
 
-        private static void FillInStreamSetting(Models.VeeShareLinks.BasicSettingsWithReality ss, string st, string mainParam, JToken token)
+        private static void FillInStreamSetting(
+            Models.VeeShareLinks.BasicSettingsWithReality ss,
+            string st,
+            string mainParam,
+            JToken token
+        )
         {
             switch (st)
             {
@@ -327,8 +349,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
                     break;
                 case "tcp_http":
                     token["tcpSettings"]["header"]["type"] = mainParam;
-                    token["tcpSettings"]["header"]["request"]["path"] =
-                        Misc.Utils.Str2JArray(string.IsNullOrEmpty(ss.streamParam2) ? "/" : ss.streamParam2);
+                    token["tcpSettings"]["header"]["request"]["path"] = Misc.Utils.Str2JArray(
+                        string.IsNullOrEmpty(ss.streamParam2) ? "/" : ss.streamParam2
+                    );
                     token["tcpSettings"]["header"]["request"]["headers"]["Host"] =
                         Misc.Utils.Str2JArray(ss.streamParam3);
                     break;
@@ -359,7 +382,10 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
         static void ExtractTlsSettings(
             Models.VeeShareLinks.BasicSettingsWithReality result,
-            JObject config, System.Func<string, string, string> reader, string prefix)
+            JObject config,
+            System.Func<string, string, string> reader,
+            string prefix
+        )
         {
             var tt = reader(prefix, "security")?.ToLower();
             result.tlsType = tt;
@@ -396,7 +422,10 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
         static void ExtractStreamSettings(
             Models.VeeShareLinks.BasicSettingsWithReality result,
-            JObject config, bool isUseV4, string root)
+            JObject config,
+            bool isUseV4,
+            string root
+        )
         {
             var GetStr = Misc.Utils.GetStringByPrefixAndKeyHelper(config);
 
@@ -431,9 +460,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
                     mainParam = GetStr(subPrefix, "httpSettings.path");
                     try
                     {
-                        var hosts = isUseV4 ?
-                            config["outbounds"][0]["streamSettings"]["httpSettings"]["host"] :
-                            config["outbound"]["streamSettings"]["httpSettings"]["host"];
+                        var hosts = isUseV4
+                            ? config["outbounds"][0]["streamSettings"]["httpSettings"]["host"]
+                            : config["outbound"]["streamSettings"]["httpSettings"]["host"];
                         result.streamParam2 = Misc.Utils.JArray2Str(hosts as JArray);
                     }
                     catch { }
@@ -450,21 +479,32 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         }
 
         static void ExtractTcpHttpSettings(
-            JObject json, bool isUseV4, Models.VeeShareLinks.BasicSettings streamSettings)
+            JObject json,
+            bool isUseV4,
+            Models.VeeShareLinks.BasicSettings streamSettings
+        )
         {
             try
             {
-                var path = isUseV4 ?
-                    json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"]["request"]["path"] :
-                    json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"]["path"];
+                var path = isUseV4
+                    ? json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"]["request"][
+                        "path"
+                    ]
+                    : json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"][
+                        "path"
+                    ];
                 streamSettings.streamParam2 = Misc.Utils.JArray2Str(path as JArray);
             }
             catch { }
             try
             {
-                var hosts = isUseV4 ?
-                    json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"]["request"]["headers"]["Host"] :
-                    json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"]["headers"]["Host"];
+                var hosts = isUseV4
+                    ? json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"]["request"][
+                        "headers"
+                    ]["Host"]
+                    : json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"][
+                        "headers"
+                    ]["Host"];
                 streamSettings.streamParam3 = Misc.Utils.JArray2Str(hosts as JArray);
             }
             catch { }

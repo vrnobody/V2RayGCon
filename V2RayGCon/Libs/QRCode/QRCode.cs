@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using ZXing;
@@ -70,17 +68,24 @@ namespace V2RayGCon.Libs.QRCode
 
         static bool ScanScreen(Screen screen, Action<string> success)
         {
-            VgcApis.Libs.Sys.ScreenExtensions.CalcScreenScaleInfo(screen, out var bounds, out var scale);
+            VgcApis.Libs.Sys.ScreenExtensions.CalcScreenScaleInfo(
+                screen,
+                out var bounds,
+                out var scale
+            );
             using (Bitmap screenshot = new Bitmap(bounds.Width, bounds.Height))
             {
                 // take a screenshot
                 using (Graphics g = Graphics.FromImage(screenshot))
                 {
                     g.CopyFromScreen(
-                        bounds.X, bounds.Y,
-                        0, 0,
+                        bounds.X,
+                        bounds.Y,
+                        0,
+                        0,
                         bounds.Size,
-                        CopyPixelOperation.SourceCopy);
+                        CopyPixelOperation.SourceCopy
+                    );
                 }
 
                 var luminance = new BitmapLuminanceSource(screenshot);
@@ -98,7 +103,12 @@ namespace V2RayGCon.Libs.QRCode
             }
         }
 
-        static void ShowSplashForm(Result result, Rectangle bounds, PointF scale, Action<string> success)
+        static void ShowSplashForm(
+            Result result,
+            Rectangle bounds,
+            PointF scale,
+            Action<string> success
+        )
         {
             var link = result.Text;
             var qrCodeRect = TransformQrCodeRect(result, bounds, scale);
@@ -138,7 +148,8 @@ namespace V2RayGCon.Libs.QRCode
                 DivIntFloat(start.X, scale.X),
                 DivIntFloat(start.Y, scale.Y),
                 DivIntFloat(end.X - start.X, scale.X),
-                DivIntFloat(end.Y - start.Y, scale.Y));
+                DivIntFloat(end.Y - start.Y, scale.Y)
+            );
         }
 
         static Rectangle TransformWinformRect(Rectangle bounds, PointF scale)
@@ -147,7 +158,8 @@ namespace V2RayGCon.Libs.QRCode
                 bounds.X,
                 bounds.Y,
                 DivIntFloat(bounds.Width, scale.X),
-                DivIntFloat(bounds.Height, scale.Y));
+                DivIntFloat(bounds.Height, scale.Y)
+            );
         }
     }
 }

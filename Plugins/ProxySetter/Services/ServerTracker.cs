@@ -29,7 +29,8 @@ namespace ProxySetter.Services
             PsSettings setting,
             PacServer pacServer,
             VgcApis.Interfaces.Services.IServersService servers,
-            VgcApis.Interfaces.Services.INotifierService notifier)
+            VgcApis.Interfaces.Services.INotifierService notifier
+        )
         {
             this.setting = setting;
             this.pacServer = pacServer;
@@ -95,7 +96,6 @@ namespace ProxySetter.Services
             StopTracking();
         }
 
-
         #endregion
 
         #region hotkey
@@ -123,7 +123,13 @@ namespace ProxySetter.Services
                 Restart();
             };
 
-            hotKeyHandle = notifier.RegisterHotKey(handler, bs.hotkeyStr, bs.isUseAlt, true, bs.isUseShift);
+            hotKeyHandle = notifier.RegisterHotKey(
+                handler,
+                bs.hotkeyStr,
+                bs.isUseAlt,
+                true,
+                bs.isUseShift
+            );
 
             if (string.IsNullOrEmpty(hotKeyHandle))
             {
@@ -143,9 +149,7 @@ namespace ProxySetter.Services
             {
                 var ok = notifier.UnregisterHotKey(hotKeyHandle);
                 hotKeyHandle = null;
-                setting.SendLog(string.Format(
-                    I18N.UnregisterHotKey,
-                    ok ? I18N.Done : I18N.Failed));
+                setting.SendLog(string.Format(I18N.UnregisterHotKey, ok ? I18N.Done : I18N.Failed));
             }
         }
         #endregion
@@ -162,30 +166,29 @@ namespace ProxySetter.Services
         }
 
         Libs.Sys.CancelableTimeout lazyProxyUpdateTimer = null;
+
         void WakeupLazyProxyUpdater()
         {
             if (lazyProxyUpdateTimer == null)
             {
-                lazyProxyUpdateTimer =
-                    new Libs.Sys.CancelableTimeout(
-                        LazyProxyUpdater, 2000);
+                lazyProxyUpdateTimer = new Libs.Sys.CancelableTimeout(LazyProxyUpdater, 2000);
             }
             lazyProxyUpdateTimer.Start();
         }
 
         void SearchForAvailableProxyServer(
             bool isGlobal,
-            List<VgcApis.Interfaces.ICoreServCtrl> serverList)
+            List<VgcApis.Interfaces.ICoreServCtrl> serverList
+        )
         {
             foreach (var serv in serverList)
             {
-                if (serv.GetConfiger().IsSuitableToBeUsedAsSysProxy(
-                   isGlobal, out bool isSocks, out int port))
+                if (
+                    serv.GetConfiger()
+                        .IsSuitableToBeUsedAsSysProxy(isGlobal, out bool isSocks, out int port)
+                )
                 {
-                    UpdateSysProxySetting(
-                        serv.GetCoreStates().GetTitle(),
-                        isSocks,
-                        port);
+                    UpdateSysProxySetting(serv.GetCoreStates().GetTitle(), isSocks, port);
                     return;
                 }
             }
@@ -199,7 +202,9 @@ namespace ProxySetter.Services
 
             if (!isGlobal)
             {
-                var curPacProtoIsSocks = (bs.pacProtocol == (int)Model.Data.Enum.PacProtocols.SOCKS);
+                var curPacProtoIsSocks = (
+                    bs.pacProtocol == (int)Model.Data.Enum.PacProtocols.SOCKS
+                );
                 if (isSocks != curPacProtoIsSocks)
                 {
                     return true;
@@ -230,10 +235,9 @@ namespace ProxySetter.Services
             }
             else
             {
-                bs.pacProtocol =
-                    (int)(isSocks ?
-                    Model.Data.Enum.PacProtocols.SOCKS :
-                    Model.Data.Enum.PacProtocols.HTTP);
+                bs.pacProtocol = (int)(
+                    isSocks ? Model.Data.Enum.PacProtocols.SOCKS : Model.Data.Enum.PacProtocols.HTTP
+                );
                 Libs.Sys.ProxySetter.SetPacProxy(pacServer.GetPacUrl());
             }
 
@@ -246,19 +250,21 @@ namespace ProxySetter.Services
         {
             var serverList = servers.GetTrackableServerList();
             var isGlobal =
-                    setting.GetBasicSetting().sysProxyMode ==
-                    (int)Model.Data.Enum.SystemProxyModes.Global;
+                setting.GetBasicSetting().sysProxyMode
+                == (int)Model.Data.Enum.SystemProxyModes.Global;
 
-            var curServ = serverList.FirstOrDefault(s => s.GetConfiger().GetConfig() == curServerConfig);
+            var curServ = serverList.FirstOrDefault(
+                s => s.GetConfiger().GetConfig() == curServerConfig
+            );
             if (curServ != null)
             {
-                if (curServ.GetConfiger().IsSuitableToBeUsedAsSysProxy(
-                    isGlobal, out bool isSocks, out int port))
+                if (
+                    curServ
+                        .GetConfiger()
+                        .IsSuitableToBeUsedAsSysProxy(isGlobal, out bool isSocks, out int port)
+                )
                 {
-                    UpdateSysProxySetting(
-                        curServ.GetCoreStates().GetTitle(),
-                        isSocks,
-                        port);
+                    UpdateSysProxySetting(curServ.GetCoreStates().GetTitle(), isSocks, port);
                     return;
                 }
             }
@@ -266,6 +272,7 @@ namespace ProxySetter.Services
         }
 
         string curServerConfig;
+
         void OnCoreRunningStatChangeHandler(object sender, EventArgs args)
         {
             if (sender != null)
@@ -281,6 +288,7 @@ namespace ProxySetter.Services
         }
 
         readonly object trackingLocker = new object();
+
         void StartTracking()
         {
             lock (trackingLocker)

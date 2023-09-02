@@ -29,10 +29,12 @@ namespace Luna.Models.Apis
 
         public VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailBox { get; set; }
         public EventHandler evHandler { get; set; }
+
         public GlobalEvHook(
             CoreEvTypes evType,
             VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailBox,
-            EventHandler evHandler)
+            EventHandler evHandler
+        )
         {
             this.evType = evType;
             this.mailBox = mailBox;
@@ -46,11 +48,13 @@ namespace Luna.Models.Apis
         public VgcApis.Interfaces.ICoreServCtrl coreServCtrl { get; set; }
         public VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailBox { get; set; }
         public EventHandler evHandler { get; set; }
+
         public CoreEvHook(
             CoreEvTypes evType,
             VgcApis.Interfaces.ICoreServCtrl coreServCtrl,
             VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailBox,
-            EventHandler evHandler)
+            EventHandler evHandler
+        )
         {
             this.evType = evType;
             this.coreServCtrl = coreServCtrl;
@@ -66,9 +70,7 @@ namespace Luna.Models.Apis
         public string lastLogSend = "";
     }
 
-    internal class LuaSys :
-        VgcApis.BaseClasses.Disposable,
-        Interfaces.ILuaSys
+    internal class LuaSys : VgcApis.BaseClasses.Disposable, Interfaces.ILuaSys
     {
         readonly object procLocker = new object();
         private readonly LuaCoreCtrl luaCoreCtrl;
@@ -76,14 +78,16 @@ namespace Luna.Models.Apis
         private readonly Func<List<Type>> getAllAssemblies;
         List<Process> processes = new List<Process>();
 
-        List<VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>
-            mailboxs = new List<VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>();
+        List<VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox> mailboxs =
+            new List<VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>();
 
-        ConcurrentDictionary<string, VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>
-            hotkeys = new ConcurrentDictionary<string, VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>();
+        ConcurrentDictionary<string, VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox> hotkeys =
+            new ConcurrentDictionary<string, VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>();
 
-        ConcurrentDictionary<string, CoreEvHook> coreEvHooks = new ConcurrentDictionary<string, CoreEvHook>();
-        ConcurrentDictionary<string, GlobalEvHook> globalEvHooks = new ConcurrentDictionary<string, GlobalEvHook>();
+        ConcurrentDictionary<string, CoreEvHook> coreEvHooks =
+            new ConcurrentDictionary<string, CoreEvHook>();
+        ConcurrentDictionary<string, GlobalEvHook> globalEvHooks =
+            new ConcurrentDictionary<string, GlobalEvHook>();
         ConcurrentDictionary<string, LuaVm> luaVms = new ConcurrentDictionary<string, LuaVm>();
 
         VgcApis.Interfaces.Services.IServersService vgcServerService;
@@ -96,10 +100,7 @@ namespace Luna.Models.Apis
 
         List<string> snapCacheTokens = new List<string>();
 
-        public LuaSys(
-            LuaCoreCtrl luaCoreCtrl,
-            LuaApis luaApis,
-            Func<List<Type>> getAllAssemblies)
+        public LuaSys(LuaCoreCtrl luaCoreCtrl, LuaApis luaApis, Func<List<Type>> getAllAssemblies)
         {
             this.luaCoreCtrl = luaCoreCtrl;
             this.luaApis = luaApis;
@@ -129,7 +130,8 @@ namespace Luna.Models.Apis
 
         public object SnapCacheGet(string token, string key) => postOffice.SnapCacheGet(token, key);
 
-        public bool SnapCacheSet(string token, string key, object value) => postOffice.SnapCacheSet(token, key, value);
+        public bool SnapCacheSet(string token, string key, object value) =>
+            postOffice.SnapCacheSet(token, key, value);
         #endregion
 
         #region ILuaSys.LuaCoreCtrl
@@ -137,11 +139,16 @@ namespace Luna.Models.Apis
         #endregion
 
         #region ILuaSys.LuaVm
-        private void BuildOneModuleSnippets(string varName, JObject ast, List<Dictionary<string, string>> snippets)
+        private void BuildOneModuleSnippets(
+            string varName,
+            JObject ast,
+            List<Dictionary<string, string>> snippets
+        )
         {
-            var fds = new Dictionary<string, string>() {
-                { Services.AstServer.KEY_FUNCTION,"." },
-                { Services.AstServer.KEY_METHODS ,":" },
+            var fds = new Dictionary<string, string>()
+            {
+                { Services.AstServer.KEY_FUNCTION, "." },
+                { Services.AstServer.KEY_METHODS, ":" },
             };
 
             snippets.Add(ToSnippet(varName, "keyword"));
@@ -211,16 +218,17 @@ namespace Luna.Models.Apis
              */
 
             return new Dictionary<string, string>
-                {
-                    {"caption", caption },
-                    {"value", caption },
-                    {"meta", meta },
-                };
+            {
+                { "caption", caption },
+                { "value", caption },
+                { "meta", meta },
+            };
         }
 
         public string LuaGetStaticSnippets()
         {
-            var snippets = astServer.GetRequireModuleNames()
+            var snippets = astServer
+                .GetRequireModuleNames()
                 .Select(name => ToSnippet(name, "snippet"))
                 .Concat(astServer.GetWebUiLuaStaticSnippets())
                 .OrderBy(dict => dict["caption"])
@@ -231,9 +239,7 @@ namespace Luna.Models.Apis
 
         Controllers.LuaCoreCtrl GetLuaCoreCtrlByName(string name)
         {
-            return luaServer.GetAllLuaCoreCtrls()
-                .Where(core => core.name == name)
-                .FirstOrDefault();
+            return luaServer.GetAllLuaCoreCtrls().Where(core => core.name == name).FirstOrDefault();
         }
 
         public string LuaAnalyzeCode(string code)
@@ -258,7 +264,8 @@ namespace Luna.Models.Apis
 
         public string LuaServGetAllCoreInfos()
         {
-            var settings = luaServer.GetAllLuaCoreCtrls()
+            var settings = luaServer
+                .GetAllLuaCoreCtrls()
                 .Select(ctrl =>
                 {
                     var s = ctrl.GetCoreSettings();
@@ -329,6 +336,7 @@ namespace Luna.Models.Apis
                 core.Start();
             });
         }
+
         public void LuaServStart(string name)
         {
             GetLuaCoreCtrlByName(name)?.Start();
@@ -343,6 +351,7 @@ namespace Luna.Models.Apis
         {
             GetLuaCoreCtrlByName(name)?.Stop();
         }
+
         public bool LuaServAdd(string name, string script)
         {
             return luaServer.AddOrReplaceScript(name, script);
@@ -424,10 +433,7 @@ namespace Luna.Models.Apis
 
         public string LuaVmCreate(string name)
         {
-            var vm = new LuaVm()
-            {
-                logger = new VgcApis.Libs.Sys.QueueLogger(),
-            };
+            var vm = new LuaVm() { logger = new VgcApis.Libs.Sys.QueueLogger(), };
 
             Action<string> log = (msg) =>
             {
@@ -455,8 +461,7 @@ namespace Luna.Models.Apis
             return luavm;
         }
 
-        public bool LuaVmRun(string vmh, string script) =>
-            LuaVmRun(vmh, script, false);
+        public bool LuaVmRun(string vmh, string script) => LuaVmRun(vmh, script, false);
 
         public bool LuaVmRun(string vmh, string script, bool isLoadClr)
         {
@@ -489,9 +494,10 @@ namespace Luna.Models.Apis
                 if (luaVms.TryGetValue(uid, out var vm))
                 {
                     var ctrl = vm.coreCtrl;
-                    infos[uid] = new Dictionary<string, object>() {
-                        {"name", ctrl.name},
-                        {"on", ctrl.isRunning },
+                    infos[uid] = new Dictionary<string, object>()
+                    {
+                        { "name", ctrl.name },
+                        { "on", ctrl.isRunning },
                     };
                 }
             }
@@ -534,7 +540,6 @@ namespace Luna.Models.Apis
 
         public string LuaVmGetLog(string vmh)
         {
-
             if (luaVms.TryGetValue(vmh, out var vm))
             {
                 var log = vm.logger?.GetLogAsString(false);
@@ -559,15 +564,16 @@ namespace Luna.Models.Apis
         public Interfaces.IRunnable CreateHttpServer(
             string url,
             VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox inbox,
-            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox outbox) =>
-            CreateHttpServer(url, inbox, outbox, null, false);
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox outbox
+        ) => CreateHttpServer(url, inbox, outbox, null, false);
 
         public Interfaces.IRunnable CreateHttpServer(
             string url,
             VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox inbox,
             VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox outbox,
             string source,
-            bool allowCORS)
+            bool allowCORS
+        )
         {
             try
             {
@@ -593,7 +599,10 @@ namespace Luna.Models.Apis
         public int CoreEvStop { get; } = (int)CoreEvTypes.CoreStop;
         public int CoreEvPropertyChanged { get; } = (int)CoreEvTypes.PropertyChanged;
 
-        public bool UnregisterCoreEvent(VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox, string handle)
+        public bool UnregisterCoreEvent(
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox,
+            string handle
+        )
         {
             if (!postOffice.ValidateMailBox(mailbox))
             {
@@ -630,10 +639,15 @@ namespace Luna.Models.Apis
             return false;
         }
 
-        public bool UnregisterGlobalEvent(VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox, string handle)
+        public bool UnregisterGlobalEvent(
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox,
+            string handle
+        )
         {
-            if (postOffice.ValidateMailBox(mailbox)
-               && globalEvHooks.TryRemove(handle, out var evhook))
+            if (
+                postOffice.ValidateMailBox(mailbox)
+                && globalEvHooks.TryRemove(handle, out var evhook)
+            )
             {
                 try
                 {
@@ -658,7 +672,9 @@ namespace Luna.Models.Apis
 
         public string RegisterGlobalEvent(
             VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox,
-            int evType, int evCode)
+            int evType,
+            int evCode
+        )
         {
             if (!postOffice.ValidateMailBox(mailbox))
             {
@@ -702,7 +718,8 @@ namespace Luna.Models.Apis
             VgcApis.Interfaces.ICoreServCtrl coreServ,
             VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox,
             int evType,
-            int evCode)
+            int evCode
+        )
         {
             // 无权访问
             if (!postOffice.ValidateMailBox(mailbox))
@@ -748,12 +765,17 @@ namespace Luna.Models.Apis
             return string.Join(@", ", Enum.GetNames(typeof(Keys)));
         }
 
-        public bool UnregisterHotKey(VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox, string handle)
+        public bool UnregisterHotKey(
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox,
+            string handle
+        )
         {
-            if (postOffice.ValidateMailBox(mailbox)
+            if (
+                postOffice.ValidateMailBox(mailbox)
                 && hotkeys.TryGetValue(handle, out var mb)
                 && ReferenceEquals(mb, mailbox)
-                && hotkeys.TryRemove(handle, out _))
+                && hotkeys.TryRemove(handle, out _)
+            )
             {
                 return luaApis.UnregisterHotKey(handle);
             }
@@ -761,8 +783,13 @@ namespace Luna.Models.Apis
         }
 
         public string RegisterHotKey(
-            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox, int evCode,
-            string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox,
+            int evCode,
+            string keyName,
+            bool hasAlt,
+            bool hasCtrl,
+            bool hasShift
+        )
         {
             // 无权访问
             if (!postOffice.ValidateMailBox(mailbox))
@@ -788,10 +815,12 @@ namespace Luna.Models.Apis
         public string GetPublicInfosOfType(Type type)
         {
             var nl = Environment.NewLine;
-            var evs = VgcApis.Misc.Utils.GetPublicEventsInfoOfType(type)
+            var evs = VgcApis.Misc.Utils
+                .GetPublicEventsInfoOfType(type)
                 .Select(infos => $"{infos.Item1} {infos.Item2}")
                 .ToList();
-            var props = VgcApis.Misc.Utils.GetPublicPropsInfoOfType(type)
+            var props = VgcApis.Misc.Utils
+                .GetPublicPropsInfoOfType(type)
                 .Select(infos => $"{infos.Item1} {infos.Item2}")
                 .ToList();
 
@@ -835,7 +864,6 @@ namespace Luna.Models.Apis
             }
             return string.Join("\n", mbs);
         }
-
 
         #endregion
 
@@ -885,7 +913,10 @@ namespace Luna.Models.Apis
             return null;
         }
 
-        public VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox CreateMailBox(string name, int capacity)
+        public VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox CreateMailBox(
+            string name,
+            int capacity
+        )
         {
             var mailbox = postOffice.CreateMailBox(name, capacity);
             if (mailbox == null)
@@ -966,8 +997,7 @@ namespace Luna.Models.Apis
             return string.Empty;
         }
 
-        public Process RunAndForgot(string exePath) =>
-          RunAndForgot(exePath, null);
+        public Process RunAndForgot(string exePath) => RunAndForgot(exePath, null);
 
         public Process RunAndForgot(string exePath, string args) =>
             RunAndForgot(exePath, args, null);
@@ -975,41 +1005,77 @@ namespace Luna.Models.Apis
         public Process RunAndForgot(string exePath, string args, string stdin) =>
             RunAndForgot(exePath, args, stdin, null, true, false);
 
-        public Process RunAndForgot(string exePath, string args, string stdin,
-            LuaTable envs, bool hasWindow, bool redirectOutput) =>
-            RunAndForgot(exePath, args, stdin,
-                envs, hasWindow, redirectOutput,
-                null, null);
+        public Process RunAndForgot(
+            string exePath,
+            string args,
+            string stdin,
+            LuaTable envs,
+            bool hasWindow,
+            bool redirectOutput
+        ) => RunAndForgot(exePath, args, stdin, envs, hasWindow, redirectOutput, null, null);
 
-        public Process RunAndForgot(string exePath, string args, string stdin,
-            LuaTable envs, bool hasWindow, bool redirectOutput,
-            Encoding inputEncoding, Encoding outputEncoding) =>
-            RunProcWrapper(false, exePath, args, stdin,
-                envs, hasWindow, redirectOutput,
-                inputEncoding, outputEncoding, null);
+        public Process RunAndForgot(
+            string exePath,
+            string args,
+            string stdin,
+            LuaTable envs,
+            bool hasWindow,
+            bool redirectOutput,
+            Encoding inputEncoding,
+            Encoding outputEncoding
+        ) =>
+            RunProcWrapper(
+                false,
+                exePath,
+                args,
+                stdin,
+                envs,
+                hasWindow,
+                redirectOutput,
+                inputEncoding,
+                outputEncoding,
+                null
+            );
 
-        public Process Run(string exePath) =>
-            Run(exePath, null);
+        public Process Run(string exePath) => Run(exePath, null);
 
-        public Process Run(string exePath, string args) =>
-            Run(exePath, args, null);
+        public Process Run(string exePath, string args) => Run(exePath, args, null);
 
         public Process Run(string exePath, string args, string stdin) =>
             Run(exePath, args, stdin, null, true, false);
 
-        public Process Run(string exePath, string args, string stdin,
-            LuaTable envs, bool hasWindow, bool redirectOutput) =>
-            Run(exePath, args, stdin,
-                envs, hasWindow, redirectOutput,
-                null, null, null);
+        public Process Run(
+            string exePath,
+            string args,
+            string stdin,
+            LuaTable envs,
+            bool hasWindow,
+            bool redirectOutput
+        ) => Run(exePath, args, stdin, envs, hasWindow, redirectOutput, null, null, null);
 
-        public Process Run(string exePath, string args, string stdin,
-            LuaTable envs, bool hasWindow, bool redirectOutput,
-            Encoding inputEncoding, Encoding outputEncoding,
-            VgcApis.Interfaces.ILogable logable) =>
-            RunProcWrapper(true, exePath, args, stdin,
-                envs, hasWindow, redirectOutput,
-                inputEncoding, outputEncoding, logable);
+        public Process Run(
+            string exePath,
+            string args,
+            string stdin,
+            LuaTable envs,
+            bool hasWindow,
+            bool redirectOutput,
+            Encoding inputEncoding,
+            Encoding outputEncoding,
+            VgcApis.Interfaces.ILogable logable
+        ) =>
+            RunProcWrapper(
+                true,
+                exePath,
+                args,
+                stdin,
+                envs,
+                hasWindow,
+                redirectOutput,
+                inputEncoding,
+                outputEncoding,
+                logable
+            );
 
         #endregion
 
@@ -1029,19 +1095,27 @@ namespace Luna.Models.Apis
         #endregion
 
         #region ILuaSys.System
-        public void SetTimeout(VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox, int timeout, double id)
+        public void SetTimeout(
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox,
+            int timeout,
+            double id
+        )
         {
-            Task.Delay(timeout).ContinueWith((task) =>
-            {
-                var addr = mailbox?.GetAddress();
-                if (!string.IsNullOrEmpty(addr))
-                {
-                    mailbox?.SendCode(addr, id);
-                }
-            });
+            Task.Delay(timeout)
+                .ContinueWith(
+                    (task) =>
+                    {
+                        var addr = mailbox?.GetAddress();
+                        if (!string.IsNullOrEmpty(addr))
+                        {
+                            mailbox?.SendCode(addr, id);
+                        }
+                    }
+                );
         }
 
         public void GarbageCollect() => GC.Collect();
+
         public void VolumeUp() => Libs.Sys.VolumeChanger.VolumeUp();
 
         public void VolumeDown() => Libs.Sys.VolumeChanger.VolumeDown();
@@ -1049,6 +1123,7 @@ namespace Luna.Models.Apis
         public void VolumeMute() => Libs.Sys.VolumeChanger.Mute();
 
         static string osReleaseId;
+
         public string GetOsReleaseInfo()
         {
             if (string.IsNullOrEmpty(osReleaseId))
@@ -1058,7 +1133,9 @@ namespace Luna.Models.Apis
                 var name = Microsoft.Win32.Registry.GetValue(root, @"ProductName", @"")?.ToString();
                 var arch = Environment.Is64BitOperatingSystem ? @"x64" : @"x86";
                 var id = Microsoft.Win32.Registry.GetValue(root, @"ReleaseId", "")?.ToString();
-                var build = Microsoft.Win32.Registry.GetValue(root, @"CurrentBuildNumber", @"")?.ToString();
+                var build = Microsoft.Win32.Registry
+                    .GetValue(root, @"CurrentBuildNumber", @"")
+                    ?.ToString();
 
                 osReleaseId = $"{name} {arch} {id} build {build}";
             }
@@ -1085,12 +1162,13 @@ namespace Luna.Models.Apis
 
         #region ILuaSys.File
         public string GetImageResolution(string filename) =>
-           VgcApis.Misc.Utils.GetImageResolution(filename);
+            VgcApis.Misc.Utils.GetImageResolution(filename);
 
         public string PickRandomLine(string filename) =>
             VgcApis.Misc.Utils.PickRandomLine(filename);
 
         public bool IsFileExists(string path) => File.Exists(path);
+
         public bool IsDirExists(string path) => Directory.Exists(path);
 
         public bool CreateFolder(string path)
@@ -1119,16 +1197,17 @@ namespace Luna.Models.Apis
 
             if (string.IsNullOrEmpty(path))
             {
-                folders = DriveInfo.GetDrives()
+                folders = DriveInfo
+                    .GetDrives()
                     .Select(di => di.Name.Split(spliters).FirstOrDefault())
                     .ToList();
             }
             else if (IsDirExists(path))
             {
-
                 try
                 {
-                    folders = Directory.GetDirectories(path)
+                    folders = Directory
+                        .GetDirectories(path)
                         .Select(f => f.Split(spliters).LastOrDefault())
                         .ToList();
                 }
@@ -1140,9 +1219,10 @@ namespace Luna.Models.Apis
                 catch { }
             }
 
-            var r = new Dictionary<string, List<string>>() {
-                {"folders", folders },
-                {"files", files },
+            var r = new Dictionary<string, List<string>>()
+            {
+                { "folders", folders },
+                { "files", files },
             };
             return JsonConvert.SerializeObject(r);
         }
@@ -1151,22 +1231,27 @@ namespace Luna.Models.Apis
         {
             List<string> files;
             var extList = exts?.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
-              .Select(e => "." + e.Trim().ToLower())
-              .Where(e => e.Length > 1)
-              .ToList();
+                .Select(e => "." + e.Trim().ToLower())
+                .Where(e => e.Length > 1)
+                .ToList();
 
             if (extList != null && extList.Count > 0)
             {
-                files = Directory.GetFiles(path)
-                    .Where(f => !string.IsNullOrEmpty(
-                        extList.FirstOrDefault(
-                            ext => f.ToLower().EndsWith(ext))))
+                files = Directory
+                    .GetFiles(path)
+                    .Where(
+                        f =>
+                            !string.IsNullOrEmpty(
+                                extList.FirstOrDefault(ext => f.ToLower().EndsWith(ext))
+                            )
+                    )
                     .Select(f => f.Split(spliters).LastOrDefault())
                     .ToList();
             }
             else
             {
-                files = Directory.GetFiles(path)
+                files = Directory
+                    .GetFiles(path)
                     .Select(f => f.Split(spliters).LastOrDefault())
                     .ToList();
             }
@@ -1189,7 +1274,10 @@ namespace Luna.Models.Apis
         #endregion
 
         #region private methods
-        DataReceivedEventHandler CreateLogHandler(Encoding encoding, VgcApis.Interfaces.ILogable logable)
+        DataReceivedEventHandler CreateLogHandler(
+            Encoding encoding,
+            VgcApis.Interfaces.ILogable logable
+        )
         {
             var ec = encoding;
             Func<string, string> decode = (s) => s;
@@ -1237,25 +1325,49 @@ namespace Luna.Models.Apis
         }
 
         Process RunProcWrapper(
-            bool isTracking, string exePath, string args, string stdin,
-           LuaTable envs, bool hasWindow, bool redirectOutput,
-           Encoding inputEncoding, Encoding outputEncoding, VgcApis.Interfaces.ILogable logable)
+            bool isTracking,
+            string exePath,
+            string args,
+            string stdin,
+            LuaTable envs,
+            bool hasWindow,
+            bool redirectOutput,
+            Encoding inputEncoding,
+            Encoding outputEncoding,
+            VgcApis.Interfaces.ILogable logable
+        )
         {
             try
             {
                 return RunProcWorker(
-                    isTracking, exePath, args, stdin,
-                    envs, hasWindow, redirectOutput,
-                    inputEncoding, outputEncoding, logable);
+                    isTracking,
+                    exePath,
+                    args,
+                    stdin,
+                    envs,
+                    hasWindow,
+                    redirectOutput,
+                    inputEncoding,
+                    outputEncoding,
+                    logable
+                );
             }
             catch { }
             return null;
         }
 
         Process RunProcWorker(
-            bool isTracking, string exePath, string args, string stdin,
-            LuaTable envs, bool hasWindow, bool redirectOutput,
-            Encoding inputEncoding, Encoding outputEncoding, VgcApis.Interfaces.ILogable logable)
+            bool isTracking,
+            string exePath,
+            string args,
+            string stdin,
+            LuaTable envs,
+            bool hasWindow,
+            bool redirectOutput,
+            Encoding inputEncoding,
+            Encoding outputEncoding,
+            VgcApis.Interfaces.ILogable logable
+        )
         {
             var useStdIn = !string.IsNullOrEmpty(stdin);
             var p = new Process
@@ -1381,6 +1493,7 @@ namespace Luna.Models.Apis
                 }
             }
         }
+
         void RemoveAllCoreEventHooks()
         {
             var handles = coreEvHooks.Keys;
@@ -1417,6 +1530,7 @@ namespace Luna.Models.Apis
                 }
             }
         }
+
         private void RemoveAllSnapCacheTokens()
         {
             lock (snapCacheTokens)

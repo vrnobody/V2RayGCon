@@ -17,7 +17,8 @@ namespace V2RayGCon.Controllers.OptionComponent
         public TabPlugin(
             Button btnRefreshPluginsPanel,
             CheckBox chkIsLoad3rdPartyPlugins,
-            FlowLayoutPanel flyPanel)
+            FlowLayoutPanel flyPanel
+        )
         {
             setting = Services.Settings.Instance;
             pluginServ = Services.PluginsServer.Instance;
@@ -85,9 +86,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             }
         }
 
-        void InitControls(
-            Button btnRefreshPluginsPanel,
-            CheckBox chkIsLoad3rdPartyPlugins)
+        void InitControls(Button btnRefreshPluginsPanel, CheckBox chkIsLoad3rdPartyPlugins)
         {
             chkIsLoad3rdPartyPlugins.Checked = setting.isLoad3rdPartyPlugins;
 
@@ -112,8 +111,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             RemoveAllControls();
             foreach (var item in curPluginInfos)
             {
-                this.flyPanel.Controls.Add(
-                    new Views.UserControls.PluginInfoUI(item));
+                this.flyPanel.Controls.Add(new Views.UserControls.PluginInfoUI(item));
             }
         }
         #endregion

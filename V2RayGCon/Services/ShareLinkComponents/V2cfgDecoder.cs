@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
-    internal sealed class V2cfgDecoder :
-        VgcApis.BaseClasses.ComponentOf<Codecs>,
-        VgcApis.Interfaces.IShareLinkDecoder
+    internal sealed class V2cfgDecoder
+        : VgcApis.BaseClasses.ComponentOf<Codecs>,
+            VgcApis.Interfaces.IShareLinkDecoder
     {
         public V2cfgDecoder() { }
 
@@ -40,11 +40,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             var body = VgcApis.Misc.Utils.Base64EncodeString(config);
 
-            return Misc.Utils.AddLinkPrefix(
-                body,
-                VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
+            return Misc.Utils.AddLinkPrefix(body, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
         }
-
 
         public List<string> ExtractLinksFromText(string text) =>
             Misc.Utils.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);

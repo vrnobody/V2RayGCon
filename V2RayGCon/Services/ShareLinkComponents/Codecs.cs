@@ -2,8 +2,7 @@
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
-    public sealed class Codecs :
-        VgcApis.BaseClasses.ComponentOf<Codecs>
+    public sealed class Codecs : VgcApis.BaseClasses.ComponentOf<Codecs>
     {
         Settings setting;
         Cache cache;
@@ -12,14 +11,10 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         #region public methods
         public string Encode<TDecoder>(string config)
-            where TDecoder :
-                VgcApis.BaseClasses.ComponentOf<Codecs>,
-                VgcApis.Interfaces.IShareLinkDecoder
-        => GetChild<TDecoder>()?.Encode(config);
+            where TDecoder : VgcApis.BaseClasses.ComponentOf<Codecs>,
+                VgcApis.Interfaces.IShareLinkDecoder => GetChild<TDecoder>()?.Encode(config);
 
-        public string Decode(
-            string shareLink,
-            VgcApis.Interfaces.IShareLinkDecoder decoder)
+        public string Decode(string shareLink, VgcApis.Interfaces.IShareLinkDecoder decoder)
         {
             try
             {
@@ -32,17 +27,14 @@ namespace V2RayGCon.Services.ShareLinkComponents
         }
 
         public string Decode<TDecoder>(string shareLink)
-            where TDecoder :
-                VgcApis.BaseClasses.ComponentOf<Codecs>,
+            where TDecoder : VgcApis.BaseClasses.ComponentOf<Codecs>,
                 VgcApis.Interfaces.IShareLinkDecoder
         {
             var tuple = GetChild<TDecoder>()?.Decode(shareLink);
             return GenerateConfing(tuple);
         }
 
-        public void Run(
-            Cache cache,
-            Settings setting)
+        public void Run(Cache cache, Settings setting)
         {
             this.setting = setting;
             this.cache = cache;
@@ -88,11 +80,10 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             var inb = Misc.Utils.CreateJObject(
                 (isV4 ? "inbounds.0" : "inbound"),
-                cache.tpl.LoadTemplate("inbSimSock"));
+                cache.tpl.LoadTemplate("inbSimSock")
+            );
 
-            var outb = Misc.Utils.CreateJObject(
-                (isV4 ? "outbounds.0" : "outbound"),
-                outbound);
+            var outb = Misc.Utils.CreateJObject((isV4 ? "outbounds.0" : "outbound"), outbound);
 
             Misc.Utils.MergeJson(template, inb);
             Misc.Utils.MergeJson(template, outb);

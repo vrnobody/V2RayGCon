@@ -13,7 +13,8 @@ namespace V2RayGCon.Services.ServersComponents
 
         public QueryHandler(
             ReaderWriterLockSlim locker,
-            Dictionary<string, Controllers.CoreServerCtrl> coreServList)
+            Dictionary<string, Controllers.CoreServerCtrl> coreServList
+        )
         {
             this.locker = locker;
             this.coreServCache = coreServList;
@@ -22,8 +23,9 @@ namespace V2RayGCon.Services.ServersComponents
         #region public methods
 
         public List<ICoreServCtrl> GetServers(
-           Func<KeyValuePair<string, Controllers.CoreServerCtrl>, bool> predicate,
-           bool? isDescending = null)
+            Func<KeyValuePair<string, Controllers.CoreServerCtrl>, bool> predicate,
+            bool? isDescending = null
+        )
         {
             return AtomicReader(() =>
             {
@@ -36,13 +38,12 @@ namespace V2RayGCon.Services.ServersComponents
 
                 if (isDescending != null)
                 {
-                    list = isDescending == false ?
-                        list.OrderBy(kv => kv.Value) :
-                        list.OrderByDescending(kv => kv.Value);
+                    list =
+                        isDescending == false
+                            ? list.OrderBy(kv => kv.Value)
+                            : list.OrderByDescending(kv => kv.Value);
                 }
-                return list
-                    .Select(kv => kv.Value as ICoreServCtrl)
-                    .ToList();
+                return list.Select(kv => kv.Value as ICoreServCtrl).ToList();
             });
         }
 
@@ -77,9 +78,11 @@ namespace V2RayGCon.Services.ServersComponents
             {
                 foreach (var uid in uids)
                 {
-                    if (!string.IsNullOrEmpty(uid)
+                    if (
+                        !string.IsNullOrEmpty(uid)
                         && coreServCache.TryGetValue(uid, out var coreServ)
-                        && coreServ != null)
+                        && coreServ != null
+                    )
                     {
                         r.Add(coreServ);
                     }
@@ -96,7 +99,10 @@ namespace V2RayGCon.Services.ServersComponents
             GetServers(kv => kv.Value.GetCoreStates().IsSelected());
 
         public List<ICoreServCtrl> GetTrackableServerList() =>
-            GetServers(kv => kv.Value.GetCoreCtrl().IsCoreRunning() && !kv.Value.GetCoreStates().IsUntrack());
+            GetServers(
+                kv =>
+                    kv.Value.GetCoreCtrl().IsCoreRunning() && !kv.Value.GetCoreStates().IsUntrack()
+            );
 
         #endregion
 

@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static VgcApis.Misc.Utils;
@@ -60,10 +59,9 @@ namespace VgcApisTests
         [DataTestMethod]
         [DataRow(
             @"vless://1234@[1::2:3:4]:1234?security=reality\u0026encryption=none\u0026headerType=none\u0026type=tcp\u0026flow=xtls-rprx-vision#1aA中😀",
-            @"vless://1234@[1::2:3:4]:1234?security=reality&encryption=none&headerType=none&type=tcp&flow=xtls-rprx-vision#1aA中😀")]
-        [DataRow(
-            @"\u8ba1\u7b97\u673a\u2022\u7f51\u7edc\u2022\u6280\u672f\u7c7b",
-            "计算机•网络•技术类")]
+            @"vless://1234@[1::2:3:4]:1234?security=reality&encryption=none&headerType=none&type=tcp&flow=xtls-rprx-vision#1aA中😀"
+        )]
+        [DataRow(@"\u8ba1\u7b97\u673a\u2022\u7f51\u7edc\u2022\u6280\u672f\u7c7b", "计算机•网络•技术类")]
         [DataRow(null, null)]
         [DataRow("", "")]
         [DataRow("1aA中😀", "1aA中😀")]
@@ -89,7 +87,8 @@ namespace VgcApisTests
         [DataTestMethod]
         [DataRow(
             "<td>vless://abcd@1.2.3.4:443?security=reality&amp;amp;encryption=none&amp;amp;pbk=a1b2&amp;amp;headerType=none&amp;amp;fp=chrome&amp;amp;spx=%2F&amp;amp;type=tcp&amp;amp;flow=xtls-rprx-vision&amp;amp;sni=baidu.com#test</td>",
-            "<td>vless://abcd@1.2.3.4:443?security=reality&encryption=none&pbk=a1b2&headerType=none&fp=chrome&spx=%2F&type=tcp&flow=xtls-rprx-vision&sni=baidu.com#test</td>")]
+            "<td>vless://abcd@1.2.3.4:443?security=reality&encryption=none&pbk=a1b2&headerType=none&fp=chrome&spx=%2F&type=tcp&flow=xtls-rprx-vision&sni=baidu.com#test</td>"
+        )]
         [DataRow("&amp;amp;amp;amp;", "&")]
         /*
         [DataRow(null, "")]
@@ -105,19 +104,41 @@ namespace VgcApisTests
         [DataTestMethod]
         [DataRow("D1", true, true, false, true, 3u, 49u)]
         public void TryParseKeyMessageTests(
-            string keyName, bool hasAlt, bool hasCtrl, bool hasShift,
-            bool ok, uint modifier, uint keyCode)
+            string keyName,
+            bool hasAlt,
+            bool hasCtrl,
+            bool hasShift,
+            bool ok,
+            uint modifier,
+            uint keyCode
+        )
         {
-            var result = TryParseKeyMesssage(keyName, hasAlt, hasCtrl, hasShift,
-                out var m, out var c);
+            var result = TryParseKeyMesssage(
+                keyName,
+                hasAlt,
+                hasCtrl,
+                hasShift,
+                out var m,
+                out var c
+            );
             Assert.AreEqual(ok, result);
             Assert.AreEqual(modifier, m);
             Assert.AreEqual(keyCode, c);
         }
 
         [DataTestMethod]
-        [DataRow("中iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii试", 34, true, "中iiiiiiiiiiiiiiiiiiiiiiiiiiiiii")]
-        [DataRow("中aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa文", 34, true, "中aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        [DataRow(
+            "中iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii试",
+            34,
+            true,
+            "中iiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
+        )]
+        [DataRow(
+            "中aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa文",
+            34,
+            true,
+            "中aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        )]
         [DataRow("中iiiii试", 6, true, "中ii")]
         [DataRow("中文aa测试", 8, true, "中文aa")]
         [DataRow("中文aa测试", 7, true, "中文a")]
@@ -185,7 +206,8 @@ namespace VgcApisTests
         [DataRow(
             @"https://github.com/user/reponame/blob/master/README.md",
             true,
-            @"https://raw.githubusercontent.com/user/reponame/master/README.md")]
+            @"https://raw.githubusercontent.com/user/reponame/master/README.md"
+        )]
         public void TryPatchGitHubUrlTest(string url, bool expectedResult, string expectedPatched)
         {
             var result = TryPatchGitHubUrl(url, out var patched);
@@ -198,7 +220,6 @@ namespace VgcApisTests
         [DataRow(@"a1中b2文", @"https://www.github.com/a1中b2文/a/b/c/d.html")]
         [DataRow(@"index.html", @"https://www.github.com/index.html")]
         [DataRow(@"a1中b2文?", @"fttp::ssh:://%20#2@&/a1中b2文?/a/b/c/d.html?#a=1&value=10")]
-
         public void TryExtractAliasFromSubsUrlNormalTest(string expected, string url)
         {
             if (TryExtractAliasFromSubscriptionUrl(url, out var alias))
@@ -209,7 +230,6 @@ namespace VgcApisTests
             {
                 Assert.Fail();
             }
-
         }
 
         [DataTestMethod]
@@ -239,11 +259,11 @@ namespace VgcApisTests
             Assert.AreEqual(expect, result);
         }
 
-
         [DataTestMethod]
         [DataRow(
             @"c,,a,//---,中文,3,,2,1,//abc中文,中文,a,1,,中文,a,1",
-            @"c,,a,//---,3,中文,,1,2,//abc中文,1,a,中文,,1,a,中文")]
+            @"c,,a,//---,3,中文,,1,2,//abc中文,1,a,中文,,1,a,中文"
+        )]
         [DataRow(@"a,b,中文,3,2,1", @"1,2,3,a,b,中文")]
         [DataRow(@"3,2,1", @"1,2,3")]
         public void SortPacListTest(string source, string expStr)
@@ -253,7 +273,6 @@ namespace VgcApisTests
             var result = SortPacList(testList);
 
             Assert.IsTrue(expectList.SequenceEqual(result));
-
         }
 
         [DataTestMethod]
@@ -270,7 +289,6 @@ namespace VgcApisTests
             Assert.AreEqual(expResult, result);
             Assert.AreEqual(expIp, ip);
             Assert.AreEqual(expPort, port);
-
         }
 
         [TestMethod]
@@ -289,17 +307,12 @@ namespace VgcApisTests
             Assert.IsTrue(AreEqual(a, c2));
         }
 
-
         [DataTestMethod]
         [DataRow(1, 2, 0.6, (long)(0.6 * 1 + 0.4 * 2))]
         [DataRow(-1, 2, 0.6, 2)]
         [DataRow(1, -2, 0.6, 1)]
         [DataRow(-1, -2, 0.6, -1)]
-        public void IntegerSpeedtestMeanTest(
-            long first,
-            long second,
-            double weight,
-            long expect)
+        public void IntegerSpeedtestMeanTest(long first, long second, double weight, long expect)
         {
             var result = SpeedtestMean(first, second, weight);
             Assert.AreEqual(expect, result);
@@ -314,7 +327,8 @@ namespace VgcApisTests
             double first,
             double second,
             double weight,
-            double expect)
+            double expect
+        )
         {
             var result = SpeedtestMean(first, second, weight);
             Assert.IsTrue(AreEqual(expect, result));
@@ -348,8 +362,7 @@ namespace VgcApisTests
         [DataRow(@"", @"", 1)]
         [DataRow(@"abc", @"", 1)]
         [DataRow(@"abc", @"abc", 1)]
-        public void MeasureSimilarityTest(
-            string source, string partial, long expect)
+        public void MeasureSimilarityTest(string source, string partial, long expect)
         {
             var result = MeasureSimilarity(source, partial);
             Assert.AreEqual(expect, result);
@@ -358,25 +371,22 @@ namespace VgcApisTests
         [DataTestMethod]
         [DataRow(
             @"{routing:{settings:{rules:[{},{}]},balancers:[{},{}],rules:[{},{}]}}",
-            @"routing:{},routing.settings:{},routing.settings.rules:[],routing.settings.rules.0:{},routing.settings.rules.1:{},routing.balancers:[],routing.balancers.0:{},routing.balancers.1:{},routing.rules:[],routing.rules.0:{},routing.rules.1:{}")]
-        [DataRow(
-            @"{1:[[],[]],'':{},b:123,c:{}}",
-            @"c:{}")]
-        [DataRow(
-            @"{a:[{},{}],b:{}}",
-            @"a:[],b:{},a.0:{},a.1:{}")]
-        [DataRow(
-            @"{a:[[[],[],[]],[[]]],b:{}}",
-            @"a:[],b:{},a.0:[],a.1:[]")]
+            @"routing:{},routing.settings:{},routing.settings.rules:[],routing.settings.rules.0:{},routing.settings.rules.1:{},routing.balancers:[],routing.balancers.0:{},routing.balancers.1:{},routing.rules:[],routing.rules.0:{},routing.rules.1:{}"
+        )]
+        [DataRow(@"{1:[[],[]],'':{},b:123,c:{}}", @"c:{}")]
+        [DataRow(@"{a:[{},{}],b:{}}", @"a:[],b:{},a.0:{},a.1:{}")]
+        [DataRow(@"{a:[[[],[],[]],[[]]],b:{}}", @"a:[],b:{},a.0:[],a.1:[]")]
         [DataRow(
             @"{a:[[[],[],[]],[[]]],b:'abc',c:{a:[],b:{d:1}}}",
-            @"a:[],a.0:[],a.1:[],c:{},c.a:[],c.b:{}")]
+            @"a:[],a.0:[],a.1:[],c:{},c.a:[],c.b:{}"
+        )]
         public void GetterJsonDataStructWorkerTest(string jsonString, string expect)
         {
             var expDict = expect
                 .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(part => part.Split(
-                    new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries))
+                .Select(
+                    part => part.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries)
+                )
                 .ToDictionary(v => v[0], v => v[1]);
 
             var jobject = JObject.Parse(jsonString);
@@ -423,26 +433,18 @@ namespace VgcApisTests
         }
 
         [DataTestMethod]
-        [DataRow(@"http://abc.com",
-            VgcApis.Models.Datas.Enums.LinkTypes.http)]
-        [DataRow(@"V://abc.com",
-            VgcApis.Models.Datas.Enums.LinkTypes.v)]
-        [DataRow(@"vmess://abc.com",
-            VgcApis.Models.Datas.Enums.LinkTypes.vmess)]
-        [DataRow(@"v2cfg://abc.com",
-            VgcApis.Models.Datas.Enums.LinkTypes.v2cfg)]
-        [DataRow(@"linkTypeNotExist://abc.com",
-            VgcApis.Models.Datas.Enums.LinkTypes.unknow)]
-        [DataRow(@"abc.com",
-            VgcApis.Models.Datas.Enums.LinkTypes.unknow)]
-        [DataRow(@"ss://abc.com",
-            VgcApis.Models.Datas.Enums.LinkTypes.ss)]
+        [DataRow(@"http://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.http)]
+        [DataRow(@"V://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.v)]
+        [DataRow(@"vmess://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.vmess)]
+        [DataRow(@"v2cfg://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.v2cfg)]
+        [DataRow(@"linkTypeNotExist://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.unknow)]
+        [DataRow(@"abc.com", VgcApis.Models.Datas.Enums.LinkTypes.unknow)]
+        [DataRow(@"ss://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.ss)]
         public void DetectLinkTypeTest(string link, VgcApis.Models.Datas.Enums.LinkTypes expect)
         {
             var linkType = DetectLinkType(link);
             Assert.AreEqual(expect, linkType);
         }
-
 
         [DataTestMethod]
         [DataRow(-4, -1)]
@@ -478,7 +480,13 @@ namespace VgcApisTests
                     }
                     try
                     {
-                        using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+                        using (
+                            var socket = new Socket(
+                                AddressFamily.InterNetwork,
+                                SocketType.Stream,
+                                ProtocolType.Tcp
+                            )
+                        )
                         {
                             IPEndPoint ep = new IPEndPoint(IPAddress.Loopback, port: freePort);
                             socket.Bind(ep);
@@ -522,11 +530,11 @@ namespace VgcApisTests
             var str = "";
 
             Action<Action> secTask = (done) =>
-             {
-                 Task.Delay(200).Wait();
-                 str += "2";
-                 done();
-             };
+            {
+                Task.Delay(200).Wait();
+                str += "2";
+                done();
+            };
 
             Action<Action> firstTask = (done) =>
             {
@@ -607,7 +615,6 @@ namespace VgcApisTests
             Assert.AreEqual("", str);
             Task.Delay(5000).Wait();
             Assert.AreEqual("1212", str);
-
         }
 #endif
 
@@ -692,7 +699,6 @@ namespace VgcApisTests
             Task.Delay(1000).Wait();
             Assert.AreEqual(".", str);
         }
-
 #endif
 
         [DataTestMethod]

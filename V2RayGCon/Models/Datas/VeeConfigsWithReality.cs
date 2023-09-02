@@ -34,20 +34,24 @@
         // tls.alpn (not support yet)
         public string tlsAlpn = string.Empty;
 
-
         public VeeConfigsWithReality() { }
 
-        public VeeConfigsWithReality(VeeConfigs veeConfigs) : this()
+        public VeeConfigsWithReality(VeeConfigs veeConfigs)
+            : this()
         {
             base.CopyFrom(veeConfigs);
         }
 
-        public VeeConfigsWithReality(string config) : this()
+        public VeeConfigsWithReality(string config)
+            : this()
         {
             try
             {
                 var slinkMgr = Services.ShareLinkMgr.Instance;
-                var vee = slinkMgr.EncodeConfigToShareLink(config, VgcApis.Models.Datas.Enums.LinkTypes.v);
+                var vee = slinkMgr.EncodeConfigToShareLink(
+                    config,
+                    VgcApis.Models.Datas.Enums.LinkTypes.v
+                );
                 if (vee == null)
                 {
                     return;
@@ -87,6 +91,5 @@
         }
 
         #endregion
-
     }
 }

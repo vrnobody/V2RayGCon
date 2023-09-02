@@ -3,9 +3,7 @@ using System;
 
 namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
 {
-    internal sealed class Vless4b :
-        VgcApis.BaseClasses.ComponentOf<VeeDecoder>,
-        IVeeDecoder
+    internal sealed class Vless4b : VgcApis.BaseClasses.ComponentOf<VeeDecoder>, IVeeDecoder
     {
         private readonly Cache cache;
 
@@ -33,6 +31,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
         #endregion
         #region public methods
         public string GetSupportedVeeVersion() => Models.VeeShareLinks.Obsolete.Vless4b.version;
+
         public string GetSupportedEncodeProtocol() => @"";
 
         public byte[] Config2Bytes(JObject config)
@@ -52,7 +51,13 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
         #region private methods
         Models.VeeShareLinks.Obsolete.Vless4b Config2Vee(JObject config)
         {
-            var bs = Comm.ExtractBasicConfig(config, @"vless", @"vnext", out bool isUseV4, out string root);
+            var bs = Comm.ExtractBasicConfig(
+                config,
+                @"vless",
+                @"vnext",
+                out bool isUseV4,
+                out string root
+            );
 
             if (bs == null)
             {
@@ -68,7 +73,6 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
             vless.flow = GetStr(userInfoPrefix, "flow");
             return vless;
         }
-
 
         Tuple<JObject, JToken> VeeToConfig(Models.VeeShareLinks.Obsolete.Vless4b vee)
         {

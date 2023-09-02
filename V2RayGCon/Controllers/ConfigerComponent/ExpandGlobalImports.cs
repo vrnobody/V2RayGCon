@@ -5,7 +5,6 @@ using System.IO;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
-
 namespace V2RayGCon.Controllers.ConfigerComponet
 {
     class ExpandGlobalImports : ConfigerComponentController
@@ -22,7 +21,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             Button btnExpand,
             Button btnClearCache,
             Button btnCopy,
-            Button btnSaveAs)
+            Button btnSaveAs
+        )
         {
             this.setting = Services.Settings.Instance;
             this.configMgr = Services.ConfigMgr.Instance;
@@ -51,16 +51,10 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         #region private method
         void SaveCurrentContentToFile()
         {
-            VgcApis.Misc.UI.SaveToFile(
-                VgcApis.Models.Consts.Files.JsonExt,
-                editor.Text);
+            VgcApis.Misc.UI.SaveToFile(VgcApis.Models.Consts.Files.JsonExt, editor.Text);
         }
 
-        void AttachEvent(
-            Button btnExpand,
-            Button btnClearCache,
-            Button btnCopy,
-            Button btnSaveAs)
+        void AttachEvent(Button btnExpand, Button btnClearCache, Button btnCopy, Button btnSaveAs)
         {
             btnSaveAs.Click += (s, a) => SaveCurrentContentToFile();
 
@@ -93,7 +87,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 bs,
                 nameof(this.content),
                 true,
-                DataSourceUpdateMode.OnPropertyChanged);
+                DataSourceUpdateMode.OnPropertyChanged
+            );
         }
 
         #endregion
@@ -111,9 +106,12 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             var plainText = config.ToString();
             if (cboxGlobalImport.Checked)
             {
-                var configWithGlobalImports =
-                    Misc.Utils.ImportItemList2JObject(
-                        setting.GetGlobalImportItems(), false, true, false);
+                var configWithGlobalImports = Misc.Utils.ImportItemList2JObject(
+                    setting.GetGlobalImportItems(),
+                    false,
+                    true,
+                    false
+                );
 
                 Misc.Utils.MergeJson(configWithGlobalImports, config);
                 plainText = configWithGlobalImports.ToString();
@@ -134,10 +132,12 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             }
             catch (FileNotFoundException)
             {
-                return string.Format("{0}{1}{2}",
-                        I18N.DecodeImportFail,
-                        Environment.NewLine,
-                        I18N.FileNotFound);
+                return string.Format(
+                    "{0}{1}{2}",
+                    I18N.DecodeImportFail,
+                    Environment.NewLine,
+                    I18N.FileNotFound
+                );
             }
             catch (FormatException)
             {
@@ -146,10 +146,11 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             catch (System.Net.WebException)
             {
                 return string.Format(
-                        "{0}{1}{2}",
-                        I18N.DecodeImportFail,
-                        Environment.NewLine,
-                        I18N.NetworkTimeout);
+                    "{0}{1}{2}",
+                    I18N.DecodeImportFail,
+                    Environment.NewLine,
+                    I18N.NetworkTimeout
+                );
             }
             catch (Newtonsoft.Json.JsonReaderException)
             {

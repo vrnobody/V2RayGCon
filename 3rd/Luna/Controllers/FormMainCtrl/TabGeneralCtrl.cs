@@ -12,18 +12,21 @@ namespace Luna.Controllers.FormMainCtrl
 {
     internal class TabGeneralCtrl
     {
-        Button btnStopAll, btnKillAll, btnDelAll, btnImport, btnExport;
+        Button btnStopAll,
+            btnKillAll,
+            btnDelAll,
+            btnImport,
+            btnExport;
         FlowLayoutPanel flyLuaUiPanel;
 
         public TabGeneralCtrl(
             FlowLayoutPanel flyLuaUiPanel,
-
             Button btnStopAll,
             Button btnKillAll,
-
             Button btnDelAll,
             Button btnImport,
-            Button btnExport)
+            Button btnExport
+        )
         {
             this.btnStopAll = btnStopAll;
             this.btnKillAll = btnKillAll;
@@ -37,9 +40,7 @@ namespace Luna.Controllers.FormMainCtrl
         Services.LuaServer luaServer;
         Services.FormMgrSvc formMgrSvc;
 
-        public void Run(
-            Services.LuaServer luaServer,
-            Services.FormMgrSvc formMgrSvc)
+        public void Run(Services.LuaServer luaServer, Services.FormMgrSvc formMgrSvc)
         {
             this.luaServer = luaServer;
             this.formMgrSvc = formMgrSvc;
@@ -50,7 +51,6 @@ namespace Luna.Controllers.FormMainCtrl
             RefreshFlyPanel();
             luaServer.OnRequireFlyPanelUpdate += OnLuaCoreCtrlListChangeHandler;
         }
-
 
         public void Cleanup()
         {
@@ -119,7 +119,10 @@ namespace Luna.Controllers.FormMainCtrl
                     continue;
                 }
 
-                if (names.Contains(scriptName) && !VgcApis.Misc.UI.Confirm($"{I18N.ReplaceScript} {scriptName}"))
+                if (
+                    names.Contains(scriptName)
+                    && !VgcApis.Misc.UI.Confirm($"{I18N.ReplaceScript} {scriptName}")
+                )
                 {
                     continue;
                 }
@@ -144,7 +147,7 @@ namespace Luna.Controllers.FormMainCtrl
             var curIdx = (curItem.GetIndex() > destIdx) ? destIdx - 0.1 : destIdx + 0.1;
             destItem.SetIndex(destIdx);
             curItem.SetIndex(curIdx);
-            luaServer.ResetIndex();  // this will invoke menu update event
+            luaServer.ResetIndex(); // this will invoke menu update event
 
             // refresh panel
             var destPos = panel.Controls.GetChildIndex(destItem, false);
@@ -168,7 +171,8 @@ namespace Luna.Controllers.FormMainCtrl
                 try
                 {
                     var serializedScripts = VgcApis.Misc.UI.ReadFileContentFromDialog(
-                        VgcApis.Models.Consts.Files.TxtExt);
+                        VgcApis.Models.Consts.Files.TxtExt
+                    );
 
                     // cancelle by user
                     if (serializedScripts == null)
@@ -194,7 +198,10 @@ namespace Luna.Controllers.FormMainCtrl
                 {
                     var scripts = luaServer.GetAllScripts();
                     var serializedScripts = JsonConvert.SerializeObject(scripts);
-                    VgcApis.Misc.UI.SaveToFile(VgcApis.Models.Consts.Files.TxtExt, serializedScripts);
+                    VgcApis.Misc.UI.SaveToFile(
+                        VgcApis.Models.Consts.Files.TxtExt,
+                        serializedScripts
+                    );
                 }
                 catch
                 {
@@ -220,6 +227,7 @@ namespace Luna.Controllers.FormMainCtrl
                 }
             };
         }
+
         void OnLuaCoreCtrlListChangeHandler(object sender, EventArgs args)
         {
             RefreshFlyPanel();
@@ -228,12 +236,12 @@ namespace Luna.Controllers.FormMainCtrl
         void RefreshFlyPanel()
         {
             VgcApis.Misc.UI.Invoke(() =>
-           {
-               var ctrls = luaServer.GetAllLuaCoreCtrls();
-               var removed = VgcApis.Misc.UI.DoHouseKeeping<LuaUI>(flyLuaUiPanel, ctrls.Count);
-               ReloadAllCtrls(ctrls);
-               DisposeRemovedCtrls(removed);
-           });
+            {
+                var ctrls = luaServer.GetAllLuaCoreCtrls();
+                var removed = VgcApis.Misc.UI.DoHouseKeeping<LuaUI>(flyLuaUiPanel, ctrls.Count);
+                ReloadAllCtrls(ctrls);
+                DisposeRemovedCtrls(removed);
+            });
         }
 
         void DisposeRemovedCtrls(List<LuaUI> rmCtrls)

@@ -1,19 +1,16 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using VgcApis.Interfaces;
 using VgcApis.Interfaces.CoreCtrlComponents;
 using VgcApis.Models.Datas;
 
 namespace V2RayGCon.Controllers
 {
-    public class CoreServerCtrl :
-        VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
-        VgcApis.Interfaces.ICoreServCtrl,
-        IComparable
+    public class CoreServerCtrl
+        : VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
+            VgcApis.Interfaces.ICoreServCtrl,
+            IComparable
     {
-        public event EventHandler
-            OnPropertyChanged,
+        public event EventHandler OnPropertyChanged,
             OnCoreClosing,
             OnCoreStop,
             OnCoreStart,
@@ -35,10 +32,11 @@ namespace V2RayGCon.Controllers
         Services.Servers servSvc = null;
 
         public void Run(
-             Services.Cache cache,
-             Services.Settings setting,
-             Services.ConfigMgr configMgr,
-             Services.Servers servers)
+            Services.Cache cache,
+            Services.Settings setting,
+            Services.ConfigMgr configMgr,
+            Services.Servers servers
+        )
         {
             servSvc = servers;
 
@@ -46,8 +44,7 @@ namespace V2RayGCon.Controllers
             coreCtrl = new CoreServerComponent.CoreCtrl(setting, configMgr);
             states = new CoreServerComponent.CoreStates(servers, coreInfo);
             logger = new CoreServerComponent.Logger(setting);
-            configer = new CoreServerComponent.Configer(
-                setting, cache, configMgr, coreInfo);
+            configer = new CoreServerComponent.Configer(setting, cache, configMgr, coreInfo);
 
             AddChild(coreCtrl);
             AddChild(states);
@@ -60,27 +57,20 @@ namespace V2RayGCon.Controllers
             logger.Prepare();
             configer.Prepare();
 
-
             //other initializiations
             coreCtrl.BindEvents();
         }
 
-
         #region event relay
-        public void InvokeEventOnCoreClosing() =>
-            OnCoreClosing?.Invoke(this, EventArgs.Empty);
+        public void InvokeEventOnCoreClosing() => OnCoreClosing?.Invoke(this, EventArgs.Empty);
 
-        public void InvokeEventOnIndexChange() =>
-            InvokeEmptyEventIgnoreError(OnIndexChanged);
+        public void InvokeEventOnIndexChange() => InvokeEmptyEventIgnoreError(OnIndexChanged);
 
-        public void InvokeEventOnPropertyChange() =>
-            InvokeEmptyEventIgnoreError(OnPropertyChanged);
+        public void InvokeEventOnPropertyChange() => InvokeEmptyEventIgnoreError(OnPropertyChanged);
 
-        public void InvokeEventOnCoreStop() =>
-            OnCoreStop?.Invoke(this, EventArgs.Empty);
+        public void InvokeEventOnCoreStop() => OnCoreStop?.Invoke(this, EventArgs.Empty);
 
-        public void InvokeEventOnCoreStart() =>
-            OnCoreStart?.Invoke(this, EventArgs.Empty);
+        public void InvokeEventOnCoreStart() => OnCoreStart?.Invoke(this, EventArgs.Empty);
 
         #endregion
 
@@ -92,7 +82,11 @@ namespace V2RayGCon.Controllers
             var restartCore = false;
             if (cs.inboundMode != ci.customInbType)
             {
-                ci.customInbType = Misc.Utils.Clamp(cs.inboundMode, 0, Models.Datas.Table.customInbTypeNames.Length);
+                ci.customInbType = Misc.Utils.Clamp(
+                    cs.inboundMode,
+                    0,
+                    Models.Datas.Table.customInbTypeNames.Length
+                );
                 restartCore = true;
             }
 
@@ -164,8 +158,9 @@ namespace V2RayGCon.Controllers
             }
 
             bool restartCore = SetCustomInboundInfo(cs);
-            if (ci.isInjectImport != cs.isGlobalImport
-                || ci.isInjectSkipCNSite != cs.isBypassCnSite)
+            if (
+                ci.isInjectImport != cs.isGlobalImport || ci.isInjectSkipCNSite != cs.isBypassCnSite
+            )
             {
                 restartCore = true;
             }
@@ -188,8 +183,11 @@ namespace V2RayGCon.Controllers
         }
 
         public ICoreStates GetCoreStates() => states;
+
         public ICoreCtrl GetCoreCtrl() => coreCtrl;
+
         public ILogger GetLogger() => logger;
+
         public IConfiger GetConfiger() => configer;
         #endregion
 

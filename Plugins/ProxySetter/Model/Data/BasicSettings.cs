@@ -22,7 +22,6 @@ namespace ProxySetter.Model.Data
 
         public string hotkeyStr { get; set; }
 
-
         public BasicSettings()
         {
             sysProxyMode = (int)Enum.SystemProxyModes.None;

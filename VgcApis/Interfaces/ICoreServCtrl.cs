@@ -3,10 +3,12 @@
 namespace VgcApis.Interfaces
 {
     public interface ICoreServCtrl
-
     {
         //内部使用，脚本一般用不到
-        event EventHandler OnPropertyChanged, OnCoreStop, OnCoreClosing, OnCoreStart;
+        event EventHandler OnPropertyChanged,
+            OnCoreStop,
+            OnCoreClosing,
+            OnCoreStart;
 
         //内部使用，脚本一般用不到
         void InvokeEventOnPropertyChange();

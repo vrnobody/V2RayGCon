@@ -4,16 +4,14 @@ using VgcApis.Interfaces.ComponentOf;
 
 namespace VgcApis.BaseClasses
 {
-    public class ComponentOf<TParent> :
-        Disposable,
-        IComponentOf<TParent>
+    public class ComponentOf<TParent> : Disposable, IComponentOf<TParent>
         where TParent : class, IParentComponent
     {
-
         TParent parent = null;
         readonly List<object> children = new List<object>();
 
         readonly object componentLocker = new object();
+
         public ComponentOf() { }
 
         #region properties
@@ -39,7 +37,8 @@ namespace VgcApis.BaseClasses
             return parent?.GetChildren();
         }
 
-        public TSibling GetSibling<TSibling>() where TSibling : class
+        public TSibling GetSibling<TSibling>()
+            where TSibling : class
         {
             var siblins = GetSiblings();
 
@@ -54,7 +53,8 @@ namespace VgcApis.BaseClasses
             return null;
         }
 
-        public TChild GetChild<TChild>() where TChild : class
+        public TChild GetChild<TChild>()
+            where TChild : class
         {
             lock (componentLocker)
             {
@@ -102,6 +102,7 @@ namespace VgcApis.BaseClasses
         }
 
         protected virtual void CleanupBeforeChildrenDispose() { }
+
         protected virtual void CleanupAfterChildrenDisposed() { }
         #endregion
 

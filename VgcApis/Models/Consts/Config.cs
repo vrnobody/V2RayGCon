@@ -39,20 +39,20 @@ namespace VgcApis.Models.Consts
         public static Dictionary<string, string> GetDefCfgSections() =>
             new Dictionary<string, string>
             {
-                { "v2raygcon", JsonObject},
-                { "log", JsonObject},
-                { "inbounds", JsonArray},
-                { "outbounds", JsonArray},
-                { "routing", JsonObject},
-                { "policy", JsonObject},
-                { "api", JsonObject},
-                { "dns", JsonObject},
-                { "stats", JsonObject},
-                { "transport", JsonObject},
-                { "reverse", JsonObject},
-                { "browserForwarder", JsonObject},
-                { "observatory",JsonObject },
-                { "fakedns", JsonArray},
+                { "v2raygcon", JsonObject },
+                { "log", JsonObject },
+                { "inbounds", JsonArray },
+                { "outbounds", JsonArray },
+                { "routing", JsonObject },
+                { "policy", JsonObject },
+                { "api", JsonObject },
+                { "dns", JsonObject },
+                { "stats", JsonObject },
+                { "transport", JsonObject },
+                { "reverse", JsonObject },
+                { "browserForwarder", JsonObject },
+                { "observatory", JsonObject },
+                { "fakedns", JsonArray },
             };
     }
 }

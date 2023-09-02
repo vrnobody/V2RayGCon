@@ -125,7 +125,7 @@ namespace Luna.Interfaces
         /// <returns>代理端口号</returns>
         int GetProxyPort();
 
-        // patch short href to full href 
+        // patch short href to full href
         // e.g. url = "http://baidu.com/" href = "/index.html" result = "http://baidu.com/index.html"
         string PatchHref(string url, string href);
 

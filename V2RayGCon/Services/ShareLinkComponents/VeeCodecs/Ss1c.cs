@@ -3,9 +3,7 @@ using System;
 
 namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 {
-    internal sealed class Ss1c :
-        VgcApis.BaseClasses.ComponentOf<VeeDecoder>,
-        IVeeDecoder
+    internal sealed class Ss1c : VgcApis.BaseClasses.ComponentOf<VeeDecoder>, IVeeDecoder
     {
         Cache cache;
 
@@ -35,8 +33,8 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
         #region public methods
         public string GetSupportedVeeVersion() => Models.VeeShareLinks.Ss1c.version;
-        public string GetSupportedEncodeProtocol() => Models.VeeShareLinks.Ss1c.proto;
 
+        public string GetSupportedEncodeProtocol() => Models.VeeShareLinks.Ss1c.proto;
 
         public byte[] Config2Bytes(JObject config)
         {
@@ -55,7 +53,13 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         #region private methods
         Models.VeeShareLinks.Ss1c Config2Vee(JObject config)
         {
-            var bs = Comm.ExtractBasicConfig(config, @"shadowsocks", @"servers", out bool isUseV4, out string root);
+            var bs = Comm.ExtractBasicConfig(
+                config,
+                @"shadowsocks",
+                @"servers",
+                out bool isUseV4,
+                out string root
+            );
             if (bs == null)
             {
                 return null;

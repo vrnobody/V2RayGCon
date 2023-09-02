@@ -20,9 +20,13 @@ namespace Luna.Libs.Sys
             return SHEmptyRecycleBin(IntPtr.Zero, null, 0);
         }
 
-
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+        static extern int SystemParametersInfo(
+            int uAction,
+            int uParam,
+            string lpvParam,
+            int fuWinIni
+        );
 
         public static int SetWallpaper(string path)
         {
@@ -34,8 +38,8 @@ namespace Luna.Libs.Sys
                 SPI_SETDESKWALLPAPER,
                 0,
                 path,
-                SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+                SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE
+            );
         }
-
     }
 }

@@ -3,8 +3,7 @@ using System;
 
 namespace Luna.Models.Apis
 {
-    internal class LuaApis :
-        VgcApis.BaseClasses.ComponentOf<LuaApis>
+    internal class LuaApis : VgcApis.BaseClasses.ComponentOf<LuaApis>
     {
         public readonly Settings settings;
         public readonly VgcApis.Interfaces.Services.IApiService vgcApi;
@@ -26,10 +25,16 @@ namespace Luna.Models.Apis
         public VgcApis.Interfaces.Services.IUtilsService GetVgcUtilsService() =>
             vgcApi.GetUtilsService();
 
-        public VgcApis.Interfaces.Services.IPostOffice GetPostOfficeService() => vgcApi.GetPostOfficeService();
+        public VgcApis.Interfaces.Services.IPostOffice GetPostOfficeService() =>
+            vgcApi.GetPostOfficeService();
 
-        public string RegisterHotKey(Action hotKeyHandler,
-              string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+        public string RegisterHotKey(
+            Action hotKeyHandler,
+            string keyName,
+            bool hasAlt,
+            bool hasCtrl,
+            bool hasShift
+        )
         {
             var vgcNotifier = vgcApi.GetNotifierService();
             return vgcNotifier.RegisterHotKey(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
@@ -55,8 +60,7 @@ namespace Luna.Models.Apis
         #endregion
 
         #region public methods
-        public void SendLog(string message) =>
-            redirectLogWorker?.Invoke(message);
+        public void SendLog(string message) => redirectLogWorker?.Invoke(message);
 
         public void SetRedirectLogWorker(Action<string> worker)
         {

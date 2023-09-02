@@ -45,9 +45,6 @@ namespace VgcApisTests
                 var c = recorder.Current();
                 Assert.AreEqual(i, c);
             }
-
-
         }
-
     }
 }

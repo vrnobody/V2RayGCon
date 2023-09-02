@@ -1,5 +1,4 @@
 ﻿using Luna.Resources.Langs;
-using Newtonsoft.Json;
 using NLua;
 using System;
 using System.Collections.Generic;
@@ -8,8 +7,7 @@ using System.Threading;
 
 namespace Luna.Controllers
 {
-    internal class LuaCoreCtrl :
-        VgcApis.BaseClasses.Disposable
+    internal class LuaCoreCtrl : VgcApis.BaseClasses.Disposable
     {
         public EventHandler OnStateChange;
 
@@ -30,9 +28,7 @@ namespace Luna.Controllers
             this.enableTracebackFeature = enableTracebackFeature;
         }
 
-        public void Run(
-            Models.Apis.LuaApis luaApis,
-            Models.Data.LuaCoreSetting luaCoreState)
+        public void Run(Models.Apis.LuaApis luaApis, Models.Data.LuaCoreSetting luaCoreState)
         {
             this.settings = luaApis.formMgr.settings;
             this.coreSetting = luaCoreState;
@@ -42,7 +38,7 @@ namespace Luna.Controllers
             isRunning = false;
         }
 
-        #region properties 
+        #region properties
         public bool isWarnOnExit = false;
 
         public string name
@@ -169,8 +165,7 @@ namespace Luna.Controllers
         #endregion
 
         #region public methods
-        public Models.Data.LuaCoreSetting GetCoreSettings() =>
-            coreSetting;
+        public Models.Data.LuaCoreSetting GetCoreSettings() => coreSetting;
 
         public string GetResult() => result;
 
@@ -260,6 +255,7 @@ namespace Luna.Controllers
         }
 
         List<Type> assemblies = null;
+
         List<Type> GetAllAssemblies()
         {
             if (assemblies == null)
@@ -330,10 +326,7 @@ namespace Luna.Controllers
 
         Lua CreateLuaCore(Models.Apis.LuaSys luaSys)
         {
-            var lua = new Lua()
-            {
-                UseTraceback = enableTracebackFeature,
-            };
+            var lua = new Lua() { UseTraceback = enableTracebackFeature, };
 
             if (isLoadClr)
             {

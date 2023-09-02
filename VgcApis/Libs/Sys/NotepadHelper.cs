@@ -15,7 +15,12 @@ namespace VgcApis.Libs.Sys
 #pragma warning disable CA2101 // Specify marshaling for P/Invoke string arguments
         [DllImport("user32.dll", EntryPoint = "FindWindowEx")]
 #pragma warning restore CA2101 // Specify marshaling for P/Invoke string arguments
-        private static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
+        private static extern IntPtr FindWindowEx(
+            IntPtr hwndParent,
+            IntPtr hwndChildAfter,
+            string lpszClass,
+            string lpszWindow
+        );
 
 #pragma warning disable CA2101 // Specify marshaling for P/Invoke string arguments
         [DllImport("User32.dll", EntryPoint = "SendMessage")]
@@ -34,7 +39,12 @@ namespace VgcApis.Libs.Sys
 
                 if (!string.IsNullOrEmpty(message))
                 {
-                    IntPtr child = FindWindowEx(notepad.MainWindowHandle, new IntPtr(0), "Edit", null);
+                    IntPtr child = FindWindowEx(
+                        notepad.MainWindowHandle,
+                        new IntPtr(0),
+                        "Edit",
+                        null
+                    );
                     SendMessage(child, 0x000C, 0, message);
                 }
             }

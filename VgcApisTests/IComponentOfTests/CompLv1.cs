@@ -2,8 +2,7 @@
 
 namespace VgcApisTests.IComponentOfTests
 {
-    public class CompLv1 :
-        VgcApis.BaseClasses.ComponentOf<Container>
+    public class CompLv1 : VgcApis.BaseClasses.ComponentOf<Container>
     {
         public CompLv1() { }
 

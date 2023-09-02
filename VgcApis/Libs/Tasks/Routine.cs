@@ -3,8 +3,7 @@ using System.Timers;
 
 namespace VgcApis.Libs.Tasks
 {
-    public sealed class Routine :
-        BaseClasses.Disposable
+    public sealed class Routine : BaseClasses.Disposable
     {
         readonly Action action;
 

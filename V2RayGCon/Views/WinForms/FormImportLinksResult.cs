@@ -9,9 +9,7 @@ namespace V2RayGCon.Views.WinForms
     public partial class FormImportLinksResult : Form
     {
         public static void ShowResult(IEnumerable<string[]> importResults) =>
-            VgcApis.Misc.UI.Invoke(
-                () => new FormImportLinksResult(importResults).Show());
-
+            VgcApis.Misc.UI.Invoke(() => new FormImportLinksResult(importResults).Show());
 
         IEnumerable<string[]> results;
 
@@ -54,32 +52,38 @@ namespace V2RayGCon.Views.WinForms
             bool stop = false;
             while (!stop)
             {
-                Invoke((MethodInvoker)delegate
-                {
-                    var p = Math.Max(min, Math.Min(count * max / total, max));
-                    pbLoading.Value = p;
-                    for (int i = 0; i < seg; i++)
-                    {
-                        if (!it.MoveNext())
+                Invoke(
+                    (MethodInvoker)
+                        delegate
                         {
-                            stop = true;
-                            break;
+                            var p = Math.Max(min, Math.Min(count * max / total, max));
+                            pbLoading.Value = p;
+                            for (int i = 0; i < seg; i++)
+                            {
+                                if (!it.MoveNext())
+                                {
+                                    stop = true;
+                                    break;
+                                }
+                                var result = it.Current;
+                                result[0] = (++count).ToString();
+                                var item = new ListViewItem(result);
+                                lvResult.Items.Add(item);
+                            }
                         }
-                        var result = it.Current;
-                        result[0] = (++count).ToString();
-                        var item = new ListViewItem(result);
-                        lvResult.Items.Add(item);
-                    }
-                });
+                );
                 Task.Delay(100).Wait();
             }
 
-            Invoke((MethodInvoker)delegate
-            {
-                lvResult.ResumeLayout();
-                lvResult.Items[lvResult.Items.Count - 1].EnsureVisible();
-                pbLoading.Visible = false;
-            });
+            Invoke(
+                (MethodInvoker)
+                    delegate
+                    {
+                        lvResult.ResumeLayout();
+                        lvResult.Items[lvResult.Items.Count - 1].EnsureVisible();
+                        pbLoading.Visible = false;
+                    }
+            );
         }
         #endregion
 
@@ -113,10 +117,11 @@ namespace V2RayGCon.Views.WinForms
         }
 
         void CopyToClipboard(List<string> links) =>
-                Misc.Utils.CopyToClipboardAndPrompt(
-                    @"index,link,mark,success,message" +
-                    Environment.NewLine +
-                    string.Join(Environment.NewLine, links));
+            Misc.Utils.CopyToClipboardAndPrompt(
+                @"index,link,mark,success,message"
+                    + Environment.NewLine
+                    + string.Join(Environment.NewLine, links)
+            );
 
         private void btnCopyAll_Click(object sender, EventArgs e)
         {

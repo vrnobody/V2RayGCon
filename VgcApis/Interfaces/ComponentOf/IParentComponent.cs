@@ -8,9 +8,11 @@ namespace VgcApis.Interfaces.ComponentOf
     {
         void Prepare();
 
-        void AddChild<TChild>(TChild child) where TChild : class, IDisposable;
+        void AddChild<TChild>(TChild child)
+            where TChild : class, IDisposable;
 
-        TChild GetChild<TChild>() where TChild : class;
+        TChild GetChild<TChild>()
+            where TChild : class;
 
         IReadOnlyCollection<object> GetChildren();
     }

@@ -1,15 +1,15 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
-    internal sealed class VlessDecoder :
-        VgcApis.BaseClasses.ComponentOf<Codecs>,
-        VgcApis.Interfaces.IShareLinkDecoder
+    internal sealed class VlessDecoder
+        : VgcApis.BaseClasses.ComponentOf<Codecs>,
+            VgcApis.Interfaces.IShareLinkDecoder
     {
         readonly VeeDecoder veeDecoder;
+
         public VlessDecoder(VeeDecoder veeDecoder)
         {
             this.veeDecoder = veeDecoder;
@@ -35,16 +35,13 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return null;
         }
 
-
         public string Encode(string config)
         {
             return VeeCodecs.Comm.EncodeUriShareLink("vless", config);
         }
 
         public List<string> ExtractLinksFromText(string text) =>
-           Misc.Utils.ExtractLinks(
-               text,
-               VgcApis.Models.Datas.Enums.LinkTypes.vless);
+            Misc.Utils.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.vless);
         #endregion
 
         #region private methods

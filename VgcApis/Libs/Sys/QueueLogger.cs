@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace VgcApis.Libs.Sys
 {
-    sealed public class QueueLogger :
-        BaseClasses.Disposable
+    public sealed class QueueLogger : BaseClasses.Disposable
     {
         long updateTimestamp = DateTime.Now.Ticks;
 
@@ -56,7 +53,6 @@ namespace VgcApis.Libs.Sys
             {
                 if (updateTimestamp != strCacheTimestamp)
                 {
-
                     var sb = new StringBuilder();
                     lock (logCacheWLock)
                     {
@@ -75,6 +71,7 @@ namespace VgcApis.Libs.Sys
         }
 
         Tasks.Bar bar = new Tasks.Bar();
+
         void TrimLogCache()
         {
             if (!bar.Install())
@@ -102,6 +99,5 @@ namespace VgcApis.Libs.Sys
         #region protected methods
         protected override void Cleanup() { }
         #endregion
-
     }
 }

@@ -2,16 +2,14 @@
 
 namespace NeoLuna.Libs.LuaSnippet
 {
-    internal class MatchItemBase
-        : AutocompleteItem
+    internal class MatchItemBase : AutocompleteItem
     {
         public MatchItemBase(string keyword)
             : base(keyword)
         {
             if (keyword == null)
             {
-                throw new System.ArgumentException(
-                    @"Keyword is null!");
+                throw new System.ArgumentException(@"Keyword is null!");
             }
 
             Text = keyword;
@@ -20,8 +18,6 @@ namespace NeoLuna.Libs.LuaSnippet
         public string GetLowerText() => Text.ToLower();
 
         public long MeasureSimilarityCi(string fragment) =>
-            VgcApis.Misc.Utils.MeasureSimilarityCi(
-                    Text, fragment);
-
+            VgcApis.Misc.Utils.MeasureSimilarityCi(Text, fragment);
     }
 }

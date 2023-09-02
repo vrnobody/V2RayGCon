@@ -21,11 +21,7 @@ namespace V2RayGCon.Views.UserControls
 
         public Models.Datas.MultiConfItem GetValue()
         {
-            return new Models.Datas.MultiConfItem
-            {
-                alias = tboxAlias.Text,
-                path = tboxUrl.Text,
-            };
+            return new Models.Datas.MultiConfItem { alias = tboxAlias.Text, path = tboxUrl.Text, };
         }
 
         #region public method
@@ -77,7 +73,5 @@ namespace V2RayGCon.Views.UserControls
             DoDragDrop((MultiConfUI)sender, DragDropEffects.Move);
         }
         #endregion
-
-      
     }
 }

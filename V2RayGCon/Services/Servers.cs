@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -12,10 +11,9 @@ using VgcApis.Interfaces;
 
 namespace V2RayGCon.Services
 {
-
-    public class Servers :
-        BaseClasses.SingletonService<Servers>,
-        VgcApis.Interfaces.Services.IServersService
+    public class Servers
+        : BaseClasses.SingletonService<Servers>,
+            VgcApis.Interfaces.Services.IServersService
     {
         Settings setting = null;
         Cache cache = null;
@@ -25,15 +23,11 @@ namespace V2RayGCon.Services
         ServersComponents.QueryHandler queryHandler;
         ServersComponents.IndexHandler indexHandler;
 
-        public event EventHandler
-            OnCoreStart, // ICoreServCtrl sender
-            OnCoreClosing, // ICoreServCtrl sender
+        public event EventHandler OnCoreStart, // ICoreServCtrl sender
+            OnCoreClosing,
             OnCoreStop,
-
             OnServerPropertyChange,
             OnServerCountChange,
-
-            // special events
             OnRequireFlyPanelReload;
 
         // uid => CoreServ
@@ -41,7 +35,8 @@ namespace V2RayGCon.Services
             new Dictionary<string, Controllers.CoreServerCtrl>();
 
         ConcurrentDictionary<string, bool> markList = new ConcurrentDictionary<string, bool>();
-        ConcurrentDictionary<string, string> configCache = new ConcurrentDictionary<string, string>();
+        ConcurrentDictionary<string, string> configCache =
+            new ConcurrentDictionary<string, string>();
 
         VgcApis.Libs.Tasks.LazyGuy lazyServerSettingsRecorder;
         ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
@@ -52,17 +47,14 @@ namespace V2RayGCon.Services
             lazyServerSettingsRecorder = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveServersSettingsWorker,
                 VgcApis.Models.Consts.Intervals.LazySaveServerListIntreval,
-                2 * 1000)
+                2 * 1000
+            )
             {
                 Name = "Servers.SaveSettings()",
             };
         }
 
-        public void Run(
-           Settings setting,
-           Cache cache,
-           ConfigMgr configMgr,
-           Notifier notifier)
+        public void Run(Settings setting, Cache cache, ConfigMgr configMgr, Notifier notifier)
         {
             this.notifier = notifier;
             this.configMgr = configMgr;
@@ -71,13 +63,9 @@ namespace V2RayGCon.Services
             InitServerCtrlList();
             UpdateMarkList();
 
-            queryHandler = new ServersComponents.QueryHandler(
-                locker,
-                coreServCache);
+            queryHandler = new ServersComponents.QueryHandler(locker, coreServCache);
 
-            indexHandler = new ServersComponents.IndexHandler(
-                locker,
-                coreServCache);
+            indexHandler = new ServersComponents.IndexHandler(locker, coreServCache);
         }
 
         #region reflection
@@ -101,46 +89,66 @@ namespace V2RayGCon.Services
 
         public void SortSelectedBySpeedTest()
         {
-            SortSelectedServers((list) => indexHandler.SortCoreServCtrlListBySpeedTestResult(ref list));
+            SortSelectedServers(
+                (list) => indexHandler.SortCoreServCtrlListBySpeedTestResult(ref list)
+            );
         }
 
         public void SortServersBySpeedTest(List<string> uids)
         {
             var coreServs = queryHandler.GetServersByUids(uids);
-            SortServers(coreServs, (list) => indexHandler.SortCoreServCtrlListBySpeedTestResult(ref list));
+            SortServers(
+                coreServs,
+                (list) => indexHandler.SortCoreServCtrlListBySpeedTestResult(ref list)
+            );
         }
 
         public void SortSelectedByDownloadTotal()
         {
-            SortSelectedServers((list) => indexHandler.SortCoreServerCtrlListByDownloadTotal(ref list));
+            SortSelectedServers(
+                (list) => indexHandler.SortCoreServerCtrlListByDownloadTotal(ref list)
+            );
         }
 
         public void SortServersByDownloadTotal(List<string> uids)
         {
             var coreServs = queryHandler.GetServersByUids(uids);
-            SortServers(coreServs, (list) => indexHandler.SortCoreServerCtrlListByDownloadTotal(ref list));
+            SortServers(
+                coreServs,
+                (list) => indexHandler.SortCoreServerCtrlListByDownloadTotal(ref list)
+            );
         }
 
         public void SortSelectedByUploadTotal()
         {
-            SortSelectedServers((list) => indexHandler.SortCoreServerCtrlListByUploadTotal(ref list));
+            SortSelectedServers(
+                (list) => indexHandler.SortCoreServerCtrlListByUploadTotal(ref list)
+            );
         }
 
         public void SortServersByUploadTotal(List<string> uids)
         {
             var coreServs = queryHandler.GetServersByUids(uids);
-            SortServers(coreServs, (list) => indexHandler.SortCoreServerCtrlListByUploadTotal(ref list));
+            SortServers(
+                coreServs,
+                (list) => indexHandler.SortCoreServerCtrlListByUploadTotal(ref list)
+            );
         }
 
         public void SortSelectedByLastModifiedDate()
         {
-            SortSelectedServers((list) => indexHandler.SortCoreServerCtrlListByLastModifyDate(ref list));
+            SortSelectedServers(
+                (list) => indexHandler.SortCoreServerCtrlListByLastModifyDate(ref list)
+            );
         }
 
         public void SortServersByLastModifiedDate(List<string> uids)
         {
             var coreServs = queryHandler.GetServersByUids(uids);
-            SortServers(coreServs, (list) => indexHandler.SortCoreServerCtrlListByLastModifyDate(ref list));
+            SortServers(
+                coreServs,
+                (list) => indexHandler.SortCoreServerCtrlListByLastModifyDate(ref list)
+            );
         }
 
         public void SortSelectedBySummary()
@@ -154,15 +162,12 @@ namespace V2RayGCon.Services
             SortServers(coreServs, (list) => indexHandler.SortCoreServCtrlListBySummary(ref list));
         }
 
-
         #endregion
 
         #region querys
-        public List<ICoreServCtrl> GetSelectedServers() =>
-            queryHandler.GetSelectedServers();
+        public List<ICoreServCtrl> GetSelectedServers() => queryHandler.GetSelectedServers();
 
-        public List<ICoreServCtrl> GetRunningServers() =>
-            queryHandler.GetRunningServers();
+        public List<ICoreServCtrl> GetRunningServers() => queryHandler.GetRunningServers();
 
         List<ICoreServCtrl> sortedCoreServListCache = null;
         readonly object sortedCoreServListCacheLocker = new object();
@@ -254,12 +259,12 @@ namespace V2RayGCon.Services
             server.OnIndexChanged -= OnCoreServIndexChangedHandler;
         }
 
-
         #endregion
 
         #region server tracking
 
         Libs.Sys.CancelableTimeout lazyServerTrackingTimer = null;
+
         void DoServerTrackingLater(Action onTimeout)
         {
             lazyServerTrackingTimer?.Release();
@@ -305,8 +310,10 @@ namespace V2RayGCon.Services
 
             foreach (var serv in list)
             {
-                if (serv.GetConfiger().IsSuitableToBeUsedAsSysProxy(
-                    true, out bool isSocks, out int port))
+                if (
+                    serv.GetConfiger()
+                        .IsSuitableToBeUsedAsSysProxy(true, out bool isSocks, out int port)
+                )
                 {
                     return port;
                 }
@@ -323,18 +330,19 @@ namespace V2RayGCon.Services
             tracker.curServer = string.Empty; // obsolete
             tracker.serverList = new List<string>(); //obsolete
 
-            tracker.uids = tracker.isTrackerOn ? GetRunningServers()
+            tracker.uids = tracker.isTrackerOn
+                ? GetRunningServers()
                     .Where(s => !s.GetCoreStates().IsUntrack())
                     .Select(s => s.GetCoreStates().GetUid())
                     .ToList()
-                    : new List<string>();
+                : new List<string>();
 
             setting.SaveServerTrackerSetting(tracker);
             return;
         }
 
-
         int selectedServersCountCache = -1;
+
         public int CountSelected()
         {
             if (selectedServersCountCache < 0)
@@ -342,7 +350,9 @@ namespace V2RayGCon.Services
                 locker.EnterReadLock();
                 try
                 {
-                    selectedServersCountCache = coreServCache.Count(kv => kv.Value.GetCoreStates().IsSelected());
+                    selectedServersCountCache = coreServCache.Count(
+                        kv => kv.Value.GetCoreStates().IsSelected()
+                    );
                 }
                 finally
                 {
@@ -355,8 +365,7 @@ namespace V2RayGCon.Services
 
         public int Count() => coreServCache.Count;
 
-        public string[] GetMarkList() =>
-            markList.Keys.OrderBy(x => x).ToArray();
+        public string[] GetMarkList() => markList.Keys.OrderBy(x => x).ToArray();
 
         public void AddNewMark(string newMark)
         {
@@ -388,7 +397,10 @@ namespace V2RayGCon.Services
         public void RestartServersWithImportMark()
         {
             var list = queryHandler.GetServers(
-                kv => kv.Value.GetCoreStates().IsInjectGlobalImport() && kv.Value.GetCoreCtrl().IsCoreRunning());
+                kv =>
+                    kv.Value.GetCoreStates().IsInjectGlobalImport()
+                    && kv.Value.GetCoreCtrl().IsCoreRunning()
+            );
             RestartServersThen(list);
         }
 
@@ -420,25 +432,45 @@ namespace V2RayGCon.Services
 
         public string PackServersWithUidsV4(
             List<string> uids,
-            string orgUid, string pkgName,
-            string interval, string url,
+            string orgUid,
+            string pkgName,
+            string interval,
+            string url,
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
-            VgcApis.Models.Datas.Enums.PackageTypes packageType)
+            VgcApis.Models.Datas.Enums.PackageTypes packageType
+        )
         {
             var coreServs = queryHandler.GetServersByUids(uids);
             return PackServersIntoV4PackageWorker(
-                coreServs, orgUid, pkgName, interval, url, strategy, packageType);
+                coreServs,
+                orgUid,
+                pkgName,
+                interval,
+                url,
+                strategy,
+                packageType
+            );
         }
 
         public string PackSelectedServersV4(
-            string orgUid, string pkgName,
-            string interval, string url,
+            string orgUid,
+            string pkgName,
+            string interval,
+            string url,
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
-            VgcApis.Models.Datas.Enums.PackageTypes packageType)
+            VgcApis.Models.Datas.Enums.PackageTypes packageType
+        )
         {
             var servList = GetSelectedServers();
             return PackServersIntoV4PackageWorker(
-                servList, orgUid, pkgName, interval, url, strategy, packageType);
+                servList,
+                orgUid,
+                pkgName,
+                interval,
+                url,
+                strategy,
+                packageType
+            );
         }
 
         /// <summary>
@@ -453,7 +485,8 @@ namespace V2RayGCon.Services
             string interval,
             string url,
             VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
-            VgcApis.Models.Datas.Enums.PackageTypes packageType)
+            VgcApis.Models.Datas.Enums.PackageTypes packageType
+        )
         {
             if (servList == null || servList.Count < 1)
             {
@@ -462,7 +495,14 @@ namespace V2RayGCon.Services
             }
 
             var uid = PackServersIntoV4PackageWorker(
-                servList, orgUid, packageName, interval, url, strategy, packageType);
+                servList,
+                orgUid,
+                packageName,
+                interval,
+                url,
+                strategy,
+                packageType
+            );
             Misc.UI.ShowMessageBoxDoneAsync();
             return uid;
         }
@@ -509,7 +549,8 @@ namespace V2RayGCon.Services
         {
             var success = BatchSpeedTestWorkerThen(
                 GetSelectedServers(),
-                () => MessageBox.Show(I18N.SpeedTestFinished));
+                () => MessageBox.Show(I18N.SpeedTestFinished)
+            );
             if (!success)
             {
                 MessageBox.Show(I18N.LastTestNoFinishYet);
@@ -518,7 +559,8 @@ namespace V2RayGCon.Services
 
         public void RestartServersThen(
             List<VgcApis.Interfaces.ICoreServCtrl> coreServs,
-            Action done = null)
+            Action done = null
+        )
         {
             void worker(int index, Action next)
             {
@@ -658,8 +700,8 @@ namespace V2RayGCon.Services
         public int DeleteSelectedServers()
         {
             List<string> uids = GetSelectedServers()
-                    .Select(s => s.GetCoreStates().GetUid())
-                    .ToList();
+                .Select(s => s.GetCoreStates().GetUid())
+                .ToList();
             return DeleteServerByUids(uids);
         }
 
@@ -730,7 +772,9 @@ namespace V2RayGCon.Services
             locker.EnterReadLock();
             try
             {
-                return coreServCache.FirstOrDefault(kv => (int)kv.Value.GetCoreStates().GetIndex() == index).Value;
+                return coreServCache
+                    .FirstOrDefault(kv => (int)kv.Value.GetCoreStates().GetIndex() == index)
+                    .Value;
             }
             finally
             {
@@ -778,7 +822,9 @@ namespace V2RayGCon.Services
         public string ReplaceOrAddNewServer(string orgUid, string newConfig, string mark)
         {
             newConfig = VgcApis.Misc.Utils.FormatConfig(newConfig);
-            if (!string.IsNullOrEmpty(orgUid) && coreServCache.TryGetValue(orgUid, out var coreServ))
+            if (
+                !string.IsNullOrEmpty(orgUid) && coreServCache.TryGetValue(orgUid, out var coreServ)
+            )
             {
                 var oldConfig = coreServ.GetConfiger().GetConfig();
 
@@ -812,9 +858,11 @@ namespace V2RayGCon.Services
 
         Controllers.CoreServerCtrl DeleteServerByUidWorker(string uid)
         {
-            if (!string.IsNullOrEmpty(uid)
+            if (
+                !string.IsNullOrEmpty(uid)
                 && coreServCache.TryGetValue(uid, out var coreServ)
-                && coreServ != null)
+                && coreServ != null
+            )
             {
                 var cfg = coreServ.GetConfiger().GetConfig();
                 configCache.TryRemove(cfg, out _);
@@ -945,9 +993,11 @@ namespace V2RayGCon.Services
             {
                 return;
             }
-            if (!coreServCache.TryGetValue(uid, out var coreServ)
+            if (
+                !coreServCache.TryGetValue(uid, out var coreServ)
                 || coreServ == null
-                || coreServ.GetCoreStates().IsUntrack())
+                || coreServ.GetCoreStates().IsUntrack()
+            )
             {
                 return;
             }
@@ -1020,7 +1070,8 @@ namespace V2RayGCon.Services
         }
 
         private List<VgcApis.Models.Datas.CoreInfo> GetAllCoreInfos() =>
-             queryHandler.GetAllServers()
+            queryHandler
+                .GetAllServers()
                 .Select(s => s.GetCoreStates().GetAllRawCoreInfo())
                 .ToList();
 
@@ -1042,7 +1093,8 @@ namespace V2RayGCon.Services
             ref JObject config,
             string interval,
             string url,
-            VgcApis.Models.Datas.Enums.BalancerStrategies strategy)
+            VgcApis.Models.Datas.Enums.BalancerStrategies strategy
+        )
         {
             switch (strategy)
             {
@@ -1058,7 +1110,9 @@ namespace V2RayGCon.Services
                         {
                             config["observatory"]["probeURL"] = url;
                         }
-                        config["routing"]["balancers"][0]["strategy"] = JObject.Parse("{type:'leastPing'}");
+                        config["routing"]["balancers"][0]["strategy"] = JObject.Parse(
+                            "{type:'leastPing'}"
+                        );
                     }
                     catch { }
                     break;
@@ -1068,13 +1122,14 @@ namespace V2RayGCon.Services
         }
 
         string PackServersIntoV4PackageWorker(
-           List<ICoreServCtrl> servList,
-           string orgUid,
-           string packageName,
-           string interval,
-           string url,
-           VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
-           VgcApis.Models.Datas.Enums.PackageTypes packageType)
+            List<ICoreServCtrl> servList,
+            string orgUid,
+            string packageName,
+            string interval,
+            string url,
+            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
+            VgcApis.Models.Datas.Enums.PackageTypes packageType
+        )
         {
             if (servList == null || servList.Count < 1)
             {
@@ -1082,7 +1137,10 @@ namespace V2RayGCon.Services
             }
 
             JObject package = configMgr.GenV4ServersPackageConfig(
-                servList, packageName, packageType);
+                servList,
+                packageName,
+                packageType
+            );
             string mark;
 
             switch (packageType)
@@ -1118,9 +1176,7 @@ namespace V2RayGCon.Services
 
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                Misc.Utils.ExecuteInParallel(
-                    randList,
-                    serv => serv.GetCoreCtrl().RunSpeedTest());
+                Misc.Utils.ExecuteInParallel(randList, serv => serv.GetCoreCtrl().RunSpeedTest());
                 speedTestingBar.Remove();
                 setting.SendLog(I18N.SpeedTestFinished);
                 next?.Invoke();
@@ -1169,7 +1225,6 @@ namespace V2RayGCon.Services
                 return;
             }
 
-
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() stop tracking");
             lazyServerTrackingTimer?.Timeout();
             lazyServerTrackingTimer?.Release();
@@ -1197,19 +1252,22 @@ namespace V2RayGCon.Services
                     var isStopCore = VgcApis.Libs.Infr.PseudoRandom.Next(0, 2) == 0;
                     var server = list[index];
 
-                    var task = new Task(() =>
-                    {
-                        AutoResetEvent sayGoodbye = new AutoResetEvent(false);
-                        if (isStopCore)
+                    var task = new Task(
+                        () =>
                         {
-                            server.GetCoreCtrl().StopCoreThen(() => sayGoodbye.Set());
-                        }
-                        else
-                        {
-                            server.GetCoreCtrl().RestartCoreThen(() => sayGoodbye.Set());
-                        }
-                        notifier.BlockingWaitOne(sayGoodbye);
-                    }, TaskCreationOptions.LongRunning);
+                            AutoResetEvent sayGoodbye = new AutoResetEvent(false);
+                            if (isStopCore)
+                            {
+                                server.GetCoreCtrl().StopCoreThen(() => sayGoodbye.Set());
+                            }
+                            else
+                            {
+                                server.GetCoreCtrl().RestartCoreThen(() => sayGoodbye.Set());
+                            }
+                            notifier.BlockingWaitOne(sayGoodbye);
+                        },
+                        TaskCreationOptions.LongRunning
+                    );
 
                     taskList.Add(task);
                     task.Start();

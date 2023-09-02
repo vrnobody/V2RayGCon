@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DyFetch.Comps
 {
@@ -39,5 +36,4 @@ namespace DyFetch.Comps
         }
         #endregion
     }
-
 }

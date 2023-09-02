@@ -6,19 +6,18 @@ using System.Linq;
 
 namespace V2RayGCon.Services.Caches
 {
-    internal sealed class JsonBestMatchItems :
-        IEnumerable<AutocompleteItem>
+    internal sealed class JsonBestMatchItems : IEnumerable<AutocompleteItem>
     {
         Scintilla editor;
-        string searchPattern =
-            VgcApis.Models.Consts.Patterns.JsonSnippetSearchPattern;
+        string searchPattern = VgcApis.Models.Consts.Patterns.JsonSnippetSearchPattern;
 
         List<string> keywords;
 
         public JsonBestMatchItems(
             Scintilla editor,
             string matchPattern,
-            IEnumerable<string> rawKeywords)
+            IEnumerable<string> rawKeywords
+        )
         {
             this.searchPattern = matchPattern;
             this.editor = editor;
@@ -30,15 +29,13 @@ namespace V2RayGCon.Services.Caches
 
         private IEnumerable<AutocompleteItem> BuildList()
         {
-            var fragment = VgcApis.Misc.Utils.GetFragment(
-                editor, searchPattern);
+            var fragment = VgcApis.Misc.Utils.GetFragment(editor, searchPattern);
 
             var table = new Dictionary<string, long>();
 
             foreach (var keyword in keywords)
             {
-                var marks = VgcApis.Misc.Utils.MeasureSimilarityCi(
-                    keyword, fragment);
+                var marks = VgcApis.Misc.Utils.MeasureSimilarityCi(keyword, fragment);
 
                 if (marks > 0 && !table.ContainsKey(keyword))
                 {
@@ -52,7 +49,6 @@ namespace V2RayGCon.Services.Caches
                 .Select(kv => kv.Key)
                 .ToList();
 
-
             //return autocomplete items
             foreach (var word in sorted)
                 yield return new JsonKeywordItems(word);
@@ -61,8 +57,7 @@ namespace V2RayGCon.Services.Caches
         #endregion
 
         #region IEnumerable thinggy
-        public IEnumerator<AutocompleteItem> GetEnumerator() =>
-            BuildList().GetEnumerator();
+        public IEnumerator<AutocompleteItem> GetEnumerator() => BuildList().GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         #endregion

@@ -61,7 +61,6 @@ namespace V2RayGCon.Views.UserControls
             var st = string.IsNullOrEmpty(sc.streamType) ? StreamTypeNone : sc.streamType;
             SelectByText(cboxStreamType, st);
 
-
             if (cboxStreamParma1.DropDownStyle == ComboBoxStyle.DropDownList)
             {
                 SelectByText(cboxStreamParma1, sc.streamParam1);
@@ -83,7 +82,6 @@ namespace V2RayGCon.Views.UserControls
             tboxTlsPublicKey.Text = sc.tlsParam1;
             tboxTlsShortId.Text = sc.tlsParam2;
             tboxTlsSpiderX.Text = sc.tlsParam3;
-
         }
         #endregion
 
@@ -104,13 +102,18 @@ namespace V2RayGCon.Views.UserControls
             cbox.SelectedIndex = -1;
         }
 
-
         const string StreamTypeNone = @"none";
 
         void InitControls()
         {
-            var protocols = new List<string> {
-                "http", "shadowsocks", "socks", "trojan", "vless", "vmess"
+            var protocols = new List<string>
+            {
+                "http",
+                "shadowsocks",
+                "socks",
+                "trojan",
+                "vless",
+                "vmess"
             };
             Misc.UI.FillComboBox(cboxProtocol, protocols);
 
@@ -203,23 +206,29 @@ namespace V2RayGCon.Views.UserControls
             {
                 case @"vless":
                 case @"trojan":
-                    items.AddRange(new string[] {
-                        "xtls-rprx-vision",
-                        "xtls-rprx-vision-udp443",
-                        "",
-                        "xtls-rprx-splice",
-                        "xtls-rprx-splice-udp443",
-                    });
+                    items.AddRange(
+                        new string[]
+                        {
+                            "xtls-rprx-vision",
+                            "xtls-rprx-vision-udp443",
+                            "",
+                            "xtls-rprx-splice",
+                            "xtls-rprx-splice-udp443",
+                        }
+                    );
                     break;
 
                 case @"shadowsocks":
-                    items.AddRange(new string[] {
-                        "none",
-                        "aes-256-gcm",
-                        "aes-128-gcm",
-                        "chacha20-poly1305",
-                        "chacha20-ietf-poly1305",
-                    });
+                    items.AddRange(
+                        new string[]
+                        {
+                            "none",
+                            "aes-256-gcm",
+                            "aes-128-gcm",
+                            "chacha20-poly1305",
+                            "chacha20-ietf-poly1305",
+                        }
+                    );
                     break;
 
                 default:
@@ -246,7 +255,9 @@ namespace V2RayGCon.Views.UserControls
             }
 
             cboxStreamParma1.Items.Clear();
-            cboxStreamParma1.DropDownStyle = opts.dropDownStyle ? ComboBoxStyle.DropDownList : ComboBoxStyle.DropDown;
+            cboxStreamParma1.DropDownStyle = opts.dropDownStyle
+                ? ComboBoxStyle.DropDownList
+                : ComboBoxStyle.DropDown;
             if (opts.dropDownStyle && opts.options.Count > 0)
             {
                 foreach (var kv in opts.options)
@@ -328,6 +339,5 @@ namespace V2RayGCon.Views.UserControls
         }
 
         #endregion
-
     }
 }

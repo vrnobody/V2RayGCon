@@ -2,22 +2,19 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
 {
-    public class CoreStates :
-        VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
-        VgcApis.Interfaces.CoreCtrlComponents.ICoreStates
+    public class CoreStates
+        : VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
+            VgcApis.Interfaces.CoreCtrlComponents.ICoreStates
     {
         VgcApis.Models.Datas.CoreInfo coreInfo;
         Services.Servers servers;
 
-        public CoreStates(
-            Services.Servers servers,
-            VgcApis.Models.Datas.CoreInfo coreInfo)
+        public CoreStates(Services.Servers servers, VgcApis.Models.Datas.CoreInfo coreInfo)
         {
             this.servers = servers;
             this.coreInfo = coreInfo;
@@ -25,6 +22,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         CoreCtrl coreCtrl;
         Configer configer;
+
         public override void Prepare()
         {
             coreCtrl = GetSibling<CoreCtrl>();
@@ -39,7 +37,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         #endregion
 
-        #region public methods       
+        #region public methods
 
         public void SetName(string name)
         {
@@ -98,6 +96,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         public long GetUplinkTotalInBytes() => coreInfo.totalUplinkInBytes;
+
         public long GetDownlinkTotalInBytes() => coreInfo.totalDownlinkInBytes;
 
         public void SetUplinkTotal(long sizeInBytes)
@@ -236,7 +235,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             {
                 coreInfo.inbPort = port;
                 changed = true;
-
             }
 
             if (changed)
@@ -253,7 +251,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
 
             coreInfo.customInbType = Misc.Utils.Clamp(
-                type, 0, Models.Datas.Table.customInbTypeNames.Length);
+                type,
+                0,
+                Models.Datas.Table.customInbTypeNames.Length
+            );
 
             GetParent().InvokeEventOnPropertyChange();
             if (coreCtrl.IsCoreRunning())
@@ -263,8 +264,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         public int GetInboundType() => coreInfo.customInbType;
-        public string GetInboundAddr() =>
-                    $"{coreInfo.inbIp}:{coreInfo.inbPort}";
+
+        public string GetInboundAddr() => $"{coreInfo.inbIp}:{coreInfo.inbPort}";
 
         public void SetMark(string mark)
         {
@@ -290,7 +291,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         public string GetTag1() => coreInfo.tag1;
+
         public string GetTag2() => coreInfo.tag2;
+
         public string GetTag3() => coreInfo.tag3;
 
         public void SetTag1(string tag)
@@ -302,6 +305,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             coreInfo.tag1 = tag;
             GetParent().InvokeEventOnPropertyChange();
         }
+
         public void SetTag2(string tag)
         {
             if (tag == coreInfo.tag2)
@@ -311,6 +315,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             coreInfo.tag2 = tag;
             GetParent().InvokeEventOnPropertyChange();
         }
+
         public void SetTag3(string tag)
         {
             if (tag == coreInfo.tag3)
@@ -324,10 +329,13 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public string GetRemark() => coreInfo.customRemark;
 
         public string GetInboundIp() => coreInfo.inbIp;
+
         public int GetInboundPort() => coreInfo.inbPort;
 
         public bool IsAutoRun() => coreInfo.isAutoRun;
+
         public bool IsSelected() => coreInfo.isSelected;
+
         public bool IsUntrack() => coreInfo.isUntrack;
 
         public bool IsInjectSkipCnSite() => coreInfo.isInjectSkipCNSite;
@@ -340,7 +348,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             if (string.IsNullOrEmpty(ci.title))
             {
                 var result = $"{GetIndex()}.[{GetShortName()}] {GetSummary()}";
-                ci.title = VgcApis.Misc.Utils.AutoEllipsis(result, VgcApis.Models.Consts.AutoEllipsis.ServerTitleMaxLength);
+                ci.title = VgcApis.Misc.Utils.AutoEllipsis(
+                    result,
+                    VgcApis.Models.Consts.AutoEllipsis.ServerTitleMaxLength
+                );
             }
             return ci.title;
         }
@@ -349,22 +360,24 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GetLongName()
         {
-            if (string.IsNullOrEmpty(coreInfo.longName)
-                && !string.IsNullOrEmpty(coreInfo.name))
+            if (string.IsNullOrEmpty(coreInfo.longName) && !string.IsNullOrEmpty(coreInfo.name))
             {
                 coreInfo.longName = VgcApis.Misc.Utils.AutoEllipsis(
-                    coreInfo.name, VgcApis.Models.Consts.AutoEllipsis.ServerLongNameMaxLength);
+                    coreInfo.name,
+                    VgcApis.Models.Consts.AutoEllipsis.ServerLongNameMaxLength
+                );
             }
             return coreInfo.longName;
         }
 
         public string GetShortName()
         {
-            if (string.IsNullOrEmpty(coreInfo.shortName)
-                && !string.IsNullOrEmpty(coreInfo.name))
+            if (string.IsNullOrEmpty(coreInfo.shortName) && !string.IsNullOrEmpty(coreInfo.name))
             {
                 coreInfo.shortName = VgcApis.Misc.Utils.AutoEllipsis(
-                    coreInfo.name, VgcApis.Models.Consts.AutoEllipsis.ServerShortNameMaxLength);
+                    coreInfo.name,
+                    VgcApis.Models.Consts.AutoEllipsis.ServerShortNameMaxLength
+                );
             }
             return coreInfo.shortName;
         }
@@ -372,6 +385,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public string GetName() => coreInfo.name;
 
         int statPort = -1;
+
         public int GetStatPort() => statPort;
 
         /// <summary>
@@ -380,6 +394,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public void SetStatPort(int port) => statPort = port;
 
         string status = @"";
+
         public string GetStatus() => status;
 
         public void SetStatus(string text)
@@ -396,6 +411,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public long GetLastSpeedTestUtcTicks() => coreInfo.lastSpeedTestUtcTicks;
 
         public long GetSpeedTestResult() => coreInfo.speedTestResult;
+
         public void SetSpeedTestResult(long latency)
         {
             coreInfo.lastSpeedTestUtcTicks = DateTime.UtcNow.Ticks;
@@ -460,11 +476,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         bool SetPropertyOnDemand(ref string property, string value) =>
-          SetPropertyOnDemandWorker(ref property, value);
+            SetPropertyOnDemandWorker(ref property, value);
 
         bool SetPropertyOnDemand<T>(ref T property, T value)
-            where T : struct =>
-            SetPropertyOnDemandWorker(ref property, value);
+            where T : struct => SetPropertyOnDemandWorker(ref property, value);
 
         bool SetPropertyOnDemandWorker<T>(ref T property, T value)
         {
@@ -479,5 +494,4 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
         #endregion
     }
-
 }

@@ -24,8 +24,7 @@ namespace ProxySetter.Libs.Sys
             {
                 return;
             }
-            VgcApis.Misc.Utils.RunInBackground(
-                this.LongRunningTaskWrapper);
+            VgcApis.Misc.Utils.RunInBackground(this.LongRunningTaskWrapper);
         }
         #endregion
 

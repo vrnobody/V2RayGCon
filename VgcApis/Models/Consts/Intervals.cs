@@ -1,12 +1,12 @@
 ﻿namespace VgcApis.Models.Consts
 {
-    static public class Intervals
+    public static class Intervals
     {
         public const int AnalizeLuaScriptDelay = 3000;
 
         public const int GetStartCoreTokenInterval = 391;
 
-        // Service.Setting 
+        // Service.Setting
         public const int LazyGcDelay = 5 * 60 * 1000; // 10 minutes
         public const int LazySaveUserSettingsDelay = 5 * 60 * 1000;
         public const int LazySaveServerListIntreval = 3 * 60 * 1000;
@@ -16,7 +16,6 @@
 
         public const int DefaultSpeedTestTimeout = 20 * 1000;
         public const int DefaultFetchTimeout = 30 * 1000;
-
 
         public const int NotifierMenuUpdateIntreval = 1000;
 

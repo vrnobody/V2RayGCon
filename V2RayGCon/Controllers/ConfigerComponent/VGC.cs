@@ -45,8 +45,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         #region private method
         JToken GetSettings()
         {
-            JToken vgc = Services.Cache.Instance.
-                tpl.LoadTemplate("vgc");
+            JToken vgc = Services.Cache.Instance.tpl.LoadTemplate("vgc");
 
             vgc["alias"] = alias;
             vgc["description"] = description;

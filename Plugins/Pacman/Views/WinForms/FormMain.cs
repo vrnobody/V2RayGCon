@@ -47,7 +47,6 @@ namespace Pacman.Views.WinForms
             //Button btnGenerate)
             return new Controllers.FormMainCtrl(
                 settings,
-
                 tboxName,
                 flyContents,
                 lstBoxPackages,
@@ -55,17 +54,16 @@ namespace Pacman.Views.WinForms
                 btnDelete,
                 btnChain,
                 btnImport,
-
                 cboxBalancerStrategy,
                 cboxObsInterval,
                 cboxObsUrl,
-
                 btnPull,
                 btnSelectAll,
                 btnSelectInvert,
                 btnSelectNone,
                 btnDeleteSelected,
-                btnRefreshSelected);
+                btnRefreshSelected
+            );
         }
         #endregion
         #region UI events
@@ -82,6 +80,5 @@ namespace Pacman.Views.WinForms
             cboxObsUrl.Enabled = visable;
         }
         #endregion
-
     }
 }

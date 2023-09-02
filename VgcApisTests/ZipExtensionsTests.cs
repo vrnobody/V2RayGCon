@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +10,7 @@ namespace VgcApisTests
     [TestClass]
     public class ZipExtensionsTests
     {
-        public ZipExtensionsTests()
-        { }
+        public ZipExtensionsTests() { }
 
         [DataTestMethod]
         [DataRow("hello, world!")]
@@ -36,7 +34,6 @@ namespace VgcApisTests
             var de = ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<string>(ser);
             Assert.AreEqual(s, de);
         }
-
 
         [TestMethod]
         public void ZipSerdeTest()
@@ -84,8 +81,6 @@ namespace VgcApisTests
             var de = VgcApis.Libs.Infr.ZipExtensions.Decompress(cb);
 
             Assert.IsTrue(bytes.SequenceEqual(de));
-
         }
-
     }
 }

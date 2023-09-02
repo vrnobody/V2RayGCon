@@ -2,9 +2,9 @@
 
 namespace V2RayGCon.Controllers.ConfigerComponet
 {
-    abstract class ConfigerComponentController :
-        BaseClasses.NotifyComponent,
-        BaseClasses.IFormComponentController
+    abstract class ConfigerComponentController
+        : BaseClasses.NotifyComponent,
+            BaseClasses.IFormComponentController
     {
         protected Controllers.FormConfigerCtrl container;
 

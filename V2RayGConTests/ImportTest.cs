@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-
 namespace V2RayGCon.Test
 {
     [TestClass]
@@ -13,20 +12,24 @@ namespace V2RayGCon.Test
         [DataRow(
             @"{'a':1,'b':[{'a':{'c':['1','2','3'],'b':1}},{'b':1}],'c':3}",
             @"{'a':1,'b':[{'a':{'c':{'1':'2'}}}]}",
-            false)]
+            false
+        )]
         [DataRow(
             @"{'a':1,'b':[{'a':{'c':['1','2','3'],'b':1}},{'b':1}],'c':3}",
             @"{'a':1,'b':[{'a':{'c':['1','2']}}]}",
-            true)]
+            true
+        )]
         [DataRow(@"{'a':'1'}", @"{'a':'1'}", true)]
         [DataRow(
             @"{'a':1,'b':[{'a':{'a':1,'b':1}},{'b':1}],'c':3}",
             @"{'a':1,'b':[{'a':{'c':1}}]}",
-            false)]
+            false
+        )]
         [DataRow(
             @"{'a':1,'b':[{'a':{'a':1,'b':1}},{'b':1}],'c':3}",
             @"{'a':1,'b':[{'b':1}]}",
-            true)]
+            true
+        )]
         [DataRow(@"{'a':1,'b':2,'c':3}", @"{'a':1,'b':2}", true)]
         [DataRow(@"{'a':1,'b':2,'d':3}", @"{'a':1,'b':2,'c':3}", false)]
         [DataRow(@"{}", @"{}", true)]
@@ -75,13 +78,16 @@ namespace V2RayGCon.Test
             Assert.AreEqual<bool>(true, JObject.DeepEquals(result, e));
         }
 
-
         [DataTestMethod]
         [DataRow(@"{'a':1}", "b")]
         [DataRow(@"{}", "")]
         public void TryExtractJObjectPartFailTest(string json, string path)
         {
-            var stat = Misc.Utils.TryExtractJObjectPart(JObject.Parse(json), path, out JObject part);
+            var stat = Misc.Utils.TryExtractJObjectPart(
+                JObject.Parse(json),
+                path,
+                out JObject part
+            );
             Assert.AreEqual(false, stat);
             Assert.AreEqual(null, part);
         }
@@ -111,65 +117,77 @@ namespace V2RayGCon.Test
             var v = Misc.Utils.ParsePathIntoParentAndKey(path);
             Assert.AreEqual<string>(parent, v.Item1);
             Assert.AreEqual<string>(key, v.Item2);
-
         }
 
         [DataTestMethod]
         [DataRow(
             @"{routing:{settings:{rules:[{a:[1,3]}]}}}",
             @"{routing:{settings:{rules:[{a:[2]}]}}}",
-            @"{routing:{settings:{rules:[{a:[2]},{a:[1,3]}]}}}")]
+            @"{routing:{settings:{rules:[{a:[2]},{a:[1,3]}]}}}"
+        )]
         [DataRow(
             @"{routing:{settings:{rules:[{b:2},{a:[1,2,3,{c:1}]}]}}}",
             @"{routing:{settings:{rules:[{a:[1,2,3,{c:1}]},{c:2}]}}}",
-            @"{routing:{settings:{rules:[{a:[1,2,3,{c:1}]},{c:2},{b:2}]}}}")]
+            @"{routing:{settings:{rules:[{a:[1,2,3,{c:1}]},{c:2},{b:2}]}}}"
+        )]
         [DataRow(
             @"{routing:{settings:{rules:[{b:2},{a:1}]}}}",
             @"{routing:{settings:{rules:[{a:1}]}}}",
-            @"{routing:{settings:{rules:[{a:1},{b:2}]}}}")]
+            @"{routing:{settings:{rules:[{a:1},{b:2}]}}}"
+        )]
         [DataRow(
             @"{'a':1,'arr':[1,2,3],'routing':{'a':1,'settings':{'c':1,'rules':[{'b':2}]}}}",
             @"{'a':2,'b':1,'arr':null,'routing':{'b':2,'settings':{'c':2,'rules':[{'a':1}]}}}",
-            @"{'a':2,'b':1,'arr':null,'routing':{'a':1,'b':2,'settings':{'c':2,'rules':[{'a':1},{'b':2}]}}}")]
+            @"{'a':2,'b':1,'arr':null,'routing':{'a':1,'b':2,'settings':{'c':2,'rules':[{'a':1},{'b':2}]}}}"
+        )]
         [DataRow(
             @"{'arr':[1,2],'routing':{'a':1,'settings':{'c':1,'rules':[{'b':2}]}}}",
             @"{'arr':[4,5,6],'routing':{'b':2,'settings':{'c':2,'rules':[{'a':1}]}}}",
-            @"{'arr':[4,5,6],'routing':{'a':1,'b':2,'settings':{'c':2,'rules':[{'a':1},{'b':2}]}}}")]
+            @"{'arr':[4,5,6],'routing':{'a':1,'b':2,'settings':{'c':2,'rules':[{'a':1},{'b':2}]}}}"
+        )]
         [DataRow(
             @"{'routing':{'a':1,'settings':{'c':1,'rules':[{'b':2}]}}}",
             @"{'routing':{'b':2,'settings':{'c':2,'rules':[{'a':1}]}}}",
-            @"{'routing':{'a':1,'b':2,'settings':{'c':2,'rules':[{'a':1},{'b':2}]}}}")]
+            @"{'routing':{'a':1,'b':2,'settings':{'c':2,'rules':[{'a':1},{'b':2}]}}}"
+        )]
         [DataRow(
             @"{'routing':{'a':1,'settings':{'c':1,'rules':[{'a':1}]}}}",
             @"{'routing':{'b':2,'settings':{'c':2,'rules':[]}}}",
-            @"{'routing':{'a':1,'b':2,'settings':{'c':2,'rules':[{'a':1}]}}}")]
+            @"{'routing':{'a':1,'b':2,'settings':{'c':2,'rules':[{'a':1}]}}}"
+        )]
         [DataRow(
             @"{'routing':{'a':1,'settings':{'c':1,'rules':null}}}",
             @"{'routing':{'b':2,'settings':{'c':2,'rules':[{'a':1}]}}}",
-            @"{'routing':{'a':1,'b':2,'settings':{'c':2,'rules':[{'a':1}]}}}")]
+            @"{'routing':{'a':1,'b':2,'settings':{'c':2,'rules':[{'a':1}]}}}"
+        )]
         [DataRow(
             @"{'routing':{'a':1,'settings':{'rules':[]}}}",
             @"{'routing':{'b':2,'settings':{'rules':[]}}}",
-            @"{'routing':{'a':1,'b':2,'settings':{'rules':[]}}}")]
+            @"{'routing':{'a':1,'b':2,'settings':{'rules':[]}}}"
+        )]
         [DataRow(
             @"{'routing':{'a':1}}",
             @"{'routing':{'b':2,'settings':{'rules':[{'b':1}]}}}",
-            @"{'routing':{'a':1,'b':2,'settings':{'rules':[{'b':1}]}}}")]
+            @"{'routing':{'a':1,'b':2,'settings':{'rules':[{'b':1}]}}}"
+        )]
         [DataRow(
             @"{'routing':{'a':1,'settings':{'rules':[{'b':2}]}}}",
             @"{'routing':{'a':2,'settings':{'rules':[{'b':1}]}}}",
-            @"{'routing':{'a':2,'settings':{'rules':[{'b':1},{'b':2}]}}}")]
+            @"{'routing':{'a':2,'settings':{'rules':[{'b':1},{'b':2}]}}}"
+        )]
         [DataRow(
             @"{'inboundDetour':[{'a':1}]}",
             @"{'inboundDetour':[{'b':1}]}",
-            @"{'inboundDetour':[{'b':1},{'a':1}]}")]
+            @"{'inboundDetour':[{'b':1},{'a':1}]}"
+        )]
         [DataRow(@"{'a':1,'b':1}", @"{'b':2}", @"{'a':1,'b':2}")]
         [DataRow(@"{'a':1}", @"{'b':1}", @"{'a':1,'b':1}")]
         [DataRow(@"{}", @"{}", @"{}")]
         [DataRow(
             @"{'inboundDetour':[{'a':1}],'outboundDetour':null}",
             @"{'inboundDetour':null,'outboundDetour':[{'b':1}]}",
-            @"{'inboundDetour':[{'a':1}],'outboundDetour':[{'b':1}]}")]
+            @"{'inboundDetour':[{'a':1}],'outboundDetour':[{'b':1}]}"
+        )]
         public void CombineConfigTest(string left, string right, string expect)
         {
             // outboundDetour inboundDetour
@@ -193,8 +211,9 @@ namespace V2RayGCon.Test
         [TestMethod]
         public void DetectJArrayTest()
         {
-            var domainOverride = Services.Cache.Instance.
-                tpl.LoadExample("inTpl.sniffing.destOverride");
+            var domainOverride = Services.Cache.Instance.tpl.LoadExample(
+                "inTpl.sniffing.destOverride"
+            );
             var isArray = domainOverride is JArray;
             var isObject = domainOverride is JObject;
 
@@ -210,16 +229,17 @@ namespace V2RayGCon.Test
         }
 
         [DataTestMethod]
-
-        // deepequals regardless dictionary's keys order 
-        [DataRow(@"{a:'123',b:null,c:{b:1}}",
+        // deepequals regardless dictionary's keys order
+        [DataRow(
+            @"{a:'123',b:null,c:{b:1}}",
             @"{a:null,c:{a:1,c:1}}",
-            @"{a:null,b:null,c:{a:1,b:1,c:1}}")]
-
-        [DataRow(@"{a:'123',b:null,c:{a:2,b:1}}",
+            @"{a:null,b:null,c:{a:1,b:1,c:1}}"
+        )]
+        [DataRow(
+            @"{a:'123',b:null,c:{a:2,b:1}}",
             @"{a:null,b:'123',c:{a:1,c:1}}",
-            @"{a:null,b:'123',c:{a:1,b:1,c:1}}")]
-
+            @"{a:null,b:'123',c:{a:1,b:1,c:1}}"
+        )]
         [DataRow(@"{}", @"{}", @"{}")]
         [DataRow(@"{a:'123',b:null}", @"{a:null,b:'123'}", @"{a:null,b:'123'}")]
         [DataRow(@"{a:[1,2],b:{}}", @"{a:[3],b:{a:[1,2,3]}}", @"{a:[3,2],b:{a:[1,2,3]}}")]
@@ -235,7 +255,12 @@ namespace V2RayGCon.Test
         [TestMethod]
         public void ImportItemList2JObject()
         {
-            Models.Datas.ImportItem GenItem(bool includeSpeedTest, bool includeActivate, string url, string alias)
+            Models.Datas.ImportItem GenItem(
+                bool includeSpeedTest,
+                bool includeActivate,
+                string url,
+                string alias
+            )
             {
                 return new Models.Datas.ImportItem
                 {
@@ -249,11 +274,14 @@ namespace V2RayGCon.Test
             var items = new List<List<Models.Datas.ImportItem>>();
             var expects = new List<string>();
 
-            items.Add(new List<Models.Datas.ImportItem> {
-                GenItem(true,true,"a.com","a"),
-                GenItem(false,true,"b.com","b"),
-                GenItem(true,false,"c.com",""),
-            });
+            items.Add(
+                new List<Models.Datas.ImportItem>
+                {
+                    GenItem(true, true, "a.com", "a"),
+                    GenItem(false, true, "b.com", "b"),
+                    GenItem(true, false, "c.com", ""),
+                }
+            );
 
             expects.Add(@"{'v2raygcon':{'import':{'a.com':'a','c.com':''}}}");
 
@@ -296,7 +324,6 @@ namespace V2RayGCon.Test
                 if (imp == null || !(imp is JObject))
                 {
                     json["v2raygcon"] = JObject.Parse(@"{'import':{}}");
-
                 }
                 json["v2raygcon"]["import"][url] = "";
                 data[name] = json.ToString(Newtonsoft.Json.Formatting.None);

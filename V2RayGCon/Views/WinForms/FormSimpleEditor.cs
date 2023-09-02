@@ -6,13 +6,11 @@ namespace V2RayGCon.Views.WinForms
 {
     public partial class FormSimpleEditor : Form
     {
-
         #region Sigleton
         static FormSimpleEditor _instant;
 
         public static FormSimpleEditor GetForm()
         {
-
             VgcApis.Misc.UI.Invoke(() =>
             {
                 if (_instant == null || _instant.IsDisposed)
@@ -46,9 +44,7 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.AutoSetFormIcon(this);
         }
 
-        private void FormSimpleEditor_Load(object sender, EventArgs e)
-        {
-        }
+        private void FormSimpleEditor_Load(object sender, EventArgs e) { }
 
         public void LoadCoreServer(VgcApis.Interfaces.ICoreServCtrl coreServ)
         {
@@ -101,16 +97,12 @@ namespace V2RayGCon.Views.WinForms
                 this.Close();
             }
         }
+
         private void linkConfigEditor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             FormConfiger.ShowEmptyConfig();
         }
 
         #endregion
-
-
-
-
-
     }
 }

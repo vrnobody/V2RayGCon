@@ -9,8 +9,10 @@ namespace V2RayGCon.Views.WinForms
         #region Sigleton
         static readonly VgcApis.BaseClasses.AuxSiWinForm<FormMain> auxSiForm =
             new VgcApis.BaseClasses.AuxSiWinForm<FormMain>();
-        static public FormMain GetForm() => auxSiForm.GetForm();
-        static public void ShowForm() => auxSiForm.ShowForm();
+
+        public static FormMain GetForm() => auxSiForm.GetForm();
+
+        public static void ShowForm() => auxSiForm.ShowForm();
         #endregion
 
         Services.Settings setting;
@@ -43,8 +45,6 @@ namespace V2RayGCon.Views.WinForms
             setting.OnPortableModeChanged += UpdateFormTitle;
             UpdateFormTitle(this, EventArgs.Empty);
         }
-
-
 
         #region private method
 
@@ -131,135 +131,137 @@ namespace V2RayGCon.Views.WinForms
         {
             var ctrl = new Controllers.FormMainCtrl();
 
-            ctrl.Plug(new Controllers.FormMainComponent.FlyServer(
-                this,
-                flyServerListContainer,
-                toolStripLabelSearch,
-                toolStripComboBoxMarkFilter,
-                toolStripStatusLabelTotal,
-                toolStripDropDownButtonPager,
-                toolStripStatusLabelPrePage,
-                toolStripStatusLabelNextPage,
-                toolStripMenuItemResize));
+            ctrl.Plug(
+                new Controllers.FormMainComponent.FlyServer(
+                    this,
+                    flyServerListContainer,
+                    toolStripLabelSearch,
+                    toolStripComboBoxMarkFilter,
+                    toolStripStatusLabelTotal,
+                    toolStripDropDownButtonPager,
+                    toolStripStatusLabelPrePage,
+                    toolStripStatusLabelNextPage,
+                    toolStripMenuItemResize
+                )
+            );
 
-            ctrl.Plug(new Controllers.FormMainComponent.MenuItemsBasic(
-                this,
-                pluginToolStripMenuItem,
+            ctrl.Plug(
+                new Controllers.FormMainComponent.MenuItemsBasic(
+                    this,
+                    pluginToolStripMenuItem,
+                    toolMenuItemSimAddVmessServer,
+                    toolMenuItemImportLinkFromClipboard,
+                    toolMenuItemExportAllServerToFile,
+                    toolMenuItemImportFromFile,
+                    toolMenuItemAbout,
+                    toolMenuItemHelp,
+                    toolMenuItemConfigEditor,
+                    toolMenuItemLog,
+                    toolMenuItemOptions,
+                    toolStripMenuItemDownLoadV2rayCore,
+                    toolStripMenuItemRemoveV2rayCore,
+                    toolMenuItemCheckUpdate
+                )
+            );
 
-                toolMenuItemSimAddVmessServer,
-                toolMenuItemImportLinkFromClipboard,
-                toolMenuItemExportAllServerToFile,
-                toolMenuItemImportFromFile,
-                toolMenuItemAbout,
-                toolMenuItemHelp,
-                toolMenuItemConfigEditor,
-                toolMenuItemLog,
-                toolMenuItemOptions,
-                toolStripMenuItemDownLoadV2rayCore,
-                toolStripMenuItemRemoveV2rayCore,
-                toolMenuItemCheckUpdate));
+            ctrl.Plug(
+                new Controllers.FormMainComponent.MenuItemsSelect(
+                    /*
+                    ToolStripMenuItem selectAllCurPage,
+                    ToolStripMenuItem invertSelectionCurPage,
+                    ToolStripMenuItem selectNoneCurPage,
+                    */
+                    selectAllCurPageToolStripMenuItem,
+                    invertSelectionCurPageToolStripMenuItem,
+                    selectNoneCurPageToolStripMenuItem1,
+                    /*
+                    ToolStripMenuItem selectAllAllPages,
+                    ToolStripMenuItem invertSelectionAllPages,
+                    ToolStripMenuItem selectNoneAllPages,
+                    */
+                    selectAllAllPagesToolStripMenuItem,
+                    invertSelectionAllPagesToolStripMenuItem,
+                    selectNoneAllPagesToolStripMenuItem,
+                    /*
+                    ToolStripMenuItem selectAutorunAllPages,
+                    ToolStripMenuItem selectNoMarkAllPages,
+                    ToolStripMenuItem selectNoSpeedTestAllPages,
+                    ToolStripMenuItem selectRunningAllPages,
+                    ToolStripMenuItem selectTimeoutAllPages,
+                    ToolStripMenuItem selectUntrackAllPages,
+                    */
+                    selectAutorunAllPagesToolStripMenuItem,
+                    selectNoMarkAllPagesToolStripMenuItem,
+                    selectNoSpeedTestAllPagesToolStripMenuItem,
+                    selectRunningAllPagesToolStripMenuItem,
+                    selectTimeoutAllPagesToolStripMenuItem,
+                    selectUntrackAllPagesToolStripMenuItem,
+                    /*
+                    ToolStripMenuItem selectAllAllServers,
+                    ToolStripMenuItem invertSelectionAllServers,
+                    ToolStripMenuItem selectNoneAllServers,
+                    */
+                    selectAllAllServersToolStripMenuItem,
+                    invertSelectionAllServersToolStripMenuItem,
+                    selectNoneAllServersToolStripMenuItem,
+                    /*
+                    ToolStripMenuItem selectAutorunAllServers,
+                    ToolStripMenuItem selectNoMarkAllServers,
+                    ToolStripMenuItem selectNoSpeedTestAllServers,
+                    ToolStripMenuItem selectRunningAllServers,
+                    ToolStripMenuItem selectTimeoutAllServers,
+                    ToolStripMenuItem selectUntrackAllServers,
+                    */
+                    selectAutorunAllServersToolStripMenuItem,
+                    selectNoMarkAllServersToolStripMenuItem,
+                    selectNoSpeedTestAllServersToolStripMenuItem,
+                    selectRunningAllServersToolStripMenuItem,
+                    selectTimeoutAllServersToolStripMenuItem,
+                    selectUntrackAllServersToolStripMenuItem
+                )
+            );
 
-            ctrl.Plug(new Controllers.FormMainComponent.MenuItemsSelect(
-                /*
-                ToolStripMenuItem selectAllCurPage,
-                ToolStripMenuItem invertSelectionCurPage,
-                ToolStripMenuItem selectNoneCurPage,
-                */
-                selectAllCurPageToolStripMenuItem,
-                invertSelectionCurPageToolStripMenuItem,
-                selectNoneCurPageToolStripMenuItem1,
-
-                /*
-                ToolStripMenuItem selectAllAllPages,
-                ToolStripMenuItem invertSelectionAllPages,
-                ToolStripMenuItem selectNoneAllPages,       
-                */
-                selectAllAllPagesToolStripMenuItem,
-                invertSelectionAllPagesToolStripMenuItem,
-                selectNoneAllPagesToolStripMenuItem,
-
-                /*
-                ToolStripMenuItem selectAutorunAllPages,
-                ToolStripMenuItem selectNoMarkAllPages,
-                ToolStripMenuItem selectNoSpeedTestAllPages,
-                ToolStripMenuItem selectRunningAllPages,
-                ToolStripMenuItem selectTimeoutAllPages,
-                ToolStripMenuItem selectUntrackAllPages,
-                */
-                selectAutorunAllPagesToolStripMenuItem,
-                selectNoMarkAllPagesToolStripMenuItem,
-                selectNoSpeedTestAllPagesToolStripMenuItem,
-                selectRunningAllPagesToolStripMenuItem,
-                selectTimeoutAllPagesToolStripMenuItem,
-                selectUntrackAllPagesToolStripMenuItem,
-
-                /*
-                ToolStripMenuItem selectAllAllServers,
-                ToolStripMenuItem invertSelectionAllServers,
-                ToolStripMenuItem selectNoneAllServers,
-                */
-                selectAllAllServersToolStripMenuItem,
-                invertSelectionAllServersToolStripMenuItem,
-                selectNoneAllServersToolStripMenuItem,
-
-                /*
-                ToolStripMenuItem selectAutorunAllServers,
-                ToolStripMenuItem selectNoMarkAllServers,
-                ToolStripMenuItem selectNoSpeedTestAllServers,
-                ToolStripMenuItem selectRunningAllServers,
-                ToolStripMenuItem selectTimeoutAllServers,
-                ToolStripMenuItem selectUntrackAllServers,
-                */
-                selectAutorunAllServersToolStripMenuItem,
-                selectNoMarkAllServersToolStripMenuItem,
-                selectNoSpeedTestAllServersToolStripMenuItem,
-                selectRunningAllServersToolStripMenuItem,
-                selectTimeoutAllServersToolStripMenuItem,
-                selectUntrackAllServersToolStripMenuItem));
-
-            ctrl.Plug(new Controllers.FormMainComponent.MenuItemsServer(
-                //// misc
-                //ToolStripMenuItem refreshSummary,
-                //ToolStripMenuItem deleteAllServers,
-                //ToolStripMenuItem deleteSelected,
-                refreshSummaryToolStripMenuItem,
-                deleteAllServersToolStripMenuItem,
-                deleteSelectedServersToolStripMenuItem,
-
-                //// copy
-                //ToolStripMenuItem copyAsV2cfgLinks,
-                //ToolStripMenuItem copyAsVmessLinks,
-                //ToolStripMenuItem copyAsSubscriptions,
-                toolStripMenuItemCopyAsV2cfgLink,
-                toolStripMenuItemCopyAsVmixLink,
-                toolStripMenuItemCopyAsVeeLink,
-                toolStripMenuItemCopyAsVmessSubscription,
-                toolStripMenuItemCopyAsVeeSubscription,
-
-                //// batch op
-                toolStripMenuItemStopBatchSpeedTest,
-                toolStripMenuItemRunBatchSpeedTest,
-                toolStripMenuItemClearSpeedTestResults,
-                toolStripMenuItemClearStatisticsRecord,
-
-                toolStripMenuItemModifySettings,
-                toolStripMenuItemStopSelected,
-                toolStripMenuItemRestartSelected,
-
-                //// view
-                //ToolStripMenuItem moveToTop,
-                //ToolStripMenuItem moveToBottom,
-                //ToolStripMenuItem sortBySpeed,
-                //ToolStripMenuItem sortBySummary)
-                toolStripMenuItemMoveToTop,
-                toolStripMenuItemMoveToBottom,
-
-                toolStripMenuItemReverseByIndex,
-                toolStripMenuItemSortBySpeedTest,
-                toolStripMenuItemSortByDateT,
-                toolStripMenuItemSortBySummary,
-                toolStripMenuItemSortByDownloadTotal,
-                toolStripMenuItemSortByUploadTotal));
+            ctrl.Plug(
+                new Controllers.FormMainComponent.MenuItemsServer(
+                    //// misc
+                    //ToolStripMenuItem refreshSummary,
+                    //ToolStripMenuItem deleteAllServers,
+                    //ToolStripMenuItem deleteSelected,
+                    refreshSummaryToolStripMenuItem,
+                    deleteAllServersToolStripMenuItem,
+                    deleteSelectedServersToolStripMenuItem,
+                    //// copy
+                    //ToolStripMenuItem copyAsV2cfgLinks,
+                    //ToolStripMenuItem copyAsVmessLinks,
+                    //ToolStripMenuItem copyAsSubscriptions,
+                    toolStripMenuItemCopyAsV2cfgLink,
+                    toolStripMenuItemCopyAsVmixLink,
+                    toolStripMenuItemCopyAsVeeLink,
+                    toolStripMenuItemCopyAsVmessSubscription,
+                    toolStripMenuItemCopyAsVeeSubscription,
+                    //// batch op
+                    toolStripMenuItemStopBatchSpeedTest,
+                    toolStripMenuItemRunBatchSpeedTest,
+                    toolStripMenuItemClearSpeedTestResults,
+                    toolStripMenuItemClearStatisticsRecord,
+                    toolStripMenuItemModifySettings,
+                    toolStripMenuItemStopSelected,
+                    toolStripMenuItemRestartSelected,
+                    //// view
+                    //ToolStripMenuItem moveToTop,
+                    //ToolStripMenuItem moveToBottom,
+                    //ToolStripMenuItem sortBySpeed,
+                    //ToolStripMenuItem sortBySummary)
+                    toolStripMenuItemMoveToTop,
+                    toolStripMenuItemMoveToBottom,
+                    toolStripMenuItemReverseByIndex,
+                    toolStripMenuItemSortBySpeedTest,
+                    toolStripMenuItemSortByDateT,
+                    toolStripMenuItemSortBySummary,
+                    toolStripMenuItemSortByDownloadTotal,
+                    toolStripMenuItemSortByUploadTotal
+                )
+            );
 
             return ctrl;
         }

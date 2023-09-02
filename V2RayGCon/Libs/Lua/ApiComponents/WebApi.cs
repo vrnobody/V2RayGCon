@@ -2,18 +2,16 @@
 
 namespace V2RayGCon.Libs.Lua.ApiComponents
 {
-    public sealed class WebApi :
-        VgcApis.BaseClasses.Disposable,
-        VgcApis.Interfaces.Services.IWebService
+    public sealed class WebApi
+        : VgcApis.BaseClasses.Disposable,
+            VgcApis.Interfaces.Services.IWebService
     {
-        public string PatchHref(string url, string href) =>
-            Misc.Utils.PatchHref(url, href);
-
+        public string PatchHref(string url, string href) => Misc.Utils.PatchHref(url, href);
 
         public List<string> ExtractLinks(
             string text,
-            VgcApis.Models.Datas.Enums.LinkTypes linkType) =>
-            Misc.Utils.ExtractLinks(text, linkType);
+            VgcApis.Models.Datas.Enums.LinkTypes linkType
+        ) => Misc.Utils.ExtractLinks(text, linkType);
 
         public string Search(string keywords, int first, int proxyPort, int timeout)
         {

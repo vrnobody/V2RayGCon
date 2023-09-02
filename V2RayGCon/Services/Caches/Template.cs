@@ -6,7 +6,9 @@ namespace V2RayGCon.Services.Caches
 {
     public class Template
     {
-        JObject template, example, package;
+        JObject template,
+            example,
+            package;
 
         public Template()
         {

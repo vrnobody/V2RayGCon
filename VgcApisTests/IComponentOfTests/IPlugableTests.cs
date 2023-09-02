@@ -12,10 +12,7 @@ namespace VgcApisTests.IComponentOfTests
         {
             var c1 = new CompLv3();
             var c2 = new CompLv3("param");
-            var c3 = new CompLv3("param")
-            {
-                Name = "something else",
-            };
+            var c3 = new CompLv3("param") { Name = "something else", };
 
             Assert.AreEqual("def property", c1.Name);
             Assert.AreEqual("param", c2.Name);
@@ -47,7 +44,6 @@ namespace VgcApisTests.IComponentOfTests
             Assert.AreEqual(null, container.GetParent());
 
             container.Dispose();
-
         }
     }
 }

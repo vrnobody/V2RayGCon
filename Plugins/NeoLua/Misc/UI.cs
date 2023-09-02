@@ -7,7 +7,6 @@ namespace NeoLuna.Misc
 {
     public static class UI
     {
-
         public static Scintilla CreateLuaEditor(Panel container)
         {
             var scintilla = new Scintilla();
@@ -24,7 +23,8 @@ namespace NeoLuna.Misc
 
             var alphaChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
             var numericChars = "0123456789";
-            var accentedChars = "ŠšŒœŸÿÀàÁáÂâÃãÄäÅåÆæÇçÈèÉéÊêËëÌìÍíÎîÏïÐðÑñÒòÓóÔôÕõÖØøÙùÚúÛûÜüÝýÞþßö";
+            var accentedChars =
+                "ŠšŒœŸÿÀàÁáÂâÃãÄäÅåÆæÇçÈèÉéÊêËëÌìÍíÎîÏïÐðÑñÒòÓóÔôÕõÖØøÙùÚúÛûÜüÝýÞþßö";
 
             // Configuring the default style with properties
             // we have common to every lexer style saves time.
@@ -59,12 +59,14 @@ namespace NeoLuna.Misc
 
             // Basic Functions
 
-            scintilla.SetKeywords(1,
+            scintilla.SetKeywords(
+                1,
                 Models.Consts.Lua.NeoLuaApiFuncNames
                     + " "
                     + string.Join(" ", Models.Consts.Lua.NeoLuaPredefinedFunctions)
                     + " "
-                    + Models.Consts.Lua.LuaFunctions);
+                    + Models.Consts.Lua.LuaFunctions
+            );
 
             // String Manipulation & Mathematical
             // Input and Output Facilities and System Facilities
@@ -99,17 +101,19 @@ namespace NeoLuna.Misc
             scintilla.Markers[Marker.FolderTail].Symbol = MarkerSymbol.LCorner;
 
             // Enable automatic folding
-            scintilla.AutomaticFold = (AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change);
+            scintilla.AutomaticFold = (
+                AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change
+            );
 
             // Disable cmd
-            var extra = new List<Keys>() {
+            var extra = new List<Keys>()
+            {
                 Keys.OemOpenBrackets,
                 Keys.Oem6,
                 Keys.OemMinus,
                 Keys.Oemplus,
             };
             VgcApis.Misc.Utils.ClearControlKeys(scintilla, extra);
-
 
             // Configure a margin to display line number
             scintilla.Margins[0].Type = MarginType.Number;
@@ -120,9 +124,5 @@ namespace NeoLuna.Misc
 
             return scintilla;
         }
-
-
-
-
     }
 }

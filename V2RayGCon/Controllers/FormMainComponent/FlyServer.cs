@@ -17,11 +17,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
         readonly Services.Servers servers;
         readonly Services.Settings setting;
         readonly ToolStripComboBox cboxMarkFilter;
-        readonly ToolStripStatusLabel tslbTotal, tslbPrePage, tslbNextPage;
+        readonly ToolStripStatusLabel tslbTotal,
+            tslbPrePage,
+            tslbNextPage;
         readonly ToolStripDropDownButton tsdbtnPager;
 
-        readonly VgcApis.Libs.Tasks.LazyGuy
-            lazyStatusBarUpdater,
+        readonly VgcApis.Libs.Tasks.LazyGuy lazyStatusBarUpdater,
             lazyFlyPanelUpdater;
 
         readonly Views.UserControls.WelcomeUI welcomeItem = null;
@@ -39,7 +40,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripDropDownButton tsdbtnPager,
             ToolStripStatusLabel tslbPrePage,
             ToolStripStatusLabel tslbNextPage,
-            ToolStripMenuItem miResizeFormMain)
+            ToolStripMenuItem miResizeFormMain
+        )
         {
             servers = Services.Servers.Instance;
             setting = Services.Settings.Instance;
@@ -55,13 +57,19 @@ namespace V2RayGCon.Controllers.FormMainComponent
             this.welcomeItem = new Views.UserControls.WelcomeUI();
 
             lazyFlyPanelUpdater = new VgcApis.Libs.Tasks.LazyGuy(
-                RefreshFlyPanelWorker, flyPanelUpdateInterval, 2000)
+                RefreshFlyPanelWorker,
+                flyPanelUpdateInterval,
+                2000
+            )
             {
                 Name = "FormMain.RefreshFlyPanelWorker()",
             };
 
             lazyStatusBarUpdater = new VgcApis.Libs.Tasks.LazyGuy(
-                UpdateStatusBarWorker, statusBarUpdateInterval, 3000)
+                UpdateStatusBarWorker,
+                statusBarUpdateInterval,
+                3000
+            )
             {
                 Name = "FormMain.UpdateStatusBarWorker()", // disable debug logging
             };
@@ -124,8 +132,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 flyPanel.Controls.Clear();
                 flyPanel.ResumeLayout();
                 flyPanel.PerformLayout();
-                VgcApis.Misc.Utils.RunInBackground(
-                    () => DisposeFlyPanelControlByList(controlList));
+                VgcApis.Misc.Utils.RunInBackground(() => DisposeFlyPanelControlByList(controlList));
             };
             VgcApis.Misc.UI.Invoke(worker);
         }
@@ -144,7 +151,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             Action worker = () =>
             {
-                UpdateStatusBarText(filteredListCount, allServersCount, selectedServersCount, serverControlCount);
+                UpdateStatusBarText(
+                    filteredListCount,
+                    allServersCount,
+                    selectedServersCount,
+                    serverControlCount
+                );
                 UpdateStatusBarPagerButtons();
 
                 // prevent formain lost focus after click next page
@@ -210,12 +222,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 var s = list[i];
                 var st = s.GetCoreStates();
-                if (IsPartialMatchCi(cache, st.GetTag1(), keyword)
+                if (
+                    IsPartialMatchCi(cache, st.GetTag1(), keyword)
                     || IsPartialMatchCi(cache, st.GetTag2(), keyword)
                     || IsPartialMatchCi(cache, st.GetTag3(), keyword)
                     || IsPartialMatchCi(cache, st.GetMark(), keyword)
                     || IsPartialMatchCi(cache, st.GetRemark(), keyword)
-                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetTitle(), keyword))
+                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetTitle(), keyword)
+                )
                 {
                     r.Add(s);
                 }
@@ -258,7 +272,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 else
                 {
                     flyPanel.Controls.Remove(welcomeItem);
-                    var rmServUis = VgcApis.Misc.UI.DoHouseKeeping<Views.UserControls.ServerUI>(flyPanel, pagedList.Count);
+                    var rmServUis = VgcApis.Misc.UI.DoHouseKeeping<Views.UserControls.ServerUI>(
+                        flyPanel,
+                        pagedList.Count
+                    );
                     removed.AddRange(rmServUis);
                     var servUis = GetAllServerControls();
                     BindServUiToCoreServCtrl(servUis, pagedList);
@@ -271,9 +288,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private void BindServUiToCoreServCtrl(
             List<Views.UserControls.ServerUI> servUis,
-            List<VgcApis.Interfaces.ICoreServCtrl> coreServs)
+            List<VgcApis.Interfaces.ICoreServCtrl> coreServs
+        )
         {
-
             if (servUis.Count != coreServs.Count)
             {
                 throw new Exception("ServUi.Count != cs.Count");
@@ -298,7 +315,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         List<VgcApis.Interfaces.ICoreServCtrl> GenPagedServerList(
-            List<VgcApis.Interfaces.ICoreServCtrl> serverList)
+            List<VgcApis.Interfaces.ICoreServCtrl> serverList
+        )
         {
             var count = serverList.Count;
             var pageSize = setting.serverPanelPageSize;
@@ -317,15 +335,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void OnServerPropertyChangeHandler(object sender, EventArgs args)
         {
-            VgcApis.Misc.Utils.RunInBackground(
-                () => lazyStatusBarUpdater?.Deadline());
+            VgcApis.Misc.Utils.RunInBackground(() => lazyStatusBarUpdater?.Deadline());
         }
 
         void SetSearchKeywords()
         {
-            var keyword = string.IsNullOrEmpty(searchKeywords) ?
-                string.Empty :
-                (searchKeywords.StartsWith("#") ? searchKeywords.Substring(1) : searchKeywords);
+            var keyword = string.IsNullOrEmpty(searchKeywords)
+                ? string.Empty
+                : (searchKeywords.StartsWith("#") ? searchKeywords.Substring(1) : searchKeywords);
             // bug
             var controls = GetAllServerControls();
             VgcApis.Misc.Utils.RunInBackground(() =>
@@ -338,14 +355,16 @@ namespace V2RayGCon.Controllers.FormMainComponent
             int filteredListCount,
             int allServersCount,
             int selectedServersCount,
-            int serverControlCount)
+            int serverControlCount
+        )
         {
             var text = string.Format(
                 $"{I18N.StatusBarMessageTpl}",
                 filteredListCount,
                 allServersCount,
                 selectedServersCount,
-                serverControlCount);
+                serverControlCount
+            );
 
             if (text != tslbTotal.Text)
             {
@@ -363,17 +382,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
             List<ToolStripMenuItem> menu;
             if (flist.Count < 5000)
             {
-                var items = CreateBasicMenuItems(
-                    flist, cpn,
-                    0, totalPageNumber, pageSize);
+                var items = CreateBasicMenuItems(flist, cpn, 0, totalPageNumber, pageSize);
                 menu = AutoGroupMenuItems(flist, items, groupSize);
             }
             else
             {
-                menu = CreateDynamicPagingMenu(
-                    flist,
-                    pageSize, cpn,
-                    groupSize, 0, totalPageNumber);
+                menu = CreateDynamicPagingMenu(flist, pageSize, cpn, groupSize, 0, totalPageNumber);
             }
             tsdbtnPager.DropDownItems.Clear();
             tsdbtnPager.DropDown.PerformLayout();
@@ -382,8 +396,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         List<ToolStripMenuItem> CreateDynamicPagingMenu(
             List<VgcApis.Interfaces.ICoreServCtrl> filteredList,
-            int pageSize, int currentPageNumber,
-            int groupSize, int start, int end)
+            int pageSize,
+            int currentPageNumber,
+            int groupSize,
+            int start,
+            int end
+        )
         {
             var ps = pageSize;
             var n = end - start;
@@ -399,7 +417,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 List<ToolStripMenuItem> mis = CreateBasicMenuItems(
                     filteredList,
                     currentPageNumber,
-                    start, end, ps);
+                    start,
+                    end,
+                    ps
+                );
                 return mis;
             }
 
@@ -413,7 +434,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     I18N.StatusBarPagerMenuItemTpl,
                     pageRange,
                     GetIndex(filteredList, s * pageSize),
-                    GetIndex(filteredList, e * pageSize - 1));
+                    GetIndex(filteredList, e * pageSize - 1)
+                );
 
                 var mi = new ToolStripMenuItem(text, null);
                 mi.DropDownOpening += (o, a) =>
@@ -423,8 +445,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     {
                         var dm = CreateDynamicPagingMenu(
                             filteredList,
-                            pageSize, currentPageNumber,
-                            groupSize, s, e);
+                            pageSize,
+                            currentPageNumber,
+                            groupSize,
+                            s,
+                            e
+                        );
                         root.AddRange(dm.ToArray());
                     }
                 };
@@ -437,7 +463,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
         private List<ToolStripMenuItem> CreateBasicMenuItems(
             List<VgcApis.Interfaces.ICoreServCtrl> filteredList,
             int currentPageNumber,
-            int start, int end, int pageSize)
+            int start,
+            int end,
+            int pageSize
+        )
         {
             var mis = new List<ToolStripMenuItem>();
 
@@ -448,7 +477,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     I18N.StatusBarPagerMenuItemTpl,
                     pn + 1,
                     GetIndex(filteredList, pn * pageSize),
-                    GetIndex(filteredList, pn * pageSize + pageSize - 1));
+                    GetIndex(filteredList, pn * pageSize + pageSize - 1)
+                );
 
                 EventHandler onClick = (s, a) =>
                 {
@@ -485,7 +515,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
         public List<ToolStripMenuItem> AutoGroupMenuItems(
             List<VgcApis.Interfaces.ICoreServCtrl> filteredList,
             List<ToolStripMenuItem> menuItems,
-            int groupSize)
+            int groupSize
+        )
         {
             var mi = menuItems;
             var menuSpan = groupSize;
@@ -502,7 +533,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
         List<ToolStripMenuItem> GroupPagerItemsWorker(
             List<VgcApis.Interfaces.ICoreServCtrl> filteredList,
             IEnumerable<ToolStripMenuItem> menuItems,
-            int maxIdx, int groupSize, int menuSpan)
+            int maxIdx,
+            int groupSize,
+            int menuSpan
+        )
         {
             var count = menuItems.Count();
             if (count <= groupSize)
@@ -524,7 +558,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     I18N.StatusBarPagerMenuItemTpl,
                     pageRange,
                     GetIndex(filteredList, pageIdx * pageSize),
-                    GetIndex(filteredList, last * pageSize - 1));
+                    GetIndex(filteredList, last * pageSize - 1)
+                );
                 var mis = menuItems.Skip(servIdx).Take(take).ToArray();
                 var mi = new ToolStripMenuItem(text, null, mis);
                 groups.Add(mi);
@@ -534,9 +569,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             return groups;
         }
 
-        int GetIndex(
-            List<VgcApis.Interfaces.ICoreServCtrl> list,
-            int index)
+        int GetIndex(List<VgcApis.Interfaces.ICoreServCtrl> list, int index)
         {
             var i = Math.Max(0, Math.Min(list.Count - 1, index));
             var c = list[i];
@@ -549,7 +582,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private void InitFormControls(
             ToolStripLabel lbMarkSearch,
-            ToolStripMenuItem miResizeFormMain)
+            ToolStripMenuItem miResizeFormMain
+        )
         {
             InitComboBoxMarkFilter();
 
@@ -665,14 +699,13 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         object flyCtrlsLocker = new object();
+
         List<Views.UserControls.ServerUI> GetAllServerControls()
         {
             var result = new List<Views.UserControls.ServerUI>();
             lock (flyCtrlsLocker)
             {
-                result = flyPanel.Controls
-                    .OfType<Views.UserControls.ServerUI>()
-                    .ToList();
+                result = flyPanel.Controls.OfType<Views.UserControls.ServerUI>().ToList();
             }
             return result;
         }
@@ -680,7 +713,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void OnRequireFlyPanelReloadHandler(object sender, EventArgs args) =>
             RefreshFlyPanelLater();
 
-        void OnRequireFlyPanelUpdateHandler(object sender, EventArgs args) => RefreshFlyPanelLater();
+        void OnRequireFlyPanelUpdateHandler(object sender, EventArgs args) =>
+            RefreshFlyPanelLater();
 
         private void BindDragDropEvent()
         {
@@ -692,7 +726,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
             flyPanel.DragDrop += (s, a) =>
             {
                 // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
-                if (!(a.Data.GetData(typeof(Views.UserControls.ServerUI)) is Views.UserControls.ServerUI curItem))
+                if (
+                    !(
+                        a.Data.GetData(typeof(Views.UserControls.ServerUI))
+                        is Views.UserControls.ServerUI curItem
+                    )
+                )
                 {
                     return;
                 }

@@ -8,10 +8,10 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Views.UserControls
 {
-    public partial class ServerUI :
-        UserControl,
-        BaseClasses.IFormMainFlyPanelComponent,
-        VgcApis.Interfaces.IDropableControl
+    public partial class ServerUI
+        : UserControl,
+            BaseClasses.IFormMainFlyPanelComponent,
+            VgcApis.Interfaces.IDropableControl
     {
         Services.Servers servers;
         Services.Settings settings;
@@ -20,7 +20,8 @@ namespace V2RayGCon.Views.UserControls
 
         string keyword = null;
 
-        VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater, lazyHighlighter;
+        VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater,
+            lazyHighlighter;
 
         static readonly Bitmap[] btnBgCaches = new Bitmap[3];
 
@@ -53,8 +54,7 @@ namespace V2RayGCon.Views.UserControls
                 Name = "ServerUi.RefreshPanel",
             };
 
-            lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(
-                HighLightKeywordsThen, 400, 1000)
+            lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(HighLightKeywordsThen, 400, 1000)
             {
                 Name = "ServerUi.HighLight",
             };
@@ -124,8 +124,8 @@ namespace V2RayGCon.Views.UserControls
             f.LoadCoreServer(this.coreServCtrl);
         }
 
-
         bool isCtrlBtnVisable = false;
+
         async Task SetCtrlButtonsVisiblityLater(bool isVisable)
         {
             isCtrlBtnVisable = isVisable;
@@ -149,6 +149,7 @@ namespace V2RayGCon.Views.UserControls
                 // Tronald Dump could ban this app while this function is executing.
             }
         }
+
         void ShowModifyConfigsWinForm() => WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);
 
         void HighLightKeyWords()
@@ -156,13 +157,13 @@ namespace V2RayGCon.Views.UserControls
             var box = rtboxServerTitle;
             var title = box.Text.ToLower();
 
-            if (string.IsNullOrEmpty(keyword)
-                || !VgcApis.Misc.Utils.PartialMatchCi(title, keyword))
+            if (string.IsNullOrEmpty(keyword) || !VgcApis.Misc.Utils.PartialMatchCi(title, keyword))
             {
                 return;
             }
 
-            int idxTitle = 0, idxKeyword = 0;
+            int idxTitle = 0,
+                idxKeyword = 0;
             while (idxTitle < title.Length && idxKeyword < keyword.Length)
             {
                 if (title[idxTitle].CompareTo(keyword[idxKeyword]) == 0)
@@ -262,8 +263,7 @@ namespace V2RayGCon.Views.UserControls
             UpdateControlTextAndTooltip(rlbTotalNetFlow, text, tooltip);
         }
 
-        void OnCorePropertyChangesHandler(object sender, EventArgs args) =>
-            RefreshUiLater();
+        void OnCorePropertyChangesHandler(object sender, EventArgs args) => RefreshUiLater();
 
         void UpdateControlTextAndTooltip(Control control, string text, string tooltip)
         {
@@ -303,6 +303,7 @@ namespace V2RayGCon.Views.UserControls
         }
 
         readonly object drawImageLocker = new object();
+
         void CreateBgImgForButton(Button btn, ButtonTypes btnType)
         {
             var idx = (int)btnType;
@@ -374,11 +375,12 @@ namespace V2RayGCon.Views.UserControls
             var ml = r * 3 / 4;
             var mr = r * 2 / 4;
 
-            var points = new PointF[] {
-                    new PointF(cx - ml, cy - r+pw/2),
-                    new PointF(cx + mr, cy),
-                    new PointF(cx - ml, cy + r-pw/2),
-                };
+            var points = new PointF[]
+            {
+                new PointF(cx - ml, cy - r + pw / 2),
+                new PointF(cx + mr, cy),
+                new PointF(cx - ml, cy + r - pw / 2),
+            };
             g.DrawLines(pen, points);
         }
 
@@ -434,45 +436,65 @@ namespace V2RayGCon.Views.UserControls
             }
         }
 
-        private void UpdateTitleTextBox(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
+        private void UpdateTitleTextBox(
+            VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates
+        )
         {
             var cs = coreStates;
-            var summary = VgcApis.Misc.Utils.AutoEllipsis(cs.GetSummary(), VgcApis.Models.Consts.AutoEllipsis.ServerSummaryMaxLength);
+            var summary = VgcApis.Misc.Utils.AutoEllipsis(
+                cs.GetSummary(),
+                VgcApis.Models.Consts.AutoEllipsis.ServerSummaryMaxLength
+            );
             var tip = $"{I18N.NameColon}{cs.GetLongName()}\n{I18N.SummaryColon}{summary}";
             UpdateControlTextAndTooltip(rtboxServerTitle, cs.GetTitle(), tip);
         }
 
         void UpdateMarkLabel(string mark)
         {
-            var m = VgcApis.Misc.Utils.AutoEllipsis(mark, VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength);
+            var m = VgcApis.Misc.Utils.AutoEllipsis(
+                mark,
+                VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength
+            );
             var tooltip = $"{I18N.Mark}{m}";
             UpdateControlTextAndTooltip(rlbMark, mark, tooltip);
         }
 
         void UpdateTag1Label(string tag)
         {
-            var m = VgcApis.Misc.Utils.AutoEllipsis(tag, VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength);
+            var m = VgcApis.Misc.Utils.AutoEllipsis(
+                tag,
+                VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength
+            );
             var tooltip = $"{I18N.Tag1}{m}";
             UpdateControlTextAndTooltip(rlbTag1, tag, tooltip);
         }
 
         void UpdateTag2Label(string tag)
         {
-            var m = VgcApis.Misc.Utils.AutoEllipsis(tag, VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength);
+            var m = VgcApis.Misc.Utils.AutoEllipsis(
+                tag,
+                VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength
+            );
             var tooltip = $"{I18N.Tag2}{m}";
             UpdateControlTextAndTooltip(rlbTag2, tag, tooltip);
         }
 
         void UpdateTag3Label(string tag)
         {
-            var m = VgcApis.Misc.Utils.AutoEllipsis(tag, VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength);
+            var m = VgcApis.Misc.Utils.AutoEllipsis(
+                tag,
+                VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength
+            );
             var tooltip = $"{I18N.Tag3}{m}";
             UpdateControlTextAndTooltip(rlbTag3, tag, tooltip);
         }
 
         void UpdateRemarkLabel(string remark)
         {
-            var m = VgcApis.Misc.Utils.AutoEllipsis(remark, VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength);
+            var m = VgcApis.Misc.Utils.AutoEllipsis(
+                remark,
+                VgcApis.Models.Consts.AutoEllipsis.MarkLabelTextMaxLength
+            );
             var tooltip = $"{I18N.Remark}{m}";
             UpdateControlTextAndTooltip(rlbRemark, remark, tooltip);
         }
@@ -506,9 +528,12 @@ namespace V2RayGCon.Views.UserControls
             return I18N.LastModified + date.ToLongDateString() + date.ToLongTimeString();
         }
 
-        private void UpdateSettingsLable(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates)
+        private void UpdateSettingsLable(
+            VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates
+        )
         {
-            var text = (coreStates.IsAutoRun() ? "A" : "")
+            var text =
+                (coreStates.IsAutoRun() ? "A" : "")
                 + (coreStates.IsInjectSkipCnSite() ? "C" : "")
                 + (coreStates.IsInjectGlobalImport() ? "I" : "")
                 + (coreStates.IsUntrack() ? "U" : "");
@@ -528,7 +553,10 @@ namespace V2RayGCon.Views.UserControls
 
         void SetServerTitleLabelFontStyle(bool selected)
         {
-            var fontStyle = new Font(rtboxServerTitle.Font, selected ? FontStyle.Bold : FontStyle.Regular);
+            var fontStyle = new Font(
+                rtboxServerTitle.Font,
+                selected ? FontStyle.Bold : FontStyle.Regular
+            );
             rtboxServerTitle.Font = fontStyle;
         }
 
@@ -553,12 +581,19 @@ namespace V2RayGCon.Views.UserControls
 
             var menuBounds = ctxMenuStripMore.Size;
 
-            var left = Math.Min(scrBounds.X + scrBounds.Width - 10, ctrlScreenPos.X + menuBounds.Width) - menuBounds.Width;
-            var top = Math.Min(scrBounds.Y + scrBounds.Height - 10, ctrlScreenPos.Y + menuBounds.Height) - menuBounds.Height;
+            var left =
+                Math.Min(scrBounds.X + scrBounds.Width - 10, ctrlScreenPos.X + menuBounds.Width)
+                - menuBounds.Width;
+            var top =
+                Math.Min(scrBounds.Y + scrBounds.Height - 10, ctrlScreenPos.Y + menuBounds.Height)
+                - menuBounds.Height;
 
             ctxMenuStripMore.Show(new Point(left, top));
 
-            var dir = left - scrBounds.X > scrBounds.Width / 2 ? ToolStripDropDownDirection.Left : ToolStripDropDownDirection.Right;
+            var dir =
+                left - scrBounds.X > scrBounds.Width / 2
+                    ? ToolStripDropDownDirection.Left
+                    : ToolStripDropDownDirection.Right;
             var items = ctxMenuStripMore.Items;
             foreach (var item in items)
             {
@@ -578,10 +613,7 @@ namespace V2RayGCon.Views.UserControls
         #region properties
         public bool isSelected
         {
-            get
-            {
-                return coreServCtrl.GetCoreStates().IsSelected();
-            }
+            get { return coreServCtrl.GetCoreStates().IsSelected(); }
             private set { }
         }
         #endregion
@@ -675,7 +707,8 @@ namespace V2RayGCon.Views.UserControls
         {
             var content = slinkMgr.EncodeConfigToShareLink(
                 GetConfig(),
-                VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
+                VgcApis.Models.Datas.Enums.LinkTypes.v2cfg
+            );
 
             Misc.Utils.CopyToClipboardAndPrompt(content);
         }
@@ -752,7 +785,8 @@ namespace V2RayGCon.Views.UserControls
         {
             var vee = slinkMgr.EncodeConfigToShareLink(
                 GetConfig(),
-                VgcApis.Models.Datas.Enums.LinkTypes.v);
+                VgcApis.Models.Datas.Enums.LinkTypes.v
+            );
             Misc.Utils.CopyToClipboardAndPrompt(vee);
         }
 

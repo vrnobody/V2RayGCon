@@ -20,7 +20,6 @@ namespace VgcApisTests
         VgcApis.Libs.Streams.RawBitStream.Address address;
         VgcApis.Libs.Streams.RawBitStream.Bytes bytesWriter;
 
-
         public RawBitStreamTests()
         {
             bitStream = new VgcApis.Libs.Streams.RawBitStream.RawBitStream();
@@ -94,7 +93,6 @@ namespace VgcApisTests
         [TestMethod]
         public void UtilsBoolListTest()
         {
-
             for (int i = 0; i < 60; i += 3)
             {
                 var source = new List<bool>();
@@ -215,7 +213,5 @@ namespace VgcApisTests
 
             Assert.Fail();
         }
-
-
     }
 }

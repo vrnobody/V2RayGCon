@@ -16,8 +16,10 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
         Scintilla editor = null;
         AutocompleteMenu jsonAcm = null;
-        ComboBox cboxSection, cboxExample;
-        Button btnFormat, btnRestore;
+        ComboBox cboxSection,
+            cboxExample;
+        Button btnFormat,
+            btnRestore;
 
         Dictionary<string, string> sections;
         string preSection = @"";
@@ -28,7 +30,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             ComboBox cboxSection,
             ComboBox cboxExample,
             Button btnFormat,
-            Button btnRestore)
+            Button btnRestore
+        )
         {
             cache = Services.Cache.Instance;
 
@@ -45,14 +48,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
         public string content
         {
-            get
-            {
-                return _content;
-            }
-            set
-            {
-                SetField(ref _content, value);
-            }
+            get { return _content; }
+            set { SetField(ref _content, value); }
         }
         #endregion
 
@@ -185,8 +182,6 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             return true;
         }
 
-
-
         public override void Update(JObject config)
         {
             // do nothing
@@ -195,6 +190,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
         #region Scintilla
         private int maxLineNumberCharLength;
+
         private void Scintilla_TextChanged(object sender, EventArgs e)
         {
             // Did the number of characters in the line number display change?
@@ -206,7 +202,9 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             // Calculate the width required to display the last line number
             // and include some padding for good measure.
             const int padding = 2;
-            editor.Margins[0].Width = editor.TextWidth(Style.LineNumber, new string('9', maxLineNumberCharLength + 1)) + padding;
+            editor.Margins[0].Width =
+                editor.TextWidth(Style.LineNumber, new string('9', maxLineNumberCharLength + 1))
+                + padding;
             this.maxLineNumberCharLength = maxLineNumberCharLength;
         }
 
@@ -229,8 +227,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
                 e.Text = (e.Text + curIndent);
 
-                if (Regex.IsMatch(curLineText, @"\[\s*$")
-                    || Regex.IsMatch(curLineText, @"{\s*$"))
+                if (Regex.IsMatch(curLineText, @"\[\s*$") || Regex.IsMatch(curLineText, @"{\s*$"))
                 {
                     e.Text = (e.Text + "  ");
                 }
@@ -257,13 +254,17 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
         const int SCI_SETLINEINDENTATION = 2126;
         const int SCI_GETLINEINDENTATION = 2127;
+
         private void SetIndent(Scintilla scin, int line, int indent)
         {
             scin.DirectMessage(SCI_SETLINEINDENTATION, new IntPtr(line), new IntPtr(indent));
         }
+
         private int GetIndent(Scintilla scin, int line)
         {
-            return (scin.DirectMessage(SCI_GETLINEINDENTATION, new IntPtr(line), (IntPtr)null).ToInt32());
+            return (
+                scin.DirectMessage(SCI_GETLINEINDENTATION, new IntPtr(line), (IntPtr)null).ToInt32()
+            );
         }
         #endregion
 
@@ -282,8 +283,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 return false;
             }
 
-            if (token.Type == JTokenType.Object
-                  || token.Type == JTokenType.Array)
+            if (token.Type == JTokenType.Object || token.Type == JTokenType.Array)
             {
                 return true;
             }
@@ -422,9 +422,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
         string LoadInOutBoundExample(string[] example, bool isInbound)
         {
-            var tpl = isInbound ?
-                cache.tpl.LoadExample("inTpl") :
-                cache.tpl.LoadExample("outTpl");
+            var tpl = isInbound ? cache.tpl.LoadExample("inTpl") : cache.tpl.LoadExample("outTpl");
 
             var protocol = example[2];
 
@@ -473,17 +471,17 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             string keyword = GetExampleKeyword();
 
             var examples = Models.Datas.Table.examples;
-            return
-                examples.ContainsKey(keyword) ?
-                examples[keyword]
-                .Select(item => item[0])  // description
-                .ToList() :
-                new List<string>();
+            return examples.ContainsKey(keyword)
+                ? examples[keyword]
+                    .Select(item => item[0]) // description
+                    .ToList()
+                : new List<string>();
         }
 
         private string GetExampleKeyword()
         {
-            var specialCase = new Dictionary<string, string> {
+            var specialCase = new Dictionary<string, string>
+            {
                 { @"inbounds.", @"inbound" },
                 { @"outbounds.", @"outbound" },
             };
@@ -584,7 +582,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 bs,
                 nameof(this.content),
                 true,
-                DataSourceUpdateMode.OnPropertyChanged);
+                DataSourceUpdateMode.OnPropertyChanged
+            );
         }
 
         #endregion

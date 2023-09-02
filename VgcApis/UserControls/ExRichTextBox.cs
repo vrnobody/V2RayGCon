@@ -5,12 +5,16 @@ using System.Windows.Forms;
 
 namespace VgcApis.UserControls
 {
-
     public class ExRichTextBox : RichTextBox
     {
-        [DllImport("kernel32.dll", EntryPoint = "LoadLibraryW",
-            CharSet = CharSet.Unicode, SetLastError = true)]
+        [DllImport(
+            "kernel32.dll",
+            EntryPoint = "LoadLibraryW",
+            CharSet = CharSet.Unicode,
+            SetLastError = true
+        )]
         private static extern IntPtr LoadLibraryW(string s_File);
+
         public static IntPtr LoadLibrary(string s_File)
         {
             var module = LoadLibraryW(s_File);
@@ -33,7 +37,9 @@ namespace VgcApis.UserControls
                         cp.ClassName = "RichEdit50W";
                     }
                 }
-                catch { /* Windows XP without any Service Pack.*/ }
+                catch
+                { /* Windows XP without any Service Pack.*/
+                }
                 return cp;
             }
         }

@@ -2,7 +2,6 @@
 using NeoLuna.Views.WinForms;
 using ScintillaNET;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -49,17 +48,15 @@ namespace NeoLuna.Controllers.FormEditorCtrl
             ComboBox cboxScriptName,
             Button btnNewScript,
             Button btnSaveScript,
-
             Button btnRunScript,
             Button btnStopScript,
             Button btnKillScript,
             Button btnClearOutput,
-
             Button btnShowSearchBox,
             Button btnGoto,
             TextBox tboxGoto,
-
-            RichTextBox rtboxOutput)
+            RichTextBox rtboxOutput
+        )
         {
             this.formEditor = formEditor;
             this.cboxScriptName = cboxScriptName;
@@ -77,13 +74,12 @@ namespace NeoLuna.Controllers.FormEditorCtrl
 
             logUpdater = new VgcApis.Libs.Tasks.Routine(
                 UpdateOutput,
-                VgcApis.Models.Consts.Intervals.LuaPluginLogRefreshInterval);
-
+                VgcApis.Models.Consts.Intervals.LuaPluginLogRefreshInterval
+            );
         }
 
         public void Run(Services.FormMgrSvc formMgr)
         {
-
             this.settings = formMgr.settings;
             this.luaServer = formMgr.luaServer;
 
@@ -179,8 +175,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
             }
         }
 
-        public bool IsChanged() =>
-            editor.Text != preScriptContent;
+        public bool IsChanged() => editor.Text != preScriptContent;
 
         public void Cleanup()
         {
@@ -193,10 +188,10 @@ namespace NeoLuna.Controllers.FormEditorCtrl
 
         public string GetCurrentEditorContent() => editor.Text;
 
-        public void SetScriptCache(string content) =>
-            preScriptContent = content;
+        public void SetScriptCache(string content) => preScriptContent = content;
 
         string curFileName = null;
+
         public void SetCurFileName(string filename)
         {
             this.curFileName = filename;
@@ -246,6 +241,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
         }
 
         private int maxLineNumberCharLength;
+
         private void Scintilla_TextChanged(object sender, EventArgs e)
         {
             // Did the number of characters in the line number display change?
@@ -257,16 +253,14 @@ namespace NeoLuna.Controllers.FormEditorCtrl
             // Calculate the width required to display the last line number
             // and include some padding for good measure.
             const int padding = 2;
-            editor.Margins[0].Width = editor.TextWidth(Style.LineNumber, new string('9', maxLineNumberCharLength + 1)) + padding;
+            editor.Margins[0].Width =
+                editor.TextWidth(Style.LineNumber, new string('9', maxLineNumberCharLength + 1))
+                + padding;
             this.maxLineNumberCharLength = maxLineNumberCharLength;
         }
 
         string Scintilla_TrimText(string text) =>
-            text?.Replace("\t", "")
-                ?.Replace("\r", "")
-                ?.Replace("\n", "")
-                ?.Trim()
-                ?.ToLower();
+            text?.Replace("\t", "")?.Replace("\r", "")?.Replace("\n", "")?.Trim()?.ToLower();
 
         string GetCurrentText(int curPos)
         {
@@ -289,13 +283,15 @@ namespace NeoLuna.Controllers.FormEditorCtrl
 
             var indent = editor.Lines[editor.CurrentLine].Indentation;
             var text = Scintilla_TrimText(GetCurrentText(e.Position));
-            if (text.StartsWith("function")
+            if (
+                text.StartsWith("function")
                 || text.StartsWith("local function")
                 || text.EndsWith("do")
                 || text.EndsWith("then")
                 || text.EndsWith("else")
                 || text == "repeat"
-                || Regex.IsMatch(text, "{\\s*$"))
+                || Regex.IsMatch(text, "{\\s*$")
+            )
             {
                 indent = indent + 4;
             }
@@ -312,10 +308,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
             }
 
             string text = Scintilla_TrimText(editor.Lines[curLine].Text);
-            if (text == "}"
-                || text.StartsWith("until")
-                || text == "else"
-                || text == "end")
+            if (text == "}" || text.StartsWith("until") || text == "else" || text == "end")
             {
                 var indent = editor.Lines[curLine - 1].Indentation - 4;
                 editor.Lines[curLine].Indentation = Math.Max(0, indent);
@@ -362,7 +355,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
             if (int.TryParse(tboxGoto.Text, out int lineNumber))
             {
                 var line = editor.Lines[lineNumber - 1];
-                var linesOnScreen = editor.LinesOnScreen - 2; // Fudge factor            
+                var linesOnScreen = editor.LinesOnScreen - 2; // Fudge factor
                 var top = line.Index - (linesOnScreen / 2);
                 line.Goto();
                 editor.FirstVisibleLine = Math.Max(0, top);
@@ -403,7 +396,6 @@ namespace NeoLuna.Controllers.FormEditorCtrl
             btnRunScript.Click -= OnBtnRunScriptClickHandler;
 
             btnClearOutput.Click -= OnBtnClearOutputClickHandler;
-
 
             btnSaveScript.Click -= OnBtnSaveScriptClickHandler;
 
@@ -451,29 +443,33 @@ namespace NeoLuna.Controllers.FormEditorCtrl
 
             btnClearOutput.Click += OnBtnClearOutputClickHandler;
 
-
             btnSaveScript.Click += OnBtnSaveScriptClickHandler;
 
             cboxScriptName.DropDown += OnCboxScriptNameDropDownHandler;
 
             cboxScriptName.SelectedValueChanged += CboxScriptNameChangedHandler;
         }
+
         void OnBtnStopLuaCoreClickHandler(object sender, EventArgs args)
         {
             luaCoreCtrl.Stop();
         }
+
         void OnBtnKillLuaCoreClickHandler(object sender, EventArgs args)
         {
             luaCoreCtrl.Abort();
         }
+
         void OnCboxScriptNameDropDownHandler(object sender, EventArgs args)
         {
             ReloadScriptName();
         }
+
         void OnBtnClearOutputClickHandler(object sender, EventArgs args)
         {
             qLogger?.Clear();
         }
+
         void OnBtnSaveScriptClickHandler(object sender, EventArgs args)
         {
             SaveScript(true);
@@ -482,8 +478,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
         private void SaveScript(bool showResult)
         {
             var name = cboxScriptName.Text;
-            if (string.IsNullOrWhiteSpace(name)
-                && string.IsNullOrWhiteSpace(curFileName))
+            if (string.IsNullOrWhiteSpace(name) && string.IsNullOrWhiteSpace(curFileName))
             {
                 VgcApis.Misc.UI.MsgBoxAsync(I18N.ScriptNameNotSet);
                 return;
@@ -547,10 +542,8 @@ namespace NeoLuna.Controllers.FormEditorCtrl
             }
 
             preScriptName = name;
-            preScriptContent = settings.GetLuaCoreSettings()
-                .Where(s => s.name == name)
-                .FirstOrDefault()
-                ?.script
+            preScriptContent =
+                settings.GetLuaCoreSettings().Where(s => s.name == name).FirstOrDefault()?.script
                 ?? string.Empty;
 
             editor.Text = preScriptContent;
@@ -559,10 +552,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
 
         void ReloadScriptName()
         {
-            var scriptsName = luaServer
-                .GetAllLuaCoreCtrls()
-                .Select(c => c.name)
-                .ToArray();
+            var scriptsName = luaServer.GetAllLuaCoreCtrls().Select(c => c.name).ToArray();
 
             Invoke(() =>
             {
@@ -570,7 +560,6 @@ namespace NeoLuna.Controllers.FormEditorCtrl
                 cboxScriptName.Items.AddRange(scriptsName);
             });
         }
-
 
         #endregion
     }

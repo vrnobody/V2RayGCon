@@ -6,9 +6,7 @@ using System.Net;
 
 namespace NeoLuna.Models.Apis.SysCmpos
 {
-    public class HttpServer :
-        VgcApis.BaseClasses.Disposable,
-        Interfaces.IRunnable
+    public class HttpServer : VgcApis.BaseClasses.Disposable, Interfaces.IRunnable
     {
         enum SourceType
         {
@@ -31,7 +29,8 @@ namespace NeoLuna.Models.Apis.SysCmpos
             VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox inbox,
             VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox outbox,
             string source,
-            bool allowCORS)
+            bool allowCORS
+        )
         {
             this.inbox = inbox;
             this.outbox = outbox;
@@ -66,78 +65,78 @@ namespace NeoLuna.Models.Apis.SysCmpos
             "default.htm"
         };
 
-        static Dictionary<string, string> mimeTypeMaps =
-            new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
-            {
-                #region extension to MIME type list
-                {".asf", "video/x-ms-asf"},
-                {".asx", "video/x-ms-asf"},
-                {".avi", "video/x-msvideo"},
-                {".bin", "application/octet-stream"},
-                {".cco", "application/x-cocoa"},
-                {".crt", "application/x-x509-ca-cert"},
-                {".css", "text/css"},
-                {".deb", "application/octet-stream"},
-                {".der", "application/x-x509-ca-cert"},
-                {".dll", "application/octet-stream"},
-                {".dmg", "application/octet-stream"},
-                {".ear", "application/java-archive"},
-                {".eot", "application/octet-stream"},
-                {".exe", "application/octet-stream"},
-                {".flv", "video/x-flv"},
-                {".gif", "image/gif"},
-                {".hqx", "application/mac-binhex40"},
-                {".htc", "text/x-component"},
-                {".htm", "text/html"},
-                {".html", "text/html"},
-                {".ico", "image/x-icon"},
-                {".img", "application/octet-stream"},
-                {".iso", "application/octet-stream"},
-                {".jar", "application/java-archive"},
-                {".jardiff", "application/x-java-archive-diff"},
-                {".jng", "image/x-jng"},
-                {".jnlp", "application/x-java-jnlp-file"},
-                {".jpeg", "image/jpeg"},
-                {".jpg", "image/jpeg"},
-                {".js", "application/x-javascript"},
-                {".mml", "text/mathml"},
-                {".mng", "video/x-mng"},
-                {".mov", "video/quicktime"},
-                {".mp3", "audio/mpeg"},
-                {".mpeg", "video/mpeg"},
-                {".mpg", "video/mpeg"},
-                {".msi", "application/octet-stream"},
-                {".msm", "application/octet-stream"},
-                {".msp", "application/octet-stream"},
-                {".pdb", "application/x-pilot"},
-                {".pdf", "application/pdf"},
-                {".pem", "application/x-x509-ca-cert"},
-                {".pl", "application/x-perl"},
-                {".pm", "application/x-perl"},
-                {".png", "image/png"},
-                {".prc", "application/x-pilot"},
-                {".ra", "audio/x-realaudio"},
-                {".rar", "application/x-rar-compressed"},
-                {".rpm", "application/x-redhat-package-manager"},
-                {".rss", "text/xml"},
-                {".run", "application/x-makeself"},
-                {".sea", "application/x-sea"},
-                {".shtml", "text/html"},
-                {".sit", "application/x-stuffit"},
-                {".swf", "application/x-shockwave-flash"},
-                {".tcl", "application/x-tcl"},
-                {".tk", "application/x-tcl"},
-                {".txt", "text/plain"},
-                {".war", "application/java-archive"},
-                {".wbmp", "image/vnd.wap.wbmp"},
-                {".wmv", "video/x-ms-wmv"},
-                {".xml", "text/xml"},
-                {".xpi", "application/x-xpinstall"},
-                {".zip", "application/zip"},
+        static Dictionary<string, string> mimeTypeMaps = new Dictionary<string, string>(
+            StringComparer.InvariantCultureIgnoreCase
+        )
+        {
+            #region extension to MIME type list
+            { ".asf", "video/x-ms-asf" },
+            { ".asx", "video/x-ms-asf" },
+            { ".avi", "video/x-msvideo" },
+            { ".bin", "application/octet-stream" },
+            { ".cco", "application/x-cocoa" },
+            { ".crt", "application/x-x509-ca-cert" },
+            { ".css", "text/css" },
+            { ".deb", "application/octet-stream" },
+            { ".der", "application/x-x509-ca-cert" },
+            { ".dll", "application/octet-stream" },
+            { ".dmg", "application/octet-stream" },
+            { ".ear", "application/java-archive" },
+            { ".eot", "application/octet-stream" },
+            { ".exe", "application/octet-stream" },
+            { ".flv", "video/x-flv" },
+            { ".gif", "image/gif" },
+            { ".hqx", "application/mac-binhex40" },
+            { ".htc", "text/x-component" },
+            { ".htm", "text/html" },
+            { ".html", "text/html" },
+            { ".ico", "image/x-icon" },
+            { ".img", "application/octet-stream" },
+            { ".iso", "application/octet-stream" },
+            { ".jar", "application/java-archive" },
+            { ".jardiff", "application/x-java-archive-diff" },
+            { ".jng", "image/x-jng" },
+            { ".jnlp", "application/x-java-jnlp-file" },
+            { ".jpeg", "image/jpeg" },
+            { ".jpg", "image/jpeg" },
+            { ".js", "application/x-javascript" },
+            { ".mml", "text/mathml" },
+            { ".mng", "video/x-mng" },
+            { ".mov", "video/quicktime" },
+            { ".mp3", "audio/mpeg" },
+            { ".mpeg", "video/mpeg" },
+            { ".mpg", "video/mpeg" },
+            { ".msi", "application/octet-stream" },
+            { ".msm", "application/octet-stream" },
+            { ".msp", "application/octet-stream" },
+            { ".pdb", "application/x-pilot" },
+            { ".pdf", "application/pdf" },
+            { ".pem", "application/x-x509-ca-cert" },
+            { ".pl", "application/x-perl" },
+            { ".pm", "application/x-perl" },
+            { ".png", "image/png" },
+            { ".prc", "application/x-pilot" },
+            { ".ra", "audio/x-realaudio" },
+            { ".rar", "application/x-rar-compressed" },
+            { ".rpm", "application/x-redhat-package-manager" },
+            { ".rss", "text/xml" },
+            { ".run", "application/x-makeself" },
+            { ".sea", "application/x-sea" },
+            { ".shtml", "text/html" },
+            { ".sit", "application/x-stuffit" },
+            { ".swf", "application/x-shockwave-flash" },
+            { ".tcl", "application/x-tcl" },
+            { ".tk", "application/x-tcl" },
+            { ".txt", "text/plain" },
+            { ".war", "application/java-archive" },
+            { ".wbmp", "image/vnd.wap.wbmp" },
+            { ".wmv", "video/x-ms-wmv" },
+            { ".xml", "text/xml" },
+            { ".xpi", "application/x-xpinstall" },
+            { ".zip", "application/zip" },
 
-                #endregion
-            };
-
+            #endregion
+        };
 
         #endregion
 
@@ -164,7 +163,7 @@ namespace NeoLuna.Models.Apis.SysCmpos
         }
         #endregion
 
-        #region protected 
+        #region protected
         protected override void Cleanup()
         {
             Stop();
@@ -175,7 +174,8 @@ namespace NeoLuna.Models.Apis.SysCmpos
         const int FinalStageConnInLimit = 1024 * 30;
         const int FirstStageConnInLimit = 1024 * 15;
 
-        ConcurrentDictionary<string, HttpListenerContext> contexts = new ConcurrentDictionary<string, HttpListenerContext>();
+        ConcurrentDictionary<string, HttpListenerContext> contexts =
+            new ConcurrentDictionary<string, HttpListenerContext>();
 
         void HandleConnOut()
         {
@@ -263,7 +263,8 @@ namespace NeoLuna.Models.Apis.SysCmpos
                         catch { }
                     }
                 }
-                catch { };
+                catch { }
+                ;
             });
         }
 
@@ -377,7 +378,10 @@ namespace NeoLuna.Models.Apis.SysCmpos
             {
                 Stream input = new FileStream(filename, FileMode.Open);
                 string mime;
-                context.Response.ContentType = mimeTypeMaps.TryGetValue(Path.GetExtension(filename), out mime)
+                context.Response.ContentType = mimeTypeMaps.TryGetValue(
+                    Path.GetExtension(filename),
+                    out mime
+                )
                     ? mime
                     : "application/octet-stream";
                 var lastModified = File.GetLastWriteTime(filename);
@@ -421,7 +425,5 @@ namespace NeoLuna.Models.Apis.SysCmpos
         }
 
         #endregion
-
-
     }
 }

@@ -93,7 +93,6 @@ namespace Luna.Interfaces
         /// <returns></returns>
         bool SetUserSettings(string props);
 
-
         /// <summary>
         /// 获取全部订阅设置
         /// </summary>
@@ -264,7 +263,12 @@ namespace Luna.Interfaces
         /// <param name="rows">内容行</param>
         /// <param name="defColumn">初始选定列号</param>
         /// <returns></returns>
-        string ShowData(string title, global::NLua.LuaTable columns, global::NLua.LuaTable rows, int defColumn);
+        string ShowData(
+            string title,
+            global::NLua.LuaTable columns,
+            global::NLua.LuaTable rows,
+            int defColumn
+        );
 
         // 18 choices max
         /// <summary>
@@ -439,7 +443,6 @@ namespace Luna.Interfaces
         /// <param name="mark">标记</param>
         /// <returns>成功导入的链接数</returns>
         int ImportLinks(string links, string mark);
-
 
         #endregion
     }

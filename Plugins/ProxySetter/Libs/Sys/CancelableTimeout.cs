@@ -19,11 +19,7 @@ namespace ProxySetter.Libs.Sys
             this.TIMEOUT = timeout;
             this.worker = worker;
 
-            timer = new Timer
-            {
-                Enabled = false,
-                AutoReset = false
-            };
+            timer = new Timer { Enabled = false, AutoReset = false };
 
             timer.Elapsed += OnTimeout;
         }

@@ -4,10 +4,17 @@ namespace VgcApis.Models.Datas
 {
     public class CoreServSettings
     {
-        public string serverName, serverDescription, inboundAddress, mark, remark;
+        public string serverName,
+            serverDescription,
+            inboundAddress,
+            mark,
+            remark;
         public int inboundMode;
         public double index;
-        public bool isAutorun, isUntrack, isGlobalImport, isBypassCnSite;
+        public bool isAutorun,
+            isUntrack,
+            isGlobalImport,
+            isBypassCnSite;
 
         public CoreServSettings()
         {
@@ -26,8 +33,8 @@ namespace VgcApis.Models.Datas
             isBypassCnSite = false;
         }
 
-        public CoreServSettings(VgcApis.Interfaces.ICoreServCtrl coreServ) :
-            this()
+        public CoreServSettings(VgcApis.Interfaces.ICoreServCtrl coreServ)
+            : this()
         {
             var cs = coreServ.GetCoreStates();
 
@@ -61,7 +68,8 @@ namespace VgcApis.Models.Datas
             }
 
             var t = target as CoreServSettings;
-            if (t.serverName != serverName
+            if (
+                t.serverName != serverName
                 || (int)t.index != (int)index
                 || t.serverDescription != serverDescription
                 || t.inboundAddress != inboundAddress
@@ -71,7 +79,8 @@ namespace VgcApis.Models.Datas
                 || t.isAutorun != isAutorun
                 || t.isUntrack != isUntrack
                 || t.isGlobalImport != isGlobalImport
-                || t.isBypassCnSite != isBypassCnSite)
+                || t.isBypassCnSite != isBypassCnSite
+            )
             {
                 return false;
             }

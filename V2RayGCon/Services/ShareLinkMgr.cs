@@ -6,9 +6,9 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
 {
-    public sealed class ShareLinkMgr :
-        BaseClasses.SingletonService<ShareLinkMgr>,
-        VgcApis.Interfaces.Services.IShareLinkMgrService
+    public sealed class ShareLinkMgr
+        : BaseClasses.SingletonService<ShareLinkMgr>,
+            VgcApis.Interfaces.Services.IShareLinkMgrService
     {
         Settings setting;
         Servers servers;
@@ -55,7 +55,8 @@ namespace V2RayGCon.Services
         /// </summary>
         public string EncodeConfigToShareLink(
             string config,
-            VgcApis.Models.Datas.Enums.LinkTypes linkType)
+            VgcApis.Models.Datas.Enums.LinkTypes linkType
+        )
         {
             switch (linkType)
             {
@@ -79,16 +80,14 @@ namespace V2RayGCon.Services
 
         #region public methods
         public T GetCodec<T>()
-          where T : VgcApis.BaseClasses.ComponentOf<ShareLinkComponents.Codecs>
+            where T : VgcApis.BaseClasses.ComponentOf<ShareLinkComponents.Codecs>
         {
             return codecs.GetChild<T>();
         }
 
         public int UpdateSubscriptions(int proxyPort)
         {
-            var enabledSubs = setting.GetSubscriptionItems()
-                .Where(s => s.isUse)
-                .ToList();
+            var enabledSubs = setting.GetSubscriptionItems().Where(s => s.isUse).ToList();
 
             var links = Misc.Utils.FetchLinksFromSubcriptions(enabledSubs, proxyPort);
             var decoders = GenDecoderList(false);
@@ -113,8 +112,7 @@ namespace V2RayGCon.Services
             return CountImportSuccessResult(results);
         }
 
-        public void ImportLinkWithOutV2cfgLinksBatchModeSync(
-            IEnumerable<string[]> linkList)
+        public void ImportLinkWithOutV2cfgLinksBatchModeSync(IEnumerable<string[]> linkList)
         {
             var decoders = GenDecoderList(false);
             var results = ImportLinksBatchModeSync(linkList, decoders);
@@ -138,10 +136,7 @@ namespace V2RayGCon.Services
             ImportLinksBatchModeAsync(linkList, decoders, true);
         }
 
-        public void Run(
-           Settings setting,
-           Servers servers,
-           Cache cache)
+        public void Run(Settings setting, Servers servers, Cache cache)
         {
             this.setting = setting;
             this.servers = servers;
@@ -157,8 +152,7 @@ namespace V2RayGCon.Services
             return result.Where(r => VgcApis.Misc.Utils.IsImportResultSuccess(r)).Count();
         }
 
-        List<VgcApis.Interfaces.IShareLinkDecoder> GenDecoderList(
-           bool isIncludeV2cfgDecoder)
+        List<VgcApis.Interfaces.IShareLinkDecoder> GenDecoderList(bool isIncludeV2cfgDecoder)
         {
             var decoders = new List<VgcApis.Interfaces.IShareLinkDecoder>
             {
@@ -185,11 +179,11 @@ namespace V2RayGCon.Services
             return decoders;
         }
 
-
         void ImportLinksBatchModeAsync(
             IEnumerable<string[]> linkList,
             IEnumerable<VgcApis.Interfaces.IShareLinkDecoder> decoders,
-            bool isShowImportResults)
+            bool isShowImportResults
+        )
         {
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
@@ -198,7 +192,6 @@ namespace V2RayGCon.Services
                 {
                     ShowImportResults(results);
                 }
-
             });
         }
 
@@ -208,7 +201,8 @@ namespace V2RayGCon.Services
         /// </summary>
         IEnumerable<string[]> ImportLinksBatchModeSync(
             IEnumerable<string[]> linkList,
-            IEnumerable<VgcApis.Interfaces.IShareLinkDecoder> decoders)
+            IEnumerable<VgcApis.Interfaces.IShareLinkDecoder> decoders
+        )
         {
             var jobs = new List<Tuple<string, string, VgcApis.Interfaces.IShareLinkDecoder>>();
 
@@ -216,8 +210,13 @@ namespace V2RayGCon.Services
             {
                 foreach (var decoder in decoders)
                 {
-                    jobs.Add(new Tuple<string, string, VgcApis.Interfaces.IShareLinkDecoder>(
-                        link[0], link[1], decoder));
+                    jobs.Add(
+                        new Tuple<string, string, VgcApis.Interfaces.IShareLinkDecoder>(
+                            link[0],
+                            link[1],
+                            decoder
+                        )
+                    );
                 }
             }
 
@@ -254,16 +253,20 @@ namespace V2RayGCon.Services
         private List<string[]> ImportShareLinks(
             string text,
             string mark,
-            VgcApis.Interfaces.IShareLinkDecoder decoder)
+            VgcApis.Interfaces.IShareLinkDecoder decoder
+        )
         {
             var links = decoder.ExtractLinksFromText(text);
-            var results = links.AsParallel().AsOrdered()
+            var results = links
+                .AsParallel()
+                .AsOrdered()
                 .Select(link =>
                 {
                     var formatedConfig = codecs.Decode(link, decoder);
                     var msg = AddLinkToServerList(mark, formatedConfig);
                     return GenImportResult(link, msg.Item1, msg.Item2, mark);
-                }).ToList();
+                })
+                .ToList();
             return results;
         }
 
@@ -272,9 +275,7 @@ namespace V2RayGCon.Services
             return importResults.Any(r => VgcApis.Misc.Utils.IsImportResultSuccess(r));
         }
 
-        private Tuple<bool, string> AddLinkToServerList(
-            string mark,
-            string formatedConfig)
+        private Tuple<bool, string> AddLinkToServerList(string mark, string formatedConfig)
         {
             if (string.IsNullOrEmpty(formatedConfig))
             {
@@ -285,23 +286,18 @@ namespace V2RayGCon.Services
             return new Tuple<bool, string>(ok, reason);
         }
 
-        string[] GenImportResult(
-            string link,
-            bool success,
-            string reason,
-            string mark)
+        string[] GenImportResult(string link, bool success, string reason, string mark)
         {
-            var importSuccessMark = success ?
-                VgcApis.Models.Consts.Import.MarkImportSuccess :
-                VgcApis.Models.Consts.Import.MarkImportFail;
-
+            var importSuccessMark = success
+                ? VgcApis.Models.Consts.Import.MarkImportSuccess
+                : VgcApis.Models.Consts.Import.MarkImportFail;
 
             return new string[]
             {
-                string.Empty,  // reserved for index
+                string.Empty, // reserved for index
                 link,
                 mark,
-                importSuccessMark,  // be aware of IsImportResultSuccess()
+                importSuccessMark, // be aware of IsImportResultSuccess()
                 reason,
             };
         }

@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.IO.Pipes;
 using System.Linq;
 using System.Management;
 using System.Net;
@@ -28,7 +27,11 @@ namespace VgcApis.Misc
     public static class Utils
     {
         #region collections
-        public static bool TryGetDictValue<T>(Dictionary<string[], T> dict, string[] key, out T value)
+        public static bool TryGetDictValue<T>(
+            Dictionary<string[], T> dict,
+            string[] key,
+            out T value
+        )
         {
             value = default;
 
@@ -63,9 +66,7 @@ namespace VgcApis.Misc
         public static void ClearControlKeys(Scintilla scintilla, List<Keys> extra)
         {
             // key binding
-            var keys = new List<Keys>() {
-                Keys.F, Keys.G, Keys.H, Keys.N, Keys.P, Keys.S,
-            };
+            var keys = new List<Keys>() { Keys.F, Keys.G, Keys.H, Keys.N, Keys.P, Keys.S, };
 
             if (extra != null && extra.Count() > 0)
             {
@@ -198,7 +199,8 @@ namespace VgcApis.Misc
         public static Process CreateHeadlessProcess(
             string exeFileName,
             string args,
-            Encoding encoding)
+            Encoding encoding
+        )
         {
             var startInfo = new ProcessStartInfo
             {
@@ -214,17 +216,15 @@ namespace VgcApis.Misc
                 startInfo.StandardOutputEncoding = encoding;
             }
 
-            return new Process
-            {
-                StartInfo = startInfo,
-            };
+            return new Process { StartInfo = startInfo, };
         }
 
         public static string ExecuteAndGetStdOut(
             string exeFileName,
             string args,
             int timeout,
-            Encoding encoding)
+            Encoding encoding
+        )
         {
             var p = CreateHeadlessProcess(exeFileName, args, encoding);
             try
@@ -240,8 +240,7 @@ namespace VgcApis.Misc
             return string.Empty;
         }
 
-
-        static public bool IsAdmin()
+        public static bool IsAdmin()
         {
             bool isElevated;
             using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
@@ -268,15 +267,18 @@ namespace VgcApis.Misc
         }
 
         public static bool TryParseKeyMesssage(
-            string keyName, bool hasAlt, bool hasCtrl, bool hasShift,
-             out uint modifier,
-             out uint keyCode)
+            string keyName,
+            bool hasAlt,
+            bool hasCtrl,
+            bool hasShift,
+            out uint modifier,
+            out uint keyCode
+        )
         {
             keyCode = 0;
             modifier = 0;
 
-            if (!(hasCtrl || hasShift || hasAlt)
-               || !Enum.TryParse(keyName, out Keys key))
+            if (!(hasCtrl || hasShift || hasAlt) || !Enum.TryParse(keyName, out Keys key))
             {
                 return false;
             }
@@ -288,7 +290,6 @@ namespace VgcApis.Misc
             uint shift = hasShift ? (uint)Models.Datas.Enums.ModifierKeys.Shift : 0;
 
             modifier = ctrl | alt | shift;
-
 
             return true;
         }
@@ -353,7 +354,10 @@ namespace VgcApis.Misc
                 var lines = File.ReadLines(filename);
                 foreach (var line in lines)
                 {
-                    if (!string.IsNullOrEmpty(line) && VgcApis.Libs.Infr.PseudoRandom.Next(++numberSeen) == 0)
+                    if (
+                        !string.IsNullOrEmpty(line)
+                        && VgcApis.Libs.Infr.PseudoRandom.Next(++numberSeen) == 0
+                    )
                     {
                         url = line;
                     }
@@ -369,7 +373,11 @@ namespace VgcApis.Misc
         public static List<int> FindAll(string haystack, string needle)
         {
             List<int> indexes = new List<int>();
-            if (!string.IsNullOrEmpty(haystack) && haystack.Length > 0 && !String.IsNullOrEmpty(needle))
+            if (
+                !string.IsNullOrEmpty(haystack)
+                && haystack.Length > 0
+                && !String.IsNullOrEmpty(needle)
+            )
             {
                 for (int index = 0; ; index += needle.Length)
                 {
@@ -395,10 +403,15 @@ namespace VgcApis.Misc
             return Regex.Replace(
                 source,
                 @"\\[Uu]([0-9A-Fa-f]{4})",
-                m => char.ToString(
-                    (char)ushort.Parse(
-                        m.Groups[1].Value,
-                        System.Globalization.NumberStyles.AllowHexSpecifier)));
+                m =>
+                    char.ToString(
+                        (char)
+                            ushort.Parse(
+                                m.Groups[1].Value,
+                                System.Globalization.NumberStyles.AllowHexSpecifier
+                            )
+                    )
+            );
         }
 
         public static string DecodeAmpersand(string source)
@@ -426,9 +439,7 @@ namespace VgcApis.Misc
             }
 
             // js hash function return lower case hex string
-            return BitConverter.ToString(bytes)
-                ?.Replace("-", "")
-                ?.ToLower();
+            return BitConverter.ToString(bytes)?.Replace("-", "")?.ToLower();
         }
 
         public static byte[] Sha512Hash(string text)
@@ -515,7 +526,6 @@ namespace VgcApis.Misc
             return mid;
         }
 
-
         public static bool TryPatchGitHubUrl(string url, out string patched)
         {
             patched = string.Empty;
@@ -551,13 +561,14 @@ namespace VgcApis.Misc
             return false;
         }
 
-        public static bool TryExtractAliasFromSubscriptionUrl(
-            string url, out string alias)
+        public static bool TryExtractAliasFromSubscriptionUrl(string url, out string alias)
         {
             alias = string.Empty;
             try
             {
-                var groups = Regex.Match(url, Models.Consts.Patterns.ExtractAliasFromSubscriptUrl).Groups;
+                var groups = Regex
+                    .Match(url, Models.Consts.Patterns.ExtractAliasFromSubscriptUrl)
+                    .Groups;
                 if (groups != null && groups.Count == 2)
                 {
                     alias = groups[1].Value;
@@ -572,7 +583,6 @@ namespace VgcApis.Misc
 
         public static string ReverseSummary(string summary)
         {
-
             if (string.IsNullOrEmpty(summary))
             {
                 return "";
@@ -594,9 +604,11 @@ namespace VgcApis.Misc
             var result = new List<string>();
             foreach (var item in pacList)
             {
-                if (!string.IsNullOrWhiteSpace(item)
+                if (
+                    !string.IsNullOrWhiteSpace(item)
                     && !string.IsNullOrEmpty(item)
-                    && !item.StartsWith(@"//"))
+                    && !item.StartsWith(@"//")
+                )
                 {
                     tmpList.Add(item);
                     continue;
@@ -644,15 +656,17 @@ namespace VgcApis.Misc
             }
             hc.DefaultRequestHeaders.Add(
                 Models.Consts.Webs.UserAgentKey,
-                Models.Consts.Webs.CustomUserAgent);
+                Models.Consts.Webs.CustomUserAgent
+            );
             return hc;
         }
 
-
         static async Task<long> TimedDownloadWorker(
-            string url, int port,
+            string url,
+            int port,
             Func<long, bool> onProgress,
-            CancellationToken token)
+            CancellationToken token
+        )
         {
             long timeout = Models.Consts.Core.SpeedtestTimeout;
 
@@ -672,13 +686,19 @@ namespace VgcApis.Misc
                             return timeout;
                         }
 
-                        using (var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                        using (
+                            var stream = await response.Content
+                                .ReadAsStreamAsync()
+                                .ConfigureAwait(false)
+                        )
                         {
                             byte[] buffer = new byte[4 * 1024];
                             long read;
                             do
                             {
-                                read = await stream.ReadAsync(buffer, 0, buffer.Length, token).ConfigureAwait(false);
+                                read = await stream
+                                    .ReadAsync(buffer, 0, buffer.Length, token)
+                                    .ConfigureAwait(false);
                                 if (!onProgress.Invoke(read))
                                 {
                                     break;
@@ -707,7 +727,11 @@ namespace VgcApis.Misc
         /// <param name="timeout"></param>
         /// <returns>(ms, recvBytesLen)</returns>
         public static Tuple<long, long> TimedDownloadTest(
-            string url, int port, int expectedSizeInKiB, int timeout)
+            string url,
+            int port,
+            int expectedSizeInKiB,
+            int timeout
+        )
         {
             if (string.IsNullOrEmpty(url))
             {
@@ -729,15 +753,19 @@ namespace VgcApis.Misc
                 return true;
             };
 
-            var maxTimeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
+            var maxTimeout =
+                timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
             var cts = new CancellationTokenSource(maxTimeout);
 
             var done = new AutoResetEvent(false);
-            var t = new Task(async () =>
-            {
-                latency = await TimedDownloadWorker(url, port, onProgress, cts.Token);
-                done.Set();
-            }, TaskCreationOptions.LongRunning);
+            var t = new Task(
+                async () =>
+                {
+                    latency = await TimedDownloadWorker(url, port, onProgress, cts.Token);
+                    done.Set();
+                },
+                TaskCreationOptions.LongRunning
+            );
             t.ConfigureAwait(false);
             t.Start();
             done.WaitOne((int)(maxTimeout * 1.5));
@@ -783,7 +811,11 @@ namespace VgcApis.Misc
             return true;
         }
 
-        static readonly IPEndPoint _defaultLoopbackEndpoint = new IPEndPoint(IPAddress.Loopback, port: 0);
+        static readonly IPEndPoint _defaultLoopbackEndpoint = new IPEndPoint(
+            IPAddress.Loopback,
+            port: 0
+        );
+
         public static int GetFreeTcpPort()
         {
             // https://stackoverflow.com/questions/138043/find-the-next-tcp-port-in-net
@@ -793,7 +825,13 @@ namespace VgcApis.Misc
             {
                 try
                 {
-                    using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+                    using (
+                        var socket = new Socket(
+                            AddressFamily.InterNetwork,
+                            SocketType.Stream,
+                            ProtocolType.Tcp
+                        )
+                    )
                     {
                         // socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontLinger, true);
                         // socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
@@ -817,6 +855,7 @@ namespace VgcApis.Misc
             }
             catch { }
         }
+
         public static void Sleep(int ms)
         {
             try
@@ -842,6 +881,7 @@ namespace VgcApis.Misc
         }
 
         static readonly AutoResetEvent sendCtrlCLocker = new AutoResetEvent(true);
+
         public static bool SendStopSignal(Process proc)
         {
             // https://stackoverflow.com/questions/283128/how-do-i-send-ctrlc-to-a-process-in-c
@@ -860,8 +900,10 @@ namespace VgcApis.Misc
                     Libs.Sys.ConsoleCtrls.SetConsoleCtrlHandler(null, true);
                     try
                     {
-                        if (Libs.Sys.ConsoleCtrls.GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0)
-                            && proc.WaitForExit(Models.Consts.Core.SendCtrlCTimeout))
+                        if (
+                            Libs.Sys.ConsoleCtrls.GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0)
+                            && proc.WaitForExit(Models.Consts.Core.SendCtrlCTimeout)
+                        )
                         {
                             success = true;
                         }
@@ -879,8 +921,9 @@ namespace VgcApis.Misc
 
         public static void KillProcessAndChildrens(int pid)
         {
-            ManagementObjectSearcher processSearcher = new ManagementObjectSearcher
-              ("Select * From Win32_Process Where ParentProcessID=" + pid);
+            ManagementObjectSearcher processSearcher = new ManagementObjectSearcher(
+                "Select * From Win32_Process Where ParentProcessID=" + pid
+            );
             ManagementObjectCollection processCollection = processSearcher.Get();
 
             // We must kill child processes first!
@@ -988,9 +1031,10 @@ namespace VgcApis.Misc
         {
             var key = GetKey(json, path);
 
-            var def = default(T) == null && typeof(T) == typeof(string) ?
-                (T)(object)string.Empty :
-                default;
+            var def =
+                default(T) == null && typeof(T) == typeof(string)
+                    ? (T)(object)string.Empty
+                    : default;
 
             try
             {
@@ -1021,7 +1065,6 @@ namespace VgcApis.Misc
                 return null;
             }
 
-
             var curPos = json;
             var keys = path.Split('.');
 
@@ -1051,7 +1094,6 @@ namespace VgcApis.Misc
             }
 
             return depth < keys.Length ? null : curPos;
-
         }
 
         public static bool WriteAllTextNow(string path, string contents)
@@ -1083,7 +1125,7 @@ namespace VgcApis.Misc
         /// <param name="filename"></param>
         /// <returns></returns>
         public static T LoadAndParseJsonFile<T>(string filename)
-           where T : class
+            where T : class
         {
             if (File.Exists(filename))
             {
@@ -1098,10 +1140,9 @@ namespace VgcApis.Misc
             return null;
         }
 
-
         /// <summary>
         /// a<b: -, a=b: 0, a>b: +
-        /// </summary>     
+        /// </summary>
         public static int JsonKeyComparer(string a, string b)
         {
             if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
@@ -1120,8 +1161,7 @@ namespace VgcApis.Misc
             {
                 var itemA = listA[i];
                 var itemB = listB[i];
-                if (int.TryParse(itemA, out int numA)
-                    && int.TryParse(itemB, out int numB))
+                if (int.TryParse(itemA, out int numA) && int.TryParse(itemB, out int numB))
                 {
                     result = numA.CompareTo(numB);
                 }
@@ -1129,14 +1169,12 @@ namespace VgcApis.Misc
                 {
                     result = itemA.CompareTo(itemB);
                 }
-
             }
 
             return result == 0 ? lenA - lenB : result;
         }
 
-        public static Dictionary<string, string> GetterJsonSections(
-            JToken jtoken)
+        public static Dictionary<string, string> GetterJsonSections(JToken jtoken)
         {
             var rootKey = Models.Consts.Config.ConfigSectionDefRootKey;
             var defDepth = Models.Consts.Config.ConfigSectionDefDepth;
@@ -1144,21 +1182,20 @@ namespace VgcApis.Misc
 
             var ds = new Dictionary<string, string>();
 
-            GetterJsonDataStructRecursively(
-                ref ds, jtoken, rootKey, defDepth, setting);
+            GetterJsonDataStructRecursively(ref ds, jtoken, rootKey, defDepth, setting);
 
             ds.Remove(rootKey);
 
             int index = rootKey.Length + 1;
-            return ds
-                .Select(kv => new KeyValuePair<string, string>(kv.Key.Substring(index), kv.Value))
+            return ds.Select(
+                    kv => new KeyValuePair<string, string>(kv.Key.Substring(index), kv.Value)
+                )
                 .ToDictionary(kv => kv.Key, kv => kv.Value);
         }
 
         static bool IsValidJobjectKey(string key)
         {
-            if (string.IsNullOrEmpty(key)
-                || int.TryParse(key, out int blackhole))
+            if (string.IsNullOrEmpty(key) || int.TryParse(key, out int blackhole))
             {
                 return false;
             }
@@ -1171,7 +1208,8 @@ namespace VgcApis.Misc
             JToken jtoken,
             string root,
             int depth,
-            Dictionary<string, int> setting)
+            Dictionary<string, int> setting
+        )
         {
             if (depth < 0)
             {
@@ -1196,7 +1234,12 @@ namespace VgcApis.Misc
                         }
                         var subRoot = $"{root}.{key}";
                         GetterJsonDataStructRecursively(
-                           ref sections, jobject[key], subRoot, depth - 1, setting);
+                            ref sections,
+                            jobject[key],
+                            subRoot,
+                            depth - 1,
+                            setting
+                        );
                     }
                     break;
 
@@ -1207,7 +1250,12 @@ namespace VgcApis.Misc
                         var key = i;
                         var subRoot = $"{root}.{key}";
                         GetterJsonDataStructRecursively(
-                            ref sections, jarry[key], subRoot, depth - 1, setting);
+                            ref sections,
+                            jarry[key],
+                            subRoot,
+                            depth - 1,
+                            setting
+                        );
                     }
                     break;
                 default:
@@ -1245,8 +1293,7 @@ namespace VgcApis.Misc
             return string.Empty;
         }
 
-        public static bool TryParseJObject(
-           string jsonString, out JObject json)
+        public static bool TryParseJObject(string jsonString, out JObject json)
         {
             json = null;
             try
@@ -1261,7 +1308,8 @@ namespace VgcApis.Misc
         public static void SavePluginSetting<T>(
             string pluginName,
             T userSettings,
-            Interfaces.Services.ISettingsService vgcSetting)
+            Interfaces.Services.ISettingsService vgcSetting
+        )
             where T : class
         {
             var content = Utils.SerializeObject(userSettings);
@@ -1270,12 +1318,12 @@ namespace VgcApis.Misc
 
         public static T LoadPluginSetting<T>(
             string pluginName,
-            Interfaces.Services.ISettingsService vgcSetting)
+            Interfaces.Services.ISettingsService vgcSetting
+        )
             where T : class, new()
         {
             var empty = new T();
-            var userSettingString =
-                vgcSetting.GetPluginsSetting(pluginName);
+            var userSettingString = vgcSetting.GetPluginsSetting(pluginName);
 
             if (string.IsNullOrEmpty(userSettingString))
             {
@@ -1284,8 +1332,7 @@ namespace VgcApis.Misc
 
             try
             {
-                var result = VgcApis.Misc.Utils
-                    .DeserializeObject<T>(userSettingString);
+                var result = VgcApis.Misc.Utils.DeserializeObject<T>(userSettingString);
                 return result ?? empty;
             }
             catch { }
@@ -1298,7 +1345,8 @@ namespace VgcApis.Misc
         /// <typeparam name="T"></typeparam>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static T DeserializeObject<T>(string content) where T : class
+        public static T DeserializeObject<T>(string content)
+            where T : class
         {
             if (string.IsNullOrEmpty(content))
             {
@@ -1337,7 +1385,8 @@ namespace VgcApis.Misc
         /// <typeparam name="T"></typeparam>
         /// <param name="a"></param>
         /// <returns></returns>
-        public static T Clone<T>(T a) where T : class
+        public static T Clone<T>(T a)
+            where T : class
         {
             if (a == null)
             {
@@ -1346,8 +1395,7 @@ namespace VgcApis.Misc
 
             try
             {
-                return JsonConvert.DeserializeObject<T>(
-                    JsonConvert.SerializeObject(a));
+                return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(a));
             }
             catch { }
             return null;
@@ -1418,7 +1466,6 @@ namespace VgcApis.Misc
             return null;
         }
 
-
         /// <summary>
         /// Return empty list if some thing goes wrong.
         /// </summary>
@@ -1442,9 +1489,7 @@ namespace VgcApis.Misc
             return b64s;
         }
 
-        public static string GetFragment(
-            Scintilla editor,
-            string searchPattern)
+        public static string GetFragment(Scintilla editor, string searchPattern)
         {
             // https://github.com/Ahmad45123/AutoCompleteMenu-ScintillaNET
 
@@ -1528,8 +1573,10 @@ namespace VgcApis.Misc
             var s = source;
             var p = partial;
 
-            int idxS = 0, idxP = 0;
-            int lenS = s.Length, lenP = p.Length;
+            int idxS = 0,
+                idxP = 0;
+            int lenS = s.Length,
+                lenP = p.Length;
             while (idxS < lenS && idxP < lenP)
             {
                 if (s[idxS] == p[idxP])
@@ -1563,13 +1610,14 @@ namespace VgcApis.Misc
             return prefix.ToLower();
         }
 
-        public static Models.Datas.Enums.LinkTypes DetectLinkType(
-            string shareLink)
+        public static Models.Datas.Enums.LinkTypes DetectLinkType(string shareLink)
         {
             var unknow = Models.Datas.Enums.LinkTypes.unknow;
             var prefix = GetLinkPrefix(shareLink);
-            if (!string.IsNullOrEmpty(prefix)
-                && Enum.TryParse(prefix, out Models.Datas.Enums.LinkTypes linkType))
+            if (
+                !string.IsNullOrEmpty(prefix)
+                && Enum.TryParse(prefix, out Models.Datas.Enums.LinkTypes linkType)
+            )
             {
                 return linkType;
             }
@@ -1584,7 +1632,11 @@ namespace VgcApis.Misc
         /// <param name="pattern"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static string ExtractStringWithPattern(string groupName, string pattern, string content)
+        public static string ExtractStringWithPattern(
+            string groupName,
+            string pattern,
+            string content
+        )
         {
             var ptnStr = string.Format(@"(?<{0}>{1})", groupName, pattern);
             Regex rgx = new Regex(ptnStr);
@@ -1605,7 +1657,6 @@ namespace VgcApis.Misc
             outEnum = (TEnum)(object)value;
             if (Enum.IsDefined(typeof(TEnum), value))
             {
-
                 return true;
             }
             return false;
@@ -1616,7 +1667,8 @@ namespace VgcApis.Misc
             if (float.TryParse(value, out float f))
             {
                 return (int)Math.Round(f);
-            };
+            }
+            ;
             return 0;
         }
 
@@ -1645,20 +1697,20 @@ namespace VgcApis.Misc
              * 由于最后一次测速服务器速度已经稳定，很有价值。
              * 而首次测速通常是没有缓存的，对分析服务器的速度也很重要，
              * 中间测速结果的重要程度则随测速次数递增。
-             * 
+             *
              * 假设：
              * 连续做三次速度测试，权重为0.6，
              * 将三次速度测试迭代进这个求平均函数中将得到：
              * first * 0.6 * 0.6 + second * 0.6 * 0.4 + third * 0.4;
              * 即 first * 0.36 + second * 0.24 + third * 0.4;
              * 可见首次和末次测速结果占比较重，中间那次占比较低，符合预期。
-             * 
+             *
              * 测试3至6次结果如下，均符合预期
-             * 3    36% 24% 40%         
-             * 4    22% 14% 24% 40%     
-             * 5    13%  9% 14% 24% 40% 
+             * 3    36% 24% 40%
+             * 4    22% 14% 24% 40%
+             * 5    13%  9% 14% 24% 40%
              * 6     8%  5%  9% 14% 24% 40%
-             * 
+             *
              * p.s.我不会告诉你，其实是因为我懒得写个列表存中间结果才这么搞的。
              */
 
@@ -1707,12 +1759,13 @@ namespace VgcApis.Misc
         }
 
         public static bool IsImportResultSuccess(string[] result) =>
-           result[3] == VgcApis.Models.Consts.Import.MarkImportSuccess;
+            result[3] == VgcApis.Models.Consts.Import.MarkImportSuccess;
 
         public static void TrimDownConcurrentQueue<T>(
             ConcurrentQueue<T> queue,
             int maxLines,
-            int minLines)
+            int minLines
+        )
         {
             var count = queue.Count();
             if (maxLines < 1 || count < maxLines)
@@ -1772,6 +1825,7 @@ namespace VgcApis.Misc
         // Assembly location may change while app running.
         // So we should cache it when app starts.
         static string appDirCache = GenAppDir();
+
         static string GenAppDir()
         {
             // z:\vgc\libs\vgcapi.dll
@@ -1825,7 +1879,9 @@ namespace VgcApis.Misc
 
         static public string GetPublicFieldsInfoOfType(Type type)
         {
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
+            var fields = type.GetFields(
+                    BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance
+                )
                 .Select(field =>
                 {
                     var pf = field.IsStatic ? "Static " : "";
@@ -1837,15 +1893,13 @@ namespace VgcApis.Misc
             return string.Join("\n", fields);
         }
 
-        static public string GetPublicMethodsInfoOfType(Type type)
+        public static string GetPublicMethodsInfoOfType(Type type)
         {
             List<string> staticMems = new List<string>();
             List<string> dynamicMems = new List<string>();
             List<string> allMems = new List<string>();
 
-            var methods = type.GetMethods()
-                .Where(m => m.IsPublic)
-                .ToList();
+            var methods = type.GetMethods().Where(m => m.IsPublic).ToList();
 
             foreach (var method in methods)
             {
@@ -1868,9 +1922,10 @@ namespace VgcApis.Misc
             return string.Join("\n", allMems);
         }
 
-        static public List<Type> GetAllAssembliesType()
+        public static List<Type> GetAllAssembliesType()
         {
-            return AppDomain.CurrentDomain.GetAssemblies()
+            return AppDomain.CurrentDomain
+                .GetAssemblies()
                 .SelectMany(t => t.GetTypes())
                 .Where(t => t.IsClass)
                 .ToList();
@@ -1883,7 +1938,8 @@ namespace VgcApis.Misc
         /// <returns></returns>
         static public string GetFriendlyMethodDeclareInfo(MethodInfo method)
         {
-            var pms = method.GetParameters()
+            var pms = method
+                .GetParameters()
                 .Select(arg =>
                 {
                     var tn = GetFriendlyTypeName(arg.ParameterType);
@@ -1898,7 +1954,7 @@ namespace VgcApis.Misc
             return $"{head}{rtt} {fn}({args})";
         }
 
-        static public string GetFriendlyMethodName(MethodInfo method)
+        public static string GetFriendlyMethodName(MethodInfo method)
         {
             var name = method.Name;
             if (!method.IsGenericMethod)
@@ -1906,9 +1962,7 @@ namespace VgcApis.Misc
                 return name;
             }
 
-            var args = method
-                .GetGenericArguments()
-                .Select(arg => GetFriendlyTypeName(arg));
+            var args = method.GetGenericArguments().Select(arg => GetFriendlyTypeName(arg));
 
             return $"{name}<{string.Join(@", ", args)}>";
         }
@@ -1936,7 +1990,7 @@ namespace VgcApis.Misc
             return friendlyName;
         }
 
-        static public List<Tuple<string, string>> GetPublicPropsInfoOfType(Type type) =>
+        public static List<Tuple<string, string>> GetPublicPropsInfoOfType(Type type) =>
             type.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
                 .Select(field =>
                 {
@@ -1945,7 +1999,7 @@ namespace VgcApis.Misc
                 })
                 .ToList();
 
-        static public List<Tuple<string, string>> GetPublicEventsInfoOfType(Type type) =>
+        public static List<Tuple<string, string>> GetPublicEventsInfoOfType(Type type) =>
             type.GetEvents(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
                 .Select(field =>
                 {
@@ -1954,13 +2008,14 @@ namespace VgcApis.Misc
                 })
                 .ToList();
 
-
         /// <summary>
         /// [0: ReturnType 1: MethodName 2: ParamsStr 3: ParamsWithType]
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static List<Tuple<string, string, string, string>> GetPublicMethodNameAndParam(Type type)
+        public static List<Tuple<string, string, string, string>> GetPublicMethodNameAndParam(
+            Type type
+        )
         {
             var fullNames = new List<Tuple<string, string, string, string>>();
             var methods = type.GetMethods();
@@ -1979,7 +2034,12 @@ namespace VgcApis.Misc
                 var returnType = GetFriendlyTypeName(method.ReturnType);
                 fullNames.Add(
                     new Tuple<string, string, string, string>(
-                        returnType, name, paramStrs.Item1, paramStrs.Item2));
+                        returnType,
+                        name,
+                        paramStrs.Item1,
+                        paramStrs.Item2
+                    )
+                );
             }
             return fullNames;
         }
@@ -1991,18 +2051,15 @@ namespace VgcApis.Misc
 
             foreach (var paramInfo in methodInfo.GetParameters())
             {
-
-                fullParamList.Add(
-                    paramInfo.ParameterType.Name +
-                    " " +
-                    paramInfo.Name);
+                fullParamList.Add(paramInfo.ParameterType.Name + " " + paramInfo.Name);
 
                 paramList.Add(paramInfo.Name);
             }
 
             return new Tuple<string, string>(
                 string.Join(@", ", paramList),
-                string.Join(@", ", fullParamList));
+                string.Join(@", ", fullParamList)
+            );
         }
 
         public static List<string> GetPublicMethodNames(Type type)

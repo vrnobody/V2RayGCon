@@ -11,10 +11,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
         bool isUseV4;
 
-        public Quick(
-            Button skipCN,
-            Button mtProto,
-            CheckBox chkUseV4)
+        public Quick(Button skipCN, Button mtProto, CheckBox chkUseV4)
         {
             cache = Services.Cache.Instance;
             configMgr = Services.ConfigMgr.Instance;
@@ -28,10 +25,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             skipCN.Click += (s, a) =>
             {
                 container.InjectConfigHelper(
-                    () => configMgr
-                        .InjectSkipCnSiteSettingsIntoConfig(
-                            ref container.config,
-                            isUseV4)
+                    () =>
+                        configMgr.InjectSkipCnSiteSettingsIntoConfig(ref container.config, isUseV4)
                 );
             };
 
@@ -45,9 +40,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         }
 
         #region public method
-        public override void Update(JObject config)
-        {
-        }
+        public override void Update(JObject config) { }
         #endregion
 
         #region private method

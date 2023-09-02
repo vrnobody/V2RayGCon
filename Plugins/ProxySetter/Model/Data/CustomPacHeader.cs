@@ -1,23 +1,27 @@
 ﻿namespace ProxySetter.Model.Data
 {
-
     public class CustomPacHeader
     {
-        public string protocol, mode, customWhite, customBlack, ip;
+        public string protocol,
+            mode,
+            customWhite,
+            customBlack,
+            ip;
         public int port;
 
         public CustomPacHeader(
             PacUrlParams urlParam,
             string customWhiteList,
-            string customBlackList)
-
-            : this(urlParam.isSocks,
+            string customBlackList
+        )
+            : this(
+                urlParam.isSocks,
                 urlParam.isWhiteList,
                 urlParam.ip,
                 urlParam.port,
                 customWhiteList,
-                customBlackList)
-        { }
+                customBlackList
+            ) { }
 
         public CustomPacHeader(
             bool isSocks,
@@ -25,7 +29,8 @@
             string ip,
             int port,
             string customWhiteList,
-            string customBlackList)
+            string customBlackList
+        )
         {
             this.protocol = isSocks ? "socks" : "http";
             this.mode = isWhiteList ? "white" : "black";
@@ -34,6 +39,5 @@
             this.ip = ip;
             this.port = port;
         }
-
     }
 }

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +12,6 @@ namespace V2RayGCon.Services.Caches
 
         public CoreCache()
         {
-
             writeLock = new object();
         }
 
@@ -39,18 +37,13 @@ namespace V2RayGCon.Services.Caches
             {
                 if (!data.ContainsKey(configString))
                 {
-                    throw new KeyNotFoundException(
-                        "Core decode cache do not contain this config.");
+                    throw new KeyNotFoundException("Core decode cache do not contain this config.");
                 }
 
                 return data[configString];
             }
-            set
-            {
-                UpdateValue(configString, value);
-            }
+            set { UpdateValue(configString, value); }
         }
-
 
         #endregion
 

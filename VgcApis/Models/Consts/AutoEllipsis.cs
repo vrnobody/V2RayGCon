@@ -20,6 +20,5 @@ namespace VgcApis.Models.Consts
         public static int NotifierTextMaxLength = 127;
 
         public static int MarkLabelTextMaxLength = 40;
-
     }
 }

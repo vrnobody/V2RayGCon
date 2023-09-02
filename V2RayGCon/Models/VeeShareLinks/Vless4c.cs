@@ -2,10 +2,9 @@
 
 namespace V2RayGCon.Models.VeeShareLinks
 {
-    public sealed class Vless4c :
-        BasicSettingsWithReality
+    public sealed class Vless4c : BasicSettingsWithReality
     {
-        // ver 0a is optimized for vmess protocol 
+        // ver 0a is optimized for vmess protocol
         public const string version = @"4c";
         public const string proto = "vless";
 
@@ -13,14 +12,16 @@ namespace V2RayGCon.Models.VeeShareLinks
         public string encryption;
         public string flow;
 
-        public Vless4c() : base()
+        public Vless4c()
+            : base()
         {
-            uuid = new Guid(); // zeros  
+            uuid = new Guid(); // zeros
             encryption = @"none";
             flow = string.Empty;
         }
 
-        public Vless4c(BasicSettingsWithReality source) : this()
+        public Vless4c(BasicSettingsWithReality source)
+            : this()
         {
             CopyFrom(source);
         }
@@ -42,8 +43,8 @@ namespace V2RayGCon.Models.VeeShareLinks
             return vc;
         }
 
-        public Vless4c(byte[] bytes) :
-            this()
+        public Vless4c(byte[] bytes)
+            : this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
             if (ver != version)
@@ -128,10 +129,12 @@ namespace V2RayGCon.Models.VeeShareLinks
 
         public bool EqTo(Vless4c veeLink)
         {
-            if (!base.EqTo(veeLink)
+            if (
+                !base.EqTo(veeLink)
                 || encryption != veeLink.encryption
                 || uuid != veeLink.uuid
-                || flow != veeLink.flow)
+                || flow != veeLink.flow
+            )
             {
                 return false;
             }
@@ -139,6 +142,5 @@ namespace V2RayGCon.Models.VeeShareLinks
             return true;
         }
         #endregion
-
     }
 }

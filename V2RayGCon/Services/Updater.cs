@@ -6,8 +6,7 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
 {
-    public sealed class Updater :
-        BaseClasses.SingletonService<Updater>
+    public sealed class Updater : BaseClasses.SingletonService<Updater>
     {
         Settings setting;
         Servers servers;
@@ -25,13 +24,10 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            VgcApis.Misc.Utils.RunInBackground(
-                () => Update(!isShowErrorUsingMessageBox));
+            VgcApis.Misc.Utils.RunInBackground(() => Update(!isShowErrorUsingMessageBox));
         }
 
-        public void Run(
-            Settings setting,
-            Servers servers)
+        public void Run(Settings setting, Servers servers)
         {
             this.setting = setting;
             this.servers = servers;
@@ -70,10 +66,11 @@ namespace V2RayGCon.Services
                 if (!isQuiet)
                 {
                     MessageBox.Show(
-                       I18N.FetchUpdateInfoFail,
-                       I18N.Error,
-                       MessageBoxButtons.OK,
-                       MessageBoxIcon.Error);
+                        I18N.FetchUpdateInfoFail,
+                        I18N.Error,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
                 }
                 return false;
             }
@@ -87,10 +84,7 @@ namespace V2RayGCon.Services
 
             if (isQuiet)
             {
-                setting.SendLog(
-                    infos == null ?
-                    I18N.FetchUpdateInfoFail :
-                    I18N.NoUpdateTryLater);
+                setting.SendLog(infos == null ? I18N.FetchUpdateInfoFail : I18N.NoUpdateTryLater);
             }
             else
             {
@@ -120,7 +114,9 @@ namespace V2RayGCon.Services
                     {
                         if (form.DialogResult == DialogResult.OK)
                         {
-                            setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser);
+                            setting.SetShutdownReason(
+                                VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser
+                            );
                             Application.Exit();
                         }
                     };
@@ -133,7 +129,8 @@ namespace V2RayGCon.Services
                     exception.Message,
                     exception.GetType().ToString(),
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                    MessageBoxIcon.Error
+                );
             }
         }
 
@@ -145,8 +142,7 @@ namespace V2RayGCon.Services
             }
 
             var tag = Misc.Utils.TrimVersionString(info.version);
-            StringBuilder msg = new StringBuilder(
-                string.Format(I18N.ConfirmUpgradeVgc, tag));
+            StringBuilder msg = new StringBuilder(string.Format(I18N.ConfirmUpgradeVgc, tag));
 
             var warnings = info.warnings;
             var changes = info.changes;
@@ -171,7 +167,6 @@ namespace V2RayGCon.Services
         {
             if (setting.isUpdateUseProxy)
             {
-
                 var port = servers.GetAvailableHttpProxyPort();
                 if (port > 0)
                 {
@@ -194,10 +189,7 @@ namespace V2RayGCon.Services
         #endregion
 
         #region protected methods
-        protected override void Cleanup()
-        {
-
-        }
+        protected override void Cleanup() { }
         #endregion
     }
 }

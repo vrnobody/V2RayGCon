@@ -4,9 +4,9 @@ using System.Threading;
 
 namespace V2RayGCon.Libs.Lua.ApiComponents
 {
-    public class UtilsApi :
-        VgcApis.BaseClasses.Disposable,
-        VgcApis.Interfaces.Services.IUtilsService
+    public class UtilsApi
+        : VgcApis.BaseClasses.Disposable,
+            VgcApis.Interfaces.Services.IUtilsService
     {
         #region misc
 
@@ -15,8 +15,7 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
         public string AddLinkPrefix(string linkBody, VgcApis.Models.Datas.Enums.LinkTypes type) =>
             Misc.Utils.AddLinkPrefix(linkBody, type);
 
-        public string GetLinkBody(string link) =>
-            Misc.Utils.GetLinkBody(link);
+        public string GetLinkBody(string link) => Misc.Utils.GetLinkBody(link);
 
         public string ScanQrcode()
         {
@@ -39,14 +38,13 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
             return shareLink;
         }
 
-        public void ExecuteInParallel<TParam>(
-            IEnumerable<TParam> source, Action<TParam> worker) =>
+        public void ExecuteInParallel<TParam>(IEnumerable<TParam> source, Action<TParam> worker) =>
             Misc.Utils.ExecuteInParallel(source, worker);
 
         public void ExecuteInParallel<TParam, TResult>(
-            IEnumerable<TParam> source, Func<TParam, TResult> worker) =>
-            Misc.Utils.ExecuteInParallel(source, worker);
+            IEnumerable<TParam> source,
+            Func<TParam, TResult> worker
+        ) => Misc.Utils.ExecuteInParallel(source, worker);
         #endregion
-
     }
 }

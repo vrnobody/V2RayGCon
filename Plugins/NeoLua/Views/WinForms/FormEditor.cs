@@ -15,27 +15,23 @@ namespace NeoLuna.Views.WinForms
 
         private readonly LuaCoreSetting initialCoreSettings;
 
-
         ScintillaNET.Scintilla editor;
         string title = "";
 
         public static FormEditor CreateForm(
             Services.FormMgrSvc formMgr,
-            Models.Data.LuaCoreSetting initialCoreSettings)
+            Models.Data.LuaCoreSetting initialCoreSettings
+        )
         {
             FormEditor r = null;
             VgcApis.Misc.UI.Invoke(() =>
             {
-                r = new FormEditor(
-                    formMgr,
-                    initialCoreSettings);
+                r = new FormEditor(formMgr, initialCoreSettings);
             });
             return r;
         }
 
-        FormEditor(
-            Services.FormMgrSvc formMgr,
-            LuaCoreSetting initialCoreSettings)
+        FormEditor(Services.FormMgrSvc formMgr, LuaCoreSetting initialCoreSettings)
         {
             this.initialCoreSettings = initialCoreSettings;
 
@@ -51,10 +47,8 @@ namespace NeoLuna.Views.WinForms
             this.Text = title;
         }
 
-
         private void FormEditor_Load(object sender, System.EventArgs e)
         {
-
             InitSplitPanel();
 
             lbStatusBarMsg.Text = "";
@@ -65,26 +59,24 @@ namespace NeoLuna.Views.WinForms
                 cboxScriptName,
                 btnNewScript,
                 btnSaveScript,
-
                 btnRunScript,
                 btnStopScript,
                 btnKillScript,
                 btnClearOutput,
-
                 btnShowFormSearch,
                 btnGotoLine,
                 tboxQuickSearch,
-
-                rtBoxOutput);
+                rtBoxOutput
+            );
 
             acmCtrl = new Controllers.FormEditorCtrl.AutoCompleteCtrl(
                 formMgr.astServer,
-
                 editor,
                 cboxVarList,
                 cboxFunctionList,
                 enableCodeAnalyzeToolStripMenuItem,
-                toolStripStatusCodeAnalyze);
+                toolStripStatusCodeAnalyze
+            );
 
             acmCtrl.Run();
 
@@ -93,7 +85,6 @@ namespace NeoLuna.Views.WinForms
             menuCtrl = new Controllers.FormEditorCtrl.MenuCtrl(
                 this,
                 editorCtrl,
-
                 newWindowToolStripMenuItem,
                 showScriptManagerToolStripMenuItem,
                 loadFileToolStripMenuItem,
@@ -101,7 +92,8 @@ namespace NeoLuna.Views.WinForms
                 exitToolStripMenuItem,
                 loadCLRLibraryToolStripMenuItem,
                 toolStripStatusClrLib,
-                cboxScriptName);
+                cboxScriptName
+            );
 
             menuCtrl.Run(formMgr, initialCoreSettings);
 
@@ -121,11 +113,13 @@ namespace NeoLuna.Views.WinForms
         void KeyDownHandler(object sender, KeyEventArgs a)
         {
             VgcApis.Misc.Utils.RunInBackground(
-                () => VgcApis.Misc.UI.Invoke(() =>
-                {
-                    editorCtrl?.KeyBoardShortcutHandler(a);
-                    acmCtrl?.KeyBoardShortcutHandler(a);
-                }));
+                () =>
+                    VgcApis.Misc.UI.Invoke(() =>
+                    {
+                        editorCtrl?.KeyBoardShortcutHandler(a);
+                        acmCtrl?.KeyBoardShortcutHandler(a);
+                    })
+            );
         }
 
         void InitSplitPanel()
@@ -133,6 +127,7 @@ namespace NeoLuna.Views.WinForms
             splitContainerTabEditor.SplitterDistance = this.Width * 6 / 10;
             SetOutputPanelCollapseState(true);
         }
+
         private void FormClosingHandler(object sender, FormClosingEventArgs e)
         {
             if (settings.IsClosing())

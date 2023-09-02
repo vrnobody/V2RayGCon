@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -41,7 +36,8 @@ namespace V2RayGCon.Views.Updater
 
             this.downloadUrl = string.Format(
                 VgcApis.Models.Consts.Webs.ReleaseDownloadUrlTpl,
-                Misc.Utils.TrimVersionString(info.version));
+                Misc.Utils.TrimVersionString(info.version)
+            );
 
             lbSource.Text = downloadUrl;
             tempFile = Path.GetTempFileName();
@@ -57,6 +53,7 @@ namespace V2RayGCon.Views.Updater
 
         #region UI event handlers
         DateTime startTimeStamp;
+
         private void OnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             if (startTimeStamp == default)
@@ -70,16 +67,22 @@ namespace V2RayGCon.Views.Updater
                 if (totalSeconds > 0)
                 {
                     long bytesPerSecond = e.BytesReceived / totalSeconds;
-                    lbSpeed.Text =
-                        string.Format(I18N.DownloadSpeedMessage, BytesToString(bytesPerSecond));
+                    lbSpeed.Text = string.Format(
+                        I18N.DownloadSpeedMessage,
+                        BytesToString(bytesPerSecond)
+                    );
                 }
             }
 
-            lbSize.Text = $"{BytesToString(e.BytesReceived)} / {BytesToString(e.TotalBytesToReceive)}";
+            lbSize.Text =
+                $"{BytesToString(e.BytesReceived)} / {BytesToString(e.TotalBytesToReceive)}";
             pgBar.Value = e.ProgressPercentage;
         }
 
-        private void OnDownloadFileCompleted(object sender, AsyncCompletedEventArgs asyncCompletedEventArgs)
+        private void OnDownloadFileCompleted(
+            object sender,
+            AsyncCompletedEventArgs asyncCompletedEventArgs
+        )
         {
             if (asyncCompletedEventArgs.Cancelled)
             {
@@ -149,11 +152,7 @@ namespace V2RayGCon.Views.Updater
             string currentExe = Process.GetCurrentProcess().MainModule?.FileName;
             string extractionPath = Path.GetDirectoryName(currentExe);
 
-            var pInfo = new ProcessStartInfo
-            {
-                FileName = installerPath,
-                UseShellExecute = true
-            };
+            var pInfo = new ProcessStartInfo { FileName = installerPath, UseShellExecute = true };
 
             var arguments = new Collection<string>
             {
@@ -194,6 +193,7 @@ namespace V2RayGCon.Views.Updater
             }
             return arguments.ToString();
         }
+
         string MoveTempDownloadFileToTempFolder(string tempFolder)
         {
             ContentDisposition contentDisposition = null;
@@ -201,8 +201,9 @@ namespace V2RayGCon.Views.Updater
             {
                 try
                 {
-                    contentDisposition =
-                        new ContentDisposition(webClient.ResponseHeaders["Content-Disposition"]);
+                    contentDisposition = new ContentDisposition(
+                        webClient.ResponseHeaders["Content-Disposition"]
+                    );
                 }
                 catch (FormatException)
                 {
@@ -238,7 +239,10 @@ namespace V2RayGCon.Views.Updater
                 using (FileStream stream = File.OpenRead(tempFile))
                 {
                     byte[] hash = hashAlgorithm.ComputeHash(stream);
-                    string fileChecksum = BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
+                    string fileChecksum = BitConverter
+                        .ToString(hash)
+                        .Replace("-", string.Empty)
+                        .ToLowerInvariant();
                     if (fileChecksum == updateInfo.md5.ToLowerInvariant())
                     {
                         return true;
@@ -270,10 +274,7 @@ namespace V2RayGCon.Views.Updater
                 port = servers.GetAvailableHttpProxyPort();
             }
 
-            MyWebClient wc = new MyWebClient
-            {
-                Encoding = Encoding.UTF8,
-            };
+            MyWebClient wc = new MyWebClient { Encoding = Encoding.UTF8, };
 
             wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
 
@@ -286,7 +287,5 @@ namespace V2RayGCon.Views.Updater
         }
 
         #endregion
-
-
     }
 }

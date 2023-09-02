@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
-
 
 namespace V2RayGCon
 {
@@ -13,14 +11,13 @@ namespace V2RayGCon
         #region single instance
         // https://stackoverflow.com/questions/19147/what-is-the-correct-way-to-create-a-single-instance-application
 
-        static Mutex mutex = new Mutex(
-            true,
+        static Mutex mutex = new Mutex(true,
 #if DEBUG
             "{a4333801-a206-4061-9e20-1f03e2deaf7f}"
 #else
             "{84d287ae-c0b0-4c1a-9ecc-d98c26577c02}"
 #endif
-            );
+        );
         #endregion
 
         /// <summary>
@@ -54,7 +51,7 @@ namespace V2RayGCon
 
         #region DPI awareness
         [DllImport("user32.dll")]
-        public extern static IntPtr SetProcessDPIAware();
+        public static extern IntPtr SetProcessDPIAware();
         #endregion
     }
 }

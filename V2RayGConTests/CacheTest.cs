@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 
 namespace V2RayGCon.Test
@@ -17,10 +16,7 @@ namespace V2RayGCon.Test
         }
 
         [TestMethod]
-        public void GeneralCacheNormalTest()
-        {
-
-        }
+        public void GeneralCacheNormalTest() { }
 
         [TestMethod]
         public void HTMLFailTest()
@@ -48,10 +44,13 @@ namespace V2RayGCon.Test
 
             try
             {
-                Misc.Utils.ExecuteInParallel(urls, (url) =>
-                {
-                    return html[url];
-                });
+                Misc.Utils.ExecuteInParallel(
+                    urls,
+                    (url) =>
+                    {
+                        return html[url];
+                    }
+                );
             }
             catch
             {

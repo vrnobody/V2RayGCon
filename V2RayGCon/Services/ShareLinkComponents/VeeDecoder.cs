@@ -4,16 +4,14 @@ using System.Collections.Generic;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
-    internal sealed class VeeDecoder :
-        VgcApis.BaseClasses.ComponentOf<Codecs>,
-        VgcApis.Interfaces.IShareLinkDecoder
+    internal sealed class VeeDecoder
+        : VgcApis.BaseClasses.ComponentOf<Codecs>,
+            VgcApis.Interfaces.IShareLinkDecoder
     {
         Cache cache;
         Settings setting;
 
-        public VeeDecoder(
-            Cache cache,
-            Settings setting)
+        public VeeDecoder(Cache cache, Settings setting)
         {
             this.cache = cache;
             this.setting = setting;
@@ -24,8 +22,10 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region public methods
-        Dictionary<string, VeeCodecs.IVeeDecoder> decoders = new Dictionary<string, VeeCodecs.IVeeDecoder>();
-        Dictionary<string, VeeCodecs.IVeeDecoder> encoders = new Dictionary<string, VeeCodecs.IVeeDecoder>();
+        Dictionary<string, VeeCodecs.IVeeDecoder> decoders =
+            new Dictionary<string, VeeCodecs.IVeeDecoder>();
+        Dictionary<string, VeeCodecs.IVeeDecoder> encoders =
+            new Dictionary<string, VeeCodecs.IVeeDecoder>();
 
         public override void Prepare()
         {
@@ -94,9 +94,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         }
 
         public List<string> ExtractLinksFromText(string text) =>
-            Misc.Utils.ExtractLinks(
-                text,
-                VgcApis.Models.Datas.Enums.LinkTypes.v);
+            Misc.Utils.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.v);
         #endregion
 
         #region IVeeLink2VeeConfig
@@ -141,8 +139,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         string EncodeWorker(string config)
         {
-            if (!VgcApis.Misc.Utils.TryParseJObject(
-                config, out JObject json))
+            if (!VgcApis.Misc.Utils.TryParseJObject(config, out JObject json))
             {
                 return null;
             }
@@ -160,7 +157,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         static byte[] VeeLink2Bytes(string veeLink)
         {
-            // Do not use Misc.Utils.Base64Decode() 
+            // Do not use Misc.Utils.Base64Decode()
             // Unicode encoder can not handle all possible byte values.
             string b64Body = Misc.Utils.GetLinkBody(veeLink);
             return VgcApis.Misc.Utils.Base64DecodeToBytes(b64Body);
@@ -170,14 +167,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             if (bytes == null)
             {
-                throw new ArgumentNullException(
-                    @"Bytes is null!");
+                throw new ArgumentNullException(@"Bytes is null!");
             }
 
             var b64Str = Convert.ToBase64String(bytes);
-            return Misc.Utils.AddLinkPrefix(
-                b64Str,
-                VgcApis.Models.Datas.Enums.LinkTypes.v);
+            return Misc.Utils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.v);
         }
 
         #endregion

@@ -2,6 +2,7 @@
 {
     public class MultiConfItem
     {
-        public string alias, path;
+        public string alias,
+            path;
     }
 }

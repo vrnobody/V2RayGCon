@@ -87,5 +87,4 @@ namespace VgcApis.Libs.Infr
             return Local.NextDouble() * (maxValue - minValue) + minValue;
         }
     }
-
 }

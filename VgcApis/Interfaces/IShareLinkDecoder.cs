@@ -4,8 +4,7 @@ using System.Collections.Generic;
 
 namespace VgcApis.Interfaces
 {
-    public interface IShareLinkDecoder :
-        IDisposable
+    public interface IShareLinkDecoder : IDisposable
     {
         /// <summary>
         /// Return empty list if fail.

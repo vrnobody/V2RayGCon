@@ -10,7 +10,8 @@
             this.container = container;
         }
 
-        public T GetContainer<T>() where T : FormController
+        public T GetContainer<T>()
+            where T : FormController
         {
             if (this.container == null)
             {

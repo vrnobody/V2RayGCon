@@ -6,9 +6,7 @@ using System.Windows.Forms;
 
 namespace NeoLuna.Views.WinForms
 {
-    public partial class FormChoice :
-        Form,
-        Interfaces.IWinFormControl<int>
+    public partial class FormChoice : Form, Interfaces.IWinFormControl<int>
     {
         readonly int MAX_TITLE_LEN = 60;
         readonly int MAX_CHOICE_LEN = 50;
@@ -20,9 +18,7 @@ namespace NeoLuna.Views.WinForms
         private readonly string[] choices;
         private readonly int defChoice;
 
-        public FormChoice(
-            AutoResetEvent done,
-            string title, string[] choices, int defChoice)
+        public FormChoice(AutoResetEvent done, string title, string[] choices, int defChoice)
         {
             InitializeComponent();
             this.done = done;
@@ -83,6 +79,7 @@ namespace NeoLuna.Views.WinForms
         }
 
         List<RadioButton> radioButtons = new List<RadioButton>();
+
         void InitControls()
         {
             lbTitle.Text = VgcApis.Misc.Utils.AutoEllipsis(title, MAX_TITLE_LEN);
@@ -118,10 +115,20 @@ namespace NeoLuna.Views.WinForms
                 AutoSize = true,
             };
 
-            MethodInfo m = typeof(RadioButton).GetMethod("SetStyle", BindingFlags.Instance | BindingFlags.NonPublic);
+            MethodInfo m = typeof(RadioButton).GetMethod(
+                "SetStyle",
+                BindingFlags.Instance | BindingFlags.NonPublic
+            );
             if (m != null)
             {
-                m.Invoke(control, new object[] { ControlStyles.StandardClick | ControlStyles.StandardDoubleClick, true });
+                m.Invoke(
+                    control,
+                    new object[]
+                    {
+                        ControlStyles.StandardClick | ControlStyles.StandardDoubleClick,
+                        true
+                    }
+                );
             }
 
             control.MouseDoubleClick += (s, a) => VgcApis.Misc.UI.Invoke(btnOk.PerformClick);
@@ -172,9 +179,6 @@ namespace NeoLuna.Views.WinForms
             }
         }
 
-
         #endregion
-
-
     }
 }

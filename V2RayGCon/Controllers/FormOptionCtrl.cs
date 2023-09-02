@@ -1,16 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using V2RayGCon.Resources.Resx;
-
-namespace V2RayGCon.Controllers
+﻿namespace V2RayGCon.Controllers
 {
     public class FormOptionCtrl : BaseClasses.FormController
     {
-        public FormOptionCtrl()
-        {
-        }
+        public FormOptionCtrl() { }
 
         public void Cleanup()
         {

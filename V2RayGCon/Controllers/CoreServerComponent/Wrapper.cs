@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
-using System.Linq;
 using System.Reflection;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
@@ -12,7 +11,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         private readonly VgcApis.Interfaces.ICoreServCtrl coreServCtrl;
 
         #region public exports
-        public static VgcApis.Interfaces.IWrappedCoreServCtrl Wrap(VgcApis.Interfaces.ICoreServCtrl coreServCtrl)
+        public static VgcApis.Interfaces.IWrappedCoreServCtrl Wrap(
+            VgcApis.Interfaces.ICoreServCtrl coreServCtrl
+        )
         {
             if (coreServCtrl == null)
             {
@@ -32,13 +33,21 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region override
-        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+        public override bool TryInvokeMember(
+            InvokeMemberBinder binder,
+            object[] args,
+            out object result
+        )
         {
             result = null;
             try
             {
                 var funcName = binder.Name;
-                if (!string.IsNullOrEmpty(funcName) && funcLookupTable.TryGetValue(funcName, out var funcsInfo) && funcsInfo != null)
+                if (
+                    !string.IsNullOrEmpty(funcName)
+                    && funcLookupTable.TryGetValue(funcName, out var funcsInfo)
+                    && funcsInfo != null
+                )
                 {
                     // 这里用参数个数会有bug，但是参数名称有时会为0，不能用。
                     var pn = binder.CallInfo.ArgumentCount;
@@ -57,10 +66,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     return true;
                 }
             }
-            catch
-            {
-
-            }
+            catch { }
             return false;
         }
         #endregion
@@ -74,24 +80,48 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             GetLogger,
         }
 
-        readonly static Dictionary<CompNames, Func<VgcApis.Interfaces.ICoreServCtrl, object>> compoLookupTable =
-            new Dictionary<CompNames, Func<VgcApis.Interfaces.ICoreServCtrl, object>>()
+        static readonly Dictionary<
+            CompNames,
+            Func<VgcApis.Interfaces.ICoreServCtrl, object>
+        > compoLookupTable = new Dictionary<
+            CompNames,
+            Func<VgcApis.Interfaces.ICoreServCtrl, object>
+        >()
         {
-            { CompNames.GetConfiger, (inst) => inst.GetConfiger()},
-            { CompNames.GetCoreCtrl, (inst) => inst.GetCoreCtrl()},
-            { CompNames.GetCoreStates, (inst) => inst.GetCoreStates()},
-            { CompNames.GetLogger, (inst) => inst.GetLogger()},
+            { CompNames.GetConfiger, (inst) => inst.GetConfiger() },
+            { CompNames.GetCoreCtrl, (inst) => inst.GetCoreCtrl() },
+            { CompNames.GetCoreStates, (inst) => inst.GetCoreStates() },
+            { CompNames.GetLogger, (inst) => inst.GetLogger() },
         };
 
-        readonly static Dictionary<string, Dictionary<int, Tuple<CompNames, MethodInfo>>> funcLookupTable = CreateFuncsLookupTableOnlyOnce();
-        static Dictionary<string, Dictionary<int, Tuple<CompNames, MethodInfo>>> CreateFuncsLookupTableOnlyOnce()
+        static readonly Dictionary<
+            string,
+            Dictionary<int, Tuple<CompNames, MethodInfo>>
+        > funcLookupTable = CreateFuncsLookupTableOnlyOnce();
+
+        static Dictionary<
+            string,
+            Dictionary<int, Tuple<CompNames, MethodInfo>>
+        > CreateFuncsLookupTableOnlyOnce()
         {
             var tups = new Tuple<CompNames, Type>[]
             {
-                new Tuple<CompNames,Type>(CompNames.GetConfiger, typeof(VgcApis.Interfaces.CoreCtrlComponents.IConfiger)),
-                new Tuple<CompNames,Type>(CompNames.GetCoreCtrl, typeof(VgcApis.Interfaces.CoreCtrlComponents.ICoreCtrl)),
-                new Tuple<CompNames,Type>(CompNames.GetCoreStates, typeof(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates)),
-                new Tuple<CompNames,Type>(CompNames.GetLogger, typeof(VgcApis.Interfaces.CoreCtrlComponents.ILogger)),
+                new Tuple<CompNames, Type>(
+                    CompNames.GetConfiger,
+                    typeof(VgcApis.Interfaces.CoreCtrlComponents.IConfiger)
+                ),
+                new Tuple<CompNames, Type>(
+                    CompNames.GetCoreCtrl,
+                    typeof(VgcApis.Interfaces.CoreCtrlComponents.ICoreCtrl)
+                ),
+                new Tuple<CompNames, Type>(
+                    CompNames.GetCoreStates,
+                    typeof(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates)
+                ),
+                new Tuple<CompNames, Type>(
+                    CompNames.GetLogger,
+                    typeof(VgcApis.Interfaces.CoreCtrlComponents.ILogger)
+                ),
             };
 
             var table = new Dictionary<string, Dictionary<int, Tuple<CompNames, MethodInfo>>>();

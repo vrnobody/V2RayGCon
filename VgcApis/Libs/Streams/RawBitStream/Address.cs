@@ -4,8 +4,7 @@ using System.Text;
 
 namespace VgcApis.Libs.Streams.RawBitStream
 {
-    public sealed class Address :
-        BaseClasses.ComponentOf<RawBitStream>
+    public sealed class Address : BaseClasses.ComponentOf<RawBitStream>
     {
         const int BytesPerIpv4 = Models.Consts.BitStream.BytesPerIpv4;
         const int BytesPerIpv6 = Models.Consts.BitStream.BytesPerIpv6;

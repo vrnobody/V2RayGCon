@@ -2,23 +2,24 @@
 
 namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 {
-    public sealed class Vless4a :
-        BasicSettings
+    public sealed class Vless4a : BasicSettings
     {
-        // ver 0a is optimized for vmess protocol 
+        // ver 0a is optimized for vmess protocol
         public const string version = @"4a";
         public const string proto = "vless";
 
         public Guid uuid;
         public string encryption;
 
-        public Vless4a() : base()
+        public Vless4a()
+            : base()
         {
-            uuid = new Guid(); // zeros  
+            uuid = new Guid(); // zeros
             encryption = "none";
         }
 
-        public Vless4a(BasicSettings source) : this()
+        public Vless4a(BasicSettings source)
+            : this()
         {
             CopyFrom(source);
         }
@@ -30,7 +31,6 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
             uuid = Guid.Parse(vc.auth1);
         }
 
-
         public override Datas.VeeConfigs ToVeeConfigs()
         {
             var vc = base.ToVeeConfigs();
@@ -39,8 +39,8 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
             return vc;
         }
 
-        public Vless4a(byte[] bytes) :
-            this()
+        public Vless4a(byte[] bytes)
+            : this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
             if (ver != version)
@@ -102,9 +102,11 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 
         public bool EqTo(Vless4a veeLink)
         {
-            if (!EqTo(veeLink as BasicSettings)
+            if (
+                !EqTo(veeLink as BasicSettings)
                 || encryption != veeLink.encryption
-                || uuid != veeLink.uuid)
+                || uuid != veeLink.uuid
+            )
             {
                 return false;
             }
@@ -112,6 +114,5 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
             return true;
         }
         #endregion
-
     }
 }

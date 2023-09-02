@@ -2,9 +2,9 @@
 
 namespace V2RayGCon.Controllers.CoreServerComponent
 {
-    sealed public class Logger :
-        VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
-        VgcApis.Interfaces.CoreCtrlComponents.ILogger
+    public sealed class Logger
+        : VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
+            VgcApis.Interfaces.CoreCtrlComponents.ILogger
     {
         VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
         Services.Settings setting;
@@ -33,6 +33,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         CoreStates coreInfo;
+
         public override void Prepare()
         {
             coreInfo = GetParent().GetChild<CoreStates>();
@@ -40,6 +41,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         Views.WinForms.FormSingleServerLog logForm = null;
         readonly object formLogLocker = new object();
+
         public void ShowFormLog()
         {
             Views.WinForms.FormSingleServerLog form = null;

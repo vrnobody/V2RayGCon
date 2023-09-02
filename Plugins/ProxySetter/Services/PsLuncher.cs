@@ -14,6 +14,7 @@ namespace ProxySetter.Services
         VgcApis.Interfaces.Services.IApiService vgcApi;
         Model.Data.ProxySettings orgSysProxySetting;
         Views.WinForms.FormMain formMain;
+
         public PsLuncher() { }
 
         #region public methods
@@ -54,8 +55,7 @@ namespace ProxySetter.Services
 
             VgcApis.Misc.UI.Invoke(() =>
             {
-                formMain = Views.WinForms.FormMain.CreateForm(
-                    setting, pacServer, serverTracker);
+                formMain = Views.WinForms.FormMain.CreateForm(setting, pacServer, serverTracker);
                 formMain.FormClosed += (s, a) => formMain = null;
                 formMain.Show();
             });
@@ -95,16 +95,29 @@ namespace ProxySetter.Services
         ToolStripMenuItem[] GenSubMenu()
         {
             miProxyModeNone = new ToolStripMenuItem(
-               I18N.MiNone, null, (s, a) => SetProxyMode(Model.Data.Enum.SystemProxyModes.None));
+                I18N.MiNone,
+                null,
+                (s, a) => SetProxyMode(Model.Data.Enum.SystemProxyModes.None)
+            );
 
             miProxyModePac = new ToolStripMenuItem(
-                I18N.MiPAC, null, (s, a) => SetProxyMode(Model.Data.Enum.SystemProxyModes.PAC));
+                I18N.MiPAC,
+                null,
+                (s, a) => SetProxyMode(Model.Data.Enum.SystemProxyModes.PAC)
+            );
             miProxyModeDirect = new ToolStripMenuItem(
-                I18N.MiDirect, null, (s, a) => SetProxyMode(Model.Data.Enum.SystemProxyModes.Direct));
+                I18N.MiDirect,
+                null,
+                (s, a) => SetProxyMode(Model.Data.Enum.SystemProxyModes.Direct)
+            );
             miProxyModeGlobal = new ToolStripMenuItem(
-                I18N.MiGlobal, null, (s, a) => SetProxyMode(Model.Data.Enum.SystemProxyModes.Global));
+                I18N.MiGlobal,
+                null,
+                (s, a) => SetProxyMode(Model.Data.Enum.SystemProxyModes.Global)
+            );
 
-            var menu = new ToolStripMenuItem[] {
+            var menu = new ToolStripMenuItem[]
+            {
                 miProxyModeNone,
                 miProxyModeDirect,
                 miProxyModeGlobal,
@@ -123,26 +136,22 @@ namespace ProxySetter.Services
 
             if (miProxyModeNone != null)
             {
-                miProxyModeNone.Checked =
-                    (int)Model.Data.Enum.SystemProxyModes.None == pm;
+                miProxyModeNone.Checked = (int)Model.Data.Enum.SystemProxyModes.None == pm;
             }
 
             if (miProxyModeDirect != null)
             {
-                miProxyModeDirect.Checked =
-                    (int)Model.Data.Enum.SystemProxyModes.Direct == pm;
+                miProxyModeDirect.Checked = (int)Model.Data.Enum.SystemProxyModes.Direct == pm;
             }
 
             if (miProxyModeGlobal != null)
             {
-                miProxyModeGlobal.Checked =
-                    (int)Model.Data.Enum.SystemProxyModes.Global == pm;
+                miProxyModeGlobal.Checked = (int)Model.Data.Enum.SystemProxyModes.Global == pm;
             }
 
             if (miProxyModePac != null)
             {
-                miProxyModePac.Checked =
-                    (int)Model.Data.Enum.SystemProxyModes.PAC == pm;
+                miProxyModePac.Checked = (int)Model.Data.Enum.SystemProxyModes.PAC == pm;
             }
         }
 
@@ -156,5 +165,4 @@ namespace ProxySetter.Services
 
         #endregion
     }
-
 }

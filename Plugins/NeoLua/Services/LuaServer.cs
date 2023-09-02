@@ -4,11 +4,9 @@ using System.Linq;
 
 namespace NeoLuna.Services
 {
-    internal class LuaServer :
-        VgcApis.BaseClasses.Disposable
+    internal class LuaServer : VgcApis.BaseClasses.Disposable
     {
-        public EventHandler
-            OnRequireFlyPanelUpdate,
+        public EventHandler OnRequireFlyPanelUpdate,
             OnRequireMenuUpdate;
 
         Settings settings;
@@ -91,9 +89,7 @@ namespace NeoLuna.Services
 
         public List<Controllers.LuaCoreCtrl> GetVisibleCoreCtrls()
         {
-            return GetAllLuaCoreCtrls()
-                .Where(c => !c.isHidden)
-                .ToList();
+            return GetAllLuaCoreCtrls().Where(c => !c.isHidden).ToList();
         }
 
         public void RemoveAllScripts()
@@ -127,7 +123,7 @@ namespace NeoLuna.Services
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="scripts">List(string[]{name, script})</param>
         public void ImportScripts(IEnumerable<string[]> scripts)
@@ -228,9 +224,7 @@ namespace NeoLuna.Services
             coreCtrl.OnStateChange += OnRequireMenuUpdateHandler;
         }
 
-
-        void InvokeOnRequireMenuUpdate() =>
-            OnRequireMenuUpdateHandler(this, EventArgs.Empty);
+        void InvokeOnRequireMenuUpdate() => OnRequireMenuUpdateHandler(this, EventArgs.Empty);
 
         void OnRequireMenuUpdateHandler(object sender, EventArgs args)
         {
@@ -240,7 +234,6 @@ namespace NeoLuna.Services
             }
             catch { }
         }
-
 
         void InvokeOnLuaCoreCtrlListChangeIgnoreError()
         {
@@ -253,7 +246,6 @@ namespace NeoLuna.Services
         }
 
         void Save() => settings.SaveUserSettingsLater();
-
 
         void InitLuaCores()
         {

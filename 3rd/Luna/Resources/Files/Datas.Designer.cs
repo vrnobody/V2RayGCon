@@ -47,8 +47,8 @@ namespace Luna.Resources.Files {
         }
         
         /// <summary>
-        ///   重写当前线程的 CurrentUICulture 属性
-        ///   重写当前线程的 CurrentUICulture 属性。
+        ///   重写当前线程的 CurrentUICulture 属性，对
+        ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture {
@@ -64,26 +64,27 @@ namespace Luna.Resources.Files {
         ///   查找类似 -- Enable import on 2020-04-17
         ///-- import = function () end
         ///
+        ///-- require path
+        ///package.path = &quot;.\\?.lua;.\\?\\init.lua&quot;
         ///
-        ///print = function(...) Misc:Print(...) end
-        ///os.exit = function() print(&quot;os.exit() is disabled&quot;) end
-        ///                
-        ///-- copy from NLua
-        ///function Each(o)
-        ///    local e = o:GetEnumerator()
-        ///    return function()
-        ///        if e:MoveNext() then
-        ///            return e.Current
-        ///        end
-        ///    end
+        ///-- dll path
+        ///if os.getenv(&apos;PROCESSOR_ARCHITECTURE&apos;) == &quot;AMD64&quot; then
+        ///    package.cpath = &apos;.\\lua\\dll64\\?.dll&apos;
+        ///else
+        ///    package.cpath = &apos;.\\lua\\dll32\\?.dll&apos;
         ///end
         ///
-        ///string.startswith = function (text, keyword)
-        ///    if text == nil or keyword == nil then   
-        ///        return false
+        ///print = function(...)
+        ///    local t = {}
+        ///    for _, v in pairs({...}) do
+        ///        table.insert(t, tostring(v))
         ///    end
-        ///    local t = string.lower(text)
-        ///    l [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///    Misc:Print(table.concat(t, &quot; &quot;))
+        ///end
+        ///
+        ///os.exit = function() print(&quot;os.exit() is disabled&quot;) end
+        ///                
+        /// [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string LuaPredefinedFunctions {
             get {

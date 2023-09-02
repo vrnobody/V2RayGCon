@@ -8,12 +8,11 @@ namespace VgcApis.Models.Datas
         public long statsUplink { get; set; }
         public long statsDownlink { get; set; }
 
-        public StatsSample() : this(0, 0)
-        { }
+        public StatsSample()
+            : this(0, 0) { }
 
         public StatsSample(string upLink, string downLink)
-            : this(Misc.Utils.Str2Int(upLink), Misc.Utils.Str2Int(downLink))
-        { }
+            : this(Misc.Utils.Str2Int(upLink), Misc.Utils.Str2Int(downLink)) { }
 
         public StatsSample(long upLink, long downLink)
         {
@@ -21,6 +20,5 @@ namespace VgcApis.Models.Datas
             statsUplink = upLink;
             statsDownlink = downLink;
         }
-
     }
 }

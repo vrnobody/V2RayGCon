@@ -3,9 +3,7 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Views.UserControls
 {
-    public partial class WelcomeUI :
-        UserControl,
-        BaseClasses.IFormMainFlyPanelComponent
+    public partial class WelcomeUI : UserControl, BaseClasses.IFormMainFlyPanelComponent
     {
         Services.Settings setting;
         Services.ShareLinkMgr slinkMgr;
@@ -22,9 +20,7 @@ namespace V2RayGCon.Views.UserControls
         }
 
         #region public method
-        public void Cleanup()
-        {
-        }
+        public void Cleanup() { }
         #endregion
 
         private void WelcomeFlyPanelComponent_Load(object sender, System.EventArgs e)
@@ -71,7 +67,10 @@ namespace V2RayGCon.Views.UserControls
         {
             void Success(string text)
             {
-                var msg = VgcApis.Misc.Utils.AutoEllipsis(text, VgcApis.Models.Consts.AutoEllipsis.QrcodeTextMaxLength);
+                var msg = VgcApis.Misc.Utils.AutoEllipsis(
+                    text,
+                    VgcApis.Models.Consts.AutoEllipsis.QrcodeTextMaxLength
+                );
                 setting.SendLog($"QRCode: {msg}");
                 slinkMgr.ImportLinkWithOutV2cfgLinks(text);
             }

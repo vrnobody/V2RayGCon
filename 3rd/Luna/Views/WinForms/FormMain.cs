@@ -14,7 +14,8 @@ namespace Luna.Views.WinForms
         public static FormMain CreateForm(
             Services.Settings settings,
             Services.LuaServer luaServer,
-            Services.FormMgrSvc formMgr)
+            Services.FormMgrSvc formMgr
+        )
         {
             FormMain r = null;
             VgcApis.Misc.UI.Invoke(() =>
@@ -27,7 +28,8 @@ namespace Luna.Views.WinForms
         FormMain(
             Services.Settings settings,
             Services.LuaServer luaServer,
-            Services.FormMgrSvc formMgr)
+            Services.FormMgrSvc formMgr
+        )
         {
             this.settings = settings;
             this.luaServer = luaServer;
@@ -49,13 +51,14 @@ namespace Luna.Views.WinForms
                 btnKillAllScript,
                 btnDeleteAllScripts,
                 btnImportFromFile,
-                btnExportToFile);
+                btnExportToFile
+            );
 
             genCtrl.Run(luaServer, formMgr);
 
             this.FormClosed += (s, a) =>
             {
-                // reverse order 
+                // reverse order
                 genCtrl.Cleanup();
             };
         }
@@ -79,12 +82,11 @@ namespace Luna.Views.WinForms
         {
             this.Close();
         }
+
         private void btnOpenEditor_Click(object sender, System.EventArgs e)
         {
             formMgr.CreateNewEditor();
         }
         #endregion
-
-
     }
 }

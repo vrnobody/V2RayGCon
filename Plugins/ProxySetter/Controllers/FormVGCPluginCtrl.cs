@@ -40,6 +40,5 @@
                 component.Cleanup();
             }
         }
-
     }
 }

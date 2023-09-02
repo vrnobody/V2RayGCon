@@ -6,8 +6,7 @@ using System.Linq;
 
 namespace Luna.Libs.LuaSnippet
 {
-    internal sealed class BestMatchSnippets :
-        IEnumerable<AutocompleteItem>
+    internal sealed class BestMatchSnippets : IEnumerable<AutocompleteItem>
     {
         private Scintilla editor;
         string searchPattern = VgcApis.Models.Consts.Patterns.LuaSnippetSearchPattern;
@@ -24,12 +23,12 @@ namespace Luna.Libs.LuaSnippet
 
         public BestMatchSnippets(
             Scintilla editor,
-
             List<ApiFunctionSnippets> apiFunctions,
             List<LuaFuncSnippets> luaFunctions,
             List<LuaKeywordSnippets> luaKeywords,
             List<LuaSubFuncSnippets> luaSubFunctions,
-            List<LuaImportClrSnippets> luaImportClrs)
+            List<LuaImportClrSnippets> luaImportClrs
+        )
         {
             this.editor = editor;
 
@@ -81,9 +80,9 @@ namespace Luna.Libs.LuaSnippet
         #endregion
 
         #region private methods
-        HashSet<string> ignoredList =
-            new HashSet<string>(
-                Models.Consts.Lua.NLuaKeyWords.Split(' '));
+        HashSet<string> ignoredList = new HashSet<string>(
+            Models.Consts.Lua.NLuaKeyWords.Split(' ')
+        );
 
         private IEnumerable<AutocompleteItem> BuildList()
         {
@@ -113,9 +112,7 @@ namespace Luna.Libs.LuaSnippet
             List<MatchItemBase> candidates;
             lock (this.customScriptSnippets)
             {
-                candidates = customScriptSnippets
-                   .Concat(GenCandidateList(fragment))
-                   .ToList();
+                candidates = customScriptSnippets.Concat(GenCandidateList(fragment)).ToList();
             }
 
             var table = new Dictionary<MatchItemBase, long>();
@@ -170,8 +167,7 @@ namespace Luna.Libs.LuaSnippet
         #endregion
 
         #region IEnumerable thinggy
-        public IEnumerator<AutocompleteItem> GetEnumerator() =>
-            BuildList().GetEnumerator();
+        public IEnumerator<AutocompleteItem> GetEnumerator() => BuildList().GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         #endregion

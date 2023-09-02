@@ -1,6 +1,5 @@
 ﻿using Neo.IronLua;
 using NeoLuna.Resources.Langs;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,8 +7,7 @@ using System.Threading;
 
 namespace NeoLuna.Controllers
 {
-    internal class LuaCoreCtrl :
-        VgcApis.BaseClasses.Disposable
+    internal class LuaCoreCtrl : VgcApis.BaseClasses.Disposable
     {
         public EventHandler OnStateChange;
 
@@ -30,9 +28,7 @@ namespace NeoLuna.Controllers
             this.enableTracebackFeature = enableTracebackFeature;
         }
 
-        public void Run(
-            Models.Apis.LuaApis luaApis,
-            Models.Data.LuaCoreSetting luaCoreState)
+        public void Run(Models.Apis.LuaApis luaApis, Models.Data.LuaCoreSetting luaCoreState)
         {
             this.settings = luaApis.formMgr.settings;
             this.coreSetting = luaCoreState;
@@ -42,7 +38,7 @@ namespace NeoLuna.Controllers
             isRunning = false;
         }
 
-        #region properties 
+        #region properties
         public string name
         {
             get => coreSetting.name;
@@ -167,8 +163,7 @@ namespace NeoLuna.Controllers
         #endregion
 
         #region public methods
-        public Models.Data.LuaCoreSetting GetCoreSettings() =>
-            coreSetting;
+        public Models.Data.LuaCoreSetting GetCoreSettings() => coreSetting;
 
         public string GetResult() => result;
 
@@ -254,6 +249,7 @@ namespace NeoLuna.Controllers
         }
 
         List<Type> assemblies = null;
+
         List<Type> GetAllAssemblies()
         {
             if (assemblies == null)
@@ -291,8 +287,11 @@ namespace NeoLuna.Controllers
                         new LuaCompileOptions()
                         {
                             ClrEnabled = isLoadClr,
-                            DebugEngine = enableTracebackFeature ? LuaStackTraceDebugger.Default : null,
-                        });
+                            DebugEngine = enableTracebackFeature
+                                ? LuaStackTraceDebugger.Default
+                                : null,
+                        }
+                    );
 
                     var results = g.DoChunk(chunk);
                     if (results != null && results.Count > 0)
@@ -350,11 +349,11 @@ namespace NeoLuna.Controllers
             var g = state.CreateEnvironment<LuaGlobal>();
             g["std"] = new LuaTable()
             {
-                { "Signal", luaSignal},
-                { "Sys", luaSys},
-                { "Misc", luaApis.GetChild<Interfaces.ILuaMisc>()},
-                { "Server", luaApis.GetChild<Interfaces.ILuaServer>()},
-                { "Web", luaApis.GetChild<Interfaces.ILuaWeb>()},
+                { "Signal", luaSignal },
+                { "Sys", luaSys },
+                { "Misc", luaApis.GetChild<Interfaces.ILuaMisc>() },
+                { "Server", luaApis.GetChild<Interfaces.ILuaServer>() },
+                { "Web", luaApis.GetChild<Interfaces.ILuaWeb>() },
             };
             Misc.Patches.FixTableStringMath(g);
             return g;

@@ -9,9 +9,7 @@ namespace ProxySetter.Libs.Nets
     {
         public PacGenerator() { }
 
-        public void Run()
-        {
-        }
+        public void Run() { }
 
         #region public method
         /// <summary>
@@ -26,7 +24,8 @@ namespace ProxySetter.Libs.Nets
             bool isUseCustomPac,
             Model.Data.PacUrlParams urlParam,
             string[] customLists,
-            string customPacFileContent)
+            string customPacFileContent
+        )
         {
             // Don't addpend charset, IE will not work.
             // var mime = "application/x-ns-proxy-autoconfig; charset=UTF-8";
@@ -48,33 +47,29 @@ namespace ProxySetter.Libs.Nets
         public static string[] GenDefaultPacCacahe(
             List<string> domainList,
             List<long[]> cidrList,
-            string customUrlList)
+            string customUrlList
+        )
         {
             // generate if not in cache
             MergeCustomPacSetting(ref domainList, ref cidrList, customUrlList);
             var cidrSimList = Misc.Utils.CompactCidrList(ref cidrList);
             StringBuilder domainSB = ConvertDomainListIntoJsDict(domainList);
             StringBuilder cidrSB = ConvertCidrListIntoJsRangeArray(cidrSimList);
-            return new string[] {
-                domainSB.ToString(),
-                cidrSB.ToString(),
-            };
+            return new string[] { domainSB.ToString(), cidrSB.ToString(), };
         }
 
         public static void ClearCache()
         {
-            defaultPacCache = new Dictionary<bool, string[]> {
-                { true,null },
-                { false,null },
-            };
+            defaultPacCache = new Dictionary<bool, string[]> { { true, null }, { false, null }, };
         }
         #endregion
 
         #region properties
-        static Dictionary<bool, string[]> defaultPacCache = new Dictionary<bool, string[]> {
-                { true,null },
-                { false,null },
-            };
+        static Dictionary<bool, string[]> defaultPacCache = new Dictionary<bool, string[]>
+        {
+            { true, null },
+            { false, null },
+        };
         #endregion
 
         #region private method
@@ -83,9 +78,7 @@ namespace ProxySetter.Libs.Nets
             var domainSB = new StringBuilder();
             foreach (var url in domainList)
             {
-                domainSB.Append("'")
-                    .Append(url)
-                    .Append("':1,");
+                domainSB.Append("'").Append(url).Append("':1,");
             }
             if (domainList.Count > 0)
             {
@@ -100,11 +93,7 @@ namespace ProxySetter.Libs.Nets
             var cidrSB = new StringBuilder();
             foreach (var cidr in cidrSimList)
             {
-                cidrSB.Append("[")
-                    .Append(cidr[0])
-                    .Append(",")
-                    .Append(cidr[1])
-                    .Append("],");
+                cidrSB.Append("[").Append(cidr[0]).Append(",").Append(cidr[1]).Append("],");
             }
             if (cidrSimList.Count > 0)
             {
@@ -117,12 +106,10 @@ namespace ProxySetter.Libs.Nets
         StringBuilder GenCustomPacFile(
             Model.Data.PacUrlParams urlParam,
             string[] customLists,
-            string customPacFileContent)
+            string customPacFileContent
+        )
         {
-            var header = new Model.Data.CustomPacHeader(
-                urlParam,
-                customLists[0],
-                customLists[1]);
+            var header = new Model.Data.CustomPacHeader(urlParam, customLists[0], customLists[1]);
 
             return new StringBuilder("var customSettings = ")
                 .Append(VgcApis.Misc.Utils.SerializeObject(header))
@@ -132,7 +119,8 @@ namespace ProxySetter.Libs.Nets
 
         static StringBuilder GenDefaultPacFile(
             Model.Data.PacUrlParams urlParam,
-            string[] customLists)
+            string[] customLists
+        )
         {
             // dns leaks
             // var proxy = urlParam.isSocks ? "SOCKS5 {0}:{1}; SOCKS {0}:{1}; DIRECT" : "PROXY {0}:{1}; DIRECT";
@@ -144,11 +132,11 @@ namespace ProxySetter.Libs.Nets
             // update cache
             if (defaultPacCache[isWhiteList] == null)
             {
-                defaultPacCache[isWhiteList] =
-                     GenDefaultPacCacahe(
-                         Misc.Utils.GetPacDomainList(isWhiteList),
-                         Misc.Utils.GetPacCidrList(isWhiteList),
-                         customLists[isWhiteList ? 0 : 1]);
+                defaultPacCache[isWhiteList] = GenDefaultPacCacahe(
+                    Misc.Utils.GetPacDomainList(isWhiteList),
+                    Misc.Utils.GetPacCidrList(isWhiteList),
+                    customLists[isWhiteList ? 0 : 1]
+                );
             }
 
             var domainAndCidrs = defaultPacCache[isWhiteList];
@@ -163,11 +151,13 @@ namespace ProxySetter.Libs.Nets
         static void MergeCustomPacSetting(
             ref List<string> domainList,
             ref List<long[]> cidrList,
-            string customList)
+            string customList
+        )
         {
             var list = customList.Split(
                 new char[] { '\n', '\r' },
-                StringSplitOptions.RemoveEmptyEntries);
+                StringSplitOptions.RemoveEmptyEntries
+            );
 
             var isRemove = false;
             foreach (var line in list)
@@ -226,7 +216,8 @@ namespace ProxySetter.Libs.Nets
             ref List<string> domainList,
             ref List<long[]> cidrList,
             string item,
-            bool isRemove)
+            bool isRemove
+        )
         {
             if (Misc.Utils.IsIP(item))
             {

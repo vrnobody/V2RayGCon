@@ -3,9 +3,7 @@ using System;
 
 namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
 {
-    internal sealed class Vmess0a :
-        VgcApis.BaseClasses.ComponentOf<VeeDecoder>,
-        IVeeDecoder
+    internal sealed class Vmess0a : VgcApis.BaseClasses.ComponentOf<VeeDecoder>, IVeeDecoder
     {
         Cache cache;
 
@@ -35,6 +33,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
 
         #region public methods
         public string GetSupportedVeeVersion() => Models.VeeShareLinks.Obsolete.Vmess0a.version;
+
         public string GetSupportedEncodeProtocol() => @"";
 
         public byte[] Config2Bytes(JObject config)
@@ -54,7 +53,13 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
         #region private methods
         Models.VeeShareLinks.Obsolete.Vmess0a Config2Vee(JObject config)
         {
-            var bs = Comm.ExtractBasicConfig(config, @"vmess", @"vnext", out bool isUseV4, out string root);
+            var bs = Comm.ExtractBasicConfig(
+                config,
+                @"vmess",
+                @"vnext",
+                out bool isUseV4,
+                out string root
+            );
 
             if (bs == null)
             {
@@ -69,7 +74,6 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
             vmess.uuid = Guid.Parse(GetStr(userInfoPrefix, "id"));
             return vmess;
         }
-
 
         Tuple<JObject, JToken> VeeToConfig(Models.VeeShareLinks.Obsolete.Vmess0a vee)
         {

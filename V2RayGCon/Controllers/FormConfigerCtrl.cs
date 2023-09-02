@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
@@ -14,7 +13,8 @@ namespace V2RayGCon.Controllers
         Services.Servers servers;
 
         public JObject config;
-        string uid, orgCfg;
+        string uid,
+            orgCfg;
         ConfigerComponet.Editor editor;
 
         public FormConfigerCtrl()
@@ -96,8 +96,7 @@ namespace V2RayGCon.Controllers
         {
             foreach (var component in this.GetAllComponents())
             {
-                (component.Value as ConfigerComponet.ConfigerComponentController)
-                    .Update(config);
+                (component.Value as ConfigerComponet.ConfigerComponentController).Update(config);
             }
         }
 
@@ -109,7 +108,8 @@ namespace V2RayGCon.Controllers
             var r = VgcApis.Misc.UI.ShowSaveFileDialog(
                 VgcApis.Models.Consts.Files.JsonExt,
                 cfg,
-                out string filename);
+                out string filename
+            );
 
             switch (r)
             {
@@ -177,23 +177,23 @@ namespace V2RayGCon.Controllers
                 MessageBox.Show(I18N.DuplicateServer);
             }
 
-            var uid = servers.GetAllServersOrderByIndex()
-                    ?.FirstOrDefault(s =>
+            var uid = servers
+                .GetAllServersOrderByIndex()
+                ?.FirstOrDefault(s =>
+                {
+                    try
                     {
-                        try
-                        {
-                            var o = ParseConfigString(s.GetConfiger()?.GetConfig());
-                            return JObject.DeepEquals(config, o);
-                        }
-                        catch { }
-                        return false;
-                    })
-                    ?.GetCoreStates()
-                    ?.GetUid();
+                        var o = ParseConfigString(s.GetConfiger()?.GetConfig());
+                        return JObject.DeepEquals(config, o);
+                    }
+                    catch { }
+                    return false;
+                })
+                ?.GetCoreStates()
+                ?.GetUid();
 
             LoadConfigByUid(uid);
         }
-
 
         public string FormatWithIndent()
         {
@@ -227,9 +227,7 @@ namespace V2RayGCon.Controllers
         }
 
         string GetConfigByUid(string uid) =>
-           servers.GetServerByUid(uid)
-               ?.GetConfiger()
-               ?.GetConfig();
+            servers.GetServerByUid(uid)?.GetConfiger()?.GetConfig();
 
         void CacheOriginalConfig(string cfg)
         {

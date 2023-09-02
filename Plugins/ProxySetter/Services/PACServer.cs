@@ -37,10 +37,7 @@ namespace ProxySetter.Services
         bool _isRunning = false;
         public bool isRunning
         {
-            get
-            {
-                return _isRunning;
-            }
+            get { return _isRunning; }
             private set
             {
                 if (_isRunning == value)
@@ -112,7 +109,8 @@ namespace ProxySetter.Services
                 bs.isUseCustomPac,
                 reqParams,
                 setting.GetCustomPacSetting(),
-                customPacFileCache);
+                customPacFileCache
+            );
 
             return pacResp.Item1;
         }
@@ -167,7 +165,6 @@ namespace ProxySetter.Services
         #region private method
         void StartFileWatcher(string relativeFileName)
         {
-
             if (!File.Exists(relativeFileName))
             {
                 return;
@@ -189,13 +186,15 @@ namespace ProxySetter.Services
         }
 
         Libs.Sys.CancelableTimeout lazyCustomPacFileCacheUpdateTimer = null;
+
         void LazyCustomPacFileCacheUpdate()
         {
             if (lazyCustomPacFileCacheUpdateTimer == null)
             {
-                lazyCustomPacFileCacheUpdateTimer =
-                    new Libs.Sys.CancelableTimeout(
-                        UpdateCustomPacCache, 2000);
+                lazyCustomPacFileCacheUpdateTimer = new Libs.Sys.CancelableTimeout(
+                    UpdateCustomPacCache,
+                    2000
+                );
             }
 
             lazyCustomPacFileCacheUpdateTimer.Start();
@@ -221,14 +220,9 @@ namespace ProxySetter.Services
             setting.SendLog(I18N.SystemProxySettingUpdated);
         }
 
-
         bool StartListining(string prefix)
         {
-            webListener = new HttpListener
-            {
-                IgnoreWriteExceptions = true,
-                Prefixes = { prefix }
-            };
+            webListener = new HttpListener { IgnoreWriteExceptions = true, Prefixes = { prefix } };
 
             try
             {
@@ -240,9 +234,7 @@ namespace ProxySetter.Services
                 return false;
             }
 
-            webResponser =
-                new Libs.Sys.CancelableTask(
-                    WebResponseWorker);
+            webResponser = new Libs.Sys.CancelableTask(WebResponseWorker);
             webResponser.Start();
             return true;
         }
@@ -253,8 +245,7 @@ namespace ProxySetter.Services
             {
                 try
                 {
-                    WebRequestDispatcher(
-                        webListener.GetContext());
+                    WebRequestDispatcher(webListener.GetContext());
                 }
                 catch (System.Threading.ThreadAbortException)
                 {
@@ -297,6 +288,7 @@ namespace ProxySetter.Services
         }
 
         Libs.Sys.CancelableTimeout lazyStateChangeTimer = null;
+
         void LazyInvokeOnPacServerStateChange()
         {
             // Create on demand.
@@ -311,7 +303,8 @@ namespace ProxySetter.Services
                         }
                         catch { }
                     },
-                    1000);
+                    1000
+                );
             }
             lazyStateChangeTimer.Start();
         }
@@ -333,10 +326,11 @@ namespace ProxySetter.Services
             var reqParams = GenReqParamFromUrl(request.Url.AbsoluteUri, bs);
 
             var pacResp = pacGenerator.GenPacFileResponse(
-                    bs.isUseCustomPac,
-                    reqParams,
-                    setting.GetCustomPacSetting(),
-                    customPacFileCache);
+                bs.isUseCustomPac,
+                reqParams,
+                setting.GetCustomPacSetting(),
+                customPacFileCache
+            );
 
             var response = context.Response;
             if (!reqParams.isDebug)
@@ -348,14 +342,16 @@ namespace ProxySetter.Services
             var debugResp = GenPacDebuggerResponse(
                 (reqParams.isWhiteList ? "white" : "black"),
                 GenPrefix(bs.pacServPort),
-                pacResp.Item1);
+                pacResp.Item1
+            );
 
             Write(response, debugResp.Item1, debugResp.Item2);
         }
 
         private static Model.Data.PacUrlParams GenReqParamFromUrl(
             string reqUrl,
-            Model.Data.BasicSettings bs)
+            Model.Data.BasicSettings bs
+        )
         {
             // e.g. http://localhost:3000/pac/?&port=5678&ip=1.2.3.4&proto=socks&type=whitelist&key=rnd
             var queryParams = Misc.Utils.GetQureryParamsFrom(reqUrl);
@@ -366,9 +362,11 @@ namespace ProxySetter.Services
         }
 
         static Tuple<string, string> GenPacDebuggerResponse(
-            string mode, string url, string pacContent)
+            string mode,
+            string url,
+            string pacContent
+        )
         {
-
             var html = StrConst.PacDebuggerTpl
                 .Replace("__PacMode__", mode)
                 .Replace("__PacServerUrl__", url)

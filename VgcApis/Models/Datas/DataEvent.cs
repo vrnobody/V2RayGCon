@@ -5,6 +5,7 @@ namespace VgcApis.Models.Datas
     public class BoolEvent : EventArgs
     {
         public bool Data;
+
         public BoolEvent(bool data)
         {
             Data = data;
@@ -14,6 +15,7 @@ namespace VgcApis.Models.Datas
     public class StrEvent : EventArgs
     {
         public string Data;
+
         public StrEvent(string data)
         {
             Data = data;
@@ -23,6 +25,7 @@ namespace VgcApis.Models.Datas
     public class IntEvent : EventArgs
     {
         public int Data;
+
         public IntEvent(int data)
         {
             Data = data;

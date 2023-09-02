@@ -33,7 +33,6 @@ namespace VgcApis.BaseClasses
                         instance.Activate();
                     }
                 });
-
             }
             return instance;
         }

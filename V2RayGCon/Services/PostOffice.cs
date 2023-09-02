@@ -2,18 +2,20 @@
 
 namespace V2RayGCon.Services
 {
-    public class PostOffice :
-        BaseClasses.SingletonService<PostOffice>,
-        VgcApis.Interfaces.Services.IPostOffice
+    public class PostOffice
+        : BaseClasses.SingletonService<PostOffice>,
+            VgcApis.Interfaces.Services.IPostOffice
     {
+        static readonly ConcurrentDictionary<
+            string,
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox
+        > mailboxes =
+            new ConcurrentDictionary<string, VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>();
 
-        readonly static ConcurrentDictionary<string, VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox> mailboxes =
-              new ConcurrentDictionary<string, VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>();
+        static readonly PostOfficeComponents.SnapCache snapCache =
+            new PostOfficeComponents.SnapCache();
 
-        readonly static PostOfficeComponents.SnapCache snapCache = new PostOfficeComponents.SnapCache();
-
-        PostOffice()
-        { }
+        PostOffice() { }
 
         #region properties
 
@@ -55,16 +57,21 @@ namespace V2RayGCon.Services
             }
 
             var addr = mailbox.GetAddress();
-            if (string.IsNullOrEmpty(addr)
+            if (
+                string.IsNullOrEmpty(addr)
                 || !mailboxes.TryGetValue(addr, out var mb)
-                || !ReferenceEquals(mb, mailbox))
+                || !ReferenceEquals(mb, mailbox)
+            )
             {
                 return false;
             }
             return true;
         }
 
-        public VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox CreateMailBox(string address, int capacity)
+        public VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox CreateMailBox(
+            string address,
+            int capacity
+        )
         {
             if (string.IsNullOrEmpty(address) || capacity < 1)
             {

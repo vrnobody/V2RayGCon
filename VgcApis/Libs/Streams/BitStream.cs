@@ -3,8 +3,7 @@ using System.Text;
 
 namespace VgcApis.Libs.Streams
 {
-    public sealed class BitStream :
-        BaseClasses.Disposable
+    public sealed class BitStream : BaseClasses.Disposable
     {
         const int BitsPerInt = Models.Consts.BitStream.BitsPerInt;
         const int Crc8ByteIndex = Models.Consts.BitStream.Crc8ByteIndex;
@@ -17,13 +16,13 @@ namespace VgcApis.Libs.Streams
         RawBitStream.Uuids uuidsWriter;
         RawBitStream.Address addressWriter;
 
-        public BitStream(byte[] bytes) : this()
+        public BitStream(byte[] bytes)
+            : this()
         {
             var crc8 = Crc8.ComputeChecksum(bytes, Crc8ByteIndex + 1);
             if (bytes[Crc8ByteIndex] != crc8)
             {
-                throw new ArgumentException(
-                    @"Crc8 checksum not match!");
+                throw new ArgumentException(@"Crc8 checksum not match!");
             }
 
             rawBitStream.FromBytes(bytes);
@@ -44,20 +43,17 @@ namespace VgcApis.Libs.Streams
         #endregion
 
         #region static methods
-        public static string ReadVersion(byte[] bytes) =>
-            RawBitStream.Utils.ReadVersion(bytes);
+        public static string ReadVersion(byte[] bytes) => RawBitStream.Utils.ReadVersion(bytes);
         #endregion
 
         #region public methods
-        public void Rewind() =>
-            rawBitStream.Rewind();
+        public void Rewind() => rawBitStream.Rewind();
 
         public byte[] ToBytes(string version)
         {
             var bytes = rawBitStream.ToBytes();
             RawBitStream.Utils.WriteVersion(version, bytes);
-            bytes[Crc8ByteIndex] = Crc8.ComputeChecksum(
-                bytes, Crc8ByteIndex + 1);
+            bytes[Crc8ByteIndex] = Crc8.ComputeChecksum(bytes, Crc8ByteIndex + 1);
             return bytes;
         }
 
@@ -147,8 +143,7 @@ namespace VgcApis.Libs.Streams
                         bytesWriter.Write(cache);
                         break;
                     default:
-                        throw new NotSupportedException(
-                            $"Not supported type {typeof(T)}");
+                        throw new NotSupportedException($"Not supported type {typeof(T)}");
                 }
             }
         }
@@ -159,8 +154,7 @@ namespace VgcApis.Libs.Streams
         {
             if (len > BitsPerInt)
             {
-                throw new OverflowException(
-                    $"Int must less then {BitsPerInt} bit");
+                throw new OverflowException($"Int must less then {BitsPerInt} bit");
             }
         }
         #endregion

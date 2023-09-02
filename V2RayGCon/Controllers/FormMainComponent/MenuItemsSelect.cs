@@ -14,44 +14,56 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem selectAllCurPage,
             ToolStripMenuItem invertSelectionCurPage,
             ToolStripMenuItem selectNoneCurPage,
-
             ToolStripMenuItem selectAllAllPages,
             ToolStripMenuItem invertSelectionAllPages,
             ToolStripMenuItem selectNoneAllPages,
-
             ToolStripMenuItem selectAutorunAllPages,
             ToolStripMenuItem selectNoMarkAllPages,
             ToolStripMenuItem selectNoSpeedTestAllPages,
             ToolStripMenuItem selectRunningAllPages,
             ToolStripMenuItem selectTimeoutAllPages,
             ToolStripMenuItem selectUntrackAllPages,
-
             ToolStripMenuItem selectAllAllServers,
             ToolStripMenuItem invertSelectionAllServers,
             ToolStripMenuItem selectNoneAllServers,
-
             ToolStripMenuItem selectAutorunAllServers,
             ToolStripMenuItem selectNoMarkAllServers,
             ToolStripMenuItem selectNoSpeedTestAllServers,
             ToolStripMenuItem selectRunningAllServers,
             ToolStripMenuItem selectTimeoutAllServers,
-            ToolStripMenuItem selectUntrackAllServers)
-
-
+            ToolStripMenuItem selectUntrackAllServers
+        )
         {
             servers = Services.Servers.Instance;
 
-            InitAllPagesSelectors(selectNoneAllPages, invertSelectionAllPages, selectAllAllPages, selectAutorunAllPages, selectRunningAllPages, selectTimeoutAllPages, selectNoSpeedTestAllPages, selectNoMarkAllPages, selectUntrackAllPages);
-            InitAllServersSelector(selectNoneAllServers, invertSelectionAllServers, selectAllAllServers, selectAutorunAllServers, selectRunningAllServers, selectTimeoutAllServers, selectNoSpeedTestAllServers, selectNoMarkAllServers, selectUntrackAllServers);
+            InitAllPagesSelectors(
+                selectNoneAllPages,
+                invertSelectionAllPages,
+                selectAllAllPages,
+                selectAutorunAllPages,
+                selectRunningAllPages,
+                selectTimeoutAllPages,
+                selectNoSpeedTestAllPages,
+                selectNoMarkAllPages,
+                selectUntrackAllPages
+            );
+            InitAllServersSelector(
+                selectNoneAllServers,
+                invertSelectionAllServers,
+                selectAllAllServers,
+                selectAutorunAllServers,
+                selectRunningAllServers,
+                selectTimeoutAllServers,
+                selectNoSpeedTestAllServers,
+                selectNoMarkAllServers,
+                selectUntrackAllServers
+            );
             InitCurPageSelectors(selectAllCurPage, selectNoneCurPage, invertSelectionCurPage);
         }
 
-
         #region public method
 
-        public override void Cleanup()
-        {
-        }
+        public override void Cleanup() { }
         #endregion
 
         #region private method
@@ -64,37 +76,35 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem selectTimeoutAllPages,
             ToolStripMenuItem selectNoSpeedTestAllPages,
             ToolStripMenuItem selectNoMarkAllPages,
-            ToolStripMenuItem selectUntrackAllPages)
+            ToolStripMenuItem selectUntrackAllPages
+        )
         {
-            selectAllAllPages.Click +=
-                            (s, a) => SelectAllPagesWhere(el => true);
+            selectAllAllPages.Click += (s, a) => SelectAllPagesWhere(el => true);
 
-            selectNoneAllPages.Click +=
-                (s, a) => SelectAllPagesWhere(el => false);
+            selectNoneAllPages.Click += (s, a) => SelectAllPagesWhere(el => false);
 
-            invertSelectionAllPages.Click +=
-                (s, a) => SelectAllPagesWhere(el => !el.GetCoreStates().IsSelected());
+            invertSelectionAllPages.Click += (s, a) =>
+                SelectAllPagesWhere(el => !el.GetCoreStates().IsSelected());
 
-            selectAutorunAllPages.Click +=
-                (s, a) => SelectAllPagesWhere(el => el.GetCoreStates().IsAutoRun());
+            selectAutorunAllPages.Click += (s, a) =>
+                SelectAllPagesWhere(el => el.GetCoreStates().IsAutoRun());
 
-            selectRunningAllPages.Click +=
-                 (s, a) => SelectAllPagesWhere(el => el.GetCoreCtrl().IsCoreRunning());
+            selectRunningAllPages.Click += (s, a) =>
+                SelectAllPagesWhere(el => el.GetCoreCtrl().IsCoreRunning());
 
-            selectTimeoutAllPages.Click +=
-                (s, a) => SelectAllPagesWhere(
-                    el => el.GetCoreStates().GetSpeedTestResult() == SpeedtestTimeout);
+            selectTimeoutAllPages.Click += (s, a) =>
+                SelectAllPagesWhere(
+                    el => el.GetCoreStates().GetSpeedTestResult() == SpeedtestTimeout
+                );
 
-            selectNoSpeedTestAllPages.Click +=
-                (s, a) => SelectAllPagesWhere(el => el.GetCoreStates().GetSpeedTestResult() <= 0);
+            selectNoSpeedTestAllPages.Click += (s, a) =>
+                SelectAllPagesWhere(el => el.GetCoreStates().GetSpeedTestResult() <= 0);
 
-            selectNoMarkAllPages.Click +=
-                (s, a) => SelectAllPagesWhere(
-                    el => string.IsNullOrEmpty(el.GetCoreStates().GetMark()));
+            selectNoMarkAllPages.Click += (s, a) =>
+                SelectAllPagesWhere(el => string.IsNullOrEmpty(el.GetCoreStates().GetMark()));
 
-            selectUntrackAllPages.Click +=
-                (s, a) => SelectAllPagesWhere(el => el.GetCoreStates().IsUntrack());
-
+            selectUntrackAllPages.Click += (s, a) =>
+                SelectAllPagesWhere(el => el.GetCoreStates().IsUntrack());
         }
 
         private void InitAllServersSelector(
@@ -106,80 +116,78 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem selectTimeoutAllServers,
             ToolStripMenuItem selectNoSpeedTestAllServers,
             ToolStripMenuItem selectNoMarkAllServers,
-            ToolStripMenuItem selectUntrackAllServers)
+            ToolStripMenuItem selectUntrackAllServers
+        )
         {
-            selectAllAllServers.Click +=
-                (s, a) => SelectAllServersWhere(el => true);
+            selectAllAllServers.Click += (s, a) => SelectAllServersWhere(el => true);
 
-            invertSelectionAllServers.Click +=
-                (s, a) => SelectAllServersWhere(el => !el.GetCoreStates().IsSelected());
+            invertSelectionAllServers.Click += (s, a) =>
+                SelectAllServersWhere(el => !el.GetCoreStates().IsSelected());
 
-            selectNoneAllServers.Click +=
-                (s, a) => SelectAllServersWhere(el => false);
+            selectNoneAllServers.Click += (s, a) => SelectAllServersWhere(el => false);
 
-            selectNoMarkAllServers.Click +=
-                (s, a) => SelectAllServersWhere(
-                    el => string.IsNullOrEmpty(el.GetCoreStates().GetMark()));
+            selectNoMarkAllServers.Click += (s, a) =>
+                SelectAllServersWhere(el => string.IsNullOrEmpty(el.GetCoreStates().GetMark()));
 
-            selectNoSpeedTestAllServers.Click +=
-                (s, a) => SelectAllServersWhere(el => el.GetCoreStates().GetSpeedTestResult() <= 0);
+            selectNoSpeedTestAllServers.Click += (s, a) =>
+                SelectAllServersWhere(el => el.GetCoreStates().GetSpeedTestResult() <= 0);
 
-            selectTimeoutAllServers.Click +=
-                (s, a) => SelectAllServersWhere(el => el.GetCoreStates().GetSpeedTestResult() == SpeedtestTimeout);
+            selectTimeoutAllServers.Click += (s, a) =>
+                SelectAllServersWhere(
+                    el => el.GetCoreStates().GetSpeedTestResult() == SpeedtestTimeout
+                );
 
-            selectRunningAllServers.Click +=
-                (s, a) => SelectAllServersWhere(el => el.GetCoreCtrl().IsCoreRunning());
+            selectRunningAllServers.Click += (s, a) =>
+                SelectAllServersWhere(el => el.GetCoreCtrl().IsCoreRunning());
 
-            selectAutorunAllServers.Click +=
-                (s, a) => SelectAllServersWhere(el => el.GetCoreStates().IsAutoRun());
+            selectAutorunAllServers.Click += (s, a) =>
+                SelectAllServersWhere(el => el.GetCoreStates().IsAutoRun());
 
-            selectUntrackAllServers.Click +=
-                (s, a) => SelectAllServersWhere(el => el.GetCoreStates().IsUntrack());
+            selectUntrackAllServers.Click += (s, a) =>
+                SelectAllServersWhere(el => el.GetCoreStates().IsUntrack());
         }
 
-        private void InitCurPageSelectors(ToolStripMenuItem selectAllCurPage, ToolStripMenuItem selectNoneCurPage, ToolStripMenuItem invertSelectionCurPage)
+        private void InitCurPageSelectors(
+            ToolStripMenuItem selectAllCurPage,
+            ToolStripMenuItem selectNoneCurPage,
+            ToolStripMenuItem invertSelectionCurPage
+        )
         {
-            selectAllCurPage.Click +=
-                (s, a) => SelectCurPageWhere(el => true);
+            selectAllCurPage.Click += (s, a) => SelectCurPageWhere(el => true);
 
-            selectNoneCurPage.Click +=
-                (s, a) => SelectCurPageWhere(el => false);
+            selectNoneCurPage.Click += (s, a) => SelectCurPageWhere(el => false);
 
-            invertSelectionCurPage.Click +=
-                (s, a) => SelectCurPageWhere(el => !el.isSelected);
+            invertSelectionCurPage.Click += (s, a) => SelectCurPageWhere(el => !el.isSelected);
         }
 
         void SelectCurPageWhere(Func<Views.UserControls.ServerUI, bool> condiction)
         {
-            GetFlyPanel().LoopThroughAllServerUI(s =>
-            {
-                s.SetSelected(condiction(s));
-            });
+            GetFlyPanel()
+                .LoopThroughAllServerUI(s =>
+                {
+                    s.SetSelected(condiction(s));
+                });
         }
 
-        void SelectAllPagesWhere(
-            Func<VgcApis.Interfaces.ICoreServCtrl, bool>
-            condiction)
+        void SelectAllPagesWhere(Func<VgcApis.Interfaces.ICoreServCtrl, bool> condiction)
         {
-            GetFlyPanel().GetFilteredList()
+            GetFlyPanel()
+                .GetFilteredList()
                 .AsParallel()
                 .ForAll(s => s.GetCoreStates().SetIsSelected(condiction(s)));
         }
 
-
-        void SelectAllServersWhere(
-            Func<VgcApis.Interfaces.ICoreServCtrl, bool>
-            condiction)
+        void SelectAllServersWhere(Func<VgcApis.Interfaces.ICoreServCtrl, bool> condiction)
         {
-            servers.GetAllServersOrderByIndex()
+            servers
+                .GetAllServersOrderByIndex()
                 .AsParallel()
                 .ForAll(s => s.GetCoreStates().SetIsSelected(condiction(s)));
         }
 
         Controllers.FormMainComponent.FlyServer GetFlyPanel()
         {
-            return this.GetContainer()
-                .GetComponent<Controllers.FormMainComponent.FlyServer>();
+            return this.GetContainer().GetComponent<Controllers.FormMainComponent.FlyServer>();
         }
         #endregion
     }

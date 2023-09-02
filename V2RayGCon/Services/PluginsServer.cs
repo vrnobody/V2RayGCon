@@ -20,21 +20,19 @@ namespace V2RayGCon.Services
         readonly object pluginsLocker = new object();
 
         Dictionary<string, VgcApis.Interfaces.IPlugin> pluginList =
-             new Dictionary<string, VgcApis.Interfaces.IPlugin>();
+            new Dictionary<string, VgcApis.Interfaces.IPlugin>();
 
         List<string> internalPluginNames = new List<string>();
 
-        PluginsServer()
-        {
-
-        }
+        PluginsServer() { }
 
         public void Run(
             Settings setting,
             Servers servers,
             ConfigMgr configMgr,
             ShareLinkMgr slinkMgr,
-            Notifier notifier)
+            Notifier notifier
+        )
         {
             this.setting = setting;
             this.notifier = notifier;
@@ -91,9 +89,9 @@ namespace V2RayGCon.Services
 
         public void RefreshPluginList()
         {
-            var extPlugins = setting.isLoad3rdPartyPlugins ?
-                LoadAllPluginFromDir() :
-                new List<VgcApis.Interfaces.IPlugin>();
+            var extPlugins = setting.isLoad3rdPartyPlugins
+                ? LoadAllPluginFromDir()
+                : new List<VgcApis.Interfaces.IPlugin>();
 
             var extNames = extPlugins.Select(p => p.Name).ToList();
             var curNames = pluginList.Keys.Where(k => !internalPluginNames.Contains(k)).ToList();
@@ -120,9 +118,7 @@ namespace V2RayGCon.Services
         {
             var names = curNames.Where(n => !extNames.Contains(n)).ToList();
 
-            var ps = pluginList.Where(kv => names.Contains(kv.Key))
-                .Select(kv => kv.Value)
-                .ToList();
+            var ps = pluginList.Where(kv => names.Contains(kv.Key)).Select(kv => kv.Value).ToList();
 
             lock (pluginsLocker)
             {
@@ -209,7 +205,9 @@ namespace V2RayGCon.Services
             var r = new List<VgcApis.Interfaces.IPlugin>();
             try
             {
-                foreach (string file in Directory.GetFiles(dir, @"*.dll", SearchOption.AllDirectories))
+                foreach (
+                    string file in Directory.GetFiles(dir, @"*.dll", SearchOption.AllDirectories)
+                )
                 {
                     var p = LoadPluginFromFile(file);
                     if (p != null)
@@ -224,7 +222,8 @@ namespace V2RayGCon.Services
 
         void LoadAllPlugins()
         {
-            var ps = new List<VgcApis.Interfaces.IPlugin>() {
+            var ps = new List<VgcApis.Interfaces.IPlugin>()
+            {
                 new NeoLuna.NeoLuna(),
                 new Pacman.Pacman(),
                 new ProxySetter.ProxySetter(),
@@ -234,7 +233,6 @@ namespace V2RayGCon.Services
 
             if (setting.isLoad3rdPartyPlugins)
             {
-
                 ps.AddRange(LoadAllPluginFromDir());
             }
 
@@ -255,14 +253,12 @@ namespace V2RayGCon.Services
         List<string> GetCurEnabledPluginFileNames()
         {
             var list = setting.GetPluginInfoItems();
-            return list
-                .Where(p => p.isUse)
-                .Select(p => p.filename)
-                .ToList();
+            return list.Where(p => p.isUse).Select(p => p.filename).ToList();
         }
 
         List<Models.Datas.PluginInfoItem> GetPluginInfoFrom(
-            Dictionary<string, VgcApis.Interfaces.IPlugin> pluginList)
+            Dictionary<string, VgcApis.Interfaces.IPlugin> pluginList
+        )
         {
             if (pluginList.Count <= 0)
             {

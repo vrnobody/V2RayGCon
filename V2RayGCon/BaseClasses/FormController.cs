@@ -18,7 +18,8 @@ namespace V2RayGCon.BaseClasses
             return this.components;
         }
 
-        public T GetComponent<T>() where T : class, IFormComponentController
+        public T GetComponent<T>()
+            where T : class, IFormComponentController
         {
             var type = typeof(T);
 
@@ -53,6 +54,5 @@ namespace V2RayGCon.BaseClasses
 
         #region private method
         #endregion
-
     }
 }

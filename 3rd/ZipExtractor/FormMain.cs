@@ -13,7 +13,6 @@ using ZipExtractor.Properties;
 
 namespace ZipExtractor
 {
-
     public partial class FormMain : Form
     {
         private const int MaxRetries = 2;
@@ -73,7 +72,11 @@ namespace ZipExtractor
 
             _logBuilder.AppendLine();
 
-            if (string.IsNullOrEmpty(zipPath) || string.IsNullOrEmpty(extractionPath) || string.IsNullOrEmpty(currentExe))
+            if (
+                string.IsNullOrEmpty(zipPath)
+                || string.IsNullOrEmpty(extractionPath)
+                || string.IsNullOrEmpty(currentExe)
+            )
             {
                 return;
             }
@@ -87,14 +90,24 @@ namespace ZipExtractor
 
             _backgroundWorker.DoWork += (_, eventArgs) =>
             {
-                foreach (Process process in Process.GetProcessesByName(Path.GetFileNameWithoutExtension(currentExe)))
+                foreach (
+                    Process process in Process.GetProcessesByName(
+                        Path.GetFileNameWithoutExtension(currentExe)
+                    )
+                )
                     try
                     {
-                        if (process.MainModule is { FileName: not null } && process.MainModule.FileName.Equals(currentExe))
+                        if (
+                            process.MainModule is { FileName: not null }
+                            && process.MainModule.FileName.Equals(currentExe)
+                        )
                         {
                             _logBuilder.AppendLine("Waiting for application process to exit...");
 
-                            _backgroundWorker.ReportProgress(0, "Waiting for application to exit...");
+                            _backgroundWorker.ReportProgress(
+                                0,
+                                "Waiting for application to exit..."
+                            );
                             process.WaitForExit();
                         }
                     }
@@ -109,7 +122,12 @@ namespace ZipExtractor
                 // is the directory separator char.
                 // Without this, a malicious zip file could try to traverse outside of the expected
                 // extraction path.
-                if (!extractionPath.EndsWith(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal))
+                if (
+                    !extractionPath.EndsWith(
+                        Path.DirectorySeparatorChar.ToString(),
+                        StringComparison.Ordinal
+                    )
+                )
                 {
                     extractionPath += Path.DirectorySeparatorChar;
                 }
@@ -124,26 +142,39 @@ namespace ZipExtractor
 
                     if (clearAppDirectory)
                     {
-                        _logBuilder.AppendLine($"Removing all files and folders from \"{extractionPath}\".");
+                        _logBuilder.AppendLine(
+                            $"Removing all files and folders from \"{extractionPath}\"."
+                        );
                         var directoryInfo = new DirectoryInfo(extractionPath);
 
                         foreach (FileInfo file in directoryInfo.GetFiles())
                         {
-                            _logBuilder.AppendLine($"Removing a file located at \"{file.FullName}\".");
-                            _backgroundWorker.ReportProgress(0, string.Format(Resources.Removing, file.FullName));
+                            _logBuilder.AppendLine(
+                                $"Removing a file located at \"{file.FullName}\"."
+                            );
+                            _backgroundWorker.ReportProgress(
+                                0,
+                                string.Format(Resources.Removing, file.FullName)
+                            );
                             file.Delete();
                         }
 
                         foreach (DirectoryInfo directory in directoryInfo.GetDirectories())
                         {
                             _logBuilder.AppendLine(
-                                $"Removing a directory located at \"{directory.FullName}\" and all its contents.");
-                            _backgroundWorker.ReportProgress(0, string.Format(Resources.Removing, directory.FullName));
+                                $"Removing a directory located at \"{directory.FullName}\" and all its contents."
+                            );
+                            _backgroundWorker.ReportProgress(
+                                0,
+                                string.Format(Resources.Removing, directory.FullName)
+                            );
                             directory.Delete(true);
                         }
                     }
 
-                    _logBuilder.AppendLine($"Found total of {entries.Count} files and folders inside the zip file.");
+                    _logBuilder.AppendLine(
+                        $"Found total of {entries.Count} files and folders inside the zip file."
+                    );
 
                     for (var index = 0; index < entries.Count; index++)
                     {
@@ -155,7 +186,10 @@ namespace ZipExtractor
 
                         ZipArchiveEntry entry = entries[index];
 
-                        string currentFile = string.Format(Resources.CurrentFileExtracting, entry.FullName);
+                        string currentFile = string.Format(
+                            Resources.CurrentFileExtracting,
+                            entry.FullName
+                        );
                         _backgroundWorker.ReportProgress(progress, currentFile);
                         var retries = 0;
                         var notCopied = true;
@@ -177,11 +211,19 @@ namespace ZipExtractor
                                     }
                                     else
                                     {
-                                        throw new ArgumentNullException($"parentDirectory is null for \"{filePath}\"!");
+                                        throw new ArgumentNullException(
+                                            $"parentDirectory is null for \"{filePath}\"!"
+                                        );
                                     }
 
-                                    using (Stream destination = File.Open(filePath, FileMode.OpenOrCreate, FileAccess.Write,
-                                               FileShare.None))
+                                    using (
+                                        Stream destination = File.Open(
+                                            filePath,
+                                            FileMode.OpenOrCreate,
+                                            FileAccess.Write,
+                                            FileShare.None
+                                        )
+                                    )
                                     {
                                         using Stream stream = entry.Open();
                                         stream.CopyTo(destination);
@@ -230,11 +272,17 @@ namespace ZipExtractor
 
                                 foreach (Process lockingProcess in lockingProcesses)
                                 {
-                                    DialogResult dialogResult = MessageBox.Show(this,
-                                        string.Format(Resources.FileStillInUseMessage,
-                                            lockingProcess.ProcessName, filePath),
+                                    DialogResult dialogResult = MessageBox.Show(
+                                        this,
+                                        string.Format(
+                                            Resources.FileStillInUseMessage,
+                                            lockingProcess.ProcessName,
+                                            filePath
+                                        ),
                                         Resources.FileStillInUseCaption,
-                                        MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                                        MessageBoxButtons.RetryCancel,
+                                        MessageBoxIcon.Error
+                                    );
                                     if (dialogResult == DialogResult.Cancel)
                                     {
                                         throw;
@@ -310,7 +358,11 @@ namespace ZipExtractor
                         }
                         else
                         {
-                            SystemUtility.ExecuteProcessUnElevated(executablePath, commandLineArgs, dir);
+                            SystemUtility.ExecuteProcessUnElevated(
+                                executablePath,
+                                commandLineArgs,
+                                dir
+                            );
                         }
 
                         _logBuilder.AppendLine("Successfully launched the updated application.");
@@ -328,8 +380,13 @@ namespace ZipExtractor
                     _logBuilder.AppendLine();
                     _logBuilder.AppendLine(exception.ToString());
 
-                    MessageBox.Show(this, exception.Message, exception.GetType().ToString(),
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        this,
+                        exception.Message,
+                        exception.GetType().ToString(),
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
                 }
                 finally
                 {
@@ -346,9 +403,10 @@ namespace ZipExtractor
             _backgroundWorker?.CancelAsync();
 
             _logBuilder.AppendLine();
-            File.AppendAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ZipExtractor.log"),
-                _logBuilder.ToString());
+            File.AppendAllText(
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ZipExtractor.log"),
+                _logBuilder.ToString()
+            );
         }
     }
-
 }

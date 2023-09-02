@@ -8,24 +8,37 @@
         public string config;
 
         // flags
-        public bool
-            isAutoRun,
+        public bool isAutoRun,
             isInjectImport,
             isSelected,
             isInjectSkipCNSite,
             isUntrack;
 
-        public string name, longName, shortName, summary, title, inbIp, customMark, uid, customRemark;
+        public string name,
+            longName,
+            shortName,
+            summary,
+            title,
+            inbIp,
+            customMark,
+            uid,
+            customRemark;
 
-        public int customInbType, inbPort;
+        public int customInbType,
+            inbPort;
 
         public double index;
 
-        public long lastModifiedUtcTicks, lastSpeedTestUtcTicks, speedTestResult;
+        public long lastModifiedUtcTicks,
+            lastSpeedTestUtcTicks,
+            speedTestResult;
 
-        public long totalUplinkInBytes, totalDownlinkInBytes;
+        public long totalUplinkInBytes,
+            totalDownlinkInBytes;
 
-        public string tag1, tag2, tag3;
+        public string tag1,
+            tag2,
+            tag3;
 
         public CoreInfo()
         {
@@ -56,7 +69,6 @@
             summary = string.Empty;
             config = string.Empty;
             uid = string.Empty;
-
 
             customInbType = (int)Enums.ProxyTypes.HTTP;
             inbIp = Consts.Webs.LoopBackIP;

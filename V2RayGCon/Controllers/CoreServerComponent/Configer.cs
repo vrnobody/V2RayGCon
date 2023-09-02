@@ -4,9 +4,9 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
 {
-    sealed public class Configer :
-        VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
-        VgcApis.Interfaces.CoreCtrlComponents.IConfiger
+    public sealed class Configer
+        : VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
+            VgcApis.Interfaces.CoreCtrlComponents.IConfiger
     {
         Services.Settings setting;
         Services.Cache cache;
@@ -21,7 +21,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             Services.Settings setting,
             Services.Cache cache,
             Services.ConfigMgr configMgr,
-            VgcApis.Models.Datas.CoreInfo coreInfo)
+            VgcApis.Models.Datas.CoreInfo coreInfo
+        )
         {
             this.configMgr = configMgr;
             this.setting = setting;
@@ -54,50 +55,58 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     case "shadowsocks":
                         url = slinkMgr.EncodeConfigToShareLink(
                             cs,
-                            VgcApis.Models.Datas.Enums.LinkTypes.ss);
+                            VgcApis.Models.Datas.Enums.LinkTypes.ss
+                        );
                         break;
                     case "vmess":
                         url = slinkMgr.EncodeConfigToShareLink(
                             cs,
-                            VgcApis.Models.Datas.Enums.LinkTypes.vmess);
+                            VgcApis.Models.Datas.Enums.LinkTypes.vmess
+                        );
                         break;
                     case "vless":
                         url = slinkMgr.EncodeConfigToShareLink(
                             cs,
-                            VgcApis.Models.Datas.Enums.LinkTypes.vless);
+                            VgcApis.Models.Datas.Enums.LinkTypes.vless
+                        );
                         break;
                     case "trojan":
                         url = slinkMgr.EncodeConfigToShareLink(
                             cs,
-                            VgcApis.Models.Datas.Enums.LinkTypes.trojan);
+                            VgcApis.Models.Datas.Enums.LinkTypes.trojan
+                        );
                         break;
                     default:
                         break;
                 }
-
             }
             catch { }
 
             return url;
         }
+
         public JObject GetFinalConfig()
         {
             JObject finalConfig = configMgr.DecodeConfig(
                 GetConfig(),
                 true,
                 false,
-                coreInfo.isInjectImport);
+                coreInfo.isInjectImport
+            );
 
             if (finalConfig == null)
             {
                 return null;
             }
 
-            if (!configMgr.ModifyInboundWithCustomSetting(
-                ref finalConfig,
-                coreInfo.customInbType,
-                coreInfo.inbIp,
-                coreInfo.inbPort))
+            if (
+                !configMgr.ModifyInboundWithCustomSetting(
+                    ref finalConfig,
+                    coreInfo.customInbType,
+                    coreInfo.inbIp,
+                    coreInfo.inbPort
+                )
+            )
             {
                 return null;
             }
@@ -126,8 +135,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             GetParent().InvokeEventOnPropertyChange();
         }
 
-        public bool IsSuitableToBeUsedAsSysProxy(
-          bool isGlobal, out bool isSocks, out int port)
+        public bool IsSuitableToBeUsedAsSysProxy(bool isGlobal, out bool isSocks, out int port)
         {
             isSocks = false;
             port = 0;
@@ -187,11 +195,15 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     next(string.Format("{0} {1}", servInfo, inInfo.Item1));
                     return;
                 }
-                next(string.Format("{0} {1}://{2}:{3}",
-                    servInfo,
-                    inInfo.Item1,
-                    inInfo.Item2,
-                    inInfo.Item3));
+                next(
+                    string.Format(
+                        "{0} {1}://{2}:{3}",
+                        servInfo,
+                        inInfo.Item1,
+                        inInfo.Item2,
+                        inInfo.Item3
+                    )
+                );
             });
         }
 
@@ -206,9 +218,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
 
             // 优先考虑兼容旧配置。
-            configMgr.InjectSkipCnSiteSettingsIntoConfig(
-                ref config,
-                false);
+            configMgr.InjectSkipCnSiteSettingsIntoConfig(ref config, false);
         }
 
         void InjectStatisticsConfigOnDemand(ref JObject config)
@@ -244,7 +254,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             var summary = Misc.Utils.GetSummaryFromConfig(config);
             coreInfo.summary = VgcApis.Misc.Utils.FilterControlChars(summary);
 
-            // update title & longname 
+            // update title & longname
             coreInfo.ClearCachedString();
             var cs = GetSibling<CoreStates>();
             cs.GetLongName();
@@ -279,7 +289,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 case "http":
                 case "socks":
                     var info = new Tuple<string, string, int>(
-                        protocol, coreInfo.inbIp, coreInfo.inbPort);
+                        protocol,
+                        coreInfo.inbIp,
+                        coreInfo.inbPort
+                    );
                     return info;
                 case "config":
                     return GetInboundInfoFromConfig(rawConfig);
@@ -309,12 +322,12 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         Tuple<string, string, int> GetInboundInfoFromConfig(string rawConfig)
         {
-
             var parsedConfig = configMgr.DecodeConfig(
                 rawConfig,
                 true,
                 false,
-                coreInfo.isInjectImport);
+                coreInfo.isInjectImport
+            );
 
             if (parsedConfig == null)
             {
@@ -338,7 +351,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             int port = Misc.Utils.GetValue<int>(parsedConfig, prefix, "port");
             return new Tuple<string, string, int>(protocol, ip, port);
         }
-
 
         #endregion
     }

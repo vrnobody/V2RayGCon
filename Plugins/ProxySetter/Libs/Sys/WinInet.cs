@@ -25,13 +25,14 @@ namespace ProxySetter.Libs.Sys
                 success = InternetQueryOption(
                     IntPtr.Zero,
                     InternetOption.INTERNET_OPTION_PER_CONNECTION_OPTION,
-                    _listPtr, ref newSize);
+                    _listPtr,
+                    ref newSize
+                );
 
                 if (success)
                 {
-                    InternetPerConnOptionList optList =
-                        (InternetPerConnOptionList)Marshal.PtrToStructure(
-                            _listPtr, typeof(InternetPerConnOptionList));
+                    InternetPerConnOptionList optList = (InternetPerConnOptionList)
+                        Marshal.PtrToStructure(_listPtr, typeof(InternetPerConnOptionList));
                     result = IntPtrToProxySettings(optList.options);
                 }
             }
@@ -44,8 +45,7 @@ namespace ProxySetter.Libs.Sys
             return result;
         }
 
-        public static bool SetProxySettings(
-            Model.Data.ProxySettings proxySettings)
+        public static bool SetProxySettings(Model.Data.ProxySettings proxySettings)
         {
             var options = GenProxyOption(proxySettings);
             var result = false;
@@ -56,7 +56,8 @@ namespace ProxySetter.Libs.Sys
                     IntPtr.Zero,
                     InternetOption.INTERNET_OPTION_PER_CONNECTION_OPTION,
                     listPtr,
-                    listSize);
+                    listSize
+                );
             }
 
             SystemProxyHandler(options, action);
@@ -66,7 +67,12 @@ namespace ProxySetter.Libs.Sys
 
         public static void ForceSysProxyRefresh()
         {
-            InternetSetOption(IntPtr.Zero, InternetOption.INTERNET_OPTION_SETTINGS_CHANGED, IntPtr.Zero, 0);
+            InternetSetOption(
+                IntPtr.Zero,
+                InternetOption.INTERNET_OPTION_SETTINGS_CHANGED,
+                IntPtr.Zero,
+                0
+            );
             InternetSetOption(IntPtr.Zero, InternetOption.INTERNET_OPTION_REFRESH, IntPtr.Zero, 0);
         }
         #endregion
@@ -81,20 +87,19 @@ namespace ProxySetter.Libs.Sys
             {
                 IntPtr opt = new IntPtr(ptr.ToInt64() + (i * optSize));
                 options.Add(
-                    (InternetConnectionOption)Marshal.PtrToStructure(
-                        opt, typeof(InternetConnectionOption)));
+                    (InternetConnectionOption)
+                        Marshal.PtrToStructure(opt, typeof(InternetConnectionOption))
+                );
             }
 
             var result = new Model.Data.ProxySettings
             {
                 proxyMode = options[QueryIndexProxyMode].m_Value.m_Int,
-
-                proxyAddr = Marshal.PtrToStringAuto(
-                    options[QueryIndexProxyServer].m_Value.m_StringPtr)
+                proxyAddr =
+                    Marshal.PtrToStringAuto(options[QueryIndexProxyServer].m_Value.m_StringPtr)
                     ?? string.Empty,
-
-                pacUrl = Marshal.PtrToStringAuto(
-                    options[QueryIndexPacUrl].m_Value.m_StringPtr)
+                pacUrl =
+                    Marshal.PtrToStringAuto(options[QueryIndexPacUrl].m_Value.m_StringPtr)
                     ?? string.Empty,
             };
             return result;
@@ -103,14 +108,15 @@ namespace ProxySetter.Libs.Sys
         static InternetConnectionOption[] GenQureyOption(bool isWin7OrNewer)
         {
             InternetConnectionOption[] options = new InternetConnectionOption[QueryOptionCount];
-            options[QueryIndexProxyMode].m_Option = isWin7OrNewer ? PerConnOption.INTERNET_PER_CONN_FLAGS_UI : PerConnOption.INTERNET_PER_CONN_FLAGS;
+            options[QueryIndexProxyMode].m_Option = isWin7OrNewer
+                ? PerConnOption.INTERNET_PER_CONN_FLAGS_UI
+                : PerConnOption.INTERNET_PER_CONN_FLAGS;
             options[QueryIndexProxyServer].m_Option = PerConnOption.INTERNET_PER_CONN_PROXY_SERVER;
             options[QueryIndexPacUrl].m_Option = PerConnOption.INTERNET_PER_CONN_AUTOCONFIG_URL;
             return options;
         }
 
-        static InternetConnectionOption[] GenProxyOption(
-            Model.Data.ProxySettings proxySettings)
+        static InternetConnectionOption[] GenProxyOption(Model.Data.ProxySettings proxySettings)
         {
             InternetConnectionOption[] options = new InternetConnectionOption[QueryOptionCount];
 
@@ -118,20 +124,23 @@ namespace ProxySetter.Libs.Sys
             options[QueryIndexProxyMode].m_Option = PerConnOption.INTERNET_PER_CONN_FLAGS;
             options[QueryIndexProxyMode].m_Value.m_Int = proxySettings.proxyMode;
 
-            options[QueryIndexProxyServer].m_Option =
-                PerConnOption.INTERNET_PER_CONN_PROXY_SERVER;
-            options[QueryIndexProxyServer].m_Value.m_StringPtr =
-                Marshal.StringToHGlobalAuto(proxySettings.proxyAddr ?? @"");
+            options[QueryIndexProxyServer].m_Option = PerConnOption.INTERNET_PER_CONN_PROXY_SERVER;
+            options[QueryIndexProxyServer].m_Value.m_StringPtr = Marshal.StringToHGlobalAuto(
+                proxySettings.proxyAddr ?? @""
+            );
 
-            options[QueryIndexPacUrl].m_Option =
-                PerConnOption.INTERNET_PER_CONN_AUTOCONFIG_URL;
-            options[QueryIndexPacUrl].m_Value.m_StringPtr =
-                Marshal.StringToHGlobalAuto(proxySettings.pacUrl ?? @"");
+            options[QueryIndexPacUrl].m_Option = PerConnOption.INTERNET_PER_CONN_AUTOCONFIG_URL;
+            options[QueryIndexPacUrl].m_Value.m_StringPtr = Marshal.StringToHGlobalAuto(
+                proxySettings.pacUrl ?? @""
+            );
 
             return options;
         }
 
-        internal static void SystemProxyHandler(InternetConnectionOption[] options, Action<IntPtr, int> action)
+        internal static void SystemProxyHandler(
+            InternetConnectionOption[] options,
+            Action<IntPtr, int> action
+        )
         {
             InternetPerConnOptionList list = new InternetPerConnOptionList();
 
@@ -170,10 +179,11 @@ namespace ProxySetter.Libs.Sys
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         public struct InternetPerConnOptionList
         {
-            public int dwSize;               // size of the INTERNET_PER_CONN_OPTION_LIST struct
-            public IntPtr szConnection;         // connection name to set/query options
-            public int dwOptionCount;        // number of options to set/query
-            public int dwOptionError;           // on error, which option failed
+            public int dwSize; // size of the INTERNET_PER_CONN_OPTION_LIST struct
+            public IntPtr szConnection; // connection name to set/query options
+            public int dwOptionCount; // number of options to set/query
+            public int dwOptionError; // on error, which option failed
+
             //[MarshalAs(UnmanagedType.)]
             public IntPtr options;
         };
@@ -184,6 +194,7 @@ namespace ProxySetter.Libs.Sys
             static readonly int Size;
             public PerConnOption m_Option;
             public InternetConnectionOptionValue m_Value;
+
             static InternetConnectionOption()
             {
                 InternetConnectionOption.Size = Marshal.SizeOf(typeof(InternetConnectionOption));
@@ -196,8 +207,10 @@ namespace ProxySetter.Libs.Sys
                 // Fields
                 [FieldOffset(0)]
                 public System.Runtime.InteropServices.ComTypes.FILETIME m_FileTime;
+
                 [FieldOffset(0)]
                 public int m_Int;
+
                 [FieldOffset(0)]
                 public IntPtr m_StringPtr;
             }
@@ -233,10 +246,10 @@ namespace ProxySetter.Libs.Sys
         //
         public enum PerConnOption
         {
-            INTERNET_PER_CONN_FLAGS = 1, // Sets or retrieves the connection type. The Value member will contain one or more of the values from PerConnFlags 
-            INTERNET_PER_CONN_PROXY_SERVER = 2, // Sets or retrieves a string containing the proxy servers.  
-            INTERNET_PER_CONN_PROXY_BYPASS = 3, // Sets or retrieves a string containing the URLs that do not use the proxy server.  
-            INTERNET_PER_CONN_AUTOCONFIG_URL = 4, // Sets or retrieves a string containing the URL to the automatic configuration script.  
+            INTERNET_PER_CONN_FLAGS = 1, // Sets or retrieves the connection type. The Value member will contain one or more of the values from PerConnFlags
+            INTERNET_PER_CONN_PROXY_SERVER = 2, // Sets or retrieves a string containing the proxy servers.
+            INTERNET_PER_CONN_PROXY_BYPASS = 3, // Sets or retrieves a string containing the URLs that do not use the proxy server.
+            INTERNET_PER_CONN_AUTOCONFIG_URL = 4, // Sets or retrieves a string containing the URL to the automatic configuration script.
             INTERNET_PER_CONN_AUTODISCOVERY_FLAGS = 5,
             INTERNET_PER_CONN_AUTOCONFIG_SECONDARY_URL = 6,
             INTERNET_PER_CONN_AUTOCONFIG_RELOAD_DELAY_MINS = 7,
@@ -251,21 +264,30 @@ namespace ProxySetter.Libs.Sys
         [Flags]
         public enum PerConnFlags
         {
-            PROXY_TYPE_DIRECT = 0x00000001,  // direct to net
-            PROXY_TYPE_PROXY = 0x00000002,  // via named proxy
-            PROXY_TYPE_AUTO_PROXY_URL = 0x00000004,  // autoproxy URL
-            PROXY_TYPE_AUTO_DETECT = 0x00000008   // use autoproxy detection
+            PROXY_TYPE_DIRECT = 0x00000001, // direct to net
+            PROXY_TYPE_PROXY = 0x00000002, // via named proxy
+            PROXY_TYPE_AUTO_PROXY_URL = 0x00000004, // autoproxy URL
+            PROXY_TYPE_AUTO_DETECT = 0x00000008 // use autoproxy detection
         }
         #endregion
 
         #region wininet.dll
         [DllImport("wininet.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        static extern bool InternetQueryOption(IntPtr hInternet, InternetOption dwOption, IntPtr lpBuffer, ref int lpdwBufferLength);
+        static extern bool InternetQueryOption(
+            IntPtr hInternet,
+            InternetOption dwOption,
+            IntPtr lpBuffer,
+            ref int lpdwBufferLength
+        );
 
         [DllImport("WinInet.dll", SetLastError = true, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool InternetSetOption(IntPtr hInternet, InternetOption dwOption, IntPtr lpBuffer, int dwBufferLength);
+        static extern bool InternetSetOption(
+            IntPtr hInternet,
+            InternetOption dwOption,
+            IntPtr lpBuffer,
+            int dwBufferLength
+        );
         #endregion
-
     }
 }

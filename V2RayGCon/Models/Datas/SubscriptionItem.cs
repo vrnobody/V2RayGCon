@@ -2,8 +2,10 @@
 {
     public class SubscriptionItem
     {
-        public bool isUse, isSetMark;
-        public string alias, url;
+        public bool isUse,
+            isSetMark;
+        public string alias,
+            url;
 
         public SubscriptionItem()
         {

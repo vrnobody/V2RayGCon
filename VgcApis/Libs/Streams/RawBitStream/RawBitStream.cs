@@ -2,8 +2,7 @@
 
 namespace VgcApis.Libs.Streams.RawBitStream
 {
-    public sealed class RawBitStream :
-        BaseClasses.ComponentOf<RawBitStream>
+    public sealed class RawBitStream : BaseClasses.ComponentOf<RawBitStream>
     {
         int readPos = 0;
         List<bool> bitStream = new List<bool>();
@@ -34,8 +33,7 @@ namespace VgcApis.Libs.Streams.RawBitStream
             bitStream = Utils.Bytes2BoolList(bytes);
         }
 
-        public byte[] ToBytes() =>
-            Utils.BoolList2Bytes(bitStream);
+        public byte[] ToBytes() => Utils.BoolList2Bytes(bitStream);
 
         public int Count() => bitStream.Count;
 
@@ -88,6 +86,5 @@ namespace VgcApis.Libs.Streams.RawBitStream
 
         #region private methods
         #endregion
-
     }
 }

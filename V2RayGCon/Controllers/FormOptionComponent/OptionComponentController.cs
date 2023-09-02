@@ -2,11 +2,10 @@
 
 namespace V2RayGCon.Controllers.OptionComponent
 {
-    public abstract class OptionComponentController :
-        IFormComponentController
+    public abstract class OptionComponentController : IFormComponentController
     {
-        readonly private FormComponentController auxComponentController
-            = new FormComponentController();
+        private readonly FormComponentController auxComponentController =
+            new FormComponentController();
 
         #region public method
         public void Bind(BaseClasses.FormController container)
@@ -14,10 +13,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             auxComponentController.Bind(container);
         }
 
-        public virtual void Cleanup()
-        {
-
-        }
+        public virtual void Cleanup() { }
         #endregion
 
         #region abstract method

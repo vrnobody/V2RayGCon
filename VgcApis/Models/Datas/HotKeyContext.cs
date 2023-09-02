@@ -11,17 +11,26 @@ namespace VgcApis.Models.Datas
 
         public uint KeyMessage { get; set; }
 
-        public HotKeyContext()
-        {
-
-        }
+        public HotKeyContext() { }
 
         public static HotKeyContext Create(
-            Action handler, string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+            Action handler,
+            string keyName,
+            bool hasAlt,
+            bool hasCtrl,
+            bool hasShift
+        )
         {
-            if (!Misc.Utils.TryParseKeyMesssage(
-                keyName, hasAlt, hasCtrl, hasShift,
-                out uint modifier, out uint key))
+            if (
+                !Misc.Utils.TryParseKeyMesssage(
+                    keyName,
+                    hasAlt,
+                    hasCtrl,
+                    hasShift,
+                    out uint modifier,
+                    out uint key
+                )
+            )
             {
                 return null;
             }

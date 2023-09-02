@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -62,7 +61,6 @@ namespace V2RayGCon.Services
             This_Function_Is_Used_For_Debugging();
 #endif
         }
-
 
         #endregion
 
@@ -153,7 +151,10 @@ namespace V2RayGCon.Services
             }
 
             CheckForUpdateBg(setting.isCheckV2RayCoreUpdateWhenAppStart, V2RayCoreUpdater);
-            CheckForUpdateBg(setting.isCheckVgcUpdateWhenAppStart, () => updater.CheckForUpdate(false));
+            CheckForUpdateBg(
+                setting.isCheckVgcUpdateWhenAppStart,
+                () => updater.CheckForUpdate(false)
+            );
         }
 
         void CheckForUpdateBg(bool flag, Action worker)
@@ -174,7 +175,8 @@ namespace V2RayGCon.Services
                 {
                     worker?.Invoke();
                 }
-                catch { };
+                catch { }
+                ;
             });
         }
 
@@ -236,7 +238,8 @@ namespace V2RayGCon.Services
             };
 
             Application.ThreadException += (s, a) => ShowExceptionDetailAndExit(a.Exception);
-            AppDomain.CurrentDomain.UnhandledException += (s, a) => ShowExceptionDetailAndExit(a.ExceptionObject as Exception);
+            AppDomain.CurrentDomain.UnhandledException += (s, a) =>
+                ShowExceptionDetailAndExit(a.ExceptionObject as Exception);
         }
 
         void InitAllServices()
@@ -251,7 +254,8 @@ namespace V2RayGCon.Services
             var pluginsServ = PluginsServer.Instance;
 
             // by dispose order
-            services = new List<IDisposable> {
+            services = new List<IDisposable>
+            {
                 updater,
                 pluginsServ,
                 notifier,
@@ -303,7 +307,10 @@ namespace V2RayGCon.Services
                 service.Dispose();
             }
 
-            if (setting.GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
+            if (
+                setting.GetShutdownReason()
+                == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser
+            )
             {
                 servers.StopAllServers();
             }
@@ -329,11 +336,13 @@ namespace V2RayGCon.Services
 
             var ci = new CultureInfo(cultureString);
 
-            Thread.CurrentThread.CurrentCulture.GetType()
+            Thread.CurrentThread.CurrentCulture
+                .GetType()
                 .GetProperty("DefaultThreadCurrentCulture")
                 .SetValue(Thread.CurrentThread.CurrentCulture, ci, null);
 
-            Thread.CurrentThread.CurrentCulture.GetType()
+            Thread.CurrentThread.CurrentCulture
+                .GetType()
                 .GetProperty("DefaultThreadCurrentUICulture")
                 .SetValue(Thread.CurrentThread.CurrentCulture, ci, null);
         }
@@ -347,7 +356,5 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.FileLogger.Info($"{appName} exited");
         }
         #endregion
-
-
     }
 }

@@ -48,7 +48,10 @@ namespace V2RayGCon.Test.DecoderTests
 
             var cache = V2RayGCon.Services.Cache.Instance;
             var setting = Services.Settings.Instance;
-            var vmessDecoder = new V2RayGCon.Services.ShareLinkComponents.VmessDecoder(cache, setting);
+            var vmessDecoder = new V2RayGCon.Services.ShareLinkComponents.VmessDecoder(
+                cache,
+                setting
+            );
 
             var vmessLinks = vmessDecoder.ExtractLinksFromText(subText);
             foreach (var vmessLink in vmessLinks)
@@ -65,7 +68,9 @@ namespace V2RayGCon.Test.DecoderTests
             var subText = string.Join(Environment.NewLine, vmessLinks);
 
             var extracted = Misc.Utils.ExtractLinks(
-                subText, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
+                subText,
+                VgcApis.Models.Datas.Enums.LinkTypes.vmess
+            );
 
             Assert.AreEqual(testData.Count, extracted.Count);
             foreach (var link in extracted)
@@ -91,7 +96,7 @@ namespace V2RayGCon.Test.DecoderTests
         {
             var errorVmess = new V2RayGCon.Models.Datas.Vmess
             {
-                id = "1234",  // invalid GUID
+                id = "1234", // invalid GUID
                 port = "1234",
                 add = "1.2.3.4",
             };

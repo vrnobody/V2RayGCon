@@ -2,9 +2,7 @@
 
 namespace V2RayGCon.Libs.Lua
 {
-    public class Apis :
-        VgcApis.BaseClasses.Disposable,
-        IApiService
+    public class Apis : VgcApis.BaseClasses.Disposable, IApiService
     {
         IServersService serversService;
         ISettingsService settingService;
@@ -20,7 +18,8 @@ namespace V2RayGCon.Libs.Lua
             IServersService servers,
             IConfigMgrService configMgr,
             IShareLinkMgrService slinkMgr,
-            INotifierService notifier)
+            INotifierService notifier
+        )
         {
             this.configMgrService = configMgr;
             this.settingService = setting;
@@ -33,25 +32,20 @@ namespace V2RayGCon.Libs.Lua
         }
 
         #region IApi interfaces
-        public IPostOffice GetPostOfficeService() =>
-            Services.PostOffice.Instance;
+        public IPostOffice GetPostOfficeService() => Services.PostOffice.Instance;
 
-        public INotifierService GetNotifierService()
-            => this.notifierService;
+        public INotifierService GetNotifierService() => this.notifierService;
 
-        public IShareLinkMgrService GetShareLinkMgrService()
-            => this.slinkMgrService;
+        public IShareLinkMgrService GetShareLinkMgrService() => this.slinkMgrService;
 
-        public IServersService GetServersService()
-            => this.serversService;
+        public IServersService GetServersService() => this.serversService;
 
-        public ISettingsService GetSettingService()
-            => this.settingService;
+        public ISettingsService GetSettingService() => this.settingService;
 
-        public IConfigMgrService GetConfigMgrService()
-            => this.configMgrService;
+        public IConfigMgrService GetConfigMgrService() => this.configMgrService;
 
         public IUtilsService GetUtilsService() => utilsService;
+
         public IWebService GetWebService() => webService;
 
         #endregion

@@ -24,7 +24,6 @@ namespace Luna.Interfaces
         // 申请者退出时自动清理
         string SnapCacheApply();
 
-
         // 注意要手动清理
         bool SnapCacheCreate(string token);
         bool SnapCacheRemove(string token);
@@ -131,7 +130,13 @@ namespace Luna.Interfaces
         /// <param name="source">网页来源，可以是HTML字符串、文件路径、文件夹路径</param>
         /// <param name="allowCORS">允许跨域</param>
         /// <returns></returns>
-        IRunnable CreateHttpServer(string url, ILuaMailBox inbox, ILuaMailBox outbox, string source, bool allowCORS);
+        IRunnable CreateHttpServer(
+            string url,
+            ILuaMailBox inbox,
+            ILuaMailBox outbox,
+            string source,
+            bool allowCORS
+        );
         #endregion
 
         #region VGC
@@ -197,7 +202,12 @@ namespace Luna.Interfaces
         /// <param name="evType">事件类型</param>
         /// <param name="evCode">事件发生时向接收邮箱发送的代码</param>
         /// <returns>随机生成的句柄</returns>
-        string RegisterCoreEvent(VgcApis.Interfaces.ICoreServCtrl coreServ, ILuaMailBox mailbox, int evType, int evCode);
+        string RegisterCoreEvent(
+            VgcApis.Interfaces.ICoreServCtrl coreServ,
+            ILuaMailBox mailbox,
+            int evType,
+            int evCode
+        );
         #endregion
 
         #region keyboard hotkey
@@ -225,8 +235,14 @@ namespace Luna.Interfaces
         /// <param name="hasCtrl">Ctrl键是否按下</param>
         /// <param name="hasShift">Shift键是否按下</param>
         /// <returns>随机生成的句柄</returns>
-        string RegisterHotKey(ILuaMailBox mailbox, int evCode,
-            string keyName, bool hasAlt, bool hasCtrl, bool hasShift);
+        string RegisterHotKey(
+            ILuaMailBox mailbox,
+            int evCode,
+            string keyName,
+            bool hasAlt,
+            bool hasCtrl,
+            bool hasShift
+        );
         #endregion
 
         #region reflection
@@ -357,8 +373,14 @@ namespace Luna.Interfaces
         /// LuaTable envs, bool hasWindow, bool redirectOutput,
         /// Encoding inputEncoding, Encoding outputEncoding);
         /// </summary>
-        Process RunAndForgot(string exePath, string args, string stdin,
-            global::NLua.LuaTable envs, bool hasWindow, bool redirectOutput);
+        Process RunAndForgot(
+            string exePath,
+            string args,
+            string stdin,
+            global::NLua.LuaTable envs,
+            bool hasWindow,
+            bool redirectOutput
+        );
 
         /// <summary>
         /// 创建进程后撒手不管（脚本结束进程也继续运行）
@@ -372,9 +394,16 @@ namespace Luna.Interfaces
         /// <param name="inputEncoding">stdin的编码</param>
         /// <param name="outputEncoding">stdout的编码</param>
         /// <returns>进程句柄</returns>
-        Process RunAndForgot(string exePath, string args, string stdin,
-            LuaTable envs, bool hasWindow, bool redirectOutput,
-            Encoding inputEncoding, Encoding outputEncoding);
+        Process RunAndForgot(
+            string exePath,
+            string args,
+            string stdin,
+            LuaTable envs,
+            bool hasWindow,
+            bool redirectOutput,
+            Encoding inputEncoding,
+            Encoding outputEncoding
+        );
 
         /// <summary>
         /// 参考 Process Run(string exePath, string args, string stdin,
@@ -402,8 +431,14 @@ namespace Luna.Interfaces
         /// LuaTable envs, bool hasWindow, bool redirectOutput,
         /// Encoding inputEncoding, Encoding outputEncoding);
         /// </summary>
-        Process Run(string exePath, string args, string stdin,
-            global::NLua.LuaTable envs, bool hasWindow, bool redirectOutput);
+        Process Run(
+            string exePath,
+            string args,
+            string stdin,
+            global::NLua.LuaTable envs,
+            bool hasWindow,
+            bool redirectOutput
+        );
 
         /// <summary>
         /// 创建进程。在脚本结束时进程也会被杀死。
@@ -418,10 +453,17 @@ namespace Luna.Interfaces
         /// <param name="outputEncoding">stdout的编码</param>
         /// <param name="customLogger">自定义的Logger</param>
         /// <returns>进程句柄</returns>
-        Process Run(string exePath, string args, string stdin,
-           LuaTable envs, bool hasWindow, bool redirectOutput,
-           Encoding inputEncoding, Encoding outputEncoding,
-           VgcApis.Interfaces.ILogable logable);
+        Process Run(
+            string exePath,
+            string args,
+            string stdin,
+            LuaTable envs,
+            bool hasWindow,
+            bool redirectOutput,
+            Encoding inputEncoding,
+            Encoding outputEncoding,
+            VgcApis.Interfaces.ILogable logable
+        );
 
         /// <summary>
         /// 向进程发送Ctrl+C信号

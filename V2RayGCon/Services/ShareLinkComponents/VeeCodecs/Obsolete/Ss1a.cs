@@ -4,9 +4,7 @@ using System.Linq;
 
 namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
 {
-    internal sealed class Ss1a :
-        VgcApis.BaseClasses.ComponentOf<VeeDecoder>,
-        IVeeDecoder
+    internal sealed class Ss1a : VgcApis.BaseClasses.ComponentOf<VeeDecoder>, IVeeDecoder
     {
         Cache cache;
 
@@ -32,6 +30,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
 
         #region public methods
         public string GetSupportedVeeVersion() => Models.VeeShareLinks.Obsolete.Ss1a.version;
+
         public string GetSupportedEncodeProtocol() => @"";
 
         public byte[] Config2Bytes(JObject config)
@@ -52,15 +51,15 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
         Models.VeeShareLinks.Obsolete.Ss1a Config2Vee(JObject config)
         {
             var GetStr = Misc.Utils.GetStringByPrefixAndKeyHelper(config);
-            var isUseV4 = (GetStr("outbounds.0", "protocol")?.ToLower()) ==
-                VgcApis.Models.Consts.Config.ProtocolNameSs;
+            var isUseV4 =
+                (GetStr("outbounds.0", "protocol")?.ToLower())
+                == VgcApis.Models.Consts.Config.ProtocolNameSs;
 
             var root = isUseV4 ? "outbounds.0" : "outbound";
             if (!isUseV4)
             {
                 var protocol = GetStr(root, "protocol")?.ToLower();
-                if (protocol == null ||
-                    protocol != VgcApis.Models.Consts.Config.ProtocolNameSs)
+                if (protocol == null || protocol != VgcApis.Models.Consts.Config.ProtocolNameSs)
                 {
                     return null;
                 }
@@ -71,7 +70,6 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
             {
                 alias = GetStr("v2raygcon", "alias"),
                 description = GetStr("v2raygcon", "description"),
-
                 address = GetStr(mainPrefix, "address"),
                 port = VgcApis.Misc.Utils.Str2Int(GetStr(mainPrefix, "port")),
                 method = GetStr(mainPrefix, "method"),
@@ -100,9 +98,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
                     mainParam = GetStr(subPrefix, "httpSettings.path");
                     try
                     {
-                        var hosts = isUseV4 ?
-                            config["outbounds"][0]["streamSettings"]["httpSettings"]["host"] :
-                            config["outbound"]["streamSettings"]["httpSettings"]["host"];
+                        var hosts = isUseV4
+                            ? config["outbounds"][0]["streamSettings"]["httpSettings"]["host"]
+                            : config["outbound"]["streamSettings"]["httpSettings"]["host"];
                         vee.streamParam2 = Misc.Utils.JArray2Str(hosts as JArray);
                     }
                     catch { }
@@ -183,7 +181,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs.Obsolete
                         break;
                     case "h2":
                         streamToken["httpSettings"]["path"] = mainParam;
-                        streamToken["httpSettings"]["host"] = Misc.Utils.Str2JArray(vee.streamParam2);
+                        streamToken["httpSettings"]["host"] = Misc.Utils.Str2JArray(
+                            vee.streamParam2
+                        );
                         break;
                     case "quic":
                         streamToken["quicSettings"]["header"]["type"] = mainParam;

@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using System;
 using System.IO;
-using System.Windows.Forms;
 using static V2RayGCon.Misc.Utils;
 
 namespace V2RayGCon.Test
@@ -10,11 +8,7 @@ namespace V2RayGCon.Test
     [TestClass]
     public class UtilsTest
     {
-
-        public UtilsTest()
-        {
-
-        }
+        public UtilsTest() { }
 
         [DataTestMethod]
         [DataRow("hello, world!")]

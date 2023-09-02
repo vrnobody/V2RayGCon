@@ -18,7 +18,8 @@ namespace ProxySetter.Model.BaseClass
             return this.components;
         }
 
-        public T GetComponent<T>() where T : class, IFormComponentController
+        public T GetComponent<T>()
+            where T : class, IFormComponentController
         {
             var type = typeof(T);
 
@@ -53,6 +54,5 @@ namespace ProxySetter.Model.BaseClass
 
         #region private method
         #endregion
-
     }
 }

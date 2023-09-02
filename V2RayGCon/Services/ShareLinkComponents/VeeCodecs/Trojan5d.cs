@@ -3,9 +3,7 @@ using System;
 
 namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 {
-    internal sealed class Trojan5d :
-        VgcApis.BaseClasses.ComponentOf<VeeDecoder>,
-        IVeeDecoder
+    internal sealed class Trojan5d : VgcApis.BaseClasses.ComponentOf<VeeDecoder>, IVeeDecoder
     {
         Cache cache;
 
@@ -20,6 +18,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
         #region public methods
         public string GetSupportedVeeVersion() => Models.VeeShareLinks.Trojan5d.version;
+
         public string GetSupportedEncodeProtocol() => Models.VeeShareLinks.Trojan5d.proto;
 
         public byte[] Config2Bytes(JObject config)
@@ -54,7 +53,13 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         #region private methods
         Models.VeeShareLinks.Trojan5d Config2Vee(JObject config)
         {
-            var bs = Comm.ExtractBasicConfig(config, @"trojan", @"servers", out bool isUseV4, out string root);
+            var bs = Comm.ExtractBasicConfig(
+                config,
+                @"trojan",
+                @"servers",
+                out bool isUseV4,
+                out string root
+            );
             if (bs == null)
             {
                 return null;

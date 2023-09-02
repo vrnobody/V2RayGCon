@@ -2,26 +2,28 @@
 
 namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 {
-    public sealed class Vmess0a :
-        BasicSettings
+    public sealed class Vmess0a : BasicSettings
     {
-        // ver 0a is optimized for vmess protocol 
+        // ver 0a is optimized for vmess protocol
         public const string version = @"0a";
         public const string proto = "vmess";
 
         public int alterId; // 16 bit each
         public Guid uuid;
 
-        public Vmess0a() : base()
+        public Vmess0a()
+            : base()
         {
             alterId = 0;
-            uuid = new Guid(); // zeros   
+            uuid = new Guid(); // zeros
         }
 
-        public Vmess0a(BasicSettings source) : this()
+        public Vmess0a(BasicSettings source)
+            : this()
         {
             CopyFrom(source);
         }
+
         #region public methods
         public override void CopyFromVeeConfig(Models.Datas.VeeConfigs vc)
         {
@@ -37,8 +39,8 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
             return vc;
         }
 
-        public Vmess0a(byte[] bytes) :
-            this()
+        public Vmess0a(byte[] bytes)
+            : this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
             if (ver != version)
@@ -95,9 +97,11 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 
         public bool EqTo(Vmess0a veeLink)
         {
-            if (!EqTo(veeLink as BasicSettings)
+            if (
+                !EqTo(veeLink as BasicSettings)
                 || alterId != veeLink.alterId
-                || uuid != veeLink.uuid)
+                || uuid != veeLink.uuid
+            )
             {
                 return false;
             }
@@ -105,6 +109,5 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
             return true;
         }
         #endregion
-
     }
 }

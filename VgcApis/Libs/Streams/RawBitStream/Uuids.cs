@@ -2,11 +2,11 @@
 
 namespace VgcApis.Libs.Streams.RawBitStream
 {
-    public sealed class Uuids :
-        BaseClasses.ComponentOf<RawBitStream>
+    public sealed class Uuids : BaseClasses.ComponentOf<RawBitStream>
     {
         const int BytesPerUuid = Models.Consts.BitStream.BytesPerUuid;
         Bytes bytesWriter;
+
         public Uuids() { }
 
         public void Run(Bytes bytes)
@@ -19,8 +19,7 @@ namespace VgcApis.Libs.Streams.RawBitStream
         #endregion
 
         #region public methods
-        public void Write(Guid uuid) =>
-            bytesWriter.Write(uuid.ToByteArray(), BytesPerUuid);
+        public void Write(Guid uuid) => bytesWriter.Write(uuid.ToByteArray(), BytesPerUuid);
 
         public Guid Read()
         {

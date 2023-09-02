@@ -3,10 +3,8 @@ using System.Linq;
 
 namespace NeoLuna.Services
 {
-    internal class FormMgrSvc :
-        VgcApis.BaseClasses.Disposable
+    internal class FormMgrSvc : VgcApis.BaseClasses.Disposable
     {
-
         Views.WinForms.FormMain formMain = null;
         Views.WinForms.FormLog formLog = null;
 
@@ -22,7 +20,8 @@ namespace NeoLuna.Services
             Settings settings,
             LuaServer luaServer,
             AstServer astServer,
-            VgcApis.Interfaces.Services.IApiService vgcApi)
+            VgcApis.Interfaces.Services.IApiService vgcApi
+        )
         {
             this.astServer = astServer;
             this.luaServer = luaServer;
@@ -39,9 +38,7 @@ namespace NeoLuna.Services
 
             VgcApis.Misc.UI.Invoke(() =>
             {
-                form = Views.WinForms.FormEditor.CreateForm(
-                    this,
-                    initialCoreSettings);
+                form = Views.WinForms.FormEditor.CreateForm(this, initialCoreSettings);
 
                 form.FormClosing += (s, a) =>
                 {
@@ -163,6 +160,5 @@ namespace NeoLuna.Services
             }
         }
         #endregion
-
     }
 }

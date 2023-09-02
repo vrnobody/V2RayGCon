@@ -4,23 +4,22 @@ using System.Windows.Forms;
 
 namespace Luna.Services
 {
-    internal class MenuUpdater :
-        VgcApis.BaseClasses.Disposable
+    internal class MenuUpdater : VgcApis.BaseClasses.Disposable
     {
         LuaServer luaServer;
-        ToolStripMenuItem miRoot, miShowMgr, miShowEditor;
+        ToolStripMenuItem miRoot,
+            miShowMgr,
+            miShowEditor;
         VgcApis.Libs.Tasks.LazyGuy lazyMenuUpdater;
 
-        public MenuUpdater()
-        {
-
-        }
+        public MenuUpdater() { }
 
         public void Run(
             LuaServer luaServer,
             ToolStripMenuItem miRoot,
             ToolStripMenuItem miShowMgr,
-            ToolStripMenuItem miShowEditor)
+            ToolStripMenuItem miShowEditor
+        )
         {
             this.luaServer = luaServer;
 
@@ -45,20 +44,23 @@ namespace Luna.Services
         #region private methods
         void UpdateMenuWorker(Action done)
         {
-            VgcApis.Misc.UI.InvokeThen(() =>
-            {
-                var mis = GenSubMenuItems();
-                var root = miRoot.DropDownItems;
-                root.Clear();
-                miRoot.DropDown.PerformLayout();
-                root.Add(miShowMgr);
-                root.Add(miShowEditor);
-                if (mis.Count > 0)
+            VgcApis.Misc.UI.InvokeThen(
+                () =>
                 {
-                    root.Add(new ToolStripSeparator());
-                    root.AddRange(mis.ToArray());
-                }
-            }, done);
+                    var mis = GenSubMenuItems();
+                    var root = miRoot.DropDownItems;
+                    root.Clear();
+                    miRoot.DropDown.PerformLayout();
+                    root.Add(miShowMgr);
+                    root.Add(miShowEditor);
+                    if (mis.Count > 0)
+                    {
+                        root.Add(new ToolStripSeparator());
+                        root.AddRange(mis.ToArray());
+                    }
+                },
+                done
+            );
         }
 
         void UpdateMenuLater() => lazyMenuUpdater?.Postpone();
@@ -91,8 +93,7 @@ namespace Luna.Services
             return mis.Count <= gs ? mis : VgcApis.Misc.UI.AutoGroupMenuItems(mis, gs);
         }
 
-        void LuaCoreCtrlListChangeHandler(object sender, EventArgs args) =>
-            UpdateMenuLater();
+        void LuaCoreCtrlListChangeHandler(object sender, EventArgs args) => UpdateMenuLater();
 
         void BindEvents()
         {
@@ -111,7 +112,5 @@ namespace Luna.Services
             ReleaseEvents();
         }
         #endregion
-
-
     }
 }

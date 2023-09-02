@@ -13,9 +13,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         Services.Settings setting;
         string oldOptions;
 
-        public TabImport(
-            FlowLayoutPanel flyPanel,
-            Button btnAdd)
+        public TabImport(FlowLayoutPanel flyPanel, Button btnAdd)
         {
             this.setting = Services.Settings.Instance;
 
@@ -66,8 +64,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             foreach (Views.UserControls.ImportUI item in this.flyPanel.Controls)
             {
                 var v = item.GetValue();
-                if (!string.IsNullOrEmpty(v.alias)
-                    || !string.IsNullOrEmpty(v.url))
+                if (!string.IsNullOrEmpty(v.alias) || !string.IsNullOrEmpty(v.url))
                 {
                     itemList.Add(v);
                 }
@@ -88,7 +85,9 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             foreach (var item in importUrlItemList)
             {
-                this.flyPanel.Controls.Add(new Views.UserControls.ImportUI(item, UpdatePanelItemsIndex));
+                this.flyPanel.Controls.Add(
+                    new Views.UserControls.ImportUI(item, UpdatePanelItemsIndex)
+                );
             }
 
             UpdatePanelItemsIndex();
@@ -99,8 +98,9 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.btnAdd.Click += (s, a) =>
             {
                 var control = new Views.UserControls.ImportUI(
-                        new Models.Datas.ImportItem(),
-                        UpdatePanelItemsIndex);
+                    new Models.Datas.ImportItem(),
+                    UpdatePanelItemsIndex
+                );
 
                 flyPanel.Controls.Add(control);
                 flyPanel.ScrollControlIntoView(control);
@@ -119,7 +119,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             {
                 // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
 
-                var curItem = a.Data.GetData(typeof(Views.UserControls.ImportUI))
+                var curItem =
+                    a.Data.GetData(typeof(Views.UserControls.ImportUI))
                     as Views.UserControls.ImportUI;
 
                 var panel = s as FlowLayoutPanel;

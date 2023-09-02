@@ -16,9 +16,7 @@ namespace V2RayGCon.Views.UserControls
         Services.Settings settings;
         private readonly Subscription subsCtrl;
 
-        public SubscriptionUI(
-            Subscription subsCtrl,
-            Models.Datas.SubscriptionItem subscriptItem)
+        public SubscriptionUI(Subscription subsCtrl, Models.Datas.SubscriptionItem subscriptItem)
         {
             InitializeComponent();
 
@@ -29,7 +27,6 @@ namespace V2RayGCon.Views.UserControls
 
             // tab page is lazy, do not call this in Load().
             InitControls(subscriptItem);
-
         }
 
         #region form thing
@@ -71,9 +68,7 @@ namespace V2RayGCon.Views.UserControls
         }
 
         public bool IsEmpty() =>
-            string.IsNullOrWhiteSpace(tboxAlias.Text)
-            && string.IsNullOrWhiteSpace(tboxUrl.Text);
-
+            string.IsNullOrWhiteSpace(tboxAlias.Text) && string.IsNullOrWhiteSpace(tboxUrl.Text);
 
         public void UpdateTextBoxColor(IEnumerable<string> alias, IEnumerable<string> urls)
         {
@@ -115,16 +110,20 @@ namespace V2RayGCon.Views.UserControls
         {
             var url = tboxUrl.Text;
 
-            if (settings.isAutoPatchSubsInfo
+            if (
+                settings.isAutoPatchSubsInfo
                 && !string.IsNullOrEmpty(url)
-                && VgcApis.Misc.Utils.TryPatchGitHubUrl(url, out var patched))
+                && VgcApis.Misc.Utils.TryPatchGitHubUrl(url, out var patched)
+            )
             {
                 tboxUrl.Text = patched;
                 return;
             }
 
-            if (string.IsNullOrEmpty(tboxAlias.Text)
-                && VgcApis.Misc.Utils.TryExtractAliasFromSubscriptionUrl(url, out var alias))
+            if (
+                string.IsNullOrEmpty(tboxAlias.Text)
+                && VgcApis.Misc.Utils.TryExtractAliasFromSubscriptionUrl(url, out var alias)
+            )
             {
                 tboxAlias.Text = alias;
             }
@@ -147,8 +146,9 @@ namespace V2RayGCon.Views.UserControls
         private void lbAlias_Click(object sender, EventArgs e)
         {
             tboxAlias.Focus();
-            var msg = VgcApis.Misc.Utils.CopyToClipboard(tboxAlias.Text) ?
-                 I18N.CopySuccess : I18N.CopyFail;
+            var msg = VgcApis.Misc.Utils.CopyToClipboard(tboxAlias.Text)
+                ? I18N.CopySuccess
+                : I18N.CopyFail;
             VgcApis.Misc.UI.MsgBoxAsync(msg);
         }
 
@@ -166,8 +166,9 @@ namespace V2RayGCon.Views.UserControls
             else
             {
                 tboxUrl.Focus();
-                var msg = VgcApis.Misc.Utils.CopyToClipboard(tboxUrl.Text) ?
-                     I18N.CopySuccess : I18N.CopyFail;
+                var msg = VgcApis.Misc.Utils.CopyToClipboard(tboxUrl.Text)
+                    ? I18N.CopySuccess
+                    : I18N.CopyFail;
                 VgcApis.Misc.UI.MsgBoxAsync(msg);
             }
         }
@@ -179,9 +180,11 @@ namespace V2RayGCon.Views.UserControls
             var color = Color.White;
             var text = textBox.Text;
 
-            if (!string.IsNullOrEmpty(text)
+            if (
+                !string.IsNullOrEmpty(text)
                 && texts != null
-                && texts.Where(t => t == text).Count() > 1)
+                && texts.Where(t => t == text).Count() > 1
+            )
             {
                 color = VgcApis.Misc.UI.String2Color(text);
             }
@@ -198,7 +201,5 @@ namespace V2RayGCon.Views.UserControls
 
         #region protected
         #endregion
-
-
     }
 }

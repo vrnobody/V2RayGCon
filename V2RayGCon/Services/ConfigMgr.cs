@@ -2,16 +2,15 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
 {
-    sealed public class ConfigMgr :
-         BaseClasses.SingletonService<ConfigMgr>,
-        VgcApis.Interfaces.Services.IConfigMgrService
+    public sealed class ConfigMgr
+        : BaseClasses.SingletonService<ConfigMgr>,
+            VgcApis.Interfaces.Services.IConfigMgrService
     {
         Settings setting;
         Cache cache;
@@ -48,35 +47,64 @@ namespace V2RayGCon.Services
             return text;
         }
 
-
         public long RunCustomSpeedTest(string rawConfig, string testUrl, int testTimeout) =>
-            QueuedSpeedTesting(rawConfig, "Custom speed-test", testUrl, testTimeout, false, false, false, null).Item1;
+            QueuedSpeedTesting(
+                rawConfig,
+                "Custom speed-test",
+                testUrl,
+                testTimeout,
+                false,
+                false,
+                false,
+                null
+            ).Item1;
 
         public long RunSpeedTest(string rawConfig)
         {
             var url = GetDefaultSpeedtestUrl();
-            return QueuedSpeedTesting(rawConfig, "Default speed-test", "", GetDefaultTimeout(), false, false, false, null).Item1;
+            return QueuedSpeedTesting(
+                rawConfig,
+                "Default speed-test",
+                "",
+                GetDefaultTimeout(),
+                false,
+                false,
+                false,
+                null
+            ).Item1;
         }
 
         public Tuple<long, long> RunDefaultSpeedTest(
             string rawConfig,
             string title,
-            EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever)
+            EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever
+        )
         {
             var url = GetDefaultSpeedtestUrl();
-            return QueuedSpeedTesting(rawConfig, title, url, GetDefaultTimeout(), true, true, false, logDeliever);
+            return QueuedSpeedTesting(
+                rawConfig,
+                title,
+                url,
+                GetDefaultTimeout(),
+                true,
+                true,
+                false,
+                logDeliever
+            );
         }
 
         public string InjectImportTpls(
             string config,
             bool isIncludeSpeedTest,
-            bool isIncludeActivate)
+            bool isIncludeActivate
+        )
         {
             JObject import = Misc.Utils.ImportItemList2JObject(
                 setting.GetGlobalImportItems(),
                 isIncludeSpeedTest,
                 isIncludeActivate,
-                false);
+                false
+            );
 
             Misc.Utils.MergeJson(import, JObject.Parse(config));
             return import.ToString();
@@ -86,7 +114,8 @@ namespace V2RayGCon.Services
             string rawConfig,
             bool isUseCache,
             bool isInjectSpeedTestTpl,
-            bool isInjectActivateTpl)
+            bool isInjectActivateTpl
+        )
         {
             var coreConfig = rawConfig;
             JObject decodedConfig = null;
@@ -99,7 +128,8 @@ namespace V2RayGCon.Services
                     injectedConfig = InjectImportTpls(
                         rawConfig,
                         isInjectSpeedTestTpl,
-                        isInjectActivateTpl);
+                        isInjectActivateTpl
+                    );
                 }
 
                 decodedConfig = ParseImport(injectedConfig);
@@ -131,7 +161,8 @@ namespace V2RayGCon.Services
             ref JObject config,
             int inbType,
             string ip,
-            int port)
+            int port
+        )
         {
             if (inbType == (int)Models.Datas.Enums.ProxyTypes.Config)
             {
@@ -153,8 +184,10 @@ namespace V2RayGCon.Services
                 return false;
             }
 
-            if (inbType != (int)Models.Datas.Enums.ProxyTypes.HTTP
-                && inbType != (int)Models.Datas.Enums.ProxyTypes.SOCKS)
+            if (
+                inbType != (int)Models.Datas.Enums.ProxyTypes.HTTP
+                && inbType != (int)Models.Datas.Enums.ProxyTypes.SOCKS
+            )
             {
                 return false;
             }
@@ -183,15 +216,14 @@ namespace V2RayGCon.Services
         /// </summary>
         /// <param name="config"></param>
         /// <returns></returns>
-        public void InjectSkipCnSiteSettingsIntoConfig(
-            ref JObject config,
-            bool useV4)
+        public void InjectSkipCnSiteSettingsIntoConfig(ref JObject config, bool useV4)
         {
             var c = JObject.Parse(@"{}");
 
-            var dict = new Dictionary<string, string> {
-                { "dns","dnsCFnGoogle" },
-                { "routing",GetRoutingTplName(config, useV4) },
+            var dict = new Dictionary<string, string>
+            {
+                { "dns", "dnsCFnGoogle" },
+                { "routing", GetRoutingTplName(config, useV4) },
             };
 
             foreach (var item in dict)
@@ -219,9 +251,7 @@ namespace V2RayGCon.Services
                 outboundTag = "outbounds";
             }
 
-            var o = Misc.Utils.CreateJObject(
-                outboundTag,
-                cache.tpl.LoadExample("outDtrFreedom"));
+            var o = Misc.Utils.CreateJObject(outboundTag, cache.tpl.LoadExample("outDtrFreedom"));
 
             if (!Misc.Utils.Contains(config, o))
             {
@@ -231,7 +261,7 @@ namespace V2RayGCon.Services
         }
 
         /*
-         * exceptions  
+         * exceptions
          * test<FormatException> base64 decode fail
          * test<System.Net.WebException> url not exist
          * test<Newtonsoft.Json.JsonReaderException> json decode fail
@@ -243,7 +273,8 @@ namespace V2RayGCon.Services
             var result = Misc.Utils.ParseImportRecursively(
                 GetHtmlContentFromCache,
                 JObject.Parse(configString),
-                maxDepth);
+                maxDepth
+            );
 
             try
             {
@@ -260,7 +291,8 @@ namespace V2RayGCon.Services
         public JObject GenV4ServersPackageConfig(
             List<VgcApis.Interfaces.ICoreServCtrl> servList,
             string packageName,
-            VgcApis.Models.Datas.Enums.PackageTypes packageType)
+            VgcApis.Models.Datas.Enums.PackageTypes packageType
+        )
         {
             JObject package;
             switch (packageType)
@@ -287,11 +319,7 @@ namespace V2RayGCon.Services
             }
         }
 
-
-
-        public void Run(
-            Settings setting,
-            Cache cache)
+        public void Run(Settings setting, Cache cache)
         {
             this.setting = setting;
             this.cache = cache;
@@ -301,8 +329,9 @@ namespace V2RayGCon.Services
 
         #region private methods
         JObject GenV4ChainConfig(
-        List<VgcApis.Interfaces.ICoreServCtrl> servList,
-        string packageName)
+            List<VgcApis.Interfaces.ICoreServCtrl> servList,
+            string packageName
+        )
         {
             var package = cache.tpl.LoadPackage("chainV4Tpl");
             var outbounds = package["outbounds"] as JArray;
@@ -312,8 +341,7 @@ namespace V2RayGCon.Services
             for (var i = 0; i < servList.Count; i++)
             {
                 var s = servList[i];
-                var parts = Misc.Utils.ExtractOutboundsFromConfig(
-                    s.GetConfiger().GetFinalConfig());
+                var parts = Misc.Utils.ExtractOutboundsFromConfig(s.GetConfiger().GetFinalConfig());
                 var c = 0;
                 foreach (JObject p in parts)
                 {
@@ -340,15 +368,19 @@ namespace V2RayGCon.Services
             }
             outbounds.Add(prev);
 
-            package["v2raygcon"]["alias"] = string.IsNullOrEmpty(packageName) ? "ChainV4" : packageName;
+            package["v2raygcon"]["alias"] = string.IsNullOrEmpty(packageName)
+                ? "ChainV4"
+                : packageName;
             package["v2raygcon"]["description"] =
-                $"[Total: {description.Count()}] " +
-                string.Join(" ", description);
+                $"[Total: {description.Count()}] " + string.Join(" ", description);
 
             return package;
         }
 
-        private JObject GenV4BalancerConfig(List<VgcApis.Interfaces.ICoreServCtrl> servList, string packageName)
+        private JObject GenV4BalancerConfig(
+            List<VgcApis.Interfaces.ICoreServCtrl> servList,
+            string packageName
+        )
         {
             var package = cache.tpl.LoadPackage("pkgV4Tpl");
             var outbounds = package["outbounds"] as JArray;
@@ -357,8 +389,7 @@ namespace V2RayGCon.Services
             for (var i = 0; i < servList.Count; i++)
             {
                 var s = servList[i];
-                var parts = Misc.Utils.ExtractOutboundsFromConfig(
-                    s.GetConfiger().GetFinalConfig());
+                var parts = Misc.Utils.ExtractOutboundsFromConfig(s.GetConfiger().GetFinalConfig());
                 var c = 0;
                 foreach (JObject p in parts)
                 {
@@ -377,16 +408,18 @@ namespace V2RayGCon.Services
                 }
             }
 
-            package["v2raygcon"]["alias"] = string.IsNullOrEmpty(packageName) ? "PackageV4" : packageName;
+            package["v2raygcon"]["alias"] = string.IsNullOrEmpty(packageName)
+                ? "PackageV4"
+                : packageName;
             package["v2raygcon"]["description"] =
-                $"[Total: {description.Count()}] " +
-                string.Join(" ", description);
+                $"[Total: {description.Count()}] " + string.Join(" ", description);
             return package;
         }
+
         void MergeCustomTlsSettings(ref JObject config)
         {
-            var outB = Misc.Utils.GetKey(config, "outbound") ??
-                Misc.Utils.GetKey(config, "outbounds.0");
+            var outB =
+                Misc.Utils.GetKey(config, "outbound") ?? Misc.Utils.GetKey(config, "outbounds.0");
 
             if (outB == null)
             {
@@ -424,15 +457,18 @@ namespace V2RayGCon.Services
         }
 
         string GetDefaultSpeedtestUrl() =>
-          setting.isUseCustomSpeedtestSettings ?
-          setting.CustomSpeedtestUrl :
-          VgcApis.Models.Consts.Webs.GoogleDotCom;
+            setting.isUseCustomSpeedtestSettings
+                ? setting.CustomSpeedtestUrl
+                : VgcApis.Models.Consts.Webs.GoogleDotCom;
 
         JObject GetGlobalImportConfigForPacking()
         {
             var imports = Misc.Utils.ImportItemList2JObject(
                 setting.GetGlobalImportItems(),
-                false, false, true);
+                false,
+                false,
+                true
+            );
             return ParseImport(imports.ToString());
         }
 
@@ -444,7 +480,8 @@ namespace V2RayGCon.Services
             bool isUseCache,
             bool isInjectSpeedTestTpl,
             bool isInjectActivateTpl,
-            EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever)
+            EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever
+        )
         {
             Interlocked.Increment(ref setting.SpeedtestCounter);
 
@@ -456,7 +493,13 @@ namespace V2RayGCon.Services
             if (!setting.isSpeedtestCancelled)
             {
                 var port = VgcApis.Misc.Utils.GetFreeTcpPort();
-                var cfg = CreateSpeedTestConfig(rawConfig, port, isUseCache, isInjectSpeedTestTpl, isInjectActivateTpl);
+                var cfg = CreateSpeedTestConfig(
+                    rawConfig,
+                    port,
+                    isUseCache,
+                    isInjectSpeedTestTpl,
+                    isInjectActivateTpl
+                );
                 result = DoSpeedTesting(title, testUrl, testTimeout, port, cfg, logDeliever);
             }
 
@@ -493,9 +536,11 @@ namespace V2RayGCon.Services
             int testTimeout,
             int port,
             string config,
-            EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever)
+            EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever
+        )
         {
-            void log(string content) => logDeliever?.Invoke(this, new VgcApis.Models.Datas.StrEvent(content));
+            void log(string content) =>
+                logDeliever?.Invoke(this, new VgcApis.Models.Datas.StrEvent(content));
 
             log($"{I18N.SpeedtestPortNum}{port}");
             if (string.IsNullOrEmpty(config))
@@ -518,8 +563,15 @@ namespace V2RayGCon.Services
                 speedTester.RestartCoreIgnoreError(config, envs);
                 if (WaitUntilCoreReady(speedTester))
                 {
-                    var expectedSizeInKib = setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestExpectedSizeInKib : -1;
-                    var r = VgcApis.Misc.Utils.TimedDownloadTest(testUrl, port, expectedSizeInKib, testTimeout);
+                    var expectedSizeInKib = setting.isUseCustomSpeedtestSettings
+                        ? setting.CustomSpeedtestExpectedSizeInKib
+                        : -1;
+                    var r = VgcApis.Misc.Utils.TimedDownloadTest(
+                        testUrl,
+                        port,
+                        expectedSizeInKib,
+                        testTimeout
+                    );
                     latency = r.Item1;
                     len = r.Item2;
                 }
@@ -543,11 +595,12 @@ namespace V2RayGCon.Services
         }
 
         JObject CreateInboundSetting(
-           int inboundType,
-           string ip,
-           int port,
-           string protocol,
-           string tplKey)
+            int inboundType,
+            string ip,
+            int port,
+            string protocol,
+            string tplKey
+        )
         {
             var o = JObject.Parse(@"{}");
             o["tag"] = "agentin";
@@ -569,7 +622,8 @@ namespace V2RayGCon.Services
             int port,
             bool isUseCache,
             bool isInjectSpeedTestTpl,
-            bool isInjectActivateTpl)
+            bool isInjectActivateTpl
+        )
         {
             var empty = string.Empty;
             if (port <= 0)
@@ -578,7 +632,11 @@ namespace V2RayGCon.Services
             }
 
             var config = DecodeConfig(
-                rawConfig, isUseCache, isInjectSpeedTestTpl, isInjectActivateTpl);
+                rawConfig,
+                isUseCache,
+                isInjectSpeedTestTpl,
+                isInjectActivateTpl
+            );
 
             if (config == null)
             {
@@ -596,11 +654,14 @@ namespace V2RayGCon.Services
                 config["log"] = JToken.Parse("{'loglevel': 'warning'}");
             }
 
-            if (!ModifyInboundWithCustomSetting(
-                ref config,
-                (int)Models.Datas.Enums.ProxyTypes.HTTP,
-                VgcApis.Models.Consts.Webs.LoopBackIP,
-                port))
+            if (
+                !ModifyInboundWithCustomSetting(
+                    ref config,
+                    (int)Models.Datas.Enums.ProxyTypes.HTTP,
+                    VgcApis.Models.Consts.Webs.LoopBackIP,
+                    port
+                )
+            )
             {
                 return empty;
             }
@@ -616,7 +677,8 @@ namespace V2RayGCon.Services
             var routingRules = Misc.Utils.GetKey(config, "routing.rules");
             var routingSettingsRules = Misc.Utils.GetKey(config, "routing.settings.rules");
             var hasRoutingV4 = routingRules == null ? false : (routingRules is JArray);
-            var hasRoutingV3 = routingSettingsRules == null ? false : (routingSettingsRules is JArray);
+            var hasRoutingV3 =
+                routingSettingsRules == null ? false : (routingSettingsRules is JArray);
 
             var isUseRoutingV4 = !hasRoutingV3 && (useV4 || hasRoutingV4);
             return isUseRoutingV4 ? "routeCnipV4" : "routeCNIP";
@@ -644,7 +706,6 @@ namespace V2RayGCon.Services
                 config["inbound"] = o;
             }
         }
-
 
         #endregion
     }

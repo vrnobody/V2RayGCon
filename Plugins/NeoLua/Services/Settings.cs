@@ -1,13 +1,9 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using VgcApis.Interfaces.Services;
 
 namespace NeoLuna.Services
 {
-    internal class Settings :
-        VgcApis.BaseClasses.Disposable
-
+    internal class Settings : VgcApis.BaseClasses.Disposable
     {
         ISettingsService vgcSetting;
 
@@ -18,21 +14,21 @@ namespace NeoLuna.Services
 
         readonly VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
 
-
         public Settings()
         {
             lazyBookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveUserSettingsNow,
                 VgcApis.Models.Consts.Intervals.LazySaveLunaSettingsInterval,
-                3000);
+                3000
+            );
         }
 
         #region properties
         bool _isDisposing = false;
+
         public void SetIsDisposing(bool value) => _isDisposing = value;
 
         public bool isScreenLocked => vgcSetting.IsScreenLocked();
-
 
         #endregion
 
@@ -53,9 +49,10 @@ namespace NeoLuna.Services
         {
             this.vgcSetting = vgcSetting;
 
-            userSettings = VgcApis.Misc.Utils
-                .LoadPluginSetting<Models.Data.UserSettings>(
-                    pluginName, vgcSetting);
+            userSettings = VgcApis.Misc.Utils.LoadPluginSetting<Models.Data.UserSettings>(
+                pluginName,
+                vgcSetting
+            );
 
             userSettings.NormalizeData();
         }
@@ -80,11 +77,9 @@ namespace NeoLuna.Services
             vgcSetting.WriteLocalStorage(key, value);
         }
 
-        public List<Models.Data.LuaCoreSetting> GetLuaCoreSettings() =>
-            userSettings.luaServers;
+        public List<Models.Data.LuaCoreSetting> GetLuaCoreSettings() => userSettings.luaServers;
 
-        public void SaveUserSettingsLater() =>
-            lazyBookKeeper?.Deadline();
+        public void SaveUserSettingsLater() => lazyBookKeeper?.Deadline();
 
         #endregion
 
@@ -98,11 +93,8 @@ namespace NeoLuna.Services
 
         #region private methods
         void SaveUserSettingsNow() =>
-            VgcApis.Misc.Utils.SavePluginSetting(
-                pluginName, userSettings, vgcSetting);
+            VgcApis.Misc.Utils.SavePluginSetting(pluginName, userSettings, vgcSetting);
 
         #endregion
-
-
     }
 }

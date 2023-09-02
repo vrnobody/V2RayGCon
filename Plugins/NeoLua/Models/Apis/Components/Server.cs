@@ -5,31 +5,28 @@ using Neo.IronLua;
 
 namespace NeoLuna.Models.Apis.Components
 {
-    internal sealed class Server :
-        VgcApis.BaseClasses.ComponentOf<LuaApis>,
-        Interfaces.ILuaServer
+    internal sealed class Server : VgcApis.BaseClasses.ComponentOf<LuaApis>, Interfaces.ILuaServer
     {
         VgcApis.Interfaces.Services.IServersService vgcServers;
         VgcApis.Interfaces.Services.IConfigMgrService vgcConfigMgr;
 
-        public Server(
-             VgcApis.Interfaces.Services.IApiService api)
+        public Server(VgcApis.Interfaces.Services.IApiService api)
         {
             vgcServers = api.GetServersService();
             vgcConfigMgr = api.GetConfigMgrService();
         }
 
         #region balancer
-        public int BalancerStrategyRandom { get; } = (int)VgcApis.Models.Datas.Enums.BalancerStrategies.Random;
+        public int BalancerStrategyRandom { get; } =
+            (int)VgcApis.Models.Datas.Enums.BalancerStrategies.Random;
 
-        public int BalancerStrategyLeastPing { get; } = (int)VgcApis.Models.Datas.Enums.BalancerStrategies.LeastPing;
+        public int BalancerStrategyLeastPing { get; } =
+            (int)VgcApis.Models.Datas.Enums.BalancerStrategies.LeastPing;
         #endregion
 
-        public int Count() =>
-            vgcServers.Count();
+        public int Count() => vgcServers.Count();
 
-        public int CountSelected() =>
-            vgcServers.CountSelected();
+        public int CountSelected() => vgcServers.CountSelected();
 
         public bool Add(string config) => Add(config, "");
 
@@ -67,21 +64,17 @@ namespace NeoLuna.Models.Apis.Components
             return vgcServers.DeleteServerByUids(list);
         }
 
-        public void UpdateAllSummary() =>
-            vgcServers.UpdateAllServersSummary();
+        public void UpdateAllSummary() => vgcServers.UpdateAllServersSummary();
 
-        public void ResetIndexes() =>
-            vgcServers.ResetIndexQuiet();
+        public void ResetIndexes() => vgcServers.ResetIndexQuiet();
 
         // expose for ILuaServer
-        public long RunSpeedTest(string rawConfig) =>
-            vgcConfigMgr.RunSpeedTest(rawConfig);
+        public long RunSpeedTest(string rawConfig) => vgcConfigMgr.RunSpeedTest(rawConfig);
 
         public long RunCustomSpeedTest(string rawConfig, string testUrl, int testTimeout) =>
             vgcConfigMgr.RunCustomSpeedTest(rawConfig, testUrl, testTimeout);
 
-        public List<ICoreServCtrl> GetAllServers() =>
-            vgcServers.GetAllServersOrderByIndex();
+        public List<ICoreServCtrl> GetAllServers() => vgcServers.GetAllServersOrderByIndex();
 
         public List<ICoreServCtrl> GetServersByUids(LuaTable uids)
         {
@@ -89,23 +82,18 @@ namespace NeoLuna.Models.Apis.Components
             return vgcServers.GetServersByUids(list);
         }
 
-        public void ReverseSelectedByIndex() =>
-            vgcServers.ReverseSelectedByIndex();
+        public void ReverseSelectedByIndex() => vgcServers.ReverseSelectedByIndex();
 
         public void SortSelectedServersByLastModifiedDate() =>
             vgcServers.SortSelectedByLastModifiedDate();
 
-        public void SortSelectedServersBySummary() =>
-            vgcServers.SortSelectedBySummary();
+        public void SortSelectedServersBySummary() => vgcServers.SortSelectedBySummary();
 
-        public void SortSelectedServersBySpeedTest() =>
-            vgcServers.SortSelectedBySpeedTest();
+        public void SortSelectedServersBySpeedTest() => vgcServers.SortSelectedBySpeedTest();
 
-        public void SortSelectedByDownloadTotal() =>
-            vgcServers.SortSelectedByDownloadTotal();
+        public void SortSelectedByDownloadTotal() => vgcServers.SortSelectedByDownloadTotal();
 
-        public void SortSelectedByUploadTotal() =>
-            vgcServers.SortSelectedByUploadTotal();
+        public void SortSelectedByUploadTotal() => vgcServers.SortSelectedByUploadTotal();
 
         public void ReverseServersByIndex(LuaTable uids)
         {
@@ -143,8 +131,7 @@ namespace NeoLuna.Models.Apis.Components
             vgcServers.SortServersByUploadTotal(list);
         }
 
-        public void StopAllServers() =>
-            vgcServers.StopAllServers();
+        public void StopAllServers() => vgcServers.StopAllServers();
 
         public bool RunSpeedTestByUids(LuaTable uids)
         {
@@ -152,36 +139,34 @@ namespace NeoLuna.Models.Apis.Components
             return vgcServers.RunSpeedTestBgQuiet(list);
         }
 
-        public bool RunSpeedTestOnSelectedServers() =>
-            vgcServers.RunSpeedTestOnSelectedServers();
+        public bool RunSpeedTestOnSelectedServers() => vgcServers.RunSpeedTestOnSelectedServers();
 
         public bool RunSpeedTestOnSelectedServersBgQuiet() =>
             vgcServers.RunSpeedTestOnSelectedServersBgQuiet();
 
-        public void StopSpeedTest() =>
-            vgcServers.StopSpeedTest();
+        public void StopSpeedTest() => vgcServers.StopSpeedTest();
 
-        public bool IsRunningSpeedTest() =>
-            vgcServers.IsRunningSpeedTest();
+        public bool IsRunningSpeedTest() => vgcServers.IsRunningSpeedTest();
 
         public string PackSelectedServers(string orgUid, string pkgName) =>
             PackSelectedServers(
-                orgUid, pkgName,
-                (int)VgcApis.Models.Datas.Enums.BalancerStrategies.Random);
+                orgUid,
+                pkgName,
+                (int)VgcApis.Models.Datas.Enums.BalancerStrategies.Random
+            );
 
         public string PackSelectedServers(string orgUid, string pkgName, int strategy)
         {
-            return PackSelectedServers(
-                orgUid,
-                pkgName,
-                strategy,
-                string.Empty,
-                string.Empty);
+            return PackSelectedServers(orgUid, pkgName, strategy, string.Empty, string.Empty);
         }
 
         public string PackSelectedServers(
-            string orgUid, string pkgName, int strategy,
-            string interval, string url)
+            string orgUid,
+            string pkgName,
+            int strategy,
+            string interval,
+            string url
+        )
         {
             var st = (VgcApis.Models.Datas.Enums.BalancerStrategies)strategy;
             return vgcServers.PackSelectedServersV4(
@@ -190,13 +175,18 @@ namespace NeoLuna.Models.Apis.Components
                 interval,
                 url,
                 st,
-                VgcApis.Models.Datas.Enums.PackageTypes.Balancer);
+                VgcApis.Models.Datas.Enums.PackageTypes.Balancer
+            );
         }
 
         public string PackServersWithUids(
             LuaTable uids,
-            string orgUid, string pkgName, int strategy,
-            string interval, string url)
+            string orgUid,
+            string pkgName,
+            int strategy,
+            string interval,
+            string url
+        )
         {
             var st = (VgcApis.Models.Datas.Enums.BalancerStrategies)strategy;
             var list = global::NeoLuna.Misc.Utils.LuaTableToList(uids, false);
@@ -207,11 +197,11 @@ namespace NeoLuna.Models.Apis.Components
                 interval,
                 url,
                 st,
-                VgcApis.Models.Datas.Enums.PackageTypes.Balancer);
+                VgcApis.Models.Datas.Enums.PackageTypes.Balancer
+            );
         }
 
-        public string ChainServersWithUids(
-            LuaTable uids, string orgUid, string pkgName)
+        public string ChainServersWithUids(LuaTable uids, string orgUid, string pkgName)
         {
             var list = global::NeoLuna.Misc.Utils.LuaTableToList(uids, false);
             return vgcServers.PackServersWithUidsV4(
@@ -221,9 +211,9 @@ namespace NeoLuna.Models.Apis.Components
                 string.Empty,
                 string.Empty,
                 VgcApis.Models.Datas.Enums.BalancerStrategies.Random,
-                VgcApis.Models.Datas.Enums.PackageTypes.Chain);
+                VgcApis.Models.Datas.Enums.PackageTypes.Chain
+            );
         }
-
 
         public string ChainSelectedServers(string orgUid, string pkgName) =>
             vgcServers.PackSelectedServersV4(
@@ -232,7 +222,8 @@ namespace NeoLuna.Models.Apis.Components
                 string.Empty,
                 string.Empty,
                 VgcApis.Models.Datas.Enums.BalancerStrategies.Random,
-                VgcApis.Models.Datas.Enums.PackageTypes.Chain);
+                VgcApis.Models.Datas.Enums.PackageTypes.Chain
+            );
 
         #region wrap interface
         public IWrappedCoreServCtrl GetWrappedServerByIndex(int index) =>
@@ -245,9 +236,7 @@ namespace NeoLuna.Models.Apis.Components
             GetServerByConfig(config)?.Wrap();
 
         public List<IWrappedCoreServCtrl> GetWrappedServersByUids(LuaTable uids) =>
-            GetServersByUids(uids).Select(c => c?.Wrap())
-                .Where(c => c != null)
-                .ToList();
+            GetServersByUids(uids).Select(c => c?.Wrap()).Where(c => c != null).ToList();
         #endregion
     }
 }

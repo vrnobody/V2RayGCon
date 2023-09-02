@@ -8,19 +8,19 @@
 
         public PsSettings() { }
 
-        public void Run(
-            VgcApis.Interfaces.Services.ISettingsService setting)
+        public void Run(VgcApis.Interfaces.Services.ISettingsService setting)
         {
             this.setting = setting;
             userSettings = LoadUserSettings();
         }
 
-
         #region public methods
         bool _IsDisposing = false;
+
         public void SetIsDisposing(bool value) => _IsDisposing = value;
 
         public bool IsClosing() => _IsDisposing || setting.IsClosing();
+
         public void DebugLog(string content)
         {
 #if DEBUG
@@ -41,9 +41,10 @@
         /// <returns></returns>
         public string[] GetCustomPacSetting()
         {
-            return new string[] {
-                userSettings.tabPacWhiteList??string.Empty,
-                userSettings.tabPacBlackList??string.Empty,
+            return new string[]
+            {
+                userSettings.tabPacWhiteList ?? string.Empty,
+                userSettings.tabPacBlackList ?? string.Empty,
             };
         }
 
@@ -64,7 +65,6 @@
             SaveUserSettings();
         }
 
-
         /// <summary>
         /// on error return default setting
         /// </summary>
@@ -74,14 +74,13 @@
             var empty = new Model.Data.BasicSettings();
             try
             {
-                var result = VgcApis.Misc.Utils
-                    .DeserializeObject<Model.Data.BasicSettings>(
-                    userSettings.tabBasicSetting);
+                var result = VgcApis.Misc.Utils.DeserializeObject<Model.Data.BasicSettings>(
+                    userSettings.tabBasicSetting
+                );
                 if (result != null)
                 {
                     return result;
                 }
-
             }
             catch { }
             return empty;
@@ -97,10 +96,7 @@
             catch { }
         }
 
-        public void Cleanup()
-        {
-
-        }
+        public void Cleanup() { }
         #endregion
 
         #region private methods
@@ -115,9 +111,9 @@
 
             try
             {
-                var result = VgcApis.Misc.Utils
-                    .DeserializeObject<Model.Data.UserSettings>(
-                        userSettingString);
+                var result = VgcApis.Misc.Utils.DeserializeObject<Model.Data.UserSettings>(
+                    userSettingString
+                );
                 return result ?? empty;
             }
             catch { }
@@ -125,7 +121,5 @@
             return empty;
         }
         #endregion
-
     }
-
 }

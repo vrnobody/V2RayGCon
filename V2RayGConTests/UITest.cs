@@ -8,11 +8,7 @@ namespace V2RayGCon.Test
     [TestClass]
     public class UITest
     {
-
-        public UITest()
-        {
-
-        }
+        public UITest() { }
 
         [TestMethod]
         public void UpdateControlOnDemandTest()

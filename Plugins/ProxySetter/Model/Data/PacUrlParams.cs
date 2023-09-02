@@ -2,14 +2,17 @@
 {
     public class PacUrlParams
     {
-        public string ip, mime;
+        public string ip,
+            mime;
         public int port;
-        public bool isSocks, isWhiteList, isDebug;
+        public bool isSocks,
+            isWhiteList,
+            isDebug;
 
         // (string ip, int port, bool isSocks, bool isWhiteList)
         public PacUrlParams()
         {
-            mime = "html";  // html,js,pac default pac
+            mime = "html"; // html,js,pac default pac
             ip = VgcApis.Models.Consts.Webs.LoopBackIP;
             isSocks = false;
             isWhiteList = true;

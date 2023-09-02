@@ -7,6 +7,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
     class Shadowsocks : ConfigerComponentController
     {
         Services.Cache cache;
+
         public Shadowsocks(
             RadioButton rbtnInboundMode,
             CheckBox chkV4Mode,
@@ -15,7 +16,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             CheckBox chkIsShowPassword,
             ComboBox cboxMethods,
             CheckBox chkIsUseOTA,
-            Button btnInsert)
+            Button btnInsert
+        )
         {
             cache = Services.Cache.Instance;
             isServerMode = false;
@@ -27,7 +29,6 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             AttachEvents(tboxPassword, chkIsShowPassword, btnInsert, rbtnInboundMode, chkV4Mode);
             DataBinding(tboxAddress, tboxPassword, cboxMethods, chkIsUseOTA);
         }
-
 
         #region properties
         private bool isServerMode { get; set; }
@@ -80,9 +81,9 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
             this.isUseOTA = Misc.Utils.GetValue<bool>(config, prefix, "ota");
             this.password = GetStr(prefix, "password");
-            this.address = isServerMode ?
-                Misc.Utils.GetAddr(config, root, "listen", "port") :
-                Misc.Utils.GetAddr(config, prefix, "address", "port");
+            this.address = isServerMode
+                ? Misc.Utils.GetAddr(config, root, "listen", "port")
+                : Misc.Utils.GetAddr(config, prefix, "address", "port");
             SetMethodTypeIndex(GetStr(prefix, "method"));
         }
         #endregion
@@ -100,10 +101,16 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         {
             this.methodTypeIndex = Misc.Utils.GetIndexIgnoreCase(
                 Models.Datas.Table.ssMethods,
-                selectedMethod);
+                selectedMethod
+            );
         }
 
-        private void DataBinding(TextBox tboxAddress, TextBox tboxPassword, ComboBox cboxMethods, CheckBox chkIsUseOTA)
+        private void DataBinding(
+            TextBox tboxAddress,
+            TextBox tboxPassword,
+            ComboBox cboxMethods,
+            CheckBox chkIsUseOTA
+        )
         {
             var bs = new BindingSource();
             bs.DataSource = this;
@@ -116,14 +123,16 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 bs,
                 nameof(this.isUseOTA),
                 true,
-                DataSourceUpdateMode.OnPropertyChanged);
+                DataSourceUpdateMode.OnPropertyChanged
+            );
 
             cboxMethods.DataBindings.Add(
                 nameof(ComboBox.SelectedIndex),
                 bs,
                 nameof(this.methodTypeIndex),
                 true,
-                DataSourceUpdateMode.OnPropertyChanged);
+                DataSourceUpdateMode.OnPropertyChanged
+            );
         }
 
         private void AttachEvents(
@@ -131,7 +140,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             CheckBox chkIsShowPassword,
             Button btnInsert,
             RadioButton rbtnIsServerMode,
-            CheckBox chkV4Mode)
+            CheckBox chkV4Mode
+        )
         {
             chkV4Mode.CheckedChanged += (s, a) =>
             {
@@ -200,7 +210,5 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         }
 
         #endregion
-
     }
-
 }

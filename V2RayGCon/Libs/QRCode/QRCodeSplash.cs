@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Windows.Forms;
 
-
 namespace V2RayGCon.Libs.QRCode
 {
     public class QRCodeSplashForm : PerPixelAlphaForm
@@ -152,16 +151,18 @@ namespace V2RayGCon.Libs.QRCode
     // class that exposes needed win32 gdi functions.
     class Win32
     {
-
         [StructLayout(LayoutKind.Sequential)]
         public struct Point
         {
             public Int32 x;
             public Int32 y;
 
-            public Point(Int32 x, Int32 y) { this.x = x; this.y = y; }
+            public Point(Int32 x, Int32 y)
+            {
+                this.x = x;
+                this.y = y;
+            }
         }
-
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Size
@@ -169,9 +170,12 @@ namespace V2RayGCon.Libs.QRCode
             public Int32 cx;
             public Int32 cy;
 
-            public Size(Int32 cx, Int32 cy) { this.cx = cx; this.cy = cy; }
+            public Size(Int32 cx, Int32 cy)
+            {
+                this.cx = cx;
+                this.cy = cy;
+            }
         }
-
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         struct ARGB
@@ -182,7 +186,6 @@ namespace V2RayGCon.Libs.QRCode
             public byte Alpha;
         }
 
-
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct BLENDFUNCTION
         {
@@ -192,7 +195,6 @@ namespace V2RayGCon.Libs.QRCode
             public byte AlphaFormat;
         }
 
-
         public const Int32 ULW_COLORKEY = 0x00000001;
         public const Int32 ULW_ALPHA = 0x00000002;
         public const Int32 ULW_OPAQUE = 0x00000004;
@@ -200,9 +202,18 @@ namespace V2RayGCon.Libs.QRCode
         public const byte AC_SRC_OVER = 0x00;
         public const byte AC_SRC_ALPHA = 0x01;
 
-
         [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
-        public static extern int UpdateLayeredWindow(IntPtr hwnd, IntPtr hdcDst, ref Point pptDst, ref Size psize, IntPtr hdcSrc, ref Point pprSrc, Int32 crKey, ref BLENDFUNCTION pblend, Int32 dwFlags);
+        public static extern int UpdateLayeredWindow(
+            IntPtr hwnd,
+            IntPtr hdcDst,
+            ref Point pptDst,
+            ref Size psize,
+            IntPtr hdcSrc,
+            ref Point pprSrc,
+            Int32 crKey,
+            ref BLENDFUNCTION pblend,
+            Int32 dwFlags
+        );
 
         [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
         public static extern IntPtr GetDC(IntPtr hWnd);
@@ -223,7 +234,6 @@ namespace V2RayGCon.Libs.QRCode
         public static extern int DeleteObject(IntPtr hObject);
     }
 
-
     public class PerPixelAlphaForm : Form
     {
         // http://www.codeproject.com/Articles/1822/Per-Pixel-Alpha-Blend-in-C
@@ -239,7 +249,6 @@ namespace V2RayGCon.Libs.QRCode
         {
             SetBitmap(bitmap, 255);
         }
-
 
         /// <para>Changes the current bitmap with a custom opacity level.  Here is where all happens!</para>
         public void SetBitmap(Bitmap bitmap, byte opacity)
@@ -259,7 +268,7 @@ namespace V2RayGCon.Libs.QRCode
 
             try
             {
-                hBitmap = bitmap.GetHbitmap(Color.FromArgb(0));  // grab a GDI handle from this GDI+ bitmap
+                hBitmap = bitmap.GetHbitmap(Color.FromArgb(0)); // grab a GDI handle from this GDI+ bitmap
                 oldBitmap = Win32.SelectObject(memDc, hBitmap);
 
                 Win32.Size size = new Win32.Size(bitmap.Width, bitmap.Height);
@@ -271,7 +280,17 @@ namespace V2RayGCon.Libs.QRCode
                 blend.SourceConstantAlpha = opacity;
                 blend.AlphaFormat = Win32.AC_SRC_ALPHA;
 
-                Win32.UpdateLayeredWindow(Handle, screenDc, ref topPos, ref size, memDc, ref pointSource, 0, ref blend, Win32.ULW_ALPHA);
+                Win32.UpdateLayeredWindow(
+                    Handle,
+                    screenDc,
+                    ref topPos,
+                    ref size,
+                    memDc,
+                    ref pointSource,
+                    0,
+                    ref blend,
+                    Win32.ULW_ALPHA
+                );
             }
             finally
             {
@@ -285,7 +304,6 @@ namespace V2RayGCon.Libs.QRCode
                 Win32.DeleteDC(memDc);
             }
         }
-
 
         protected override CreateParams CreateParams
         {

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
 namespace Luna.Misc
 {
     public static class Utils
     {
         #region lua vm
 
-        internal static bool DoString(Controllers.LuaCoreCtrl coreCtrl, string script, bool isLoadClr)
+        internal static bool DoString(
+            Controllers.LuaCoreCtrl coreCtrl,
+            string script,
+            bool isLoadClr
+        )
         {
             if (coreCtrl == null)
             {
@@ -22,8 +25,9 @@ namespace Luna.Misc
         }
 
         internal static Controllers.LuaCoreCtrl CreateLuaCoreCtrl(
-           Services.FormMgrSvc formMgr,
-           Action<string> logger)
+            Services.FormMgrSvc formMgr,
+            Action<string> logger
+        )
         {
             var luaApis = new Models.Apis.LuaApis(formMgr);
             luaApis.Prepare();

@@ -1,16 +1,15 @@
 ﻿namespace VgcApis.Libs.Streams
 {
-
     // http://sanity-free.org/146/crc8_implementation_in_csharp.html
 
     public static class Crc8
     {
         static byte[] table = new byte[256];
+
         // x8 + x7 + x6 + x4 + x2 + 1
         const byte poly = 0xd5;
 
-        public static byte ComputeChecksum(byte[] bytes) =>
-            ComputeChecksum(bytes, 0);
+        public static byte ComputeChecksum(byte[] bytes) => ComputeChecksum(bytes, 0);
 
         public static byte ComputeChecksum(byte[] bytes, int start)
         {

@@ -3,13 +3,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
-using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -25,7 +23,10 @@ namespace V2RayGCon.Misc
     {
         #region strings
 
-        public static VgcApis.Models.Datas.StatsSample ParseStatApiResult(bool isXray, string result)
+        public static VgcApis.Models.Datas.StatsSample ParseStatApiResult(
+            bool isXray,
+            string result
+        )
         {
             return isXray ? ParseXrayStatApiResult(result) : ParseV2RayStatApiResult(result);
         }
@@ -101,6 +102,7 @@ namespace V2RayGCon.Misc
         }
 
         static string appNameAndVersion = null;
+
         public static string GetAppNameAndVer()
         {
             if (string.IsNullOrEmpty(appNameAndVersion))
@@ -154,14 +156,14 @@ namespace V2RayGCon.Misc
 
         public static string GetConfigRoot(bool isInbound, bool isV4)
         {
-            return (isInbound ? "inbound" : "outbound")
-                + (isV4 ? "s.0" : "");
+            return (isInbound ? "inbound" : "outbound") + (isV4 ? "s.0" : "");
         }
 
         public static JObject ParseImportRecursively(
-          Func<List<string>, List<string>> fetcher,
-          JObject config,
-          int depth)
+            Func<List<string>, List<string>> fetcher,
+            JObject config,
+            int depth
+        )
         {
             var empty = JObject.Parse(@"{}");
 
@@ -180,16 +182,13 @@ namespace V2RayGCon.Misc
                 return config;
             }
 
-            var configList =
-                Misc.Utils.ExecuteInParallel<string, JObject>(
-                    contents,
-                    (content) =>
-                    {
-                        return ParseImportRecursively(
-                            fetcher,
-                            JObject.Parse(content),
-                            depth - 1);
-                    });
+            var configList = Misc.Utils.ExecuteInParallel<string, JObject>(
+                contents,
+                (content) =>
+                {
+                    return ParseImportRecursively(fetcher, JObject.Parse(content), depth - 1);
+                }
+            );
 
             var result = empty;
             foreach (var c in configList)
@@ -225,7 +224,9 @@ namespace V2RayGCon.Misc
             try
             {
                 var jobj = JObject.Parse(config);
-                var confs = GetKey(jobj, "v2raygcon.configs")?.ToObject<Dictionary<string, string>>()?.Keys;
+                var confs = GetKey(jobj, "v2raygcon.configs")
+                    ?.ToObject<Dictionary<string, string>>()
+                    ?.Keys;
                 if (confs == null)
                 {
                     return r;
@@ -242,7 +243,9 @@ namespace V2RayGCon.Misc
                     args = $"{args} -{confArg}={conf}";
                 }
 
-                return hasStdIn ? $"{jsonFormat} {args}" : $"{jsonFormat} -{confArg}={stdIn} {args}";
+                return hasStdIn
+                    ? $"{jsonFormat} {args}"
+                    : $"{jsonFormat} -{confArg}={stdIn} {args}";
             }
             catch { }
             return r;
@@ -381,7 +384,6 @@ namespace V2RayGCon.Misc
                         return true;
                     }
                 }
-
             }
             return false;
         }
@@ -468,7 +470,6 @@ namespace V2RayGCon.Misc
                 result = child;
             }
 
-
             if (string.IsNullOrEmpty(path))
             {
                 return JObject.Parse(@"{}");
@@ -532,10 +533,7 @@ namespace V2RayGCon.Misc
             return false;
         }
 
-        public static bool TryExtractJObjectPart(
-            JObject source,
-            string path,
-            out JObject result)
+        public static bool TryExtractJObjectPart(JObject source, string path, out JObject result)
         {
             var parts = ParsePathIntoParentAndKey(path);
             var key = parts.Item2;
@@ -557,8 +555,7 @@ namespace V2RayGCon.Misc
 
             result = CreateJObject(parentPath);
 
-            var parent = string.IsNullOrEmpty(parentPath) ?
-                result : GetKey(result, parentPath);
+            var parent = string.IsNullOrEmpty(parentPath) ? result : GetKey(result, parentPath);
 
             if (parent == null || !(parent is JObject))
             {
@@ -582,8 +579,7 @@ namespace V2RayGCon.Misc
                 throw new KeyNotFoundException();
             }
 
-            var node = string.IsNullOrEmpty(parent) ?
-                json : GetKey(json, parent);
+            var node = string.IsNullOrEmpty(parent) ? json : GetKey(json, parent);
 
             if (node == null || !(node is JObject))
             {
@@ -595,21 +591,26 @@ namespace V2RayGCon.Misc
 
         static void ConcatJson(JObject body, JObject mixin)
         {
-            body.Merge(mixin, new JsonMergeSettings
-            {
-                MergeArrayHandling = MergeArrayHandling.Concat,
-                MergeNullValueHandling = MergeNullValueHandling.Ignore,
-            });
+            body.Merge(
+                mixin,
+                new JsonMergeSettings
+                {
+                    MergeArrayHandling = MergeArrayHandling.Concat,
+                    MergeNullValueHandling = MergeNullValueHandling.Ignore,
+                }
+            );
         }
 
         public static void UnionJson(JObject body, JObject mixin)
         {
-            body.Merge(mixin, new JsonMergeSettings
-            {
-                MergeArrayHandling = MergeArrayHandling.Union,
-                MergeNullValueHandling = MergeNullValueHandling.Ignore,
-            });
-
+            body.Merge(
+                mixin,
+                new JsonMergeSettings
+                {
+                    MergeArrayHandling = MergeArrayHandling.Union,
+                    MergeNullValueHandling = MergeNullValueHandling.Ignore,
+                }
+            );
         }
 
         public static void CombineConfigWithRoutingInTheEnd(ref JObject body, JObject mixin)
@@ -679,10 +680,7 @@ namespace V2RayGCon.Misc
             return body;
         }
 
-        static void CombineConfigWorker(
-            ref JObject body,
-            JObject mixin,
-            IEnumerable<string> keys)
+        static void CombineConfigWorker(ref JObject body, JObject mixin, IEnumerable<string> keys)
         {
             JObject backup = JObject.Parse(@"{}");
 
@@ -729,7 +727,8 @@ namespace V2RayGCon.Misc
             List<Models.Datas.ImportItem> items,
             bool isIncludeSpeedTest,
             bool isIncludeActivate,
-            bool isIncludePackage)
+            bool isIncludePackage
+        )
         {
             var result = CreateJObject(@"v2raygcon.import");
             foreach (var item in items)
@@ -739,9 +738,11 @@ namespace V2RayGCon.Misc
                 {
                     continue;
                 }
-                if ((isIncludeSpeedTest && item.isUseOnSpeedTest)
+                if (
+                    (isIncludeSpeedTest && item.isUseOnSpeedTest)
                     || (isIncludeActivate && item.isUseOnActivate)
-                    || (isIncludePackage && item.isUseOnPackage))
+                    || (isIncludePackage && item.isUseOnPackage)
+                )
                 {
                     result["v2raygcon"]["import"][url] = item.alias ?? string.Empty;
                 }
@@ -751,11 +752,14 @@ namespace V2RayGCon.Misc
 
         public static void MergeJson(JObject body, JObject mixin)
         {
-            body.Merge(mixin, new JsonMergeSettings
-            {
-                MergeArrayHandling = MergeArrayHandling.Merge,
-                MergeNullValueHandling = MergeNullValueHandling.Merge
-            });
+            body.Merge(
+                mixin,
+                new JsonMergeSettings
+                {
+                    MergeArrayHandling = MergeArrayHandling.Merge,
+                    MergeNullValueHandling = MergeNullValueHandling.Merge
+                }
+            );
         }
 
         /// <summary>
@@ -765,11 +769,7 @@ namespace V2RayGCon.Misc
         /// <returns></returns>
         public static string GetProtocolFromConfig(JObject config)
         {
-            var keys = new string[]
-            {
-                "outbound.protocol",
-                "outbounds.0.protocol",
-            };
+            var keys = new string[] { "outbound.protocol", "outbounds.0.protocol", };
 
             foreach (var key in keys)
             {
@@ -794,7 +794,6 @@ namespace V2RayGCon.Misc
             {
                 return null;
             }
-
 
             var curPos = json;
             var keys = path.Split('.');
@@ -825,7 +824,6 @@ namespace V2RayGCon.Misc
             }
 
             return depth < keys.Length ? null : curPos;
-
         }
 
         public static T GetValue<T>(JToken json, string prefix, string key)
@@ -880,7 +878,8 @@ namespace V2RayGCon.Misc
         /// <returns></returns>
         public static List<string> ExtractLinks(
             string text,
-            VgcApis.Models.Datas.Enums.LinkTypes linkType)
+            VgcApis.Models.Datas.Enums.LinkTypes linkType
+        )
         {
             var links = new List<string>();
             try
@@ -904,14 +903,15 @@ namespace V2RayGCon.Misc
         {
             try
             {
-
                 string plainText = VgcApis.Misc.Utils.Base64DecodeToString(GetLinkBody(link));
                 var vmess = JsonConvert.DeserializeObject<Models.Datas.Vmess>(plainText);
-                if (!string.IsNullOrEmpty(vmess.add)
+                if (
+                    !string.IsNullOrEmpty(vmess.add)
                     && !string.IsNullOrEmpty(vmess.port)
                     && !string.IsNullOrEmpty(vmess.id)
                     && VgcApis.Misc.Utils.IsValidPort(vmess.port)
-                    && new Guid(vmess.id) != new Guid())
+                    && new Guid(vmess.id) != new Guid()
+                )
                 {
                     return vmess;
                 }
@@ -1040,7 +1040,8 @@ namespace V2RayGCon.Misc
         /// <returns></returns>
         public static List<string[]> FetchLinksFromSubcriptions(
             List<Models.Datas.SubscriptionItem> subscriptions,
-            int proxyPort)
+            int proxyPort
+        )
         {
             string[] worker(Models.Datas.SubscriptionItem subItem)
             {
@@ -1048,14 +1049,14 @@ namespace V2RayGCon.Misc
                 var mark = subItem.isSetMark ? subItem.alias : null;
 
                 var subsString = Fetch(
-                    url, proxyPort, VgcApis.Models.Consts.Import.ParseImportTimeout);
+                    url,
+                    proxyPort,
+                    VgcApis.Models.Consts.Import.ParseImportTimeout
+                );
 
                 if (string.IsNullOrEmpty(subsString))
                 {
-                    return new string[] {
-                        string.Empty,
-                        $"[{subItem.alias}] {url}",
-                    };
+                    return new string[] { string.Empty, $"[{subItem.alias}] {url}", };
                 }
 
                 var links = new List<string> { subsString };
@@ -1095,9 +1096,9 @@ namespace V2RayGCon.Misc
         {
             var baseUrl = GetBaseUrl(url);
 
-            if (string.IsNullOrEmpty(baseUrl)
-                || string.IsNullOrEmpty(href)
-                || !href.StartsWith("/"))
+            if (
+                string.IsNullOrEmpty(baseUrl) || string.IsNullOrEmpty(href) || !href.StartsWith("/")
+            )
             {
                 return href;
             }
@@ -1176,10 +1177,7 @@ namespace V2RayGCon.Misc
 
         public static WebClient CreateWebClient(int proxyPort)
         {
-            WebClient wc = new WebClient
-            {
-                Encoding = Encoding.UTF8,
-            };
+            WebClient wc = new WebClient { Encoding = Encoding.UTF8, };
 
             wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
             if (proxyPort > 0 && proxyPort < 65536)
@@ -1234,8 +1232,6 @@ namespace V2RayGCon.Misc
 
             try
             {
-
-
                 wc.DownloadStringAsync(new Uri(url));
                 // 收到信号为True
                 if (!dlCompleted.WaitOne(timeout))
@@ -1255,13 +1251,9 @@ namespace V2RayGCon.Misc
         public static string Fetch(string url, int proxyPort, int timeout) =>
             FetchWorker(url, proxyPort, timeout);
 
-        public static string Fetch(string url) =>
-            Fetch(url, -1, -1);
+        public static string Fetch(string url) => Fetch(url, -1, -1);
 
-        public static string Fetch(string url, int timeout) =>
-            Fetch(url, -1, timeout);
-
-
+        public static string Fetch(string url, int timeout) => Fetch(url, -1, timeout);
 
         #endregion
 
@@ -1270,7 +1262,8 @@ namespace V2RayGCon.Misc
             string path,
             Models.Datas.UserSettings userSettings,
             List<CoreInfo> coreInfos,
-            Dictionary<string, string> pluginsSetting)
+            Dictionary<string, string> pluginsSetting
+        )
         {
             try
             {
@@ -1340,7 +1333,6 @@ namespace V2RayGCon.Misc
                     parts.Add(coreInfoPlaceHolder);
                     parts.Add(pp[1]);
                 }
-
             }
             catch { }
             return parts;
@@ -1366,7 +1358,8 @@ namespace V2RayGCon.Misc
             string path,
             List<string> parts,
             List<CoreInfo> coreInfos,
-            Dictionary<string, string> pluginsSetting)
+            Dictionary<string, string> pluginsSetting
+        )
         {
             var pluginPlaceHolder = VgcApis.Models.Consts.Libs.pluginPlaceHolder;
             var coreInfoPlaceHolder = VgcApis.Models.Consts.Libs.coreInfoPlaceHolder;
@@ -1375,11 +1368,17 @@ namespace V2RayGCon.Misc
             {
                 if (part == pluginPlaceHolder)
                 {
-                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectAsCompressedUnicodeBase64StringToFile(path, pluginsSetting);
+                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectAsCompressedUnicodeBase64StringToFile(
+                        path,
+                        pluginsSetting
+                    );
                 }
                 else if (part == coreInfoPlaceHolder)
                 {
-                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectAsCompressedUnicodeBase64StringToFile(path, coreInfos);
+                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectAsCompressedUnicodeBase64StringToFile(
+                        path,
+                        coreInfos
+                    );
                 }
                 else
                 {
@@ -1395,7 +1394,9 @@ namespace V2RayGCon.Misc
             Models.Datas.UserSettings userSettings,
             List<VgcApis.Models.Datas.CoreInfo> coreInfos,
             Dictionary<string, string> pluginsSetting,
-            string mainFilename, string bakFilename)
+            string mainFilename,
+            string bakFilename
+        )
         {
             try
             {
@@ -1407,7 +1408,9 @@ namespace V2RayGCon.Misc
                     }
                     else
                     {
-                        VgcApis.Libs.Sys.FileLogger.Error($"ClumsyWriter(): Write bak file failed!");
+                        VgcApis.Libs.Sys.FileLogger.Error(
+                            $"ClumsyWriter(): Write bak file failed!"
+                        );
                     }
                 }
                 else
@@ -1419,7 +1422,6 @@ namespace V2RayGCon.Misc
             return false;
         }
 
-
         public static string GetSha256SumFromFile(string file)
         {
             // http://peterkellner.net/2010/11/24/efficiently-generating-sha256-checksum-for-files-using-csharp/
@@ -1429,21 +1431,18 @@ namespace V2RayGCon.Misc
                 {
                     var sha = new SHA256Managed();
                     byte[] checksum = sha.ComputeHash(stream);
-                    return BitConverter
-                        .ToString(checksum)
-                        .Replace("-", String.Empty)
-                        .ToLower();
+                    return BitConverter.ToString(checksum).Replace("-", String.Empty).ToLower();
                 }
             }
             catch { }
             return string.Empty;
         }
 
-
         public static string GetSysAppDataFolder()
         {
             var appData = System.Environment.GetFolderPath(
-                Environment.SpecialFolder.CommonApplicationData);
+                Environment.SpecialFolder.CommonApplicationData
+            );
             var appName = VgcApis.Misc.Utils.GetAppName();
             return Path.Combine(appData, appName);
         }
@@ -1514,18 +1513,18 @@ namespace V2RayGCon.Misc
             return hash.ToString();
         }
 
-
         // 懒得改调用处的代码了。
         public static int Clamp(int value, int min, int max) =>
             VgcApis.Misc.Utils.Clamp(value, min, max);
-
 
         public static int GetIndexIgnoreCase(Dictionary<int, string> dict, string value)
         {
             foreach (var data in dict)
             {
-                if (!string.IsNullOrEmpty(data.Value)
-                    && data.Value.Equals(value, StringComparison.CurrentCultureIgnoreCase))
+                if (
+                    !string.IsNullOrEmpty(data.Value)
+                    && data.Value.Equals(value, StringComparison.CurrentCultureIgnoreCase)
+                )
                 {
                     return data.Key;
                 }
@@ -1533,37 +1532,49 @@ namespace V2RayGCon.Misc
             return -1;
         }
 
-        static string GenLinkPrefix(
-            VgcApis.Models.Datas.Enums.LinkTypes linkType) =>
+        static string GenLinkPrefix(VgcApis.Models.Datas.Enums.LinkTypes linkType) =>
             $"{linkType.ToString()}";
 
-        public static string GenPattern(
-            VgcApis.Models.Datas.Enums.LinkTypes linkType)
+        public static string GenPattern(VgcApis.Models.Datas.Enums.LinkTypes linkType)
         {
             string pattern;
             switch (linkType)
             {
                 case VgcApis.Models.Datas.Enums.LinkTypes.ss:
-                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.SsShareLinkContent;
+                    pattern =
+                        GenLinkPrefix(linkType)
+                        + "://"
+                        + VgcApis.Models.Consts.Patterns.SsShareLinkContent;
                     break;
                 case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
                 case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
                 case VgcApis.Models.Datas.Enums.LinkTypes.v:
-                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.Base64NonStandard;
+                    pattern =
+                        GenLinkPrefix(linkType)
+                        + "://"
+                        + VgcApis.Models.Consts.Patterns.Base64NonStandard;
                     break;
                 case VgcApis.Models.Datas.Enums.LinkTypes.http:
                 case VgcApis.Models.Datas.Enums.LinkTypes.https:
                     pattern = VgcApis.Models.Consts.Patterns.HttpUrl;
                     break;
                 case VgcApis.Models.Datas.Enums.LinkTypes.trojan:
-                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.UriContentNonStandard;
+                    pattern =
+                        GenLinkPrefix(linkType)
+                        + "://"
+                        + VgcApis.Models.Consts.Patterns.UriContentNonStandard;
                     break;
                 case VgcApis.Models.Datas.Enums.LinkTypes.vless:
                     // pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.UriContent;
-                    pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.UriContentNonStandard;
+                    pattern =
+                        GenLinkPrefix(linkType)
+                        + "://"
+                        + VgcApis.Models.Consts.Patterns.UriContentNonStandard;
                     break;
                 default:
-                    throw new NotSupportedException($"Not supported link type {linkType.ToString()}:// ...");
+                    throw new NotSupportedException(
+                        $"Not supported link type {linkType.ToString()}:// ..."
+                    );
             }
 
             return VgcApis.Models.Consts.Patterns.NonAlphabets + pattern;
@@ -1571,7 +1582,8 @@ namespace V2RayGCon.Misc
 
         public static string AddLinkPrefix(
             string b64Content,
-            VgcApis.Models.Datas.Enums.LinkTypes linkType)
+            VgcApis.Models.Datas.Enums.LinkTypes linkType
+        )
         {
             return GenLinkPrefix(linkType) + "://" + b64Content;
         }
@@ -1583,8 +1595,7 @@ namespace V2RayGCon.Misc
 
             if (index < 0)
             {
-                throw new ArgumentException(
-                    $"Not a valid link ${link}");
+                throw new ArgumentException($"Not a valid link ${link}");
             }
 
             return link.Substring(index + needle.Length);
@@ -1595,19 +1606,14 @@ namespace V2RayGCon.Misc
             // let downloader handle exception
             using (ZipFile zip = ZipFile.Read(zipFile))
             {
-                zip.ExtractAll(
-                    outFolder,
-                    ExtractExistingFileAction.OverwriteSilently);
+                zip.ExtractAll(outFolder, ExtractExistingFileAction.OverwriteSilently);
             }
         }
         #endregion
 
         #region UI related
         public static void CopyToClipboardAndPrompt(string content) =>
-            MessageBox.Show(
-                CopyToClipboard(content) ?
-                I18N.CopySuccess :
-                I18N.CopyFail);
+            MessageBox.Show(CopyToClipboard(content) ? I18N.CopySuccess : I18N.CopyFail);
 
         public static bool CopyToClipboard(string content)
         {
@@ -1630,25 +1636,27 @@ namespace V2RayGCon.Misc
             // https://www.medo64.com/2020/05/using-tls-1-3-from-net-4-0-application/
             try
             { //try TLS 1.3
-                ServicePointManager.SecurityProtocol = (SecurityProtocolType)12288
-                                                     | (SecurityProtocolType)3072
-                                                     | (SecurityProtocolType)768
-                                                     | SecurityProtocolType.Tls;
+                ServicePointManager.SecurityProtocol =
+                    (SecurityProtocolType)12288
+                    | (SecurityProtocolType)3072
+                    | (SecurityProtocolType)768
+                    | SecurityProtocolType.Tls;
             }
             catch (NotSupportedException)
             {
                 try
                 { //try TLS 1.2
-                    ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072
-                                                         | (SecurityProtocolType)768
-                                                         | SecurityProtocolType.Tls;
+                    ServicePointManager.SecurityProtocol =
+                        (SecurityProtocolType)3072
+                        | (SecurityProtocolType)768
+                        | SecurityProtocolType.Tls;
                 }
                 catch (NotSupportedException)
                 {
                     try
                     { //try TLS 1.1
-                        ServicePointManager.SecurityProtocol = (SecurityProtocolType)768
-                                                             | SecurityProtocolType.Tls;
+                        ServicePointManager.SecurityProtocol =
+                            (SecurityProtocolType)768 | SecurityProtocolType.Tls;
                     }
                     catch (NotSupportedException)
                     { //TLS 1.0
@@ -1664,7 +1672,6 @@ namespace V2RayGCon.Misc
             if (Clipboard.ContainsText(TextDataFormat.Text))
             {
                 return Clipboard.GetText(TextDataFormat.Text);
-
             }
             return string.Empty;
         }
@@ -1674,34 +1681,38 @@ namespace V2RayGCon.Misc
 
         /*
          * ChainActionHelper loops from [count - 1] to [0]
-         * 
+         *
          * These integers, which is index in this example,
          * will be transfered into worker function one by one.
-         * 
+         *
          * The second parameter "next" is generated automatically
          * for chaining up all workers.
-         * 
-         * e.g. 
-         * 
+         *
+         * e.g.
+         *
          * Action<int,Action> worker = (index, next)=>{
-         * 
+         *
          *   // do something accroding to index
-         *   Debug.WriteLine(index); 
-         *   
+         *   Debug.WriteLine(index);
+         *
          *   // call next when done
-         *   next(); 
+         *   next();
          * }
-         * 
+         *
          * Action done = ()=>{
          *   // do something when all done
          *   // or simply set to null
          * }
-         * 
+         *
          * Finally call this function like this.
          * ChainActionHelper(10, worker, done);
          */
 
-        public static void ChainActionHelperAsync(int countdown, Action<int, Action> worker, Action done = null)
+        public static void ChainActionHelperAsync(
+            int countdown,
+            Action<int, Action> worker,
+            Action done = null
+        )
         {
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
@@ -1710,12 +1721,20 @@ namespace V2RayGCon.Misc
         }
 
         // wrapper
-        public static void ChainActionHelper(int countdown, Action<int, Action> worker, Action done = null)
+        public static void ChainActionHelper(
+            int countdown,
+            Action<int, Action> worker,
+            Action done = null
+        )
         {
             ChainActionHelperWorker(countdown, worker, done)();
         }
 
-        static Action ChainActionHelperWorker(int countdown, Action<int, Action> worker, Action done = null)
+        static Action ChainActionHelperWorker(
+            int countdown,
+            Action<int, Action> worker,
+            Action done = null
+        )
         {
             int _index = countdown - 1;
 
@@ -1733,18 +1752,22 @@ namespace V2RayGCon.Misc
 
         public static void ExecuteInParallel<TParam>(
             IEnumerable<TParam> param,
-            Action<TParam> worker) =>
-            ExecuteInParallel(param,
+            Action<TParam> worker
+        ) =>
+            ExecuteInParallel(
+                param,
                 (p) =>
                 {
                     worker(p);
                     // ExecuteInParallel require a return value
                     return "nothing";
-                });
+                }
+            );
 
         public static List<TResult> ExecuteInParallel<TParam, TResult>(
             IEnumerable<TParam> param,
-            Func<TParam, TResult> worker)
+            Func<TParam, TResult> worker
+        )
         {
             var result = new List<TResult>();
 
@@ -1785,6 +1808,5 @@ namespace V2RayGCon.Misc
             };
         }
         #endregion
-
     }
 }

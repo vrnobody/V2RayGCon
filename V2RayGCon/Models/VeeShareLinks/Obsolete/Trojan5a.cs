@@ -15,16 +15,16 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
         public Trojan5a()
         {
             password = string.Empty;
-
         }
 
-        public Trojan5a(BasicSettings source) : this()
+        public Trojan5a(BasicSettings source)
+            : this()
         {
             CopyFrom(source);
         }
 
-        public Trojan5a(byte[] bytes) :
-           this()
+        public Trojan5a(byte[] bytes)
+            : this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
             if (ver != version)
@@ -93,8 +93,7 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 
         public bool EqTo(Trojan5a vee)
         {
-            if (!EqTo(vee as BasicSettings)
-                || password != vee.password)
+            if (!EqTo(vee as BasicSettings) || password != vee.password)
             {
                 return false;
             }
@@ -107,6 +106,5 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 
 
         #endregion
-
     }
 }

@@ -49,7 +49,6 @@ namespace VgcApis.Libs.Sys
 
         public static void Dump()
         {
-
             using (StreamReader r = File.OpenText(LogFilename))
             {
                 string line;
@@ -58,11 +57,11 @@ namespace VgcApis.Libs.Sys
                     Console.WriteLine(line);
                 }
             }
-
         }
 
         static readonly object dumpCsLocker = new object();
-        static public void DumpCallStack(string message)
+
+        public static void DumpCallStack(string message)
         {
             if (string.IsNullOrEmpty(LogFilename))
             {
@@ -76,7 +75,6 @@ namespace VgcApis.Libs.Sys
             }
         }
 
-
         #endregion
 
         #region private method
@@ -87,7 +85,8 @@ namespace VgcApis.Libs.Sys
                 "[{0}] {1} {2}",
                 prefix,
                 DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"),
-                message);
+                message
+            );
 
             Raw(text);
         }

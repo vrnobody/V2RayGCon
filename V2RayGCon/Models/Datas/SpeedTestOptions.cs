@@ -20,12 +20,14 @@
 
         public bool Equals(SpeedTestOptions target)
         {
-            if (target == null
+            if (
+                target == null
                 || !Url.Equals(target.Url)
                 || IsUse != target.IsUse
                 || Cycles != target.Cycles
                 || ExpectedSize != target.ExpectedSize
-                || Timeout != target.Timeout)
+                || Timeout != target.Timeout
+            )
             {
                 return false;
             }

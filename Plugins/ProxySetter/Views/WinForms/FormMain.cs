@@ -16,7 +16,8 @@ namespace ProxySetter.Views.WinForms
         public static FormMain CreateForm(
             Services.PsSettings setting,
             Services.PacServer pacServer,
-            Services.ServerTracker servTracker)
+            Services.ServerTracker servTracker
+        )
         {
             FormMain r = null;
             VgcApis.Misc.UI.Invoke(() =>
@@ -29,7 +30,8 @@ namespace ProxySetter.Views.WinForms
         FormMain(
             Services.PsSettings setting,
             Services.PacServer pacServer,
-            Services.ServerTracker servTracker)
+            Services.ServerTracker servTracker
+        )
         {
             this.setting = setting;
             this.pacServer = pacServer;
@@ -64,7 +66,8 @@ namespace ProxySetter.Views.WinForms
             this.Text = string.Format(
                 "{0} v{1}",
                 Properties.Resources.Name,
-                Properties.Resources.Version);
+                Properties.Resources.Version
+            );
 
             formVGCPluginCtrl = CreateFormCtrl();
 
@@ -106,10 +109,7 @@ namespace ProxySetter.Views.WinForms
 
         void StartUpdateTimer()
         {
-            updateSysProxyInfoTimer = new Timer
-            {
-                Interval = 2000,
-            };
+            updateSysProxyInfoTimer = new Timer { Interval = 2000, };
             updateSysProxyInfoTimer.Tick += UpdateSysProxyInfo;
             updateSysProxyInfoTimer.Start();
         }
@@ -118,49 +118,57 @@ namespace ProxySetter.Views.WinForms
         {
             var ctrl = new Controllers.FormVGCPluginCtrl();
 
-            ctrl.Plug(new Controllers.VGCPluginComponents.TabUsage(
-                linkLabelUsageTxthinkingPac,
-                tboxUsageReadMe));
+            ctrl.Plug(
+                new Controllers.VGCPluginComponents.TabUsage(
+                    linkLabelUsageTxthinkingPac,
+                    tboxUsageReadMe
+                )
+            );
 
-            ctrl.Plug(new Controllers.VGCPluginComponents.TabStatus(
-                pacServer,
+            ctrl.Plug(
+                new Controllers.VGCPluginComponents.TabStatus(
+                    pacServer,
+                    lbBasicCurPacServerStatus,
+                    lbBasicProxyLink,
+                    btnBasicStartPacServer,
+                    btnBasicStopPacServer,
+                    btnBasicViewInNotepad,
+                    btnBasicDebugPacServer,
+                    btnBaiscCopyProxyLink
+                )
+            );
 
-                lbBasicCurPacServerStatus,
-                lbBasicProxyLink,
-                btnBasicStartPacServer,
-                btnBasicStopPacServer,
-                btnBasicViewInNotepad,
-                btnBasicDebugPacServer,
-                btnBaiscCopyProxyLink));
+            ctrl.Plug(
+                new Controllers.VGCPluginComponents.TabBasicSetting(
+                    setting,
+                    servTracker,
+                    cboxBasicPacProtocol,
+                    cboxBasicSysProxyMode,
+                    tboxBasicGlobalPort,
+                    tboxBaiscPacPort,
+                    cboxBasicPacMode,
+                    tboxBasicCustomPacPath,
+                    chkBasicAutoUpdateSysProxy,
+                    chkBasicPacAlwaysOn,
+                    chkBasicUseCustomPac,
+                    btnBasicBrowseCustomPac,
+                    // hotkey
+                    chkBasicUseHotkey,
+                    chkBasicUseAlt,
+                    chkBasicUseShift,
+                    tboxBasicHotkey
+                )
+            );
 
-            ctrl.Plug(new Controllers.VGCPluginComponents.TabBasicSetting(
-                setting,
-                servTracker,
-
-                cboxBasicPacProtocol,
-                cboxBasicSysProxyMode,
-                tboxBasicGlobalPort,
-                tboxBaiscPacPort,
-                cboxBasicPacMode,
-                tboxBasicCustomPacPath,
-                chkBasicAutoUpdateSysProxy,
-                chkBasicPacAlwaysOn,
-                chkBasicUseCustomPac,
-                btnBasicBrowseCustomPac,
-
-                // hotkey
-                chkBasicUseHotkey,
-                chkBasicUseAlt,
-                chkBasicUseShift,
-                tboxBasicHotkey));
-
-            ctrl.Plug(new Controllers.VGCPluginComponents.TabPacCustomList(
-                setting,
-                rtboxPacWhiteList,
-                rtboxPacBlackList,
-
-                btnSetSortWhitelist,
-                btnSetSortBlacklist));
+            ctrl.Plug(
+                new Controllers.VGCPluginComponents.TabPacCustomList(
+                    setting,
+                    rtboxPacWhiteList,
+                    rtboxPacBlackList,
+                    btnSetSortWhitelist,
+                    btnSetSortBlacklist
+                )
+            );
 
             return ctrl;
         }
@@ -181,6 +189,7 @@ namespace ProxySetter.Views.WinForms
         {
             this.Close();
         }
+
         private void chkBasicUseCustomPac_CheckedChanged(object sender, EventArgs e)
         {
             var isChecked = chkBasicUseCustomPac.Checked;

@@ -18,14 +18,13 @@ namespace V2RayGCon.Test
         public void TestGetExecutablePath()
         {
 #if DEBUG
-            // these tests may fail sometimes, 
+            // these tests may fail sometimes,
             // and i had no idea what goes wrong.
             // temporary disable these tests.
 
             // var exe = core.GetExecutablePath();
             // Assert.AreEqual(false, string.IsNullOrEmpty(exe));
 #endif
-
         }
 
         [TestMethod]
@@ -41,14 +40,11 @@ namespace V2RayGCon.Test
         [TestMethod]
         public void TestGetCoreVersion()
         {
-
 #if DEBUG
             return;
             //var ver = core.GetCoreVersion();
             //Assert.AreEqual(false, string.IsNullOrEmpty(ver));
 #endif
         }
-
-
     }
 }

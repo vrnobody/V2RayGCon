@@ -1,14 +1,11 @@
 using Neo.IronLua;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NeoLuna.Misc
 {
-    static internal class Patches
+    internal static class Patches
     {
-        static Patches()
-        { }
+        static Patches() { }
 
         #region properties
 
@@ -30,6 +27,7 @@ namespace NeoLuna.Misc
         #region --- Math Lib ----------------------------------------------------------
 
         readonly static LuaTable mathLibCache = CreateMathLibrary();
+
         private static LuaTable CreateMathLibrary()
         {
             LuaTable math = new LuaTable();
@@ -81,7 +79,8 @@ namespace NeoLuna.Misc
         private delegate LuaResult byteDelg(string s, int? i = null, int? j = null);
         private delegate string charDelg(params int[] chars);
         private delegate string formatDelg(string format, params object[] prms);
-        readonly static LuaTable strLibCache = CreateStringLibrary();
+        static readonly LuaTable strLibCache = CreateStringLibrary();
+
         private static LuaTable CreateStringLibrary()
         {
             LuaTable str = new LuaTable();
@@ -89,13 +88,21 @@ namespace NeoLuna.Misc
             str["byte"] = new byteDelg(Neo.IronLua.LuaLibraryString.@byte);
             str["char"] = new charDelg(Neo.IronLua.LuaLibraryString.@char);
             str["dump"] = new Func<Delegate, string>(Neo.IronLua.LuaLibraryString.dump);
-            str["find"] = new Func<string, string, int, bool, LuaResult>(Neo.IronLua.LuaLibraryString.find);
+            str["find"] = new Func<string, string, int, bool, LuaResult>(
+                Neo.IronLua.LuaLibraryString.find
+            );
             str["format"] = new formatDelg(Neo.IronLua.LuaLibraryString.format);
-            str["gmatch"] = new Func<string, string, LuaResult>(Neo.IronLua.LuaLibraryString.gmatch);
-            str["gsub"] = new Func<string, string, object, int, LuaResult>(Neo.IronLua.LuaLibraryString.gsub);
+            str["gmatch"] = new Func<string, string, LuaResult>(
+                Neo.IronLua.LuaLibraryString.gmatch
+            );
+            str["gsub"] = new Func<string, string, object, int, LuaResult>(
+                Neo.IronLua.LuaLibraryString.gsub
+            );
             str["len"] = new Func<string, int>(Neo.IronLua.LuaLibraryString.len);
             str["lower"] = new Func<string, string>(Neo.IronLua.LuaLibraryString.lower);
-            str["match"] = new Func<string, string, int, LuaResult>(Neo.IronLua.LuaLibraryString.match);
+            str["match"] = new Func<string, string, int, LuaResult>(
+                Neo.IronLua.LuaLibraryString.match
+            );
             str["rep"] = new Func<string, int, string, string>(Neo.IronLua.LuaLibraryString.rep);
             str["reverse"] = new Func<string, string>(Neo.IronLua.LuaLibraryString.reverse);
             str["sub"] = new Func<string, int, int, string>(Neo.IronLua.LuaLibraryString.sub);
@@ -106,9 +113,15 @@ namespace NeoLuna.Misc
 
         #region --- Table Lib ------------------------------------------------
 
-        private delegate string concatDelg(LuaTable t, string sep = null, int? i = null, int? j = null);
+        private delegate string concatDelg(
+            LuaTable t,
+            string sep = null,
+            int? i = null,
+            int? j = null
+        );
 
-        readonly static LuaTable tableLibCache = CreateTableLibrary();
+        static readonly LuaTable tableLibCache = CreateTableLibrary();
+
         private static LuaTable CreateTableLibrary()
         {
             LuaTable tbl = new LuaTable();

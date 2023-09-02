@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
-    internal sealed class SsDecoder :
-        VgcApis.BaseClasses.ComponentOf<Codecs>,
-        VgcApis.Interfaces.IShareLinkDecoder
+    internal sealed class SsDecoder
+        : VgcApis.BaseClasses.ComponentOf<Codecs>,
+            VgcApis.Interfaces.IShareLinkDecoder
     {
         Cache cache;
 
@@ -48,7 +48,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return new Tuple<JObject, JToken>(tpl, outbound);
         }
 
-
         public string Encode(string config)
         {
             var vc = new Models.Datas.VeeConfigs(config);
@@ -58,7 +57,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
 
             var auth = string.Format("{0}:{1}", vc.auth2, vc.auth1);
-            var userinfo = VgcApis.Misc.Utils.Base64EncodeString(auth)
+            var userinfo = VgcApis.Misc.Utils
+                .Base64EncodeString(auth)
                 .Replace("=", "")
                 .Replace('+', '-')
                 .Replace('/', '_');
@@ -68,15 +68,14 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 userinfo,
                 Uri.EscapeDataString(vc.host),
                 vc.port,
-                Uri.EscapeDataString(vc.name));
+                Uri.EscapeDataString(vc.name)
+            );
 
             return url;
         }
 
         public List<string> ExtractLinksFromText(string text) =>
-            Misc.Utils.ExtractLinks(
-                text,
-                VgcApis.Models.Datas.Enums.LinkTypes.ss);
+            Misc.Utils.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.ss);
         #endregion
 
         #region private methods

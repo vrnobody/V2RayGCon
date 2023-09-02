@@ -12,9 +12,9 @@ using VgcApis.Interfaces;
 
 namespace V2RayGCon.Services
 {
-    public class Notifier :
-         BaseClasses.SingletonService<Notifier>,
-         VgcApis.Interfaces.Services.INotifierService
+    public class Notifier
+        : BaseClasses.SingletonService<Notifier>,
+            VgcApis.Interfaces.Services.INotifierService
     {
         Settings setting;
         Servers servers;
@@ -23,7 +23,11 @@ namespace V2RayGCon.Services
         NotifyIcon ni;
 
         static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
-        static readonly int UpdateInterval = VgcApis.Models.Consts.Intervals.NotifierMenuUpdateIntreval;
+        static readonly int UpdateInterval = VgcApis
+            .Models
+            .Consts
+            .Intervals
+            .NotifierMenuUpdateIntreval;
 
         Bitmap orgIcon;
 
@@ -73,7 +77,8 @@ namespace V2RayGCon.Services
             Settings setting,
             Servers servers,
             ShareLinkMgr shareLinkMgr,
-            Updater updater)
+            Updater updater
+        )
         {
             this.setting = setting;
             this.servers = servers;
@@ -81,7 +86,10 @@ namespace V2RayGCon.Services
             this.updater = updater;
 
             lazyNotifierMenuUpdater = new VgcApis.Libs.Tasks.LazyGuy(
-                UpdateNotifyIconWorker, UpdateInterval, 5000)
+                UpdateNotifyIconWorker,
+                UpdateInterval,
+                5000
+            )
             {
                 Name = "Notifier.MenuUpdater", // disable debug logging
             };
@@ -177,7 +185,12 @@ namespace V2RayGCon.Services
         }
 
         string RegisterHotKeyWorker(
-            Action hotKeyHandler, string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+            Action hotKeyHandler,
+            string keyName,
+            bool hasAlt,
+            bool hasCtrl,
+            bool hasShift
+        )
         {
             if (hkWindow == null)
             {
@@ -185,7 +198,12 @@ namespace V2RayGCon.Services
             }
 
             var context = VgcApis.Models.Datas.HotKeyContext.Create(
-                hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
+                hotKeyHandler,
+                keyName,
+                hasAlt,
+                hasCtrl,
+                hasShift
+            );
 
             if (context == null)
             {
@@ -195,8 +213,7 @@ namespace V2RayGCon.Services
             context.evCode = currentEvCode++;
             var keyMsg = context.KeyMessage;
             var handle = keyMsg.ToString();
-            if (hkContexts.ContainsKey(handle)
-                || !hkWindow.RegisterHotKey(context))
+            if (hkContexts.ContainsKey(handle) || !hkWindow.RegisterHotKey(context))
             {
                 return null;
             }
@@ -212,9 +229,11 @@ namespace V2RayGCon.Services
         {
             try
             {
-                if (!string.IsNullOrEmpty(handle)
+                if (
+                    !string.IsNullOrEmpty(handle)
                     && hkContexts.TryRemove(handle, out var context)
-                    && hkWindow != null)
+                    && hkWindow != null
+                )
                 {
                     return hkWindow.UnregisterHotKey(context);
                 }
@@ -223,22 +242,32 @@ namespace V2RayGCon.Services
             return false;
         }
 
-
         public string RegisterHotKey(
-             Action hotKeyHandler,
-             string keyName, bool hasAlt, bool hasCtrl, bool hasShift)
+            Action hotKeyHandler,
+            string keyName,
+            bool hasAlt,
+            bool hasCtrl,
+            bool hasShift
+        )
         {
             string handle = null;
             Invoke(() =>
-           {
-               try
-               {
-                   handle = RegisterHotKeyWorker(hotKeyHandler, keyName, hasAlt, hasCtrl, hasShift);
-               }
-               catch { }
-           });
+            {
+                try
+                {
+                    handle = RegisterHotKeyWorker(
+                        hotKeyHandler,
+                        keyName,
+                        hasAlt,
+                        hasCtrl,
+                        hasShift
+                    );
+                }
+                catch { }
+            });
             return handle;
         }
+
         public bool UnregisterHotKey(string hotKeyHandle)
         {
             var r = false;
@@ -291,8 +320,7 @@ namespace V2RayGCon.Services
             Invoke(() => ni.ShowBalloonTip(timeout, title, content, ToolTipIcon.None));
         }
 
-        public void BlockingWaitOne(AutoResetEvent autoEv) =>
-            autoEv.WaitOne();
+        public void BlockingWaitOne(AutoResetEvent autoEv) => autoEv.WaitOne();
 
         public void RefreshNotifyIconLater() => lazyNotifierMenuUpdater?.Deadline();
 
@@ -308,7 +336,10 @@ namespace V2RayGCon.Services
                     return;
                 }
 
-                var msg = VgcApis.Misc.Utils.AutoEllipsis(link, VgcApis.Models.Consts.AutoEllipsis.QrcodeTextMaxLength);
+                var msg = VgcApis.Misc.Utils.AutoEllipsis(
+                    link,
+                    VgcApis.Models.Consts.AutoEllipsis.QrcodeTextMaxLength
+                );
                 setting.SendLog($"QRCode: {msg}");
                 slinkMgr.ImportLinkWithOutV2cfgLinks(link);
             }
@@ -355,15 +386,14 @@ namespace V2RayGCon.Services
             var th = Thread.CurrentThread;
 
             VgcApis.Libs.Sys.FileLogger.Error(
-                $"Invoke updater() error by control {control.Name}\n" +
-                $"Current thread info: [{th.ManagedThreadId}] {th.Name}\n" +
-                $"{ex}\n"
-
+                $"Invoke updater() error by control {control.Name}\n"
+                    + $"Current thread info: [{th.ManagedThreadId}] {th.Name}\n"
+                    + $"{ex}\n"
 #if DEBUG
-                + $"{VgcApis.Misc.Utils.GetCurCallStack()}"
+                    + $"{VgcApis.Misc.Utils.GetCurCallStack()}"
 #endif
 
-                );
+            );
         }
 
         static void InvokeThenWorker(Control control, Action updater, Action next)
@@ -396,17 +426,20 @@ namespace V2RayGCon.Services
                     return;
                 }
 
-                control.Invoke((MethodInvoker)delegate
-                {
+                control.Invoke(
+                    (MethodInvoker)
+                        delegate
+                        {
 #if DEBUG
-                    if (!VgcApis.Misc.UI.IsInUiThread())
-                    {
-                        VgcApis.Libs.Sys.FileLogger.DumpCallStack("!invoke error!");
-                    }
+                            if (!VgcApis.Misc.UI.IsInUiThread())
+                            {
+                                VgcApis.Libs.Sys.FileLogger.DumpCallStack("!invoke error!");
+                            }
 #endif
-                    worker();
-                    tail();
-                });
+                            worker();
+                            tail();
+                        }
+                );
             }
             catch (ObjectDisposedException) { }
             catch (InvalidOperationException) { }
@@ -473,7 +506,8 @@ namespace V2RayGCon.Services
 
         void OnNotifyIconMenuClosedHandler(object sender, EventArgs args)
         {
-            var menus = new List<ToolStripMenuItem>() {
+            var menus = new List<ToolStripMenuItem>()
+            {
                 qsMenuCompos[qsMenuNames.QuickSwitchMenuRoot],
                 miServersRoot,
             };
@@ -510,8 +544,7 @@ namespace V2RayGCon.Services
             servers.OnServerPropertyChange -= UpdateNotifyIconHandler;
         }
 
-        List<ToolStripMenuItem> ServerList2MenuItems(
-            IEnumerable<ICoreServCtrl> serverList)
+        List<ToolStripMenuItem> ServerList2MenuItems(IEnumerable<ICoreServCtrl> serverList)
         {
             var menuItems = new List<ToolStripMenuItem>();
 
@@ -550,23 +583,27 @@ namespace V2RayGCon.Services
             var qm = new Dictionary<qsMenuNames, ToolStripMenuItem>();
 
             qm[qsMenuNames.QuickSwitchMenuRoot] = new ToolStripMenuItem(
-                I18N.QuickSwitch, Properties.Resources.SwitchSourceOrTarget_16x);
+                I18N.QuickSwitch,
+                Properties.Resources.SwitchSourceOrTarget_16x
+            );
 
             qm[qsMenuNames.StopAllServer] = new ToolStripMenuItem(
-                    I18N.StopAllServers,
-                    Properties.Resources.Stop_16x,
-                    (s, a) => servers.StopAllServersThen());
+                I18N.StopAllServers,
+                Properties.Resources.Stop_16x,
+                (s, a) => servers.StopAllServersThen()
+            );
 
             qm[qsMenuNames.SwitchToRandomServer] = new ToolStripMenuItem(
-                    I18N.SwitchToRandomServer,
-                    Properties.Resources.FTPConnection_16x,
-                    (s, a) => SwitchToRandomServer());
+                I18N.SwitchToRandomServer,
+                Properties.Resources.FTPConnection_16x,
+                (s, a) => SwitchToRandomServer()
+            );
 
-            qm[qsMenuNames.SwitchToRandomTlsServer] =
-                new ToolStripMenuItem(
-                    I18N.SwitchToRandomTlsserver,
-                    Properties.Resources.SFTPConnection_16x,
-                    (s, a) => SwitchRandomTlsServer());
+            qm[qsMenuNames.SwitchToRandomTlsServer] = new ToolStripMenuItem(
+                I18N.SwitchToRandomTlsserver,
+                Properties.Resources.SFTPConnection_16x,
+                (s, a) => SwitchRandomTlsServer()
+            );
 
             return qm;
         }
@@ -574,14 +611,14 @@ namespace V2RayGCon.Services
         void SwitchRandomTlsServer()
         {
             var latency = setting.QuickSwitchServerLantency;
-            var list = servers.GetAllServersOrderByIndex()
+            var list = servers
+                .GetAllServersOrderByIndex()
                 .Where(s =>
                 {
                     var st = s.GetCoreStates();
                     var summary = st.GetSummary()?.ToLower();
                     var d = st.GetSpeedTestResult();
-                    return
-                        !string.IsNullOrEmpty(summary)
+                    return !string.IsNullOrEmpty(summary)
                         && summary.Contains(@".tls@")
                         && (latency <= 0 || (d > 0 && d <= latency));
                 })
@@ -592,7 +629,8 @@ namespace V2RayGCon.Services
         void SwitchToRandomServer()
         {
             var latency = setting.QuickSwitchServerLantency;
-            var list = servers.GetAllServersOrderByIndex()
+            var list = servers
+                .GetAllServersOrderByIndex()
                 .Where(s =>
                 {
                     var d = s.GetCoreStates().GetSpeedTestResult();
@@ -617,7 +655,8 @@ namespace V2RayGCon.Services
 
         void ReplaceServersMenuWith(
             List<ToolStripMenuItem> miGroupedServers,
-            List<ToolStripMenuItem> miTopNthServers)
+            List<ToolStripMenuItem> miTopNthServers
+        )
         {
             var root = miServersRoot.DropDownItems;
             root.Clear();
@@ -671,25 +710,32 @@ namespace V2RayGCon.Services
             var num = VgcApis.Models.Consts.Config.QuickSwitchMenuItemNum;
             var groupSize = VgcApis.Models.Consts.Config.MenuItemGroupSize;
 
-            InvokeThen(() =>
-            {
-                List<ToolStripMenuItem> miGroupedServers = null;
-                if (serverList.Count < VgcApis.Models.Consts.Config.MinDynamicMenuSize)
+            InvokeThen(
+                () =>
                 {
-                    var miAllServers = ServerList2MenuItems(serverList);
-                    miGroupedServers = VgcApis.Misc.UI.AutoGroupMenuItems(miAllServers, groupSize);
-                }
-                else
-                {
-                    miGroupedServers = CreateDynamicServerMenus(groupSize, 0, serverList.Count);
-                }
+                    List<ToolStripMenuItem> miGroupedServers = null;
+                    if (serverList.Count < VgcApis.Models.Consts.Config.MinDynamicMenuSize)
+                    {
+                        var miAllServers = ServerList2MenuItems(serverList);
+                        miGroupedServers = VgcApis.Misc.UI.AutoGroupMenuItems(
+                            miAllServers,
+                            groupSize
+                        );
+                    }
+                    else
+                    {
+                        miGroupedServers = CreateDynamicServerMenus(groupSize, 0, serverList.Count);
+                    }
 
-                var miTopNthServers = serverList.Count > groupSize ?
-                    ServerList2MenuItems(serverList.Take(num).ToList()) :
-                    new List<ToolStripMenuItem>();
+                    var miTopNthServers =
+                        serverList.Count > groupSize
+                            ? ServerList2MenuItems(serverList.Take(num).ToList())
+                            : new List<ToolStripMenuItem>();
 
-                ReplaceServersMenuWith(miGroupedServers, miTopNthServers);
-            }, done);
+                    ReplaceServersMenuWith(miGroupedServers, miTopNthServers);
+                },
+                done
+            );
         }
 
         List<ToolStripMenuItem> CreateDynamicServerMenus(int groupSize, int start, int end)
@@ -748,6 +794,7 @@ namespace V2RayGCon.Services
         }
 
         SysTrayIconTypes curSysTrayIconType = SysTrayIconTypes.None;
+
         void UpdateNotifyIconWorker(Action done)
         {
             if (setting.IsClosing())
@@ -769,12 +816,13 @@ namespace V2RayGCon.Services
             }
 
             var start = DateTime.Now.Millisecond;
-            Action finished = () => VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                var relex = UpdateInterval - (DateTime.Now.Millisecond - start);
-                VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
-                done();
-            });
+            Action finished = () =>
+                VgcApis.Misc.Utils.RunInBackground(() =>
+                {
+                    var relex = UpdateInterval - (DateTime.Now.Millisecond - start);
+                    VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
+                    done();
+                });
 
             try
             {
@@ -814,7 +862,11 @@ namespace V2RayGCon.Services
                     break;
                 case 1:
                     var idx = coreCtrls.First().GetCoreStates().GetIndex();
-                    r |= (idx == 1 ? SysTrayIconTypes.FirstServRunning : SysTrayIconTypes.OthServRunning);
+                    r |= (
+                        idx == 1
+                            ? SysTrayIconTypes.FirstServRunning
+                            : SysTrayIconTypes.OthServRunning
+                    );
                     break;
                 default:
                     r |= SysTrayIconTypes.MultiServRunning;
@@ -855,8 +907,7 @@ namespace V2RayGCon.Services
             return icon;
         }
 
-        void DrawProxyModeCornerCircle(
-            Graphics graphics, Size size, SysTrayIconTypes iconType)
+        void DrawProxyModeCornerCircle(Graphics graphics, Size size, SysTrayIconTypes iconType)
         {
             Brush br = Brushes.ForestGreen;
 
@@ -876,7 +927,10 @@ namespace V2RayGCon.Services
         }
 
         private void DrawIsRunningCornerMark(
-            Graphics graphics, Size size, SysTrayIconTypes iconType)
+            Graphics graphics,
+            Size size,
+            SysTrayIconTypes iconType
+        )
         {
             var w = size.Width;
             var cx = w * 0.7f;
@@ -900,8 +954,7 @@ namespace V2RayGCon.Services
             }
         }
 
-        private static void DrawTriangle(
-            Graphics graphics, int w, float cx, bool isFirstServ)
+        private static void DrawTriangle(Graphics graphics, int w, float cx, bool isFirstServ)
         {
             var lw = w * 0.07f;
             var cr = w * 0.22f;
@@ -912,10 +965,11 @@ namespace V2RayGCon.Services
             }
 
             var dh = Math.Sqrt(3) * cr / 2f;
-            var tri = new Point[] {
-                new Point((int)(cx - cr / 2f),(int)(cx - dh)),
-                new Point((int)(cx + cr),(int)cx),
-                new Point((int)(cx - cr / 2f),(int)(cx + dh)),
+            var tri = new Point[]
+            {
+                new Point((int)(cx - cr / 2f), (int)(cx - dh)),
+                new Point((int)(cx + cr), (int)cx),
+                new Point((int)(cx - cr / 2f), (int)(cx + dh)),
             };
 
             if (!isFirstServ)
@@ -932,10 +986,8 @@ namespace V2RayGCon.Services
             graphics.DrawPolygon(pen, tri);
         }
 
-        private static void DrawOneLine(
-            Graphics graphics, int w, float cx, bool isVertical)
+        private static void DrawOneLine(Graphics graphics, int w, float cx, bool isVertical)
         {
-
             var rw = w * 0.44f;
             var rh = w * 0.14f;
 
@@ -950,8 +1002,7 @@ namespace V2RayGCon.Services
             graphics.FillRectangle(Brushes.White, rect);
         }
 
-        void UpdateNotifyIconHandler(object sender, EventArgs args) =>
-            RefreshNotifyIconLater();
+        void UpdateNotifyIconHandler(object sender, EventArgs args) => RefreshNotifyIconLater();
 
         string GetterSysProxyInfo()
         {
@@ -981,7 +1032,9 @@ namespace V2RayGCon.Services
                     if (!string.IsNullOrEmpty(sysProxyInfo))
                     {
                         int len = VgcApis.Models.Consts.AutoEllipsis.NotifierSysProxyInfoMaxLength;
-                        texts.Add(I18N.CurSysProxy + VgcApis.Misc.Utils.AutoEllipsis(sysProxyInfo, len));
+                        texts.Add(
+                            I18N.CurSysProxy + VgcApis.Misc.Utils.AutoEllipsis(sysProxyInfo, len)
+                        );
                     }
                     SetNotifyIconText(string.Join(Environment.NewLine, texts));
                 }
@@ -993,11 +1046,13 @@ namespace V2RayGCon.Services
             {
                 try
                 {
-                    list[index].GetConfiger().GetterInfoForNotifyIconf(s =>
-                    {
-                        texts.Add(s);
-                        next?.Invoke();
-                    });
+                    list[index]
+                        .GetConfiger()
+                        .GetterInfoForNotifyIconf(s =>
+                        {
+                            texts.Add(s);
+                            next?.Invoke();
+                        });
                     return;
                 }
                 catch { }
@@ -1018,9 +1073,9 @@ namespace V2RayGCon.Services
         private void SetNotifyIconText(string rawText)
         {
             var maxLen = VgcApis.Models.Consts.AutoEllipsis.NotifierTextMaxLength;
-            var text = string.IsNullOrEmpty(rawText) ?
-                I18N.Description :
-                VgcApis.Misc.Utils.AutoEllipsis(rawText, maxLen);
+            var text = string.IsNullOrEmpty(rawText)
+                ? I18N.Description
+                : VgcApis.Misc.Utils.AutoEllipsis(rawText, maxLen);
 
             if (ni.Text == text)
             {
@@ -1043,82 +1098,98 @@ namespace V2RayGCon.Services
         void CreateContextMenuStrip(
             ContextMenuStrip menu,
             ToolStripMenuItem serversRootMenuItem,
-            ToolStripMenuItem pluginRootMenuItem)
+            ToolStripMenuItem pluginRootMenuItem
+        )
         {
             var factor = Misc.UI.GetScreenScalingFactor();
             if (factor > 1)
             {
                 menu.ImageScalingSize = new Size(
                     (int)(menu.ImageScalingSize.Width * factor),
-                    (int)(menu.ImageScalingSize.Height * factor));
+                    (int)(menu.ImageScalingSize.Height * factor)
+                );
             }
 
-            menu.Items.AddRange(new ToolStripMenuItem[] {
-                new ToolStripMenuItem(
-                    I18N.Windows,
-                    Properties.Resources.CPPWin32Project_16x,
-                    new ToolStripMenuItem[]{
-                        new ToolStripMenuItem(
-                            I18N.MainWin,
-                            Properties.Resources.WindowsForm_16x,
-                            (s,a)=>Views.WinForms.FormMain.ShowForm()),
-                        new ToolStripMenuItem(
-                            I18N.AddClientManually,
-                            Properties.Resources.AddField_16x,
-                            (s,a)=>{
-                                var f = Views.WinForms.FormSimpleEditor.GetForm();
-                                f.LoadCoreServer(null);
-                            }),
-                        new ToolStripMenuItem(
-                            I18N.ConfigEditor,
-                            Properties.Resources.EditWindow_16x,
-                            (s,a)=>Views.WinForms.FormConfiger.ShowEmptyConfig()),
-                        new ToolStripMenuItem(
-                            I18N.Log,
-                            Properties.Resources.FSInteractiveWindow_16x,
-                            (s,a)=> Views.WinForms.FormLog.ShowForm() ),
-                    }),
-
-                serversRootMenuItem,
-
-                pluginRootMenuItem,
-
-                new ToolStripMenuItem(
-                    I18N.ScanQRCode,
-                    Properties.Resources.ExpandScope_16x,
-                    (s,a)=> ScanQrcode()),
-
-                new ToolStripMenuItem(
-                    I18N.ImportLink,
-                    Properties.Resources.CopyLongTextToClipboard_16x,
-                    (s,a)=>{
-                        string links = Misc.Utils.GetClipboardText();
-                        slinkMgr.ImportLinkWithOutV2cfgLinks(links);
-                    }),
-
-                new ToolStripMenuItem(
+            menu.Items.AddRange(
+                new ToolStripMenuItem[]
+                {
+                    new ToolStripMenuItem(
+                        I18N.Windows,
+                        Properties.Resources.CPPWin32Project_16x,
+                        new ToolStripMenuItem[]
+                        {
+                            new ToolStripMenuItem(
+                                I18N.MainWin,
+                                Properties.Resources.WindowsForm_16x,
+                                (s, a) => Views.WinForms.FormMain.ShowForm()
+                            ),
+                            new ToolStripMenuItem(
+                                I18N.AddClientManually,
+                                Properties.Resources.AddField_16x,
+                                (s, a) =>
+                                {
+                                    var f = Views.WinForms.FormSimpleEditor.GetForm();
+                                    f.LoadCoreServer(null);
+                                }
+                            ),
+                            new ToolStripMenuItem(
+                                I18N.ConfigEditor,
+                                Properties.Resources.EditWindow_16x,
+                                (s, a) => Views.WinForms.FormConfiger.ShowEmptyConfig()
+                            ),
+                            new ToolStripMenuItem(
+                                I18N.Log,
+                                Properties.Resources.FSInteractiveWindow_16x,
+                                (s, a) => Views.WinForms.FormLog.ShowForm()
+                            ),
+                        }
+                    ),
+                    serversRootMenuItem,
+                    pluginRootMenuItem,
+                    new ToolStripMenuItem(
+                        I18N.ScanQRCode,
+                        Properties.Resources.ExpandScope_16x,
+                        (s, a) => ScanQrcode()
+                    ),
+                    new ToolStripMenuItem(
+                        I18N.ImportLink,
+                        Properties.Resources.CopyLongTextToClipboard_16x,
+                        (s, a) =>
+                        {
+                            string links = Misc.Utils.GetClipboardText();
+                            slinkMgr.ImportLinkWithOutV2cfgLinks(links);
+                        }
+                    ),
+                    new ToolStripMenuItem(
                         I18N.Options,
                         Properties.Resources.Settings_16x,
-                        (s,a)=>Invoke(()=> Views.WinForms.FormOption.ShowForm())),
-            });
+                        (s, a) => Invoke(() => Views.WinForms.FormOption.ShowForm())
+                    ),
+                }
+            );
 
             menu.Items.Add(new ToolStripSeparator());
 
             menu.Items.AddRange(
-                new ToolStripMenuItem[] {
+                new ToolStripMenuItem[]
+                {
                     CreateAboutMenu(),
-
                     new ToolStripMenuItem(
                         I18N.Exit,
                         Properties.Resources.CloseSolution_16x,
-                        (s, a) => {
+                        (s, a) =>
+                        {
                             if (Misc.UI.Confirm(I18N.ConfirmExitApp))
                             {
-                                setting.SetShutdownReason( VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser);
+                                setting.SetShutdownReason(
+                                    VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser
+                                );
                                 Application.Exit();
                             }
-                        }),
-                });
+                        }
+                    ),
+                }
+            );
         }
 
         private ToolStripMenuItem CreateRootMenuItem(string title, Bitmap icon)
@@ -1130,42 +1201,42 @@ namespace V2RayGCon.Services
 
         ToolStripMenuItem CreateAboutMenu()
         {
-            var aboutMenu = new ToolStripMenuItem(
-                I18N.About,
-                Properties.Resources.StatusHelp_16x);
+            var aboutMenu = new ToolStripMenuItem(I18N.About, Properties.Resources.StatusHelp_16x);
 
             var children = aboutMenu.DropDownItems;
 
             children.Add(
                 I18N.DownloadV2rayCore,
                 Properties.Resources.ASX_TransferDownload_blue_16x,
-                (s, a) => Views.WinForms.FormDownloadCore.ShowForm());
+                (s, a) => Views.WinForms.FormDownloadCore.ShowForm()
+            );
 
             children.Add(
-               I18N.CheckForVgcUpdate,
-               Properties.Resources.CloudSearch_16x,
-               (s, a) => updater.CheckForUpdate(true));
+                I18N.CheckForVgcUpdate,
+                Properties.Resources.CloudSearch_16x,
+                (s, a) => updater.CheckForUpdate(true)
+            );
 
             children.Add(
                 I18N.ProjectPage,
                 null,
-                (s, a) => Misc.UI.VisitUrl(I18N.VistProjectPage, Properties.Resources.ProjectLink));
+                (s, a) => Misc.UI.VisitUrl(I18N.VistProjectPage, Properties.Resources.ProjectLink)
+            );
 
             children.Add(
                 I18N.Feedback,
                 null,
-                (s, a) => Misc.UI.VisitUrl(
-                    I18N.VisitVGCIssuePage, Properties.Resources.IssueLink));
+                (s, a) => Misc.UI.VisitUrl(I18N.VisitVGCIssuePage, Properties.Resources.IssueLink)
+            );
 
             children.Add(
                 I18N.ProjectWiki,
                 null,
-                (s, a) => Misc.UI.VisitUrl(
-                    I18N.VistWikiPage, Properties.Resources.WikiLink));
+                (s, a) => Misc.UI.VisitUrl(I18N.VistWikiPage, Properties.Resources.WikiLink)
+            );
 
             return aboutMenu;
         }
-
 
         #endregion
 

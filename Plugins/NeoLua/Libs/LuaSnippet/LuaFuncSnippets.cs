@@ -11,8 +11,7 @@ namespace NeoLuna.Libs.LuaSnippet
         {
             if (luaFuncStr == null)
             {
-                throw new System.ArgumentException(
-                    @"luaFuncStr is null!");
+                throw new System.ArgumentException(@"luaFuncStr is null!");
             }
 
             ImageIndex = 1;

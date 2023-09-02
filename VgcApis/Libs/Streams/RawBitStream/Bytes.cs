@@ -1,12 +1,12 @@
 ﻿namespace VgcApis.Libs.Streams.RawBitStream
 {
-    public class Bytes :
-        BaseClasses.ComponentOf<RawBitStream>
+    public class Bytes : BaseClasses.ComponentOf<RawBitStream>
     {
         const int BitPerByte = Models.Consts.BitStream.BitsPerByte;
         const int MaxStringLenInBits = Models.Consts.BitStream.MaxStringLenInBits;
 
         Numbers numbers;
+
         public Bytes() { }
 
         public void Run(Numbers numbers)

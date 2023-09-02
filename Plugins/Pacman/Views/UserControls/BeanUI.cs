@@ -116,7 +116,5 @@ namespace Pacman.Views.UserControls
         }
 
         #endregion
-
-
     }
 }

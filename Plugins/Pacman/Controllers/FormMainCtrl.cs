@@ -11,16 +11,21 @@ namespace Pacman.Controllers
     {
         Services.Settings settings;
 
-        Button btnSave, btnDelete, btnPull, btnPack, btnChain;
+        Button btnSave,
+            btnDelete,
+            btnPull,
+            btnPack,
+            btnChain;
         TextBox tboxName;
         FlowLayoutPanel flyContent;
         ListBox lstBoxPackages;
         List<Models.Data.Bean> beanList;
-        ComboBox cboxBalancerStrategy, cboxObsInterval, cboxObsUrl;
+        ComboBox cboxBalancerStrategy,
+            cboxObsInterval,
+            cboxObsUrl;
 
         public FormMainCtrl(
             Services.Settings settings,
-
             TextBox tboxName,
             FlowLayoutPanel flyContent,
             ListBox lstBoxPackages,
@@ -28,17 +33,16 @@ namespace Pacman.Controllers
             Button btnDelete,
             Button btnChain,
             Button btnPack,
-
             ComboBox cboxBalancerStrategy,
             ComboBox cboxObsInterval,
             ComboBox cboxObsUrl,
-
             Button btnPull,
             Button btnSelectAll,
             Button btnSelectInvert,
             Button btnSelectNone,
             Button btnDeleteSelected,
-            Button btnRefreshSelected)
+            Button btnRefreshSelected
+        )
         {
             this.settings = settings;
 
@@ -59,12 +63,13 @@ namespace Pacman.Controllers
                 btnSelectInvert,
                 btnSelectNone,
                 btnDeleteSelected,
-                btnRefreshSelected);
-
+                btnRefreshSelected
+            );
         }
 
         #region drag and drop
-        List<string> dropableObjectsTypeString = new List<string> {
+        List<string> dropableObjectsTypeString = new List<string>
+        {
             "Pacman.Views.UserControls.BeanUI",
             "V2RayGCon.Views.UserControls.ServerUI",
         };
@@ -147,15 +152,13 @@ namespace Pacman.Controllers
                 }
 
                 var destIndex = flyContent.Controls.GetChildIndex(
-                    flyContent.GetChildAtPoint(
-                        flyContent.PointToClient(
-                            new Point(a.X, a.Y))),
-                    false);
+                    flyContent.GetChildAtPoint(flyContent.PointToClient(new Point(a.X, a.Y))),
+                    false
+                );
                 flyContent.Controls.SetChildIndex(beanUI, destIndex);
 
                 ResetFlyContentItemsIndex();
             };
-
         }
 
         #endregion
@@ -180,32 +183,29 @@ namespace Pacman.Controllers
         }
         #endregion
 
-        #region private methods 
+        #region private methods
         private void BindEvent(
-          Button btnSelectAll,
-          Button btnSelectInvert,
-          Button btnSelectNone,
-          Button btnDeleteSelected,
-          Button btnRefreshSelected)
+            Button btnSelectAll,
+            Button btnSelectInvert,
+            Button btnSelectNone,
+            Button btnDeleteSelected,
+            Button btnRefreshSelected
+        )
         {
-            btnSelectAll.Click +=
-                (s, a) => LoopThroughFlyContentItems(
-                    (b) => b.Select(true));
-            btnSelectNone.Click +=
-                (s, a) => LoopThroughFlyContentItems(
-                    (b) => b.Select(false));
-            btnSelectInvert.Click +=
-                (s, a) => LoopThroughFlyContentItems(
-                    (b) => b.InvertSelection());
-            btnDeleteSelected.Click +=
-                (s, a) => LoopThroughFlyContentItems(
+            btnSelectAll.Click += (s, a) => LoopThroughFlyContentItems((b) => b.Select(true));
+            btnSelectNone.Click += (s, a) => LoopThroughFlyContentItems((b) => b.Select(false));
+            btnSelectInvert.Click += (s, a) =>
+                LoopThroughFlyContentItems((b) => b.InvertSelection());
+            btnDeleteSelected.Click += (s, a) =>
+                LoopThroughFlyContentItems(
                     (b) =>
                     {
                         if (b.isSelected)
                         {
                             flyContent.Controls.Remove(b);
                         }
-                    });
+                    }
+                );
             btnRefreshSelected.Click += (s, a) =>
             {
                 var list = settings.GetAllServersList();
@@ -223,7 +223,6 @@ namespace Pacman.Controllers
                     b.SetStatus(coreStates.GetStatus());
                     b.SetTitle(coreStates.GetTitle());
                 });
-
             };
         }
 
@@ -251,15 +250,21 @@ namespace Pacman.Controllers
                 .Where(s => uidList.Contains(s.GetCoreStates().GetUid()))
                 .ToList();
 
-            var package = settings
-                .GetPackageList()
-                .FirstOrDefault(p => p.name == tboxName.Text);
+            var package = settings.GetPackageList().FirstOrDefault(p => p.name == tboxName.Text);
 
-            var strategy = (VgcApis.Models.Datas.Enums.BalancerStrategies)cboxBalancerStrategy.SelectedIndex;
+            var strategy = (VgcApis.Models.Datas.Enums.BalancerStrategies)
+                cboxBalancerStrategy.SelectedIndex;
             var interval = cboxObsInterval.Text;
             var url = cboxObsUrl.Text;
 
-            var newUid = settings.Pack(servList, package?.uid, tboxName.Text, interval, url, strategy);
+            var newUid = settings.Pack(
+                servList,
+                package?.uid,
+                tboxName.Text,
+                interval,
+                url,
+                strategy
+            );
             if (package != null && !string.IsNullOrEmpty(newUid))
             {
                 package.uid = newUid;
@@ -279,10 +284,7 @@ namespace Pacman.Controllers
                 .Where(s => uidList.Contains(s.GetCoreStates().GetUid()))
                 .ToList();
 
-            var package = settings
-                .GetPackageList()
-                .FirstOrDefault(p => p.name == tboxName.Text);
-
+            var package = settings.GetPackageList().FirstOrDefault(p => p.name == tboxName.Text);
 
             var newUid = settings.Chain(servList, package?.uid, tboxName.Text);
             if (package != null && !string.IsNullOrEmpty(newUid))
@@ -314,19 +316,23 @@ namespace Pacman.Controllers
             {
                 var states = serverCtrl.GetCoreStates();
 
-                var found = curList.FirstOrDefault(b => b.uid == serverCtrl.GetCoreStates().GetUid());
+                var found = curList.FirstOrDefault(
+                    b => b.uid == serverCtrl.GetCoreStates().GetUid()
+                );
                 if (found != null)
                 {
                     found.title = states.GetTitle();
                     found.status = states.GetStatus();
                     continue;
                 }
-                curList.Add(new Models.Data.Bean
-                {
-                    title = states.GetTitle(),
-                    uid = serverCtrl.GetCoreStates().GetUid(),
-                    status = states.GetStatus(),
-                });
+                curList.Add(
+                    new Models.Data.Bean
+                    {
+                        title = states.GetTitle(),
+                        uid = serverCtrl.GetCoreStates().GetUid(),
+                        status = states.GetStatus(),
+                    }
+                );
             }
             this.beanList = curList;
             RefreshFlyContent();
@@ -427,10 +433,7 @@ namespace Pacman.Controllers
                 beans = GetFlyContentBeanList()
             };
 
-            Libs.UI.MsgBoxAsync(
-                settings.SavePackage(package) ?
-                I18N.Done :
-                I18N.NullParam);
+            Libs.UI.MsgBoxAsync(settings.SavePackage(package) ? I18N.Done : I18N.NullParam);
 
             RefreshPackageListBox();
         }
@@ -446,7 +449,7 @@ namespace Pacman.Controllers
         }
         #endregion
 
-        #region UI 
+        #region UI
 
         #endregion
     }

@@ -23,10 +23,7 @@ namespace VgcApis.WinForms
         public HotKeyWindow(ContextMenuStrip niMenuRoot)
         {
             this.niMenuRoot = niMenuRoot;
-            var cp = new CreateParams()
-            {
-                Parent = niMenuRoot.Handle,
-            };
+            var cp = new CreateParams() { Parent = niMenuRoot.Handle, };
             CreateHandle(cp);
         }
 
@@ -39,7 +36,10 @@ namespace VgcApis.WinForms
         #endregion
 
         #region protected methods
-        [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
+        [System.Security.Permissions.PermissionSet(
+            System.Security.Permissions.SecurityAction.Demand,
+            Name = "FullTrust"
+        )]
         protected override void WndProc(ref Message m)
         {
             // check if we got a hot key pressed.

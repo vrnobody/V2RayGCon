@@ -20,7 +20,10 @@ namespace VgcApis.Libs.Sys
         public delegate Boolean ConsoleCtrlDelegate(uint CtrlType);
 
         [DllImport("kernel32.dll")]
-        public static extern bool SetConsoleCtrlHandler(ConsoleCtrlDelegate HandlerRoutine, bool Add);
+        public static extern bool SetConsoleCtrlHandler(
+            ConsoleCtrlDelegate HandlerRoutine,
+            bool Add
+        );
         #endregion
     }
 }

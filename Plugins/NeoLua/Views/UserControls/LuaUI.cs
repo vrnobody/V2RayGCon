@@ -12,7 +12,6 @@ namespace NeoLuna.Views.UserControls
 
         public LuaUI()
         {
-
             InitializeComponent();
         }
 
@@ -27,11 +26,12 @@ namespace NeoLuna.Views.UserControls
         #region public methods
         Services.LuaServer luaServerSvc = null;
         Services.FormMgrSvc formMgrSvc = null;
+
         public void Reload(
             Services.LuaServer luaServerSvc,
             Services.FormMgrSvc formMgrSvc,
-
-            Controllers.LuaCoreCtrl luaCoreCtrl)
+            Controllers.LuaCoreCtrl luaCoreCtrl
+        )
         {
             this.luaServerSvc = luaServerSvc;
             this.formMgrSvc = formMgrSvc;
@@ -91,18 +91,18 @@ namespace NeoLuna.Views.UserControls
         void UpdateUiWorker()
         {
             VgcApis.Misc.UI.Invoke(() =>
-           {
-               var ctrl = this.luaCoreCtrl;
+            {
+                var ctrl = this.luaCoreCtrl;
 
-               if (this.Parent == null || ctrl == null)
-               {
-                   return;
-               }
+                if (this.Parent == null || ctrl == null)
+                {
+                    return;
+                }
 
-               UpdateNameLabel(ctrl);
-               UpdateOptionsLabel(ctrl);
-               UpdateRunningState(ctrl);
-           });
+                UpdateNameLabel(ctrl);
+                UpdateOptionsLabel(ctrl);
+                UpdateRunningState(ctrl);
+            });
         }
 
         void UpdateUiLater() => lazyUpdater?.Deadline();
@@ -164,7 +164,6 @@ namespace NeoLuna.Views.UserControls
             luaCoreCtrl?.Start();
         }
 
-
         private void LuaUI_MouseDown(object sender, MouseEventArgs e)
         {
             DoDragDrop(this, DragDropEffects.Move);
@@ -220,8 +219,10 @@ namespace NeoLuna.Views.UserControls
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var scriptName = luaCoreCtrl.name;
-            if (string.IsNullOrEmpty(scriptName)
-                || !VgcApis.Misc.UI.Confirm(I18N.ConfirmRemoveScript))
+            if (
+                string.IsNullOrEmpty(scriptName)
+                || !VgcApis.Misc.UI.Confirm(I18N.ConfirmRemoveScript)
+            )
             {
                 return;
             }

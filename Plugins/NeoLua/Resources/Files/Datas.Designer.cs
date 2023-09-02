@@ -65,25 +65,25 @@ namespace NeoLuna.Resources.Files {
         ///-- import = function () end
         ///
         ///-- require path
-        ///package.path = &quot;.\\?.lua;.\\?\\init.lua&quot;
-        ///
-        ///-- dll path
-        ///if os.getenv(&apos;PROCESSOR_ARCHITECTURE&apos;) == &quot;AMD64&quot; then
-        ///    package.cpath = &apos;.\\lua\\dll64\\?.dll&apos;
-        ///else
-        ///    package.cpath = &apos;.\\lua\\dll32\\?.dll&apos;
-        ///end
+        ///-- package.path = &quot;.\\?.lua;.\\?\\init.lua&quot;
         ///
         ///print = function(...)
         ///    local t = {}
         ///    for _, v in pairs({...}) do
         ///        table.insert(t, tostring(v))
         ///    end
-        ///    Misc:Print(table.concat(t, &quot; &quot;))
+        ///    std.Misc:Print(table.concat(t, &quot; &quot;))
         ///end
         ///
-        ///os.exit = function() print(&quot;os.exit() is disabled&quot;) end
-        ///  [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///-- exit is not writable
+        ///-- os.exit = function() print(&quot;os.exit() is disabled&quot;) end
+        ///
+        ///-- copy from NLua
+        ///function each(o)
+        ///    local e = o:GetEnumerator()
+        ///    return function()
+        ///        if e:MoveNext() then
+        ///            return e.Curren [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string LuaPredefinedFunctions {
             get {

@@ -10,14 +10,12 @@ namespace V2RayGCon.Controllers.OptionComponent
         private readonly CheckBox chkIsUseCustomUserAgent;
         private readonly TextBox tboxSystrayLeftClickCommand;
         private readonly CheckBox chkIsEnableSystrayLeftClickCommand;
-        private readonly ComboBox
-            cboxLanguage = null,
+        private readonly ComboBox cboxLanguage = null,
             cboxPageSize = null,
             cboxSettingsUtlsFingerprint = null,
             cboxRandomSelectServerLatency = null;
 
-        private readonly CheckBox
-            chkServAutoTrack = null,
+        private readonly CheckBox chkServAutoTrack = null,
             chkPortableMode = null,
             chkSetUseV4 = null,
             chkSetEnableStat = null,
@@ -25,7 +23,6 @@ namespace V2RayGCon.Controllers.OptionComponent
             chkSetCheckVgcUpdateWhenAppStart = null,
             chkSetIsEnableUtlsFingerprint = null,
             chkSetIsSupportSelfSignedCert = null;
-
 
         private readonly CheckBox chkSetCheckV2RayCoreUpdateWhenAppStart;
         private readonly Button btnBrowseDebugLogFile;
@@ -36,10 +33,8 @@ namespace V2RayGCon.Controllers.OptionComponent
         public TabSetting(
             ComboBox cboxCustomUserAgent,
             CheckBox chkIsUseCustomUserAgent,
-
             TextBox tboxSystrayLeftClickCommand,
             CheckBox chkIsEnableSystrayLeftClickCommand,
-
             ComboBox cboxLanguage,
             ComboBox cboxPageSize,
             CheckBox chkServAutoTrack,
@@ -47,19 +42,17 @@ namespace V2RayGCon.Controllers.OptionComponent
             ComboBox cboxRandomSelectServerLatency,
             CheckBox chkPortableMode,
             CheckBox chkSetUseV4,
-
             CheckBox chkSetIsSupportSelfSignedCert,
             ComboBox cboxSettingsUtlsFingerprint,
             CheckBox chkSettingsEnableUtlsFingerprint,
-
             CheckBox chkSetEnableStat,
             CheckBox chkSetUpdateUseProxy,
             CheckBox chkSetCheckVgcUpdateWhenAppStart,
             CheckBox chkSetCheckV2rayCoreUpdateWhenAppStart,
-
             Button btnBrowseDebugLogFile,
             TextBox tboxDebugLogFilePath,
-            CheckBox chkIsEnableDebugLogFile)
+            CheckBox chkIsEnableDebugLogFile
+        )
         {
             this.setting = Services.Settings.Instance;
             this.servers = Services.Servers.Instance;
@@ -110,7 +103,8 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             chkSetUpdateUseProxy.Checked = setting.isUpdateUseProxy;
             chkSetCheckVgcUpdateWhenAppStart.Checked = setting.isCheckVgcUpdateWhenAppStart;
-            chkSetCheckV2RayCoreUpdateWhenAppStart.Checked = setting.isCheckV2RayCoreUpdateWhenAppStart;
+            chkSetCheckV2RayCoreUpdateWhenAppStart.Checked =
+                setting.isCheckV2RayCoreUpdateWhenAppStart;
 
             chkSetEnableStat.Checked = setting.isEnableStatistics;
             chkSetUseV4.Checked = setting.isUseV4;
@@ -169,10 +163,13 @@ namespace V2RayGCon.Controllers.OptionComponent
                 servers.UpdateServerTrackerSettings(keepTracking);
             }
 
-            setting.QuickSwitchServerLantency = VgcApis.Misc.Utils.Str2Int(cboxRandomSelectServerLatency.Text);
+            setting.QuickSwitchServerLantency = VgcApis.Misc.Utils.Str2Int(
+                cboxRandomSelectServerLatency.Text
+            );
             setting.isUpdateUseProxy = chkSetUpdateUseProxy.Checked;
             setting.isCheckVgcUpdateWhenAppStart = chkSetCheckVgcUpdateWhenAppStart.Checked;
-            setting.isCheckV2RayCoreUpdateWhenAppStart = chkSetCheckV2RayCoreUpdateWhenAppStart.Checked;
+            setting.isCheckV2RayCoreUpdateWhenAppStart =
+                chkSetCheckV2RayCoreUpdateWhenAppStart.Checked;
 
             setting.isSupportSelfSignedCert = chkSetIsSupportSelfSignedCert.Checked;
             setting.uTlsFingerprint = cboxSettingsUtlsFingerprint.Text;
@@ -190,24 +187,30 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         public override bool IsOptionsChanged()
         {
-            if (setting.isUseV4 != chkSetUseV4.Checked
+            if (
+                setting.isUseV4 != chkSetUseV4.Checked
                 || setting.CustomUserAgent != cboxCustomUserAgent.Text
                 || setting.isUseCustomUserAgent != chkIsUseCustomUserAgent.Checked
-                || setting.isEnableSystrayLeftClickCommand != chkIsEnableSystrayLeftClickCommand.Checked
+                || setting.isEnableSystrayLeftClickCommand
+                    != chkIsEnableSystrayLeftClickCommand.Checked
                 || setting.SystrayLeftClickCommand != tboxSystrayLeftClickCommand.Text
                 || setting.isEnableUtlsFingerprint != chkSetIsEnableUtlsFingerprint.Checked
                 || setting.uTlsFingerprint != cboxSettingsUtlsFingerprint.Text
                 || setting.isEnableDebugLogFile != chkIsEnableDebugLogFile.Checked
                 || setting.DebugLogFilePath != tboxDebugLogFilePath.Text
                 || setting.isSupportSelfSignedCert != chkSetIsSupportSelfSignedCert.Checked
-                || setting.QuickSwitchServerLantency != VgcApis.Misc.Utils.Str2Int(cboxRandomSelectServerLatency.Text)
+                || setting.QuickSwitchServerLantency
+                    != VgcApis.Misc.Utils.Str2Int(cboxRandomSelectServerLatency.Text)
                 || setting.isUpdateUseProxy != chkSetUpdateUseProxy.Checked
                 || setting.isCheckVgcUpdateWhenAppStart != chkSetCheckVgcUpdateWhenAppStart.Checked
-                || setting.isCheckV2RayCoreUpdateWhenAppStart != chkSetCheckV2RayCoreUpdateWhenAppStart.Checked
+                || setting.isCheckV2RayCoreUpdateWhenAppStart
+                    != chkSetCheckV2RayCoreUpdateWhenAppStart.Checked
                 || setting.isEnableStatistics != chkSetEnableStat.Checked
-                || VgcApis.Misc.Utils.Str2Int(tboxMaxCoreNum.Text) != setting.maxConcurrentV2RayCoreNum
+                || VgcApis.Misc.Utils.Str2Int(tboxMaxCoreNum.Text)
+                    != setting.maxConcurrentV2RayCoreNum
                 || setting.isPortable != chkPortableMode.Checked
-                || VgcApis.Misc.Utils.Str2Int(cboxPageSize.Text) != setting.serverPanelPageSize)
+                || VgcApis.Misc.Utils.Str2Int(cboxPageSize.Text) != setting.serverPanelPageSize
+            )
             {
                 return true;
             }
@@ -240,7 +243,6 @@ namespace V2RayGCon.Controllers.OptionComponent
                 }
             };
         }
-
 
         bool IsIndexValide(int index)
         {

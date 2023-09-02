@@ -3,10 +3,8 @@ using System.Linq;
 
 namespace Luna.Services
 {
-    internal class FormMgrSvc :
-        VgcApis.BaseClasses.Disposable
+    internal class FormMgrSvc : VgcApis.BaseClasses.Disposable
     {
-
         Views.WinForms.FormMain formMain = null;
         List<Views.WinForms.FormEditor> editors = new List<Views.WinForms.FormEditor>();
         readonly object formLocker = new object();
@@ -20,7 +18,8 @@ namespace Luna.Services
             Settings settings,
             LuaServer luaServer,
             AstServer astServer,
-            VgcApis.Interfaces.Services.IApiService vgcApi)
+            VgcApis.Interfaces.Services.IApiService vgcApi
+        )
         {
             this.astServer = astServer;
             this.luaServer = luaServer;
@@ -37,9 +36,7 @@ namespace Luna.Services
 
             VgcApis.Misc.UI.Invoke(() =>
             {
-                form = Views.WinForms.FormEditor.CreateForm(
-                    this,
-                    initialCoreSettings);
+                form = Views.WinForms.FormEditor.CreateForm(this, initialCoreSettings);
 
                 form.FormClosing += (s, a) =>
                 {
@@ -131,6 +128,5 @@ namespace Luna.Services
             }
         }
         #endregion
-
     }
 }

@@ -17,7 +17,8 @@ namespace NeoLuna.Views.WinForms
             this.qLogger = logger;
             logUpdater = new VgcApis.Libs.Tasks.Routine(
                 RefreshUi,
-                VgcApis.Models.Consts.Intervals.SiFormLogRefreshInterval);
+                VgcApis.Models.Consts.Intervals.SiFormLogRefreshInterval
+            );
 
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
@@ -88,9 +89,7 @@ namespace NeoLuna.Views.WinForms
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var logs = rtBoxLogger.Text;
-            var msg = VgcApis.Misc.Utils.CopyToClipboard(logs) ?
-                I18N.CopySuccess :
-                I18N.CopyFail;
+            var msg = VgcApis.Misc.Utils.CopyToClipboard(logs) ? I18N.CopySuccess : I18N.CopyFail;
             VgcApis.Misc.UI.MsgBoxAsync(msg);
         }
     }

@@ -115,8 +115,7 @@ namespace NeoLuna.Interfaces
         /// <param name="pkgName">服务器新名字</param>
         /// <param name="strategy">均衡策略</param>
         /// <returns>打包后新服务器的uid</returns>
-        string PackSelectedServers(
-            string orgUid, string pkgName, int strategy);
+        string PackSelectedServers(string orgUid, string pkgName, int strategy);
 
         /// <summary>
         /// 将选中的服务器打包成均衡策略为leastPing的服务器包
@@ -128,8 +127,12 @@ namespace NeoLuna.Interfaces
         /// <param name="url">probeURL</param>
         /// <returns>打包后新服务器的uid</returns>
         string PackSelectedServers(
-            string orgUid, string pkgName, int strategy,
-            string interval, string url);
+            string orgUid,
+            string pkgName,
+            int strategy,
+            string interval,
+            string url
+        );
 
         /// <summary>
         /// 将选中的服务器打包成均衡策略为leastPing的服务器包
@@ -143,8 +146,12 @@ namespace NeoLuna.Interfaces
         /// <returns>打包后新服务器的uid</returns>
         string PackServersWithUids(
             LuaTable uids,
-            string orgUid, string pkgName, int strategy,
-            string interval, string url);
+            string orgUid,
+            string pkgName,
+            int strategy,
+            string interval,
+            string url
+        );
 
         /// <summary>
         /// 将服务器打包成代理链

@@ -10,17 +10,18 @@ namespace ProxySetter.Controllers.VGCPluginComponents
         Services.PsSettings setting;
 
         string[] oldCustomPacList;
-        RichTextBox rtboxWhiteList, rtboxBlackList;
-        Button btnSetSortWhitelist, btnSetSortBlacklist;
+        RichTextBox rtboxWhiteList,
+            rtboxBlackList;
+        Button btnSetSortWhitelist,
+            btnSetSortBlacklist;
 
         public TabPacCustomList(
             Services.PsSettings setting,
-
             RichTextBox rtboxWhiteList,
             RichTextBox rtboxBlackList,
-
-                Button btnSetSortWhitelist,
-            Button btnSetSortBlacklist)
+            Button btnSetSortWhitelist,
+            Button btnSetSortBlacklist
+        )
         {
             this.setting = setting;
 
@@ -37,8 +38,7 @@ namespace ProxySetter.Controllers.VGCPluginComponents
         }
 
         #region private methods
-        List<string> Text2List(string text) =>
-            text.Replace("\r", "").Split('\n').ToList();
+        List<string> Text2List(string text) => text.Replace("\r", "").Split('\n').ToList();
 
         void BindEvents()
         {
@@ -76,8 +76,10 @@ namespace ProxySetter.Controllers.VGCPluginComponents
 
         public override bool IsOptionsChanged()
         {
-            if (oldCustomPacList[0] != rtboxWhiteList.Text
-                || oldCustomPacList[1] != rtboxBlackList.Text)
+            if (
+                oldCustomPacList[0] != rtboxWhiteList.Text
+                || oldCustomPacList[1] != rtboxBlackList.Text
+            )
             {
                 return true;
             }

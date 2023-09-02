@@ -9,7 +9,7 @@ namespace ProxySetterTests
         [TestMethod]
         public void GeneralTests()
         {
-            // for debug only 
+            // for debug only
             // WinInetDebugWorker();
         }
 
@@ -47,6 +47,5 @@ namespace ProxySetterTests
             curSettings = WinInet.GetProxySettings();
             Assert.AreEqual(true, orgSettings.IsEqualTo(curSettings));
         }
-
     }
 }

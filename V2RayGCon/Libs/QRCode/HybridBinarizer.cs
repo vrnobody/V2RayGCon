@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZXing;
+﻿using ZXing;
 using ZXing.Common;
 
 namespace V2RayGCon.Libs.QRCode
@@ -13,22 +9,22 @@ namespace V2RayGCon.Libs.QRCode
     /// it does a much better job than a global blackpoint with severe shadows and gradients.
     /// However it tends to produce artifacts on lower frequency images and is therefore not
     /// a good general purpose binarizer for uses outside ZXing.
-    /// 
+    ///
     /// This class extends GlobalHistogramBinarizer, using the older histogram approach for 1D readers,
     /// and the newer local approach for 2D readers. 1D decoding using a per-row histogram is already
     /// inherently local, and only fails for horizontal gradients. We can revisit that problem later,
     /// but for now it was not a win to use local blocks for 1D.
-    /// 
+    ///
     /// This Binarizer is the default for the unit tests and the recommended class for library users.
-    /// 
+    ///
     /// </summary>
     /// <author>  dswitkin@google.com (Daniel Switkin)
     /// </author>
-    /// <author>www.Redivivus.in (suraj.supekar@redivivus.in) - Ported from ZXING Java Source 
+    /// <author>www.Redivivus.in (suraj.supekar@redivivus.in) - Ported from ZXING Java Source
     /// </author>
     public sealed class HybridBinarizer : GlobalHistogramBinarizer
     {
-        override public BitMatrix BlackMatrix
+        public override BitMatrix BlackMatrix
         {
             get
             {
@@ -41,16 +37,14 @@ namespace V2RayGCon.Libs.QRCode
         // So this is the smallest dimension in each axis we can accept.
         private const int BLOCK_SIZE_POWER = 3;
         private const int BLOCK_SIZE = 1 << BLOCK_SIZE_POWER; // ...0100...00
-        private const int BLOCK_SIZE_MASK = BLOCK_SIZE - 1;   // ...0011...11
+        private const int BLOCK_SIZE_MASK = BLOCK_SIZE - 1; // ...0011...11
         private const int MINIMUM_DIMENSION = 40;
         private const int MIN_DYNAMIC_RANGE = 24;
 
         private BitMatrix matrix = null;
 
         public HybridBinarizer(LuminanceSource source)
-           : base(source)
-        {
-        }
+            : base(source) { }
 
         public override Binarizer createBinarizer(LuminanceSource source)
         {
@@ -83,10 +77,24 @@ namespace V2RayGCon.Libs.QRCode
                     {
                         subHeight++;
                     }
-                    int[][] blackPoints = calculateBlackPoints(luminances, subWidth, subHeight, width, height);
+                    int[][] blackPoints = calculateBlackPoints(
+                        luminances,
+                        subWidth,
+                        subHeight,
+                        width,
+                        height
+                    );
 
                     var newMatrix = new BitMatrix(width, height);
-                    calculateThresholdForBlock(luminances, subWidth, subHeight, width, height, blackPoints, newMatrix);
+                    calculateThresholdForBlock(
+                        luminances,
+                        subWidth,
+                        subHeight,
+                        width,
+                        height,
+                        blackPoints,
+                        newMatrix
+                    );
                     matrix = newMatrix;
                 }
                 else
@@ -109,7 +117,15 @@ namespace V2RayGCon.Libs.QRCode
         /// <param name="height">The height.</param>
         /// <param name="blackPoints">The black points.</param>
         /// <param name="matrix">The matrix.</param>
-        private static void calculateThresholdForBlock(byte[] luminances, int subWidth, int subHeight, int width, int height, int[][] blackPoints, BitMatrix matrix)
+        private static void calculateThresholdForBlock(
+            byte[] luminances,
+            int subWidth,
+            int subHeight,
+            int width,
+            int height,
+            int[][] blackPoints,
+            BitMatrix matrix
+        )
         {
             for (int y = 0; y < subHeight; y++)
             {
@@ -147,7 +163,11 @@ namespace V2RayGCon.Libs.QRCode
 
         private static int cap(int value, int min, int max)
         {
-            return value < min ? min : value > max ? max : value;
+            return value < min
+                ? min
+                : value > max
+                    ? max
+                    : value;
         }
 
         /// <summary>
@@ -159,7 +179,14 @@ namespace V2RayGCon.Libs.QRCode
         /// <param name="threshold">The threshold.</param>
         /// <param name="stride">The stride.</param>
         /// <param name="matrix">The matrix.</param>
-        private static void thresholdBlock(byte[] luminances, int xoffset, int yoffset, int threshold, int stride, BitMatrix matrix)
+        private static void thresholdBlock(
+            byte[] luminances,
+            int xoffset,
+            int yoffset,
+            int threshold,
+            int stride,
+            BitMatrix matrix
+        )
         {
             int offset = (yoffset * stride) + xoffset;
             for (int y = 0; y < BLOCK_SIZE; y++, offset += stride)
@@ -184,7 +211,13 @@ namespace V2RayGCon.Libs.QRCode
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
         /// <returns></returns>
-        private static int[][] calculateBlackPoints(byte[] luminances, int subWidth, int subHeight, int width, int height)
+        private static int[][] calculateBlackPoints(
+            byte[] luminances,
+            int subWidth,
+            int subHeight,
+            int width,
+            int height
+        )
         {
             int[][] blackPoints = new int[subHeight][];
             for (int i = 0; i < subHeight; i++)
@@ -211,7 +244,11 @@ namespace V2RayGCon.Libs.QRCode
                     int sum = 0;
                     int min = 0xFF;
                     int max = 0;
-                    for (int yy = 0, offset = yoffset * width + xoffset; yy < BLOCK_SIZE; yy++, offset += width)
+                    for (
+                        int yy = 0, offset = yoffset * width + xoffset;
+                        yy < BLOCK_SIZE;
+                        yy++, offset += width
+                    )
                     {
                         for (int xx = 0; xx < BLOCK_SIZE; xx++)
                         {
@@ -262,8 +299,12 @@ namespace V2RayGCon.Libs.QRCode
                             // the boundaries is used for the interior.
 
                             // The (min < bp) is arbitrary but works better than other heuristics that were tried.
-                            int averageNeighborBlackPoint = (blackPoints[y - 1][x] + (2 * blackPoints[y][x - 1]) +
-                                blackPoints[y - 1][x - 1]) >> 2;
+                            int averageNeighborBlackPoint =
+                                (
+                                    blackPoints[y - 1][x]
+                                    + (2 * blackPoints[y][x - 1])
+                                    + blackPoints[y - 1][x - 1]
+                                ) >> 2;
                             if (min < averageNeighborBlackPoint)
                             {
                                 average = averageNeighborBlackPoint;

@@ -24,8 +24,8 @@
 
         public enum ShutdownReasons
         {
-            Undefined,  // default
-            CloseByUser,  // close by user
+            Undefined, // default
+            CloseByUser, // close by user
             Poweroff, // system shut down
             Abort, // attacked by aliens :>
         }

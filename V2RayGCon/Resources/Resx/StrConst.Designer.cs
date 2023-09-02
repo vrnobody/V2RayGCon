@@ -47,8 +47,8 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   重写当前线程的 CurrentUICulture 属性
-        ///   重写当前线程的 CurrentUICulture 属性。
+        ///   重写当前线程的 CurrentUICulture 属性，对
+        ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture {
@@ -62,35 +62,31 @@ namespace V2RayGCon.Resources.Resx {
         
         /// <summary>
         ///   查找类似 {
-        ///  &quot;reverseDefault&quot;: {
-        ///    &quot;bridges&quot;: [
-        ///      {
-        ///        &quot;tag&quot;: &quot;bridge&quot;,
-        ///        &quot;domain&quot;: &quot;test.v2ray.com&quot;
-        ///      }
-        ///    ],
-        ///    &quot;portals&quot;: [
-        ///      {
-        ///        &quot;tag&quot;: &quot;portal&quot;,
-        ///        &quot;domain&quot;: &quot;test.v2ray.com&quot;
-        ///      }
+        ///  &quot;fakednsDefault&quot;: [
+        ///    {
+        ///      &quot;ipPool&quot;: &quot;198.18.0.0/15&quot;,
+        ///      &quot;poolSize&quot;: 65535
+        ///    },
+        ///    {
+        ///      &quot;ipPool&quot;: &quot;fc00::/18&quot;,
+        ///      &quot;poolSize&quot;: 65535
+        ///    }
+        ///  ],
+        ///  &quot;observatoryDefault&quot;: {
+        ///    &quot;subjectSelector&quot;: [
+        ///      &quot;outbound&quot;
         ///    ]
         ///  },
-        ///  &quot;inTpl&quot;: {
-        ///    &quot;port&quot;: 1080,
-        ///    &quot;listen&quot;: &quot;127.0.0.1&quot;,
-        ///    &quot;protocol&quot;: &quot;协议名称&quot;,
-        ///    &quot;settings&quot;: {},
-        ///    &quot;streamSettings&quot;: {},
-        ///    &quot;tag&quot;: &quot;标识&quot;,
-        ///    &quot;sniffing&quot;: {
-        ///      &quot;enabled&quot;: false,
-        ///      &quot;destOverride&quot;: [
-        ///        &quot;http&quot;,
-        ///        &quot;tls&quot;
-        ///      ]
-        ///    }
-        /// [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///  &quot;observatoryUrlAndInterval&quot;: {
+        ///    &quot;subjectSelector&quot;: [
+        ///      &quot;agentout&quot;
+        ///    ],
+        ///    &quot;probeURL&quot;: &quot;https://api.v2fly.org/checkConnection.svgz&quot;,
+        ///    &quot;probeInterval&quot;: &quot;5000ms&quot;
+        ///  },
+        ///  &quot;browserForwarderDefault&quot;: {
+        ///    &quot;listenAddr&quot;: &quot;127.0.0.1&quot;,
+        ///    [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string config_example {
             get {
@@ -139,7 +135,7 @@ namespace V2RayGCon.Resources.Resx {
         
         /// <summary>
         ///   查找类似 {
-        ///  &quot;pkgV4Tpl&quot;: {
+        ///  &quot;chainV4Tpl&quot;: {
         ///    &quot;log&quot;: {
         ///      &quot;loglevel&quot;: &quot;warning&quot;
         ///    },
@@ -147,26 +143,25 @@ namespace V2RayGCon.Resources.Resx {
         ///      &quot;alias&quot;: &quot;PackageV4&quot;,
         ///      &quot;description&quot;: &quot;&quot;
         ///    },
-        ///    &quot;routing&quot;: {
-        ///      &quot;balancers&quot;: [
-        ///        {
-        ///          &quot;tag&quot;: &quot;balancer&quot;,
-        ///          &quot;selector&quot;: [
-        ///            &quot;agentout&quot;
-        ///          ]
-        ///        }
-        ///      ],
-        ///      &quot;rules&quot;: [
-        ///        {
-        ///          &quot;type&quot;: &quot;field&quot;,
-        ///          &quot;inboundTag&quot;: [
-        ///            &quot;agentin&quot;
-        ///          ],
-        ///          &quot;balancerTag&quot;: &quot;balancer&quot;
-        ///        }
-        ///      ]
+        ///    &quot;inbounds&quot;: [
+        ///      {
+        ///        &quot;port&quot;: 1080,
+        ///        &quot;listen&quot;: &quot;127.0.0.1&quot;,
+        ///        &quot;protocol&quot;: &quot;socks&quot;,
+        ///        &quot;settings&quot;: {},
+        ///        &quot;tag&quot;: &quot;agentin&quot;
+        ///      }
+        ///    ],
+        ///    &quot;outbounds&quot;: []
+        ///  },
+        ///  &quot;pkgV4Tpl&quot;: {
+        ///    &quot;log&quot;: {
+        ///      &quot;loglevel&quot;: &quot;warning&quot;
         ///    },
-        ///    &quot;inbo [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///    &quot;v2raygcon&quot;: {
+        ///      &quot;alias&quot;: &quot;PackageV4&quot;,
+        ///      &quot;description&quot;: &quot;&quot;
+        ///    },        /// [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string config_pkg {
             get {
@@ -221,22 +216,21 @@ namespace V2RayGCon.Resources.Resx {
         ///8.8.8.8
         ///8080
         ///Accept-Encoding
+        ///acceptProxyProtocol
+        ///agentout
         ///AsIs
+        ///browserForwarder
         ///Connection
         ///GET
+        ///grpc
+        ///grpcSettings
         ///Host
         ///IPIfNonMatch
         ///IPOnDemand
         ///Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
         ///Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46
-        ///OK
-        ///Pragma
-        ///UseIP
-        ///UseIPv4
-        ///UseIPv6
-        ///V2RAY_BUF_READV
-        ///V2RAY_LOCATION_ASSET
-        ///V2RAY_ [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///multiMode
+        ///OK [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string ConfigJsonKeywords {
             get {

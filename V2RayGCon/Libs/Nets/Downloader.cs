@@ -7,7 +7,9 @@ namespace V2RayGCon.Libs.Nets
 {
     internal sealed class Downloader
     {
-        public event EventHandler OnDownloadCompleted, OnDownloadCancelled, OnDownloadFail;
+        public event EventHandler OnDownloadCompleted,
+            OnDownloadCancelled,
+            OnDownloadFail;
         public event EventHandler<VgcApis.Models.Datas.IntEvent> OnProgress;
 
         public enum CoreTypes
@@ -42,9 +44,10 @@ namespace V2RayGCon.Libs.Nets
         public void SetArchitecture(bool win64 = false)
         {
             var arch = win64 ? "64" : "32";
-            _packageName = coreType == CoreTypes.Xray ?
-                $"Xray-windows-{arch}.zip" :
-                $"v2ray-windows-{arch}.zip";
+            _packageName =
+                coreType == CoreTypes.Xray
+                    ? $"Xray-windows-{arch}.zip"
+                    : $"v2ray-windows-{arch}.zip";
         }
 
         public void SetVersion(string version)
@@ -110,15 +113,15 @@ namespace V2RayGCon.Libs.Nets
         #region private method
         void RemoveOldExe(string path)
         {
-            string[] exes =
-                new string[] {
-                    // remove all cores to support switching between v2ray and xray
-                    VgcApis.Models.Consts.Core.XrayCoreExeFileName,
-                    VgcApis.Models.Consts.Core.V2RayCoreExeFileName,
+            string[] exes = new string[]
+            {
+                // remove all cores to support switching between v2ray and xray
+                VgcApis.Models.Consts.Core.XrayCoreExeFileName,
+                VgcApis.Models.Consts.Core.V2RayCoreExeFileName,
 
-                    // statistic require v2ctl.exe
-                    // VgcApis.Models.Consts.Core.V2RayCtlExeFileName,
-                };
+                // statistic require v2ctl.exe
+                // VgcApis.Models.Consts.Core.V2RayCtlExeFileName,
+            };
 
             string prefix = "bak";
 
@@ -150,8 +153,10 @@ namespace V2RayGCon.Libs.Nets
         {
             try
             {
-                OnProgress?.Invoke(this,
-                    new VgcApis.Models.Datas.IntEvent(Math.Max(1, percentage)));
+                OnProgress?.Invoke(
+                    this,
+                    new VgcApis.Models.Datas.IntEvent(Math.Max(1, percentage))
+                );
             }
             catch { }
         }
@@ -217,9 +222,9 @@ namespace V2RayGCon.Libs.Nets
 
         string GetLocalFolderPath()
         {
-            var path = setting.isPortable ?
-                VgcApis.Misc.Utils.GetCoreFolderFullPath() :
-                Misc.Utils.GetSysAppDataFolder();
+            var path = setting.isPortable
+                ? VgcApis.Misc.Utils.GetCoreFolderFullPath()
+                : Misc.Utils.GetSysAppDataFolder();
 
             if (!Directory.Exists(path))
             {
@@ -264,8 +269,7 @@ namespace V2RayGCon.Libs.Nets
 
             if (proxyPort > 0)
             {
-                webClient.Proxy = new WebProxy(
-                    VgcApis.Models.Consts.Webs.LoopBackIP, proxyPort);
+                webClient.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, proxyPort);
             }
 
             webClient.DownloadProgressChanged += (s, a) =>

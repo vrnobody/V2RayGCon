@@ -18,7 +18,8 @@ namespace VgcApis.BaseClasses
 
         public virtual void Stop() => throw new NotImplementedException();
 
-        public virtual void Run(Interfaces.Services.IApiService api) => throw new NotImplementedException();
+        public virtual void Run(Interfaces.Services.IApiService api) =>
+            throw new NotImplementedException();
 
         // 默认只有一个菜单项，即弹出主窗口
         public virtual ToolStripMenuItem GetToolStripMenu()

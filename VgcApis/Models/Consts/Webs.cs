@@ -5,7 +5,8 @@
         public static string Nobody3uVideoUrl = @"https://www.youtube.com/watch?v=BA7fdSkp8ds";
 
         public static string UserAgentKey = @"User-Agent";
-        public static string ChromeUserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36";
+        public static string ChromeUserAgent =
+            @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36";
 
         // this var will be modified by V2RayGCon.Services.Settings.
         public static string CustomUserAgent = ChromeUserAgent;
@@ -29,7 +30,5 @@
         // https://www.bing.com/search?q=vmess&first=21
         public const string SearchUrlPrefix = BingDotCom + @"/search?q=";
         public const string SearchPagePrefix = @"&first=";
-
-
     }
 }

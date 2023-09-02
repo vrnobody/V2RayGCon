@@ -16,7 +16,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             RadioButton inbound,
             CheckBox v4,
             Button genID,
-            Button insert)
+            Button insert
+        )
         {
             serverMode = false;
             v4Mode = false;
@@ -25,7 +26,8 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         }
 
         #region properties
-        public bool serverMode, v4Mode;
+        public bool serverMode,
+            v4Mode;
 
         private string _ID;
         public string ID
@@ -52,19 +54,12 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         public string address
         {
             get { return _address; }
-            set
-            {
-                SetField(ref _address, value);
-            }
+            set { SetField(ref _address, value); }
         }
         #endregion
 
         #region private method
-        void AttachEvent(
-            RadioButton inbound,
-            CheckBox v4,
-            Button genID,
-            Button insert)
+        void AttachEvent(RadioButton inbound, CheckBox v4, Button genID, Button insert)
         {
             v4.CheckedChanged += (s, a) =>
             {
@@ -105,9 +100,9 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
         JToken GetSettings()
         {
-            JToken vmess = Services.Cache.Instance.
-                tpl.LoadTemplate(serverMode ?
-                "vmessServer" : "vmessClient");
+            JToken vmess = Services.Cache.Instance.tpl.LoadTemplate(
+                serverMode ? "vmessServer" : "vmessClient"
+            );
 
             VgcApis.Misc.Utils.TryParseAddress(this.address, out string ip, out int port);
 
@@ -124,8 +119,12 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 vmess["settings"]["vnext"][0]["address"] = ip;
                 vmess["settings"]["vnext"][0]["port"] = port;
                 vmess["settings"]["vnext"][0]["users"][0]["id"] = ID;
-                vmess["settings"]["vnext"][0]["users"][0]["alterId"] = VgcApis.Misc.Utils.Str2Int(altID);
-                vmess["settings"]["vnext"][0]["users"][0]["level"] = VgcApis.Misc.Utils.Str2Int(level);
+                vmess["settings"]["vnext"][0]["users"][0]["alterId"] = VgcApis.Misc.Utils.Str2Int(
+                    altID
+                );
+                vmess["settings"]["vnext"][0]["users"][0]["level"] = VgcApis.Misc.Utils.Str2Int(
+                    level
+                );
             }
 
             return vmess;
@@ -150,7 +149,6 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             this.level = string.Empty;
             this.altID = string.Empty;
             this.address = string.Empty;
-
         }
         #endregion
 
@@ -167,19 +165,15 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 return;
             }
 
-            var prefix = root + ".settings."
-                + (serverMode ? "clients.0" : "vnext.0.users.0");
+            var prefix = root + ".settings." + (serverMode ? "clients.0" : "vnext.0.users.0");
 
             ID = Misc.Utils.GetValue<string>(config, prefix, "id");
             level = Misc.Utils.GetValue<int>(config, prefix, "level").ToString();
             altID = Misc.Utils.GetValue<int>(config, prefix, "alterId").ToString();
 
-            address = serverMode ?
-                Misc.Utils.GetAddr(config, root, "listen", "port") :
-                Misc.Utils.GetAddr(
-                    config,
-                    root + ".settings.vnext.0",
-                    "address", "port");
+            address = serverMode
+                ? Misc.Utils.GetAddr(config, root, "listen", "port")
+                : Misc.Utils.GetAddr(config, root + ".settings.vnext.0", "address", "port");
         }
         #endregion
     }

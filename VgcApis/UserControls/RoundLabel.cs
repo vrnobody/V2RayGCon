@@ -35,12 +35,32 @@ namespace VgcApis.UserControls
             int diminisher = 1;
             GraphicsPath path = new GraphicsPath();
             path.AddArc(rectangle.X, rectangle.Y, cornerRadius, cornerRadius, 180, 90);
-            path.AddArc(rectangle.X + rectangle.Width - cornerRadius - diminisher, rectangle.Y, cornerRadius, cornerRadius, 270, 90);
-            path.AddArc(rectangle.X + rectangle.Width - cornerRadius - diminisher, rectangle.Y + rectangle.Height - cornerRadius - diminisher, cornerRadius, cornerRadius, 0, 90);
-            path.AddArc(rectangle.X, rectangle.Y + rectangle.Height - cornerRadius - diminisher, cornerRadius, cornerRadius, 90, 90);
+            path.AddArc(
+                rectangle.X + rectangle.Width - cornerRadius - diminisher,
+                rectangle.Y,
+                cornerRadius,
+                cornerRadius,
+                270,
+                90
+            );
+            path.AddArc(
+                rectangle.X + rectangle.Width - cornerRadius - diminisher,
+                rectangle.Y + rectangle.Height - cornerRadius - diminisher,
+                cornerRadius,
+                cornerRadius,
+                0,
+                90
+            );
+            path.AddArc(
+                rectangle.X,
+                rectangle.Y + rectangle.Height - cornerRadius - diminisher,
+                cornerRadius,
+                cornerRadius,
+                90,
+                90
+            );
             path.CloseAllFigures();
             return path;
         }
-
     }
 }

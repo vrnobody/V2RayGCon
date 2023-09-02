@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace V2RayGCon.Constants
 {
@@ -20,14 +14,12 @@ namespace V2RayGCon.Constants
         static string GetUserSettingsFullFileName(bool isBackup)
         {
             var appDir = VgcApis.Misc.Utils.GetAppDir();
-            var fileName = isBackup ?
-                Properties.Resources.PortableUserSettingsBackup :
-                Properties.Resources.PortableUserSettingsFilename;
+            var fileName = isBackup
+                ? Properties.Resources.PortableUserSettingsBackup
+                : Properties.Resources.PortableUserSettingsFilename;
             var fullFileName = Path.Combine(appDir, fileName);
             return fullFileName;
         }
         #endregion
-
-
     }
 }

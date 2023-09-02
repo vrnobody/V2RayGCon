@@ -14,8 +14,7 @@ namespace V2RayGCon.Services.Caches
         #region public methods
         public AutocompleteMenu BindToEditor(Scintilla editor)
         {
-            const string SearchPattern =
-            VgcApis.Models.Consts.Patterns.JsonSnippetSearchPattern;
+            const string SearchPattern = VgcApis.Models.Consts.Patterns.JsonSnippetSearchPattern;
 
             var acm = new AutocompleteMenu()
             {
@@ -25,8 +24,7 @@ namespace V2RayGCon.Services.Caches
             };
 
             acm.TargetControlWrapper = new ScintillaWrapper(editor);
-            var snippets = new JsonBestMatchItems(
-                    editor, SearchPattern, GetKeywords());
+            var snippets = new JsonBestMatchItems(editor, SearchPattern, GetKeywords());
             acm.SetAutocompleteItems(snippets);
             return acm;
         }
@@ -35,6 +33,7 @@ namespace V2RayGCon.Services.Caches
 
         #region private methods
         List<string> keywordCache = null;
+
         List<string> GetKeywords()
         {
             if (keywordCache == null)

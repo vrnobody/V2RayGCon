@@ -208,7 +208,7 @@ namespace VgcApis.WinForms
         void ScrollTo(int pos)
         {
             var target = editor.LineFromPosition(pos);
-            var linesOnScreen = editor.LinesOnScreen - 2; // Fudge factor            
+            var linesOnScreen = editor.LinesOnScreen - 2; // Fudge factor
             var top = target - (linesOnScreen / 2);
             editor.GotoPosition(pos);
             editor.FirstVisibleLine = top;

@@ -9,9 +9,7 @@ namespace V2RayGCon.Services.Caches
         public JsonKeywordItems(string luaKeyword)
             : base(luaKeyword)
         {
-            ToolTipTitle = luaKeyword
-                ?? throw new System.ArgumentException(
-                    @"keyword is null!");
+            ToolTipTitle = luaKeyword ?? throw new System.ArgumentException(@"keyword is null!");
             ToolTipText = @"";
             Text = luaKeyword;
 

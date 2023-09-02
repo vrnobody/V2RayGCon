@@ -6,7 +6,10 @@ namespace V2RayGCon.Views.WinForms
 {
     public partial class FormSingleServerLog : Form
     {
-        public static FormSingleServerLog CreateLogForm(string title, VgcApis.Libs.Sys.QueueLogger logger)
+        public static FormSingleServerLog CreateLogForm(
+            string title,
+            VgcApis.Libs.Sys.QueueLogger logger
+        )
         {
             FormSingleServerLog logForm = null;
             VgcApis.Misc.UI.Invoke(() =>
@@ -23,14 +26,13 @@ namespace V2RayGCon.Views.WinForms
 
         bool isPaused = false;
 
-        FormSingleServerLog(
-            string title,
-            VgcApis.Libs.Sys.QueueLogger logger)
+        FormSingleServerLog(string title, VgcApis.Libs.Sys.QueueLogger logger)
         {
             this.qLogger = logger;
             logUpdater = new VgcApis.Libs.Tasks.Routine(
                 RefreshUi,
-                VgcApis.Models.Consts.Intervals.SiFormLogRefreshInterval);
+                VgcApis.Models.Consts.Intervals.SiFormLogRefreshInterval
+            );
 
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);

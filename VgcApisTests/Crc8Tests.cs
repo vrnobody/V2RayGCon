@@ -8,17 +8,11 @@ namespace VgcApisTests
         [TestMethod]
         public void Crc8NormalTest()
         {
-            var b1 = new byte[]
-            {
-                0,1,2,3
-            };
+            var b1 = new byte[] { 0, 1, 2, 3 };
 
             var crc1 = VgcApis.Libs.Streams.Crc8.ComputeChecksum(b1, 1);
 
-            var b2 = new byte[]
-            {
-                12,1,2,3,crc1
-            };
+            var b2 = new byte[] { 12, 1, 2, 3, crc1 };
 
             var crc2 = VgcApis.Libs.Streams.Crc8.ComputeChecksum(b2, 1);
 
@@ -28,6 +22,5 @@ namespace VgcApisTests
 
             Assert.AreNotEqual(crc2, crc3);
         }
-
     }
 }

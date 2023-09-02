@@ -1,5 +1,4 @@
 ﻿using NeoLuna.Services;
-using Newtonsoft.Json.Linq;
 using Neo.IronLua;
 using System;
 using System.Collections.Generic;
@@ -10,9 +9,7 @@ using VgcApis.Interfaces;
 
 namespace NeoLuna.Models.Apis.Components
 {
-    internal sealed class Misc :
-        VgcApis.BaseClasses.ComponentOf<LuaApis>,
-        Interfaces.ILuaMisc
+    internal sealed class Misc : VgcApis.BaseClasses.ComponentOf<LuaApis>, Interfaces.ILuaMisc
     {
         Services.Settings settings;
         private readonly FormMgrSvc formMgr;
@@ -25,7 +22,8 @@ namespace NeoLuna.Models.Apis.Components
         public Misc(
             VgcApis.Interfaces.Services.IApiService api,
             Services.Settings settings,
-            Services.FormMgrSvc formMgr)
+            Services.FormMgrSvc formMgr
+        )
         {
             this.settings = settings;
             this.formMgr = formMgr;
@@ -36,11 +34,9 @@ namespace NeoLuna.Models.Apis.Components
             vgcSettings = api.GetSettingService();
         }
 
-
         #region ILuaMisc.WinForms
         public void Notify(string title, string content, int ms) =>
             vgcNotifier.Notify(title, content, ms);
-
 
         public bool CopyToClipboard(string content)
         {
@@ -54,9 +50,11 @@ namespace NeoLuna.Models.Apis.Components
 
         public void ShowFormJsonEditor(string config) => vgcNotifier.ShowFormJsonEditor(config);
 
-        public void ShowFormServerSettings(ICoreServCtrl coreServ) => vgcNotifier.ShowFormServerSettings(coreServ);
+        public void ShowFormServerSettings(ICoreServCtrl coreServ) =>
+            vgcNotifier.ShowFormServerSettings(coreServ);
 
-        public void ShowFormSimpleEditor(ICoreServCtrl coreServ) => vgcNotifier.ShowFormSimpleEditor(coreServ);
+        public void ShowFormSimpleEditor(ICoreServCtrl coreServ) =>
+            vgcNotifier.ShowFormSimpleEditor(coreServ);
 
         public void ShowFormOption() => vgcNotifier.ShowFormOption();
 
@@ -72,7 +70,7 @@ namespace NeoLuna.Models.Apis.Components
 
         #endregion
 
-        #region ILuaMisc.ImportLinks     
+        #region ILuaMisc.ImportLinks
         public int ImportLinks(string links, string mark) =>
             vgcSlinkMgr.ImportLinksWithOutV2cfgLinksSync(links, mark);
 
@@ -92,11 +90,9 @@ namespace NeoLuna.Models.Apis.Components
         public string BrowseFolder() => VgcApis.Misc.UI.ShowSelectFolderDialog();
 
         public string BrowseFile() =>
-            VgcApis.Misc.UI.ShowSelectFileDialog(
-                VgcApis.Models.Consts.Files.AllExt);
+            VgcApis.Misc.UI.ShowSelectFileDialog(VgcApis.Models.Consts.Files.AllExt);
 
-        public string BrowseFile(string filter) =>
-                VgcApis.Misc.UI.ShowSelectFileDialog(filter);
+        public string BrowseFile(string filter) => VgcApis.Misc.UI.ShowSelectFileDialog(filter);
 
         public string Input(string title) => Input(title, 3);
 
@@ -104,13 +100,12 @@ namespace NeoLuna.Models.Apis.Components
 
         public string Input(string title, string content, int lines)
         {
-            Func<AutoResetEvent, Views.WinForms.FormInput> creater =
-                 (done) => new Views.WinForms.FormInput(done, title, content, lines);
+            Func<AutoResetEvent, Views.WinForms.FormInput> creater = (done) =>
+                new Views.WinForms.FormInput(done, title, content, lines);
             return GetResult<Views.WinForms.FormInput, string>(creater);
         }
 
-        public List<int> Choices(string title, LuaTable choices) =>
-            Choices(title, choices, false);
+        public List<int> Choices(string title, LuaTable choices) => Choices(title, choices, false);
 
         public List<int> Choices(string title, LuaTable choices, bool isShowKey)
         {
@@ -121,8 +116,7 @@ namespace NeoLuna.Models.Apis.Components
         public List<int> Choices(string title, params string[] choices) =>
             GetResultFromChoicesDialog(title, choices);
 
-        public int Choice(string title, LuaTable choices) =>
-            Choice(title, choices, false, -1);
+        public int Choice(string title, LuaTable choices) => Choice(title, choices, false, -1);
 
         public int Choice(string title, LuaTable choices, bool isShowKey) =>
             Choice(title, choices, isShowKey, -1);
@@ -136,8 +130,7 @@ namespace NeoLuna.Models.Apis.Components
         public int Choice(string title, params string[] choices) =>
             GetResultFromChoiceDialog(title, choices, -1);
 
-        public bool Confirm(string content) =>
-            VgcApis.Misc.UI.Confirm(content);
+        public bool Confirm(string content) => VgcApis.Misc.UI.Confirm(content);
 
         public void Alert(string content) =>
             MessageBox.Show(content, VgcApis.Misc.Utils.GetAppName());
@@ -150,11 +143,13 @@ namespace NeoLuna.Models.Apis.Components
             var b = VgcApis.Misc.Utils.Md5Hash(str);
             return VgcApis.Misc.Utils.ToHexString(b);
         }
+
         public string Sha256(string str)
         {
             var b = VgcApis.Misc.Utils.Sha256Hash(str);
             return VgcApis.Misc.Utils.ToHexString(b);
         }
+
         public string Sha512(string str)
         {
             var b = VgcApis.Misc.Utils.Sha512Hash(str);
@@ -188,30 +183,30 @@ namespace NeoLuna.Models.Apis.Components
 
         public string GetSubscriptionConfig() => vgcSettings.GetSubscriptionConfig();
 
-        public void SetSubscriptionConfig(string cfgStr) => vgcSettings.SetSubscriptionConfig(cfgStr);
+        public void SetSubscriptionConfig(string cfgStr) =>
+            vgcSettings.SetSubscriptionConfig(cfgStr);
 
         public long GetTimeoutValue() => VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
         public void RefreshFormMain() => vgcServer.RequireFormMainReload();
 
         public void WriteLocalStorage(string key, string value) =>
-          settings.SetLuaShareMemory(key, value);
+            settings.SetLuaShareMemory(key, value);
 
-        public string ReadLocalStorage(string key) =>
-            settings.GetLuaShareMemory(key);
+        public string ReadLocalStorage(string key) => settings.GetLuaShareMemory(key);
 
-        public bool RemoveLocalStorage(string key) =>
-            settings.RemoveShareMemory(key);
+        public bool RemoveLocalStorage(string key) => settings.RemoveShareMemory(key);
 
-        public List<string> LocalStorageKeys() =>
-            settings.ShareMemoryKeys();
+        public List<string> LocalStorageKeys() => settings.ShareMemoryKeys();
 
         public string Config2VeeLink(string config)
         {
             try
             {
                 return vgcSlinkMgr.EncodeConfigToShareLink(
-                config, VgcApis.Models.Datas.Enums.LinkTypes.v);
+                    config,
+                    VgcApis.Models.Datas.Enums.LinkTypes.v
+                );
             }
             catch { }
             return null;
@@ -222,7 +217,9 @@ namespace NeoLuna.Models.Apis.Components
             try
             {
                 return vgcSlinkMgr.EncodeConfigToShareLink(
-                config, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
+                    config,
+                    VgcApis.Models.Datas.Enums.LinkTypes.vmess
+                );
             }
             catch { }
             return null;
@@ -233,7 +230,9 @@ namespace NeoLuna.Models.Apis.Components
             try
             {
                 return vgcSlinkMgr.EncodeConfigToShareLink(
-                config, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
+                    config,
+                    VgcApis.Models.Datas.Enums.LinkTypes.v2cfg
+                );
             }
             catch { }
             return null;
@@ -250,19 +249,18 @@ namespace NeoLuna.Models.Apis.Components
         }
 
         public string AddVeePrefix(string b64Str) =>
-           vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.v);
+            vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.v);
 
         public string AddVmessPrefix(string b64Str) =>
-           vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
+            vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
 
         public string AddV2cfgPrefix(string b64Str) =>
-           vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
+            vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
 
         /// <summary>
         /// null: failed
         /// </summary>
-        public string Base64Encode(string text) =>
-            VgcApis.Misc.Utils.Base64EncodeString(text);
+        public string Base64Encode(string text) => VgcApis.Misc.Utils.Base64EncodeString(text);
 
         public string Basse64EncodeBytes(byte[] bytes) =>
             VgcApis.Misc.Utils.Base64EncodeBytes(bytes);
@@ -276,14 +274,11 @@ namespace NeoLuna.Models.Apis.Components
         public string Base64Decode(string b64Str) =>
             VgcApis.Misc.Utils.Base64DecodeToString(b64Str);
 
-        public string GetLinkBody(string link) =>
-            vgcUtils.GetLinkBody(link);
+        public string GetLinkBody(string link) => vgcUtils.GetLinkBody(link);
 
-        public string PredefinedFunctions() =>
-            Resources.Files.Datas.LuaPredefinedFunctions;
+        public string PredefinedFunctions() => Resources.Files.Datas.LuaPredefinedFunctions;
 
-        public string ScanQrcode() =>
-            vgcUtils.ScanQrcode();
+        public string ScanQrcode() => vgcUtils.ScanQrcode();
 
         public string GetAppDir() => VgcApis.Misc.Utils.GetAppDir();
 
@@ -374,20 +369,20 @@ namespace NeoLuna.Models.Apis.Components
 
         string ShowDataGridDialog(string title, DataTable dataSource, int defColumn)
         {
-            Func<AutoResetEvent, Views.WinForms.FormDataGrid> creater =
-                  (done) => new Views.WinForms.FormDataGrid(done, title, dataSource, defColumn);
+            Func<AutoResetEvent, Views.WinForms.FormDataGrid> creater = (done) =>
+                new Views.WinForms.FormDataGrid(done, title, dataSource, defColumn);
             return GetResult<Views.WinForms.FormDataGrid, string>(creater);
         }
 
         private static List<int> GetResultFromChoicesDialog(string title, string[] choices)
         {
-            Func<AutoResetEvent, Views.WinForms.FormChoices> creater =
-                (done) => new Views.WinForms.FormChoices(done, title, choices);
+            Func<AutoResetEvent, Views.WinForms.FormChoices> creater = (done) =>
+                new Views.WinForms.FormChoices(done, title, choices);
             return GetResult<Views.WinForms.FormChoices, List<int>>(creater);
         }
 
         static TResult GetResult<TForm, TResult>(Func<AutoResetEvent, TForm> creater)
-             where TForm : Form, Interfaces.IWinFormControl<TResult>
+            where TForm : Form, Interfaces.IWinFormControl<TResult>
         {
             AutoResetEvent done = new AutoResetEvent(false);
             TResult r = default;
@@ -409,8 +404,8 @@ namespace NeoLuna.Models.Apis.Components
 
         private static int GetResultFromChoiceDialog(string title, string[] choices, int selected)
         {
-            Func<AutoResetEvent, Views.WinForms.FormChoice> creater =
-                (done) => new Views.WinForms.FormChoice(done, title, choices, selected);
+            Func<AutoResetEvent, Views.WinForms.FormChoice> creater = (done) =>
+                new Views.WinForms.FormChoice(done, title, choices, selected);
 
             return GetResult<Views.WinForms.FormChoice, int>(creater);
         }

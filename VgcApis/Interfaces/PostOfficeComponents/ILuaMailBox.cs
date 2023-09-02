@@ -104,7 +104,6 @@
         /// </returns>
         bool Reply(ILuaMail mail, string title, string content);
 
-
         // lua识别参数类型的方式过于灵活
         // 如果用重载写法会导致错误的调用 Reply(ILuaMail mail, STRING title)
         /// <summary>
@@ -254,8 +253,24 @@
 
         // 跨插件发送attachment时会显示成userdata，猜测是lua实现方式不同导致
 
-        bool Send(string address, double code, string title, bool state, string content, string header, object attachment);
+        bool Send(
+            string address,
+            double code,
+            string title,
+            bool state,
+            string content,
+            string header,
+            object attachment
+        );
 
-        bool SendAndWait(string address, double code, string title, bool state, string content, string header, object attachment);
+        bool SendAndWait(
+            string address,
+            double code,
+            string title,
+            bool state,
+            string content,
+            string header,
+            object attachment
+        );
     }
 }

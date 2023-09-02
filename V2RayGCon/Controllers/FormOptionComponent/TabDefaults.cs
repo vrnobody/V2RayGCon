@@ -28,22 +28,19 @@ namespace V2RayGCon.Controllers.OptionComponent
         public TabDefaults(
             ComboBox cboxDefImportMode,
             TextBox tboxDefImportAddr,
-
             CheckBox chkImportSsShareLink,
             CheckBox chkImportTrojanShareLink,
             CheckBox chkImportBypassCnSite,
             CheckBox chkImportInjectGlobalImport,
-
             CheckBox chkSetSpeedtestIsUse,
             ComboBox cboxDefSpeedtestUrl,
             TextBox tboxSetSpeedtestCycles,
             ComboBox cboxDefSpeedtestExpectedSize,
             TextBox tboxSetSpeedtestTimeout,
-
             TextBox tboxDefVmessDecodeTemplateUrl,
             CheckBox chkDefVmessDecodeTemplateEnabled,
-
-            RichTextBox exRTBoxDefCustomInbounds)
+            RichTextBox exRTBoxDefCustomInbounds
+        )
         {
             this.setting = Services.Settings.Instance;
 
@@ -85,7 +82,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             tboxDefImportAddr.Text = string.Format(
                 @"{0}:{1}",
                 setting.CustomDefImportIp,
-                setting.CustomDefImportPort);
+                setting.CustomDefImportPort
+            );
 
             // speedtest
             chkSetSpeedtestIsUse.Checked = setting.isUseCustomSpeedtestSettings;
@@ -109,7 +107,13 @@ namespace V2RayGCon.Controllers.OptionComponent
             setting.CustomDefInbounds = exRTBoxDefCustomInbounds.Text;
 
             // mode
-            if (VgcApis.Misc.Utils.TryParseAddress(tboxDefImportAddr.Text, out string ip, out int port))
+            if (
+                VgcApis.Misc.Utils.TryParseAddress(
+                    tboxDefImportAddr.Text,
+                    out string ip,
+                    out int port
+                )
+            )
             {
                 setting.CustomDefImportIp = ip;
                 setting.CustomDefImportPort = port;
@@ -125,8 +129,12 @@ namespace V2RayGCon.Controllers.OptionComponent
             setting.isUseCustomSpeedtestSettings = chkSetSpeedtestIsUse.Checked;
             setting.CustomSpeedtestUrl = cboxDefSpeedtestUrl.Text;
             setting.CustomSpeedtestCycles = VgcApis.Misc.Utils.Str2Int(tboxSetSpeedtestCycles.Text);
-            setting.CustomSpeedtestExpectedSizeInKib = VgcApis.Misc.Utils.Str2Int(cboxDefSpeedtestExpectedSize.Text);
-            setting.CustomSpeedtestTimeout = VgcApis.Misc.Utils.Str2Int(tboxSetSpeedtestTimeout.Text);
+            setting.CustomSpeedtestExpectedSizeInKib = VgcApis.Misc.Utils.Str2Int(
+                cboxDefSpeedtestExpectedSize.Text
+            );
+            setting.CustomSpeedtestTimeout = VgcApis.Misc.Utils.Str2Int(
+                tboxSetSpeedtestTimeout.Text
+            );
 
             setting.SaveUserSettingsNow();
             return true;
@@ -134,10 +142,16 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         public override bool IsOptionsChanged()
         {
-            var success = VgcApis.Misc.Utils.TryParseAddress(tboxDefImportAddr.Text, out string ip, out int port);
-            if (!success
+            var success = VgcApis.Misc.Utils.TryParseAddress(
+                tboxDefImportAddr.Text,
+                out string ip,
+                out int port
+            );
+            if (
+                !success
                 || setting.CustomVmessDecodeTemplateUrl != tboxDefVmessDecodeTemplateUrl.Text
-                || setting.CustomVmessDecodeTemplateEnabled != chkDefVmessDecodeTemplateEnabled.Checked
+                || setting.CustomVmessDecodeTemplateEnabled
+                    != chkDefVmessDecodeTemplateEnabled.Checked
                 || setting.CustomDefInbounds != exRTBoxDefCustomInbounds.Text
                 || setting.CustomDefImportGlobalImport != chkImportInjectGlobalImport.Checked
                 || setting.CustomDefImportBypassCnSite != chkImportBypassCnSite.Checked
@@ -146,12 +160,15 @@ namespace V2RayGCon.Controllers.OptionComponent
                 || setting.CustomDefImportIp != ip
                 || setting.CustomDefImportPort != port
                 || setting.CustomDefImportMode != cboxDefImportMode.SelectedIndex
-
                 || setting.isUseCustomSpeedtestSettings != chkSetSpeedtestIsUse.Checked
                 || setting.CustomSpeedtestUrl != cboxDefSpeedtestUrl.Text
-                || setting.CustomSpeedtestExpectedSizeInKib != VgcApis.Misc.Utils.Str2Int(cboxDefSpeedtestExpectedSize.Text)
-                || setting.CustomSpeedtestCycles != VgcApis.Misc.Utils.Str2Int(tboxSetSpeedtestCycles.Text)
-                || setting.CustomSpeedtestTimeout != VgcApis.Misc.Utils.Str2Int(tboxSetSpeedtestTimeout.Text))
+                || setting.CustomSpeedtestExpectedSizeInKib
+                    != VgcApis.Misc.Utils.Str2Int(cboxDefSpeedtestExpectedSize.Text)
+                || setting.CustomSpeedtestCycles
+                    != VgcApis.Misc.Utils.Str2Int(tboxSetSpeedtestCycles.Text)
+                || setting.CustomSpeedtestTimeout
+                    != VgcApis.Misc.Utils.Str2Int(tboxSetSpeedtestTimeout.Text)
+            )
             {
                 return true;
             }

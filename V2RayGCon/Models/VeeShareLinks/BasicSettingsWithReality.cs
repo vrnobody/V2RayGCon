@@ -29,15 +29,15 @@ namespace V2RayGCon.Models.VeeShareLinks
         public string tlsFingerPrint = string.Empty;
         public string tlsAlpn = string.Empty;
 
-
-        public BasicSettingsWithReality(BasicSettings source) : base()
+        public BasicSettingsWithReality(BasicSettings source)
+            : base()
         {
             CopyFrom(source);
         }
 
-        public BasicSettingsWithReality() : base()
+        public BasicSettingsWithReality()
+            : base()
         {
-
             tlsParam1 = string.Empty;
             tlsParam2 = string.Empty;
             tlsParam3 = string.Empty;
@@ -46,17 +46,42 @@ namespace V2RayGCon.Models.VeeShareLinks
             tlsAlpn = string.Empty;
         }
 
-        #region protected 
+        #region protected
         // for string compression
-        protected new readonly List<string> strTable = new List<string>{
-            "ws", "tcp", "kcp", "h2", "quic",
-            "none", "srtp", "utp", "wechat-video",
-            "dtls", "wireguard",
-            "xtls-rprx-direct", "xtls-rprx-splice",
-            "tls", "xtls", "reality",
-            "auto", "aes-128-gcm", "chacha20-poly1305",
-            "gun", "multi", "guna",
-            "chrome", "firefox", "safari", "ios", "android", "edge", "360", "qq", "random", "randomized",
+        protected new readonly List<string> strTable = new List<string>
+        {
+            "ws",
+            "tcp",
+            "kcp",
+            "h2",
+            "quic",
+            "none",
+            "srtp",
+            "utp",
+            "wechat-video",
+            "dtls",
+            "wireguard",
+            "xtls-rprx-direct",
+            "xtls-rprx-splice",
+            "tls",
+            "xtls",
+            "reality",
+            "auto",
+            "aes-128-gcm",
+            "chacha20-poly1305",
+            "gun",
+            "multi",
+            "guna",
+            "chrome",
+            "firefox",
+            "safari",
+            "ios",
+            "android",
+            "edge",
+            "360",
+            "qq",
+            "random",
+            "randomized",
             "",
         };
 
@@ -101,17 +126,18 @@ namespace V2RayGCon.Models.VeeShareLinks
             this.tlsParam3 = source.tlsParam3;
             this.tlsFingerPrint = source.tlsFingerPrint;
             this.tlsAlpn = source.tlsAlpn;
-
         }
 
         public bool EqTo(BasicSettingsWithReality target)
         {
-            if (!base.EqTo(target)
+            if (
+                !base.EqTo(target)
                 || tlsParam1 != target.tlsParam1
                 || tlsParam2 != target.tlsParam2
                 || tlsParam3 != target.tlsParam3
                 || tlsFingerPrint != target.tlsFingerPrint
-                || tlsAlpn != target.tlsAlpn)
+                || tlsAlpn != target.tlsAlpn
+            )
             {
                 return false;
             }

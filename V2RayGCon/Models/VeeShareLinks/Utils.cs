@@ -7,7 +7,8 @@ namespace V2RayGCon.Models.VeeShareLinks
     {
         public static Func<string> GenReadStringHelper(
             VgcApis.Libs.Streams.BitStream bitStream,
-            List<string> strTable)
+            List<string> strTable
+        )
         {
             var bs = bitStream;
             var table = strTable;
@@ -16,7 +17,8 @@ namespace V2RayGCon.Models.VeeShareLinks
 
         public static string ReadString(
             VgcApis.Libs.Streams.BitStream bitStream,
-            List<string> strTable)
+            List<string> strTable
+        )
         {
             var lenInBits = VgcApis.Misc.Utils.GetLenInBitsOfInt(strTable.Count);
 
@@ -34,7 +36,8 @@ namespace V2RayGCon.Models.VeeShareLinks
 
         public static Action<string> GenWriteStringHelper(
             VgcApis.Libs.Streams.BitStream bitStream,
-            List<string> strTable)
+            List<string> strTable
+        )
         {
             var bs = bitStream;
             var table = strTable;
@@ -44,7 +47,8 @@ namespace V2RayGCon.Models.VeeShareLinks
         public static void WriteString(
             VgcApis.Libs.Streams.BitStream bitStream,
             List<string> strTable,
-            string str)
+            string str
+        )
         {
             var lenInBits = VgcApis.Misc.Utils.GetLenInBitsOfInt(strTable.Count);
 

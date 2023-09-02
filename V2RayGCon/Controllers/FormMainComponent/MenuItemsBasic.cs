@@ -18,7 +18,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         public MenuItemsBasic(
             Form formMain,
             ToolStripMenuItem pluginToolStrip,
-
             ToolStripMenuItem miSimVmessServer,
             ToolStripMenuItem miImportLinkFromClipboard,
             ToolStripMenuItem miExportAllServer,
@@ -30,7 +29,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem miFormOptions,
             ToolStripMenuItem miDownloadV2rayCore,
             ToolStripMenuItem miRemoveV2rayCore,
-            ToolStripMenuItem miCheckVgcUpdate)
+            ToolStripMenuItem miCheckVgcUpdate
+        )
         {
             servers = Services.Servers.Instance;
             slinkMgr = Services.ShareLinkMgr.Instance;
@@ -41,16 +41,28 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             InitMenuPlugin(pluginToolStrip);
 
-            InitMenuFile(miSimVmessServer, miImportLinkFromClipboard, miExportAllServer, miImportFromFile);
+            InitMenuFile(
+                miSimVmessServer,
+                miImportLinkFromClipboard,
+                miExportAllServer,
+                miImportFromFile
+            );
             InitMenuWindows(miFormConfigEditor, miFormLog, miFormOptions);
-            InitMenuAbout(miAbout, miHelp, miDownloadV2rayCore, miRemoveV2rayCore, miCheckVgcUpdate);
+            InitMenuAbout(
+                miAbout,
+                miHelp,
+                miDownloadV2rayCore,
+                miRemoveV2rayCore,
+                miCheckVgcUpdate
+            );
         }
 
         #region public method
         public void ImportServersFromTextFile()
         {
             string v2cfgLinks = VgcApis.Misc.UI.ReadFileContentFromDialog(
-                VgcApis.Models.Consts.Files.TxtExt);
+                VgcApis.Models.Consts.Files.TxtExt
+            );
 
             if (v2cfgLinks == null)
             {
@@ -74,8 +86,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
             foreach (var server in serverList)
             {
                 var vlink = Misc.Utils.AddLinkPrefix(
-                     VgcApis.Misc.Utils.Base64EncodeString(server.GetConfiger().GetConfig()),
-                    VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
+                    VgcApis.Misc.Utils.Base64EncodeString(server.GetConfiger().GetConfig()),
+                    VgcApis.Models.Datas.Enums.LinkTypes.v2cfg
+                );
 
                 s += vlink + System.Environment.NewLine + System.Environment.NewLine;
             }
@@ -106,7 +119,11 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
                 foreach (var plugin in plugins)
                 {
-                    var mi = new ToolStripMenuItem(plugin.Name, plugin.Icon, (s, a) => plugin.ShowMainForm());
+                    var mi = new ToolStripMenuItem(
+                        plugin.Name,
+                        plugin.Icon,
+                        (s, a) => plugin.ShowMainForm()
+                    );
                     pluginToolStrip.DropDownItems.Add(mi);
                     mi.ToolTipText = plugin.Description;
                 }
@@ -131,7 +148,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem help,
             ToolStripMenuItem downloadV2rayCore,
             ToolStripMenuItem removeV2rayCore,
-            ToolStripMenuItem miCheckVgcUpdate)
+            ToolStripMenuItem miCheckVgcUpdate
+        )
         {
             // menu about
             downloadV2rayCore.Click += (s, a) => Views.WinForms.FormDownloadCore.ShowForm();
@@ -147,7 +165,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
             miCheckVgcUpdate.Click += (s, a) => updater.CheckForUpdate(true);
         }
 
-        private void InitMenuFile(ToolStripMenuItem simVmessServer, ToolStripMenuItem importLinkFromClipboard, ToolStripMenuItem exportAllServer, ToolStripMenuItem importFromFile)
+        private void InitMenuFile(
+            ToolStripMenuItem simVmessServer,
+            ToolStripMenuItem importLinkFromClipboard,
+            ToolStripMenuItem exportAllServer,
+            ToolStripMenuItem importFromFile
+        )
         {
             // menu file
             simVmessServer.Click += (s, a) =>
@@ -170,7 +193,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
         private static void InitMenuWindows(
             ToolStripMenuItem miFormConfigEditor,
             ToolStripMenuItem miFormLog,
-            ToolStripMenuItem miFormOptions)
+            ToolStripMenuItem miFormOptions
+        )
         {
             // menu window
             miFormConfigEditor.Click += (s, a) => Views.WinForms.FormConfiger.ShowEmptyConfig();

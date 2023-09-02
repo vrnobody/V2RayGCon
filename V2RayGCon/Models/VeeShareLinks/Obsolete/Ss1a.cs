@@ -9,16 +9,22 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 
         public const string version = @"1a";
 
-        public string alias, description; // 256 bytes each
-        public bool isUseOta, isUseTls;
-        public int port; // 16 bit 
+        public string alias,
+            description; // 256 bytes each
+        public bool isUseOta,
+            isUseTls;
+        public int port; // 16 bit
 
         const int networkTypeLenInBits = 2;
         int networkType; // 2 bit "tcp" , "udp" , "tcp,udp"
 
-        public string address, password, method; // 256 bytes
-        public string streamType, streamParam1, streamParam2, streamParam3; // 256 bytes each
-
+        public string address,
+            password,
+            method; // 256 bytes
+        public string streamType,
+            streamParam1,
+            streamParam2,
+            streamParam3; // 256 bytes each
 
         public Ss1a()
         {
@@ -26,7 +32,7 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
             alias = string.Empty;
             description = string.Empty;
 
-            // ss 
+            // ss
             address = string.Empty;
             port = 0;
             password = string.Empty;
@@ -42,14 +48,13 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
             streamParam3 = string.Empty;
         }
 
-        public Ss1a(byte[] bytes) :
-           this()
+        public Ss1a(byte[] bytes)
+            : this()
         {
             var ver = VgcApis.Libs.Streams.BitStream.ReadVersion(bytes);
             if (ver != version)
             {
-                throw new NotSupportedException(
-                    $"Not supported version ${ver}");
+                throw new NotSupportedException($"Not supported version ${ver}");
             }
 
             using (var bs = new VgcApis.Libs.Streams.BitStream(bytes))
@@ -74,22 +79,35 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
             }
         }
 
-        #region string table for compression 
-        List<string> strTable = new List<string>{
-            "","ws", "tcp", "kcp", "h2",
-            "quic", "none", "srtp", "utp", "wechat-video",
-            "dtls", "wireguard", "aes-256-cfb", "aes-128-cfb", "chacha20",
-            "chacha20-ietf","aes-256-gcm", "aes-128-gcm", "chacha20-poly1305" , "chacha20-ietf-poly1305"
+        #region string table for compression
+        List<string> strTable = new List<string>
+        {
+            "",
+            "ws",
+            "tcp",
+            "kcp",
+            "h2",
+            "quic",
+            "none",
+            "srtp",
+            "utp",
+            "wechat-video",
+            "dtls",
+            "wireguard",
+            "aes-256-cfb",
+            "aes-128-cfb",
+            "chacha20",
+            "chacha20-ietf",
+            "aes-256-gcm",
+            "aes-128-gcm",
+            "chacha20-poly1305",
+            "chacha20-ietf-poly1305"
         };
 
-        string[] networkTable = new string[] {
-            "tcp" , "udp" , "tcp,udp"
-        };
+        string[] networkTable = new string[] { "tcp", "udp", "tcp,udp" };
 
         string GetNetworkTypeNameByIndex(int index) =>
-            networkTable[
-                VgcApis.Misc.Utils.Clamp(
-                    index, 0, networkTable.Length)];
+            networkTable[VgcApis.Misc.Utils.Clamp(index, 0, networkTable.Length)];
 
         int GetIndexByNetworkTypeName(string networkTypeName)
         {
@@ -110,11 +128,9 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
         public void SetNetworkType(string networkTypeName) =>
             networkType = GetIndexByNetworkTypeName(networkTypeName);
 
-        public int GetCurNetworkTypeIndex() =>
-            networkType;
+        public int GetCurNetworkTypeIndex() => networkType;
 
-        public string GetCurNetworkTypeName() =>
-            GetNetworkTypeNameByIndex(networkType);
+        public string GetCurNetworkTypeName() => GetNetworkTypeNameByIndex(networkType);
 
         public byte[] ToBytes()
         {
@@ -148,7 +164,8 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 
         public bool EqTo(Ss1a vee)
         {
-            if (isUseOta != vee.isUseOta
+            if (
+                isUseOta != vee.isUseOta
                 || port != vee.port
                 || password != vee.password
                 || method != vee.method
@@ -159,7 +176,8 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
                 || streamParam2 != vee.streamParam2
                 || streamParam3 != vee.streamParam3
                 || alias != vee.alias
-                || description != vee.description)
+                || description != vee.description
+            )
             {
                 return false;
             }
@@ -172,6 +190,5 @@ namespace V2RayGCon.Models.VeeShareLinks.Obsolete
 
 
         #endregion
-
     }
 }

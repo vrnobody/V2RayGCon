@@ -30,6 +30,5 @@ namespace V2RayGCon.Test.VeeTests
                 Assert.AreEqual(true, v1.EqTo(v2));
             }
         }
-
     }
 }

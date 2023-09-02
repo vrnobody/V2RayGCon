@@ -7,8 +7,7 @@ namespace V2RayGCon.BaseClasses
     /// A base class for the singleton design pattern.
     /// </summary>
     /// <typeparam name="T">Class type of the singleton</typeparam>
-    public abstract class SingletonService<T> :
-        VgcApis.BaseClasses.Disposable
+    public abstract class SingletonService<T> : VgcApis.BaseClasses.Disposable
         where T : class
     {
         #region Members
@@ -26,7 +25,10 @@ namespace V2RayGCon.BaseClasses
         /// <summary>
         /// Gets the instance of this singleton.
         /// </summary>
-        public static T Instance { get { return sInstance.Value; } }
+        public static T Instance
+        {
+            get { return sInstance.Value; }
+        }
 
         #endregion
 

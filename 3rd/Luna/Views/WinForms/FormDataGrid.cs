@@ -10,10 +10,7 @@ using System.Windows.Forms;
 
 namespace Luna.Views.WinForms
 {
-    public partial class FormDataGrid :
-        Form,
-        Interfaces.IWinFormControl<string>
-
+    public partial class FormDataGrid : Form, Interfaces.IWinFormControl<string>
     {
         readonly int MAX_TITLE_LEN = 60;
         readonly int UPDATE_INTERVAL = 500;
@@ -26,10 +23,7 @@ namespace Luna.Views.WinForms
         string jsonResult = null;
         VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater;
 
-
-        public FormDataGrid(
-            AutoResetEvent done,
-            string title, DataTable dataSource, int defColumn)
+        public FormDataGrid(AutoResetEvent done, string title, DataTable dataSource, int defColumn)
         {
             InitializeComponent();
             this.done = done;
@@ -230,11 +224,11 @@ namespace Luna.Views.WinForms
         void UpdateUiWorker()
         {
             VgcApis.Misc.UI.Invoke(() =>
-           {
-               var ds = GetFilteredDataTable();
-               lbTotal.Text = ds.Rows.Count.ToString();
-               dgvData.DataSource = ds;
-           });
+            {
+                var ds = GetFilteredDataTable();
+                lbTotal.Text = ds.Rows.Count.ToString();
+                dgvData.DataSource = ds;
+            });
         }
 
         DataTable GetFilteredDataTable()
@@ -252,7 +246,6 @@ namespace Luna.Views.WinForms
             }
             return r;
         }
-
 
         void InitControls()
         {
@@ -276,8 +269,7 @@ namespace Luna.Views.WinForms
             if (count > 0)
             {
                 // lua index starts from 1
-                cboxColumnIdx.SelectedIndex = VgcApis.Misc.Utils.Clamp(
-                    defColumn - 1, 0, count);
+                cboxColumnIdx.SelectedIndex = VgcApis.Misc.Utils.Clamp(defColumn - 1, 0, count);
             }
         }
 
@@ -287,11 +279,11 @@ namespace Luna.Views.WinForms
             {
                 jsonResult = null;
                 var idxs = JsonConvert.SerializeObject(GetSelectDatas(), Formatting.Indented);
-                var datas = JsonConvert.SerializeObject(dgvData.DataSource as DataTable, Formatting.Indented);
-                jsonResult = "{\n"
-                            + $"\"selected\":{idxs},\n"
-                            + $"\"all\":{datas}"
-                            + "\n}";
+                var datas = JsonConvert.SerializeObject(
+                    dgvData.DataSource as DataTable,
+                    Formatting.Indented
+                );
+                jsonResult = "{\n" + $"\"selected\":{idxs},\n" + $"\"all\":{datas}" + "\n}";
             }
             catch { }
         }
@@ -300,8 +292,17 @@ namespace Luna.Views.WinForms
         {
             var content = GetColumns(true, isSelectedOnly);
             var text = List2Csv(content);
-            VgcApis.Models.Datas.Enums.SaveFileErrorCode ok = VgcApis.Models.Datas.Enums.SaveFileErrorCode.Cancel;
-            ok = VgcApis.Misc.UI.ShowSaveFileDialog(VgcApis.Models.Consts.Files.CsvExt, text, out _);
+            VgcApis.Models.Datas.Enums.SaveFileErrorCode ok = VgcApis
+                .Models
+                .Datas
+                .Enums
+                .SaveFileErrorCode
+                .Cancel;
+            ok = VgcApis.Misc.UI.ShowSaveFileDialog(
+                VgcApis.Models.Consts.Files.CsvExt,
+                text,
+                out _
+            );
             switch (ok)
             {
                 case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Fail:
@@ -325,7 +326,6 @@ namespace Luna.Views.WinForms
             success = VgcApis.Misc.Utils.CopyToClipboard(text);
             VgcApis.Misc.UI.MsgBoxAsync(success ? I18N.Done : I18N.Fail);
         }
-
 
         private void btnCancel_Click(object sender, EventArgs e)
         {

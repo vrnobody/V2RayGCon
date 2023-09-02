@@ -6,25 +6,30 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 {
     class EnvImportMultiConf : ConfigerComponentController
     {
-        readonly ComboBox cboxImportAlias, cboxEnvName, cboxMultiConfAlias;
-        readonly TextBox tboxImportUrl, tboxEnvValue, tboxMultiConfPath;
-        readonly Button btnInsertImport, btnInsertEnv, btnInsertMultiConf;
+        readonly ComboBox cboxImportAlias,
+            cboxEnvName,
+            cboxMultiConfAlias;
+        readonly TextBox tboxImportUrl,
+            tboxEnvValue,
+            tboxMultiConfPath;
+        readonly Button btnInsertImport,
+            btnInsertEnv,
+            btnInsertMultiConf;
 
-        Dictionary<string, string> importTable, multiConfTable;
-
+        Dictionary<string, string> importTable,
+            multiConfTable;
 
         public EnvImportMultiConf(
             ComboBox cboxMultiConfAlias,
             TextBox tboxMultiConfPath,
             Button btnInsertMultiConf,
-
             ComboBox cboxImportAlias,
             TextBox tboxImportUrl,
             Button btnInsertImport,
-
             ComboBox cboxEnvName,
             TextBox tboxEnvValue,
-            Button btnInsertEnv)
+            Button btnInsertEnv
+        )
         {
             this.cboxMultiConfAlias = cboxMultiConfAlias;
             this.tboxMultiConfPath = tboxMultiConfPath;
@@ -40,9 +45,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
             Init();
             BindEvent();
-
         }
-
 
         #region private method
         void BindEvent()
@@ -60,8 +63,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             {
                 var json = Misc.Utils.CreateJObject("v2raygcon.configs");
                 json["v2raygcon"]["configs"][tboxMultiConfPath.Text] = cboxMultiConfAlias.Text;
-                container.InjectConfigHelper(() =>
-                    Misc.Utils.MergeJson(container.config, json));
+                container.InjectConfigHelper(() => Misc.Utils.MergeJson(container.config, json));
             };
 
             cboxImportAlias.SelectedIndexChanged += (s, a) =>
@@ -77,16 +79,14 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             {
                 var json = Misc.Utils.CreateJObject("v2raygcon.import");
                 json["v2raygcon"]["import"][tboxImportUrl.Text] = cboxImportAlias.Text;
-                container.InjectConfigHelper(() =>
-                    Misc.Utils.MergeJson(container.config, json));
+                container.InjectConfigHelper(() => Misc.Utils.MergeJson(container.config, json));
             };
 
             btnInsertEnv.Click += (s, a) =>
             {
                 var json = Misc.Utils.CreateJObject("v2raygcon.env");
                 json["v2raygcon"]["env"][cboxEnvName.Text] = tboxEnvValue.Text;
-                container.InjectConfigHelper(
-                    () => Misc.Utils.MergeJson(container.config, json));
+                container.InjectConfigHelper(() => Misc.Utils.MergeJson(container.config, json));
             };
         }
 
@@ -110,8 +110,9 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         private void InitMultiConfControls()
         {
             var stdinKey = @"Standard Input";
-            multiConfTable = new Dictionary<string, string> {
-                {stdinKey, VgcApis.Models.Consts.Core.StdIn                },
+            multiConfTable = new Dictionary<string, string>
+            {
+                { stdinKey, VgcApis.Models.Consts.Core.StdIn },
             };
 
             var multiConfItems = Services.Settings.Instance.GetMultiConfItems();
@@ -138,7 +139,6 @@ namespace V2RayGCon.Controllers.ConfigerComponet
 
             Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMultiConfAlias);
         }
-
 
         private void InitGlobalImportControls()
         {

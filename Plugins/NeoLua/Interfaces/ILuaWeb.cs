@@ -39,6 +39,11 @@ namespace NeoLuna.Interfaces
         /// <returns>Base64编码的内容</returns>
         List<string> ExtractBase64String(string text);
 
+        /// <summary>
+        /// 从字符串中提取全部支持的链接
+        /// </summary>
+        /// <param name="text">一段字符串</param>
+        /// <returns></returns>
         List<string> ExtractAllShareLinks(string text);
 
         /// <summary>
@@ -178,8 +183,18 @@ namespace NeoLuna.Interfaces
         // using bing.com to search sth.
         string Search(string keywords, int first, int proxyPort);
 
+        /// <summary>
+        /// 同Tcping(url, ms, proxyPort)
+        /// </summary>
         bool Tcping(string url, int ms);
 
+        /// <summary>
+        /// 其实是HTTP ping，访问url指定的网站，在指定时间内下载到数据即返回true。
+        /// </summary>
+        /// <param name="url">指定的网址</param>
+        /// <param name="ms">超时（毫秒）</param>
+        /// <param name="proxyPort">代理端口</param>
+        /// <returns></returns>
         bool Tcping(string url, int ms, int proxyPort);
 
         /// <summary>

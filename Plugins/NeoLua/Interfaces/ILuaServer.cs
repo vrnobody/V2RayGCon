@@ -28,8 +28,19 @@ namespace NeoLuna.Interfaces
         /// <returns>选中的服务器总数</returns>
         int CountSelected();
 
+        /// <summary>
+        /// 同Add(config, mark)
+        /// </summary>
+        /// <param name="config"></param>
+        /// <returns></returns>
         bool Add(string config);
 
+        /// <summary>
+        /// 添加一个服务器
+        /// </summary>
+        /// <param name="config">服务器的config.json</param>
+        /// <param name="mark">标记</param>
+        /// <returns></returns>
         bool Add(string config, string mark);
 
         /// <summary>
@@ -177,17 +188,33 @@ namespace NeoLuna.Interfaces
         long RunSpeedTest(string rawConfig);
 
         /// <summary>
-        /// 对选定的服务器进行延迟测试
+        /// 对选定的服务器进行延迟测试，完成时弹出提示窗口。
         /// </summary>
         /// <returns></returns>
         bool RunSpeedTestOnSelectedServers();
 
+        /// <summary>
+        /// 对选定的服务器进行延迟测试，没有任务提示。
+        /// </summary>
+        /// <returns></returns>
         bool RunSpeedTestOnSelectedServersBgQuiet();
 
+        /// <summary>
+        /// 对指定uid的服务器进行延迟测试
+        /// </summary>
+        /// <param name="uids"></param>
+        /// <returns></returns>
         bool RunSpeedTestByUids(LuaTable uids);
 
+        /// <summary>
+        /// 停止延迟测试
+        /// </summary>
         void StopSpeedTest();
 
+        /// <summary>
+        /// 是否正在进行延迟测试
+        /// </summary>
+        /// <returns></returns>
         bool IsRunningSpeedTest();
 
         /// <summary>
@@ -210,20 +237,44 @@ namespace NeoLuna.Interfaces
         /// </summary>
         void SortSelectedServersBySummary();
 
+        /// <summary>
+        /// 按流量统计下载量排序选中的服务器
+        /// </summary>
         void SortSelectedByDownloadTotal();
 
+        /// <summary>
+        /// 按流量统计上传量排序选中的服务器
+        /// </summary>
         void SortSelectedByUploadTotal();
 
+        /// <summary>
+        /// 按序号反序排列服务器
+        /// </summary>
         void ReverseServersByIndex(LuaTable uids);
 
+        /// <summary>
+        /// 按最后修改时间排序服务器
+        /// </summary>
         void SortServersByLastModifiedDate(LuaTable uids);
 
+        /// <summary>
+        /// 按延迟排序服务器
+        /// </summary>
         void SortServersBySpeedTest(LuaTable uids);
 
+        /// <summary>
+        /// 按摘要排序服务器
+        /// </summary>
         void SortServersBySummary(LuaTable uids);
 
+        /// <summary>
+        /// 按流量统计下载量排序服务器
+        /// </summary>
         void SortServersByDownloadTotal(LuaTable uids);
 
+        /// <summary>
+        /// 按流量统计上传量排序服务器
+        /// </summary>
         void SortServersByUploadTotal(LuaTable uids);
 
         /// <summary>

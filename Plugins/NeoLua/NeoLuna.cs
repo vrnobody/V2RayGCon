@@ -59,7 +59,7 @@ namespace NeoLuna
 
         public override void ShowMainForm()
         {
-            if (!GetState())
+            if (!GetRunningState())
             {
                 return;
             }
@@ -69,7 +69,7 @@ namespace NeoLuna
 
         public override void Run(VgcApis.Interfaces.Services.IApiService api)
         {
-            if (!SetState(true))
+            if (!SetRunningState(true))
             {
                 return;
             }
@@ -94,7 +94,7 @@ namespace NeoLuna
 
         public override void Stop()
         {
-            if (!SetState(false))
+            if (!SetRunningState(false))
             {
                 return;
             }

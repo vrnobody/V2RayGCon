@@ -20,6 +20,7 @@ namespace VgcApis.BaseClasses
 
         public virtual void Run(Interfaces.Services.IApiService api) => throw new NotImplementedException();
 
+        // 默认只有一个菜单项，即弹出主窗口
         public virtual ToolStripMenuItem GetToolStripMenu()
         {
             var menu = new ToolStripMenuItem(Name, Icon, (s, a) => ShowMainForm());
@@ -30,12 +31,14 @@ namespace VgcApis.BaseClasses
 
         #region protected
 
+        // 预防多次执行IPlugin.Run()及IPlugin.Stop()的辅助函数。
+
         object locker = new object();
         bool isPluginRunning = false;
 
-        protected bool GetState() => isPluginRunning && !disposedValue;
+        protected bool GetRunningState() => isPluginRunning && !disposedValue;
 
-        protected bool SetState(bool isRunning)
+        protected bool SetRunningState(bool isRunning)
         {
             if (disposedValue && isRunning)
             {
@@ -65,7 +68,7 @@ namespace VgcApis.BaseClasses
                 if (disposing)
                 {
                     // TODO: 释放托管状态(托管对象)
-                    if (GetState())
+                    if (GetRunningState())
                     {
                         Stop();
                     }

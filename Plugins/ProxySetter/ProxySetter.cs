@@ -49,7 +49,7 @@ namespace ProxySetter
         #region public overrides
         public override void Run(VgcApis.Interfaces.Services.IApiService api)
         {
-            if (!SetState(true))
+            if (!SetRunningState(true))
             {
                 return;
             }
@@ -61,7 +61,7 @@ namespace ProxySetter
 
         public override void ShowMainForm()
         {
-            if (!GetState())
+            if (!GetRunningState())
             {
                 return;
             }
@@ -71,7 +71,7 @@ namespace ProxySetter
 
         public override void Stop()
         {
-            if (!SetState(false))
+            if (!SetRunningState(false))
             {
                 return;
             }

@@ -243,6 +243,13 @@ namespace NeoLuna.Interfaces
         ILuaMailBox ApplyRandomMailBox();
 
         /// <summary>
+        /// 申请一个随机邮箱
+        /// </summary>
+        /// <param name="capacity">容量（超过时拒收新邮件）</param>
+        /// <returns></returns>
+        ILuaMailBox ApplyRandomMailBox(int capacity);
+
+        /// <summary>
         /// 检测邮箱是否有权使用（只有拥有邮箱的脚本才有权收邮件及注销邮箱）
         /// </summary>
         /// <param name="mailbox"></param>
@@ -259,7 +266,15 @@ namespace NeoLuna.Interfaces
         /// </returns>
         ILuaMailBox CreateMailBox(string name);
 
-        ILuaMailBox ApplyRandomMailBox(int capacity);
+        /// <summary>
+        /// 申请一个名为name的邮箱
+        /// </summary>
+        /// <param name="name">邮箱名</param>
+        /// <param name="capacity">容量（超过时拒收新邮件）</param>
+        /// <returns>
+        /// 申请成功（name不重复)时返回一个邮箱<br/>
+        /// 申请失败时返回nil
+        /// </returns>
         ILuaMailBox CreateMailBox(string name, int capacity);
 
         /// <summary>
@@ -274,9 +289,7 @@ namespace NeoLuna.Interfaces
         #endregion
 
         #region encoding
-        /*
-         * Encoding 用于向Sys:Run()传递编码类型，解决乱码问题。
-         */
+        // Encoding 用于向Sys:Run()传递编码类型，解决乱码问题。
         Encoding GetEncoding(int codepage);
         Encoding EncodingDefault { get; }
 
@@ -300,7 +313,6 @@ namespace NeoLuna.Interfaces
         bool PipedProcWrite(string handle, string content);
 
         #endregion
-
 
 
         #region process

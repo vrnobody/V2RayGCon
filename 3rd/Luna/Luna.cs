@@ -53,7 +53,7 @@ namespace Luna
 
         public override void ShowMainForm()
         {
-            if (!GetState())
+            if (!GetRunningState())
             {
                 return;
             }
@@ -63,7 +63,7 @@ namespace Luna
 
         public override void Run(VgcApis.Interfaces.Services.IApiService api)
         {
-            if (!SetState(true))
+            if (!SetRunningState(true))
             {
                 return;
             }
@@ -88,7 +88,7 @@ namespace Luna
 
         public override void Stop()
         {
-            if (!SetState(false))
+            if (!SetRunningState(false))
             {
                 return;
             }

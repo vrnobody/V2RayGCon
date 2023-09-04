@@ -229,6 +229,7 @@
     <Compile Include="Services\PluginsServer.cs" />
     <Compile Include="Services\PostOffice.cs" />
     <Compile Include="Services\PostOfficeComponents\SnapCache.cs" />
+    <Compile Include="Services\ServersComponents\ConfigCache.cs" />
     <Compile Include="Services\ServersComponents\IndexHandler.cs" />
     <Compile Include="Services\ServersComponents\QueryHandler.cs" />
     <Compile Include="Services\ShareLinkComponents\Codecs.cs" />

@@ -35,8 +35,7 @@ namespace V2RayGCon.Services
             new Dictionary<string, Controllers.CoreServerCtrl>();
 
         ConcurrentDictionary<string, bool> markList = new ConcurrentDictionary<string, bool>();
-        ConcurrentDictionary<string, string> configCache =
-            new ConcurrentDictionary<string, string>();
+        ServersComponents.ConfigCache configCache = new ServersComponents.ConfigCache();
 
         VgcApis.Libs.Tasks.LazyGuy lazyServerSettingsRecorder;
         ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
@@ -757,7 +756,7 @@ namespace V2RayGCon.Services
 
             if (configCache.TryGetValue(config, out var uid) && !string.IsNullOrEmpty(uid))
             {
-                return DeleteServerByUids(new List<string>() { uid }) == 1;
+                return DeleteServerByUid(uid);
             }
 
             if (!isQuiet)

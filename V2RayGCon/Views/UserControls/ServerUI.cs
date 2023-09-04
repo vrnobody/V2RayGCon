@@ -722,9 +722,14 @@ namespace V2RayGCon.Views.UserControls
 
             var csc = this.coreServCtrl;
             this.coreServCtrl = null;
+
             ReleaseCoreCtrlEvents(csc);
-            var config = csc?.GetConfiger()?.GetConfig() ?? "";
-            servers.DeleteServerByConfig(config, false);
+
+            var uid = csc?.GetCoreStates().GetUid();
+            if (!servers.DeleteServerByUid(uid))
+            {
+                MessageBox.Show(I18N.CantFindOrgServDelFail);
+            }
         }
 
         private void logOfThisServerToolStripMenuItem_Click(object sender, EventArgs e)

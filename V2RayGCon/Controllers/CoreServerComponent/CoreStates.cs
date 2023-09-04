@@ -435,9 +435,13 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             try
             {
-                var json = JObject.Parse(coreInfo.config);
+                var orgCfg = coreInfo.config;
+                var json = JObject.Parse(orgCfg);
                 json.Merge(node);
-                coreInfo.config = json.ToString(Formatting.None);
+
+                // update configCache
+                servers.ReplaceServerConfig(orgCfg, json.ToString());
+
                 return true;
             }
             catch { }

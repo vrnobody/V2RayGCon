@@ -22,16 +22,16 @@ namespace NeoLuna.Libs.LuaSnippet
             }
 
             this.seperator = seperator;
-            var pairs = luaSubFuncStr.Split(seperator[0]);
 
-            if (pairs == null || pairs.Length < 2)
+            var idx = luaSubFuncStr.LastIndexOf(seperator[0]);
+
+            if (idx <= 0 || idx >= luaSubFuncStr.Length - 1)
             {
                 throw new System.ArgumentException(@"luaSubFuncStr split fail!");
             }
 
-            var last = pairs.Length - 1;
-            string parent = pairs[last - 1];
-            string functionName = pairs[last];
+            string parent = luaSubFuncStr.Substring(0, idx);
+            string functionName = luaSubFuncStr.Substring(idx + 1);
 
             if (string.IsNullOrEmpty(parent) || string.IsNullOrEmpty(functionName))
             {

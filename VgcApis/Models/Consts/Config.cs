@@ -4,6 +4,8 @@ namespace VgcApis.Models.Consts
 {
     public static class Config
     {
+        public static int MinCompressConfigLen = 4 * 1024;
+
         public static int QuickSwitchMenuItemNum = 9;
 
         public static double CustomSpeedtestMeanWeight = 0.6;

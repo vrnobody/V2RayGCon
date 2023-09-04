@@ -16,6 +16,7 @@ namespace VgcApis.Interfaces
 
         #region IConfiger
         new JObject GetFinalConfig();
+        new string GetRawConfig();
         new string GetConfig();
         new string GetShareLink();
         new void SetConfig(string newConfig);

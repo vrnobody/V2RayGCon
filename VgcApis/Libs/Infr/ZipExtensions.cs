@@ -82,6 +82,17 @@ namespace VgcApis.Libs.Infr
             }
         }
 
+        static readonly string marker = @"H4sIAAAAAAA";
+
+        public static bool IsCompressedBase64(string str)
+        {
+            if (string.IsNullOrEmpty(str) || str.Length <= marker.Length)
+            {
+                return false;
+            }
+            return str.StartsWith(marker);
+        }
+
         public static string CompressToBase64(string data)
         {
             var b = Encoding.Unicode.GetBytes(data);

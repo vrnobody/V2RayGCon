@@ -18,6 +18,12 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         string GetConfig();
 
         /// <summary>
+        /// 获取config的原始数据
+        /// </summary>
+        /// <returns>（可能）压缩后的conig</returns>
+        string GetRawConfig();
+
+        /// <summary>
         /// 获取ss/vless/vmess分享链接
         /// </summary>
         /// <returns>分享链接</returns>

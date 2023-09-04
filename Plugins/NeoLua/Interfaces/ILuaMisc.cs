@@ -363,6 +363,11 @@ namespace NeoLuna.Interfaces
         #endregion
 
         #region encode decode
+        bool IsCompressedBase64(string str);
+
+        string CompressToBase64(string str);
+
+        string DecompressFromBase64(string str);
 
         string Md5(string str);
         string Sha256(string str);

@@ -996,7 +996,7 @@ namespace V2RayGCon.Services
                 {
                     try
                     {
-                        return JObject.Parse(c.config) != null;
+                        return JObject.Parse(c.GetConfig()) != null;
                     }
                     catch { }
                     return false;

@@ -889,11 +889,11 @@ namespace V2RayGCon.Services
                 customInbType = setting.CustomDefImportMode,
                 inbIp = setting.CustomDefImportIp,
                 inbPort = setting.CustomDefImportPort,
-                config = config,
                 customMark = mark,
                 uid = Guid.NewGuid().ToString(),
                 lastModifiedUtcTicks = DateTime.UtcNow.Ticks,
             };
+            coreInfo.SetConfig(config);
 
             var newServer = new Controllers.CoreServerCtrl(coreInfo);
             newServer.Run(cache, setting, configMgr, this);
@@ -1055,10 +1055,6 @@ namespace V2RayGCon.Services
 
         bool IsFormatedConfigInCache(string config)
         {
-            if (string.IsNullOrEmpty(config))
-            {
-                return true;
-            }
             return configCache.ContainsKey(config);
         }
 

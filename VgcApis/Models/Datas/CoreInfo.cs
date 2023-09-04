@@ -79,6 +79,27 @@
             tag3 = string.Empty;
         }
 
+        public string GetConfig()
+        {
+            if (Libs.Infr.ZipExtensions.IsCompressedBase64(config))
+            {
+                return Libs.Infr.ZipExtensions.DecompressFromBase64(config);
+            }
+            return config;
+        }
+
+        public void SetConfig(string config)
+        {
+            if (config != null && config.Length > Consts.Config.MinCompressConfigLen)
+            {
+                this.config = Libs.Infr.ZipExtensions.CompressToBase64(config);
+            }
+            else
+            {
+                this.config = config;
+            }
+        }
+
         public void ClearCachedString()
         {
             shortName = string.Empty;

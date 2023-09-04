@@ -26,6 +26,10 @@ namespace V2RayGCon.Services.ServersComponents
 
         public bool TryAdd(string config, string uid)
         {
+            if (string.IsNullOrEmpty(config))
+            {
+                return false;
+            }
             var hash = GetHash(config);
             return cache.TryAdd(hash, uid);
         }

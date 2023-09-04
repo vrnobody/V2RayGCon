@@ -435,7 +435,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             try
             {
-                var orgCfg = coreInfo.config;
+                var orgCfg = coreInfo.GetConfig();
                 var json = JObject.Parse(orgCfg);
                 json.Merge(node);
 

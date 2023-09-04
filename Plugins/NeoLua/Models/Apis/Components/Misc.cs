@@ -138,6 +138,15 @@ namespace NeoLuna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc.Encodings
+        public bool IsCompressedBase64(string str) =>
+            VgcApis.Libs.Infr.ZipExtensions.IsCompressedBase64(str);
+
+        public string CompressToBase64(string str) =>
+            VgcApis.Libs.Infr.ZipExtensions.CompressToBase64(str);
+
+        public string DecompressFromBase64(string str) =>
+            VgcApis.Libs.Infr.ZipExtensions.DecompressFromBase64(str);
+
         public string Md5(string str)
         {
             var b = VgcApis.Misc.Utils.Md5Hash(str);

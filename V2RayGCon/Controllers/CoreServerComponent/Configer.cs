@@ -117,7 +117,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return finalConfig;
         }
 
-        public string GetConfig() => coreInfo.config;
+        public string GetRawConfig() => coreInfo.config;
+
+        public string GetConfig() => coreInfo.GetConfig();
 
         public void UpdateSummary()
         {
@@ -163,12 +165,12 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             var trimed = VgcApis.Misc.Utils.FormatConfig(newConfig);
 
-            if (string.IsNullOrEmpty(trimed) || coreInfo.config == trimed)
+            if (string.IsNullOrEmpty(trimed) || coreInfo.GetConfig() == trimed)
             {
                 return;
             }
 
-            coreInfo.config = trimed;
+            coreInfo.SetConfig(trimed);
             UpdateSummary();
 
             if (coreCtrl.IsCoreRunning())

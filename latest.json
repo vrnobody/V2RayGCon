@@ -1,18 +1,13 @@
 {
-  "version": "1.8.2.0",
-  "md5": "31AE39804C83229474EE055B330E216D",
+  "version": "1.8.3.0",
+  "md5": "95EB4D30EB7DE6E5ADE58CE75F333E12",
   "warnings": [
     "本项目支持的最高v2ray-core版本是v4.45.2"
   ],
   "changes": [
-    "停止发布scripts.zip脚本包",
-    "删除std.Sys:SetWarnOnExit()",
-    "主窗口可以输入 #序号 来定位服务器",
-    "优化主窗口搜索速度",
-    "NeoLuna插件添加日志窗口",
-    "添加std.Misc:Notify()托盘气泡消息",
-    "添加std.Web:ParseHtml()",
-    "添加std.Sys:PipedProc***()几个函数",
-    "用法见3rd/DyFetch项目源码"
+    "修复删除服务器有时失效的bug",
+    "对较大的服务器配置进行压缩",
+    "选项窗口可加载第三方外置插件",
+    "Luna从内置插件移出，预计下个版本停止发布"
   ]
 }

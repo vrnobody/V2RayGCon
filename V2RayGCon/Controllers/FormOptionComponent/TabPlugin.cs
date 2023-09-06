@@ -25,8 +25,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             this.flyPanel = flyPanel;
 
-            curPluginInfos = pluginServ.GetterAllPluginsInfo();
-            setting.SavePluginInfoItems(curPluginInfos);
+            curPluginInfos = setting.GetPluginInfoItems();
             MarkdownCurOption();
 
             InitControls(btnRefreshPluginsPanel, chkIsLoad3rdPartyPlugins);
@@ -97,9 +96,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             btnRefreshPluginsPanel.Click += (s, a) =>
             {
-                pluginServ.RefreshPluginList();
-                curPluginInfos = pluginServ.GetterAllPluginsInfo();
-                setting.SavePluginInfoItems(curPluginInfos);
+                curPluginInfos = pluginServ.GatherAllPluginInfos();
                 RefreshPluginsPanel();
             };
 

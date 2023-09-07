@@ -84,8 +84,7 @@ namespace V2RayGCon.Models.Datas
         {
             Normalized();
 
-            // 20230901 兼容考虑暂时设为true, 预计在v1.8.5将改成false
-            isLoad3rdPartyPlugins = true;
+            isLoad3rdPartyPlugins = false;
 
             CompressedUnicodeLocalStorage = string.Empty;
 

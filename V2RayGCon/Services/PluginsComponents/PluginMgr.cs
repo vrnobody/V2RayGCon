@@ -35,9 +35,9 @@ namespace V2RayGCon.Services.PluginsComponents
             var enabled = GetEnabledPluginFileNames();
 
             var r = new List<Models.Datas.PluginInfoItem>();
-            foreach (var key in internalPluginNames)
+            foreach (var name in internalPluginNames)
             {
-                var info = ToPluginInfoItem(cache[key], key, enabled.Contains(key));
+                var info = ToPluginInfoItem(cache[name], name, enabled.Contains(name));
                 r.Add(info);
             }
 
@@ -60,16 +60,10 @@ namespace V2RayGCon.Services.PluginsComponents
         {
             var menu = new List<ToolStripMenuItem>();
             var enabledList = GetEnabledPluginFileNames();
-            lock (locker)
+            foreach (var fileName in enabledList)
             {
-                foreach (var fileName in enabledList)
+                if (cache.TryGetValue(fileName, out var plugin) && plugin != null)
                 {
-                    if (!cache.ContainsKey(fileName))
-                    {
-                        continue;
-                    }
-
-                    var plugin = cache[fileName];
                     var mi = plugin.GetToolStripMenu();
                     mi.ImageScaling = ToolStripItemImageScaling.SizeToFit;
                     mi.ToolTipText = plugin.Description;
@@ -82,11 +76,14 @@ namespace V2RayGCon.Services.PluginsComponents
         public void RestartAllPlugins()
         {
             var enabledList = GetEnabledPluginFileNames();
-            var disabled = cache.Keys.Where(k => !enabledList.Contains(k));
+            var disabled = cache.Keys.Where(k => !enabledList.Contains(k)).ToList();
 
             foreach (var filename in disabled)
             {
-                cache[filename]?.Stop();
+                if (cache.TryGetValue(filename, out var plugin) && plugin != null)
+                {
+                    plugin.Stop();
+                }
             }
 
             LoadPlugins(enabledList);
@@ -153,6 +150,20 @@ namespace V2RayGCon.Services.PluginsComponents
             }
         }
 
+        string CompatibleWithLuna(string filename)
+        {
+            if (filename == "Luna")
+            {
+                // 不要搜索libs目录的Luna.dll，那个版本不兼容
+                var file = Path.Combine(VgcApis.Models.Consts.Files.PluginsDir, "Luna.dll");
+                if (File.Exists(file))
+                {
+                    return file;
+                }
+            }
+            return filename;
+        }
+
         VgcApis.Interfaces.IPlugin GetPlugin(string filename)
         {
             if (cache.TryGetValue(filename, out var plugin) && plugin != null)
@@ -160,7 +171,8 @@ namespace V2RayGCon.Services.PluginsComponents
                 return plugin;
             }
 
-            var p = LoadPluginFromFile(filename);
+            var dll = CompatibleWithLuna(filename);
+            var p = LoadPluginFromFile(dll);
             if (p != null)
             {
                 cache.Add(filename, p);
@@ -214,26 +226,13 @@ namespace V2RayGCon.Services.PluginsComponents
             return r;
         }
 
-        List<string> FixLuna(IEnumerable<Models.Datas.PluginInfoItem> infos)
-        {
-            return infos
-                .Select(info =>
-                {
-                    var filename = info.filename;
-                    // 兼容
-                    if (filename == "Luna")
-                    {
-                        filename = Path.Combine(VgcApis.Models.Consts.Files.PluginsDir, "Luna.dll");
-                    }
-                    return filename;
-                })
-                .ToList();
-        }
-
         List<string> GetEnabledPluginFileNames()
         {
-            var list = settings.GetPluginInfoItems();
-            return FixLuna(list.Where(p => p.isUse));
+            return settings
+                .GetPluginInfoItems()
+                .Where(pi => pi.isUse)
+                .Select(pi => pi.filename)
+                .ToList();
         }
 
         void RemovePlugins(List<string> filenames)

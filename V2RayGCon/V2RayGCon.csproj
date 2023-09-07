@@ -629,7 +629,7 @@ set "otherDlls=HtmlAgilityPack Neo.Lua ImpromptuInterface Dynamitey Autocomplete
 
 call:RemoveDbgFiles "%25otherDlls%25"
 
-call:CopyLunaAssets
+rem call:CopyLunaAssets
 
 call:CreateFoldersOnDemand "%25libsDir%25 %25copyFolderList%25"
 call:MoveFilesByList "%25pluginDlls%25 %25otherDlls%25"

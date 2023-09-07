@@ -7,7 +7,7 @@ namespace VgcApis.Interfaces
     // 选项窗口插件面板点刷新时，有~可~能~调用到Dispose方法。
     public interface IPlugin : System.IDisposable
     {
-        // 这个属性会在选项窗口的插件面板、主窗口的插件菜单以及托盘右键菜单中显示。
+        // 插件的名字，在选项窗口的插件面板、主窗口的插件菜单以及托盘右键菜单中显示。
         string Name { get; }
 
         // 插件的版本信息，在选项窗口的插件面板中显示。
@@ -25,13 +25,13 @@ namespace VgcApis.Interfaces
         // 例如：api.GetUtilsService().GetAppVersion()获取软件版本号。
         void Run(Services.IApiService api);
 
-        // 点主窗口插件菜单时执行这个函数。
+        // 点主窗口插件菜单的时候会调用这个函数。
         // 注意有可能被多次调用。
         void ShowMainForm();
 
-        // 选项窗口插件面板中取消启用并保存后会调用Dispose。
-        // 建议实现IDisposable的时候，调用一下这个函数。
+        // 选项窗口插件面板中取消启用并保存后会调用这个函数。
         // 注意有可能被多次调用。
+        // Dispose时不会调用这个函数，建议实现IDisposable的时候调用一下这个函数。
         void Stop();
 
         // 这是托盘右键菜单，插件子菜单中显示的菜单项。托盘菜单刷新时调用。

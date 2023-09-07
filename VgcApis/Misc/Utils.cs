@@ -1831,7 +1831,7 @@ namespace VgcApis.Misc
             // z:\vgc\libs\vgcapi.dll
             var vgcApiDllFile = System.Reflection.Assembly.GetExecutingAssembly().Location;
             var parent = new DirectoryInfo(vgcApiDllFile).Parent;
-            if (parent.Name == "libs")
+            if (parent.Name == Models.Consts.Files.LibsDir)
             {
                 parent = parent.Parent;
             }

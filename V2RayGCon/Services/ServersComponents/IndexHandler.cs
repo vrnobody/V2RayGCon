@@ -10,6 +10,8 @@ namespace V2RayGCon.Services.ServersComponents
         ReaderWriterLockSlim locker;
         Dictionary<string, Controllers.CoreServerCtrl> coreServCache;
 
+        public event EventHandler OnIndexChanged;
+
         public IndexHandler(
             ReaderWriterLockSlim locker,
             Dictionary<string, Controllers.CoreServerCtrl> coreServList
@@ -88,25 +90,33 @@ namespace V2RayGCon.Services.ServersComponents
                 locker.ExitReadLock();
             }
 
-            Action quiet = () =>
+            // 不要RunInBackground!! 2023-09-09
+            double idx = 0;
+            if (isQuiet)
             {
-                double idx = 0;
                 foreach (var coreServ in coreServs)
                 {
                     coreServ.SetIndexQuiet(++idx);
                 }
-            };
-
-            Action notify = () =>
+            }
+            else
             {
-                double idx = 0;
-                foreach (var pkg in coreServs)
+                foreach (var coreServ in coreServs)
                 {
-                    pkg.SetIndex(++idx);
+                    coreServ.SetIndex(++idx);
                 }
-            };
+            }
 
-            VgcApis.Misc.Utils.RunInBgSlim(isQuiet ? quiet : notify);
+            InvokeOnIndexChangedHandlerIgnoreError();
+        }
+
+        void InvokeOnIndexChangedHandlerIgnoreError()
+        {
+            try
+            {
+                OnIndexChanged?.Invoke(this, EventArgs.Empty);
+            }
+            catch { }
         }
 
         int ReverseIndexComparer(

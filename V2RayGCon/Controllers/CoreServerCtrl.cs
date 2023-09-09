@@ -150,7 +150,7 @@ namespace V2RayGCon.Controllers
             ci.isUntrack = cs.isUntrack;
 
             bool indexChanged = false;
-            if ((int)ci.index != (int)cs.index)
+            if (!VgcApis.Misc.Utils.AreEqual(ci.index, cs.index))
             {
                 indexChanged = true;
                 var dt = ci.index > cs.index ? -0.01 : +0.01;

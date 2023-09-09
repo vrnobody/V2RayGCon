@@ -65,6 +65,8 @@ namespace V2RayGCon.Services
             queryHandler = new ServersComponents.QueryHandler(locker, coreServCache);
 
             indexHandler = new ServersComponents.IndexHandler(locker, coreServCache);
+
+            indexHandler.OnIndexChanged += OnCoreServIndexChangedHandler;
         }
 
         #region reflection
@@ -1221,6 +1223,8 @@ namespace V2RayGCon.Services
             }
 
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() stop tracking");
+
+            indexHandler.OnIndexChanged -= OnCoreServIndexChangedHandler;
             lazyServerTrackingTimer?.Timeout();
             lazyServerTrackingTimer?.Release();
 

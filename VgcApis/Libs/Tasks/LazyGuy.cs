@@ -64,30 +64,34 @@ namespace VgcApis.Libs.Tasks
             }
 
             retry = Deadline;
-            Misc.Utils.RunInBackground(() =>
-            {
-                Misc.Utils.Sleep(interval);
-                TryDoTheJob();
-            });
+            Misc.Utils.DoItLater(TryDoTheJob, interval);
         }
+
+        private long postPoneCheckpoint;
 
         /// <summary>
         /// ...~...~...~...|
         /// </summary>
         public void Postpone()
         {
-            checkpoint = DateTime.Now.Ticks + ticks;
+            postPoneCheckpoint = DateTime.Now.Ticks + ticks;
             if (isCancelled || !waitToken.WaitOne(0))
             {
                 return;
             }
 
             retry = Postpone;
-            Misc.Utils.RunInBackground(() =>
+            void next()
             {
-                PostponeWorker();
+                var ms = (postPoneCheckpoint - DateTime.Now.Ticks) / TimeSpan.TicksPerMillisecond;
+                if (ms > 50)
+                {
+                    Misc.Utils.DoItLater(next, ms);
+                    return;
+                }
                 TryDoTheJob();
-            });
+            }
+            Misc.Utils.DoItLater(next, interval);
         }
 
         /// <summary>
@@ -101,10 +105,7 @@ namespace VgcApis.Libs.Tasks
             }
 
             retry = Deadline;
-            Misc.Utils.RunInBackground(() =>
-            {
-                TryDoTheJob();
-            });
+            TryDoTheJob();
         }
 
         /// <summary>
@@ -125,22 +126,12 @@ namespace VgcApis.Libs.Tasks
         #endregion
 
         #region private method
-        private long checkpoint;
-
-        void PostponeWorker()
+        void TryDoTheJob()
         {
-            while (true)
-            {
-                var delay = checkpoint - DateTime.Now.Ticks;
-                if (delay < 1)
-                {
-                    break;
-                }
-                Misc.Utils.Sleep(TimeSpan.FromTicks(delay));
-            }
+            Misc.Utils.RunInBackground(TryDoTheJobCore);
         }
 
-        void TryDoTheJob()
+        void TryDoTheJobCore()
         {
             var ready = jobToken.WaitOne(expectedWorkTime);
             waitToken.Set();
@@ -170,16 +161,18 @@ namespace VgcApis.Libs.Tasks
             var ok = false;
             var start = DateTime.Now.Ticks;
 
-            Task.Run(async () =>
-            {
-                var delay = Math.Max(3000, expectedWorkTime * 3);
-                await Task.Delay(delay);
-                if (!ok)
+            var delay = Math.Max(3000, expectedWorkTime * 3);
+            Misc.Utils.DoItLater(
+                () =>
                 {
-                    // jobToken.Set();
-                    Sys.FileLogger.Error(errMsg);
-                }
-            });
+                    if (!ok)
+                    {
+                        // jobToken.Set();
+                        Sys.FileLogger.Error(errMsg);
+                    }
+                },
+                delay
+            );
 
             Action done = () =>
             {

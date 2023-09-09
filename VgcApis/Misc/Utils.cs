@@ -847,6 +847,20 @@ namespace VgcApis.Misc
         #endregion
 
         #region Task
+
+        public static void DoItLater(Action action, long ms)
+        {
+            System.Threading.Timer timer = null;
+            timer = new System.Threading.Timer(
+                (_) =>
+                {
+                    timer.Dispose();
+                    action();
+                }
+            );
+            timer.Change(ms, Timeout.Infinite);
+        }
+
         public static void Sleep(TimeSpan timespan)
         {
             try

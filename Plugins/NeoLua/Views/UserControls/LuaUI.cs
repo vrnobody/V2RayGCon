@@ -227,13 +227,10 @@ namespace NeoLuna.Views.UserControls
                 return;
             }
 
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            if (luaServerSvc?.RemoveScriptByName(scriptName) != true)
             {
-                if (luaServerSvc?.RemoveScriptByName(scriptName) != true)
-                {
-                    VgcApis.Misc.UI.MsgBoxAsync(I18N.ScriptNotFound);
-                }
-            });
+                VgcApis.Misc.UI.MsgBoxAsync(I18N.ScriptNotFound);
+            }
         }
 
         private void btnMenuMore_Click(object sender, EventArgs e)

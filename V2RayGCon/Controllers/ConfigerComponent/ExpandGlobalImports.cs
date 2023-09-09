@@ -117,7 +117,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
                 plainText = configWithGlobalImports.ToString();
             }
 
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
                 string result = ParseConfig(plainText);
                 VgcApis.Misc.UI.Invoke(() => content = result);

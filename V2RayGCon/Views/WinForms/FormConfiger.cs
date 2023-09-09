@@ -226,7 +226,7 @@ namespace V2RayGCon.Views.WinForms
         #region bind hotkey
         protected override bool ProcessCmdKey(ref Message msg, Keys keyCode)
         {
-            VgcApis.Misc.Utils.RunInBackground(
+            VgcApis.Misc.Utils.RunInBgSlim(
                 () =>
                     VgcApis.Misc.UI.Invoke(() =>
                     {

@@ -72,7 +72,7 @@ namespace V2RayGCon.Views.WinForms
         {
             var el = labelCoreVersion;
 
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
                 var core = new Libs.V2Ray.Core(setting);
                 var version = core.GetCoreVersion();
@@ -117,7 +117,7 @@ namespace V2RayGCon.Views.WinForms
             downloader.OnDownloadCompleted += (s, a) =>
             {
                 ResetUI(100);
-                VgcApis.Misc.Utils.RunInBackground(() => MessageBox.Show(I18N.DownloadCompleted));
+                VgcApis.Misc.UI.MsgBoxAsync(I18N.DownloadCompleted);
                 VgcApis.Misc.Utils.Sleep(1000);
                 VgcApis.Misc.UI.Invoke(() => btnCheckVersion.PerformClick());
             };
@@ -125,13 +125,13 @@ namespace V2RayGCon.Views.WinForms
             downloader.OnDownloadCancelled += (s, a) =>
             {
                 ResetUI(0);
-                VgcApis.Misc.Utils.RunInBackground(() => MessageBox.Show(I18N.DownloadCancelled));
+                VgcApis.Misc.UI.MsgBoxAsync(I18N.DownloadCancelled);
             };
 
             downloader.OnDownloadFail += (s, a) =>
             {
                 ResetUI(0);
-                VgcApis.Misc.Utils.RunInBackground(() => MessageBox.Show(I18N.TryManualDownload));
+                VgcApis.Misc.UI.MsgBoxAsync(I18N.TryManualDownload);
             };
 
             downloader.DownloadV2RayCore();
@@ -201,7 +201,7 @@ namespace V2RayGCon.Views.WinForms
                 VgcApis.Misc.UI.Invoke(() => done(versions));
             };
 
-            VgcApis.Misc.Utils.RunInBackground(worker);
+            VgcApis.Misc.Utils.RunInBgSlim(worker);
         }
 
         private void BtnUpdate_Click(object sender, System.EventArgs e)
@@ -218,9 +218,7 @@ namespace V2RayGCon.Views.WinForms
                 proxyPort = servers.GetAvailableHttpProxyPort();
                 if (proxyPort <= 0)
                 {
-                    VgcApis.Misc.Utils.RunInBackground(
-                        () => MessageBox.Show(I18N.NoQualifyProxyServer)
-                    );
+                    VgcApis.Misc.UI.MsgBoxAsync(I18N.NoQualifyProxyServer);
                 }
             }
 

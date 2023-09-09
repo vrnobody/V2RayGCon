@@ -37,7 +37,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
         #region private method
         void ServerMenuOpeningHandler(object sender, EventArgs args)
         {
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
                 ReloadMenu();
             });

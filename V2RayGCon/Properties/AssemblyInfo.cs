@@ -38,6 +38,7 @@ using System.Runtime.InteropServices;
 
 /*
 
+v1.8.3.3 Add RunInBgSlim().
 v1.8.3.2 Refactor LazyGuy().
 v1.8.3.1 Remove Luna plug-in.
 --------------------------------------------------------------------

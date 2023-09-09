@@ -112,7 +112,7 @@ namespace NeoLuna.Views.WinForms
         #region private methods
         void KeyDownHandler(object sender, KeyEventArgs a)
         {
-            VgcApis.Misc.Utils.RunInBackground(
+            VgcApis.Misc.Utils.RunInBgSlim(
                 () =>
                     VgcApis.Misc.UI.Invoke(() =>
                     {

@@ -965,6 +965,24 @@ namespace VgcApis.Misc
             }
         }
 
+        public static Task RunInBgSlim(Action worker)
+        {
+            Action w = () =>
+            {
+                worker?.Invoke();
+            };
+
+            try
+            {
+                var t = new Task(w);
+                t.ConfigureAwait(false);
+                t.Start();
+                return t;
+            }
+            catch { }
+            return Task.FromResult(false);
+        }
+
         public static Task RunInBackground(Action worker, bool configAwait = false)
         {
             Action job = () =>

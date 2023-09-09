@@ -244,7 +244,7 @@ namespace NeoLuna.Models.Apis.SysCmpos
 
                         if (contexts.Keys.Count > FinalStageConnInLimit)
                         {
-                            VgcApis.Misc.Utils.RunInBackground(() =>
+                            VgcApis.Misc.Utils.RunInBgSlim(() =>
                             {
                                 try
                                 {

@@ -520,7 +520,7 @@ namespace V2RayGCon.Services
 
         void OnNotifyIconMenuOpeningHandler(object sender, EventArgs args)
         {
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
                 VgcApis.Misc.Utils.Sleep(10);
                 UpdateServersMenuThen();
@@ -805,7 +805,7 @@ namespace V2RayGCon.Services
 
             if (setting.IsScreenLocked())
             {
-                VgcApis.Misc.Utils.RunInBackground(() =>
+                VgcApis.Misc.Utils.RunInBgSlim(() =>
                 {
                     VgcApis.Misc.Utils.Sleep(1000);
                     done();
@@ -817,7 +817,7 @@ namespace V2RayGCon.Services
 
             var start = DateTime.Now.Millisecond;
             Action finished = () =>
-                VgcApis.Misc.Utils.RunInBackground(() =>
+                VgcApis.Misc.Utils.RunInBgSlim(() =>
                 {
                     var relex = UpdateInterval - (DateTime.Now.Millisecond - start);
                     VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));

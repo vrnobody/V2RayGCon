@@ -106,7 +106,7 @@ namespace V2RayGCon.Services.ServersComponents
                 }
             };
 
-            VgcApis.Misc.Utils.RunInBackground(isQuiet ? quiet : notify);
+            VgcApis.Misc.Utils.RunInBgSlim(isQuiet ? quiet : notify);
         }
 
         int ReverseIndexComparer(

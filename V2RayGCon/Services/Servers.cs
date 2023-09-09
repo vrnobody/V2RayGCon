@@ -691,7 +691,7 @@ namespace V2RayGCon.Services
                 }
             }
 
-            VgcApis.Misc.Utils.RunInBackground(housekeeping);
+            VgcApis.Misc.Utils.RunInBgSlim(housekeeping);
             RefreshUiAfterCoreServersAreDeleted();
             return coreServs.Count;
         }
@@ -731,7 +731,7 @@ namespace V2RayGCon.Services
                 }
             }
 
-            VgcApis.Misc.Utils.RunInBackground(housekeeping);
+            VgcApis.Misc.Utils.RunInBgSlim(housekeeping);
             RefreshUiAfterCoreServersAreDeleted();
         }
 

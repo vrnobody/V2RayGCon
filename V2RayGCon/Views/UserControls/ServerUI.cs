@@ -759,11 +759,8 @@ namespace V2RayGCon.Views.UserControls
 
         private void runSpeedTestToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                settings.isSpeedtestCancelled = false;
-                coreServCtrl.GetCoreCtrl().RunSpeedTest();
-            });
+            settings.isSpeedtestCancelled = false;
+            coreServCtrl.GetCoreCtrl().RunSpeedTestThen();
         }
 
         private void moveToTopToolStripMenuItem_Click(object sender, EventArgs e)

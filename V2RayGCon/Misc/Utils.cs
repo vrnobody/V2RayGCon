@@ -1714,7 +1714,7 @@ namespace V2RayGCon.Misc
             Action done = null
         )
         {
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
                 ChainActionHelperWorker(countdown, worker, done)();
             });

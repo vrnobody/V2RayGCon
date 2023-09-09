@@ -185,7 +185,7 @@ namespace V2RayGCon.Services
             bool isShowImportResults
         )
         {
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
                 var results = ImportLinksBatchModeSync(linkList, decoders);
                 if (isShowImportResults)

@@ -249,7 +249,7 @@ namespace V2RayGCon.Services.PluginsComponents
                 }
             }
 
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
                 foreach (var p in ps)
                 {

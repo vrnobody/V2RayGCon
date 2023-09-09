@@ -344,7 +344,7 @@ namespace V2RayGCon.Misc
             var text = string.Format("{0}\n{1}", msg, url);
             if (Confirm(text))
             {
-                VgcApis.Misc.Utils.RunInBackground(() => Process.Start(url));
+                VgcApis.Misc.Utils.RunInBgSlim(() => Process.Start(url));
             }
         }
 

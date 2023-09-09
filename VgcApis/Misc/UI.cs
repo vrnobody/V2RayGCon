@@ -457,7 +457,7 @@ namespace VgcApis.Misc
             var text = string.Format("{0}\n{1}", msg, url);
             if (Confirm(text))
             {
-                Utils.RunInBackground(() => System.Diagnostics.Process.Start(url));
+                Utils.RunInBgSlim(() => System.Diagnostics.Process.Start(url));
             }
         }
 

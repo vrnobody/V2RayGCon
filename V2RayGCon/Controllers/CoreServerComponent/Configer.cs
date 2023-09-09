@@ -184,7 +184,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             var cs = GetParent().GetCoreStates();
             var servInfo = $"{cs.GetIndex()}.[{cs.GetShortName()}]";
 
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
                 var inInfo = GetterParsedInboundInfo(GetConfig());
                 if (inInfo == null)

@@ -1,36 +1,39 @@
 ﻿using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Text;
 
 namespace VgcApis.Libs.Sys
 {
     public sealed class QueueLogger : BaseClasses.Disposable
     {
-        long updateTimestamp = DateTime.Now.Ticks;
+        long logTimestamp = DateTime.Now.Ticks;
 
-        ConcurrentQueue<string> logCache = new ConcurrentQueue<string>();
-        object logCacheWLock = new object();
+        readonly object logLock = new object();
+        Queue<string> logs = new Queue<string>();
 
         public QueueLogger() { }
 
         #region public methods
-        public int Count() => logCache.Count;
+        public int Count() => logs.Count;
 
         public void Clear()
         {
-            lock (logCacheWLock)
+            lock (logLock)
             {
-                logCache = new ConcurrentQueue<string>();
-                updateTimestamp = DateTime.Now.Ticks;
+                logs = new Queue<string>();
             }
+            UpdateLogTimestamp();
         }
 
-        public long GetTimestamp() => updateTimestamp;
+        public long GetTimestamp() => logTimestamp;
 
         public void Log(string message)
         {
-            logCache.Enqueue(message ?? @"");
-            updateTimestamp = DateTime.Now.Ticks;
+            lock (logLock)
+            {
+                logs.Enqueue(message ?? @"");
+            }
+            UpdateLogTimestamp();
             TrimLogCache();
         }
 
@@ -42,32 +45,52 @@ namespace VgcApis.Libs.Sys
         #endregion
 
         #region private methods
-        string strCache = string.Empty;
-        string trimedStrCache = string.Empty;
-        long strCacheTimestamp = -1;
-        object strCacheLock = new object();
+        void UpdateLogTimestamp()
+        {
+            lock (logStrCacheLock)
+            {
+                logTimestamp = DateTime.Now.Ticks;
+                if (logTimestamp == logStrCacheTimestamp)
+                {
+                    logStrCacheTimestamp = -1;
+                }
+                if (logStrCache != string.Empty)
+                {
+                    logStrCache = string.Empty;
+                }
+                if (trimedLogStrCache != string.Empty)
+                {
+                    trimedLogStrCache = string.Empty;
+                }
+            }
+        }
+
+        string logStrCache = string.Empty;
+        string trimedLogStrCache = string.Empty;
+        long logStrCacheTimestamp = -1;
+        object logStrCacheLock = new object();
 
         string CachedGetLogAsString(bool hasNewLineAtTheEnd)
         {
-            lock (strCacheLock)
+            lock (logStrCacheLock)
             {
-                if (updateTimestamp != strCacheTimestamp)
+                if (logTimestamp != logStrCacheTimestamp)
                 {
                     var sb = new StringBuilder();
-                    lock (logCacheWLock)
+                    lock (logLock)
                     {
-                        foreach (var line in logCache)
+                        foreach (var line in logs)
                         {
                             sb.AppendLine(line);
                         }
                     }
                     sb.AppendLine();
-                    strCache = sb.ToString();
-                    trimedStrCache = Misc.Utils.TrimTrailingNewLine(strCache);
-                    strCacheTimestamp = updateTimestamp;
+                    logStrCache = sb.ToString();
+                    trimedLogStrCache = Misc.Utils.TrimTrailingNewLine(logStrCache);
+                    logStrCacheTimestamp = logTimestamp;
                 }
             }
-            return hasNewLineAtTheEnd ? strCache : trimedStrCache;
+            return hasNewLineAtTheEnd ? logStrCache : trimedLogStrCache;
         }
 
         Tasks.Bar bar = new Tasks.Bar();
@@ -79,17 +102,20 @@ namespace VgcApis.Libs.Sys
                 return;
             }
 
-            var count = logCache.Count;
+            var count = logs.Count;
             if (count < Models.Consts.Libs.MaxCacheLoggerLineNumber)
             {
                 bar.Remove();
                 return;
             }
 
-            var len = count - Models.Consts.Libs.MinCacheLoggerLineNumber;
-            for (int i = 0; i < len; i++)
+            lock (logLock)
             {
-                logCache.TryDequeue(out _);
+                var num = logs.Count - Models.Consts.Libs.MinCacheLoggerLineNumber;
+                for (int i = 0; i < num; i++)
+                {
+                    logs.Dequeue();
+                }
             }
             bar.Remove();
         }

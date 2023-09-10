@@ -65,10 +65,10 @@ jobs:
             Expand-Archive "${env:webuiPkgName}" -DestinationPath "${outdir}/3rd/neolua/webui"
             Compress-Archive -Path ${outdir}/* ${env:projName}'.zip'
 
-        - name: Upload V2RayGCon.zip
+        - name: Upload V2RayGCon artifacts
           uses: actions/upload-artifact@v3
           with:
-            name: ${{ env.projName }}.zip
+            name: ${{ env.projName }}
             path: ${{ env.projName}}/bin/${{ env.projCfg }}/*
 
         - name: Create V2RayGCon-box.zip
@@ -79,10 +79,10 @@ jobs:
             Expand-Archive "${env:v2rayCorePkgName}" -DestinationPath "${outdir}/3rd/core"
             Compress-Archive -Path ${outdir}/* ${env:projName}'-'${env:boxAppend}'.zip'
 
-        - name: Upload V2RayGCon-box.zip
+        - name: Upload V2RayGCon-box artifacts
           uses: actions/upload-artifact@v3
           with:
-            name: ${{ env.projName }}-${{ env.boxAppend }}.zip
+            name: ${{ env.projName }}-${{ env.boxAppend }}
             path: ${{ env.projName}}/bin/${{ env.projCfg }}/*
 
         - name: Calculate MD5 hash

@@ -57,30 +57,43 @@ jobs:
             Invoke-VSTest "VgcApisTests\bin\${{ env.projCfg }}\VgcApisTests.dll"
             Invoke-VSTest "Plugins\ProxySetterTests\bin\${{ env.projCfg }}\ProxySetterTests.dll"
 
-        - name: Create assets
+        - name: Create V2RayGCon.zip
           shell: pwsh
           run: |
             $outdir = "${env:projName}/bin/${env:projCfg}"
             Invoke-WebRequest -Uri "${env:webuiUrl}/${env:webuiVer}/${env:webuiPkgName}" -OutFile "${env:webuiPkgName}"
             Expand-Archive "${env:webuiPkgName}" -DestinationPath "${outdir}/3rd/neolua/webui"
             Compress-Archive -Path ${outdir}/* ${env:projName}'.zip'
+
+        - name: Upload V2RayGCon.zip
+          uses: actions/upload-artifact@v3
+          with:
+            name: ${{ env.projName }}.zip
+            path: ${{ env.projName}}/bin/${{ env.projCfg }}/*
+
+        - name: Create V2RayGCon-box.zip
+          shell: pwsh
+          run: |
+            $outdir = "${env:projName}/bin/${env:projCfg}"
             Invoke-WebRequest -Uri "${env:v2rayCoreUrl}/${env:v2rayCoreVer}/${env:v2rayCorePkgName}" -OutFile "${env:v2rayCorePkgName}"
             Expand-Archive "${env:v2rayCorePkgName}" -DestinationPath "${outdir}/3rd/core"
             Compress-Archive -Path ${outdir}/* ${env:projName}'-'${env:boxAppend}'.zip'
+
+        - name: Upload V2RayGCon-box.zip
+          uses: actions/upload-artifact@v3
+          with:
+            name: ${{ env.projName }}-${{ env.boxAppend }}.zip
+            path: ${{ env.projName}}/bin/${{ env.projCfg }}/*
+
+        - name: Calculate MD5 hash
+          shell: pwsh
+          run: |
             $hash1 = Get-FileHash "${env:projName}.zip" -Algorithm MD5
             $hash2 = Get-FileHash "${env:projName}-${env:boxAppend}.zip" -Algorithm MD5
             $hv1 = $hash1.Hash
             $hv2 = $hash2.Hash
             echo "hashVgcZip=${hv1}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
             echo "hashVgcBoxZip=${hv2}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
-        - name: Upload GitHub action artifacts
-          uses: actions/upload-artifact@v3
-          with:
-            name: ${{ env.projName }}
-            path: |
-              ${{ env.projName }}.zip
-              ${{ env.projName }}-${{ env.boxAppend }}.zip
 
         - name: Publish Release
           uses: ncipollo/release-action@v1.12.0

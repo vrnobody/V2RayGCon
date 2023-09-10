@@ -30,7 +30,7 @@ jobs:
 
     steps:
         - name: Checkout master
-          uses: actions/checkout@v3
+          uses: actions/checkout@v4
 
         - name: Show versions
           run: |
@@ -73,6 +73,14 @@ jobs:
             $hv2 = $hash2.Hash
             echo "hashVgcZip=${hv1}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
             echo "hashVgcBoxZip=${hv2}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+        - name: Upload GitHub action artifacts
+          uses: actions/upload-artifact@v3
+          with:
+            name: ${{ env.projName }}
+            path: |
+              ${{ env.projName }}.zip
+              ${{ env.projName }}-${{ env.boxAppend }}.zip
 
         - name: Publish Release
           uses: ncipollo/release-action@v1.12.0

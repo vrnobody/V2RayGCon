@@ -66,7 +66,7 @@ namespace V2RayGCon.Services
 
             indexHandler = new ServersComponents.IndexHandler(locker, coreServCache);
 
-            indexHandler.OnIndexChanged += OnCoreServIndexChangedHandler;
+            indexHandler.OnIndexChanged += ClearSortedCoreServCacheHandler;
         }
 
         #region reflection
@@ -248,7 +248,7 @@ namespace V2RayGCon.Services
             server.OnCoreStart += OnTrackCoreStartHandler;
             server.OnCoreStop += OnTrackCoreStopHandler;
             server.OnPropertyChanged += InvokeEventOnServerPropertyChange;
-            server.OnIndexChanged += OnCoreServIndexChangedHandler;
+            server.OnIndexChanged += ClearSortedCoreServCacheHandler;
         }
 
         void ReleaseEventsFrom(Controllers.CoreServerCtrl server)
@@ -257,7 +257,7 @@ namespace V2RayGCon.Services
             server.OnCoreStart -= OnTrackCoreStartHandler;
             server.OnCoreStop -= OnTrackCoreStopHandler;
             server.OnPropertyChanged -= InvokeEventOnServerPropertyChange;
-            server.OnIndexChanged -= OnCoreServIndexChangedHandler;
+            server.OnIndexChanged -= ClearSortedCoreServCacheHandler;
         }
 
         #endregion
@@ -846,7 +846,7 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
-        void OnCoreServIndexChangedHandler(object sender, EventArgs args)
+        void ClearSortedCoreServCacheHandler(object sender, EventArgs args)
         {
             if (sortedCoreServListCache != null)
             {
@@ -930,7 +930,7 @@ namespace V2RayGCon.Services
             newServer.GetConfiger().UpdateSummary();
 
             // clear sorted core serv list cache
-            OnCoreServIndexChangedHandler(newServer, EventArgs.Empty);
+            ClearSortedCoreServCacheHandler(newServer, EventArgs.Empty);
 
             if (!quiet)
             {
@@ -1049,7 +1049,7 @@ namespace V2RayGCon.Services
         {
             UpdateMarkList();
             ResetIndexQuiet();
-            OnCoreServIndexChangedHandler(null, EventArgs.Empty);
+            ClearSortedCoreServCacheHandler(null, EventArgs.Empty);
             InvokeEventOnServerCountChange(this, EventArgs.Empty);
             RequireFormMainReload();
             lazyServerSettingsRecorder.Deadline();
@@ -1224,7 +1224,7 @@ namespace V2RayGCon.Services
 
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() stop tracking");
 
-            indexHandler.OnIndexChanged -= OnCoreServIndexChangedHandler;
+            indexHandler.OnIndexChanged -= ClearSortedCoreServCacheHandler;
             lazyServerTrackingTimer?.Timeout();
             lazyServerTrackingTimer?.Release();
 

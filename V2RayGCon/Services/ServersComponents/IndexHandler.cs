@@ -114,7 +114,7 @@ namespace V2RayGCon.Services.ServersComponents
         {
             try
             {
-                OnIndexChanged?.Invoke(this, EventArgs.Empty);
+                OnIndexChanged?.Invoke(null, EventArgs.Empty);
             }
             catch { }
         }

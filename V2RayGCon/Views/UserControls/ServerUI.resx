@@ -130,7 +130,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkSelected.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 10</value>
+    <value>6, 6</value>
   </data>
   <data name="chkSelected.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
@@ -163,7 +163,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnStart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>401, 30</value>
+    <value>405, 24</value>
   </data>
   <data name="btnStart.Size" type="System.Drawing.Size, System.Drawing">
     <value>21, 21</value>
@@ -190,7 +190,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnStart.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="btnStop.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -202,7 +202,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnStop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>423, 30</value>
+    <value>427, 24</value>
   </data>
   <data name="btnStop.Size" type="System.Drawing.Size, System.Drawing">
     <value>21, 21</value>
@@ -229,7 +229,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnStop.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="btnMenu.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -244,7 +244,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnMenu.Location" type="System.Drawing.Point, System.Drawing">
-    <value>445, 30</value>
+    <value>449, 24</value>
   </data>
   <data name="btnMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>21, 21</value>
@@ -271,7 +271,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnMenu.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="rlbIsRunning.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 9pt, style=Bold</value>
@@ -280,7 +280,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbIsRunning.Location" type="System.Drawing.Point, System.Drawing">
-    <value>435, 9</value>
+    <value>439, 5</value>
   </data>
   <data name="rlbIsRunning.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 16</value>
@@ -319,7 +319,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbSetting.Location" type="System.Drawing.Point, System.Drawing">
-    <value>119, 31</value>
+    <value>119, 25</value>
   </data>
   <data name="rlbSetting.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>35, 18</value>
@@ -367,7 +367,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbMark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 31</value>
+    <value>213, 25</value>
   </data>
   <data name="rlbMark.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>90, 18</value>
@@ -412,7 +412,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbRemark.Location" type="System.Drawing.Point, System.Drawing">
-    <value>144, 31</value>
+    <value>144, 25</value>
   </data>
   <data name="rlbRemark.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>70, 18</value>
@@ -457,7 +457,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbTotalNetFlow.Location" type="System.Drawing.Point, System.Drawing">
-    <value>193, 31</value>
+    <value>193, 25</value>
   </data>
   <data name="rlbTotalNetFlow.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>80, 18</value>
@@ -502,7 +502,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbSpeedtest.Location" type="System.Drawing.Point, System.Drawing">
-    <value>229, 31</value>
+    <value>229, 25</value>
   </data>
   <data name="rlbSpeedtest.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>60, 18</value>
@@ -547,7 +547,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbLastModifyDate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>58, 31</value>
+    <value>58, 25</value>
   </data>
   <data name="rlbLastModifyDate.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>60, 18</value>
@@ -589,7 +589,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbInboundMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 31</value>
+    <value>6, 25</value>
   </data>
   <data name="rlbInboundMode.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>60, 18</value>
@@ -631,7 +631,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbTag1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>304, 31</value>
+    <value>304, 25</value>
   </data>
   <data name="rlbTag1.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>70, 18</value>
@@ -676,7 +676,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbTag2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>323, 31</value>
+    <value>323, 25</value>
   </data>
   <data name="rlbTag2.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>70, 18</value>
@@ -721,7 +721,7 @@
     <value>NoControl</value>
   </data>
   <data name="rlbTag3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>347, 31</value>
+    <value>347, 25</value>
   </data>
   <data name="rlbTag3.MaximumSize" type="System.Drawing.Size, System.Drawing">
     <value>70, 18</value>
@@ -925,7 +925,7 @@
     <value>宋体, 9pt</value>
   </data>
   <data name="rtboxServerTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 10</value>
+    <value>23, 6</value>
   </data>
   <data name="rtboxServerTitle.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -966,8 +966,11 @@
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 12</value>
   </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 0, 3, 0</value>
+  </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>475, 60</value>
+    <value>476, 50</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value>Drag and drop to adjust order.</value>

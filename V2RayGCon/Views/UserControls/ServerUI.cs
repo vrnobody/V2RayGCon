@@ -34,6 +34,7 @@ namespace V2RayGCon.Views.UserControls
             settings = Services.Settings.Instance;
 
             InitializeComponent();
+            InitButtomLine();
 
             roundLables = new List<Control>
             {
@@ -67,6 +68,18 @@ namespace V2RayGCon.Views.UserControls
             {
                 item.MouseEnter += ShowCtrlBtn;
             }
+        }
+
+        private void InitButtomLine()
+        {
+            Controls.Add(
+                new Label()
+                {
+                    Height = 1,
+                    Dock = DockStyle.Bottom,
+                    BackColor = Color.LightGray
+                }
+            );
         }
 
         private void ResetControls()
@@ -278,7 +291,7 @@ namespace V2RayGCon.Views.UserControls
         void CompactRoundLables()
         {
             var left = chkSelected.Left;
-            var margin = chkSelected.Left / 2;
+            var margin = chkSelected.Left;
 
             foreach (var control in roundLables)
             {

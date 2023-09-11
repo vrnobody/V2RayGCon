@@ -15,7 +15,11 @@ namespace VgcApis.Misc
     public static class UI
     {
         #region Controls
-        public static List<T> DoHouseKeeping<T>(FlowLayoutPanel flyPanel, int num)
+        public static List<T> DoHouseKeeping<T>(
+            FlowLayoutPanel flyPanel,
+            int num,
+            bool isOneColumn = false
+        )
             where T : Control, new()
         {
             var removed = new List<T>();
@@ -28,7 +32,12 @@ namespace VgcApis.Misc
             var numAdd = num - ctrls.Count;
             for (int i = 0; i < numAdd; i++)
             {
-                flyPanel.Controls.Add(new T());
+                var ctrl = new T();
+                flyPanel.Controls.Add(ctrl);
+                if (isOneColumn)
+                {
+                    flyPanel.SetFlowBreak(ctrl, true);
+                }
             }
 
             var numRemove = ctrls.Count - num;

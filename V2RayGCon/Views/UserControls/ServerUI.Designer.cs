@@ -397,7 +397,6 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.btnMenu);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
@@ -415,6 +414,7 @@
             this.Controls.Add(this.chkSelected);
             this.Controls.Add(this.rtboxServerTitle);
             this.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "ServerUI";
             this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ServerListItem_MouseDown);

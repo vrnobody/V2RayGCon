@@ -274,7 +274,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     flyPanel.Controls.Remove(welcomeItem);
                     var rmServUis = VgcApis.Misc.UI.DoHouseKeeping<Views.UserControls.ServerUI>(
                         flyPanel,
-                        pagedList.Count
+                        pagedList.Count,
+                        true
                     );
                     removed.AddRange(rmServUis);
                     var servUis = GetAllServerControls();
@@ -603,29 +604,35 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 lazyFlyPanelUpdater?.Postpone();
             };
 
-            lbMarkSearch.Click += (s, a) => PerformSearch();
+            lbMarkSearch.Click += (s, a) =>
+            {
+                cboxMarkFilter.Text = string.Empty;
+                PerformSearch();
+            };
+
             miResizeFormMain.Click += (s, a) => ResizeFormMain();
         }
 
         private void ResizeFormMain()
         {
             var num = setting.serverPanelPageSize;
-            if (num < 1 || num > 16)
+            if (num < 1)
             {
                 return;
             }
 
             var height = 0;
             var width = 0;
-            var first = flyPanel.Controls
-                .OfType<Views.UserControls.ServerUI>()
-                .Select(c =>
+
+            var controls = flyPanel.Controls.OfType<Views.UserControls.ServerUI>().ToList();
+            foreach (var c in controls)
+            {
+                height += c.Height + c.Margin.Vertical;
+                if (width == 0)
                 {
-                    height += c.Height + c.Margin.Vertical;
                     width = c.Width + c.Margin.Horizontal;
-                    return width;
-                })
-                .ToList();
+                }
+            }
 
             if (width == 0)
             {
@@ -635,8 +642,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
             height += flyPanel.Padding.Vertical + 2;
             width += flyPanel.Padding.Horizontal + 2;
 
-            formMain.Height += height - flyPanel.Height;
-            formMain.Width += width - flyPanel.Width;
+            if (num <= 12)
+            {
+                formMain.Height += height - flyPanel.Height;
+            }
+
+            formMain.Width += width - flyPanel.ClientSize.Width;
         }
 
         private void InitComboBoxMarkFilter()

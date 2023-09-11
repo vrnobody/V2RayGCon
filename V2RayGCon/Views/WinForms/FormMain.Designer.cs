@@ -56,7 +56,6 @@ namespace V2RayGCon.Views.WinForms
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripComboBoxMarkFilter = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripLabelSearch = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.mainMneuStrip = new System.Windows.Forms.MenuStrip();
             this.operationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolMenuItemSimAddVmessServer = new System.Windows.Forms.ToolStripMenuItem();
@@ -226,8 +225,7 @@ namespace V2RayGCon.Views.WinForms
             this.toolStripButtonShowFormLog,
             this.toolStripSeparator10,
             this.toolStripComboBoxMarkFilter,
-            this.toolStripLabelSearch,
-            this.toolStripButton1});
+            this.toolStripLabelSearch});
             this.toolStrip1.Name = "toolStrip1";
             this.toolTip1.SetToolTip(this.toolStrip1, resources.GetString("toolStrip1.ToolTip"));
             // 
@@ -349,12 +347,6 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this.toolStripLabelSearch, "toolStripLabelSearch");
             this.toolStripLabelSearch.Name = "toolStripLabelSearch";
-            // 
-            // toolStripButton1
-            // 
-            resources.ApplyResources(this.toolStripButton1, "toolStripButton1");
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Name = "toolStripButton1";
             // 
             // mainMneuStrip
             // 
@@ -1061,6 +1053,5 @@ namespace V2RayGCon.Views.WinForms
         private ToolStripMenuItem toolStripMenuItemSortByDownloadTotal;
         private ToolStripMenuItem toolStripMenuItemSortByUploadTotal;
         private ToolStripLabel toolStripLabelSearch;
-        private ToolStripButton toolStripButton1;
     }
 }

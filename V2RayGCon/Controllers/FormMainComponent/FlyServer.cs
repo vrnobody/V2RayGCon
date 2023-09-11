@@ -90,13 +90,17 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 r = servers.GetAllServersOrderByIndex();
             }
-            else if (keyword[0] == '#')
-            {
-                r = SearchIndex(keyword);
-            }
             else
             {
-                r = SearchAllInfos(keyword);
+                var index = ParseSearchKeywordToIndex();
+                if (index > 0)
+                {
+                    r = SearchIndex(index);
+                }
+                else
+                {
+                    r = SearchAllInfos(keyword);
+                }
             }
             matchCountCache = r.Count;
             return r;
@@ -182,18 +186,24 @@ namespace V2RayGCon.Controllers.FormMainComponent
         #endregion
 
         #region private method
-        List<VgcApis.Interfaces.ICoreServCtrl> SearchIndex(string keyword)
+        int ParseSearchKeywordToIndex()
         {
-            var r = new List<VgcApis.Interfaces.ICoreServCtrl>();
-            if (!int.TryParse(keyword.Substring(1), out var index))
+            if (
+                !string.IsNullOrEmpty(searchKeywords)
+                && searchKeywords.Length > 1
+                && searchKeywords[0] == '#'
+                && int.TryParse(searchKeywords.Substring(1), out var index)
+            )
             {
-                return r;
+                return index;
             }
-            var s = servers.GetServerByIndex(index);
-            if (s != null)
-            {
-                r.Add(s);
-            }
+            return -1;
+        }
+
+        List<VgcApis.Interfaces.ICoreServCtrl> SearchIndex(int index)
+        {
+            var r = servers.GetAllServersOrderByIndex();
+            curPageNumber = (int)((index - 1) / setting.serverPanelPageSize);
             return r;
         }
 
@@ -237,6 +247,25 @@ namespace V2RayGCon.Controllers.FormMainComponent
             return r;
         }
 
+        void ScrollIntoView()
+        {
+            var index = ParseSearchKeywordToIndex();
+            if (index <= 0)
+            {
+                return;
+            }
+
+            var controls = GetAllServerControls();
+            foreach (var c in controls)
+            {
+                if ((int)c.GetIndex() == index)
+                {
+                    flyPanel.ScrollControlIntoView(c);
+                    return;
+                }
+            }
+        }
+
         void RefreshFlyPanelWorker(Action done)
         {
             var start = DateTime.Now.Millisecond;
@@ -261,27 +290,27 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     return;
                 }
 
-                flyPanel.SuspendLayout();
                 if (showWelcome)
                 {
                     removed = GetAllServerControls();
                     flyPanel.Controls.Clear();
                     flyPanel.PerformLayout();
                     flyPanel.Controls.Add(welcomeItem);
+                    return;
                 }
-                else
-                {
-                    flyPanel.Controls.Remove(welcomeItem);
-                    var rmServUis = VgcApis.Misc.UI.DoHouseKeeping<Views.UserControls.ServerUI>(
-                        flyPanel,
-                        pagedList.Count,
-                        true
-                    );
-                    removed.AddRange(rmServUis);
-                    var servUis = GetAllServerControls();
-                    BindServUiToCoreServCtrl(servUis, pagedList);
-                }
+
+                flyPanel.SuspendLayout();
+                flyPanel.Controls.Remove(welcomeItem);
+                var rmServUis = VgcApis.Misc.UI.DoHouseKeeping<Views.UserControls.ServerUI>(
+                    flyPanel,
+                    pagedList.Count,
+                    true
+                );
+                removed.AddRange(rmServUis);
+                var servUis = GetAllServerControls();
+                BindServUiToCoreServCtrl(servUis, pagedList);
                 flyPanel.ResumeLayout();
+                ScrollIntoView();
             };
 
             VgcApis.Misc.UI.InvokeThen(worker, next);
@@ -341,9 +370,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void SetSearchKeywords()
         {
-            var keyword = string.IsNullOrEmpty(searchKeywords)
-                ? string.Empty
-                : (searchKeywords.StartsWith("#") ? searchKeywords.Substring(1) : searchKeywords);
+            var keyword = searchKeywords;
             // bug
             var controls = GetAllServerControls();
             VgcApis.Misc.Utils.RunInBgSlim(() =>

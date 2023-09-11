@@ -165,12 +165,35 @@ namespace V2RayGCon.Views.UserControls
 
         void ShowModifyConfigsWinForm() => WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);
 
+        void HighLightIndex()
+        {
+            if ($"#{(int)GetIndex()}" != keyword)
+            {
+                return;
+            }
+
+            rtboxServerTitle.SelectionStart = 0;
+            rtboxServerTitle.SelectionLength = keyword.Length - 1;
+            rtboxServerTitle.SelectionBackColor = Color.Yellow;
+        }
+
         void HighLightKeyWords()
         {
             var box = rtboxServerTitle;
             var title = box.Text.ToLower();
 
-            if (string.IsNullOrEmpty(keyword) || !VgcApis.Misc.Utils.PartialMatchCi(title, keyword))
+            if (string.IsNullOrEmpty(keyword))
+            {
+                return;
+            }
+
+            if (keyword.StartsWith("#"))
+            {
+                HighLightIndex();
+                return;
+            }
+
+            if (!VgcApis.Misc.Utils.PartialMatchCi(title, keyword))
             {
                 return;
             }

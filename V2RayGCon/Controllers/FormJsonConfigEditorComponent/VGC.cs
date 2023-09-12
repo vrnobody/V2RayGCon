@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Windows.Forms;
 
-namespace V2RayGCon.Controllers.ConfigerComponet
+namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
 {
     class VGC : ConfigerComponentController
     {

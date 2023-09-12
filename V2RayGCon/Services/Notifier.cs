@@ -287,7 +287,7 @@ namespace V2RayGCon.Services
         #region INotifier.WinForms
         public void ShowFormJsonEditor(string config)
         {
-            Views.WinForms.FormConfiger.ShowConfig(config);
+            Views.WinForms.FormJsonConfigEditor.ShowConfig(config);
         }
 
         public void ShowFormServerSettings(ICoreServCtrl coreServ)
@@ -302,7 +302,7 @@ namespace V2RayGCon.Services
 
         public void ShowFormSimpleEditor(ICoreServCtrl coreServ)
         {
-            var f = Views.WinForms.FormSimpleEditor.GetForm();
+            var f = Views.WinForms.FormSimpleConfigEditor.GetForm();
             f.LoadCoreServer(coreServ);
         }
 
@@ -1128,14 +1128,20 @@ namespace V2RayGCon.Services
                                 Properties.Resources.AddField_16x,
                                 (s, a) =>
                                 {
-                                    var f = Views.WinForms.FormSimpleEditor.GetForm();
+                                    var f = Views.WinForms.FormSimpleConfigEditor.GetForm();
                                     f.LoadCoreServer(null);
                                 }
                             ),
                             new ToolStripMenuItem(
-                                I18N.ConfigEditor,
-                                Properties.Resources.EditWindow_16x,
-                                (s, a) => Views.WinForms.FormConfiger.ShowEmptyConfig()
+                                I18N.JsonEditor,
+                                Properties.Resources.EditSelectedTag_16x,
+                                (s, a) => Views.WinForms.FormJsonConfigEditor.ShowEmptyConfig()
+                            ),
+                            new ToolStripMenuItem(
+                                I18N.TextEditor,
+                                Properties.Resources.EditPage_16x,
+                                (s, a) =>
+                                    Views.WinForms.FormTextConfigEditor.ShowConfig("", "", false)
                             ),
                             new ToolStripMenuItem(
                                 I18N.Log,

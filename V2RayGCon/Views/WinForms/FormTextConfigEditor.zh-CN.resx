@@ -117,130 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="chkSelected.ToolTip" xml:space="preserve">
-    <value>选中此服务器</value>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>文件</value>
   </data>
-  <data name="btnStart.ToolTip" xml:space="preserve">
-    <value>只启动这个服务器</value>
+  <data name="openToolStripMenuItem.Text" xml:space="preserve">
+    <value>新窗口</value>
   </data>
-  <data name="btnStop.ToolTip" xml:space="preserve">
-    <value>停止这个服务器</value>
+  <data name="loadFileToolStripMenuItem.Text" xml:space="preserve">
+    <value>加载文件</value>
   </data>
-  <data name="btnMenu.ToolTip" xml:space="preserve">
-    <value>菜单</value>
+  <data name="saveAsToolStripMenuItem.Text" xml:space="preserve">
+    <value>另存为文件</value>
   </data>
-  <data name="rlbIsRunning.ToolTip" xml:space="preserve">
-    <value>服务器运行状态</value>
+  <data name="closeToolStripMenuItem.Text" xml:space="preserve">
+    <value>关闭</value>
   </data>
-  <data name="rlbSetting.ToolTip" xml:space="preserve">
-    <value>A自启动，I全局import，C不代理国内网址, U不追踪</value>
+  <data name="serverToolStripMenuItem.Text" xml:space="preserve">
+    <value>服务器</value>
   </data>
-  <data name="rlbMark.ToolTip" xml:space="preserve">
-    <value>标记</value>
+  <data name="addNewServerToolStripMenuItem.Text" xml:space="preserve">
+    <value>添加服务器</value>
   </data>
-  <data name="rlbRemark.ToolTip" xml:space="preserve">
-    <value>备注</value>
+  <data name="overwriteCurrentServerToolStripMenuItem.Text" xml:space="preserve">
+    <value>保存当前配置</value>
   </data>
-  <data name="rlbSpeedtest.ToolTip" xml:space="preserve">
-    <value>可用性测试结果</value>
+  <data name="loadConfigToolStripMenuItem.Text" xml:space="preserve">
+    <value>加载服务器</value>
   </data>
-  <data name="rlbInboundMode.ToolTip" xml:space="preserve">
-    <value>Inbound信息</value>
+  <data name="overwriteServerToolStripMenuItem.Text" xml:space="preserve">
+    <value>覆盖服务器</value>
   </data>
-  <data name="startToolStripMenuItem.Text" xml:space="preserve">
-    <value>开启</value>
+  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
+    <value>视图</value>
   </data>
-  <data name="startToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>关闭全部服务器，然后运行这个服务器</value>
+  <data name="searchToolStripMenuItem.Text" xml:space="preserve">
+    <value>搜索</value>
   </data>
-  <data name="multiboxingToolStripMenuItem1.Text" xml:space="preserve">
-    <value>多开</value>
-  </data>
-  <data name="multiboxingToolStripMenuItem1.ToolTipText" xml:space="preserve">
-    <value>和其他已开启服务器并行运行（注意错开inbound端口）</value>
-  </data>
-  <data name="stopToolStripMenuItem1.Text" xml:space="preserve">
-    <value>停止</value>
-  </data>
-  <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
-    <value>停止这个服务器</value>
-  </data>
-  <data name="toolStripMenuItem3.Text" xml:space="preserve">
-    <value>操作</value>
-  </data>
-  <data name="moveToTopToolStripMenuItem.Text" xml:space="preserve">
-    <value>置顶</value>
-  </data>
-  <data name="moveToTopToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>将此服务器移至顶部</value>
-  </data>
-  <data name="moveToBottomToolStripMenuItem.Text" xml:space="preserve">
-    <value>置底</value>
-  </data>
-  <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>将此服务器移至底部</value>
-  </data>
-  <data name="toolStripMenuItem6.Text" xml:space="preserve">
-    <value>移动</value>
-  </data>
-  <data name="autoShareLinkToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>只包含部分配置信息</value>
-  </data>
-  <data name="vToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>包含主要配置信息</value>
-  </data>
-  <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>包含全部配置信息</value>
-  </data>
-  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
-    <value>复制</value>
-  </data>
-  <data name="showSettingWindowToolStripMenuItem.Text" xml:space="preserve">
-    <value>设定及二维码</value>
-  </data>
-  <data name="showSettingWindowToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>调出修改设置窗口</value>
-  </data>
-  <data name="simpleEditorToolStripMenuItem.Text" xml:space="preserve">
-    <value>简易编辑器</value>
-  </data>
-  <data name="editToolStripMenuItem.Text" xml:space="preserve">
-    <value>Json编辑器</value>
-  </data>
-  <data name="editToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>编辑config.json</value>
-  </data>
-  <data name="textEditortoolStripMenuItem.Text" xml:space="preserve">
+  <data name="$this.Text" xml:space="preserve">
     <value>Text编辑器</value>
-  </data>
-  <data name="textEditortoolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>编辑配置</value>
-  </data>
-  <data name="debugToolStripMenuItem.Text" xml:space="preserve">
-    <value>查看最终配置(只读)</value>
-  </data>
-  <data name="debugToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>传给v2ray-core的最终配置</value>
-  </data>
-  <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
-    <value>删除</value>
-  </data>
-  <data name="logOfThisServerToolStripMenuItem.Text" xml:space="preserve">
-    <value>此服务器日志</value>
-  </data>
-  <data name="runSpeedTestToolStripMenuItem1.Text" xml:space="preserve">
-    <value>速度测试</value>
-  </data>
-  <data name="runSpeedTestToolStripMenuItem1.ToolTipText" xml:space="preserve">
-    <value>下载测试网页所需的时间</value>
-  </data>
-  <data name="ctxMenuStripMore.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtboxServerTitle.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value>拖放可调整顺序</value>
   </data>
 </root>

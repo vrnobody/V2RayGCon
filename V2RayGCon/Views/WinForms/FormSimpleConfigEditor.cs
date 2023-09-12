@@ -4,18 +4,18 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Views.WinForms
 {
-    public partial class FormSimpleEditor : Form
+    public partial class FormSimpleConfigEditor : Form
     {
         #region Sigleton
-        static FormSimpleEditor _instant;
+        static FormSimpleConfigEditor _instant;
 
-        public static FormSimpleEditor GetForm()
+        public static FormSimpleConfigEditor GetForm()
         {
             VgcApis.Misc.UI.Invoke(() =>
             {
                 if (_instant == null || _instant.IsDisposed)
                 {
-                    _instant = new FormSimpleEditor();
+                    _instant = new FormSimpleConfigEditor();
                     _instant.FormClosed += (s, a) => _instant = null;
                     _instant.Show();
                 }
@@ -34,7 +34,7 @@ namespace V2RayGCon.Views.WinForms
 
         VgcApis.Interfaces.ICoreServCtrl coreServ = null;
 
-        FormSimpleEditor()
+        FormSimpleConfigEditor()
         {
             InitializeComponent();
 
@@ -100,7 +100,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void linkConfigEditor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            FormConfiger.ShowEmptyConfig();
+            FormJsonConfigEditor.ShowEmptyConfig();
         }
 
         #endregion

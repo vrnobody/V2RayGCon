@@ -277,11 +277,12 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Config Editor 的本地化字符串。
+        ///   查找类似 Parse config failed!
+        ///Config editor supports JSON format only! 的本地化字符串。
         /// </summary>
-        internal static string ConfigEditor {
+        internal static string ConfigerSupportsJsonOnly {
             get {
-                return ResourceManager.GetString("ConfigEditor", resourceCulture);
+                return ResourceManager.GetString("ConfigerSupportsJsonOnly", resourceCulture);
             }
         }
         
@@ -1118,6 +1119,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Json editor 的本地化字符串。
+        /// </summary>
+        internal static string JsonEditor {
+            get {
+                return ResourceManager.GetString("JsonEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 was killed by user or another app. 的本地化字符串。
         /// </summary>
         internal static string KilledByUserOrOtherApp {
@@ -1878,6 +1888,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string TestWillTakeALongTime {
             get {
                 return ResourceManager.GetString("TestWillTakeALongTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Text editor 的本地化字符串。
+        /// </summary>
+        internal static string TextEditor {
+            get {
+                return ResourceManager.GetString("TextEditor", resourceCulture);
             }
         }
         

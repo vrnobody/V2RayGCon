@@ -137,9 +137,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Strings.cs" />
+    <Compile Include="Controllers\Comm\DyMenuGenerator.cs" />
+    <Compile Include="Controllers\Comm\IDyMenuHelper.cs" />
     <Compile Include="Controllers\CoreServerComponent\Wrapper.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabMultiConf.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabDefaults.cs" />
+    <Compile Include="Controllers\FormTextConfigEditorComponent\CompBase.cs" />
+    <Compile Include="Controllers\FormTextConfigEditorComponent\Editor.cs" />
+    <Compile Include="Controllers\FormTextConfigEditorComponent\MenuUpdater.cs" />
+    <Compile Include="Controllers\FormTextConfigEditorCtrl.cs" />
     <Compile Include="Models\Datas\MultiConfItem.cs" />
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
     <Compile Include="Models\Datas\VeeConfigsWithReality.cs" />
@@ -174,26 +180,26 @@
       <DependentUpon>StrConst.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\Caches\JsonAcm.cs" />
-    <Compile Include="Controllers\ConfigerComponent\MenuUpdater.cs" />
+    <Compile Include="Controllers\FormJsonConfigEditorComponent\MenuUpdater.cs" />
     <Compile Include="Controllers\CoreServerComponent\Configer.cs" />
     <Compile Include="Controllers\CoreServerComponent\CoreCtrl.cs" />
     <Compile Include="Controllers\CoreServerComponent\CoreStates.cs" />
     <Compile Include="Controllers\CoreServerComponent\Logger.cs" />
-    <Compile Include="Controllers\FormConfigerCtrl.cs" />
-    <Compile Include="Controllers\ConfigerComponent\Editor.cs" />
-    <Compile Include="Controllers\ConfigerComponent\ExpandGlobalImports.cs" />
-    <Compile Include="Controllers\ConfigerComponent\EnvImportMultiConf.cs" />
-    <Compile Include="Controllers\ConfigerComponent\Shadowsocks.cs" />
-    <Compile Include="Controllers\ConfigerComponent\VGC.cs" />
-    <Compile Include="Controllers\ConfigerComponent\StreamSettings.cs" />
-    <Compile Include="Controllers\ConfigerComponent\Vmess.cs" />
+    <Compile Include="Controllers\FormJsonConfigEditorCtrl.cs" />
+    <Compile Include="Controllers\FormJsonConfigEditorComponent\Editor.cs" />
+    <Compile Include="Controllers\FormJsonConfigEditorComponent\ExpandGlobalImports.cs" />
+    <Compile Include="Controllers\FormJsonConfigEditorComponent\EnvImportMultiConf.cs" />
+    <Compile Include="Controllers\FormJsonConfigEditorComponent\Shadowsocks.cs" />
+    <Compile Include="Controllers\FormJsonConfigEditorComponent\VGC.cs" />
+    <Compile Include="Controllers\FormJsonConfigEditorComponent\StreamSettings.cs" />
+    <Compile Include="Controllers\FormJsonConfigEditorComponent\Vmess.cs" />
     <Compile Include="Controllers\FormMainComponent\FlyServer.cs" />
     <Compile Include="Controllers\FormMainComponent\FormMainComponentController.cs" />
     <Compile Include="Controllers\FormMainComponent\MenuItemsSelect.cs" />
     <Compile Include="Controllers\FormMainComponent\MenuItemsServer.cs" />
     <Compile Include="Controllers\FormMainComponent\MenuItemsBasic.cs" />
     <Compile Include="Controllers\FormMainCtrl.cs" />
-    <Compile Include="Controllers\ConfigerComponent\Quick.cs" />
+    <Compile Include="Controllers\FormJsonConfigEditorComponent\Quick.cs" />
     <Compile Include="Controllers\FormOptionComponent\OptionComponentController.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabImport.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabPlugin.cs" />
@@ -211,7 +217,7 @@
     <Compile Include="BaseClasses\IFormMainFlyPanelComponent.cs" />
     <Compile Include="BaseClasses\IFormComponentController.cs" />
     <Compile Include="BaseClasses\FormController.cs" />
-    <Compile Include="Controllers\ConfigerComponent\ConfigerComponentController.cs" />
+    <Compile Include="Controllers\FormJsonConfigEditorComponent\ConfigerComponentController.cs" />
     <Compile Include="Models\Datas\PluginInfoItem.cs" />
     <Compile Include="Models\Datas\ServerTracker.cs" />
     <Compile Include="Models\Datas\UserSettings.cs" />
@@ -334,11 +340,11 @@
     <Compile Include="Services\Caches\Template.cs" />
     <Compile Include="Libs\Nets\Downloader.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Views\WinForms\FormConfiger.cs">
+    <Compile Include="Views\WinForms\FormJsonConfigEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\WinForms\FormConfiger.Designer.cs">
-      <DependentUpon>FormConfiger.cs</DependentUpon>
+    <Compile Include="Views\WinForms\FormJsonConfigEditor.Designer.cs">
+      <DependentUpon>FormJsonConfigEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\WinForms\FormDownloadCore.cs">
       <SubType>Form</SubType>
@@ -396,11 +402,17 @@
     <Compile Include="Views\WinForms\FormOption.Designer.cs">
       <DependentUpon>FormOption.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\WinForms\FormSimpleEditor.cs">
+    <Compile Include="Views\WinForms\FormSimpleConfigEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\WinForms\FormSimpleEditor.Designer.cs">
-      <DependentUpon>FormSimpleEditor.cs</DependentUpon>
+    <Compile Include="Views\WinForms\FormSimpleConfigEditor.Designer.cs">
+      <DependentUpon>FormSimpleConfigEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForms\FormTextConfigEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormTextConfigEditor.Designer.cs">
+      <DependentUpon>FormTextConfigEditor.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Resources\Resx\StrConst.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -479,11 +491,11 @@
     <EmbeddedResource Include="Views\WinForms\FormBatchModifyServerSetting.zh-CN.resx">
       <DependentUpon>FormBatchModifyServerSetting.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormConfiger.resx">
-      <DependentUpon>FormConfiger.cs</DependentUpon>
+    <EmbeddedResource Include="Views\WinForms\FormJsonConfigEditor.resx">
+      <DependentUpon>FormJsonConfigEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormConfiger.zh-CN.resx">
-      <DependentUpon>FormConfiger.cs</DependentUpon>
+    <EmbeddedResource Include="Views\WinForms\FormJsonConfigEditor.zh-CN.resx">
+      <DependentUpon>FormJsonConfigEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormDownloadCore.resx">
       <DependentUpon>FormDownloadCore.cs</DependentUpon>
@@ -528,11 +540,17 @@
     <EmbeddedResource Include="Views\WinForms\FormDownloadCore.zh-CN.resx">
       <DependentUpon>FormDownloadCore.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormSimpleEditor.resx">
-      <DependentUpon>FormSimpleEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Views\WinForms\FormSimpleConfigEditor.resx">
+      <DependentUpon>FormSimpleConfigEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormSimpleEditor.zh-CN.resx">
-      <DependentUpon>FormSimpleEditor.cs</DependentUpon>
+    <EmbeddedResource Include="Views\WinForms\FormSimpleConfigEditor.zh-CN.resx">
+      <DependentUpon>FormSimpleConfigEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormTextConfigEditor.resx">
+      <DependentUpon>FormTextConfigEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormTextConfigEditor.zh-CN.resx">
+      <DependentUpon>FormTextConfigEditor.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
@@ -556,6 +574,8 @@
     <Content Include="icon_dark.ico" />
     <Content Include="Resources\Files\3rd\plugins\readme.txt" />
     <Content Include="Resources\Files\CSharp\ConfigJsonKeywords.txt" />
+    <None Include="Resources\Icon\FormMainToolStrip\EditSelectedTag_16x.png" />
+    <None Include="Resources\Icon\FormMainToolStrip\EditPage_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\CloudSearch_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\AddField_16x.png" />
     <None Include="Resources\Icon\TaskTray\SFTPConnection_16x.png" />

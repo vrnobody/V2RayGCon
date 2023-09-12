@@ -6,7 +6,7 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers
 {
-    class FormConfigerCtrl : BaseClasses.FormController
+    class FormJsonConfigEditorCtrl : BaseClasses.FormController
     {
         public event EventHandler OnChanged;
 
@@ -15,9 +15,9 @@ namespace V2RayGCon.Controllers
         public JObject config;
         string uid,
             orgCfg;
-        ConfigerComponet.Editor editor;
+        FormJsonConfigEditorComponet.Editor editor;
 
-        public FormConfigerCtrl()
+        public FormJsonConfigEditorCtrl()
         {
             servers = Services.Servers.Instance;
             config = ParseConfigString(null);
@@ -36,12 +36,9 @@ namespace V2RayGCon.Controllers
 
         public void LoadConfigByUid(string uid)
         {
-            this.uid = uid;
             var cfg = GetConfigByUid(uid);
-
-            CacheOriginalConfig(cfg);
-            Update();
-            editor.ReloadSection();
+            LoadConfigString(cfg);
+            this.uid = uid;
         }
 
         public void LoadConfigString(string cfg)
@@ -54,14 +51,14 @@ namespace V2RayGCon.Controllers
 
         public void Cleanup()
         {
-            GetComponent<ConfigerComponet.MenuUpdater>()?.Cleanup();
-            GetComponent<ConfigerComponet.ExpandGlobalImports>()?.Cleanup();
-            GetComponent<ConfigerComponet.Editor>()?.Cleanup();
+            GetComponent<FormJsonConfigEditorComponet.MenuUpdater>()?.Cleanup();
+            GetComponent<FormJsonConfigEditorComponet.ExpandGlobalImports>()?.Cleanup();
+            GetComponent<FormJsonConfigEditorComponet.Editor>()?.Cleanup();
         }
 
         public void Prepare()
         {
-            editor = GetComponent<ConfigerComponet.Editor>();
+            editor = GetComponent<FormJsonConfigEditorComponet.Editor>();
             editor.Prepare();
         }
 
@@ -96,7 +93,9 @@ namespace V2RayGCon.Controllers
         {
             foreach (var component in this.GetAllComponents())
             {
-                (component.Value as ConfigerComponet.ConfigerComponentController).Update(config);
+                (
+                    component.Value as FormJsonConfigEditorComponet.ConfigerComponentController
+                ).Update(config);
             }
         }
 
@@ -248,7 +247,10 @@ namespace V2RayGCon.Controllers
             {
                 return JObject.Parse(cfgStr);
             }
-            catch { }
+            catch
+            {
+                VgcApis.Misc.UI.MsgBox(I18N.ConfigerSupportsJsonOnly);
+            }
             return empty;
         }
         #endregion

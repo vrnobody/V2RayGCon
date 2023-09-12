@@ -1196,8 +1196,8 @@ namespace V2RayGCon.Services
             {
                 return;
             }
-            config = VgcApis.Misc.Utils.FormatConfig(config);
-            coreServ.GetConfiger().SetConfig(config);
+            var formated = VgcApis.Misc.Utils.FormatConfig(config);
+            coreServ.GetConfiger().SetConfig(formated);
         }
 
         #endregion

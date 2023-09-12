@@ -1,6 +1,6 @@
 ﻿namespace V2RayGCon.Views.WinForms
 {
-    partial class FormConfiger
+    partial class FormJsonConfigEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormConfiger));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormJsonConfigEditor));
             this.cboxConfigSection = new System.Windows.Forms.ComboBox();
             this.tabCtrlToolPanel = new System.Windows.Forms.TabControl();
             this.tabPageProtocol = new System.Windows.Forms.TabPage();

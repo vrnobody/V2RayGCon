@@ -85,13 +85,13 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbSimAddVmessWin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var f = WinForms.FormSimpleEditor.GetForm();
+            var f = WinForms.FormSimpleConfigEditor.GetForm();
             f.LoadCoreServer(null);
         }
 
         private void lbConfigEditor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Views.WinForms.FormConfiger.ShowEmptyConfig();
+            Views.WinForms.FormJsonConfigEditor.ShowEmptyConfig();
         }
     }
 }

@@ -139,16 +139,17 @@
             // 
             // pnlDownloadV2RayCore
             // 
+            resources.ApplyResources(this.pnlDownloadV2RayCore, "pnlDownloadV2RayCore");
             this.pnlDownloadV2RayCore.Controls.Add(this.label5);
             this.pnlDownloadV2RayCore.Controls.Add(this.label4);
             this.pnlDownloadV2RayCore.Controls.Add(this.label2);
             this.pnlDownloadV2RayCore.Controls.Add(this.lbV2rayCoreGitHub);
             this.pnlDownloadV2RayCore.Controls.Add(this.lbDownloadV2rayCore);
-            resources.ApplyResources(this.pnlDownloadV2RayCore, "pnlDownloadV2RayCore");
             this.pnlDownloadV2RayCore.Name = "pnlDownloadV2RayCore";
             // 
             // pnlBasicUsage
             // 
+            resources.ApplyResources(this.pnlBasicUsage, "pnlBasicUsage");
             this.pnlBasicUsage.Controls.Add(this.lbIssue);
             this.pnlBasicUsage.Controls.Add(this.lbConfigEditor);
             this.pnlBasicUsage.Controls.Add(this.lbSimAddVmessWin);
@@ -156,7 +157,6 @@
             this.pnlBasicUsage.Controls.Add(this.label3);
             this.pnlBasicUsage.Controls.Add(this.lbCopyFromClipboard);
             this.pnlBasicUsage.Controls.Add(this.lbWiki);
-            resources.ApplyResources(this.pnlBasicUsage, "pnlBasicUsage");
             this.pnlBasicUsage.Name = "pnlBasicUsage";
             // 
             // WelcomeUI

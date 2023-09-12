@@ -177,9 +177,6 @@
   <data name="btnStart.ToolTip" xml:space="preserve">
     <value>Start this server only.</value>
   </data>
-  <data name="btnStart.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="&gt;&gt;btnStart.Name" xml:space="preserve">
     <value>btnStart</value>
   </data>
@@ -215,9 +212,6 @@
   </data>
   <data name="btnStop.ToolTip" xml:space="preserve">
     <value>Stop this server.</value>
-  </data>
-  <data name="btnStop.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="&gt;&gt;btnStop.Name" xml:space="preserve">
     <value>btnStop</value>
@@ -257,9 +251,6 @@
   </data>
   <data name="btnMenu.ToolTip" xml:space="preserve">
     <value>Show menu.</value>
-  </data>
-  <data name="btnMenu.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="&gt;&gt;btnMenu.Name" xml:space="preserve">
     <value>btnMenu</value>
@@ -762,21 +753,6 @@
   <metadata name="ctxMenuStripMore.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>119, 18</value>
   </metadata>
-  <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 236</value>
-  </data>
-  <data name="&gt;&gt;ctxMenuStripMore.Name" xml:space="preserve">
-    <value>ctxMenuStripMore</value>
-  </data>
-  <data name="&gt;&gt;ctxMenuStripMore.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 22</value>
-  </data>
-  <data name="toolStripMenuItem3.Text" xml:space="preserve">
-    <value>Action</value>
-  </data>
   <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>145, 22</value>
   </data>
@@ -804,11 +780,11 @@
   <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>Stop this server.</value>
   </data>
-  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 22</value>
   </data>
-  <data name="toolStripMenuItem6.Text" xml:space="preserve">
-    <value>Move</value>
+  <data name="toolStripMenuItem3.Text" xml:space="preserve">
+    <value>Action</value>
   </data>
   <data name="moveToTopToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 22</value>
@@ -828,11 +804,11 @@
   <data name="moveToBottomToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Move this server to bottom.</value>
   </data>
-  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="toolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 22</value>
   </data>
-  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
-    <value>Copy</value>
+  <data name="toolStripMenuItem6.Text" xml:space="preserve">
+    <value>Move</value>
   </data>
   <data name="autoShareLinkToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 22</value>
@@ -861,6 +837,12 @@
   <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Contain all config information.</value>
   </data>
+  <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 22</value>
+  </data>
+  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy</value>
+  </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>205, 6</value>
   </data>
@@ -887,6 +869,15 @@
   </data>
   <data name="editToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Edit config.json</value>
+  </data>
+  <data name="textEditortoolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 22</value>
+  </data>
+  <data name="textEditortoolStripMenuItem.Text" xml:space="preserve">
+    <value>Text editor</value>
+  </data>
+  <data name="textEditortoolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Edit config.</value>
   </data>
   <data name="debugToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 22</value>
@@ -920,6 +911,15 @@
   </data>
   <data name="runSpeedTestToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>The time it takes to download the test web page.</value>
+  </data>
+  <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>209, 258</value>
+  </data>
+  <data name="&gt;&gt;ctxMenuStripMore.Name" xml:space="preserve">
+    <value>ctxMenuStripMore</value>
+  </data>
+  <data name="&gt;&gt;ctxMenuStripMore.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="rtboxServerTitle.Font" type="System.Drawing.Font, System.Drawing">
     <value>宋体, 9pt</value>
@@ -1069,6 +1069,12 @@
     <value>editToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;editToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textEditortoolStripMenuItem.Name" xml:space="preserve">
+    <value>textEditortoolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;textEditortoolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;debugToolStripMenuItem.Name" xml:space="preserve">

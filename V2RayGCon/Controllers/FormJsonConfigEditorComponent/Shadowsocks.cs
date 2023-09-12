@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace V2RayGCon.Controllers.ConfigerComponet
+namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
 {
     class Shadowsocks : ConfigerComponentController
     {

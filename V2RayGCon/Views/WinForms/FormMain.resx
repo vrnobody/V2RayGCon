@@ -574,6 +574,9 @@
   <data name="invertSelectionCurPageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>166, 22</value>
   </data>
+  <data name="&gt;&gt;deleteSelectedServersToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;toolStripMenuItemDownLoadV2rayCore.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -615,6 +618,9 @@
   </data>
   <data name="toolStripButtonAddServerSimple.Text" xml:space="preserve">
     <value>Add new server.</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItemTextEditor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="statusStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 340</value>
@@ -686,7 +692,7 @@
     <value>toolStripMenuItemStopSelected</value>
   </data>
   <data name="toolMenuItemOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 30</value>
+    <value>188, 30</value>
   </data>
   <data name="toolStripMenuItemReverseByIndex.Text" xml:space="preserve">
     <value>Reverse by index</value>
@@ -765,7 +771,7 @@
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="toolMenuItemConfigEditor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 30</value>
+    <value>188, 30</value>
   </data>
   <data name="&gt;&gt;refreshSummaryToolStripMenuItem.Name" xml:space="preserve">
     <value>refreshSummaryToolStripMenuItem</value>
@@ -1075,11 +1081,14 @@
   <data name="&gt;&gt;toolStripMenuItemReverseByIndex.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;toolStripMenuItemTextEditor.Name" xml:space="preserve">
+    <value>toolStripMenuItemTextEditor</value>
+  </data>
   <data name="&gt;&gt;toolStripMenuItemRestartSelected.Name" xml:space="preserve">
     <value>toolStripMenuItemRestartSelected</value>
   </data>
-  <data name="&gt;&gt;deleteSelectedServersToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="toolStripMenuItemTextEditor.Text" xml:space="preserve">
+    <value>Text editor</value>
   </data>
   <data name="&gt;&gt;toolStripContainer2.RightToolStripPanel.Parent" xml:space="preserve">
     <value>toolStripContainer2</value>
@@ -1360,6 +1369,9 @@
   <data name="&gt;&gt;toolStripMenuItemCopyAsVmixLink.Name" xml:space="preserve">
     <value>toolStripMenuItemCopyAsVmixLink</value>
   </data>
+  <data name="toolStripMenuItemTextEditor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 30</value>
+  </data>
   <data name="toolStripMenuItem7.Size" type="System.Drawing.Size, System.Drawing">
     <value>222, 30</value>
   </data>
@@ -1489,7 +1501,7 @@
     <value>53, 20</value>
   </data>
   <data name="toolMenuItemLog.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 30</value>
+    <value>188, 30</value>
   </data>
   <data name="&gt;&gt;toolMenuItemCheckUpdate.Name" xml:space="preserve">
     <value>toolMenuItemCheckUpdate</value>
@@ -1660,7 +1672,7 @@
     <value>toolMenuItemHelp</value>
   </data>
   <data name="toolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 6</value>
+    <value>185, 6</value>
   </data>
   <data name="toolStripContainer2.Text" xml:space="preserve">
     <value>toolStripContainer2</value>
@@ -1791,7 +1803,7 @@
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="toolStripMenuItemResize.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 30</value>
+    <value>188, 30</value>
   </data>
   <data name="toolStripButtonAllServerSelectAll.Text" xml:space="preserve">
     <value>toolStripButton4</value>
@@ -1910,7 +1922,7 @@
     <value>flyServerListContainer</value>
   </data>
   <data name="toolMenuItemConfigEditor.Text" xml:space="preserve">
-    <value>Config editor</value>
+    <value>Json editor</value>
   </data>
   <data name="toolStripContainer2.ToolTip" xml:space="preserve">
     <value />

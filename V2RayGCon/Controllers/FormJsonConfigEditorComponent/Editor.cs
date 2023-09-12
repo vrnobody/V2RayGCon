@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
-namespace V2RayGCon.Controllers.ConfigerComponet
+namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
 {
     class Editor : ConfigerComponentController
     {
@@ -71,6 +71,7 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             jsonAcm.SetAutocompleteMenu(editor, null);
             jsonAcm.Dispose();
             jsonAcm = null;
+            ReleaseEditorEvents();
         }
 
         public void DiscardChanges()
@@ -274,6 +275,13 @@ namespace V2RayGCon.Controllers.ConfigerComponet
             editor.InsertCheck += Scintilla_InsertCheck;
             editor.CharAdded += Scintilla_CharAdded;
             editor.TextChanged += Scintilla_TextChanged;
+        }
+
+        void ReleaseEditorEvents()
+        {
+            editor.InsertCheck -= Scintilla_InsertCheck;
+            editor.CharAdded -= Scintilla_CharAdded;
+            editor.TextChanged -= Scintilla_TextChanged;
         }
 
         bool IsJsonCollection(JToken token)

@@ -192,8 +192,8 @@ Discard latest changes and continue?</value>
   <data name="ImportLinkSuccess" xml:space="preserve">
     <value>Import Success!</value>
   </data>
-  <data name="ConfigEditor" xml:space="preserve">
-    <value>Config Editor</value>
+  <data name="JsonEditor" xml:space="preserve">
+    <value>Json editor</value>
   </data>
   <data name="Windows" xml:space="preserve">
     <value>Windows</value>
@@ -806,5 +806,12 @@ No, abort.</value>
   </data>
   <data name="UnableToDetermineFilenameMessage" xml:space="preserve">
     <value>Unable to determine the filename of the update file!</value>
+  </data>
+  <data name="ConfigerSupportsJsonOnly" xml:space="preserve">
+    <value>Parse config failed!
+Config editor supports JSON format only!</value>
+  </data>
+  <data name="TextEditor" xml:space="preserve">
+    <value>Text editor</value>
   </data>
 </root>

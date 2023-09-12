@@ -125,6 +125,7 @@ namespace V2RayGCon.Views.WinForms
             this.deleteSelectedServersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolMenuItemConfigEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemTextEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.toolMenuItemLog = new System.Windows.Forms.ToolStripMenuItem();
             this.toolMenuItemOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
@@ -773,6 +774,7 @@ namespace V2RayGCon.Views.WinForms
             resources.ApplyResources(this.windowToolStripMenuItem, "windowToolStripMenuItem");
             this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolMenuItemConfigEditor,
+            this.toolStripMenuItemTextEditor,
             this.toolMenuItemLog,
             this.toolMenuItemOptions,
             this.toolStripMenuItem4,
@@ -782,8 +784,14 @@ namespace V2RayGCon.Views.WinForms
             // toolMenuItemConfigEditor
             // 
             resources.ApplyResources(this.toolMenuItemConfigEditor, "toolMenuItemConfigEditor");
-            this.toolMenuItemConfigEditor.Image = global::V2RayGCon.Properties.Resources.EditWindow_16x;
+            this.toolMenuItemConfigEditor.Image = global::V2RayGCon.Properties.Resources.EditSelectedTag_16x;
             this.toolMenuItemConfigEditor.Name = "toolMenuItemConfigEditor";
+            // 
+            // toolStripMenuItemTextEditor
+            // 
+            resources.ApplyResources(this.toolStripMenuItemTextEditor, "toolStripMenuItemTextEditor");
+            this.toolStripMenuItemTextEditor.Image = global::V2RayGCon.Properties.Resources.EditPage_16x;
+            this.toolStripMenuItemTextEditor.Name = "toolStripMenuItemTextEditor";
             // 
             // toolMenuItemLog
             // 
@@ -1053,5 +1061,6 @@ namespace V2RayGCon.Views.WinForms
         private ToolStripMenuItem toolStripMenuItemSortByDownloadTotal;
         private ToolStripMenuItem toolStripMenuItemSortByUploadTotal;
         private ToolStripLabel toolStripLabelSearch;
+        private ToolStripMenuItem toolStripMenuItemTextEditor;
     }
 }

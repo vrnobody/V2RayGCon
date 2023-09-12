@@ -11,7 +11,7 @@ namespace VgcApis.Models.Consts
         public static double CustomSpeedtestMeanWeight = 0.6;
         public static double FloatPointNumberTolerance = 0.000001;
 
-        public static int MinDynamicMenuSize = 1024;
+        public static int MinDynamicMenuSize = 512;
         public static int MenuItemGroupSize = 16;
 
         public const string ProtocolNameVless = @"vless";

@@ -25,14 +25,14 @@ namespace V2RayGCon.Views.WinForms
     };
     #endregion
 
-    public partial class FormConfiger : Form
+    public partial class FormJsonConfigEditor : Form
     {
         public static void ShowEmptyConfig() => ShowConfig(@"{}");
 
         public static void ShowConfig(string orgConfig) =>
             VgcApis.Misc.UI.Invoke(() =>
             {
-                var f = new FormConfiger();
+                var f = new FormJsonConfigEditor();
                 f.Show();
                 f.configer.LoadConfigString(orgConfig);
             });
@@ -40,13 +40,13 @@ namespace V2RayGCon.Views.WinForms
         public static void ShowServer(string uid) =>
             VgcApis.Misc.UI.Invoke(() =>
             {
-                var f = new FormConfiger();
+                var f = new FormJsonConfigEditor();
                 f.Show();
                 f.configer.LoadConfigByUid(uid);
                 f.SetTitle(f.configer.GetAlias());
             });
 
-        Controllers.FormConfigerCtrl configer;
+        Controllers.FormJsonConfigEditorCtrl configer;
         Services.Settings setting;
 
         VgcApis.WinForms.FormSearch formSearch;
@@ -56,7 +56,7 @@ namespace V2RayGCon.Views.WinForms
 
         ScintillaNET.Scintilla editor;
 
-        FormConfiger()
+        FormJsonConfigEditor()
         {
             setting = Services.Settings.Instance;
 
@@ -79,7 +79,9 @@ namespace V2RayGCon.Views.WinForms
 
             chkIsV4.Checked = setting.isUseV4;
 
-            editor = configer.GetComponent<Controllers.ConfigerComponet.Editor>().GetEditor();
+            editor = configer
+                .GetComponent<Controllers.FormJsonConfigEditorComponet.Editor>()
+                .GetEditor();
 
             editor.Click += OnMouseLeaveToolsPanel;
             BindConfigerEvents();
@@ -256,13 +258,13 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         #region init
-        Controllers.FormConfigerCtrl InitConfiger()
+        Controllers.FormJsonConfigEditorCtrl InitConfiger()
         {
-            var configer = new Controllers.FormConfigerCtrl();
+            var configer = new Controllers.FormJsonConfigEditorCtrl();
 
             configer
                 .Plug(
-                    new Controllers.ConfigerComponet.EnvImportMultiConf(
+                    new Controllers.FormJsonConfigEditorComponet.EnvImportMultiConf(
                         cboxMultiConfAlias,
                         tboxMultiConfPath,
                         btnInsertMultiConf,
@@ -275,7 +277,7 @@ namespace V2RayGCon.Views.WinForms
                     )
                 )
                 .Plug(
-                    new Controllers.ConfigerComponet.Editor(
+                    new Controllers.FormJsonConfigEditorComponet.Editor(
                         panelScintilla,
                         cboxConfigSection,
                         cboxExamples,
@@ -284,7 +286,7 @@ namespace V2RayGCon.Views.WinForms
                     )
                 )
                 .Plug(
-                    new Controllers.ConfigerComponet.Vmess(
+                    new Controllers.FormJsonConfigEditorComponet.Vmess(
                         tboxVMessID,
                         tboxVMessLevel,
                         tboxVMessAid,
@@ -295,9 +297,15 @@ namespace V2RayGCon.Views.WinForms
                         btnVMessInsertClient
                     )
                 )
-                .Plug(new Controllers.ConfigerComponet.VGC(tboxVGCAlias, tboxVGCDesc, btnInsertVGC))
                 .Plug(
-                    new Controllers.ConfigerComponet.StreamSettings(
+                    new Controllers.FormJsonConfigEditorComponet.VGC(
+                        tboxVGCAlias,
+                        tboxVGCDesc,
+                        btnInsertVGC
+                    )
+                )
+                .Plug(
+                    new Controllers.FormJsonConfigEditorComponet.StreamSettings(
                         cboxStreamType,
                         cboxStreamParam,
                         rbtnIsServerMode,
@@ -308,7 +316,7 @@ namespace V2RayGCon.Views.WinForms
                     )
                 )
                 .Plug(
-                    new Controllers.ConfigerComponet.Shadowsocks(
+                    new Controllers.FormJsonConfigEditorComponet.Shadowsocks(
                         rbtnIsServerMode,
                         chkIsV4,
                         tboxSSAddr,
@@ -320,7 +328,7 @@ namespace V2RayGCon.Views.WinForms
                     )
                 )
                 .Plug(
-                    new Controllers.ConfigerComponet.ExpandGlobalImports(
+                    new Controllers.FormJsonConfigEditorComponet.ExpandGlobalImports(
                         panelExpandConfig,
                         cboxGlobalImport,
                         btnExpandImport,
@@ -330,16 +338,23 @@ namespace V2RayGCon.Views.WinForms
                     )
                 )
                 .Plug(
-                    new Controllers.ConfigerComponet.Quick(btnQConSkipCN, btnQConMTProto, chkIsV4)
-                )
-                .Plug(
-                    new Controllers.ConfigerComponet.MenuUpdater(
-                        this,
-                        configToolStripMenuItem,
-                        replaceExistServerToolStripMenuItem,
-                        loadServerToolStripMenuItem
+                    new Controllers.FormJsonConfigEditorComponet.Quick(
+                        btnQConSkipCN,
+                        btnQConMTProto,
+                        chkIsV4
                     )
                 );
+
+            var mu = new Controllers.FormJsonConfigEditorComponet.MenuUpdater();
+            configer.Plug(mu);
+
+            // plug后container才可以获得父对象
+            mu.Init(
+                this,
+                configToolStripMenuItem,
+                replaceExistServerToolStripMenuItem,
+                loadServerToolStripMenuItem
+            );
 
             configer.Prepare();
             return configer;
@@ -395,7 +410,7 @@ namespace V2RayGCon.Views.WinForms
 
         void OnConfigerChangedHandler(object sender, EventArgs args)
         {
-            var configer = sender as Controllers.FormConfigerCtrl;
+            var configer = sender as Controllers.FormJsonConfigEditorCtrl;
 
             if (configer.IsConfigSaved())
             {
@@ -538,7 +553,7 @@ namespace V2RayGCon.Views.WinForms
             {
                 return;
             }
-            var editor = configer.GetComponent<Controllers.ConfigerComponet.Editor>();
+            var editor = configer.GetComponent<Controllers.FormJsonConfigEditorComponet.Editor>();
             formSearch = VgcApis.WinForms.FormSearch.CreateForm(editor.GetEditor());
             formSearch.FormClosed += (s, a) => formSearch = null;
         }

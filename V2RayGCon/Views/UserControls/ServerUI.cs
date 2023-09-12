@@ -106,6 +106,11 @@ namespace V2RayGCon.Views.UserControls
             cs.OnPropertyChanged -= OnCorePropertyChangesHandler;
         }
 
+        async void ShowCtrlBtn(object sender, EventArgs args)
+        {
+            await SetCtrlButtonsVisiblityLater(true);
+        }
+
         private void BindCoreCtrlEvents(VgcApis.Interfaces.ICoreServCtrl cs)
         {
             if (cs == null)
@@ -115,11 +120,6 @@ namespace V2RayGCon.Views.UserControls
             cs.OnCoreStart += OnCorePropertyChangesHandler;
             cs.OnCoreStop += OnCorePropertyChangesHandler;
             cs.OnPropertyChanged += OnCorePropertyChangesHandler;
-        }
-
-        async void ShowCtrlBtn(object sender, EventArgs args)
-        {
-            await SetCtrlButtonsVisiblityLater(true);
         }
 
         #region interface VgcApis.Models.IDropableControl
@@ -133,7 +133,7 @@ namespace V2RayGCon.Views.UserControls
         #region private method
         private void ShowFormSimpleEditor()
         {
-            var f = WinForms.FormSimpleEditor.GetForm();
+            var f = WinForms.FormSimpleConfigEditor.GetForm();
             f.LoadCoreServer(this.coreServCtrl);
         }
 
@@ -698,12 +698,7 @@ namespace V2RayGCon.Views.UserControls
             {
                 item.MouseEnter -= ShowCtrlBtn;
             }
-            /*
-            VgcApis.Misc.UI.Invoke(() =>
-            {
-                rtboxServerTitle.Dispose();
-                toolTip1.Dispose();
-            });*/
+
             this.coreServCtrl = null;
         }
         #endregion
@@ -730,7 +725,7 @@ namespace V2RayGCon.Views.UserControls
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var uid = coreServCtrl.GetCoreStates().GetUid();
-            WinForms.FormConfiger.ShowServer(uid);
+            WinForms.FormJsonConfigEditor.ShowServer(uid);
         }
 
         private void autoShareLinkToolStripMenuItem_Click(object sender, EventArgs e)
@@ -816,7 +811,9 @@ namespace V2RayGCon.Views.UserControls
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var finalConfig = coreServCtrl.GetConfiger().GetFinalConfig();
-            WinForms.FormConfiger.ShowConfig(finalConfig.ToString(Formatting.Indented));
+            var title = coreServCtrl.GetCoreStates().GetTitle();
+            var config = VgcApis.Misc.Utils.FormatConfig(finalConfig);
+            WinForms.FormTextConfigEditor.ShowConfig(title, config, true);
         }
 
         private void vToolStripMenuItem_Click(object sender, EventArgs e)
@@ -836,6 +833,21 @@ namespace V2RayGCon.Views.UserControls
         private void showSettingsWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowModifyConfigsWinForm();
+        }
+
+        private void lbLastModifyDate_MouseDown(object sender, MouseEventArgs e)
+        {
+            UserMouseDown();
+        }
+
+        private async void ServerUI_MouseEnter(object sender, EventArgs e)
+        {
+            await SetCtrlButtonsVisiblityLater(true);
+        }
+
+        private async void ServerUI_MouseLeave(object sender, EventArgs e)
+        {
+            await SetCtrlButtonsVisiblityLater(false);
         }
 
         private void btnShowPopupMenu_Click(object sender, EventArgs e)
@@ -878,21 +890,6 @@ namespace V2RayGCon.Views.UserControls
             ShowModifyConfigsWinForm();
         }
 
-        private void lbLastModifyDate_MouseDown(object sender, MouseEventArgs e)
-        {
-            UserMouseDown();
-        }
-
-        private async void ServerUI_MouseEnter(object sender, EventArgs e)
-        {
-            await SetCtrlButtonsVisiblityLater(true);
-        }
-
-        private async void ServerUI_MouseLeave(object sender, EventArgs e)
-        {
-            await SetCtrlButtonsVisiblityLater(false);
-        }
-
         private void simpleEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowFormSimpleEditor();
@@ -901,6 +898,12 @@ namespace V2RayGCon.Views.UserControls
         private void rlbLastModifyDate_Click(object sender, EventArgs e)
         {
             ShowFormSimpleEditor();
+        }
+
+        private void textEditortoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var uid = coreServCtrl.GetCoreStates().GetUid();
+            WinForms.FormTextConfigEditor.ShowServer(uid);
         }
 
         private void rlbRemark_Click(object sender, EventArgs e)

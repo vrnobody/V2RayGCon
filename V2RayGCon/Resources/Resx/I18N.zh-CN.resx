@@ -188,8 +188,8 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="ImportLinkSuccess" xml:space="preserve">
     <value>链接导入成功！</value>
   </data>
-  <data name="ConfigEditor" xml:space="preserve">
-    <value>配置编辑器</value>
+  <data name="JsonEditor" xml:space="preserve">
+    <value>Json编辑器</value>
   </data>
   <data name="Windows" xml:space="preserve">
     <value>窗口</value>
@@ -797,5 +797,11 @@ https://github.com/v2ray/v2ray-core</value>
   </data>
   <data name="UnableToDetermineFilenameMessage" xml:space="preserve">
     <value>无法确定更新文件的文件名！</value>
+  </data>
+  <data name="ConfigerSupportsJsonOnly" xml:space="preserve">
+    <value>解释配置失败！JSON编辑器仅支持JSON格式的配置。</value>
+  </data>
+  <data name="TextEditor" xml:space="preserve">
+    <value>Text编辑器</value>
   </data>
 </root>

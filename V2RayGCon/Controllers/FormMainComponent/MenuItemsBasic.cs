@@ -25,6 +25,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem miAbout,
             ToolStripMenuItem miHelp,
             ToolStripMenuItem miFormConfigEditor,
+            ToolStripMenuItem miFormTextEditor,
             ToolStripMenuItem miFormLog,
             ToolStripMenuItem miFormOptions,
             ToolStripMenuItem miDownloadV2rayCore,
@@ -47,7 +48,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 miExportAllServer,
                 miImportFromFile
             );
-            InitMenuWindows(miFormConfigEditor, miFormLog, miFormOptions);
+            InitMenuWindows(miFormConfigEditor, miFormTextEditor, miFormLog, miFormOptions);
+
             InitMenuAbout(
                 miAbout,
                 miHelp,
@@ -175,7 +177,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             // menu file
             simVmessServer.Click += (s, a) =>
             {
-                var f = Views.WinForms.FormSimpleEditor.GetForm();
+                var f = Views.WinForms.FormSimpleConfigEditor.GetForm();
                 f.LoadCoreServer(null);
             };
 
@@ -192,12 +194,17 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private static void InitMenuWindows(
             ToolStripMenuItem miFormConfigEditor,
+            ToolStripMenuItem miFormTextEditor,
             ToolStripMenuItem miFormLog,
             ToolStripMenuItem miFormOptions
         )
         {
+            miFormTextEditor.Click += (s, a) =>
+                Views.WinForms.FormTextConfigEditor.ShowConfig("", "", false);
+
             // menu window
-            miFormConfigEditor.Click += (s, a) => Views.WinForms.FormConfiger.ShowEmptyConfig();
+            miFormConfigEditor.Click += (s, a) =>
+                Views.WinForms.FormJsonConfigEditor.ShowEmptyConfig();
 
             miFormLog.Click += (s, a) => Views.WinForms.FormLog.ShowForm();
 

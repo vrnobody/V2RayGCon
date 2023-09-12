@@ -62,6 +62,7 @@
             this.showSettingWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simpleEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textEditortoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
@@ -248,6 +249,7 @@
             this.showSettingWindowToolStripMenuItem,
             this.simpleEditorToolStripMenuItem,
             this.editToolStripMenuItem,
+            this.textEditortoolStripMenuItem,
             this.debugToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.toolStripMenuItem2,
@@ -352,6 +354,12 @@
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            // 
+            // textEditortoolStripMenuItem
+            // 
+            this.textEditortoolStripMenuItem.Name = "textEditortoolStripMenuItem";
+            resources.ApplyResources(this.textEditortoolStripMenuItem, "textEditortoolStripMenuItem");
+            this.textEditortoolStripMenuItem.Click += new System.EventHandler(this.textEditortoolStripMenuItem_Click);
             // 
             // debugToolStripMenuItem
             // 
@@ -465,5 +473,6 @@
         private VgcApis.UserControls.RoundLabel rlbTag1;
         private VgcApis.UserControls.RoundLabel rlbTag2;
         private VgcApis.UserControls.RoundLabel rlbTag3;
+        private System.Windows.Forms.ToolStripMenuItem textEditortoolStripMenuItem;
     }
 }

@@ -5,7 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
-namespace V2RayGCon.Controllers.ConfigerComponet
+namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
 {
     class ExpandGlobalImports : ConfigerComponentController
     {

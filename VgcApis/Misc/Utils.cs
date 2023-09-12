@@ -1308,7 +1308,7 @@ namespace VgcApis.Misc
         {
             try
             {
-                return config?.ToString(Formatting.None) ?? string.Empty;
+                return config?.ToString() ?? string.Empty;
             }
             catch { }
             return string.Empty;

@@ -163,14 +163,12 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public void SetConfig(string newConfig)
         {
-            var trimed = VgcApis.Misc.Utils.FormatConfig(newConfig);
-
-            if (string.IsNullOrEmpty(trimed) || coreInfo.GetConfig() == trimed)
+            if (string.IsNullOrEmpty(newConfig) || coreInfo.GetConfig() == newConfig)
             {
                 return;
             }
 
-            coreInfo.SetConfig(trimed);
+            coreInfo.SetConfig(newConfig);
             UpdateSummary();
 
             if (coreCtrl.IsCoreRunning())

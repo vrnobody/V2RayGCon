@@ -281,7 +281,7 @@ namespace V2RayGCon.Services
             {
                 return new Tuple<bool, string>(false, I18N.DecodeFail);
             }
-            var ok = servers.AddServerWithFormatedConfig(formatedConfig, mark, true);
+            var ok = servers.AddServer(formatedConfig, mark, true);
             var reason = ok ? I18N.Success : I18N.DuplicateServer;
             return new Tuple<bool, string>(ok, reason);
         }

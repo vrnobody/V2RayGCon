@@ -33,6 +33,7 @@ namespace V2RayGCon.Views.WinForms
             var cs = new CustomCoreSettings();
             cs.name = tboxName.Text;
             cs.dir = tboxDir.Text;
+            cs.isWorkingDir = chkSetWorkingDir.Checked;
             cs.exe = tboxExe.Text;
             cs.args = tboxArgs.Text;
             cs.stdInEncoding = cboxStdinEncoding.Text;
@@ -50,6 +51,7 @@ namespace V2RayGCon.Views.WinForms
         {
             tboxName.Text = coreSettings.name;
             tboxDir.Text = coreSettings.dir;
+            chkSetWorkingDir.Checked = coreSettings.isWorkingDir;
             tboxExe.Text = coreSettings.exe;
             tboxArgs.Text = coreSettings.args;
             cboxStdinEncoding.Text = coreSettings.stdInEncoding;
@@ -88,6 +90,16 @@ namespace V2RayGCon.Views.WinForms
             this.DialogResult = DialogResult.OK;
             Close();
         }
+
+        private void btnDir_Click(object sender, EventArgs e)
+        {
+            var folder = VgcApis.Misc.UI.ShowSelectFolderDialog();
+            if (!string.IsNullOrEmpty(folder))
+            {
+                tboxDir.Text = folder;
+            }
+        }
+
         #endregion
     }
 }

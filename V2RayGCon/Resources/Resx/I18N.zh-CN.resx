@@ -174,7 +174,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>配置已修改，是否保存修改？</value>
   </data>
   <data name="ExeNotFound" xml:space="preserve">
-    <value>请先下载v2ray-core（可点托盘图标相应菜单）</value>
+    <value>找不到core可执行文件！</value>
   </data>
   <data name="Exit" xml:space="preserve">
     <value>退出</value>
@@ -806,5 +806,8 @@ https://github.com/v2ray/v2ray-core</value>
   </data>
   <data name="ConfirmDeleteCoreSetting" xml:space="preserve">
     <value>确定删除[{0}]吗？</value>
+  </data>
+  <data name="CustomCoreName" xml:space="preserve">
+    <value>自定义内核名</value>
   </data>
 </root>

@@ -9,6 +9,7 @@ namespace V2RayGCon.Models.Datas
 
         public string name = "";
         public string dir = "";
+        public bool isWorkingDir = false;
         public string exe = "";
         public string args = "";
 
@@ -39,6 +40,10 @@ namespace V2RayGCon.Models.Datas
         };
 
         public static List<string> GetEncodings() => encodings;
+
+        public Encoding GetStdInEncoding() => TranslateEncoding(stdInEncoding);
+
+        public Encoding GetStdOutEncoding() => TranslateEncoding(stdOutEncoding);
 
         public static Encoding TranslateEncoding(string encoding)
         {

@@ -55,6 +55,11 @@ namespace VgcApis.Interfaces
         new long GetLastSpeedTestUtcTicks();
         new string GetMark();
         new string GetRemark();
+
+        new string GetCustomCoreName();
+
+        new void SetCustomCoreName(string name);
+
         new int GetStatPort();
         new string GetShortName();
         new string GetLongName();

@@ -22,7 +22,8 @@
             inbIp,
             customMark,
             uid,
-            customRemark;
+            customRemark,
+            customCoreName;
 
         public int customInbType,
             inbPort;
@@ -42,6 +43,8 @@
 
         public CoreInfo()
         {
+            customCoreName = string.Empty;
+
             lastModifiedUtcTicks = System.DateTime.UtcNow.Ticks;
             lastSpeedTestUtcTicks = System.DateTime.UtcNow.Ticks;
 

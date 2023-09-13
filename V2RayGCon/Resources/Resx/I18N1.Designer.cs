@@ -650,6 +650,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Custom core name. 的本地化字符串。
+        /// </summary>
+        internal static string CustomCoreName {
+            get {
+                return ResourceManager.GetString("CustomCoreName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Data too big. Please trim down the config file. 的本地化字符串。
         /// </summary>
         internal static string DataTooBig {
@@ -885,7 +894,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Please download v2ray-core first!（checkout systray icon&apos;s popup menu.） 的本地化字符串。
+        ///   查找类似 Core exe file not found! 的本地化字符串。
         /// </summary>
         internal static string ExeNotFound {
             get {

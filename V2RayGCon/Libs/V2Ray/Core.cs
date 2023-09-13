@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using V2RayGCon.Resources.Resx;
@@ -16,16 +17,18 @@ namespace V2RayGCon.Libs.V2Ray
         public event EventHandler OnCoreStatusChanged;
 
         Services.Settings setting;
+        Models.Datas.CustomCoreSettings customCoreSettings;
+        bool isCustomCore;
 
         AutoResetEvent coreStartStopLocker = new AutoResetEvent(true);
-        Process v2rayCore;
+        Process coreProc;
         static int curConcurrentV2RayCoreNum = 0;
         bool isForcedExit = false;
 
         public Core(Services.Settings setting)
         {
             isReady = false;
-            v2rayCore = null;
+            coreProc = null;
             this.setting = setting;
         }
 
@@ -62,17 +65,24 @@ namespace V2RayGCon.Libs.V2Ray
 
         public bool isRunning
         {
-            get => IsProcRunning(v2rayCore);
+            get => IsProcRunning(coreProc);
         }
 
         #endregion
 
         #region public method
+        public void SetCustomCoreName(string name)
+        {
+            customCoreSettings = setting
+                .GetCustomCoreSettings()
+                .FirstOrDefault(cs => cs.name == name);
+            isCustomCore = customCoreSettings != null;
+        }
 
         public VgcApis.Models.Datas.StatsSample QueryStatsApi(int port)
         {
             var exe = statExe;
-            if (setting.IsClosing() || string.IsNullOrEmpty(exe))
+            if (setting.IsClosing() || string.IsNullOrEmpty(exe) || isCustomCore)
             {
                 return null;
             }
@@ -99,7 +109,7 @@ namespace V2RayGCon.Libs.V2Ray
 
         public string GetCoreVersion()
         {
-            if (!IsExecutableExist())
+            if (!IsExecutableExist() || isCustomCore)
             {
                 return string.Empty;
             }
@@ -142,7 +152,25 @@ namespace V2RayGCon.Libs.V2Ray
             return false;
         }
 
-        public string GetExecutablePath(string fileName)
+        // blocking
+        public void RestartCore(string config, Dictionary<string, string> envs = null) =>
+            RestartCoreWorker(config, envs, false);
+
+        public void RestartCoreIgnoreError(string config, Dictionary<string, string> envs = null) =>
+            RestartCoreWorker(config, envs, true);
+
+        // blocking
+        public void StopCore()
+        {
+            coreStartStopLocker.WaitOne();
+            StopCoreIgnoreError(coreProc);
+            coreStartStopLocker.Set();
+        }
+
+        #endregion
+
+        #region private method
+        string GetExecutablePath(string fileName)
         {
             List<string> folders = GenV2RayCoreSearchPaths(setting.isPortable);
             for (var i = 0; i < folders.Count; i++)
@@ -156,27 +184,22 @@ namespace V2RayGCon.Libs.V2Ray
             return string.Empty;
         }
 
-        // blocking
-        public void RestartCore(string config, Dictionary<string, string> envs = null) =>
-            RestartCoreWorker(config, envs, false);
-
-        public void RestartCoreIgnoreError(string config, Dictionary<string, string> envs = null) =>
-            RestartCoreWorker(config, envs, true);
-
-        // blocking
-        public void StopCore()
+        string GetCustomCoreExePath()
         {
-            coreStartStopLocker.WaitOne();
-            StopCoreIgnoreError(v2rayCore);
-            coreStartStopLocker.Set();
+            var f = Path.Combine(customCoreSettings.dir, customCoreSettings.exe);
+            if (File.Exists(f))
+            {
+                return f;
+            }
+            return null;
         }
 
-        #endregion
-
-        #region private method
         void RestartCoreWorker(string config, Dictionary<string, string> env, bool quiet)
         {
-            if (!IsExecutableExist())
+            if (
+                (!isCustomCore && !IsExecutableExist())
+                || (isCustomCore && GetCustomCoreExePath() == null)
+            )
             {
                 if (quiet)
                 {
@@ -191,7 +214,7 @@ namespace V2RayGCon.Libs.V2Ray
             }
 
             coreStartStopLocker.WaitOne();
-            StopCoreIgnoreError(this.v2rayCore);
+            StopCoreIgnoreError(this.coreProc);
 
             try
             {
@@ -202,7 +225,7 @@ namespace V2RayGCon.Libs.V2Ray
             }
             catch
             {
-                StopCoreIgnoreError(this.v2rayCore);
+                StopCoreIgnoreError(this.coreProc);
             }
             finally
             {
@@ -215,7 +238,7 @@ namespace V2RayGCon.Libs.V2Ray
 
         void StopCoreIgnoreError(Process core)
         {
-            this.v2rayCore = null;
+            this.coreProc = null;
 
             if (!IsProcRunning(core))
             {
@@ -226,8 +249,6 @@ namespace V2RayGCon.Libs.V2Ray
             {
                 isForcedExit = true;
                 core?.Kill();
-                // VgcApis.Misc.Utils.KillProcessAndChildrens(core.Id);
-                // core.WaitForExit(VgcApis.Models.Consts.Core.KillCoreTimeout);
                 core?.WaitForExit();
             }
             catch { }
@@ -278,6 +299,39 @@ namespace V2RayGCon.Libs.V2Ray
             catch { }
         }
 
+        Process CreateCustomCoreProcess(string config)
+        {
+            var cs = customCoreSettings;
+            var ec = cs.GetStdOutEncoding();
+            var p = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = GetCustomCoreExePath(),
+                    Arguments = cs.args,
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    RedirectStandardInput = cs.useStdInToPassConfig,
+                    StandardOutputEncoding = ec,
+                    StandardErrorEncoding = ec,
+                }
+            };
+            if (cs.isWorkingDir)
+            {
+                p.StartInfo.WorkingDirectory = cs.dir;
+            }
+            p.EnableRaisingEvents = true;
+
+            if (cs.useConfigFile)
+            {
+                var file = Path.Combine(cs.dir, cs.configFilename);
+                File.WriteAllText(file, config);
+            }
+            return p;
+        }
+
         Process CreateV2RayCoreProcess(string config)
         {
             var exe = GetExecutablePath(VgcApis.Models.Consts.Core.XrayCoreExeFileName);
@@ -315,9 +369,6 @@ namespace V2RayGCon.Libs.V2Ray
                 return null;
             }
 
-            // exitCode = 1 means Killed forcibly.
-            // src https://stackoverflow.com/questions/4344923/process-exit-code-when-process-is-killed-forcibly
-
             // ctrl + c not working
             if (isForcedExit)
             {
@@ -325,17 +376,26 @@ namespace V2RayGCon.Libs.V2Ray
                 return null;
             }
 
+            // exitCode = 1 means Killed forcibly.
+            // src https://stackoverflow.com/questions/4344923/process-exit-code-when-process-is-killed-forcibly
+            if (exitCode == 1)
+            {
+                return title + @" " + I18N.KilledByUserOrOtherApp;
+            }
+
+            string msg = string.Format(I18N.V2rayCoreExitAbnormally, title, exitCode);
+            if (isCustomCore)
+            {
+                return msg;
+            }
+
             /*
              * v2ray-core/main/main.go
              * 23: Configuration error.
              * -1: Failed to start.
              */
-            string msg = string.Format(I18N.V2rayCoreExitAbnormally, title, exitCode);
             switch (exitCode)
             {
-                case 1:
-                    msg = title + @" " + I18N.KilledByUserOrOtherApp;
-                    break;
                 case 23:
                     msg = title + @" " + I18N.HasFaultyConfig;
                     break;
@@ -420,19 +480,24 @@ namespace V2RayGCon.Libs.V2Ray
         void StartCore(string config, Dictionary<string, string> envs, bool quiet)
         {
             isReady = false;
-            var core = CreateV2RayCoreProcess(config);
+            var core = isCustomCore
+                ? CreateCustomCoreProcess(config)
+                : CreateV2RayCoreProcess(config);
             VgcApis.Misc.Utils.SetProcessEnvs(core, envs);
 
             BindEvents(core, quiet);
             Interlocked.Increment(ref curConcurrentV2RayCoreNum);
 
             core.Start();
-            this.v2rayCore = core;
+            this.coreProc = core;
 
             // Add to JOB object require win8+.
             VgcApis.Libs.Sys.ChildProcessTracker.AddProcess(core);
 
-            WriteConfigToStandardInput(core, config);
+            if (!isCustomCore || customCoreSettings.useStdInToPassConfig)
+            {
+                WriteConfigToStandardInput(core, config);
+            }
 
             core.PriorityClass = ProcessPriorityClass.AboveNormal;
             core.BeginErrorReadLine();
@@ -443,8 +508,9 @@ namespace V2RayGCon.Libs.V2Ray
 
         private void WriteConfigToStandardInput(Process core, string config)
         {
+            var ec = isCustomCore ? customCoreSettings.GetStdInEncoding() : ioEncoding;
             var input = core.StandardInput;
-            var buff = ioEncoding.GetBytes(config);
+            var buff = ec.GetBytes(config);
             input.BaseStream.Write(buff, 0, buff.Length);
             input.WriteLine();
             input.Close();
@@ -469,6 +535,11 @@ namespace V2RayGCon.Libs.V2Ray
 
         bool MatchAllReadyMarks(string message)
         {
+            if (isCustomCore)
+            {
+                return true;
+            }
+
             var lower = message.ToLower();
             foreach (var mark in VgcApis.Models.Consts.Core.ReadyLogMarks)
             {

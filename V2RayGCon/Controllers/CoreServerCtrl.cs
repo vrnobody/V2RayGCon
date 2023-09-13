@@ -41,7 +41,7 @@ namespace V2RayGCon.Controllers
             servSvc = servers;
 
             //external dependency injection
-            coreCtrl = new CoreServerComponent.CoreCtrl(setting, configMgr);
+            coreCtrl = new CoreServerComponent.CoreCtrl(setting, coreInfo, configMgr);
             states = new CoreServerComponent.CoreStates(servers, coreInfo);
             logger = new CoreServerComponent.Logger(setting);
             configer = new CoreServerComponent.Configer(setting, cache, configMgr, coreInfo);
@@ -144,6 +144,7 @@ namespace V2RayGCon.Controllers
 
             cst.SetName(cs.serverName);
             cst.SetDescription(cs.serverDescription);
+
             ci.customMark = cs.mark;
             ci.customRemark = cs.remark;
             ci.isAutoRun = cs.isAutorun;
@@ -164,6 +165,8 @@ namespace V2RayGCon.Controllers
             {
                 restartCore = true;
             }
+
+            restartCore = restartCore || GetCoreCtrl().SetCustomCoreName(cs.customCoreName);
 
             ci.isInjectImport = cs.isGlobalImport;
             ci.isInjectSkipCNSite = cs.isBypassCnSite;

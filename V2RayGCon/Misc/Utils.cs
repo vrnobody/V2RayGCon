@@ -214,12 +214,11 @@ namespace V2RayGCon.Misc
 
         public static string GenCmdArgFromConfig(string config)
         {
-            // "-config=stdin: -format=json",
             var stdIn = VgcApis.Models.Consts.Core.StdIn;
             var confArg = VgcApis.Models.Consts.Core.ConfigArg;
-
             var jsonFormat = @"-format=json";
 
+            // "-config=stdin: -format=json",
             var r = $"{jsonFormat} -{confArg}={stdIn}";
             try
             {

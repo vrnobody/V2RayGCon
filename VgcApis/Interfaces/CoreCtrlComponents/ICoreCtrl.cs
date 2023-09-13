@@ -5,6 +5,18 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
     public interface ICoreCtrl
     {
         /// <summary>
+        /// 获取自定义core名字
+        /// </summary>
+        /// <returns>名字</returns>
+        string GetCustomCoreName();
+
+        /// <summary>
+        /// 设置自定义core名字
+        /// </summary>
+        /// <param name="name">名字</param>
+        bool SetCustomCoreName(string name);
+
+        /// <summary>
         /// 服务器是否在运行
         /// </summary>
         /// <returns>

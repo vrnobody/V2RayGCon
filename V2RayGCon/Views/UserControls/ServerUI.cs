@@ -256,7 +256,7 @@ namespace V2RayGCon.Views.UserControls
                 UpdateTitleTextBox(cs);
 
                 // second line
-                UpdateInboundModeLabel(cs);
+                UpdateInboundModeLabel(cs, cc.GetCustomCoreName());
                 UpdateLastModifiedLable(cs.GetLastModifiedUtcTicks());
                 UpdateMarkLabel(cs.GetMark());
                 UpdateTag1Label(cs.GetTag1());
@@ -424,8 +424,17 @@ namespace V2RayGCon.Views.UserControls
             g.FillRectangle(Brushes.Brown, cx - r, cy - r, r * 2, r * 2);
         }
 
-        void UpdateInboundModeLabel(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreState)
+        void UpdateInboundModeLabel(
+            VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreState,
+            string coreName
+        )
         {
+            if (!string.IsNullOrEmpty(coreName))
+            {
+                UpdateControlTextAndTooltip(rlbInboundMode, coreName, I18N.CustomCoreName);
+                return;
+            }
+
             var text = @"Config";
             var tooltip = I18N.InbModeConfigToolTip;
             var inbModeIdx = coreState.GetInboundType();
@@ -809,9 +818,17 @@ namespace V2RayGCon.Views.UserControls
 
         private void debugToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var finalConfig = coreServCtrl.GetConfiger().GetFinalConfig();
             var title = coreServCtrl.GetCoreStates().GetTitle();
-            var config = VgcApis.Misc.Utils.FormatConfig(finalConfig);
+            var finalConfig = coreServCtrl.GetConfiger().GetFinalConfig();
+            string config;
+            if (finalConfig != null)
+            {
+                config = VgcApis.Misc.Utils.FormatConfig(finalConfig);
+            }
+            else
+            {
+                config = coreServCtrl.GetConfiger().GetConfig();
+            }
             WinForms.FormTextConfigEditor.ShowConfig(title, config, true);
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Interfaces;
@@ -53,12 +54,14 @@ namespace V2RayGCon.Views.WinForms
         private ICoreServCtrl coreServ;
         VgcApis.Models.Datas.CoreServSettings orgCoreServSettings;
         Services.Servers servers;
+        Services.Settings settings;
 
         public FormModifyServerSettings()
         {
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             servers = Services.Servers.Instance;
+            settings = Services.Settings.Instance;
         }
 
         private void FormModifyServerSettings_Load(object sender, System.EventArgs e)
@@ -72,9 +75,15 @@ namespace V2RayGCon.Views.WinForms
             orgCoreServSettings = new VgcApis.Models.Datas.CoreServSettings(coreServ);
             var marks = servers.GetMarkList();
             lbServerTitle.Text = coreServ.GetCoreStates().GetTitle();
+
             cboxMark.Items.Clear();
             cboxMark.Items.AddRange(marks);
             Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMark);
+
+            var coreNames = settings.GetCustomCoreSettings().Select(cs => cs.name).ToArray();
+            cboxCoreName.Items.AddRange(coreNames);
+            Misc.UI.ResetComboBoxDropdownMenuWidth(cboxCoreName);
+
             UpdateControls(orgCoreServSettings);
             AutoSelectShareLinkType();
             UpdateShareLink();
@@ -105,7 +114,7 @@ namespace V2RayGCon.Views.WinForms
             cboxShareLinkType.SelectedIndex = 0;
         }
 
-        VgcApis.Models.Datas.CoreServSettings GetterSettings()
+        VgcApis.Models.Datas.CoreServSettings GatherSettings()
         {
             var result = new VgcApis.Models.Datas.CoreServSettings();
             result.index = VgcApis.Misc.Utils.Str2Int(tboxServIndex.Text);
@@ -115,6 +124,10 @@ namespace V2RayGCon.Views.WinForms
             result.inboundAddress = cboxInboundAddress.Text;
             result.mark = cboxMark.Text;
             result.remark = tboxRemark.Text;
+
+            result.customCoreName =
+                cboxCoreName.SelectedIndex < 1 ? string.Empty : cboxCoreName.Text;
+
             result.isAutorun = chkAutoRun.Checked;
             result.isBypassCnSite = chkBypassCnSite.Checked;
             result.isGlobalImport = chkGlobalImport.Checked;
@@ -132,10 +145,27 @@ namespace V2RayGCon.Views.WinForms
             cboxInboundAddress.Text = s.inboundAddress;
             cboxMark.Text = s.mark;
             tboxRemark.Text = s.remark;
+
+            SelectComboBoxByText(cboxCoreName, s.customCoreName, 0);
+
             chkAutoRun.Checked = s.isAutorun;
             chkBypassCnSite.Checked = s.isBypassCnSite;
             chkGlobalImport.Checked = s.isGlobalImport;
             chkUntrack.Checked = s.isUntrack;
+        }
+
+        void SelectComboBoxByText(ComboBox cbox, string text, int defaultIndex)
+        {
+            var items = cbox.Items;
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].ToString() == text)
+                {
+                    cbox.SelectedIndex = i;
+                    return;
+                }
+            }
+            cbox.SelectedIndex = defaultIndex;
         }
 
         void UpdateShareLink()
@@ -260,7 +290,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            var curSettings = GetterSettings();
+            var curSettings = GatherSettings();
             if (!curSettings.Equals(orgCoreServSettings))
             {
                 coreServ.UpdateCoreSettings(curSettings);

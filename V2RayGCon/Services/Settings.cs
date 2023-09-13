@@ -273,7 +273,7 @@ namespace V2RayGCon.Services
                 if (coreSettings != null)
                 {
                     userSettings.customCoreSettings.Remove(coreSettings);
-                    SaveSettingsLater();
+                    ResetCoreSettingsIndex();
                     return true;
                 }
             }

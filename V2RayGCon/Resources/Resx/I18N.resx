@@ -178,7 +178,7 @@ Discard latest changes and continue?</value>
     <value>Config has change, save it now?</value>
   </data>
   <data name="ExeNotFound" xml:space="preserve">
-    <value>Please download v2ray-core first!（checkout systray icon's popup menu.）</value>
+    <value>Core exe file not found!</value>
   </data>
   <data name="Exit" xml:space="preserve">
     <value>Exit</value>
@@ -816,5 +816,8 @@ Config editor supports JSON format only!</value>
   </data>
   <data name="ConfirmDeleteCoreSetting" xml:space="preserve">
     <value>Remove [{0}]?</value>
+  </data>
+  <data name="CustomCoreName" xml:space="preserve">
+    <value>Custom core name.</value>
   </data>
 </root>

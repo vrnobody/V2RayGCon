@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using V2RayGCon.Resources.Resx;
+using VgcApis.Models.Datas;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
 {
@@ -7,9 +9,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         : VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
             VgcApis.Interfaces.CoreCtrlComponents.ICoreCtrl
     {
-        Libs.V2Ray.Core v2rayCore;
+        Libs.V2Ray.Core core;
         Services.Settings setting;
         Services.ConfigMgr configMgr;
+        CoreInfo coreInfo;
 
         static long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
@@ -17,8 +20,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         VgcApis.Libs.Tasks.Bar isRecording = new VgcApis.Libs.Tasks.Bar();
 
-        public CoreCtrl(Services.Settings setting, Services.ConfigMgr configMgr)
+        public CoreCtrl(Services.Settings setting, CoreInfo coreInfo, Services.ConfigMgr configMgr)
         {
+            this.coreInfo = coreInfo;
             this.setting = setting;
             this.configMgr = configMgr;
         }
@@ -29,7 +33,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public override void Prepare()
         {
-            v2rayCore = new Libs.V2Ray.Core(setting);
+            core = new Libs.V2Ray.Core(setting);
+            core.SetCustomCoreName(coreInfo.customCoreName);
 
             coreStates = GetSibling<CoreStates>();
             configer = GetSibling<Configer>();
@@ -39,20 +44,36 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         #region public mehtods
+        public string GetCustomCoreName() => coreInfo.customCoreName;
+
+        public bool SetCustomCoreName(string name)
+        {
+            name = name ?? string.Empty;
+            if (name == coreInfo.customCoreName)
+            {
+                return false;
+            }
+
+            coreInfo.customCoreName = name;
+            core.SetCustomCoreName(name);
+            GetParent().InvokeEventOnPropertyChange();
+            return true;
+        }
+
         // 非正常终止时调用
-        public void SetTitle(string title) => v2rayCore.title = title;
+        public void SetTitle(string title) => core.title = title;
 
         public void BindEvents()
         {
-            v2rayCore.OnLog += OnLogHandler;
-            v2rayCore.OnCoreStatusChanged += OnCoreStateChangedHandler;
+            core.OnLog += OnLogHandler;
+            core.OnCoreStatusChanged += OnCoreStateChangedHandler;
         }
 
         public void ReleaseEvents()
         {
             bookKeeper?.Dispose();
-            v2rayCore.OnLog -= OnLogHandler;
-            v2rayCore.OnCoreStatusChanged -= OnCoreStateChangedHandler;
+            core.OnLog -= OnLogHandler;
+            core.OnCoreStatusChanged -= OnCoreStateChangedHandler;
         }
 
         public string Fetch(string url) => Fetch(url, -1);
@@ -82,7 +103,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public void RestartCoreThen(Action next) =>
             VgcApis.Misc.Utils.RunInBgSlim(() => RestartCoreWorker(next, false));
 
-        public bool IsCoreRunning() => v2rayCore.isRunning;
+        public bool IsCoreRunning() => core.isRunning;
 
         public void RunSpeedTest() => SpeedTestWorker(configer.GetConfig());
 
@@ -112,7 +133,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 var statsPort = coreStates.GetStatPort();
                 if (statsPort > 0)
                 {
-                    var sample = v2rayCore.QueryStatsApi(statsPort);
+                    var sample = core.QueryStatsApi(statsPort);
                     coreStates.AddStatSample(sample);
                 }
             }
@@ -124,7 +145,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
-                if (v2rayCore.isRunning)
+                if (core.isRunning)
                 {
                     GetParent().InvokeEventOnCoreStart();
                 }
@@ -198,7 +219,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             try
             {
                 GetParent().InvokeEventOnCoreClosing();
-                v2rayCore.StopCore();
+                core.StopCore();
             }
             finally
             {
@@ -210,23 +231,32 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             try
             {
-                var finalConfig = configer.GetFinalConfig();
-                if (finalConfig == null)
+                string cfg;
+                Dictionary<string, string> envs = new Dictionary<string, string>();
+                if (string.IsNullOrEmpty(coreInfo.customCoreName))
                 {
-                    StopCore();
-                    return;
-                }
-
-                v2rayCore.title = coreStates.GetTitle();
-                var envs = Misc.Utils.GetEnvVarsFromConfig(finalConfig);
-                var cfg = finalConfig.ToString();
-                if (isQuiet)
-                {
-                    v2rayCore.RestartCoreIgnoreError(cfg, envs);
+                    cfg = configer.GetConfig();
                 }
                 else
                 {
-                    v2rayCore.RestartCore(finalConfig.ToString(), envs);
+                    var finalConfig = configer.GetFinalConfig();
+                    if (finalConfig == null)
+                    {
+                        StopCore();
+                        return;
+                    }
+                    envs = Misc.Utils.GetEnvVarsFromConfig(finalConfig);
+                    cfg = finalConfig.ToString();
+                }
+
+                core.title = coreStates.GetTitle();
+                if (isQuiet)
+                {
+                    core.RestartCoreIgnoreError(cfg, envs);
+                }
+                else
+                {
+                    core.RestartCore(cfg, envs);
                 }
                 bookKeeper?.Run();
             }

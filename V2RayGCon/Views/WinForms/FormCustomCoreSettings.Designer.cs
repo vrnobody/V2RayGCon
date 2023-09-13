@@ -37,7 +37,6 @@ namespace V2RayGCon.Views.WinForms
             this.btnSave = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -47,6 +46,8 @@ namespace V2RayGCon.Views.WinForms
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.chkUseFile = new System.Windows.Forms.CheckBox();
             this.chkBindSharelink = new System.Windows.Forms.CheckBox();
+            this.btnDir = new System.Windows.Forms.Button();
+            this.chkSetWorkingDir = new System.Windows.Forms.CheckBox();
             this.tboxDir = new System.Windows.Forms.TextBox();
             this.tboxExe = new System.Windows.Forms.TextBox();
             this.tboxArgs = new System.Windows.Forms.TextBox();
@@ -94,12 +95,6 @@ namespace V2RayGCon.Views.WinForms
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
             this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
-            // 
-            // label4
-            // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Name = "label4";
-            this.toolTip1.SetToolTip(this.label4, resources.GetString("label4.ToolTip"));
             // 
             // label5
             // 
@@ -154,6 +149,21 @@ namespace V2RayGCon.Views.WinForms
             this.toolTip1.SetToolTip(this.chkBindSharelink, resources.GetString("chkBindSharelink.ToolTip"));
             this.chkBindSharelink.UseVisualStyleBackColor = true;
             // 
+            // btnDir
+            // 
+            resources.ApplyResources(this.btnDir, "btnDir");
+            this.btnDir.Name = "btnDir";
+            this.toolTip1.SetToolTip(this.btnDir, resources.GetString("btnDir.ToolTip"));
+            this.btnDir.UseVisualStyleBackColor = true;
+            this.btnDir.Click += new System.EventHandler(this.btnDir_Click);
+            // 
+            // chkSetWorkingDir
+            // 
+            resources.ApplyResources(this.chkSetWorkingDir, "chkSetWorkingDir");
+            this.chkSetWorkingDir.Name = "chkSetWorkingDir";
+            this.toolTip1.SetToolTip(this.chkSetWorkingDir, resources.GetString("chkSetWorkingDir.ToolTip"));
+            this.chkSetWorkingDir.UseVisualStyleBackColor = true;
+            // 
             // tboxDir
             // 
             resources.ApplyResources(this.tboxDir, "tboxDir");
@@ -202,9 +212,11 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnDir);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.chkUseFile);
+            this.Controls.Add(this.chkSetWorkingDir);
             this.Controls.Add(this.chkUseStdin);
             this.Controls.Add(this.chkBindSharelink);
             this.Controls.Add(this.chkBindConfig);
@@ -221,7 +233,6 @@ namespace V2RayGCon.Views.WinForms
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "FormCustomCoreSettings";
@@ -240,7 +251,6 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
@@ -257,5 +267,7 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.TextBox tboxConfigFilename;
         private System.Windows.Forms.CheckBox chkBindSharelink;
         private System.Windows.Forms.TextBox tboxProtocols;
+        private System.Windows.Forms.Button btnDir;
+        private System.Windows.Forms.CheckBox chkSetWorkingDir;
     }
 }

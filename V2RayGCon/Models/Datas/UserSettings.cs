@@ -77,6 +77,8 @@ namespace V2RayGCon.Models.Datas
         public string WinFormPosList { get; set; }
 
         public int MaxConcurrentV2RayCoreNum { get; set; }
+
+        public List<CustomCoreSettings> customCoreSettings = null;
         #endregion
 
 
@@ -160,6 +162,7 @@ namespace V2RayGCon.Models.Datas
             V2RayCoreDownloadVersionList = V2RayCoreDownloadVersionList ?? new List<string>();
             ImportOptions = ImportOptions ?? new ImportSharelinkOptions();
             SpeedtestOptions = SpeedtestOptions ?? new SpeedTestOptions();
+            customCoreSettings = customCoreSettings ?? new List<CustomCoreSettings>();
         }
         #endregion
     }

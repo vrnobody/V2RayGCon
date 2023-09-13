@@ -458,6 +458,18 @@
   <data name="tabPageDefaults.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="btnCoresSettingAdd.Text" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="btnCoresSettingAdd.ToolTip" xml:space="preserve">
+    <value>添加自定义core配置</value>
+  </data>
+  <data name="flyCoresSetting.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tabPageCustomCoresSetting.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnImportAdd.Text" xml:space="preserve">
     <value>添加</value>
   </data>

@@ -69,8 +69,8 @@ namespace VgcApis.Misc
 
         public static void ResetComboBoxDropdownMenuWidth(ComboBox cbox)
         {
-            int maxWidth = 0,
-                tempWidth = 0;
+            int maxWidth = 0;
+            int tempWidth;
             var font = cbox.Font;
 
             foreach (var item in cbox.Items)

@@ -814,4 +814,7 @@ Config editor supports JSON format only!</value>
   <data name="TextEditor" xml:space="preserve">
     <value>Text editor</value>
   </data>
+  <data name="ConfirmDeleteCoreSetting" xml:space="preserve">
+    <value>Remove [{0}]?</value>
+  </data>
 </root>

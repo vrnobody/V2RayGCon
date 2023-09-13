@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 using V2RayGCon.Views.WinForms;

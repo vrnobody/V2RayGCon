@@ -62,6 +62,13 @@ namespace V2RayGCon.Views.WinForms
             ctrl.Plug(new Controllers.OptionComponent.TabImport(flyImportPanel, btnImportAdd));
 
             ctrl.Plug(
+                new Controllers.OptionComponent.TabCustomCoreSettings(
+                    flyCoresSetting,
+                    btnCoresSettingAdd
+                )
+            );
+
+            ctrl.Plug(
                 new Controllers.OptionComponent.Subscription(
                     flySubsUrlContainer,
                     btnAddSubsUrl,

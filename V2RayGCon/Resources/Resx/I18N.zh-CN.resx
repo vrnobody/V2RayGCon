@@ -804,4 +804,7 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="TextEditor" xml:space="preserve">
     <value>Text编辑器</value>
   </data>
+  <data name="ConfirmDeleteCoreSetting" xml:space="preserve">
+    <value>确定删除[{0}]吗？</value>
+  </data>
 </root>

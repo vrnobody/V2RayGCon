@@ -140,12 +140,14 @@
     <Compile Include="Controllers\Comm\DyMenuGenerator.cs" />
     <Compile Include="Controllers\Comm\IDyMenuHelper.cs" />
     <Compile Include="Controllers\CoreServerComponent\Wrapper.cs" />
+    <Compile Include="Controllers\FormOptionComponent\TabCustomCoreSettings.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabMultiConf.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabDefaults.cs" />
     <Compile Include="Controllers\FormTextConfigEditorComponent\CompBase.cs" />
     <Compile Include="Controllers\FormTextConfigEditorComponent\Editor.cs" />
     <Compile Include="Controllers\FormTextConfigEditorComponent\MenuUpdater.cs" />
     <Compile Include="Controllers\FormTextConfigEditorCtrl.cs" />
+    <Compile Include="Models\Datas\CustomCoreSettings.cs" />
     <Compile Include="Models\Datas\MultiConfItem.cs" />
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
     <Compile Include="Models\Datas\VeeConfigsWithReality.cs" />
@@ -277,6 +279,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Views\Updater\PasteArguments.cs" />
+    <Compile Include="Views\UserControls\CoreSettingUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\CoreSettingUI.Designer.cs">
+      <DependentUpon>CoreSettingUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\MultiConfUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -340,6 +348,12 @@
     <Compile Include="Services\Caches\Template.cs" />
     <Compile Include="Libs\Nets\Downloader.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Views\WinForms\FormCustomCoreSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormCustomCoreSettings.Designer.cs">
+      <DependentUpon>FormCustomCoreSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\WinForms\FormJsonConfigEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -424,6 +438,9 @@
     <EmbeddedResource Include="Views\Updater\FormDownloader.zh-CN.resx">
       <DependentUpon>FormDownloader.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\CoreSettingUI.resx">
+      <DependentUpon>CoreSettingUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\MultiConfUI.resx">
       <DependentUpon>MultiConfUI.cs</DependentUpon>
     </EmbeddedResource>
@@ -490,6 +507,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormBatchModifyServerSetting.zh-CN.resx">
       <DependentUpon>FormBatchModifyServerSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormCustomCoreSettings.resx">
+      <DependentUpon>FormCustomCoreSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormCustomCoreSettings.zh-CN.resx">
+      <DependentUpon>FormCustomCoreSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormJsonConfigEditor.resx">
       <DependentUpon>FormJsonConfigEditor.cs</DependentUpon>

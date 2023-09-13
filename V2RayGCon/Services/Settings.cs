@@ -241,6 +241,69 @@ namespace V2RayGCon.Services
             }
         }
 
+        public List<Models.Datas.CustomCoreSettings> GetCustomCoreSettings()
+        {
+            lock (saveUserSettingsLocker)
+            {
+                return userSettings.customCoreSettings.OrderBy(cs => cs.index).ToList();
+            }
+        }
+
+        public void ResetCoreSettingsIndex()
+        {
+            lock (saveUserSettingsLocker)
+            {
+                var cores = GetCustomCoreSettings();
+                var idx = 1.0;
+                foreach (var core in cores)
+                {
+                    core.index = idx++;
+                }
+            }
+            SaveSettingsLater();
+        }
+
+        public bool RemoveCoreSettingsByName(string name)
+        {
+            lock (saveUserSettingsLocker)
+            {
+                var coreSettings = userSettings.customCoreSettings.FirstOrDefault(
+                    cs => cs.name == name
+                );
+                if (coreSettings != null)
+                {
+                    userSettings.customCoreSettings.Remove(coreSettings);
+                    SaveSettingsLater();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void AddOrReplaceCustomCoreSettings(Models.Datas.CustomCoreSettings coreSettings)
+        {
+            if (coreSettings == null)
+            {
+                return;
+            }
+
+            coreSettings.index = userSettings.customCoreSettings.Count + 1;
+
+            lock (saveUserSettingsLocker)
+            {
+                var coreS = userSettings.customCoreSettings.FirstOrDefault(
+                    cs => cs.name == coreSettings.name
+                );
+                if (coreS != null)
+                {
+                    coreSettings.index = coreS.index;
+                    userSettings.customCoreSettings.Remove(coreS);
+                }
+                userSettings.customCoreSettings.Add(coreSettings);
+            }
+            SaveSettingsLater();
+        }
+
         public Dictionary<string, string> decodeCache
         {
             get

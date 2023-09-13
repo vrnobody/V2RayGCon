@@ -386,6 +386,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Remove [{0}]? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmDeleteCoreSetting {
+            get {
+                return ResourceManager.GetString("ConfirmDeleteCoreSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Delete selected servers? 的本地化字符串。
         /// </summary>
         internal static string ConfirmDeleteSelectedServers {

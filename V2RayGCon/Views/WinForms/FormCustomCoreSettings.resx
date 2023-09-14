@@ -121,11 +121,11 @@
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>95, 12</value>
   </data>
+  <data name="chkUseImportBinding.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 16</value>
+  </data>
   <data name="&gt;&gt;label6.Name" xml:space="preserve">
     <value>label6</value>
-  </data>
-  <data name="&gt;&gt;label5.Name" xml:space="preserve">
-    <value>label5</value>
   </data>
   <data name="&gt;&gt;label8.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -135,7 +135,7 @@
     <value>0</value>
   </data>
   <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>17</value>
   </data>
   <data name="label7.ToolTip" xml:space="preserve">
     <value />
@@ -143,23 +143,14 @@
   <data name="&gt;&gt;label5.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="chkSetWorkingDir.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;label7.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnSave.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="label5.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;tboxExe.ZOrder" xml:space="preserve">
+    <value>12</value>
   </data>
   <data name="chkSetWorkingDir.Text" xml:space="preserve">
     <value>Work dir</value>
   </data>
-  <data name="chkBindConfig.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 16</value>
+  <data name="&gt;&gt;btnSave.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="cboxStdinEncoding.ToolTip" xml:space="preserve">
     <value />
@@ -173,23 +164,21 @@
   <data name="tboxConfigFilename.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="&gt;&gt;chkBindConfig.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;btnSave.Name" xml:space="preserve">
+    <value>btnSave</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
-    <value>Protocol binding</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>Config filename</value>
+    <value>Import protocols</value>
   </data>
   <data name="&gt;&gt;label1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tboxName.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>14</value>
   </data>
-  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
-    <value>toolTip1</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="cboxStdoutEncoding.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="&gt;&gt;label6.Parent" xml:space="preserve">
     <value>$this</value>
@@ -197,11 +186,17 @@
   <data name="&gt;&gt;label2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="chkSetWorkingDir.Location" type="System.Drawing.Point, System.Drawing">
-    <value>346, 41</value>
+  <data name="tboxDir.Location" type="System.Drawing.Point, System.Drawing">
+    <value>119, 39</value>
+  </data>
+  <data name="&gt;&gt;cboxArgs.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
   </data>
   <data name="chkUseStdin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>358, 174</value>
+    <value>346, 174</value>
   </data>
   <data name="cboxStdinEncoding.Location" type="System.Drawing.Point, System.Drawing">
     <value>119, 120</value>
@@ -215,26 +210,23 @@
   <data name="tboxProtocols.Location" type="System.Drawing.Point, System.Drawing">
     <value>119, 200</value>
   </data>
-  <data name="chkUseStdin.ToolTip" xml:space="preserve">
-    <value>Pass config through STDIN.</value>
+  <data name="chkSetWorkingDir.Location" type="System.Drawing.Point, System.Drawing">
+    <value>346, 41</value>
   </data>
   <data name="tboxDir.Size" type="System.Drawing.Size, System.Drawing">
     <value>221, 21</value>
   </data>
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>18</value>
   </data>
   <data name="label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="chkBindConfig.Location" type="System.Drawing.Point, System.Drawing">
-    <value>358, 202</value>
-  </data>
   <data name="&gt;&gt;cboxStdinEncoding.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="chkBindSharelink.Location" type="System.Drawing.Point, System.Drawing">
-    <value>274, 202</value>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>19</value>
   </data>
   <data name="&gt;&gt;cboxStdinEncoding.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -245,14 +237,11 @@
   <data name="tboxConfigFilename.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;cboxStdinEncoding.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
   <data name="&gt;&gt;cboxStdoutEncoding.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>22</value>
+    <value>21</value>
   </data>
   <data name="chkUseStdin.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -264,41 +253,43 @@
     <value>label1</value>
   </data>
   <data name="&gt;&gt;tboxDir.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>13</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="tboxConfigFilename.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 21</value>
+  <data name="btnDir.ToolTip" xml:space="preserve">
+    <value>Browse custom core directory.</value>
   </data>
   <data name="label7.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;tboxArgs.Parent" xml:space="preserve">
+  <data name="&gt;&gt;tboxConfigFilename.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cboxStdinEncoding.Name" xml:space="preserve">
     <value>cboxStdinEncoding</value>
   </data>
-  <data name="chkBindSharelink.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+  <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>139, 230</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 12</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="cboxStdoutEncoding.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="chkSetWorkingDir.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;tboxDir.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>20</value>
   </data>
   <data name="btnDir.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
+  </data>
+  <data name="chkUseImportBinding.Location" type="System.Drawing.Point, System.Drawing">
+    <value>346, 202</value>
   </data>
   <data name="&gt;&gt;tboxProtocols.Parent" xml:space="preserve">
     <value>$this</value>
@@ -306,20 +297,20 @@
   <data name="label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;chkBindConfig.ZOrder" xml:space="preserve">
-    <value>7</value>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="chkBindSharelink.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Config filename</value>
   </data>
-  <data name="tboxArgs.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="cboxArgs.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="label5.Text" xml:space="preserve">
     <value>STDOUT encoding</value>
   </data>
-  <data name="&gt;&gt;chkBindConfig.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="cboxArgs.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -333,9 +324,6 @@
   <data name="chkUseStdin.Text" xml:space="preserve">
     <value>STDIN</value>
   </data>
-  <data name="&gt;&gt;tboxArgs.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -346,16 +334,13 @@
     <value>chkSetWorkingDir</value>
   </data>
   <data name="chkUseFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>274, 174</value>
+    <value>279, 174</value>
   </data>
   <data name="&gt;&gt;label5.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="tboxProtocols.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>$this</value>
   </data>
   <data name="tboxExe.Location" type="System.Drawing.Point, System.Drawing">
     <value>119, 66</value>
@@ -369,11 +354,14 @@
   <data name="chkUseFile.ToolTip" xml:space="preserve">
     <value>Generate config file.</value>
   </data>
-  <data name="chkBindSharelink.Text" xml:space="preserve">
-    <value>sharelink</value>
+  <data name="cboxArgs.Items" xml:space="preserve">
+    <value>-format=json -config=stdin:</value>
   </data>
   <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkUseImportBinding.Name" xml:space="preserve">
+    <value>chkUseImportBinding</value>
   </data>
   <data name="&gt;&gt;tboxConfigFilename.ZOrder" xml:space="preserve">
     <value>11</value>
@@ -381,11 +369,8 @@
   <data name="label8.Text" xml:space="preserve">
     <value>STDIN encoding</value>
   </data>
-  <data name="label6.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="chkBindConfig.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
   </data>
   <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 12</value>
@@ -399,8 +384,8 @@
   <data name="tboxName.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="label8.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;cboxArgs.Name" xml:space="preserve">
+    <value>cboxArgs</value>
   </data>
   <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
     <value>btnCancel</value>
@@ -408,8 +393,14 @@
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 16</value>
   </data>
+  <data name="tboxDir.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;cboxArgs.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
   <data name="chkUseFile.Text" xml:space="preserve">
-    <value>use file</value>
+    <value>File</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormCustomCoreSettings</value>
@@ -417,14 +408,11 @@
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>434, 262</value>
   </data>
-  <data name="&gt;&gt;chkBindSharelink.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
   <data name="&gt;&gt;label2.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="chkBindSharelink.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 16</value>
+  <data name="chkUseImportBinding.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;chkUseStdin.Name" xml:space="preserve">
     <value>chkUseStdin</value>
@@ -432,14 +420,14 @@
   <data name="tboxExe.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="chkBindConfig.Text" xml:space="preserve">
-    <value>config</value>
+  <data name="cboxStdoutEncoding.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
   <data name="tboxDir.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="tboxDir.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="&gt;&gt;label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="btnSave.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -450,11 +438,11 @@
   <data name="&gt;&gt;chkUseFile.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="chkUseImportBinding.ToolTip" xml:space="preserve">
+    <value>Set default core when importing sharelinks.</value>
+  </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 12</value>
-  </data>
-  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="cboxStdinEncoding.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -477,17 +465,26 @@
   <data name="btnCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
   </data>
-  <data name="&gt;&gt;chkBindConfig.Name" xml:space="preserve">
-    <value>chkBindConfig</value>
+  <data name="label5.ToolTip" xml:space="preserve">
+    <value>日志出乱码再设置</value>
   </data>
   <data name="&gt;&gt;btnSave.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
+  <data name="cboxArgs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>119, 93</value>
+  </data>
+  <data name="&gt;&gt;tboxExe.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="label1.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
   </data>
   <data name="tboxProtocols.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -495,11 +492,11 @@
   <data name="&gt;&gt;label8.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="tboxArgs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>119, 93</value>
-  </data>
   <data name="tboxProtocols.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="cboxArgs.Items2" xml:space="preserve">
+    <value>run -format=json -config=stdin:</value>
   </data>
   <data name="tboxConfigFilename.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -511,7 +508,7 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cboxStdoutEncoding.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;tboxProtocols.Name" xml:space="preserve">
     <value>tboxProtocols</value>
@@ -534,8 +531,8 @@
   <data name="&gt;&gt;chkSetWorkingDir.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="btnSave.Text" xml:space="preserve">
-    <value>Save</value>
+  <data name="chkUseImportBinding.Text" xml:space="preserve">
+    <value>Use</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 176</value>
@@ -556,13 +553,10 @@
     <value>Set this directory as working directory.</value>
   </data>
   <data name="chkUseFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 16</value>
+    <value>48, 16</value>
   </data>
-  <data name="&gt;&gt;tboxExe.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxConfigFilename.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="chkUseImportBinding.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="chkUseFile.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -573,20 +567,26 @@
   <data name="&gt;&gt;tboxDir.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btnSave.Name" xml:space="preserve">
-    <value>btnSave</value>
+  <data name="cboxArgs.Items1" xml:space="preserve">
+    <value>-format=json -config=config.json</value>
+  </data>
+  <data name="&gt;&gt;chkUseImportBinding.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="btnCancel.Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="tboxArgs.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="&gt;&gt;cboxArgs.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;cboxStdinEncoding.ZOrder" xml:space="preserve">
+    <value>9</value>
   </data>
   <data name="&gt;&gt;label7.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="label3.ToolTip" xml:space="preserve">
-    <value />
+  <data name="tboxConfigFilename.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 21</value>
   </data>
   <data name="cboxStdinEncoding.Size" type="System.Drawing.Size, System.Drawing">
     <value>299, 20</value>
@@ -597,8 +597,8 @@
   <data name="&gt;&gt;label6.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tboxDir.Location" type="System.Drawing.Point, System.Drawing">
-    <value>119, 39</value>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -612,11 +612,14 @@
   <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
-  <data name="chkBindConfig.ToolTip" xml:space="preserve">
-    <value>Bind core settings when server starts.</value>
+  <data name="label2.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;tboxExe.Parent" xml:space="preserve">
     <value>$this</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="label8.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -624,8 +627,8 @@
   <data name="&gt;&gt;tboxExe.Name" xml:space="preserve">
     <value>tboxExe</value>
   </data>
-  <data name="btnSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
+  <data name="btnDir.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 70</value>
@@ -636,8 +639,8 @@
   <data name="&gt;&gt;label8.Name" xml:space="preserve">
     <value>label8</value>
   </data>
-  <data name="&gt;&gt;chkBindSharelink.Name" xml:space="preserve">
-    <value>chkBindSharelink</value>
+  <data name="tboxDir.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="cboxStdoutEncoding.Size" type="System.Drawing.Size, System.Drawing">
     <value>299, 20</value>
@@ -648,20 +651,14 @@
   <data name="&gt;&gt;tboxProtocols.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
-  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>20</value>
+  <data name="label6.ToolTip" xml:space="preserve">
+    <value>vmess, vless</value>
   </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxArgs.ToolTip" xml:space="preserve">
+  <data name="label3.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 12</value>
-  </data>
-  <data name="tboxDir.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="&gt;&gt;tboxConfigFilename.Name" xml:space="preserve">
     <value>tboxConfigFilename</value>
@@ -669,8 +666,8 @@
   <data name="&gt;&gt;tboxName.Name" xml:space="preserve">
     <value>tboxName</value>
   </data>
-  <data name="&gt;&gt;chkBindSharelink.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="btnSave.Text" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="chkUseFile.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -682,7 +679,10 @@
     <value>True</value>
   </data>
   <data name="btnDir.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 21</value>
+    <value>95, 21</value>
+  </data>
+  <data name="cboxArgs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>299, 20</value>
   </data>
   <data name="label8.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -693,17 +693,11 @@
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>101, 12</value>
   </data>
-  <data name="&gt;&gt;btnDir.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="tboxProtocols.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 21</value>
   </data>
   <data name="&gt;&gt;label3.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="tboxArgs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>299, 21</value>
-  </data>
-  <data name="chkBindConfig.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
   </data>
   <data name="btnDir.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 39</value>
@@ -720,8 +714,8 @@
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
   </data>
-  <data name="&gt;&gt;chkBindSharelink.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="chkUseStdin.ToolTip" xml:space="preserve">
+    <value>Pass config through STDIN.</value>
   </data>
   <data name="tboxExe.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -735,17 +729,14 @@
   <data name="chkSetWorkingDir.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;tboxExe.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="chkBindConfig.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;btnDir.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;btnDir.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tboxProtocols.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 21</value>
+  <data name="&gt;&gt;chkUseImportBinding.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="&gt;&gt;label7.Name" xml:space="preserve">
     <value>label7</value>
@@ -753,41 +744,29 @@
   <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;tboxArgs.Name" xml:space="preserve">
-    <value>tboxArgs</value>
-  </data>
   <data name="cboxStdinEncoding.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
   <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>15</value>
   </data>
   <data name="chkSetWorkingDir.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="chkBindSharelink.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>16</value>
   </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
     <value>220, 230</value>
   </data>
-  <data name="chkBindSharelink.ToolTip" xml:space="preserve">
-    <value>Bind custom core setting when importing sharelinks.</value>
-  </data>
-  <data name="btnDir.ToolTip" xml:space="preserve">
-    <value>Browse custom core directory.</value>
-  </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>95, 12</value>
   </data>
-  <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>139, 230</value>
+  <data name="&gt;&gt;cboxStdoutEncoding.Name" xml:space="preserve">
+    <value>cboxStdoutEncoding</value>
   </data>
-  <data name="btnDir.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="cboxArgs.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="tboxName.Location" type="System.Drawing.Point, System.Drawing">
     <value>119, 12</value>
@@ -801,29 +780,26 @@
   <data name="btnSave.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
-  <data name="label2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="&gt;&gt;tboxName.Parent" xml:space="preserve">
     <value>$this</value>
-  </data>
-  <data name="cboxStdoutEncoding.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
   </data>
   <data name="tboxConfigFilename.Location" type="System.Drawing.Point, System.Drawing">
     <value>119, 172</value>
   </data>
-  <data name="&gt;&gt;tboxArgs.ZOrder" xml:space="preserve">
-    <value>12</value>
+  <data name="label8.ToolTip" xml:space="preserve">
+    <value>通常留空就行</value>
   </data>
   <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 204</value>
   </data>
-  <data name="&gt;&gt;cboxStdoutEncoding.Name" xml:space="preserve">
-    <value>cboxStdoutEncoding</value>
-  </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="chkUseImportBinding.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;chkUseImportBinding.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;btnSave.ZOrder" xml:space="preserve">
     <value>2</value>

@@ -46,6 +46,7 @@
             this.rlbTag1 = new VgcApis.UserControls.RoundLabel();
             this.rlbTag2 = new VgcApis.UserControls.RoundLabel();
             this.rlbTag3 = new VgcApis.UserControls.RoundLabel();
+            this.rlbCoreName = new VgcApis.UserControls.RoundLabel();
             this.ctxMenuStripMore = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,11 +57,9 @@
             this.moveToBottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoShareLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.vToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.v2cfgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.showSettingWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.simpleEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textEditortoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -191,7 +190,7 @@
             this.rlbLastModifyDate.ForeColor = System.Drawing.Color.DimGray;
             this.rlbLastModifyDate.Name = "rlbLastModifyDate";
             this.toolTip1.SetToolTip(this.rlbLastModifyDate, resources.GetString("rlbLastModifyDate.ToolTip"));
-            this.rlbLastModifyDate.Click += new System.EventHandler(this.rlbLastModifyDate_Click);
+            this.rlbLastModifyDate.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbLastModifyDate_MouseDown);
             // 
             // rlbInboundMode
             // 
@@ -238,6 +237,17 @@
             this.toolTip1.SetToolTip(this.rlbTag3, resources.GetString("rlbTag3.ToolTip"));
             this.rlbTag3.Click += new System.EventHandler(this.rlbRemark_Click);
             // 
+            // rlbCoreName
+            // 
+            this.rlbCoreName._BackColor = System.Drawing.Color.Lavender;
+            this.rlbCoreName.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbCoreName, "rlbCoreName");
+            this.rlbCoreName.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rlbCoreName.ForeColor = System.Drawing.Color.DimGray;
+            this.rlbCoreName.Name = "rlbCoreName";
+            this.toolTip1.SetToolTip(this.rlbCoreName, resources.GetString("rlbCoreName.ToolTip"));
+            this.rlbCoreName.Click += new System.EventHandler(this.rlbCoreName_Click);
+            // 
             // ctxMenuStripMore
             // 
             this.ctxMenuStripMore.ImageScalingSize = new System.Drawing.Size(24, 24);
@@ -247,7 +257,6 @@
             this.copyToolStripMenuItem,
             this.toolStripMenuItem1,
             this.showSettingWindowToolStripMenuItem,
-            this.simpleEditorToolStripMenuItem,
             this.editToolStripMenuItem,
             this.textEditortoolStripMenuItem,
             this.debugToolStripMenuItem,
@@ -309,7 +318,6 @@
             // 
             this.copyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.autoShareLinkToolStripMenuItem,
-            this.vToolStripMenuItem,
             this.v2cfgToolStripMenuItem});
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             resources.ApplyResources(this.copyToolStripMenuItem, "copyToolStripMenuItem");
@@ -319,12 +327,6 @@
             this.autoShareLinkToolStripMenuItem.Name = "autoShareLinkToolStripMenuItem";
             resources.ApplyResources(this.autoShareLinkToolStripMenuItem, "autoShareLinkToolStripMenuItem");
             this.autoShareLinkToolStripMenuItem.Click += new System.EventHandler(this.autoShareLinkToolStripMenuItem_Click);
-            // 
-            // vToolStripMenuItem
-            // 
-            this.vToolStripMenuItem.Name = "vToolStripMenuItem";
-            resources.ApplyResources(this.vToolStripMenuItem, "vToolStripMenuItem");
-            this.vToolStripMenuItem.Click += new System.EventHandler(this.vToolStripMenuItem_Click);
             // 
             // v2cfgToolStripMenuItem
             // 
@@ -342,12 +344,6 @@
             this.showSettingWindowToolStripMenuItem.Name = "showSettingWindowToolStripMenuItem";
             resources.ApplyResources(this.showSettingWindowToolStripMenuItem, "showSettingWindowToolStripMenuItem");
             this.showSettingWindowToolStripMenuItem.Click += new System.EventHandler(this.showSettingsWindowToolStripMenuItem_Click);
-            // 
-            // simpleEditorToolStripMenuItem
-            // 
-            this.simpleEditorToolStripMenuItem.Name = "simpleEditorToolStripMenuItem";
-            resources.ApplyResources(this.simpleEditorToolStripMenuItem, "simpleEditorToolStripMenuItem");
-            this.simpleEditorToolStripMenuItem.Click += new System.EventHandler(this.simpleEditorToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -409,6 +405,7 @@
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.rlbTag3);
+            this.Controls.Add(this.rlbCoreName);
             this.Controls.Add(this.rlbTag2);
             this.Controls.Add(this.rlbTag1);
             this.Controls.Add(this.rlbSpeedtest);
@@ -457,7 +454,6 @@
         private System.Windows.Forms.ToolStripMenuItem moveToTopToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveToBottomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem vToolStripMenuItem;
         private VgcApis.UserControls.RoundLabel rlbInboundMode;
         private VgcApis.UserControls.RoundLabel rlbSpeedtest;
         private VgcApis.UserControls.RoundLabel rlbTotalNetFlow;
@@ -469,10 +465,10 @@
         private System.Windows.Forms.Button btnMenu;
         private VgcApis.UserControls.RoundLabel rlbRemark;
         private VgcApis.UserControls.RoundLabel rlbLastModifyDate;
-        private System.Windows.Forms.ToolStripMenuItem simpleEditorToolStripMenuItem;
         private VgcApis.UserControls.RoundLabel rlbTag1;
         private VgcApis.UserControls.RoundLabel rlbTag2;
         private VgcApis.UserControls.RoundLabel rlbTag3;
         private System.Windows.Forms.ToolStripMenuItem textEditortoolStripMenuItem;
+        private VgcApis.UserControls.RoundLabel rlbCoreName;
     }
 }

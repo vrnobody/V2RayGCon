@@ -200,21 +200,6 @@
   <data name="lbCopyFromClipboard.Text" xml:space="preserve">
     <value>1. 复制分享链接然后从剪切板导入</value>
   </data>
-  <data name="lbSimAddVmessWin.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
-    <value>5, 5</value>
-  </data>
-  <data name="lbSimAddVmessWin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 61</value>
-  </data>
-  <data name="lbSimAddVmessWin.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>1, 0, 1, 0</value>
-  </data>
-  <data name="lbSimAddVmessWin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 19</value>
-  </data>
-  <data name="lbSimAddVmessWin.Text" xml:space="preserve">
-    <value>3. 使用简易编辑器</value>
-  </data>
   <data name="lbScanQRCode.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
     <value>3, 9</value>
   </data>
@@ -234,7 +219,7 @@
     <value>5, 7</value>
   </data>
   <data name="lbConfigEditor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 78</value>
+    <value>17, 62</value>
   </data>
   <data name="lbConfigEditor.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 0, 1, 0</value>
@@ -243,7 +228,7 @@
     <value>110, 19</value>
   </data>
   <data name="lbConfigEditor.Text" xml:space="preserve">
-    <value>4. 或者Json编辑器</value>
+    <value>3. 或者Json编辑器</value>
   </data>
   <data name="lbWiki.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
     <value>5, 4</value>

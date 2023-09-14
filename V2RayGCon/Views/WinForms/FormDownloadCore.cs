@@ -75,7 +75,7 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
                 var core = new Libs.V2Ray.Core(setting);
-                var version = core.GetCoreVersion();
+                var version = core.GetV2RayCoreVersion();
                 var msg = string.IsNullOrEmpty(version)
                     ? I18N.GetCoreVerFail
                     : string.Format(I18N.CurrentCoreVerIs, version);

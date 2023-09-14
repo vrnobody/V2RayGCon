@@ -8,19 +8,14 @@ namespace V2RayGCon.Services.ShareLinkComponents
         : VgcApis.BaseClasses.ComponentOf<Codecs>,
             VgcApis.Interfaces.IShareLinkDecoder
     {
-        readonly VeeDecoder veeDecoder;
-
-        public TrojanDecoder(VeeDecoder veeDecoder)
-        {
-            this.veeDecoder = veeDecoder;
-        }
+        public TrojanDecoder() { }
 
         #region properties
 
         #endregion
 
         #region public methods
-        public Tuple<JObject, JToken> Decode(string shareLink)
+        public string Decode(string shareLink)
         {
             /*
              * trojan://password@remote_host:remote_port
@@ -29,12 +24,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             try
             {
-                var vc = VeeCodecs.Comm.ParseNonStandarUriShareLink("trojan", shareLink);
-                if (vc != null)
-                {
-                    var vee = vc.ToVeeShareLink();
-                    return veeDecoder.Decode(vee);
-                }
+                var vc = Comm.ParseNonStandarUriShareLink("trojan", shareLink);
+                return GetParent()?.TrojanToConfig(vc);
             }
             catch { }
             return null;
@@ -42,7 +33,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public string Encode(string config)
         {
-            return VeeCodecs.Comm.EncodeUriShareLink("trojan", config);
+            return Comm.EncodeUriShareLink("trojan", config);
         }
 
         public List<string> ExtractLinksFromText(string text) =>

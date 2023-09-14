@@ -80,7 +80,7 @@ namespace V2RayGCon.Views.WinForms
             cboxMark.Items.AddRange(marks);
             Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMark);
 
-            var coreNames = settings.GetCustomCoreSettings().Select(cs => cs.name).ToArray();
+            var coreNames = settings.GetCustomCoresSetting().Select(cs => cs.name).ToArray();
             cboxCoreName.Items.AddRange(coreNames);
             Misc.UI.ResetComboBoxDropdownMenuWidth(cboxCoreName);
 
@@ -96,18 +96,17 @@ namespace V2RayGCon.Views.WinForms
             var config = coreServ.GetConfiger().GetConfig();
             var ts = new List<VgcApis.Models.Datas.Enums.LinkTypes>
             {
-                VgcApis.Models.Datas.Enums.LinkTypes.ss,
                 VgcApis.Models.Datas.Enums.LinkTypes.vmess,
-                VgcApis.Models.Datas.Enums.LinkTypes.trojan,
                 VgcApis.Models.Datas.Enums.LinkTypes.vless,
-                VgcApis.Models.Datas.Enums.LinkTypes.v,
+                VgcApis.Models.Datas.Enums.LinkTypes.trojan,
+                VgcApis.Models.Datas.Enums.LinkTypes.ss,
             };
 
             for (int i = 0; i < ts.Count; i++)
             {
                 if (!string.IsNullOrEmpty(slinkMgr.EncodeConfigToShareLink(config, ts[i])))
                 {
-                    cboxShareLinkType.SelectedIndex = ts.Count - i - 1;
+                    cboxShareLinkType.SelectedIndex = i;
                     return;
                 }
             }
@@ -177,9 +176,6 @@ namespace V2RayGCon.Views.WinForms
             {
                 case "vmess":
                     ty = VgcApis.Models.Datas.Enums.LinkTypes.vmess;
-                    break;
-                case "vee":
-                    ty = VgcApis.Models.Datas.Enums.LinkTypes.v;
                     break;
                 case "vless":
                     ty = VgcApis.Models.Datas.Enums.LinkTypes.vless;

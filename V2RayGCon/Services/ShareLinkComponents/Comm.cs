@@ -3,16 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
+namespace V2RayGCon.Services.ShareLinkComponents
 {
     public static class Comm
     {
         #region public methods
 
-
         public static string EncodeUriShareLink(string protocol, string config)
         {
-            var vc = new Models.Datas.VeeConfigsWithReality(config);
+            var vc = new Models.Datas.SharelinkMetadata(config);
             if (vc.proto != protocol)
             {
                 return null;
@@ -39,7 +38,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             return url;
         }
 
-        public static Models.Datas.VeeConfigsWithReality ParseNonStandarUriShareLink(
+        public static Models.Datas.SharelinkMetadata ParseNonStandarUriShareLink(
             string proto,
             string url
         )
@@ -63,7 +62,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
                 return null;
             }
 
-            var vc = new Models.Datas.VeeConfigsWithReality();
+            var vc = new Models.Datas.SharelinkMetadata();
             vc.name = parts.Last();
             vc.proto = proto;
             vc.auth1 = parts[0];
@@ -129,45 +128,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             return vc;
         }
 
-        public static Models.VeeShareLinks.BasicSettingsWithReality ExtractBasicConfig(
-            JObject config,
-            string protocol,
-            string key,
-            out bool isUseV4,
-            out string root
-        )
-        {
-            var GetStr = Misc.Utils.GetStringByPrefixAndKeyHelper(config);
-
-            isUseV4 = (GetStr("outbounds.0", "protocol")?.ToLower()) == protocol;
-            root = isUseV4 ? "outbounds.0" : "outbound";
-            if (!isUseV4)
-            {
-                var p = GetStr(root, "protocol")?.ToLower();
-                if (p == null || p != protocol)
-                {
-                    return null;
-                }
-            }
-
-            var mainPrefix = root + "." + $"settings.{key}.0";
-
-            var result = new Models.VeeShareLinks.BasicSettingsWithReality
-            {
-                alias = GetStr("v2raygcon", "alias"),
-                address = GetStr(mainPrefix, "address"),
-                port = VgcApis.Misc.Utils.Str2Int(GetStr(mainPrefix, "port")),
-                description = GetStr("v2raygcon", "description"),
-            };
-
-            ExtractStreamSettings(result, config, isUseV4, root);
-
-            return result;
-        }
-
         public static JToken GenStreamSetting(
             Cache cache,
-            Models.VeeShareLinks.BasicSettingsWithReality streamSettings
+            Models.Datas.SharelinkMetadata streamSettings
         )
         {
             var ss = streamSettings;
@@ -195,11 +158,94 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
 
             return token;
         }
+
+        public static Models.Datas.SharelinkMetadata ExtractFromJsonConfig(JObject config)
+        {
+            var GetStr = VgcApis.Misc.Utils.GetStringByPrefixAndKeyHelper(config);
+
+            var root = "outbounds.0";
+            var proto = GetStr(root, "protocol")?.ToLower();
+            var isUseV4 = true;
+            if (string.IsNullOrEmpty(proto))
+            {
+                root = "outbound";
+                isUseV4 = false;
+                proto = GetStr(root, "protocol")?.ToLower();
+            }
+
+            if (string.IsNullOrEmpty(proto))
+            {
+                return null;
+            }
+
+            var key = "servers";
+            switch (proto)
+            {
+                case "vless":
+                case "vmess":
+                    key = "vnext";
+                    break;
+            }
+
+            var mainPrefix = root + "." + $"settings.{key}.0";
+
+            var result = new Models.Datas.SharelinkMetadata
+            {
+                proto = proto,
+                name = GetStr("v2raygcon", "alias"),
+                host = GetStr(mainPrefix, "address"),
+                port = VgcApis.Misc.Utils.Str2Int(GetStr(mainPrefix, "port")),
+                description = GetStr("v2raygcon", "description"),
+            };
+
+            ExtractFirstOutboundFromJsonConfig(result, config, mainPrefix, proto);
+            ExtractStreamSettings(result, config, isUseV4, root);
+            return result;
+        }
         #endregion
 
         #region private methods
+        static void ExtractFirstOutboundFromJsonConfig(
+            Models.Datas.SharelinkMetadata result,
+            JObject config,
+            string prefix,
+            string protocol
+        )
+        {
+            // var mainPrefix = root + "." + $"settings.{key}.0";
+            var GetStr = VgcApis.Misc.Utils.GetStringByPrefixAndKeyHelper(config);
+            switch (protocol)
+            {
+                case "vmess":
+                    prefix += ".users.0";
+                    result.auth1 = GetStr(prefix, "id");
+                    break;
+                case "vless":
+                    prefix += ".users.0";
+                    result.auth1 = GetStr(prefix, "id");
+                    result.auth2 = GetStr(prefix, "flow");
+                    break;
+                case "trojan":
+                    result.auth1 = GetStr(prefix, "password");
+                    result.auth2 = GetStr(prefix, "flow");
+                    break;
+                case "shadowsocks":
+                    result.auth1 = GetStr(prefix, "password");
+                    result.auth2 = GetStr(prefix, "method");
+                    break;
+                case "socks":
+                case "http":
+                    prefix += ".users.0";
+                    result.auth1 = GetStr(prefix, "user");
+                    result.auth2 = GetStr(prefix, "pass");
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private static void EncodeStreamSettings(
-            Models.Datas.VeeConfigsWithReality vc,
+            Models.Datas.SharelinkMetadata vc,
             Dictionary<string, string> ps
         )
         {
@@ -251,7 +297,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         }
 
         private static void EncodeTlsSettings(
-            Models.Datas.VeeConfigsWithReality vc,
+            Models.Datas.SharelinkMetadata vc,
             Dictionary<string, string> ps
         )
         {
@@ -269,21 +315,8 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             }
         }
 
-        private static void FillInTlsSetting(
-            Models.VeeShareLinks.BasicSettingsWithReality ss,
-            JToken token
-        )
+        private static void FillInTlsSetting(Models.Datas.SharelinkMetadata ss, JToken token)
         {
-            if (ss.isUseTls)
-            {
-                // backward compatible
-                token["security"] = "tls";
-                token["tlsSettings"] = ss.isSecTls
-                    ? JObject.Parse(@"{allowInsecure: false}")
-                    : JObject.Parse(@"{allowInsecure: true}");
-                return;
-            }
-
             var tt = string.IsNullOrEmpty(ss.tlsType) ? "none" : ss.tlsType;
             token["security"] = tt;
             if (tt == "none")
@@ -292,10 +325,6 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             }
 
             var o = new JObject();
-            if (!ss.isSecTls)
-            {
-                o["allowInsecure"] = true;
-            }
 
             void SetValue(string key, string value)
             {
@@ -325,7 +354,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         }
 
         private static void FillInStreamSetting(
-            Models.VeeShareLinks.BasicSettingsWithReality ss,
+            Models.Datas.SharelinkMetadata ss,
             string st,
             string mainParam,
             JToken token
@@ -380,54 +409,14 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
             }
         }
 
-        static void ExtractTlsSettings(
-            Models.VeeShareLinks.BasicSettingsWithReality result,
-            JObject config,
-            System.Func<string, string, string> reader,
-            string prefix
-        )
-        {
-            var tt = reader(prefix, "security")?.ToLower();
-            result.tlsType = tt;
-
-            result.isUseTls = tt == "tls"; // backward compatible
-
-            if (tt != "xtls" && tt != "tls" && tt != "reality")
-            {
-                return;
-            }
-
-            result.isUseTls = false;
-            result.isSecTls = true;
-
-            var ts = $"{tt}Settings";
-            result.tlsServName = reader(prefix, $"{ts}.serverName") ?? "";
-            result.tlsFingerPrint = reader(prefix, $"{ts}.fingerprint") ?? "";
-
-            try
-            {
-                // do not support v3.x config
-                var alpn = config["outbounds"][0]["streamSettings"][ts]["alpn"];
-                result.tlsAlpn = Misc.Utils.JArray2Str(alpn as JArray);
-            }
-            catch { }
-
-            if (tt == "reality")
-            {
-                result.tlsParam1 = reader(prefix, $"{ts}.publicKey") ?? "";
-                result.tlsParam2 = reader(prefix, $"{ts}.shortId") ?? "";
-                result.tlsParam3 = reader(prefix, $"{ts}.spiderX") ?? "";
-            }
-        }
-
         static void ExtractStreamSettings(
-            Models.VeeShareLinks.BasicSettingsWithReality result,
+            Models.Datas.SharelinkMetadata result,
             JObject config,
             bool isUseV4,
             string root
         )
         {
-            var GetStr = Misc.Utils.GetStringByPrefixAndKeyHelper(config);
+            var GetStr = VgcApis.Misc.Utils.GetStringByPrefixAndKeyHelper(config);
 
             var subPrefix = root + "." + "streamSettings";
             result.streamType = GetStr(subPrefix, "network");
@@ -445,7 +434,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
                     mainParam = GetStr(subPrefix, "tcpSettings.header.type");
                     if (mainParam?.ToLower() == "http")
                     {
-                        ExtractTcpHttpSettings(config, isUseV4, result);
+                        ExtractTcpHttpSettings(result, config, isUseV4);
                     }
                     break;
                 case "kcp":
@@ -479,9 +468,9 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
         }
 
         static void ExtractTcpHttpSettings(
+            Models.Datas.SharelinkMetadata result,
             JObject json,
-            bool isUseV4,
-            Models.VeeShareLinks.BasicSettings streamSettings
+            bool isUseV4
         )
         {
             try
@@ -493,7 +482,7 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
                     : json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"][
                         "path"
                     ];
-                streamSettings.streamParam2 = Misc.Utils.JArray2Str(path as JArray);
+                result.streamParam2 = Misc.Utils.JArray2Str(path as JArray);
             }
             catch { }
             try
@@ -505,11 +494,45 @@ namespace V2RayGCon.Services.ShareLinkComponents.VeeCodecs
                     : json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"][
                         "headers"
                     ]["Host"];
-                streamSettings.streamParam3 = Misc.Utils.JArray2Str(hosts as JArray);
+                result.streamParam3 = Misc.Utils.JArray2Str(hosts as JArray);
             }
             catch { }
         }
 
+        static void ExtractTlsSettings(
+            Models.Datas.SharelinkMetadata result,
+            JObject config,
+            System.Func<string, string, string> reader,
+            string prefix
+        )
+        {
+            var tt = reader(prefix, "security")?.ToLower();
+            result.tlsType = tt;
+
+            if (tt != "xtls" && tt != "tls" && tt != "reality")
+            {
+                return;
+            }
+
+            var ts = $"{tt}Settings";
+            result.tlsServName = reader(prefix, $"{ts}.serverName") ?? "";
+            result.tlsFingerPrint = reader(prefix, $"{ts}.fingerprint") ?? "";
+
+            try
+            {
+                // do not support v3.x config
+                var alpn = config["outbounds"][0]["streamSettings"][ts]["alpn"];
+                result.tlsAlpn = Misc.Utils.JArray2Str(alpn as JArray);
+            }
+            catch { }
+
+            if (tt == "reality")
+            {
+                result.tlsParam1 = reader(prefix, $"{ts}.publicKey") ?? "";
+                result.tlsParam2 = reader(prefix, $"{ts}.shortId") ?? "";
+                result.tlsParam3 = reader(prefix, $"{ts}.spiderX") ?? "";
+            }
+        }
         #endregion
     }
 }

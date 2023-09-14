@@ -8,28 +8,19 @@ namespace V2RayGCon.Services.ShareLinkComponents
         : VgcApis.BaseClasses.ComponentOf<Codecs>,
             VgcApis.Interfaces.IShareLinkDecoder
     {
-        readonly VeeDecoder veeDecoder;
-
-        public VlessDecoder(VeeDecoder veeDecoder)
-        {
-            this.veeDecoder = veeDecoder;
-        }
+        public VlessDecoder() { }
 
         #region properties
 
         #endregion
 
         #region public methods
-        public Tuple<JObject, JToken> Decode(string shareLink)
+        public string Decode(string shareLink)
         {
             try
             {
-                var vc = VeeCodecs.Comm.ParseNonStandarUriShareLink("vless", shareLink);
-                if (vc != null)
-                {
-                    var vee = vc.ToVeeShareLink();
-                    return veeDecoder.Decode(vee);
-                }
+                var vc = Comm.ParseNonStandarUriShareLink("vless", shareLink);
+                return GetParent()?.VlessToConfig(vc);
             }
             catch { }
             return null;
@@ -37,7 +28,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public string Encode(string config)
         {
-            return VeeCodecs.Comm.EncodeUriShareLink("vless", config);
+            return Comm.EncodeUriShareLink("vless", config);
         }
 
         public List<string> ExtractLinksFromText(string text) =>
@@ -45,7 +36,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region private methods
-
 
         #endregion
 

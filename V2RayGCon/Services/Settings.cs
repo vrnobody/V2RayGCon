@@ -44,6 +44,8 @@ namespace V2RayGCon.Services
         {
             userSettings = LoadUserSettings();
             userSettings.Normalized(); // replace null with empty object.
+            UpdateCustomCoresLookupTable();
+
             InitCoreInfoCache();
             InitLocalStorageCache(); // must init before plug-ins setting
             InitPluginsSettingCache();
@@ -62,6 +64,114 @@ namespace V2RayGCon.Services
                 Name = "Settings.SaveSettings",
             };
         }
+
+        #region custom core settings
+        ConcurrentDictionary<string, string> customCoreLookupTable =
+            new ConcurrentDictionary<string, string>();
+
+        public string GetCustomCoreName(string protocol)
+        {
+            if (
+                !string.IsNullOrEmpty(protocol)
+                && customCoreLookupTable.TryGetValue(protocol, out var name)
+                && !string.IsNullOrEmpty(name)
+            )
+            {
+                return name;
+            }
+            return string.Empty;
+        }
+
+        void UpdateCustomCoresLookupTable()
+        {
+            customCoreLookupTable.Clear();
+            var cs = GetCustomCoresSetting();
+            foreach (var c in cs)
+            {
+                if (!c.useImportBinding)
+                {
+                    continue;
+                }
+                var ps = c.protocols.Split(
+                    new char[] { ',', ' ' },
+                    StringSplitOptions.RemoveEmptyEntries
+                );
+                foreach (var p in ps)
+                {
+                    if (!string.IsNullOrEmpty(p))
+                    {
+                        customCoreLookupTable.TryAdd(p, c.name);
+                    }
+                }
+            }
+        }
+
+        public List<Models.Datas.CustomCoreSettings> GetCustomCoresSetting()
+        {
+            lock (saveUserSettingsLocker)
+            {
+                return userSettings.customCoreSettings.OrderBy(cs => cs.index).ToList();
+            }
+        }
+
+        public void ResetCustomCoresIndex()
+        {
+            lock (saveUserSettingsLocker)
+            {
+                var cores = GetCustomCoresSetting();
+                var idx = 1.0;
+                foreach (var core in cores)
+                {
+                    core.index = idx++;
+                }
+            }
+            UpdateCustomCoresLookupTable();
+            SaveSettingsLater();
+        }
+
+        public bool RemoveCustomCoreByName(string name)
+        {
+            lock (saveUserSettingsLocker)
+            {
+                var coreSettings = userSettings.customCoreSettings.FirstOrDefault(
+                    cs => cs.name == name
+                );
+                if (coreSettings != null)
+                {
+                    userSettings.customCoreSettings.Remove(coreSettings);
+                    ResetCustomCoresIndex();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void AddOrReplaceCustomCoreSettings(Models.Datas.CustomCoreSettings coreSettings)
+        {
+            if (coreSettings == null)
+            {
+                return;
+            }
+
+            coreSettings.index = userSettings.customCoreSettings.Count + 1;
+
+            lock (saveUserSettingsLocker)
+            {
+                var coreS = userSettings.customCoreSettings.FirstOrDefault(
+                    cs => cs.name == coreSettings.name
+                );
+                if (coreS != null)
+                {
+                    coreSettings.index = coreS.index;
+                    userSettings.customCoreSettings.Remove(coreS);
+                }
+                userSettings.customCoreSettings.Add(coreSettings);
+            }
+            UpdateCustomCoresLookupTable();
+            SaveSettingsLater();
+        }
+
+        #endregion
 
         #region Properties
         public bool isLoad3rdPartyPlugins
@@ -239,69 +349,6 @@ namespace V2RayGCon.Services
                 userSettings.isAutoPatchSubsInfo = value;
                 SaveSettingsLater();
             }
-        }
-
-        public List<Models.Datas.CustomCoreSettings> GetCustomCoreSettings()
-        {
-            lock (saveUserSettingsLocker)
-            {
-                return userSettings.customCoreSettings.OrderBy(cs => cs.index).ToList();
-            }
-        }
-
-        public void ResetCoreSettingsIndex()
-        {
-            lock (saveUserSettingsLocker)
-            {
-                var cores = GetCustomCoreSettings();
-                var idx = 1.0;
-                foreach (var core in cores)
-                {
-                    core.index = idx++;
-                }
-            }
-            SaveSettingsLater();
-        }
-
-        public bool RemoveCoreSettingsByName(string name)
-        {
-            lock (saveUserSettingsLocker)
-            {
-                var coreSettings = userSettings.customCoreSettings.FirstOrDefault(
-                    cs => cs.name == name
-                );
-                if (coreSettings != null)
-                {
-                    userSettings.customCoreSettings.Remove(coreSettings);
-                    ResetCoreSettingsIndex();
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public void AddOrReplaceCustomCoreSettings(Models.Datas.CustomCoreSettings coreSettings)
-        {
-            if (coreSettings == null)
-            {
-                return;
-            }
-
-            coreSettings.index = userSettings.customCoreSettings.Count + 1;
-
-            lock (saveUserSettingsLocker)
-            {
-                var coreS = userSettings.customCoreSettings.FirstOrDefault(
-                    cs => cs.name == coreSettings.name
-                );
-                if (coreS != null)
-                {
-                    coreSettings.index = coreS.index;
-                    userSettings.customCoreSettings.Remove(coreS);
-                }
-                userSettings.customCoreSettings.Add(coreSettings);
-            }
-            SaveSettingsLater();
         }
 
         public Dictionary<string, string> decodeCache

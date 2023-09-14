@@ -275,8 +275,7 @@
             resources.GetString("cboxShareLinkType.Items"),
             resources.GetString("cboxShareLinkType.Items1"),
             resources.GetString("cboxShareLinkType.Items2"),
-            resources.GetString("cboxShareLinkType.Items3"),
-            resources.GetString("cboxShareLinkType.Items4")});
+            resources.GetString("cboxShareLinkType.Items3")});
             this.cboxShareLinkType.Name = "cboxShareLinkType";
             this.toolTip1.SetToolTip(this.cboxShareLinkType, resources.GetString("cboxShareLinkType.ToolTip"));
             this.cboxShareLinkType.SelectedValueChanged += new System.EventHandler(this.cboxShareLinkType_SelectedValueChanged);

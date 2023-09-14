@@ -88,7 +88,6 @@
       <DependentUpon>TestConst.resx</DependentUpon>
     </Compile>
     <Compile Include="Resource\StringResource.cs" />
-    <Compile Include="VeeTests\Ver001ModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resource\Data\links.txt" />

@@ -53,9 +53,6 @@ namespace NeoLuna.Models.Apis.Components
         public void ShowFormServerSettings(ICoreServCtrl coreServ) =>
             vgcNotifier.ShowFormServerSettings(coreServ);
 
-        public void ShowFormSimpleEditor(ICoreServCtrl coreServ) =>
-            vgcNotifier.ShowFormSimpleEditor(coreServ);
-
         public void ShowFormOption() => vgcNotifier.ShowFormOption();
 
         public void ShowFormNeoLunaMgr() => formMgr.ShowFormMain();
@@ -208,19 +205,6 @@ namespace NeoLuna.Models.Apis.Components
 
         public List<string> LocalStorageKeys() => settings.ShareMemoryKeys();
 
-        public string Config2VeeLink(string config)
-        {
-            try
-            {
-                return vgcSlinkMgr.EncodeConfigToShareLink(
-                    config,
-                    VgcApis.Models.Datas.Enums.LinkTypes.v
-                );
-            }
-            catch { }
-            return null;
-        }
-
         public string Config2VmessLink(string config)
         {
             try
@@ -256,9 +240,6 @@ namespace NeoLuna.Models.Apis.Components
             catch { }
             return null;
         }
-
-        public string AddVeePrefix(string b64Str) =>
-            vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.v);
 
         public string AddVmessPrefix(string b64Str) =>
             vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.vmess);

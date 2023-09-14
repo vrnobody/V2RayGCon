@@ -33,11 +33,13 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.8.3.13")]
+[assembly: AssemblyVersion("1.8.3.14")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v1.8.3.14 (WIP) Remove v://... decoder.
+                Set custom core name while importing sharelink.
 v1.8.3.13 (WIP) Add custom core settings.
 v1.8.3.12 Modify title of FormJsonConfigEditor.
 v1.8.3.11 Add text editor.

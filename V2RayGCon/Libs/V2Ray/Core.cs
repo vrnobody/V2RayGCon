@@ -11,19 +11,18 @@ namespace V2RayGCon.Libs.V2Ray
 {
     public class Core
     {
-        readonly Encoding ioEncoding = Encoding.UTF8;
+        readonly Encoding utf8 = Encoding.UTF8;
 
         public event EventHandler<VgcApis.Models.Datas.StrEvent> OnLog;
         public event EventHandler OnCoreStatusChanged;
 
         Services.Settings setting;
-        Models.Datas.CustomCoreSettings customCoreSettings;
-        bool isCustomCore;
 
         AutoResetEvent coreStartStopLocker = new AutoResetEvent(true);
         Process coreProc;
         static int curConcurrentV2RayCoreNum = 0;
         bool isForcedExit = false;
+        string customCoreName = string.Empty;
 
         public Core(Services.Settings setting)
         {
@@ -37,10 +36,10 @@ namespace V2RayGCon.Libs.V2Ray
         {
             get
             {
-                var exe = GetExecutablePath(VgcApis.Models.Consts.Core.XrayCoreExeFileName);
+                var exe = GetV2RayExecutablePath(VgcApis.Models.Consts.Core.XrayCoreExeFileName);
                 if (string.IsNullOrEmpty(exe))
                 {
-                    return GetExecutablePath(VgcApis.Models.Consts.Core.V2RayCtlExeFileName);
+                    return GetV2RayExecutablePath(VgcApis.Models.Consts.Core.V2RayCtlExeFileName);
                 }
                 return exe;
             }
@@ -73,16 +72,13 @@ namespace V2RayGCon.Libs.V2Ray
         #region public method
         public void SetCustomCoreName(string name)
         {
-            customCoreSettings = setting
-                .GetCustomCoreSettings()
-                .FirstOrDefault(cs => cs.name == name);
-            isCustomCore = customCoreSettings != null;
+            this.customCoreName = name;
         }
 
-        public VgcApis.Models.Datas.StatsSample QueryStatsApi(int port)
+        public VgcApis.Models.Datas.StatsSample QueryV2RayStatsApi(int port)
         {
             var exe = statExe;
-            if (setting.IsClosing() || string.IsNullOrEmpty(exe) || isCustomCore)
+            if (IsCustomCore() || string.IsNullOrEmpty(exe) || setting.IsClosing())
             {
                 return null;
             }
@@ -107,17 +103,17 @@ namespace V2RayGCon.Libs.V2Ray
             return null;
         }
 
-        public string GetCoreVersion()
+        public string GetV2RayCoreVersion()
         {
-            if (!IsExecutableExist() || isCustomCore)
+            if (!IsV2RayExecutableExist() || IsCustomCore())
             {
                 return string.Empty;
             }
 
-            var exe = GetExecutablePath(VgcApis.Models.Consts.Core.XrayCoreExeFileName);
+            var exe = GetV2RayExecutablePath(VgcApis.Models.Consts.Core.XrayCoreExeFileName);
             if (string.IsNullOrEmpty(exe))
             {
-                exe = GetExecutablePath(VgcApis.Models.Consts.Core.V2RayCoreExeFileName);
+                exe = GetV2RayExecutablePath(VgcApis.Models.Consts.Core.V2RayCoreExeFileName);
             }
 
             var timeout = VgcApis.Models.Consts.Core.GetVersionTimeout;
@@ -134,7 +130,7 @@ namespace V2RayGCon.Libs.V2Ray
             return ver;
         }
 
-        public bool IsExecutableExist()
+        public bool IsV2RayExecutableExist()
         {
             var cores = new string[]
             {
@@ -144,7 +140,7 @@ namespace V2RayGCon.Libs.V2Ray
 
             foreach (var core in cores)
             {
-                if (!string.IsNullOrEmpty(GetExecutablePath(core)))
+                if (!string.IsNullOrEmpty(GetV2RayExecutablePath(core)))
                 {
                     return true;
                 }
@@ -170,7 +166,17 @@ namespace V2RayGCon.Libs.V2Ray
         #endregion
 
         #region private method
-        string GetExecutablePath(string fileName)
+        Models.Datas.CustomCoreSettings GetCustomCoreSettings()
+        {
+            return setting.GetCustomCoresSetting().FirstOrDefault(cs => cs.name == customCoreName);
+        }
+
+        bool IsCustomCore()
+        {
+            return !string.IsNullOrEmpty(customCoreName);
+        }
+
+        string GetV2RayExecutablePath(string fileName)
         {
             List<string> folders = GenV2RayCoreSearchPaths(setting.isPortable);
             for (var i = 0; i < folders.Count; i++)
@@ -186,7 +192,8 @@ namespace V2RayGCon.Libs.V2Ray
 
         string GetCustomCoreExePath()
         {
-            var f = Path.Combine(customCoreSettings.dir, customCoreSettings.exe);
+            var cs = GetCustomCoreSettings();
+            var f = Path.Combine(cs.dir, cs.exe);
             if (File.Exists(f))
             {
                 return f;
@@ -196,8 +203,9 @@ namespace V2RayGCon.Libs.V2Ray
 
         void RestartCoreWorker(string config, Dictionary<string, string> env, bool quiet)
         {
+            var isCustomCore = IsCustomCore();
             if (
-                (!isCustomCore && !IsExecutableExist())
+                (!isCustomCore && !IsV2RayExecutableExist())
                 || (isCustomCore && GetCustomCoreExePath() == null)
             )
             {
@@ -301,7 +309,7 @@ namespace V2RayGCon.Libs.V2Ray
 
         Process CreateCustomCoreProcess(string config)
         {
-            var cs = customCoreSettings;
+            var cs = GetCustomCoreSettings();
             var ec = cs.GetStdOutEncoding();
             var p = new Process
             {
@@ -313,20 +321,21 @@ namespace V2RayGCon.Libs.V2Ray
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
-                    RedirectStandardInput = cs.useStdInToPassConfig,
+                    RedirectStandardInput = cs.useStdin,
                     StandardOutputEncoding = ec,
                     StandardErrorEncoding = ec,
                 }
             };
-            if (cs.isWorkingDir)
+            if (cs.setWorkingDir)
             {
                 p.StartInfo.WorkingDirectory = cs.dir;
             }
             p.EnableRaisingEvents = true;
 
-            if (cs.useConfigFile)
+            if (cs.useFile)
             {
-                var file = Path.Combine(cs.dir, cs.configFilename);
+                // 保持args和config file路径一致
+                var file = cs.configFile;
                 File.WriteAllText(file, config);
             }
             return p;
@@ -334,12 +343,12 @@ namespace V2RayGCon.Libs.V2Ray
 
         Process CreateV2RayCoreProcess(string config)
         {
-            var exe = GetExecutablePath(VgcApis.Models.Consts.Core.XrayCoreExeFileName);
+            var exe = GetV2RayExecutablePath(VgcApis.Models.Consts.Core.XrayCoreExeFileName);
             // var args = string.Empty;
             var args = Misc.Utils.GenCmdArgFromConfig(config);
             if (string.IsNullOrEmpty(exe))
             {
-                exe = GetExecutablePath(VgcApis.Models.Consts.Core.V2RayCoreExeFileName);
+                exe = GetV2RayExecutablePath(VgcApis.Models.Consts.Core.V2RayCoreExeFileName);
             }
 
             var p = new Process
@@ -354,8 +363,8 @@ namespace V2RayGCon.Libs.V2Ray
                     RedirectStandardError = true,
                     RedirectStandardInput = true,
                     // 定时炸弹
-                    StandardOutputEncoding = ioEncoding,
-                    StandardErrorEncoding = ioEncoding,
+                    StandardOutputEncoding = utf8,
+                    StandardErrorEncoding = utf8,
                 }
             };
             p.EnableRaisingEvents = true;
@@ -384,7 +393,7 @@ namespace V2RayGCon.Libs.V2Ray
             }
 
             string msg = string.Format(I18N.V2rayCoreExitAbnormally, title, exitCode);
-            if (isCustomCore)
+            if (IsCustomCore())
             {
                 return msg;
             }
@@ -479,6 +488,7 @@ namespace V2RayGCon.Libs.V2Ray
 
         void StartCore(string config, Dictionary<string, string> envs, bool quiet)
         {
+            var isCustomCore = IsCustomCore();
             isReady = false;
             var core = isCustomCore
                 ? CreateCustomCoreProcess(config)
@@ -494,9 +504,12 @@ namespace V2RayGCon.Libs.V2Ray
             // Add to JOB object require win8+.
             VgcApis.Libs.Sys.ChildProcessTracker.AddProcess(core);
 
-            if (!isCustomCore || customCoreSettings.useStdInToPassConfig)
+            var cs = GetCustomCoreSettings();
+
+            if (!isCustomCore || cs.useStdin)
             {
-                WriteConfigToStandardInput(core, config);
+                var ec = isCustomCore ? cs.GetStdInEncoding() : utf8;
+                WriteConfigToStandardInput(core, config, ec);
             }
 
             core.PriorityClass = ProcessPriorityClass.AboveNormal;
@@ -506,11 +519,10 @@ namespace V2RayGCon.Libs.V2Ray
             SendLog($"{I18N.ConcurrentV2RayCoreNum}{curConcurrentV2RayCoreNum}");
         }
 
-        private void WriteConfigToStandardInput(Process core, string config)
+        private void WriteConfigToStandardInput(Process proc, string config, Encoding encoding)
         {
-            var ec = isCustomCore ? customCoreSettings.GetStdInEncoding() : ioEncoding;
-            var input = core.StandardInput;
-            var buff = ec.GetBytes(config);
+            var input = proc.StandardInput;
+            var buff = encoding.GetBytes(config);
             input.BaseStream.Write(buff, 0, buff.Length);
             input.WriteLine();
             input.Close();
@@ -535,7 +547,7 @@ namespace V2RayGCon.Libs.V2Ray
 
         bool MatchAllReadyMarks(string message)
         {
-            if (isCustomCore)
+            if (IsCustomCore())
             {
                 return true;
             }

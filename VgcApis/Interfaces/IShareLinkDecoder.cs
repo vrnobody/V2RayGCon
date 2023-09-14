@@ -16,7 +16,7 @@ namespace VgcApis.Interfaces
         /// <summary>
         /// Return null if decode fail!
         /// </summary>
-        Tuple<JObject, JToken> Decode(string shareLink);
+        string Decode(string shareLink);
 
         /// <summary>
         /// Return null if encode fail!

@@ -9,20 +9,19 @@ namespace V2RayGCon.Models.Datas
 
         public string name = "";
         public string dir = "";
-        public bool isWorkingDir = false;
+        public bool setWorkingDir = false;
         public string exe = "";
         public string args = "";
 
         public string stdOutEncoding = "";
         public string stdInEncoding = "";
 
-        public string configFilename = "";
-        public bool useConfigFile = false;
-        public bool useStdInToPassConfig = true;
+        public string configFile = "";
+        public bool useFile = false;
+        public bool useStdin = true;
 
-        public bool isBindToShareLinkProtocol = false;
-        public bool isBindToConfigProtocol = false;
         public string protocols = "";
+        public bool useImportBinding = false;
 
         public CustomCoreSettings() { }
 

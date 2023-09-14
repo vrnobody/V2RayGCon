@@ -30,6 +30,7 @@ namespace V2RayGCon.Views.UserControls
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CoreSettingUI));
             this.lbTitle = new System.Windows.Forms.Label();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
@@ -39,53 +40,38 @@ namespace V2RayGCon.Views.UserControls
             // 
             // lbTitle
             // 
-            this.lbTitle.AutoSize = true;
-            this.lbTitle.Location = new System.Drawing.Point(8, 8);
+            resources.ApplyResources(this.lbTitle, "lbTitle");
             this.lbTitle.Name = "lbTitle";
-            this.lbTitle.Size = new System.Drawing.Size(119, 12);
-            this.lbTitle.TabIndex = 0;
-            this.lbTitle.Text = "Core settings title";
             this.lbTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbTitle_MouseDown);
             // 
             // btnEdit
             // 
             this.btnEdit.BackgroundImage = global::V2RayGCon.Properties.Resources.EditWindow_16x;
-            this.btnEdit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnEdit.Location = new System.Drawing.Point(299, 3);
+            resources.ApplyResources(this.btnEdit, "btnEdit");
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(20, 20);
-            this.btnEdit.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.btnEdit, "Modify.");
+            this.toolTip1.SetToolTip(this.btnEdit, resources.GetString("btnEdit.ToolTip"));
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnDelete
             // 
-            this.btnDelete.BackgroundImage = global::V2RayGCon.Properties.Resources.CloseSolution_16x;
-            this.btnDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnDelete.Location = new System.Drawing.Point(322, 3);
+            resources.ApplyResources(this.btnDelete, "btnDelete");
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(20, 20);
-            this.btnDelete.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.btnDelete, "Delete this.");
+            this.toolTip1.SetToolTip(this.btnDelete, resources.GetString("btnDelete.ToolTip"));
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // rlbBinding
             // 
             this.rlbBinding._BackColor = System.Drawing.Color.Wheat;
-            this.rlbBinding.Location = new System.Drawing.Point(133, 6);
+            resources.ApplyResources(this.rlbBinding, "rlbBinding");
             this.rlbBinding.Name = "rlbBinding";
-            this.rlbBinding.Size = new System.Drawing.Size(22, 17);
-            this.rlbBinding.TabIndex = 2;
-            this.rlbBinding.Text = "SC";
-            this.rlbBinding.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.toolTip1.SetToolTip(this.rlbBinding, "(S)harelink (C)onfig");
+            this.toolTip1.SetToolTip(this.rlbBinding, resources.GetString("rlbBinding.ToolTip"));
             this.rlbBinding.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbBinding_MouseDown);
             // 
             // CoreSettingUI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.rlbBinding);
@@ -93,7 +79,6 @@ namespace V2RayGCon.Views.UserControls
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.lbTitle);
             this.Name = "CoreSettingUI";
-            this.Size = new System.Drawing.Size(349, 29);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CoreSettingUI_MouseDown);
             this.ResumeLayout(false);
             this.PerformLayout();

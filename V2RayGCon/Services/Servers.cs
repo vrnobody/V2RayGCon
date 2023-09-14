@@ -905,6 +905,9 @@ namespace V2RayGCon.Services
                 return false;
             }
 
+            var proto = VgcApis.Misc.Utils.GetProtocolFromConfig(config);
+            var coreName = setting.GetCustomCoreName(proto);
+
             var coreInfo = new VgcApis.Models.Datas.CoreInfo
             {
                 isInjectImport = setting.CustomDefImportGlobalImport,
@@ -913,6 +916,7 @@ namespace V2RayGCon.Services
                 inbIp = setting.CustomDefImportIp,
                 inbPort = setting.CustomDefImportPort,
                 customMark = mark,
+                customCoreName = coreName,
                 uid = Guid.NewGuid().ToString(),
                 lastModifiedUtcTicks = DateTime.UtcNow.Ticks,
             };

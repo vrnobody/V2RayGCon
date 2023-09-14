@@ -35,7 +35,6 @@
             this.lbDownloadV2rayCore = new System.Windows.Forms.LinkLabel();
             this.lbV2rayCoreGitHub = new System.Windows.Forms.LinkLabel();
             this.lbCopyFromClipboard = new System.Windows.Forms.LinkLabel();
-            this.lbSimAddVmessWin = new System.Windows.Forms.LinkLabel();
             this.lbScanQRCode = new System.Windows.Forms.LinkLabel();
             this.lbConfigEditor = new System.Windows.Forms.LinkLabel();
             this.lbWiki = new System.Windows.Forms.LinkLabel();
@@ -86,14 +85,6 @@
             this.lbCopyFromClipboard.TabStop = true;
             this.lbCopyFromClipboard.UseCompatibleTextRendering = true;
             this.lbCopyFromClipboard.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbCopyFromClipboard_LinkClicked);
-            // 
-            // lbSimAddVmessWin
-            // 
-            resources.ApplyResources(this.lbSimAddVmessWin, "lbSimAddVmessWin");
-            this.lbSimAddVmessWin.Name = "lbSimAddVmessWin";
-            this.lbSimAddVmessWin.TabStop = true;
-            this.lbSimAddVmessWin.UseCompatibleTextRendering = true;
-            this.lbSimAddVmessWin.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbSimAddVmessWin_LinkClicked);
             // 
             // lbScanQRCode
             // 
@@ -152,7 +143,6 @@
             resources.ApplyResources(this.pnlBasicUsage, "pnlBasicUsage");
             this.pnlBasicUsage.Controls.Add(this.lbIssue);
             this.pnlBasicUsage.Controls.Add(this.lbConfigEditor);
-            this.pnlBasicUsage.Controls.Add(this.lbSimAddVmessWin);
             this.pnlBasicUsage.Controls.Add(this.lbScanQRCode);
             this.pnlBasicUsage.Controls.Add(this.label3);
             this.pnlBasicUsage.Controls.Add(this.lbCopyFromClipboard);
@@ -184,7 +174,6 @@
         private System.Windows.Forms.LinkLabel lbDownloadV2rayCore;
         private System.Windows.Forms.LinkLabel lbV2rayCoreGitHub;
         private System.Windows.Forms.LinkLabel lbCopyFromClipboard;
-        private System.Windows.Forms.LinkLabel lbSimAddVmessWin;
         private System.Windows.Forms.LinkLabel lbScanQRCode;
         private System.Windows.Forms.LinkLabel lbConfigEditor;
         private System.Windows.Forms.LinkLabel lbWiki;

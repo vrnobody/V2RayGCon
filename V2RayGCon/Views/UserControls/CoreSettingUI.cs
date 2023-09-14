@@ -20,7 +20,6 @@ namespace V2RayGCon.Views.UserControls
         public void Reload(CustomCoreSettings coreSettings)
         {
             this.coreSettings = coreSettings;
-
             UpdateTitle();
         }
 
@@ -46,12 +45,19 @@ namespace V2RayGCon.Views.UserControls
                 title += $" ({coreSettings.protocols})";
             }
             lbTitle.Text = title;
+            toolTip1.SetToolTip(lbTitle, title);
 
-            var tag = coreSettings.isBindToShareLinkProtocol ? "S" : "";
-            tag += coreSettings.isBindToConfigProtocol ? "C" : "";
+            var tag = "";
+            tag += coreSettings.useImportBinding ? "B" : "";
+            tag += coreSettings.useFile ? "F" : "";
+            tag += coreSettings.useStdin ? "I" : "";
+
             rlbBinding.Text = tag;
-            rlbBinding.Visible = !string.IsNullOrEmpty(tag);
-            rlbBinding.Left = lbTitle.Right + lbTitle.Left;
+
+            var visible = !string.IsNullOrEmpty(tag);
+            rlbBinding.Visible = visible;
+
+            lbTitle.Left = visible ? rlbBinding.Right + rlbBinding.Left : rlbBinding.Left;
         }
 
         private void InvokeOnRequireReloadIgnoreError()
@@ -100,7 +106,7 @@ namespace V2RayGCon.Views.UserControls
             var msg = string.Format(I18N.ConfirmDeleteCoreSetting, coreSettings.name);
             if (VgcApis.Misc.UI.Confirm(msg))
             {
-                var ok = Services.Settings.Instance.RemoveCoreSettingsByName(coreSettings.name);
+                var ok = Services.Settings.Instance.RemoveCustomCoreByName(coreSettings.name);
                 if (ok)
                 {
                     InvokeOnRequireReloadIgnoreError();

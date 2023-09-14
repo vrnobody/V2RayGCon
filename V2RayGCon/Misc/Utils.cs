@@ -250,6 +250,17 @@ namespace V2RayGCon.Misc
             return r;
         }
 
+        public static Dictionary<string, string> GetEnvVarsFromConfig(string config)
+        {
+            try
+            {
+                var json = JObject.Parse(config);
+                return GetEnvVarsFromConfig(json);
+            }
+            catch { }
+            return new Dictionary<string, string>();
+        }
+
         public static Dictionary<string, string> GetEnvVarsFromConfig(JObject config)
         {
             var empty = new Dictionary<string, string>();
@@ -761,74 +772,11 @@ namespace V2RayGCon.Misc
             );
         }
 
-        /// <summary>
-        /// Return null if not found!
-        /// </summary>
-        /// <param name="config"></param>
-        /// <returns></returns>
-        public static string GetProtocolFromConfig(JObject config)
-        {
-            var keys = new string[] { "outbound.protocol", "outbounds.0.protocol", };
+        public static JToken GetKey(JToken json, string path) =>
+            VgcApis.Misc.Utils.GetKey(json, path);
 
-            foreach (var key in keys)
-            {
-                var value = GetValue<string>(config, key);
-                if (!string.IsNullOrEmpty(value))
-                {
-                    return value.ToLower();
-                }
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// return null if path is null or path not exists.
-        /// </summary>
-        /// <param name="json"></param>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static JToken GetKey(JToken json, string path)
-        {
-            if (string.IsNullOrEmpty(path))
-            {
-                return null;
-            }
-
-            var curPos = json;
-            var keys = path.Split('.');
-
-            int depth;
-            for (depth = 0; depth < keys.Length; depth++)
-            {
-                if (curPos == null || !curPos.HasValues)
-                {
-                    break;
-                }
-
-                try
-                {
-                    if (int.TryParse(keys[depth], out int n))
-                    {
-                        curPos = curPos[n];
-                    }
-                    else
-                    {
-                        curPos = curPos[keys[depth]];
-                    }
-                }
-                catch
-                {
-                    return null;
-                }
-            }
-
-            return depth < keys.Length ? null : curPos;
-        }
-
-        public static T GetValue<T>(JToken json, string prefix, string key)
-        {
-            return GetValue<T>(json, $"{prefix}.{key}");
-        }
+        public static T GetValue<T>(JToken json, string prefix, string key) =>
+            VgcApis.Misc.Utils.GetValue<T>(json, prefix, key);
 
         /// <summary>
         /// return null if not exist.
@@ -839,24 +787,6 @@ namespace V2RayGCon.Misc
         /// <returns></returns>
         public static T GetValue<T>(JToken json, string path) =>
             VgcApis.Misc.Utils.GetValue<T>(json, path);
-
-        public static Func<string, string, string> GetStringByPrefixAndKeyHelper(JObject json)
-        {
-            var o = json;
-            return (prefix, key) =>
-            {
-                return GetValue<string>(o, $"{prefix}.{key}");
-            };
-        }
-
-        public static Func<string, string> GetStringByKeyHelper(JObject json)
-        {
-            var o = json;
-            return (key) =>
-            {
-                return GetValue<string>(o, $"{key}");
-            };
-        }
 
         public static string GetAddr(JObject json, string prefix, string keyIP, string keyPort)
         {
@@ -1547,7 +1477,6 @@ namespace V2RayGCon.Misc
                     break;
                 case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
                 case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
-                case VgcApis.Models.Datas.Enums.LinkTypes.v:
                     pattern =
                         GenLinkPrefix(linkType)
                         + "://"

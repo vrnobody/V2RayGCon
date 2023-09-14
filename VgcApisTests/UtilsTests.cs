@@ -17,6 +17,17 @@ namespace VgcApisTests
     public class UtilsTests
     {
         [DataTestMethod]
+        [DataRow(@"{outbounds:[{protocol:'vmess'}]}", "vmess")]
+        [DataRow(@"{outbounds:[{protocol:'Trojan'}]}", "trojan")]
+        [DataRow(@"{outbound:{protocol:'vless'}}", "vless")]
+        [DataRow(@"{inbound:{protocol:'vless'}}", null)]
+        public void GetProtocolFromConfigTest(string config, string exp)
+        {
+            var r = GetProtocolFromConfig(config);
+            Assert.AreEqual(exp, r);
+        }
+
+        [DataTestMethod]
         [DataRow(",,,1中2,❤文？,,,", ",,,1中2,❤文？,,")]
         [DataRow(",,,", ",,")]
         [DataRow("1中2,❤文？,,,", "1中2,❤文？,,,")]
@@ -434,7 +445,6 @@ namespace VgcApisTests
 
         [DataTestMethod]
         [DataRow(@"http://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.http)]
-        [DataRow(@"V://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.v)]
         [DataRow(@"vmess://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.vmess)]
         [DataRow(@"v2cfg://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.v2cfg)]
         [DataRow(@"linkTypeNotExist://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.unknow)]

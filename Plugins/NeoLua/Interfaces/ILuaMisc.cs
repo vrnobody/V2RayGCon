@@ -36,12 +36,6 @@ namespace NeoLuna.Interfaces
         void ShowFormServerSettings(ICoreServCtrl coreServ);
 
         /// <summary>
-        /// 调出简易编辑器窗口
-        /// </summary>
-        /// <param name="coreServ">一个服务器</param>
-        void ShowFormSimpleEditor(ICoreServCtrl coreServ);
-
-        /// <summary>
         /// 调出选项窗口
         /// </summary>
         void ShowFormOption();
@@ -389,14 +383,6 @@ namespace NeoLuna.Interfaces
         /// <returns>v2cfg://（任意内容）</returns>
         string AddV2cfgPrefix(string b64Str);
 
-        // v://(b64Str)
-        /// <summary>
-        /// abcdefg => v://abcdefg
-        /// </summary>
-        /// <param name="b64Str">任意内容</param>
-        /// <returns>v://（任意内容）</returns>
-        string AddVeePrefix(string b64Str);
-
         // vmess://(b64Str)
         /// <summary>
         /// abcdefg => vmess://abcdefg
@@ -428,13 +414,6 @@ namespace NeoLuna.Interfaces
         /// <param name="config">服务器完整config.json</param>
         /// <returns>v2cfg://...</returns>
         string Config2V2cfg(string config);
-
-        /// <summary>
-        /// 将config编码为vee链接
-        /// </summary>
-        /// <param name="config">服务器完整config.json</param>
-        /// <returns>v://...</returns>
-        string Config2VeeLink(string config);
 
         /// <summary>
         /// 将config编码为vmess链接

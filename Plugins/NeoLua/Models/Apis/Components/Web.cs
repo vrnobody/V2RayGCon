@@ -142,7 +142,6 @@ namespace NeoLuna.Models.Apis.Components
             {
                 VgcApis.Models.Datas.Enums.LinkTypes.ss,
                 VgcApis.Models.Datas.Enums.LinkTypes.trojan,
-                VgcApis.Models.Datas.Enums.LinkTypes.v,
                 VgcApis.Models.Datas.Enums.LinkTypes.v2cfg,
                 VgcApis.Models.Datas.Enums.LinkTypes.vless,
                 VgcApis.Models.Datas.Enums.LinkTypes.vmess,

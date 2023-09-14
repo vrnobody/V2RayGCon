@@ -125,8 +125,8 @@
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>227, 12</value>
   </data>
-  <data name="lbScanQRCode.Text" xml:space="preserve">
-    <value>2. Scan QR Code from the screen</value>
+  <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;label5.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -143,9 +143,6 @@
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
-  </data>
-  <data name="lbSimAddVmessWin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 65</value>
   </data>
   <data name="label5.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -189,8 +186,8 @@
   <data name="pnlDownloadV2RayCore.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="lbSimAddVmessWin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 19</value>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;lbDownloadV2rayCore.Name" xml:space="preserve">
     <value>lbDownloadV2rayCore</value>
@@ -285,9 +282,6 @@
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="lbSimAddVmessWin.Text" xml:space="preserve">
-    <value>3. Use simple editor</value>
-  </data>
   <data name="lbWiki.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 0, 2, 0</value>
   </data>
@@ -303,9 +297,6 @@
   <data name="lbCopyFromClipboard.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="lbSimAddVmessWin.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
-    <value>7, 13</value>
-  </data>
   <data name="lbDownloadV2rayCore.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
@@ -315,8 +306,8 @@
   <data name="&gt;&gt;lbScanQRCode.Name" xml:space="preserve">
     <value>lbScanQRCode</value>
   </data>
-  <data name="lbSimAddVmessWin.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
+  <data name="lbScanQRCode.Text" xml:space="preserve">
+    <value>2. Scan QR Code from the screen</value>
   </data>
   <data name="lbIssue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 0, 2, 0</value>
@@ -326,9 +317,6 @@
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;lbScanQRCode.Type" xml:space="preserve">
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -360,17 +348,11 @@
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 78</value>
   </data>
-  <data name="lbSimAddVmessWin.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
   <data name="&gt;&gt;label2.Parent" xml:space="preserve">
     <value>pnlDownloadV2RayCore</value>
   </data>
   <data name="label4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 0, 2, 0</value>
-  </data>
-  <data name="&gt;&gt;lbSimAddVmessWin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="lbConfigEditor.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -382,7 +364,7 @@
     <value>2</value>
   </data>
   <data name="&gt;&gt;lbCopyFromClipboard.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="label5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 0, 2, 0</value>
@@ -404,9 +386,6 @@
   </data>
   <data name="lbCopyFromClipboard.Size" type="System.Drawing.Size, System.Drawing">
     <value>326, 19</value>
-  </data>
-  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
   </data>
   <data name="lbV2rayCoreGitHub.Text" xml:space="preserve">
     <value>Or download them from GitHub repo manually, and then</value>
@@ -442,7 +421,7 @@
     <value>4</value>
   </data>
   <data name="&gt;&gt;lbWiki.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>5</value>
   </data>
   <data name="lbScanQRCode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 0, 2, 0</value>
@@ -469,7 +448,7 @@
     <value>pnlBasicUsage</value>
   </data>
   <data name="&gt;&gt;lbScanQRCode.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="pnlDownloadV2RayCore.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 31</value>
@@ -486,8 +465,8 @@
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>249, 19</value>
   </data>
-  <data name="lbSimAddVmessWin.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
   </data>
   <data name="label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -498,14 +477,8 @@
   <data name="lbCopyFromClipboard.Location" type="System.Drawing.Point, System.Drawing">
     <value>14, 30</value>
   </data>
-  <data name="&gt;&gt;lbSimAddVmessWin.Parent" xml:space="preserve">
-    <value>pnlBasicUsage</value>
-  </data>
   <data name="lbConfigEditor.Text" xml:space="preserve">
-    <value>4. Use json editor</value>
-  </data>
-  <data name="&gt;&gt;lbSimAddVmessWin.Name" xml:space="preserve">
-    <value>lbSimAddVmessWin</value>
+    <value>3. Use json editor</value>
   </data>
   <data name="&gt;&gt;lbConfigEditor.Name" xml:space="preserve">
     <value>lbConfigEditor</value>
@@ -519,9 +492,6 @@
   <data name="lbV2rayCoreGitHub.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
     <value>22, 11</value>
   </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="lbScanQRCode.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -534,11 +504,8 @@
   <data name="&gt;&gt;pnlDownloadV2RayCore.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;pnlDownloadV2RayCore.Name" xml:space="preserve">
-    <value>pnlDownloadV2RayCore</value>
-  </data>
   <data name="lbConfigEditor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 82</value>
+    <value>14, 66</value>
   </data>
   <data name="lbCopyFromClipboard.Text" xml:space="preserve">
     <value>1. Copy share link(s) and then import from clipboard</value>
@@ -555,20 +522,20 @@
   <data name="lbDownloadV2rayCore.Size" type="System.Drawing.Size, System.Drawing">
     <value>239, 19</value>
   </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="lbScanQRCode.Location" type="System.Drawing.Point, System.Drawing">
     <value>14, 47</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;pnlDownloadV2RayCore.Name" xml:space="preserve">
+    <value>pnlDownloadV2RayCore</value>
   </data>
   <data name="lbDownloadV2rayCore.Text" xml:space="preserve">
     <value>Please Download V2Ray/Xray core first.</value>
   </data>
   <data name="lbV2rayCoreGitHub.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 27</value>
-  </data>
-  <data name="&gt;&gt;lbSimAddVmessWin.ZOrder" xml:space="preserve">
-    <value>2</value>
   </data>
   <data name="pnlBasicUsage.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 133</value>

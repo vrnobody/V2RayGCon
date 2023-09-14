@@ -183,7 +183,7 @@ namespace V2RayGCon.Services
         void V2RayCoreUpdater()
         {
             var core = new Libs.V2Ray.Core(setting);
-            var curVerStr = core.GetCoreVersion();
+            var curVerStr = core.GetV2RayCoreVersion();
             if (string.IsNullOrEmpty(curVerStr))
             {
                 return;

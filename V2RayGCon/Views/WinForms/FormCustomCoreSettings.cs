@@ -33,17 +33,16 @@ namespace V2RayGCon.Views.WinForms
             var cs = new CustomCoreSettings();
             cs.name = tboxName.Text;
             cs.dir = tboxDir.Text;
-            cs.isWorkingDir = chkSetWorkingDir.Checked;
+            cs.setWorkingDir = chkSetWorkingDir.Checked;
             cs.exe = tboxExe.Text;
-            cs.args = tboxArgs.Text;
+            cs.args = cboxArgs.Text;
             cs.stdInEncoding = cboxStdinEncoding.Text;
             cs.stdOutEncoding = cboxStdoutEncoding.Text;
-            cs.configFilename = tboxConfigFilename.Text;
-            cs.useConfigFile = chkUseFile.Checked;
-            cs.useStdInToPassConfig = chkUseStdin.Checked;
+            cs.configFile = tboxConfigFilename.Text;
+            cs.useFile = chkUseFile.Checked;
+            cs.useStdin = chkUseStdin.Checked;
             cs.protocols = tboxProtocols.Text;
-            cs.isBindToConfigProtocol = chkBindConfig.Checked;
-            cs.isBindToShareLinkProtocol = chkBindSharelink.Checked;
+            cs.useImportBinding = chkUseImportBinding.Checked;
             return cs;
         }
 
@@ -51,19 +50,18 @@ namespace V2RayGCon.Views.WinForms
         {
             tboxName.Text = coreSettings.name;
             tboxDir.Text = coreSettings.dir;
-            chkSetWorkingDir.Checked = coreSettings.isWorkingDir;
+            chkSetWorkingDir.Checked = coreSettings.setWorkingDir;
             tboxExe.Text = coreSettings.exe;
-            tboxArgs.Text = coreSettings.args;
+            cboxArgs.Text = coreSettings.args;
             cboxStdinEncoding.Text = coreSettings.stdInEncoding;
             cboxStdoutEncoding.Text = coreSettings.stdOutEncoding;
 
-            tboxConfigFilename.Text = coreSettings.configFilename;
-            chkUseFile.Checked = coreSettings.useConfigFile;
-            chkUseStdin.Checked = coreSettings.useStdInToPassConfig;
+            tboxConfigFilename.Text = coreSettings.configFile;
+            chkUseFile.Checked = coreSettings.useFile;
+            chkUseStdin.Checked = coreSettings.useStdin;
 
             tboxProtocols.Text = coreSettings.protocols;
-            chkBindConfig.Checked = coreSettings.isBindToConfigProtocol;
-            chkBindSharelink.Checked = coreSettings.isBindToShareLinkProtocol;
+            chkUseImportBinding.Checked = coreSettings.useImportBinding;
         }
 
         void InitEncodingComboBox()

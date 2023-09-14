@@ -1029,6 +1029,37 @@ namespace VgcApis.Misc
         #endregion
 
         #region Json
+        public static string GetProtocolFromConfig(string config)
+        {
+            if (string.IsNullOrEmpty(config) || config.Length < 3 || config[0] != '{')
+            {
+                return null;
+            }
+
+            try
+            {
+                var json = JObject.Parse(config);
+                return GetProtocolFromConfig(json);
+            }
+            catch { }
+            return null;
+        }
+
+        public static string GetProtocolFromConfig(JObject config)
+        {
+            var keys = new string[] { "outbounds.0.protocol", "outbound.protocol" };
+
+            foreach (var key in keys)
+            {
+                var value = GetValue<string>(config, key);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    return value.ToLower();
+                }
+            }
+            return null;
+        }
+
         public static Func<string, string, string> GetStringByPrefixAndKeyHelper(JObject json)
         {
             var o = json;

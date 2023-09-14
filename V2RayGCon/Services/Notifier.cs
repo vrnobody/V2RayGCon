@@ -302,8 +302,7 @@ namespace V2RayGCon.Services
 
         public void ShowFormSimpleEditor(ICoreServCtrl coreServ)
         {
-            var f = Views.WinForms.FormSimpleConfigEditor.GetForm();
-            f.LoadCoreServer(coreServ);
+            // backward compact for Luna
         }
 
         public void ShowFormOption() => Views.WinForms.FormOption.ShowForm();
@@ -1124,15 +1123,6 @@ namespace V2RayGCon.Services
                                 (s, a) => Views.WinForms.FormMain.ShowForm()
                             ),
                             new ToolStripMenuItem(
-                                I18N.AddClientManually,
-                                Properties.Resources.AddField_16x,
-                                (s, a) =>
-                                {
-                                    var f = Views.WinForms.FormSimpleConfigEditor.GetForm();
-                                    f.LoadCoreServer(null);
-                                }
-                            ),
-                            new ToolStripMenuItem(
                                 I18N.JsonEditor,
                                 Properties.Resources.EditSelectedTag_16x,
                                 (s, a) => Views.WinForms.FormJsonConfigEditor.ShowEmptyConfig()
@@ -1140,8 +1130,7 @@ namespace V2RayGCon.Services
                             new ToolStripMenuItem(
                                 I18N.TextEditor,
                                 Properties.Resources.EditPage_16x,
-                                (s, a) =>
-                                    Views.WinForms.FormTextConfigEditor.ShowConfig("", "", false)
+                                (s, a) => Views.WinForms.FormTextConfigEditor.ShowEmptyConfig()
                             ),
                             new ToolStripMenuItem(
                                 I18N.Log,

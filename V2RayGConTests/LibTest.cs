@@ -343,9 +343,9 @@ stat: <
         public void GetLocalCoreVersion()
         {
             var core = new V2RayGCon.Libs.V2Ray.Core(Services.Settings.Instance);
-            var version = core.GetCoreVersion();
+            var version = core.GetV2RayCoreVersion();
 
-            if (core.IsExecutableExist())
+            if (core.IsV2RayExecutableExist())
             {
                 Assert.AreNotEqual(string.Empty, version);
             }

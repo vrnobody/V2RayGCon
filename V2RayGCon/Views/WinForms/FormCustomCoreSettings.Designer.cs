@@ -33,7 +33,6 @@ namespace V2RayGCon.Views.WinForms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCustomCoreSettings));
             this.label1 = new System.Windows.Forms.Label();
             this.tboxName = new System.Windows.Forms.TextBox();
-            this.chkBindConfig = new System.Windows.Forms.CheckBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -45,16 +44,16 @@ namespace V2RayGCon.Views.WinForms
             this.btnCancel = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.chkUseFile = new System.Windows.Forms.CheckBox();
-            this.chkBindSharelink = new System.Windows.Forms.CheckBox();
+            this.chkUseImportBinding = new System.Windows.Forms.CheckBox();
             this.btnDir = new System.Windows.Forms.Button();
             this.chkSetWorkingDir = new System.Windows.Forms.CheckBox();
             this.tboxDir = new System.Windows.Forms.TextBox();
             this.tboxExe = new System.Windows.Forms.TextBox();
-            this.tboxArgs = new System.Windows.Forms.TextBox();
             this.cboxStdinEncoding = new System.Windows.Forms.ComboBox();
             this.cboxStdoutEncoding = new System.Windows.Forms.ComboBox();
             this.tboxConfigFilename = new System.Windows.Forms.TextBox();
             this.tboxProtocols = new System.Windows.Forms.TextBox();
+            this.cboxArgs = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -68,13 +67,6 @@ namespace V2RayGCon.Views.WinForms
             resources.ApplyResources(this.tboxName, "tboxName");
             this.tboxName.Name = "tboxName";
             this.toolTip1.SetToolTip(this.tboxName, resources.GetString("tboxName.ToolTip"));
-            // 
-            // chkBindConfig
-            // 
-            resources.ApplyResources(this.chkBindConfig, "chkBindConfig");
-            this.chkBindConfig.Name = "chkBindConfig";
-            this.toolTip1.SetToolTip(this.chkBindConfig, resources.GetString("chkBindConfig.ToolTip"));
-            this.chkBindConfig.UseVisualStyleBackColor = true;
             // 
             // btnSave
             // 
@@ -142,12 +134,12 @@ namespace V2RayGCon.Views.WinForms
             this.toolTip1.SetToolTip(this.chkUseFile, resources.GetString("chkUseFile.ToolTip"));
             this.chkUseFile.UseVisualStyleBackColor = true;
             // 
-            // chkBindSharelink
+            // chkUseImportBinding
             // 
-            resources.ApplyResources(this.chkBindSharelink, "chkBindSharelink");
-            this.chkBindSharelink.Name = "chkBindSharelink";
-            this.toolTip1.SetToolTip(this.chkBindSharelink, resources.GetString("chkBindSharelink.ToolTip"));
-            this.chkBindSharelink.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.chkUseImportBinding, "chkUseImportBinding");
+            this.chkUseImportBinding.Name = "chkUseImportBinding";
+            this.toolTip1.SetToolTip(this.chkUseImportBinding, resources.GetString("chkUseImportBinding.ToolTip"));
+            this.chkUseImportBinding.UseVisualStyleBackColor = true;
             // 
             // btnDir
             // 
@@ -176,12 +168,6 @@ namespace V2RayGCon.Views.WinForms
             this.tboxExe.Name = "tboxExe";
             this.toolTip1.SetToolTip(this.tboxExe, resources.GetString("tboxExe.ToolTip"));
             // 
-            // tboxArgs
-            // 
-            resources.ApplyResources(this.tboxArgs, "tboxArgs");
-            this.tboxArgs.Name = "tboxArgs";
-            this.toolTip1.SetToolTip(this.tboxArgs, resources.GetString("tboxArgs.ToolTip"));
-            // 
             // cboxStdinEncoding
             // 
             resources.ApplyResources(this.cboxStdinEncoding, "cboxStdinEncoding");
@@ -208,6 +194,17 @@ namespace V2RayGCon.Views.WinForms
             this.tboxProtocols.Name = "tboxProtocols";
             this.toolTip1.SetToolTip(this.tboxProtocols, resources.GetString("tboxProtocols.ToolTip"));
             // 
+            // cboxArgs
+            // 
+            resources.ApplyResources(this.cboxArgs, "cboxArgs");
+            this.cboxArgs.FormattingEnabled = true;
+            this.cboxArgs.Items.AddRange(new object[] {
+            resources.GetString("cboxArgs.Items"),
+            resources.GetString("cboxArgs.Items1"),
+            resources.GetString("cboxArgs.Items2")});
+            this.cboxArgs.Name = "cboxArgs";
+            this.toolTip1.SetToolTip(this.cboxArgs, resources.GetString("cboxArgs.ToolTip"));
+            // 
             // FormCustomCoreSettings
             // 
             resources.ApplyResources(this, "$this");
@@ -218,13 +215,12 @@ namespace V2RayGCon.Views.WinForms
             this.Controls.Add(this.chkUseFile);
             this.Controls.Add(this.chkSetWorkingDir);
             this.Controls.Add(this.chkUseStdin);
-            this.Controls.Add(this.chkBindSharelink);
-            this.Controls.Add(this.chkBindConfig);
+            this.Controls.Add(this.chkUseImportBinding);
             this.Controls.Add(this.cboxStdoutEncoding);
+            this.Controls.Add(this.cboxArgs);
             this.Controls.Add(this.cboxStdinEncoding);
             this.Controls.Add(this.tboxProtocols);
             this.Controls.Add(this.tboxConfigFilename);
-            this.Controls.Add(this.tboxArgs);
             this.Controls.Add(this.tboxExe);
             this.Controls.Add(this.tboxDir);
             this.Controls.Add(this.tboxName);
@@ -247,7 +243,6 @@ namespace V2RayGCon.Views.WinForms
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tboxName;
-        private System.Windows.Forms.CheckBox chkBindConfig;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -260,14 +255,14 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TextBox tboxDir;
         private System.Windows.Forms.TextBox tboxExe;
-        private System.Windows.Forms.TextBox tboxArgs;
         private System.Windows.Forms.ComboBox cboxStdinEncoding;
         private System.Windows.Forms.ComboBox cboxStdoutEncoding;
         private System.Windows.Forms.CheckBox chkUseFile;
         private System.Windows.Forms.TextBox tboxConfigFilename;
-        private System.Windows.Forms.CheckBox chkBindSharelink;
+        private System.Windows.Forms.CheckBox chkUseImportBinding;
         private System.Windows.Forms.TextBox tboxProtocols;
         private System.Windows.Forms.Button btnDir;
         private System.Windows.Forms.CheckBox chkSetWorkingDir;
+        private System.Windows.Forms.ComboBox cboxArgs;
     }
 }

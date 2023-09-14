@@ -117,40 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnOK.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnExit.Text" xml:space="preserve">
-    <value>退出</value>
-  </data>
-  <data name="btnExit.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="veeConfigerUI1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="panelVeeImporter.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="linkConfigEditor.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
-    <value>16, 7</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="linkConfigEditor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>276, 19</value>
-  </data>
-  <data name="linkConfigEditor.Text" xml:space="preserve">
-    <value>如果你需要更高级的功能，请使用"Json编辑器"！</value>
-  </data>
-  <data name="linkConfigEditor.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="lbTitle.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>简易编辑器</value>
+  <data name="btnEdit.ToolTip" xml:space="preserve">
+    <value>修改配置</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnDelete.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAALFJREFUOE+tkDESwiAQRbmA17C2tKb2EBbeICfKEeQGXkZNFWho1/wdlsEMgXVM
+        8cJC9r9ZMET0F/yJMZ6AHK73LaTZJzhY7muhEgj8Y7gRQO3fz3C/nPO+JzFhehEC4/HAIamxqgRLw7WU
+        SBiT9MKA30DGFoF2fGDKMFap1W8gAoBarpMEXfIVAOoFfhPnHFlrm7AAY6RgHhU/0ODnsMmXYM1ugh5N
+        gZaq4Beqh3rIfADNkAPZUpn57QAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="btnDelete.ToolTip" xml:space="preserve">
+    <value>删除配置</value>
+  </data>
+  <data name="rlbBinding.ToolTip" xml:space="preserve">
+    <value>(B)绑定导入链接 (F)生成config文件 (I)使用STDIN</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>347, 27</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value />

@@ -10,7 +10,7 @@ namespace V2RayGCon.Services
         : BaseClasses.SingletonService<ShareLinkMgr>,
             VgcApis.Interfaces.Services.IShareLinkMgrService
     {
-        Settings setting;
+        Settings settings;
         Servers servers;
 
         ShareLinkComponents.Codecs codecs;
@@ -34,8 +34,8 @@ namespace V2RayGCon.Services
             var linkType = VgcApis.Misc.Utils.DetectLinkType(shareLink);
             switch (linkType)
             {
-                case VgcApis.Models.Datas.Enums.LinkTypes.v:
-                    return codecs.Decode<ShareLinkComponents.VeeDecoder>(shareLink);
+                case VgcApis.Models.Datas.Enums.LinkTypes.ss:
+                    return codecs.Decode<ShareLinkComponents.SsDecoder>(shareLink);
                 case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
                     return codecs.Decode<ShareLinkComponents.VmessDecoder>(shareLink);
                 case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
@@ -62,8 +62,6 @@ namespace V2RayGCon.Services
             {
                 case VgcApis.Models.Datas.Enums.LinkTypes.ss:
                     return codecs.Encode<ShareLinkComponents.SsDecoder>(config);
-                case VgcApis.Models.Datas.Enums.LinkTypes.v:
-                    return codecs.Encode<ShareLinkComponents.VeeDecoder>(config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
                     return codecs.Encode<ShareLinkComponents.VmessDecoder>(config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
@@ -87,10 +85,10 @@ namespace V2RayGCon.Services
 
         public int UpdateSubscriptions(int proxyPort)
         {
-            var enabledSubs = setting.GetSubscriptionItems().Where(s => s.isUse).ToList();
+            var enabledSubs = settings.GetSubscriptionItems().Where(s => s.isUse).ToList();
 
             var links = Misc.Utils.FetchLinksFromSubcriptions(enabledSubs, proxyPort);
-            var decoders = GenDecoderList(false);
+            var decoders = codecs.GetDecoders(false);
             var results = ImportLinksBatchModeSync(links, decoders);
             return CountImportSuccessResult(results);
         }
@@ -104,7 +102,7 @@ namespace V2RayGCon.Services
 
             var pair = new string[] { links, mark ?? "" };
             var linkList = new List<string[]> { pair };
-            var decoders = GenDecoderList(false);
+            var decoders = codecs.GetDecoders(false);
             var results = ImportLinksBatchModeSync(linkList, decoders);
 
             // servers.UpdateAllServersSummary();
@@ -114,7 +112,7 @@ namespace V2RayGCon.Services
 
         public void ImportLinkWithOutV2cfgLinksBatchModeSync(IEnumerable<string[]> linkList)
         {
-            var decoders = GenDecoderList(false);
+            var decoders = codecs.GetDecoders(false);
             var results = ImportLinksBatchModeSync(linkList, decoders);
             ShowImportResults(results);
         }
@@ -123,7 +121,7 @@ namespace V2RayGCon.Services
         {
             var pair = new string[] { text, "" };
             var linkList = new List<string[]> { pair };
-            var decoders = GenDecoderList(false);
+            var decoders = codecs.GetDecoders(false);
             ImportLinksBatchModeAsync(linkList, decoders, true);
         }
 
@@ -131,17 +129,17 @@ namespace V2RayGCon.Services
         {
             var pair = new string[] { text, "" };
             var linkList = new List<string[]> { pair };
-            var decoders = GenDecoderList(true);
+            var decoders = codecs.GetDecoders(true);
 
             ImportLinksBatchModeAsync(linkList, decoders, true);
         }
 
-        public void Run(Settings setting, Servers servers, Cache cache)
+        public void Run(Settings settings, Servers servers, Cache cache)
         {
-            this.setting = setting;
+            this.settings = settings;
             this.servers = servers;
 
-            codecs.Run(cache, setting);
+            codecs.Run(cache, settings);
         }
 
         #endregion
@@ -150,33 +148,6 @@ namespace V2RayGCon.Services
         int CountImportSuccessResult(IEnumerable<string[]> result)
         {
             return result.Where(r => VgcApis.Misc.Utils.IsImportResultSuccess(r)).Count();
-        }
-
-        List<VgcApis.Interfaces.IShareLinkDecoder> GenDecoderList(bool isIncludeV2cfgDecoder)
-        {
-            var decoders = new List<VgcApis.Interfaces.IShareLinkDecoder>
-            {
-                codecs.GetChild<ShareLinkComponents.VlessDecoder>(),
-                codecs.GetChild<ShareLinkComponents.VmessDecoder>(),
-                codecs.GetChild<ShareLinkComponents.VeeDecoder>(),
-            };
-
-            if (setting.CustomDefImportTrojanShareLink)
-            {
-                decoders.Add(codecs.GetChild<ShareLinkComponents.TrojanDecoder>());
-            }
-
-            if (setting.CustomDefImportSsShareLink)
-            {
-                decoders.Add(codecs.GetChild<ShareLinkComponents.SsDecoder>());
-            }
-
-            if (isIncludeV2cfgDecoder)
-            {
-                decoders.Add(codecs.GetChild<ShareLinkComponents.V2cfgDecoder>());
-            }
-
-            return decoders;
         }
 
         void ImportLinksBatchModeAsync(
@@ -262,8 +233,8 @@ namespace V2RayGCon.Services
                 .AsOrdered()
                 .Select(link =>
                 {
-                    var formatedConfig = codecs.Decode(link, decoder);
-                    var msg = AddLinkToServerList(mark, formatedConfig);
+                    var config = codecs.Decode(link, decoder);
+                    var msg = AddLinkToServerList(mark, config);
                     return GenImportResult(link, msg.Item1, msg.Item2, mark);
                 })
                 .ToList();
@@ -275,13 +246,13 @@ namespace V2RayGCon.Services
             return importResults.Any(r => VgcApis.Misc.Utils.IsImportResultSuccess(r));
         }
 
-        private Tuple<bool, string> AddLinkToServerList(string mark, string formatedConfig)
+        private Tuple<bool, string> AddLinkToServerList(string mark, string config)
         {
-            if (string.IsNullOrEmpty(formatedConfig))
+            if (string.IsNullOrEmpty(config))
             {
                 return new Tuple<bool, string>(false, I18N.DecodeFail);
             }
-            var ok = servers.AddServer(formatedConfig, mark, true);
+            var ok = servers.AddServer(config, mark, true);
             var reason = ok ? I18N.Success : I18N.DuplicateServer;
             return new Tuple<bool, string>(ok, reason);
         }

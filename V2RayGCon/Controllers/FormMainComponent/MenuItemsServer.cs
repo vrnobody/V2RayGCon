@@ -21,9 +21,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             // copy
             ToolStripMenuItem copyAsV2cfgLinks,
             ToolStripMenuItem copyAsVmixLinks,
-            ToolStripMenuItem copyAsVeeLinks,
-            ToolStripMenuItem copyAsVmessSubscriptions,
-            ToolStripMenuItem copyAsVeeSubscriptions,
             // batch op
             ToolStripMenuItem stopBatchSpeedtest,
             ToolStripMenuItem runBatchSpeedtest,
@@ -59,13 +56,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             InitCtrlView(moveToTop, moveToBottom);
 
-            InitCtrlCopyToClipboard(
-                copyAsV2cfgLinks,
-                copyAsVmixLinks,
-                copyAsVeeLinks,
-                copyAsVmessSubscriptions,
-                copyAsVeeSubscriptions
-            );
+            InitCtrlCopyToClipboard(copyAsV2cfgLinks, copyAsVmixLinks);
 
             InitCtrlMisc(refreshSummary, deleteSelected, deleteAllServers);
 
@@ -218,28 +209,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private void InitCtrlCopyToClipboard(
             ToolStripMenuItem copyAsV2cfgLinks,
-            ToolStripMenuItem copyAsVmixLinks,
-            ToolStripMenuItem copyAsVeeLinks,
-            ToolStripMenuItem copyAsVmessSubscriptions,
-            ToolStripMenuItem copyAsVeeSubscriptions
+            ToolStripMenuItem copyAsVmixLinks
         )
         {
-            copyAsVeeSubscriptions.Click += RunWhenSelectionIsNotEmptyHandler(() =>
-            {
-                var links = EncodeSelectedServersIntoShareLinks(
-                    VgcApis.Models.Datas.Enums.LinkTypes.v
-                );
-                var b64Links = VgcApis.Misc.Utils.Base64EncodeString(links);
-                Misc.Utils.CopyToClipboardAndPrompt(b64Links);
-            });
-
-            copyAsVmessSubscriptions.Click += RunWhenSelectionIsNotEmptyHandler(() =>
-            {
-                var links = EncodeSelectedServersIntoVmixShareLinks();
-                var b64Links = VgcApis.Misc.Utils.Base64EncodeString(links);
-                Misc.Utils.CopyToClipboardAndPrompt(b64Links);
-            });
-
             copyAsV2cfgLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 var links = EncodeSelectedServersIntoShareLinks(
@@ -251,14 +223,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             copyAsVmixLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 var links = EncodeSelectedServersIntoVmixShareLinks();
-                Misc.Utils.CopyToClipboardAndPrompt(links);
-            });
-
-            copyAsVeeLinks.Click += RunWhenSelectionIsNotEmptyHandler(() =>
-            {
-                var links = EncodeSelectedServersIntoShareLinks(
-                    VgcApis.Models.Datas.Enums.LinkTypes.v
-                );
                 Misc.Utils.CopyToClipboardAndPrompt(links);
             });
         }

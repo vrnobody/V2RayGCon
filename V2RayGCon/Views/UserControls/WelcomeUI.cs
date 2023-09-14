@@ -26,7 +26,7 @@ namespace V2RayGCon.Views.UserControls
         private void WelcomeFlyPanelComponent_Load(object sender, System.EventArgs e)
         {
             var core = new V2RayGCon.Libs.V2Ray.Core(setting);
-            if (!core.IsExecutableExist())
+            if (!core.IsV2RayExecutableExist())
             {
                 return;
             }
@@ -81,12 +81,6 @@ namespace V2RayGCon.Views.UserControls
             }
 
             Libs.QRCode.QRCode.ScanQRCode(Success, Fail);
-        }
-
-        private void lbSimAddVmessWin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            var f = WinForms.FormSimpleConfigEditor.GetForm();
-            f.LoadCoreServer(null);
         }
 
         private void lbConfigEditor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

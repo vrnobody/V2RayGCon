@@ -133,7 +133,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 var statsPort = coreStates.GetStatPort();
                 if (statsPort > 0)
                 {
-                    var sample = core.QueryStatsApi(statsPort);
+                    var sample = core.QueryV2RayStatsApi(statsPort);
                     coreStates.AddStatSample(sample);
                 }
             }
@@ -232,21 +232,17 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             try
             {
                 string cfg;
-                Dictionary<string, string> envs = new Dictionary<string, string>();
-                if (string.IsNullOrEmpty(coreInfo.customCoreName))
+                Dictionary<string, string> envs;
+                var finalConfig = configer.GetFinalConfig();
+                if (finalConfig != null)
                 {
-                    cfg = configer.GetConfig();
+                    cfg = VgcApis.Misc.Utils.FormatConfig(finalConfig);
+                    envs = Misc.Utils.GetEnvVarsFromConfig(finalConfig);
                 }
                 else
                 {
-                    var finalConfig = configer.GetFinalConfig();
-                    if (finalConfig == null)
-                    {
-                        StopCore();
-                        return;
-                    }
-                    envs = Misc.Utils.GetEnvVarsFromConfig(finalConfig);
-                    cfg = finalConfig.ToString();
+                    cfg = configer.GetConfig();
+                    envs = Misc.Utils.GetEnvVarsFromConfig(cfg);
                 }
 
                 core.title = coreStates.GetTitle();

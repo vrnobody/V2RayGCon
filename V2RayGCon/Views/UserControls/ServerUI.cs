@@ -40,6 +40,7 @@ namespace V2RayGCon.Views.UserControls
                 rlbSetting,
                 rlbInboundMode,
                 rlbLastModifyDate,
+                rlbCoreName,
                 rlbRemark,
                 rlbTotalNetFlow,
                 rlbMark,
@@ -130,12 +131,6 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region private method
-        private void ShowFormSimpleEditor()
-        {
-            var f = WinForms.FormSimpleConfigEditor.GetForm();
-            f.LoadCoreServer(this.coreServCtrl);
-        }
-
         bool isCtrlBtnVisable = false;
 
         async Task SetCtrlButtonsVisiblityLater(bool isVisable)
@@ -256,8 +251,9 @@ namespace V2RayGCon.Views.UserControls
                 UpdateTitleTextBox(cs);
 
                 // second line
-                UpdateInboundModeLabel(cs, cc.GetCustomCoreName());
+                UpdateInboundModeLabel(cs);
                 UpdateLastModifiedLable(cs.GetLastModifiedUtcTicks());
+                UpdateCoreNameLabel(cc);
                 UpdateMarkLabel(cs.GetMark());
                 UpdateTag1Label(cs.GetTag1());
                 UpdateTag2Label(cs.GetTag2());
@@ -277,6 +273,16 @@ namespace V2RayGCon.Views.UserControls
             };
 
             VgcApis.Misc.UI.InvokeThen(worker, next);
+        }
+
+        void UpdateCoreNameLabel(VgcApis.Interfaces.CoreCtrlComponents.ICoreCtrl cc)
+        {
+            var coreName = cc.GetCustomCoreName();
+            UpdateControlTextAndTooltip(
+                rlbCoreName,
+                coreName,
+                $"{I18N.CustomCoreName}: {coreName}"
+            );
         }
 
         void UpdateNetworkFlowLable(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreState)
@@ -424,17 +430,8 @@ namespace V2RayGCon.Views.UserControls
             g.FillRectangle(Brushes.Brown, cx - r, cy - r, r * 2, r * 2);
         }
 
-        void UpdateInboundModeLabel(
-            VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreState,
-            string coreName
-        )
+        void UpdateInboundModeLabel(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreState)
         {
-            if (!string.IsNullOrEmpty(coreName))
-            {
-                UpdateControlTextAndTooltip(rlbInboundMode, coreName, I18N.CustomCoreName);
-                return;
-            }
-
             var text = @"Config";
             var tooltip = I18N.InbModeConfigToolTip;
             var inbModeIdx = coreState.GetInboundType();
@@ -832,15 +829,6 @@ namespace V2RayGCon.Views.UserControls
             WinForms.FormTextConfigEditor.ShowConfig(title, config, true);
         }
 
-        private void vToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var vee = slinkMgr.EncodeConfigToShareLink(
-                GetConfig(),
-                VgcApis.Models.Datas.Enums.LinkTypes.v
-            );
-            Misc.Utils.CopyToClipboardAndPrompt(vee);
-        }
-
         private void rlbIsRunning_Click(object sender, EventArgs e)
         {
             coreServCtrl.GetCoreCtrl().StopCoreThen();
@@ -906,20 +894,20 @@ namespace V2RayGCon.Views.UserControls
             ShowModifyConfigsWinForm();
         }
 
-        private void simpleEditorToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowFormSimpleEditor();
-        }
-
-        private void rlbLastModifyDate_Click(object sender, EventArgs e)
-        {
-            ShowFormSimpleEditor();
-        }
-
         private void textEditortoolStripMenuItem_Click(object sender, EventArgs e)
         {
             var uid = coreServCtrl.GetCoreStates().GetUid();
             WinForms.FormTextConfigEditor.ShowServer(uid);
+        }
+
+        private void rlbLastModifyDate_MouseDown(object sender, MouseEventArgs e)
+        {
+            UserMouseDown();
+        }
+
+        private void rlbCoreName_Click(object sender, EventArgs e)
+        {
+            ShowModifyConfigsWinForm();
         }
 
         private void rlbRemark_Click(object sender, EventArgs e)

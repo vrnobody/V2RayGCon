@@ -66,7 +66,7 @@ namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
         #region public method
         public override void Update(JObject config)
         {
-            var GetStr = Misc.Utils.GetStringByPrefixAndKeyHelper(config);
+            var GetStr = VgcApis.Misc.Utils.GetStringByPrefixAndKeyHelper(config);
 
             var root = Misc.Utils.GetConfigRoot(isServerMode, isV4Mode);
 

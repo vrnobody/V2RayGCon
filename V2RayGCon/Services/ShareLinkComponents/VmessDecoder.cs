@@ -23,7 +23,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region public methods
-        public Tuple<JObject, JToken> Decode(string shareLink)
+        public string Decode(string shareLink)
         {
             var vmess = Misc.Utils.VmessLink2Vmess(shareLink);
             return Vmess2Config(vmess);
@@ -75,7 +75,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var GetStr = Misc.Utils.GetStringByPrefixAndKeyHelper(json);
+            var GetStr = VgcApis.Misc.Utils.GetStringByPrefixAndKeyHelper(json);
             if (!TryDetectConfigVersion(GetStr, out bool isUseV4, out string root))
             {
                 return null;
@@ -177,7 +177,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return vmess;
         }
 
-        Tuple<JObject, JToken> Vmess2Config(Models.Datas.Vmess vmess)
+        string Vmess2Config(Models.Datas.Vmess vmess)
         {
             if (vmess == null)
             {
@@ -199,7 +199,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             var tpl = cache.tpl.LoadTemplate("tplImportVmess") as JObject;
             tpl["v2raygcon"]["alias"] = vmess.ps;
-            return new Tuple<JObject, JToken>(tpl, outVmess);
+
+            return GetParent()?.GenerateJsonConfing(tpl, outVmess);
         }
 
         JToken LoadVmessDecodeTemplate()

@@ -70,7 +70,9 @@
             ss = 2,
             http = 3,
             https = 4,
-            v = 5,
+
+            // v = 5, // disabled 2023-09-14
+
             trojan = 6,
             vless = 7,
             unknow = 256, // for enum parse

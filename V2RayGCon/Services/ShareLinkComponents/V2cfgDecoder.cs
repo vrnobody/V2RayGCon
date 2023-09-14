@@ -15,17 +15,12 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region public methods
-        public Tuple<JObject, JToken> Decode(string shareLink)
+        public string Decode(string shareLink)
         {
             try
             {
                 var linkBody = Misc.Utils.GetLinkBody(shareLink);
-                var plainText = VgcApis.Misc.Utils.Base64DecodeToString(linkBody);
-                var config = JObject.Parse(plainText);
-                if (config != null)
-                {
-                    return new Tuple<JObject, JToken>(config, null);
-                }
+                return VgcApis.Misc.Utils.Base64DecodeToString(linkBody);
             }
             catch { }
             return null;
@@ -37,9 +32,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             {
                 return null;
             }
-
             var body = VgcApis.Misc.Utils.Base64EncodeString(config);
-
             return Misc.Utils.AddLinkPrefix(body, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
         }
 

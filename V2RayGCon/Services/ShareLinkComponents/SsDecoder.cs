@@ -20,7 +20,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region public methods
-        public Tuple<JObject, JToken> Decode(string shareLink)
+        public string Decode(string shareLink)
         {
             // ss://(base64)#tag or ss://(base64)
             var parts = shareLink.Split('#');
@@ -45,12 +45,12 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 tpl["v2raygcon"]["alias"] = name;
             }
 
-            return new Tuple<JObject, JToken>(tpl, outbound);
+            return GetParent()?.GenerateJsonConfing(tpl, outbound);
         }
 
         public string Encode(string config)
         {
-            var vc = new Models.Datas.VeeConfigs(config);
+            var vc = new Models.Datas.SharelinkMetadata(config);
             if (vc.proto != @"shadowsocks")
             {
                 return null;

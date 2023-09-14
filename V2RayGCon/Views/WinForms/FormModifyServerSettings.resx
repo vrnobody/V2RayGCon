@@ -151,14 +151,14 @@
   <data name="$this.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="cboxCoreName.ToolTip" xml:space="preserve">
-    <value />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="lbServerTitle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 14</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="label4.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnCopyShareLink.Location" type="System.Drawing.Point, System.Drawing">
     <value>62, 359</value>
   </data>
@@ -173,9 +173,6 @@
   </data>
   <data name="label10.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
-  </data>
-  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 12</value>
   </data>
   <data name="&gt;&gt;tboxServIndex.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -309,8 +306,8 @@
   <data name="cboxInboundMode.Items3" xml:space="preserve">
     <value>Custom</value>
   </data>
-  <data name="lbServerTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>20, 14</value>
+  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 12</value>
   </data>
   <data name="cboxMark.ToolTip" xml:space="preserve">
     <value />
@@ -456,6 +453,9 @@
   <data name="&gt;&gt;cboxInboundMode.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
+  <data name="cboxCoreName.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkAutoRun.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 16</value>
   </data>
@@ -582,9 +582,6 @@
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 39</value>
   </data>
-  <data name="cboxShareLinkType.Items4" xml:space="preserve">
-    <value>ss</value>
-  </data>
   <data name="label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -628,7 +625,7 @@
     <value>8</value>
   </data>
   <data name="cboxShareLinkType.Items3" xml:space="preserve">
-    <value>vmess</value>
+    <value>ss</value>
   </data>
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
@@ -835,7 +832,7 @@
     <value>lbServerTitle</value>
   </data>
   <data name="cboxShareLinkType.Items" xml:space="preserve">
-    <value>vee</value>
+    <value>vmess</value>
   </data>
   <data name="&gt;&gt;tboxShareLink.Parent" xml:space="preserve">
     <value>groupBox4</value>

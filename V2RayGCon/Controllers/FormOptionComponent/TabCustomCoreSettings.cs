@@ -81,7 +81,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             var curIdx = (curItem.GetIndex() > destIdx) ? destIdx - 0.1 : destIdx + 0.1;
             destItem.SetIndex(destIdx);
             curItem.SetIndex(curIdx);
-            settings.ResetCoreSettingsIndex(); // this will invoke menu update event
+            settings.ResetCustomCoresIndex(); // this will invoke menu update event
 
             Refresh();
         }
@@ -140,7 +140,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         void RefreshPanelCore()
         {
             ReleaseEventHandler();
-            var cs = settings.GetCustomCoreSettings();
+            var cs = settings.GetCustomCoresSetting();
             flyPanel.SuspendLayout();
             KeepNthControls(cs.Count);
             for (var i = 0; i < cs.Count; i++)

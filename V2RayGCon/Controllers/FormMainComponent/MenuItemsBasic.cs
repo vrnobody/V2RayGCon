@@ -18,7 +18,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         public MenuItemsBasic(
             Form formMain,
             ToolStripMenuItem pluginToolStrip,
-            ToolStripMenuItem miSimVmessServer,
             ToolStripMenuItem miImportLinkFromClipboard,
             ToolStripMenuItem miExportAllServer,
             ToolStripMenuItem miImportFromFile,
@@ -42,12 +41,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             InitMenuPlugin(pluginToolStrip);
 
-            InitMenuFile(
-                miSimVmessServer,
-                miImportLinkFromClipboard,
-                miExportAllServer,
-                miImportFromFile
-            );
+            InitMenuFile(miImportLinkFromClipboard, miExportAllServer, miImportFromFile);
             InitMenuWindows(miFormConfigEditor, miFormTextEditor, miFormLog, miFormOptions);
 
             InitMenuAbout(
@@ -168,19 +162,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         private void InitMenuFile(
-            ToolStripMenuItem simVmessServer,
             ToolStripMenuItem importLinkFromClipboard,
             ToolStripMenuItem exportAllServer,
             ToolStripMenuItem importFromFile
         )
         {
             // menu file
-            simVmessServer.Click += (s, a) =>
-            {
-                var f = Views.WinForms.FormSimpleConfigEditor.GetForm();
-                f.LoadCoreServer(null);
-            };
-
             importLinkFromClipboard.Click += (s, a) =>
             {
                 string text = Misc.Utils.GetClipboardText();
@@ -200,7 +187,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         )
         {
             miFormTextEditor.Click += (s, a) =>
-                Views.WinForms.FormTextConfigEditor.ShowConfig("", "", false);
+                Views.WinForms.FormTextConfigEditor.ShowEmptyConfig();
 
             // menu window
             miFormConfigEditor.Click += (s, a) =>

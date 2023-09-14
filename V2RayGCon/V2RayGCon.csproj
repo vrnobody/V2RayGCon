@@ -150,27 +150,9 @@
     <Compile Include="Models\Datas\CustomCoreSettings.cs" />
     <Compile Include="Models\Datas\MultiConfItem.cs" />
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
-    <Compile Include="Models\Datas\VeeConfigsWithReality.cs" />
-    <Compile Include="Models\Datas\VeeConfigs.cs" />
+    <Compile Include="Models\Datas\SharelinkMetadata.cs" />
     <Compile Include="Models\Datas\SpeedTestOptions.cs" />
     <Compile Include="Models\Datas\UpdateInfo.cs" />
-    <Compile Include="Models\VeeShareLinks\BasicSettingsWithReality.cs" />
-    <Compile Include="Models\VeeShareLinks\Http3b.cs" />
-    <Compile Include="Models\VeeShareLinks\Obsolete\Http3a.cs" />
-    <Compile Include="Models\VeeShareLinks\Obsolete\Socks2a.cs" />
-    <Compile Include="Models\VeeShareLinks\Obsolete\Ss1a.cs" />
-    <Compile Include="Models\VeeShareLinks\Obsolete\Ss1b.cs" />
-    <Compile Include="Models\VeeShareLinks\Obsolete\Trojan5b.cs" />
-    <Compile Include="Models\VeeShareLinks\Obsolete\Trojan5c.cs" />
-    <Compile Include="Models\VeeShareLinks\Obsolete\Vless4b.cs" />
-    <Compile Include="Models\VeeShareLinks\Obsolete\Vmess0a.cs" />
-    <Compile Include="Models\VeeShareLinks\Socks2b.cs" />
-    <Compile Include="Models\VeeShareLinks\BasicSettings.cs" />
-    <Compile Include="Models\VeeShareLinks\Obsolete\Trojan5a.cs" />
-    <Compile Include="Models\VeeShareLinks\Trojan5d.cs" />
-    <Compile Include="Models\VeeShareLinks\Ss1c.cs" />
-    <Compile Include="Models\VeeShareLinks\Obsolete\Vless4a.cs" />
-    <Compile Include="Models\VeeShareLinks\Vless4c.cs" />
     <Compile Include="Resources\Resx\I18N1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -229,7 +211,6 @@
     <Compile Include="BaseClasses\NotifyComponent.cs" />
     <Compile Include="BaseClasses\SingletonService.cs" />
     <Compile Include="Models\Datas\ImportItem.cs" />
-    <Compile Include="Models\VeeShareLinks\Utils.cs" />
     <Compile Include="Services\Caches\JsonBestMatchItems.cs" />
     <Compile Include="Services\Caches\JsonKeywordItems.cs" />
     <Compile Include="Services\ConfigMgr.cs" />
@@ -242,28 +223,9 @@
     <Compile Include="Services\ServersComponents\IndexHandler.cs" />
     <Compile Include="Services\ServersComponents\QueryHandler.cs" />
     <Compile Include="Services\ShareLinkComponents\Codecs.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Trojan5c.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Vless4b.cs" />
+    <Compile Include="Services\ShareLinkComponents\Comm.cs" />
     <Compile Include="Services\ShareLinkComponents\VlessDecoder.cs" />
     <Compile Include="Services\ShareLinkComponents\TrojanDecoder.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Comm.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\IVeeDecoder.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Http3b.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Http3a.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Socks2a.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Ss1a.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Ss1b.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Trojan5b.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Vmess0a.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Trojan5a.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Trojan5d.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Ss1c.cs" />
-    <Compile Include="Models\VeeShareLinks\Vmess0b.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Socks2b.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Obsolete\Vless4a.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Vless4c.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeCodecs\Vmess0b.cs" />
-    <Compile Include="Services\ShareLinkComponents\VeeDecoder.cs" />
     <Compile Include="Services\ShareLinkComponents\VmessDecoder.cs" />
     <Compile Include="Services\ShareLinkComponents\SsDecoder.cs" />
     <Compile Include="Services\ShareLinkComponents\V2cfgDecoder.cs" />
@@ -319,12 +281,6 @@
     </Compile>
     <Compile Include="Views\UserControls\SubscriptionUI.Designer.cs">
       <DependentUpon>SubscriptionUI.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\VeeConfigerUI.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\UserControls\VeeConfigerUI.Designer.cs">
-      <DependentUpon>VeeConfigerUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\WelcomeUI.cs">
       <SubType>UserControl</SubType>
@@ -416,12 +372,6 @@
     <Compile Include="Views\WinForms\FormOption.Designer.cs">
       <DependentUpon>FormOption.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\WinForms\FormSimpleConfigEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\WinForms\FormSimpleConfigEditor.Designer.cs">
-      <DependentUpon>FormSimpleConfigEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\WinForms\FormTextConfigEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -439,6 +389,9 @@
       <DependentUpon>FormDownloader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\CoreSettingUI.resx">
+      <DependentUpon>CoreSettingUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\CoreSettingUI.zh-CN.resx">
       <DependentUpon>CoreSettingUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\MultiConfUI.resx">
@@ -470,12 +423,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\SubscriptionUI.zh-CN.resx">
       <DependentUpon>SubscriptionUI.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\UserControls\VeeConfigerUI.resx">
-      <DependentUpon>VeeConfigerUI.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\UserControls\VeeConfigerUI.zh-CN.resx">
-      <DependentUpon>VeeConfigerUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\WelcomeUI.resx">
       <DependentUpon>WelcomeUI.cs</DependentUpon>
@@ -562,12 +509,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormDownloadCore.zh-CN.resx">
       <DependentUpon>FormDownloadCore.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormSimpleConfigEditor.resx">
-      <DependentUpon>FormSimpleConfigEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormSimpleConfigEditor.zh-CN.resx">
-      <DependentUpon>FormSimpleConfigEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormTextConfigEditor.resx">
       <DependentUpon>FormTextConfigEditor.cs</DependentUpon>
@@ -661,6 +602,7 @@
     <Folder Include="Resources\Files\3rd\bins\" />
     <Folder Include="Resources\Files\3rd\neolua\libs\" />
     <Folder Include="Resources\Files\3rd\neolua\mods\" />
+    <Folder Include="Resources\Icon\CustomCoreUI\" />
     <Folder Include="Resources\Pkg\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -45,6 +45,8 @@ namespace V2RayGCon.Views.WinForms
         }
 
         #region static methods
+        public static FormTextConfigEditor ShowEmptyConfig() => ShowConfig("", "", false);
+
         public static FormTextConfigEditor ShowConfig(string title, string config, bool isReadonly)
         {
             FormTextConfigEditor f = null;
@@ -150,7 +152,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowConfig("", "", false);
+            ShowEmptyConfig();
         }
 
         private void addNewServerToolStripMenuItem_Click(object sender, EventArgs e)

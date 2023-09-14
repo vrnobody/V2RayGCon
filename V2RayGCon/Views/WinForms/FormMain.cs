@@ -111,7 +111,6 @@ namespace V2RayGCon.Views.WinForms
                 slinkMgr.ImportLinkWithOutV2cfgLinks(text);
             };
 
-            bind(toolStripButtonAddServerSimple, toolMenuItemSimAddVmessServer, false);
             bind(toolStripButtonSelectAllCurPage, selectAllCurPageToolStripMenuItem);
             bind(toolStripButtonInverseSelectionCurPage, invertSelectionCurPageToolStripMenuItem);
             bind(toolStripButtonSelectNoneCurPage, selectNoneCurPageToolStripMenuItem1);
@@ -149,7 +148,6 @@ namespace V2RayGCon.Views.WinForms
                 new Controllers.FormMainComponent.MenuItemsBasic(
                     this,
                     pluginToolStripMenuItem,
-                    toolMenuItemSimAddVmessServer,
                     toolMenuItemImportLinkFromClipboard,
                     toolMenuItemExportAllServerToFile,
                     toolMenuItemImportFromFile,
@@ -237,9 +235,6 @@ namespace V2RayGCon.Views.WinForms
                     //ToolStripMenuItem copyAsSubscriptions,
                     toolStripMenuItemCopyAsV2cfgLink,
                     toolStripMenuItemCopyAsVmixLink,
-                    toolStripMenuItemCopyAsVeeLink,
-                    toolStripMenuItemCopyAsVmessSubscription,
-                    toolStripMenuItemCopyAsVeeSubscription,
                     //// batch op
                     toolStripMenuItemStopBatchSpeedTest,
                     toolStripMenuItemRunBatchSpeedTest,

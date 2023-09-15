@@ -305,6 +305,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Set all servers default core to [{0}]? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmChangeAllDefCoreTo {
+            get {
+                return ResourceManager.GetString("ConfirmChangeAllDefCoreTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Are you sure to clear logs? 的本地化字符串。
         /// </summary>
         internal static string ConfirmClearLog {

@@ -20,9 +20,6 @@ namespace V2RayGCon.Models.Datas
         public bool useFile = false;
         public bool useStdin = true;
 
-        public string protocols = "";
-        public bool useImportBinding = false;
-
         public CustomCoreSettings() { }
 
         #region properties

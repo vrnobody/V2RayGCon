@@ -2,23 +2,39 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using V2RayGCon.Resources.Resx;
 using V2RayGCon.Services;
 
 namespace V2RayGCon.Controllers.OptionComponent
 {
     public class TabCustomCoreSettings : OptionComponentController
     {
+        private readonly Servers servers;
         private readonly Settings settings;
         private readonly FlowLayoutPanel flyPanel;
+        private readonly ToolTip tooltip;
         private readonly Button btnAdd;
+        private readonly ComboBox cboxDefCore;
+        private readonly Button btnChangeAll;
 
-        public TabCustomCoreSettings(FlowLayoutPanel flyPanel, Button btnAdd)
+        public TabCustomCoreSettings(
+            FlowLayoutPanel flyPanel,
+            ToolTip tooltip,
+            Button btnAdd,
+            ComboBox cboxDefCore,
+            Button btnChangeAll
+        )
         {
+            this.servers = Servers.Instance;
             this.settings = Services.Settings.Instance;
             this.flyPanel = flyPanel;
+            this.tooltip = tooltip;
             this.btnAdd = btnAdd;
+            this.cboxDefCore = cboxDefCore;
+            this.btnChangeAll = btnChangeAll;
 
             BindButtonAdd();
+            BindDefCoreControls();
             BindFlyPanelDragDropEvent();
             Refresh();
         }
@@ -45,6 +61,86 @@ namespace V2RayGCon.Controllers.OptionComponent
         #endregion
 
         #region private methods
+        string GetCurDefCoreName()
+        {
+            if (cboxDefCore.SelectedIndex < 1)
+            {
+                return string.Empty;
+            }
+            return cboxDefCore.Text;
+        }
+
+        void UpdateCboxDefCoreTooltip(string name)
+        {
+            tooltip.SetToolTip(cboxDefCore, string.IsNullOrEmpty(name) ? I18N.Default : name);
+        }
+
+        void BindDefCoreControls()
+        {
+            RefreshCboxDefCore();
+            var defCoreName = settings.DefaultCoreName;
+            SelectByText(cboxDefCore, defCoreName);
+            UpdateCboxDefCoreTooltip(defCoreName);
+
+            cboxDefCore.DropDown += (s, a) => RefreshCboxDefCore();
+            cboxDefCore.SelectedValueChanged += (s, a) =>
+            {
+                var name = GetCurDefCoreName();
+                settings.DefaultCoreName = name;
+                UpdateCboxDefCoreTooltip(name);
+            };
+
+            btnChangeAll.Click += (s, a) =>
+            {
+                var name = GetCurDefCoreName();
+                var msg = string.Format(
+                    I18N.ConfirmChangeAllDefCoreTo,
+                    string.IsNullOrEmpty(name) ? I18N.Default : name
+                );
+                if (!VgcApis.Misc.UI.Confirm(msg))
+                {
+                    return;
+                }
+                VgcApis.Misc.Utils.RunInBgSlim(() =>
+                {
+                    var servs = servers.GetAllServersOrderByIndex();
+                    foreach (var coreServ in servs)
+                    {
+                        coreServ.GetCoreCtrl().SetCustomCoreName(name);
+                    }
+                });
+            };
+        }
+
+        void RefreshCboxDefCore()
+        {
+            var names = settings.GetCustomCoresSetting().Select(cs => cs.name).ToArray();
+            var items = cboxDefCore.Items;
+            items.Clear();
+            items.Add(I18N.Default);
+            items.AddRange(names);
+            VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxDefCore);
+        }
+
+        void SelectByText(ComboBox cbox, string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                cbox.SelectedIndex = 0;
+                return;
+            }
+
+            var items = cboxDefCore.Items;
+            for (int i = 1; i < items.Count; i++)
+            {
+                if (items[i].ToString() == text)
+                {
+                    cbox.SelectedIndex = i;
+                    return;
+                }
+            }
+        }
+
         void BindFlyPanelDragDropEvent()
         {
             flyPanel.DragEnter += (s, a) =>

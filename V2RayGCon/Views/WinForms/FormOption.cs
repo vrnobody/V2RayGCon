@@ -64,7 +64,10 @@ namespace V2RayGCon.Views.WinForms
             ctrl.Plug(
                 new Controllers.OptionComponent.TabCustomCoreSettings(
                     flyCoresSetting,
-                    btnCoresSettingAdd
+                    toolTip1,
+                    btnCoresSettingAdd,
+                    cboxCoreSettingDefaultCore,
+                    btnCoreSettingChangeAll
                 )
             );
 

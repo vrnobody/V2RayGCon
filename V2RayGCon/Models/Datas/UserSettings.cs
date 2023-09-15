@@ -78,13 +78,17 @@ namespace V2RayGCon.Models.Datas
 
         public int MaxConcurrentV2RayCoreNum { get; set; }
 
-        public List<CustomCoreSettings> customCoreSettings = null;
+        public string DefaultCoreName { get; set; }
+
+        public List<CustomCoreSettings> CustomCoreSettings = null;
         #endregion
 
 
         public UserSettings()
         {
             Normalized();
+
+            DefaultCoreName = string.Empty;
 
             isLoad3rdPartyPlugins = false;
 
@@ -162,7 +166,7 @@ namespace V2RayGCon.Models.Datas
             V2RayCoreDownloadVersionList = V2RayCoreDownloadVersionList ?? new List<string>();
             ImportOptions = ImportOptions ?? new ImportSharelinkOptions();
             SpeedtestOptions = SpeedtestOptions ?? new SpeedTestOptions();
-            customCoreSettings = customCoreSettings ?? new List<CustomCoreSettings>();
+            CustomCoreSettings = CustomCoreSettings ?? new List<CustomCoreSettings>();
         }
         #endregion
     }

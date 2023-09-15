@@ -810,4 +810,7 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="CustomCoreName" xml:space="preserve">
     <value>自定义内核</value>
   </data>
+  <data name="ConfirmChangeAllDefCoreTo" xml:space="preserve">
+    <value>把所有服务器的core设置为 [{0}] 吗？</value>
+  </data>
 </root>

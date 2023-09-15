@@ -552,6 +552,28 @@
   <data name="tabPageDefaults.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="btnCoreSettingChangeAll.Text" xml:space="preserve">
+    <value>修改现有</value>
+  </data>
+  <data name="btnCoreSettingChangeAll.ToolTip" xml:space="preserve">
+    <value>把全部服务器core修改成上面选中的值</value>
+  </data>
+  <data name="cboxCoreSettingDefaultCore.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label19.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label19.Location" type="System.Drawing.Point, System.Drawing">
+    <value>396, 38</value>
+  </data>
+  <data name="label19.Text" xml:space="preserve">
+    <value>选择默认core</value>
+  </data>
+  <data name="label19.ToolTip" xml:space="preserve">
+    <value>选择默认core</value>
+  </data>
   <data name="btnCoresSettingAdd.Text" xml:space="preserve">
     <value>添加</value>
   </data>

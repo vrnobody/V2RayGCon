@@ -13,6 +13,7 @@ namespace V2RayGCon.Views.UserControls
 
         public CoreSettingUI()
         {
+            // this.size = 347, 27
             InitializeComponent();
         }
 
@@ -39,24 +40,18 @@ namespace V2RayGCon.Views.UserControls
         #region private method
         void UpdateTitle()
         {
-            var title = $"{coreSettings.index}.[{coreSettings.name}]";
-            if (!string.IsNullOrEmpty(coreSettings.protocols))
-            {
-                title += $" ({coreSettings.protocols})";
-            }
+            var title = $"{coreSettings.index}.{coreSettings.name}";
             lbTitle.Text = title;
             toolTip1.SetToolTip(lbTitle, title);
 
             var tag = "";
-            tag += coreSettings.useImportBinding ? "B" : "";
             tag += coreSettings.useFile ? "F" : "";
             tag += coreSettings.useStdin ? "I" : "";
-
+            tag += coreSettings.setWorkingDir ? "W" : "";
             rlbBinding.Text = tag;
 
             var visible = !string.IsNullOrEmpty(tag);
             rlbBinding.Visible = visible;
-
             lbTitle.Left = visible ? rlbBinding.Right + rlbBinding.Left : rlbBinding.Left;
         }
 

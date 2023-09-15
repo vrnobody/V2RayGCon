@@ -44,7 +44,6 @@ namespace V2RayGCon.Services
         {
             userSettings = LoadUserSettings();
             userSettings.Normalized(); // replace null with empty object.
-            UpdateCustomCoresLookupTable();
 
             InitCoreInfoCache();
             InitLocalStorageCache(); // must init before plug-ins setting
@@ -66,42 +65,15 @@ namespace V2RayGCon.Services
         }
 
         #region custom core settings
-        ConcurrentDictionary<string, string> customCoreLookupTable =
-            new ConcurrentDictionary<string, string>();
-
-        public string GetCustomCoreName(string protocol)
+        public string DefaultCoreName
         {
-            if (
-                !string.IsNullOrEmpty(protocol)
-                && customCoreLookupTable.TryGetValue(protocol, out var name)
-                && !string.IsNullOrEmpty(name)
-            )
+            get => userSettings.DefaultCoreName;
+            set
             {
-                return name;
-            }
-            return string.Empty;
-        }
-
-        void UpdateCustomCoresLookupTable()
-        {
-            customCoreLookupTable.Clear();
-            var cs = GetCustomCoresSetting();
-            foreach (var c in cs)
-            {
-                if (!c.useImportBinding)
+                if (value != userSettings.DefaultCoreName)
                 {
-                    continue;
-                }
-                var ps = c.protocols.Split(
-                    new char[] { ',', ' ' },
-                    StringSplitOptions.RemoveEmptyEntries
-                );
-                foreach (var p in ps)
-                {
-                    if (!string.IsNullOrEmpty(p))
-                    {
-                        customCoreLookupTable.TryAdd(p, c.name);
-                    }
+                    userSettings.DefaultCoreName = value;
+                    SaveSettingsLater();
                 }
             }
         }
@@ -110,7 +82,7 @@ namespace V2RayGCon.Services
         {
             lock (saveUserSettingsLocker)
             {
-                return userSettings.customCoreSettings.OrderBy(cs => cs.index).ToList();
+                return userSettings.CustomCoreSettings.OrderBy(cs => cs.index).ToList();
             }
         }
 
@@ -125,7 +97,6 @@ namespace V2RayGCon.Services
                     core.index = idx++;
                 }
             }
-            UpdateCustomCoresLookupTable();
             SaveSettingsLater();
         }
 
@@ -133,12 +104,12 @@ namespace V2RayGCon.Services
         {
             lock (saveUserSettingsLocker)
             {
-                var coreSettings = userSettings.customCoreSettings.FirstOrDefault(
+                var coreSettings = userSettings.CustomCoreSettings.FirstOrDefault(
                     cs => cs.name == name
                 );
                 if (coreSettings != null)
                 {
-                    userSettings.customCoreSettings.Remove(coreSettings);
+                    userSettings.CustomCoreSettings.Remove(coreSettings);
                     ResetCustomCoresIndex();
                     return true;
                 }
@@ -153,21 +124,20 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            coreSettings.index = userSettings.customCoreSettings.Count + 1;
+            coreSettings.index = userSettings.CustomCoreSettings.Count + 1;
 
             lock (saveUserSettingsLocker)
             {
-                var coreS = userSettings.customCoreSettings.FirstOrDefault(
+                var coreS = userSettings.CustomCoreSettings.FirstOrDefault(
                     cs => cs.name == coreSettings.name
                 );
                 if (coreS != null)
                 {
                     coreSettings.index = coreS.index;
-                    userSettings.customCoreSettings.Remove(coreS);
+                    userSettings.CustomCoreSettings.Remove(coreS);
                 }
-                userSettings.customCoreSettings.Add(coreSettings);
+                userSettings.CustomCoreSettings.Add(coreSettings);
             }
-            UpdateCustomCoresLookupTable();
             SaveSettingsLater();
         }
 

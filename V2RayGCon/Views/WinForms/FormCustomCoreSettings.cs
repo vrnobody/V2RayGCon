@@ -38,11 +38,9 @@ namespace V2RayGCon.Views.WinForms
             cs.args = cboxArgs.Text;
             cs.stdInEncoding = cboxStdinEncoding.Text;
             cs.stdOutEncoding = cboxStdoutEncoding.Text;
-            cs.configFile = tboxConfigFilename.Text;
+            cs.configFile = cboxConfigFilename.Text;
             cs.useFile = chkUseFile.Checked;
             cs.useStdin = chkUseStdin.Checked;
-            cs.protocols = tboxProtocols.Text;
-            cs.useImportBinding = chkUseImportBinding.Checked;
             return cs;
         }
 
@@ -56,12 +54,9 @@ namespace V2RayGCon.Views.WinForms
             cboxStdinEncoding.Text = coreSettings.stdInEncoding;
             cboxStdoutEncoding.Text = coreSettings.stdOutEncoding;
 
-            tboxConfigFilename.Text = coreSettings.configFile;
+            cboxConfigFilename.Text = coreSettings.configFile;
             chkUseFile.Checked = coreSettings.useFile;
             chkUseStdin.Checked = coreSettings.useStdin;
-
-            tboxProtocols.Text = coreSettings.protocols;
-            chkUseImportBinding.Checked = coreSettings.useImportBinding;
         }
 
         void InitEncodingComboBox()

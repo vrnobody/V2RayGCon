@@ -167,11 +167,11 @@ namespace V2RayGCon.Views.WinForms
             // 
             // cboxConfigFilename
             // 
+            resources.ApplyResources(this.cboxConfigFilename, "cboxConfigFilename");
             this.cboxConfigFilename.FormattingEnabled = true;
             this.cboxConfigFilename.Items.AddRange(new object[] {
             resources.GetString("cboxConfigFilename.Items"),
             resources.GetString("cboxConfigFilename.Items1")});
-            resources.ApplyResources(this.cboxConfigFilename, "cboxConfigFilename");
             this.cboxConfigFilename.Name = "cboxConfigFilename";
             // 
             // FormCustomCoreSettings

@@ -764,9 +764,9 @@
             // 
             // cboxCoreSettingDefaultCore
             // 
+            resources.ApplyResources(this.cboxCoreSettingDefaultCore, "cboxCoreSettingDefaultCore");
             this.cboxCoreSettingDefaultCore.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxCoreSettingDefaultCore.FormattingEnabled = true;
-            resources.ApplyResources(this.cboxCoreSettingDefaultCore, "cboxCoreSettingDefaultCore");
             this.cboxCoreSettingDefaultCore.Name = "cboxCoreSettingDefaultCore";
             // 
             // label19

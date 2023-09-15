@@ -144,11 +144,18 @@
   <data name="chkInMode.ToolTip" xml:space="preserve">
     <value>Inbound协议，Config表示按原配置</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkIncrement.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
   <data name="chkIncrement.Text" xml:space="preserve">
     <value>递增</value>
   </data>
   <data name="chkIncrement.ToolTip" xml:space="preserve">
     <value>端口号递增</value>
+  </data>
+  <data name="chkShareOverLAN.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
   </data>
   <data name="chkShareOverLAN.Text" xml:space="preserve">
     <value>共享</value>
@@ -183,6 +190,9 @@
   <data name="cboxIsInjectSkipCNSite.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="chkIsInjectSkipCNSite.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 16</value>
+  </data>
   <data name="chkIsInjectSkipCNSite.Text" xml:space="preserve">
     <value>分流国内</value>
   </data>
@@ -190,6 +200,9 @@
     <value>（新手专用）不代理国内网址。高级用户请使用v2ray-core的routing</value>
   </data>
   <data name="cboxImport.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxCustomCoreName.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="cboxAutorun.ToolTip" xml:space="preserve">
@@ -201,11 +214,20 @@
   <data name="chkImport.ToolTip" xml:space="preserve">
     <value>注入全局import</value>
   </data>
+  <data name="chkRemark.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
   <data name="chkRemark.Text" xml:space="preserve">
     <value>备注</value>
   </data>
   <data name="chkRemark.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="chkCustomCore.ToolTip" xml:space="preserve">
+    <value>自定义core</value>
+  </data>
+  <data name="chkAutorun.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 16</value>
   </data>
   <data name="chkAutorun.Text" xml:space="preserve">
     <value>自启动</value>

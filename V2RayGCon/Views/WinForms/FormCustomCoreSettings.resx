@@ -630,6 +630,9 @@
   <data name="&gt;&gt;cboxArgs.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
+  <data name="cboxConfigFilename.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
   <data name="cboxConfigFilename.Items" xml:space="preserve">
     <value>config.json</value>
   </data>

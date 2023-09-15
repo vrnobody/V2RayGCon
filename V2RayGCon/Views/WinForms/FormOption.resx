@@ -2468,6 +2468,9 @@
   <data name="&gt;&gt;tabPageDefaults.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="btnCoreSettingChangeAll.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
   <data name="btnCoreSettingChangeAll.Location" type="System.Drawing.Point, System.Drawing">
     <value>396, 83</value>
   </data>
@@ -2495,6 +2498,9 @@
   <data name="&gt;&gt;btnCoreSettingChangeAll.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="cboxCoreSettingDefaultCore.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
   <data name="cboxCoreSettingDefaultCore.Location" type="System.Drawing.Point, System.Drawing">
     <value>396, 57</value>
   </data>
@@ -2515,6 +2521,9 @@
   </data>
   <data name="&gt;&gt;cboxCoreSettingDefaultCore.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="label19.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="label19.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>

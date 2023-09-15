@@ -143,6 +143,9 @@
   <data name="chkInPort.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="cboxCustomCoreName.Items" xml:space="preserve">
+    <value>True</value>
+  </data>
   <data name="cboxAutorun.Items" xml:space="preserve">
     <value>True</value>
   </data>
@@ -154,10 +157,10 @@
     <value>True</value>
   </data>
   <data name="&gt;&gt;cboxAutorun.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="cboxImport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 91</value>
+    <value>87, 115</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -180,6 +183,9 @@
   <data name="chkIncrement.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="&gt;&gt;cboxCustomCoreName.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="chkImport.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
@@ -195,11 +201,11 @@
   <data name="chkInIP.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 39</value>
   </data>
-  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>306, 144</value>
+  <data name="&gt;&gt;chkCustomCore.Parent" xml:space="preserve">
+    <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;chkImport.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
     <value>$this</value>
@@ -214,7 +220,7 @@
     <value>1</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>340, 292</value>
+    <value>340, 320</value>
   </data>
   <data name="&gt;&gt;cboxMark.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -273,6 +279,9 @@
   <data name="chkImport.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="cboxCustomCoreName.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
   <data name="&gt;&gt;chkInMode.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
@@ -309,14 +318,17 @@
   <data name="chkIsInjectSkipCNSite.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
+  <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>306, 172</value>
+  </data>
   <data name="cboxImport.Items" xml:space="preserve">
     <value>True</value>
   </data>
   <data name="&gt;&gt;chkInMode.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tboxRemark.Name" xml:space="preserve">
-    <value>tboxRemark</value>
+  <data name="&gt;&gt;cboxCustomCoreName.Name" xml:space="preserve">
+    <value>cboxCustomCoreName</value>
   </data>
   <data name="cboxMark.Location" type="System.Drawing.Point, System.Drawing">
     <value>87, 18</value>
@@ -324,8 +336,8 @@
   <data name="&gt;&gt;chkIsInjectSkipCNSite.Name" xml:space="preserve">
     <value>chkIsInjectSkipCNSite</value>
   </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
+  <data name="$this.Text" xml:space="preserve">
+    <value>Batch modify</value>
   </data>
   <data name="cboxIsInjectSkipCNSite.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -342,6 +354,9 @@
   <data name="btnModify.ToolTip" xml:space="preserve">
     <value>Only checked items will be modified.</value>
   </data>
+  <data name="chkCustomCore.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
   <data name="&gt;&gt;chkIncrement.Name" xml:space="preserve">
     <value>chkIncrement</value>
   </data>
@@ -349,13 +364,13 @@
     <value>cboxImport</value>
   </data>
   <data name="chkImport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 93</value>
+    <value>12, 117</value>
   </data>
   <data name="&gt;&gt;chkIsInjectSkipCNSite.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="chkIsInjectSkipCNSite.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 117</value>
+    <value>12, 141</value>
   </data>
   <data name="&gt;&gt;tboxRemark.Parent" xml:space="preserve">
     <value>groupBox2</value>
@@ -366,11 +381,17 @@
   <data name="chkShareOverLAN.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="&gt;&gt;tboxRemark.Name" xml:space="preserve">
+    <value>tboxRemark</value>
+  </data>
   <data name="groupBox1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
   <data name="btnModify.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
+  </data>
+  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="cboxImport.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -378,8 +399,11 @@
   <data name="&gt;&gt;chkRemark.Parent" xml:space="preserve">
     <value>groupBox2</value>
   </data>
+  <data name="cboxCustomCoreName.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
   <data name="&gt;&gt;chkAutorun.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;tboxInIP.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -391,7 +415,7 @@
     <value>127, 20</value>
   </data>
   <data name="&gt;&gt;tboxRemark.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="chkInPort.Text" xml:space="preserve">
     <value>Port</value>
@@ -419,6 +443,9 @@
   </data>
   <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
     <value>toolTip1</value>
+  </data>
+  <data name="&gt;&gt;chkCustomCore.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="chkAutorun.Text" xml:space="preserve">
     <value>Autorun</value>
@@ -448,10 +475,10 @@
     <value>87, 42</value>
   </data>
   <data name="cboxAutorun.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 67</value>
+    <value>87, 91</value>
   </data>
   <data name="&gt;&gt;cboxMark.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="chkImport.ToolTip" xml:space="preserve">
     <value>Inject global import.</value>
@@ -476,6 +503,9 @@
   </data>
   <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cboxCustomCoreName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 20</value>
   </data>
   <data name="chkRemark.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -567,10 +597,16 @@
   <data name="groupBox1.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="chkCustomCore.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="&gt;&gt;cboxIsInjectSkipCNSite.Parent" xml:space="preserve">
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;chkMark.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;chkCustomCore.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
   <data name="tboxInIP.TabIndex" type="System.Int32, mscorlib">
@@ -612,8 +648,17 @@
   <data name="cboxImport.Items1" xml:space="preserve">
     <value>False</value>
   </data>
+  <data name="cboxCustomCoreName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 67</value>
+  </data>
+  <data name="chkCustomCore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
   <data name="cboxAutorun.Items1" xml:space="preserve">
     <value>False</value>
+  </data>
+  <data name="chkCustomCore.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="groupBox1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -628,7 +673,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="btnModify.Location" type="System.Drawing.Point, System.Drawing">
-    <value>105, 260</value>
+    <value>105, 288</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormBatchModifyServerSetting</value>
@@ -639,8 +684,8 @@
   <data name="&gt;&gt;chkInIP.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="cboxAutorun.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;cboxCustomCoreName.Parent" xml:space="preserve">
+    <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;chkIncrement.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -663,6 +708,9 @@
   <data name="chkInMode.Text" xml:space="preserve">
     <value>Mode</value>
   </data>
+  <data name="&gt;&gt;chkCustomCore.Name" xml:space="preserve">
+    <value>chkCustomCore</value>
+  </data>
   <data name="chkAutorun.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
@@ -680,6 +728,9 @@
   </data>
   <data name="chkMark.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 20</value>
+  </data>
+  <data name="cboxCustomCoreName.Items1" xml:space="preserve">
+    <value>False</value>
   </data>
   <data name="chkInMode.ToolTip" xml:space="preserve">
     <value>Inbound protocol. Config means keep the original config.</value>
@@ -708,6 +759,12 @@
   <data name="&gt;&gt;tboxInPort.Name" xml:space="preserve">
     <value>tboxInPort</value>
   </data>
+  <data name="cboxCustomCoreName.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkShareOverLAN.Text" xml:space="preserve">
     <value>Share</value>
   </data>
@@ -721,7 +778,7 @@
     <value />
   </data>
   <data name="cboxIsInjectSkipCNSite.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 115</value>
+    <value>87, 139</value>
   </data>
   <data name="&gt;&gt;chkInIP.ZOrder" xml:space="preserve">
     <value>7</value>
@@ -747,6 +804,9 @@
   <data name="chkShareOverLAN.Location" type="System.Drawing.Point, System.Drawing">
     <value>223, 39</value>
   </data>
+  <data name="chkCustomCore.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 69</value>
+  </data>
   <data name="&gt;&gt;tboxInPort.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
@@ -765,11 +825,14 @@
   <data name="cboxImport.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 20</value>
   </data>
-  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="chkCustomCore.Text" xml:space="preserve">
+    <value>Core</value>
   </data>
   <data name="&gt;&gt;chkAutorun.Parent" xml:space="preserve">
     <value>groupBox2</value>
+  </data>
+  <data name="cboxAutorun.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;cboxAutorun.Name" xml:space="preserve">
     <value>cboxAutorun</value>
@@ -783,8 +846,8 @@
   <data name="chkInIP.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Batch modify</value>
+  <data name="chkCustomCore.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Inbound</value>
@@ -804,8 +867,11 @@
   <data name="&gt;&gt;tboxInPort.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="chkCustomCore.ToolTip" xml:space="preserve">
+    <value>Custom core.</value>
+  </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>173, 260</value>
+    <value>173, 288</value>
   </data>
   <data name="&gt;&gt;tboxInIP.ZOrder" xml:space="preserve">
     <value>5</value>
@@ -832,7 +898,7 @@
     <value>4</value>
   </data>
   <data name="chkAutorun.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 69</value>
+    <value>12, 93</value>
   </data>
   <data name="chkAutorun.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -849,6 +915,9 @@
   <data name="&gt;&gt;chkAutorun.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;cboxCustomCoreName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="chkMark.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 16</value>
   </data>
@@ -856,7 +925,7 @@
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;chkRemark.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using V2RayGCon.Resources.Resx;
+using V2RayGCon.Services;
 
 namespace V2RayGCon.Views.WinForms
 {
@@ -28,12 +30,14 @@ namespace V2RayGCon.Views.WinForms
 
             return _instant;
         }
-        #endregion
 
-        Services.Servers servers;
+        #endregion
+        private readonly Settings settings;
+        private readonly Servers servers;
 
         FormBatchModifyServerSetting()
         {
+            settings = Services.Settings.Instance;
             servers = Services.Servers.Instance;
 
             InitializeComponent();
@@ -45,6 +49,7 @@ namespace V2RayGCon.Views.WinForms
         {
             this.cboxMark.Items.Clear();
             cboxMark.Items.AddRange(servers.GetMarkList());
+            InitCboxCustomCore();
 
             var firstCtrl = servers.GetSelectedServers().OrderBy(s => s).FirstOrDefault();
 
@@ -60,6 +65,7 @@ namespace V2RayGCon.Views.WinForms
             this.tboxInPort.Text = first.inbPort.ToString();
             this.cboxMark.Text = first.customMark;
             this.tboxRemark.Text = first.customRemark;
+            SelectCoreName(first.customCoreName);
             this.cboxAutorun.SelectedIndex = first.isAutoRun ? 0 : 1;
             this.cboxImport.SelectedIndex = first.isInjectImport ? 0 : 1;
             this.cboxIsInjectSkipCNSite.SelectedIndex = first.isInjectSkipCNSite ? 0 : 1;
@@ -85,6 +91,19 @@ namespace V2RayGCon.Views.WinForms
             this.Close();
         }
 
+        string GetCustomCoreName()
+        {
+            if (chkCustomCore.Checked)
+            {
+                if (cboxCustomCoreName.SelectedIndex < 1)
+                {
+                    return string.Empty;
+                }
+                return cboxCustomCoreName.Text;
+            }
+            return null;
+        }
+
         private void btnModify_Click(object sender, EventArgs e)
         {
             var list = servers.GetSelectedServers();
@@ -92,14 +111,17 @@ namespace V2RayGCon.Views.WinForms
             var newMode = chkInMode.Checked ? cboxInMode.SelectedIndex : -1;
             var newIP = chkInIP.Checked ? tboxInIP.Text : null;
             var newPort = chkInPort.Checked ? VgcApis.Misc.Utils.Str2Int(tboxInPort.Text) : -1;
+
             var newMark = chkMark.Checked ? cboxMark.Text : null;
+            var newRemark = chkRemark.Checked ? tboxRemark.Text : null;
+            var newCoreName = GetCustomCoreName();
+
             var newAutorun = chkAutorun.Checked ? cboxAutorun.SelectedIndex : -1;
             var newImport = chkImport.Checked ? cboxImport.SelectedIndex : -1;
             var newSkipCN = chkIsInjectSkipCNSite.Checked
                 ? cboxIsInjectSkipCNSite.SelectedIndex
                 : -1;
             var isPortAutoIncrease = chkIncrement.Checked;
-            var newRemark = chkRemark.Checked ? tboxRemark.Text : null;
 
             ModifyServersSetting(
                 list,
@@ -109,6 +131,7 @@ namespace V2RayGCon.Views.WinForms
                 isPortAutoIncrease,
                 newMark,
                 newRemark,
+                newCoreName,
                 newAutorun,
                 newImport,
                 newSkipCN
@@ -118,6 +141,35 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         #region private method
+        void SelectCoreName(string def)
+        {
+            if (string.IsNullOrEmpty(def))
+            {
+                cboxCustomCoreName.SelectedIndex = 0;
+                return;
+            }
+
+            var items = cboxCustomCoreName.Items;
+            for (int i = 1; i < items.Count; i++)
+            {
+                if (items[i].ToString() == def)
+                {
+                    cboxCustomCoreName.SelectedIndex = i;
+                    return;
+                }
+            }
+        }
+
+        void InitCboxCustomCore()
+        {
+            var items = cboxCustomCoreName.Items;
+            items.Clear();
+            items.Add(I18N.Default);
+            var names = settings.GetCustomCoresSetting().Select(cs => cs.name).ToArray();
+            items.AddRange(names);
+            VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxCustomCoreName);
+        }
+
         void ModifyServersSetting(
             List<VgcApis.Interfaces.ICoreServCtrl> list,
             int newMode,
@@ -126,6 +178,7 @@ namespace V2RayGCon.Views.WinForms
             bool isPortAutoIncrease,
             string newMark,
             string newRemark,
+            string newCoreName,
             int newAutorun,
             int newImport,
             int newSkipCN
@@ -145,6 +198,7 @@ namespace V2RayGCon.Views.WinForms
                         portNumber,
                         newMark,
                         newRemark,
+                        newCoreName,
                         newAutorun,
                         newImport,
                         newSkipCN
@@ -165,6 +219,7 @@ namespace V2RayGCon.Views.WinForms
                             portNumber,
                             newMark,
                             newRemark,
+                            newCoreName,
                             newAutorun,
                             newImport,
                             newSkipCN
@@ -191,12 +246,18 @@ namespace V2RayGCon.Views.WinForms
             int newPort,
             string newMark,
             string newRemark,
+            string newCoreName,
             int newAutorun,
             int newImport,
             int newSkipCN
         )
         {
             var server = serverCtrl.GetCoreStates().GetAllRawCoreInfo();
+
+            if (newCoreName != null)
+            {
+                server.customCoreName = newCoreName;
+            }
 
             if (newSkipCN >= 0)
             {
@@ -222,6 +283,7 @@ namespace V2RayGCon.Views.WinForms
             {
                 server.inbIp = newIP;
             }
+
             if (newPort >= 0)
             {
                 server.inbPort = newPort;

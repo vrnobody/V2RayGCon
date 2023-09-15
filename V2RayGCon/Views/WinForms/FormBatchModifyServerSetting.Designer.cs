@@ -47,10 +47,12 @@
             this.cboxIsInjectSkipCNSite = new System.Windows.Forms.ComboBox();
             this.chkIsInjectSkipCNSite = new System.Windows.Forms.CheckBox();
             this.cboxImport = new System.Windows.Forms.ComboBox();
+            this.cboxCustomCoreName = new System.Windows.Forms.ComboBox();
             this.cboxAutorun = new System.Windows.Forms.ComboBox();
             this.tboxRemark = new System.Windows.Forms.TextBox();
             this.chkImport = new System.Windows.Forms.CheckBox();
             this.chkRemark = new System.Windows.Forms.CheckBox();
+            this.chkCustomCore = new System.Windows.Forms.CheckBox();
             this.chkAutorun = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
@@ -169,10 +171,12 @@
             this.groupBox2.Controls.Add(this.cboxIsInjectSkipCNSite);
             this.groupBox2.Controls.Add(this.chkIsInjectSkipCNSite);
             this.groupBox2.Controls.Add(this.cboxImport);
+            this.groupBox2.Controls.Add(this.cboxCustomCoreName);
             this.groupBox2.Controls.Add(this.cboxAutorun);
             this.groupBox2.Controls.Add(this.tboxRemark);
             this.groupBox2.Controls.Add(this.chkImport);
             this.groupBox2.Controls.Add(this.chkRemark);
+            this.groupBox2.Controls.Add(this.chkCustomCore);
             this.groupBox2.Controls.Add(this.chkAutorun);
             this.groupBox2.Controls.Add(this.chkMark);
             this.groupBox2.Controls.Add(this.cboxMark);
@@ -209,6 +213,17 @@
             this.cboxImport.Name = "cboxImport";
             this.toolTip1.SetToolTip(this.cboxImport, resources.GetString("cboxImport.ToolTip"));
             // 
+            // cboxCustomCoreName
+            // 
+            resources.ApplyResources(this.cboxCustomCoreName, "cboxCustomCoreName");
+            this.cboxCustomCoreName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxCustomCoreName.FormattingEnabled = true;
+            this.cboxCustomCoreName.Items.AddRange(new object[] {
+            resources.GetString("cboxCustomCoreName.Items"),
+            resources.GetString("cboxCustomCoreName.Items1")});
+            this.cboxCustomCoreName.Name = "cboxCustomCoreName";
+            this.toolTip1.SetToolTip(this.cboxCustomCoreName, resources.GetString("cboxCustomCoreName.ToolTip"));
+            // 
             // cboxAutorun
             // 
             resources.ApplyResources(this.cboxAutorun, "cboxAutorun");
@@ -239,6 +254,13 @@
             this.chkRemark.Name = "chkRemark";
             this.toolTip1.SetToolTip(this.chkRemark, resources.GetString("chkRemark.ToolTip"));
             this.chkRemark.UseVisualStyleBackColor = true;
+            // 
+            // chkCustomCore
+            // 
+            resources.ApplyResources(this.chkCustomCore, "chkCustomCore");
+            this.chkCustomCore.Name = "chkCustomCore";
+            this.toolTip1.SetToolTip(this.chkCustomCore, resources.GetString("chkCustomCore.ToolTip"));
+            this.chkCustomCore.UseVisualStyleBackColor = true;
             // 
             // chkAutorun
             // 
@@ -294,5 +316,7 @@
         private System.Windows.Forms.CheckBox chkIncrement;
         private System.Windows.Forms.TextBox tboxRemark;
         private System.Windows.Forms.CheckBox chkRemark;
+        private System.Windows.Forms.ComboBox cboxCustomCoreName;
+        private System.Windows.Forms.CheckBox chkCustomCore;
     }
 }

@@ -16,7 +16,6 @@
 [14]: https://codebeat.co/projects/github-com-vrnobody-v2raygcon-master "codebeat report"
 
 V2RayGCon是windows下[v2ray-core](https://www.v2fly.org)的图形(graphic)配置器(configer)。  
-本项目支持的最高v2ray-core版本是`v4.45.2`  
 
 [\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]][10]&nbsp;&nbsp;[\[唯一联系方式 issue\]][11]  
 

@@ -113,6 +113,16 @@ namespace VgcApisTests
         }
 
         [DataTestMethod]
+        [DataRow(@"{outbounds:[{protocol:'vmess'}]}", "outbounds.0.protocol", "")]
+        public void WTF(string str, string path, string exp)
+        {
+            // 啊，这？
+            var r = GetValue<string>(str, path);
+
+            Assert.AreEqual(r, exp);
+        }
+
+        [DataTestMethod]
         [DataRow("D1", true, true, false, true, 3u, 49u)]
         public void TryParseKeyMessageTests(
             string keyName,

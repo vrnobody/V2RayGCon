@@ -76,7 +76,7 @@ namespace NeoLuna.Services
             foreach (var luaCtrl in luaCtrls)
             {
                 var ctrl = luaCtrl; // capture
-                Action onClick = () =>
+                void onClick()
                 {
                     if (ctrl.isRunning)
                     {
@@ -86,10 +86,12 @@ namespace NeoLuna.Services
                     {
                         ctrl.Start();
                     }
-                };
+                }
 
-                var mi = new ToolStripMenuItem(ctrl.name, null, (s, a) => onClick());
-                mi.Checked = luaCtrl.isRunning;
+                var mi = new ToolStripMenuItem(ctrl.name, null, (s, a) => onClick())
+                {
+                    Checked = luaCtrl.isRunning
+                };
                 mis.Add(mi);
             }
 

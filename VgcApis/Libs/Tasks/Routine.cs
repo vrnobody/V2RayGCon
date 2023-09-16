@@ -6,9 +6,8 @@ namespace VgcApis.Libs.Tasks
     public sealed class Routine : BaseClasses.Disposable
     {
         readonly Action action;
-
-        Timer schedule;
-        Bar bar;
+        readonly Timer schedule;
+        readonly Bar bar;
 
         public Routine(Action action, int interval)
         {

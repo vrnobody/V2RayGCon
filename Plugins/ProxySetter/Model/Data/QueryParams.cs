@@ -4,7 +4,7 @@ namespace ProxySetter.Model.Data
 {
     public class QueryParams
     {
-        Dictionary<Enum.PacListModes, string> pacTypeName = new Dictionary<
+        readonly Dictionary<Enum.PacListModes, string> pacTypeName = new Dictionary<
             Enum.PacListModes,
             string
         >
@@ -12,8 +12,7 @@ namespace ProxySetter.Model.Data
             { Enum.PacListModes.WhiteList, "whitelist" },
             { Enum.PacListModes.BlackList, "blacklist" },
         };
-
-        Dictionary<Enum.PacProtocols, string> pacProtocolName = new Dictionary<
+        readonly Dictionary<Enum.PacProtocols, string> pacProtocolName = new Dictionary<
             Enum.PacProtocols,
             string
         >

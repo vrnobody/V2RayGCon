@@ -16,9 +16,8 @@ namespace V2RayGCon.Libs.V2Ray
         public event EventHandler<VgcApis.Models.Datas.StrEvent> OnLog;
         public event EventHandler OnCoreStatusChanged;
 
-        Services.Settings setting;
-
-        AutoResetEvent coreStartStopLocker = new AutoResetEvent(true);
+        readonly Services.Settings setting;
+        readonly AutoResetEvent coreStartStopLocker = new AutoResetEvent(true);
         Process coreProc;
         static int curConcurrentV2RayCoreNum = 0;
         bool isForcedExit = false;

@@ -9,14 +9,12 @@ namespace Luna.Libs.LuaSnippet
     internal sealed class BestMatchSnippets : IEnumerable<AutocompleteItem>
     {
         private Scintilla editor;
-        string searchPattern = VgcApis.Models.Consts.Patterns.LuaSnippetSearchPattern;
-
-        List<ApiFunctionSnippets> apiFunctions;
-        List<LuaFuncSnippets> luaFunctions;
-        List<LuaKeywordSnippets> luaKeywords;
-        List<LuaSubFuncSnippets> luaSubFunctions;
-
-        List<LuaImportClrSnippets> luaImportClrs;
+        readonly string searchPattern = VgcApis.Models.Consts.Patterns.LuaSnippetSearchPattern;
+        readonly List<ApiFunctionSnippets> apiFunctions;
+        readonly List<LuaFuncSnippets> luaFunctions;
+        readonly List<LuaKeywordSnippets> luaKeywords;
+        readonly List<LuaSubFuncSnippets> luaSubFunctions;
+        readonly List<LuaImportClrSnippets> luaImportClrs;
 
         List<LuaImportClrSnippets> customRequireModuleSnippets = new List<LuaImportClrSnippets>();
         List<MatchItemBase> customScriptSnippets = new List<MatchItemBase>();
@@ -80,7 +78,7 @@ namespace Luna.Libs.LuaSnippet
         #endregion
 
         #region private methods
-        HashSet<string> ignoredList = new HashSet<string>(
+        readonly HashSet<string> ignoredList = new HashSet<string>(
             Models.Consts.Lua.NLuaKeyWords.Split(' ')
         );
 

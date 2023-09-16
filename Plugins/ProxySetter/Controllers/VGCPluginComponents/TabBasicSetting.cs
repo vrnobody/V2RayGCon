@@ -6,18 +6,17 @@ namespace ProxySetter.Controllers.VGCPluginComponents
 {
     class TabBasicSetting : ComponentCtrl
     {
-        Services.PsSettings setting;
+        readonly Services.PsSettings setting;
         string oldSetting;
         Model.Data.BasicSettings basicSettings;
-        Services.ServerTracker servTracker;
-
-        ComboBox cboxBasicSysProxyMode,
+        readonly Services.ServerTracker servTracker;
+        readonly ComboBox cboxBasicSysProxyMode,
             cboxBasicPacMode,
             cboxBasicPacProtocol;
-        TextBox tboxBasicProxyPort,
+        readonly TextBox tboxBasicProxyPort,
             tboxBaiscPacPort,
             tboxBasicCustomPacPath;
-        CheckBox chkBasicAutoUpdateSysProxy,
+        readonly CheckBox chkBasicAutoUpdateSysProxy,
             chkBasicPacAlwaysOn,
             chkBasicUseCustomPac;
 

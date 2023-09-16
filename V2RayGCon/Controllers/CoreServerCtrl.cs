@@ -16,7 +16,7 @@ namespace V2RayGCon.Controllers
             OnCoreStart,
             OnIndexChanged;
 
-        CoreInfo coreInfo;
+        readonly CoreInfo coreInfo;
         CoreServerComponent.CoreStates states;
         CoreServerComponent.Logger logger;
         CoreServerComponent.Configer configer;

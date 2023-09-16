@@ -18,7 +18,7 @@ namespace NeoLuna.Controllers
         Models.Apis.LuaSys luaSys = null;
 
         string result = null;
-        ManualResetEvent coreStopBar = new ManualResetEvent(true);
+        readonly ManualResetEvent coreStopBar = new ManualResetEvent(true);
 
         Thread luaCoreThread;
         private readonly bool enableTracebackFeature;

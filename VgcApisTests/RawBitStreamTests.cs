@@ -13,12 +13,11 @@ namespace VgcApisTests
         const int MaxStrLen = VgcApis.Models.Consts.BitStream.MaxStringLen;
         const int SubVersionIndexInBytes = VgcApis.Models.Consts.BitStream.SubVersionByteIndex;
         const int InfoAreaLenInBytes = VgcApis.Models.Consts.BitStream.InfoAreaLenInBytes;
-
-        VgcApis.Libs.Streams.RawBitStream.RawBitStream bitStream;
-        VgcApis.Libs.Streams.RawBitStream.Numbers numbers;
-        VgcApis.Libs.Streams.RawBitStream.Uuids uuids;
-        VgcApis.Libs.Streams.RawBitStream.Address address;
-        VgcApis.Libs.Streams.RawBitStream.Bytes bytesWriter;
+        readonly VgcApis.Libs.Streams.RawBitStream.RawBitStream bitStream;
+        readonly VgcApis.Libs.Streams.RawBitStream.Numbers numbers;
+        readonly VgcApis.Libs.Streams.RawBitStream.Uuids uuids;
+        readonly VgcApis.Libs.Streams.RawBitStream.Address address;
+        readonly VgcApis.Libs.Streams.RawBitStream.Bytes bytesWriter;
 
         public RawBitStreamTests()
         {

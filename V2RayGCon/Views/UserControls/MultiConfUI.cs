@@ -6,7 +6,7 @@ namespace V2RayGCon.Views.UserControls
 {
     public partial class MultiConfUI : UserControl
     {
-        Action OnDeleted;
+        readonly Action OnDeleted;
 
         public MultiConfUI(Models.Datas.MultiConfItem multiConfItem, Action OnDeleted)
         {

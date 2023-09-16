@@ -5,10 +5,9 @@ namespace V2RayGCon.Views.UserControls
 {
     public partial class WelcomeUI : UserControl, BaseClasses.IFormMainFlyPanelComponent
     {
-        Services.Settings setting;
-        Services.ShareLinkMgr slinkMgr;
-
-        int marginBottom;
+        readonly Services.Settings setting;
+        readonly Services.ShareLinkMgr slinkMgr;
+        readonly int marginBottom;
 
         public WelcomeUI()
         {

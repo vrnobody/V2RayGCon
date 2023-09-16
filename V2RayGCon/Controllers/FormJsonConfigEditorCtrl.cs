@@ -10,7 +10,7 @@ namespace V2RayGCon.Controllers
     {
         public event EventHandler OnChanged;
 
-        Services.Servers servers;
+        readonly Services.Servers servers;
 
         public JObject config;
         string uid,

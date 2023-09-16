@@ -8,7 +8,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         : VgcApis.BaseClasses.ComponentOf<Codecs>,
             VgcApis.Interfaces.IShareLinkDecoder
     {
-        Cache cache;
+        readonly Cache cache;
 
         public SsDecoder(Cache cache)
         {

@@ -47,11 +47,11 @@ namespace V2RayGCon.Views.WinForms
             });
 
         Controllers.FormJsonConfigEditorCtrl configer;
-        Services.Settings setting;
+        readonly Services.Settings setting;
 
         VgcApis.WinForms.FormSearch formSearch;
         ToolsPanelController toolsPanelController;
-        string formTitle;
+        readonly string formTitle;
         bool isShowPanel;
 
         ScintillaNET.Scintilla editor;

@@ -53,8 +53,8 @@ namespace V2RayGCon.Views.WinForms
 
         private ICoreServCtrl coreServ;
         VgcApis.Models.Datas.CoreServSettings orgCoreServSettings;
-        Services.Servers servers;
-        Services.Settings settings;
+        readonly Services.Servers servers;
+        readonly Services.Settings settings;
 
         public FormModifyServerSettings()
         {
@@ -115,22 +115,21 @@ namespace V2RayGCon.Views.WinForms
 
         VgcApis.Models.Datas.CoreServSettings GatherSettings()
         {
-            var result = new VgcApis.Models.Datas.CoreServSettings();
-            result.index = VgcApis.Misc.Utils.Str2Int(tboxServIndex.Text);
-            result.serverName = tboxServerName.Text;
-            result.serverDescription = tboxDescription.Text;
-            result.inboundMode = cboxInboundMode.SelectedIndex;
-            result.inboundAddress = cboxInboundAddress.Text;
-            result.mark = cboxMark.Text;
-            result.remark = tboxRemark.Text;
-
-            result.customCoreName =
-                cboxCoreName.SelectedIndex < 1 ? string.Empty : cboxCoreName.Text;
-
-            result.isAutorun = chkAutoRun.Checked;
-            result.isBypassCnSite = chkBypassCnSite.Checked;
-            result.isGlobalImport = chkGlobalImport.Checked;
-            result.isUntrack = chkUntrack.Checked;
+            var result = new VgcApis.Models.Datas.CoreServSettings
+            {
+                index = VgcApis.Misc.Utils.Str2Int(tboxServIndex.Text),
+                serverName = tboxServerName.Text,
+                serverDescription = tboxDescription.Text,
+                inboundMode = cboxInboundMode.SelectedIndex,
+                inboundAddress = cboxInboundAddress.Text,
+                mark = cboxMark.Text,
+                remark = tboxRemark.Text,
+                customCoreName = cboxCoreName.SelectedIndex < 1 ? string.Empty : cboxCoreName.Text,
+                isAutorun = chkAutoRun.Checked,
+                isBypassCnSite = chkBypassCnSite.Checked,
+                isGlobalImport = chkGlobalImport.Checked,
+                isUntrack = chkUntrack.Checked
+            };
             return result;
         }
 

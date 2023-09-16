@@ -99,11 +99,11 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
                 Match curIndentMatch = Regex.Match(curLineText, "^[ \\t]*");
                 string curIndent = curIndentMatch.Value;
 
-                e.Text = (e.Text + curIndent);
+                e.Text += curIndent;
 
                 if (Regex.IsMatch(curLineText, @"\[\s*$") || Regex.IsMatch(curLineText, @"{\s*$"))
                 {
-                    e.Text = (e.Text + "  ");
+                    e.Text += "  ";
                 }
             }
         }
@@ -168,8 +168,7 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
             this.editor = editor;
 
             // bind scintilla
-            var bs = new BindingSource();
-            bs.DataSource = this;
+            var bs = new BindingSource { DataSource = this };
             editor.DataBindings.Add(
                 "Text",
                 bs,

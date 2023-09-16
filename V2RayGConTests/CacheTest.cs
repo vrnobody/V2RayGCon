@@ -8,7 +8,7 @@ namespace V2RayGCon.Test
     [TestClass]
     public class CacheTest
     {
-        V2RayGCon.Services.Cache cache;
+        readonly V2RayGCon.Services.Cache cache;
 
         public CacheTest()
         {

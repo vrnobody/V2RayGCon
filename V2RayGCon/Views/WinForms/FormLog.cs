@@ -14,7 +14,7 @@ namespace V2RayGCon.Views.WinForms
         public static void ShowForm() => auxSiForm.ShowForm();
         #endregion
 
-        Services.Settings setting;
+        readonly Services.Settings setting;
 
         long updateTimeStamp = DateTime.Now.Ticks;
 

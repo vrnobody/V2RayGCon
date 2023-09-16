@@ -11,7 +11,7 @@ namespace V2RayGCon
         #region single instance
         // https://stackoverflow.com/questions/19147/what-is-the-correct-way-to-create-a-single-instance-application
 
-        static Mutex mutex = new Mutex(true,
+        static readonly Mutex mutex = new Mutex(true,
 #if DEBUG
             "{a4333801-a206-4061-9e20-1f03e2deaf7f}"
 #else

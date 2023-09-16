@@ -116,12 +116,12 @@ namespace ProxySetter.Services
                 return;
             }
 
-            Action handler = () =>
+            void handler()
             {
                 bs.sysProxyMode = (bs.sysProxyMode % 3) + 1;
                 setting.SaveBasicSetting(bs);
                 Restart();
-            };
+            }
 
             hotKeyHandle = notifier.RegisterHotKey(
                 handler,

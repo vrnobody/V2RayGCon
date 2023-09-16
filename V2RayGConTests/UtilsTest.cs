@@ -21,8 +21,7 @@ namespace V2RayGCon.Test
             var f1 = "clumsy-writer-main-test.txt";
             var f2 = "clumsy-writer-bak-test.txt";
 
-            var us = new Models.Datas.UserSettings();
-            us.DecodeCache = s;
+            var us = new Models.Datas.UserSettings { DecodeCache = s };
             ClumsyWriter(us, null, null, f1, f2);
 
             var us1 = LoadUserSettingsFromFile(f1);

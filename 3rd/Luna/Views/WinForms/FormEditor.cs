@@ -9,14 +9,12 @@ namespace Luna.Views.WinForms
         Controllers.FormEditorCtrl.ButtonCtrl editorCtrl;
         Controllers.FormEditorCtrl.AutoCompleteCtrl acmCtrl;
         Controllers.FormEditorCtrl.MenuCtrl menuCtrl;
-
-        Services.Settings settings;
-        Services.FormMgrSvc formMgr;
+        readonly Services.Settings settings;
+        readonly Services.FormMgrSvc formMgr;
 
         private readonly LuaCoreSetting initialCoreSettings;
-
-        ScintillaNET.Scintilla editor;
-        string title = "";
+        readonly ScintillaNET.Scintilla editor;
+        readonly string title = "";
 
         public static FormEditor CreateForm(
             Services.FormMgrSvc formMgr,

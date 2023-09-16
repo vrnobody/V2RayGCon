@@ -4,7 +4,8 @@ namespace V2RayGCon.Services.ServersComponents
 {
     internal class ConfigCache
     {
-        ConcurrentDictionary<string, string> cache = new ConcurrentDictionary<string, string>();
+        readonly ConcurrentDictionary<string, string> cache =
+            new ConcurrentDictionary<string, string>();
 
         public ConfigCache() { }
 

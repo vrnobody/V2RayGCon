@@ -12,12 +12,12 @@ namespace NeoLuna.Controllers.FormMainCtrl
 {
     internal class TabGeneralCtrl
     {
-        Button btnStopAll,
+        readonly Button btnStopAll,
             btnKillAll,
             btnDelAll,
             btnImport,
             btnExport;
-        FlowLayoutPanel flyLuaUiPanel;
+        readonly FlowLayoutPanel flyLuaUiPanel;
 
         public TabGeneralCtrl(
             FlowLayoutPanel flyLuaUiPanel,
@@ -87,8 +87,7 @@ namespace NeoLuna.Controllers.FormMainCtrl
 
         void HandleFileDrop(DragEventArgs args)
         {
-            var filenames = args.Data.GetData(DataFormats.FileDrop) as string[];
-            if (filenames == null)
+            if (!(args.Data.GetData(DataFormats.FileDrop) is string[] filenames))
             {
                 return;
             }
@@ -134,10 +133,12 @@ namespace NeoLuna.Controllers.FormMainCtrl
         {
             // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
             var panel = sender as FlowLayoutPanel;
-            var curItem = args.Data.GetData(typeof(LuaUI)) as LuaUI;
             Point p = panel.PointToClient(new Point(args.X, args.Y));
-            var destItem = panel.GetChildAtPoint(p) as Views.UserControls.LuaUI;
-            if (curItem == null || destItem == null || curItem == destItem)
+            if (
+                !(args.Data.GetData(typeof(LuaUI)) is LuaUI curItem)
+                || !(panel.GetChildAtPoint(p) is Views.UserControls.LuaUI destItem)
+                || curItem == destItem
+            )
             {
                 return;
             }

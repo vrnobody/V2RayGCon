@@ -6,10 +6,9 @@ namespace Luna.Views.WinForms
     internal partial class FormMain : Form
     {
         Controllers.FormMainCtrl.TabGeneralCtrl genCtrl;
-
-        Services.LuaServer luaServer;
-        Services.Settings settings;
-        Services.FormMgrSvc formMgr;
+        readonly Services.LuaServer luaServer;
+        readonly Services.Settings settings;
+        readonly Services.FormMgrSvc formMgr;
 
         public static FormMain CreateForm(
             Services.Settings settings,

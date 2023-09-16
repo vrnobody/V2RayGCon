@@ -7,8 +7,8 @@ namespace V2RayGCon.Services.ServersComponents
 {
     internal sealed class IndexHandler
     {
-        ReaderWriterLockSlim locker;
-        Dictionary<string, Controllers.CoreServerCtrl> coreServCache;
+        readonly ReaderWriterLockSlim locker;
+        readonly Dictionary<string, Controllers.CoreServerCtrl> coreServCache;
 
         public event EventHandler OnIndexChanged;
 

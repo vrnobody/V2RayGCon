@@ -75,14 +75,15 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return null;
         }
 
+#pragma warning disable CA1822 // Mark members as static
         public string Decode(string shareLink, VgcApis.Interfaces.IShareLinkDecoder decoder)
+#pragma warning restore CA1822 // Mark members as static
         {
             try
             {
                 return decoder.Decode(shareLink);
             }
             catch { }
-
             return null;
         }
 

@@ -4,7 +4,7 @@ namespace Luna.Libs.LuaSnippet
 {
     internal sealed class LuaFuncSnippets : MatchItemBase
     {
-        string lowerText;
+        readonly string lowerText;
 
         public LuaFuncSnippets(string luaFuncStr)
             : base(luaFuncStr)

@@ -10,8 +10,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         : VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
             VgcApis.Interfaces.CoreCtrlComponents.ICoreStates
     {
-        VgcApis.Models.Datas.CoreInfo coreInfo;
-        Services.Servers servers;
+        readonly VgcApis.Models.Datas.CoreInfo coreInfo;
+        readonly Services.Servers servers;
 
         public CoreStates(Services.Servers servers, VgcApis.Models.Datas.CoreInfo coreInfo)
         {

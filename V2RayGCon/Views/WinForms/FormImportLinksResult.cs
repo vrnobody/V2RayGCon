@@ -11,7 +11,7 @@ namespace V2RayGCon.Views.WinForms
         public static void ShowResult(IEnumerable<string[]> importResults) =>
             VgcApis.Misc.UI.Invoke(() => new FormImportLinksResult(importResults).Show());
 
-        IEnumerable<string[]> results;
+        readonly IEnumerable<string[]> results;
 
         FormImportLinksResult(IEnumerable<string[]> importResults)
         {

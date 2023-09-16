@@ -10,7 +10,7 @@ namespace V2RayGCon.Test
     [TestClass]
     public class LibTest
     {
-        static long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+        static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
         [TestMethod]
         public void ParseStatApiResultTestXray()

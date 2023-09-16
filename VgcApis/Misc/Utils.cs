@@ -633,7 +633,7 @@ namespace VgcApis.Misc
             {
                 if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
                 {
-                    return $"[{address.ToString()}]";
+                    return $"[{address}]";
                 }
             }
             return host;
@@ -743,7 +743,7 @@ namespace VgcApis.Misc
             long latency = to;
             long totalRead = 0;
             long expectedBytes = expectedSizeInKiB * 1024;
-            Func<long, bool> onProgress = (read) =>
+            bool onProgress(long read)
             {
                 totalRead += read;
                 if (totalRead > expectedBytes && totalRead > 0)
@@ -751,7 +751,7 @@ namespace VgcApis.Misc
                     return false;
                 }
                 return true;
-            };
+            }
 
             var maxTimeout =
                 timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
@@ -967,10 +967,10 @@ namespace VgcApis.Misc
 
         public static Task RunInBgSlim(Action worker)
         {
-            Action w = () =>
+            void w()
             {
                 worker?.Invoke();
-            };
+            }
 
             try
             {
@@ -985,7 +985,7 @@ namespace VgcApis.Misc
 
         public static Task RunInBackground(Action worker, bool configAwait = false)
         {
-            Action job = () =>
+            void job()
             {
                 try
                 {
@@ -1008,7 +1008,7 @@ namespace VgcApis.Misc
                     Libs.Sys.FileLogger.Error($"Background task error:\n{e}");
                     throw;
                 }
-            };
+            }
 
             try
             {
@@ -1176,7 +1176,7 @@ namespace VgcApis.Misc
             }
             catch (Exception e)
             {
-                Libs.Sys.FileLogger.Error($"WriteAllTextNow() exception: {e.ToString()}");
+                Libs.Sys.FileLogger.Error($"WriteAllTextNow() exception: {e}");
             }
             return false;
         }
@@ -1785,7 +1785,7 @@ namespace VgcApis.Misc
             var k = 0;
             while (value > 0)
             {
-                value = value >> 1;
+                value >>= 1;
                 k++;
             }
             return value < 0 ? -1 : k;
@@ -1887,7 +1887,7 @@ namespace VgcApis.Misc
 
         // Assembly location may change while app running.
         // So we should cache it when app starts.
-        static string appDirCache = GenAppDir();
+        static readonly string appDirCache = GenAppDir();
 
         static string GenAppDir()
         {

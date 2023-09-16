@@ -4,7 +4,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 {
     abstract class FormMainComponentController : IFormComponentController
     {
-        private FormComponentController auxComponentController = new FormComponentController();
+        private readonly FormComponentController auxComponentController =
+            new FormComponentController();
 
         #region public method
         public void Bind(BaseClasses.FormController container)

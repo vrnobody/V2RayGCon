@@ -62,10 +62,12 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var vc = new Models.Datas.SharelinkMetadata();
-            vc.name = parts.Last();
-            vc.proto = proto;
-            vc.auth1 = parts[0];
+            var vc = new Models.Datas.SharelinkMetadata
+            {
+                name = parts.Last(),
+                proto = proto,
+                auth1 = parts[0]
+            };
 
             var addr = parts[1];
             if (!VgcApis.Misc.Utils.TryParseAddress(addr, out vc.host, out vc.port))

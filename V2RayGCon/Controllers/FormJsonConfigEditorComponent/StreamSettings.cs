@@ -6,7 +6,7 @@ namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
 {
     class StreamSettings : ConfigerComponentController
     {
-        Services.Cache cache;
+        readonly Services.Cache cache;
 
         public StreamSettings(
             ComboBox type,
@@ -149,8 +149,7 @@ namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
 
         void DataBinding(ComboBox type, ComboBox param, CheckBox tls, CheckBox sockopt)
         {
-            var bs = new BindingSource();
-            bs.DataSource = this;
+            var bs = new BindingSource { DataSource = this };
 
             tls.DataBindings.Add(
                 nameof(CheckBox.Checked),

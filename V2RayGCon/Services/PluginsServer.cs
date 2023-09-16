@@ -11,7 +11,7 @@ namespace V2RayGCon.Services
 
         public event EventHandler OnRequireMenuUpdate;
 
-        Libs.Lua.Apis apis = new Libs.Lua.Apis();
+        readonly Libs.Lua.Apis apis = new Libs.Lua.Apis();
 
         PluginsComponents.PluginMgr pluginsMgr = null;
 

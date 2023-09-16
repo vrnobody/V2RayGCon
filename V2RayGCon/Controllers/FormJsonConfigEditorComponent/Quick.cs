@@ -6,8 +6,8 @@ namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
 {
     class Quick : ConfigerComponentController
     {
-        Services.Cache cache;
-        Services.ConfigMgr configMgr;
+        readonly Services.Cache cache;
+        readonly Services.ConfigMgr configMgr;
 
         bool isUseV4;
 

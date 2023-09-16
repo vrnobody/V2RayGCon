@@ -498,7 +498,7 @@ namespace VgcApis.Misc
 
         #region winform
 
-        static List<Color> colorTable = new List<Color>
+        static readonly List<Color> colorTable = new List<Color>
         {
             Color.AntiqueWhite,
             Color.Aqua,

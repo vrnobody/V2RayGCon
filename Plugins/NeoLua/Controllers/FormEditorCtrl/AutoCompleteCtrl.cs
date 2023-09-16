@@ -19,12 +19,10 @@ namespace NeoLuna.Controllers.FormEditorCtrl
         private readonly ComboBox cboxFunctionList;
         private readonly ToolStripMenuItem miEanbleCodeAnalyzeEx;
         private readonly ToolStripStatusLabel smiLbCodeanalyze;
-
-        AstServer astServer;
+        readonly AstServer astServer;
         AutocompleteMenu luaAcm = null;
         BestMatchSnippets bestMatchSnippets = null;
-
-        VgcApis.Libs.Infr.Recorder history = new VgcApis.Libs.Infr.Recorder();
+        readonly VgcApis.Libs.Infr.Recorder history = new VgcApis.Libs.Infr.Recorder();
         VgcApis.Libs.Tasks.LazyGuy lazyAnalyser;
 
         public AutoCompleteCtrl(

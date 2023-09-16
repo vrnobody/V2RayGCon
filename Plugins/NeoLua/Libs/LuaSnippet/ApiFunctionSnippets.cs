@@ -5,8 +5,7 @@ namespace NeoLuna.Libs.LuaSnippet
     internal sealed class ApiFunctionSnippets : MatchItemBase
     {
         const string seperator = @":";
-
-        string lowerText;
+        readonly string lowerText;
 
         public ApiFunctionSnippets(
             string returnType,

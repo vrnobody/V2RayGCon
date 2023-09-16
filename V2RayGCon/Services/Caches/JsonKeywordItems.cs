@@ -4,7 +4,7 @@ namespace V2RayGCon.Services.Caches
 {
     internal sealed class JsonKeywordItems : AutocompleteItem
     {
-        string lowerText;
+        readonly string lowerText;
 
         public JsonKeywordItems(string luaKeyword)
             : base(luaKeyword)

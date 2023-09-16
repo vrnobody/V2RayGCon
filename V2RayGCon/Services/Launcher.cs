@@ -16,11 +16,11 @@ namespace V2RayGCon.Services
 
         Servers servers;
         Updater updater;
-        Notifier notifier;
+        readonly Notifier notifier;
 
         bool isDisposing = false;
         List<IDisposable> services = new List<IDisposable>();
-        string appName;
+        readonly string appName;
 
         public Launcher()
         {
@@ -65,7 +65,9 @@ namespace V2RayGCon.Services
         #endregion
 
         #region debug
+#pragma warning disable IDE0051 // 删除未使用的私有成员
         void ShowPlugin(string name)
+#pragma warning restore IDE0051 // 删除未使用的私有成员
         {
             var pluginsServ = PluginsServer.Instance;
             var plugins = pluginsServ.GetAllEnabledPlugins();
@@ -269,7 +271,7 @@ namespace V2RayGCon.Services
             // dependency injection
             cache.Run(setting);
             configMgr.Run(setting, cache);
-            servers.Run(setting, cache, configMgr, notifier);
+            servers.Run(setting, cache, configMgr);
             updater.Run(setting, servers);
             slinkMgr.Run(setting, servers, cache);
             notifier.Run(setting, servers, slinkMgr, updater);

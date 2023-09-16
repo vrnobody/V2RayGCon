@@ -5,7 +5,7 @@ namespace VgcApisTests
     [TestClass]
     public class Base64Tests
     {
-        string[] normalStrings = new string[] { @"1234", @"abcd", @"1中23 文", @"中123ac文" };
+        readonly string[] normalStrings = new string[] { @"1234", @"abcd", @"1中23 文", @"中123ac文" };
 
         string GenRandHex() => VgcApis.Misc.Utils.RandomHex(7);
 

@@ -8,7 +8,7 @@ namespace ProxySetter.Libs.Sys
         // https://codereview.stackexchange.com/questions/117743/background-task-with-instant-abort-capability-in-c
         // Declare cancellation token and Cancellation token sources:
         private Thread _executionThread = null;
-        private Action _worker = null;
+        private readonly Action _worker = null;
 
         // During initialization of the class assign token:
         public CancelableTask(Action worker)

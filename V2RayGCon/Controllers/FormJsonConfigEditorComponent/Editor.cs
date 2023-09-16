@@ -12,18 +12,18 @@ namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
 {
     class Editor : ConfigerComponentController
     {
-        Services.Cache cache;
+        readonly Services.Cache cache;
 
         Scintilla editor = null;
         AutocompleteMenu jsonAcm = null;
-        ComboBox cboxSection,
+        readonly ComboBox cboxSection,
             cboxExample;
-        Button btnFormat,
+        readonly Button btnFormat,
             btnRestore;
 
         Dictionary<string, string> sections;
         string preSection = @"";
-        string ConfigDotJson = VgcApis.Models.Consts.Config.ConfigDotJson;
+        readonly string ConfigDotJson = VgcApis.Models.Consts.Config.ConfigDotJson;
 
         public Editor(
             Panel panel,
@@ -226,11 +226,11 @@ namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
                 Match curIndentMatch = Regex.Match(curLineText, "^[ \\t]*");
                 string curIndent = curIndentMatch.Value;
 
-                e.Text = (e.Text + curIndent);
+                e.Text += curIndent;
 
                 if (Regex.IsMatch(curLineText, @"\[\s*$") || Regex.IsMatch(curLineText, @"{\s*$"))
                 {
-                    e.Text = (e.Text + "  ");
+                    e.Text += "  ";
                 }
             }
         }
@@ -583,8 +583,7 @@ namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
             this.editor = editor;
 
             // bind scintilla
-            var bs = new BindingSource();
-            bs.DataSource = this;
+            var bs = new BindingSource { DataSource = this };
             editor.DataBindings.Add(
                 "Text",
                 bs,

@@ -39,7 +39,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>V2RayGCon.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
     <LangVersion>7.1</LangVersion>
   </PropertyGroup>
@@ -51,7 +52,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>V2RayGCon.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
     <DebugSymbols>true</DebugSymbols>
     <Prefer32Bit>false</Prefer32Bit>
     <LangVersion>7.1</LangVersion>
@@ -532,7 +534,6 @@
     <None Include="Resources\Files\3rd\templates\custom\vmessDecodeTemplate.json" />
     <None Include="Resources\Files\3rd\templates\routing\whitelist.json" />
     <None Include="Resources\Files\tests\stress-test-01.lua" />
-    <None Include="V2RayGCon.ruleset" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon_dark.ico" />

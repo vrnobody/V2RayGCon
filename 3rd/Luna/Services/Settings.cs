@@ -9,8 +9,7 @@ namespace Luna.Services
 
         readonly string pluginName = Properties.Resources.Name;
         Models.Data.UserSettings userSettings;
-
-        VgcApis.Libs.Tasks.LazyGuy lazyBookKeeper;
+        readonly VgcApis.Libs.Tasks.LazyGuy lazyBookKeeper;
 
         public Settings()
         {

@@ -11,13 +11,13 @@ namespace NeoLuna.Models.Apis.Components
 {
     internal sealed class Misc : VgcApis.BaseClasses.ComponentOf<LuaApis>, Interfaces.ILuaMisc
     {
-        Services.Settings settings;
+        readonly Services.Settings settings;
         private readonly FormMgrSvc formMgr;
-        VgcApis.Interfaces.Services.IUtilsService vgcUtils;
-        VgcApis.Interfaces.Services.IShareLinkMgrService vgcSlinkMgr;
-        VgcApis.Interfaces.Services.INotifierService vgcNotifier;
-        VgcApis.Interfaces.Services.IServersService vgcServer;
-        VgcApis.Interfaces.Services.ISettingsService vgcSettings;
+        readonly VgcApis.Interfaces.Services.IUtilsService vgcUtils;
+        readonly VgcApis.Interfaces.Services.IShareLinkMgrService vgcSlinkMgr;
+        readonly VgcApis.Interfaces.Services.INotifierService vgcNotifier;
+        readonly VgcApis.Interfaces.Services.IServersService vgcServer;
+        readonly VgcApis.Interfaces.Services.ISettingsService vgcSettings;
 
         public Misc(
             VgcApis.Interfaces.Services.IApiService api,
@@ -97,7 +97,7 @@ namespace NeoLuna.Models.Apis.Components
 
         public string Input(string title, string content, int lines)
         {
-            Func<AutoResetEvent, Views.WinForms.FormInput> creater = (done) =>
+            Views.WinForms.FormInput creater(AutoResetEvent done) =>
                 new Views.WinForms.FormInput(done, title, content, lines);
             return GetResult<Views.WinForms.FormInput, string>(creater);
         }
@@ -359,14 +359,14 @@ namespace NeoLuna.Models.Apis.Components
 
         string ShowDataGridDialog(string title, DataTable dataSource, int defColumn)
         {
-            Func<AutoResetEvent, Views.WinForms.FormDataGrid> creater = (done) =>
+            Views.WinForms.FormDataGrid creater(AutoResetEvent done) =>
                 new Views.WinForms.FormDataGrid(done, title, dataSource, defColumn);
             return GetResult<Views.WinForms.FormDataGrid, string>(creater);
         }
 
         private static List<int> GetResultFromChoicesDialog(string title, string[] choices)
         {
-            Func<AutoResetEvent, Views.WinForms.FormChoices> creater = (done) =>
+            Views.WinForms.FormChoices creater(AutoResetEvent done) =>
                 new Views.WinForms.FormChoices(done, title, choices);
             return GetResult<Views.WinForms.FormChoices, List<int>>(creater);
         }
@@ -394,7 +394,7 @@ namespace NeoLuna.Models.Apis.Components
 
         private static int GetResultFromChoiceDialog(string title, string[] choices, int selected)
         {
-            Func<AutoResetEvent, Views.WinForms.FormChoice> creater = (done) =>
+            Views.WinForms.FormChoice creater(AutoResetEvent done) =>
                 new Views.WinForms.FormChoice(done, title, choices, selected);
 
             return GetResult<Views.WinForms.FormChoice, int>(creater);

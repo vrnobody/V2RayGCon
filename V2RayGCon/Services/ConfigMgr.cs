@@ -15,7 +15,7 @@ namespace V2RayGCon.Services
         Settings setting;
         Cache cache;
 
-        static long TIMEOUT = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+        static readonly long TIMEOUT = VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
         ConfigMgr() { }
 
@@ -426,8 +426,7 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            JObject streamSettings = Misc.Utils.GetKey(outB, "streamSettings") as JObject;
-            if (streamSettings == null)
+            if (!(Misc.Utils.GetKey(outB, "streamSettings") is JObject streamSettings))
             {
                 return;
             }
@@ -676,9 +675,8 @@ namespace V2RayGCon.Services
         {
             var routingRules = Misc.Utils.GetKey(config, "routing.rules");
             var routingSettingsRules = Misc.Utils.GetKey(config, "routing.settings.rules");
-            var hasRoutingV4 = routingRules == null ? false : (routingRules is JArray);
-            var hasRoutingV3 =
-                routingSettingsRules == null ? false : (routingSettingsRules is JArray);
+            var hasRoutingV4 = routingRules != null && (routingRules is JArray);
+            var hasRoutingV3 = routingSettingsRules != null && (routingSettingsRules is JArray);
 
             var isUseRoutingV4 = !hasRoutingV3 && (useV4 || hasRoutingV4);
             return isUseRoutingV4 ? "routeCnipV4" : "routeCNIP";

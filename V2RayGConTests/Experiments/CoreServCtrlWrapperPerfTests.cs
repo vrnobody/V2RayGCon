@@ -10,9 +10,9 @@ namespace V2RayGCon.Test.Experiments
     {
 #if DEBUG
         static readonly Services.Cache cache = Services.Cache.Instance;
-        static Services.Settings setting = Services.Settings.Instance;
-        static Services.ConfigMgr configMgr = Services.ConfigMgr.Instance;
-        static Services.Servers servers = Services.Servers.Instance;
+        static readonly Services.Settings setting = Services.Settings.Instance;
+        static readonly Services.ConfigMgr configMgr = Services.ConfigMgr.Instance;
+        static readonly Services.Servers servers = Services.Servers.Instance;
 
         VgcApis.Interfaces.ICoreServCtrl CreateCoreServCtrl()
         {

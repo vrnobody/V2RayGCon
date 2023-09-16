@@ -99,13 +99,12 @@ namespace Luna.Services
 
         #region properties
         FileSystemWatcher fsWatcher;
-
-        ConcurrentQueue<string> hotCacheKeys = new ConcurrentQueue<string>();
-        ConcurrentDictionary<string, JObject> astCodeCache =
+        readonly ConcurrentQueue<string> hotCacheKeys = new ConcurrentQueue<string>();
+        readonly ConcurrentDictionary<string, JObject> astCodeCache =
             new ConcurrentDictionary<string, JObject>();
-        ConcurrentDictionary<string, JObject> astModuleCache =
+        readonly ConcurrentDictionary<string, JObject> astModuleCache =
             new ConcurrentDictionary<string, JObject>();
-        ConcurrentDictionary<string, JObject> astModuleExCache =
+        readonly ConcurrentDictionary<string, JObject> astModuleExCache =
             new ConcurrentDictionary<string, JObject>();
 
         internal enum AnalyzeModes

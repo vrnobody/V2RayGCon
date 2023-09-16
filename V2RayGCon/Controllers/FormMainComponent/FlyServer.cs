@@ -9,8 +9,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 {
     class FlyServer : FormMainComponentController
     {
-        int statusBarUpdateInterval = 1000;
-        int flyPanelUpdateInterval = 500;
+        readonly int statusBarUpdateInterval = 1000;
+        readonly int flyPanelUpdateInterval = 500;
 
         readonly Form formMain;
         readonly FlowLayoutPanel flyPanel;
@@ -129,7 +129,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         public void RemoveAllServersConrol()
         {
-            Action worker = () =>
+            void worker()
             {
                 var controlList = GetAllServerControls();
                 flyPanel.SuspendLayout();
@@ -137,7 +137,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 flyPanel.ResumeLayout();
                 flyPanel.PerformLayout();
                 VgcApis.Misc.Utils.RunInBgSlim(() => DisposeFlyPanelControlByList(controlList));
-            };
+            }
             VgcApis.Misc.UI.Invoke(worker);
         }
 
@@ -153,7 +153,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             SetSearchKeywords();
 
-            Action worker = () =>
+            void worker()
             {
                 UpdateStatusBarText(
                     filteredListCount,
@@ -169,14 +169,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     formMain.Focus();
                     isFocusOnFormMain = false;
                 }
-            };
+            }
 
-            Action next = () =>
+            void next()
             {
                 var relex = statusBarUpdateInterval - (DateTime.Now.Millisecond - start);
                 VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
                 done();
-            };
+            }
 
             VgcApis.Misc.UI.InvokeThen(worker, next);
         }
@@ -274,16 +274,16 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var showWelcome = servers.Count() == 0;
             List<Views.UserControls.ServerUI> removed = new List<Views.UserControls.ServerUI>();
 
-            Action next = () =>
+            void next()
             {
                 DisposeFlyPanelControlByList(removed);
                 lazyStatusBarUpdater?.Deadline();
                 var relex = flyPanelUpdateInterval - (DateTime.Now.Millisecond - start);
                 VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
                 done();
-            };
+            }
 
-            Action worker = () =>
+            void worker()
             {
                 if (flyPanel == null || flyPanel.IsDisposed)
                 {
@@ -311,7 +311,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 BindServUiToCoreServCtrl(servUis, pagedList);
                 flyPanel.ResumeLayout();
                 ScrollIntoView();
-            };
+            }
 
             VgcApis.Misc.UI.InvokeThen(worker, next);
         }
@@ -436,8 +436,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var step = 1;
             while (n > groupSize)
             {
-                n = n / groupSize;
-                step = step * groupSize;
+                n /= groupSize;
+                step *= groupSize;
             }
 
             if (step == 1)
@@ -508,12 +508,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     GetIndex(filteredList, pn * pageSize + pageSize - 1)
                 );
 
-                EventHandler onClick = (s, a) =>
+                void onClick(object s, EventArgs a)
                 {
                     curPageNumber = pn;
                     isFocusOnFormMain = true;
                     RefreshFlyPanelLater();
-                };
+                }
                 var item = new ToolStripMenuItem(title, null, onClick);
                 item.Disposed += (s, a) => item.Click -= onClick;
                 item.Checked = pn == currentPageNumber;
@@ -736,7 +736,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             });
         }
 
-        object flyCtrlsLocker = new object();
+        readonly object flyCtrlsLocker = new object();
 
         List<Views.UserControls.ServerUI> GetAllServerControls()
         {
@@ -776,15 +776,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
                 var panel = s as FlowLayoutPanel;
                 Point cursor = panel.PointToClient(new Point(a.X, a.Y));
-                var destItem = panel.GetChildAtPoint(cursor) as Views.UserControls.ServerUI;
-                if (destItem == null)
+                if (!(panel.GetChildAtPoint(cursor) is Views.UserControls.ServerUI destItem))
                 {
                     return;
                 }
 
                 var destIdx = destItem.GetIndex();
                 var curIdx = curItem.GetIndex();
-                destIdx = destIdx - 0.5;
+                destIdx -= 0.5;
                 curIdx = curIdx < destIdx ? destIdx + 0.2 : destIdx - 0.2;
                 destItem.SetIndex(destIdx);
                 curItem.SetIndex(curIdx);

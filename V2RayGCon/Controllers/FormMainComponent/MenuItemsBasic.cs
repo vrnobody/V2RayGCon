@@ -7,13 +7,13 @@ namespace V2RayGCon.Controllers.FormMainComponent
 {
     class MenuItemsBasic : FormMainComponentController
     {
-        Services.Servers servers;
-        Services.ShareLinkMgr slinkMgr;
-        Services.Updater updater;
-        Services.PluginsServer pluginServ;
+        readonly Services.Servers servers;
+        readonly Services.ShareLinkMgr slinkMgr;
+        readonly Services.Updater updater;
+        readonly Services.PluginsServer pluginServ;
 
         ToolStripMenuItem pluginToolStrip;
-        Form formMain;
+        readonly Form formMain;
 
         public MenuItemsBasic(
             Form formMain,

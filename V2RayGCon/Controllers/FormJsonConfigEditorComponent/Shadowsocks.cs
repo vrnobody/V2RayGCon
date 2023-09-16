@@ -6,7 +6,7 @@ namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
 {
     class Shadowsocks : ConfigerComponentController
     {
-        Services.Cache cache;
+        readonly Services.Cache cache;
 
         public Shadowsocks(
             RadioButton rbtnInboundMode,
@@ -112,8 +112,7 @@ namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
             CheckBox chkIsUseOTA
         )
         {
-            var bs = new BindingSource();
-            bs.DataSource = this;
+            var bs = new BindingSource { DataSource = this };
 
             tboxAddress.DataBindings.Add("Text", bs, nameof(this.address));
             tboxPassword.DataBindings.Add("Text", bs, nameof(this.password));

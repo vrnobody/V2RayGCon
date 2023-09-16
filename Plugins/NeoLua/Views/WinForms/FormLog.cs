@@ -7,8 +7,8 @@ namespace NeoLuna.Views.WinForms
     public partial class FormLog : Form
     {
         long updateTimestamp = -1;
-        VgcApis.Libs.Tasks.Routine logUpdater;
-        VgcApis.Libs.Sys.QueueLogger qLogger;
+        readonly VgcApis.Libs.Tasks.Routine logUpdater;
+        readonly VgcApis.Libs.Sys.QueueLogger qLogger;
 
         bool isPaused = false;
 

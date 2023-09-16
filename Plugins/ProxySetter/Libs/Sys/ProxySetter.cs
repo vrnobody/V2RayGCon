@@ -6,7 +6,7 @@ namespace ProxySetter.Libs.Sys
     public class ProxySetter
     {
         #region public method
-        static string LoopBackIP = VgcApis.Models.Consts.Webs.LoopBackIP;
+        static readonly string LoopBackIP = VgcApis.Models.Consts.Webs.LoopBackIP;
 
         public static void SetPacProxy(string pacUrl)
         {

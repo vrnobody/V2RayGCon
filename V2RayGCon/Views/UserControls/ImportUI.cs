@@ -6,7 +6,7 @@ namespace V2RayGCon.Views.UserControls
 {
     public partial class ImportUI : UserControl
     {
-        Action OnDeleted;
+        readonly Action OnDeleted;
 
         public ImportUI(Models.Datas.ImportItem subItem, Action OnDeleted)
         {

@@ -12,8 +12,8 @@ namespace V2RayGCon.Views.UserControls
     {
         public delegate void OnDeleteHandler();
 
-        Services.Servers servers;
-        Services.Settings settings;
+        readonly Services.Servers servers;
+        readonly Services.Settings settings;
         private readonly Subscription subsCtrl;
 
         public SubscriptionUI(Subscription subsCtrl, Models.Datas.SubscriptionItem subscriptItem)

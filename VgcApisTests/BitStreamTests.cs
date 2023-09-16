@@ -7,7 +7,7 @@ namespace VgcApisTests
     [TestClass]
     public class BitStreamTests
     {
-        VgcApis.Libs.Streams.BitStream bs;
+        readonly VgcApis.Libs.Streams.BitStream bs;
 
         public BitStreamTests()
         {

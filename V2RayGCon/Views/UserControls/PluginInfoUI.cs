@@ -4,7 +4,7 @@ namespace V2RayGCon.Views.UserControls
 {
     public partial class PluginInfoUI : UserControl
     {
-        Models.Datas.PluginInfoItem curInfo;
+        readonly Models.Datas.PluginInfoItem curInfo;
 
         public PluginInfoUI(Models.Datas.PluginInfoItem pluginInfo)
         {

@@ -20,8 +20,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         readonly Services.Settings setting;
         readonly Services.Servers servers;
         readonly Services.ShareLinkMgr slinkMgr;
-
-        VgcApis.Libs.Tasks.LazyGuy lazyCounter;
+        readonly VgcApis.Libs.Tasks.LazyGuy lazyCounter;
 
         public Subscription(
             FlowLayoutPanel flyPanel,

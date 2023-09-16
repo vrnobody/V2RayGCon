@@ -6,8 +6,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         : VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
             VgcApis.Interfaces.CoreCtrlComponents.ILogger
     {
-        VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
-        Services.Settings setting;
+        readonly VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
+        readonly Services.Settings setting;
 
         public Logger(Services.Settings setting)
         {

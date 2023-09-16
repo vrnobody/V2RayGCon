@@ -5,7 +5,7 @@ namespace V2RayGCon.Libs.Sys
 {
     public class CancelableTimeout
     {
-        Timer timer;
+        readonly Timer timer;
         readonly int TIMEOUT;
         Action worker;
 

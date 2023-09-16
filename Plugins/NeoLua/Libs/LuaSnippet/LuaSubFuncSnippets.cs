@@ -5,8 +5,7 @@ namespace NeoLuna.Libs.LuaSnippet
     internal class LuaSubFuncSnippets : MatchItemBase
     {
         protected string seperator = @".";
-
-        string lowerText;
+        readonly string lowerText;
 
         public LuaSubFuncSnippets(string luaSubFuncStr, string seperator)
             : base(luaSubFuncStr)

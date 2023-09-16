@@ -16,7 +16,7 @@ namespace NeoLuna.Models.Apis.SysCmpos
             Folder,
         }
 
-        HttpListener serv;
+        readonly HttpListener serv;
 
         private readonly VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox inbox;
         private readonly VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox outbox;
@@ -57,7 +57,7 @@ namespace NeoLuna.Models.Apis.SysCmpos
 
         #region static public folder
 
-        static string[] defaultDocuments =
+        static readonly string[] defaultDocuments =
         {
             "index.html",
             "index.htm",
@@ -65,7 +65,7 @@ namespace NeoLuna.Models.Apis.SysCmpos
             "default.htm"
         };
 
-        static Dictionary<string, string> mimeTypeMaps = new Dictionary<string, string>(
+        static readonly Dictionary<string, string> mimeTypeMaps = new Dictionary<string, string>(
             StringComparer.InvariantCultureIgnoreCase
         )
         {
@@ -173,8 +173,7 @@ namespace NeoLuna.Models.Apis.SysCmpos
         #region private methods
         const int FinalStageConnInLimit = 1024 * 30;
         const int FirstStageConnInLimit = 1024 * 15;
-
-        ConcurrentDictionary<string, HttpListenerContext> contexts =
+        readonly ConcurrentDictionary<string, HttpListenerContext> contexts =
             new ConcurrentDictionary<string, HttpListenerContext>();
 
         void HandleConnOut()

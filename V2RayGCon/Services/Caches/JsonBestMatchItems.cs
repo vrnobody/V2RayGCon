@@ -8,10 +8,9 @@ namespace V2RayGCon.Services.Caches
 {
     internal sealed class JsonBestMatchItems : IEnumerable<AutocompleteItem>
     {
-        Scintilla editor;
-        string searchPattern = VgcApis.Models.Consts.Patterns.JsonSnippetSearchPattern;
-
-        List<string> keywords;
+        readonly Scintilla editor;
+        readonly string searchPattern = VgcApis.Models.Consts.Patterns.JsonSnippetSearchPattern;
+        readonly List<string> keywords;
 
         public JsonBestMatchItems(
             Scintilla editor,

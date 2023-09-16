@@ -76,29 +76,26 @@ namespace Luna.Models.Apis
         private readonly LuaCoreCtrl luaCoreCtrl;
         private readonly LuaApis luaApis;
         private readonly Func<List<Type>> getAllAssemblies;
-        List<Process> processes = new List<Process>();
-
-        List<VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox> mailboxs =
+        readonly List<Process> processes = new List<Process>();
+        readonly List<VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox> mailboxs =
             new List<VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>();
-
-        ConcurrentDictionary<string, VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox> hotkeys =
+        readonly ConcurrentDictionary<
+            string,
+            VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox
+        > hotkeys =
             new ConcurrentDictionary<string, VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox>();
-
-        ConcurrentDictionary<string, CoreEvHook> coreEvHooks =
+        readonly ConcurrentDictionary<string, CoreEvHook> coreEvHooks =
             new ConcurrentDictionary<string, CoreEvHook>();
-        ConcurrentDictionary<string, GlobalEvHook> globalEvHooks =
+        readonly ConcurrentDictionary<string, GlobalEvHook> globalEvHooks =
             new ConcurrentDictionary<string, GlobalEvHook>();
-        ConcurrentDictionary<string, LuaVm> luaVms = new ConcurrentDictionary<string, LuaVm>();
-
-        VgcApis.Interfaces.Services.IServersService vgcServerService;
-        VgcApis.Interfaces.Services.ISettingsService vgcSettingsService;
-
-        VgcApis.Interfaces.Services.IPostOffice postOffice;
-
-        Services.LuaServer luaServer;
-        Services.AstServer astServer;
-
-        List<string> snapCacheTokens = new List<string>();
+        readonly ConcurrentDictionary<string, LuaVm> luaVms =
+            new ConcurrentDictionary<string, LuaVm>();
+        readonly VgcApis.Interfaces.Services.IServersService vgcServerService;
+        readonly VgcApis.Interfaces.Services.ISettingsService vgcSettingsService;
+        readonly VgcApis.Interfaces.Services.IPostOffice postOffice;
+        readonly Services.LuaServer luaServer;
+        readonly Services.AstServer astServer;
+        readonly List<string> snapCacheTokens = new List<string>();
 
         public LuaSys(LuaCoreCtrl luaCoreCtrl, LuaApis luaApis, Func<List<Type>> getAllAssemblies)
         {
@@ -435,13 +432,13 @@ namespace Luna.Models.Apis
         {
             var vm = new LuaVm() { logger = new VgcApis.Libs.Sys.QueueLogger(), };
 
-            Action<string> log = (msg) =>
+            void log(string msg)
             {
                 var n = vm.coreCtrl.name;
                 var m = string.IsNullOrEmpty(n) ? msg : $"[{n}] {msg}";
                 luaApis.SendLog(m);
                 vm.logger.Log(msg);
-            };
+            }
 
             // 开始无限套娃
             var formMgr = luaApis.formMgr;
@@ -559,7 +556,7 @@ namespace Luna.Models.Apis
         #endregion
 
         #region ILuaSys.Net
-        List<SysCmpos.HttpServer> httpServs = new List<SysCmpos.HttpServer>();
+        readonly List<SysCmpos.HttpServer> httpServs = new List<SysCmpos.HttpServer>();
 
         public Interfaces.IRunnable CreateHttpServer(
             string url,
@@ -685,16 +682,15 @@ namespace Luna.Models.Apis
             {
                 var handle = Guid.NewGuid().ToString();
                 var addr = mailbox.GetAddress();
-                EventHandler handler = (s, a) =>
+                void handler(object s, EventArgs a)
                 {
-                    var coreServ = s as VgcApis.Interfaces.ICoreServCtrl;
-                    if (coreServ == null)
+                    if (!(s is VgcApis.Interfaces.ICoreServCtrl coreServ))
                     {
                         return;
                     }
                     var uid = coreServ.GetCoreStates().GetUid();
                     mailbox.SendCode(addr, evCode, uid);
-                };
+                }
                 switch ((CoreEvTypes)evType)
                 {
                     case CoreEvTypes.CoreStart:
@@ -731,7 +727,7 @@ namespace Luna.Models.Apis
             {
                 var handle = Guid.NewGuid().ToString();
                 var addr = mailbox.GetAddress();
-                EventHandler handler = (s, a) => mailbox.SendCode(addr, evCode);
+                void handler(object s, EventArgs a) => mailbox.SendCode(addr, evCode);
                 switch ((CoreEvTypes)evType)
                 {
                     case CoreEvTypes.CoreStart:
@@ -798,7 +794,7 @@ namespace Luna.Models.Apis
             }
 
             var addr = mailbox.GetAddress();
-            Action handler = () => mailbox.SendCode(addr, evCode);
+            void handler() => mailbox.SendCode(addr, evCode);
 
             var hkHandle = luaApis.RegisterHotKey(handler, keyName, hasAlt, hasCtrl, hasShift);
             if (!string.IsNullOrEmpty(hkHandle))

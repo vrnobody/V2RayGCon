@@ -10,8 +10,7 @@ namespace V2RayGCon.Services
     {
         Settings setting;
         Servers servers;
-
-        VgcApis.Libs.Tasks.Bar updateBar = new VgcApis.Libs.Tasks.Bar();
+        readonly VgcApis.Libs.Tasks.Bar updateBar = new VgcApis.Libs.Tasks.Bar();
 
         Updater() { }
 

@@ -8,9 +8,8 @@ namespace Luna.Services
     {
         public EventHandler OnRequireFlyPanelUpdate,
             OnRequireMenuUpdate;
-
-        Settings settings;
-        List<Controllers.LuaCoreCtrl> luaCoreCtrls = new List<Controllers.LuaCoreCtrl>();
+        readonly Settings settings;
+        readonly List<Controllers.LuaCoreCtrl> luaCoreCtrls = new List<Controllers.LuaCoreCtrl>();
         Models.Apis.LuaApis luaApis;
 
         readonly object rwLock = new object();

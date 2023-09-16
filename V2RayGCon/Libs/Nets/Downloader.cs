@@ -25,8 +25,7 @@ namespace V2RayGCon.Libs.Nets
 
         public int proxyPort { get; set; } = -1;
         WebClient webClient;
-
-        Services.Settings setting;
+        readonly Services.Settings setting;
 
         public Downloader(Services.Settings setting)
         {

@@ -5,7 +5,7 @@ namespace ProxySetter.Libs.Sys
 {
     public class CancelableTimeout
     {
-        Timer timer;
+        readonly Timer timer;
         readonly int TIMEOUT;
         Action worker;
 

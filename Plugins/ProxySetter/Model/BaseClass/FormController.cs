@@ -5,7 +5,7 @@ namespace ProxySetter.Model.BaseClass
 {
     public class FormController
     {
-        Dictionary<Type, IFormComponentController> components;
+        readonly Dictionary<Type, IFormComponentController> components;
 
         public FormController()
         {

@@ -24,8 +24,10 @@ namespace VgcApis.BaseClasses
         // 默认只有一个菜单项，即弹出主窗口
         public virtual ToolStripMenuItem GetToolStripMenu()
         {
-            var menu = new ToolStripMenuItem(Name, Icon, (s, a) => ShowMainForm());
-            menu.ToolTipText = Description;
+            var menu = new ToolStripMenuItem(Name, Icon, (s, a) => ShowMainForm())
+            {
+                ToolTipText = Description
+            };
             return menu;
         }
         #endregion
@@ -34,7 +36,7 @@ namespace VgcApis.BaseClasses
 
         // 预防多次执行IPlugin.Run()及IPlugin.Stop()的辅助函数。
 
-        object locker = new object();
+        readonly object locker = new object();
         bool isPluginRunning = false;
 
         protected bool GetRunningState() => isPluginRunning && !disposedValue;

@@ -6,7 +6,7 @@ namespace V2RayGCon.Test
     public class CoreServerTest
     {
         // download v2ray-core into test folder first
-        Libs.V2Ray.Core core;
+        readonly Libs.V2Ray.Core core;
 
         public CoreServerTest()
         {

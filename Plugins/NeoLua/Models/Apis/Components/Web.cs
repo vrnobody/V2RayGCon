@@ -10,10 +10,10 @@ namespace NeoLuna.Models.Apis.Components
 {
     internal sealed class Web : VgcApis.BaseClasses.ComponentOf<LuaApis>, Interfaces.ILuaWeb
     {
-        VgcApis.Interfaces.Services.IWebService vgcWeb;
-        VgcApis.Interfaces.Services.IServersService vgcServers;
-        VgcApis.Interfaces.Services.IShareLinkMgrService vgcSlinkMgr;
-        VgcApis.Interfaces.Services.IConfigMgrService vgcCfgMgr;
+        readonly VgcApis.Interfaces.Services.IWebService vgcWeb;
+        readonly VgcApis.Interfaces.Services.IServersService vgcServers;
+        readonly VgcApis.Interfaces.Services.IShareLinkMgrService vgcSlinkMgr;
+        readonly VgcApis.Interfaces.Services.IConfigMgrService vgcCfgMgr;
 
         public Web(VgcApis.Interfaces.Services.IApiService api)
         {

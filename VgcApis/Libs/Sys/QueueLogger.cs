@@ -68,7 +68,7 @@ namespace VgcApis.Libs.Sys
         string logStrCache = string.Empty;
         string trimedLogStrCache = string.Empty;
         long logStrCacheTimestamp = -1;
-        object logStrCacheLock = new object();
+        readonly object logStrCacheLock = new object();
 
         string CachedGetLogAsString(bool hasNewLineAtTheEnd)
         {
@@ -93,7 +93,7 @@ namespace VgcApis.Libs.Sys
             return hasNewLineAtTheEnd ? logStrCache : trimedLogStrCache;
         }
 
-        Tasks.Bar bar = new Tasks.Bar();
+        readonly Tasks.Bar bar = new Tasks.Bar();
 
         void TrimLogCache()
         {

@@ -9,18 +9,17 @@ namespace Pacman.Controllers
 {
     class FormMainCtrl
     {
-        Services.Settings settings;
-
-        Button btnSave,
+        readonly Services.Settings settings;
+        readonly Button btnSave,
             btnDelete,
             btnPull,
             btnPack,
             btnChain;
-        TextBox tboxName;
-        FlowLayoutPanel flyContent;
-        ListBox lstBoxPackages;
+        readonly TextBox tboxName;
+        readonly FlowLayoutPanel flyContent;
+        readonly ListBox lstBoxPackages;
         List<Models.Data.Bean> beanList;
-        ComboBox cboxBalancerStrategy,
+        readonly ComboBox cboxBalancerStrategy,
             cboxObsInterval,
             cboxObsUrl;
 
@@ -68,7 +67,7 @@ namespace Pacman.Controllers
         }
 
         #region drag and drop
-        List<string> dropableObjectsTypeString = new List<string>
+        readonly List<string> dropableObjectsTypeString = new List<string>
         {
             "Pacman.Views.UserControls.BeanUI",
             "V2RayGCon.Views.UserControls.ServerUI",

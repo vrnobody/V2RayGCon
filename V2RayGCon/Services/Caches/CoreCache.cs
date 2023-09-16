@@ -6,7 +6,7 @@ namespace V2RayGCon.Services.Caches
 {
     public class CoreCache
     {
-        object writeLock;
+        readonly object writeLock;
         Dictionary<string, string> data;
         Services.Settings setting;
 

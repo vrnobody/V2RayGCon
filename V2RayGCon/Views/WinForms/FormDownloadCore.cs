@@ -27,8 +27,8 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         Libs.Nets.Downloader downloader;
-        Services.Settings setting;
-        Services.Servers servers;
+        readonly Services.Settings setting;
+        readonly Services.Servers servers;
 
         FormDownloadCore()
         {
@@ -99,11 +99,13 @@ namespace V2RayGCon.Views.WinForms
         {
             var idx = cboxDownloadSource.SelectedIndex;
 
-            downloader = new Libs.Nets.Downloader(setting);
-            downloader.coreType =
-                idx == 2
-                    ? Libs.Nets.Downloader.CoreTypes.Xray
-                    : Libs.Nets.Downloader.CoreTypes.V2Ray;
+            downloader = new Libs.Nets.Downloader(setting)
+            {
+                coreType =
+                    idx == 2
+                        ? Libs.Nets.Downloader.CoreTypes.Xray
+                        : Libs.Nets.Downloader.CoreTypes.V2Ray
+            };
             downloader.SetSource(idx);
             downloader.SetArchitecture(cboxArch.SelectedIndex == 1);
             downloader.SetVersion(cboxVer.Text);
@@ -172,7 +174,7 @@ namespace V2RayGCon.Views.WinForms
             int proxyPort = chkUseProxy.Checked ? servers.GetAvailableHttpProxyPort() : -1;
             var isV2fly = cboxDownloadSource.SelectedIndex == 1;
 
-            Action<List<string>> done = (versions) =>
+            void done(List<string> versions)
             {
                 btnRefreshVer.Enabled = true;
                 if (versions.Count > 0)
@@ -183,9 +185,9 @@ namespace V2RayGCon.Views.WinForms
                 {
                     MessageBox.Show(I18N.GetVersionListFail);
                 }
-            };
+            }
 
-            Action worker = () =>
+            void worker()
             {
                 var versions = Misc.Utils.GetOnlineV2RayCoreVersionList(proxyPort, sourceUrl);
 
@@ -199,7 +201,7 @@ namespace V2RayGCon.Views.WinForms
                     setting.SaveV2RayCoreVersionList(versions);
                 }
                 VgcApis.Misc.UI.Invoke(() => done(versions));
-            };
+            }
 
             VgcApis.Misc.Utils.RunInBgSlim(worker);
         }

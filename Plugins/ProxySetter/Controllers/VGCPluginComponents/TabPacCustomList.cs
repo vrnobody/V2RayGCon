@@ -7,12 +7,12 @@ namespace ProxySetter.Controllers.VGCPluginComponents
 {
     class TabPacCustomList : ComponentCtrl
     {
-        Services.PsSettings setting;
+        readonly Services.PsSettings setting;
 
         string[] oldCustomPacList;
-        RichTextBox rtboxWhiteList,
+        readonly RichTextBox rtboxWhiteList,
             rtboxBlackList;
-        Button btnSetSortWhitelist,
+        readonly Button btnSetSortWhitelist,
             btnSetSortBlacklist;
 
         public TabPacCustomList(

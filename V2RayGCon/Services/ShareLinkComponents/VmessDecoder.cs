@@ -10,7 +10,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         : VgcApis.BaseClasses.ComponentOf<Codecs>,
             VgcApis.Interfaces.IShareLinkDecoder
     {
-        Cache cache;
+        readonly Cache cache;
         private readonly Settings setting;
 
         public VmessDecoder(Cache cache, Settings setting)

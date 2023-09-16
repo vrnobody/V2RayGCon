@@ -8,10 +8,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
 {
     class MenuItemsServer : FormMainComponentController
     {
-        Services.Cache cache;
-        Services.Settings settings;
-        Services.Servers servers;
-        Services.ShareLinkMgr slinkMgr;
+        readonly Services.Cache cache;
+        readonly Services.Settings settings;
+        readonly Services.Servers servers;
+        readonly Services.ShareLinkMgr slinkMgr;
 
         public MenuItemsServer(
             // misc

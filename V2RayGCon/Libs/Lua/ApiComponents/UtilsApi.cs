@@ -15,7 +15,15 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
         public string AddLinkPrefix(string linkBody, VgcApis.Models.Datas.Enums.LinkTypes type) =>
             Misc.Utils.AddLinkPrefix(linkBody, type);
 
-        public string GetLinkBody(string link) => Misc.Utils.GetLinkBody(link);
+        public string GetLinkBody(string link)
+        {
+            try
+            {
+                return Misc.Utils.GetLinkBody(link);
+            }
+            catch { }
+            return string.Empty;
+        }
 
         public string ScanQrcode()
         {

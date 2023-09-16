@@ -7,8 +7,7 @@ namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
     {
         public VGC(TextBox alias, TextBox description, Button insert)
         {
-            var bs = new BindingSource();
-            bs.DataSource = this;
+            var bs = new BindingSource { DataSource = this };
             alias.DataBindings.Add("Text", bs, nameof(this.alias));
             description.DataBindings.Add("Text", bs, nameof(this.description));
 

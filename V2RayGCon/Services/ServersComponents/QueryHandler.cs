@@ -8,8 +8,8 @@ namespace V2RayGCon.Services.ServersComponents
 {
     class QueryHandler
     {
-        ReaderWriterLockSlim locker;
-        Dictionary<string, Controllers.CoreServerCtrl> coreServCache;
+        readonly ReaderWriterLockSlim locker;
+        readonly Dictionary<string, Controllers.CoreServerCtrl> coreServCache;
 
         public QueryHandler(
             ReaderWriterLockSlim locker,

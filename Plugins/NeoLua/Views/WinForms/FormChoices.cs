@@ -49,7 +49,7 @@ namespace NeoLuna.Views.WinForms
             }
         }
 
-        List<CheckBox> checkBoxes = new List<CheckBox>();
+        readonly List<CheckBox> checkBoxes = new List<CheckBox>();
 
         void InitControls()
         {
@@ -62,7 +62,7 @@ namespace NeoLuna.Views.WinForms
 
             var num = Math.Min(choices.Length, MAX_CHOICES_NUM);
             var clientRectHeight = h * (num + 1) + btnOk.Height + margin * 2;
-            Height = Height - (ClientRectangle.Height - clientRectHeight);
+            Height -= (ClientRectangle.Height - clientRectHeight);
 
             btnOk.Top = clientRectHeight - margin - btnOk.Height;
             btnCancel.Top = btnOk.Top;

@@ -4,7 +4,8 @@ namespace ProxySetter.Controllers.VGCPluginComponents
 {
     abstract class ComponentCtrl : IFormComponentController
     {
-        private FormComponentController auxComponentController = new FormComponentController();
+        private readonly FormComponentController auxComponentController =
+            new FormComponentController();
 
         #region public method
         public void Bind(FormController container)

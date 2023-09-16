@@ -6,9 +6,9 @@ namespace ProxySetter.Views.WinForms
 {
     partial class FormMain : Form
     {
-        Services.PsSettings setting;
-        Services.PacServer pacServer;
-        Services.ServerTracker servTracker;
+        readonly Services.PsSettings setting;
+        readonly Services.PacServer pacServer;
+        readonly Services.ServerTracker servTracker;
 
         Controllers.FormVGCPluginCtrl formVGCPluginCtrl;
         Timer updateSysProxyInfoTimer = null;

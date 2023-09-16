@@ -9,7 +9,7 @@ namespace V2RayGCon.Libs.QRCode
     // 这段代码由 ssr-csharp 魔改而成
     public class QRCode
     {
-        static QrCodeEncodingOptions options = new QrCodeEncodingOptions
+        static readonly QrCodeEncodingOptions options = new QrCodeEncodingOptions
         {
             DisableECI = true,
             CharacterSet = "UTF-8"
@@ -116,10 +116,12 @@ namespace V2RayGCon.Libs.QRCode
 
             VgcApis.Misc.UI.Invoke(() =>
             {
-                var qrSplash = new QRCodeSplashForm();
-                qrSplash.Location = formBounds.Location;
-                qrSplash.Size = formBounds.Size;
-                qrSplash.TargetRect = qrCodeRect;
+                var qrSplash = new QRCodeSplashForm
+                {
+                    Location = formBounds.Location,
+                    Size = formBounds.Size,
+                    TargetRect = qrCodeRect
+                };
                 qrSplash.FormClosed += (s, a) => success?.Invoke(link);
                 qrSplash.Show();
             });

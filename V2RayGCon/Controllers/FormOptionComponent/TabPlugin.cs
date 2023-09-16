@@ -6,10 +6,9 @@ namespace V2RayGCon.Controllers.OptionComponent
 {
     class TabPlugin : OptionComponentController
     {
-        FlowLayoutPanel flyPanel;
-
-        Services.Settings setting;
-        Services.PluginsServer pluginServ;
+        readonly FlowLayoutPanel flyPanel;
+        readonly Services.Settings setting;
+        readonly Services.PluginsServer pluginServ;
 
         string oldOptions;
         List<Models.Datas.PluginInfoItem> curPluginInfos;

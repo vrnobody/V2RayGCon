@@ -30,44 +30,44 @@ namespace NeoLuna.Misc
 
         private static LuaTable CreateMathLibrary()
         {
-            LuaTable math = new LuaTable();
-
-            math["huge"] = LuaLibraryMath.huge;
-            math["pi"] = LuaLibraryMath.pi;
-            math["e"] = LuaLibraryMath.e;
-            math["mininteger"] = LuaLibraryMath.mininteger;
-            math["maxinteger"] = LuaLibraryMath.maxinteger;
-
-            math["abs"] = new Func<double, double>(LuaLibraryMath.abs);
-            math["acos"] = new Func<double, double>(LuaLibraryMath.acos);
-            math["asin"] = new Func<double, double>(LuaLibraryMath.asin);
-            math["atan"] = new Func<double, double>(LuaLibraryMath.atan);
-            math["atan2"] = new Func<double, double, double>(LuaLibraryMath.atan2);
-            math["ceil"] = new Func<double, double>(LuaLibraryMath.ceil);
-            math["cos"] = new Func<double, double>(LuaLibraryMath.cos);
-            math["cosh"] = new Func<double, double>(LuaLibraryMath.cosh);
-            math["deg"] = new Func<double, double>(LuaLibraryMath.deg);
-            math["exp"] = new Func<double, double>(LuaLibraryMath.exp);
-            math["floor"] = new Func<double, double>(LuaLibraryMath.floor);
-            math["fmod"] = new Func<double, double, double>(LuaLibraryMath.fmod);
-            math["frexp"] = new Func<double, Neo.IronLua.LuaResult>(LuaLibraryMath.frexp);
-            math["ldexp"] = new Func<double, int, double>(LuaLibraryMath.ldexp);
-            math["log"] = new Func<double, double, double>(LuaLibraryMath.log);
-            math["max"] = new Func<double[], double>(LuaLibraryMath.max);
-            math["min"] = new Func<double[], double>(LuaLibraryMath.min);
-            math["modf"] = new Func<double, LuaResult>(LuaLibraryMath.modf);
-            math["pow"] = new Func<double, double, double>(LuaLibraryMath.pow);
-            math["rad"] = new Func<double, double>(LuaLibraryMath.rad);
-            math["random"] = new Func<object, object, object>(LuaLibraryMath.random);
-            math["randomseed"] = new Action<object>(LuaLibraryMath.randomseed);
-            math["sin"] = new Func<double, double>(LuaLibraryMath.sin);
-            math["sinh"] = new Func<double, double>(LuaLibraryMath.sinh);
-            math["sqrt"] = new Func<double, double>(LuaLibraryMath.sqrt);
-            math["tan"] = new Func<double, double>(LuaLibraryMath.tan);
-            math["tanh"] = new Func<double, double>(LuaLibraryMath.tanh);
-            math["type"] = new Func<object, string>(LuaLibraryMath.type);
-            math["tointeger"] = new Func<object, object>(LuaLibraryMath.tointeger);
-            math["ult"] = new Func<long, long, bool>(LuaLibraryMath.ult);
+            LuaTable math = new LuaTable
+            {
+                ["huge"] = LuaLibraryMath.huge,
+                ["pi"] = LuaLibraryMath.pi,
+                ["e"] = LuaLibraryMath.e,
+                ["mininteger"] = LuaLibraryMath.mininteger,
+                ["maxinteger"] = LuaLibraryMath.maxinteger,
+                ["abs"] = new Func<double, double>(LuaLibraryMath.abs),
+                ["acos"] = new Func<double, double>(LuaLibraryMath.acos),
+                ["asin"] = new Func<double, double>(LuaLibraryMath.asin),
+                ["atan"] = new Func<double, double>(LuaLibraryMath.atan),
+                ["atan2"] = new Func<double, double, double>(LuaLibraryMath.atan2),
+                ["ceil"] = new Func<double, double>(LuaLibraryMath.ceil),
+                ["cos"] = new Func<double, double>(LuaLibraryMath.cos),
+                ["cosh"] = new Func<double, double>(LuaLibraryMath.cosh),
+                ["deg"] = new Func<double, double>(LuaLibraryMath.deg),
+                ["exp"] = new Func<double, double>(LuaLibraryMath.exp),
+                ["floor"] = new Func<double, double>(LuaLibraryMath.floor),
+                ["fmod"] = new Func<double, double, double>(LuaLibraryMath.fmod),
+                ["frexp"] = new Func<double, Neo.IronLua.LuaResult>(LuaLibraryMath.frexp),
+                ["ldexp"] = new Func<double, int, double>(LuaLibraryMath.ldexp),
+                ["log"] = new Func<double, double, double>(LuaLibraryMath.log),
+                ["max"] = new Func<double[], double>(LuaLibraryMath.max),
+                ["min"] = new Func<double[], double>(LuaLibraryMath.min),
+                ["modf"] = new Func<double, LuaResult>(LuaLibraryMath.modf),
+                ["pow"] = new Func<double, double, double>(LuaLibraryMath.pow),
+                ["rad"] = new Func<double, double>(LuaLibraryMath.rad),
+                ["random"] = new Func<object, object, object>(LuaLibraryMath.random),
+                ["randomseed"] = new Action<object>(LuaLibraryMath.randomseed),
+                ["sin"] = new Func<double, double>(LuaLibraryMath.sin),
+                ["sinh"] = new Func<double, double>(LuaLibraryMath.sinh),
+                ["sqrt"] = new Func<double, double>(LuaLibraryMath.sqrt),
+                ["tan"] = new Func<double, double>(LuaLibraryMath.tan),
+                ["tanh"] = new Func<double, double>(LuaLibraryMath.tanh),
+                ["type"] = new Func<object, string>(LuaLibraryMath.type),
+                ["tointeger"] = new Func<object, object>(LuaLibraryMath.tointeger),
+                ["ult"] = new Func<long, long, bool>(LuaLibraryMath.ult)
+            };
 
             return math;
         }
@@ -83,30 +83,31 @@ namespace NeoLuna.Misc
 
         private static LuaTable CreateStringLibrary()
         {
-            LuaTable str = new LuaTable();
-
-            str["byte"] = new byteDelg(Neo.IronLua.LuaLibraryString.@byte);
-            str["char"] = new charDelg(Neo.IronLua.LuaLibraryString.@char);
-            str["dump"] = new Func<Delegate, string>(Neo.IronLua.LuaLibraryString.dump);
-            str["find"] = new Func<string, string, int, bool, LuaResult>(
-                Neo.IronLua.LuaLibraryString.find
-            );
-            str["format"] = new formatDelg(Neo.IronLua.LuaLibraryString.format);
-            str["gmatch"] = new Func<string, string, LuaResult>(
-                Neo.IronLua.LuaLibraryString.gmatch
-            );
-            str["gsub"] = new Func<string, string, object, int, LuaResult>(
-                Neo.IronLua.LuaLibraryString.gsub
-            );
-            str["len"] = new Func<string, int>(Neo.IronLua.LuaLibraryString.len);
-            str["lower"] = new Func<string, string>(Neo.IronLua.LuaLibraryString.lower);
-            str["match"] = new Func<string, string, int, LuaResult>(
-                Neo.IronLua.LuaLibraryString.match
-            );
-            str["rep"] = new Func<string, int, string, string>(Neo.IronLua.LuaLibraryString.rep);
-            str["reverse"] = new Func<string, string>(Neo.IronLua.LuaLibraryString.reverse);
-            str["sub"] = new Func<string, int, int, string>(Neo.IronLua.LuaLibraryString.sub);
-            str["upper"] = new Func<string, string>(Neo.IronLua.LuaLibraryString.upper);
+            LuaTable str = new LuaTable
+            {
+                ["byte"] = new byteDelg(Neo.IronLua.LuaLibraryString.@byte),
+                ["char"] = new charDelg(Neo.IronLua.LuaLibraryString.@char),
+                ["dump"] = new Func<Delegate, string>(Neo.IronLua.LuaLibraryString.dump),
+                ["find"] = new Func<string, string, int, bool, LuaResult>(
+                    Neo.IronLua.LuaLibraryString.find
+                ),
+                ["format"] = new formatDelg(Neo.IronLua.LuaLibraryString.format),
+                ["gmatch"] = new Func<string, string, LuaResult>(
+                    Neo.IronLua.LuaLibraryString.gmatch
+                ),
+                ["gsub"] = new Func<string, string, object, int, LuaResult>(
+                    Neo.IronLua.LuaLibraryString.gsub
+                ),
+                ["len"] = new Func<string, int>(Neo.IronLua.LuaLibraryString.len),
+                ["lower"] = new Func<string, string>(Neo.IronLua.LuaLibraryString.lower),
+                ["match"] = new Func<string, string, int, LuaResult>(
+                    Neo.IronLua.LuaLibraryString.match
+                ),
+                ["rep"] = new Func<string, int, string, string>(Neo.IronLua.LuaLibraryString.rep),
+                ["reverse"] = new Func<string, string>(Neo.IronLua.LuaLibraryString.reverse),
+                ["sub"] = new Func<string, int, int, string>(Neo.IronLua.LuaLibraryString.sub),
+                ["upper"] = new Func<string, string>(Neo.IronLua.LuaLibraryString.upper)
+            };
             return str;
         }
         #endregion
@@ -124,14 +125,16 @@ namespace NeoLuna.Misc
 
         private static LuaTable CreateTableLibrary()
         {
-            LuaTable tbl = new LuaTable();
-            tbl["concat"] = new concatDelg(LuaTable.concat);
-            tbl["insert"] = new Action<LuaTable, object, object>(LuaTable.insert);
-            tbl["move"] = new Action<LuaTable, int, int, int, LuaTable>(LuaTable.move);
-            tbl["pack"] = new Func<object[], LuaTable>(LuaTable.pack);
-            tbl["remove"] = new Func<LuaTable, int, object>(LuaTable.remove);
-            tbl["sort"] = new Action<LuaTable, object>(LuaTable.sort);
-            tbl["unpack"] = new Func<LuaTable, LuaResult>(LuaTable.unpack);
+            LuaTable tbl = new LuaTable
+            {
+                ["concat"] = new concatDelg(LuaTable.concat),
+                ["insert"] = new Action<LuaTable, object, object>(LuaTable.insert),
+                ["move"] = new Action<LuaTable, int, int, int, LuaTable>(LuaTable.move),
+                ["pack"] = new Func<object[], LuaTable>(LuaTable.pack),
+                ["remove"] = new Func<LuaTable, int, object>(LuaTable.remove),
+                ["sort"] = new Action<LuaTable, object>(LuaTable.sort),
+                ["unpack"] = new Func<LuaTable, LuaResult>(LuaTable.unpack)
+            };
             return tbl;
         }
         #endregion

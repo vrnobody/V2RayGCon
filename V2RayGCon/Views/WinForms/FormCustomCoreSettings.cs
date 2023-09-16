@@ -30,17 +30,19 @@ namespace V2RayGCon.Views.WinForms
         #region private method
         CustomCoreSettings GatherCoreSettings()
         {
-            var cs = new CustomCoreSettings();
-            cs.name = tboxName.Text;
-            cs.dir = tboxDir.Text;
-            cs.setWorkingDir = chkSetWorkingDir.Checked;
-            cs.exe = tboxExe.Text;
-            cs.args = cboxArgs.Text;
-            cs.stdInEncoding = cboxStdinEncoding.Text;
-            cs.stdOutEncoding = cboxStdoutEncoding.Text;
-            cs.configFile = cboxConfigFilename.Text;
-            cs.useFile = chkUseFile.Checked;
-            cs.useStdin = chkUseStdin.Checked;
+            var cs = new CustomCoreSettings
+            {
+                name = tboxName.Text,
+                dir = tboxDir.Text,
+                setWorkingDir = chkSetWorkingDir.Checked,
+                exe = tboxExe.Text,
+                args = cboxArgs.Text,
+                stdInEncoding = cboxStdinEncoding.Text,
+                stdOutEncoding = cboxStdoutEncoding.Text,
+                configFile = cboxConfigFilename.Text,
+                useFile = chkUseFile.Checked,
+                useStdin = chkUseStdin.Checked
+            };
             return cs;
         }
 

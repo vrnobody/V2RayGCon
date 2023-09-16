@@ -171,8 +171,8 @@ namespace V2RayGCon.Controllers.Comm
             var step = 1;
             while (n > groupSize)
             {
-                n = n / groupSize;
-                step = step * groupSize;
+                n /= groupSize;
+                step *= groupSize;
             }
 
             if (step == 1)

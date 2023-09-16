@@ -16,15 +16,13 @@ namespace NeoLuna.Controllers.FormEditorCtrl
 
         private readonly FormEditor formEditor;
         VgcApis.WinForms.FormSearch formSearch = null;
-
-        VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
-
-        Scintilla editor = null;
+        readonly VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
+        readonly Scintilla editor = null;
         LuaCoreCtrl luaCoreCtrl;
 
         #region controls
-        ComboBox cboxScriptName;
-        Button btnNewScript,
+        readonly ComboBox cboxScriptName;
+        readonly Button btnNewScript,
             btnSaveScript,
             btnRunScript,
             btnStopLuaCore,
@@ -33,14 +31,13 @@ namespace NeoLuna.Controllers.FormEditorCtrl
         private readonly Button btnShowSearchBox;
         private readonly Button btnGoto;
         private readonly TextBox tboxGoto;
-        RichTextBox rtboxOutput;
+        readonly RichTextBox rtboxOutput;
 
         #endregion
 
         string preScriptName = string.Empty;
         string preScriptContent = string.Empty;
-
-        VgcApis.Libs.Tasks.Routine logUpdater;
+        readonly VgcApis.Libs.Tasks.Routine logUpdater;
 
         public ButtonCtrl(
             FormEditor formEditor,
@@ -293,10 +290,10 @@ namespace NeoLuna.Controllers.FormEditorCtrl
                 || Regex.IsMatch(text, "{\\s*$")
             )
             {
-                indent = indent + 4;
+                indent += 4;
             }
 
-            e.Text = e.Text + new string(' ', Math.Max(0, indent));
+            e.Text += new string(' ', Math.Max(0, indent));
         }
 
         private void Scintilla_CharAdded(object sender, CharAddedEventArgs e)

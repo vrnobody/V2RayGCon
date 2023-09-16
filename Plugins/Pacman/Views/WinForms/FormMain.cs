@@ -5,7 +5,7 @@ namespace Pacman.Views.WinForms
 {
     public partial class FormMain : Form
     {
-        Services.Settings settings;
+        readonly Services.Settings settings;
         Controllers.FormMainCtrl formMainCtrl;
 
         public static FormMain CreateForm(Services.Settings setting)

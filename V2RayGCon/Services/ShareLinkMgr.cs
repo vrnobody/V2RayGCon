@@ -12,8 +12,7 @@ namespace V2RayGCon.Services
     {
         Settings settings;
         Servers servers;
-
-        ShareLinkComponents.Codecs codecs;
+        readonly ShareLinkComponents.Codecs codecs;
 
         public ShareLinkMgr()
         {

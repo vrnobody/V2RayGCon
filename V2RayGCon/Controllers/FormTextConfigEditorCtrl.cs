@@ -7,7 +7,7 @@ namespace V2RayGCon.Controllers
     public class FormTextConfigEditorCtrl : BaseClasses.FormController
     {
         FormTextConfigEditorComponent.Editor editor;
-        Services.Servers servers;
+        readonly Services.Servers servers;
         string prevConfig = string.Empty;
         string uid = string.Empty;
 

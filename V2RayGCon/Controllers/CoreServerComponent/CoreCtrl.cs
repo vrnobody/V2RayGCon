@@ -10,15 +10,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             VgcApis.Interfaces.CoreCtrlComponents.ICoreCtrl
     {
         Libs.V2Ray.Core core;
-        Services.Settings setting;
-        Services.ConfigMgr configMgr;
-        CoreInfo coreInfo;
+        readonly Services.Settings setting;
+        readonly Services.ConfigMgr configMgr;
+        readonly CoreInfo coreInfo;
 
-        static long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+        static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
         VgcApis.Libs.Tasks.Routine bookKeeper;
-
-        VgcApis.Libs.Tasks.Bar isRecording = new VgcApis.Libs.Tasks.Bar();
+        readonly VgcApis.Libs.Tasks.Bar isRecording = new VgcApis.Libs.Tasks.Bar();
 
         public CoreCtrl(Services.Settings setting, CoreInfo coreInfo, Services.ConfigMgr configMgr)
         {

@@ -33,9 +33,9 @@ namespace V2RayGCon.Libs.QRCode
 
         private Timer timer;
         private int flashStep;
-        private static double FPS = 1.0 / 15 * 1000; // System.Windows.Forms.Timer resolution is 15ms
-        private static double ANIMATION_TIME = 0.5;
-        private static int ANIMATION_STEPS = (int)(ANIMATION_TIME * FPS);
+        private static readonly double FPS = 1.0 / 15 * 1000; // System.Windows.Forms.Timer resolution is 15ms
+        private static readonly double ANIMATION_TIME = 0.5;
+        private static readonly int ANIMATION_STEPS = (int)(ANIMATION_TIME * FPS);
         Stopwatch sw;
         int x;
         int y;
@@ -56,8 +56,7 @@ namespace V2RayGCon.Libs.QRCode
             w = Width;
             h = Height;
             sw = Stopwatch.StartNew();
-            timer = new Timer();
-            timer.Interval = (int)(ANIMATION_TIME * 1000 / ANIMATION_STEPS);
+            timer = new Timer { Interval = (int)(ANIMATION_TIME * 1000 / ANIMATION_STEPS) };
             timer.Tick += timer_Tick;
             timer.Start();
             bitmap = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
@@ -274,11 +273,13 @@ namespace V2RayGCon.Libs.QRCode
                 Win32.Size size = new Win32.Size(bitmap.Width, bitmap.Height);
                 Win32.Point pointSource = new Win32.Point(0, 0);
                 Win32.Point topPos = new Win32.Point(Left, Top);
-                Win32.BLENDFUNCTION blend = new Win32.BLENDFUNCTION();
-                blend.BlendOp = Win32.AC_SRC_OVER;
-                blend.BlendFlags = 0;
-                blend.SourceConstantAlpha = opacity;
-                blend.AlphaFormat = Win32.AC_SRC_ALPHA;
+                Win32.BLENDFUNCTION blend = new Win32.BLENDFUNCTION
+                {
+                    BlendOp = Win32.AC_SRC_OVER,
+                    BlendFlags = 0,
+                    SourceConstantAlpha = opacity,
+                    AlphaFormat = Win32.AC_SRC_ALPHA
+                };
 
                 Win32.UpdateLayeredWindow(
                     Handle,

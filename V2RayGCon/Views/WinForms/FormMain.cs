@@ -19,8 +19,7 @@ namespace V2RayGCon.Views.WinForms
         Services.ShareLinkMgr slinkMgr;
 
         Controllers.FormMainCtrl formMainCtrl;
-
-        string formTitle = "";
+        readonly string formTitle = "";
 
         public FormMain()
         {

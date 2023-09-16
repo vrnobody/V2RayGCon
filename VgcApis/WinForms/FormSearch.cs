@@ -9,8 +9,8 @@ namespace VgcApis.WinForms
 {
     public partial class FormSearch : Form
     {
-        Scintilla editor;
-        string title = "";
+        readonly Scintilla editor;
+        readonly string title = "";
         SearchFlags searchFlag = SearchFlags.None;
 
         public static FormSearch CreateForm(Scintilla editor)

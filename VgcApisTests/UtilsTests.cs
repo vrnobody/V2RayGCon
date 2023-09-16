@@ -180,7 +180,9 @@ namespace VgcApisTests
         [DataRow("a中文测试", -1, false, "")]
         [DataRow("aaaaaaaaa", 5, true, "aaa")]
         [DataRow("", 100, false, "")]
+#pragma warning disable IDE0060 // 删除未使用的参数
         public void AutoEllipsisTest(string org, int len, bool isEllipsised, string expect)
+#pragma warning restore IDE0060 // 删除未使用的参数
         {
             var defFont = VgcApis.Models.Consts.AutoEllipsis.defFont;
             var orgLen = org.Length;
@@ -549,19 +551,19 @@ namespace VgcApisTests
         {
             var str = "";
 
-            Action<Action> secTask = (done) =>
+            void secTask(Action done)
             {
                 Task.Delay(200).Wait();
                 str += "2";
                 done();
-            };
+            }
 
-            Action<Action> firstTask = (done) =>
+            void firstTask(Action done)
             {
                 Task.Delay(200).Wait();
                 str += "1";
                 secTask(done);
-            };
+            }
 
             var alex = new VgcApis.Libs.Tasks.LazyGuy(firstTask, 1000, 300);
 

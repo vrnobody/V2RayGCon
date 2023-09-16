@@ -18,7 +18,6 @@ namespace V2RayGCon.Services
         Settings setting = null;
         Cache cache = null;
         ConfigMgr configMgr;
-        Notifier notifier;
 
         ServersComponents.QueryHandler queryHandler;
         ServersComponents.IndexHandler indexHandler;
@@ -31,15 +30,14 @@ namespace V2RayGCon.Services
             OnRequireFlyPanelReload;
 
         // uid => CoreServ
-        Dictionary<string, Controllers.CoreServerCtrl> coreServCache =
+        readonly Dictionary<string, Controllers.CoreServerCtrl> coreServCache =
             new Dictionary<string, Controllers.CoreServerCtrl>();
-
-        ConcurrentDictionary<string, bool> markList = new ConcurrentDictionary<string, bool>();
-        ServersComponents.ConfigCache configCache = new ServersComponents.ConfigCache();
-
-        VgcApis.Libs.Tasks.LazyGuy lazyServerSettingsRecorder;
-        ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
-        VgcApis.Libs.Tasks.Bar speedTestingBar = new VgcApis.Libs.Tasks.Bar();
+        readonly ConcurrentDictionary<string, bool> markList =
+            new ConcurrentDictionary<string, bool>();
+        readonly ServersComponents.ConfigCache configCache = new ServersComponents.ConfigCache();
+        readonly VgcApis.Libs.Tasks.LazyGuy lazyServerSettingsRecorder;
+        readonly ReaderWriterLockSlim locker = new ReaderWriterLockSlim();
+        readonly VgcApis.Libs.Tasks.Bar speedTestingBar = new VgcApis.Libs.Tasks.Bar();
 
         Servers()
         {
@@ -53,9 +51,8 @@ namespace V2RayGCon.Services
             };
         }
 
-        public void Run(Settings setting, Cache cache, ConfigMgr configMgr, Notifier notifier)
+        public void Run(Settings setting, Cache cache, ConfigMgr configMgr)
         {
-            this.notifier = notifier;
             this.configMgr = configMgr;
             this.cache = cache;
             this.setting = setting;
@@ -311,10 +308,7 @@ namespace V2RayGCon.Services
 
             foreach (var serv in list)
             {
-                if (
-                    serv.GetConfiger()
-                        .IsSuitableToBeUsedAsSysProxy(true, out bool isSocks, out int port)
-                )
+                if (serv.GetConfiger().IsSuitableToBeUsedAsSysProxy(true, out _, out int port))
                 {
                     return port;
                 }
@@ -324,12 +318,12 @@ namespace V2RayGCon.Services
 
         public void UpdateServerTrackerSettings(bool isTrackerOn)
         {
-            var tracker = new Models.Datas.ServerTracker();
-
-            tracker.isTrackerOn = isTrackerOn;
-
-            tracker.curServer = string.Empty; // obsolete
-            tracker.serverList = new List<string>(); //obsolete
+            var tracker = new Models.Datas.ServerTracker
+            {
+                isTrackerOn = isTrackerOn,
+                curServer = string.Empty, // obsolete
+                serverList = new List<string>() //obsolete
+            };
 
             tracker.uids = tracker.isTrackerOn
                 ? GetRunningServers()
@@ -512,7 +506,7 @@ namespace V2RayGCon.Services
         {
             var evDone = new AutoResetEvent(false);
             var success = BatchSpeedTestWorkerThen(GetSelectedServers(), () => evDone.Set());
-            notifier.BlockingWaitOne(evDone);
+            evDone.WaitOne();
             return success;
         }
 
@@ -1256,7 +1250,7 @@ namespace V2RayGCon.Services
                             {
                                 server.GetCoreCtrl().RestartCoreThen(() => sayGoodbye.Set());
                             }
-                            notifier.BlockingWaitOne(sayGoodbye);
+                            sayGoodbye.WaitOne();
                         },
                         TaskCreationOptions.LongRunning
                     );

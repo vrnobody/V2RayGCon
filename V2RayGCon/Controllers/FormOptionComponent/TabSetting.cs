@@ -4,8 +4,8 @@ namespace V2RayGCon.Controllers.OptionComponent
 {
     class TabSetting : OptionComponentController
     {
-        Services.Settings setting;
-        Services.Servers servers;
+        readonly Services.Settings setting;
+        readonly Services.Servers servers;
         private readonly ComboBox cboxCustomUserAgent;
         private readonly CheckBox chkIsUseCustomUserAgent;
         private readonly TextBox tboxSystrayLeftClickCommand;

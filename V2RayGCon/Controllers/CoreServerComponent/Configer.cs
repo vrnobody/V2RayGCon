@@ -8,10 +8,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         : VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
             VgcApis.Interfaces.CoreCtrlComponents.IConfiger
     {
-        Services.Settings setting;
-        Services.Cache cache;
-        Services.ConfigMgr configMgr;
-        VgcApis.Models.Datas.CoreInfo coreInfo;
+        readonly Services.Settings setting;
+        readonly Services.Cache cache;
+        readonly Services.ConfigMgr configMgr;
+        readonly VgcApis.Models.Datas.CoreInfo coreInfo;
 
         CoreStates states;
         Logger logger;

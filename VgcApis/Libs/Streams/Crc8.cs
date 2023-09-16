@@ -4,7 +4,7 @@
 
     public static class Crc8
     {
-        static byte[] table = new byte[256];
+        static readonly byte[] table = new byte[256];
 
         // x8 + x7 + x6 + x4 + x2 + 1
         const byte poly = 0xd5;

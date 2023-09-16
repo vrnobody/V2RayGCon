@@ -162,12 +162,15 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
             var panel = sender as FlowLayoutPanel;
-            var curItem =
-                args.Data.GetData(typeof(Views.UserControls.CoreSettingUI))
-                as Views.UserControls.CoreSettingUI;
             Point p = panel.PointToClient(new Point(args.X, args.Y));
-            var destItem = panel.GetChildAtPoint(p) as Views.UserControls.CoreSettingUI;
-            if (curItem == null || destItem == null || curItem == destItem)
+            if (
+                !(
+                    args.Data.GetData(typeof(Views.UserControls.CoreSettingUI))
+                    is Views.UserControls.CoreSettingUI curItem
+                )
+                || !(panel.GetChildAtPoint(p) is Views.UserControls.CoreSettingUI destItem)
+                || curItem == destItem
+            )
             {
                 return;
             }

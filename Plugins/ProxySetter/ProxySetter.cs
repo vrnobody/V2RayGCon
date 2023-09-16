@@ -26,8 +26,7 @@ namespace ProxySetter
 
             VgcApis.Misc.UI.Invoke(() =>
             {
-                menuItemCache = new ToolStripMenuItem(Name, Icon);
-                menuItemCache.ToolTipText = Description;
+                menuItemCache = new ToolStripMenuItem(Name, Icon) { ToolTipText = Description };
 
                 var children = menuItemCache.DropDownItems;
                 children.Add(

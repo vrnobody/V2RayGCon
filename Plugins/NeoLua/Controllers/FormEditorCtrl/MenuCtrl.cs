@@ -7,8 +7,8 @@ namespace NeoLuna.Controllers.FormEditorCtrl
 {
     internal sealed class MenuCtrl
     {
-        Views.WinForms.FormEditor formEditor;
-        ButtonCtrl editorCtrl;
+        readonly Views.WinForms.FormEditor formEditor;
+        readonly ButtonCtrl editorCtrl;
         private readonly ToolStripMenuItem miNewWindow;
         private readonly ToolStripMenuItem miShowMgr;
         private readonly ToolStripMenuItem miLoad;

@@ -9,11 +9,10 @@ namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
 {
     class ExpandGlobalImports : ConfigerComponentController
     {
-        Services.Settings setting;
-        Services.ConfigMgr configMgr;
-
-        Scintilla editor;
-        CheckBox cboxGlobalImport;
+        readonly Services.Settings setting;
+        readonly Services.ConfigMgr configMgr;
+        readonly Scintilla editor;
+        readonly CheckBox cboxGlobalImport;
 
         public ExpandGlobalImports(
             Panel container,
@@ -79,8 +78,7 @@ namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
 
         void DataBinding()
         {
-            var bs = new BindingSource();
-            bs.DataSource = this;
+            var bs = new BindingSource { DataSource = this };
 
             editor.DataBindings.Add(
                 "Text",

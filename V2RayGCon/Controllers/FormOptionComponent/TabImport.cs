@@ -7,10 +7,9 @@ namespace V2RayGCon.Controllers.OptionComponent
 {
     class TabImport : OptionComponentController
     {
-        FlowLayoutPanel flyPanel;
-        Button btnAdd;
-
-        Services.Settings setting;
+        readonly FlowLayoutPanel flyPanel;
+        readonly Button btnAdd;
+        readonly Services.Settings setting;
         string oldOptions;
 
         public TabImport(FlowLayoutPanel flyPanel, Button btnAdd)

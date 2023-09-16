@@ -41,7 +41,7 @@ namespace Luna.Views.WinForms
         {
             var h = VgcApis.Misc.Utils.Clamp(lines, 1, MAX_LINE_NUM + 1);
             var dh = (h - 1) * rtboxInput.ClientRectangle.Height;
-            Height = Height + dh;
+            Height += dh;
         }
 
         void SetResult()

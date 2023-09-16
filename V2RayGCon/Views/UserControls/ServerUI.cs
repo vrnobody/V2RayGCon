@@ -12,19 +12,17 @@ namespace V2RayGCon.Views.UserControls
             BaseClasses.IFormMainFlyPanelComponent,
             VgcApis.Interfaces.IDropableControl
     {
-        Services.Servers servers;
-        Services.Settings settings;
-        Services.ShareLinkMgr slinkMgr;
+        readonly Services.Servers servers;
+        readonly Services.Settings settings;
+        readonly Services.ShareLinkMgr slinkMgr;
         VgcApis.Interfaces.ICoreServCtrl coreServCtrl;
 
         string keyword = null;
-
-        VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater,
+        readonly VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater,
             lazyHighlighter;
 
         static readonly Bitmap[] btnBgCaches = new Bitmap[3];
-
-        List<Control> roundLables;
+        readonly List<Control> roundLables;
 
         public ServerUI()
         {
@@ -231,7 +229,7 @@ namespace V2RayGCon.Views.UserControls
                 return;
             }
 
-            Action worker = () =>
+            void worker()
             {
                 var flyPanel = this.Parent;
                 if (flyPanel == null || flyPanel.IsDisposed)
@@ -264,13 +262,13 @@ namespace V2RayGCon.Views.UserControls
                 UpdateNetworkFlowLable(cs);
 
                 CompactRoundLables();
-            };
+            }
 
-            Action next = () =>
+            void next()
             {
                 lazyHighlighter?.Postpone();
                 done?.Invoke();
-            };
+            }
 
             VgcApis.Misc.UI.InvokeThen(worker, next);
         }

@@ -6,7 +6,7 @@ namespace Luna.Services
     internal class FormMgrSvc : VgcApis.BaseClasses.Disposable
     {
         Views.WinForms.FormMain formMain = null;
-        List<Views.WinForms.FormEditor> editors = new List<Views.WinForms.FormEditor>();
+        readonly List<Views.WinForms.FormEditor> editors = new List<Views.WinForms.FormEditor>();
         readonly object formLocker = new object();
 
         public Settings settings;

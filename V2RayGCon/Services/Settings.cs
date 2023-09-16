@@ -19,9 +19,8 @@ namespace V2RayGCon.Services
         : BaseClasses.SingletonService<Settings>,
             VgcApis.Interfaces.Services.ISettingsService
     {
-        Models.Datas.UserSettings userSettings;
-
-        VgcApis.Libs.Tasks.LazyGuy lazyBookKeeper;
+        readonly Models.Datas.UserSettings userSettings;
+        readonly VgcApis.Libs.Tasks.LazyGuy lazyBookKeeper;
 
         readonly object saveUserSettingsLocker = new object();
 
@@ -287,7 +286,7 @@ namespace V2RayGCon.Services
 
         public void SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons reason)
         {
-            VgcApis.Libs.Sys.FileLogger.Warn($"change shutdow reason to: {reason.ToString()}");
+            VgcApis.Libs.Sys.FileLogger.Warn($"change shutdow reason to: {reason}");
             this.shutdownReason = reason;
         }
 
@@ -623,8 +622,7 @@ namespace V2RayGCon.Services
         }
 
         public CultureInfo orgCulture = null;
-
-        VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
+        readonly VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
 
         public long GetLogTimestamp() => qLogger.GetTimestamp();
 

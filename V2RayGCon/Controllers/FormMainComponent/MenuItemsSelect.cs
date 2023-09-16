@@ -7,8 +7,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
     class MenuItemsSelect : FormMainComponentController
     {
         static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
-
-        Services.Servers servers;
+        readonly Services.Servers servers;
 
         public MenuItemsSelect(
             ToolStripMenuItem selectAllCurPage,

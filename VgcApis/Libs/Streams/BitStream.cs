@@ -9,12 +9,11 @@ namespace VgcApis.Libs.Streams
         const int Crc8ByteIndex = Models.Consts.BitStream.Crc8ByteIndex;
 
         readonly object rbsWriteLock = new object();
-
-        RawBitStream.RawBitStream rawBitStream;
-        RawBitStream.Numbers numberWriter;
-        RawBitStream.Bytes bytesWriter;
-        RawBitStream.Uuids uuidsWriter;
-        RawBitStream.Address addressWriter;
+        readonly RawBitStream.RawBitStream rawBitStream;
+        readonly RawBitStream.Numbers numberWriter;
+        readonly RawBitStream.Bytes bytesWriter;
+        readonly RawBitStream.Uuids uuidsWriter;
+        readonly RawBitStream.Address addressWriter;
 
         public BitStream(byte[] bytes)
             : this()

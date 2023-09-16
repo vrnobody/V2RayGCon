@@ -89,8 +89,7 @@ namespace V2RayGCon.Controllers.FormJsonConfigEditorComponet
 
         void DataBinding(TextBox id, TextBox level, TextBox alterID, TextBox ipAddr)
         {
-            var bs = new BindingSource();
-            bs.DataSource = this;
+            var bs = new BindingSource { DataSource = this };
 
             id.DataBindings.Add("Text", bs, nameof(this.ID));
             level.DataBindings.Add("Text", bs, nameof(this.level));

@@ -5,25 +5,21 @@ namespace V2RayGCon.Controllers.OptionComponent
 {
     class TabDefaults : OptionComponentController
     {
-        Services.Settings setting;
-
-        ComboBox cboxDefImportMode = null,
+        readonly Services.Settings setting;
+        readonly ComboBox cboxDefImportMode = null,
             cboxDefSpeedtestUrl = null,
             cboxDefSpeedtestExpectedSize = null;
-
-        CheckBox chkSetSpeedtestIsUse = null,
+        readonly CheckBox chkSetSpeedtestIsUse = null,
             chkImportSsShareLink = null,
             chkImportTrojanShareLink = null,
             chkImportBypassCnSite = null,
             chkImportInjectGlobalImport = null,
             chkDefVmessDecodeTemplateEnabled = null;
-
-        TextBox tboxDefImportAddr = null,
+        readonly TextBox tboxDefImportAddr = null,
             tboxSetSpeedtestCycles = null,
             tboxSetSpeedtestTimeout = null,
             tboxDefVmessDecodeTemplateUrl = null;
-
-        RichTextBox exRTBoxDefCustomInbounds = null;
+        readonly RichTextBox exRTBoxDefCustomInbounds = null;
 
         public TabDefaults(
             ComboBox cboxDefImportMode,

@@ -1214,7 +1214,7 @@ namespace V2RayGCon.Misc
             }
             catch (Exception e)
             {
-                VgcApis.Libs.Sys.FileLogger.Error($"WriteAllTextNow() exception: {e.ToString()}");
+                VgcApis.Libs.Sys.FileLogger.Error($"WriteAllTextNow() exception: {e}");
             }
             return false;
         }
@@ -1461,8 +1461,7 @@ namespace V2RayGCon.Misc
             return -1;
         }
 
-        static string GenLinkPrefix(VgcApis.Models.Datas.Enums.LinkTypes linkType) =>
-            $"{linkType.ToString()}";
+        static string GenLinkPrefix(VgcApis.Models.Datas.Enums.LinkTypes linkType) => $"{linkType}";
 
         public static string GenPattern(VgcApis.Models.Datas.Enums.LinkTypes linkType)
         {
@@ -1500,9 +1499,7 @@ namespace V2RayGCon.Misc
                         + VgcApis.Models.Consts.Patterns.UriContentNonStandard;
                     break;
                 default:
-                    throw new NotSupportedException(
-                        $"Not supported link type {linkType.ToString()}:// ..."
-                    );
+                    throw new NotSupportedException($"Not supported link type {linkType}:// ...");
             }
 
             return VgcApis.Models.Consts.Patterns.NonAlphabets + pattern;

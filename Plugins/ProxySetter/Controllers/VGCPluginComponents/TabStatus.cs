@@ -8,7 +8,7 @@ namespace ProxySetter.Controllers.VGCPluginComponents
     {
         Label lbPacUrl,
             lbPacServerStatus;
-        Services.PacServer pacServer;
+        readonly Services.PacServer pacServer;
 
         public TabStatus(
             Services.PacServer pacServer,

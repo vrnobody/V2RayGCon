@@ -6,8 +6,7 @@ namespace NeoLuna.Libs.LuaSnippet
     internal sealed class LuaKeywordSnippets : MatchItemBase
     {
         static readonly List<string> hiddenList = new List<string>() { "end", };
-
-        string lowerText;
+        readonly string lowerText;
 
         public LuaKeywordSnippets(string luaKeyword)
             : base(luaKeyword)

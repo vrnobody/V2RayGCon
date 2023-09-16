@@ -10,9 +10,8 @@ namespace VgcApis.Libs.Tasks
         private readonly int interval;
         private readonly long ticks;
         private readonly int expectedWorkTime;
-
-        AutoResetEvent jobToken = new AutoResetEvent(true);
-        AutoResetEvent waitToken = new AutoResetEvent(true);
+        readonly AutoResetEvent jobToken = new AutoResetEvent(true);
+        readonly AutoResetEvent waitToken = new AutoResetEvent(true);
 
         bool isCancelled = false;
         Action retry = null;
@@ -173,7 +172,7 @@ namespace VgcApis.Libs.Tasks
                 delay
             );
 
-            Action done = () =>
+            void done()
             {
                 ok = true;
                 jobToken.Set();
@@ -187,7 +186,7 @@ namespace VgcApis.Libs.Tasks
                             + $"exp: {expectedWorkTime}ms, act: {workTime}ms"
                     );
                 }
-            };
+            }
 
             if (isCancelled)
             {

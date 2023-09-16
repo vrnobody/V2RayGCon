@@ -10,7 +10,7 @@ namespace DyFetch.Comps
 {
     internal class Fetcher : IDisposable
     {
-        ChromeDriver driver;
+        readonly ChromeDriver driver;
         private bool disposedValue;
 
         public Fetcher(Models.Configs configs)
@@ -79,19 +79,19 @@ namespace DyFetch.Comps
 
         ChromeOptions CreateOptions(Models.Configs configs)
         {
-            // ����ճ�����ϵļ�����ʼ������
-
             var options = new ChromeOptions();
 
             options.AddArgument("--window-size=1920,1080");
 
             if (!string.IsNullOrEmpty(configs.proxy))
             {
-                var proxy = new Proxy();
-                proxy.Kind = ProxyKind.Manual;
-                proxy.IsAutoDetect = false;
-                proxy.HttpProxy = configs.proxy;
-                proxy.SslProxy = configs.proxy;
+                var proxy = new Proxy
+                {
+                    Kind = ProxyKind.Manual,
+                    IsAutoDetect = false,
+                    HttpProxy = configs.proxy,
+                    SslProxy = configs.proxy
+                };
                 options.Proxy = proxy;
             }
 

@@ -184,7 +184,7 @@ namespace V2RayGCon.Views.WinForms
             int newSkipCN
         )
         {
-            Action<int, Action> worker = (index, next) =>
+            void worker(int index, Action next)
             {
                 var portNumber = isPortAutoIncrease ? newPort + index : newPort;
 
@@ -227,14 +227,14 @@ namespace V2RayGCon.Views.WinForms
                         server.GetCoreCtrl().RestartCoreThen();
                         next();
                     });
-            };
+            }
 
             var that = this;
-            Action done = () =>
+            void done()
             {
                 servers.UpdateMarkList();
                 VgcApis.Misc.UI.Invoke(() => that.Close());
-            };
+            }
 
             Misc.Utils.ChainActionHelperAsync(list.Count, worker, done);
         }

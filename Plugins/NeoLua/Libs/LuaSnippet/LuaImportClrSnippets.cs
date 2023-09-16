@@ -5,8 +5,7 @@ namespace NeoLuna.Libs.LuaSnippet
     internal sealed class LuaImportClrSnippets : MatchItemBase
     {
         const string seperator = @"(";
-
-        string lowerText;
+        readonly string lowerText;
 
         public LuaImportClrSnippets(string luaImportClrStr)
             : base(luaImportClrStr)

@@ -5,7 +5,7 @@ namespace V2RayGCon.BaseClasses
 {
     public class FormController
     {
-        Dictionary<Type, IFormComponentController> components;
+        readonly Dictionary<Type, IFormComponentController> components;
 
         public FormController()
         {

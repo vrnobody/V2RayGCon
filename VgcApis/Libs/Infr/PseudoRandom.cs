@@ -11,7 +11,7 @@ namespace VgcApis.Libs.Infr
     public static class PseudoRandom
     {
         // Global seed generator
-        private static RNGCryptoServiceProvider global;
+        private static readonly RNGCryptoServiceProvider global;
 
         // Thread-local pseudo-random generator
         [ThreadStatic]

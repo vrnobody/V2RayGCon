@@ -5,7 +5,7 @@ namespace VgcApis.Libs.Tasks
 {
     public class CancelableTimeout
     {
-        Timer timer;
+        readonly Timer timer;
         readonly int TIMEOUT;
         Action worker;
 

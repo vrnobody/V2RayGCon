@@ -46,12 +46,9 @@ namespace V2RayGCon.Test.DecoderTests
             var testLinks = testData.Select(e => e.Item2).ToList();
             var subText = string.Join(Environment.NewLine, testLinks);
 
-            var cache = V2RayGCon.Services.Cache.Instance;
+            var cache = Services.Cache.Instance;
             var setting = Services.Settings.Instance;
-            var vmessDecoder = new V2RayGCon.Services.ShareLinkComponents.VmessDecoder(
-                cache,
-                setting
-            );
+            var vmessDecoder = new Services.ShareLinkComponents.VmessDecoder(cache, setting);
 
             var vmessLinks = vmessDecoder.ExtractLinksFromText(subText);
             foreach (var vmessLink in vmessLinks)
@@ -94,7 +91,7 @@ namespace V2RayGCon.Test.DecoderTests
         [TestMethod]
         public void DecodeVmessFailTest()
         {
-            var errorVmess = new V2RayGCon.Models.Datas.Vmess
+            var errorVmess = new Models.Datas.Vmess
             {
                 id = "1234", // invalid GUID
                 port = "1234",

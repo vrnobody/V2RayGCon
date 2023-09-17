@@ -37,8 +37,8 @@ namespace V2RayGCon.Views.WinForms
 
         FormBatchModifyServerSetting()
         {
-            settings = Services.Settings.Instance;
-            servers = Services.Servers.Instance;
+            settings = Settings.Instance;
+            servers = Servers.Instance;
 
             InitializeComponent();
 

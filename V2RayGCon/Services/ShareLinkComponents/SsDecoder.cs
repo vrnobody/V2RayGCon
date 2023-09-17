@@ -20,7 +20,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region public methods
-        public string Decode(string shareLink)
+        public VgcApis.Models.Datas.DecodeResult Decode(string shareLink)
         {
             // ss://(base64)#tag or ss://(base64)
             var parts = shareLink.Split('#');
@@ -39,16 +39,17 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
 
             var tpl = cache.tpl.LoadTemplate("tplImportSS") as JObject;
+            var name = string.Empty;
             if (parts.Length > 1 && !string.IsNullOrEmpty(parts[1]))
             {
-                var name = Uri.UnescapeDataString(parts[1]);
-                tpl["v2raygcon"]["alias"] = name;
+                name = Uri.UnescapeDataString(parts[1]);
             }
 
-            return GetParent()?.GenerateJsonConfing(tpl, outbound);
+            var config = GetParent()?.GenerateJsonConfing(tpl, outbound);
+            return new VgcApis.Models.Datas.DecodeResult(name, config);
         }
 
-        public string Encode(string config)
+        public string Encode(string name, string config)
         {
             var vc = new Models.Datas.SharelinkMetadata(config);
             if (vc.proto != @"shadowsocks")
@@ -68,7 +69,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 userinfo,
                 Uri.EscapeDataString(vc.host),
                 vc.port,
-                Uri.EscapeDataString(vc.name)
+                Uri.EscapeDataString(name)
             );
 
             return url;

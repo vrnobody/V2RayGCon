@@ -219,8 +219,11 @@ namespace V2RayGCon.Misc
             scintilla.IndentationGuides = IndentView.LookBoth;
 
             // Configure the JSON lexer styles
+            scintilla.StyleResetDefault();
             scintilla.Styles[Style.Default].Font = "Consolas";
             scintilla.Styles[Style.Default].Size = 11;
+            scintilla.StyleClearAll();
+
             if (readOnlyMode)
             {
                 var bgColor = Color.FromArgb(240, 240, 240);

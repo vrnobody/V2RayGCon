@@ -58,9 +58,6 @@ stat: <
             return SourceUrls[index];
         }
 
-        public static string StdIn = @"stdin:";
-        public static string ConfigArg = @"config";
-
         public static long SpeedtestAbort = -1;
         public static long SpeedtestTimeout = long.MaxValue;
 

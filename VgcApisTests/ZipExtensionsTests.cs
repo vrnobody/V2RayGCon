@@ -62,8 +62,8 @@ namespace VgcApisTests
         [DataRow("")]
         public void ZipBase64StringTest(string s)
         {
-            var cs = VgcApis.Libs.Infr.ZipExtensions.CompressToBase64(s);
-            var de = VgcApis.Libs.Infr.ZipExtensions.DecompressFromBase64(cs);
+            var cs = ZipExtensions.CompressToBase64(s);
+            var de = ZipExtensions.DecompressFromBase64(cs);
 
             Assert.AreEqual(s, de);
         }
@@ -77,8 +77,8 @@ namespace VgcApisTests
         public void ZipByteTest(string s)
         {
             var bytes = Encoding.UTF8.GetBytes(s);
-            var cb = VgcApis.Libs.Infr.ZipExtensions.Compress(bytes);
-            var de = VgcApis.Libs.Infr.ZipExtensions.Decompress(cb);
+            var cb = ZipExtensions.Compress(bytes);
+            var de = ZipExtensions.Decompress(cb);
 
             Assert.IsTrue(bytes.SequenceEqual(de));
         }

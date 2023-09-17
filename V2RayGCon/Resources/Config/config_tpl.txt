@@ -121,10 +121,6 @@
   "tplImportVmess": {
     "log": {
       "loglevel": "warning"
-    },
-    "v2raygcon": {
-      "alias": "",
-      "description": ""
     }
   },
   "emptyInOut": {
@@ -300,10 +296,6 @@
   "tplImportSS": {
     "log": {
       "loglevel": "warning"
-    },
-    "v2raygcon": {
-      "alias": "",
-      "description": ""
     }
   },
   "tls": {

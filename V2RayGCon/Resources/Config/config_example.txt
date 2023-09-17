@@ -304,18 +304,6 @@
       "mux": {}
     }
   ],
-  "v2raygcon": {
-    "alias": "My Server1",
-    "description": ""
-  },
-  "vgcImport": {
-    "alias": "My Server2",
-    "description": "",
-    "import": {
-      "http://a.com/a.json": "对a.json的注释",
-      "http://a.com/b.json": "对b.json的注释"
-    }
-  },
   "policyDefault": {
     "levels": {
       "0": {

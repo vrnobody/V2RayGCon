@@ -9,7 +9,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
     {
         #region public methods
 
-        public static string EncodeUriShareLink(string protocol, string config)
+        public static string EncodeUriShareLink(string protocol, string name, string config)
         {
             var vc = new Models.Datas.SharelinkMetadata(config);
             if (vc.proto != protocol)
@@ -33,7 +33,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 VgcApis.Misc.Utils.FormatHost(vc.host),
                 vc.port,
                 string.Join("&", pms),
-                Uri.EscapeDataString(vc.name)
+                Uri.EscapeDataString(name)
             );
             return url;
         }
@@ -194,10 +194,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
             var result = new Models.Datas.SharelinkMetadata
             {
                 proto = proto,
-                name = GetStr("v2raygcon", "alias"),
                 host = GetStr(mainPrefix, "address"),
                 port = VgcApis.Misc.Utils.Str2Int(GetStr(mainPrefix, "port")),
-                description = GetStr("v2raygcon", "description"),
             };
 
             ExtractFirstOutboundFromJsonConfig(result, config, mainPrefix, proto);
@@ -504,7 +502,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         static void ExtractTlsSettings(
             Models.Datas.SharelinkMetadata result,
             JObject config,
-            System.Func<string, string, string> reader,
+            Func<string, string, string> reader,
             string prefix
         )
         {

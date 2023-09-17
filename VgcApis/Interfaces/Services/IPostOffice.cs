@@ -24,7 +24,7 @@ namespace VgcApis.Interfaces.Services
 
         bool RemoveMailBox(ILuaMailBox mailbox);
         bool Send(string address, LuaMail mail);
-        bool SendAndWait(string address, VgcApis.Models.Datas.LuaMail mail);
+        bool SendAndWait(string address, LuaMail mail);
         bool ValidateMailBox(ILuaMailBox mailbox);
         #endregion
     }

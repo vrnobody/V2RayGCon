@@ -117,88 +117,120 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfirmClearLog" xml:space="preserve">
-    <value>清空日志？</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lbTitle.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="ConfirmDeleteAllScripts" xml:space="preserve">
-    <value>删除所有脚本？</value>
+  <data name="&gt;&gt;btnOk.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="ConfirmRemoveScript" xml:space="preserve">
-    <value>真的要删除这个脚本吗？</value>
+  <data name="&gt;&gt;btnOk.Name" xml:space="preserve">
+    <value>btnOk</value>
   </data>
-  <data name="CopyFail" xml:space="preserve">
-    <value>复制失败！</value>
+  <data name="&gt;&gt;lbTitle.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="CopySuccess" xml:space="preserve">
-    <value>复制成功！</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tboxContent.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 27</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>NeoLua脚本管理器。</value>
+  <data name="tboxContent.Size" type="System.Drawing.Size, System.Drawing">
+    <value>267, 21</value>
   </data>
-  <data name="DiscardUnsavedChanges" xml:space="preserve">
-    <value>放弃未保存的修改?</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormInput</value>
   </data>
-  <data name="Done" xml:space="preserve">
-    <value>完成</value>
+  <data name="lbTitle.Text" xml:space="preserve">
+    <value>Content:</value>
   </data>
-  <data name="Empty" xml:space="preserve">
-    <value>空白</value>
+  <data name="btnOk.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
-  <data name="ExportScriptsFail" xml:space="preserve">
-    <value>导出脚本失败！</value>
+  <data name="lbTitle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 9</value>
   </data>
-  <data name="Fail" xml:space="preserve">
-    <value>失败</value>
+  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
-  <data name="ImportScriptsFail" xml:space="preserve">
-    <value>导入脚本失败！</value>
+  <data name="tboxContent.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="ImportScriptsSuccess" xml:space="preserve">
-    <value>导入脚本完成！</value>
+  <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
-  <data name="LuaCtrlOptionNone" xml:space="preserve">
-    <value>无</value>
+  <data name="&gt;&gt;tboxContent.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="LunaScrEditor" xml:space="preserve">
-    <value>NeoLuna v{0} - 脚本编辑器</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>291, 86</value>
   </data>
-  <data name="LunaScrMgr" xml:space="preserve">
-    <value>NeoLuna v{0} - 脚本管理器</value>
+  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>148, 54</value>
   </data>
-  <data name="NewServerName" xml:space="preserve">
-    <value>新服务器名</value>
+  <data name="&gt;&gt;tboxContent.Name" xml:space="preserve">
+    <value>tboxContent</value>
   </data>
-  <data name="OpenLogWindow" xml:space="preserve">
-    <value>打开日志窗口</value>
+  <data name="lbTitle.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
-  <data name="OpenScriptEditor" xml:space="preserve">
-    <value>打开脚本编辑器</value>
+  <data name="&gt;&gt;btnOk.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="OpenScriptManger" xml:space="preserve">
-    <value>打开脚本管理器</value>
+  <data name="&gt;&gt;btnOk.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ReplaceScript" xml:space="preserve">
-    <value>替换现有脚本：</value>
+  <data name="&gt;&gt;tboxContent.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ScriptNameNotSet" xml:space="preserve">
-    <value>脚本名没设置！</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ScriptNotFound" xml:space="preserve">
-    <value>找不到这个脚本！</value>
+  <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="SendStopSignalTo" xml:space="preserve">
-    <value>发送停止信号至</value>
+  <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
+    <value>btnCancel</value>
   </data>
-  <data name="Start" xml:space="preserve">
-    <value>启动</value>
+  <data name="btnOk.Location" type="System.Drawing.Point, System.Drawing">
+    <value>67, 54</value>
   </data>
-  <data name="Stopped" xml:space="preserve">
-    <value>已结束</value>
+  <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="Terminate" xml:space="preserve">
-    <value>终止</value>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="WriteFileFail" xml:space="preserve">
-    <value>写入文件失败！</value>
+  <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;lbTitle.Name" xml:space="preserve">
+    <value>lbTitle</value>
+  </data>
+  <data name="&gt;&gt;lbTitle.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnOk.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="lbTitle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 12</value>
+  </data>
+  <data name="&gt;&gt;lbTitle.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="btnOk.Text" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="&gt;&gt;tboxContent.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

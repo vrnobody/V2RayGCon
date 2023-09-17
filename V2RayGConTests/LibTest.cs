@@ -122,9 +122,9 @@ stat: <
         }
 
         [DataTestMethod]
-        [DataRow(@"v/", @"")]
-        [DataRow(@":v/v/", @"")]
-        public void GetLinkBodyFailTest(string link, string expect)
+        [DataRow(@"v/")]
+        [DataRow(@":v/v/")]
+        public void GetLinkBodyFailTest(string link)
         {
             try
             {
@@ -138,15 +138,23 @@ stat: <
         }
 
         [DataTestMethod]
+#if DEBUG
+        [DataRow("https://www.baidu.com/")]
+#else
         [DataRow("https://www.github.com/")]
+#endif
         public void FetchTest(string url)
         {
-            var html = Misc.Utils.Fetch(url);
+            var html = Fetch(url);
             Assert.AreEqual(false, string.IsNullOrEmpty(html));
         }
 
         [DataTestMethod]
+#if DEBUG
+        [DataRow("https://www.baidu.com/", 3)]
+#else
         [DataRow("https://www.github.com/", 3)]
+#endif
         public void FetchBatchTest(string url, int times)
         {
             var urls = new List<string>();
@@ -183,7 +191,7 @@ stat: <
         [DataRow("http://a.com/c", "/d/abc.html", "http://a.com/d/abc.html")]
         public void PatchUrlTest(string url, string relativeUrl, string expect)
         {
-            var patchedUrl = Misc.Utils.PatchHref(url, relativeUrl);
+            var patchedUrl = PatchHref(url, relativeUrl);
             Assert.AreEqual(expect, patchedUrl);
         }
 
@@ -195,7 +203,7 @@ stat: <
         [DataRow("0.0.0.0", "0.0")]
         public void TrimVersionStringTest(string version, string expect)
         {
-            var result = Misc.Utils.TrimVersionString(version);
+            var result = TrimVersionString(version);
             Assert.AreEqual(expect, result);
         }
 
@@ -205,7 +213,7 @@ stat: <
         [DataRow("1234", "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4")]
         public void Sha256Test(string source, string expect)
         {
-            var sha = Misc.Utils.SHA256(source);
+            var sha = SHA256(source);
             Assert.AreEqual(expect, sha);
         }
 
@@ -217,11 +225,15 @@ stat: <
         [DataRow(2, 2, true)]
         public void AreEqualTest(double a, double b, bool expect)
         {
-            Assert.AreEqual(expect, Misc.Utils.AreEqual(a, b));
+            Assert.AreEqual(expect, AreEqual(a, b));
         }
 
         [DataTestMethod]
-        [DataRow("https://www.github.com")]
+#if DEBUG
+        [DataRow("https://www.baidu.com/")]
+#else
+        [DataRow("https://www.github.com/")]
+#endif
         public void VisitWebPageSpeedTestTest(string url)
         {
             var r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, 1024 * 1024, -1);
@@ -233,25 +245,10 @@ stat: <
             Assert.AreEqual(true, time < SpeedtestTimeout);
         }
 
-        [DataTestMethod]
-        [DataRow(@"{}", "")]
-        [DataRow(@"{v2raygcon:{env:['1','2']}}", "")]
-        [DataRow(@"{v2raygcon:{env:{a:'1',b:2}}}", "a:1,b:2")]
-        [DataRow(@"{v2raygcon:{env:{a:'1',b:'2'}}}", "a:1,b:2")]
-        public void GetEnvVarsFromConfigTest(string json, string expect)
-        {
-            var j = JObject.Parse(json);
-            var env = Misc.Utils.GetEnvVarsFromConfig(j);
-            var strs = env.OrderBy(p => p.Key).Select(p => p.Key + ":" + p.Value);
-            var r = string.Join(",", strs);
-
-            Assert.AreEqual(expect, r);
-        }
-
         [TestMethod]
         public void CreateDeleteAppFolderTest()
         {
-            var appFolder = Misc.Utils.GetSysAppDataFolder();
+            var appFolder = GetSysAppDataFolder();
             Assert.AreEqual(false, string.IsNullOrEmpty(appFolder));
 
             // do not run these tests
@@ -268,8 +265,8 @@ stat: <
         {
             var r = JObject.Parse(json);
             var e = JObject.Parse(expect);
-            Misc.Utils.TrySetValue<string>(r, path, value);
-            Assert.AreEqual(true, JObject.DeepEquals(e, r));
+            TrySetValue(r, path, value);
+            Assert.AreEqual(true, JToken.DeepEquals(e, r));
         }
 
         [DataTestMethod]
@@ -279,8 +276,8 @@ stat: <
         {
             var r = JObject.Parse(json);
             var e = JObject.Parse(expect);
-            Misc.Utils.TrySetValue<int>(r, path, value);
-            Assert.AreEqual(true, JObject.DeepEquals(e, r));
+            TrySetValue(r, path, value);
+            Assert.AreEqual(true, JToken.DeepEquals(e, r));
         }
 
         [DataTestMethod]
@@ -309,7 +306,7 @@ stat: <
             var j = JObject.Parse(json);
             RemoveKeyFromJObject(j, key);
             var e = JObject.Parse(expect);
-            Assert.AreEqual(true, JObject.DeepEquals(e, j));
+            Assert.AreEqual(true, JToken.DeepEquals(e, j));
         }
 
         [DataTestMethod]
@@ -320,8 +317,8 @@ stat: <
         [DataRow(",,,  ,1  ,  ,2,  ,3,,,", "1,2,3")]
         public void Str2JArray2Str(string value, string expect)
         {
-            var array = Misc.Utils.Str2JArray(value);
-            var str = Misc.Utils.JArray2Str(array);
+            var array = Str2JArray(value);
+            var str = JArray2Str(array);
             Assert.AreEqual(expect, str);
         }
 
@@ -342,7 +339,7 @@ stat: <
         [TestMethod]
         public void GetLocalCoreVersion()
         {
-            var core = new V2RayGCon.Libs.V2Ray.Core(Services.Settings.Instance);
+            var core = new Libs.V2Ray.Core(Services.Settings.Instance);
             var version = core.GetV2RayCoreVersion();
 
             if (core.IsV2RayExecutableExist())
@@ -359,7 +356,7 @@ stat: <
         public void GetValue_GetBoolFromString_ReturnDefault()
         {
             var json = Services.Cache.Instance.tpl.LoadMinConfig();
-            Assert.AreEqual(default(bool), GetValue<bool>(json, "log.loglevel"));
+            Assert.AreEqual(default, GetValue<bool>(json, "log.loglevel"));
         }
 
         [TestMethod]
@@ -373,14 +370,14 @@ stat: <
         public void GetValue_KeyNotExist_ReturnDefault()
         {
             var json = Services.Cache.Instance.tpl.LoadMinConfig();
-            var value = Misc.Utils.GetValue<int>(json, "log.key_not_exist");
-            Assert.AreEqual(default(int), value);
+            var value = GetValue<int>(json, "log.key_not_exist");
+            Assert.AreEqual(default, value);
         }
 
         [TestMethod]
         public void ConfigResource_Validate()
         {
-            foreach (var config in Misc.Utils.TestingGetResourceConfigJson())
+            foreach (var config in TestingGetResourceConfigJson())
             {
                 try
                 {
@@ -398,15 +395,9 @@ stat: <
         {
             var html = "http://abc.com https://def.com";
 
-            var httpLinks = Misc.Utils.ExtractLinks(
-                html,
-                VgcApis.Models.Datas.Enums.LinkTypes.http
-            );
+            var httpLinks = ExtractLinks(html, VgcApis.Models.Datas.Enums.LinkTypes.http);
 
-            var httpsLinks = Misc.Utils.ExtractLinks(
-                html,
-                VgcApis.Models.Datas.Enums.LinkTypes.https
-            );
+            var httpsLinks = ExtractLinks(html, VgcApis.Models.Datas.Enums.LinkTypes.https);
 
             Assert.AreEqual(2, httpLinks.Count());
             Assert.AreEqual(2, httpsLinks.Count());
@@ -430,10 +421,7 @@ stat: <
         public void ExtractLinks_FromLinksTxt()
         {
             var content = TestConst.links;
-            var links = Misc.Utils.ExtractLinks(
-                content,
-                VgcApis.Models.Datas.Enums.LinkTypes.vmess
-            );
+            var links = ExtractLinks(content, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
             Assert.AreEqual(2, links.Count);
         }
 
@@ -441,10 +429,7 @@ stat: <
         public void ExtractLink_FromEmptyString_Return_EmptyList()
         {
             var content = "";
-            var links = Misc.Utils.ExtractLinks(
-                content,
-                VgcApis.Models.Datas.Enums.LinkTypes.vmess
-            );
+            var links = ExtractLinks(content, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
             Assert.AreEqual(0, links.Count);
         }
 

@@ -1,7 +1,17 @@
-﻿namespace VgcApis.Models.Datas
+﻿using System;
+
+namespace VgcApis.Models.Datas
 {
-    public class Enums
+    public static class Enums
     {
+        [Flags]
+        public enum ConfigType
+        {
+            Unknow,
+            Json,
+            Yaml,
+        }
+
         public enum PackageTypes
         {
             Chain,
@@ -14,6 +24,7 @@
             LeastPing = 1,
         }
 
+        [Flags]
         public enum ModifierKeys
         {
             Alt = 1,
@@ -33,6 +44,7 @@
         /// <summary>
         /// 数值需要连续,否则无法和ComboBox的selectedIndex对应
         /// </summary>
+        [Flags]
         public enum Sections
         {
             Config = 0,
@@ -63,6 +75,7 @@
             zhCN = 2,
         }
 
+        [Flags]
         public enum LinkTypes
         {
             vmess = 0,

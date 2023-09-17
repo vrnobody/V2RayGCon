@@ -37,7 +37,7 @@ namespace V2RayGCon.Test
         {
             var m = JObject.Parse(main);
             var s = JObject.Parse(sub);
-            Assert.AreEqual<bool>(expect, Misc.Utils.Contains(m, s));
+            Assert.AreEqual(expect, Misc.Utils.Contains(m, s));
         }
 
         [DataTestMethod]
@@ -62,7 +62,7 @@ namespace V2RayGCon.Test
             var c = JToken.Parse(child);
             var result = Misc.Utils.CreateJObject(path, c);
             var e = JObject.Parse(expect);
-            Assert.AreEqual<bool>(true, JObject.DeepEquals(result, e));
+            Assert.AreEqual(true, JToken.DeepEquals(result, e));
         }
 
         [DataTestMethod]
@@ -75,7 +75,7 @@ namespace V2RayGCon.Test
         {
             var result = Misc.Utils.CreateJObject(path);
             var e = JObject.Parse(expect);
-            Assert.AreEqual<bool>(true, JObject.DeepEquals(result, e));
+            Assert.AreEqual(true, JToken.DeepEquals(result, e));
         }
 
         [DataTestMethod]
@@ -103,7 +103,7 @@ namespace V2RayGCon.Test
             var e = JObject.Parse(expect);
 
             Assert.AreEqual(true, stat);
-            Assert.AreEqual<bool>(true, JObject.DeepEquals(e, part));
+            Assert.AreEqual(true, JToken.DeepEquals(e, part));
         }
 
         [DataTestMethod]
@@ -115,8 +115,8 @@ namespace V2RayGCon.Test
         public void PathParseTest(string path, string parent, string key)
         {
             var v = Misc.Utils.ParsePathIntoParentAndKey(path);
-            Assert.AreEqual<string>(parent, v.Item1);
-            Assert.AreEqual<string>(key, v.Item2);
+            Assert.AreEqual(parent, v.Item1);
+            Assert.AreEqual(key, v.Item2);
         }
 
         [DataTestMethod]
@@ -197,14 +197,14 @@ namespace V2RayGCon.Test
             Misc.Utils.CombineConfigWithRoutingInFront(ref body, mixin);
 
             var e = JObject.Parse(expect);
-            var dbg = body.ToString();
-            var equal = JObject.DeepEquals(e, body);
+            // var dbg = body.ToString();
+            var equal = JToken.DeepEquals(e, body);
 
             Assert.AreEqual(true, equal);
 
             // test whether mixin changed
             var orgMixin = JObject.Parse(right);
-            var same = JObject.DeepEquals(orgMixin, mixin);
+            var same = JToken.DeepEquals(orgMixin, mixin);
             Assert.AreEqual(true, same);
         }
 
@@ -249,155 +249,7 @@ namespace V2RayGCon.Test
             Misc.Utils.MergeJson(body, JObject.Parse(mixinStr));
 
             var e = JObject.Parse(expect);
-            Assert.AreEqual(true, JObject.DeepEquals(body, e));
-        }
-
-        [TestMethod]
-        public void ImportItemList2JObject()
-        {
-            Models.Datas.ImportItem GenItem(
-                bool includeSpeedTest,
-                bool includeActivate,
-                string url,
-                string alias
-            )
-            {
-                return new Models.Datas.ImportItem
-                {
-                    isUseOnActivate = includeActivate,
-                    isUseOnSpeedTest = includeSpeedTest,
-                    isUseOnPackage = false,
-                    url = url,
-                    alias = alias,
-                };
-            }
-            var items = new List<List<Models.Datas.ImportItem>>();
-            var expects = new List<string>();
-
-            items.Add(
-                new List<Models.Datas.ImportItem>
-                {
-                    GenItem(true, true, "a.com", "a"),
-                    GenItem(false, true, "b.com", "b"),
-                    GenItem(true, false, "c.com", ""),
-                }
-            );
-
-            expects.Add(@"{'v2raygcon':{'import':{'a.com':'a','c.com':''}}}");
-
-            items.Add(new List<Models.Datas.ImportItem> { });
-            expects.Add(@"{'v2raygcon':{'import':{}}}");
-
-            for (var i = 0; i < items.Count; i++)
-            {
-                var expect = JObject.Parse(expects[i]);
-                var json = Misc.Utils.ImportItemList2JObject(items[i], true, false, false);
-                var result = JObject.DeepEquals(expect, json);
-                Assert.AreEqual(true, result);
-            }
-        }
-
-        [TestMethod]
-        public void ParseImportTest()
-        {
-            var data = new Dictionary<string, string>();
-
-            void kv(string name, string key, string val)
-            {
-                var json = JObject.Parse(@"{}");
-                if (data.ContainsKey(name))
-                {
-                    json = JObject.Parse(data[name]);
-                }
-                json[key] = val;
-                data[name] = json.ToString(Newtonsoft.Json.Formatting.None);
-            }
-
-            void import(string name, string url)
-            {
-                var json = JObject.Parse(@"{}");
-                if (data.ContainsKey(name))
-                {
-                    json = JObject.Parse(data[name]);
-                }
-                var imp = Misc.Utils.GetKey(json, "v2raygcon.import");
-                if (imp == null || !(imp is JObject))
-                {
-                    json["v2raygcon"] = JObject.Parse(@"{'import':{}}");
-                }
-                json["v2raygcon"]["import"][url] = "";
-                data[name] = json.ToString(Newtonsoft.Json.Formatting.None);
-            }
-
-            List<string> fetcher(List<string> keys)
-            {
-                var result = new List<string>();
-
-                foreach (var key in keys)
-                {
-                    try
-                    {
-                        // Debug.WriteLine(key);
-                        result.Add(data[key]);
-                    }
-                    catch
-                    {
-                        throw new System.Net.WebException();
-                    }
-                }
-
-                return result;
-            }
-
-            bool eq(JObject left, JObject right)
-            {
-                var jleft = left.DeepClone() as JObject;
-                var jright = right.DeepClone() as JObject;
-                jleft["v2raygcon"] = null;
-                jright["v2raygcon"] = null;
-                return JObject.DeepEquals(jleft, jright);
-            }
-
-            JObject parse(string key, int depth = 3)
-            {
-                var config = JObject.Parse(data[key]);
-                return Misc.Utils.ParseImportRecursively(fetcher, config, depth);
-            }
-
-            void check(string expect, string value)
-            {
-                Assert.AreEqual(true, eq(JObject.Parse(expect), parse(value)));
-            }
-
-            data["base"] = "{'v2raygcon':{}}";
-            kv("a", "a", "1");
-            kv("b", "b", "1");
-            kv("baser", "r", "1");
-            import("baser", "baser");
-            import("mixAB", "a");
-            import("mixAB", "b");
-            import("mixC", "mixAB");
-            kv("mixC", "a", "2");
-            kv("mixC", "c", "1");
-            import("mixCAb", "mixC");
-            import("mixCAb", "mixAB");
-            kv("mixCAb", "c", "2");
-            import("mixABC", "a");
-            import("mixABC", "b");
-            import("mixABC", "mixC");
-            import("final", "mixAB");
-            import("final", "mixC");
-            import("final", "mixCAb");
-            import("final", "baser");
-            kv("final", "msg", "omg");
-
-            check(@"{'a':'2','b':'1','c':'2','r':'1','msg':'omg'}", "final");
-            check(@"{'a':'2','b':'1','c':'1'}", "mixABC");
-            check(@"{'a':'1','b':'1','c':'2'}", "mixCAb");
-            check(@"{'a':'2','c':'1','b':'1'}", "mixC");
-            check(@"{'a':'1','b':'1'}", "mixAB");
-            check(data["base"], "base");
-            check(data["baser"], "baser");
+            Assert.AreEqual(true, JToken.DeepEquals(body, e));
         }
     }
 }

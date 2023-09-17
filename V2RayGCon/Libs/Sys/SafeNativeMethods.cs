@@ -4,7 +4,7 @@ using System.Security;
 
 namespace V2RayGCon.Libs.Sys
 {
-    [SuppressUnmanagedCodeSecurityAttribute]
+    [SuppressUnmanagedCodeSecurity]
     internal static class SafeNativeMethods
     {
         #region dll loader

@@ -60,7 +60,6 @@
             this.v2cfgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.showSettingWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textEditortoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -257,7 +256,6 @@
             this.copyToolStripMenuItem,
             this.toolStripMenuItem1,
             this.showSettingWindowToolStripMenuItem,
-            this.editToolStripMenuItem,
             this.textEditortoolStripMenuItem,
             this.debugToolStripMenuItem,
             this.deleteToolStripMenuItem,
@@ -345,12 +343,6 @@
             resources.ApplyResources(this.showSettingWindowToolStripMenuItem, "showSettingWindowToolStripMenuItem");
             this.showSettingWindowToolStripMenuItem.Click += new System.EventHandler(this.showSettingsWindowToolStripMenuItem_Click);
             // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            resources.ApplyResources(this.editToolStripMenuItem, "editToolStripMenuItem");
-            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
-            // 
             // textEditortoolStripMenuItem
             // 
             this.textEditortoolStripMenuItem.Name = "textEditortoolStripMenuItem";
@@ -361,7 +353,7 @@
             // 
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             resources.ApplyResources(this.debugToolStripMenuItem, "debugToolStripMenuItem");
-            this.debugToolStripMenuItem.Click += new System.EventHandler(this.debugToolStripMenuItem_Click);
+            this.debugToolStripMenuItem.Click += new System.EventHandler(this.showFinalConfigToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
@@ -435,7 +427,6 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox chkSelected;
         private System.Windows.Forms.ContextMenuStrip ctxMenuStripMore;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem autoShareLinkToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem v2cfgToolStripMenuItem;

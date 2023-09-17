@@ -332,8 +332,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     continue;
                 }
 
+                var name = server.GetCoreStates().GetName();
                 var configString = server.GetConfiger().GetConfig();
-                var shareLink = slinkMgr.EncodeConfigToShareLink(configString, linkType);
+                var shareLink = slinkMgr.EncodeConfigToShareLink(name, configString, linkType);
 
                 if (!string.IsNullOrEmpty(shareLink))
                 {

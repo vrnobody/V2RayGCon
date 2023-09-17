@@ -44,7 +44,7 @@ namespace VgcApis.Models.Datas
 
         public int Count() => mails.Count;
 
-        public VgcApis.Models.Datas.LuaMail Wait()
+        public LuaMail Wait()
         {
             do
             {
@@ -52,12 +52,12 @@ namespace VgcApis.Models.Datas
                 {
                     return mail;
                 }
-                VgcApis.Misc.Utils.Sleep(100);
+                Misc.Utils.Sleep(100);
             } while (!mails.IsCompleted);
             return null;
         }
 
-        public VgcApis.Models.Datas.LuaMail Wait(int ms)
+        public LuaMail Wait(int ms)
         {
             if (TryTakeIgnoreError(mails, ms, out var mail))
             {
@@ -66,7 +66,7 @@ namespace VgcApis.Models.Datas
             return null;
         }
 
-        public VgcApis.Models.Datas.LuaMail Check()
+        public LuaMail Check()
         {
             try
             {
@@ -80,35 +80,35 @@ namespace VgcApis.Models.Datas
             return null;
         }
 
-        public bool Reply(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, string title) =>
+        public bool Reply(Interfaces.PostOfficeComponents.ILuaMail mail, string title) =>
             Reply(mail, title, null);
 
         public bool Reply(
-            VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail,
+            Interfaces.PostOfficeComponents.ILuaMail mail,
             string title,
             string content
         ) => Reply(mail, 0, title, false, content);
 
-        public bool ReplyCode(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, double code) =>
+        public bool ReplyCode(Interfaces.PostOfficeComponents.ILuaMail mail, double code) =>
             ReplyCode(mail, code, null);
 
         public bool ReplyCode(
-            VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail,
+            Interfaces.PostOfficeComponents.ILuaMail mail,
             double code,
             string content
         ) => Reply(mail, code, null, false, content);
 
-        public bool ReplyState(VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail, bool state) =>
+        public bool ReplyState(Interfaces.PostOfficeComponents.ILuaMail mail, bool state) =>
             ReplyState(mail, state, null);
 
         public bool ReplyState(
-            VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail,
+            Interfaces.PostOfficeComponents.ILuaMail mail,
             bool state,
             string content
         ) => Reply(mail, 0, null, state, content);
 
         public bool Reply(
-            VgcApis.Interfaces.PostOfficeComponents.ILuaMail mail,
+            Interfaces.PostOfficeComponents.ILuaMail mail,
             double code,
             string title,
             bool state,

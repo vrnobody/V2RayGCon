@@ -8,7 +8,7 @@ namespace V2RayGCon.Services.Caches
     {
         readonly object writeLock;
         Dictionary<string, string> data;
-        Services.Settings setting;
+        Settings setting;
 
         public CoreCache()
         {
@@ -16,7 +16,7 @@ namespace V2RayGCon.Services.Caches
         }
 
         #region public method
-        public void Run(Services.Settings setting)
+        public void Run(Settings setting)
         {
             this.setting = setting;
             data = LoadDecodeCache();

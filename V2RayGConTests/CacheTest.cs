@@ -8,11 +8,11 @@ namespace V2RayGCon.Test
     [TestClass]
     public class CacheTest
     {
-        readonly V2RayGCon.Services.Cache cache;
+        readonly Services.Cache cache;
 
         public CacheTest()
         {
-            cache = V2RayGCon.Services.Cache.Instance;
+            cache = Services.Cache.Instance;
         }
 
         [TestMethod]
@@ -28,8 +28,13 @@ namespace V2RayGCon.Test
         }
 
         [DataTestMethod]
+#if DEBUG
+        [DataRow("https://www.baidu.com/")]
+        [DataRow("https://www.sogou.com/,https://www.baidu.com/")]
+#else
         [DataRow("https://www.github.com/")]
         [DataRow("https://www.bing.com/,https://www.github.com/")]
+#endif
         public void HTMLNormalTest(string rawData)
         {
             var data = rawData.Split(',');
@@ -57,9 +62,9 @@ namespace V2RayGCon.Test
                 Assert.Fail();
             }
 
-            Assert.AreEqual<int>(data.Length, html.Count);
+            Assert.AreEqual(data.Length, html.Count);
             html.Clear();
-            Assert.AreEqual<int>(0, html.Count);
+            Assert.AreEqual(0, html.Count);
         }
 
         [DataTestMethod]
@@ -77,7 +82,7 @@ namespace V2RayGCon.Test
         {
             var v = cache.tpl.LoadTemplate(key);
             var e = JObject.Parse(expect);
-            Assert.AreEqual(true, JObject.DeepEquals(v, e));
+            Assert.AreEqual(true, JToken.DeepEquals(v, e));
         }
 
         [TestMethod]
@@ -85,7 +90,7 @@ namespace V2RayGCon.Test
         {
             var min = cache.tpl.LoadMinConfig();
             var v = Misc.Utils.GetValue<string>(min, "log.loglevel");
-            Assert.AreEqual<string>("warning", v);
+            Assert.AreEqual("warning", v);
         }
     }
 }

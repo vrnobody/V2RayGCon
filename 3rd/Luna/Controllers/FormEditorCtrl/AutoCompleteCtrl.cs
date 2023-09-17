@@ -19,7 +19,7 @@ namespace Luna.Controllers.FormEditorCtrl
         private readonly ComboBox cboxFunctionList;
         private readonly ToolStripMenuItem miEanbleCodeAnalyzeEx;
         private readonly ToolStripStatusLabel smiLbCodeanalyze;
-        readonly Services.AstServer astServer;
+        readonly AstServer astServer;
         AutocompleteMenu luaAcm = null;
         BestMatchSnippets bestMatchSnippets = null;
         readonly VgcApis.Libs.Infr.Recorder history = new VgcApis.Libs.Infr.Recorder();
@@ -123,39 +123,39 @@ namespace Luna.Controllers.FormEditorCtrl
                 return;
             }
 
-            if (ast[Services.AstServer.KEY_VARS] is JObject)
+            if (ast[AstServer.KEY_VARS] is JObject)
             {
-                foreach (var kv in ast[Services.AstServer.KEY_VARS] as JObject)
+                foreach (var kv in ast[AstServer.KEY_VARS] as JObject)
                 {
                     snippets.Add(new LuaKeywordSnippets(kv.Key));
                 }
             }
 
-            if (ast[Services.AstServer.KEY_FUNCTION] is JObject)
+            if (ast[AstServer.KEY_FUNCTION] is JObject)
             {
-                foreach (var kv in ast[Services.AstServer.KEY_FUNCTION] as JObject)
+                foreach (var kv in ast[AstServer.KEY_FUNCTION] as JObject)
                 {
-                    var ps = (kv.Value as JObject)[Services.AstServer.KEY_PARAMS] as JArray;
+                    var ps = (kv.Value as JObject)[AstServer.KEY_PARAMS] as JArray;
                     var sps = string.Join(", ", ps);
                     snippets.Add(new LuaFuncSnippets($"{kv.Key}({sps})"));
                 }
             }
 
-            if (ast[Services.AstServer.KEY_SUB_FUNCS] is JObject)
+            if (ast[AstServer.KEY_SUB_FUNCS] is JObject)
             {
-                foreach (var kv in ast[Services.AstServer.KEY_SUB_FUNCS] as JObject)
+                foreach (var kv in ast[AstServer.KEY_SUB_FUNCS] as JObject)
                 {
-                    var ps = (kv.Value as JObject)[Services.AstServer.KEY_PARAMS] as JArray;
+                    var ps = (kv.Value as JObject)[AstServer.KEY_PARAMS] as JArray;
                     var sps = string.Join(", ", ps);
                     snippets.Add(new LuaSubFuncSnippets($"{kv.Key}({sps})", "."));
                 }
             }
 
-            if (ast[Services.AstServer.KEY_METHODS] is JObject)
+            if (ast[AstServer.KEY_METHODS] is JObject)
             {
-                foreach (var kv in ast[Services.AstServer.KEY_METHODS] as JObject)
+                foreach (var kv in ast[AstServer.KEY_METHODS] as JObject)
                 {
-                    var ps = (kv.Value as JObject)[Services.AstServer.KEY_PARAMS] as JArray;
+                    var ps = (kv.Value as JObject)[AstServer.KEY_PARAMS] as JArray;
                     var sps = string.Join(", ", ps);
                     snippets.Add(new LuaSubFuncSnippets($"{kv.Key}({sps})", ":"));
                 }
@@ -166,12 +166,12 @@ namespace Luna.Controllers.FormEditorCtrl
 
         private void BuildModuleSnippets(JObject ast, List<MatchItemBase> snippets)
         {
-            if (!(ast[Services.AstServer.KEY_MODULES] is JObject))
+            if (!(ast[AstServer.KEY_MODULES] is JObject))
             {
                 return;
             }
 
-            foreach (var kv in ast[Services.AstServer.KEY_MODULES] as JObject)
+            foreach (var kv in ast[AstServer.KEY_MODULES] as JObject)
             {
                 var mn = kv.Value.ToString();
                 var mAst = astServer.AnalyzeModule(mn, isEnableCodeAnalyzeEx);
@@ -192,15 +192,15 @@ namespace Luna.Controllers.FormEditorCtrl
         {
             var fds = new Dictionary<string, string>()
             {
-                { Services.AstServer.KEY_FUNCTION, "." },
-                { Services.AstServer.KEY_METHODS, ":" },
+                { AstServer.KEY_FUNCTION, "." },
+                { AstServer.KEY_METHODS, ":" },
             };
 
             snippets.Add(new LuaKeywordSnippets(varName));
 
             foreach (var kv in ast)
             {
-                if (kv.Value is JArray && kv.Key == Services.AstServer.KEY_PROPERTY)
+                if (kv.Value is JArray && kv.Key == AstServer.KEY_PROPERTY)
                 {
                     foreach (string prop in kv.Value as JArray)
                     {
@@ -532,9 +532,9 @@ namespace Luna.Controllers.FormEditorCtrl
 
             string[] keys = new string[]
             {
-                Services.AstServer.KEY_FUNCTION,
-                Services.AstServer.KEY_SUB_FUNCS,
-                Services.AstServer.KEY_METHODS,
+                AstServer.KEY_FUNCTION,
+                AstServer.KEY_SUB_FUNCS,
+                AstServer.KEY_METHODS,
             };
 
             Dictionary<string, int> funcs = new Dictionary<string, int>();
@@ -545,9 +545,9 @@ namespace Luna.Controllers.FormEditorCtrl
                 {
                     foreach (var kv in ast[key] as JObject)
                     {
-                        var ps = (kv.Value as JObject)[Services.AstServer.KEY_PARAMS] as JArray;
+                        var ps = (kv.Value as JObject)[AstServer.KEY_PARAMS] as JArray;
                         var luaLineNumber = (kv.Value as JObject)[
-                            Services.AstServer.KEY_LINE_NUM
+                            AstServer.KEY_LINE_NUM
                         ].Value<int>();
                         var sps = string.Join(", ", ps);
                         var fn = $"{kv.Key}({sps})";
@@ -574,9 +574,9 @@ namespace Luna.Controllers.FormEditorCtrl
             }
 
             var ast = currentCodeAst;
-            if (ast != null && ast[Services.AstServer.KEY_VARS] is JObject)
+            if (ast != null && ast[AstServer.KEY_VARS] is JObject)
             {
-                foreach (var kv in ast[Services.AstServer.KEY_VARS] as JObject)
+                foreach (var kv in ast[AstServer.KEY_VARS] as JObject)
                 {
                     if (kv.Key == v)
                     {
@@ -612,9 +612,9 @@ namespace Luna.Controllers.FormEditorCtrl
             history.Add(editor.CurrentLine);
             var ast = currentCodeAst;
             List<string> vars = new List<string>();
-            if (ast != null && ast[Services.AstServer.KEY_VARS] is JObject)
+            if (ast != null && ast[AstServer.KEY_VARS] is JObject)
             {
-                foreach (var kv in ast[Services.AstServer.KEY_VARS] as JObject)
+                foreach (var kv in ast[AstServer.KEY_VARS] as JObject)
                 {
                     vars.Add(kv.Key);
                 }

@@ -104,10 +104,11 @@ namespace NeoLuna.Interfaces
         /// 用自定义配置下载网页内容
         /// </summary>
         /// <param name="rawConfig">自定义配置</param>
+        /// <param name="coreName">自定义core</param>
         /// <param name="url">网址</param>
         /// <param name="timeout">超时（毫秒）</param>
         /// <returns></returns>
-        string FetchWithCustomConfig(string rawConfig, string url, int timeout);
+        string FetchWithCustomConfig(string rawConfig, string coreName, string url, int timeout);
 
         // Download("http://baidu.com", "d:\index.html")
         /// <summary>

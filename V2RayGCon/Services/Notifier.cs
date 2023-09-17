@@ -283,9 +283,9 @@ namespace V2RayGCon.Services
         #endregion
 
         #region INotifier.WinForms
-        public void ShowFormJsonEditor(string config)
+        public void ShowFormTextEditor(string config)
         {
-            Views.WinForms.FormJsonConfigEditor.ShowConfig(config);
+            Views.WinForms.FormTextConfigEditor.ShowConfig(string.Empty, config, false);
         }
 
         public void ShowFormServerSettings(ICoreServCtrl coreServ)
@@ -1122,11 +1122,6 @@ namespace V2RayGCon.Services
                                 I18N.MainWin,
                                 Properties.Resources.WindowsForm_16x,
                                 (s, a) => Views.WinForms.FormMain.ShowForm()
-                            ),
-                            new ToolStripMenuItem(
-                                I18N.JsonEditor,
-                                Properties.Resources.EditSelectedTag_16x,
-                                (s, a) => Views.WinForms.FormJsonConfigEditor.ShowEmptyConfig()
                             ),
                             new ToolStripMenuItem(
                                 I18N.TextEditor,

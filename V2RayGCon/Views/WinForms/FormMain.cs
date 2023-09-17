@@ -145,14 +145,12 @@ namespace V2RayGCon.Views.WinForms
 
             ctrl.Plug(
                 new Controllers.FormMainComponent.MenuItemsBasic(
-                    this,
                     pluginToolStripMenuItem,
                     toolMenuItemImportLinkFromClipboard,
                     toolMenuItemExportAllServerToFile,
                     toolMenuItemImportFromFile,
                     toolMenuItemAbout,
                     toolMenuItemHelp,
-                    toolMenuItemConfigEditor,
                     toolStripMenuItemTextEditor,
                     toolMenuItemLog,
                     toolMenuItemOptions,

@@ -11,7 +11,7 @@
     {
         bool Add(Models.Datas.LuaMail mail);
 
-        bool TryAdd(VgcApis.Models.Datas.LuaMail mail);
+        bool TryAdd(Models.Datas.LuaMail mail);
 
         /// <summary>
         /// 邮箱内未收取的邮件总数

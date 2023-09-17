@@ -26,7 +26,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         )
         {
             this.servers = Servers.Instance;
-            this.settings = Services.Settings.Instance;
+            this.settings = Settings.Instance;
             this.flyPanel = flyPanel;
             this.tooltip = tooltip;
             this.btnAdd = btnAdd;

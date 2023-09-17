@@ -197,7 +197,7 @@ namespace ProxySetter.Libs.Sys
 
             static InternetConnectionOption()
             {
-                InternetConnectionOption.Size = Marshal.SizeOf(typeof(InternetConnectionOption));
+                Size = Marshal.SizeOf(typeof(InternetConnectionOption));
             }
 
             // Nested Types

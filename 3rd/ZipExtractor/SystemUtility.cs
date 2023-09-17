@@ -72,7 +72,7 @@ namespace ZipExtractor
 
         [ComImport]
         [Guid("9BA05972-F6A8-11CF-A442-00A0C90A8F39")]
-        [ClassInterfaceAttribute(ClassInterfaceType.None)]
+        [ClassInterface(ClassInterfaceType.None)]
         private class CShellWindows { }
 
         [ComImport]

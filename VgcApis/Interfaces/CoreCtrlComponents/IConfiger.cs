@@ -9,7 +9,7 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         /// 获取传给v2ray-core的最终配置
         /// </summary>
         /// <returns>最终配置</returns>
-        JObject GetFinalConfig();
+        string GetFinalConfig();
 
         /// <summary>
         /// 获取整个config.json

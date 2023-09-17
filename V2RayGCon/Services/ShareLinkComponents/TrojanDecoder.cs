@@ -15,7 +15,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region public methods
-        public string Decode(string shareLink)
+        public VgcApis.Models.Datas.DecodeResult Decode(string shareLink)
         {
             /*
              * trojan://password@remote_host:remote_port
@@ -25,15 +25,16 @@ namespace V2RayGCon.Services.ShareLinkComponents
             try
             {
                 var vc = Comm.ParseNonStandarUriShareLink("trojan", shareLink);
-                return GetParent()?.TrojanToConfig(vc);
+                var config = GetParent()?.TrojanToConfig(vc);
+                return new VgcApis.Models.Datas.DecodeResult(vc?.name, config);
             }
             catch { }
             return null;
         }
 
-        public string Encode(string config)
+        public string Encode(string name, string config)
         {
-            return Comm.EncodeUriShareLink("trojan", config);
+            return Comm.EncodeUriShareLink("trojan", name, config);
         }
 
         public List<string> ExtractLinksFromText(string text) =>

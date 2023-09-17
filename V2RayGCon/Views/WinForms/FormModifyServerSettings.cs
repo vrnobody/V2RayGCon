@@ -64,7 +64,7 @@ namespace V2RayGCon.Views.WinForms
             settings = Services.Settings.Instance;
         }
 
-        private void FormModifyServerSettings_Load(object sender, System.EventArgs e)
+        private void FormModifyServerSettings_Load(object sender, EventArgs e)
         {
             cboxZoomMode.SelectedIndex = 0;
         }
@@ -94,6 +94,7 @@ namespace V2RayGCon.Views.WinForms
         {
             var slinkMgr = Services.ShareLinkMgr.Instance;
             var config = coreServ.GetConfiger().GetConfig();
+            var name = coreServ.GetCoreStates().GetName();
             var ts = new List<VgcApis.Models.Datas.Enums.LinkTypes>
             {
                 VgcApis.Models.Datas.Enums.LinkTypes.vmess,
@@ -104,7 +105,7 @@ namespace V2RayGCon.Views.WinForms
 
             for (int i = 0; i < ts.Count; i++)
             {
-                if (!string.IsNullOrEmpty(slinkMgr.EncodeConfigToShareLink(config, ts[i])))
+                if (!string.IsNullOrEmpty(slinkMgr.EncodeConfigToShareLink(name, config, ts[i])))
                 {
                     cboxShareLinkType.SelectedIndex = i;
                     return;
@@ -119,15 +120,12 @@ namespace V2RayGCon.Views.WinForms
             {
                 index = VgcApis.Misc.Utils.Str2Int(tboxServIndex.Text),
                 serverName = tboxServerName.Text,
-                serverDescription = tboxDescription.Text,
                 inboundMode = cboxInboundMode.SelectedIndex,
                 inboundAddress = cboxInboundAddress.Text,
                 mark = cboxMark.Text,
                 remark = tboxRemark.Text,
                 customCoreName = cboxCoreName.SelectedIndex < 1 ? string.Empty : cboxCoreName.Text,
                 isAutorun = chkAutoRun.Checked,
-                isBypassCnSite = chkBypassCnSite.Checked,
-                isGlobalImport = chkGlobalImport.Checked,
                 isUntrack = chkUntrack.Checked
             };
             return result;
@@ -138,7 +136,6 @@ namespace V2RayGCon.Views.WinForms
             var s = coreServSettings;
             tboxServIndex.Text = s.index.ToString();
             tboxServerName.Text = s.serverName;
-            tboxDescription.Text = s.serverDescription;
             cboxInboundMode.SelectedIndex = s.inboundMode;
             cboxInboundAddress.Text = s.inboundAddress;
             cboxMark.Text = s.mark;
@@ -147,8 +144,6 @@ namespace V2RayGCon.Views.WinForms
             SelectComboBoxByText(cboxCoreName, s.customCoreName, 0);
 
             chkAutoRun.Checked = s.isAutorun;
-            chkBypassCnSite.Checked = s.isBypassCnSite;
-            chkGlobalImport.Checked = s.isGlobalImport;
             chkUntrack.Checked = s.isUntrack;
         }
 
@@ -169,6 +164,7 @@ namespace V2RayGCon.Views.WinForms
         void UpdateShareLink()
         {
             var slinkMgr = Services.ShareLinkMgr.Instance;
+            var name = coreServ.GetCoreStates().GetName();
             var config = coreServ.GetConfiger().GetConfig();
             var ty = VgcApis.Models.Datas.Enums.LinkTypes.ss;
             switch (cboxShareLinkType.Text.ToLower())
@@ -185,7 +181,7 @@ namespace V2RayGCon.Views.WinForms
                 default:
                     break;
             }
-            var link = slinkMgr.EncodeConfigToShareLink(config, ty);
+            var link = slinkMgr.EncodeConfigToShareLink(name, config, ty);
             tboxShareLink.Text = link;
         }
 
@@ -204,18 +200,18 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         #region UI events
-        private void cboxInboundAddress_TextChanged(object sender, System.EventArgs e)
+        private void cboxInboundAddress_TextChanged(object sender, EventArgs e)
         {
             VgcApis.Misc.UI.MarkInvalidAddressWithColorRed(cboxInboundAddress);
         }
 
-        private void cboxInboundMode_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void cboxInboundMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             var idx = cboxInboundMode.SelectedIndex;
             cboxInboundAddress.Enabled = idx == 1 || idx == 2;
         }
 
-        private void tboxShareLink_TextChanged(object sender, System.EventArgs e)
+        private void tboxShareLink_TextChanged(object sender, EventArgs e)
         {
             var text = tboxShareLink.Text;
             if (string.IsNullOrEmpty(text))
@@ -245,12 +241,12 @@ namespace V2RayGCon.Views.WinForms
             }
         }
 
-        private void cboxShareLinkType_SelectedValueChanged(object sender, System.EventArgs e)
+        private void cboxShareLinkType_SelectedValueChanged(object sender, EventArgs e)
         {
             UpdateShareLink();
         }
 
-        private void cboxZoomMode_SelectedValueChanged(object sender, System.EventArgs e)
+        private void cboxZoomMode_SelectedValueChanged(object sender, EventArgs e)
         {
             pboxQrcode.SizeMode =
                 cboxZoomMode.Text.ToLower() == "none"

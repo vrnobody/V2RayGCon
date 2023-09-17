@@ -8,7 +8,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             new FormComponentController();
 
         #region public method
-        public void Bind(BaseClasses.FormController container)
+        public void Bind(FormController container)
         {
             auxComponentController.Bind(container);
         }

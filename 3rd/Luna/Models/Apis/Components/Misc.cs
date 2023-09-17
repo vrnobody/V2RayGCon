@@ -11,7 +11,7 @@ namespace Luna.Models.Apis.Components
 {
     internal sealed class Misc : VgcApis.BaseClasses.ComponentOf<LuaApis>, Interfaces.ILuaMisc
     {
-        readonly Services.Settings settings;
+        readonly Settings settings;
         private readonly FormMgrSvc formMgr;
         readonly VgcApis.Interfaces.Services.IUtilsService vgcUtils;
         readonly VgcApis.Interfaces.Services.IShareLinkMgrService vgcSlinkMgr;
@@ -21,8 +21,8 @@ namespace Luna.Models.Apis.Components
 
         public Misc(
             VgcApis.Interfaces.Services.IApiService api,
-            Services.Settings settings,
-            Services.FormMgrSvc formMgr
+            Settings settings,
+            FormMgrSvc formMgr
         )
         {
             this.settings = settings;
@@ -47,7 +47,7 @@ namespace Luna.Models.Apis.Components
             return ok;
         }
 
-        public void ShowFormJsonEditor(string config) => vgcNotifier.ShowFormJsonEditor(config);
+        public void ShowFormTextEditor(string config) => vgcNotifier.ShowFormTextEditor(config);
 
         public void ShowFormServerSettings(ICoreServCtrl coreServ) =>
             vgcNotifier.ShowFormServerSettings(coreServ);
@@ -75,18 +75,13 @@ namespace Luna.Models.Apis.Components
 
         #region ILuaMisc.Forms
 
-        public string ShowData(
-            string title,
-            NLua.LuaTable columns,
-            NLua.LuaTable rows,
-            int defColumn
-        )
+        public string ShowData(string title, LuaTable columns, LuaTable rows, int defColumn)
         {
             var dt = LuaTableToDataTable(columns, rows);
             return ShowDataGridDialog(title, dt, defColumn);
         }
 
-        public string ShowData(string title, NLua.LuaTable columns, NLua.LuaTable rows) =>
+        public string ShowData(string title, LuaTable columns, LuaTable rows) =>
             ShowData(title, columns, rows, -1);
 
         public string BrowseFolder() => VgcApis.Misc.UI.ShowSelectFolderDialog();
@@ -107,10 +102,9 @@ namespace Luna.Models.Apis.Components
             return GetResult<Views.WinForms.FormInput, string>(creater);
         }
 
-        public List<int> Choices(string title, NLua.LuaTable choices) =>
-            Choices(title, choices, false);
+        public List<int> Choices(string title, LuaTable choices) => Choices(title, choices, false);
 
-        public List<int> Choices(string title, NLua.LuaTable choices, bool isShowKey)
+        public List<int> Choices(string title, LuaTable choices, bool isShowKey)
         {
             var list = global::Luna.Misc.Utils.LuaTableToList(choices, isShowKey);
             return GetResultFromChoicesDialog(title, list.ToArray());
@@ -119,12 +113,12 @@ namespace Luna.Models.Apis.Components
         public List<int> Choices(string title, params string[] choices) =>
             GetResultFromChoicesDialog(title, choices);
 
-        public int Choice(string title, NLua.LuaTable choices) => Choice(title, choices, false, -1);
+        public int Choice(string title, LuaTable choices) => Choice(title, choices, false, -1);
 
-        public int Choice(string title, NLua.LuaTable choices, bool isShowKey) =>
+        public int Choice(string title, LuaTable choices, bool isShowKey) =>
             Choice(title, choices, isShowKey, -1);
 
-        public int Choice(string title, NLua.LuaTable choices, bool isShowKey, int selected)
+        public int Choice(string title, LuaTable choices, bool isShowKey, int selected)
         {
             var list = global::Luna.Misc.Utils.LuaTableToList(choices, isShowKey);
             return GetResultFromChoiceDialog(title, list.ToArray(), selected);
@@ -202,40 +196,23 @@ namespace Luna.Models.Apis.Components
 
         public List<string> LocalStorageKeys() => settings.ShareMemoryKeys();
 
-        public string Config2VmessLink(string config)
+        public string EncodeToShareLink(string name, string config)
         {
-            try
-            {
-                return vgcSlinkMgr.EncodeConfigToShareLink(
-                    config,
-                    VgcApis.Models.Datas.Enums.LinkTypes.vmess
-                );
-            }
-            catch { }
-            return null;
+            return vgcSlinkMgr.EncodeConfigToShareLink(name, config);
         }
 
-        public string Config2V2cfg(string config)
+        public string EncodeToV2cfgShareLink(string name, string config)
         {
-            try
-            {
-                return vgcSlinkMgr.EncodeConfigToShareLink(
-                    config,
-                    VgcApis.Models.Datas.Enums.LinkTypes.v2cfg
-                );
-            }
-            catch { }
-            return null;
+            return vgcSlinkMgr.EncodeConfigToShareLink(
+                name,
+                config,
+                VgcApis.Models.Datas.Enums.LinkTypes.v2cfg
+            );
         }
 
-        public string ShareLink2ConfigString(string shareLink)
+        public VgcApis.Models.Datas.DecodeResult DecodeShareLink(string shareLink)
         {
-            try
-            {
-                return vgcSlinkMgr.DecodeShareLinkToConfig(shareLink) ?? @"";
-            }
-            catch { }
-            return null;
+            return vgcSlinkMgr.DecodeShareLinkToConfig(shareLink);
         }
 
         public string AddVmessPrefix(string b64Str) =>
@@ -290,7 +267,7 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region private methods
-        List<Type> GetTypesFromRows(NLua.LuaTable rows)
+        List<Type> GetTypesFromRows(LuaTable rows)
         {
             if (rows == null)
             {
@@ -300,7 +277,7 @@ namespace Luna.Models.Apis.Components
             var ts = new List<Type>();
             foreach (var row in rows.Values)
             {
-                foreach (var cell in (row as NLua.LuaTable).Values)
+                foreach (var cell in (row as LuaTable).Values)
                 {
                     ts.Add(cell.GetType());
                 }
@@ -309,7 +286,7 @@ namespace Luna.Models.Apis.Components
             return null;
         }
 
-        DataTable LuaTableToDataTable(NLua.LuaTable columns, NLua.LuaTable rows)
+        DataTable LuaTableToDataTable(LuaTable columns, LuaTable rows)
         {
             var d = new DataTable();
 
@@ -341,7 +318,7 @@ namespace Luna.Models.Apis.Components
             var rowsKey = rows.Keys;
             foreach (var rowkey in rowsKey)
             {
-                var row = rows[rowkey] as NLua.LuaTable;
+                var row = rows[rowkey] as LuaTable;
                 var items = new List<object>();
                 foreach (var item in row.Values)
                 {

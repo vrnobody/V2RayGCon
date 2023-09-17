@@ -5,9 +5,11 @@ using VgcApis.Models.Datas;
 
 namespace V2RayGCon.Controllers
 {
+#pragma warning disable CA1036 // Override methods on comparable types
     public class CoreServerCtrl
+#pragma warning restore CA1036 // Override methods on comparable types
         : VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
-            VgcApis.Interfaces.ICoreServCtrl,
+            ICoreServCtrl,
             IComparable
     {
         public event EventHandler OnPropertyChanged,
@@ -116,7 +118,7 @@ namespace V2RayGCon.Controllers
                 return 1;
             }
 
-            if (obj is VgcApis.Interfaces.ICoreServCtrl target)
+            if (obj is ICoreServCtrl target)
             {
                 return this.GetCoreStates().GetIndex().CompareTo(target.GetCoreStates().GetIndex());
             }
@@ -143,8 +145,6 @@ namespace V2RayGCon.Controllers
             var cst = GetCoreStates();
 
             cst.SetName(cs.serverName);
-            cst.SetDescription(cs.serverDescription);
-
             ci.customMark = cs.mark;
             ci.customRemark = cs.remark;
             ci.isAutoRun = cs.isAutorun;

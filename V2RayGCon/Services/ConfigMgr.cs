@@ -20,7 +20,13 @@ namespace V2RayGCon.Services
         ConfigMgr() { }
 
         #region public methods
-        public string FetchWithCustomConfig(string rawConfig, string title, string url, int timeout)
+        public string FetchWithCustomConfig(
+            string rawConfig,
+            string coreName,
+            string title,
+            string url,
+            int timeout
+        )
         {
             var text = string.Empty;
             var port = VgcApis.Misc.Utils.GetFreeTcpPort();
@@ -30,10 +36,10 @@ namespace V2RayGCon.Services
             }
             try
             {
-                var config = CreateSpeedTestConfig(rawConfig, port, false, false, false);
-                var envs = Misc.Utils.GetEnvVarsFromConfig(JObject.Parse(config));
+                var config = CreateSpeedTestConfig(rawConfig, port);
                 var core = new Libs.V2Ray.Core(setting) { title = title };
-                core.RestartCoreIgnoreError(config, envs);
+                core.SetCustomCoreName(coreName);
+                core.RestartCoreIgnoreError(config);
                 if (WaitUntilCoreReady(core))
                 {
                     text = Misc.Utils.Fetch(url, port, timeout);
@@ -47,15 +53,18 @@ namespace V2RayGCon.Services
             return text;
         }
 
-        public long RunCustomSpeedTest(string rawConfig, string testUrl, int testTimeout) =>
+        public long RunCustomSpeedTest(
+            string rawConfig,
+            string coreName,
+            string testUrl,
+            int testTimeout
+        ) =>
             QueuedSpeedTesting(
                 rawConfig,
                 "Custom speed-test",
+                coreName,
                 testUrl,
                 testTimeout,
-                false,
-                false,
-                false,
                 null
             ).Item1;
 
@@ -66,95 +75,57 @@ namespace V2RayGCon.Services
                 rawConfig,
                 "Default speed-test",
                 "",
+                url,
                 GetDefaultTimeout(),
-                false,
-                false,
-                false,
                 null
             ).Item1;
         }
 
         public Tuple<long, long> RunDefaultSpeedTest(
-            string rawConfig,
+            string config,
             string title,
+            string coreName,
             EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever
         )
         {
             var url = GetDefaultSpeedtestUrl();
             return QueuedSpeedTesting(
-                rawConfig,
+                config,
                 title,
+                coreName,
                 url,
                 GetDefaultTimeout(),
-                true,
-                true,
-                false,
                 logDeliever
             );
         }
 
-        public string InjectImportTpls(
-            string config,
-            bool isIncludeSpeedTest,
-            bool isIncludeActivate
-        )
+        public void MergeCustomTlsSettings(ref JObject config)
         {
-            JObject import = Misc.Utils.ImportItemList2JObject(
-                setting.GetGlobalImportItems(),
-                isIncludeSpeedTest,
-                isIncludeActivate,
-                false
-            );
+            var outB =
+                Misc.Utils.GetKey(config, "outbound") ?? Misc.Utils.GetKey(config, "outbounds.0");
 
-            Misc.Utils.MergeJson(import, JObject.Parse(config));
-            return import.ToString();
-        }
-
-        public JObject DecodeConfig(
-            string rawConfig,
-            bool isUseCache,
-            bool isInjectSpeedTestTpl,
-            bool isInjectActivateTpl
-        )
-        {
-            var coreConfig = rawConfig;
-            JObject decodedConfig = null;
-
-            try
+            if (outB == null)
             {
-                string injectedConfig = coreConfig;
-                if (isInjectActivateTpl || isInjectSpeedTestTpl)
-                {
-                    injectedConfig = InjectImportTpls(
-                        rawConfig,
-                        isInjectSpeedTestTpl,
-                        isInjectActivateTpl
-                    );
-                }
-
-                decodedConfig = ParseImport(injectedConfig);
-
-                MergeCustomTlsSettings(ref decodedConfig);
-
-                cache.core[coreConfig] = decodedConfig.ToString(Formatting.None);
-            }
-            catch { }
-
-            if (decodedConfig == null)
-            {
-                setting.SendLog(I18N.DecodeImportFail);
-                if (isUseCache)
-                {
-                    try
-                    {
-                        decodedConfig = JObject.Parse(cache.core[coreConfig]);
-                    }
-                    catch (KeyNotFoundException) { }
-                    setting.SendLog(I18N.UsingDecodeCache);
-                }
+                return;
             }
 
-            return decodedConfig;
+            if (!(Misc.Utils.GetKey(outB, "streamSettings") is JObject streamSettings))
+            {
+                return;
+            }
+
+            if (setting.isSupportSelfSignedCert)
+            {
+                var selfSigned = JObject.Parse(@"{tlsSettings: {allowInsecure: true}}");
+                Misc.Utils.MergeJson(streamSettings, selfSigned);
+            }
+
+            if (setting.isEnableUtlsFingerprint)
+            {
+                var uTlsFingerprint = JObject.Parse(@"{tlsSettings: {}}");
+                uTlsFingerprint["tlsSettings"]["fingerprint"] = setting.uTlsFingerprint;
+                Misc.Utils.MergeJson(streamSettings, uTlsFingerprint);
+            }
         }
 
         public bool ModifyInboundWithCustomSetting(
@@ -260,37 +231,8 @@ namespace V2RayGCon.Services
             }
         }
 
-        /*
-         * exceptions
-         * test<FormatException> base64 decode fail
-         * test<System.Net.WebException> url not exist
-         * test<Newtonsoft.Json.JsonReaderException> json decode fail
-         */
-        public JObject ParseImport(string configString)
-        {
-            var maxDepth = VgcApis.Models.Consts.Import.ParseImportDepth;
-
-            var result = Misc.Utils.ParseImportRecursively(
-                GetHtmlContentFromCache,
-                JObject.Parse(configString),
-                maxDepth
-            );
-
-            try
-            {
-                Misc.Utils.RemoveKeyFromJObject(result, "v2raygcon.import");
-            }
-            catch (KeyNotFoundException)
-            {
-                // do nothing;
-            }
-
-            return result;
-        }
-
         public JObject GenV4ServersPackageConfig(
             List<VgcApis.Interfaces.ICoreServCtrl> servList,
-            string packageName,
             VgcApis.Models.Datas.Enums.PackageTypes packageType
         )
         {
@@ -298,25 +240,14 @@ namespace V2RayGCon.Services
             switch (packageType)
             {
                 case VgcApis.Models.Datas.Enums.PackageTypes.Chain:
-                    package = GenV4ChainConfig(servList, packageName);
+                    package = GenV4ChainConfig(servList);
                     break;
                 case VgcApis.Models.Datas.Enums.PackageTypes.Balancer:
                 default:
-                    package = GenV4BalancerConfig(servList, packageName);
+                    package = GenV4BalancerConfig(servList);
                     break;
             }
-
-            try
-            {
-                var finalConfig = GetGlobalImportConfigForPacking();
-                Misc.Utils.CombineConfigWithRoutingInTheEnd(ref finalConfig, package);
-                return finalConfig;
-            }
-            catch
-            {
-                setting.SendLog(I18N.InjectPackagingImportsFail);
-                return package;
-            }
+            return package;
         }
 
         public void Run(Settings setting, Cache cache)
@@ -328,20 +259,18 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
-        JObject GenV4ChainConfig(
-            List<VgcApis.Interfaces.ICoreServCtrl> servList,
-            string packageName
-        )
+        JObject GenV4ChainConfig(List<VgcApis.Interfaces.ICoreServCtrl> servList)
         {
             var package = cache.tpl.LoadPackage("chainV4Tpl");
             var outbounds = package["outbounds"] as JArray;
-            var description = new List<string>();
 
             JObject prev = null;
             for (var i = 0; i < servList.Count; i++)
             {
                 var s = servList[i];
-                var parts = Misc.Utils.ExtractOutboundsFromConfig(s.GetConfiger().GetFinalConfig());
+                var finalConfig = s.GetConfiger().GetFinalConfig();
+                var json = VgcApis.Misc.Utils.ParseJObject(finalConfig);
+                var parts = Misc.Utils.ExtractOutboundsFromConfig(json);
                 var c = 0;
                 foreach (JObject p in parts)
                 {
@@ -362,34 +291,23 @@ namespace V2RayGCon.Services
                 }
                 else
                 {
-                    description.Add($"{i}.[{name}]");
                     setting.SendLog(I18N.PackageSuccess + ": " + name);
                 }
             }
             outbounds.Add(prev);
-
-            package["v2raygcon"]["alias"] = string.IsNullOrEmpty(packageName)
-                ? "ChainV4"
-                : packageName;
-            package["v2raygcon"]["description"] =
-                $"[Total: {description.Count()}] " + string.Join(" ", description);
-
             return package;
         }
 
-        private JObject GenV4BalancerConfig(
-            List<VgcApis.Interfaces.ICoreServCtrl> servList,
-            string packageName
-        )
+        private JObject GenV4BalancerConfig(List<VgcApis.Interfaces.ICoreServCtrl> servList)
         {
             var package = cache.tpl.LoadPackage("pkgV4Tpl");
             var outbounds = package["outbounds"] as JArray;
-            var description = new List<string>();
-
             for (var i = 0; i < servList.Count; i++)
             {
                 var s = servList[i];
-                var parts = Misc.Utils.ExtractOutboundsFromConfig(s.GetConfiger().GetFinalConfig());
+                var finalConfig = s.GetConfiger().GetFinalConfig();
+                var json = VgcApis.Misc.Utils.ParseJObject(finalConfig);
+                var parts = Misc.Utils.ExtractOutboundsFromConfig(json);
                 var c = 0;
                 foreach (JObject p in parts)
                 {
@@ -403,46 +321,10 @@ namespace V2RayGCon.Services
                 }
                 else
                 {
-                    description.Add($"{i}.[{name}]");
                     setting.SendLog(I18N.PackageSuccess + ": " + name);
                 }
             }
-
-            package["v2raygcon"]["alias"] = string.IsNullOrEmpty(packageName)
-                ? "PackageV4"
-                : packageName;
-            package["v2raygcon"]["description"] =
-                $"[Total: {description.Count()}] " + string.Join(" ", description);
             return package;
-        }
-
-        void MergeCustomTlsSettings(ref JObject config)
-        {
-            var outB =
-                Misc.Utils.GetKey(config, "outbound") ?? Misc.Utils.GetKey(config, "outbounds.0");
-
-            if (outB == null)
-            {
-                return;
-            }
-
-            if (!(Misc.Utils.GetKey(outB, "streamSettings") is JObject streamSettings))
-            {
-                return;
-            }
-
-            if (setting.isSupportSelfSignedCert)
-            {
-                var selfSigned = JObject.Parse(@"{tlsSettings: {allowInsecure: true}}");
-                Misc.Utils.MergeJson(streamSettings, selfSigned);
-            }
-
-            if (setting.isEnableUtlsFingerprint)
-            {
-                var uTlsFingerprint = JObject.Parse(@"{tlsSettings: {}}");
-                uTlsFingerprint["tlsSettings"]["fingerprint"] = setting.uTlsFingerprint;
-                Misc.Utils.MergeJson(streamSettings, uTlsFingerprint);
-            }
         }
 
         int GetDefaultTimeout()
@@ -460,25 +342,12 @@ namespace V2RayGCon.Services
                 ? setting.CustomSpeedtestUrl
                 : VgcApis.Models.Consts.Webs.GoogleDotCom;
 
-        JObject GetGlobalImportConfigForPacking()
-        {
-            var imports = Misc.Utils.ImportItemList2JObject(
-                setting.GetGlobalImportItems(),
-                false,
-                false,
-                true
-            );
-            return ParseImport(imports.ToString());
-        }
-
         Tuple<long, long> QueuedSpeedTesting(
             string rawConfig,
             string title,
+            string coreName,
             string testUrl,
             int testTimeout,
-            bool isUseCache,
-            bool isInjectSpeedTestTpl,
-            bool isInjectActivateTpl,
             EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever
         )
         {
@@ -492,14 +361,16 @@ namespace V2RayGCon.Services
             if (!setting.isSpeedtestCancelled)
             {
                 var port = VgcApis.Misc.Utils.GetFreeTcpPort();
-                var cfg = CreateSpeedTestConfig(
-                    rawConfig,
+                var cfg = CreateSpeedTestConfig(rawConfig, port);
+                result = DoSpeedTesting(
+                    cfg,
+                    title,
+                    coreName,
+                    testUrl,
+                    testTimeout,
                     port,
-                    isUseCache,
-                    isInjectSpeedTestTpl,
-                    isInjectActivateTpl
+                    logDeliever
                 );
-                result = DoSpeedTesting(title, testUrl, testTimeout, port, cfg, logDeliever);
             }
 
             pool.Release();
@@ -530,11 +401,12 @@ namespace V2RayGCon.Services
         }
 
         Tuple<long, long> DoSpeedTesting(
+            string config,
             string title,
+            string coreName,
             string testUrl,
             int testTimeout,
             int port,
-            string config,
             EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever
         )
         {
@@ -549,6 +421,7 @@ namespace V2RayGCon.Services
             }
 
             var speedTester = new Libs.V2Ray.Core(setting) { title = title };
+            speedTester.SetCustomCoreName(coreName);
             if (logDeliever != null)
             {
                 speedTester.OnLog += logDeliever;
@@ -558,8 +431,7 @@ namespace V2RayGCon.Services
             long len = 0;
             try
             {
-                var envs = Misc.Utils.GetEnvVarsFromConfig(JObject.Parse(config));
-                speedTester.RestartCoreIgnoreError(config, envs);
+                speedTester.RestartCoreIgnoreError(config);
                 if (WaitUntilCoreReady(speedTester))
                 {
                     var expectedSizeInKib = setting.isUseCustomSpeedtestSettings
@@ -582,15 +454,6 @@ namespace V2RayGCon.Services
                 speedTester.OnLog -= logDeliever;
             }
             return new Tuple<long, long>(latency, len);
-        }
-
-        List<string> GetHtmlContentFromCache(IEnumerable<string> urls)
-        {
-            if (urls == null || urls.Count() <= 0)
-            {
-                return new List<string>();
-            }
-            return Misc.Utils.ExecuteInParallel(urls, (url) => cache.html[url]);
         }
 
         JObject CreateInboundSetting(
@@ -616,13 +479,7 @@ namespace V2RayGCon.Services
             return o;
         }
 
-        string CreateSpeedTestConfig(
-            string rawConfig,
-            int port,
-            bool isUseCache,
-            bool isInjectSpeedTestTpl,
-            bool isInjectActivateTpl
-        )
+        string CreateSpeedTestConfig(string rawConfig, int port)
         {
             var empty = string.Empty;
             if (port <= 0)
@@ -630,12 +487,7 @@ namespace V2RayGCon.Services
                 return empty;
             }
 
-            var config = DecodeConfig(
-                rawConfig,
-                isUseCache,
-                isInjectSpeedTestTpl,
-                isInjectActivateTpl
-            );
+            var config = VgcApis.Misc.Utils.ParseJObject(rawConfig);
 
             if (config == null)
             {

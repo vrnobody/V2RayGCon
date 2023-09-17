@@ -49,7 +49,7 @@ namespace NeoLuna.Misc
                 ["exp"] = new Func<double, double>(LuaLibraryMath.exp),
                 ["floor"] = new Func<double, double>(LuaLibraryMath.floor),
                 ["fmod"] = new Func<double, double, double>(LuaLibraryMath.fmod),
-                ["frexp"] = new Func<double, Neo.IronLua.LuaResult>(LuaLibraryMath.frexp),
+                ["frexp"] = new Func<double, LuaResult>(LuaLibraryMath.frexp),
                 ["ldexp"] = new Func<double, int, double>(LuaLibraryMath.ldexp),
                 ["log"] = new Func<double, double, double>(LuaLibraryMath.log),
                 ["max"] = new Func<double[], double>(LuaLibraryMath.max),
@@ -85,28 +85,20 @@ namespace NeoLuna.Misc
         {
             LuaTable str = new LuaTable
             {
-                ["byte"] = new byteDelg(Neo.IronLua.LuaLibraryString.@byte),
-                ["char"] = new charDelg(Neo.IronLua.LuaLibraryString.@char),
-                ["dump"] = new Func<Delegate, string>(Neo.IronLua.LuaLibraryString.dump),
-                ["find"] = new Func<string, string, int, bool, LuaResult>(
-                    Neo.IronLua.LuaLibraryString.find
-                ),
-                ["format"] = new formatDelg(Neo.IronLua.LuaLibraryString.format),
-                ["gmatch"] = new Func<string, string, LuaResult>(
-                    Neo.IronLua.LuaLibraryString.gmatch
-                ),
-                ["gsub"] = new Func<string, string, object, int, LuaResult>(
-                    Neo.IronLua.LuaLibraryString.gsub
-                ),
-                ["len"] = new Func<string, int>(Neo.IronLua.LuaLibraryString.len),
-                ["lower"] = new Func<string, string>(Neo.IronLua.LuaLibraryString.lower),
-                ["match"] = new Func<string, string, int, LuaResult>(
-                    Neo.IronLua.LuaLibraryString.match
-                ),
-                ["rep"] = new Func<string, int, string, string>(Neo.IronLua.LuaLibraryString.rep),
-                ["reverse"] = new Func<string, string>(Neo.IronLua.LuaLibraryString.reverse),
-                ["sub"] = new Func<string, int, int, string>(Neo.IronLua.LuaLibraryString.sub),
-                ["upper"] = new Func<string, string>(Neo.IronLua.LuaLibraryString.upper)
+                ["byte"] = new byteDelg(LuaLibraryString.@byte),
+                ["char"] = new charDelg(LuaLibraryString.@char),
+                ["dump"] = new Func<Delegate, string>(LuaLibraryString.dump),
+                ["find"] = new Func<string, string, int, bool, LuaResult>(LuaLibraryString.find),
+                ["format"] = new formatDelg(LuaLibraryString.format),
+                ["gmatch"] = new Func<string, string, LuaResult>(LuaLibraryString.gmatch),
+                ["gsub"] = new Func<string, string, object, int, LuaResult>(LuaLibraryString.gsub),
+                ["len"] = new Func<string, int>(LuaLibraryString.len),
+                ["lower"] = new Func<string, string>(LuaLibraryString.lower),
+                ["match"] = new Func<string, string, int, LuaResult>(LuaLibraryString.match),
+                ["rep"] = new Func<string, int, string, string>(LuaLibraryString.rep),
+                ["reverse"] = new Func<string, string>(LuaLibraryString.reverse),
+                ["sub"] = new Func<string, int, int, string>(LuaLibraryString.sub),
+                ["upper"] = new Func<string, string>(LuaLibraryString.upper)
             };
             return str;
         }

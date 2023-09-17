@@ -15,19 +15,19 @@ namespace V2RayGCon.Libs.QRCode
         public QRCodeSplashForm()
         {
             this.Load += QRCodeSplashForm_Load;
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1, 1);
+            this.AutoScaleMode = AutoScaleMode.None;
+            this.BackColor = Color.White;
+            this.ClientSize = new Size(1, 1);
             this.ControlBox = false;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "QRCodeSplashForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             //this.ShowInTaskbar = true;
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.SizeGripStyle = SizeGripStyle.Hide;
+            this.StartPosition = FormStartPosition.Manual;
             this.TopMost = true;
         }
 
@@ -146,7 +146,7 @@ namespace V2RayGCon.Libs.QRCode
         }
     }
 
-    [SuppressUnmanagedCodeSecurityAttribute]
+    [SuppressUnmanagedCodeSecurity]
     // class that exposes needed win32 gdi functions.
     class Win32
     {

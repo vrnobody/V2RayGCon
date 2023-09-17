@@ -48,10 +48,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
 
         FormMgrSvc formMgrService;
 
-        public void Run(
-            Services.FormMgrSvc formMgrService,
-            Models.Data.LuaCoreSetting initialCoreSettings
-        )
+        public void Run(FormMgrSvc formMgrService, Models.Data.LuaCoreSetting initialCoreSettings)
         {
             this.formMgrService = formMgrService;
             InitControls();

@@ -165,6 +165,9 @@
   <data name="LunaScrMgr" xml:space="preserve">
     <value>NeoLuna v{0} - script manager</value>
   </data>
+  <data name="NewServerName" xml:space="preserve">
+    <value>Server name</value>
+  </data>
   <data name="OpenLogWindow" xml:space="preserve">
     <value>Open log window</value>
   </data>

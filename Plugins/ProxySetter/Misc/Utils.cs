@@ -185,7 +185,7 @@ namespace ProxySetter.Misc
             {
                 if (range.Length != 2)
                 {
-                    throw new System.ArgumentException("Range must have 2 number.");
+                    throw new ArgumentException("Range must have 2 number.");
                 }
 
                 if (range[0] > range[1])
@@ -213,7 +213,7 @@ namespace ProxySetter.Misc
 
             if (c.Count < 4)
             {
-                throw new System.ArgumentException("Not a valid ip.");
+                throw new ArgumentException("Not a valid ip.");
             }
 
             return 256 * (256 * (256 * +c[0] + +c[1]) + +c[2]) + +c[3];

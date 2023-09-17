@@ -228,7 +228,7 @@
     <value>110, 19</value>
   </data>
   <data name="lbConfigEditor.Text" xml:space="preserve">
-    <value>3. 或者Json编辑器</value>
+    <value>3. 或者Text编辑器</value>
   </data>
   <data name="lbWiki.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
     <value>5, 4</value>

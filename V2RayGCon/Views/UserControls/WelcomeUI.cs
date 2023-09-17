@@ -24,7 +24,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void WelcomeFlyPanelComponent_Load(object sender, System.EventArgs e)
         {
-            var core = new V2RayGCon.Libs.V2Ray.Core(setting);
+            var core = new Libs.V2Ray.Core(setting);
             if (!core.IsV2RayExecutableExist())
             {
                 return;
@@ -37,7 +37,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbDownloadV2rayCore_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Views.WinForms.FormDownloadCore.ShowForm();
+            WinForms.FormDownloadCore.ShowForm();
         }
 
         private void lbV2rayCoreGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -84,7 +84,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbConfigEditor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Views.WinForms.FormJsonConfigEditor.ShowEmptyConfig();
+            WinForms.FormTextConfigEditor.ShowEmptyConfig();
         }
     }
 }

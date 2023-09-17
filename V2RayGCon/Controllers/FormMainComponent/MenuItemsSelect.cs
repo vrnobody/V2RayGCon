@@ -184,9 +184,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 .ForAll(s => s.GetCoreStates().SetIsSelected(condiction(s)));
         }
 
-        Controllers.FormMainComponent.FlyServer GetFlyPanel()
+        FlyServer GetFlyPanel()
         {
-            return this.GetContainer().GetComponent<Controllers.FormMainComponent.FlyServer>();
+            return this.GetContainer().GetComponent<FlyServer>();
         }
         #endregion
     }

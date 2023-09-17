@@ -59,7 +59,7 @@ namespace ProxySetter.Views.WinForms
             InitializeComponent();
         }
 
-        private void FormPluginMain_Shown(object sender, System.EventArgs e)
+        private void FormPluginMain_Shown(object sender, EventArgs e)
         {
             VgcApis.Misc.UI.AutoSetFormIcon(this);
 
@@ -175,7 +175,7 @@ namespace ProxySetter.Views.WinForms
         #endregion
 
         #region UI event handler
-        private void btnSave_Click(object sender, System.EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
             var changed = formVGCPluginCtrl.SaveAllOptions();
             if (changed)
@@ -185,7 +185,7 @@ namespace ProxySetter.Views.WinForms
             MessageBox.Show(I18N.Done);
         }
 
-        private void btnCancel_Click(object sender, System.EventArgs e)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }

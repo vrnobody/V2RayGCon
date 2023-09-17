@@ -13,17 +13,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
         readonly Services.PluginsServer pluginServ;
 
         ToolStripMenuItem pluginToolStrip;
-        readonly Form formMain;
 
         public MenuItemsBasic(
-            Form formMain,
             ToolStripMenuItem pluginToolStrip,
             ToolStripMenuItem miImportLinkFromClipboard,
             ToolStripMenuItem miExportAllServer,
             ToolStripMenuItem miImportFromFile,
             ToolStripMenuItem miAbout,
             ToolStripMenuItem miHelp,
-            ToolStripMenuItem miFormConfigEditor,
             ToolStripMenuItem miFormTextEditor,
             ToolStripMenuItem miFormLog,
             ToolStripMenuItem miFormOptions,
@@ -37,12 +34,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
             updater = Services.Updater.Instance;
             pluginServ = Services.PluginsServer.Instance;
 
-            this.formMain = formMain;
-
             InitMenuPlugin(pluginToolStrip);
 
             InitMenuFile(miImportLinkFromClipboard, miExportAllServer, miImportFromFile);
-            InitMenuWindows(miFormConfigEditor, miFormTextEditor, miFormLog, miFormOptions);
+            InitMenuWindows(miFormTextEditor, miFormLog, miFormOptions);
 
             InitMenuAbout(
                 miAbout,
@@ -86,7 +81,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     VgcApis.Models.Datas.Enums.LinkTypes.v2cfg
                 );
 
-                s += vlink + System.Environment.NewLine + System.Environment.NewLine;
+                s += vlink + Environment.NewLine + Environment.NewLine;
             }
 
             VgcApis.Misc.UI.SaveToFile(VgcApis.Models.Consts.Files.TxtExt, s);
@@ -180,7 +175,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         private static void InitMenuWindows(
-            ToolStripMenuItem miFormConfigEditor,
             ToolStripMenuItem miFormTextEditor,
             ToolStripMenuItem miFormLog,
             ToolStripMenuItem miFormOptions
@@ -188,10 +182,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             miFormTextEditor.Click += (s, a) =>
                 Views.WinForms.FormTextConfigEditor.ShowEmptyConfig();
-
-            // menu window
-            miFormConfigEditor.Click += (s, a) =>
-                Views.WinForms.FormJsonConfigEditor.ShowEmptyConfig();
 
             miFormLog.Click += (s, a) => Views.WinForms.FormLog.ShowForm();
 
@@ -217,7 +207,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 {
                     Misc.Utils.DeleteAppDataFolder();
                 }
-                catch (System.IO.IOException)
+                catch (IOException)
                 {
                     MessageBox.Show(I18N.FileInUse);
                     return;

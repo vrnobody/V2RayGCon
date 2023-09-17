@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace VgcApis.UserControls
 {
     // https://stackoverflow.com/questions/42627293/label-with-smooth-rounded-corners
-    public class RoundLabel : System.Windows.Forms.Label
+    public class RoundLabel : Label
     {
         [Browsable(true)]
         public Color _BackColor { get; set; }

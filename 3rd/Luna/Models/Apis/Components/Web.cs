@@ -122,12 +122,17 @@ namespace Luna.Models.Apis.Components
             vgcWeb.Fetch(url, proxyPort, milliSeconds);
 
         public string FetchWithCustomConfig(string rawConfig, string url) =>
-            FetchWithCustomConfig(rawConfig, url, -1);
+            FetchWithCustomConfig(rawConfig, "", url, -1);
 
-        public string FetchWithCustomConfig(string rawConfig, string url, int timeout)
+        public string FetchWithCustomConfig(
+            string rawConfig,
+            string coreName,
+            string url,
+            int timeout
+        )
         {
             var title = "fetch wiht custom config";
-            var text = vgcCfgMgr.FetchWithCustomConfig(rawConfig, title, url, timeout);
+            var text = vgcCfgMgr.FetchWithCustomConfig(rawConfig, coreName, title, url, timeout);
             return text ?? string.Empty;
         }
 

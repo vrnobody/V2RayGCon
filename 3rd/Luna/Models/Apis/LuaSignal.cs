@@ -7,7 +7,7 @@ namespace Luna.Models.Apis
         bool signalStop;
         private readonly Settings settings;
 
-        public LuaSignal(Services.Settings settings)
+        public LuaSignal(Settings settings)
         {
             ResetAllSignals();
             this.settings = settings;

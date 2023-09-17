@@ -3,8 +3,14 @@
     public interface IConfigMgrService
     {
         long RunSpeedTest(string rawConfig);
-        long RunCustomSpeedTest(string rawConfig, string testUrl, int testTimeout);
+        long RunCustomSpeedTest(string rawConfig, string coreName, string testUrl, int testTimeout);
 
-        string FetchWithCustomConfig(string rawConfig, string title, string url, int timeout);
+        string FetchWithCustomConfig(
+            string rawConfig,
+            string coreName,
+            string title,
+            string url,
+            int timeout
+        );
     }
 }

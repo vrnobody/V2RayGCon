@@ -32,6 +32,8 @@ namespace Luna.Interfaces
 
         bool Add(string config, string mark);
 
+        bool Add(string config, string name, string mark);
+
         /// <summary>
         /// 危险操作！
         /// </summary>
@@ -170,10 +172,11 @@ namespace Luna.Interfaces
         /// 测试任意config.json的延迟
         /// </summary>
         /// <param name="rawConfig">任意config.json</param>
+        /// <param name="coreName">自定义内核名</param>
         /// <param name="testUrl">测速网址</param>
         /// <param name="testTimeout">超时值</param>
         /// <returns></returns>
-        long RunCustomSpeedTest(string rawConfig, string testUrl, int testTimeout);
+        long RunCustomSpeedTest(string rawConfig, string coreName, string testUrl, int testTimeout);
 
         // download google.com
         /// <summary>

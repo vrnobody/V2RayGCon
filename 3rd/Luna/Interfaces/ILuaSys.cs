@@ -377,7 +377,7 @@ namespace Luna.Interfaces
             string exePath,
             string args,
             string stdin,
-            global::NLua.LuaTable envs,
+            LuaTable envs,
             bool hasWindow,
             bool redirectOutput
         );
@@ -435,7 +435,7 @@ namespace Luna.Interfaces
             string exePath,
             string args,
             string stdin,
-            global::NLua.LuaTable envs,
+            LuaTable envs,
             bool hasWindow,
             bool redirectOutput
         );

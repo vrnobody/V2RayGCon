@@ -1,5 +1,8 @@
 using ScintillaNET;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -26,17 +29,20 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
                     editor.ReadOnly = false;
                 }
                 SetField(ref _content, value);
+                UpdateLexer();
                 if (isReadonly)
                 {
                     editor.ReadOnly = true;
                 }
             }
         }
+
         #endregion
 
         #region public methods
-        public void Init(Panel panel, bool isReadonly)
+        public void Init(Panel panel, bool isReadonly, ToolStripComboBox cboxNavigation)
         {
+            this.cboxNavigation = cboxNavigation;
             CreateEditor(panel, isReadonly);
             this.isReadonly = isReadonly;
             AttachEditorEvents();
@@ -64,6 +70,7 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
 
         #region Scintilla
         private int maxLineNumberCharLength;
+        private ToolStripComboBox cboxNavigation;
 
         private void Scintilla_TextChanged(object sender, EventArgs e)
         {
@@ -101,10 +108,16 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
 
                 e.Text += curIndent;
 
-                if (Regex.IsMatch(curLineText, @"\[\s*$") || Regex.IsMatch(curLineText, @"{\s*$"))
+                if (
+                    Regex.IsMatch(curLineText, @"\[\s*$")
+                    || Regex.IsMatch(curLineText, @"{\s*$")
+                    || curLineText.EndsWith("|")
+                )
                 {
                     e.Text += "  ";
                 }
+
+                UpdateLexer();
             }
         }
 
@@ -140,9 +153,17 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
                 scin.DirectMessage(SCI_GETLINEINDENTATION, new IntPtr(line), (IntPtr)null).ToInt32()
             );
         }
+
+        void UpdateLexer()
+        {
+            var isUnknow =
+                VgcApis.Misc.Utils.DetectConfigType(content)
+                == VgcApis.Models.Datas.Enums.ConfigType.Unknow;
+            var color = isUnknow ? Color.Black : Color.Silver;
+            editor.Lexer = isUnknow ? Lexer.Null : Lexer.Json;
+            editor.Styles[Style.Json.Default].ForeColor = color;
+        }
         #endregion
-
-
 
         #region private methods
         void ReleaseEditorEvents()
@@ -157,12 +178,50 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
             editor.InsertCheck += Scintilla_InsertCheck;
             editor.CharAdded += Scintilla_CharAdded;
             editor.TextChanged += Scintilla_TextChanged;
+
+            cboxNavigation.DropDown += OnCboxNavigatorDropDownHandler;
+            cboxNavigation.SelectedIndexChanged += OnCboxNavigatorIndexChangedHandler;
+        }
+
+        Dictionary<string, int> tags = new Dictionary<string, int>();
+
+        void OnCboxNavigatorIndexChangedHandler(object sender, EventArgs args)
+        {
+            var key = cboxNavigation.Text;
+            if (!string.IsNullOrEmpty(key) && tags.TryGetValue(key, out var num))
+            {
+                ScrollToLine(num);
+            }
+        }
+
+        void ScrollToLine(int num)
+        {
+            var count = editor.Lines.Count;
+            if (count < 10 || num < 0)
+            {
+                return;
+            }
+            num = Math.Min(count - 1, num);
+            var linesOnScreen = editor.LinesOnScreen - 2; // Fudge factor
+            var top = num - (linesOnScreen / 2);
+            var pos = editor.Lines[num].Position;
+            editor.GotoPosition(pos);
+            editor.FirstVisibleLine = Math.Max(0, top);
+        }
+
+        void OnCboxNavigatorDropDownHandler(object sender, EventArgs args)
+        {
+            var lines = editor.Lines.Select(line => line.Text).ToList();
+            tags = VgcApis.Misc.Utils.GetConfigTags(lines);
+            var items = cboxNavigation.Items;
+            items.Clear();
+            items.AddRange(tags.Select(t => t.Key).OrderBy(k => k).ToArray());
+            VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxNavigation);
         }
 
         void CreateEditor(Panel container, bool isReadonly)
         {
             var editor = Misc.UI.CreateScintilla(container, isReadonly);
-
             VgcApis.Misc.Utils.BindEditorDragDropEvent(editor);
 
             this.editor = editor;

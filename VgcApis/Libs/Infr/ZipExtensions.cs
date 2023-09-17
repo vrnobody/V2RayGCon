@@ -9,6 +9,7 @@ namespace VgcApis.Libs.Infr
 {
     public static class ZipExtensions
     {
+        #region public
         public static void SerializeObjectAsCompressedUnicodeBase64StringToFile(
             string path,
             object value
@@ -68,7 +69,6 @@ namespace VgcApis.Libs.Infr
             }
         }
 
-        // obsolete
         public static T DeserializeObjectFromCompressedUtf8Base64<T>(string b64Str)
         {
             var b64Bytes = Convert.FromBase64String(b64Str);
@@ -82,7 +82,9 @@ namespace VgcApis.Libs.Infr
             }
         }
 
+#pragma warning disable CA1802 // Use literals where appropriate
         static readonly string marker = @"H4sIAAAAAAA";
+#pragma warning restore CA1802 // Use literals where appropriate
 
         public static bool IsCompressedBase64(string str)
         {
@@ -124,8 +126,10 @@ namespace VgcApis.Libs.Infr
                 return destinationStream.ToArray();
             }
         }
+        #endregion
 
-        public static void CompressTo(Stream inputStream, Stream outputStream)
+        #region private
+        static void CompressTo(Stream inputStream, Stream outputStream)
         {
             using (var gZipStream = new GZipStream(outputStream, CompressionMode.Compress))
             {
@@ -134,12 +138,13 @@ namespace VgcApis.Libs.Infr
             }
         }
 
-        public static void DecompressTo(Stream inputStream, Stream outputStream)
+        static void DecompressTo(Stream inputStream, Stream outputStream)
         {
             using (var gZipStream = new GZipStream(inputStream, CompressionMode.Decompress))
             {
                 gZipStream.CopyTo(outputStream);
             }
         }
+        #endregion
     }
 }

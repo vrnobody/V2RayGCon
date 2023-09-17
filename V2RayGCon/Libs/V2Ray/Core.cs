@@ -340,11 +340,10 @@ namespace V2RayGCon.Libs.V2Ray
             return p;
         }
 
-        Process CreateV2RayCoreProcess(string config)
+        Process CreateV2RayCoreProcess()
         {
             var exe = GetV2RayExecutablePath(VgcApis.Models.Consts.Core.XrayCoreExeFileName);
-            // var args = string.Empty;
-            var args = Misc.Utils.GenCmdArgFromConfig(config);
+            var args = "-config=stdin: -format=json";
             if (string.IsNullOrEmpty(exe))
             {
                 exe = GetV2RayExecutablePath(VgcApis.Models.Consts.Core.V2RayCoreExeFileName);
@@ -489,9 +488,7 @@ namespace V2RayGCon.Libs.V2Ray
         {
             var isCustomCore = IsCustomCore();
             isReady = false;
-            var core = isCustomCore
-                ? CreateCustomCoreProcess(config)
-                : CreateV2RayCoreProcess(config);
+            var core = isCustomCore ? CreateCustomCoreProcess(config) : CreateV2RayCoreProcess();
             VgcApis.Misc.Utils.SetProcessEnvs(core, envs);
 
             BindEvents(core, quiet);

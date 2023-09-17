@@ -12,8 +12,6 @@ namespace V2RayGCon.Controllers.OptionComponent
         readonly CheckBox chkSetSpeedtestIsUse = null,
             chkImportSsShareLink = null,
             chkImportTrojanShareLink = null,
-            chkImportBypassCnSite = null,
-            chkImportInjectGlobalImport = null,
             chkDefVmessDecodeTemplateEnabled = null;
         readonly TextBox tboxDefImportAddr = null,
             tboxSetSpeedtestCycles = null,
@@ -26,8 +24,6 @@ namespace V2RayGCon.Controllers.OptionComponent
             TextBox tboxDefImportAddr,
             CheckBox chkImportSsShareLink,
             CheckBox chkImportTrojanShareLink,
-            CheckBox chkImportBypassCnSite,
-            CheckBox chkImportInjectGlobalImport,
             CheckBox chkSetSpeedtestIsUse,
             ComboBox cboxDefSpeedtestUrl,
             TextBox tboxSetSpeedtestCycles,
@@ -50,8 +46,6 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.tboxDefImportAddr = tboxDefImportAddr;
             this.chkImportSsShareLink = chkImportSsShareLink;
             this.chkImportTrojanShareLink = chkImportTrojanShareLink;
-            this.chkImportBypassCnSite = chkImportBypassCnSite;
-            this.chkImportInjectGlobalImport = chkImportInjectGlobalImport;
             this.chkSetSpeedtestIsUse = chkSetSpeedtestIsUse;
             this.cboxDefSpeedtestUrl = cboxDefSpeedtestUrl;
             this.tboxSetSpeedtestCycles = tboxSetSpeedtestCycles;
@@ -67,9 +61,6 @@ namespace V2RayGCon.Controllers.OptionComponent
             chkDefVmessDecodeTemplateEnabled.Checked = setting.CustomVmessDecodeTemplateEnabled;
             exRTBoxDefCustomInbounds.Text = setting.CustomDefInbounds;
 
-            // mode
-            chkImportBypassCnSite.Checked = setting.CustomDefImportBypassCnSite;
-            chkImportInjectGlobalImport.Checked = setting.CustomDefImportGlobalImport;
             chkImportSsShareLink.Checked = setting.CustomDefImportSsShareLink;
             chkImportTrojanShareLink.Checked = setting.CustomDefImportTrojanShareLink;
 
@@ -118,8 +109,6 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             setting.CustomDefImportSsShareLink = chkImportSsShareLink.Checked;
             setting.CustomDefImportTrojanShareLink = chkImportTrojanShareLink.Checked;
-            setting.CustomDefImportGlobalImport = chkImportInjectGlobalImport.Checked;
-            setting.CustomDefImportBypassCnSite = chkImportBypassCnSite.Checked;
 
             // speedtest
             setting.isUseCustomSpeedtestSettings = chkSetSpeedtestIsUse.Checked;
@@ -149,8 +138,6 @@ namespace V2RayGCon.Controllers.OptionComponent
                 || setting.CustomVmessDecodeTemplateEnabled
                     != chkDefVmessDecodeTemplateEnabled.Checked
                 || setting.CustomDefInbounds != exRTBoxDefCustomInbounds.Text
-                || setting.CustomDefImportGlobalImport != chkImportInjectGlobalImport.Checked
-                || setting.CustomDefImportBypassCnSite != chkImportBypassCnSite.Checked
                 || setting.CustomDefImportSsShareLink != chkImportSsShareLink.Checked
                 || setting.CustomDefImportTrojanShareLink != chkImportTrojanShareLink.Checked
                 || setting.CustomDefImportIp != ip

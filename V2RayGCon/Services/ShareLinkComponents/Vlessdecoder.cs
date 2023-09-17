@@ -15,20 +15,21 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region public methods
-        public string Decode(string shareLink)
+        public VgcApis.Models.Datas.DecodeResult Decode(string shareLink)
         {
             try
             {
                 var vc = Comm.ParseNonStandarUriShareLink("vless", shareLink);
-                return GetParent()?.VlessToConfig(vc);
+                var config = GetParent()?.VlessToConfig(vc);
+                return new VgcApis.Models.Datas.DecodeResult(vc?.name, config);
             }
             catch { }
             return null;
         }
 
-        public string Encode(string config)
+        public string Encode(string name, string config)
         {
-            return Comm.EncodeUriShareLink("vless", config);
+            return Comm.EncodeUriShareLink("vless", name, config);
         }
 
         public List<string> ExtractLinksFromText(string text) =>

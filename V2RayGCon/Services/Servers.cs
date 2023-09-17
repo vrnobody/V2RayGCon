@@ -474,7 +474,7 @@ namespace V2RayGCon.Services
         /// <param name="packageName"></param>
         /// <param name="servList"></param>
         public string PackServersV4Ui(
-            List<VgcApis.Interfaces.ICoreServCtrl> servList,
+            List<ICoreServCtrl> servList,
             string orgUid,
             string packageName,
             string interval,
@@ -552,10 +552,7 @@ namespace V2RayGCon.Services
             }
         }
 
-        public void RestartServersThen(
-            List<VgcApis.Interfaces.ICoreServCtrl> coreServs,
-            Action done = null
-        )
+        public void RestartServersThen(List<ICoreServCtrl> coreServs, Action done = null)
         {
             void worker(int index, Action next)
             {
@@ -789,9 +786,9 @@ namespace V2RayGCon.Services
             return IsConfigInCache(config);
         }
 
-        public bool AddServer(string config, string mark, bool quiet = false)
+        public bool AddServer(string name, string config, string mark, bool quiet)
         {
-            return AddServerWithConfigWorker(config, mark, quiet);
+            return AddServerWithConfigWorker(name, config, mark, quiet);
         }
 
         public bool ReplaceServerConfig(string orgConfig, string newConfig)
@@ -836,10 +833,12 @@ namespace V2RayGCon.Services
             return null;
         }
 
-        public string ReplaceOrAddNewServer(string orgUid, string newConfig) =>
-            ReplaceOrAddNewServer(orgUid, newConfig, @"");
-
-        public string ReplaceOrAddNewServer(string orgUid, string newConfig, string mark)
+        public string ReplaceOrAddNewServer(
+            string orgUid,
+            string newName,
+            string newConfig,
+            string mark
+        )
         {
             if (
                 !string.IsNullOrEmpty(orgUid) && coreServCache.TryGetValue(orgUid, out var coreServ)
@@ -847,10 +846,14 @@ namespace V2RayGCon.Services
             {
                 var oldConfig = coreServ.GetConfiger().GetConfig();
                 ReplaceServerConfig(oldConfig, newConfig);
+                if (!string.IsNullOrEmpty(newName))
+                {
+                    coreServ.GetCoreStates().SetName(newName);
+                }
                 return orgUid;
             }
 
-            AddServerWithConfigWorker(newConfig, mark, false);
+            AddServerWithConfigWorker(newName, newConfig, mark, false);
             if (configCache.TryGetValue(newConfig, out var uid))
             {
                 return uid;
@@ -888,7 +891,7 @@ namespace V2RayGCon.Services
             return null;
         }
 
-        bool AddServerWithConfigWorker(string config, string mark, bool quiet = false)
+        bool AddServerWithConfigWorker(string name, string config, string mark, bool quiet = false)
         {
             // unknow bug 2023-05-08
             mark = mark ?? @"";
@@ -911,6 +914,7 @@ namespace V2RayGCon.Services
                 uid = Guid.NewGuid().ToString(),
                 lastModifiedUtcTicks = DateTime.UtcNow.Ticks,
             };
+
             coreInfo.SetConfig(config);
 
             var newServer = new Controllers.CoreServerCtrl(coreInfo);
@@ -924,6 +928,7 @@ namespace V2RayGCon.Services
                 if (!IsConfigInCache(config))
                 {
                     configCache.TryAdd(config, coreInfo.uid);
+                    newServer.GetCoreStates().SetName(name);
                     coreServCache.Add(coreInfo.uid, newServer);
                     var idx = coreServCache.Count();
                     newServer.GetCoreStates().SetIndexQuiet(idx);
@@ -1107,11 +1112,7 @@ namespace V2RayGCon.Services
                 return "";
             }
 
-            JObject package = configMgr.GenV4ServersPackageConfig(
-                servList,
-                packageName,
-                packageType
-            );
+            JObject package = configMgr.GenV4ServersPackageConfig(servList, packageType);
             string mark;
 
             switch (packageType)
@@ -1126,8 +1127,13 @@ namespace V2RayGCon.Services
                     break;
             }
 
+            if (string.IsNullOrEmpty(packageName))
+            {
+                packageName = mark;
+            }
+
             var newConfig = VgcApis.Misc.Utils.FormatConfig(package);
-            string newUid = ReplaceOrAddNewServer(orgUid, newConfig, mark);
+            string newUid = ReplaceOrAddNewServer(orgUid, packageName, newConfig, mark);
 
             UpdateMarkList();
             setting.SendLog(I18N.PackageDone);
@@ -1183,16 +1189,34 @@ namespace V2RayGCon.Services
             }
         }
 
-        // 预计2023-11删除此函数
+        // 预计2023-12删除此函数
         void PatchConfig(Controllers.CoreServerCtrl coreServ)
         {
             var config = coreServ.GetConfiger().GetConfig();
-            if (config.IndexOf("\n") >= 0)
+            var isJson =
+                VgcApis.Misc.Utils.DetectConfigType(config)
+                == VgcApis.Models.Datas.Enums.ConfigType.Json;
+
+            if (!isJson)
             {
                 return;
             }
-            var formated = VgcApis.Misc.Utils.FormatConfig(config);
-            coreServ.GetConfiger().SetConfig(formated);
+
+            try
+            {
+                var json = JObject.Parse(config);
+                var coreState = coreServ.GetCoreStates();
+                var name = coreState.GetName();
+                if (string.IsNullOrEmpty(name))
+                {
+                    name = Misc.Utils.GetAliasFromConfig(json);
+                    coreState.SetName(name);
+                }
+                json.Remove(VgcApis.Models.Consts.Config.SectionKeyV2rayGCon);
+                var formated = VgcApis.Misc.Utils.FormatConfig(json);
+                coreServ.GetConfiger().SetConfig(formated);
+            }
+            catch { }
         }
 
         #endregion

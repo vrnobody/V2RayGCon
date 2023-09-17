@@ -823,4 +823,7 @@ Config editor supports JSON format only!</value>
   <data name="ConfirmChangeAllDefCoreTo" xml:space="preserve">
     <value>Set all servers default core to [{0}]?</value>
   </data>
+  <data name="NewServerName" xml:space="preserve">
+    <value>New server name:</value>
+  </data>
 </root>

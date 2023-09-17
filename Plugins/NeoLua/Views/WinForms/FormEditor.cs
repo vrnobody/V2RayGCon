@@ -18,7 +18,7 @@ namespace NeoLuna.Views.WinForms
 
         public static FormEditor CreateForm(
             Services.FormMgrSvc formMgr,
-            Models.Data.LuaCoreSetting initialCoreSettings
+            LuaCoreSetting initialCoreSettings
         )
         {
             FormEditor r = null;

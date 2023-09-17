@@ -181,7 +181,7 @@ namespace NeoLuna.Views.UserControls
 
         private void rlbOptions_Click(object sender, EventArgs e)
         {
-            Views.WinForms.FormLuaCoreSettings.ShowForm(luaCoreCtrl);
+            WinForms.FormLuaCoreSettings.ShowForm(luaCoreCtrl);
         }
 
         private void restartToolStripMenuItem_Click(object sender, EventArgs e)

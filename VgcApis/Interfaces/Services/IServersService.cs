@@ -21,11 +21,9 @@ namespace VgcApis.Interfaces.Services
 
         int GetAvailableHttpProxyPort();
 
-        bool AddServer(string config, string mark, bool quiet = false);
+        bool AddServer(string name, string config, string mark, bool quiet);
 
-        string ReplaceOrAddNewServer(string orgUid, string newConfig);
-
-        string ReplaceOrAddNewServer(string orgUid, string newConfig, string mark);
+        string ReplaceOrAddNewServer(string orgUid, string newName, string newConfig, string mark);
 
         void RequireFormMainReload();
         void ResetIndexQuiet();
@@ -78,8 +76,8 @@ namespace VgcApis.Interfaces.Services
             string pkgName,
             string interval,
             string url,
-            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
-            VgcApis.Models.Datas.Enums.PackageTypes packageType
+            Models.Datas.Enums.BalancerStrategies strategy,
+            Models.Datas.Enums.PackageTypes packageType
         );
 
         string PackSelectedServersV4(
@@ -87,18 +85,18 @@ namespace VgcApis.Interfaces.Services
             string pkgName,
             string interval,
             string url,
-            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
-            VgcApis.Models.Datas.Enums.PackageTypes packageType
+            Models.Datas.Enums.BalancerStrategies strategy,
+            Models.Datas.Enums.PackageTypes packageType
         );
 
         string PackServersV4Ui(
-            List<VgcApis.Interfaces.ICoreServCtrl> servList,
+            List<ICoreServCtrl> servList,
             string orgUid,
             string packageName,
             string interval,
             string url,
-            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
-            VgcApis.Models.Datas.Enums.PackageTypes packageType
+            Models.Datas.Enums.BalancerStrategies strategy,
+            Models.Datas.Enums.PackageTypes packageType
         );
 
         List<ICoreServCtrl> GetTrackableServerList();

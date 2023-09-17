@@ -27,13 +27,18 @@ namespace V2RayGCon.Controllers
         public void AddNewServer()
         {
             var config = editor.content;
-            if (!servers.AddServer(config, ""))
-            {
-                MessageBox.Show(I18N.DuplicateServer);
-            }
-
-            var uid = servers.GetServerByConfig(config)?.GetCoreStates()?.GetUid();
-            LoadConfigByUid(uid);
+            VgcApis.Misc.UI.GetUserInput(
+                I18N.NewServerName,
+                (name) =>
+                {
+                    if (!servers.AddServer(name, config, "", false))
+                    {
+                        MessageBox.Show(I18N.DuplicateServer);
+                    }
+                    var uid = servers.GetServerByConfig(config)?.GetCoreStates()?.GetUid();
+                    LoadConfigByUid(uid);
+                }
+            );
         }
 
         public string SaveToFile()

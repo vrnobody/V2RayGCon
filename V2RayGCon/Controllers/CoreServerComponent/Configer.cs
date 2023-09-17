@@ -40,81 +40,35 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #region public methods
         public string GetShareLink()
         {
-            var slinkMgr = Services.ShareLinkMgr.Instance;
-
-            string url = null;
-
-            try
-            {
-                var config = GetFinalConfig();
-                var proto = Misc.Utils.GetValue<string>(config, "outbounds.0.protocol")?.ToLower();
-                var cs = config?.ToString();
-                switch (proto)
-                {
-                    case "ss":
-                    case "shadowsocks":
-                        url = slinkMgr.EncodeConfigToShareLink(
-                            cs,
-                            VgcApis.Models.Datas.Enums.LinkTypes.ss
-                        );
-                        break;
-                    case "vmess":
-                        url = slinkMgr.EncodeConfigToShareLink(
-                            cs,
-                            VgcApis.Models.Datas.Enums.LinkTypes.vmess
-                        );
-                        break;
-                    case "vless":
-                        url = slinkMgr.EncodeConfigToShareLink(
-                            cs,
-                            VgcApis.Models.Datas.Enums.LinkTypes.vless
-                        );
-                        break;
-                    case "trojan":
-                        url = slinkMgr.EncodeConfigToShareLink(
-                            cs,
-                            VgcApis.Models.Datas.Enums.LinkTypes.trojan
-                        );
-                        break;
-                    default:
-                        break;
-                }
-            }
-            catch { }
-
-            return url;
+            var name = GetSibling<CoreStates>().GetName();
+            var config = GetConfig();
+            return Services.ShareLinkMgr.Instance.EncodeConfigToShareLink(name, config);
         }
 
-        public JObject GetFinalConfig()
+        public string GetFinalConfig()
         {
-            JObject finalConfig = configMgr.DecodeConfig(
-                GetConfig(),
-                true,
-                false,
-                coreInfo.isInjectImport
-            );
+            JObject json = VgcApis.Misc.Utils.ParseJObject(GetConfig());
 
-            if (finalConfig == null)
+            if (json != null)
             {
-                return null;
-            }
-
-            if (
-                !configMgr.ModifyInboundWithCustomSetting(
-                    ref finalConfig,
-                    coreInfo.customInbType,
-                    coreInfo.inbIp,
-                    coreInfo.inbPort
+                if (
+                    configMgr.ModifyInboundWithCustomSetting(
+                        ref json,
+                        coreInfo.customInbType,
+                        coreInfo.inbIp,
+                        coreInfo.inbPort
+                    )
                 )
-            )
-            {
-                return null;
+                {
+                    InjectStatisticsConfigOnDemand(ref json);
+                    configMgr.MergeCustomTlsSettings(ref json);
+
+                    var config = VgcApis.Misc.Utils.FormatConfig(json);
+                    return config;
+                }
             }
 
-            InjectSkipCnSitesConfigOnDemand(ref finalConfig);
-            InjectStatisticsConfigOnDemand(ref finalConfig);
-
-            return finalConfig;
+            return GetConfig();
         }
 
         public string GetRawConfig() => coreInfo.config;
@@ -125,12 +79,12 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             try
             {
-                var c = GetFinalConfig();
-                if (c != null)
+                var json = VgcApis.Misc.Utils.ParseJObject(GetFinalConfig());
+                if (json != null)
                 {
                     // update summary should not clear status
                     // this.status = string.Empty;
-                    UpdateSummary(c);
+                    UpdateSummary(json);
                 }
             }
             catch { }
@@ -210,16 +164,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region private methods
-        void InjectSkipCnSitesConfigOnDemand(ref JObject config)
-        {
-            if (!coreInfo.isInjectSkipCNSite)
-            {
-                return;
-            }
-
-            // 优先考虑兼容旧配置。
-            configMgr.InjectSkipCnSiteSettingsIntoConfig(ref config, false);
-        }
 
         void InjectStatisticsConfigOnDemand(ref JObject config)
         {
@@ -248,17 +192,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         void UpdateSummary(JObject config)
         {
-            var name = Misc.Utils.GetAliasFromConfig(config);
-            coreInfo.name = VgcApis.Misc.Utils.FilterControlChars(name);
-
             var summary = Misc.Utils.GetSummaryFromConfig(config);
             coreInfo.summary = VgcApis.Misc.Utils.FilterControlChars(summary);
 
             // update title & longname
-            coreInfo.ClearCachedString();
             var cs = GetSibling<CoreStates>();
-            cs.GetLongName();
             cs.GetUid();
+
+            coreInfo.title = string.Empty;
             cs.GetTitle();
         }
 
@@ -322,14 +263,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         Tuple<string, string, int> GetInboundInfoFromConfig(string rawConfig)
         {
-            var parsedConfig = configMgr.DecodeConfig(
-                rawConfig,
-                true,
-                false,
-                coreInfo.isInjectImport
-            );
-
-            if (parsedConfig == null)
+            if (rawConfig == null)
             {
                 return null;
             }
@@ -339,7 +273,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             foreach (var p in new string[] { "inbound", "inbounds.0" })
             {
                 prefix = p;
-                protocol = Misc.Utils.GetValue<string>(parsedConfig, prefix, "protocol");
+                protocol = Misc.Utils.GetValue<string>(rawConfig, prefix, "protocol");
 
                 if (!string.IsNullOrEmpty(protocol))
                 {
@@ -347,8 +281,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 }
             }
 
-            string ip = Misc.Utils.GetValue<string>(parsedConfig, prefix, "listen");
-            int port = Misc.Utils.GetValue<int>(parsedConfig, prefix, "port");
+            string ip = Misc.Utils.GetValue<string>(rawConfig, prefix, "listen");
+            int port = Misc.Utils.GetValue<int>(rawConfig, prefix, "port");
             return new Tuple<string, string, int>(protocol, ip, port);
         }
 

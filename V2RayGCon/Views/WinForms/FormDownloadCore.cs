@@ -46,7 +46,7 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.AutoSetFormIcon(this);
         }
 
-        private void FormDownloadCore_Shown(object sender, System.EventArgs e)
+        private void FormDownloadCore_Shown(object sender, EventArgs e)
         {
             RefreshV2RayCoreSourceUrls();
             RefreshLocalV2RayCoreVersion();
@@ -159,12 +159,12 @@ namespace V2RayGCon.Views.WinForms
             pgBarDownload.Value = 0;
         }
 
-        private void BtnExit_Click(object sender, System.EventArgs e)
+        private void BtnExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void BtnRefreshVer_Click(object sender, System.EventArgs e)
+        private void BtnRefreshVer_Click(object sender, EventArgs e)
         {
             btnRefreshVer.Enabled = false;
 
@@ -206,7 +206,7 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.Utils.RunInBgSlim(worker);
         }
 
-        private void BtnUpdate_Click(object sender, System.EventArgs e)
+        private void BtnUpdate_Click(object sender, EventArgs e)
         {
             if (downloader != null)
             {
@@ -228,7 +228,7 @@ namespace V2RayGCon.Views.WinForms
             DownloadV2RayCore(proxyPort);
         }
 
-        void BtnCancel_Click(object sender, System.EventArgs e)
+        void BtnCancel_Click(object sender, EventArgs e)
         {
             if (downloader != null && Misc.UI.Confirm(I18N.CancelDownload))
             {
@@ -236,12 +236,12 @@ namespace V2RayGCon.Views.WinForms
             }
         }
 
-        private void BtnCheckVersion_Click(object sender, System.EventArgs e)
+        private void BtnCheckVersion_Click(object sender, EventArgs e)
         {
             RefreshLocalV2RayCoreVersion();
         }
 
-        private void cboxArch_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void cboxArch_SelectedIndexChanged(object sender, EventArgs e)
         {
             var index = cboxArch.SelectedIndex;
             if (index < 0 || index > 1)
@@ -258,7 +258,7 @@ namespace V2RayGCon.Views.WinForms
             setting.isDownloadWin32V2RayCore = isWin32;
         }
 
-        private void cboxDownloadSource_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void cboxDownloadSource_SelectedIndexChanged(object sender, EventArgs e)
         {
             var index = cboxDownloadSource.SelectedIndex;
             var url = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(index);

@@ -478,7 +478,7 @@
     <value>14, 30</value>
   </data>
   <data name="lbConfigEditor.Text" xml:space="preserve">
-    <value>3. Use json editor</value>
+    <value>3. Use text editor</value>
   </data>
   <data name="&gt;&gt;lbConfigEditor.Name" xml:space="preserve">
     <value>lbConfigEditor</value>

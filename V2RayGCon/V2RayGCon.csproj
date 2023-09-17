@@ -143,14 +143,12 @@
     <Compile Include="Controllers\Comm\IDyMenuHelper.cs" />
     <Compile Include="Controllers\CoreServerComponent\Wrapper.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabCustomCoreSettings.cs" />
-    <Compile Include="Controllers\FormOptionComponent\TabMultiConf.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabDefaults.cs" />
     <Compile Include="Controllers\FormTextConfigEditorComponent\CompBase.cs" />
     <Compile Include="Controllers\FormTextConfigEditorComponent\Editor.cs" />
     <Compile Include="Controllers\FormTextConfigEditorComponent\MenuUpdater.cs" />
     <Compile Include="Controllers\FormTextConfigEditorCtrl.cs" />
     <Compile Include="Models\Datas\CustomCoreSettings.cs" />
-    <Compile Include="Models\Datas\MultiConfItem.cs" />
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
     <Compile Include="Models\Datas\SharelinkMetadata.cs" />
     <Compile Include="Models\Datas\SpeedTestOptions.cs" />
@@ -166,28 +164,17 @@
       <DependentUpon>StrConst.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\Caches\JsonAcm.cs" />
-    <Compile Include="Controllers\FormJsonConfigEditorComponent\MenuUpdater.cs" />
     <Compile Include="Controllers\CoreServerComponent\Configer.cs" />
     <Compile Include="Controllers\CoreServerComponent\CoreCtrl.cs" />
     <Compile Include="Controllers\CoreServerComponent\CoreStates.cs" />
     <Compile Include="Controllers\CoreServerComponent\Logger.cs" />
-    <Compile Include="Controllers\FormJsonConfigEditorCtrl.cs" />
-    <Compile Include="Controllers\FormJsonConfigEditorComponent\Editor.cs" />
-    <Compile Include="Controllers\FormJsonConfigEditorComponent\ExpandGlobalImports.cs" />
-    <Compile Include="Controllers\FormJsonConfigEditorComponent\EnvImportMultiConf.cs" />
-    <Compile Include="Controllers\FormJsonConfigEditorComponent\Shadowsocks.cs" />
-    <Compile Include="Controllers\FormJsonConfigEditorComponent\VGC.cs" />
-    <Compile Include="Controllers\FormJsonConfigEditorComponent\StreamSettings.cs" />
-    <Compile Include="Controllers\FormJsonConfigEditorComponent\Vmess.cs" />
     <Compile Include="Controllers\FormMainComponent\FlyServer.cs" />
     <Compile Include="Controllers\FormMainComponent\FormMainComponentController.cs" />
     <Compile Include="Controllers\FormMainComponent\MenuItemsSelect.cs" />
     <Compile Include="Controllers\FormMainComponent\MenuItemsServer.cs" />
     <Compile Include="Controllers\FormMainComponent\MenuItemsBasic.cs" />
     <Compile Include="Controllers\FormMainCtrl.cs" />
-    <Compile Include="Controllers\FormJsonConfigEditorComponent\Quick.cs" />
     <Compile Include="Controllers\FormOptionComponent\OptionComponentController.cs" />
-    <Compile Include="Controllers\FormOptionComponent\TabImport.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabPlugin.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabSetting.cs" />
     <Compile Include="Controllers\FormOptionComponent\Subscription.cs" />
@@ -203,7 +190,6 @@
     <Compile Include="BaseClasses\IFormMainFlyPanelComponent.cs" />
     <Compile Include="BaseClasses\IFormComponentController.cs" />
     <Compile Include="BaseClasses\FormController.cs" />
-    <Compile Include="Controllers\FormJsonConfigEditorComponent\ConfigerComponentController.cs" />
     <Compile Include="Models\Datas\PluginInfoItem.cs" />
     <Compile Include="Models\Datas\ServerTracker.cs" />
     <Compile Include="Models\Datas\UserSettings.cs" />
@@ -212,7 +198,6 @@
     <Compile Include="BaseClasses\FormComponentController.cs" />
     <Compile Include="BaseClasses\NotifyComponent.cs" />
     <Compile Include="BaseClasses\SingletonService.cs" />
-    <Compile Include="Models\Datas\ImportItem.cs" />
     <Compile Include="Services\Caches\JsonBestMatchItems.cs" />
     <Compile Include="Services\Caches\JsonKeywordItems.cs" />
     <Compile Include="Services\ConfigMgr.cs" />
@@ -248,18 +233,6 @@
     </Compile>
     <Compile Include="Views\UserControls\CoreSettingUI.Designer.cs">
       <DependentUpon>CoreSettingUI.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\MultiConfUI.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\UserControls\MultiConfUI.Designer.cs">
-      <DependentUpon>MultiConfUI.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\ImportUI.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\UserControls\ImportUI.Designer.cs">
-      <DependentUpon>ImportUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Servers.cs" />
     <Compile Include="Models\Datas\StreamComponent.cs" />
@@ -311,12 +284,6 @@
     </Compile>
     <Compile Include="Views\WinForms\FormCustomCoreSettings.Designer.cs">
       <DependentUpon>FormCustomCoreSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WinForms\FormJsonConfigEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\WinForms\FormJsonConfigEditor.Designer.cs">
-      <DependentUpon>FormJsonConfigEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\WinForms\FormDownloadCore.cs">
       <SubType>Form</SubType>
@@ -396,12 +363,6 @@
     <EmbeddedResource Include="Views\UserControls\CoreSettingUI.zh-CN.resx">
       <DependentUpon>CoreSettingUI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\UserControls\MultiConfUI.resx">
-      <DependentUpon>MultiConfUI.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\UserControls\MultiConfUI.zh-CN.resx">
-      <DependentUpon>MultiConfUI.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\PluginInfoUI.resx">
       <DependentUpon>PluginInfoUI.cs</DependentUpon>
     </EmbeddedResource>
@@ -413,12 +374,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\ServerUI.zh-CN.resx">
       <DependentUpon>ServerUI.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\UserControls\ImportUI.resx">
-      <DependentUpon>ImportUI.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\UserControls\ImportUI.zh-CN.resx">
-      <DependentUpon>ImportUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\SubscriptionUI.resx">
       <DependentUpon>SubscriptionUI.cs</DependentUpon>
@@ -462,12 +417,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormCustomCoreSettings.zh-CN.resx">
       <DependentUpon>FormCustomCoreSettings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormJsonConfigEditor.resx">
-      <DependentUpon>FormJsonConfigEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\WinForms\FormJsonConfigEditor.zh-CN.resx">
-      <DependentUpon>FormJsonConfigEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormDownloadCore.resx">
       <DependentUpon>FormDownloadCore.cs</DependentUpon>
@@ -530,9 +479,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\Files\3rd\templates\basic\basic.json" />
-    <None Include="Resources\Files\3rd\templates\custom\vmessDecodeTemplate.json" />
-    <None Include="Resources\Files\3rd\templates\routing\whitelist.json" />
     <None Include="Resources\Files\tests\stress-test-01.lua" />
   </ItemGroup>
   <ItemGroup>

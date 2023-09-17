@@ -56,12 +56,6 @@ namespace V2RayGCon.Views.WinForms
             var ctrl = new Controllers.FormOptionCtrl();
 
             ctrl.Plug(
-                new Controllers.OptionComponent.TabMultiConf(flyMultiConfPanel, btnMultiConfAdd)
-            );
-
-            ctrl.Plug(new Controllers.OptionComponent.TabImport(flyImportPanel, btnImportAdd));
-
-            ctrl.Plug(
                 new Controllers.OptionComponent.TabCustomCoreSettings(
                     flyCoresSetting,
                     toolTip1,
@@ -124,8 +118,6 @@ namespace V2RayGCon.Views.WinForms
                     tboxDefImportAddr,
                     chkDefImportSsShareLink,
                     chkDefImportTrojanShareLink,
-                    chkDefImportBypassCnSite,
-                    chkDefImportInjectGlobalImport,
                     // speedtest
                     chkDefSpeedtestIsUse,
                     cboxDefSpeedTestUrl,
@@ -163,11 +155,6 @@ namespace V2RayGCon.Views.WinForms
         private void flySubsUrlContainer_Scroll(object sender, ScrollEventArgs e)
         {
             flySubsUrlContainer.Refresh();
-        }
-
-        private void flyImportPanel_Scroll(object sender, ScrollEventArgs e)
-        {
-            flyImportPanel.Refresh();
         }
 
         private void flyPluginsItemsContainer_Scroll(object sender, ScrollEventArgs e)

@@ -23,13 +23,18 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region public methods
-        public string Decode(string shareLink)
+        public VgcApis.Models.Datas.DecodeResult Decode(string shareLink)
         {
             var vmess = Misc.Utils.VmessLink2Vmess(shareLink);
-            return Vmess2Config(vmess);
+            var config = Vmess2Config(vmess);
+            return new VgcApis.Models.Datas.DecodeResult(vmess.ps, config);
         }
 
-        public string Encode(string config) => ConfigString2Vmess(config)?.ToVmessLink();
+        public string Encode(string name, string config)
+        {
+            var vmess = ConfigString2Vmess(name, config);
+            return vmess?.ToVmessLink();
+        }
 
         public List<string> ExtractLinksFromText(string text) =>
             Misc.Utils.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
@@ -68,7 +73,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return false;
         }
 
-        Models.Datas.Vmess ConfigString2Vmess(string config)
+        Models.Datas.Vmess ConfigString2Vmess(string name, string config)
         {
             if (!TryParseConfig(config, out JObject json))
             {
@@ -82,9 +87,13 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
 
             var basicPrefix = root + "." + "settings.vnext.0";
+
             Models.Datas.Vmess vmess = ExtractBasicInfo(GetStr, basicPrefix);
 
+            vmess.ps = name;
+
             var streamPrefix = root + "." + "streamSettings";
+
             vmess.net = GetStr(streamPrefix, "network");
             vmess.tls = GetStr(streamPrefix, "security");
             vmess.sni = GetStr(streamPrefix, "tlsSettings.serverName");
@@ -165,11 +174,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         Models.Datas.Vmess ExtractBasicInfo(Func<string, string, string> GetStr, string prefix)
         {
-            Models.Datas.Vmess vmess = new Models.Datas.Vmess
-            {
-                v = "2",
-                ps = GetStr("v2raygcon", "alias")
-            };
+            Models.Datas.Vmess vmess = new Models.Datas.Vmess { v = "2", };
             vmess.add = GetStr(prefix, "address");
             vmess.port = GetStr(prefix, "port");
             vmess.id = GetStr(prefix, "users.0.id");
@@ -198,8 +203,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
             node["users"][0]["alterId"] = VgcApis.Misc.Utils.Str2Int(vmess.aid);
 
             var tpl = cache.tpl.LoadTemplate("tplImportVmess") as JObject;
-            tpl["v2raygcon"]["alias"] = vmess.ps;
-
             return GetParent()?.GenerateJsonConfing(tpl, outVmess);
         }
 

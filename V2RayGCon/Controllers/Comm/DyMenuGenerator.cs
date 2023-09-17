@@ -20,7 +20,7 @@ namespace V2RayGCon.Controllers.Comm
             ToolStripMenuItem miLoadServer
         )
         {
-            this.servers = Services.Servers.Instance;
+            this.servers = Servers.Instance;
             this.helper = helper;
             this.miRoot = miRoot;
             this.miReplaceServer = miReplaceServer;

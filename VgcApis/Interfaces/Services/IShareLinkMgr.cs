@@ -2,9 +2,15 @@
 {
     public interface IShareLinkMgrService
     {
-        string DecodeShareLinkToConfig(string shareLink);
+        Models.Datas.DecodeResult DecodeShareLinkToConfig(string shareLink);
 
-        string EncodeConfigToShareLink(string config, Models.Datas.Enums.LinkTypes linkType);
+        string EncodeConfigToShareLink(string name, string config);
+
+        string EncodeConfigToShareLink(
+            string name,
+            string config,
+            Models.Datas.Enums.LinkTypes linkType
+        );
 
         int ImportLinksWithOutV2cfgLinksSync(string links, string mark);
 

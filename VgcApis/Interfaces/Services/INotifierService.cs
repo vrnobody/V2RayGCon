@@ -5,7 +5,7 @@ namespace VgcApis.Interfaces.Services
     public interface INotifierService
     {
         #region winforms
-        void ShowFormJsonEditor(string config);
+        void ShowFormTextEditor(string config);
         void ShowFormServerSettings(ICoreServCtrl coreServ);
         void ShowFormSimpleEditor(ICoreServCtrl coreServ);
         void ShowFormOption();

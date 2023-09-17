@@ -16,11 +16,11 @@ namespace VgcApis.Interfaces
         /// <summary>
         /// Return null if decode fail!
         /// </summary>
-        string Decode(string shareLink);
+        Models.Datas.DecodeResult Decode(string shareLink);
 
         /// <summary>
         /// Return null if encode fail!
         /// </summary>
-        string Encode(string config);
+        string Encode(string name, string config);
     }
 }

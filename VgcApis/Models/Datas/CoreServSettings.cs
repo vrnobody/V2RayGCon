@@ -5,7 +5,6 @@ namespace VgcApis.Models.Datas
     public class CoreServSettings
     {
         public string serverName,
-            serverDescription,
             inboundAddress,
             mark,
             remark,
@@ -23,7 +22,6 @@ namespace VgcApis.Models.Datas
             var em = string.Empty;
 
             serverName = em;
-            serverDescription = em;
             inboundAddress = em;
             mark = em;
             remark = em;
@@ -37,7 +35,7 @@ namespace VgcApis.Models.Datas
             isBypassCnSite = false;
         }
 
-        public CoreServSettings(VgcApis.Interfaces.ICoreServCtrl coreServ)
+        public CoreServSettings(Interfaces.ICoreServCtrl coreServ)
             : this()
         {
             var cs = coreServ.GetCoreStates();
@@ -53,6 +51,7 @@ namespace VgcApis.Models.Datas
             isBypassCnSite = cs.IsInjectSkipCnSite();
             inboundMode = cs.GetInboundType();
             inboundAddress = cs.GetInboundAddr();
+            serverName = cs.GetName();
 
             try
             {
@@ -60,8 +59,6 @@ namespace VgcApis.Models.Datas
                 var cfg = ccfg.GetConfig();
                 var json = JObject.Parse(cfg);
                 var GetStr = Misc.Utils.GetStringByKeyHelper(json);
-                serverName = GetStr("v2raygcon.alias");
-                serverDescription = GetStr("v2raygcon.description");
             }
             catch { }
         }
@@ -77,7 +74,6 @@ namespace VgcApis.Models.Datas
             if (
                 t.serverName != serverName
                 || (int)t.index != (int)index
-                || t.serverDescription != serverDescription
                 || t.inboundAddress != inboundAddress
                 || t.mark != mark
                 || t.remark != remark

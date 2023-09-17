@@ -1318,6 +1318,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 New server name: 的本地化字符串。
+        /// </summary>
+        internal static string NewServerName {
+            get {
+                return ResourceManager.GetString("NewServerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 No links found. 的本地化字符串。
         /// </summary>
         internal static string NoLinkFound {

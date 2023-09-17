@@ -28,7 +28,7 @@ namespace V2RayGCon.Services
         /// <summary>
         /// return null if fail!
         /// </summary>
-        public string DecodeShareLinkToConfig(string shareLink)
+        public VgcApis.Models.Datas.DecodeResult DecodeShareLinkToConfig(string shareLink)
         {
             var linkType = VgcApis.Misc.Utils.DetectLinkType(shareLink);
             switch (linkType)
@@ -49,10 +49,24 @@ namespace V2RayGCon.Services
             return null;
         }
 
+        public string EncodeConfigToShareLink(string name, string config)
+        {
+            foreach (var linkType in linkTypes)
+            {
+                var link = EncodeConfigToShareLink(name, config, linkType);
+                if (!string.IsNullOrEmpty(link))
+                {
+                    return link;
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// return null if fail!
         /// </summary>
         public string EncodeConfigToShareLink(
+            string name,
             string config,
             VgcApis.Models.Datas.Enums.LinkTypes linkType
         )
@@ -60,15 +74,15 @@ namespace V2RayGCon.Services
             switch (linkType)
             {
                 case VgcApis.Models.Datas.Enums.LinkTypes.ss:
-                    return codecs.Encode<ShareLinkComponents.SsDecoder>(config);
+                    return codecs.Encode<ShareLinkComponents.SsDecoder>(name, config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
-                    return codecs.Encode<ShareLinkComponents.VmessDecoder>(config);
+                    return codecs.Encode<ShareLinkComponents.VmessDecoder>(name, config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
-                    return codecs.Encode<ShareLinkComponents.V2cfgDecoder>(config);
+                    return codecs.Encode<ShareLinkComponents.V2cfgDecoder>(name, config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.vless:
-                    return codecs.Encode<ShareLinkComponents.VlessDecoder>(config);
+                    return codecs.Encode<ShareLinkComponents.VlessDecoder>(name, config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.trojan:
-                    return codecs.Encode<ShareLinkComponents.TrojanDecoder>(config);
+                    return codecs.Encode<ShareLinkComponents.TrojanDecoder>(name, config);
                 default:
                     return null;
             }
@@ -144,6 +158,15 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+        static readonly List<VgcApis.Models.Datas.Enums.LinkTypes> linkTypes =
+            new List<VgcApis.Models.Datas.Enums.LinkTypes>
+            {
+                VgcApis.Models.Datas.Enums.LinkTypes.vmess,
+                VgcApis.Models.Datas.Enums.LinkTypes.vless,
+                VgcApis.Models.Datas.Enums.LinkTypes.trojan,
+                VgcApis.Models.Datas.Enums.LinkTypes.ss,
+            };
+
         int CountImportSuccessResult(IEnumerable<string[]> result)
         {
             return result.Where(r => VgcApis.Misc.Utils.IsImportResultSuccess(r)).Count();
@@ -232,8 +255,8 @@ namespace V2RayGCon.Services
                 .AsOrdered()
                 .Select(link =>
                 {
-                    var config = codecs.Decode(link, decoder);
-                    var msg = AddLinkToServerList(mark, config);
+                    var r = codecs.Decode(link, decoder);
+                    var msg = AddLinkToServerList(r, mark);
                     return GenImportResult(link, msg.Item1, msg.Item2, mark);
                 })
                 .ToList();
@@ -245,13 +268,16 @@ namespace V2RayGCon.Services
             return importResults.Any(r => VgcApis.Misc.Utils.IsImportResultSuccess(r));
         }
 
-        private Tuple<bool, string> AddLinkToServerList(string mark, string config)
+        private Tuple<bool, string> AddLinkToServerList(
+            VgcApis.Models.Datas.DecodeResult r,
+            string mark
+        )
         {
-            if (string.IsNullOrEmpty(config))
+            if (r == null || string.IsNullOrEmpty(r.config))
             {
                 return new Tuple<bool, string>(false, I18N.DecodeFail);
             }
-            var ok = servers.AddServer(config, mark, true);
+            var ok = servers.AddServer(r.name, r.config, mark, true);
             var reason = ok ? I18N.Success : I18N.DuplicateServer;
             return new Tuple<bool, string>(ok, reason);
         }

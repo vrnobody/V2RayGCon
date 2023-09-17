@@ -6,8 +6,7 @@
         {
             foreach (var component in GetAllComponents())
             {
-                var c =
-                    component.Value as Controllers.FormMainComponent.FormMainComponentController;
+                var c = component.Value as FormMainComponent.FormMainComponentController;
                 c.Cleanup();
             }
         }

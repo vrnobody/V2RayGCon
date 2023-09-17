@@ -3,10 +3,6 @@
     "log": {
       "loglevel": "warning"
     },
-    "v2raygcon": {
-      "alias": "PackageV4",
-      "description": ""
-    },
     "inbounds": [
       {
         "port": 1080,
@@ -21,10 +17,6 @@
   "pkgV4Tpl": {
     "log": {
       "loglevel": "warning"
-    },
-    "v2raygcon": {
-      "alias": "PackageV4",
-      "description": ""
     },
     "routing": {
       "balancers": [
@@ -57,10 +49,6 @@
     "outbounds": []
   },
   "main": {
-    "v2raygcon": {
-      "alias": "PackageV3",
-      "description": ""
-    },
     "log": {
       "loglevel": "warning"
     },

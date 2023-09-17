@@ -813,4 +813,7 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="ConfirmChangeAllDefCoreTo" xml:space="preserve">
     <value>把所有服务器的core设置为 [{0}] 吗？</value>
   </data>
+  <data name="NewServerName" xml:space="preserve">
+    <value>新服务器名：</value>
+  </data>
 </root>

@@ -5,13 +5,15 @@ namespace V2RayGCon.Models.Datas
 {
     class Table
     {
-        public static readonly Dictionary<Models.Datas.Enums.Cultures, string> Cultures =
-            new Dictionary<Enums.Cultures, string>
-            {
-                { Enums.Cultures.auto, "auto" },
-                { Enums.Cultures.enUS, "en" },
-                { Enums.Cultures.zhCN, "cn" },
-            };
+        public static readonly Dictionary<Enums.Cultures, string> Cultures = new Dictionary<
+            Enums.Cultures,
+            string
+        >
+        {
+            { Enums.Cultures.auto, "auto" },
+            { Enums.Cultures.enUS, "en" },
+            { Enums.Cultures.zhCN, "cn" },
+        };
 
         public static readonly string[] EnviromentVariablesName = new string[]
         {
@@ -60,7 +62,7 @@ namespace V2RayGCon.Models.Datas
 
         public static readonly Dictionary<int, StreamComponent> streamSettings = new Dictionary<
             int,
-            Models.Datas.StreamComponent
+            StreamComponent
         >
         {
             //public bool dropDownStyle;
@@ -294,12 +296,6 @@ namespace V2RayGCon.Models.Datas
             list = NewList();
             list.Add(SS(I18N.Default, "policyDefault"));
             d.Add("policy", list);
-
-            //{ 6,"v2raygcon" },
-            list = NewList();
-            list.Add(SS(I18N.Default, "v2raygcon"));
-            list.Add(SS(I18N.Import, "vgcImport"));
-            d.Add("v2raygcon", list);
 
             //{ 7, "api"},
             list = NewList();

@@ -11,7 +11,7 @@ namespace NeoLuna.Models.Apis.Components
 {
     internal sealed class Misc : VgcApis.BaseClasses.ComponentOf<LuaApis>, Interfaces.ILuaMisc
     {
-        readonly Services.Settings settings;
+        readonly Settings settings;
         private readonly FormMgrSvc formMgr;
         readonly VgcApis.Interfaces.Services.IUtilsService vgcUtils;
         readonly VgcApis.Interfaces.Services.IShareLinkMgrService vgcSlinkMgr;
@@ -21,8 +21,8 @@ namespace NeoLuna.Models.Apis.Components
 
         public Misc(
             VgcApis.Interfaces.Services.IApiService api,
-            Services.Settings settings,
-            Services.FormMgrSvc formMgr
+            Settings settings,
+            FormMgrSvc formMgr
         )
         {
             this.settings = settings;
@@ -48,7 +48,7 @@ namespace NeoLuna.Models.Apis.Components
             return ok;
         }
 
-        public void ShowFormJsonEditor(string config) => vgcNotifier.ShowFormJsonEditor(config);
+        public void ShowFormTextEditor(string config) => vgcNotifier.ShowFormTextEditor(config);
 
         public void ShowFormServerSettings(ICoreServCtrl coreServ) =>
             vgcNotifier.ShowFormServerSettings(coreServ);
@@ -205,40 +205,23 @@ namespace NeoLuna.Models.Apis.Components
 
         public List<string> LocalStorageKeys() => settings.ShareMemoryKeys();
 
-        public string Config2VmessLink(string config)
+        public string EncodeToShareLink(string name, string config)
         {
-            try
-            {
-                return vgcSlinkMgr.EncodeConfigToShareLink(
-                    config,
-                    VgcApis.Models.Datas.Enums.LinkTypes.vmess
-                );
-            }
-            catch { }
-            return null;
+            return vgcSlinkMgr.EncodeConfigToShareLink(name, config);
         }
 
-        public string Config2V2cfg(string config)
+        public string EncodeToV2cfgShareLink(string name, string config)
         {
-            try
-            {
-                return vgcSlinkMgr.EncodeConfigToShareLink(
-                    config,
-                    VgcApis.Models.Datas.Enums.LinkTypes.v2cfg
-                );
-            }
-            catch { }
-            return null;
+            return vgcSlinkMgr.EncodeConfigToShareLink(
+                name,
+                config,
+                VgcApis.Models.Datas.Enums.LinkTypes.v2cfg
+            );
         }
 
-        public string ShareLink2ConfigString(string shareLink)
+        public VgcApis.Models.Datas.DecodeResult DecodeShareLink(string shareLink)
         {
-            try
-            {
-                return vgcSlinkMgr.DecodeShareLinkToConfig(shareLink) ?? @"";
-            }
-            catch { }
-            return null;
+            return vgcSlinkMgr.DecodeShareLinkToConfig(shareLink);
         }
 
         public string AddVmessPrefix(string b64Str) =>

@@ -28,11 +28,9 @@ namespace NeoLuna.Models.Apis.Components
 
         public int CountSelected() => vgcServers.CountSelected();
 
-        public bool Add(string config) => Add(config, "");
-
-        public bool Add(string config, string mark)
+        public bool Add(string name, string config, string mark)
         {
-            return vgcServers.AddServer(config, mark);
+            return vgcServers.AddServer(name, config, mark, false);
         }
 
         public bool DeleteServerByConfig(string config) =>
@@ -71,8 +69,12 @@ namespace NeoLuna.Models.Apis.Components
         // expose for ILuaServer
         public long RunSpeedTest(string rawConfig) => vgcConfigMgr.RunSpeedTest(rawConfig);
 
-        public long RunCustomSpeedTest(string rawConfig, string testUrl, int testTimeout) =>
-            vgcConfigMgr.RunCustomSpeedTest(rawConfig, testUrl, testTimeout);
+        public long RunCustomSpeedTest(
+            string rawConfig,
+            string coreName,
+            string testUrl,
+            int testTimeout
+        ) => vgcConfigMgr.RunCustomSpeedTest(rawConfig, coreName, testUrl, testTimeout);
 
         public List<ICoreServCtrl> GetAllServers() => vgcServers.GetAllServersOrderByIndex();
 

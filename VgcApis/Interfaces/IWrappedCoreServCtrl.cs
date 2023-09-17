@@ -65,7 +65,6 @@ namespace VgcApis.Interfaces
         new string GetLongName();
         new string GetName();
         new void SetName(string name);
-        new void SetDescription(string description);
         new string GetRawUid();
         new long GetSpeedTestResult();
         new string GetStatus();

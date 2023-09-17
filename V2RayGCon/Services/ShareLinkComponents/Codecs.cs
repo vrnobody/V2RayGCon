@@ -29,9 +29,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
             node["flow"] = vee.auth2;
 
             var tpl = cache.tpl.LoadTemplate("tplImportSS") as JObject;
-            tpl["v2raygcon"]["alias"] = vee.name;
-            tpl["v2raygcon"]["description"] = vee.description;
-
             return GenerateJsonConfing(tpl, outbSs);
         }
 
@@ -56,27 +53,29 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
             node["users"][0]["encryption"] = "none";
             var tpl = cache.tpl.LoadTemplate("tplImportVmess") as JObject;
-            tpl["v2raygcon"]["alias"] = vee.name;
-            tpl["v2raygcon"]["description"] = vee.description;
             return GenerateJsonConfing(tpl, outVmess);
         }
         #endregion
+
         #region public methods
 
-        public string Encode<TDecoder>(string config)
+        public string Encode<TDecoder>(string name, string config)
             where TDecoder : VgcApis.BaseClasses.ComponentOf<Codecs>,
                 VgcApis.Interfaces.IShareLinkDecoder
         {
             try
             {
-                return GetChild<TDecoder>()?.Encode(config);
+                return GetChild<TDecoder>()?.Encode(name, config);
             }
             catch { }
             return null;
         }
 
 #pragma warning disable CA1822 // Mark members as static
-        public string Decode(string shareLink, VgcApis.Interfaces.IShareLinkDecoder decoder)
+        public VgcApis.Models.Datas.DecodeResult Decode(
+            string shareLink,
+            VgcApis.Interfaces.IShareLinkDecoder decoder
+        )
 #pragma warning restore CA1822 // Mark members as static
         {
             try
@@ -87,7 +86,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return null;
         }
 
-        public string Decode<TDecoder>(string shareLink)
+        public VgcApis.Models.Datas.DecodeResult Decode<TDecoder>(string shareLink)
             where TDecoder : VgcApis.BaseClasses.ComponentOf<Codecs>,
                 VgcApis.Interfaces.IShareLinkDecoder
         {
@@ -158,7 +157,9 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             Misc.Utils.MergeJson(template, inb);
             Misc.Utils.MergeJson(template, outb);
-            return VgcApis.Misc.Utils.FormatConfig(template as JObject);
+            var key = VgcApis.Models.Consts.Config.SectionKeyV2rayGCon;
+            template.Remove(key);
+            return VgcApis.Misc.Utils.FormatConfig(template);
         }
         #endregion
     }

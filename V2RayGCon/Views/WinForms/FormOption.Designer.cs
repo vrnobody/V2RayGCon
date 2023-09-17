@@ -86,8 +86,6 @@
             this.tboxDefImportVmessDecodeTemplateUrl = new System.Windows.Forms.TextBox();
             this.chkDefImportIsUseVmessDecodeTemplate = new System.Windows.Forms.CheckBox();
             this.btnDefImportBrowseVemssDecodeTemplate = new System.Windows.Forms.Button();
-            this.chkDefImportInjectGlobalImport = new System.Windows.Forms.CheckBox();
-            this.chkDefImportBypassCnSite = new System.Windows.Forms.CheckBox();
             this.chkDefImportTrojanShareLink = new System.Windows.Forms.CheckBox();
             this.chkDefImportSsShareLink = new System.Windows.Forms.CheckBox();
             this.tboxDefImportAddr = new System.Windows.Forms.TextBox();
@@ -110,12 +108,6 @@
             this.label19 = new System.Windows.Forms.Label();
             this.btnCoresSettingAdd = new System.Windows.Forms.Button();
             this.flyCoresSetting = new System.Windows.Forms.FlowLayoutPanel();
-            this.tabPageImport = new System.Windows.Forms.TabPage();
-            this.btnImportAdd = new System.Windows.Forms.Button();
-            this.flyImportPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.tabPageMultiConf = new System.Windows.Forms.TabPage();
-            this.btnMultiConfAdd = new System.Windows.Forms.Button();
-            this.flyMultiConfPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPagePlugins = new System.Windows.Forms.TabPage();
             this.chkIsLoad3rdPartyPlugins = new System.Windows.Forms.CheckBox();
             this.btnRefreshPluginsPanel = new System.Windows.Forms.Button();
@@ -138,8 +130,6 @@
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPageCustomCoresSetting.SuspendLayout();
-            this.tabPageImport.SuspendLayout();
-            this.tabPageMultiConf.SuspendLayout();
             this.tabPagePlugins.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -150,8 +140,6 @@
             this.tabControl1.Controls.Add(this.tabPageSetting);
             this.tabControl1.Controls.Add(this.tabPageDefaults);
             this.tabControl1.Controls.Add(this.tabPageCustomCoresSetting);
-            this.tabControl1.Controls.Add(this.tabPageImport);
-            this.tabControl1.Controls.Add(this.tabPageMultiConf);
             this.tabControl1.Controls.Add(this.tabPagePlugins);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -565,8 +553,6 @@
             this.groupBox4.Controls.Add(this.tboxDefImportVmessDecodeTemplateUrl);
             this.groupBox4.Controls.Add(this.chkDefImportIsUseVmessDecodeTemplate);
             this.groupBox4.Controls.Add(this.btnDefImportBrowseVemssDecodeTemplate);
-            this.groupBox4.Controls.Add(this.chkDefImportInjectGlobalImport);
-            this.groupBox4.Controls.Add(this.chkDefImportBypassCnSite);
             this.groupBox4.Controls.Add(this.chkDefImportTrojanShareLink);
             this.groupBox4.Controls.Add(this.chkDefImportSsShareLink);
             this.groupBox4.Controls.Add(this.tboxDefImportAddr);
@@ -595,20 +581,6 @@
             this.toolTip1.SetToolTip(this.btnDefImportBrowseVemssDecodeTemplate, resources.GetString("btnDefImportBrowseVemssDecodeTemplate.ToolTip"));
             this.btnDefImportBrowseVemssDecodeTemplate.UseVisualStyleBackColor = true;
             this.btnDefImportBrowseVemssDecodeTemplate.Click += new System.EventHandler(this.btnDefImportBrowseVemssDecodeTemplate_Click);
-            // 
-            // chkDefImportInjectGlobalImport
-            // 
-            resources.ApplyResources(this.chkDefImportInjectGlobalImport, "chkDefImportInjectGlobalImport");
-            this.chkDefImportInjectGlobalImport.Name = "chkDefImportInjectGlobalImport";
-            this.toolTip1.SetToolTip(this.chkDefImportInjectGlobalImport, resources.GetString("chkDefImportInjectGlobalImport.ToolTip"));
-            this.chkDefImportInjectGlobalImport.UseVisualStyleBackColor = true;
-            // 
-            // chkDefImportBypassCnSite
-            // 
-            resources.ApplyResources(this.chkDefImportBypassCnSite, "chkDefImportBypassCnSite");
-            this.chkDefImportBypassCnSite.Name = "chkDefImportBypassCnSite";
-            this.toolTip1.SetToolTip(this.chkDefImportBypassCnSite, resources.GetString("chkDefImportBypassCnSite.ToolTip"));
-            this.chkDefImportBypassCnSite.UseVisualStyleBackColor = true;
             // 
             // chkDefImportTrojanShareLink
             // 
@@ -789,51 +761,6 @@
             this.flyCoresSetting.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flyCoresSetting.Name = "flyCoresSetting";
             // 
-            // tabPageImport
-            // 
-            this.tabPageImport.Controls.Add(this.btnImportAdd);
-            this.tabPageImport.Controls.Add(this.flyImportPanel);
-            resources.ApplyResources(this.tabPageImport, "tabPageImport");
-            this.tabPageImport.Name = "tabPageImport";
-            this.tabPageImport.UseVisualStyleBackColor = true;
-            // 
-            // btnImportAdd
-            // 
-            resources.ApplyResources(this.btnImportAdd, "btnImportAdd");
-            this.btnImportAdd.Name = "btnImportAdd";
-            this.toolTip1.SetToolTip(this.btnImportAdd, resources.GetString("btnImportAdd.ToolTip"));
-            this.btnImportAdd.UseVisualStyleBackColor = true;
-            // 
-            // flyImportPanel
-            // 
-            this.flyImportPanel.AllowDrop = true;
-            resources.ApplyResources(this.flyImportPanel, "flyImportPanel");
-            this.flyImportPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.flyImportPanel.Name = "flyImportPanel";
-            this.flyImportPanel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flyImportPanel_Scroll);
-            // 
-            // tabPageMultiConf
-            // 
-            this.tabPageMultiConf.Controls.Add(this.btnMultiConfAdd);
-            this.tabPageMultiConf.Controls.Add(this.flyMultiConfPanel);
-            resources.ApplyResources(this.tabPageMultiConf, "tabPageMultiConf");
-            this.tabPageMultiConf.Name = "tabPageMultiConf";
-            this.tabPageMultiConf.UseVisualStyleBackColor = true;
-            // 
-            // btnMultiConfAdd
-            // 
-            resources.ApplyResources(this.btnMultiConfAdd, "btnMultiConfAdd");
-            this.btnMultiConfAdd.Name = "btnMultiConfAdd";
-            this.toolTip1.SetToolTip(this.btnMultiConfAdd, resources.GetString("btnMultiConfAdd.ToolTip"));
-            this.btnMultiConfAdd.UseVisualStyleBackColor = true;
-            // 
-            // flyMultiConfPanel
-            // 
-            this.flyMultiConfPanel.AllowDrop = true;
-            resources.ApplyResources(this.flyMultiConfPanel, "flyMultiConfPanel");
-            this.flyMultiConfPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.flyMultiConfPanel.Name = "flyMultiConfPanel";
-            // 
             // tabPagePlugins
             // 
             this.tabPagePlugins.Controls.Add(this.chkIsLoad3rdPartyPlugins);
@@ -919,8 +846,6 @@
             this.groupBox3.PerformLayout();
             this.tabPageCustomCoresSetting.ResumeLayout(false);
             this.tabPageCustomCoresSetting.PerformLayout();
-            this.tabPageImport.ResumeLayout(false);
-            this.tabPageMultiConf.ResumeLayout(false);
             this.tabPagePlugins.ResumeLayout(false);
             this.tabPagePlugins.PerformLayout();
             this.ResumeLayout(false);
@@ -937,9 +862,6 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnOptionSave;
         private System.Windows.Forms.Button btnOptionExit;
-        private System.Windows.Forms.TabPage tabPageImport;
-        private System.Windows.Forms.Button btnImportAdd;
-        private System.Windows.Forms.FlowLayoutPanel flyImportPanel;
         private System.Windows.Forms.TabPage tabPageSetting;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox cboxSettingLanguage;
@@ -976,8 +898,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox tboxDefSpeedtestTimeout;
         private System.Windows.Forms.CheckBox chkDefImportSsShareLink;
-        private System.Windows.Forms.CheckBox chkDefImportInjectGlobalImport;
-        private System.Windows.Forms.CheckBox chkDefImportBypassCnSite;
         private System.Windows.Forms.Button btnSetOpenStartupFolder;
         private System.Windows.Forms.Button btnSubsInvertSelection;
         private System.Windows.Forms.Button btnSubsUseAll;
@@ -985,9 +905,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.CheckBox chkSubsIsAutoPatch;
-        private System.Windows.Forms.TabPage tabPageMultiConf;
-        private System.Windows.Forms.Button btnMultiConfAdd;
-        private System.Windows.Forms.FlowLayoutPanel flyMultiConfPanel;
         private System.Windows.Forms.ComboBox cboxDefSpeedTestExpectedSize;
         private System.Windows.Forms.ComboBox cboxDefSpeedTestUrl;
         private System.Windows.Forms.ComboBox cboxSettingsRandomSelectServerLatency;

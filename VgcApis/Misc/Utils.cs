@@ -138,7 +138,7 @@ namespace VgcApis.Misc
                 }
 
                 var msg = string.Format(I18N.ConfirmLoadFileContent, name);
-                if (string.IsNullOrEmpty(editor.Text) || VgcApis.Misc.UI.Confirm(msg))
+                if (string.IsNullOrEmpty(editor.Text) || UI.Confirm(msg))
                 {
                     editor.Text = content;
                 }
@@ -185,7 +185,6 @@ namespace VgcApis.Misc
             return text.Substring(start + 1, len);
         }
         #endregion
-
 
         #region system
         /// <summary>
@@ -259,7 +258,7 @@ namespace VgcApis.Misc
             foreach (var frame in stack.GetFrames())
             {
                 var method = frame.GetMethod();
-                var mn = Misc.Utils.GetFriendlyMethodDeclareInfo(method as MethodInfo);
+                var mn = GetFriendlyMethodDeclareInfo(method as MethodInfo);
                 s.Add($" -> {mn}");
             }
 
@@ -306,7 +305,7 @@ namespace VgcApis.Misc
             while (n > 1)
             {
                 n--;
-                int k = VgcApis.Libs.Infr.PseudoRandom.Next(n + 1);
+                int k = Libs.Infr.PseudoRandom.Next(n + 1);
                 T value = list[k];
                 list[k] = list[n];
                 list[n] = value;
@@ -356,7 +355,7 @@ namespace VgcApis.Misc
                 {
                     if (
                         !string.IsNullOrEmpty(line)
-                        && VgcApis.Libs.Infr.PseudoRandom.Next(++numberSeen) == 0
+                        && Libs.Infr.PseudoRandom.Next(++numberSeen) == 0
                     )
                     {
                         url = line;
@@ -369,6 +368,55 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
+
+        public static Dictionary<string, int> GetConfigTags(List<string> lines)
+        {
+            var r = new Dictionary<string, int>();
+            var pat1 = @"^ {0,2}""?([a-zA-Z][\w\-_]*)""?:";
+            var pat2 = @"^ *""?(tag)""?: *""?([\w\-_]+)""?";
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                try
+                {
+                    var line = lines[i];
+                    var gs = Regex.Match(line, pat1).Groups;
+                    if (gs.Count > 1)
+                    {
+                        r[gs[1].Value] = i;
+                        continue;
+                    }
+                    gs = Regex.Match(line, pat2).Groups;
+                    if (gs.Count > 2)
+                    {
+                        var key = $"{gs[1].Value}: {gs[2].Value}";
+                        r[key] = i;
+                    }
+                }
+                catch { }
+            }
+            return r;
+        }
+
+        public static Models.Datas.Enums.ConfigType DetectConfigType(string config)
+        {
+            var unknow = Models.Datas.Enums.ConfigType.Unknow;
+            if (string.IsNullOrEmpty(config) || config.Length < 2)
+            {
+                return unknow;
+            }
+            if (config[0] == '{' && config[config.Length - 1] == '}')
+            {
+                return Models.Datas.Enums.ConfigType.Json;
+            }
+
+            if (Regex.IsMatch(config, @"^ *[a-zA-Z][\w\-_]*:"))
+            {
+                return Models.Datas.Enums.ConfigType.Yaml;
+            }
+
+            return unknow;
+        }
 
         public static List<int> FindAll(string haystack, string needle)
         {
@@ -429,7 +477,7 @@ namespace VgcApis.Misc
         }
 
         public static string TrimTrailingNewLine(string content) =>
-            content?.TrimEnd(System.Environment.NewLine.ToCharArray());
+            content?.TrimEnd(Environment.NewLine.ToCharArray());
 
         public static string ToHexString(byte[] bytes)
         {
@@ -631,7 +679,7 @@ namespace VgcApis.Misc
         {
             if (IPAddress.TryParse(host, out var address))
             {
-                if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                if (address.AddressFamily == AddressFamily.InterNetworkV6)
                 {
                     return $"[{address}]";
                 }
@@ -989,7 +1037,7 @@ namespace VgcApis.Misc
             {
                 try
                 {
-                    var missionId = Utils.RandomHex(8);
+                    var missionId = RandomHex(8);
                     if (UI.IsInUiThread())
                     {
                         Libs.Sys.FileLogger.Warn($"Task [{missionId}] running in UI thread");
@@ -1237,95 +1285,6 @@ namespace VgcApis.Misc
             return result == 0 ? lenA - lenB : result;
         }
 
-        public static Dictionary<string, string> GetterJsonSections(JToken jtoken)
-        {
-            var rootKey = Models.Consts.Config.ConfigSectionDefRootKey;
-            var defDepth = Models.Consts.Config.ConfigSectionDefDepth;
-            var setting = Models.Consts.Config.ConfigSectionDefSetting;
-
-            var ds = new Dictionary<string, string>();
-
-            GetterJsonDataStructRecursively(ref ds, jtoken, rootKey, defDepth, setting);
-
-            ds.Remove(rootKey);
-
-            int index = rootKey.Length + 1;
-            return ds.Select(
-                    kv => new KeyValuePair<string, string>(kv.Key.Substring(index), kv.Value)
-                )
-                .ToDictionary(kv => kv.Key, kv => kv.Value);
-        }
-
-        static bool IsValidJobjectKey(string key)
-        {
-            if (string.IsNullOrEmpty(key) || int.TryParse(key, out int blackhole))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        static void GetterJsonDataStructRecursively(
-            ref Dictionary<string, string> sections,
-            JToken jtoken,
-            string root,
-            int depth,
-            Dictionary<string, int> setting
-        )
-        {
-            if (depth < 0)
-            {
-                return;
-            }
-
-            if (setting.ContainsKey(root))
-            {
-                depth = setting[root];
-            }
-
-            switch (jtoken)
-            {
-                case JObject jobject:
-                    sections[root] = Models.Consts.Config.JsonObject;
-                    foreach (var prop in jobject.Properties())
-                    {
-                        var key = prop.Name;
-                        if (!IsValidJobjectKey(key))
-                        {
-                            continue;
-                        }
-                        var subRoot = $"{root}.{key}";
-                        GetterJsonDataStructRecursively(
-                            ref sections,
-                            jobject[key],
-                            subRoot,
-                            depth - 1,
-                            setting
-                        );
-                    }
-                    break;
-
-                case JArray jarry:
-                    sections[root] = Models.Consts.Config.JsonArray;
-                    for (int i = 0; i < jarry.Count(); i++)
-                    {
-                        var key = i;
-                        var subRoot = $"{root}.{key}";
-                        GetterJsonDataStructRecursively(
-                            ref sections,
-                            jarry[key],
-                            subRoot,
-                            depth - 1,
-                            setting
-                        );
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
         public static string FilterControlChars(string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -1347,25 +1306,18 @@ namespace VgcApis.Misc
 
         public static string FormatConfig(string config)
         {
-            try
-            {
-                var j = JObject.Parse(config);
-                return FormatConfig(j);
-            }
-            catch { }
-            return string.Empty;
+            var json = ParseJObject(config);
+            return FormatConfig(json);
         }
 
-        public static bool TryParseJObject(string jsonString, out JObject json)
+        public static JObject ParseJObject(string json)
         {
-            json = null;
             try
             {
-                json = JObject.Parse(jsonString);
-                return true;
+                return JObject.Parse(json);
             }
             catch { }
-            return false;
+            return null;
         }
 
         public static void SavePluginSetting<T>(
@@ -1375,7 +1327,7 @@ namespace VgcApis.Misc
         )
             where T : class
         {
-            var content = Utils.SerializeObject(userSettings);
+            var content = SerializeObject(userSettings);
             vgcSetting.SavePluginsSetting(pluginName, content);
         }
 
@@ -1395,7 +1347,7 @@ namespace VgcApis.Misc
 
             try
             {
-                var result = VgcApis.Misc.Utils.DeserializeObject<T>(userSettingString);
+                var result = DeserializeObject<T>(userSettingString);
                 return result ?? empty;
             }
             catch { }
@@ -1813,35 +1765,18 @@ namespace VgcApis.Misc
                 mn = mn.Substring(1);
             }
 
-            if (mn != null && mn.ToLower().EndsWith(".lua"))
+            string ext = ".lua";
+            if (mn != null && mn.ToLower().EndsWith(ext))
             {
-                mn = mn.Substring(0, mn.Length - ".lua".Length);
+                mn = mn.Substring(0, mn.Length - ext.Length);
             }
 
             return mn;
         }
 
-        public static bool IsImportResultSuccess(string[] result) =>
-            result[3] == VgcApis.Models.Consts.Import.MarkImportSuccess;
-
-        public static void TrimDownConcurrentQueue<T>(
-            ConcurrentQueue<T> queue,
-            int maxLines,
-            int minLines
-        )
+        public static bool IsImportResultSuccess(string[] result)
         {
-            var count = queue.Count();
-            if (maxLines < 1 || count < maxLines)
-            {
-                return;
-            }
-
-            var loop = Clamp(count - minLines, 0, count);
-            var blackHole = default(T);
-            for (int i = 0; i < loop; i++)
-            {
-                queue.TryDequeue(out blackHole);
-            }
+            return result[3] == Models.Consts.Import.MarkImportSuccess;
         }
 
         public static bool IsHttpLink(string link)
@@ -1892,7 +1827,7 @@ namespace VgcApis.Misc
         static string GenAppDir()
         {
             // z:\vgc\libs\vgcapi.dll
-            var vgcApiDllFile = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var vgcApiDllFile = Assembly.GetExecutingAssembly().Location;
             var parent = new DirectoryInfo(vgcApiDllFile).Parent;
             if (parent.Name == Models.Consts.Files.LibsDir)
             {
@@ -1930,7 +1865,7 @@ namespace VgcApis.Misc
 
             for (int i = 0; i < length; i++)
             {
-                rndIndex = VgcApis.Libs.Infr.PseudoRandom.Next(charLen);
+                rndIndex = Libs.Infr.PseudoRandom.Next(charLen);
                 sb.Append(chars[rndIndex]);
             }
 
@@ -2107,7 +2042,7 @@ namespace VgcApis.Misc
             return fullNames;
         }
 
-        static Tuple<string, string> GenParamStr(System.Reflection.MethodInfo methodInfo)
+        static Tuple<string, string> GenParamStr(MethodInfo methodInfo)
         {
             var fullParamList = new List<string>();
             var paramList = new List<string>();
@@ -2134,7 +2069,7 @@ namespace VgcApis.Misc
             };
 
             var methodsName = new List<string>();
-            var methods = type.GetMethods();
+            _ = type.GetMethods();
             foreach (var method in type.GetMethods())
             {
                 var name = method.Name;

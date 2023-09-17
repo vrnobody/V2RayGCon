@@ -67,6 +67,26 @@ namespace VgcApis.Misc
             scintilla.Indicators[INDICATOR_NUM].Alpha = 180;
         }
 
+        public static void ResetComboBoxDropdownMenuWidth(ToolStripComboBox cbox)
+        {
+            int maxWidth = 0;
+            int tempWidth;
+            var font = cbox.Font;
+
+            foreach (var item in cbox.Items)
+            {
+                tempWidth = TextRenderer.MeasureText(item.ToString(), font).Width;
+                if (tempWidth > maxWidth)
+                {
+                    maxWidth = tempWidth;
+                }
+            }
+            cbox.DropDownWidth = Math.Max(
+                cbox.Width,
+                maxWidth + SystemInformation.VerticalScrollBarWidth
+            );
+        }
+
         public static void ResetComboBoxDropdownMenuWidth(ComboBox cbox)
         {
             int maxWidth = 0;
@@ -497,6 +517,22 @@ namespace VgcApis.Misc
         #endregion
 
         #region winform
+        public static void GetUserInput(string title, Action<string> onOk, Action onCancel = null)
+        {
+            var form = new WinForms.FormInput(title);
+            form.Show();
+            form.FormClosed += (_, __) =>
+            {
+                if (form.DialogResult == DialogResult.OK)
+                {
+                    onOk?.Invoke(form.Content);
+                }
+                else
+                {
+                    onCancel?.Invoke();
+                }
+            };
+        }
 
         static readonly List<Color> colorTable = new List<Color>
         {
@@ -598,18 +634,6 @@ namespace VgcApis.Misc
             Color.Yellow,
         };
 
-        static List<Color> ColorStructToList(IEnumerable<string> filterList)
-        {
-            var colors = typeof(Color)
-                .GetProperties(
-                    BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.Public
-                )
-                .Select(c => (Color)c.GetValue(null, null))
-                .Where(c => !filterList.Where(fl => c.Name.Contains(fl)).Any())
-                .ToList();
-            return colors;
-        }
-
         public static Color String2Color(string text)
         {
             var hashed = Utils.Md5Hash(text);
@@ -676,7 +700,7 @@ namespace VgcApis.Misc
 #endif
         }
 
-        public static System.Drawing.Icon GetAppIcon()
+        public static Icon GetAppIcon()
         {
 #if DEBUG
             return Properties.Resources.icon_light;

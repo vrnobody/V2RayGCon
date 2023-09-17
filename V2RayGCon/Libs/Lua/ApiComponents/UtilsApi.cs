@@ -41,7 +41,7 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
                 are.Set();
             }
 
-            Libs.QRCode.QRCode.ScanQRCode(Success, Fail);
+            QRCode.QRCode.ScanQRCode(Success, Fail);
             are.WaitOne(10000);
             return shareLink;
         }

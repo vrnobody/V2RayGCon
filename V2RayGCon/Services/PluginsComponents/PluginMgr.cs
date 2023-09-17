@@ -19,7 +19,7 @@ namespace V2RayGCon.Services.PluginsComponents
             new Dictionary<string, VgcApis.Interfaces.IPlugin>();
         List<string> internalPluginNames = new List<string>();
 
-        public PluginMgr(Settings settings, Libs.Lua.Apis apis)
+        public PluginMgr(Settings settings, Apis apis)
         {
             this.settings = settings;
             this.apis = apis;

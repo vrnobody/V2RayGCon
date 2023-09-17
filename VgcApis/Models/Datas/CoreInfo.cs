@@ -102,12 +102,5 @@
                 this.config = config;
             }
         }
-
-        public void ClearCachedString()
-        {
-            shortName = string.Empty;
-            longName = string.Empty;
-            title = string.Empty;
-        }
     }
 }

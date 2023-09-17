@@ -119,7 +119,6 @@ namespace V2RayGCon.Views.WinForms
             this.refreshSummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteSelectedServersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolMenuItemConfigEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemTextEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.toolMenuItemLog = new System.Windows.Forms.ToolStripMenuItem();
             this.toolMenuItemOptions = new System.Windows.Forms.ToolStripMenuItem();
@@ -714,7 +713,6 @@ namespace V2RayGCon.Views.WinForms
             // windowToolStripMenuItem
             // 
             this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolMenuItemConfigEditor,
             this.toolStripMenuItemTextEditor,
             this.toolMenuItemLog,
             this.toolMenuItemOptions,
@@ -722,12 +720,6 @@ namespace V2RayGCon.Views.WinForms
             this.toolStripMenuItemResize});
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
             resources.ApplyResources(this.windowToolStripMenuItem, "windowToolStripMenuItem");
-            // 
-            // toolMenuItemConfigEditor
-            // 
-            this.toolMenuItemConfigEditor.Image = global::V2RayGCon.Properties.Resources.EditSelectedTag_16x;
-            this.toolMenuItemConfigEditor.Name = "toolMenuItemConfigEditor";
-            resources.ApplyResources(this.toolMenuItemConfigEditor, "toolMenuItemConfigEditor");
             // 
             // toolStripMenuItemTextEditor
             // 
@@ -892,7 +884,6 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.ToolStripMenuItem toolMenuItemImportLinkFromClipboard;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolMenuItemConfigEditor;
         private System.Windows.Forms.ToolStripMenuItem toolMenuItemLog;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolTip toolTip1;

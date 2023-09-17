@@ -170,7 +170,7 @@ namespace VgcApis.WinForms
             {
                 return;
             }
-            var len = cboxSearchKeyword.Text.Length;
+
             ScrollTo(p.X);
             editor.IndicatorFillRange(p.X, p.Y - p.X);
         }

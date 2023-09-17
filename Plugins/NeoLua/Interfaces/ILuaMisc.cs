@@ -5,7 +5,7 @@ using VgcApis.Interfaces;
 
 namespace NeoLuna.Interfaces
 {
-    public interface ILuaMisc : VgcApis.Interfaces.ILogable
+    public interface ILuaMisc : ILogable
     {
         #region winform things
         /// <summary>
@@ -27,7 +27,7 @@ namespace NeoLuna.Interfaces
         /// 调出Json编辑器窗口
         /// </summary>
         /// <param name="config">预置内容</param>
-        void ShowFormJsonEditor(string config);
+        void ShowFormTextEditor(string config);
 
         /// <summary>
         /// 调出设定及二维码窗口
@@ -409,25 +409,27 @@ namespace NeoLuna.Interfaces
         byte[] Base64DecodeToBytes(string b64Str);
 
         /// <summary>
+        /// 将config编码为分享链接
+        /// </summary>
+        /// <param name="name">链接名</param>
+        /// <param name="config">服务器完整config</param>
+        /// <returns>vmess://..., vless://...</returns>
+        string EncodeToShareLink(string name, string config);
+
+        /// <summary>
         /// 将config编码为v2cfg链接
         /// </summary>
-        /// <param name="config">服务器完整config.json</param>
+        /// <param name="name">链接名</param>
+        /// <param name="config">服务器完整config</param>
         /// <returns>v2cfg://...</returns>
-        string Config2V2cfg(string config);
+        string EncodeToV2cfgShareLink(string name, string config);
 
         /// <summary>
-        /// 将config编码为vmess链接
-        /// </summary>
-        /// <param name="config">服务器完整config.json</param>
-        /// <returns>vmess://...</returns>
-        string Config2VmessLink(string config);
-
-        /// <summary>
-        /// 将各种分享链接解码为config.json
+        /// 将各种分享链接解码为{name, config}
         /// </summary>
         /// <param name="shareLink">各种分享链接</param>
-        /// <returns>服务器config.json</returns>
-        string ShareLink2ConfigString(string shareLink);
+        /// <returns>{name, config}</returns>
+        VgcApis.Models.Datas.DecodeResult DecodeShareLink(string shareLink);
 
         // links = "vmess://... ss://...  (...)"
         /// <summary>

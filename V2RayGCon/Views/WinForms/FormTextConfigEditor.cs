@@ -15,7 +15,7 @@ namespace V2RayGCon.Views.WinForms
         FormTextConfigEditor(bool isReadonly)
         {
             this.isReadonly = isReadonly;
-            setting = Services.Settings.Instance;
+            setting = Settings.Instance;
 
             InitializeComponent();
             this.formTitle = this.Text;
@@ -99,7 +99,7 @@ namespace V2RayGCon.Views.WinForms
             ctrl.Plug(editor).Plug(mu);
 
             // plug之后才可以init
-            editor.Init(pnlEditor, isReadonly);
+            editor.Init(pnlEditor, isReadonly, toolStripCboxNavigtion);
 
             mu.Init(
                 serverToolStripMenuItem,

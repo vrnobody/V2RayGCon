@@ -56,7 +56,7 @@ namespace Luna.Controllers.FormMainCtrl
         {
             luaServer.OnRequireFlyPanelUpdate -= OnLuaCoreCtrlListChangeHandler;
             var list = flyLuaUiPanel.Controls;
-            foreach (Views.UserControls.LuaUI c in list)
+            foreach (LuaUI c in list)
             {
                 c.Cleanup();
             }
@@ -136,7 +136,7 @@ namespace Luna.Controllers.FormMainCtrl
             Point p = panel.PointToClient(new Point(args.X, args.Y));
             if (
                 !(args.Data.GetData(typeof(LuaUI)) is LuaUI curItem)
-                || !(panel.GetChildAtPoint(p) is Views.UserControls.LuaUI destItem)
+                || !(panel.GetChildAtPoint(p) is LuaUI destItem)
                 || curItem == destItem
             )
             {

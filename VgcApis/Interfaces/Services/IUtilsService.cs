@@ -8,7 +8,7 @@ namespace VgcApis.Interfaces.Services
         #region misc
         string GetAppVersion();
 
-        string AddLinkPrefix(string linkBody, VgcApis.Models.Datas.Enums.LinkTypes type);
+        string AddLinkPrefix(string linkBody, Models.Datas.Enums.LinkTypes type);
 
         string GetLinkBody(string link);
 

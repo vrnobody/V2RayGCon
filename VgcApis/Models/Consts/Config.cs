@@ -23,6 +23,8 @@ namespace VgcApis.Models.Consts
         public const string JsonArray = @"[]";
         public const string JsonObject = @"{}";
 
+        public const string SectionKeyV2rayGCon = @"v2raygcon";
+
         public const string ConfigDotJson = "config.json";
 
         public const int ConfigSectionDefDepth = 2;
@@ -37,24 +39,5 @@ namespace VgcApis.Models.Consts
             { $"{ConfigSectionDefRootKey}.routing", 2 },
             { $"{ConfigSectionDefRootKey}.routing.settings", 2 },
         };
-
-        public static Dictionary<string, string> GetDefCfgSections() =>
-            new Dictionary<string, string>
-            {
-                { "v2raygcon", JsonObject },
-                { "log", JsonObject },
-                { "inbounds", JsonArray },
-                { "outbounds", JsonArray },
-                { "routing", JsonObject },
-                { "policy", JsonObject },
-                { "api", JsonObject },
-                { "dns", JsonObject },
-                { "stats", JsonObject },
-                { "transport", JsonObject },
-                { "reverse", JsonObject },
-                { "browserForwarder", JsonObject },
-                { "observatory", JsonObject },
-                { "fakedns", JsonArray },
-            };
     }
 }

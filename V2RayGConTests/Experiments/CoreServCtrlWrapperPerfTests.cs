@@ -37,9 +37,9 @@ namespace V2RayGCon.Test.Experiments
         [TestMethod]
         public void GetNamePerfTest()
         {
-            var len = 1_000_000;
+            // var len = 1_000_000;
 
-            len = 10;
+            var len = 10;
 
             var coreServ = CreateCoreServCtrl();
             var sw = new Stopwatch();
@@ -57,9 +57,9 @@ namespace V2RayGCon.Test.Experiments
         [TestMethod]
         public void WrapPerfTest()
         {
-            var len = 1_000_000; // about 1 minute
+            // var len = 1_000_000; // about 1 minute
 
-            len = 10;
+            var len = 10;
 
             var sw = new Stopwatch();
             var coreServs = new List<VgcApis.Interfaces.ICoreServCtrl>();

@@ -205,6 +205,15 @@ namespace NeoLuna.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Server name 的本地化字符串。
+        /// </summary>
+        internal static string NewServerName {
+            get {
+                return ResourceManager.GetString("NewServerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Open log window 的本地化字符串。
         /// </summary>
         internal static string OpenLogWindow {

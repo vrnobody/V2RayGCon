@@ -26,6 +26,8 @@ namespace V2RayGCon.Views.UserControls
 
         public ServerUI()
         {
+            // this.Size = 476, 50
+
             servers = Services.Servers.Instance;
             slinkMgr = Services.ShareLinkMgr.Instance;
             settings = Services.Settings.Instance;
@@ -725,12 +727,6 @@ namespace V2RayGCon.Views.UserControls
             SetServerTitleLabelFontStyle(chkSelected.Checked);
         }
 
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var uid = coreServCtrl.GetCoreStates().GetUid();
-            WinForms.FormJsonConfigEditor.ShowServer(uid);
-        }
-
         private void autoShareLinkToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var url = coreServCtrl?.GetConfiger()?.GetShareLink();
@@ -740,6 +736,7 @@ namespace V2RayGCon.Views.UserControls
         private void v2cfgToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var content = slinkMgr.EncodeConfigToShareLink(
+                coreServCtrl.GetCoreStates().GetName(),
                 GetConfig(),
                 VgcApis.Models.Datas.Enums.LinkTypes.v2cfg
             );
@@ -811,19 +808,10 @@ namespace V2RayGCon.Views.UserControls
             servers.RequireFormMainReload();
         }
 
-        private void debugToolStripMenuItem_Click(object sender, EventArgs e)
+        private void showFinalConfigToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var title = coreServCtrl.GetCoreStates().GetTitle();
-            var finalConfig = coreServCtrl.GetConfiger().GetFinalConfig();
-            string config;
-            if (finalConfig != null)
-            {
-                config = VgcApis.Misc.Utils.FormatConfig(finalConfig);
-            }
-            else
-            {
-                config = coreServCtrl.GetConfiger().GetConfig();
-            }
+            var config = coreServCtrl.GetConfiger().GetFinalConfig();
             WinForms.FormTextConfigEditor.ShowConfig(title, config, true);
         }
 

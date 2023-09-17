@@ -233,7 +233,7 @@ namespace NeoLuna.Models.Apis
             return JsonConvert.SerializeObject(snippets);
         }
 
-        Controllers.LuaCoreCtrl GetLuaCoreCtrlByName(string name)
+        LuaCoreCtrl GetLuaCoreCtrlByName(string name)
         {
             return luaServer.GetAllLuaCoreCtrls().Where(core => core.name == name).FirstOrDefault();
         }
@@ -411,7 +411,7 @@ namespace NeoLuna.Models.Apis
 
         public void LuaVmWait(string vmh, int ms)
         {
-            Controllers.LuaCoreCtrl core = null;
+            LuaCoreCtrl core = null;
             if (luaVms.TryGetValue(vmh, out var vm))
             {
                 core = vm.coreCtrl;

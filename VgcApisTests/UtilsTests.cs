@@ -10,12 +10,72 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static VgcApis.Misc.Utils;
+using static VgcApis.Models.Datas.Enums;
 
 namespace VgcApisTests
 {
     [TestClass]
     public class UtilsTests
     {
+        [DataTestMethod]
+        [DataRow(@"{}", ConfigType.Json)]
+        [DataRow("{\n\n}", ConfigType.Json)]
+        [DataRow(@"{\n\n\n", ConfigType.Unknow)]
+        [DataRow(@"", ConfigType.Unknow)]
+        [DataRow(null, ConfigType.Unknow)]
+        [DataRow(@"  123:", ConfigType.Unknow)]
+        [DataRow(@"  ab12-_中文:", ConfigType.Yaml)]
+        [DataRow(@"  ab12😀-_中文:", ConfigType.Unknow)]
+        public void DetectConfigTypeTest(string config, ConfigType ty)
+        {
+            var r = DetectConfigType(config);
+            Assert.AreEqual(ty, r);
+        }
+
+        [DataTestMethod]
+        [DataRow("{\nlog:{},\n      tag:\"123\"\n}", "log,1;tag: 123,2")]
+        [DataRow("log:123,\n      tag:1-2-3\n}", "log,0;tag: 1-2-3,1")]
+        [DataRow("  abc: 123\na_b-c: |\n  1\n2\n3\n4\n      d: 7\n  a中文: 8", "abc,0;a_b-c,1;a中文,7")]
+        [DataRow("", "")]
+        [DataRow(null, "")]
+        [DataRow(
+            "{\n\"abc1\": 123,\n \"a_b\": \"abc\",\n  \"c\":1,\n        \"d\":1 }",
+            "abc1,1;a_b,2;c,3"
+        )]
+        public void GetConfigKeysTest(string config, string rawExp)
+        {
+            var exp = rawExp
+                .Split(';')
+                .Select(kvs =>
+                {
+                    var kvp = kvs.Split(',');
+                    if (kvp.Length > 1)
+                    {
+                        var num = int.Parse(kvp[1]);
+                        return new KeyValuePair<string, int>(kvp[0], num);
+                    }
+                    return new KeyValuePair<string, int>(string.Empty, -1);
+                })
+                .Where(kv => kv.Value >= 0)
+                .ToDictionary(kv => kv.Key, kv => kv.Value);
+
+            var lines = config?.Split('\n')?.ToList() ?? new List<string>();
+            var r = GetConfigTags(lines);
+
+            foreach (var key in exp.Keys)
+            {
+                var e = exp[key];
+                var t = r[key];
+                Assert.AreEqual(e, t);
+            }
+            foreach (var key in r.Keys)
+            {
+                var e = exp[key];
+                var t = r[key];
+                Assert.AreEqual(e, t);
+            }
+        }
+
         [DataTestMethod]
         [DataRow(@"{outbounds:[{protocol:'vmess'}]}", "vmess")]
         [DataRow(@"{outbounds:[{protocol:'Trojan'}]}", "trojan")]
@@ -180,9 +240,7 @@ namespace VgcApisTests
         [DataRow("a中文测试", -1, false, "")]
         [DataRow("aaaaaaaaa", 5, true, "aaa")]
         [DataRow("", 100, false, "")]
-#pragma warning disable IDE0060 // 删除未使用的参数
         public void AutoEllipsisTest(string org, int len, bool isEllipsised, string expect)
-#pragma warning restore IDE0060 // 删除未使用的参数
         {
             var defFont = VgcApis.Models.Consts.AutoEllipsis.defFont;
             var orgLen = org.Length;
@@ -392,47 +450,6 @@ namespace VgcApisTests
         }
 
         [DataTestMethod]
-        [DataRow(
-            @"{routing:{settings:{rules:[{},{}]},balancers:[{},{}],rules:[{},{}]}}",
-            @"routing:{},routing.settings:{},routing.settings.rules:[],routing.settings.rules.0:{},routing.settings.rules.1:{},routing.balancers:[],routing.balancers.0:{},routing.balancers.1:{},routing.rules:[],routing.rules.0:{},routing.rules.1:{}"
-        )]
-        [DataRow(@"{1:[[],[]],'':{},b:123,c:{}}", @"c:{}")]
-        [DataRow(@"{a:[{},{}],b:{}}", @"a:[],b:{},a.0:{},a.1:{}")]
-        [DataRow(@"{a:[[[],[],[]],[[]]],b:{}}", @"a:[],b:{},a.0:[],a.1:[]")]
-        [DataRow(
-            @"{a:[[[],[],[]],[[]]],b:'abc',c:{a:[],b:{d:1}}}",
-            @"a:[],a.0:[],a.1:[],c:{},c.a:[],c.b:{}"
-        )]
-        public void GetterJsonDataStructWorkerTest(string jsonString, string expect)
-        {
-            var expDict = expect
-                .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(
-                    part => part.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries)
-                )
-                .ToDictionary(v => v[0], v => v[1]);
-
-            var jobject = JObject.Parse(jsonString);
-            var sections = GetterJsonSections(jobject);
-
-            foreach (var kv in expDict)
-            {
-                if (kv.Value != sections[kv.Key])
-                {
-                    Assert.Fail();
-                }
-            }
-
-            foreach (var kv in sections)
-            {
-                if (kv.Value != expDict[kv.Key])
-                {
-                    Assert.Fail();
-                }
-            }
-        }
-
-        [DataTestMethod]
         [DataRow("EvABk文,tv字vvc", "字文", false)]
         [DataRow("EvABk文,tv字vvc", "ab字", true)]
         [DataRow("ab vvvc", "bc", true)]
@@ -456,13 +473,13 @@ namespace VgcApisTests
         }
 
         [DataTestMethod]
-        [DataRow(@"http://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.http)]
-        [DataRow(@"vmess://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.vmess)]
-        [DataRow(@"v2cfg://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.v2cfg)]
-        [DataRow(@"linkTypeNotExist://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.unknow)]
-        [DataRow(@"abc.com", VgcApis.Models.Datas.Enums.LinkTypes.unknow)]
-        [DataRow(@"ss://abc.com", VgcApis.Models.Datas.Enums.LinkTypes.ss)]
-        public void DetectLinkTypeTest(string link, VgcApis.Models.Datas.Enums.LinkTypes expect)
+        [DataRow(@"http://abc.com", LinkTypes.http)]
+        [DataRow(@"vmess://abc.com", LinkTypes.vmess)]
+        [DataRow(@"v2cfg://abc.com", LinkTypes.v2cfg)]
+        [DataRow(@"linkTypeNotExist://abc.com", LinkTypes.unknow)]
+        [DataRow(@"abc.com", LinkTypes.unknow)]
+        [DataRow(@"ss://abc.com", LinkTypes.ss)]
+        public void DetectLinkTypeTest(string link, LinkTypes expect)
         {
             var linkType = DetectLinkType(link);
             Assert.AreEqual(expect, linkType);
@@ -729,7 +746,7 @@ namespace VgcApisTests
         public void CloneTest(string orgStr)
         {
             var org = orgStr?.Split(',').ToList();
-            var clone = Clone<List<string>>(org);
+            var clone = Clone(org);
             var sClone = SerializeObject(clone);
             var sOrg = SerializeObject(org);
             Assert.AreEqual(sOrg, sClone);

@@ -23,10 +23,7 @@ namespace V2RayGCon.Misc
     {
         #region strings
 
-        public static VgcApis.Models.Datas.StatsSample ParseStatApiResult(
-            bool isXray,
-            string result
-        )
+        public static StatsSample ParseStatApiResult(bool isXray, string result)
         {
             return isXray ? ParseXrayStatApiResult(result) : ParseV2RayStatApiResult(result);
         }
@@ -98,7 +95,7 @@ namespace V2RayGCon.Misc
                     down += value;
                 }
             }
-            return new VgcApis.Models.Datas.StatsSample(up, down);
+            return new StatsSample(up, down);
         }
 
         static string appNameAndVersion = null;
@@ -152,133 +149,6 @@ namespace V2RayGCon.Misc
                 catch { }
             }
             return result;
-        }
-
-        public static string GetConfigRoot(bool isInbound, bool isV4)
-        {
-            return (isInbound ? "inbound" : "outbound") + (isV4 ? "s.0" : "");
-        }
-
-        public static JObject ParseImportRecursively(
-            Func<List<string>, List<string>> fetcher,
-            JObject config,
-            int depth
-        )
-        {
-            var empty = JObject.Parse(@"{}");
-
-            if (depth <= 0)
-            {
-                return empty;
-            }
-
-            // var config = JObject.Parse(configString);
-
-            var urls = Misc.Utils.ExtractImportUrlsFrom(config);
-            var contents = fetcher(urls);
-
-            if (contents.Count <= 0)
-            {
-                return config;
-            }
-
-            var configList = Misc.Utils.ExecuteInParallel<string, JObject>(
-                contents,
-                (content) =>
-                {
-                    return ParseImportRecursively(fetcher, JObject.Parse(content), depth - 1);
-                }
-            );
-
-            var result = empty;
-            foreach (var c in configList)
-            {
-                Misc.Utils.CombineConfigWithRoutingInFront(ref result, c);
-            }
-            Misc.Utils.CombineConfigWithRoutingInFront(ref result, config);
-
-            return result;
-        }
-
-        public static List<string> ExtractImportUrlsFrom(JObject config)
-        {
-            List<string> urls = null;
-            var empty = new List<string>();
-            var import = Misc.Utils.GetKey(config, "v2raygcon.import");
-            if (import != null && import is JObject)
-            {
-                urls = (import as JObject).Properties().Select(p => p.Name).ToList();
-            }
-            return urls ?? new List<string>();
-        }
-
-        public static string GenCmdArgFromConfig(string config)
-        {
-            var stdIn = VgcApis.Models.Consts.Core.StdIn;
-            var confArg = VgcApis.Models.Consts.Core.ConfigArg;
-            var jsonFormat = @"-format=json";
-
-            // "-config=stdin: -format=json",
-            var r = $"{jsonFormat} -{confArg}={stdIn}";
-            try
-            {
-                var jobj = JObject.Parse(config);
-                var confs = GetKey(jobj, "v2raygcon.configs")
-                    ?.ToObject<Dictionary<string, string>>()
-                    ?.Keys;
-                if (confs == null)
-                {
-                    return r;
-                }
-
-                var hasStdIn = false;
-                var args = string.Empty;
-                foreach (var conf in confs)
-                {
-                    if (stdIn == conf)
-                    {
-                        hasStdIn = true;
-                    }
-                    args = $"{args} -{confArg}={conf}";
-                }
-
-                return hasStdIn
-                    ? $"{jsonFormat} {args}"
-                    : $"{jsonFormat} -{confArg}={stdIn} {args}";
-            }
-            catch { }
-            return r;
-        }
-
-        public static Dictionary<string, string> GetEnvVarsFromConfig(string config)
-        {
-            try
-            {
-                var json = JObject.Parse(config);
-                return GetEnvVarsFromConfig(json);
-            }
-            catch { }
-            return new Dictionary<string, string>();
-        }
-
-        public static Dictionary<string, string> GetEnvVarsFromConfig(JObject config)
-        {
-            var empty = new Dictionary<string, string>();
-
-            var env = GetKey(config, "v2raygcon.env");
-            if (env == null)
-            {
-                return empty;
-            }
-
-            try
-            {
-                return env.ToObject<Dictionary<string, string>>();
-            }
-            catch (JsonSerializationException)
-            {
-                return empty;
-            }
         }
 
         public static string GetAliasFromConfig(JObject config)
@@ -733,33 +603,6 @@ namespace V2RayGCon.Misc
             ConcatJson(mixin, backup);
         }
 
-        public static JObject ImportItemList2JObject(
-            List<Models.Datas.ImportItem> items,
-            bool isIncludeSpeedTest,
-            bool isIncludeActivate,
-            bool isIncludePackage
-        )
-        {
-            var result = CreateJObject(@"v2raygcon.import");
-            foreach (var item in items)
-            {
-                var url = item.url;
-                if (string.IsNullOrEmpty(url))
-                {
-                    continue;
-                }
-                if (
-                    (isIncludeSpeedTest && item.isUseOnSpeedTest)
-                    || (isIncludeActivate && item.isUseOnActivate)
-                    || (isIncludePackage && item.isUseOnPackage)
-                )
-                {
-                    result["v2raygcon"]["import"][url] = item.alias ?? string.Empty;
-                }
-            }
-            return result;
-        }
-
         public static void MergeJson(JObject body, JObject mixin)
         {
             body.Merge(
@@ -805,10 +648,7 @@ namespace V2RayGCon.Misc
         /// <param name="text"></param>
         /// <param name="linkType"></param>
         /// <returns></returns>
-        public static List<string> ExtractLinks(
-            string text,
-            VgcApis.Models.Datas.Enums.LinkTypes linkType
-        )
+        public static List<string> ExtractLinks(string text, Enums.LinkTypes linkType)
         {
             var links = new List<string>();
             try
@@ -940,7 +780,7 @@ namespace V2RayGCon.Misc
             // https://github.com/XTLS/Xray-core/releases",
             var apiUrl = sourceUrl.Replace(@"github.com", @"api.github.com/repos");
 
-            string text = Misc.Utils.Fetch(apiUrl, proxyPort, -1);
+            string text = Fetch(apiUrl, proxyPort, -1);
             if (string.IsNullOrEmpty(text))
             {
                 return versions;
@@ -1003,7 +843,7 @@ namespace V2RayGCon.Misc
                 return new string[] { string.Join("\n", links), mark };
             }
 
-            return Misc.Utils.ExecuteInParallel(subscriptions, worker);
+            return ExecuteInParallel(subscriptions, worker);
         }
 
         public static string GetBaseUrl(string url)
@@ -1321,7 +1161,7 @@ namespace V2RayGCon.Misc
 
         internal static bool ClumsyWriter(
             Models.Datas.UserSettings userSettings,
-            List<VgcApis.Models.Datas.CoreInfo> coreInfos,
+            List<CoreInfo> coreInfos,
             Dictionary<string, string> pluginsSetting,
             string mainFilename,
             string bakFilename
@@ -1369,7 +1209,7 @@ namespace V2RayGCon.Misc
 
         public static string GetSysAppDataFolder()
         {
-            var appData = System.Environment.GetFolderPath(
+            var appData = Environment.GetFolderPath(
                 Environment.SpecialFolder.CommonApplicationData
             );
             var appName = VgcApis.Misc.Utils.GetAppName();
@@ -1461,37 +1301,37 @@ namespace V2RayGCon.Misc
             return -1;
         }
 
-        static string GenLinkPrefix(VgcApis.Models.Datas.Enums.LinkTypes linkType) => $"{linkType}";
+        static string GenLinkPrefix(Enums.LinkTypes linkType) => $"{linkType}";
 
-        public static string GenPattern(VgcApis.Models.Datas.Enums.LinkTypes linkType)
+        public static string GenPattern(Enums.LinkTypes linkType)
         {
             string pattern;
             switch (linkType)
             {
-                case VgcApis.Models.Datas.Enums.LinkTypes.ss:
+                case Enums.LinkTypes.ss:
                     pattern =
                         GenLinkPrefix(linkType)
                         + "://"
                         + VgcApis.Models.Consts.Patterns.SsShareLinkContent;
                     break;
-                case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
-                case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
+                case Enums.LinkTypes.vmess:
+                case Enums.LinkTypes.v2cfg:
                     pattern =
                         GenLinkPrefix(linkType)
                         + "://"
                         + VgcApis.Models.Consts.Patterns.Base64NonStandard;
                     break;
-                case VgcApis.Models.Datas.Enums.LinkTypes.http:
-                case VgcApis.Models.Datas.Enums.LinkTypes.https:
+                case Enums.LinkTypes.http:
+                case Enums.LinkTypes.https:
                     pattern = VgcApis.Models.Consts.Patterns.HttpUrl;
                     break;
-                case VgcApis.Models.Datas.Enums.LinkTypes.trojan:
+                case Enums.LinkTypes.trojan:
                     pattern =
                         GenLinkPrefix(linkType)
                         + "://"
                         + VgcApis.Models.Consts.Patterns.UriContentNonStandard;
                     break;
-                case VgcApis.Models.Datas.Enums.LinkTypes.vless:
+                case Enums.LinkTypes.vless:
                     // pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.UriContent;
                     pattern =
                         GenLinkPrefix(linkType)
@@ -1505,10 +1345,7 @@ namespace V2RayGCon.Misc
             return VgcApis.Models.Consts.Patterns.NonAlphabets + pattern;
         }
 
-        public static string AddLinkPrefix(
-            string b64Content,
-            VgcApis.Models.Datas.Enums.LinkTypes linkType
-        )
+        public static string AddLinkPrefix(string b64Content, Enums.LinkTypes linkType)
         {
             return GenLinkPrefix(linkType) + "://" + b64Content;
         }

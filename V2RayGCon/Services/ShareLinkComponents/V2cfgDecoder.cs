@@ -15,24 +15,29 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region public methods
-        public string Decode(string shareLink)
+        public VgcApis.Models.Datas.DecodeResult Decode(string shareLink)
         {
             try
             {
                 var linkBody = Misc.Utils.GetLinkBody(shareLink);
-                return VgcApis.Misc.Utils.Base64DecodeToString(linkBody);
+                if (VgcApis.Libs.Infr.ZipExtensions.IsCompressedBase64(linkBody))
+                {
+                    return DecodeV2cfg(linkBody);
+                }
+                return DecodeV2cfgVer1(linkBody);
             }
             catch { }
             return null;
         }
 
-        public string Encode(string config)
+        public string Encode(string name, string config)
         {
             if (string.IsNullOrEmpty(config))
             {
                 return null;
             }
-            var body = VgcApis.Misc.Utils.Base64EncodeString(config);
+            var v2cfg = new VgcApis.Models.Datas.V2Cfg(name, config);
+            var body = v2cfg.ToCompressedString();
             return Misc.Utils.AddLinkPrefix(body, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
         }
 
@@ -41,6 +46,25 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region private methods
+        VgcApis.Models.Datas.DecodeResult DecodeV2cfg(string linkBody)
+        {
+            var v2cfg = new VgcApis.Models.Datas.V2Cfg(linkBody);
+            if (v2cfg.IsValid())
+            {
+                return new VgcApis.Models.Datas.DecodeResult(v2cfg.name, v2cfg.config);
+            }
+            return null;
+        }
+
+        VgcApis.Models.Datas.DecodeResult DecodeV2cfgVer1(string linkBody)
+        {
+            var config = VgcApis.Misc.Utils.Base64DecodeToString(linkBody);
+            var json = JObject.Parse(config);
+            var name = Misc.Utils.GetAliasFromConfig(json);
+            json.Remove(VgcApis.Models.Consts.Config.SectionKeyV2rayGCon);
+            var cfg = VgcApis.Misc.Utils.FormatConfig(json);
+            return new VgcApis.Models.Datas.DecodeResult(name, cfg);
+        }
 
         #endregion
 

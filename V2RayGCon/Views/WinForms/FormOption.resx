@@ -1782,69 +1782,6 @@
   <data name="&gt;&gt;btnDefImportBrowseVemssDecodeTemplate.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="chkDefImportInjectGlobalImport.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkDefImportInjectGlobalImport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkDefImportInjectGlobalImport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>185, 44</value>
-  </data>
-  <data name="chkDefImportInjectGlobalImport.Size" type="System.Drawing.Size, System.Drawing">
-    <value>102, 16</value>
-  </data>
-  <data name="chkDefImportInjectGlobalImport.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="chkDefImportInjectGlobalImport.Text" xml:space="preserve">
-    <value>Global import</value>
-  </data>
-  <data name="chkDefImportInjectGlobalImport.ToolTip" xml:space="preserve">
-    <value>Inject global imports.</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportInjectGlobalImport.Name" xml:space="preserve">
-    <value>chkDefImportInjectGlobalImport</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportInjectGlobalImport.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportInjectGlobalImport.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportInjectGlobalImport.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="chkDefImportBypassCnSite.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkDefImportBypassCnSite.Location" type="System.Drawing.Point, System.Drawing">
-    <value>293, 44</value>
-  </data>
-  <data name="chkDefImportBypassCnSite.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 16</value>
-  </data>
-  <data name="chkDefImportBypassCnSite.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="chkDefImportBypassCnSite.Text" xml:space="preserve">
-    <value>Bypass CN</value>
-  </data>
-  <data name="chkDefImportBypassCnSite.ToolTip" xml:space="preserve">
-    <value>Bypass CN sites.</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportBypassCnSite.Name" xml:space="preserve">
-    <value>chkDefImportBypassCnSite</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportBypassCnSite.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportBypassCnSite.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportBypassCnSite.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="chkDefImportTrojanShareLink.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1879,7 +1816,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;chkDefImportTrojanShareLink.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>3</value>
   </data>
   <data name="chkDefImportSsShareLink.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1912,7 +1849,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;chkDefImportSsShareLink.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>4</value>
   </data>
   <data name="tboxDefImportAddr.Location" type="System.Drawing.Point, System.Drawing">
     <value>239, 18</value>
@@ -1942,7 +1879,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;tboxDefImportAddr.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>5</value>
   </data>
   <data name="cboxDefImportMode.Items" xml:space="preserve">
     <value>Config</value>
@@ -1981,7 +1918,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;cboxDefImportMode.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>6</value>
   </data>
   <data name="label9.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2017,7 +1954,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>7</value>
   </data>
   <data name="label10.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2050,7 +1987,7 @@
     <value>groupBox4</value>
   </data>
   <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>8</value>
   </data>
   <data name="groupBox4.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 91</value>
@@ -2645,192 +2582,6 @@
   <data name="&gt;&gt;tabPageCustomCoresSetting.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="btnImportAdd.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="btnImportAdd.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnImportAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>394, 6</value>
-  </data>
-  <data name="btnImportAdd.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnImportAdd.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="btnImportAdd.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="btnImportAdd.Text" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="btnImportAdd.ToolTip" xml:space="preserve">
-    <value>Add import URL.</value>
-  </data>
-  <data name="&gt;&gt;btnImportAdd.Name" xml:space="preserve">
-    <value>btnImportAdd</value>
-  </data>
-  <data name="&gt;&gt;btnImportAdd.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnImportAdd.Parent" xml:space="preserve">
-    <value>tabPageImport</value>
-  </data>
-  <data name="&gt;&gt;btnImportAdd.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="flyImportPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="flyImportPanel.AutoScroll" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="flyImportPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 6</value>
-  </data>
-  <data name="flyImportPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="flyImportPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>381, 381</value>
-  </data>
-  <data name="flyImportPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;flyImportPanel.Name" xml:space="preserve">
-    <value>flyImportPanel</value>
-  </data>
-  <data name="&gt;&gt;flyImportPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;flyImportPanel.Parent" xml:space="preserve">
-    <value>tabPageImport</value>
-  </data>
-  <data name="&gt;&gt;flyImportPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tabPageImport.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 26</value>
-  </data>
-  <data name="tabPageImport.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="tabPageImport.Size" type="System.Drawing.Size, System.Drawing">
-    <value>479, 393</value>
-  </data>
-  <data name="tabPageImport.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tabPageImport.Text" xml:space="preserve">
-    <value>Imports</value>
-  </data>
-  <data name="&gt;&gt;tabPageImport.Name" xml:space="preserve">
-    <value>tabPageImport</value>
-  </data>
-  <data name="&gt;&gt;tabPageImport.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabPageImport.Parent" xml:space="preserve">
-    <value>tabControl1</value>
-  </data>
-  <data name="&gt;&gt;tabPageImport.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="btnMultiConfAdd.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="btnMultiConfAdd.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnMultiConfAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>394, 6</value>
-  </data>
-  <data name="btnMultiConfAdd.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="btnMultiConfAdd.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="btnMultiConfAdd.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="btnMultiConfAdd.Text" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="btnMultiConfAdd.ToolTip" xml:space="preserve">
-    <value>Add config file.</value>
-  </data>
-  <data name="&gt;&gt;btnMultiConfAdd.Name" xml:space="preserve">
-    <value>btnMultiConfAdd</value>
-  </data>
-  <data name="&gt;&gt;btnMultiConfAdd.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnMultiConfAdd.Parent" xml:space="preserve">
-    <value>tabPageMultiConf</value>
-  </data>
-  <data name="&gt;&gt;btnMultiConfAdd.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="flyMultiConfPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="flyMultiConfPanel.AutoScroll" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="flyMultiConfPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 6</value>
-  </data>
-  <data name="flyMultiConfPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="flyMultiConfPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>381, 381</value>
-  </data>
-  <data name="flyMultiConfPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;flyMultiConfPanel.Name" xml:space="preserve">
-    <value>flyMultiConfPanel</value>
-  </data>
-  <data name="&gt;&gt;flyMultiConfPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;flyMultiConfPanel.Parent" xml:space="preserve">
-    <value>tabPageMultiConf</value>
-  </data>
-  <data name="&gt;&gt;flyMultiConfPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tabPageMultiConf.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 26</value>
-  </data>
-  <data name="tabPageMultiConf.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="tabPageMultiConf.Size" type="System.Drawing.Size, System.Drawing">
-    <value>479, 393</value>
-  </data>
-  <data name="tabPageMultiConf.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="tabPageMultiConf.Text" xml:space="preserve">
-    <value>MulConf</value>
-  </data>
-  <data name="&gt;&gt;tabPageMultiConf.Name" xml:space="preserve">
-    <value>tabPageMultiConf</value>
-  </data>
-  <data name="&gt;&gt;tabPageMultiConf.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabPageMultiConf.Parent" xml:space="preserve">
-    <value>tabControl1</value>
-  </data>
-  <data name="&gt;&gt;tabPageMultiConf.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
   <data name="chkIsLoad3rdPartyPlugins.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
@@ -2982,7 +2733,7 @@
     <value>tabControl1</value>
   </data>
   <data name="&gt;&gt;tabPagePlugins.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>4</value>
   </data>
   <data name="tabControl1.ItemSize" type="System.Drawing.Size, System.Drawing">
     <value>84, 22</value>

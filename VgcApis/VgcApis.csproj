@@ -100,6 +100,7 @@
     <Compile Include="Models\Consts\Webs.cs" />
     <Compile Include="Models\Datas\CoreInfo.cs" />
     <Compile Include="Models\Datas\CoreServSettings.cs" />
+    <Compile Include="Models\Datas\DecodeResult.cs" />
     <Compile Include="Models\Datas\Enums.cs" />
     <Compile Include="Interfaces\CoreCtrlComponents\IConfiger.cs" />
     <Compile Include="Interfaces\CoreCtrlComponents\ICoreCtrl.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Models\Datas\StatsSample.cs" />
     <Compile Include="Interfaces\Services\IUtilsService.cs" />
     <Compile Include="Interfaces\Services\IWebService.cs" />
+    <Compile Include="Models\Datas\V2Cfg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -148,6 +150,12 @@
     <Compile Include="UserControls\RoundLabel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="WinForms\FormInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\FormInput.Designer.cs">
+      <DependentUpon>FormInput.cs</DependentUpon>
+    </Compile>
     <Compile Include="WinForms\FormSearch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +174,12 @@
       <LastGenOutput>I18N.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Langs\I18N.zh-CN.resx" />
+    <EmbeddedResource Include="WinForms\FormInput.resx">
+      <DependentUpon>FormInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\FormInput.zh-CN.resx">
+      <DependentUpon>FormInput.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinForms\FormSearch.resx">
       <DependentUpon>FormSearch.cs</DependentUpon>
     </EmbeddedResource>

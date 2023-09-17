@@ -8,7 +8,7 @@ namespace ProxySetter.Services
 {
     class PacServer
     {
-        Services.PsSettings setting;
+        PsSettings setting;
         Libs.Nets.PacGenerator pacGenerator;
 
         public event EventHandler OnPACServerStateChanged;

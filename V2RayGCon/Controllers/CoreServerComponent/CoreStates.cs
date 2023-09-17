@@ -37,32 +37,34 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region public methods
-
         public void SetName(string name)
         {
-            if (name == coreInfo.name)
+            name = VgcApis.Misc.Utils.FilterControlChars(name);
+            var isEmpty = string.IsNullOrEmpty(name);
+            if (name == coreInfo.name && !isEmpty)
             {
                 return;
             }
 
-            var root = "v2raygcon";
-            var node = JObject.Parse("{v2raygcon:{alias:\"\"}}");
-            node[root]["alias"] = name;
+            coreInfo.name = name;
 
-            if (MergeNodeIntoConfig(node))
+            if (isEmpty)
             {
-                coreInfo.name = name;
-                coreInfo.ClearCachedString();
-                GetParent().InvokeEventOnPropertyChange();
+                name = I18N.Empty;
             }
-        }
 
-        public void SetDescription(string description)
-        {
-            var root = "v2raygcon";
-            var node = JObject.Parse("{v2raygcon:{description:\"\"}}");
-            node[root]["description"] = description;
-            MergeNodeIntoConfig(node);
+            coreInfo.longName = VgcApis.Misc.Utils.AutoEllipsis(
+                name,
+                VgcApis.Models.Consts.AutoEllipsis.ServerLongNameMaxLength
+            );
+
+            coreInfo.shortName = VgcApis.Misc.Utils.AutoEllipsis(
+                name,
+                VgcApis.Models.Consts.AutoEllipsis.ServerShortNameMaxLength
+            );
+
+            coreInfo.title = string.Empty;
+            GetParent().InvokeEventOnPropertyChange();
         }
 
         public void AddStatSample(VgcApis.Models.Datas.StatsSample sample)
@@ -114,12 +116,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 Interlocked.Exchange(ref coreInfo.totalDownlinkInBytes, sizeInBytes);
                 GetParent().InvokeEventOnPropertyChange();
             }
-        }
-
-        string GetInProtocolNameByNumber(int typeNumber)
-        {
-            var table = Models.Datas.Table.customInbTypeNames;
-            return table[Misc.Utils.Clamp(typeNumber, 0, table.Length)];
         }
 
         public void SetIndexQuiet(double index) => SetIndexWorker(index, true);
@@ -355,29 +351,13 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return ci.title;
         }
 
-        public VgcApis.Models.Datas.CoreInfo GetAllInfo() => coreInfo;
-
         public string GetLongName()
         {
-            if (string.IsNullOrEmpty(coreInfo.longName) && !string.IsNullOrEmpty(coreInfo.name))
-            {
-                coreInfo.longName = VgcApis.Misc.Utils.AutoEllipsis(
-                    coreInfo.name,
-                    VgcApis.Models.Consts.AutoEllipsis.ServerLongNameMaxLength
-                );
-            }
             return coreInfo.longName;
         }
 
         public string GetShortName()
         {
-            if (string.IsNullOrEmpty(coreInfo.shortName) && !string.IsNullOrEmpty(coreInfo.name))
-            {
-                coreInfo.shortName = VgcApis.Misc.Utils.AutoEllipsis(
-                    coreInfo.name,
-                    VgcApis.Models.Consts.AutoEllipsis.ServerShortNameMaxLength
-                );
-            }
             return coreInfo.shortName;
         }
 
@@ -430,22 +410,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region private methods
-        bool MergeNodeIntoConfig(JObject node)
-        {
-            try
-            {
-                var orgCfg = coreInfo.GetConfig();
-                var json = JObject.Parse(orgCfg);
-                json.Merge(node);
-
-                // update configCache
-                servers.ReplaceServerConfig(orgCfg, json.ToString());
-
-                return true;
-            }
-            catch { }
-            return false;
-        }
 
         void UpdateStatusWithSpeedTestResult()
         {
@@ -477,9 +441,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 coreCtrl.RestartCoreThen();
             }
         }
-
-        bool SetPropertyOnDemand(ref string property, string value) =>
-            SetPropertyOnDemandWorker(ref property, value);
 
         bool SetPropertyOnDemand<T>(ref T property, T value)
             where T : struct => SetPropertyOnDemandWorker(ref property, value);

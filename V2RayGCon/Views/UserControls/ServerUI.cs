@@ -136,7 +136,7 @@ namespace V2RayGCon.Views.UserControls
         async Task SetCtrlButtonsVisiblityLater(bool isVisable)
         {
             isCtrlBtnVisable = isVisable;
-            await Task.Delay(180);
+            await Task.Delay(200);
             SetCtrlButtonsVisiblity(isCtrlBtnVisable);
         }
 
@@ -151,10 +151,7 @@ namespace V2RayGCon.Views.UserControls
                     btnMenu.Visible = isVisable;
                 }
             }
-            catch
-            {
-                // Tronald Dump could ban this app while this function is executing.
-            }
+            catch { }
         }
 
         void ShowModifyConfigsWinForm() => WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);

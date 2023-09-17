@@ -205,7 +205,6 @@
             resources.ApplyResources(this.flySubsUrlContainer, "flySubsUrlContainer");
             this.flySubsUrlContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flySubsUrlContainer.Name = "flySubsUrlContainer";
-            this.flySubsUrlContainer.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flySubsUrlContainer_Scroll);
             // 
             // tabPageSetting
             // 
@@ -795,7 +794,6 @@
             resources.ApplyResources(this.flyPluginsItemsContainer, "flyPluginsItemsContainer");
             this.flyPluginsItemsContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.flyPluginsItemsContainer.Name = "flyPluginsItemsContainer";
-            this.flyPluginsItemsContainer.Scroll += new System.Windows.Forms.ScrollEventHandler(this.flyPluginsItemsContainer_Scroll);
             // 
             // btnOptionSave
             // 

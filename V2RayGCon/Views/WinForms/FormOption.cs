@@ -152,16 +152,6 @@ namespace V2RayGCon.Views.WinForms
             MessageBox.Show(I18N.Done);
         }
 
-        private void flySubsUrlContainer_Scroll(object sender, ScrollEventArgs e)
-        {
-            flySubsUrlContainer.Refresh();
-        }
-
-        private void flyPluginsItemsContainer_Scroll(object sender, ScrollEventArgs e)
-        {
-            flyPluginsItemsContainer.Refresh();
-        }
-
         private void btnDefImportBrowseVemssDecodeTemplate_Click(object sender, System.EventArgs e)
         {
             var path = VgcApis.Misc.UI.ShowSelectFileDialog(VgcApis.Models.Consts.Files.JsonExt);

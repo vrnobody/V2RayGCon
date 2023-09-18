@@ -16,7 +16,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         readonly FlowLayoutPanel flyPanel;
         readonly Services.Servers servers;
         readonly Services.Settings setting;
-        readonly ToolStripComboBox cboxMarkFilter;
+        readonly ToolStripComboBox cboxKeyword;
         readonly ToolStripStatusLabel tslbTotal,
             tslbPrePage,
             tslbNextPage;
@@ -34,8 +34,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
         public FlyServer(
             Form formMain,
             FlowLayoutPanel panel,
-            ToolStripLabel lbMarkSearch,
-            ToolStripComboBox cboxMarkeFilter,
+            ToolStripLabel lbClearKeyword,
+            ToolStripComboBox cboxKeyword,
             ToolStripStatusLabel tslbTotal,
             ToolStripDropDownButton tsdbtnPager,
             ToolStripStatusLabel tslbPrePage,
@@ -48,7 +48,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             this.formMain = formMain;
             this.flyPanel = panel;
-            this.cboxMarkFilter = cboxMarkeFilter;
+            this.cboxKeyword = cboxKeyword;
             this.tsdbtnPager = tsdbtnPager;
             this.tslbTotal = tslbTotal;
             this.tslbPrePage = tslbPrePage;
@@ -74,7 +74,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 Name = "FormMain.UpdateStatusBarWorker()", // disable debug logging
             };
 
-            InitFormControls(lbMarkSearch, miResizeFormMain);
+            InitFormControls(lbClearKeyword, miResizeFormMain);
             BindDragDropEvent();
             RefreshFlyPanelLater();
             WatchServers();
@@ -408,7 +408,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var pageSize = setting.serverPanelPageSize;
 
             List<ToolStripMenuItem> menu;
-            if (flist.Count < 5000)
+            if (flist.Count < 1000)
             {
                 var items = CreateBasicMenuItems(flist, cpn, 0, totalPageNumber, pageSize);
                 menu = AutoGroupMenuItems(flist, items, groupSize);
@@ -511,9 +511,11 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 void onClick(object s, EventArgs a)
                 {
                     curPageNumber = pn;
+                    ClearCboxKeywordIndex();
                     isFocusOnFormMain = true;
                     RefreshFlyPanelLater();
                 }
+
                 var item = new ToolStripMenuItem(title, null, onClick);
                 item.Disposed += (s, a) => item.Click -= onClick;
                 item.Checked = pn == currentPageNumber;
@@ -609,7 +611,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         int matchCountCache = 0;
 
         private void InitFormControls(
-            ToolStripLabel lbMarkSearch,
+            ToolStripLabel lbClearKeyword,
             ToolStripMenuItem miResizeFormMain
         )
         {
@@ -619,6 +621,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             tslbPrePage.Click += (s, a) =>
             {
+                ClearCboxKeywordIndex();
                 curPageNumber--;
                 isFocusOnFormMain = true;
                 lazyFlyPanelUpdater?.Postpone();
@@ -626,18 +629,28 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             tslbNextPage.Click += (s, a) =>
             {
+                ClearCboxKeywordIndex();
                 curPageNumber++;
                 isFocusOnFormMain = true;
                 lazyFlyPanelUpdater?.Postpone();
             };
 
-            lbMarkSearch.Click += (s, a) =>
+            lbClearKeyword.Click += (s, a) =>
             {
-                cboxMarkFilter.Text = string.Empty;
+                cboxKeyword.Text = string.Empty;
                 PerformSearch();
             };
 
             miResizeFormMain.Click += (s, a) => ResizeFormMain();
+        }
+
+        void ClearCboxKeywordIndex()
+        {
+            if (searchKeywords?.StartsWith("#") == true)
+            {
+                cboxKeyword.Text = "";
+                searchKeywords = "";
+            }
         }
 
         private void ResizeFormMain()
@@ -679,20 +692,20 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private void InitComboBoxMarkFilter()
         {
-            UpdateMarkFilterItemList(cboxMarkFilter);
+            UpdateMarkFilterItemList(cboxKeyword);
 
-            cboxMarkFilter.DropDown += (s, e) =>
+            cboxKeyword.DropDown += (s, e) =>
             {
-                UpdateMarkFilterItemList(cboxMarkFilter);
-                Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMarkFilter);
+                UpdateMarkFilterItemList(cboxKeyword);
+                Misc.UI.ResetComboBoxDropdownMenuWidth(cboxKeyword);
             };
 
-            cboxMarkFilter.SelectedIndexChanged += (s, e) =>
+            cboxKeyword.SelectedIndexChanged += (s, e) =>
             {
                 PerformSearch();
             };
 
-            cboxMarkFilter.KeyDown += (s, e) =>
+            cboxKeyword.KeyDown += (s, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
                 {
@@ -705,7 +718,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void PerformSearch()
         {
-            searchKeywords = cboxMarkFilter.Text;
+            searchKeywords = cboxKeyword.Text;
             lazyFlyPanelUpdater?.Throttle();
         }
 

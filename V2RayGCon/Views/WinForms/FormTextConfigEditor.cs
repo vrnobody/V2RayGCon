@@ -148,8 +148,6 @@ namespace V2RayGCon.Views.WinForms
             ctrl.ShowSearchBox();
         }
 
-        #endregion
-
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowEmptyConfig();
@@ -201,5 +199,7 @@ namespace V2RayGCon.Views.WinForms
                 SetTitle(filename);
             }
         }
+
+        #endregion
     }
 }

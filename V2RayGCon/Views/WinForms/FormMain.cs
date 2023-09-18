@@ -261,6 +261,26 @@ namespace V2RayGCon.Views.WinForms
 
         #endregion
 
+        #region bind hotkey
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyCode)
+        {
+            VgcApis.Misc.Utils.RunInBgSlim(
+                () =>
+                    VgcApis.Misc.UI.Invoke(() =>
+                    {
+                        switch (keyCode)
+                        {
+                            case (Keys.Control | Keys.F):
+                                toolStripComboBoxMarkFilter.SelectAll();
+                                toolStripComboBoxMarkFilter.Focus();
+                                break;
+                        }
+                    })
+            );
+            return base.ProcessCmdKey(ref msg, keyCode);
+        }
+        #endregion
+
         #region UI event handler
         private void closeWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {

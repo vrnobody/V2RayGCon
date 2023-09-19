@@ -400,7 +400,7 @@ namespace VgcApis.Misc
 
         public static Models.Datas.Enums.ConfigType DetectConfigType(string config)
         {
-            var unknow = Models.Datas.Enums.ConfigType.Unknow;
+            var unknow = Models.Datas.Enums.ConfigType.Text;
             if (string.IsNullOrEmpty(config) || config.Length < 2)
             {
                 return unknow;

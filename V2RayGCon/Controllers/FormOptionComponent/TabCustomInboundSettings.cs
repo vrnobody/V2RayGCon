@@ -7,17 +7,18 @@ using V2RayGCon.Services;
 
 namespace V2RayGCon.Controllers.OptionComponent
 {
-    public class TabCustomCoreSettings : OptionComponentController
+    public class TabCustomInboundSettings : OptionComponentController
     {
         private readonly Settings settings;
         private readonly FlowLayoutPanel flyPanel;
         private readonly Button btnAdd;
 
-        public TabCustomCoreSettings(FlowLayoutPanel flyPanel, Button btnAdd)
+        public TabCustomInboundSettings(FlowLayoutPanel flyPanel, Button btnAdd)
         {
             this.settings = Settings.Instance;
             this.flyPanel = flyPanel;
             this.btnAdd = btnAdd;
+
             BindButtonAdd();
             BindFlyPanelDragDropEvent();
             Refresh();
@@ -46,6 +47,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         #region private methods
 
+
         void BindFlyPanelDragDropEvent()
         {
             flyPanel.DragEnter += (s, a) =>
@@ -56,7 +58,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             flyPanel.DragDrop += (s, a) =>
             {
                 var data = a.Data;
-                if (data.GetDataPresent(typeof(Views.UserControls.CoreSettingUI)))
+                if (data.GetDataPresent(typeof(Views.UserControls.InboundSettingUI)))
                 {
                     SwapFlyControls(s, a);
                 }
@@ -67,13 +69,13 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             // https://www.codeproject.com/Articles/48411/Using-the-FlowLayoutPanel-and-Reordering-with-Drag
             var panel = sender as FlowLayoutPanel;
-            Point p = panel.PointToClient(new Point(args.X, args.Y));
+            Point pos = panel.PointToClient(new Point(args.X, args.Y));
             if (
                 !(
-                    args.Data.GetData(typeof(Views.UserControls.CoreSettingUI))
-                    is Views.UserControls.CoreSettingUI curItem
+                    args.Data.GetData(typeof(Views.UserControls.InboundSettingUI))
+                    is Views.UserControls.InboundSettingUI curItem
                 )
-                || !(panel.GetChildAtPoint(p) is Views.UserControls.CoreSettingUI destItem)
+                || !(panel.GetChildAtPoint(pos) is Views.UserControls.InboundSettingUI destItem)
                 || curItem == destItem
             )
             {
@@ -85,7 +87,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             var curIdx = (curItem.GetIndex() > destIdx) ? destIdx - 0.1 : destIdx + 0.1;
             destItem.SetIndex(destIdx);
             curItem.SetIndex(curIdx);
-            settings.ResetCustomCoresIndex(); // this will invoke menu update event
+            settings.ResetCustomInboundsIndex(); // this will invoke menu update event
 
             Refresh();
         }
@@ -94,13 +96,13 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             btnAdd.Click += (s, a) =>
             {
-                var form = new Views.WinForms.FormCustomCoreSettings();
+                var form = new Views.WinForms.FormCustomInboundSettings();
                 form.FormClosed += (_, __) =>
                 {
                     if (form.DialogResult == DialogResult.OK)
                     {
-                        var cs = form.coreSettings;
-                        settings.AddOrReplaceCustomCoreSettings(cs);
+                        var inbS = form.inbSettings;
+                        settings.AddOrReplaceCustomInboundSettings(inbS);
                         Refresh();
                     }
                 };
@@ -115,10 +117,10 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         void ReleaseEventHandler()
         {
-            var coreUis = flyPanel.Controls.OfType<Views.UserControls.CoreSettingUI>();
-            foreach (var cui in coreUis)
+            var inbUis = flyPanel.Controls.OfType<Views.UserControls.InboundSettingUI>();
+            foreach (var inb in inbUis)
             {
-                cui.OnRequireReload -= OnRequireReloadHandler;
+                inb.OnRequireReload -= OnRequireReloadHandler;
             }
         }
 
@@ -137,20 +139,20 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             while (ctrls.Count < num)
             {
-                ctrls.Add(new Views.UserControls.CoreSettingUI());
+                ctrls.Add(new Views.UserControls.InboundSettingUI());
             }
         }
 
         void RefreshPanelCore()
         {
             ReleaseEventHandler();
-            var cs = settings.GetCustomCoresSetting();
+            var inbs = settings.GetCustomInboundsSetting();
             flyPanel.SuspendLayout();
-            KeepNthControls(cs.Count);
-            for (var i = 0; i < cs.Count; i++)
+            KeepNthControls(inbs.Count);
+            for (var i = 0; i < inbs.Count; i++)
             {
-                var ui = flyPanel.Controls[i] as Views.UserControls.CoreSettingUI;
-                ui.Reload(cs[i]);
+                var ui = flyPanel.Controls[i] as Views.UserControls.InboundSettingUI;
+                ui.Reload(inbs[i]);
                 ui.OnRequireReload += OnRequireReloadHandler;
             }
             flyPanel.ResumeLayout();

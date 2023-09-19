@@ -6,6 +6,12 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
     public interface IConfiger
     {
         /// <summary>
+        /// 获取当前inbound主要信息
+        /// </summary>
+        /// <returns>inbound信息</returns>
+        Models.Datas.InboundInfo GetInboundInfo();
+
+        /// <summary>
         /// 获取传给v2ray-core的最终配置
         /// </summary>
         /// <returns>最终配置</returns>

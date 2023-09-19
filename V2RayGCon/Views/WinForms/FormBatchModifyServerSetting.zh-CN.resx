@@ -117,26 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="chkInIP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxInPort.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="chkInPort.Text" xml:space="preserve">
     <value>端口</value>
   </data>
-  <data name="chkInPort.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxInIP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="chkMark.Text" xml:space="preserve">
     <value>标记</value>
-  </data>
-  <data name="chkMark.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="chkInMode.Text" xml:space="preserve">
     <value>模式</value>
@@ -163,18 +148,6 @@
   <data name="chkShareOverLAN.ToolTip" xml:space="preserve">
     <value>允许局域网访问代理</value>
   </data>
-  <data name="cboxInMode.Items3" xml:space="preserve">
-    <value>自定义</value>
-  </data>
-  <data name="cboxInMode.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxMark.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnModify.Text" xml:space="preserve">
     <value>修改</value>
   </data>
@@ -184,44 +157,23 @@
   <data name="btnCancel.Text" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="btnCancel.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>选项</value>
   </data>
-  <data name="cboxIsInjectSkipCNSite.ToolTip" xml:space="preserve">
-    <value />
+  <data name="chkUntrack.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 16</value>
   </data>
-  <data name="chkIsInjectSkipCNSite.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 16</value>
+  <data name="chkUntrack.Text" xml:space="preserve">
+    <value>不追踪</value>
   </data>
-  <data name="chkIsInjectSkipCNSite.Text" xml:space="preserve">
-    <value>分流国内</value>
-  </data>
-  <data name="chkIsInjectSkipCNSite.ToolTip" xml:space="preserve">
-    <value>（新手专用）不代理国内网址。高级用户请使用v2ray-core的routing</value>
-  </data>
-  <data name="cboxImport.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxCustomCoreName.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxAutorun.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxRemark.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="chkImport.ToolTip" xml:space="preserve">
-    <value>注入全局import</value>
+  <data name="chkUntrack.ToolTip" xml:space="preserve">
+    <value>停止记录server的运行状态</value>
   </data>
   <data name="chkRemark.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 16</value>
   </data>
   <data name="chkRemark.Text" xml:space="preserve">
     <value>备注</value>
-  </data>
-  <data name="chkRemark.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="chkCustomCore.ToolTip" xml:space="preserve">
     <value>自定义core</value>
@@ -232,19 +184,7 @@
   <data name="chkAutorun.Text" xml:space="preserve">
     <value>自启动</value>
   </data>
-  <data name="chkAutorun.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>选项</value>
-  </data>
-  <data name="groupBox2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>批量修改</value>
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>

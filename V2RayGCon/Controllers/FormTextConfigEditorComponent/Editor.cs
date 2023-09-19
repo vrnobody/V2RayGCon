@@ -158,7 +158,7 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
         {
             var isUnknow =
                 VgcApis.Misc.Utils.DetectConfigType(content)
-                == VgcApis.Models.Datas.Enums.ConfigType.Unknow;
+                == VgcApis.Models.Datas.Enums.ConfigType.Text;
             var color = isUnknow ? Color.Black : Color.Silver;
             editor.Lexer = isUnknow ? Lexer.Null : Lexer.Json;
             editor.Styles[Style.Json.Default].ForeColor = color;

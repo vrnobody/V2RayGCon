@@ -238,19 +238,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
         }
 
-        public void SetInboundType(int type)
+        public void SetInboundName(string name)
         {
-            if (coreInfo.customInbType == type)
+            if (coreInfo.inbName == name)
             {
                 return;
             }
 
-            coreInfo.customInbType = Misc.Utils.Clamp(
-                type,
-                0,
-                Models.Datas.Table.customInbTypeNames.Length
-            );
-
+            coreInfo.inbName = name;
             GetParent().InvokeEventOnPropertyChange();
             if (coreCtrl.IsCoreRunning())
             {
@@ -258,7 +253,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
         }
 
-        public int GetInboundType() => coreInfo.customInbType;
+        public string GetInboundName()
+        {
+            return coreInfo.inbName;
+        }
 
         public string GetInboundAddr() => $"{coreInfo.inbIp}:{coreInfo.inbPort}";
 

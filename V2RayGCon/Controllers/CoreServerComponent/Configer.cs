@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Linq;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
@@ -38,6 +39,33 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         #region public methods
+
+        public VgcApis.Models.Datas.InboundInfo GetInboundInfo()
+        {
+            var config = VgcApis.Misc.Utils.ParseJObject(GetFinalConfig());
+            if (config == null)
+            {
+                return null;
+            }
+
+            foreach (var p in new string[] { "inbound", "inbounds.0" })
+            {
+                var protocol = Misc.Utils.GetValue<string>(config, p, "protocol");
+                if (!string.IsNullOrEmpty(protocol))
+                {
+                    string host = Misc.Utils.GetValue<string>(config, p, "listen");
+                    return new VgcApis.Models.Datas.InboundInfo()
+                    {
+                        protocol = protocol,
+                        host = host ?? VgcApis.Models.Consts.Webs.LoopBackIP,
+                        port = Misc.Utils.GetValue<int>(config, p, "port")
+                    };
+                }
+            }
+
+            return null;
+        }
+
         public string GetShareLink()
         {
             var name = GetSibling<CoreStates>().GetName();
@@ -47,26 +75,19 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GetFinalConfig()
         {
-            JObject json = VgcApis.Misc.Utils.ParseJObject(GetConfig());
-
-            if (json != null)
+            try
             {
-                if (
-                    configMgr.ModifyInboundWithCustomSetting(
-                        ref json,
-                        coreInfo.customInbType,
-                        coreInfo.inbIp,
-                        coreInfo.inbPort
-                    )
-                )
-                {
-                    InjectStatisticsConfigOnDemand(ref json);
-                    configMgr.MergeCustomTlsSettings(ref json);
-
-                    var config = VgcApis.Misc.Utils.FormatConfig(json);
-                    return config;
-                }
+                var config = setting
+                    .GetCustomInboundsSetting()
+                    .FirstOrDefault(inb => inb.name == coreInfo.inbName)
+                    ?.MergeToConfig(GetConfig(), coreInfo.inbIp, coreInfo.inbPort);
+                var json = JObject.Parse(config);
+                InjectStatisticsConfigOnDemand(ref json);
+                configMgr.MergeCustomTlsSettings(ref json);
+                config = VgcApis.Misc.Utils.FormatConfig(json);
+                return config;
             }
+            catch { }
 
             return GetConfig();
         }
@@ -96,15 +117,15 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             isSocks = false;
             port = 0;
 
-            var inboundInfo = GetterParsedInboundInfo(GetConfig());
-            if (inboundInfo == null)
+            var inbInfo = GetInboundInfo();
+            if (inbInfo == null)
             {
                 logger.Log(I18N.GetInboundInfoFail);
                 return false;
             }
 
-            var protocol = inboundInfo.Item1;
-            port = inboundInfo.Item3;
+            var protocol = inbInfo.protocol;
+            port = inbInfo.port;
 
             if (!IsProtocolMatchProxyRequirment(isGlobal, protocol))
             {
@@ -134,30 +155,22 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public void GetterInfoForNotifyIconf(Action<string> next)
         {
             var cs = GetParent().GetCoreStates();
-            var servInfo = $"{cs.GetIndex()}.[{cs.GetShortName()}]";
+            var name = $"{cs.GetIndex()}.[{cs.GetShortName()}]";
 
             VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
-                var inInfo = GetterParsedInboundInfo(GetConfig());
-                if (inInfo == null)
+                var inb = GetInboundInfo();
+                if (inb == null)
                 {
-                    next(servInfo);
+                    next(name);
                     return;
                 }
-                if (string.IsNullOrEmpty(inInfo.Item2))
+                if (string.IsNullOrEmpty(inb.host))
                 {
-                    next(string.Format("{0} {1}", servInfo, inInfo.Item1));
+                    next(string.Format("{0} {1}", name, inb.port));
                     return;
                 }
-                next(
-                    string.Format(
-                        "{0} {1}://{2}:{3}",
-                        servInfo,
-                        inInfo.Item1,
-                        inInfo.Item2,
-                        inInfo.Item3
-                    )
-                );
+                next(string.Format("{0} {1}://{2}:{3}", name, inb.protocol, inb.host, inb.port));
             });
         }
 
@@ -216,74 +229,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
 
             return true;
-        }
-
-        /// <summary>
-        /// return Tuple(protocol, ip, port)
-        /// </summary>
-        /// <returns></returns>
-        Tuple<string, string, int> GetterParsedInboundInfo(string rawConfig)
-        {
-            var protocol = Misc.Utils.InboundTypeNumberToName(coreInfo.customInbType);
-            switch (protocol)
-            {
-                case "http":
-                case "socks":
-                    var info = new Tuple<string, string, int>(
-                        protocol,
-                        coreInfo.inbIp,
-                        coreInfo.inbPort
-                    );
-                    return info;
-                case "config":
-                    return GetInboundInfoFromConfig(rawConfig);
-                case "custom":
-                    return GetInboundInfoFromCustomInboundsSetting();
-                default:
-                    return null;
-            }
-        }
-
-        Tuple<string, string, int> GetInboundInfoFromCustomInboundsSetting()
-        {
-            try
-            {
-                var jobj = JArray.Parse(setting.CustomDefInbounds)[0];
-                var protocol = Misc.Utils.GetValue<string>(jobj, "protocol");
-                string ip = Misc.Utils.GetValue<string>(jobj, "listen");
-                int port = Misc.Utils.GetValue<int>(jobj, "port");
-                return new Tuple<string, string, int>(protocol, ip, port);
-            }
-            catch
-            {
-                setting.SendLog(I18N.ParseCustomInboundsSettingFail);
-            }
-            return null;
-        }
-
-        Tuple<string, string, int> GetInboundInfoFromConfig(string rawConfig)
-        {
-            if (rawConfig == null)
-            {
-                return null;
-            }
-
-            string prefix = "inbound";
-            string protocol = "";
-            foreach (var p in new string[] { "inbound", "inbounds.0" })
-            {
-                prefix = p;
-                protocol = Misc.Utils.GetValue<string>(rawConfig, prefix, "protocol");
-
-                if (!string.IsNullOrEmpty(protocol))
-                {
-                    break;
-                }
-            }
-
-            string ip = Misc.Utils.GetValue<string>(rawConfig, prefix, "listen");
-            int port = Misc.Utils.GetValue<int>(rawConfig, prefix, "port");
-            return new Tuple<string, string, int>(protocol, ip, port);
         }
 
         #endregion

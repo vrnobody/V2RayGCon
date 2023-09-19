@@ -697,7 +697,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             cboxKeyword.DropDown += (s, e) =>
             {
                 UpdateMarkFilterItemList(cboxKeyword);
-                Misc.UI.ResetComboBoxDropdownMenuWidth(cboxKeyword);
+                VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxKeyword);
             };
 
             cboxKeyword.SelectedIndexChanged += (s, e) =>

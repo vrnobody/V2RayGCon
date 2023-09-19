@@ -708,9 +708,6 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="StoppingSpeedtest" xml:space="preserve">
     <value>正在停止速度测试...</value>
   </data>
-  <data name="InbModeConfigToolTip" xml:space="preserve">
-    <value>使用config中的inbound设定</value>
-  </data>
   <data name="Mark" xml:space="preserve">
     <value>标记：</value>
   </data>
@@ -743,9 +740,6 @@ https://github.com/v2ray/v2ray-core</value>
   </data>
   <data name="ParseCustomInboundsSettingFail" xml:space="preserve">
     <value>解释自定义inbounds失败！</value>
-  </data>
-  <data name="InbModeCustomToolTip" xml:space="preserve">
-    <value>使用选项窗口中的自定义inbounds设定</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>自定义</value>
@@ -804,7 +798,7 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="TextEditor" xml:space="preserve">
     <value>Text编辑器</value>
   </data>
-  <data name="ConfirmDeleteCoreSetting" xml:space="preserve">
+  <data name="ConfirmDeleteTpl" xml:space="preserve">
     <value>确定删除[{0}]吗？</value>
   </data>
   <data name="CustomCoreName" xml:space="preserve">
@@ -815,5 +809,8 @@ https://github.com/v2ray/v2ray-core</value>
   </data>
   <data name="NewServerName" xml:space="preserve">
     <value>新服务器名：</value>
+  </data>
+  <data name="Format" xml:space="preserve">
+    <value>格式</value>
   </data>
 </root>

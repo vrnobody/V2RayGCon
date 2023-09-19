@@ -51,10 +51,10 @@
         int GetInboundPort();
 
         /// <summary>
-        /// 获取inbound协议类型
+        /// 获取自定义inbound名
         /// </summary>
-        /// <returns>inbound协议类型</returns>
-        int GetInboundType();
+        /// <returns>inbound名</returns>
+        string GetInboundName();
 
         /// <summary>
         /// 获取服务器序号
@@ -189,18 +189,6 @@
         bool IsSelected();
 
         /// <summary>
-        /// 当前服务器是否设置为绕过CN网站
-        /// </summary>
-        /// <returns>绕过CN网站</returns>
-        bool IsInjectSkipCnSite();
-
-        /// <summary>
-        /// 当前服务器是否设置为注入全局import
-        /// </summary>
-        /// <returns>注入全局import</returns>
-        bool IsInjectGlobalImport();
-
-        /// <summary>
         /// 设置服务器序号并刷新主窗口
         /// </summary>
         /// <param name="index">序号</param>
@@ -229,10 +217,10 @@
         void SetInboundAddr(string ip, int port);
 
         /// <summary>
-        /// 设置服务器inbound类型
+        /// 设置自定义inbound名
         /// </summary>
-        /// <param name="type">inbound类型</param>
-        void SetInboundType(int type);
+        /// <param name="type">inbound名</param>
+        void SetInboundName(string name);
 
         /// <summary>
         /// 设置服务器上次修改日期
@@ -287,17 +275,5 @@
         /// </summary>
         /// <param name="isUntrack">是否不追踪</param>
         void SetIsUntrack(bool isUntrack);
-
-        /// <summary>
-        /// 设置服务器全局import选项
-        /// </summary>
-        /// <param name="isInjectImport">是否注入全局import</param>
-        void SetIsInjectImport(bool isInjectImport);
-
-        /// <summary>
-        /// 设置服务器绕过CN网站选项
-        /// </summary>
-        /// <param name="isInjectSkipCnSite">是否绕过CN网站</param>
-        void SetIsInjectSkipCnSite(bool isInjectSkipCnSite);
     }
 }

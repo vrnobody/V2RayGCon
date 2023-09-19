@@ -493,18 +493,6 @@ namespace V2RayGCon.Misc
             );
         }
 
-        public static void CombineConfigWithRoutingInTheEnd(ref JObject body, JObject mixin)
-        {
-            List<string> keys = new List<string>
-            {
-                "inbounds",
-                "outbounds",
-                "inboundDetour",
-                "outboundDetour",
-            };
-            CombineConfigWorker(ref body, mixin, keys);
-        }
-
         public static void CombineConfigWithRoutingInFront(ref JObject body, JObject mixin)
         {
             List<string> keys = new List<string>

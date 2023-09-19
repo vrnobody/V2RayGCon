@@ -67,6 +67,26 @@ namespace VgcApis.Misc
             scintilla.Indicators[INDICATOR_NUM].Alpha = 180;
         }
 
+        public static void SelectComboxByText(ComboBox cbox, string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                var items = cbox.Items;
+                for (int i = 0; i < items.Count; i++)
+                {
+                    var item = items[i];
+                    if (item.ToString() == text)
+                    {
+                        cbox.SelectedIndex = i;
+                        return;
+                    }
+                }
+            }
+
+            cbox.SelectedIndex = cbox.Items.Count > 0 ? 0 : -1;
+            return;
+        }
+
         public static void ResetComboBoxDropdownMenuWidth(ToolStripComboBox cbox)
         {
             int maxWidth = 0;

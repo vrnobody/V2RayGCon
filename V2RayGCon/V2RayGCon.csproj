@@ -142,6 +142,7 @@
     <Compile Include="Controllers\Comm\DyMenuGenerator.cs" />
     <Compile Include="Controllers\Comm\IDyMenuHelper.cs" />
     <Compile Include="Controllers\CoreServerComponent\Wrapper.cs" />
+    <Compile Include="Controllers\FormOptionComponent\TabCustomInboundSettings.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabCustomCoreSettings.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabDefaults.cs" />
     <Compile Include="Controllers\FormTextConfigEditorComponent\CompBase.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Controllers\FormTextConfigEditorCtrl.cs" />
     <Compile Include="Models\Datas\CustomCoreSettings.cs" />
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
+    <Compile Include="Models\Datas\CustomInboundSettings.cs" />
     <Compile Include="Models\Datas\SharelinkMetadata.cs" />
     <Compile Include="Models\Datas\SpeedTestOptions.cs" />
     <Compile Include="Models\Datas\UpdateInfo.cs" />
@@ -228,6 +230,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Views\Updater\PasteArguments.cs" />
+    <Compile Include="Views\UserControls\InboundSettingUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\InboundSettingUI.Designer.cs">
+      <DependentUpon>InboundSettingUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\CoreSettingUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -279,6 +287,12 @@
     <Compile Include="Services\Caches\Template.cs" />
     <Compile Include="Libs\Nets\Downloader.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Views\WinForms\FormCustomInboundSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormCustomInboundSettings.Designer.cs">
+      <DependentUpon>FormCustomInboundSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\WinForms\FormCustomCoreSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -357,11 +371,17 @@
     <EmbeddedResource Include="Views\Updater\FormDownloader.zh-CN.resx">
       <DependentUpon>FormDownloader.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\InboundSettingUI.resx">
+      <DependentUpon>InboundSettingUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\CoreSettingUI.resx">
       <DependentUpon>CoreSettingUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\CoreSettingUI.zh-CN.resx">
       <DependentUpon>CoreSettingUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\InboundSettingUI.zh-CN.resx">
+      <DependentUpon>InboundSettingUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\PluginInfoUI.resx">
       <DependentUpon>PluginInfoUI.cs</DependentUpon>
@@ -412,11 +432,17 @@
     <EmbeddedResource Include="Views\WinForms\FormBatchModifyServerSetting.zh-CN.resx">
       <DependentUpon>FormBatchModifyServerSetting.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormCustomInboundSettings.resx">
+      <DependentUpon>FormCustomInboundSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormCustomCoreSettings.resx">
       <DependentUpon>FormCustomCoreSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormCustomCoreSettings.zh-CN.resx">
       <DependentUpon>FormCustomCoreSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormCustomInboundSettings.zh-CN.resx">
+      <DependentUpon>FormCustomInboundSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormDownloadCore.resx">
       <DependentUpon>FormDownloadCore.cs</DependentUpon>

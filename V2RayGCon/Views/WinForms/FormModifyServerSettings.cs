@@ -76,13 +76,16 @@ namespace V2RayGCon.Views.WinForms
             var marks = servers.GetMarkList();
             lbServerTitle.Text = coreServ.GetCoreStates().GetTitle();
 
-            cboxMark.Items.Clear();
             cboxMark.Items.AddRange(marks);
-            Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMark);
+            VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMark);
 
             var coreNames = settings.GetCustomCoresSetting().Select(cs => cs.name).ToArray();
             cboxCoreName.Items.AddRange(coreNames);
-            Misc.UI.ResetComboBoxDropdownMenuWidth(cboxCoreName);
+            VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxCoreName);
+
+            var inbNames = settings.GetCustomInboundsSetting().Select(inb => inb.name).ToArray();
+            cboxInboundName.Items.AddRange(inbNames);
+            VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxInboundName);
 
             UpdateControls(orgCoreServSettings);
             AutoSelectShareLinkType();
@@ -120,7 +123,7 @@ namespace V2RayGCon.Views.WinForms
             {
                 index = VgcApis.Misc.Utils.Str2Int(tboxServIndex.Text),
                 serverName = tboxServerName.Text,
-                inboundMode = cboxInboundMode.SelectedIndex,
+                inboundName = cboxInboundName.Text,
                 inboundAddress = cboxInboundAddress.Text,
                 mark = cboxMark.Text,
                 remark = tboxRemark.Text,
@@ -136,29 +139,15 @@ namespace V2RayGCon.Views.WinForms
             var s = coreServSettings;
             tboxServIndex.Text = s.index.ToString();
             tboxServerName.Text = s.serverName;
-            cboxInboundMode.SelectedIndex = s.inboundMode;
             cboxInboundAddress.Text = s.inboundAddress;
             cboxMark.Text = s.mark;
             tboxRemark.Text = s.remark;
 
-            SelectComboBoxByText(cboxCoreName, s.customCoreName, 0);
+            VgcApis.Misc.UI.SelectComboxByText(cboxCoreName, s.customCoreName);
+            VgcApis.Misc.UI.SelectComboxByText(cboxInboundName, s.inboundName);
 
             chkAutoRun.Checked = s.isAutorun;
             chkUntrack.Checked = s.isUntrack;
-        }
-
-        void SelectComboBoxByText(ComboBox cbox, string text, int defaultIndex)
-        {
-            var items = cbox.Items;
-            for (int i = 0; i < items.Count; i++)
-            {
-                if (items[i].ToString() == text)
-                {
-                    cbox.SelectedIndex = i;
-                    return;
-                }
-            }
-            cbox.SelectedIndex = defaultIndex;
         }
 
         void UpdateShareLink()
@@ -203,12 +192,6 @@ namespace V2RayGCon.Views.WinForms
         private void cboxInboundAddress_TextChanged(object sender, EventArgs e)
         {
             VgcApis.Misc.UI.MarkInvalidAddressWithColorRed(cboxInboundAddress);
-        }
-
-        private void cboxInboundMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var idx = cboxInboundMode.SelectedIndex;
-            cboxInboundAddress.Enabled = idx == 1 || idx == 2;
         }
 
         private void tboxShareLink_TextChanged(object sender, EventArgs e)

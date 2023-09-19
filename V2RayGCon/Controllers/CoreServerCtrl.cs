@@ -82,13 +82,9 @@ namespace V2RayGCon.Controllers
         {
             var ci = coreInfo;
             var restartCore = false;
-            if (cs.inboundMode != ci.customInbType)
+            if (cs.inboundName != ci.inbName)
             {
-                ci.customInbType = Misc.Utils.Clamp(
-                    cs.inboundMode,
-                    0,
-                    Models.Datas.Table.customInbTypeNames.Length
-                );
+                ci.inbName = cs.inboundName;
                 restartCore = true;
             }
 
@@ -159,17 +155,10 @@ namespace V2RayGCon.Controllers
             }
 
             bool restartCore = SetCustomInboundInfo(cs);
-            if (
-                ci.isInjectImport != cs.isGlobalImport || ci.isInjectSkipCNSite != cs.isBypassCnSite
-            )
+            if (GetCoreCtrl().SetCustomCoreName(cs.customCoreName))
             {
                 restartCore = true;
             }
-
-            restartCore = restartCore || GetCoreCtrl().SetCustomCoreName(cs.customCoreName);
-
-            ci.isInjectImport = cs.isGlobalImport;
-            ci.isInjectSkipCNSite = cs.isBypassCnSite;
 
             GetConfiger().UpdateSummary();
 

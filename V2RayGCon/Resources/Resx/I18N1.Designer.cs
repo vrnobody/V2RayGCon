@@ -395,20 +395,20 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Remove [{0}]? 的本地化字符串。
-        /// </summary>
-        internal static string ConfirmDeleteCoreSetting {
-            get {
-                return ResourceManager.GetString("ConfirmDeleteCoreSetting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Delete selected servers? 的本地化字符串。
         /// </summary>
         internal static string ConfirmDeleteSelectedServers {
             get {
                 return ResourceManager.GetString("ConfirmDeleteSelectedServers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Delete [{0}]? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmDeleteTpl {
+            get {
+                return ResourceManager.GetString("ConfirmDeleteTpl", resourceCulture);
             }
         }
         
@@ -984,6 +984,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Format 的本地化字符串。
+        /// </summary>
+        internal static string Format {
+            get {
+                return ResourceManager.GetString("Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Generate QRCode 的本地化字符串。
         /// </summary>
         internal static string GenQRCode {
@@ -1115,24 +1124,6 @@ namespace V2RayGCon.Resources.Resx {
         internal static string ImportLinkSuccess {
             get {
                 return ResourceManager.GetString("ImportLinkSuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Use inbound settings in config. 的本地化字符串。
-        /// </summary>
-        internal static string InbModeConfigToolTip {
-            get {
-                return ResourceManager.GetString("InbModeConfigToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Use custom inbounds setting in option window. 的本地化字符串。
-        /// </summary>
-        internal static string InbModeCustomToolTip {
-            get {
-                return ResourceManager.GetString("InbModeCustomToolTip", resourceCulture);
             }
         }
         

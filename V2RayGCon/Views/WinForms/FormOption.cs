@@ -58,10 +58,14 @@ namespace V2RayGCon.Views.WinForms
             ctrl.Plug(
                 new Controllers.OptionComponent.TabCustomCoreSettings(
                     flyCoresSetting,
-                    toolTip1,
-                    btnCoresSettingAdd,
-                    cboxCoreSettingDefaultCore,
-                    btnCoreSettingChangeAll
+                    btnCoresSettingAdd
+                )
+            );
+
+            ctrl.Plug(
+                new Controllers.OptionComponent.TabCustomInboundSettings(
+                    flyInboundsSetting,
+                    btnInboundsSettingAdd
                 )
             );
 
@@ -113,9 +117,11 @@ namespace V2RayGCon.Views.WinForms
 
             ctrl.Plug(
                 new Controllers.OptionComponent.TabDefaults(
+                    toolTip1,
                     // def import share link mode
-                    cboxDefImportMode,
+                    cboxDefImportInbName,
                     tboxDefImportAddr,
+                    cboxDefImportCoreName,
                     chkDefImportSsShareLink,
                     chkDefImportTrojanShareLink,
                     // speedtest
@@ -125,8 +131,7 @@ namespace V2RayGCon.Views.WinForms
                     cboxDefSpeedTestExpectedSize,
                     tboxDefSpeedtestTimeout,
                     tboxDefImportVmessDecodeTemplateUrl,
-                    chkDefImportIsUseVmessDecodeTemplate,
-                    exRTBoxDefCustomInbounds
+                    chkDefImportIsUseVmessDecodeTemplate
                 )
             );
 

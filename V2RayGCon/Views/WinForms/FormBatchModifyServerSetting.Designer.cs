@@ -39,18 +39,16 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chkIncrement = new System.Windows.Forms.CheckBox();
             this.chkShareOverLAN = new System.Windows.Forms.CheckBox();
-            this.cboxInMode = new System.Windows.Forms.ComboBox();
+            this.cboxInName = new System.Windows.Forms.ComboBox();
             this.cboxMark = new System.Windows.Forms.ComboBox();
             this.btnModify = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cboxIsInjectSkipCNSite = new System.Windows.Forms.ComboBox();
-            this.chkIsInjectSkipCNSite = new System.Windows.Forms.CheckBox();
-            this.cboxImport = new System.Windows.Forms.ComboBox();
+            this.cboxUntrack = new System.Windows.Forms.ComboBox();
             this.cboxCustomCoreName = new System.Windows.Forms.ComboBox();
             this.cboxAutorun = new System.Windows.Forms.ComboBox();
             this.tboxRemark = new System.Windows.Forms.TextBox();
-            this.chkImport = new System.Windows.Forms.CheckBox();
+            this.chkUntrack = new System.Windows.Forms.CheckBox();
             this.chkRemark = new System.Windows.Forms.CheckBox();
             this.chkCustomCore = new System.Windows.Forms.CheckBox();
             this.chkAutorun = new System.Windows.Forms.CheckBox();
@@ -104,7 +102,7 @@
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.chkIncrement);
             this.groupBox1.Controls.Add(this.chkShareOverLAN);
-            this.groupBox1.Controls.Add(this.cboxInMode);
+            this.groupBox1.Controls.Add(this.cboxInName);
             this.groupBox1.Controls.Add(this.chkInMode);
             this.groupBox1.Controls.Add(this.tboxInPort);
             this.groupBox1.Controls.Add(this.tboxInIP);
@@ -129,18 +127,18 @@
             this.chkShareOverLAN.UseVisualStyleBackColor = true;
             this.chkShareOverLAN.CheckedChanged += new System.EventHandler(this.chkShareOverLAN_CheckedChanged);
             // 
-            // cboxInMode
+            // cboxInName
             // 
-            resources.ApplyResources(this.cboxInMode, "cboxInMode");
-            this.cboxInMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxInMode.FormattingEnabled = true;
-            this.cboxInMode.Items.AddRange(new object[] {
-            resources.GetString("cboxInMode.Items"),
-            resources.GetString("cboxInMode.Items1"),
-            resources.GetString("cboxInMode.Items2"),
-            resources.GetString("cboxInMode.Items3")});
-            this.cboxInMode.Name = "cboxInMode";
-            this.toolTip1.SetToolTip(this.cboxInMode, resources.GetString("cboxInMode.ToolTip"));
+            resources.ApplyResources(this.cboxInName, "cboxInName");
+            this.cboxInName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxInName.FormattingEnabled = true;
+            this.cboxInName.Items.AddRange(new object[] {
+            resources.GetString("cboxInName.Items"),
+            resources.GetString("cboxInName.Items1"),
+            resources.GetString("cboxInName.Items2"),
+            resources.GetString("cboxInName.Items3")});
+            this.cboxInName.Name = "cboxInName";
+            this.toolTip1.SetToolTip(this.cboxInName, resources.GetString("cboxInName.ToolTip"));
             // 
             // cboxMark
             // 
@@ -168,13 +166,11 @@
             // groupBox2
             // 
             resources.ApplyResources(this.groupBox2, "groupBox2");
-            this.groupBox2.Controls.Add(this.cboxIsInjectSkipCNSite);
-            this.groupBox2.Controls.Add(this.chkIsInjectSkipCNSite);
-            this.groupBox2.Controls.Add(this.cboxImport);
+            this.groupBox2.Controls.Add(this.cboxUntrack);
             this.groupBox2.Controls.Add(this.cboxCustomCoreName);
             this.groupBox2.Controls.Add(this.cboxAutorun);
             this.groupBox2.Controls.Add(this.tboxRemark);
-            this.groupBox2.Controls.Add(this.chkImport);
+            this.groupBox2.Controls.Add(this.chkUntrack);
             this.groupBox2.Controls.Add(this.chkRemark);
             this.groupBox2.Controls.Add(this.chkCustomCore);
             this.groupBox2.Controls.Add(this.chkAutorun);
@@ -184,34 +180,16 @@
             this.groupBox2.TabStop = false;
             this.toolTip1.SetToolTip(this.groupBox2, resources.GetString("groupBox2.ToolTip"));
             // 
-            // cboxIsInjectSkipCNSite
+            // cboxUntrack
             // 
-            resources.ApplyResources(this.cboxIsInjectSkipCNSite, "cboxIsInjectSkipCNSite");
-            this.cboxIsInjectSkipCNSite.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxIsInjectSkipCNSite.FormattingEnabled = true;
-            this.cboxIsInjectSkipCNSite.Items.AddRange(new object[] {
-            resources.GetString("cboxIsInjectSkipCNSite.Items"),
-            resources.GetString("cboxIsInjectSkipCNSite.Items1")});
-            this.cboxIsInjectSkipCNSite.Name = "cboxIsInjectSkipCNSite";
-            this.toolTip1.SetToolTip(this.cboxIsInjectSkipCNSite, resources.GetString("cboxIsInjectSkipCNSite.ToolTip"));
-            // 
-            // chkIsInjectSkipCNSite
-            // 
-            resources.ApplyResources(this.chkIsInjectSkipCNSite, "chkIsInjectSkipCNSite");
-            this.chkIsInjectSkipCNSite.Name = "chkIsInjectSkipCNSite";
-            this.toolTip1.SetToolTip(this.chkIsInjectSkipCNSite, resources.GetString("chkIsInjectSkipCNSite.ToolTip"));
-            this.chkIsInjectSkipCNSite.UseVisualStyleBackColor = true;
-            // 
-            // cboxImport
-            // 
-            resources.ApplyResources(this.cboxImport, "cboxImport");
-            this.cboxImport.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxImport.FormattingEnabled = true;
-            this.cboxImport.Items.AddRange(new object[] {
-            resources.GetString("cboxImport.Items"),
-            resources.GetString("cboxImport.Items1")});
-            this.cboxImport.Name = "cboxImport";
-            this.toolTip1.SetToolTip(this.cboxImport, resources.GetString("cboxImport.ToolTip"));
+            resources.ApplyResources(this.cboxUntrack, "cboxUntrack");
+            this.cboxUntrack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxUntrack.FormattingEnabled = true;
+            this.cboxUntrack.Items.AddRange(new object[] {
+            resources.GetString("cboxUntrack.Items"),
+            resources.GetString("cboxUntrack.Items1")});
+            this.cboxUntrack.Name = "cboxUntrack";
+            this.toolTip1.SetToolTip(this.cboxUntrack, resources.GetString("cboxUntrack.ToolTip"));
             // 
             // cboxCustomCoreName
             // 
@@ -241,12 +219,12 @@
             this.tboxRemark.Name = "tboxRemark";
             this.toolTip1.SetToolTip(this.tboxRemark, resources.GetString("tboxRemark.ToolTip"));
             // 
-            // chkImport
+            // chkUntrack
             // 
-            resources.ApplyResources(this.chkImport, "chkImport");
-            this.chkImport.Name = "chkImport";
-            this.toolTip1.SetToolTip(this.chkImport, resources.GetString("chkImport.ToolTip"));
-            this.chkImport.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.chkUntrack, "chkUntrack");
+            this.chkUntrack.Name = "chkUntrack";
+            this.toolTip1.SetToolTip(this.chkUntrack, resources.GetString("chkUntrack.ToolTip"));
+            this.chkUntrack.UseVisualStyleBackColor = true;
             // 
             // chkRemark
             // 
@@ -300,18 +278,16 @@
         private System.Windows.Forms.CheckBox chkMark;
         private System.Windows.Forms.CheckBox chkInMode;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox cboxInMode;
+        private System.Windows.Forms.ComboBox cboxInName;
         private System.Windows.Forms.ComboBox cboxMark;
         private System.Windows.Forms.Button btnModify;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox cboxImport;
+        private System.Windows.Forms.ComboBox cboxUntrack;
         private System.Windows.Forms.ComboBox cboxAutorun;
-        private System.Windows.Forms.CheckBox chkImport;
+        private System.Windows.Forms.CheckBox chkUntrack;
         private System.Windows.Forms.CheckBox chkAutorun;
-        private System.Windows.Forms.ComboBox cboxIsInjectSkipCNSite;
-        private System.Windows.Forms.CheckBox chkIsInjectSkipCNSite;
         private System.Windows.Forms.CheckBox chkShareOverLAN;
         private System.Windows.Forms.CheckBox chkIncrement;
         private System.Windows.Forms.TextBox tboxRemark;

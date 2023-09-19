@@ -144,46 +144,6 @@ namespace V2RayGCon.Misc
             return true;
         }
 
-        public static void ResetComboBoxDropdownMenuWidth(ToolStripComboBox cbox)
-        {
-            int maxWidth = 0,
-                tempWidth = 0;
-            var font = cbox.Font;
-
-            foreach (var item in cbox.Items)
-            {
-                tempWidth = TextRenderer.MeasureText(item.ToString(), font).Width;
-                if (tempWidth > maxWidth)
-                {
-                    maxWidth = tempWidth;
-                }
-            }
-            cbox.DropDownWidth = Math.Max(
-                cbox.Width,
-                maxWidth + SystemInformation.VerticalScrollBarWidth
-            );
-        }
-
-        public static void ResetComboBoxDropdownMenuWidth(ComboBox cbox)
-        {
-            int maxWidth = 0,
-                tempWidth = 0;
-            var font = cbox.Font;
-
-            foreach (var item in cbox.Items)
-            {
-                tempWidth = TextRenderer.MeasureText(item.ToString(), font).Width;
-                if (tempWidth > maxWidth)
-                {
-                    maxWidth = tempWidth;
-                }
-            }
-            cbox.DropDownWidth = Math.Max(
-                cbox.Width,
-                maxWidth + SystemInformation.VerticalScrollBarWidth
-            );
-        }
-
         public static void ClearFlowLayoutPanel(FlowLayoutPanel panel)
         {
             List<Control> listControls = new List<Control>();

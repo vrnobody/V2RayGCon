@@ -717,9 +717,6 @@ No, abort.</value>
   <data name="StoppingSpeedtest" xml:space="preserve">
     <value>Stopping speed test.</value>
   </data>
-  <data name="InbModeConfigToolTip" xml:space="preserve">
-    <value>Use inbound settings in config.</value>
-  </data>
   <data name="Mark" xml:space="preserve">
     <value>Mark: </value>
   </data>
@@ -752,9 +749,6 @@ No, abort.</value>
   </data>
   <data name="ParseCustomInboundsSettingFail" xml:space="preserve">
     <value>Parse custom inbound setting fail!</value>
-  </data>
-  <data name="InbModeCustomToolTip" xml:space="preserve">
-    <value>Use custom inbounds setting in option window.</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Custom</value>
@@ -814,8 +808,8 @@ Config editor supports JSON format only!</value>
   <data name="TextEditor" xml:space="preserve">
     <value>Text editor</value>
   </data>
-  <data name="ConfirmDeleteCoreSetting" xml:space="preserve">
-    <value>Remove [{0}]?</value>
+  <data name="ConfirmDeleteTpl" xml:space="preserve">
+    <value>Delete [{0}]?</value>
   </data>
   <data name="CustomCoreName" xml:space="preserve">
     <value>Custom core name.</value>
@@ -825,5 +819,8 @@ Config editor supports JSON format only!</value>
   </data>
   <data name="NewServerName" xml:space="preserve">
     <value>New server name:</value>
+  </data>
+  <data name="Format" xml:space="preserve">
+    <value>Format</value>
   </data>
 </root>

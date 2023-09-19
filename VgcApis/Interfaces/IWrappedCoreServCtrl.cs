@@ -15,6 +15,8 @@ namespace VgcApis.Interfaces
         ICoreServCtrl Unwrap();
 
         #region IConfiger
+        new Models.Datas.InboundInfo GetInboundInfo();
+
         new JObject GetFinalConfig();
         new string GetRawConfig();
         new string GetConfig();
@@ -49,7 +51,7 @@ namespace VgcApis.Interfaces
         new string GetInboundAddr();
         new string GetInboundIp();
         new int GetInboundPort();
-        new int GetInboundType();
+        new string GetInboundName();
         new double GetIndex();
         new long GetLastModifiedUtcTicks();
         new long GetLastSpeedTestUtcTicks();
@@ -77,13 +79,12 @@ namespace VgcApis.Interfaces
         new bool IsAutoRun();
         new bool IsUntrack();
         new bool IsSelected();
-        new bool IsInjectSkipCnSite();
-        new bool IsInjectGlobalImport();
+
         new void SetIndex(double index);
         new void SetIndexQuiet(double index);
         new void SetIsSelected(bool selected);
         new void SetInboundAddr(string ip, int port);
-        new void SetInboundType(int type);
+        new void SetInboundName(string name);
         new void SetLastModifiedUtcTicks(long utcTicks);
         new void SetMark(string mark);
         new void SetRemark(string remark);
@@ -93,8 +94,7 @@ namespace VgcApis.Interfaces
         new void SetTag3(string tag);
         new void SetIsAutoRun(bool isAutoRun);
         new void SetIsUntrack(bool isUntrack);
-        new void SetIsInjectImport(bool isInjectImport);
-        new void SetIsInjectSkipCnSite(bool isInjectSkipCnSite);
+
         #endregion
 
         #region ILogger

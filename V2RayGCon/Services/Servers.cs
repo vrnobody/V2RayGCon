@@ -389,16 +389,6 @@ namespace V2RayGCon.Services
             }
         }
 
-        public void RestartServersWithImportMark()
-        {
-            var list = queryHandler.GetServers(
-                kv =>
-                    kv.Value.GetCoreStates().IsInjectGlobalImport()
-                    && kv.Value.GetCoreCtrl().IsCoreRunning()
-            );
-            RestartServersThen(list);
-        }
-
         public bool IsEmpty()
         {
             locker.EnterReadLock();
@@ -906,8 +896,8 @@ namespace V2RayGCon.Services
             {
                 isInjectImport = setting.CustomDefImportGlobalImport,
                 isInjectSkipCNSite = setting.CustomDefImportBypassCnSite,
-                customInbType = setting.CustomDefImportMode,
-                inbIp = setting.CustomDefImportIp,
+                inbName = setting.DefaultInboundName,
+                inbIp = setting.CustomDefImportHost,
                 inbPort = setting.CustomDefImportPort,
                 customMark = mark,
                 customCoreName = setting.DefaultCoreName,
@@ -1182,14 +1172,44 @@ namespace V2RayGCon.Services
             {
                 var coreServ = kv.Value;
                 coreServ.Run(cache, setting, configMgr, this);
+
+                // 预计2024-06删除这两个函数
                 PatchConfig(coreServ);
+                FixInboundName(coreServ);
+
                 var cfg = coreServ.GetConfiger().GetConfig();
                 configCache.TryAdd(cfg, coreServ.GetCoreStates().GetUid());
                 BindEventsTo(coreServ);
             }
         }
 
-        // 预计2023-12删除此函数
+        void FixInboundName(Controllers.CoreServerCtrl coreServ)
+        {
+            var name = coreServ.GetCoreStates().GetInboundName();
+            if (!string.IsNullOrEmpty(name))
+            {
+                return;
+            }
+
+            var coreInfo = coreServ.GetCoreStates().GetAllRawCoreInfo();
+            switch ((VgcApis.Models.Datas.Enums.ProxyTypes)coreInfo.customInbType)
+            {
+                case VgcApis.Models.Datas.Enums.ProxyTypes.SOCKS:
+                    name = "socks";
+                    break;
+                case VgcApis.Models.Datas.Enums.ProxyTypes.Custom:
+                    name = "custom";
+                    break;
+                case VgcApis.Models.Datas.Enums.ProxyTypes.Config:
+                    name = "config";
+                    break;
+                default:
+                    name = "http";
+                    break;
+            }
+            coreInfo.inbName = name;
+        }
+
         void PatchConfig(Controllers.CoreServerCtrl coreServ)
         {
             var config = coreServ.GetConfiger().GetConfig();

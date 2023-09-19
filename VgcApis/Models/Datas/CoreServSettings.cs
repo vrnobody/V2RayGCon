@@ -5,17 +5,15 @@ namespace VgcApis.Models.Datas
     public class CoreServSettings
     {
         public string serverName,
+            inboundName,
             inboundAddress,
             mark,
             remark,
             customCoreName;
 
-        public int inboundMode;
         public double index;
         public bool isAutorun,
-            isUntrack,
-            isGlobalImport,
-            isBypassCnSite;
+            isUntrack;
 
         public CoreServSettings()
         {
@@ -28,11 +26,8 @@ namespace VgcApis.Models.Datas
             customCoreName = em;
 
             index = 0;
-            inboundMode = 0;
             isAutorun = false;
             isUntrack = false;
-            isGlobalImport = false;
-            isBypassCnSite = false;
         }
 
         public CoreServSettings(Interfaces.ICoreServCtrl coreServ)
@@ -43,13 +38,11 @@ namespace VgcApis.Models.Datas
             index = cs.GetIndex();
             mark = cs.GetMark();
             remark = cs.GetRemark();
+            inboundName = cs.GetInboundName();
             customCoreName = coreServ.GetCoreCtrl().GetCustomCoreName();
 
             isAutorun = cs.IsAutoRun();
             isUntrack = cs.IsUntrack();
-            isGlobalImport = cs.IsInjectGlobalImport();
-            isBypassCnSite = cs.IsInjectSkipCnSite();
-            inboundMode = cs.GetInboundType();
             inboundAddress = cs.GetInboundAddr();
             serverName = cs.GetName();
 
@@ -78,11 +71,9 @@ namespace VgcApis.Models.Datas
                 || t.mark != mark
                 || t.remark != remark
                 || t.customCoreName != customCoreName
-                || t.inboundMode != inboundMode
+                || t.inboundName != inboundName
                 || t.isAutorun != isAutorun
                 || t.isUntrack != isUntrack
-                || t.isGlobalImport != isGlobalImport
-                || t.isBypassCnSite != isBypassCnSite
             )
             {
                 return false;

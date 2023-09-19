@@ -2,7 +2,8 @@
 {
     public class CoreInfo
     {
-        // private variables will not be serialized
+        // obsolete 预计2024-06删除
+        public int customInbType = (int)Enums.ProxyTypes.HTTP;
 
         // plain text of config.json
         public string config;
@@ -19,14 +20,14 @@
             shortName,
             summary,
             title,
-            inbIp,
             customMark,
             uid,
             customRemark,
             customCoreName;
 
-        public int customInbType,
-            inbPort;
+        public string inbName,
+            inbIp;
+        public int inbPort;
 
         public double index;
 
@@ -73,7 +74,7 @@
             config = string.Empty;
             uid = string.Empty;
 
-            customInbType = (int)Enums.ProxyTypes.HTTP;
+            inbName = string.Empty;
             inbIp = Consts.Webs.LoopBackIP;
             inbPort = Consts.Webs.DefaultProxyPort;
 

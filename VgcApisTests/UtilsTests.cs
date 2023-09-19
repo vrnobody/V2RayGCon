@@ -20,12 +20,12 @@ namespace VgcApisTests
         [DataTestMethod]
         [DataRow(@"{}", ConfigType.Json)]
         [DataRow("{\n\n}", ConfigType.Json)]
-        [DataRow(@"{\n\n\n", ConfigType.Unknow)]
-        [DataRow(@"", ConfigType.Unknow)]
-        [DataRow(null, ConfigType.Unknow)]
-        [DataRow(@"  123:", ConfigType.Unknow)]
+        [DataRow(@"{\n\n\n", ConfigType.Text)]
+        [DataRow(@"", ConfigType.Text)]
+        [DataRow(null, ConfigType.Text)]
+        [DataRow(@"  123:", ConfigType.Text)]
         [DataRow(@"  ab12-_中文:", ConfigType.Yaml)]
-        [DataRow(@"  ab12😀-_中文:", ConfigType.Unknow)]
+        [DataRow(@"  ab12😀-_中文:", ConfigType.Text)]
         public void DetectConfigTypeTest(string config, ConfigType ty)
         {
             var r = DetectConfigType(config);

@@ -429,27 +429,16 @@ namespace V2RayGCon.Views.UserControls
 
         void UpdateInboundModeLabel(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreState)
         {
-            var text = @"Config";
-            var tooltip = I18N.InbModeConfigToolTip;
-            var inbModeIdx = coreState.GetInboundType();
-            var lower = coreState.GetInboundIp().Equals(VgcApis.Models.Consts.Webs.LoopBackIP);
+            var name = coreState.GetInboundName();
+            var tooltip = name;
 
-            switch (inbModeIdx)
+            var info = coreServCtrl.GetConfiger().GetInboundInfo();
+            if (info != null)
             {
-                case (int)VgcApis.Models.Datas.Enums.ProxyTypes.HTTP:
-                    text = (lower ? @"h" : @"H") + coreState.GetInboundPort();
-                    tooltip = @"inbound -> http://" + coreState.GetInboundAddr();
-                    break;
-                case (int)VgcApis.Models.Datas.Enums.ProxyTypes.SOCKS:
-                    text = (lower ? @"s" : @"S") + coreState.GetInboundPort();
-                    tooltip = @"inbound -> socks://" + coreState.GetInboundAddr();
-                    break;
-                case (int)VgcApis.Models.Datas.Enums.ProxyTypes.Custom:
-                    text = I18N.Custom;
-                    tooltip = I18N.InbModeCustomToolTip;
-                    break;
+                tooltip = $"inbound -> {info.protocol}://{info.host}:{info.port}";
             }
-            UpdateControlTextAndTooltip(rlbInboundMode, text, tooltip);
+
+            UpdateControlTextAndTooltip(rlbInboundMode, name, tooltip);
         }
 
         void UpdateControlTextOndemand(Control control, string text)
@@ -570,11 +559,7 @@ namespace V2RayGCon.Views.UserControls
             VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates
         )
         {
-            var text =
-                (coreStates.IsAutoRun() ? "A" : "")
-                + (coreStates.IsInjectSkipCnSite() ? "C" : "")
-                + (coreStates.IsInjectGlobalImport() ? "I" : "")
-                + (coreStates.IsUntrack() ? "U" : "");
+            var text = (coreStates.IsAutoRun() ? "A" : "") + (coreStates.IsUntrack() ? "U" : "");
             UpdateControlTextOndemand(rlbSetting, text);
         }
 

@@ -125,6 +125,7 @@
     <Compile Include="Interfaces\Services\IServersService.cs" />
     <Compile Include="Interfaces\Services\ISettingsService.cs" />
     <Compile Include="Models\Datas\HotKeyContext.cs" />
+    <Compile Include="Models\Datas\InboundInfo.cs" />
     <Compile Include="Models\Datas\LuaMail.cs" />
     <Compile Include="Models\Datas\LuaMailBox.cs" />
     <Compile Include="Models\Datas\StatsSample.cs" />

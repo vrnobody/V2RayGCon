@@ -66,12 +66,12 @@ namespace V2RayGCon.Services
         #region custom core settings
         public string DefaultCoreName
         {
-            get => userSettings.DefaultCoreName;
+            get => userSettings.ImportOptions.DefaultCoreName;
             set
             {
-                if (value != userSettings.DefaultCoreName)
+                if (value != userSettings.ImportOptions.DefaultCoreName)
                 {
-                    userSettings.DefaultCoreName = value;
+                    userSettings.ImportOptions.DefaultCoreName = value;
                     SaveSettingsLater();
                 }
             }
@@ -136,6 +136,87 @@ namespace V2RayGCon.Services
                     userSettings.CustomCoreSettings.Remove(coreS);
                 }
                 userSettings.CustomCoreSettings.Add(coreSettings);
+            }
+            SaveSettingsLater();
+        }
+
+        #endregion
+
+        #region custom inbound settings
+        public string DefaultInboundName
+        {
+            get => userSettings.ImportOptions.DefaultInboundName;
+            set
+            {
+                if (value != userSettings.ImportOptions.DefaultInboundName)
+                {
+                    userSettings.ImportOptions.DefaultInboundName = value;
+                    SaveSettingsLater();
+                }
+            }
+        }
+
+        public List<Models.Datas.CustomInboundSettings> GetCustomInboundsSetting()
+        {
+            lock (saveUserSettingsLocker)
+            {
+                return userSettings.CustomInboundSettings.OrderBy(inb => inb.index).ToList();
+            }
+        }
+
+        public void ResetCustomInboundsIndex()
+        {
+            lock (saveUserSettingsLocker)
+            {
+                var inbs = GetCustomInboundsSetting();
+                var idx = 1.0;
+                foreach (var inb in inbs)
+                {
+                    inb.index = idx++;
+                }
+            }
+            SaveSettingsLater();
+        }
+
+        public bool RemoveCustomInboundByName(string name)
+        {
+            lock (saveUserSettingsLocker)
+            {
+                var inbSettings = userSettings.CustomInboundSettings.FirstOrDefault(
+                    inb => inb.name == name
+                );
+                if (inbSettings != null)
+                {
+                    userSettings.CustomInboundSettings.Remove(inbSettings);
+                    ResetCustomInboundsIndex();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void AddOrReplaceCustomInboundSettings(
+            Models.Datas.CustomInboundSettings inbSettings
+        )
+        {
+            if (inbSettings == null)
+            {
+                return;
+            }
+
+            inbSettings.index = userSettings.CustomInboundSettings.Count + 1;
+
+            lock (saveUserSettingsLocker)
+            {
+                var inbS = userSettings.CustomInboundSettings.FirstOrDefault(
+                    inb => inb.name == inbSettings.name
+                );
+                if (inbS != null)
+                {
+                    inbSettings.index = inbS.index;
+                    userSettings.CustomInboundSettings.Remove(inbS);
+                }
+                userSettings.CustomInboundSettings.Add(inbSettings);
             }
             SaveSettingsLater();
         }
@@ -445,17 +526,7 @@ namespace V2RayGCon.Services
             }
         }
 
-        public int CustomDefImportMode
-        {
-            get => VgcApis.Misc.Utils.Clamp(userSettings.ImportOptions.Mode, 0, 4);
-            set
-            {
-                userSettings.ImportOptions.Mode = VgcApis.Misc.Utils.Clamp(value, 0, 4);
-                SaveSettingsLater();
-            }
-        }
-
-        public string CustomDefImportIp
+        public string CustomDefImportHost
         {
             get => userSettings.ImportOptions.Ip;
             set

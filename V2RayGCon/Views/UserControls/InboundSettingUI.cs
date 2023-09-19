@@ -5,28 +5,28 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Views.UserControls
 {
-    public partial class CoreSettingUI : UserControl
+    public partial class InboundSettingUI : UserControl
     {
         public event EventHandler OnRequireReload;
 
-        private CustomCoreSettings coreSettings;
+        private CustomInboundSettings inbSettings;
 
-        public CoreSettingUI()
+        public InboundSettingUI()
         {
             // this.size = 347, 27
             InitializeComponent();
         }
 
         #region public mehtod
-        public void Reload(CustomCoreSettings coreSettings)
+        public void Reload(CustomInboundSettings inbSettings)
         {
-            this.coreSettings = coreSettings;
+            this.inbSettings = inbSettings;
             UpdateTitle();
         }
 
         public void SetIndex(double index)
         {
-            var ctrl = coreSettings;
+            var ctrl = inbSettings;
             if (ctrl == null)
             {
                 return;
@@ -34,25 +34,17 @@ namespace V2RayGCon.Views.UserControls
             ctrl.index = index;
         }
 
-        public double GetIndex() => coreSettings?.index ?? -1;
+        public double GetIndex() => inbSettings?.index ?? -1;
         #endregion
 
         #region private method
         void UpdateTitle()
         {
-            var title = $"{coreSettings.index}.{coreSettings.name}";
+            var title = $"{inbSettings.index}.{inbSettings.name}";
             lbTitle.Text = title;
             toolTip1.SetToolTip(lbTitle, title);
-
-            var tag = "";
-            tag += coreSettings.useFile ? "F" : "";
-            tag += coreSettings.useStdin ? "I" : "";
-            tag += coreSettings.setWorkingDir ? "W" : "";
-            rlbBinding.Text = tag;
-
-            var visible = !string.IsNullOrEmpty(tag);
-            rlbBinding.Visible = visible;
-            lbTitle.Left = visible ? rlbBinding.Right + rlbBinding.Left : rlbBinding.Left;
+            rlbBinding.Text = inbSettings.format;
+            toolTip1.SetToolTip(rlbBinding, $"{I18N.Format}: {inbSettings.format}");
         }
 
         private void InvokeOnRequireReloadIgnoreError()
@@ -83,13 +75,13 @@ namespace V2RayGCon.Views.UserControls
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            var form = new WinForms.FormCustomCoreSettings(coreSettings);
+            var form = new WinForms.FormCustomInboundSettings(inbSettings);
             form.FormClosed += (s, a) =>
             {
                 if (form.DialogResult == DialogResult.OK)
                 {
-                    var coreSet = form.coreSettings;
-                    Services.Settings.Instance.AddOrReplaceCustomCoreSettings(coreSet);
+                    var inbSet = form.inbSettings;
+                    Services.Settings.Instance.AddOrReplaceCustomInboundSettings(inbSet);
                     InvokeOnRequireReloadIgnoreError();
                 }
             };
@@ -98,10 +90,10 @@ namespace V2RayGCon.Views.UserControls
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            var msg = string.Format(I18N.ConfirmDeleteTpl, coreSettings.name);
+            var msg = string.Format(I18N.ConfirmDeleteTpl, inbSettings.name);
             if (VgcApis.Misc.UI.Confirm(msg))
             {
-                var ok = Services.Settings.Instance.RemoveCustomCoreByName(coreSettings.name);
+                var ok = Services.Settings.Instance.RemoveCustomInboundByName(inbSettings.name);
                 if (ok)
                 {
                     InvokeOnRequireReloadIgnoreError();

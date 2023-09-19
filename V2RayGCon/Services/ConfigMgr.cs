@@ -128,109 +128,6 @@ namespace V2RayGCon.Services
             }
         }
 
-        public bool ModifyInboundWithCustomSetting(
-            ref JObject config,
-            int inbType,
-            string ip,
-            int port
-        )
-        {
-            if (inbType == (int)Models.Datas.Enums.ProxyTypes.Config)
-            {
-                return true;
-            }
-
-            if (inbType == (int)Models.Datas.Enums.ProxyTypes.Custom)
-            {
-                try
-                {
-                    var inbs = JArray.Parse(setting.CustomDefInbounds);
-                    config["inbounds"] = inbs;
-                    return true;
-                }
-                catch
-                {
-                    setting.SendLog(I18N.ParseCustomInboundsSettingFail);
-                }
-                return false;
-            }
-
-            if (
-                inbType != (int)Models.Datas.Enums.ProxyTypes.HTTP
-                && inbType != (int)Models.Datas.Enums.ProxyTypes.SOCKS
-            )
-            {
-                return false;
-            }
-
-            var protocol = Misc.Utils.InboundTypeNumberToName(inbType);
-            var tplKey = protocol + "In";
-            try
-            {
-                JObject o = CreateInboundSetting(inbType, ip, port, protocol, tplKey);
-
-                ReplaceInboundSetting(ref config, o);
-#if DEBUG
-                var debug = config.ToString(Formatting.Indented);
-#endif
-                return true;
-            }
-            catch
-            {
-                setting.SendLog(I18N.CoreCantSetLocalAddr);
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// ref means config will change after the function is executed.
-        /// </summary>
-        /// <param name="config"></param>
-        /// <returns></returns>
-        public void InjectSkipCnSiteSettingsIntoConfig(ref JObject config, bool useV4)
-        {
-            var c = JObject.Parse(@"{}");
-
-            var dict = new Dictionary<string, string>
-            {
-                { "dns", "dnsCFnGoogle" },
-                { "routing", GetRoutingTplName(config, useV4) },
-            };
-
-            foreach (var item in dict)
-            {
-                var tpl = Misc.Utils.CreateJObject(item.Key);
-                var value = cache.tpl.LoadExample(item.Value);
-                tpl[item.Key] = value;
-
-                if (!Misc.Utils.Contains(config, tpl))
-                {
-                    c[item.Key] = value;
-                }
-            }
-
-            // put dns/routing settings in front of user settings
-            Misc.Utils.CombineConfigWithRoutingInFront(ref config, c);
-
-            // put outbounds after user settings
-            var hasOutbounds = Misc.Utils.GetKey(config, "outbounds") != null;
-            var hasOutDtr = Misc.Utils.GetKey(config, "outboundDetour") != null;
-
-            var outboundTag = "outboundDetour";
-            if (!hasOutDtr && (hasOutbounds || useV4))
-            {
-                outboundTag = "outbounds";
-            }
-
-            var o = Misc.Utils.CreateJObject(outboundTag, cache.tpl.LoadExample("outDtrFreedom"));
-
-            if (!Misc.Utils.Contains(config, o))
-            {
-                Misc.Utils.CombineConfigWithRoutingInFront(ref o, config);
-                config = o;
-            }
-        }
-
         public JObject GenV4ServersPackageConfig(
             List<VgcApis.Interfaces.ICoreServCtrl> servList,
             VgcApis.Models.Datas.Enums.PackageTypes packageType
@@ -456,28 +353,14 @@ namespace V2RayGCon.Services
             return new Tuple<long, long>(latency, len);
         }
 
-        JObject CreateInboundSetting(
-            int inboundType,
-            string ip,
-            int port,
-            string protocol,
-            string tplKey
-        )
-        {
-            var o = JObject.Parse(@"{}");
-            o["tag"] = "agentin";
-            o["protocol"] = protocol;
-            o["listen"] = ip;
-            o["port"] = port;
-            o["settings"] = cache.tpl.LoadTemplate(tplKey);
-
-            if (inboundType == (int)Models.Datas.Enums.ProxyTypes.SOCKS)
-            {
-                o["settings"]["ip"] = ip;
-            }
-
-            return o;
-        }
+        static readonly string httpInboundsTemplate =
+            @"[{
+    ""tag"": ""agentin"",
+    ""protocol"": ""http"",
+    ""port"": %port%,
+    ""listen"": ""%host%"",
+    ""settings"": { }
+}]";
 
         string CreateSpeedTestConfig(string rawConfig, int port)
         {
@@ -487,39 +370,37 @@ namespace V2RayGCon.Services
                 return empty;
             }
 
-            var config = VgcApis.Misc.Utils.ParseJObject(rawConfig);
+            var json = VgcApis.Misc.Utils.ParseJObject(rawConfig);
+            if (json == null)
+            {
+                return empty;
+            }
 
-            if (config == null)
+            try
+            {
+                var inb = httpInboundsTemplate
+                    .Replace("%host%", VgcApis.Models.Consts.Webs.LoopBackIP)
+                    .Replace("%port%", port.ToString());
+                json["inbounds"] = JArray.Parse(inb);
+            }
+            catch
             {
                 return empty;
             }
 
             // inject log config
-            var nodeLog = Misc.Utils.GetKey(config, "log");
+            var nodeLog = Misc.Utils.GetKey(json, "log");
             if (nodeLog != null && nodeLog is JObject)
             {
                 nodeLog["loglevel"] = "warning";
             }
             else
             {
-                config["log"] = JToken.Parse("{'loglevel': 'warning'}");
-            }
-
-            if (
-                !ModifyInboundWithCustomSetting(
-                    ref config,
-                    (int)Models.Datas.Enums.ProxyTypes.HTTP,
-                    VgcApis.Models.Consts.Webs.LoopBackIP,
-                    port
-                )
-            )
-            {
-                return empty;
+                json["log"] = JToken.Parse("{'loglevel': 'warning'}");
             }
 
             // debug
-            var configString = config.ToString(Formatting.None);
-
+            var configString = VgcApis.Misc.Utils.FormatConfig(json);
             return configString;
         }
 
@@ -532,29 +413,6 @@ namespace V2RayGCon.Services
 
             var isUseRoutingV4 = !hasRoutingV3 && (useV4 || hasRoutingV4);
             return isUseRoutingV4 ? "routeCnipV4" : "routeCNIP";
-        }
-
-        void ReplaceInboundSetting(ref JObject config, JObject o)
-        {
-            // Bug. Stream setting will mess things up.
-            // Misc.Utils.MergeJson(ref config, o);
-
-            var hasInbound = Misc.Utils.GetKey(config, "inbound") != null;
-            var hasInbounds = Misc.Utils.GetKey(config, "inbounds.0") != null;
-            var isUseV4 = !hasInbound && (hasInbounds || setting.isUseV4);
-
-            if (isUseV4)
-            {
-                if (!hasInbounds)
-                {
-                    config["inbounds"] = JArray.Parse(@"[{}]");
-                }
-                config["inbounds"][0] = o;
-            }
-            else
-            {
-                config["inbound"] = o;
-            }
         }
 
         #endregion

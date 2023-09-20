@@ -160,7 +160,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public string GetUid()
         {
             var changed = false;
-            lock (coreInfo.uid)
+            lock (coreInfo)
             {
                 if (string.IsNullOrEmpty(coreInfo.uid))
                 {

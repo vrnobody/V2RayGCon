@@ -400,22 +400,22 @@ namespace VgcApis.Misc
 
         public static Models.Datas.Enums.ConfigType DetectConfigType(string config)
         {
-            var unknow = Models.Datas.Enums.ConfigType.Text;
+            var text = Models.Datas.Enums.ConfigType.text;
             if (string.IsNullOrEmpty(config) || config.Length < 2)
             {
-                return unknow;
+                return text;
             }
             if (config[0] == '{' && config[config.Length - 1] == '}')
             {
-                return Models.Datas.Enums.ConfigType.Json;
+                return Models.Datas.Enums.ConfigType.json;
             }
 
             if (Regex.IsMatch(config, @"^ *[a-zA-Z][\w\-_]*:"))
             {
-                return Models.Datas.Enums.ConfigType.Yaml;
+                return Models.Datas.Enums.ConfigType.yaml;
             }
 
-            return unknow;
+            return text;
         }
 
         public static List<int> FindAll(string haystack, string needle)
@@ -1361,13 +1361,21 @@ namespace VgcApis.Misc
             return FormatConfig(json);
         }
 
-        public static JObject ParseJObject(string json)
+        public static bool IsJson(string config)
         {
-            try
+            return DetectConfigType(config) == Models.Datas.Enums.ConfigType.json;
+        }
+
+        public static JObject ParseJObject(string config)
+        {
+            if (IsJson(config))
             {
-                return JObject.Parse(json);
+                try
+                {
+                    return JObject.Parse(config);
+                }
+                catch { }
             }
-            catch { }
             return null;
         }
 

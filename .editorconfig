@@ -1,7 +1,13 @@
 ﻿[*.cs]
 
+# 默认换行
+end_of_line=lf
+
 # IDE1006: 命名样式
 dotnet_diagnostic.IDE1006.severity = none
 
 # CA1031: Do not catch general exception types
 dotnet_diagnostic.CA1031.severity = none
+
+# CA1802: static readonly to constant
+dotnet_diagnostic.CA1802.severity = none

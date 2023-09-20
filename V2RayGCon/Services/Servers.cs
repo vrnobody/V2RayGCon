@@ -1213,15 +1213,10 @@ namespace V2RayGCon.Services
         void PatchConfig(Controllers.CoreServerCtrl coreServ)
         {
             var config = coreServ.GetConfiger().GetConfig();
-            var isJson =
-                VgcApis.Misc.Utils.DetectConfigType(config)
-                == VgcApis.Models.Datas.Enums.ConfigType.Json;
-
-            if (!isJson)
+            if (VgcApis.Misc.Utils.IsJson(config))
             {
                 return;
             }
-
             try
             {
                 var json = JObject.Parse(config);

@@ -7,9 +7,9 @@ namespace VgcApis.Models.Datas
         [Flags]
         public enum ConfigType
         {
-            Text,
-            Json,
-            Yaml,
+            text,
+            json,
+            yaml,
         }
 
         public enum PackageTypes

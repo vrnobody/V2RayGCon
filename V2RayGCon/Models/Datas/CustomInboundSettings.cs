@@ -32,9 +32,9 @@ namespace V2RayGCon.Models.Datas
                     case "json":
                         return MergeJsonConfig(config, tpl);
                     case "yaml":
-                        return MergeYamlConfig(config, tpl);
+                    // 没找到不需要通行定义class的YAML库，只好当成文本添加到头部了。
                     default:
-                        return string.Join("\n", new List<string>() { tpl, config });
+                        return MergeTextConfig(config, tpl);
                 }
             }
             catch { }
@@ -55,10 +55,9 @@ namespace V2RayGCon.Models.Datas
 
         #region private
 
-        string MergeYamlConfig(string config, string inbound)
+        string MergeTextConfig(string config, string inbound)
         {
-            VgcApis.Misc.UI.MsgBox("YAML is not supported yet!");
-            return null;
+            return string.Join("\n", new List<string>() { inbound, config });
         }
 
         string MergeJsonConfig(string config, string inbound)

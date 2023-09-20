@@ -279,20 +279,13 @@ namespace V2RayGCon.Services
         {
             const int jiff = 300;
             int cycle = 30 * 1000 / jiff;
-            int i;
-            for (i = 0; i < cycle && !core.isReady && core.isRunning; i++)
+            for (int i = 0; i < cycle && core.isRunning; i++)
             {
+                if (core.isReady)
+                {
+                    return true;
+                }
                 VgcApis.Misc.Utils.Sleep(jiff);
-            }
-
-            if (!core.isRunning)
-            {
-                return false;
-            }
-
-            if (i < cycle)
-            {
-                return true;
             }
             return false;
         }
@@ -403,18 +396,6 @@ namespace V2RayGCon.Services
             var configString = VgcApis.Misc.Utils.FormatConfig(json);
             return configString;
         }
-
-        string GetRoutingTplName(JObject config, bool useV4)
-        {
-            var routingRules = Misc.Utils.GetKey(config, "routing.rules");
-            var routingSettingsRules = Misc.Utils.GetKey(config, "routing.settings.rules");
-            var hasRoutingV4 = routingRules != null && (routingRules is JArray);
-            var hasRoutingV3 = routingSettingsRules != null && (routingSettingsRules is JArray);
-
-            var isUseRoutingV4 = !hasRoutingV3 && (useV4 || hasRoutingV4);
-            return isUseRoutingV4 ? "routeCnipV4" : "routeCNIP";
-        }
-
         #endregion
     }
 }

@@ -75,21 +75,29 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GetFinalConfig()
         {
-            try
-            {
-                var config = setting
+            var config = GetConfig();
+            var r =
+                setting
                     .GetCustomInboundsSetting()
                     .FirstOrDefault(inb => inb.name == coreInfo.inbName)
-                    ?.MergeToConfig(GetConfig(), coreInfo.inbIp, coreInfo.inbPort);
-                var json = JObject.Parse(config);
+                    ?.MergeToConfig(config, coreInfo.inbIp, coreInfo.inbPort) ?? config;
+
+            if (!VgcApis.Misc.Utils.IsJson(r))
+            {
+                return r;
+            }
+
+            try
+            {
+                var json = JObject.Parse(r);
                 InjectStatisticsConfigOnDemand(ref json);
                 configMgr.MergeCustomTlsSettings(ref json);
-                config = VgcApis.Misc.Utils.FormatConfig(json);
-                return config;
+                var s = VgcApis.Misc.Utils.FormatConfig(json);
+                return s;
             }
             catch { }
 
-            return GetConfig();
+            return r;
         }
 
         public string GetRawConfig() => coreInfo.config;
@@ -100,13 +108,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             try
             {
-                var json = VgcApis.Misc.Utils.ParseJObject(GetFinalConfig());
-                if (json != null)
-                {
-                    // update summary should not clear status
-                    // this.status = string.Empty;
-                    UpdateSummary(json);
-                }
+                var config = GetFinalConfig();
+
+                UpdateSummaryCore(config);
             }
             catch { }
             GetParent().InvokeEventOnPropertyChange();
@@ -203,9 +207,25 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             config = result;
         }
 
-        void UpdateSummary(JObject config)
+        void UpdateSummaryCore(string config)
         {
-            var summary = Misc.Utils.GetSummaryFromConfig(config);
+            var ty = VgcApis.Misc.Utils.DetectConfigType(config);
+            var summary = $"<unknow {ty}>";
+            switch (ty)
+            {
+                case VgcApis.Models.Datas.Enums.ConfigType.json:
+                    var s = Misc.Utils.ExtractSummaryFromConfig(config);
+                    if (!string.IsNullOrEmpty(s))
+                    {
+                        summary = s;
+                    }
+                    break;
+                case VgcApis.Models.Datas.Enums.ConfigType.yaml:
+                // 占坑
+                default:
+                    break;
+            }
+
             coreInfo.summary = VgcApis.Misc.Utils.FilterControlChars(summary);
 
             // update title & longname

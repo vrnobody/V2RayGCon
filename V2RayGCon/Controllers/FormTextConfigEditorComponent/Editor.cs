@@ -54,17 +54,15 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
             SaveCurrentPosition();
             switch (ty)
             {
-                case VgcApis.Models.Datas.Enums.ConfigType.Json:
+                case VgcApis.Models.Datas.Enums.ConfigType.json:
                     var config = VgcApis.Misc.Utils.FormatConfig(content);
                     if (config != null)
                     {
                         content = config;
-                        RestorePosition();
+                        RestorePreviousPosition();
                     }
                     break;
-                case VgcApis.Models.Datas.Enums.ConfigType.Yaml:
-                    // to-do
-                    break;
+                case VgcApis.Models.Datas.Enums.ConfigType.yaml:
                 default:
                     break;
             }
@@ -178,12 +176,10 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
 
         void UpdateLexer()
         {
-            var isUnknow =
-                VgcApis.Misc.Utils.DetectConfigType(content)
-                == VgcApis.Models.Datas.Enums.ConfigType.Text;
-            var color = isUnknow ? Color.Black : Color.Silver;
-            editor.Lexer = isUnknow ? Lexer.Null : Lexer.Json;
+            var isJson = VgcApis.Misc.Utils.IsJson(content);
+            var color = isJson ? Color.Silver : Color.Black;
             editor.Styles[Style.Json.Default].ForeColor = color;
+            editor.Lexer = isJson ? Lexer.Json : Lexer.Null;
         }
         #endregion
 
@@ -195,7 +191,7 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
             editorPosition = new Point(editor.CurrentPosition, editor.FirstVisibleLine);
         }
 
-        void RestorePosition()
+        void RestorePreviousPosition()
         {
             editor.GotoPosition(editorPosition.X);
             editor.FirstVisibleLine = editorPosition.Y;

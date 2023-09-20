@@ -157,40 +157,44 @@ namespace V2RayGCon.Misc
             return string.IsNullOrEmpty(name) ? I18N.Empty : name;
         }
 
-        public static string GetSummaryFromConfig(JObject config)
+        public static string ExtractSummaryFromConfig(string config)
         {
-            var strategy = GetValue<string>(config, "routing.balancers.0.strategy.type");
+            var json = VgcApis.Misc.Utils.ParseJObject(config);
+            if (json == null)
+            {
+                return string.Empty;
+            }
+
+            var count = json["outbounds"]?.Count() ?? 0;
+            var strategy = GetValue<string>(json, "routing.balancers.0.strategy.type");
             if (!string.IsNullOrEmpty(strategy))
             {
-                return $"balancer: {strategy}";
+                return $"balancer: {count} {strategy}";
             }
 
-            var tag = GetValue<string>(config, "routing.balancers.0.tag");
+            var tag = GetValue<string>(json, "routing.balancers.0.tag");
             if (!string.IsNullOrEmpty(tag))
             {
-                return @"balancer: random";
+                return $"balancer: {count} random";
             }
 
-            var proxy = GetValue<string>(config, "outbounds.0.proxySettings.tag");
+            var proxy = GetValue<string>(json, "outbounds.0.proxySettings.tag");
             if (!string.IsNullOrEmpty(proxy))
             {
-                var count = config["outbounds"].Count();
                 return $"proxychain: {count}";
             }
 
-            var result = GetSummaryFromConfig(config, "outbound");
-
+            var result = GetSummaryFromConfig(json, "outbounds.0");
             if (string.IsNullOrEmpty(result))
             {
-                return GetSummaryFromConfig(config, "outbounds.0");
+                result = GetSummaryFromConfig(json, "outbound");
             }
-
             return result;
         }
 
-        public static string GetStreamSettingInfo(JObject config, string root)
+        static string GetStreamSettingInfo(JObject json, string root)
         {
-            var streamType = GetValue<string>(config, root + ".streamSettings.network")?.ToLower();
+            var streamType = GetValue<string>(json, root + ".streamSettings.network")?.ToLower();
             // "tcp" | "kcp" | "ws" | "http" | "domainsocket" | "quic"
             string result;
             switch (streamType)
@@ -206,7 +210,7 @@ namespace V2RayGCon.Misc
                     break;
             }
 
-            var sec = GetValue<string>(config, root + ".streamSettings.security")?.ToLower();
+            var sec = GetValue<string>(json, root + ".streamSettings.security")?.ToLower();
             if (!string.IsNullOrWhiteSpace(sec) && sec != "none")
             {
                 result += $".{sec}";
@@ -214,9 +218,9 @@ namespace V2RayGCon.Misc
             return result;
         }
 
-        public static string GetSummaryFromConfig(JObject config, string root)
+        static string GetSummaryFromConfig(JObject json, string root)
         {
-            var protocol = GetValue<string>(config, root + ".protocol")?.ToLower();
+            var protocol = GetValue<string>(json, root + ".protocol")?.ToLower();
             if (protocol == null)
             {
                 return string.Empty;
@@ -240,8 +244,8 @@ namespace V2RayGCon.Misc
                     break;
             }
 
-            string addr = GetValue<string>(config, addrKey);
-            string streamType = GetStreamSettingInfo(config, root);
+            string addr = GetValue<string>(json, addrKey);
+            string streamType = GetStreamSettingInfo(json, root);
 
             return protocol
                 + (string.IsNullOrEmpty(streamType) ? "" : $".{streamType}")

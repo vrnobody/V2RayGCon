@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -306,37 +307,29 @@ namespace V2RayGCon.Libs.V2Ray
             catch { }
         }
 
-        Process CreateCustomCoreProcess(string config)
+        Process CreateCustomCoreProcess(Models.Datas.CustomCoreSettings customSettings)
         {
-            var cs = GetCustomCoreSettings();
-            var ec = cs.GetStdOutEncoding();
+            var ec = customSettings.GetStdOutEncoding();
             var p = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = GetCustomCoreExePath(),
-                    Arguments = cs.args,
+                    Arguments = customSettings.args,
                     CreateNoWindow = true,
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
-                    RedirectStandardInput = cs.useStdin,
+                    RedirectStandardInput = customSettings.useStdin,
                     StandardOutputEncoding = ec,
                     StandardErrorEncoding = ec,
                 }
             };
-            if (cs.setWorkingDir)
+            if (customSettings.setWorkingDir)
             {
-                p.StartInfo.WorkingDirectory = cs.dir;
+                p.StartInfo.WorkingDirectory = customSettings.dir;
             }
             p.EnableRaisingEvents = true;
-
-            if (cs.useFile)
-            {
-                // 保持args和config file路径一致
-                var file = cs.configFile;
-                File.WriteAllText(file, config);
-            }
             return p;
         }
 
@@ -484,23 +477,49 @@ namespace V2RayGCon.Libs.V2Ray
             catch { }
         }
 
+        static readonly ConcurrentDictionary<string, AutoResetEvent> fileLockers =
+            new ConcurrentDictionary<string, AutoResetEvent>();
+
+        void WaitForFile(string filename)
+        {
+            var n = new AutoResetEvent(true);
+            if (!fileLockers.ContainsKey(filename))
+            {
+                fileLockers.TryAdd(filename, n);
+            }
+            fileLockers.TryGetValue(filename, out var r);
+            var mre = r ?? n;
+            mre.WaitOne();
+            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            {
+                VgcApis.Misc.Utils.Sleep(3000);
+                mre.Set();
+            });
+        }
+
         void StartCore(string config, Dictionary<string, string> envs, bool quiet)
         {
             var isCustomCore = IsCustomCore();
             isReady = false;
-            var core = isCustomCore ? CreateCustomCoreProcess(config) : CreateV2RayCoreProcess();
+            var cs = isCustomCore ? GetCustomCoreSettings() : null;
+            var core = isCustomCore ? CreateCustomCoreProcess(cs) : CreateV2RayCoreProcess();
             VgcApis.Misc.Utils.SetProcessEnvs(core, envs);
 
             BindEvents(core, quiet);
             Interlocked.Increment(ref curConcurrentV2RayCoreNum);
+
+            if (isCustomCore && cs.useFile)
+            {
+                var fn = cs.configFile;
+                WaitForFile(fn);
+                File.WriteAllText(fn, config);
+            }
 
             core.Start();
             this.coreProc = core;
 
             // Add to JOB object require win8+.
             VgcApis.Libs.Sys.ChildProcessTracker.AddProcess(core);
-
-            var cs = GetCustomCoreSettings();
 
             if (!isCustomCore || cs.useStdin)
             {

@@ -547,7 +547,7 @@
     <value />
   </data>
   <data name="tabPageCustomCoresSetting.Text" xml:space="preserve">
-    <value>自定义Cores</value>
+    <value>多内核</value>
   </data>
   <data name="tabPageCustomCoresSetting.ToolTip" xml:space="preserve">
     <value />

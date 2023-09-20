@@ -1395,7 +1395,7 @@
     <value>Enable</value>
   </data>
   <data name="tabPageInboundsSetting.Text" xml:space="preserve">
-    <value>Inbs</value>
+    <value>Inbounds</value>
   </data>
   <data name="tboxSetDebugFilePath.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>

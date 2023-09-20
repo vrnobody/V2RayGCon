@@ -18,6 +18,26 @@ namespace VgcApisTests
     public class UtilsTests
     {
         [DataTestMethod]
+        [DataRow(
+            @"TAG: agentout,inbounds,Inbounds,log,OUTBOUNDS,outbounds,tag: n10s10,tag: n1s2,tag: n1s0,tag: agentin",
+            @"inbounds,Inbounds,log,OUTBOUNDS,outbounds,tag: agentin,TAG: agentout,tag: n1s0,tag: n1s2,tag: n10s10"
+        )]
+        [DataRow(
+            @"tag: a10s10,tag: a10s0,tag: a0s1,tag: a0s0",
+            @"tag: a0s0,tag: a0s1,tag: a10s0,tag: a10s10"
+        )]
+        [DataRow(@"b2,a10s0,a0s1,a1s10,b1,a1s5", "a0s1,a1s5,a1s10,a10s0,b1,b2")]
+        [DataRow(@"2,,1", ",1,2")]
+        [DataRow(@"0,1,2", "0,1,2")]
+        public void TagStringComparerTest(string src, string exp)
+        {
+            var ls = src.Split(',').ToList();
+            ls.Sort(TagStringComparer);
+            var r = string.Join(",", ls);
+            Assert.AreEqual(exp, r);
+        }
+
+        [DataTestMethod]
         [DataRow(@"{}", ConfigType.Json)]
         [DataRow("{\n\n}", ConfigType.Json)]
         [DataRow(@"{\n\n\n", ConfigType.Text)]

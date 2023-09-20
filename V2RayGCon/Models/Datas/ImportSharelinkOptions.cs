@@ -15,7 +15,8 @@
         public bool IsBypassCnSite { get; set; }
 
         public string DefaultCoreName { get; set; } = "";
-        public string DefaultInboundName { get; set; } = "";
+
+        public string DefaultInboundName { get; set; } = "http";
 
         public string Ip { get; set; }
         public int Port { get; set; }

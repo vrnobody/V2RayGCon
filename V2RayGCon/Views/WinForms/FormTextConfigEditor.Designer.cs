@@ -38,6 +38,7 @@ namespace V2RayGCon.Views.WinForms
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.formatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.loadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,6 +117,7 @@ namespace V2RayGCon.Views.WinForms
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
+            this.formatToolStripMenuItem,
             this.toolStripMenuItem1,
             this.loadFileToolStripMenuItem,
             this.saveAsToolStripMenuItem,
@@ -129,6 +131,12 @@ namespace V2RayGCon.Views.WinForms
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             resources.ApplyResources(this.openToolStripMenuItem, "openToolStripMenuItem");
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // formatToolStripMenuItem
+            // 
+            this.formatToolStripMenuItem.Name = "formatToolStripMenuItem";
+            resources.ApplyResources(this.formatToolStripMenuItem, "formatToolStripMenuItem");
+            this.formatToolStripMenuItem.Click += new System.EventHandler(this.formatToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -209,14 +217,14 @@ namespace V2RayGCon.Views.WinForms
             resources.ApplyResources(this.searchToolStripMenuItem, "searchToolStripMenuItem");
             this.searchToolStripMenuItem.Click += new System.EventHandler(this.searchToolStripMenuItem_Click);
             // 
-            // toolStripCboxNavigtor
+            // toolStripCboxNavigtion
             // 
             this.toolStripCboxNavigtion.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripCboxNavigtion.BackColor = System.Drawing.SystemColors.Window;
             this.toolStripCboxNavigtion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            resources.ApplyResources(this.toolStripCboxNavigtion, "toolStripCboxNavigtor");
+            resources.ApplyResources(this.toolStripCboxNavigtion, "toolStripCboxNavigtion");
             this.toolStripCboxNavigtion.Margin = new System.Windows.Forms.Padding(1, 0, 3, 0);
-            this.toolStripCboxNavigtion.Name = "toolStripCboxNavigtor";
+            this.toolStripCboxNavigtion.Name = "toolStripCboxNavigtion";
             this.toolStripCboxNavigtion.Tag = "";
             // 
             // FormTextConfigEditor
@@ -269,5 +277,6 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.ToolStripMenuItem overwriteServerToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStripComboBox toolStripCboxNavigtion;
+        private System.Windows.Forms.ToolStripMenuItem formatToolStripMenuItem;
     }
 }

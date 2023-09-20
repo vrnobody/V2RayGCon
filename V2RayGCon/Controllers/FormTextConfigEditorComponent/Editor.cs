@@ -48,6 +48,28 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
             AttachEditorEvents();
         }
 
+        public void Format()
+        {
+            var ty = VgcApis.Misc.Utils.DetectConfigType(content);
+            SaveCurrentPosition();
+            switch (ty)
+            {
+                case VgcApis.Models.Datas.Enums.ConfigType.Json:
+                    var config = VgcApis.Misc.Utils.FormatConfig(content);
+                    if (config != null)
+                    {
+                        content = config;
+                        RestorePosition();
+                    }
+                    break;
+                case VgcApis.Models.Datas.Enums.ConfigType.Yaml:
+                    // to-do
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public void ZoomIn() => editor.ZoomIn();
 
         public void ZoomOut() => editor.ZoomOut();
@@ -166,6 +188,19 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
         #endregion
 
         #region private methods
+        Point editorPosition = new Point();
+
+        void SaveCurrentPosition()
+        {
+            editorPosition = new Point(editor.CurrentPosition, editor.FirstVisibleLine);
+        }
+
+        void RestorePosition()
+        {
+            editor.GotoPosition(editorPosition.X);
+            editor.FirstVisibleLine = editorPosition.Y;
+        }
+
         void ReleaseEditorEvents()
         {
             editor.InsertCheck -= Scintilla_InsertCheck;
@@ -191,6 +226,7 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
             if (!string.IsNullOrEmpty(key) && tags.TryGetValue(key, out var num))
             {
                 ScrollToLine(num);
+                editor.Focus();
             }
         }
 
@@ -213,9 +249,11 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
         {
             var lines = editor.Lines.Select(line => line.Text).ToList();
             tags = VgcApis.Misc.Utils.GetConfigTags(lines);
+            var keys = tags.Keys.ToList();
+            keys.Sort(VgcApis.Misc.Utils.TagStringComparer);
             var items = cboxNavigation.Items;
             items.Clear();
-            items.AddRange(tags.Select(t => t.Key).OrderBy(k => k).ToArray());
+            items.AddRange(keys.ToArray());
             VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxNavigation);
         }
 

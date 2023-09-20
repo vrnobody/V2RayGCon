@@ -4,7 +4,7 @@ using V2RayGCon.Views.WinForms;
 
 namespace V2RayGCon.Controllers
 {
-    public class FormTextConfigEditorCtrl : BaseClasses.FormController
+    internal class FormTextConfigEditorCtrl : BaseClasses.FormController
     {
         FormTextConfigEditorComponent.Editor editor;
         readonly Services.Servers servers;
@@ -73,11 +73,7 @@ namespace V2RayGCon.Controllers
             editor = GetComponent<FormTextConfigEditorComponent.Editor>();
         }
 
-        public void ZoomIn() => editor.ZoomIn();
-
-        public void ZoomOut() => editor.ZoomOut();
-
-        public void ShowSearchBox() => editor.ShowSearchBox();
+        public FormTextConfigEditorComponent.Editor GetEditor() => editor;
 
         public void Cleanup()
         {

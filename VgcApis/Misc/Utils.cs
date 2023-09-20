@@ -66,7 +66,7 @@ namespace VgcApis.Misc
         public static void ClearControlKeys(Scintilla scintilla, List<Keys> extra)
         {
             // key binding
-            var keys = new List<Keys>() { Keys.F, Keys.G, Keys.H, Keys.N, Keys.P, Keys.S, };
+            var keys = new List<Keys>() { Keys.F, Keys.G, Keys.H, Keys.K, Keys.N, Keys.P, Keys.S, };
 
             if (extra != null && extra.Count() > 0)
             {
@@ -1249,6 +1249,57 @@ namespace VgcApis.Misc
                 catch { }
             }
             return null;
+        }
+
+        public static int TagStringComparer(string a, string b)
+        {
+            if (a == b)
+            {
+                return 0;
+            }
+
+            var pa = ParseTagString(a);
+            var pb = ParseTagString(b);
+            var la = pa.Count;
+            var lb = pb.Count;
+            var len = Math.Min(la, lb);
+            for (int i = 0; i < len; i++)
+            {
+                var ia = pa[i];
+                var ib = pb[i];
+                if (ia != ib)
+                {
+                    if (int.TryParse(ia, out var na) && int.TryParse(ib, out var nb))
+                    {
+                        return na.CompareTo(nb);
+                    }
+                    else
+                    {
+                        return ia?.CompareTo(ib) ?? -1;
+                    }
+                }
+            }
+            return la.CompareTo(lb);
+        }
+
+        static List<string> ParseTagString(string s)
+        {
+            if (!string.IsNullOrEmpty(s))
+            {
+                try
+                {
+                    var ma = Regex.Match(s.ToLower(), @"([^\d]*)(\d*)([^\d]*)(\d*)");
+                    var g = ma.Groups;
+                    var r = new List<string>();
+                    for (int i = 1; i < g.Count; i++)
+                    {
+                        r.Add(g[i].Value);
+                    }
+                    return r;
+                }
+                catch { }
+            }
+            return new List<string>();
         }
 
         /// <summary>

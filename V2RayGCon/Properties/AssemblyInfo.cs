@@ -33,11 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.8.4.5")]
+[assembly: AssemblyVersion("1.8.4.6")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v1.8.4.6 Minor UI update.
 v1.8.4.5 (WIP) custom cores: add custom inbounds setting tab FormOption.
 v1.8.4.4 Fix FormMain page switchers not working if filter is set to #index.
          Add Ctrl+F hotkey for FormMain.

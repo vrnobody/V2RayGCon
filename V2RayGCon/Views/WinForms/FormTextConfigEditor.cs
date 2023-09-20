@@ -120,15 +120,18 @@ namespace V2RayGCon.Views.WinForms
                     {
                         switch (keyCode)
                         {
+                            case (Keys.Control | Keys.K):
+                                ctrl.GetEditor().Format();
+                                break;
                             case (Keys.Control | Keys.F):
                             case (Keys.Control | Keys.H):
-                                ctrl.ShowSearchBox();
+                                ctrl.GetEditor().ShowSearchBox();
                                 break;
                             case (Keys.Control | Keys.OemOpenBrackets):
-                                ctrl.ZoomOut();
+                                ctrl.GetEditor().ZoomOut();
                                 break;
                             case (Keys.Control | Keys.Oem6):
-                                ctrl.ZoomIn();
+                                ctrl.GetEditor().ZoomIn();
                                 break;
                         }
                     })
@@ -145,7 +148,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void searchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ctrl.ShowSearchBox();
+            ctrl.GetEditor().ShowSearchBox();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -200,6 +203,10 @@ namespace V2RayGCon.Views.WinForms
             }
         }
 
+        private void formatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ctrl.GetEditor().Format();
+        }
         #endregion
     }
 }

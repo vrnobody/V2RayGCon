@@ -292,13 +292,7 @@ namespace Luna.Views.WinForms
         {
             var content = GetColumns(true, isSelectedOnly);
             var text = List2Csv(content);
-            VgcApis.Models.Datas.Enums.SaveFileErrorCode ok = VgcApis
-                .Models
-                .Datas
-                .Enums
-                .SaveFileErrorCode
-                .Cancel;
-            ok = VgcApis.Misc.UI.ShowSaveFileDialog(
+            VgcApis.Models.Datas.Enums.SaveFileErrorCode ok = VgcApis.Misc.UI.ShowSaveFileDialog(
                 VgcApis.Models.Consts.Files.CsvExt,
                 text,
                 out _
@@ -322,8 +316,7 @@ namespace Luna.Views.WinForms
         {
             var content = GetColumns(true, true);
             var text = List2Csv(content);
-            var success = false;
-            success = VgcApis.Misc.Utils.CopyToClipboard(text);
+            var success = VgcApis.Misc.Utils.CopyToClipboard(text);
             VgcApis.Misc.UI.MsgBoxAsync(success ? I18N.Done : I18N.Fail);
         }
 

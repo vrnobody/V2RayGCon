@@ -1414,7 +1414,7 @@ namespace Luna.Models.Apis
 
             if (useStdIn)
             {
-                var ie = inputEncoding == null ? EncodingCmd936 : inputEncoding;
+                var ie = inputEncoding ?? EncodingCmd936;
                 var buff = ie.GetBytes(stdin);
 
                 var input = p.StandardInput;

@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Linq;
 using ScintillaNET;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -396,6 +395,75 @@ namespace VgcApis.Misc
                 catch { }
             }
             return r;
+        }
+
+        public static string MergeYamlInboundIntoConfig(string config, string inbound)
+        {
+            if (!IsYaml(config) || !IsYaml(inbound))
+            {
+                return config;
+            }
+
+            var patKey = @"^([a-zA-Z][\w\-_]*):";
+
+            var sb = new StringBuilder();
+
+            var mixin = inbound.Replace("\r\n", "\n").Split(new char[] { '\n' });
+            var keys = new HashSet<string>();
+            foreach (var line in mixin)
+            {
+                sb.AppendLine(line);
+                if (string.IsNullOrEmpty(line))
+                {
+                    continue;
+                }
+                var c = line[0];
+                if (c == '#' || c == ' ')
+                {
+                    continue;
+                }
+                var g = Regex.Match(line, patKey).Groups;
+                if (g.Count > 1)
+                {
+                    keys.Add(g[1].Value);
+                }
+            }
+
+            var body = config.Replace("\r\n", "\n").Split(new char[] { '\n' });
+            for (int i = 0; i < body.Length; i++)
+            {
+                var line = body[i];
+                if (!string.IsNullOrEmpty(line))
+                {
+                    do
+                    {
+                        var g = Regex.Match(line, patKey).Groups;
+                        if (g.Count > 1 && keys.Contains(g[1].Value))
+                        {
+                            for (i++; i < body.Length; i++)
+                            {
+                                line = body[i];
+                                if (
+                                    !string.IsNullOrEmpty(line) && Regex.IsMatch(line, @"^[a-zA-Z]")
+                                )
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    } while (i < body.Length);
+                }
+
+                if (i < body.Length)
+                {
+                    sb.AppendLine(line);
+                }
+            }
+            return sb.ToString()?.Replace("\r\n", "\n");
         }
 
         public static Models.Datas.Enums.ConfigType DetectConfigType(string config)
@@ -1359,6 +1427,11 @@ namespace VgcApis.Misc
         {
             var json = ParseJObject(config);
             return FormatConfig(json);
+        }
+
+        public static bool IsYaml(string config)
+        {
+            return DetectConfigType(config) == Models.Datas.Enums.ConfigType.yaml;
         }
 
         public static bool IsJson(string config)

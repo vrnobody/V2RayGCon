@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Models.Datas;
 

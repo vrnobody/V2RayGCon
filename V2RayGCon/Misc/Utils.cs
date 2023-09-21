@@ -157,7 +157,21 @@ namespace V2RayGCon.Misc
             return string.IsNullOrEmpty(name) ? I18N.Empty : name;
         }
 
-        public static string ExtractSummaryFromConfig(string config)
+        public static string ExtractSummaryFromYaml(string config)
+        {
+            if (VgcApis.Misc.Utils.IsYaml(config))
+            {
+                var pat = @"server: *([^\n]*)";
+                var g = Regex.Match(config, pat).Groups;
+                if (g.Count > 1)
+                {
+                    return $"unknow@{g[1].Value}";
+                }
+            }
+            return "";
+        }
+
+        public static string ExtractSummaryFromJson(string config)
         {
             var json = VgcApis.Misc.Utils.ParseJObject(config);
             if (json == null)

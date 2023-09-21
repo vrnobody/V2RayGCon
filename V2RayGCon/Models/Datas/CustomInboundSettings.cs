@@ -1,9 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace V2RayGCon.Models.Datas
 {
@@ -32,7 +28,8 @@ namespace V2RayGCon.Models.Datas
                     case "json":
                         return MergeJsonConfig(config, tpl);
                     case "yaml":
-                    // 没找到不需要通行定义class的YAML库，只好当成文本添加到头部了。
+                        // 没找到不需要先定义class的YAML库，只好用土制的查找替换了。
+                        return VgcApis.Misc.Utils.MergeYamlInboundIntoConfig(config, tpl);
                     default:
                         return MergeTextConfig(config, tpl);
                 }
@@ -62,6 +59,11 @@ namespace V2RayGCon.Models.Datas
 
         string MergeJsonConfig(string config, string inbound)
         {
+            if (!VgcApis.Misc.Utils.IsJson(config) || !VgcApis.Misc.Utils.IsJson(inbound))
+            {
+                return config;
+            }
+
             var body = JObject.Parse(config);
             var mixin = JObject.Parse(inbound);
             body.Merge(

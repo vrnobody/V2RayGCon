@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -17,6 +16,75 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+        [DataTestMethod]
+        [DataRow(
+            @"name: hello
+
+key: |
+  e
+  f
+
+# this line will be retained
+value: |
+  1
+  2
+  aaa
+
+# this line should be deleted",
+            @"value: |
+  a
+  b
+
+name: t0e中s2t😀文1",
+            @"value: |
+  a
+  b
+
+name: t0e中s2t😀文1
+key: |
+  e
+  f
+
+# this line will be retained
+"
+        )]
+        [DataRow(
+            @"name: hello
+
+key: test
+# this line will be retained
+
+value: world
+# this line should be deleted
+
+",
+            @"name: t0e中s2t😀文1
+
+value: |
+  a
+  b
+",
+            @"name: t0e中s2t😀文1
+
+value: |
+  a
+  b
+
+key: test
+# this line will be retained
+
+"
+        )]
+        [DataRow("", "", "")]
+        [DataRow(null, null, null)]
+        [DataRow(null, "", null)]
+        public void MergeYamlInboundIntoConfigTest(string config, string inbound, string exp)
+        {
+            var c = MergeYamlInboundIntoConfig(config, inbound);
+            var r = c?.Replace("\r\n", "\n");
+            Assert.AreEqual(exp, r);
+        }
+
         [DataTestMethod]
         [DataRow(
             @"TAG: agentout,inbounds,Inbounds,log,OUTBOUNDS,outbounds,tag: n10s10,tag: n1s2,tag: n1s0,tag: agentin",
@@ -260,7 +328,11 @@ namespace VgcApisTests
         [DataRow("a中文测试", -1, false, "")]
         [DataRow("aaaaaaaaa", 5, true, "aaa")]
         [DataRow("", 100, false, "")]
+#pragma warning disable IDE0079 // 请删除不必要的忽略
+#pragma warning disable IDE0060 // 删除未使用的参数
         public void AutoEllipsisTest(string org, int len, bool isEllipsised, string expect)
+#pragma warning restore IDE0079 // 请删除不必要的忽略
+#pragma warning restore IDE0060 // 删除未使用的参数
         {
             var defFont = VgcApis.Models.Consts.AutoEllipsis.defFont;
             var orgLen = org.Length;

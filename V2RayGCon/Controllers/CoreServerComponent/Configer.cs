@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
@@ -42,28 +43,15 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public VgcApis.Models.Datas.InboundInfo GetInboundInfo()
         {
-            var config = VgcApis.Misc.Utils.ParseJObject(GetFinalConfig());
-            if (config == null)
+            var config = GetFinalConfig();
+
+            if (VgcApis.Misc.Utils.IsYaml(config))
             {
-                return null;
+                return GetInboundInfoFromYaml(config);
             }
 
-            foreach (var p in new string[] { "inbound", "inbounds.0" })
-            {
-                var protocol = Misc.Utils.GetValue<string>(config, p, "protocol");
-                if (!string.IsNullOrEmpty(protocol))
-                {
-                    string host = Misc.Utils.GetValue<string>(config, p, "listen");
-                    return new VgcApis.Models.Datas.InboundInfo()
-                    {
-                        protocol = protocol,
-                        host = host ?? VgcApis.Models.Consts.Webs.LoopBackIP,
-                        port = Misc.Utils.GetValue<int>(config, p, "port")
-                    };
-                }
-            }
-
-            return null;
+            var json = VgcApis.Misc.Utils.ParseJObject(config);
+            return GetInboundInfoFromJson(json);
         }
 
         public string GetShareLink()
@@ -106,13 +94,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public void UpdateSummary()
         {
-            try
-            {
-                var config = GetFinalConfig();
-
-                UpdateSummaryCore(config);
-            }
-            catch { }
+            var config = GetFinalConfig();
+            UpdateSummaryCore(config);
             GetParent().InvokeEventOnPropertyChange();
         }
 
@@ -128,7 +111,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 return false;
             }
 
-            var protocol = inbInfo.protocol;
+            var protocol = inbInfo.protocol ?? "";
             port = inbInfo.port;
 
             if (!IsProtocolMatchProxyRequirment(isGlobal, protocol))
@@ -136,7 +119,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 return false;
             }
 
-            isSocks = protocol == "socks";
+            isSocks = protocol.StartsWith("socks");
             return true;
         }
 
@@ -181,6 +164,47 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region private methods
+        VgcApis.Models.Datas.InboundInfo GetInboundInfoFromJson(JObject json)
+        {
+            if (json == null)
+            {
+                return null;
+            }
+
+            foreach (var p in new string[] { "inbound", "inbounds.0" })
+            {
+                var protocol = Misc.Utils.GetValue<string>(json, p, "protocol");
+                if (!string.IsNullOrEmpty(protocol))
+                {
+                    string host = Misc.Utils.GetValue<string>(json, p, "listen");
+                    return new VgcApis.Models.Datas.InboundInfo()
+                    {
+                        protocol = protocol,
+                        host = host ?? VgcApis.Models.Consts.Webs.LoopBackIP,
+                        port = Misc.Utils.GetValue<int>(json, p, "port")
+                    };
+                }
+            }
+
+            return null;
+        }
+
+        VgcApis.Models.Datas.InboundInfo GetInboundInfoFromYaml(string config)
+        {
+            var pat = @"(.*):\r?\n +listen: ?([^\r\n]+)";
+            var g = Regex.Match(config, pat).Groups;
+            if (g.Count > 2)
+            {
+                VgcApis.Misc.Utils.TryParseAddress(g[2].Value, out var host, out var port);
+                return new VgcApis.Models.Datas.InboundInfo()
+                {
+                    protocol = g[1].Value,
+                    host = host,
+                    port = port,
+                };
+            }
+            return null;
+        }
 
         void InjectStatisticsConfigOnDemand(ref JObject config)
         {
@@ -211,20 +235,26 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             var ty = VgcApis.Misc.Utils.DetectConfigType(config);
             var summary = $"<unknow {ty}>";
-            switch (ty)
+            try
             {
-                case VgcApis.Models.Datas.Enums.ConfigType.json:
-                    var s = Misc.Utils.ExtractSummaryFromConfig(config);
-                    if (!string.IsNullOrEmpty(s))
-                    {
-                        summary = s;
-                    }
-                    break;
-                case VgcApis.Models.Datas.Enums.ConfigType.yaml:
-                // 占坑
-                default:
-                    break;
+                var s = "";
+                switch (ty)
+                {
+                    case VgcApis.Models.Datas.Enums.ConfigType.json:
+                        s = Misc.Utils.ExtractSummaryFromJson(config);
+                        break;
+                    case VgcApis.Models.Datas.Enums.ConfigType.yaml:
+                        s = Misc.Utils.ExtractSummaryFromYaml(config);
+                        break;
+                    default:
+                        break;
+                }
+                if (!string.IsNullOrEmpty(s))
+                {
+                    summary = s;
+                }
             }
+            catch { }
 
             coreInfo.summary = VgcApis.Misc.Utils.FilterControlChars(summary);
 

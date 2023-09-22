@@ -8,34 +8,40 @@ namespace V2RayGCon.Models.Datas
         public double index = 0;
         public string name = "";
         public string template = "";
-        public string format = "json"; // json, yaml, text
 
         public CustomInboundSettings() { }
 
         #region public
-        public string MergeToConfig(string config, string host, int port)
+        public void MergeToJObject(ref JObject config, string host, int port)
+        {
+            if (config == null)
+            {
+                return;
+            }
+
+            try
+            {
+                var tpl = GetFormatedTemplate(host, port);
+                var mixin = JObject.Parse(tpl);
+                MergeJObject(ref config, mixin);
+            }
+            catch { }
+        }
+
+        public string MergeToYaml(string config, string host, int port)
+        {
+            var tpl = GetFormatedTemplate(host, port);
+            return VgcApis.Misc.Utils.MergeYaml(config, tpl);
+        }
+
+        public string MergeToText(string config, string host, int port)
         {
             var tpl = GetFormatedTemplate(host, port);
             if (string.IsNullOrEmpty(tpl))
             {
                 return config;
             }
-
-            try
-            {
-                switch (format)
-                {
-                    case "json":
-                        return MergeJsonConfig(config, tpl);
-                    case "yaml":
-                        // 没找到不需要先定义class的YAML库，只好用土制的查找替换了。
-                        return VgcApis.Misc.Utils.MergeYamlInboundIntoConfig(config, tpl);
-                    default:
-                        return MergeTextConfig(config, tpl);
-                }
-            }
-            catch { }
-            return config;
+            return string.Join("\n", new List<string>() { tpl, config });
         }
 
         public string GetFormatedTemplate(string host, int port)
@@ -51,22 +57,13 @@ namespace V2RayGCon.Models.Datas
         #endregion
 
         #region private
-
-        string MergeTextConfig(string config, string inbound)
+        void MergeJObject(ref JObject body, JObject mixin)
         {
-            return string.Join("\n", new List<string>() { inbound, config });
-        }
-
-        string MergeJsonConfig(string config, string inbound)
-        {
-            if (!VgcApis.Misc.Utils.IsJson(config) || !VgcApis.Misc.Utils.IsJson(inbound))
+            if (mixin == null)
             {
-                return config;
+                return;
             }
-
-            var body = JObject.Parse(config);
-            var mixin = JObject.Parse(inbound);
-            body.Merge(
+            body?.Merge(
                 mixin,
                 new JsonMergeSettings
                 {
@@ -74,7 +71,6 @@ namespace V2RayGCon.Models.Datas
                     MergeNullValueHandling = MergeNullValueHandling.Ignore,
                 }
             );
-            return VgcApis.Misc.Utils.FormatConfig(body);
         }
         #endregion
     }

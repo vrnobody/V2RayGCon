@@ -78,9 +78,9 @@ key: test
         [DataRow("", "", "")]
         [DataRow(null, null, null)]
         [DataRow(null, "", null)]
-        public void MergeYamlInboundIntoConfigTest(string config, string inbound, string exp)
+        public void MergeYamlTest(string config, string inbound, string exp)
         {
-            var c = MergeYamlInboundIntoConfig(config, inbound);
+            var c = MergeYaml(config, inbound);
             var r = c?.Replace("\r\n", "\n");
             Assert.AreEqual(exp, r);
         }

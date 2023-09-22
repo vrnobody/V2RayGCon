@@ -144,7 +144,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>6</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tboxName.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -169,7 +169,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tboxName.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="btnSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom</value>
@@ -202,7 +202,7 @@
     <value>True</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 65</value>
+    <value>12, 39</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>
@@ -223,34 +223,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 43</value>
-  </data>
-  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 12</value>
-  </data>
-  <data name="label7.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>Format</value>
-  </data>
-  <data name="&gt;&gt;label7.Name" xml:space="preserve">
-    <value>label7</value>
-  </data>
-  <data name="&gt;&gt;label7.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>5</value>
   </data>
   <data name="btnCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom</value>
@@ -282,47 +255,14 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="cboxFormats.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="cboxFormats.Items" xml:space="preserve">
-    <value>json</value>
-  </data>
-  <data name="cboxFormats.Items1" xml:space="preserve">
-    <value>yaml</value>
-  </data>
-  <data name="cboxFormats.Items2" xml:space="preserve">
-    <value>text</value>
-  </data>
-  <data name="cboxFormats.Location" type="System.Drawing.Point, System.Drawing">
-    <value>119, 39</value>
-  </data>
-  <data name="cboxFormats.Size" type="System.Drawing.Size, System.Drawing">
-    <value>299, 20</value>
-  </data>
-  <data name="cboxFormats.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;cboxFormats.Name" xml:space="preserve">
-    <value>cboxFormats</value>
-  </data>
-  <data name="&gt;&gt;cboxFormats.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cboxFormats.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;cboxFormats.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="rtboxTemplate.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="rtboxTemplate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>119, 65</value>
+    <value>119, 39</value>
   </data>
   <data name="rtboxTemplate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>299, 201</value>
+    <value>299, 227</value>
   </data>
   <data name="rtboxTemplate.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>

@@ -401,20 +401,20 @@ namespace VgcApis.Misc
             return r;
         }
 
-        public static string MergeYamlInboundIntoConfig(string config, string inbound)
+        public static string MergeYaml(string body, string mixin)
         {
-            if (!IsYaml(config) || !IsYaml(inbound))
+            if (!IsYaml(body) || !IsYaml(mixin))
             {
-                return config;
+                return body;
             }
 
             var patKey = @"^([a-zA-Z][\w\-_]*):";
 
             var sb = new StringBuilder();
 
-            var mixin = inbound.Replace("\r\n", "\n").Split(new char[] { '\n' });
+            var mLines = mixin.Replace("\r\n", "\n").Split(new char[] { '\n' });
             var keys = new HashSet<string>();
-            foreach (var line in mixin)
+            foreach (var line in mLines)
             {
                 sb.AppendLine(line);
                 if (string.IsNullOrEmpty(line))
@@ -433,10 +433,10 @@ namespace VgcApis.Misc
                 }
             }
 
-            var body = config.Replace("\r\n", "\n").Split(new char[] { '\n' });
-            for (int i = 0; i < body.Length; i++)
+            var bLines = body.Replace("\r\n", "\n").Split(new char[] { '\n' });
+            for (int i = 0; i < bLines.Length; i++)
             {
-                var line = body[i];
+                var line = bLines[i];
                 if (!string.IsNullOrEmpty(line))
                 {
                     do
@@ -444,9 +444,9 @@ namespace VgcApis.Misc
                         var g = Regex.Match(line, patKey).Groups;
                         if (g.Count > 1 && keys.Contains(g[1].Value))
                         {
-                            for (i++; i < body.Length; i++)
+                            for (i++; i < bLines.Length; i++)
                             {
-                                line = body[i];
+                                line = bLines[i];
                                 if (
                                     !string.IsNullOrEmpty(line) && Regex.IsMatch(line, @"^[a-zA-Z]")
                                 )
@@ -459,10 +459,10 @@ namespace VgcApis.Misc
                         {
                             break;
                         }
-                    } while (i < body.Length);
+                    } while (i < bLines.Length);
                 }
 
-                if (i < body.Length)
+                if (i < bLines.Length)
                 {
                     sb.AppendLine(line);
                 }

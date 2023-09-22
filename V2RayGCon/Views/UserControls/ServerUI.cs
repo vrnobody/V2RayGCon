@@ -868,14 +868,15 @@ namespace V2RayGCon.Views.UserControls
             WinForms.FormTextConfigEditor.ShowServer(uid);
         }
 
-        private void rlbLastModifyDate_MouseDown(object sender, MouseEventArgs e)
-        {
-            UserMouseDown();
-        }
-
         private void rlbCoreName_Click(object sender, EventArgs e)
         {
             ShowModifyConfigsWinForm();
+        }
+
+        private void rlbLastModifyDate_Click(object sender, EventArgs e)
+        {
+            var uid = coreServCtrl.GetCoreStates().GetUid();
+            WinForms.FormTextConfigEditor.ShowServer(uid);
         }
 
         private void rlbRemark_Click(object sender, EventArgs e)

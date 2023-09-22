@@ -227,7 +227,6 @@ namespace V2RayGCon.Models.Datas
                         {
                             index = index,
                             name = "custom",
-                            format = "json",
                             template = config,
                         }
                     );
@@ -241,18 +240,12 @@ namespace V2RayGCon.Models.Datas
         {
             var r = new List<CustomInboundSettings>();
 
-            var config = new CustomInboundSettings()
-            {
-                index = 1,
-                name = "config",
-                format = "text",
-            };
+            var config = new CustomInboundSettings() { index = 1, name = "config", };
 
             var socks = new CustomInboundSettings()
             {
                 index = 2,
                 name = "socks",
-                format = "json",
                 template =
                     @"{
     ""inbounds"":[
@@ -271,7 +264,6 @@ namespace V2RayGCon.Models.Datas
             {
                 index = 3,
                 name = "http",
-                format = "json",
                 template =
                     @"{
     ""inbounds"":[

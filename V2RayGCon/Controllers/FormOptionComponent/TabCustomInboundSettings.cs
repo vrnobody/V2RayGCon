@@ -100,7 +100,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                 {
                     if (form.DialogResult == DialogResult.OK)
                     {
-                        var inbS = form.inbSettings;
+                        var inbS = form.inbS;
                         settings.AddOrReplaceCustomInboundSettings(inbS);
                         Refresh();
                     }

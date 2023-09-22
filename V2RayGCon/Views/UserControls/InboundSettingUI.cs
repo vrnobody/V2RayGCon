@@ -9,24 +9,24 @@ namespace V2RayGCon.Views.UserControls
     {
         public event EventHandler OnRequireReload;
 
-        private CustomInboundSettings inbSettings;
+        private CustomInboundSettings inbS;
 
         public InboundSettingUI()
         {
-            // this.size = 347, 27
+            // this.size = 346, 27
             InitializeComponent();
         }
 
         #region public mehtod
         public void Reload(CustomInboundSettings inbSettings)
         {
-            this.inbSettings = inbSettings;
+            this.inbS = inbSettings;
             UpdateTitle();
         }
 
         public void SetIndex(double index)
         {
-            var ctrl = inbSettings;
+            var ctrl = inbS;
             if (ctrl == null)
             {
                 return;
@@ -34,17 +34,18 @@ namespace V2RayGCon.Views.UserControls
             ctrl.index = index;
         }
 
-        public double GetIndex() => inbSettings?.index ?? -1;
+        public double GetIndex() => inbS?.index ?? -1;
         #endregion
 
         #region private method
         void UpdateTitle()
         {
-            var title = $"{inbSettings.index}.{inbSettings.name}";
+            var title = $"{inbS.index}.{inbS.name}";
             lbTitle.Text = title;
             toolTip1.SetToolTip(lbTitle, title);
-            rlbBinding.Text = inbSettings.format;
-            toolTip1.SetToolTip(rlbBinding, $"{I18N.Format}: {inbSettings.format}");
+            var ty = VgcApis.Misc.Utils.DetectConfigType(inbS.template).ToString();
+            rlbBinding.Text = ty;
+            toolTip1.SetToolTip(rlbBinding, $"{I18N.Format}: {ty}");
         }
 
         private void InvokeOnRequireReloadIgnoreError()
@@ -75,12 +76,12 @@ namespace V2RayGCon.Views.UserControls
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            var form = new WinForms.FormCustomInboundSettings(inbSettings);
+            var form = new WinForms.FormCustomInboundSettings(inbS);
             form.FormClosed += (s, a) =>
             {
                 if (form.DialogResult == DialogResult.OK)
                 {
-                    var inbSet = form.inbSettings;
+                    var inbSet = form.inbS;
                     Services.Settings.Instance.AddOrReplaceCustomInboundSettings(inbSet);
                     InvokeOnRequireReloadIgnoreError();
                 }
@@ -90,10 +91,10 @@ namespace V2RayGCon.Views.UserControls
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            var msg = string.Format(I18N.ConfirmDeleteTpl, inbSettings.name);
+            var msg = string.Format(I18N.ConfirmDeleteTpl, inbS.name);
             if (VgcApis.Misc.UI.Confirm(msg))
             {
-                var ok = Services.Settings.Instance.RemoveCustomInboundByName(inbSettings.name);
+                var ok = Services.Settings.Instance.RemoveCustomInboundByName(inbS.name);
                 if (ok)
                 {
                     InvokeOnRequireReloadIgnoreError();

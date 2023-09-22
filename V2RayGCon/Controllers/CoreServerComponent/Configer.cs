@@ -64,28 +64,27 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public string GetFinalConfig()
         {
             var config = GetConfig();
-            var r =
-                setting
-                    .GetCustomInboundsSetting()
-                    .FirstOrDefault(inb => inb.name == coreInfo.inbName)
-                    ?.MergeToConfig(config, coreInfo.inbIp, coreInfo.inbPort) ?? config;
+            var inbS = setting
+                .GetCustomInboundsSetting()
+                .FirstOrDefault(inb => inb.name == coreInfo.inbName);
 
-            if (!VgcApis.Misc.Utils.IsJson(r))
+            var ty = VgcApis.Misc.Utils.DetectConfigType(config);
+            string r;
+            var host = coreInfo.inbIp;
+            var port = coreInfo.inbPort;
+            switch (ty)
             {
-                return r;
+                case VgcApis.Models.Datas.Enums.ConfigType.yaml:
+                    r = inbS?.MergeToYaml(config, host, port);
+                    break;
+                case VgcApis.Models.Datas.Enums.ConfigType.json:
+                    r = GenJsonFinalConfig(inbS, config, host, port);
+                    break;
+                default:
+                    r = inbS?.MergeToText(config, host, port);
+                    break;
             }
-
-            try
-            {
-                var json = JObject.Parse(r);
-                InjectStatisticsConfigOnDemand(ref json);
-                configMgr.MergeCustomTlsSettings(ref json);
-                var s = VgcApis.Misc.Utils.FormatConfig(json);
-                return s;
-            }
-            catch { }
-
-            return r;
+            return string.IsNullOrEmpty(r) ? config : r;
         }
 
         public string GetRawConfig() => coreInfo.config;
@@ -164,6 +163,26 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region private methods
+        string GenJsonFinalConfig(
+            Models.Datas.CustomInboundSettings inbS,
+            string config,
+            string host,
+            int port
+        )
+        {
+            try
+            {
+                var json = JObject.Parse(config);
+                InjectStatisticsConfigOnDemand(ref json);
+                configMgr.MergeCustomTlsSettings(ref json);
+                inbS?.MergeToJObject(ref json, host, port);
+                var s = VgcApis.Misc.Utils.FormatConfig(json);
+                return s;
+            }
+            catch { }
+            return null;
+        }
+
         VgcApis.Models.Datas.InboundInfo GetInboundInfoFromJson(JObject json)
         {
             if (json == null)

@@ -6,18 +6,18 @@ namespace V2RayGCon.Views.WinForms
 {
     public partial class FormCustomInboundSettings : Form
     {
-        public CustomInboundSettings inbSettings;
+        public CustomInboundSettings inbS;
 
         public FormCustomInboundSettings()
             : this(new CustomInboundSettings()) { }
 
-        public FormCustomInboundSettings(CustomInboundSettings inbSettings)
+        public FormCustomInboundSettings(CustomInboundSettings inboundSettings)
         {
             InitializeComponent();
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);
 
-            this.inbSettings = inbSettings;
+            this.inbS = inboundSettings;
             this.DialogResult = DialogResult.Cancel;
         }
 
@@ -33,16 +33,14 @@ namespace V2RayGCon.Views.WinForms
             {
                 name = tboxName.Text,
                 template = rtboxTemplate.Text,
-                format = cboxFormats.Text,
             };
             return cs;
         }
 
         void InitControls()
         {
-            tboxName.Text = inbSettings.name;
-            rtboxTemplate.Text = inbSettings.template;
-            cboxFormats.Text = inbSettings.format;
+            tboxName.Text = inbS.name;
+            rtboxTemplate.Text = inbS.template;
         }
 
         #endregion
@@ -58,7 +56,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            this.inbSettings = GatherCoreSettings();
+            this.inbS = GatherCoreSettings();
             this.DialogResult = DialogResult.OK;
             Close();
         }

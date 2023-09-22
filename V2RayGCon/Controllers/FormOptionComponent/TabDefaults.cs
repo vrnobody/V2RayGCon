@@ -83,7 +83,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                 settings.CustomDefImportPort = port;
             }
 
-            settings.DefaultCoreName = cboxDefCoreName.Text;
+            settings.DefaultCoreName = GetCboxCoreNameText();
             settings.DefaultInboundName = cboxDefInboundName.Text;
 
             settings.CustomDefImportSsShareLink = chkImportSsShareLink.Checked;
@@ -120,7 +120,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                     != chkDefVmessDecodeTemplateEnabled.Checked
                 || settings.CustomDefImportHost != host
                 || settings.CustomDefImportPort != port
-                || settings.DefaultCoreName != cboxDefCoreName.Text
+                || settings.DefaultCoreName != GetCboxCoreNameText()
                 || settings.DefaultInboundName != cboxDefInboundName.Text
                 || settings.CustomDefImportSsShareLink != chkImportSsShareLink.Checked
                 || settings.CustomDefImportTrojanShareLink != chkImportTrojanShareLink.Checked
@@ -141,6 +141,15 @@ namespace V2RayGCon.Controllers.OptionComponent
         #endregion
 
         #region private method
+        string GetCboxCoreNameText()
+        {
+            if (cboxDefCoreName.SelectedIndex < 1)
+            {
+                return string.Empty;
+            }
+            return cboxDefCoreName.Text;
+        }
+
         void RefreshCboxInboundName(object sender, EventArgs args)
         {
             var names = settings.GetCustomInboundsSetting().Select(inb => inb.name).ToArray();

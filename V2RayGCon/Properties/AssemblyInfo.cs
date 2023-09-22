@@ -33,12 +33,13 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.8.4.11")]
+[assembly: AssemblyVersion("1.8.4.12")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
-v1.8.4.11 Refactoring.
+v1.8.4.12 Fix default core name bug.
+v1.8.4.11 Move WaitUntilCoreReady() to Libs.V2Ray.Core.cs.
 v1.8.4.10 Fix extract keys from config bug.
 v1.8.4.9 Add basic YAML support.
 v1.8.4.8 Disable YAML config format.

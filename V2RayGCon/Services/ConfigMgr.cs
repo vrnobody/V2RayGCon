@@ -38,7 +38,7 @@ namespace V2RayGCon.Services
                 var core = new Libs.V2Ray.Core(setting) { title = title };
                 core.SetCustomCoreName(coreName);
                 core.RestartCoreIgnoreError(config);
-                if (WaitUntilCoreReady(core))
+                if (core.WaitUntilReady())
                 {
                     text = Misc.Utils.Fetch(url, port, timeout);
                 }
@@ -273,21 +273,6 @@ namespace V2RayGCon.Services
             return result;
         }
 
-        bool WaitUntilCoreReady(Libs.V2Ray.Core core)
-        {
-            const int jiff = 300;
-            int cycle = 30 * 1000 / jiff;
-            for (int i = 0; i < cycle && core.isRunning; i++)
-            {
-                if (core.isReady)
-                {
-                    return true;
-                }
-                VgcApis.Misc.Utils.Sleep(jiff);
-            }
-            return false;
-        }
-
         Tuple<long, long> DoSpeedTesting(
             string config,
             string title,
@@ -320,7 +305,7 @@ namespace V2RayGCon.Services
             try
             {
                 speedTester.RestartCoreIgnoreError(config);
-                if (WaitUntilCoreReady(speedTester))
+                if (speedTester.WaitUntilReady())
                 {
                     var expectedSizeInKib = setting.isUseCustomSpeedtestSettings
                         ? setting.CustomSpeedtestExpectedSizeInKib

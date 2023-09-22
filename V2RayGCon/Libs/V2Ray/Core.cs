@@ -19,6 +19,7 @@ namespace V2RayGCon.Libs.V2Ray
 
         readonly Services.Settings setting;
         readonly AutoResetEvent coreStartStopLocker = new AutoResetEvent(true);
+        readonly ManualResetEvent coreReadEvt = new ManualResetEvent(false);
         Process coreProc;
         static int curConcurrentV2RayCoreNum = 0;
         bool isForcedExit = false;
@@ -26,7 +27,6 @@ namespace V2RayGCon.Libs.V2Ray
 
         public Core(Services.Settings setting)
         {
-            isReady = false;
             coreProc = null;
             this.setting = setting;
         }
@@ -60,8 +60,6 @@ namespace V2RayGCon.Libs.V2Ray
             set { _title = value; }
         }
 
-        public bool isReady { get; private set; }
-
         public bool isRunning
         {
             get => IsProcRunning(coreProc);
@@ -70,6 +68,13 @@ namespace V2RayGCon.Libs.V2Ray
         #endregion
 
         #region public method
+        public bool WaitUntilReady()
+        {
+            var r = coreReadEvt.WaitOne(TimeSpan.FromSeconds(30));
+            coreReadEvt.Set();
+            return r;
+        }
+
         public void SetCustomCoreName(string name)
         {
             this.customCoreName = name;
@@ -415,7 +420,7 @@ namespace V2RayGCon.Libs.V2Ray
 
         void OnCoreExitedHandler(object sender, bool quiet)
         {
-            isReady = false;
+            coreReadEvt.Reset();
 
             var core = sender as Process;
 
@@ -500,7 +505,7 @@ namespace V2RayGCon.Libs.V2Ray
         void StartCore(string config, Dictionary<string, string> envs, bool quiet)
         {
             var isCustomCore = IsCustomCore();
-            isReady = false;
+            coreReadEvt.Reset();
             var cs = isCustomCore ? GetCustomCoreSettings() : null;
             var core = isCustomCore ? CreateCustomCoreProcess(cs) : CreateV2RayCoreProcess();
             VgcApis.Misc.Utils.SetProcessEnvs(core, envs);
@@ -552,9 +557,9 @@ namespace V2RayGCon.Libs.V2Ray
                 return;
             }
 
-            if (!isReady && MatchAllReadyMarks(msg))
+            if (!coreReadEvt.WaitOne(0) && MatchAllReadyMarks(msg))
             {
-                isReady = true;
+                coreReadEvt.Set();
             }
 
             SendLog(msg);

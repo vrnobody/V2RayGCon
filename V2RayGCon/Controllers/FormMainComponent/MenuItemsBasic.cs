@@ -17,8 +17,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         public MenuItemsBasic(
             ToolStripMenuItem pluginToolStrip,
             ToolStripMenuItem miImportLinkFromClipboard,
-            ToolStripMenuItem miExportAllServer,
-            ToolStripMenuItem miImportFromFile,
             ToolStripMenuItem miAbout,
             ToolStripMenuItem miHelp,
             ToolStripMenuItem miFormTextEditor,
@@ -36,7 +34,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             InitMenuPlugin(pluginToolStrip);
 
-            InitMenuFile(miImportLinkFromClipboard, miExportAllServer, miImportFromFile);
+            InitMenuFile(miImportLinkFromClipboard);
             InitMenuWindows(miFormTextEditor, miFormLog, miFormOptions);
 
             InitMenuAbout(
@@ -49,43 +47,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         #region public method
-        public void ImportServersFromTextFile()
-        {
-            string v2cfgLinks = VgcApis.Misc.UI.ReadFileContentFromDialog(
-                VgcApis.Models.Consts.Files.TxtExt
-            );
 
-            if (v2cfgLinks == null)
-            {
-                return;
-            }
-
-            slinkMgr.ImportLinkWithV2cfgLinks(v2cfgLinks);
-        }
-
-        public void ExportAllServersToTextFile()
-        {
-            if (this.servers.IsEmpty())
-            {
-                MessageBox.Show(I18N.NoServerAvailable);
-                return;
-            }
-
-            var serverList = servers.GetAllServersOrderByIndex();
-            string s = string.Empty;
-
-            foreach (var server in serverList)
-            {
-                var vlink = Misc.Utils.AddLinkPrefix(
-                    VgcApis.Misc.Utils.Base64EncodeString(server.GetConfiger().GetConfig()),
-                    VgcApis.Models.Datas.Enums.LinkTypes.v2cfg
-                );
-
-                s += vlink + Environment.NewLine + Environment.NewLine;
-            }
-
-            VgcApis.Misc.UI.SaveToFile(VgcApis.Models.Consts.Files.TxtExt, s);
-        }
 
         public override void Cleanup()
         {
@@ -156,11 +118,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             miCheckVgcUpdate.Click += (s, a) => updater.CheckForUpdate(true);
         }
 
-        private void InitMenuFile(
-            ToolStripMenuItem importLinkFromClipboard,
-            ToolStripMenuItem exportAllServer,
-            ToolStripMenuItem importFromFile
-        )
+        private void InitMenuFile(ToolStripMenuItem importLinkFromClipboard)
         {
             // menu file
             importLinkFromClipboard.Click += (s, a) =>
@@ -168,10 +126,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 string text = Misc.Utils.GetClipboardText();
                 slinkMgr.ImportLinkWithV2cfgLinks(text);
             };
-
-            exportAllServer.Click += (s, a) => ExportAllServersToTextFile();
-
-            importFromFile.Click += (s, a) => ImportServersFromTextFile();
         }
 
         private static void InitMenuWindows(

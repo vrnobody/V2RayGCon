@@ -59,9 +59,6 @@ namespace V2RayGCon.Views.WinForms
             this.operationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolMenuItemImportLinkFromClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolMenuItemExportAllServerToFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolMenuItemImportFromFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.closeWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -333,9 +330,6 @@ namespace V2RayGCon.Views.WinForms
             this.operationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolMenuItemImportLinkFromClipboard,
             this.toolStripSeparator5,
-            this.toolMenuItemExportAllServerToFile,
-            this.toolMenuItemImportFromFile,
-            this.toolStripSeparator8,
             this.closeWindowToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.operationToolStripMenuItem.Name = "operationToolStripMenuItem";
@@ -350,21 +344,6 @@ namespace V2RayGCon.Views.WinForms
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             resources.ApplyResources(this.toolStripSeparator5, "toolStripSeparator5");
-            // 
-            // toolMenuItemExportAllServerToFile
-            // 
-            this.toolMenuItemExportAllServerToFile.Name = "toolMenuItemExportAllServerToFile";
-            resources.ApplyResources(this.toolMenuItemExportAllServerToFile, "toolMenuItemExportAllServerToFile");
-            // 
-            // toolMenuItemImportFromFile
-            // 
-            this.toolMenuItemImportFromFile.Name = "toolMenuItemImportFromFile";
-            resources.ApplyResources(this.toolMenuItemImportFromFile, "toolMenuItemImportFromFile");
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            resources.ApplyResources(this.toolStripSeparator8, "toolStripSeparator8");
             // 
             // closeWindowToolStripMenuItem
             // 
@@ -885,13 +864,10 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolMenuItemLog;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolMenuItemCheckUpdate;
         private System.Windows.Forms.ToolStripMenuItem toolMenuItemAbout;
-        private System.Windows.Forms.ToolStripMenuItem toolMenuItemExportAllServerToFile;
-        private System.Windows.Forms.ToolStripMenuItem toolMenuItemImportFromFile;
         private ToolStripMenuItem toolMenuItemHelp;
         private ToolStripMenuItem toolMenuItemOptions;
         private FlowLayoutPanel flyServerListContainer;

@@ -147,8 +147,6 @@ namespace V2RayGCon.Views.WinForms
                 new Controllers.FormMainComponent.MenuItemsBasic(
                     pluginToolStripMenuItem,
                     toolMenuItemImportLinkFromClipboard,
-                    toolMenuItemExportAllServerToFile,
-                    toolMenuItemImportFromFile,
                     toolMenuItemAbout,
                     toolMenuItemHelp,
                     toolStripMenuItemTextEditor,

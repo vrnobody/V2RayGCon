@@ -371,7 +371,11 @@ namespace VgcApis.Misc
         public static Dictionary<string, int> GetConfigTags(List<string> lines)
         {
             var r = new Dictionary<string, int>();
-            var patKeys = new string[] { @"^  ""([a-zA-Z][\w\-_]*)"":", @"^([a-zA-Z][\w\-_]*):", };
+            var patKeys = new string[]
+            {
+                @"^ {0,2}""([a-zA-Z][\w\-_]*)"":",
+                @"^([a-zA-Z][\w\-_]*):",
+            };
             var patTag = @"^ *""?(tag)""?: *""?([\w\-_]+)""?";
 
             for (int i = 0; i < lines.Count; i++)

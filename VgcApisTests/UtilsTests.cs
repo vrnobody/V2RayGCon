@@ -121,9 +121,9 @@ key: test
         }
 
         [DataTestMethod]
+        [DataRow("  abc: 123\na_b-c: |\n  1\n2\n3\n4\n      d: 7\na中文: 8", "a_b-c,1;a中文,7")]
         [DataRow("{\nlog:{},\n      tag:\"123\"\n}", "log,1;tag: 123,2")]
         [DataRow("log:123,\n      tag:1-2-3\n}", "log,0;tag: 1-2-3,1")]
-        [DataRow("  abc: 123\na_b-c: |\n  1\n2\n3\n4\n      d: 7\n  a中文: 8", "abc,0;a_b-c,1;a中文,7")]
         [DataRow("", "")]
         [DataRow(null, "")]
         [DataRow(

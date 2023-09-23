@@ -1,4 +1,4 @@
-using ScintillaNET;
+﻿using ScintillaNET;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -56,7 +56,7 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
             {
                 case VgcApis.Models.Datas.Enums.ConfigType.json:
                     var config = VgcApis.Misc.Utils.FormatConfig(content);
-                    if (config != null)
+                    if (!string.IsNullOrEmpty(config))
                     {
                         content = config;
                         RestorePreviousPosition();

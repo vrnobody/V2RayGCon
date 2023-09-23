@@ -979,7 +979,6 @@ namespace V2RayGCon.Services
                 }
             }
             catch { }
-            ;
             return new List<Models.Datas.PluginInfoItem>();
         }
 

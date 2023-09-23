@@ -40,6 +40,7 @@ using System.Runtime.InteropServices;
 
 --------------------------------------------------------------------
 v1.8.4.15 Remove im(ex)port from(to) file in FormMain.
+          Fix internal plugins not loaded bug.
 v1.8.4.14 Fix format code bug in text editor.
 v1.8.4.13 Refactoring.
 v1.8.4.12 Fix default core name bug.

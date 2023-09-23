@@ -25,8 +25,14 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.flyPanel = flyPanel;
 
             curPluginInfos = setting.GetPluginInfoItems();
-            MarkdownCurOption();
+            if (curPluginInfos.Count < 1)
+            {
+                // for safty reason
+                setting.isLoad3rdPartyPlugins = false;
+                curPluginInfos = pluginServ.GatherAllPluginInfos();
+            }
 
+            MarkdownCurOption();
             InitControls(btnRefreshPluginsPanel, chkIsLoad3rdPartyPlugins);
         }
 

@@ -287,7 +287,8 @@
     <PostBuildEvent>set "libsDir=libs\"
 set "copyFolderList=lua"
 set "pluginsFolder=3rd\plugins\"
-set "allDlls=KeraLua lua53 Nlua AutocompleteMenu-ScintillaNET Newtonsoft ScintillaNET Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
+set "allDlls=KeraLua lua53 Nlua"
+set "rmDlls=AutocompleteMenu-ScintillaNET Newtonsoft ScintillaNET Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
 
 call:CreateFoldersOnDemand "%25libsDir%25 %25copyFolderList%25 %25pluginsFolder%25"
 
@@ -295,10 +296,11 @@ del /s /q /f *.pdb
 del /s /q /f *.xml
 del /s /q /f *.so
 del /s /q /f *.dylib
-move /y Luna.* %25pluginsFolder%25
 
+move /y Luna.* %25pluginsFolder%25
 call:MoveFilesByList "%25allDlls%25"
 call:CopyFolders "%25copyFolderList%25"
+call::RemoveFiles "%25rmDlls%25"
 
 rem NLua v1.4+
 set "luaFolders=x86 x64"

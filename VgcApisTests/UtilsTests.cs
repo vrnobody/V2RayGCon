@@ -82,7 +82,8 @@ key: test
         {
             var c = MergeYaml(config, inbound);
             var r = c?.Replace("\r\n", "\n");
-            Assert.AreEqual(exp, r);
+            var e = exp?.Replace("\r\n", "\n");
+            Assert.AreEqual(e, r);
         }
 
         [DataTestMethod]

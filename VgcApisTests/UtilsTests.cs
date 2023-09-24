@@ -17,6 +17,22 @@ namespace VgcApisTests
     public class UtilsTests
     {
         [DataTestMethod]
+        [DataRow(@"😁", 0)]
+        [DataRow(@"   中文", 3)]
+        [DataRow(@"   😀", 3)]
+        [DataRow(@"   ..", 3)]
+        [DataRow(@"      abc", 6)]
+        [DataRow(@"   ", 3)]
+        [DataRow(@" ", 1)]
+        [DataRow(@"", 0)]
+        [DataRow(null, 0)]
+        public void CountLeadingSpacesTest(string content, int exp)
+        {
+            var r = CountLeadingSpaces(content);
+            Assert.AreEqual(exp, r);
+        }
+
+        [DataTestMethod]
         [DataRow(
             @"name: hello
 
@@ -113,8 +129,20 @@ key: test
         [DataRow(@"", ConfigType.text)]
         [DataRow(null, ConfigType.text)]
         [DataRow(@"  123:", ConfigType.text)]
-        [DataRow(@"  ab12-_中文:", ConfigType.yaml)]
+        [DataRow(@"ab12-_中文:", ConfigType.yaml)]
         [DataRow(@"  ab12😀-_中文:", ConfigType.text)]
+        [DataRow(
+            @"# this is a comment
+
+# hello
+ab12-_中文: |
+  hello
+  world
+
+# world
+",
+            ConfigType.yaml
+        )]
         public void DetectConfigTypeTest(string config, ConfigType ty)
         {
             var r = DetectConfigType(config);
@@ -128,8 +156,12 @@ key: test
         [DataRow("", "")]
         [DataRow(null, "")]
         [DataRow(
-            "{\n\"abc1\": 123,\n \"a_b\": \"abc\",\n  \"c\":1,\n        \"d\":1 }",
+            "{\n  \"abc1\": 123,\n  \"a_b\": \"abc\",\n  \"c\":1,\n        \"d\":1 }",
             "abc1,1;a_b,2;c,3"
+        )]
+        [DataRow(
+            "{\n        \"abc1\": 123,\n  \"a_b\": \"abc\",\n        \"c\":1,\n\"d\":1 }",
+            "abc1,1;c,3"
         )]
         public void GetConfigKeysTest(string config, string rawExp)
         {

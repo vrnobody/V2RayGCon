@@ -368,36 +368,48 @@ namespace VgcApis.Misc
 
         #region string
 
+        public static int CountLeadingSpaces(string str)
+        {
+            return str?.TakeWhile(c => c == ' ').Count() ?? 0;
+        }
+
         public static Dictionary<string, int> GetConfigTags(List<string> lines)
         {
-            var r = new Dictionary<string, int>();
-            var patKeys = new string[]
-            {
-                @"^ {0,2}""([a-zA-Z][\w\-_]*)"":",
-                @"^([a-zA-Z][\w\-_]*):",
-            };
-            var patTag = @"^ *""?(tag)""?: *""?([\w\-_]+)""?";
+            var patTag = @"^ *""?tag""?: *""?([\w\-_]+)""?";
+            var patYaml = @"^([a-zA-Z][\w\-_]*):";
 
+            var patJsonInit = @"^ +""([a-zA-Z][\w\-_]*)"":";
+            var patJsonTpl = @"^{0}""([a-zA-Z][\w\-_]*)"":";
+            string patJson = null;
+
+            var r = new Dictionary<string, int>();
             for (int i = 0; i < lines.Count; i++)
             {
                 try
                 {
                     var line = lines[i];
                     var gs = Regex.Match(line, patTag).Groups;
-                    if (gs.Count > 2)
+                    if (gs.Count > 1)
                     {
-                        var key = $"{gs[1].Value}: {gs[2].Value}";
-                        r[key] = i;
+                        r[$"tag: {gs[1].Value}"] = i;
                         continue;
                     }
-                    foreach (var patKey in patKeys)
+                    gs = Regex.Match(line, patYaml).Groups;
+                    if (gs.Count > 1)
                     {
-                        gs = Regex.Match(line, patKey).Groups;
-                        if (gs.Count > 1)
+                        r[gs[1].Value] = i;
+                        continue;
+                    }
+                    gs = Regex.Match(line, patJson ?? patJsonInit).Groups;
+                    if (gs.Count > 1)
+                    {
+                        r[gs[1].Value] = i;
+                        if (patJson == null)
                         {
-                            r[gs[1].Value] = i;
-                            continue;
+                            var c = CountLeadingSpaces(line);
+                            patJson = string.Format(patJsonTpl, new string(' ', c));
                         }
+                        continue;
                     }
                 }
                 catch { }
@@ -481,12 +493,16 @@ namespace VgcApis.Misc
             {
                 return text;
             }
+
             if (config[0] == '{' && config[config.Length - 1] == '}')
             {
                 return Models.Datas.Enums.ConfigType.json;
             }
 
-            if (Regex.IsMatch(config, @"^ *[a-zA-Z][\w\-_]*:"))
+            if (
+                Regex.IsMatch(config, @"^[a-zA-Z][\w\-_]*:")
+                || Regex.IsMatch(config, @"\n[a-zA-Z][\w\-_]*:")
+            )
             {
                 return Models.Datas.Enums.ConfigType.yaml;
             }

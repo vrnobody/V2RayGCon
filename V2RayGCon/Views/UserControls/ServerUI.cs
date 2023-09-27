@@ -228,16 +228,16 @@ namespace V2RayGCon.Views.UserControls
                 return;
             }
 
-            void worker()
+            var cs = csc.GetCoreStates();
+            var cc = csc.GetCoreCtrl();
+
+            void first()
             {
                 var flyPanel = this.Parent;
                 if (flyPanel == null || flyPanel.IsDisposed)
                 {
                     return;
                 }
-
-                var cs = csc.GetCoreStates();
-                var cc = csc.GetCoreCtrl();
 
                 // must update background first
                 var isSelected = cs.IsSelected();
@@ -246,8 +246,12 @@ namespace V2RayGCon.Views.UserControls
                 UpdateOnOffLabel(cc.IsCoreRunning());
                 UpdateSelectCheckboxState(isSelected);
                 UpdateTitleTextBox(cs);
+            }
 
+            void second()
+            {
                 // second line
+                UpdateSettingsLable(cs);
                 UpdateInboundModeLabel(cs);
                 UpdateLastModifiedLable(cs.GetLastModifiedUtcTicks());
                 UpdateCoreNameLabel(cc);
@@ -257,19 +261,24 @@ namespace V2RayGCon.Views.UserControls
                 UpdateTag3Label(cs.GetTag3());
                 UpdateRemarkLabel(cs.GetRemark());
                 UpdateStatusLable(cs);
-                UpdateSettingsLable(cs);
                 UpdateNetworkFlowLable(cs);
-
                 CompactRoundLables();
             }
 
-            void next()
+            void third()
             {
                 lazyHighlighter?.Postpone();
                 done?.Invoke();
             }
 
-            VgcApis.Misc.UI.InvokeThen(worker, next);
+            VgcApis.Misc.UI.InvokeThen(
+                first,
+                () =>
+                {
+                    VgcApis.Misc.Utils.Sleep(1);
+                    VgcApis.Misc.UI.InvokeThen(second, third);
+                }
+            );
         }
 
         void UpdateCoreNameLabel(VgcApis.Interfaces.CoreCtrlComponents.ICoreCtrl cc)

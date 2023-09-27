@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Models.Datas;
 
@@ -42,6 +43,11 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         #region public mehtods
+        public void ReleaseSpeedTestLock()
+        {
+            speedTestingEvt.Set();
+        }
+
         public string GetCustomCoreName() => coreInfo.customCoreName;
 
         public bool SetCustomCoreName(string name)
@@ -106,13 +112,17 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public bool IsCoreRunning() => core.isRunning;
 
-        public void RunSpeedTest() => SpeedTestWorker();
+        public void RunSpeedTest()
+        {
+            AddToSpeedTestQueue();
+            speedTestingEvt.WaitOne();
+        }
 
-        public void RunSpeedTestThen() =>
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                SpeedTestWorker();
-            });
+        public void RunSpeedTestThen()
+        {
+            AddToSpeedTestQueue();
+        }
+
         #endregion
 
         #region private methods
@@ -157,60 +167,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             });
         }
 
-        void SpeedTestWorker()
-        {
-            long avgDelay = -1;
-            long curDelay = SpeedtestTimeout;
-            var cycles = Math.Max(
-                1,
-                setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestCycles : 1
-            );
+        ManualResetEvent speedTestingEvt = new ManualResetEvent(true);
 
+        void AddToSpeedTestQueue()
+        {
+            speedTestingEvt.Reset();
             coreStates.SetSpeedTestResult(0);
             coreStates.SetStatus(I18N.Testing);
-
-            logger.Log(I18N.Testing);
-            for (int i = 0; i < cycles && !setting.isSpeedtestCancelled; i++)
-            {
-                var sr = configMgr.RunDefaultSpeedTest(
-                    configer.GetFinalConfig(),
-                    coreStates.GetTitle(),
-                    GetCustomCoreName(),
-                    (s, a) => logger.Log(a.Data)
-                );
-                curDelay = sr.Item1;
-                coreStates.AddStatSample(new StatsSample(0, sr.Item2));
-                ShowCurrentSpeedtestResult(I18N.CurSpeedtestResult, curDelay);
-                if (curDelay == SpeedtestTimeout)
-                {
-                    continue;
-                }
-
-                avgDelay = VgcApis.Misc.Utils.SpeedtestMean(
-                    avgDelay,
-                    curDelay,
-                    VgcApis.Models.Consts.Config.CustomSpeedtestMeanWeight
-                );
-            }
-
-            // all speedtest timeout
-            if (avgDelay <= 0)
-            {
-                avgDelay = SpeedtestTimeout;
-            }
-            ShowCurrentSpeedtestResult(I18N.AvgSpeedtestResult, avgDelay);
-        }
-
-        void ShowCurrentSpeedtestResult(string prefix, long delay)
-        {
-            if (delay <= 0)
-            {
-                delay = SpeedtestTimeout;
-            }
-            var text = delay == SpeedtestTimeout ? I18N.Timeout : $"{delay}ms";
-            coreStates.SetStatus(text);
-            coreStates.SetSpeedTestResult(delay);
-            logger.Log($"{prefix}{text}");
+            configMgr.AddToSpeedTestQueue(GetParent());
         }
 
         void OnLogHandler(object sender, StrEvent arg) => logger.Log(arg.Data);

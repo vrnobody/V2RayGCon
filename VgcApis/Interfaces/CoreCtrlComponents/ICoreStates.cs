@@ -247,6 +247,12 @@
         void SetSpeedTestResult(long latency);
 
         /// <summary>
+        /// 设置服务器延迟标签内容
+        /// </summary>
+        /// <returns>延迟标签内容</returns>
+        void SetStatus(string content);
+
+        /// <summary>
         /// 设置自定义标签1的内容
         /// </summary>
         /// <param name="tag">标签内容</param>
@@ -275,5 +281,11 @@
         /// </summary>
         /// <param name="isUntrack">是否不追踪</param>
         void SetIsUntrack(bool isUntrack);
+
+        /// <summary>
+        /// 添加流量统计数据
+        /// </summary>
+        /// <param name="sample">流量统计数据</param>
+        void AddStatSample(Models.Datas.StatsSample sample);
     }
 }

@@ -28,6 +28,7 @@ namespace VgcApis.Interfaces
         #endregion
 
         #region ICoreCtrl
+        new void ReleaseSpeedTestLock();
         new bool IsCoreRunning();
         new void RunSpeedTest();
         new void RunSpeedTestThen();
@@ -43,6 +44,8 @@ namespace VgcApis.Interfaces
         #endregion
 
         #region ICoreStates
+        new void AddStatSample(Models.Datas.StatsSample sample);
+
         new Models.Datas.CoreInfo GetAllRawCoreInfo();
         new long GetUplinkTotalInBytes();
         new long GetDownlinkTotalInBytes();
@@ -89,6 +92,8 @@ namespace VgcApis.Interfaces
         new void SetMark(string mark);
         new void SetRemark(string remark);
         new void SetSpeedTestResult(long latency);
+
+        new void SetStatus(string content);
         new void SetTag1(string tag);
         new void SetTag2(string tag);
         new void SetTag3(string tag);

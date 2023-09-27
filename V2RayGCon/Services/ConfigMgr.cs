@@ -1,11 +1,29 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
 {
+    #region test result
+    class LatencyTestResult
+    {
+        public long latency;
+        public long size;
+
+        public LatencyTestResult(long latency, long size)
+        {
+            this.latency = latency;
+            this.size = size;
+        }
+
+        public LatencyTestResult() { }
+    }
+    #endregion
+
     public sealed class ConfigMgr
         : BaseClasses.SingletonService<ConfigMgr>,
             VgcApis.Interfaces.Services.IConfigMgrService
@@ -14,6 +32,9 @@ namespace V2RayGCon.Services
         Cache cache;
 
         static readonly long TIMEOUT = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+
+        ConcurrentQueue<VgcApis.Interfaces.ICoreServCtrl> testTaskIds =
+            new ConcurrentQueue<VgcApis.Interfaces.ICoreServCtrl>();
 
         ConfigMgr() { }
 
@@ -56,74 +77,48 @@ namespace V2RayGCon.Services
             string coreName,
             string testUrl,
             int testTimeout
-        ) =>
-            QueuedSpeedTesting(
+        )
+        {
+            Interlocked.Increment(ref setting.SpeedtestCounter);
+            setting.SpeedTestPool.Wait();
+            var result = DoSpeedTest(
                 rawConfig,
                 "Custom speed-test",
                 coreName,
                 testUrl,
                 testTimeout,
                 null
-            ).Item1;
+            );
+            setting.SpeedTestPool.Release();
+            Interlocked.Decrement(ref setting.SpeedtestCounter);
+            WakeupLatencyTester();
+            return result.latency;
+        }
 
         public long RunSpeedTest(string rawConfig)
         {
+            Interlocked.Increment(ref setting.SpeedtestCounter);
+            setting.SpeedTestPool.Wait();
             var url = GetDefaultSpeedtestUrl();
-            return QueuedSpeedTesting(
+            var r = DoSpeedTest(
                 rawConfig,
                 "Default speed-test",
                 "",
                 url,
                 GetDefaultTimeout(),
                 null
-            ).Item1;
-        }
-
-        public Tuple<long, long> RunDefaultSpeedTest(
-            string config,
-            string title,
-            string coreName,
-            EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever
-        )
-        {
-            var url = GetDefaultSpeedtestUrl();
-            return QueuedSpeedTesting(
-                config,
-                title,
-                coreName,
-                url,
-                GetDefaultTimeout(),
-                logDeliever
             );
+            setting.SpeedTestPool.Release();
+            Interlocked.Decrement(ref setting.SpeedtestCounter);
+            WakeupLatencyTester();
+            return r.latency;
         }
 
-        public void MergeCustomTlsSettings(ref JObject config)
+        public void AddToSpeedTestQueue(VgcApis.Interfaces.ICoreServCtrl coreServ)
         {
-            var outB =
-                Misc.Utils.GetKey(config, "outbound") ?? Misc.Utils.GetKey(config, "outbounds.0");
-
-            if (outB == null)
-            {
-                return;
-            }
-
-            if (!(Misc.Utils.GetKey(outB, "streamSettings") is JObject streamSettings))
-            {
-                return;
-            }
-
-            if (setting.isSupportSelfSignedCert)
-            {
-                var selfSigned = JObject.Parse(@"{tlsSettings: {allowInsecure: true}}");
-                Misc.Utils.MergeJson(streamSettings, selfSigned);
-            }
-
-            if (setting.isEnableUtlsFingerprint)
-            {
-                var uTlsFingerprint = JObject.Parse(@"{tlsSettings: {}}");
-                uTlsFingerprint["tlsSettings"]["fingerprint"] = setting.uTlsFingerprint;
-                Misc.Utils.MergeJson(streamSettings, uTlsFingerprint);
-            }
+            testTaskIds.Enqueue(coreServ);
+            Interlocked.Increment(ref setting.SpeedtestCounter);
+            WakeupLatencyTester();
         }
 
         public JObject GenV4ServersPackageConfig(
@@ -193,7 +188,7 @@ namespace V2RayGCon.Services
             return package;
         }
 
-        private JObject GenV4BalancerConfig(List<VgcApis.Interfaces.ICoreServCtrl> servList)
+        JObject GenV4BalancerConfig(List<VgcApis.Interfaces.ICoreServCtrl> servList)
         {
             var package = cache.tpl.LoadPackage("pkgV4Tpl");
             var outbounds = package["outbounds"] as JArray;
@@ -237,7 +232,7 @@ namespace V2RayGCon.Services
                 ? setting.CustomSpeedtestUrl
                 : VgcApis.Models.Consts.Webs.GoogleDotCom;
 
-        Tuple<long, long> QueuedSpeedTesting(
+        LatencyTestResult DoSpeedTest(
             string rawConfig,
             string title,
             string coreName,
@@ -246,18 +241,12 @@ namespace V2RayGCon.Services
             EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever
         )
         {
-            Interlocked.Increment(ref setting.SpeedtestCounter);
-
-            // setting.SpeedTestPool may change while testing
-            var pool = setting.SpeedTestPool;
-            pool.Wait();
-
-            var result = new Tuple<long, long>(VgcApis.Models.Consts.Core.SpeedtestAbort, 0);
+            var result = new LatencyTestResult(VgcApis.Models.Consts.Core.SpeedtestAbort, 0);
             if (!setting.isSpeedtestCancelled)
             {
                 var port = VgcApis.Misc.Utils.GetFreeTcpPort();
                 var cfg = CreateSpeedTestConfig(rawConfig, port);
-                result = DoSpeedTesting(
+                result = SpeedTestCore(
                     cfg,
                     title,
                     coreName,
@@ -267,13 +256,10 @@ namespace V2RayGCon.Services
                     logDeliever
                 );
             }
-
-            pool.Release();
-            Interlocked.Decrement(ref setting.SpeedtestCounter);
             return result;
         }
 
-        Tuple<long, long> DoSpeedTesting(
+        LatencyTestResult SpeedTestCore(
             string config,
             string title,
             string coreName,
@@ -290,7 +276,7 @@ namespace V2RayGCon.Services
             if (string.IsNullOrEmpty(config))
             {
                 log(I18N.DecodeImportFail);
-                return new Tuple<long, long>(TIMEOUT, 0);
+                return new LatencyTestResult(TIMEOUT, 0);
             }
 
             var speedTester = new Libs.V2Ray.Core(setting) { title = title };
@@ -326,7 +312,7 @@ namespace V2RayGCon.Services
             {
                 speedTester.OnLog -= logDeliever;
             }
-            return new Tuple<long, long>(latency, len);
+            return new LatencyTestResult(latency, len);
         }
 
         static readonly string httpInboundsTemplate =
@@ -337,6 +323,28 @@ namespace V2RayGCon.Services
     ""listen"": ""%host%"",
     ""settings"": { }
 }]";
+
+        void WakeupLatencyTester()
+        {
+            if (!setting.SpeedTestPool.Wait(0))
+            {
+                return;
+            }
+
+            if (testTaskIds.Count > 0 && testTaskIds.TryDequeue(out var coreServ))
+            {
+                if (coreServ != null)
+                {
+                    VgcApis.Misc.Utils.RunInBackground(() => DoLatencyTestOnCore(coreServ));
+                    return;
+                }
+                else
+                {
+                    Interlocked.Decrement(ref setting.SpeedtestCounter);
+                }
+            }
+            setting.SpeedTestPool.Release();
+        }
 
         string CreateSpeedTestConfig(string rawConfig, int port)
         {
@@ -378,6 +386,80 @@ namespace V2RayGCon.Services
             // debug
             var configString = VgcApis.Misc.Utils.FormatConfig(json);
             return configString;
+        }
+
+        void ShowCurrentSpeedtestResult(
+            VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates,
+            VgcApis.Interfaces.CoreCtrlComponents.ILogger coreLogger,
+            string prefix,
+            long delay
+        )
+        {
+            if (delay <= 0)
+            {
+                delay = TIMEOUT;
+            }
+            var text = delay == TIMEOUT ? I18N.Timeout : $"{delay}ms";
+            coreStates.SetStatus(text);
+            coreStates.SetSpeedTestResult(delay);
+            coreLogger.Log($"{prefix}{text}");
+        }
+
+        void DoLatencyTestOnCore(VgcApis.Interfaces.ICoreServCtrl coreServ)
+        {
+            long avgDelay = -1;
+            long curDelay = TIMEOUT;
+            var cycles = Math.Max(
+                1,
+                setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestCycles : 1
+            );
+
+            var coreStates = coreServ.GetCoreStates();
+            var coreConfiger = coreServ.GetConfiger();
+            var coreCtrl = coreServ.GetCoreCtrl();
+            var coreLogger = coreServ.GetLogger();
+
+            for (int i = 0; i < cycles && !setting.isSpeedtestCancelled; i++)
+            {
+                var url = GetDefaultSpeedtestUrl();
+                var sr = DoSpeedTest(
+                    coreConfiger.GetFinalConfig(),
+                    coreStates.GetTitle(),
+                    coreCtrl.GetCustomCoreName(),
+                    url,
+                    GetDefaultTimeout(),
+                    (s, a) => coreLogger.Log(a.Data)
+                );
+                curDelay = sr.latency;
+                coreStates.AddStatSample(new VgcApis.Models.Datas.StatsSample(0, sr.size));
+                ShowCurrentSpeedtestResult(
+                    coreStates,
+                    coreLogger,
+                    I18N.CurSpeedtestResult,
+                    curDelay
+                );
+                if (curDelay == TIMEOUT)
+                {
+                    continue;
+                }
+
+                avgDelay = VgcApis.Misc.Utils.SpeedtestMean(
+                    avgDelay,
+                    curDelay,
+                    VgcApis.Models.Consts.Config.CustomSpeedtestMeanWeight
+                );
+            }
+
+            // all speedtest timeout
+            if (avgDelay <= 0)
+            {
+                avgDelay = TIMEOUT;
+            }
+            ShowCurrentSpeedtestResult(coreStates, coreLogger, I18N.AvgSpeedtestResult, avgDelay);
+            setting.SpeedTestPool.Release();
+            Interlocked.Decrement(ref setting.SpeedtestCounter);
+            coreCtrl.ReleaseSpeedTestLock();
+            WakeupLatencyTester();
         }
         #endregion
     }

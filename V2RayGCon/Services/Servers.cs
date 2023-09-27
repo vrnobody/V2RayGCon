@@ -1140,10 +1140,17 @@ namespace V2RayGCon.Services
             setting.isSpeedtestCancelled = false;
 
             var randList = VgcApis.Misc.Utils.Shuffle(servList);
+            foreach (var coreServ in randList)
+            {
+                coreServ.GetCoreCtrl().RunSpeedTestThen();
+            }
 
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                Misc.Utils.ExecuteInParallel(randList, serv => serv.GetCoreCtrl().RunSpeedTest());
+                while (setting.SpeedtestCounter > 0)
+                {
+                    VgcApis.Misc.Utils.Sleep(TimeSpan.FromSeconds(2));
+                }
                 speedTestingBar.Remove();
                 setting.SendLog(I18N.SpeedTestFinished);
                 next?.Invoke();

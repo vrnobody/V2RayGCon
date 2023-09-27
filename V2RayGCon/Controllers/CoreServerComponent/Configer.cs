@@ -163,6 +163,35 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region private methods
+        void MergeCustomTlsSettings(ref JObject config)
+        {
+            var outB =
+                Misc.Utils.GetKey(config, "outbound") ?? Misc.Utils.GetKey(config, "outbounds.0");
+
+            if (outB == null)
+            {
+                return;
+            }
+
+            if (!(Misc.Utils.GetKey(outB, "streamSettings") is JObject streamSettings))
+            {
+                return;
+            }
+
+            if (setting.isSupportSelfSignedCert)
+            {
+                var selfSigned = JObject.Parse(@"{tlsSettings: {allowInsecure: true}}");
+                Misc.Utils.MergeJson(streamSettings, selfSigned);
+            }
+
+            if (setting.isEnableUtlsFingerprint)
+            {
+                var uTlsFingerprint = JObject.Parse(@"{tlsSettings: {}}");
+                uTlsFingerprint["tlsSettings"]["fingerprint"] = setting.uTlsFingerprint;
+                Misc.Utils.MergeJson(streamSettings, uTlsFingerprint);
+            }
+        }
+
         string GenJsonFinalConfig(
             Models.Datas.CustomInboundSettings inbS,
             string config,
@@ -174,7 +203,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             {
                 var json = JObject.Parse(config);
                 InjectStatisticsConfigOnDemand(ref json);
-                configMgr.MergeCustomTlsSettings(ref json);
+                MergeCustomTlsSettings(ref json);
                 inbS?.MergeToJObject(ref json, host, port);
                 var s = VgcApis.Misc.Utils.FormatConfig(json);
                 return s;

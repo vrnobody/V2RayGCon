@@ -26,6 +26,11 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         bool IsCoreRunning();
 
         /// <summary>
+        /// 内部使用
+        /// </summary>
+        void ReleaseSpeedTestLock();
+
+        /// <summary>
         /// 进行延迟测试并等待测试完成
         /// </summary>
         void RunSpeedTest();

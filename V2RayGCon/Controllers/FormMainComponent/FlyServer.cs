@@ -76,8 +76,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             InitFormControls(lbClearKeyword, miResizeFormMain);
             BindDragDropEvent();
-            RefreshFlyPanelLater();
             WatchServers();
+            lazyFlyPanelUpdater.Throttle();
         }
 
         #region public method

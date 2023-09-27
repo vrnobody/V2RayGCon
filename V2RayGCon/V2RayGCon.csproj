@@ -165,7 +165,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StrConst.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\Caches\JsonAcm.cs" />
     <Compile Include="Controllers\CoreServerComponent\Configer.cs" />
     <Compile Include="Controllers\CoreServerComponent\CoreCtrl.cs" />
     <Compile Include="Controllers\CoreServerComponent\CoreStates.cs" />
@@ -200,8 +199,6 @@
     <Compile Include="BaseClasses\FormComponentController.cs" />
     <Compile Include="BaseClasses\NotifyComponent.cs" />
     <Compile Include="BaseClasses\SingletonService.cs" />
-    <Compile Include="Services\Caches\JsonBestMatchItems.cs" />
-    <Compile Include="Services\Caches\JsonKeywordItems.cs" />
     <Compile Include="Services\ConfigMgr.cs" />
     <Compile Include="Services\Launcher.cs" />
     <Compile Include="Services\PluginsComponents\PluginMgr.cs" />
@@ -510,7 +507,6 @@
   <ItemGroup>
     <Content Include="icon_dark.ico" />
     <Content Include="Resources\Files\3rd\plugins\readme.txt" />
-    <Content Include="Resources\Files\CSharp\ConfigJsonKeywords.txt" />
     <None Include="Resources\Icon\FormMainToolStrip\EditSelectedTag_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\EditPage_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\CloudSearch_16x.png" />
@@ -536,7 +532,6 @@
     <None Include="Resources\Icon\TaskTray\CloseSolution_16x.png" />
     <None Include="Resources\Icon\TaskTray\AzureVirtualMachineExtension_16x.png" />
     <None Include="Resources\Icon\TaskTray\ASX_TransferDownload_blue_16x.png" />
-    <None Include="Resources\Config\config_example.txt" />
     <Content Include="Resources\Config\config_pkg.txt" />
     <Content Include="Resources\Config\config_tpl.txt" />
     <None Include="Resources\Config\config_min.txt" />

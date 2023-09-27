@@ -128,12 +128,6 @@
   <data name="config_pkg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Config\config_pkg.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="config_example" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Config\config_example.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="ConfigJsonKeywords" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Files\CSharp\ConfigJsonKeywords.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="config_tpl" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Config\config_tpl.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

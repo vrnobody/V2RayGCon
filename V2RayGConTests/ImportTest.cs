@@ -208,26 +208,6 @@ namespace V2RayGCon.Test
             Assert.AreEqual(true, same);
         }
 
-        [TestMethod]
-        public void DetectJArrayTest()
-        {
-            var domainOverride = Services.Cache.Instance.tpl.LoadExample(
-                "inTpl.sniffing.destOverride"
-            );
-            var isArray = domainOverride is JArray;
-            var isObject = domainOverride is JObject;
-
-            string[] list = null;
-            if (isArray)
-            {
-                list = domainOverride.ToObject<string[]>();
-            }
-
-            Assert.AreEqual(true, isArray);
-            Assert.AreEqual(false, isObject);
-            Assert.AreNotEqual(null, list);
-        }
-
         [DataTestMethod]
         // deepequals regardless dictionary's keys order
         [DataRow(

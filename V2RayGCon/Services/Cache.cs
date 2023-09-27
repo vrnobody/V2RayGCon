@@ -19,17 +19,6 @@
             core.Run(setting);
         }
 
-        Caches.JsonAcm _jsonAcm = null;
-
-        public Caches.JsonAcm GetJsonAcm()
-        {
-            if (_jsonAcm == null)
-            {
-                _jsonAcm = new Caches.JsonAcm();
-            }
-            return _jsonAcm;
-        }
-
         #region public method
 
         #endregion

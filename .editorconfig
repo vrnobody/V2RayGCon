@@ -19,3 +19,6 @@ dotnet_diagnostic.CA1031.severity = none
 
 # CA1802: static readonly to constant
 dotnet_diagnostic.CA1802.severity = none
+
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = none

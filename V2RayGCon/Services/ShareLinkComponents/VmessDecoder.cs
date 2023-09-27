@@ -66,7 +66,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             node["users"][0]["id"] = vmess.id;
             node["users"][0]["alterId"] = VgcApis.Misc.Utils.Str2Int(vmess.aid);
 
-            var tpl = cache.tpl.LoadTemplate("tplImportVmess") as JObject;
+            var tpl = cache.tpl.LoadTemplate("tplLogWarn") as JObject;
             return GetParent()?.GenerateJsonConfing(tpl, outVmess);
         }
 

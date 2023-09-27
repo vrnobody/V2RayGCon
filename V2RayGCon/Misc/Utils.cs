@@ -1238,15 +1238,6 @@ namespace V2RayGCon.Misc
         }
         #endregion
 
-        #region speed test helper
-
-        public static string InboundTypeNumberToName(int typeNumber)
-        {
-            var table = Models.Datas.Table.customInbTypeNames;
-            return table[Clamp(typeNumber, 0, table.Length)];
-        }
-        #endregion
-
         #region Miscellaneous
 
 
@@ -1567,13 +1558,7 @@ namespace V2RayGCon.Misc
         #region for Testing
         public static string[] TestingGetResourceConfigJson()
         {
-            return new string[]
-            {
-                StrConst.config_example,
-                StrConst.config_min,
-                StrConst.config_tpl,
-                StrConst.config_pkg,
-            };
+            return new string[] { StrConst.config_min, StrConst.config_tpl, StrConst.config_pkg, };
         }
         #endregion
     }

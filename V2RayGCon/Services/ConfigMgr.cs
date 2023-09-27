@@ -335,7 +335,7 @@ namespace V2RayGCon.Services
             {
                 if (coreServ != null)
                 {
-                    VgcApis.Misc.Utils.RunInBackground(() => DoLatencyTestOnCore(coreServ));
+                    VgcApis.Misc.Utils.RunInBgSlim(() => DoLatencyTestOnCore(coreServ));
                     return;
                 }
                 else

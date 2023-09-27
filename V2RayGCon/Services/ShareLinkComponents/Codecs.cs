@@ -18,7 +18,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var outbSs = cache.tpl.LoadTemplate("outbVeeTrojan5a");
+            var outbSs = cache.tpl.LoadTemplate("outbTrojan");
 
             outbSs["streamSettings"] = Comm.GenStreamSetting(cache, vee);
             var node = outbSs["settings"]["servers"][0];
@@ -27,7 +27,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             node["password"] = vee.auth1;
             node["flow"] = vee.auth2;
 
-            var tpl = cache.tpl.LoadTemplate("tplImportSS") as JObject;
+            var tpl = cache.tpl.LoadTemplate("tplLogWarn") as JObject;
             return GenerateJsonConfing(tpl, outbSs);
         }
 
@@ -38,7 +38,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var outVmess = cache.tpl.LoadTemplate("outbVeeVmess");
+            var outVmess = cache.tpl.LoadTemplate("outbVless");
             outVmess["streamSettings"] = Comm.GenStreamSetting(cache, vee);
 
             outVmess["protocol"] = "vless";
@@ -51,7 +51,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 node["users"][0]["flow"] = vee.auth2;
             }
             node["users"][0]["encryption"] = "none";
-            var tpl = cache.tpl.LoadTemplate("tplImportVmess") as JObject;
+            var tpl = cache.tpl.LoadTemplate("tplLogWarn") as JObject;
             return GenerateJsonConfing(tpl, outVmess);
         }
         #endregion

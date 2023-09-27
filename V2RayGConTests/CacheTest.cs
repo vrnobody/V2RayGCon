@@ -68,29 +68,12 @@ namespace V2RayGCon.Test
         }
 
         [DataTestMethod]
-        [DataRow(@"inTpl.sniffing", @"{'enabled':false,'destOverride':['http','tls']}")]
-        public void LoadExampleTest(string key, string expect)
-        {
-            var v = cache.tpl.LoadExample(key);
-            var e = JToken.Parse(expect);
-            Assert.AreEqual(true, JToken.DeepEquals(v, e));
-        }
-
-        [DataTestMethod]
-        [DataRow(@"vgc", @"{'alias': '','description': ''}")]
+        [DataRow(@"tplLogWarn", @"{'log': {'loglevel': 'warning'}}")]
         public void LoadTplTest(string key, string expect)
         {
             var v = cache.tpl.LoadTemplate(key);
             var e = JObject.Parse(expect);
             Assert.AreEqual(true, JToken.DeepEquals(v, e));
-        }
-
-        [TestMethod]
-        public void LoadMinConfigTest()
-        {
-            var min = cache.tpl.LoadMinConfig();
-            var v = Misc.Utils.GetValue<string>(min, "log.loglevel");
-            Assert.AreEqual("warning", v);
         }
     }
 }

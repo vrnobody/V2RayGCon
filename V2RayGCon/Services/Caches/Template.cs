@@ -7,16 +7,12 @@ namespace V2RayGCon.Services.Caches
     public class Template
     {
         readonly JObject template,
-            example,
             package;
 
         public Template()
         {
             template = JObject.Parse(StrConst.config_tpl);
-            example = JObject.Parse(StrConst.config_example);
             package = JObject.Parse(StrConst.config_pkg);
-
-            example["cfgMin"] = LoadMinConfig();
         }
 
         #region public method
@@ -35,12 +31,6 @@ namespace V2RayGCon.Services.Caches
         public JObject LoadMinConfig()
         {
             return JObject.Parse(StrConst.config_min);
-        }
-
-        public JToken LoadExample(string key)
-        {
-            var node = LoadJObjectPart(example, key);
-            return JToken.Parse(node.ToString());
         }
         #endregion
 

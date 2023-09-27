@@ -38,7 +38,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var tpl = cache.tpl.LoadTemplate("tplImportSS") as JObject;
+            var tpl = cache.tpl.LoadTemplate("tplLogWarn") as JObject;
             var name = string.Empty;
             if (parts.Length > 1 && !string.IsNullOrEmpty(parts[1]))
             {

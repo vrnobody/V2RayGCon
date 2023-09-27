@@ -238,7 +238,7 @@ namespace V2RayGCon.Services
             string coreName,
             string testUrl,
             int testTimeout,
-            EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever
+            Action<string> logDeliever
         )
         {
             var result = new LatencyTestResult(VgcApis.Models.Consts.Core.SpeedtestAbort, 0);
@@ -266,12 +266,9 @@ namespace V2RayGCon.Services
             string testUrl,
             int testTimeout,
             int port,
-            EventHandler<VgcApis.Models.Datas.StrEvent> logDeliever
+            Action<string> log
         )
         {
-            void log(string content) =>
-                logDeliever?.Invoke(this, new VgcApis.Models.Datas.StrEvent(content));
-
             log($"{I18N.SpeedtestPortNum}{port}");
             if (string.IsNullOrEmpty(config))
             {
@@ -279,19 +276,19 @@ namespace V2RayGCon.Services
                 return new LatencyTestResult(TIMEOUT, 0);
             }
 
-            var speedTester = new Libs.V2Ray.Core(setting) { title = title };
-            speedTester.SetCustomCoreName(coreName);
-            if (logDeliever != null)
+            var core = new Libs.V2Ray.Core(setting) { title = title };
+            core.SetCustomCoreName(coreName);
+            if (log != null)
             {
-                speedTester.OnLog += logDeliever;
+                core.OnLog += log;
             }
 
             long latency = TIMEOUT;
             long len = 0;
             try
             {
-                speedTester.RestartCoreIgnoreError(config);
-                if (speedTester.WaitUntilReady())
+                core.RestartCoreIgnoreError(config);
+                if (core.WaitUntilReady())
                 {
                     var expectedSizeInKib = setting.isUseCustomSpeedtestSettings
                         ? setting.CustomSpeedtestExpectedSizeInKib
@@ -305,24 +302,15 @@ namespace V2RayGCon.Services
                     latency = r.Item1;
                     len = r.Item2;
                 }
-                speedTester.StopCore();
+                core.StopCore();
             }
             catch { }
-            if (logDeliever != null)
+            if (log != null)
             {
-                speedTester.OnLog -= logDeliever;
+                core.OnLog -= log;
             }
             return new LatencyTestResult(latency, len);
         }
-
-        static readonly string httpInboundsTemplate =
-            @"[{
-    ""tag"": ""agentin"",
-    ""protocol"": ""http"",
-    ""port"": %port%,
-    ""listen"": ""%host%"",
-    ""settings"": { }
-}]";
 
         void WakeupLatencyTester()
         {
@@ -336,6 +324,8 @@ namespace V2RayGCon.Services
                 if (coreServ != null)
                 {
                     VgcApis.Misc.Utils.RunInBgSlim(() => DoLatencyTestOnCore(coreServ));
+                    // 预防有线程意外终止，补个线程
+                    WakeupLatencyTester();
                     return;
                 }
                 else
@@ -360,17 +350,7 @@ namespace V2RayGCon.Services
                 return empty;
             }
 
-            try
-            {
-                var inb = httpInboundsTemplate
-                    .Replace("%host%", VgcApis.Models.Consts.Webs.LoopBackIP)
-                    .Replace("%port%", port.ToString());
-                json["inbounds"] = JArray.Parse(inb);
-            }
-            catch
-            {
-                return empty;
-            }
+            json["inbounds"] = VgcApis.Misc.Utils.GenHttpInbound(port);
 
             // inject log config
             var nodeLog = Misc.Utils.GetKey(json, "log");
@@ -384,8 +364,8 @@ namespace V2RayGCon.Services
             }
 
             // debug
-            var configString = VgcApis.Misc.Utils.FormatConfig(json);
-            return configString;
+            var r = VgcApis.Misc.Utils.FormatConfig(json);
+            return r;
         }
 
         void ShowCurrentSpeedtestResult(
@@ -414,21 +394,23 @@ namespace V2RayGCon.Services
                 setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestCycles : 1
             );
 
-            var coreStates = coreServ.GetCoreStates();
-            var coreConfiger = coreServ.GetConfiger();
             var coreCtrl = coreServ.GetCoreCtrl();
+            var coreStates = coreServ.GetCoreStates();
             var coreLogger = coreServ.GetLogger();
+
+            var coreName = coreCtrl.GetCustomCoreName();
+            var config = coreServ.GetConfiger().GetFinalConfig();
+            var url = GetDefaultSpeedtestUrl();
 
             for (int i = 0; i < cycles && !setting.isSpeedtestCancelled; i++)
             {
-                var url = GetDefaultSpeedtestUrl();
                 var sr = DoSpeedTest(
-                    coreConfiger.GetFinalConfig(),
+                    config,
                     coreStates.GetTitle(),
-                    coreCtrl.GetCustomCoreName(),
+                    coreName,
                     url,
                     GetDefaultTimeout(),
-                    (s, a) => coreLogger.Log(a.Data)
+                    coreLogger.Log
                 );
                 curDelay = sr.latency;
                 coreStates.AddStatSample(new VgcApis.Models.Datas.StatsSample(0, sr.size));

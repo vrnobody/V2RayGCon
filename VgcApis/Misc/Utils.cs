@@ -1169,6 +1169,19 @@ namespace VgcApis.Misc
         #endregion
 
         #region Json
+        public static JToken GenHttpInbound(int port)
+        {
+            return GenHttpInbound(Models.Consts.Webs.LoopBackIP, port);
+        }
+
+        public static JToken GenHttpInbound(string host, int port)
+        {
+            var tpl = Models.Consts.Config.HttpInboundsTemplate
+                .Replace("%host%", host)
+                .Replace("%port%", port.ToString());
+            return JToken.Parse(tpl);
+        }
+
         public static string GetProtocolFromConfig(string config)
         {
             if (string.IsNullOrEmpty(config) || config.Length < 3 || config[0] != '{')

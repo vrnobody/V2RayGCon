@@ -8,10 +8,23 @@ namespace VgcApis.Libs.Sys
     {
         long logTimestamp = DateTime.Now.Ticks;
 
+        readonly int maxLineNumber;
+        readonly int minLineNumber;
+
         readonly object logLock = new object();
         Queue<string> logs = new Queue<string>();
 
-        public QueueLogger() { }
+        public QueueLogger()
+            : this(
+                Models.Consts.Libs.MinCacheLoggerLineNumber,
+                Models.Consts.Libs.MaxCacheLoggerLineNumber
+            ) { }
+
+        public QueueLogger(int minLineNumber, int maxLineNumber)
+        {
+            this.minLineNumber = minLineNumber;
+            this.maxLineNumber = maxLineNumber;
+        }
 
         #region public methods
         public int Count() => logs.Count;
@@ -103,7 +116,7 @@ namespace VgcApis.Libs.Sys
             }
 
             var count = logs.Count;
-            if (count < Models.Consts.Libs.MaxCacheLoggerLineNumber)
+            if (count < maxLineNumber)
             {
                 bar.Remove();
                 return;
@@ -111,7 +124,7 @@ namespace VgcApis.Libs.Sys
 
             lock (logLock)
             {
-                var num = logs.Count - Models.Consts.Libs.MinCacheLoggerLineNumber;
+                var num = logs.Count - minLineNumber;
                 for (int i = 0; i < num; i++)
                 {
                     logs.Dequeue();

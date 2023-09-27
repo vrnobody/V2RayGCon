@@ -10,7 +10,7 @@ namespace V2RayGCon.Libs.Nets
         public event EventHandler OnDownloadCompleted,
             OnDownloadCancelled,
             OnDownloadFail;
-        public event EventHandler<VgcApis.Models.Datas.IntEvent> OnProgress;
+        public event Action<int> OnProgress;
 
         public enum CoreTypes
         {
@@ -152,10 +152,7 @@ namespace V2RayGCon.Libs.Nets
         {
             try
             {
-                OnProgress?.Invoke(
-                    this,
-                    new VgcApis.Models.Datas.IntEvent(Math.Max(1, percentage))
-                );
+                OnProgress?.Invoke(percentage);
             }
             catch { }
         }

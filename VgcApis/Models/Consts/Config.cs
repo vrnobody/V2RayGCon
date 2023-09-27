@@ -4,6 +4,9 @@ namespace VgcApis.Models.Consts
 {
     public static class Config
     {
+        public static readonly string HttpInboundsTemplate =
+            @"[{'tag': 'agentin','protocol': 'http','port': %port%,'listen': '%host%','settings': {}}]";
+
         public static int MinCompressConfigLen = 4 * 1024;
 
         public static int QuickSwitchMenuItemNum = 9;

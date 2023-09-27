@@ -86,7 +86,7 @@ namespace V2RayGCon.Views.WinForms
 
         void UpdateProgressBar(int percentage)
         {
-            var v = Misc.Utils.Clamp(percentage, 0, 101);
+            var v = Misc.Utils.Clamp(percentage, 1, 101);
             VgcApis.Misc.UI.Invoke(() => pgBarDownload.Value = v);
         }
 
@@ -111,10 +111,7 @@ namespace V2RayGCon.Views.WinForms
             downloader.SetVersion(cboxVer.Text);
             downloader.proxyPort = proxyPort;
 
-            downloader.OnProgress += (s, a) =>
-            {
-                UpdateProgressBar(a.Data);
-            };
+            downloader.OnProgress += (p) => UpdateProgressBar(p);
 
             downloader.OnDownloadCompleted += (s, a) =>
             {

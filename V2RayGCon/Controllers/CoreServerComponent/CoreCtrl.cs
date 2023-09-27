@@ -175,7 +175,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             configMgr.AddToSpeedTestQueue(GetParent());
         }
 
-        void OnLogHandler(object sender, StrEvent arg) => logger.Log(arg.Data);
+        void OnLogHandler(string msg) => logger.Log(msg);
 
         void StopCoreWorker(Action next)
         {

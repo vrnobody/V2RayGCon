@@ -116,7 +116,6 @@
     <Compile Include="Libs\Tasks\LazyGuy.cs" />
     <Compile Include="Libs\Sys\FileLogger.cs" />
     <Compile Include="BaseClasses\Plugin.cs" />
-    <Compile Include="Models\Datas\DataEvent.cs" />
     <Compile Include="Interfaces\ICoreServCtrl.cs" />
     <Compile Include="Interfaces\IDropableControl.cs" />
     <Compile Include="Interfaces\Services\INotifierService.cs" />

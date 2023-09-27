@@ -77,7 +77,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             InitFormControls(lbClearKeyword, miResizeFormMain);
             BindDragDropEvent();
             WatchServers();
-            lazyFlyPanelUpdater.Throttle();
+            RefreshFlyPanelNow();
         }
 
         #region public method
@@ -181,7 +181,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
             VgcApis.Misc.UI.InvokeThen(worker, next);
         }
 
-        public void RefreshFlyPanelLater() => lazyFlyPanelUpdater?.Deadline();
+        public void RefreshFlyPanelLater()
+        {
+            lazyFlyPanelUpdater?.Deadline();
+        }
 
         #endregion
 
@@ -488,6 +491,11 @@ namespace V2RayGCon.Controllers.FormMainComponent
             return gmis;
         }
 
+        void RefreshFlyPanelNow()
+        {
+            lazyFlyPanelUpdater?.Throttle();
+        }
+
         private List<ToolStripMenuItem> CreateBasicMenuItems(
             List<VgcApis.Interfaces.ICoreServCtrl> filteredList,
             int currentPageNumber,
@@ -513,7 +521,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     curPageNumber = pn;
                     ClearCboxKeywordIndex();
                     isFocusOnFormMain = true;
-                    RefreshFlyPanelLater();
+                    RefreshFlyPanelNow();
                 }
 
                 var item = new ToolStripMenuItem(title, null, onClick);
@@ -624,7 +632,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 ClearCboxKeywordIndex();
                 curPageNumber--;
                 isFocusOnFormMain = true;
-                lazyFlyPanelUpdater?.Postpone();
+                RefreshFlyPanelNow();
             };
 
             tslbNextPage.Click += (s, a) =>
@@ -632,7 +640,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 ClearCboxKeywordIndex();
                 curPageNumber++;
                 isFocusOnFormMain = true;
-                lazyFlyPanelUpdater?.Postpone();
+                RefreshFlyPanelNow();
             };
 
             lbClearKeyword.Click += (s, a) =>
@@ -719,7 +727,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void PerformSearch()
         {
             searchKeywords = cboxKeyword.Text;
-            lazyFlyPanelUpdater?.Throttle();
+            RefreshFlyPanelNow();
         }
 
         void UpdateMarkFilterItemList(ToolStripComboBox marker)

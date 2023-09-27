@@ -14,7 +14,7 @@ namespace V2RayGCon.Libs.V2Ray
     {
         readonly Encoding utf8 = Encoding.UTF8;
 
-        public event EventHandler<VgcApis.Models.Datas.StrEvent> OnLog;
+        public event Action<string> OnLog;
         public event EventHandler OnCoreStatusChanged;
 
         readonly Services.Settings setting;
@@ -585,10 +585,9 @@ namespace V2RayGCon.Libs.V2Ray
 
         void SendLog(string log)
         {
-            var arg = new VgcApis.Models.Datas.StrEvent(log);
             try
             {
-                OnLog?.Invoke(this, arg);
+                OnLog?.Invoke(log);
             }
             catch { }
         }

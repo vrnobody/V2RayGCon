@@ -14,8 +14,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         readonly Services.ConfigMgr configMgr;
         readonly CoreInfo coreInfo;
 
-        static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
-
         VgcApis.Libs.Tasks.Routine bookKeeper;
         readonly VgcApis.Libs.Tasks.Bar isRecording = new VgcApis.Libs.Tasks.Bar();
 
@@ -167,7 +165,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             });
         }
 
-        ManualResetEvent speedTestingEvt = new ManualResetEvent(true);
+        readonly ManualResetEvent speedTestingEvt = new ManualResetEvent(true);
 
         void AddToSpeedTestQueue()
         {

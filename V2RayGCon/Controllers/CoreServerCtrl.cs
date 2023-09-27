@@ -46,7 +46,7 @@ namespace V2RayGCon.Controllers
             coreCtrl = new CoreServerComponent.CoreCtrl(setting, coreInfo, configMgr);
             states = new CoreServerComponent.CoreStates(servers, coreInfo);
             logger = new CoreServerComponent.Logger(setting);
-            configer = new CoreServerComponent.Configer(setting, cache, configMgr, coreInfo);
+            configer = new CoreServerComponent.Configer(setting, cache, coreInfo);
 
             AddChild(coreCtrl);
             AddChild(states);

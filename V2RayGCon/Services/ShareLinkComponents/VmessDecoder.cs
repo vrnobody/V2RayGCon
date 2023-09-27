@@ -32,8 +32,13 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public string Encode(string name, string config)
         {
-            var vmess = ConfigString2Vmess(name, config);
-            return vmess?.ToVmessLink();
+            var vc = new Models.Datas.SharelinkMetadata(config);
+            if (vc.proto != @"vmess")
+            {
+                return null;
+            }
+            vc.name = name;
+            return vc.ToShareLink();
         }
 
         public List<string> ExtractLinksFromText(string text) =>
@@ -41,147 +46,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region private methods
-        bool TryParseConfig(string config, out JObject json)
-        {
-            json = null;
-            try
-            {
-                json = JObject.Parse(config);
-                return json != null;
-            }
-            catch { }
-            return false;
-        }
-
-        bool TryDetectConfigVersion(
-            Func<string, string, string> GetStr,
-            out bool isUseV4,
-            out string root
-        )
-        {
-            isUseV4 = (GetStr("outbounds.0", "protocol")?.ToLower()) == "vmess";
-            root = isUseV4 ? "outbounds.0" : "outbound";
-            if (isUseV4)
-            {
-                return true;
-            }
-
-            if (GetStr(root, "protocol")?.ToLower() == "vmess")
-            {
-                return true;
-            }
-            return false;
-        }
-
-        Models.Datas.Vmess ConfigString2Vmess(string name, string config)
-        {
-            if (!TryParseConfig(config, out JObject json))
-            {
-                return null;
-            }
-
-            var GetStr = VgcApis.Misc.Utils.GetStringByPrefixAndKeyHelper(json);
-            if (!TryDetectConfigVersion(GetStr, out bool isUseV4, out string root))
-            {
-                return null;
-            }
-
-            var basicPrefix = root + "." + "settings.vnext.0";
-
-            Models.Datas.Vmess vmess = ExtractBasicInfo(GetStr, basicPrefix);
-
-            vmess.ps = name;
-
-            var streamPrefix = root + "." + "streamSettings";
-
-            vmess.net = GetStr(streamPrefix, "network");
-            vmess.tls = GetStr(streamPrefix, "security");
-            vmess.sni = GetStr(streamPrefix, "tlsSettings.serverName");
-
-            switch (vmess.net)
-            {
-                case "grpc":
-                    vmess.path = GetStr(streamPrefix, "grpcSettings.serviceName");
-                    break;
-                case "quic":
-                    vmess.type = GetStr(streamPrefix, "quicSettings.header.type");
-                    vmess.host = GetStr(streamPrefix, "quicSettings.security");
-                    vmess.path = GetStr(streamPrefix, "quicSettings.key");
-                    break;
-                case "tcp":
-                    vmess.type = GetStr(streamPrefix, "tcpSettings.header.type");
-                    if (vmess.type?.ToLower() == "http")
-                    {
-                        ExtractTcpHttpSettings(json, isUseV4, vmess);
-                    }
-                    break;
-                case "kcp":
-                    vmess.type = GetStr(streamPrefix, "kcpSettings.header.type");
-                    vmess.path = GetStr(streamPrefix, "kcpSettings.seed");
-                    break;
-                case "ws":
-                    vmess.path = GetStr(streamPrefix, "wsSettings.path");
-                    vmess.host = GetStr(streamPrefix, "wsSettings.headers.Host");
-                    break;
-                case "h2":
-                    try
-                    {
-                        vmess.path = GetStr(streamPrefix, "httpSettings.path");
-                        var hosts = isUseV4
-                            ? json["outbounds"][0]["streamSettings"]["httpSettings"]["host"]
-                            : json["outbound"]["streamSettings"]["httpSettings"]["host"];
-                        vmess.host = Misc.Utils.JArray2Str(hosts as JArray);
-                    }
-                    catch { }
-                    break;
-                case "":
-                    // stream type none
-                    break;
-                default:
-                    // unsupported stream type
-                    return null;
-            }
-            return vmess;
-        }
-
-        void ExtractTcpHttpSettings(JObject json, bool isUseV4, Models.Datas.Vmess vmess)
-        {
-            try
-            {
-                var path = isUseV4
-                    ? json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"]["request"][
-                        "path"
-                    ]
-                    : json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"][
-                        "path"
-                    ];
-                vmess.path = Misc.Utils.JArray2Str(path as JArray);
-            }
-            catch { }
-            try
-            {
-                var hosts = isUseV4
-                    ? json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"]["request"][
-                        "headers"
-                    ]["Host"]
-                    : json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"][
-                        "headers"
-                    ]["Host"];
-                vmess.host = Misc.Utils.JArray2Str(hosts as JArray);
-            }
-            catch { }
-        }
-
-        Models.Datas.Vmess ExtractBasicInfo(Func<string, string, string> GetStr, string prefix)
-        {
-            Models.Datas.Vmess vmess = new Models.Datas.Vmess { v = "2", };
-            vmess.add = GetStr(prefix, "address");
-            vmess.port = GetStr(prefix, "port");
-            vmess.id = GetStr(prefix, "users.0.id");
-            vmess.aid = GetStr(prefix, "users.0.alterId");
-            return vmess;
-        }
-
         string Vmess2Config(Models.Datas.Vmess vmess)
         {
             if (vmess == null)

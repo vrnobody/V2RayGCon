@@ -12,7 +12,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
     {
         readonly Services.Settings setting;
         readonly Services.Cache cache;
-        readonly Services.ConfigMgr configMgr;
         readonly VgcApis.Models.Datas.CoreInfo coreInfo;
 
         CoreStates states;
@@ -22,11 +21,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public Configer(
             Services.Settings setting,
             Services.Cache cache,
-            Services.ConfigMgr configMgr,
             VgcApis.Models.Datas.CoreInfo coreInfo
         )
         {
-            this.configMgr = configMgr;
             this.setting = setting;
             this.cache = cache;
             this.coreInfo = coreInfo;

@@ -26,11 +26,58 @@ namespace V2RayGCon.Models.Datas
             id = string.Empty; // user id
             aid = string.Empty;
             net = string.Empty; // ws,tcp,kcp
+
+            tls = string.Empty; // streamSettings->security
+            sni = string.Empty; // tlsSettings.serverName
+
             type = string.Empty; // kcp->header
             host = string.Empty; // v1: ws->path v2: ws->host h2->["host1","host2"]
             path = string.Empty; // v1: "" v2: ws->path h2->path
-            tls = string.Empty; // streamSettings->security
-            sni = string.Empty; // tlsSettings.serverName
+        }
+
+        public Vmess(SharelinkMetadata vc)
+            : this()
+        {
+            v = "2";
+            ps = vc.name;
+            add = vc.host;
+            port = vc.port.ToString();
+            id = vc.auth1;
+            net = vc.streamType;
+            tls = vc.tlsType == "tls" ? "tls" : "none";
+            sni = vc.tlsServName;
+
+            switch (net)
+            {
+                case "grpc":
+                    path = vc.streamParam2;
+                    break;
+                case "quic":
+                    type = vc.streamParam1;
+                    host = vc.streamParam2;
+                    path = vc.streamParam3;
+                    break;
+                case "tcp":
+                    type = vc.streamParam1;
+                    path = vc.streamParam2;
+                    host = vc.streamParam3;
+                    break;
+                case "kcp":
+                    type = vc.streamParam1;
+                    path = vc.streamParam2;
+                    break;
+                case "ws":
+                    path = vc.streamParam1;
+                    host = vc.streamParam2;
+                    break;
+                case "h2":
+                    path = vc.streamParam1;
+                    host = vc.streamParam2;
+                    break;
+                default:
+                    // unsupported stream type
+                    break;
+            }
         }
 
         public bool Equals(Vmess t)

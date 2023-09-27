@@ -577,7 +577,6 @@
     <Folder Include="Resources\Files\3rd\neolua\mods\" />
     <Folder Include="Resources\Icon\CustomCoreUI\" />
     <Folder Include="Resources\Pkg\" />
-    <Folder Include="Services\ConfigMgrComponents\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

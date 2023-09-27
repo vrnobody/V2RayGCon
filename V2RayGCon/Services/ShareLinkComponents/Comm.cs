@@ -8,36 +8,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
     public static class Comm
     {
         #region public methods
-
-        public static string EncodeUriShareLink(string protocol, string name, string config)
-        {
-            var vc = new Models.Datas.SharelinkMetadata(config);
-            if (vc.proto != protocol)
-            {
-                return null;
-            }
-
-            var ps = new Dictionary<string, string>();
-            EncodeTlsSettings(vc, ps);
-            ps["flow"] = vc.auth2;
-            EncodeStreamSettings(vc, ps);
-
-            var pms = ps.Where(kv => !string.IsNullOrEmpty(kv.Value))
-                .Select(kv => string.Format("{0}={1}", kv.Key, Uri.EscapeDataString(kv.Value)))
-                .ToList();
-
-            var url = string.Format(
-                "{0}://{1}@{2}:{3}?{4}#{5}",
-                vc.proto,
-                Uri.EscapeDataString(vc.auth1),
-                VgcApis.Misc.Utils.FormatHost(vc.host),
-                vc.port,
-                string.Join("&", pms),
-                Uri.EscapeDataString(name)
-            );
-            return url;
-        }
-
         public static Models.Datas.SharelinkMetadata ParseNonStandarUriShareLink(
             string proto,
             string url
@@ -205,6 +175,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region private methods
+
+
         static void ExtractFirstOutboundFromJsonConfig(
             Models.Datas.SharelinkMetadata result,
             JObject config,
@@ -241,77 +213,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 default:
                     break;
-            }
-        }
-
-        private static void EncodeStreamSettings(
-            Models.Datas.SharelinkMetadata vc,
-            Dictionary<string, string> ps
-        )
-        {
-            switch (vc.streamType)
-            {
-                case "grpc":
-                    ps["serviceName"] = vc.streamParam2;
-                    ps["mode"] = vc.streamParam1 == @"false" ? "gun" : "multi";
-                    // 不知道guna怎么配置T.T
-                    break;
-                case "ws":
-                case "h2":
-                    if (!string.IsNullOrWhiteSpace(vc.streamParam1))
-                    {
-                        ps["path"] = vc.streamParam1;
-                    }
-                    if (!string.IsNullOrWhiteSpace(vc.streamParam2))
-                    {
-                        ps["host"] = vc.streamParam2;
-                    }
-                    break;
-                case "kcp":
-                    if (!string.IsNullOrWhiteSpace(vc.streamParam1))
-                    {
-                        ps["headerType"] = vc.streamParam1;
-                    }
-                    if (!string.IsNullOrWhiteSpace(vc.streamParam2))
-                    {
-                        ps["seed"] = vc.streamParam2;
-                    }
-                    break;
-                case "quic":
-                    if (!string.IsNullOrWhiteSpace(vc.streamParam2))
-                    {
-                        ps["quicSecurity"] = vc.streamParam2;
-                    }
-                    if (!string.IsNullOrWhiteSpace(vc.streamParam3))
-                    {
-                        ps["key"] = vc.streamParam3;
-                    }
-                    if (!string.IsNullOrWhiteSpace(vc.streamParam1))
-                    {
-                        ps["headerType"] = vc.streamParam1;
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private static void EncodeTlsSettings(
-            Models.Datas.SharelinkMetadata vc,
-            Dictionary<string, string> ps
-        )
-        {
-            ps["type"] = vc.streamType;
-            ps["security"] = vc.tlsType;
-            ps["fp"] = vc.tlsFingerPrint;
-            ps["alpn"] = vc.tlsAlpn;
-            ps["pbk"] = vc.tlsParam1;
-            ps["sid"] = vc.tlsParam2;
-            ps["spx"] = vc.tlsParam3;
-
-            if (!string.IsNullOrWhiteSpace(vc.tlsServName))
-            {
-                ps["sni"] = vc.tlsServName;
             }
         }
 

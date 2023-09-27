@@ -56,23 +56,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
             {
                 return null;
             }
-
-            var auth = string.Format("{0}:{1}", vc.auth2, vc.auth1);
-            var userinfo = VgcApis.Misc.Utils
-                .Base64EncodeString(auth)
-                .Replace("=", "")
-                .Replace('+', '-')
-                .Replace('/', '_');
-
-            var url = string.Format(
-                "ss://{0}@{1}:{2}#{3}",
-                userinfo,
-                Uri.EscapeDataString(vc.host),
-                vc.port,
-                Uri.EscapeDataString(name)
-            );
-
-            return url;
+            vc.name = name;
+            return vc.ToShareLink();
         }
 
         public List<string> ExtractLinksFromText(string text) =>

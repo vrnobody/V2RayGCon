@@ -62,7 +62,7 @@ namespace ProxySetter.Controllers.VGCPluginComponents
 
             btnCopy.Click += (s, a) =>
             {
-                MessageBox.Show(
+                VgcApis.Misc.UI.MsgBox(
                     VgcApis.Misc.Utils.CopyToClipboard(this.lbPacUrl.Text)
                         ? I18N.CopySuccess
                         : I18N.CopyFail

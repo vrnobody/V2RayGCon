@@ -1,4 +1,4 @@
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 using V2RayGCon.Views.WinForms;
 
@@ -33,7 +33,7 @@ namespace V2RayGCon.Controllers
                 {
                     if (!servers.AddServer(name, config, "", false))
                     {
-                        MessageBox.Show(I18N.DuplicateServer);
+                        VgcApis.Misc.UI.MsgBox(I18N.DuplicateServer);
                     }
                     var uid = servers.GetServerByConfig(config)?.GetCoreStates()?.GetUid();
                     LoadConfigByUid(uid);
@@ -56,10 +56,10 @@ namespace V2RayGCon.Controllers
                 case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Success:
                     this.prevConfig = cfg;
                     this.uid = string.Empty;
-                    MessageBox.Show(I18N.Done);
+                    VgcApis.Misc.UI.MsgBox(I18N.Done);
                     return filename;
                 case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Fail:
-                    MessageBox.Show(I18N.WriteFileFail);
+                    VgcApis.Misc.UI.MsgBox(I18N.WriteFileFail);
                     break;
                 case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Cancel:
                     // do nothing
@@ -91,7 +91,7 @@ namespace V2RayGCon.Controllers
             var coreServ = servers.GetServerByUid(uid);
             if (coreServ == null)
             {
-                MessageBox.Show(I18N.OrgServNotFound);
+                VgcApis.Misc.UI.MsgBox(I18N.OrgServNotFound);
                 return;
             }
 
@@ -100,13 +100,13 @@ namespace V2RayGCon.Controllers
 
             if (oldConfig == newConfig || servers.IsServerExist(newConfig))
             {
-                MessageBox.Show(I18N.DuplicateServer);
+                VgcApis.Misc.UI.MsgBox(I18N.DuplicateServer);
                 return;
             }
 
             if (!servers.ReplaceServerConfig(oldConfig, newConfig))
             {
-                MessageBox.Show(I18N.OrgServNotFound);
+                VgcApis.Misc.UI.MsgBox(I18N.OrgServNotFound);
                 return;
             }
 

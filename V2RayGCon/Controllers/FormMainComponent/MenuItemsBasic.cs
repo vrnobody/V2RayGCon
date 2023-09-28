@@ -110,10 +110,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
             removeV2rayCore.Click += (s, a) => RemoveV2RayCore();
 
             aboutVGC.Click += (s, a) =>
-                Misc.UI.VisitUrl(I18N.VistProjectPage, Properties.Resources.ProjectLink);
+                VgcApis.Misc.UI.VisitUrl(I18N.VistProjectPage, Properties.Resources.ProjectLink);
 
             help.Click += (s, a) =>
-                Misc.UI.VisitUrl(I18N.VistWikiPage, Properties.Resources.WikiLink);
+                VgcApis.Misc.UI.VisitUrl(I18N.VistWikiPage, Properties.Resources.WikiLink);
 
             miCheckVgcUpdate.Click += (s, a) => updater.CheckForUpdate(true);
         }
@@ -144,14 +144,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private void RemoveV2RayCore()
         {
-            if (!Misc.UI.Confirm(I18N.ConfirmRemoveV2RayCore))
+            if (!VgcApis.Misc.UI.Confirm(I18N.ConfirmRemoveV2RayCore))
             {
                 return;
             }
 
             if (!Directory.Exists(Misc.Utils.GetSysAppDataFolder()))
             {
-                MessageBox.Show(I18N.Done);
+                VgcApis.Misc.UI.MsgBox(I18N.Done);
                 return;
             }
 
@@ -163,10 +163,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 }
                 catch (IOException)
                 {
-                    MessageBox.Show(I18N.FileInUse);
+                    VgcApis.Misc.UI.MsgBox(I18N.FileInUse);
                     return;
                 }
-                MessageBox.Show(I18N.Done);
+                VgcApis.Misc.UI.MsgBox(I18N.Done);
             });
         }
         #endregion

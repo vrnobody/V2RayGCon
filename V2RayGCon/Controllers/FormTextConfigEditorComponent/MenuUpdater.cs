@@ -14,7 +14,7 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
 
         public void LoadConfigByUid(string uid)
         {
-            if (formCtrl.IsConfigChanged() && !Misc.UI.Confirm(I18N.ConfirmLoadNewServer))
+            if (formCtrl.IsConfigChanged() && !VgcApis.Misc.UI.Confirm(I18N.ConfirmLoadNewServer))
             {
                 return;
             }
@@ -23,7 +23,7 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
 
         public void ReplaceServer(string uid)
         {
-            if (Misc.UI.Confirm(I18N.ReplaceServer))
+            if (VgcApis.Misc.UI.Confirm(I18N.ReplaceServer))
             {
                 formCtrl.ReplaceServer(uid);
             }

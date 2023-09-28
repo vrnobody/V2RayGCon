@@ -215,11 +215,11 @@ namespace V2RayGCon.Views.WinForms
                     break;
                 case Libs.QRCode.QRCode.WriteErrors.DataEmpty:
                     SetQRCodeImage(null);
-                    MessageBox.Show(I18N.EmptyLink);
+                    VgcApis.Misc.UI.MsgBox(I18N.EmptyLink);
                     break;
                 case Libs.QRCode.QRCode.WriteErrors.DataTooBig:
                     SetQRCodeImage(null);
-                    MessageBox.Show(I18N.DataTooBig);
+                    VgcApis.Misc.UI.MsgBox(I18N.DataTooBig);
                     break;
             }
         }

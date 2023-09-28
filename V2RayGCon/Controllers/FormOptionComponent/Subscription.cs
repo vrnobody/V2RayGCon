@@ -77,7 +77,6 @@ namespace V2RayGCon.Controllers.OptionComponent
             if (curOptions != oldOptions)
             {
                 setting.SetSubscriptionConfig(curOptions);
-                oldOptions = curOptions;
                 return true;
             }
             return false;
@@ -329,7 +328,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                 if (subs.Count <= 0)
                 {
                     this.btnUpdate.Enabled = true;
-                    MessageBox.Show(I18N.NoSubsUrlAvailable);
+                    VgcApis.Misc.UI.MsgBox(I18N.NoSubsUrlAvailable);
                     return;
                 }
 

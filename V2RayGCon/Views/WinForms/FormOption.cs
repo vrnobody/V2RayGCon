@@ -34,7 +34,7 @@ namespace V2RayGCon.Views.WinForms
             {
                 if (!this.optionCtrl.IsOptionsSaved())
                 {
-                    a.Cancel = !Misc.UI.Confirm(I18N.ConfirmCloseWinWithoutSave);
+                    a.Cancel = !VgcApis.Misc.UI.Confirm(I18N.ConfirmCloseWinWithoutSave);
                     return;
                 }
             };
@@ -154,7 +154,7 @@ namespace V2RayGCon.Views.WinForms
         private void btnOptionSave_Click(object sender, System.EventArgs e)
         {
             this.optionCtrl.SaveAllOptions();
-            MessageBox.Show(I18N.Done);
+            VgcApis.Misc.UI.MsgBox(I18N.Done);
         }
 
         private void btnDefImportBrowseVemssDecodeTemplate_Click(object sender, System.EventArgs e)

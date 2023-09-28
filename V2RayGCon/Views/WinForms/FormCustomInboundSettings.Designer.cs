@@ -37,6 +37,7 @@ namespace V2RayGCon.Views.WinForms
             this.label2 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnFormat = new System.Windows.Forms.Button();
             this.rtboxTemplate = new VgcApis.UserControls.ExRichTextBox();
             this.btnTest = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -45,16 +46,19 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
+            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // tboxName
             // 
             resources.ApplyResources(this.tboxName, "tboxName");
             this.tboxName.Name = "tboxName";
+            this.toolTip1.SetToolTip(this.tboxName, resources.GetString("tboxName.ToolTip"));
             // 
             // btnSave
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
             this.btnSave.Name = "btnSave";
+            this.toolTip1.SetToolTip(this.btnSave, resources.GetString("btnSave.ToolTip"));
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -62,23 +66,35 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
+            this.toolTip1.SetToolTip(this.label2, resources.GetString("label2.ToolTip"));
             // 
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
+            this.toolTip1.SetToolTip(this.btnCancel, resources.GetString("btnCancel.ToolTip"));
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnFormat
+            // 
+            resources.ApplyResources(this.btnFormat, "btnFormat");
+            this.btnFormat.Name = "btnFormat";
+            this.toolTip1.SetToolTip(this.btnFormat, resources.GetString("btnFormat.ToolTip"));
+            this.btnFormat.UseVisualStyleBackColor = true;
+            this.btnFormat.Click += new System.EventHandler(this.btnFormat_Click);
             // 
             // rtboxTemplate
             // 
             resources.ApplyResources(this.rtboxTemplate, "rtboxTemplate");
             this.rtboxTemplate.Name = "rtboxTemplate";
+            this.toolTip1.SetToolTip(this.rtboxTemplate, resources.GetString("rtboxTemplate.ToolTip"));
             // 
             // btnTest
             // 
             resources.ApplyResources(this.btnTest, "btnTest");
             this.btnTest.Name = "btnTest";
+            this.toolTip1.SetToolTip(this.btnTest, resources.GetString("btnTest.ToolTip"));
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
@@ -86,6 +102,7 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnFormat);
             this.Controls.Add(this.rtboxTemplate);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnTest);
@@ -94,6 +111,7 @@ namespace V2RayGCon.Views.WinForms
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "FormCustomInboundSettings";
+            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.FormCustomCoreSettings_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -110,5 +128,6 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.ToolTip toolTip1;
         private VgcApis.UserControls.ExRichTextBox rtboxTemplate;
         private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Button btnFormat;
     }
 }

@@ -534,11 +534,11 @@ namespace V2RayGCon.Services
         {
             var success = BatchSpeedTestWorkerThen(
                 GetSelectedServers(),
-                () => MessageBox.Show(I18N.SpeedTestFinished)
+                () => VgcApis.Misc.UI.MsgBox(I18N.SpeedTestFinished)
             );
             if (!success)
             {
-                MessageBox.Show(I18N.LastTestNoFinishYet);
+                VgcApis.Misc.UI.MsgBox(I18N.LastTestNoFinishYet);
             }
         }
 
@@ -742,7 +742,7 @@ namespace V2RayGCon.Services
 
             if (!isQuiet)
             {
-                MessageBox.Show(I18N.CantFindOrgServDelFail);
+                VgcApis.Misc.UI.MsgBox(I18N.CantFindOrgServDelFail);
             }
             return false;
         }
@@ -1306,7 +1306,7 @@ namespace V2RayGCon.Services
                 }
 
                 Task.WaitAll(taskList.ToArray());
-                MessageBox.Show(I18N.Done);
+                VgcApis.Misc.UI.MsgBox(I18N.Done);
             });
         }
 #endif

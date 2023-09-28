@@ -49,7 +49,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Misc.UI.Confirm(I18N.ConfirmExitApp))
+            if (VgcApis.Misc.UI.Confirm(I18N.ConfirmExitApp))
             {
                 setting.SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser);
                 Application.Exit();
@@ -262,19 +262,13 @@ namespace V2RayGCon.Views.WinForms
         #region bind hotkey
         protected override bool ProcessCmdKey(ref Message msg, Keys keyCode)
         {
-            VgcApis.Misc.Utils.RunInBgSlim(
-                () =>
-                    VgcApis.Misc.UI.Invoke(() =>
-                    {
-                        switch (keyCode)
-                        {
-                            case (Keys.Control | Keys.F):
-                                toolStripComboBoxMarkFilter.SelectAll();
-                                toolStripComboBoxMarkFilter.Focus();
-                                break;
-                        }
-                    })
-            );
+            switch (keyCode)
+            {
+                case (Keys.Control | Keys.F):
+                    toolStripComboBoxMarkFilter.SelectAll();
+                    toolStripComboBoxMarkFilter.Focus();
+                    break;
+            }
             return base.ProcessCmdKey(ref msg, keyCode);
         }
         #endregion

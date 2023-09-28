@@ -1388,7 +1388,7 @@ namespace V2RayGCon.Services
             if (
                 result == null
                 && (File.Exists(mainUsFile) || File.Exists(bakUsFile))
-                && !Misc.UI.Confirm(I18N.ConfirmLoadDefaultUserSettings)
+                && !VgcApis.Misc.UI.Confirm(I18N.ConfirmLoadDefaultUserSettings)
             )
             {
                 SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.Abort);

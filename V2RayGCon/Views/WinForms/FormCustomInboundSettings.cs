@@ -45,6 +45,19 @@ namespace V2RayGCon.Views.WinForms
 
         #endregion
 
+        #region bind hotkey
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyCode)
+        {
+            switch (keyCode)
+            {
+                case (Keys.Control | Keys.K):
+                    btnFormat.PerformClick();
+                    break;
+            }
+            return base.ProcessCmdKey(ref msg, keyCode);
+        }
+        #endregion
+
         #region public methods
         #endregion
 
@@ -66,6 +79,18 @@ namespace V2RayGCon.Views.WinForms
             var inbS = GatherCoreSettings();
             var tpl = inbS.GetFormatedTemplate("127.0.0.1", 1080);
             VgcApis.Misc.UI.MsgBoxAsync(tpl);
+        }
+
+        private void btnFormat_Click(object sender, EventArgs e)
+        {
+            var src = "%port%";
+            var rep = "\"%port%\"";
+            var txt = rtboxTemplate.Text?.Replace(src, rep);
+            txt = VgcApis.Misc.Utils.FormatConfig(txt)?.Replace(rep, src);
+            if (!string.IsNullOrEmpty(txt))
+            {
+                rtboxTemplate.Text = txt;
+            }
         }
         #endregion
     }

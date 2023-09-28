@@ -180,7 +180,7 @@ namespace V2RayGCon.Views.WinForms
                 }
                 else
                 {
-                    MessageBox.Show(I18N.GetVersionListFail);
+                    VgcApis.Misc.UI.MsgBox(I18N.GetVersionListFail);
                 }
             }
 
@@ -207,7 +207,7 @@ namespace V2RayGCon.Views.WinForms
         {
             if (downloader != null)
             {
-                MessageBox.Show(I18N.Downloading);
+                VgcApis.Misc.UI.MsgBox(I18N.Downloading);
                 return;
             }
 
@@ -227,7 +227,7 @@ namespace V2RayGCon.Views.WinForms
 
         void BtnCancel_Click(object sender, EventArgs e)
         {
-            if (downloader != null && Misc.UI.Confirm(I18N.CancelDownload))
+            if (downloader != null && VgcApis.Misc.UI.Confirm(I18N.CancelDownload))
             {
                 downloader?.Cancel();
             }

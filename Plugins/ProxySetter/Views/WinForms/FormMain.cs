@@ -182,7 +182,7 @@ namespace ProxySetter.Views.WinForms
             {
                 servTracker.Restart();
             }
-            MessageBox.Show(I18N.Done);
+            VgcApis.Misc.UI.MsgBox(I18N.Done);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

@@ -262,6 +262,12 @@
     <Compile Include="Views\UserControls\SubscriptionUI.Designer.cs">
       <DependentUpon>SubscriptionUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\SimpleConfigerUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\SimpleConfigerUI.Designer.cs">
+      <DependentUpon>SimpleConfigerUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\WelcomeUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -319,6 +325,12 @@
     </Compile>
     <Compile Include="Views\WinForms\FormModifyServerSettings.Designer.cs">
       <DependentUpon>FormModifyServerSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WinForms\FormSimpleConfiger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormSimpleConfiger.Designer.cs">
+      <DependentUpon>FormSimpleConfiger.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\WinForms\FormSingleServerLog.cs">
       <SubType>Form</SubType>
@@ -398,6 +410,12 @@
     <EmbeddedResource Include="Views\UserControls\SubscriptionUI.zh-CN.resx">
       <DependentUpon>SubscriptionUI.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\SimpleConfigerUI.resx">
+      <DependentUpon>SimpleConfigerUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\SimpleConfigerUI.zh-CN.resx">
+      <DependentUpon>SimpleConfigerUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\WelcomeUI.resx">
       <DependentUpon>WelcomeUI.cs</DependentUpon>
     </EmbeddedResource>
@@ -455,6 +473,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormModifyServerSettings.zh-CN.resx">
       <DependentUpon>FormModifyServerSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormSimpleConfiger.resx">
+      <DependentUpon>FormSimpleConfiger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormSimpleConfiger.zh-CN.resx">
+      <DependentUpon>FormSimpleConfiger.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormSingleServerLog.resx">
       <DependentUpon>FormSingleServerLog.cs</DependentUpon>

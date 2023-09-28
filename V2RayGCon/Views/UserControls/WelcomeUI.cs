@@ -43,17 +43,17 @@ namespace V2RayGCon.Views.UserControls
         private void lbV2rayCoreGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var url = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(1);
-            Misc.UI.VisitUrl(I18N.VisitV2rayCoreReleasePage, url);
+            VgcApis.Misc.UI.VisitUrl(I18N.VisitV2rayCoreReleasePage, url);
         }
 
         private void lbWiki_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Misc.UI.VisitUrl(I18N.VistWikiPage, Properties.Resources.WikiLink);
+            VgcApis.Misc.UI.VisitUrl(I18N.VistWikiPage, Properties.Resources.WikiLink);
         }
 
         private void lbIssue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Misc.UI.VisitUrl(I18N.VisitVGCIssuePage, Properties.Resources.IssueLink);
+            VgcApis.Misc.UI.VisitUrl(I18N.VisitVGCIssuePage, Properties.Resources.IssueLink);
         }
 
         private void lbCopyFromClipboard_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -76,7 +76,7 @@ namespace V2RayGCon.Views.UserControls
 
             void Fail()
             {
-                MessageBox.Show(I18N.NoQRCode);
+                VgcApis.Misc.UI.MsgBox(I18N.NoQRCode);
             }
 
             Libs.QRCode.QRCode.ScanQRCode(Success, Fail);

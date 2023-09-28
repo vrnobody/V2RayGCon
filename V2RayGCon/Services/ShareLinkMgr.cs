@@ -228,7 +228,7 @@ namespace V2RayGCon.Services
 
             if (c <= 0)
             {
-                MessageBox.Show(I18N.NoLinkFound);
+                VgcApis.Misc.UI.MsgBox(I18N.NoLinkFound);
                 return;
             }
 

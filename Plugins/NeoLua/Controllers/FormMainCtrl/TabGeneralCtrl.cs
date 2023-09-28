@@ -185,12 +185,12 @@ namespace NeoLuna.Controllers.FormMainCtrl
                     if (scripts != null && scripts.Count > 0)
                     {
                         luaServer.ImportScripts(scripts);
-                        MessageBox.Show(I18N.ImportScriptsSuccess);
+                        VgcApis.Misc.UI.MsgBox(I18N.ImportScriptsSuccess);
                         return;
                     }
                 }
                 catch { }
-                MessageBox.Show(I18N.ImportScriptsFail);
+                VgcApis.Misc.UI.MsgBox(I18N.ImportScriptsFail);
             };
 
             btnExport.Click += (s, a) =>
@@ -206,7 +206,7 @@ namespace NeoLuna.Controllers.FormMainCtrl
                 }
                 catch
                 {
-                    MessageBox.Show(I18N.ExportScriptsFail);
+                    VgcApis.Misc.UI.MsgBox(I18N.ExportScriptsFail);
                 }
             };
 

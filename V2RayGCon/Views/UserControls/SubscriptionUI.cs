@@ -12,7 +12,6 @@ namespace V2RayGCon.Views.UserControls
     {
         public delegate void OnDeleteHandler();
 
-        readonly Services.Servers servers;
         readonly Services.Settings settings;
         private readonly Subscription subsCtrl;
 
@@ -22,7 +21,6 @@ namespace V2RayGCon.Views.UserControls
 
             this.subsCtrl = subsCtrl;
 
-            servers = Services.Servers.Instance;
             settings = Services.Settings.Instance;
 
             // tab page is lazy, do not call this in Load().
@@ -135,7 +133,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (!Misc.UI.Confirm(I18N.ConfirmDeleteControl))
+            if (!VgcApis.Misc.UI.Confirm(I18N.ConfirmDeleteControl))
             {
                 return;
             }

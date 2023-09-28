@@ -373,10 +373,10 @@ namespace VgcApis.Misc
             switch (err)
             {
                 case Models.Datas.Enums.SaveFileErrorCode.Success:
-                    MessageBox.Show(I18N.Done);
+                    VgcApis.Misc.UI.MsgBox(I18N.Done);
                     break;
                 case Models.Datas.Enums.SaveFileErrorCode.Fail:
-                    MessageBox.Show(I18N.WriteFileFail);
+                    VgcApis.Misc.UI.MsgBox(I18N.WriteFileFail);
                     break;
                 case Models.Datas.Enums.SaveFileErrorCode.Cancel:
                     // do nothing
@@ -510,28 +510,49 @@ namespace VgcApis.Misc
             }
         }
 
-        public static void MsgBox(string content) => MsgBox("", content);
+        public static void MsgBox(string content)
+        {
+            MsgBox(Properties.Resources.AppName, content);
+        }
 
-        public static void MsgBox(string title, string content) =>
-            MessageBox.Show(content ?? string.Empty, title ?? string.Empty);
+        public static void MsgBox(string title, string content)
+        {
+            Invoke(
+                () =>
+                    MessageBox.Show(
+                        content ?? string.Empty,
+                        title ?? string.Empty,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.None,
+                        MessageBoxDefaultButton.Button1
+                    )
+            );
+        }
 
-        public static void MsgBoxAsync(string content) =>
-            Utils.RunInBackground(() => MsgBox("", content));
+        public static void MsgBoxAsync(string content)
+        {
+            Utils.RunInBackground(() => MsgBox(content));
+        }
 
-        public static void MsgBoxAsync(string title, string content) =>
+        public static void MsgBoxAsync(string title, string content)
+        {
             Utils.RunInBackground(() => MsgBox(title, content));
+        }
 
         public static bool Confirm(string content)
         {
-            var confirm = MessageBox.Show(
-                content,
-                I18N.Confirm,
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button2
-            );
-
-            return confirm == DialogResult.Yes;
+            DialogResult ok = DialogResult.No;
+            Invoke(() =>
+            {
+                ok = MessageBox.Show(
+                    content,
+                    $"{Properties.Resources.AppName} - {I18N.Confirm}",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button2
+                );
+            });
+            return ok == DialogResult.Yes;
         }
 
         #endregion

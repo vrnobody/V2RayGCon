@@ -12,6 +12,8 @@ namespace V2RayGCon.Views.WinForms
         private readonly string formTitle;
         private readonly Settings setting;
 
+        FormSimpleConfiger simpleConfiger = null;
+
         FormTextConfigEditor(bool isReadonly)
         {
             this.isReadonly = isReadonly;
@@ -33,12 +35,13 @@ namespace V2RayGCon.Views.WinForms
             {
                 if (ctrl.IsConfigChanged())
                 {
-                    a.Cancel = !Misc.UI.Confirm(I18N.ConfirmCloseWinWithoutSave);
+                    a.Cancel = !VgcApis.Misc.UI.Confirm(I18N.ConfirmCloseWinWithoutSave);
                 }
             };
 
             this.FormClosed += (s, a) =>
             {
+                simpleConfiger?.Close();
                 ctrl.Cleanup();
                 setting.SaveFormRect(this);
             };
@@ -89,7 +92,6 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         #region private methods
-
         private void InitFormController()
         {
             var editor = new Controllers.FormTextConfigEditorComponent.Editor();
@@ -114,28 +116,22 @@ namespace V2RayGCon.Views.WinForms
         #region bind hotkey
         protected override bool ProcessCmdKey(ref Message msg, Keys keyCode)
         {
-            VgcApis.Misc.Utils.RunInBgSlim(
-                () =>
-                    VgcApis.Misc.UI.Invoke(() =>
-                    {
-                        switch (keyCode)
-                        {
-                            case (Keys.Control | Keys.K):
-                                ctrl.GetEditor().Format();
-                                break;
-                            case (Keys.Control | Keys.F):
-                            case (Keys.Control | Keys.H):
-                                ctrl.GetEditor().ShowSearchBox();
-                                break;
-                            case (Keys.Control | Keys.OemOpenBrackets):
-                                ctrl.GetEditor().ZoomOut();
-                                break;
-                            case (Keys.Control | Keys.Oem6):
-                                ctrl.GetEditor().ZoomIn();
-                                break;
-                        }
-                    })
-            );
+            switch (keyCode)
+            {
+                case (Keys.Control | Keys.K):
+                    ctrl.GetEditor().Format();
+                    break;
+                case (Keys.Control | Keys.F):
+                case (Keys.Control | Keys.H):
+                    ctrl.GetEditor().ShowSearchBox();
+                    break;
+                case (Keys.Control | Keys.OemOpenBrackets):
+                    ctrl.GetEditor().ZoomOut();
+                    break;
+                case (Keys.Control | Keys.Oem6):
+                    ctrl.GetEditor().ZoomIn();
+                    break;
+            }
             return base.ProcessCmdKey(ref msg, keyCode);
         }
         #endregion
@@ -158,7 +154,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void addNewServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Misc.UI.Confirm(I18N.AddNewServer))
+            if (VgcApis.Misc.UI.Confirm(I18N.AddNewServer))
             {
                 ctrl.AddNewServer();
             }
@@ -166,7 +162,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void overwriteCurrentServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Misc.UI.Confirm(I18N.ConfirmSaveCurConfig))
+            if (VgcApis.Misc.UI.Confirm(I18N.ConfirmSaveCurConfig))
             {
                 ctrl.OverwriteCurServer();
             }
@@ -174,7 +170,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void loadFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (ctrl.IsConfigChanged() && !Misc.UI.Confirm(I18N.ConfirmLoadNewServer))
+            if (ctrl.IsConfigChanged() && !VgcApis.Misc.UI.Confirm(I18N.ConfirmLoadNewServer))
             {
                 return;
             }
@@ -206,6 +202,30 @@ namespace V2RayGCon.Views.WinForms
         private void formatToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ctrl.GetEditor().Format();
+        }
+
+        private void simpleConfigerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (simpleConfiger == null)
+            {
+                simpleConfiger = new FormSimpleConfiger();
+                simpleConfiger.FormClosed += (s, a) =>
+                {
+                    if (simpleConfiger.DialogResult == DialogResult.OK)
+                    {
+                        var shareLink = simpleConfiger.shareLink;
+                        var r = ShareLinkMgr.Instance.DecodeShareLinkToConfig(shareLink);
+                        ctrl.GetEditor().content = r.config;
+                    }
+                    simpleConfiger = null;
+                };
+                simpleConfiger.LoadConfig(ctrl.GetEditor().content);
+                simpleConfiger.Show();
+            }
+            else
+            {
+                simpleConfiger.Activate();
+            }
         }
         #endregion
     }

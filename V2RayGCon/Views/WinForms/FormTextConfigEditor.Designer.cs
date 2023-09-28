@@ -52,6 +52,7 @@ namespace V2RayGCon.Views.WinForms
             this.overwriteServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simpleConfigerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripCboxNavigtion = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -207,7 +208,8 @@ namespace V2RayGCon.Views.WinForms
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.searchToolStripMenuItem});
+            this.searchToolStripMenuItem,
+            this.simpleConfigerToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             resources.ApplyResources(this.viewToolStripMenuItem, "viewToolStripMenuItem");
             // 
@@ -216,6 +218,12 @@ namespace V2RayGCon.Views.WinForms
             this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
             resources.ApplyResources(this.searchToolStripMenuItem, "searchToolStripMenuItem");
             this.searchToolStripMenuItem.Click += new System.EventHandler(this.searchToolStripMenuItem_Click);
+            // 
+            // simpleConfigerToolStripMenuItem
+            // 
+            this.simpleConfigerToolStripMenuItem.Name = "simpleConfigerToolStripMenuItem";
+            resources.ApplyResources(this.simpleConfigerToolStripMenuItem, "simpleConfigerToolStripMenuItem");
+            this.simpleConfigerToolStripMenuItem.Click += new System.EventHandler(this.simpleConfigerToolStripMenuItem_Click);
             // 
             // toolStripCboxNavigtion
             // 
@@ -278,5 +286,6 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStripComboBox toolStripCboxNavigtion;
         private System.Windows.Forms.ToolStripMenuItem formatToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem simpleConfigerToolStripMenuItem;
     }
 }

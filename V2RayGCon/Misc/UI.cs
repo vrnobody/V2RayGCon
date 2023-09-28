@@ -78,7 +78,7 @@ namespace V2RayGCon.Misc
 
         public static void ShowMessageBoxDoneAsync()
         {
-            VgcApis.Misc.Utils.RunInBackground(() => MessageBox.Show(I18N.Done));
+            VgcApis.Misc.Utils.RunInBackground(() => VgcApis.Misc.UI.MsgBox(I18N.Done));
         }
 
         public static bool UpdateControlOnDemand(Control control, int value)
@@ -158,13 +158,6 @@ namespace V2RayGCon.Misc
                 panel.Controls.Remove(control);
                 control.Dispose();
             }
-        }
-
-        public static Cursor CreateCursorIconFromUserControl(Control control)
-        {
-            Bitmap bmp = new Bitmap(control.Size.Width, control.Size.Height);
-            control.DrawToBitmap(bmp, new Rectangle(Point.Empty, bmp.Size));
-            return new Cursor(bmp.GetHicon());
         }
 
         public static Scintilla CreateScintilla(Panel container, bool readOnlyMode = false)
@@ -287,31 +280,7 @@ namespace V2RayGCon.Misc
         }
         #endregion
 
-        #region popup
 
-        public static bool Confirm(string content)
-        {
-            var confirm = MessageBox.Show(
-                content,
-                I18N.Confirm,
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button2
-            );
-
-            return confirm == DialogResult.Yes;
-        }
-
-        public static void VisitUrl(string msg, string url)
-        {
-            var text = string.Format("{0}\n{1}", msg, url);
-            if (Confirm(text))
-            {
-                VgcApis.Misc.Utils.RunInBgSlim(() => Process.Start(url));
-            }
-        }
-
-        #endregion
 
         #region DEBUG
 

@@ -1372,7 +1372,7 @@ namespace V2RayGCon.Misc
 
         #region UI related
         public static void CopyToClipboardAndPrompt(string content) =>
-            MessageBox.Show(CopyToClipboard(content) ? I18N.CopySuccess : I18N.CopyFail);
+            VgcApis.Misc.UI.MsgBox(CopyToClipboard(content) ? I18N.CopySuccess : I18N.CopyFail);
 
         public static bool CopyToClipboard(string content)
         {
@@ -1421,7 +1421,7 @@ namespace V2RayGCon.Misc
                     { //TLS 1.0
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
                     }
-                    MessageBox.Show(I18N.SysNotSupportTLS12);
+                    VgcApis.Misc.UI.MsgBox(I18N.SysNotSupportTLS12);
                 }
             }
         }

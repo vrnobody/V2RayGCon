@@ -22,3 +22,6 @@ dotnet_diagnostic.CA1802.severity = none
 
 # CA1822: Mark members as static
 dotnet_diagnostic.CA1822.severity = none
+
+# IDE0062: 使本地函数成为静态函数
+dotnet_diagnostic.IDE0062.severity = none

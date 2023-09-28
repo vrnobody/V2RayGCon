@@ -28,7 +28,7 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
                 {
                     editor.ReadOnly = false;
                 }
-                SetField(ref _content, value);
+                SetField(ref _content, value ?? "");
                 UpdateLexer();
                 if (isReadonly)
                 {

@@ -45,7 +45,7 @@ namespace V2RayGCon
             }
             else
             {
-                MessageBox.Show(I18N.ExitOtherVGCFirst);
+                VgcApis.Misc.UI.MsgBox(I18N.ExitOtherVGCFirst);
             }
         }
 

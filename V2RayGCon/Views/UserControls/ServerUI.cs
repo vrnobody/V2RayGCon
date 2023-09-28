@@ -737,7 +737,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!Misc.UI.Confirm(I18N.ConfirmDeleteControl))
+            if (!VgcApis.Misc.UI.Confirm(I18N.ConfirmDeleteControl))
             {
                 return;
             }
@@ -750,7 +750,7 @@ namespace V2RayGCon.Views.UserControls
             var uid = csc?.GetCoreStates().GetUid();
             if (!servers.DeleteServerByUid(uid))
             {
-                MessageBox.Show(I18N.CantFindOrgServDelFail);
+                VgcApis.Misc.UI.MsgBox(I18N.CantFindOrgServDelFail);
             }
         }
 

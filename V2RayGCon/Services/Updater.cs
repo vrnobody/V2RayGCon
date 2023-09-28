@@ -87,7 +87,7 @@ namespace V2RayGCon.Services
             }
             else
             {
-                MessageBox.Show(I18N.NoUpdateTryLater);
+                VgcApis.Misc.UI.MsgBox(I18N.NoUpdateTryLater);
             }
             return false;
         }
@@ -179,7 +179,7 @@ namespace V2RayGCon.Services
             }
             else
             {
-                MessageBox.Show(I18N.NoQualifyProxyServer);
+                VgcApis.Misc.UI.MsgBox(I18N.NoQualifyProxyServer);
             }
 
             return -1;

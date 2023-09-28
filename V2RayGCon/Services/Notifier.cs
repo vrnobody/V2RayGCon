@@ -327,7 +327,7 @@ namespace V2RayGCon.Services
                 var video = VgcApis.Models.Consts.Webs.Nobody3uVideoUrl;
                 if (link == video)
                 {
-                    Misc.UI.VisitUrl(I18N.VisitWebPage, video);
+                    VgcApis.Misc.UI.VisitUrl(I18N.VisitWebPage, video);
                     return;
                 }
 
@@ -341,7 +341,7 @@ namespace V2RayGCon.Services
 
             void Fail()
             {
-                MessageBox.Show(I18N.NoQRCode);
+                VgcApis.Misc.UI.MsgBox(I18N.NoQRCode);
             }
 
             Libs.QRCode.QRCode.ScanQRCode(Success, Fail);
@@ -1170,7 +1170,7 @@ namespace V2RayGCon.Services
                         Properties.Resources.CloseSolution_16x,
                         (s, a) =>
                         {
-                            if (Misc.UI.Confirm(I18N.ConfirmExitApp))
+                            if (VgcApis.Misc.UI.Confirm(I18N.ConfirmExitApp))
                             {
                                 setting.SetShutdownReason(
                                     VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser
@@ -1210,19 +1210,21 @@ namespace V2RayGCon.Services
             children.Add(
                 I18N.ProjectPage,
                 null,
-                (s, a) => Misc.UI.VisitUrl(I18N.VistProjectPage, Properties.Resources.ProjectLink)
+                (s, a) =>
+                    VgcApis.Misc.UI.VisitUrl(I18N.VistProjectPage, Properties.Resources.ProjectLink)
             );
 
             children.Add(
                 I18N.Feedback,
                 null,
-                (s, a) => Misc.UI.VisitUrl(I18N.VisitVGCIssuePage, Properties.Resources.IssueLink)
+                (s, a) =>
+                    VgcApis.Misc.UI.VisitUrl(I18N.VisitVGCIssuePage, Properties.Resources.IssueLink)
             );
 
             children.Add(
                 I18N.ProjectWiki,
                 null,
-                (s, a) => Misc.UI.VisitUrl(I18N.VistWikiPage, Properties.Resources.WikiLink)
+                (s, a) => VgcApis.Misc.UI.VisitUrl(I18N.VistWikiPage, Properties.Resources.WikiLink)
             );
 
             return aboutMenu;

@@ -124,7 +124,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             clearStatisticsRecord.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                if (Misc.UI.Confirm(I18N.ConfirmClearStat))
+                if (VgcApis.Misc.UI.Confirm(I18N.ConfirmClearStat))
                 {
                     ClearSelectedServersStatRecord();
                 }
@@ -132,7 +132,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             clearSpeedtestResults.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                if (Misc.UI.Confirm(I18N.ConfirmClearSpeedTestResults))
+                if (VgcApis.Misc.UI.Confirm(I18N.ConfirmClearSpeedTestResults))
                 {
                     ClearSelectedServersSpeedTestResults();
                 }
@@ -144,7 +144,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             runBatchSpeedtest.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                if (!Misc.UI.Confirm(I18N.TestWillTakeALongTime))
+                if (!VgcApis.Misc.UI.Confirm(I18N.TestWillTakeALongTime))
                 {
                     return;
                 }
@@ -160,7 +160,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             stopSelected.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                if (Misc.UI.Confirm(I18N.ConfirmStopAllSelectedServers))
+                if (VgcApis.Misc.UI.Confirm(I18N.ConfirmStopAllSelectedServers))
                 {
                     servers.StopSelectedServersThen();
                 }
@@ -168,7 +168,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             restartSelected.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                if (Misc.UI.Confirm(I18N.ConfirmRestartAllSelectedServers))
+                if (VgcApis.Misc.UI.Confirm(I18N.ConfirmRestartAllSelectedServers))
                 {
                     servers.RestartSelectedServersThen();
                 }
@@ -189,7 +189,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             deleteAllItems.Click += (s, a) =>
             {
-                if (!Misc.UI.Confirm(I18N.ConfirmDeleteAllServers))
+                if (!VgcApis.Misc.UI.Confirm(I18N.ConfirmDeleteAllServers))
                 {
                     return;
                 }
@@ -199,7 +199,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             deleteSelected.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                if (!Misc.UI.Confirm(I18N.ConfirmDeleteSelectedServers))
+                if (!VgcApis.Misc.UI.Confirm(I18N.ConfirmDeleteSelectedServers))
                 {
                     return;
                 }

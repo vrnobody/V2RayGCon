@@ -12,11 +12,49 @@ namespace V2RayGCon.Models.Datas
         public CustomInboundSettings() { }
 
         #region public
-        public void MergeToJObject(ref JObject config, string host, int port)
+        public string MergeToConfig(string config, int port)
         {
+            return MergeToConfig(config, VgcApis.Models.Consts.Webs.LoopBackIP, port);
+        }
+
+        public string MergeToConfig(string config, string host, int port)
+        {
+            if (string.IsNullOrEmpty(template))
+            {
+                return config;
+            }
+
+            var ty = VgcApis.Misc.Utils.DetectConfigType(config);
+            string r = "";
+            switch (ty)
+            {
+                case VgcApis.Models.Datas.Enums.ConfigType.yaml:
+                    r = MergeToYaml(config, host, port);
+                    break;
+                case VgcApis.Models.Datas.Enums.ConfigType.json:
+                    var json = VgcApis.Misc.Utils.ParseJObject(config);
+                    if (json != null && MergeToJObject(ref json, host, port))
+                    {
+                        r = VgcApis.Misc.Utils.FormatConfig(json);
+                    }
+                    break;
+                default:
+                    r = MergeToText(config, host, port);
+                    break;
+            }
+            return r ?? "";
+        }
+
+        public bool MergeToJObject(ref JObject config, string host, int port)
+        {
+            if (string.IsNullOrEmpty(template))
+            {
+                return true;
+            }
+
             if (config == null)
             {
-                return;
+                return false;
             }
 
             try
@@ -24,24 +62,10 @@ namespace V2RayGCon.Models.Datas
                 var tpl = GetFormatedTemplate(host, port);
                 var mixin = JObject.Parse(tpl);
                 MergeJObject(ref config, mixin);
+                return true;
             }
             catch { }
-        }
-
-        public string MergeToYaml(string config, string host, int port)
-        {
-            var tpl = GetFormatedTemplate(host, port);
-            return VgcApis.Misc.Utils.MergeYaml(config, tpl);
-        }
-
-        public string MergeToText(string config, string host, int port)
-        {
-            var tpl = GetFormatedTemplate(host, port);
-            if (string.IsNullOrEmpty(tpl))
-            {
-                return config;
-            }
-            return string.Join("\n", new List<string>() { tpl, config });
+            return false;
         }
 
         public string GetFormatedTemplate(string host, int port)
@@ -57,6 +81,22 @@ namespace V2RayGCon.Models.Datas
         #endregion
 
         #region private
+        string MergeToYaml(string config, string host, int port)
+        {
+            var tpl = GetFormatedTemplate(host, port);
+            return VgcApis.Misc.Utils.MergeYaml(config, tpl);
+        }
+
+        string MergeToText(string config, string host, int port)
+        {
+            var tpl = GetFormatedTemplate(host, port);
+            if (string.IsNullOrEmpty(tpl))
+            {
+                return config;
+            }
+            return string.Join("\n", new List<string>() { tpl, config });
+        }
+
         void MergeJObject(ref JObject body, JObject mixin)
         {
             if (mixin == null)

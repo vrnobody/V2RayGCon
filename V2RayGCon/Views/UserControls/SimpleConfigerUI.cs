@@ -16,9 +16,11 @@ namespace V2RayGCon.Views.UserControls
         }
 
         #region public methods
-        public void ToggleTextBoxName(bool isEnable)
+        public void SetTitle(string title)
         {
-            tboxName.Enabled = isEnable;
+            lbName.Text = title ?? "";
+            toolTip1.SetToolTip(lbName, title);
+            tboxName.Visible = false;
         }
 
         public string ToVeeShareLink()

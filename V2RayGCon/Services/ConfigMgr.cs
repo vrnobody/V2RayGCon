@@ -55,7 +55,7 @@ namespace V2RayGCon.Services
             }
             try
             {
-                var config = CreateSpeedTestConfig(rawConfig, port);
+                var config = CreateSpeedTestConfig(coreName, rawConfig, port);
                 var core = new Libs.V2Ray.Core(setting) { title = title };
                 core.SetCustomCoreName(coreName);
                 core.RestartCoreIgnoreError(config);
@@ -245,7 +245,7 @@ namespace V2RayGCon.Services
             if (!setting.isSpeedtestCancelled)
             {
                 var port = VgcApis.Misc.Utils.GetFreeTcpPort();
-                var cfg = CreateSpeedTestConfig(rawConfig, port);
+                var cfg = CreateSpeedTestConfig(coreName, rawConfig, port);
                 result = SpeedTestCore(
                     cfg,
                     title,
@@ -336,12 +336,21 @@ namespace V2RayGCon.Services
             setting.SpeedTestPool.Release();
         }
 
-        string CreateSpeedTestConfig(string rawConfig, int port)
+        string CreateSpeedTestConfig(string coreName, string rawConfig, int port)
         {
             var empty = string.Empty;
             if (port <= 0)
             {
                 return empty;
+            }
+
+            var coreS = setting.GetCustomCoresSetting().FirstOrDefault(cs => cs.name == coreName);
+            var inbS = setting
+                .GetCustomInboundsSetting()
+                .FirstOrDefault(inb => inb.name == coreS?.speedtestInboundTemplateName);
+            if (inbS != null)
+            {
+                return inbS.MergeToConfig(rawConfig, port);
             }
 
             var json = VgcApis.Misc.Utils.ParseJObject(rawConfig);

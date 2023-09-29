@@ -154,11 +154,9 @@ namespace V2RayGCon.Libs.V2Ray
         }
 
         // blocking
-        public void RestartCore(string config, Dictionary<string, string> envs = null) =>
-            RestartCoreWorker(config, envs, false);
+        public void RestartCore(string config) => RestartCoreWorker(config, false);
 
-        public void RestartCoreIgnoreError(string config, Dictionary<string, string> envs = null) =>
-            RestartCoreWorker(config, envs, true);
+        public void RestartCoreIgnoreError(string config) => RestartCoreWorker(config, true);
 
         // blocking
         public void StopCore()
@@ -166,6 +164,13 @@ namespace V2RayGCon.Libs.V2Ray
             coreStartStopLocker.WaitOne();
             StopCoreIgnoreError(coreProc);
             coreStartStopLocker.Set();
+        }
+
+        string envs = "";
+
+        public void SetEnvs(string envs)
+        {
+            this.envs = envs;
         }
 
         #endregion
@@ -206,7 +211,7 @@ namespace V2RayGCon.Libs.V2Ray
             return null;
         }
 
-        void RestartCoreWorker(string config, Dictionary<string, string> env, bool quiet)
+        void RestartCoreWorker(string config, bool quiet)
         {
             var isCustomCore = IsCustomCore();
             if (
@@ -233,7 +238,7 @@ namespace V2RayGCon.Libs.V2Ray
             {
                 if (!setting.IsClosing())
                 {
-                    StartCore(config, env, quiet);
+                    StartCore(config, quiet);
                 }
             }
             catch
@@ -335,6 +340,8 @@ namespace V2RayGCon.Libs.V2Ray
                 p.StartInfo.WorkingDirectory = customSettings.dir;
             }
             p.EnableRaisingEvents = true;
+
+            VgcApis.Misc.Utils.SetProcessEnvs(p, customSettings.envs);
             return p;
         }
 
@@ -502,7 +509,7 @@ namespace V2RayGCon.Libs.V2Ray
             });
         }
 
-        void StartCore(string config, Dictionary<string, string> envs, bool quiet)
+        void StartCore(string config, bool quiet)
         {
             var isCustomCore = IsCustomCore();
             coreReadEvt.Reset();

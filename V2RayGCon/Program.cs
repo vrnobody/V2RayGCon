@@ -31,6 +31,7 @@ namespace V2RayGCon
             SetProcessDPIAware();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 
             if (mutex.WaitOne(TimeSpan.Zero, true))
             {

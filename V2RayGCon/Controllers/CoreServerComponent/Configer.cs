@@ -65,22 +65,13 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 .GetCustomInboundsSetting()
                 .FirstOrDefault(inb => inb.name == coreInfo.inbName);
 
-            var ty = VgcApis.Misc.Utils.DetectConfigType(config);
             string r;
             var host = coreInfo.inbIp;
             var port = coreInfo.inbPort;
-            switch (ty)
-            {
-                case VgcApis.Models.Datas.Enums.ConfigType.yaml:
-                    r = inbS?.MergeToYaml(config, host, port);
-                    break;
-                case VgcApis.Models.Datas.Enums.ConfigType.json:
-                    r = GenJsonFinalConfig(inbS, config, host, port);
-                    break;
-                default:
-                    r = inbS?.MergeToText(config, host, port);
-                    break;
-            }
+            r = VgcApis.Misc.Utils.IsJson(config)
+                ? GenJsonFinalConfig(inbS, config, host, port)
+                : inbS?.MergeToConfig(config, host, port);
+
             return string.IsNullOrEmpty(r) ? config : r;
         }
 
@@ -201,9 +192,11 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 var json = JObject.Parse(config);
                 InjectStatisticsConfigOnDemand(ref json);
                 MergeCustomTlsSettings(ref json);
-                inbS?.MergeToJObject(ref json, host, port);
-                var s = VgcApis.Misc.Utils.FormatConfig(json);
-                return s;
+                if (inbS?.MergeToJObject(ref json, host, port) == true)
+                {
+                    var s = VgcApis.Misc.Utils.FormatConfig(json);
+                    return s;
+                }
             }
             catch { }
             return null;

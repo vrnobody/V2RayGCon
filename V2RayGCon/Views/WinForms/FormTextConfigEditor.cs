@@ -75,8 +75,16 @@ namespace V2RayGCon.Views.WinForms
             return f;
         }
 
+        string title = "";
+
         public void SetTitle(string title)
         {
+            if (this.title == title)
+            {
+                return;
+            }
+
+            this.title = title;
             VgcApis.Misc.UI.Invoke(() =>
             {
                 if (string.IsNullOrEmpty(title))
@@ -219,7 +227,7 @@ namespace V2RayGCon.Views.WinForms
                     }
                     simpleConfiger = null;
                 };
-                simpleConfiger.LoadConfig(ctrl.GetEditor().content);
+                simpleConfiger.LoadConfig(title, ctrl.GetEditor().content);
                 simpleConfiger.Show();
             }
             else

@@ -13,14 +13,17 @@ namespace V2RayGCon.Views.WinForms
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             this.DialogResult = DialogResult.Cancel;
-            this.SimpleConfigerUI1.ToggleTextBoxName(false);
         }
 
         private void FormSimpleEditor_Load(object sender, EventArgs e) { }
 
-        public void LoadConfig(string config)
+        public void LoadConfig(string name, string config)
         {
-            VgcApis.Misc.UI.Invoke(() => SimpleConfigerUI1.FromCoreConfig(config));
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                SimpleConfigerUI1.SetTitle(name);
+                SimpleConfigerUI1.FromCoreConfig(config);
+            });
         }
 
         #region private methods

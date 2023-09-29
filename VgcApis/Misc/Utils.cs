@@ -368,6 +368,7 @@ namespace VgcApis.Misc
 
         #region string
 
+
         public static int CountLeadingSpaces(string str)
         {
             return str?.TakeWhile(c => c == ' ').Count() ?? 0;
@@ -1020,17 +1021,40 @@ namespace VgcApis.Misc
             catch { }
         }
 
+        public static Dictionary<string, string> ParseEnvString(string envs)
+        {
+            var r = new Dictionary<string, string>();
+            var kvs =
+                envs?.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                ?? new string[0];
+            foreach (var kvp in kvs)
+            {
+                var kv = kvp.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+                if (kv.Length > 1 && !string.IsNullOrEmpty(kv[0]) && !string.IsNullOrEmpty(kv[1]))
+                {
+                    r[kv[0]] = kv[1];
+                }
+            }
+            return r;
+        }
+
+        public static void SetProcessEnvs(Process proc, string envs)
+        {
+            var ds = ParseEnvString(envs);
+            SetProcessEnvs(proc, ds);
+        }
+
         public static void SetProcessEnvs(Process proc, Dictionary<string, string> envs)
         {
-            if (envs == null || envs.Count <= 0)
+            if (envs != null && envs.Count <= 0)
             {
                 return;
             }
 
             var procEnv = proc.StartInfo.EnvironmentVariables;
-            foreach (var env in envs)
+            foreach (var d in envs)
             {
-                procEnv[env.Key] = env.Value;
+                procEnv[d.Key] = d.Value;
             }
         }
 

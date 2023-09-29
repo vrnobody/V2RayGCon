@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace V2RayGCon.Models.Datas
@@ -12,6 +12,7 @@ namespace V2RayGCon.Models.Datas
         public bool setWorkingDir = false;
         public string exe = "";
         public string args = "";
+        public string envs = "";
 
         public string stdOutEncoding = "";
         public string stdInEncoding = "";
@@ -19,6 +20,8 @@ namespace V2RayGCon.Models.Datas
         public string configFile = "";
         public bool useFile = false;
         public bool useStdin = true;
+
+        public string speedtestInboundTemplateName = "";
 
         public CustomCoreSettings() { }
 

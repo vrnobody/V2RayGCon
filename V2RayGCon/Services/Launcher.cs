@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -48,7 +49,7 @@ namespace V2RayGCon.Services
 
         public void Run()
         {
-            BindAppExitEvents();
+            BindApplicationGlobalEvents();
             InitAllServices();
             BootUp();
 
@@ -110,9 +111,16 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
+        bool isExceptionDetailShown = false;
 
         void ShowExceptionDetailAndExit(Exception exception)
         {
+            if (isExceptionDetailShown)
+            {
+                return;
+            }
+            isExceptionDetailShown = true;
+
             VgcApis.Libs.Sys.FileLogger.Error($"unhandled exception:\n{exception}");
 
             if (setting.GetShutdownReason() != VgcApis.Models.Datas.Enums.ShutdownReasons.Poweroff)
@@ -216,7 +224,7 @@ namespace V2RayGCon.Services
             }
         }
 
-        void BindAppExitEvents()
+        void BindApplicationGlobalEvents()
         {
             Application.ApplicationExit += (s, a) =>
             {
@@ -242,6 +250,8 @@ namespace V2RayGCon.Services
             Application.ThreadException += (s, a) => ShowExceptionDetailAndExit(a.Exception);
             AppDomain.CurrentDomain.UnhandledException += (s, a) =>
                 ShowExceptionDetailAndExit(a.ExceptionObject as Exception);
+            TaskScheduler.UnobservedTaskException += (s, a) =>
+                ShowExceptionDetailAndExit(a.Exception);
         }
 
         void InitAllServices()

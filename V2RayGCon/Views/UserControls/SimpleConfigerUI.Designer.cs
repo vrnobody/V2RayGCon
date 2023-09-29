@@ -43,7 +43,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.tboxName = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbName = new System.Windows.Forms.Label();
             this.chkTlsCertSelfSign = new System.Windows.Forms.CheckBox();
             this.lbStreamParam3 = new System.Windows.Forms.Label();
             this.lbStreamParam2 = new System.Windows.Forms.Label();
@@ -159,10 +159,11 @@
             resources.ApplyResources(this.tboxName, "tboxName");
             this.tboxName.Name = "tboxName";
             // 
-            // label1
+            // lbName
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
+            resources.ApplyResources(this.lbName, "lbName");
+            this.lbName.AutoEllipsis = true;
+            this.lbName.Name = "lbName";
             // 
             // chkTlsCertSelfSign
             // 
@@ -357,7 +358,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tboxName);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lbName);
             this.Name = "SimpleConfigerUI";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -384,7 +385,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox tboxName;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbName;
         private System.Windows.Forms.CheckBox chkTlsCertSelfSign;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label lbStreamParam3;

@@ -353,16 +353,6 @@ namespace V2RayGCon.Services
 
         public bool isSpeedtestCancelled = false;
 
-        public string AllPluginsSetting
-        {
-            get => userSettings.PluginsSetting;
-            set
-            {
-                userSettings.PluginsSetting = value;
-                SaveSettingsLater();
-            }
-        }
-
         public VgcApis.Models.Datas.Enums.ShutdownReasons GetShutdownReason() => shutdownReason;
 
         public void SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons reason)
@@ -418,20 +408,12 @@ namespace V2RayGCon.Services
                 {
                     return r;
                 }
-                try
-                {
-                    r = JsonConvert.DeserializeObject<Dictionary<string, string>>(
-                        userSettings.DecodeCache
-                    );
-                }
-                catch { }
                 return r ?? new Dictionary<string, string>();
             }
             set
             {
                 userSettings.CompressedUnicodeDecodeCache =
                     VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(value);
-                userSettings.DecodeCache = string.Empty;
                 SaveSettingsLater();
             }
         }
@@ -1053,35 +1035,17 @@ namespace V2RayGCon.Services
             try
             {
                 var ucs = userSettings.CompressedUnicodeCoreInfoList;
-                var cs = userSettings.CompressedCoreInfoList;
-                if (!string.IsNullOrEmpty(ucs))
-                {
-                    coreInfos =
-                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
-                            List<VgcApis.Models.Datas.CoreInfo>
-                        >(ucs);
-                }
-                else if (!string.IsNullOrEmpty(cs))
-                {
-                    coreInfos =
-                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUtf8Base64<
-                            List<VgcApis.Models.Datas.CoreInfo>
-                        >(cs);
-                }
-                else
-                {
-                    coreInfos = JsonConvert.DeserializeObject<List<VgcApis.Models.Datas.CoreInfo>>(
-                        userSettings.CoreInfoList
-                    );
-                }
+
+                coreInfos =
+                    VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                        List<VgcApis.Models.Datas.CoreInfo>
+                    >(ucs);
 
                 userSettings.CompressedUnicodeCoreInfoList = VgcApis
                     .Models
                     .Consts
                     .Libs
                     .coreInfoPlaceHolder;
-                userSettings.CompressedCoreInfoList = string.Empty;
-                userSettings.CoreInfoList = string.Empty;
             }
             catch { }
 
@@ -1184,36 +1148,15 @@ namespace V2RayGCon.Services
             try
             {
                 string ucps = userSettings.CompressedUnicodePluginsSetting;
-                var cps = userSettings.CompressedPluginsSetting; // obsolete and buggy
-
-                if (!string.IsNullOrEmpty(ucps))
-                {
-                    pluginsSetting =
-                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
-                            Dictionary<string, string>
-                        >(ucps);
-                }
-                else if (!string.IsNullOrEmpty(cps))
-                {
-                    pluginsSetting =
-                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUtf8Base64<
-                            Dictionary<string, string>
-                        >(cps);
-                }
-                else
-                {
-                    pluginsSetting = JsonConvert.DeserializeObject<Dictionary<string, string>>(
-                        userSettings.PluginsSetting
-                    );
-                }
-
+                pluginsSetting =
+                    VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                        Dictionary<string, string>
+                    >(ucps);
                 userSettings.CompressedUnicodePluginsSetting = VgcApis
                     .Models
                     .Consts
                     .Libs
                     .pluginPlaceHolder;
-                userSettings.CompressedPluginsSetting = string.Empty;
-                userSettings.PluginsSetting = string.Empty;
             }
             catch { }
 

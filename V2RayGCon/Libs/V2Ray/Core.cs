@@ -200,24 +200,36 @@ namespace V2RayGCon.Libs.V2Ray
             return string.Empty;
         }
 
-        string GetCustomCoreExePath()
+        string GetCustomCoreExePath(Models.Datas.CustomCoreSettings cs)
         {
-            var cs = GetCustomCoreSettings();
-            var f = Path.Combine(cs.dir, cs.exe);
-            if (File.Exists(f))
+            if (cs == null)
             {
-                return f;
+                return null;
             }
-            return null;
+
+            if (string.IsNullOrEmpty(cs.dir))
+            {
+                return string.IsNullOrEmpty(cs.exe) ? null : cs.exe;
+            }
+
+            var f = Path.Combine(cs.dir, cs.exe);
+            return File.Exists(f) ? f : null;
+        }
+
+        bool IsCoreExcutableExist()
+        {
+            if (!IsCustomCore())
+            {
+                return IsV2RayExecutableExist();
+            }
+            var cs = GetCustomCoreSettings();
+            var exe = GetCustomCoreExePath(cs);
+            return !string.IsNullOrEmpty(exe);
         }
 
         void RestartCoreWorker(string config, bool quiet)
         {
-            var isCustomCore = IsCustomCore();
-            if (
-                (!isCustomCore && !IsV2RayExecutableExist())
-                || (isCustomCore && GetCustomCoreExePath() == null)
-            )
+            if (!IsCoreExcutableExist())
             {
                 if (quiet)
                 {
@@ -324,7 +336,7 @@ namespace V2RayGCon.Libs.V2Ray
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = GetCustomCoreExePath(),
+                    FileName = GetCustomCoreExePath(customSettings),
                     Arguments = customSettings.args,
                     CreateNoWindow = true,
                     UseShellExecute = false,
@@ -335,7 +347,7 @@ namespace V2RayGCon.Libs.V2Ray
                     StandardErrorEncoding = ec,
                 }
             };
-            if (customSettings.setWorkingDir)
+            if (customSettings.setWorkingDir && !string.IsNullOrEmpty(customSettings.dir))
             {
                 p.StartInfo.WorkingDirectory = customSettings.dir;
             }

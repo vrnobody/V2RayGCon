@@ -57,7 +57,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             flyPanel.DragDrop += (s, a) =>
             {
                 var data = a.Data;
-                if (data.GetDataPresent(typeof(Views.UserControls.InboundSettingUI)))
+                if (data.GetDataPresent(typeof(Views.UserControls.ConfigTemplateUI)))
                 {
                     SwapFlyControls(s, a);
                 }
@@ -71,10 +71,10 @@ namespace V2RayGCon.Controllers.OptionComponent
             Point pos = panel.PointToClient(new Point(args.X, args.Y));
             if (
                 !(
-                    args.Data.GetData(typeof(Views.UserControls.InboundSettingUI))
-                    is Views.UserControls.InboundSettingUI curItem
+                    args.Data.GetData(typeof(Views.UserControls.ConfigTemplateUI))
+                    is Views.UserControls.ConfigTemplateUI curItem
                 )
-                || !(panel.GetChildAtPoint(pos) is Views.UserControls.InboundSettingUI destItem)
+                || !(panel.GetChildAtPoint(pos) is Views.UserControls.ConfigTemplateUI destItem)
                 || curItem == destItem
             )
             {
@@ -86,7 +86,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             var curIdx = (curItem.GetIndex() > destIdx) ? destIdx - 0.1 : destIdx + 0.1;
             destItem.SetIndex(destIdx);
             curItem.SetIndex(curIdx);
-            settings.ResetCustomInboundsIndex(); // this will invoke menu update event
+            settings.ResetCustomConfigTemplatesIndex(); // this will invoke menu update event
 
             Refresh();
         }
@@ -95,13 +95,13 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             btnAdd.Click += (s, a) =>
             {
-                var form = new Views.WinForms.FormCustomInboundSettings();
+                var form = new Views.WinForms.FormCustomConfigTemplates();
                 form.FormClosed += (_, __) =>
                 {
                     if (form.DialogResult == DialogResult.OK)
                     {
                         var inbS = form.inbS;
-                        settings.AddOrReplaceCustomInboundSettings(inbS);
+                        settings.AddOrReplaceCustomConfigTemplateSettings(inbS);
                         Refresh();
                     }
                 };
@@ -116,7 +116,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         void ReleaseEventHandler()
         {
-            var inbUis = flyPanel.Controls.OfType<Views.UserControls.InboundSettingUI>();
+            var inbUis = flyPanel.Controls.OfType<Views.UserControls.ConfigTemplateUI>();
             foreach (var inb in inbUis)
             {
                 inb.OnRequireReload -= OnRequireReloadHandler;
@@ -138,19 +138,19 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             while (ctrls.Count < num)
             {
-                ctrls.Add(new Views.UserControls.InboundSettingUI());
+                ctrls.Add(new Views.UserControls.ConfigTemplateUI());
             }
         }
 
         void RefreshPanelCore()
         {
             ReleaseEventHandler();
-            var inbs = settings.GetCustomInboundsSetting();
+            var inbs = settings.GetCustomConfigTemplates();
             flyPanel.SuspendLayout();
             KeepNthControls(inbs.Count);
             for (var i = 0; i < inbs.Count; i++)
             {
-                var ui = flyPanel.Controls[i] as Views.UserControls.InboundSettingUI;
+                var ui = flyPanel.Controls[i] as Views.UserControls.ConfigTemplateUI;
                 ui.Reload(inbs[i]);
                 ui.OnRequireReload += OnRequireReloadHandler;
             }

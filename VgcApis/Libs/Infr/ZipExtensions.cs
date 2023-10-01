@@ -69,19 +69,6 @@ namespace VgcApis.Libs.Infr
             }
         }
 
-        public static T DeserializeObjectFromCompressedUtf8Base64<T>(string b64Str)
-        {
-            var b64Bytes = Convert.FromBase64String(b64Str);
-            using (var sourceStream = new MemoryStream(b64Bytes))
-            using (var gZipStream = new GZipStream(sourceStream, CompressionMode.Decompress))
-            using (StreamReader reader = new StreamReader(gZipStream))
-            using (JsonTextReader jsonReader = new JsonTextReader(reader))
-            {
-                JsonSerializer ser = new JsonSerializer();
-                return ser.Deserialize<T>(jsonReader);
-            }
-        }
-
 #pragma warning disable CA1802 // Use literals where appropriate
         static readonly string marker = @"H4sIAAAAAAA";
 #pragma warning restore CA1802 // Use literals where appropriate

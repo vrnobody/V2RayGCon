@@ -152,7 +152,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         void RefreshCboxInboundName(object sender, EventArgs args)
         {
-            var names = settings.GetCustomInboundsSetting().Select(inb => inb.name).ToArray();
+            var names = settings.GetCustomConfigTemplates().Select(inb => inb.name).ToArray();
             var items = cboxDefInboundName.Items;
             items.Clear();
             items.AddRange(names);

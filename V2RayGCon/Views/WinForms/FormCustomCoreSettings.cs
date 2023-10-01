@@ -8,8 +8,7 @@ namespace V2RayGCon.Views.WinForms
     public partial class FormCustomCoreSettings : Form
     {
         public CustomCoreSettings coreSettings;
-
-        Services.Settings settings;
+        readonly Services.Settings settings;
 
         public FormCustomCoreSettings()
             : this(new CustomCoreSettings()) { }
@@ -57,7 +56,7 @@ namespace V2RayGCon.Views.WinForms
                 configFile = cboxConfigFilename.Text,
                 useFile = chkUseFile.Checked,
                 useStdin = chkUseStdin.Checked,
-                speedtestInboundTemplateName = GetCboxSpeedtestInbTplNameText(),
+                speedtestConfigTemplateName = GetCboxSpeedtestInbTplNameText(),
             };
             return cs;
         }
@@ -80,7 +79,7 @@ namespace V2RayGCon.Views.WinForms
 
             VgcApis.Misc.UI.SelectComboxByText(
                 cboxSpeedtestInbTplName,
-                coreSettings.speedtestInboundTemplateName
+                coreSettings.speedtestConfigTemplateName
             );
         }
 
@@ -90,7 +89,7 @@ namespace V2RayGCon.Views.WinForms
             cboxStdinEncoding.Items.AddRange(encodings);
             cboxStdoutEncoding.Items.AddRange(encodings);
 
-            var inbNames = settings.GetCustomInboundsSetting().Select(inb => inb.name).ToArray();
+            var inbNames = settings.GetCustomConfigTemplates().Select(inb => inb.name).ToArray();
             cboxSpeedtestInbTplName.Items.AddRange(inbNames);
 
             foreach (

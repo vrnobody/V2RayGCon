@@ -3,6 +3,18 @@
     public interface ICoreStates
     {
         /// <summary>
+        /// 获取自定义模板名
+        /// </summary>
+        /// <returns>逗号分隔的模板名</returns>
+        string GetCustomTemplateNames();
+
+        /// <summary>
+        /// 设置自定义模板名
+        /// </summary>
+        /// <param name="tpls">逗号分隔的模板名</param>
+        void SetCustomTemplateNames(string tpls);
+
+        /// <summary>
         /// 内部使用，脚本一般用不到
         /// </summary>
         /// <returns></returns>

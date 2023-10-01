@@ -21,7 +21,7 @@ namespace V2RayGCon.Models.Datas
         public bool useFile = false;
         public bool useStdin = true;
 
-        public string speedtestInboundTemplateName = "";
+        public string speedtestConfigTemplateName = "";
 
         public CustomCoreSettings() { }
 

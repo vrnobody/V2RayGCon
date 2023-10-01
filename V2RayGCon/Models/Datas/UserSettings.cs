@@ -11,6 +11,8 @@ namespace V2RayGCon.Models.Datas
         // ----------------------------------
         public string CustomInbounds { get; set; } = @"[]";
 
+        public List<CustomConfigTemplate> CustomInboundSettings = null;
+
         // ----------------------------------
 
         public bool isLoad3rdPartyPlugins { get; set; }
@@ -81,7 +83,7 @@ namespace V2RayGCon.Models.Datas
 
         public List<CustomCoreSettings> CustomCoreSettings = null;
 
-        public List<CustomInboundSettings> CustomInboundSettings = null;
+        public string CompressedUnicodeCustomConfigTemplates { get; set; } = string.Empty;
         #endregion
 
 
@@ -162,8 +164,11 @@ namespace V2RayGCon.Models.Datas
             SpeedtestOptions = SpeedtestOptions ?? new SpeedTestOptions();
             CustomCoreSettings = CustomCoreSettings ?? new List<CustomCoreSettings>();
 
-            CustomInboundSettings = CustomInboundSettings ?? CreateDefaultInboundSettings();
+            // plan to delete on 2024-06
+            // ----------------
+            CustomInboundSettings = CustomInboundSettings ?? CreateDefaultConfigTemplates();
             FixCustomInbounds(); // 必须在CustomInboundSettings创建后
+            // ----------------
         }
         #endregion
 
@@ -213,7 +218,7 @@ namespace V2RayGCon.Models.Datas
                     var tpl = string.Format("{{inbounds:{0}}}", CustomInbounds);
                     var config = VgcApis.Misc.Utils.FormatConfig(tpl);
                     CustomInboundSettings.Add(
-                        new CustomInboundSettings()
+                        new CustomConfigTemplate()
                         {
                             index = index,
                             name = "custom",
@@ -226,13 +231,13 @@ namespace V2RayGCon.Models.Datas
             catch { }
         }
 
-        List<CustomInboundSettings> CreateDefaultInboundSettings()
+        List<CustomConfigTemplate> CreateDefaultConfigTemplates()
         {
-            var r = new List<CustomInboundSettings>();
+            var r = new List<CustomConfigTemplate>();
 
-            var config = new CustomInboundSettings() { index = 1, name = "config", };
+            var config = new CustomConfigTemplate() { index = 1, name = "config", };
 
-            var socks = new CustomInboundSettings()
+            var socks = new CustomConfigTemplate()
             {
                 index = 2,
                 name = "socks",
@@ -250,7 +255,7 @@ namespace V2RayGCon.Models.Datas
 }",
             };
 
-            var http = new CustomInboundSettings()
+            var http = new CustomConfigTemplate()
             {
                 index = 3,
                 name = "http",
@@ -267,7 +272,7 @@ namespace V2RayGCon.Models.Datas
     ]
 }",
             };
-            r.AddRange(new CustomInboundSettings[] { config, socks, http });
+            r.AddRange(new CustomConfigTemplate[] { config, socks, http });
             return r;
         }
         #endregion

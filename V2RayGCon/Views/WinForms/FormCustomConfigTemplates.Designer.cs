@@ -1,7 +1,7 @@
 ﻿
 namespace V2RayGCon.Views.WinForms
 {
-    partial class FormCustomInboundSettings
+    partial class FormCustomConfigTemplates
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace V2RayGCon.Views.WinForms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCustomInboundSettings));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCustomConfigTemplates));
             this.label1 = new System.Windows.Forms.Label();
             this.tboxName = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
@@ -40,6 +40,8 @@ namespace V2RayGCon.Views.WinForms
             this.btnFormat = new System.Windows.Forms.Button();
             this.rtboxTemplate = new VgcApis.UserControls.ExRichTextBox();
             this.btnTest = new System.Windows.Forms.Button();
+            this.cboxMergeOption = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -98,19 +100,35 @@ namespace V2RayGCon.Views.WinForms
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
-            // FormCustomInboundSettings
+            // cboxMergeOption
+            // 
+            resources.ApplyResources(this.cboxMergeOption, "cboxMergeOption");
+            this.cboxMergeOption.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxMergeOption.FormattingEnabled = true;
+            this.cboxMergeOption.Name = "cboxMergeOption";
+            this.toolTip1.SetToolTip(this.cboxMergeOption, resources.GetString("cboxMergeOption.ToolTip"));
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
+            // 
+            // FormCustomConfigTemplates
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.cboxMergeOption);
             this.Controls.Add(this.btnFormat);
             this.Controls.Add(this.rtboxTemplate);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tboxName);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "FormCustomInboundSettings";
+            this.Name = "FormCustomConfigTemplates";
             this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.FormCustomCoreSettings_Load);
             this.ResumeLayout(false);
@@ -129,5 +147,7 @@ namespace V2RayGCon.Views.WinForms
         private VgcApis.UserControls.ExRichTextBox rtboxTemplate;
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Button btnFormat;
+        private System.Windows.Forms.ComboBox cboxMergeOption;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 namespace V2RayGCon.Views.UserControls
 {
-    partial class InboundSettingUI
+    partial class ConfigTemplateUI
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -30,7 +30,7 @@ namespace V2RayGCon.Views.UserControls
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InboundSettingUI));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigTemplateUI));
             this.lbTitle = new System.Windows.Forms.Label();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();

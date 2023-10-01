@@ -46,6 +46,9 @@ namespace VgcApis.Interfaces
         #region ICoreStates
         new void AddStatSample(Models.Datas.StatsSample sample);
 
+        new string GetCustomTemplateNames();
+        new void SetCustomTemplateNames(string tpls);
+
         new Models.Datas.CoreInfo GetAllRawCoreInfo();
         new long GetUplinkTotalInBytes();
         new long GetDownlinkTotalInBytes();

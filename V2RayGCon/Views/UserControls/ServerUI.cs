@@ -568,7 +568,11 @@ namespace V2RayGCon.Views.UserControls
             VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates
         )
         {
-            var text = (coreStates.IsAutoRun() ? "A" : "") + (coreStates.IsUntrack() ? "U" : "");
+            var text =
+                (coreStates.IsAutoRun() ? "A" : "")
+                + (!string.IsNullOrEmpty(coreStates.GetCustomTemplateNames()) ? "C" : "")
+                + (coreStates.IsUntrack() ? "U" : "");
+
             UpdateControlTextOndemand(rlbSetting, text);
         }
 

@@ -160,6 +160,12 @@ namespace V2RayGCon.Controllers
                 restartCore = true;
             }
 
+            if (ci.templates != cs.templates)
+            {
+                ci.templates = cs.templates;
+                restartCore = true;
+            }
+
             GetConfiger().UpdateSummary();
 
             if (indexChanged)

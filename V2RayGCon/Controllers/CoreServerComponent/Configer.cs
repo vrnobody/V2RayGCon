@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using V2RayGCon.Resources.Resx;
@@ -61,17 +62,36 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public string GetFinalConfig()
         {
             var config = GetConfig();
-            var inbS = setting
-                .GetCustomInboundsSetting()
-                .FirstOrDefault(inb => inb.name == coreInfo.inbName);
+            var cfgTpls = setting.GetCustomConfigTemplates();
+
+            var names =
+                coreInfo.templates?.Replace(", ", ",")?.Split(',')?.ToList() ?? new List<string>();
+            names.Add(coreInfo.inbName);
+
+            var tplsS = names
+                .Select(n => cfgTpls.FirstOrDefault(t => t.name == n))
+                .Where(t => t != null)
+                .ToList();
 
             string r;
             var host = coreInfo.inbIp;
             var port = coreInfo.inbPort;
-            r = VgcApis.Misc.Utils.IsJson(config)
-                ? GenJsonFinalConfig(inbS, config, host, port)
-                : inbS?.MergeToConfig(config, host, port);
-
+            if (VgcApis.Misc.Utils.IsJson(config))
+            {
+                r = GenJsonFinalConfig(tplsS, config, host, port);
+            }
+            else
+            {
+                r = config;
+                foreach (var tplS in tplsS)
+                {
+                    r = tplS.MergeToConfig(r, host, port);
+                    if (string.IsNullOrEmpty(r))
+                    {
+                        break;
+                    }
+                }
+            }
             return string.IsNullOrEmpty(r) ? config : r;
         }
 
@@ -181,7 +201,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         string GenJsonFinalConfig(
-            Models.Datas.CustomInboundSettings inbS,
+            IEnumerable<Models.Datas.CustomConfigTemplate> tplsS,
             string config,
             string host,
             int port
@@ -192,11 +212,15 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 var json = JObject.Parse(config);
                 InjectStatisticsConfigOnDemand(ref json);
                 MergeCustomTlsSettings(ref json);
-                if (inbS?.MergeToJObject(ref json, host, port) == true)
+                foreach (var tplS in tplsS)
                 {
-                    var s = VgcApis.Misc.Utils.FormatConfig(json);
-                    return s;
+                    if (tplS.MergeToJObject(ref json, host, port) != true)
+                    {
+                        break;
+                    }
                 }
+                var s = VgcApis.Misc.Utils.FormatConfig(json);
+                return s;
             }
             catch { }
             return null;

@@ -36,6 +36,27 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region public methods
+        public string GetCustomTemplateNames()
+        {
+            return coreInfo.templates;
+        }
+
+        public void SetCustomTemplateNames(string tpls)
+        {
+            if (coreInfo.templates == tpls)
+            {
+                return;
+            }
+
+            coreInfo.templates = tpls;
+            configer.UpdateSummary();
+            if (coreCtrl.IsCoreRunning())
+            {
+                coreCtrl.RestartCore();
+            }
+            GetParent().InvokeEventOnPropertyChange();
+        }
+
         public void SetName(string name)
         {
             name = VgcApis.Misc.Utils.FilterControlChars(name);

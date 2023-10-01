@@ -47,6 +47,7 @@ namespace V2RayGCon.Services
             InitCoreInfoCache();
             InitLocalStorageCache(); // must init before plug-ins setting
             InitPluginsSettingCache();
+            InitConfigTemplatesCache();
 
             UpdateVgcApisUserAgent();
 
@@ -143,6 +144,33 @@ namespace V2RayGCon.Services
         #endregion
 
         #region custom inbound settings
+        List<Models.Datas.CustomConfigTemplate> configTemplateCache;
+
+        void InitConfigTemplatesCache()
+        {
+            try
+            {
+                configTemplateCache =
+                    VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                        List<Models.Datas.CustomConfigTemplate>
+                    >(userSettings.CompressedUnicodeCustomConfigTemplates);
+            }
+            catch { }
+            configTemplateCache =
+                configTemplateCache
+                ?? userSettings.CustomInboundSettings?.ToList()
+                ?? new List<Models.Datas.CustomConfigTemplate>();
+        }
+
+        void SerializeCustomConfigTemplate()
+        {
+            userSettings.CompressedUnicodeCustomConfigTemplates =
+                VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
+                    configTemplateCache
+                );
+            userSettings.CustomInboundSettings = null;
+        }
+
         public string DefaultInboundName
         {
             get => userSettings.ImportOptions.DefaultInboundName;
@@ -156,67 +184,63 @@ namespace V2RayGCon.Services
             }
         }
 
-        public List<Models.Datas.CustomInboundSettings> GetCustomInboundsSetting()
+        public List<Models.Datas.CustomConfigTemplate> GetCustomConfigTemplates()
         {
             lock (saveUserSettingsLocker)
             {
-                return userSettings.CustomInboundSettings.OrderBy(inb => inb.index).ToList();
+                return configTemplateCache.OrderBy(inb => inb.index).ToList();
             }
         }
 
-        public void ResetCustomInboundsIndex()
+        public void ResetCustomConfigTemplatesIndex()
         {
             lock (saveUserSettingsLocker)
             {
-                var inbs = GetCustomInboundsSetting();
+                var inbs = GetCustomConfigTemplates();
                 var idx = 1.0;
                 foreach (var inb in inbs)
                 {
                     inb.index = idx++;
                 }
+                SerializeCustomConfigTemplate();
             }
             SaveSettingsLater();
         }
 
-        public bool RemoveCustomInboundByName(string name)
+        public bool RemoveCustomConfigTemplateByName(string name)
         {
             lock (saveUserSettingsLocker)
             {
-                var inbSettings = userSettings.CustomInboundSettings.FirstOrDefault(
-                    inb => inb.name == name
-                );
-                if (inbSettings != null)
+                var tpl = configTemplateCache.FirstOrDefault(t => t.name == name);
+                if (tpl != null)
                 {
-                    userSettings.CustomInboundSettings.Remove(inbSettings);
-                    ResetCustomInboundsIndex();
+                    configTemplateCache.Remove(tpl);
+                    ResetCustomConfigTemplatesIndex();
                     return true;
                 }
             }
             return false;
         }
 
-        public void AddOrReplaceCustomInboundSettings(
-            Models.Datas.CustomInboundSettings inbSettings
-        )
+        public void AddOrReplaceCustomConfigTemplateSettings(Models.Datas.CustomConfigTemplate tpl)
         {
-            if (inbSettings == null)
+            if (tpl == null)
             {
                 return;
             }
 
-            inbSettings.index = userSettings.CustomInboundSettings.Count + 1;
+            tpl.index = configTemplateCache.Count + 1;
 
             lock (saveUserSettingsLocker)
             {
-                var inbS = userSettings.CustomInboundSettings.FirstOrDefault(
-                    inb => inb.name == inbSettings.name
-                );
-                if (inbS != null)
+                var oldTpl = configTemplateCache.FirstOrDefault(t => t.name == tpl.name);
+                if (oldTpl != null)
                 {
-                    inbSettings.index = inbS.index;
-                    userSettings.CustomInboundSettings.Remove(inbS);
+                    tpl.index = oldTpl.index;
+                    configTemplateCache.Remove(oldTpl);
                 }
-                userSettings.CustomInboundSettings.Add(inbSettings);
+                configTemplateCache.Add(tpl);
+                SerializeCustomConfigTemplate();
             }
             SaveSettingsLater();
         }

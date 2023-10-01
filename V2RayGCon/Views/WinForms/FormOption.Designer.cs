@@ -105,9 +105,9 @@
             this.tabPageCustomCoresSetting = new System.Windows.Forms.TabPage();
             this.btnCoresSettingAdd = new System.Windows.Forms.Button();
             this.flyCoresSetting = new System.Windows.Forms.FlowLayoutPanel();
-            this.tabPageInboundsSetting = new System.Windows.Forms.TabPage();
-            this.btnInboundsSettingAdd = new System.Windows.Forms.Button();
-            this.flyInboundsSetting = new System.Windows.Forms.FlowLayoutPanel();
+            this.tabPageConfigTemplates = new System.Windows.Forms.TabPage();
+            this.btnCustomTemplatesAdd = new System.Windows.Forms.Button();
+            this.flyCustomTemplates = new System.Windows.Forms.FlowLayoutPanel();
             this.tabPagePlugins = new System.Windows.Forms.TabPage();
             this.chkIsLoad3rdPartyPlugins = new System.Windows.Forms.CheckBox();
             this.btnRefreshPluginsPanel = new System.Windows.Forms.Button();
@@ -129,7 +129,7 @@
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPageCustomCoresSetting.SuspendLayout();
-            this.tabPageInboundsSetting.SuspendLayout();
+            this.tabPageConfigTemplates.SuspendLayout();
             this.tabPagePlugins.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -140,7 +140,7 @@
             this.tabControl1.Controls.Add(this.tabPageSetting);
             this.tabControl1.Controls.Add(this.tabPageDefaults);
             this.tabControl1.Controls.Add(this.tabPageCustomCoresSetting);
-            this.tabControl1.Controls.Add(this.tabPageInboundsSetting);
+            this.tabControl1.Controls.Add(this.tabPageConfigTemplates);
             this.tabControl1.Controls.Add(this.tabPagePlugins);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -768,29 +768,29 @@
             this.flyCoresSetting.Name = "flyCoresSetting";
             this.toolTip1.SetToolTip(this.flyCoresSetting, resources.GetString("flyCoresSetting.ToolTip"));
             // 
-            // tabPageInboundsSetting
+            // tabPageConfigTemplates
             // 
-            resources.ApplyResources(this.tabPageInboundsSetting, "tabPageInboundsSetting");
-            this.tabPageInboundsSetting.Controls.Add(this.btnInboundsSettingAdd);
-            this.tabPageInboundsSetting.Controls.Add(this.flyInboundsSetting);
-            this.tabPageInboundsSetting.Name = "tabPageInboundsSetting";
-            this.toolTip1.SetToolTip(this.tabPageInboundsSetting, resources.GetString("tabPageInboundsSetting.ToolTip"));
-            this.tabPageInboundsSetting.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.tabPageConfigTemplates, "tabPageConfigTemplates");
+            this.tabPageConfigTemplates.Controls.Add(this.btnCustomTemplatesAdd);
+            this.tabPageConfigTemplates.Controls.Add(this.flyCustomTemplates);
+            this.tabPageConfigTemplates.Name = "tabPageConfigTemplates";
+            this.toolTip1.SetToolTip(this.tabPageConfigTemplates, resources.GetString("tabPageConfigTemplates.ToolTip"));
+            this.tabPageConfigTemplates.UseVisualStyleBackColor = true;
             // 
-            // btnInboundsSettingAdd
+            // btnCustomTemplatesAdd
             // 
-            resources.ApplyResources(this.btnInboundsSettingAdd, "btnInboundsSettingAdd");
-            this.btnInboundsSettingAdd.Name = "btnInboundsSettingAdd";
-            this.toolTip1.SetToolTip(this.btnInboundsSettingAdd, resources.GetString("btnInboundsSettingAdd.ToolTip"));
-            this.btnInboundsSettingAdd.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.btnCustomTemplatesAdd, "btnCustomTemplatesAdd");
+            this.btnCustomTemplatesAdd.Name = "btnCustomTemplatesAdd";
+            this.toolTip1.SetToolTip(this.btnCustomTemplatesAdd, resources.GetString("btnCustomTemplatesAdd.ToolTip"));
+            this.btnCustomTemplatesAdd.UseVisualStyleBackColor = true;
             // 
-            // flyInboundsSetting
+            // flyCustomTemplates
             // 
-            resources.ApplyResources(this.flyInboundsSetting, "flyInboundsSetting");
-            this.flyInboundsSetting.AllowDrop = true;
-            this.flyInboundsSetting.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.flyInboundsSetting.Name = "flyInboundsSetting";
-            this.toolTip1.SetToolTip(this.flyInboundsSetting, resources.GetString("flyInboundsSetting.ToolTip"));
+            resources.ApplyResources(this.flyCustomTemplates, "flyCustomTemplates");
+            this.flyCustomTemplates.AllowDrop = true;
+            this.flyCustomTemplates.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.flyCustomTemplates.Name = "flyCustomTemplates";
+            this.toolTip1.SetToolTip(this.flyCustomTemplates, resources.GetString("flyCustomTemplates.ToolTip"));
             // 
             // tabPagePlugins
             // 
@@ -879,7 +879,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.tabPageCustomCoresSetting.ResumeLayout(false);
-            this.tabPageInboundsSetting.ResumeLayout(false);
+            this.tabPageConfigTemplates.ResumeLayout(false);
             this.tabPagePlugins.ResumeLayout(false);
             this.tabPagePlugins.PerformLayout();
             this.ResumeLayout(false);
@@ -971,8 +971,8 @@
         private System.Windows.Forms.FlowLayoutPanel flyCoresSetting;
         private System.Windows.Forms.ComboBox cboxDefImportCoreName;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TabPage tabPageInboundsSetting;
-        private System.Windows.Forms.Button btnInboundsSettingAdd;
-        private System.Windows.Forms.FlowLayoutPanel flyInboundsSetting;
+        private System.Windows.Forms.TabPage tabPageConfigTemplates;
+        private System.Windows.Forms.Button btnCustomTemplatesAdd;
+        private System.Windows.Forms.FlowLayoutPanel flyCustomTemplates;
     }
 }

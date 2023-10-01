@@ -346,8 +346,8 @@ namespace V2RayGCon.Services
 
             var coreS = setting.GetCustomCoresSetting().FirstOrDefault(cs => cs.name == coreName);
             var inbS = setting
-                .GetCustomInboundsSetting()
-                .FirstOrDefault(inb => inb.name == coreS?.speedtestInboundTemplateName);
+                .GetCustomConfigTemplates()
+                .FirstOrDefault(inb => inb.name == coreS?.speedtestConfigTemplateName);
             if (inbS != null)
             {
                 return inbS.MergeToConfig(rawConfig, port);

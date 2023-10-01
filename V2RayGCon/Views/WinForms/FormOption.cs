@@ -64,8 +64,8 @@ namespace V2RayGCon.Views.WinForms
 
             ctrl.Plug(
                 new Controllers.OptionComponent.TabCustomInboundSettings(
-                    flyInboundsSetting,
-                    btnInboundsSettingAdd
+                    flyCustomTemplates,
+                    btnCustomTemplatesAdd
                 )
             );
 

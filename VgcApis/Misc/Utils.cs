@@ -1025,7 +1025,8 @@ namespace VgcApis.Misc
         {
             var r = new Dictionary<string, string>();
             var kvs =
-                envs?.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                envs?.Replace(", ", ",")
+                    ?.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                 ?? new string[0];
             foreach (var kvp in kvs)
             {
@@ -1859,6 +1860,19 @@ namespace VgcApis.Misc
         #endregion
 
         #region numbers
+
+        public static List<string> EnumToList<TEnum>()
+            where TEnum : struct
+        {
+            return Enum.GetValues(typeof(TEnum)).Cast<TEnum>().Select(e => e.ToString()).ToList();
+        }
+
+        public static bool TryParseEnum<TEnum>(string value, out TEnum outEnum)
+            where TEnum : struct
+        {
+            return Enum.TryParse(value, out outEnum);
+        }
+
         public static bool TryParseEnum<TEnum>(int value, out TEnum outEnum)
             where TEnum : struct
         {

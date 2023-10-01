@@ -8,6 +8,8 @@
         // plain text of config.json
         public string config;
 
+        public string templates;
+
         // flags
         public bool isAutoRun,
             isInjectImport,
@@ -72,6 +74,7 @@
             title = string.Empty;
             summary = string.Empty;
             config = string.Empty;
+            templates = string.Empty;
             uid = string.Empty;
 
             inbName = string.Empty;

@@ -62,6 +62,8 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             servers = Services.Servers.Instance;
             settings = Services.Settings.Instance;
+
+            FormClosed += (s, a) => formTemplateNames?.Close();
         }
 
         private void FormModifyServerSettings_Load(object sender, EventArgs e)
@@ -74,7 +76,8 @@ namespace V2RayGCon.Views.WinForms
             this.coreServ = coreServ;
             orgCoreServSettings = new VgcApis.Models.Datas.CoreServSettings(coreServ);
             var marks = servers.GetMarkList();
-            lbServerTitle.Text = coreServ.GetCoreStates().GetTitle();
+            var coreState = coreServ.GetCoreStates();
+            lbServerTitle.Text = coreState.GetTitle();
 
             cboxMark.Items.AddRange(marks);
             VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxMark);
@@ -83,7 +86,7 @@ namespace V2RayGCon.Views.WinForms
             cboxCoreName.Items.AddRange(coreNames);
             VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxCoreName);
 
-            var inbNames = settings.GetCustomInboundsSetting().Select(inb => inb.name).ToArray();
+            var inbNames = settings.GetCustomConfigTemplates().Select(inb => inb.name).ToArray();
             cboxInboundName.Items.AddRange(inbNames);
             VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxInboundName);
 
@@ -128,6 +131,7 @@ namespace V2RayGCon.Views.WinForms
                 mark = cboxMark.Text,
                 remark = tboxRemark.Text,
                 customCoreName = cboxCoreName.SelectedIndex < 1 ? string.Empty : cboxCoreName.Text,
+                templates = tboxTemplates.Text,
                 isAutorun = chkAutoRun.Checked,
                 isUntrack = chkUntrack.Checked
             };
@@ -137,6 +141,7 @@ namespace V2RayGCon.Views.WinForms
         void UpdateControls(VgcApis.Models.Datas.CoreServSettings coreServSettings)
         {
             var s = coreServSettings;
+
             tboxServIndex.Text = s.index.ToString();
             tboxServerName.Text = s.serverName;
             cboxInboundAddress.Text = s.inboundAddress;
@@ -145,6 +150,7 @@ namespace V2RayGCon.Views.WinForms
 
             VgcApis.Misc.UI.SelectComboxByText(cboxCoreName, s.customCoreName);
             VgcApis.Misc.UI.SelectComboxByText(cboxInboundName, s.inboundName);
+            tboxTemplates.Text = s.templates;
 
             chkAutoRun.Checked = s.isAutorun;
             chkUntrack.Checked = s.isUntrack;
@@ -273,6 +279,25 @@ namespace V2RayGCon.Views.WinForms
             Close();
         }
 
+        FormTemplateNameSelector formTemplateNames = null;
+
+        private void btnTemplates_Click(object sender, EventArgs e)
+        {
+            if (formTemplateNames == null)
+            {
+                formTemplateNames = new FormTemplateNameSelector(tboxTemplates.Text);
+                formTemplateNames.FormClosed += (s, a) =>
+                {
+                    if (formTemplateNames.DialogResult == DialogResult.OK)
+                    {
+                        tboxTemplates.Text = formTemplateNames.result;
+                    }
+                    formTemplateNames = null;
+                };
+                formTemplateNames.Show();
+            }
+            formTemplateNames.Activate();
+        }
         #endregion
     }
 }

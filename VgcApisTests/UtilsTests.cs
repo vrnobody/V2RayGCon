@@ -16,6 +16,38 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+        enum EnumForTest
+        {
+            replace = 0,
+            concat = 1,
+            union = 2,
+            merge = 3,
+            tag = 4,
+        }
+
+        [TestMethod]
+        public void EnumTest()
+        {
+            var values = new string[] { "replace", "concat", "union", "merge", "tag", };
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                var s = values[i];
+                Assert.IsTrue(TryParseEnum<EnumForTest>(s, out var em1));
+                Assert.IsTrue(TryParseEnum<EnumForTest>(i, out var em2));
+                Assert.AreEqual(em1, em2);
+            }
+
+            var list = EnumToList<EnumForTest>();
+
+            Assert.AreEqual(values.Length, list.Count);
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                Assert.AreEqual(values[i], list[i]);
+            }
+        }
+
         [DataTestMethod]
         [DataRow(@"😁=😁, 😁=😁, 😁=😁, ", 1)]
         [DataRow(@"", 0)]

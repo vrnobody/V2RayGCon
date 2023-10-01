@@ -5,28 +5,28 @@ using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Views.UserControls
 {
-    public partial class InboundSettingUI : UserControl
+    public partial class ConfigTemplateUI : UserControl
     {
         public event EventHandler OnRequireReload;
 
-        private CustomInboundSettings inbS;
+        private CustomConfigTemplate tplS;
 
-        public InboundSettingUI()
+        public ConfigTemplateUI()
         {
             // this.size = 346, 27
             InitializeComponent();
         }
 
         #region public mehtod
-        public void Reload(CustomInboundSettings inbSettings)
+        public void Reload(CustomConfigTemplate tplSettings)
         {
-            this.inbS = inbSettings;
+            this.tplS = tplSettings;
             UpdateTitle();
         }
 
         public void SetIndex(double index)
         {
-            var ctrl = inbS;
+            var ctrl = tplS;
             if (ctrl == null)
             {
                 return;
@@ -34,18 +34,23 @@ namespace V2RayGCon.Views.UserControls
             ctrl.index = index;
         }
 
-        public double GetIndex() => inbS?.index ?? -1;
+        public double GetIndex() => tplS?.index ?? -1;
         #endregion
 
         #region private method
         void UpdateTitle()
         {
-            var title = $"{inbS.index}.{inbS.name}";
+            var title = $"{tplS.index}.{tplS.name}";
             lbTitle.Text = title;
             toolTip1.SetToolTip(lbTitle, title);
-            var ty = VgcApis.Misc.Utils.DetectConfigType(inbS.template).ToString();
-            rlbBinding.Text = ty;
-            toolTip1.SetToolTip(rlbBinding, $"{I18N.Format}: {ty}");
+            var ty = VgcApis.Misc.Utils.DetectConfigType(tplS.template);
+            rlbBinding.Text = ty.ToString();
+            var tip = $"{I18N.Format}: {ty}";
+            if (ty == VgcApis.Models.Datas.Enums.ConfigType.json)
+            {
+                tip += $" ({tplS.GetJsonArrMergeOption()})";
+            }
+            toolTip1.SetToolTip(rlbBinding, tip);
         }
 
         private void InvokeOnRequireReloadIgnoreError()
@@ -76,13 +81,13 @@ namespace V2RayGCon.Views.UserControls
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            var form = new WinForms.FormCustomInboundSettings(inbS);
+            var form = new WinForms.FormCustomConfigTemplates(tplS);
             form.FormClosed += (s, a) =>
             {
                 if (form.DialogResult == DialogResult.OK)
                 {
                     var inbSet = form.inbS;
-                    Services.Settings.Instance.AddOrReplaceCustomInboundSettings(inbSet);
+                    Services.Settings.Instance.AddOrReplaceCustomConfigTemplateSettings(inbSet);
                     InvokeOnRequireReloadIgnoreError();
                 }
             };
@@ -91,10 +96,10 @@ namespace V2RayGCon.Views.UserControls
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            var msg = string.Format(I18N.ConfirmDeleteTpl, inbS.name);
+            var msg = string.Format(I18N.ConfirmDeleteTpl, tplS.name);
             if (VgcApis.Misc.UI.Confirm(msg))
             {
-                var ok = Services.Settings.Instance.RemoveCustomInboundByName(inbS.name);
+                var ok = Services.Settings.Instance.RemoveCustomConfigTemplateByName(tplS.name);
                 if (ok)
                 {
                     InvokeOnRequireReloadIgnoreError();

@@ -4,14 +4,14 @@ using V2RayGCon.Models.Datas;
 
 namespace V2RayGCon.Views.WinForms
 {
-    public partial class FormCustomInboundSettings : Form
+    public partial class FormCustomConfigTemplates : Form
     {
-        public CustomInboundSettings inbS;
+        public CustomConfigTemplate inbS;
 
-        public FormCustomInboundSettings()
-            : this(new CustomInboundSettings()) { }
+        public FormCustomConfigTemplates()
+            : this(new CustomConfigTemplate()) { }
 
-        public FormCustomInboundSettings(CustomInboundSettings inboundSettings)
+        public FormCustomConfigTemplates(CustomConfigTemplate inboundSettings)
         {
             InitializeComponent();
 
@@ -27,12 +27,13 @@ namespace V2RayGCon.Views.WinForms
         }
 
         #region private method
-        CustomInboundSettings GatherCoreSettings()
+        CustomConfigTemplate GatherCoreSettings()
         {
-            var cs = new CustomInboundSettings
+            var cs = new CustomConfigTemplate
             {
                 name = tboxName.Text,
                 template = rtboxTemplate.Text,
+                jsonArrMergeOption = cboxMergeOption.Text,
             };
             return cs;
         }
@@ -41,6 +42,11 @@ namespace V2RayGCon.Views.WinForms
         {
             tboxName.Text = inbS.name;
             rtboxTemplate.Text = inbS.template;
+
+            var opts = CustomConfigTemplate.GetJsonArrayMergeOptions();
+            cboxMergeOption.Items.AddRange(opts.ToArray());
+            var def = inbS.GetJsonArrMergeOption();
+            VgcApis.Misc.UI.SelectComboxByText(cboxMergeOption, def);
         }
 
         #endregion

@@ -9,7 +9,8 @@ namespace VgcApis.Models.Datas
             inboundAddress,
             mark,
             remark,
-            customCoreName;
+            customCoreName,
+            templates;
 
         public double index;
         public bool isAutorun,
@@ -24,6 +25,7 @@ namespace VgcApis.Models.Datas
             mark = em;
             remark = em;
             customCoreName = em;
+            templates = em;
 
             index = 0;
             isAutorun = false;
@@ -40,6 +42,7 @@ namespace VgcApis.Models.Datas
             remark = cs.GetRemark();
             inboundName = cs.GetInboundName();
             customCoreName = coreServ.GetCoreCtrl().GetCustomCoreName();
+            templates = cs.GetCustomTemplateNames();
 
             isAutorun = cs.IsAutoRun();
             isUntrack = cs.IsUntrack();
@@ -66,6 +69,7 @@ namespace VgcApis.Models.Datas
             var t = target as CoreServSettings;
             if (
                 t.serverName != serverName
+                || t.templates != templates
                 || (int)t.index != (int)index
                 || t.inboundAddress != inboundAddress
                 || t.mark != mark

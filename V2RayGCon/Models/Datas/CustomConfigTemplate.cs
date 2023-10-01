@@ -3,15 +3,42 @@ using System.Collections.Generic;
 
 namespace V2RayGCon.Models.Datas
 {
-    public class CustomInboundSettings
+    public class CustomConfigTemplate
     {
         public double index = 0;
         public string name = "";
+        public string jsonArrMergeOption = "";
         public string template = "";
 
-        public CustomInboundSettings() { }
+        public CustomConfigTemplate() { }
+
+        #region static
+        static readonly string extJsonArrMergeOption = "ByTag";
+
+        public static List<string> GetJsonArrayMergeOptions()
+        {
+            var r = VgcApis.Misc.Utils.EnumToList<MergeArrayHandling>();
+            r.Add(extJsonArrMergeOption);
+            return r;
+        }
+        #endregion
 
         #region public
+        public string GetJsonArrMergeOption()
+        {
+            if (jsonArrMergeOption == extJsonArrMergeOption)
+            {
+                return extJsonArrMergeOption;
+            }
+            if (
+                VgcApis.Misc.Utils.TryParseEnum<MergeArrayHandling>(jsonArrMergeOption, out var mah)
+            )
+            {
+                return mah.ToString();
+            }
+            return MergeArrayHandling.Replace.ToString();
+        }
+
         public string MergeToConfig(string config, int port)
         {
             return MergeToConfig(config, VgcApis.Models.Consts.Webs.LoopBackIP, port);
@@ -103,11 +130,28 @@ namespace V2RayGCon.Models.Datas
             {
                 return;
             }
+
+            if (jsonArrMergeOption == extJsonArrMergeOption)
+            {
+                Misc.Utils.CombineConfigWithRoutingInFront(ref body, mixin);
+                return;
+            }
+
+            if (
+                !VgcApis.Misc.Utils.TryParseEnum<MergeArrayHandling>(
+                    jsonArrMergeOption,
+                    out var mah
+                )
+            )
+            {
+                mah = MergeArrayHandling.Replace;
+            }
+
             body?.Merge(
                 mixin,
                 new JsonMergeSettings
                 {
-                    MergeArrayHandling = MergeArrayHandling.Replace,
+                    MergeArrayHandling = mah,
                     MergeNullValueHandling = MergeNullValueHandling.Ignore,
                 }
             );

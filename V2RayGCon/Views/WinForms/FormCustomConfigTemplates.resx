@@ -271,7 +271,7 @@
     <value>VgcApis.UserControls.ExRichTextBox, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="btnFormat.ToolTip" xml:space="preserve">
-    <value>For json only!</value>
+    <value>Ctrl + K, for json only! </value>
   </data>
   <data name="tboxName.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -373,7 +373,7 @@
     <value>12, 16</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Custom inbound settings</value>
+    <value>Custom config template</value>
   </data>
   <data name="&gt;&gt;btnFormat.ZOrder" xml:space="preserve">
     <value>1</value>

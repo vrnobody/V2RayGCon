@@ -28,6 +28,13 @@ namespace V2RayGCon.Views.WinForms
         #region private methods
         List<string> selected = new List<string>();
 
+        string[] Split(string str)
+        {
+            return str?.Replace(", ", ",")
+                    ?.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                ?? new string[0];
+        }
+
         string GatherResult()
         {
             return string.Join(",", selected);
@@ -66,7 +73,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void FormTemplateNameSelector_Load(object sender, EventArgs e)
         {
-            var table = this.names?.Replace(", ", ",")?.Split(',');
+            var table = Split(this.names);
             selected.AddRange(table);
             tboxNames.Text = GatherResult();
 
@@ -95,7 +102,7 @@ namespace V2RayGCon.Views.WinForms
 
             suppressEvent = true;
             selected.Clear();
-            selected.AddRange(tboxNames.Text?.Replace(", ", ",")?.Split(','));
+            selected.AddRange(Split(tboxNames.Text));
 
             var chks = flyPanel.Controls.OfType<CheckBox>();
             foreach (var chk in chks)

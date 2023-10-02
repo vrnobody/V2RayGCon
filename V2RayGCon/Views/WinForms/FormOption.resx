@@ -117,32 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="chkSetUseV4.Text" xml:space="preserve">
-    <value>Prefer v4 format</value>
+  <data name="cboxSettingsUtlsFingerprint.Items4" xml:space="preserve">
+    <value>edge</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="&gt;&gt;cboxCustomUserAgent.Name" xml:space="preserve">
     <value>cboxCustomUserAgent</value>
   </data>
-  <data name="cboxDefSpeedTestExpectedSize.Items9" xml:space="preserve">
-    <value>8192</value>
+  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
+    <value>groupBox3</value>
   </data>
   <data name="cboxSettingPageSize.Items4" xml:space="preserve">
     <value>50</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnRefreshPluginsPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
+    <value>groupBox4</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="btnUpdateViaSubscription.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnCustomTemplatesAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>396, 6</value>
+  <data name="chkSetCheckV2RayCoreUpdateWhenStart.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="chkIsUseCustomUserAgent.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -150,11 +151,12 @@
   <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
-  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
-    <value>groupBox3</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 12</value>
   </data>
-  <data name="&gt;&gt;btnCustomTemplatesAdd.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;chkSettingsEnableUtlsFingerprint.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;chkIsUseCustomUserAgent.Name" xml:space="preserve">
     <value>chkIsUseCustomUserAgent</value>
@@ -174,11 +176,15 @@
   <data name="cboxSettingsUtlsFingerprint.Items10" xml:space="preserve">
     <value>randomized</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="label20.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 0, 2, 0</value>
   </data>
   <data name="btnSubsInvertSelection.Location" type="System.Drawing.Point, System.Drawing">
     <value>394, 364</value>
+  </data>
+  <data name="&gt;&gt;tabPageDefaults.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="chkDefImportTrojanShareLink.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -188,9 +194,6 @@
   </data>
   <data name="&gt;&gt;tabPageSubscribe.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="cboxSettingsUtlsFingerprint.Items9" xml:space="preserve">
-    <value>random</value>
   </data>
   <data name="btnOptionExit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -207,8 +210,8 @@
   <data name="&gt;&gt;chkSetCheckVgcUpdateWhenStart.Parent" xml:space="preserve">
     <value>groupBox2</value>
   </data>
-  <data name="&gt;&gt;tboxSystrayLeftClickCommand.Name" xml:space="preserve">
-    <value>tboxSystrayLeftClickCommand</value>
+  <data name="cboxDefSpeedTestUrl.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
   <data name="&gt;&gt;chkDefImportTrojanShareLink.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -219,8 +222,17 @@
   <data name="tabPageDefaults.Text" xml:space="preserve">
     <value>Defaults</value>
   </data>
-  <data name="btnCustomTemplatesAdd.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="&gt;&gt;label16.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chkSubsIsAutoPatch.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="cboxDefSpeedTestExpectedSize.Items3" xml:space="preserve">
+    <value>128</value>
+  </data>
+  <data name="groupBox8.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
   <data name="cboxSettingPageSize.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 20</value>
@@ -234,8 +246,8 @@
   <data name="&gt;&gt;label12.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label17.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;btnSubsInvertSelection.Name" xml:space="preserve">
+    <value>btnSubsInvertSelection</value>
   </data>
   <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -246,17 +258,11 @@
   <data name="label5.Text" xml:space="preserve">
     <value>Custom URL</value>
   </data>
-  <data name="label18.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 20</value>
-  </data>
   <data name="cboxSettingPageSize.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="&gt;&gt;label4.Parent" xml:space="preserve">
     <value>tabPagePlugins</value>
-  </data>
-  <data name="tboxDefSpeedtestCycles.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 43</value>
   </data>
   <data name="chkSettingsEnableUtlsFingerprint.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -264,11 +270,11 @@
   <data name="&gt;&gt;label7.Parent" xml:space="preserve">
     <value>groupBox3</value>
   </data>
-  <data name="cboxSettingsUtlsFingerprint.Items4" xml:space="preserve">
-    <value>edge</value>
-  </data>
   <data name="chkSetUpgradeUseProxy.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="label3.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="label17.Text" xml:space="preserve">
     <value>Systray</value>
@@ -285,20 +291,11 @@
   <data name="chkSetServStatistics.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="tboxDefImportVmessDecodeTemplateUrl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 69</value>
-  </data>
-  <data name="groupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="tboxSetDebugFilePath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="&gt;&gt;flyCoresSetting.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="chkSetUpgradeUseProxy.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
   </data>
   <data name="chkSetSelfSignedCert.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -312,6 +309,9 @@
   <data name="chkSetSysPortable.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
+  <data name="groupBox6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkSetServStatistics.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 16</value>
   </data>
@@ -324,35 +324,35 @@
   <data name="&gt;&gt;cboxSettingPageSize.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="btnDefImportBrowseVemssDecodeTemplate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 69</value>
-  </data>
   <data name="&gt;&gt;label18.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btnCustomTemplatesAdd.ToolTip" xml:space="preserve">
+    <value>Add custom config template.</value>
+  </data>
+  <data name="chkSubsIsUseProxy.Text" xml:space="preserve">
+    <value>Use proxy</value>
   </data>
   <data name="&gt;&gt;chkSetSelfSignedCert.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="tboxDefSpeedtestTimeout.ToolTip" xml:space="preserve">
+    <value>20000 (20 seconds)</value>
+  </data>
   <data name="&gt;&gt;chkSetUseV4.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btnSubsInvertSelection.Name" xml:space="preserve">
-    <value>btnSubsInvertSelection</value>
+  <data name="chkSetSelfSignedCert.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 16</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
     <value>4</value>
-  </data>
-  <data name="&gt;&gt;cboxSettingPageSize.Parent" xml:space="preserve">
-    <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;chkSetServAutotrack.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="label8.Text" xml:space="preserve">
     <value>(need to restart)</value>
-  </data>
-  <data name="label20.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 47</value>
   </data>
   <data name="&gt;&gt;chkDefImportTrojanShareLink.Parent" xml:space="preserve">
     <value>groupBox4</value>
@@ -366,11 +366,14 @@
   <data name="&gt;&gt;btnSubsUseAll.Parent" xml:space="preserve">
     <value>tabPageSubscribe</value>
   </data>
-  <data name="&gt;&gt;groupBox8.Name" xml:space="preserve">
-    <value>groupBox8</value>
+  <data name="chkIsLoad3rdPartyPlugins.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
     <value>toolTip1</value>
+  </data>
+  <data name="tboxDefImportVmessDecodeTemplateUrl.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;cboxSettingsRandomSelectServerLatency.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -396,6 +399,9 @@
   <data name="flyCoresSetting.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 6</value>
   </data>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkSetSelfSignedCert.Text" xml:space="preserve">
     <value>Self-signed cert</value>
   </data>
@@ -414,7 +420,10 @@
   <data name="label2.ToolTip" xml:space="preserve">
     <value>Show how many servers per page in form main.</value>
   </data>
-  <data name="tboxDefSpeedtestTimeout.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 12</value>
+  </data>
+  <data name="groupBox6.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
@@ -429,17 +438,23 @@
   <data name="groupBox5.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
+  <data name="cboxDefSpeedTestUrl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>305, 20</value>
+  </data>
   <data name="tboxDefSpeedtestTimeout.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 21</value>
   </data>
   <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
     <value>189, 23</value>
   </data>
-  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;chkSetServStatistics.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="cboxCustomUserAgent.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
+    <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;btnRefreshPluginsPanel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -452,6 +467,9 @@
   </data>
   <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
     <value>4</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 377</value>
   </data>
   <data name="&gt;&gt;btnCoresSettingAdd.Name" xml:space="preserve">
     <value>btnCoresSettingAdd</value>
@@ -507,8 +525,8 @@
   <data name="&gt;&gt;tboxDefSpeedtestCycles.Parent" xml:space="preserve">
     <value>groupBox3</value>
   </data>
-  <data name="cboxDefImportCoreName.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;flySubsUrlContainer.Name" xml:space="preserve">
+    <value>flySubsUrlContainer</value>
   </data>
   <data name="&gt;&gt;label14.Name" xml:space="preserve">
     <value>label14</value>
@@ -518,6 +536,9 @@
   </data>
   <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tboxDefSpeedtestTimeout.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
   <data name="tabPageSubscribe.Size" type="System.Drawing.Size, System.Drawing">
     <value>479, 393</value>
@@ -534,11 +555,14 @@
   <data name="label4.Text" xml:space="preserve">
     <value>A plugin menu will show up in form main if any plugin is in use.</value>
   </data>
-  <data name="groupBox3.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="chkSetUpgradeUseProxy.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
-  <data name="cboxSettingsRandomSelectServerLatency.Items1" xml:space="preserve">
-    <value>1000</value>
+  <data name="btnUpdateViaSubscription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>394, 34</value>
+  </data>
+  <data name="cboxDefImportCoreName.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="cboxSettingLanguage.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 20</value>
@@ -549,8 +573,8 @@
   <data name="cboxDefSpeedTestExpectedSize.Items2" xml:space="preserve">
     <value>64</value>
   </data>
-  <data name="groupBox1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="chkIsUseCustomUserAgent.Text" xml:space="preserve">
+    <value>Use</value>
   </data>
   <data name="chkIsUseCustomUserAgent.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -579,14 +603,8 @@
   <data name="tabPageDefaults.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
-  <data name="&gt;&gt;cboxSettingLanguage.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
   <data name="tboxDefSpeedtestCycles.ToolTip" xml:space="preserve">
     <value>3</value>
-  </data>
-  <data name="btnUpdateViaSubscription.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
   </data>
   <data name="&gt;&gt;btnSetBrowseDebugFile.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -600,11 +618,17 @@
   <data name="label13.Text" xml:space="preserve">
     <value>(1 - 1000)</value>
   </data>
+  <data name="tboxDefSpeedtestTimeout.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
   <data name="&gt;&gt;tboxSettingsMaxCoreNum.Name" xml:space="preserve">
     <value>tboxSettingsMaxCoreNum</value>
   </data>
   <data name="chkSetCheckV2RayCoreUpdateWhenStart.Text" xml:space="preserve">
     <value>V2Ray/Xray core</value>
+  </data>
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="label17.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -627,8 +651,8 @@
   <data name="btnCustomTemplatesAdd.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="label18.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;tboxSystrayLeftClickCommand.Name" xml:space="preserve">
+    <value>tboxSystrayLeftClickCommand</value>
   </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
     <value>487, 423</value>
@@ -654,11 +678,11 @@
   <data name="label13.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;btnSetOpenStartupFolder.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="cboxDefImportInbName.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="&gt;&gt;chkSetUpgradeUseProxy.Parent" xml:space="preserve">
+    <value>groupBox2</value>
   </data>
   <data name="btnUpdateViaSubscription.Text" xml:space="preserve">
     <value>Update</value>
@@ -669,8 +693,8 @@
   <data name="btnCustomTemplatesAdd.Text" xml:space="preserve">
     <value>Add</value>
   </data>
-  <data name="tboxSetDebugFilePath.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="chkSetSelfSignedCert.ToolTip" xml:space="preserve">
+    <value>Supports self-signed certificate. </value>
   </data>
   <data name="&gt;&gt;cboxDefSpeedTestUrl.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -690,17 +714,14 @@
   <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 284</value>
   </data>
-  <data name="&gt;&gt;btnOptionExit.Name" xml:space="preserve">
-    <value>btnOptionExit</value>
+  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;tabPageSetting.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="btnSubsInvertSelection.ToolTip" xml:space="preserve">
     <value>Invert selection.</value>
-  </data>
-  <data name="label8.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="btnUpdateViaSubscription.ToolTip" xml:space="preserve">
     <value>Download servers via subscription.</value>
@@ -743,6 +764,9 @@
   <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <data name="&gt;&gt;chkSetCheckVgcUpdateWhenStart.Name" xml:space="preserve">
+    <value>chkSetCheckVgcUpdateWhenStart</value>
+  </data>
   <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -764,8 +788,11 @@
   <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;groupBox4.Parent" xml:space="preserve">
-    <value>tabPageDefaults</value>
+  <data name="&gt;&gt;chkDefSpeedtestIsUse.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="chkSetUpgradeUseProxy.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;label5.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -803,6 +830,9 @@
   <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
     <value>groupBox1</value>
   </data>
+  <data name="groupBox9.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;btnSubsUseAll.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -821,6 +851,9 @@
   <data name="label20.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
+  <data name="label17.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 76</value>
+  </data>
   <data name="btnOptionSave.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
@@ -832,6 +865,9 @@
   </data>
   <data name="groupBox8.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 334</value>
+  </data>
+  <data name="flyPluginsItemsContainer.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;label17.Name" xml:space="preserve">
     <value>label17</value>
@@ -869,11 +905,17 @@
   <data name="groupBox8.Text" xml:space="preserve">
     <value>Debug</value>
   </data>
-  <data name="chkIsLoad3rdPartyPlugins.ToolTip" xml:space="preserve">
-    <value>Load plug-in dlls in 3rd/plugins directory.</value>
+  <data name="tboxDefSpeedtestTimeout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>325, 43</value>
+  </data>
+  <data name="&gt;&gt;flyCoresSetting.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="cboxCustomUserAgent.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 16</value>
+  </data>
+  <data name="&gt;&gt;btnOptionExit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;chkDefImportTrojanShareLink.ZOrder" xml:space="preserve">
     <value>4</value>
@@ -893,14 +935,11 @@
   <data name="chkSetEnableDebugFile.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="cboxSettingsUtlsFingerprint.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 67</value>
-  </data>
   <data name="flySubsUrlContainer.Size" type="System.Drawing.Size, System.Drawing">
     <value>381, 381</value>
   </data>
-  <data name="btnRefreshPluginsPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="chkSetUpgradeUseProxy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 16</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
     <value>Size(KiB)</value>
@@ -914,11 +953,14 @@
   <data name="groupBox9.Text" xml:space="preserve">
     <value>Web</value>
   </data>
+  <data name="chkDefSpeedtestIsUse.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
   <data name="label11.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 0, 2, 0</value>
   </data>
-  <data name="groupBox9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 193</value>
+  <data name="&gt;&gt;groupBox4.Parent" xml:space="preserve">
+    <value>tabPageDefaults</value>
   </data>
   <data name="&gt;&gt;chkSetServStatistics.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -926,20 +968,26 @@
   <data name="cboxSettingLanguage.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="label11.Text" xml:space="preserve">
+    <value>Timeout</value>
+  </data>
   <data name="btnSubsUseAll.ToolTip" xml:space="preserve">
     <value>Check all 'Use' boxes.</value>
   </data>
   <data name="&gt;&gt;tboxSetDebugFilePath.Name" xml:space="preserve">
     <value>tboxSetDebugFilePath</value>
   </data>
-  <data name="chkSubsIsUseProxy.Text" xml:space="preserve">
-    <value>Use proxy</value>
+  <data name="&gt;&gt;cboxSettingPageSize.Parent" xml:space="preserve">
+    <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;chkDefImportIsUseVmessDecodeTemplate.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 18</value>
+  </data>
+  <data name="cboxDefSpeedTestExpectedSize.Items8" xml:space="preserve">
+    <value>4096</value>
   </data>
   <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
     <value>11</value>
@@ -950,14 +998,17 @@
   <data name="chkIsUseCustomUserAgent.Location" type="System.Drawing.Point, System.Drawing">
     <value>398, 18</value>
   </data>
-  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
-    <value>groupBox4</value>
+  <data name="groupBox3.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="btnDefImportBrowseVemssDecodeTemplate.Text" xml:space="preserve">
+    <value>VmessTpl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>V2RayGCon - Options</value>
   </data>
-  <data name="cboxDefSpeedTestExpectedSize.Items8" xml:space="preserve">
-    <value>4096</value>
+  <data name="btnDefImportBrowseVemssDecodeTemplate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 69</value>
   </data>
   <data name="btnAddSubsUrl.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -965,11 +1016,11 @@
   <data name="btnOptionSave.ToolTip" xml:space="preserve">
     <value>Save all options.</value>
   </data>
-  <data name="label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
+    <value>5</value>
   </data>
-  <data name="groupBox6.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="tabPageConfigTemplates.ToolTip" xml:space="preserve">
+    <value>Custom config templates.</value>
   </data>
   <data name="label12.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -980,8 +1031,8 @@
   <data name="&gt;&gt;label12.Name" xml:space="preserve">
     <value>label12</value>
   </data>
-  <data name="&gt;&gt;cboxDefImportCoreName.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;btnDefImportBrowseVemssDecodeTemplate.Name" xml:space="preserve">
+    <value>btnDefImportBrowseVemssDecodeTemplate</value>
   </data>
   <data name="btnAddSubsUrl.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -995,20 +1046,23 @@
   <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
-  <data name="label15.Text" xml:space="preserve">
-    <value>SLantency</value>
+  <data name="tabPageConfigTemplates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>479, 393</value>
   </data>
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
   </data>
+  <data name="tabPagePlugins.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;label15.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
-    <value>groupBox3</value>
+  <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
   </data>
-  <data name="tboxSetDebugFilePath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="chkSetUpgradeUseProxy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 18</value>
   </data>
   <data name="label5.ToolTip" xml:space="preserve">
     <value>Custom speed-test URL.</value>
@@ -1031,8 +1085,11 @@
   <data name="&gt;&gt;label13.Name" xml:space="preserve">
     <value>label13</value>
   </data>
-  <data name="&gt;&gt;groupBox6.Parent" xml:space="preserve">
-    <value>tabPageSetting</value>
+  <data name="cboxSettingsUtlsFingerprint.Items9" xml:space="preserve">
+    <value>random</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="chkSetSysPortable.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -1058,6 +1115,12 @@
   <data name="tboxDefSpeedtestCycles.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
+  <data name="chkSetServStatistics.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnRefreshPluginsPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
   <data name="flyCoresSetting.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
@@ -1076,8 +1139,8 @@
   <data name="flyCoresSetting.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="tabPageSubscribe.ToolTip" xml:space="preserve">
-    <value />
+  <data name="btnCustomTemplatesAdd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
   <data name="&gt;&gt;tabPagePlugins.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1097,14 +1160,17 @@
   <data name="groupBox8.Size" type="System.Drawing.Size, System.Drawing">
     <value>449, 51</value>
   </data>
+  <data name="groupBox5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 114</value>
+  </data>
   <data name="&gt;&gt;label20.Parent" xml:space="preserve">
     <value>groupBox4</value>
   </data>
   <data name="btnRefreshPluginsPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>395, 6</value>
   </data>
-  <data name="cboxCustomUserAgent.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+  <data name="&gt;&gt;cboxDefSpeedTestExpectedSize.Name" xml:space="preserve">
+    <value>cboxDefSpeedTestExpectedSize</value>
   </data>
   <data name="&gt;&gt;btnSubsInvertSelection.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1151,32 +1217,20 @@
   <data name="&gt;&gt;chkSetCheckVgcUpdateWhenStart.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="chkDefImportSsShareLink.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 16</value>
-  </data>
   <data name="&gt;&gt;tabPageSubscribe.Parent" xml:space="preserve">
     <value>tabControl1</value>
   </data>
   <data name="label15.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;cboxDefSpeedTestUrl.Name" xml:space="preserve">
-    <value>cboxDefSpeedTestUrl</value>
-  </data>
-  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
-    <value>tabPageSetting</value>
-  </data>
-  <data name="&gt;&gt;tboxDefSpeedtestTimeout.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="label11.ToolTip" xml:space="preserve">
-    <value>Timeout in milliseconds.</value>
+  <data name="cboxSettingPageSize.Items2" xml:space="preserve">
+    <value>20</value>
   </data>
   <data name="chkSetCheckV2RayCoreUpdateWhenStart.ToolTip" xml:space="preserve">
     <value>Check for V2Ray/Xray core update when this application starts.</value>
   </data>
-  <data name="tboxSettingsMaxCoreNum.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="&gt;&gt;tabPageSubscribe.Name" xml:space="preserve">
+    <value>tabPageSubscribe</value>
   </data>
   <data name="&gt;&gt;cboxSettingsUtlsFingerprint.Name" xml:space="preserve">
     <value>cboxSettingsUtlsFingerprint</value>
@@ -1184,8 +1238,8 @@
   <data name="chkDefImportSsShareLink.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;btnOptionExit.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;btnCustomTemplatesAdd.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1199,9 +1253,6 @@
   <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
     <value>189, 45</value>
   </data>
-  <data name="chkSetServStatistics.Location" type="System.Drawing.Point, System.Drawing">
-    <value>125, 92</value>
-  </data>
   <data name="cboxSettingLanguage.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 20</value>
   </data>
@@ -1214,8 +1265,8 @@
   <data name="&gt;&gt;label2.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 12</value>
+  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 12</value>
@@ -1226,8 +1277,8 @@
   <data name="tboxDefImportVmessDecodeTemplateUrl.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="tboxDefSpeedtestTimeout.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 12</value>
   </data>
   <data name="cboxDefSpeedTestUrl.ToolTip" xml:space="preserve">
     <value />
@@ -1235,8 +1286,8 @@
   <data name="label6.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="cboxCustomUserAgent.Size" type="System.Drawing.Size, System.Drawing">
-    <value>305, 20</value>
+  <data name="cboxSettingsRandomSelectServerLatency.Items4" xml:space="preserve">
+    <value>6000</value>
   </data>
   <data name="cboxDefSpeedTestExpectedSize.Items1" xml:space="preserve">
     <value>0</value>
@@ -1274,8 +1325,8 @@
   <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 47</value>
   </data>
-  <data name="label18.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 12</value>
+  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 12</value>
   </data>
   <data name="&gt;&gt;chkDefImportSsShareLink.ZOrder" xml:space="preserve">
     <value>5</value>
@@ -1289,14 +1340,11 @@
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Views</value>
   </data>
-  <data name="groupBox2.ToolTip" xml:space="preserve">
-    <value />
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>144, 47</value>
   </data>
   <data name="&gt;&gt;label13.Parent" xml:space="preserve">
     <value>groupBox5</value>
-  </data>
-  <data name="&gt;&gt;chkSetCheckV2RayCoreUpdateWhenStart.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="btnCoresSettingAdd.Location" type="System.Drawing.Point, System.Drawing">
     <value>396, 6</value>
@@ -1304,8 +1352,8 @@
   <data name="cboxSettingLanguage.Items" xml:space="preserve">
     <value>Auto</value>
   </data>
-  <data name="label5.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="cboxSettingsRandomSelectServerLatency.Items2" xml:space="preserve">
+    <value>2000</value>
   </data>
   <data name="chkSetEnableDebugFile.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -1315,6 +1363,9 @@
   </data>
   <data name="chkDefSpeedtestIsUse.Text" xml:space="preserve">
     <value>Use</value>
+  </data>
+  <data name="&gt;&gt;btnRefreshPluginsPanel.Parent" xml:space="preserve">
+    <value>tabPagePlugins</value>
   </data>
   <data name="&gt;&gt;chkIsEnableSystrayLeftClickCommand.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -1352,8 +1403,8 @@
   <data name="chkSetEnableDebugFile.Text" xml:space="preserve">
     <value>Enable</value>
   </data>
-  <data name="&gt;&gt;btnOptionExit.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="tboxSetDebugFilePath.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
   <data name="chkSetSysPortable.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1385,6 +1436,9 @@
   <data name="tboxDefImportVmessDecodeTemplateUrl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
+  <data name="&gt;&gt;groupBox6.Parent" xml:space="preserve">
+    <value>tabPageSetting</value>
+  </data>
   <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
@@ -1412,8 +1466,11 @@
   <data name="&gt;&gt;btnCoresSettingAdd.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="groupBox9.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>Speedtest</value>
+  </data>
+  <data name="btnOptionSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
   </data>
   <data name="&gt;&gt;btnSetBrowseDebugFile.Parent" xml:space="preserve">
     <value>groupBox8</value>
@@ -1424,20 +1481,26 @@
   <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="btnCustomTemplatesAdd.Location" type="System.Drawing.Point, System.Drawing">
+    <value>396, 6</value>
+  </data>
+  <data name="&gt;&gt;tabPageConfigTemplates.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
   <data name="&gt;&gt;btnDefImportBrowseVemssDecodeTemplate.Parent" xml:space="preserve">
     <value>groupBox4</value>
   </data>
   <data name="btnSubsInvertSelection.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
+  <data name="tabPagePlugins.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 26</value>
+  </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>
   </data>
   <data name="cboxDefSpeedTestUrl.Items6" xml:space="preserve">
     <value>http://ovh.net/files/100Mio.dat</value>
-  </data>
-  <data name="chkSetServStatistics.ToolTip" xml:space="preserve">
-    <value>Enable statistics.</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 12</value>
@@ -1450,9 +1513,6 @@
   </data>
   <data name="&gt;&gt;chkIsEnableSystrayLeftClickCommand.Name" xml:space="preserve">
     <value>chkIsEnableSystrayLeftClickCommand</value>
-  </data>
-  <data name="cboxDefImportInbName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 20</value>
   </data>
   <data name="&gt;&gt;btnRefreshPluginsPanel.Name" xml:space="preserve">
     <value>btnRefreshPluginsPanel</value>
@@ -1472,31 +1532,22 @@
   <data name="chkSubsIsAutoPatch.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="tboxDefImportAddr.Text" xml:space="preserve">
-    <value>127.0.0.1:1080</value>
-  </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
   <data name="&gt;&gt;cboxSettingsRandomSelectServerLatency.Parent" xml:space="preserve">
     <value>groupBox5</value>
   </data>
-  <data name="label20.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 12</value>
-  </data>
   <data name="chkSetUseV4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
-  <data name="&gt;&gt;btnRefreshPluginsPanel.Parent" xml:space="preserve">
-    <value>tabPagePlugins</value>
+  <data name="chkSubsIsAutoPatch.Text" xml:space="preserve">
+    <value>Autopatch</value>
   </data>
   <data name="label18.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="&gt;&gt;flyCustomTemplates.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="chkSetCheckVgcUpdateWhenStart.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="groupBox5.Text" xml:space="preserve">
@@ -1505,14 +1556,20 @@
   <data name="chkDefSpeedtestIsUse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="chkSetCheckV2RayCoreUpdateWhenStart.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="label18.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 12</value>
   </data>
   <data name="&gt;&gt;chkSetSysPortable.Parent" xml:space="preserve">
     <value>groupBox6</value>
   </data>
   <data name="flyCustomTemplates.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="chkIsLoad3rdPartyPlugins.ToolTip" xml:space="preserve">
+    <value>Load plug-in dlls in 3rd/plugins directory.</value>
+  </data>
+  <data name="&gt;&gt;label7.Name" xml:space="preserve">
+    <value>label7</value>
   </data>
   <data name="label16.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 12</value>
@@ -1523,6 +1580,9 @@
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
   </data>
+  <data name="groupBox2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="groupBox9.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
   </data>
@@ -1532,8 +1592,8 @@
   <data name="&gt;&gt;cboxDefImportInbName.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="&gt;&gt;groupBox8.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="chkSetUseV4.Text" xml:space="preserve">
+    <value>Prefer v4 format</value>
   </data>
   <data name="groupBox6.Text" xml:space="preserve">
     <value>System</value>
@@ -1543,6 +1603,9 @@
   </data>
   <data name="&gt;&gt;chkSetCheckV2RayCoreUpdateWhenStart.Parent" xml:space="preserve">
     <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;btnOptionExit.Name" xml:space="preserve">
+    <value>btnOptionExit</value>
   </data>
   <data name="&gt;&gt;tabPageCustomCoresSetting.Parent" xml:space="preserve">
     <value>tabControl1</value>
@@ -1559,7 +1622,7 @@
   <data name="tabPagePlugins.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;btnSetOpenStartupFolder.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="btnSubsInvertSelection.Text" xml:space="preserve">
@@ -1571,14 +1634,17 @@
   <data name="&gt;&gt;label6.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tabPageSetting.Text" xml:space="preserve">
-    <value>Settings</value>
+  <data name="cboxCustomUserAgent.Items1" xml:space="preserve">
+    <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.42</value>
   </data>
   <data name="chkDefImportSsShareLink.Text" xml:space="preserve">
     <value>SS</value>
   </data>
   <data name="&gt;&gt;chkSetEnableDebugFile.Name" xml:space="preserve">
     <value>chkSetEnableDebugFile</value>
+  </data>
+  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 12</value>
   </data>
   <data name="&gt;&gt;chkSubsIsUseProxy.Parent" xml:space="preserve">
     <value>tabPageSubscribe</value>
@@ -1589,14 +1655,11 @@
   <data name="chkSetSelfSignedCert.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
-  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="&gt;&gt;tboxDefSpeedtestTimeout.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;chkSettingsEnableUtlsFingerprint.Name" xml:space="preserve">
     <value>chkSettingsEnableUtlsFingerprint</value>
-  </data>
-  <data name="&gt;&gt;chkSetEnableDebugFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="btnOptionExit.Text" xml:space="preserve">
     <value>Exit</value>
@@ -1622,11 +1685,8 @@
   <data name="&gt;&gt;btnAddSubsUrl.Parent" xml:space="preserve">
     <value>tabPageSubscribe</value>
   </data>
-  <data name="cboxDefSpeedTestExpectedSize.Items3" xml:space="preserve">
-    <value>128</value>
-  </data>
-  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 22</value>
+  <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
   </data>
   <data name="flyCustomTemplates.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -1637,23 +1697,17 @@
   <data name="&gt;&gt;chkSettingsEnableUtlsFingerprint.Parent" xml:space="preserve">
     <value>groupBox5</value>
   </data>
-  <data name="&gt;&gt;cboxDefImportCoreName.Name" xml:space="preserve">
-    <value>cboxDefImportCoreName</value>
-  </data>
   <data name="btnAddSubsUrl.ToolTip" xml:space="preserve">
     <value>Add subscription URL.</value>
   </data>
   <data name="&gt;&gt;chkSubsIsUseProxy.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="groupBox2.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="&gt;&gt;cboxDefImportInbName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="chkDefSpeedtestIsUse.ToolTip" xml:space="preserve">
     <value>Use these custom speed-test settings.</value>
-  </data>
-  <data name="label18.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="&gt;&gt;label7.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1664,20 +1718,20 @@
   <data name="&gt;&gt;btnRefreshPluginsPanel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
   <data name="&gt;&gt;btnOptionExit.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="flyPluginsItemsContainer.Size" type="System.Drawing.Size, System.Drawing">
     <value>381, 365</value>
   </data>
-  <data name="label7.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="&gt;&gt;groupBox4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;btnCoresSettingAdd.Parent" xml:space="preserve">
     <value>tabPageCustomCoresSetting</value>
-  </data>
-  <data name="&gt;&gt;flySubsUrlContainer.ZOrder" xml:space="preserve">
-    <value>6</value>
   </data>
   <data name="chkSetUseV4.Location" type="System.Drawing.Point, System.Drawing">
     <value>125, 18</value>
@@ -1688,9 +1742,6 @@
   <data name="chkIsUseCustomUserAgent.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="&gt;&gt;tabPageSetting.Name" xml:space="preserve">
-    <value>tabPageSetting</value>
-  </data>
   <data name="btnRefreshPluginsPanel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -1700,11 +1751,11 @@
   <data name="chkSetSelfSignedCert.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>527, 510</value>
+  <data name="&gt;&gt;tabPageCustomCoresSetting.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
-  <data name="chkIsUseCustomUserAgent.Text" xml:space="preserve">
-    <value>Use</value>
+  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
+    <value>tabPageSetting</value>
   </data>
   <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 12</value>
@@ -1712,14 +1763,17 @@
   <data name="&gt;&gt;chkSetUpgradeUseProxy.Name" xml:space="preserve">
     <value>chkSetUpgradeUseProxy</value>
   </data>
+  <data name="cboxSettingsRandomSelectServerLatency.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="&gt;&gt;label3.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
     <value>groupBox2</value>
   </data>
-  <data name="&gt;&gt;tabPageCustomCoresSetting.Name" xml:space="preserve">
-    <value>tabPageCustomCoresSetting</value>
+  <data name="label11.ToolTip" xml:space="preserve">
+    <value>Timeout in milliseconds.</value>
   </data>
   <data name="tboxSettingsMaxCoreNum.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 21</value>
@@ -1742,8 +1796,8 @@
   <data name="groupBox4.Size" type="System.Drawing.Size, System.Drawing">
     <value>449, 97</value>
   </data>
-  <data name="cboxSettingsRandomSelectServerLatency.Items2" xml:space="preserve">
-    <value>2000</value>
+  <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="cboxCustomUserAgent.Items2" xml:space="preserve">
     <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0</value>
@@ -1753,12 +1807,6 @@
   </data>
   <data name="&gt;&gt;chkDefSpeedtestIsUse.Parent" xml:space="preserve">
     <value>groupBox3</value>
-  </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="tboxDefImportAddr.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
   </data>
   <data name="chkSetSysPortable.Text" xml:space="preserve">
     <value>Portable mode</value>
@@ -1772,6 +1820,9 @@
   <data name="tabPageConfigTemplates.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
+  <data name="btnRefreshPluginsPanel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
   <data name="label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -1784,11 +1835,11 @@
   <data name="btnOptionExit.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="tboxDefImportAddr.ToolTip" xml:space="preserve">
-    <value>127.0.0.1:1080</value>
-  </data>
   <data name="&gt;&gt;label4.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPageCustomCoresSetting.Name" xml:space="preserve">
+    <value>tabPageCustomCoresSetting</value>
   </data>
   <data name="label5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 0, 2, 0</value>
@@ -1796,14 +1847,14 @@
   <data name="&gt;&gt;groupBox9.Parent" xml:space="preserve">
     <value>tabPageDefaults</value>
   </data>
-  <data name="label3.ToolTip" xml:space="preserve">
-    <value />
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>527, 510</value>
   </data>
   <data name="&gt;&gt;groupBox3.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tabPagePlugins.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;tboxDefSpeedtestTimeout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="btnOptionSave.Text" xml:space="preserve">
     <value>Save</value>
@@ -1817,8 +1868,11 @@
   <data name="chkSubsIsAutoPatch.ToolTip" xml:space="preserve">
     <value>Auto patch github url.</value>
   </data>
-  <data name="tboxDefSpeedtestTimeout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>325, 43</value>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 12</value>
+  </data>
+  <data name="&gt;&gt;cboxSettingLanguage.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <data name="tabPageConfigTemplates.Text" xml:space="preserve">
     <value>Templates</value>
@@ -1832,8 +1886,11 @@
   <data name="cboxSettingLanguage.Items2" xml:space="preserve">
     <value>简体中文</value>
   </data>
-  <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 12</value>
+  <data name="tboxSettingsMaxCoreNum.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="tabPageDefaults.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
   <data name="cboxDefImportInbName.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1854,16 +1911,13 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
-    <value>Def. Inb.</value>
-  </data>
-  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>186, 21</value>
+    <value>Def. tpl.</value>
   </data>
   <data name="&gt;&gt;chkSetCheckV2RayCoreUpdateWhenStart.Name" xml:space="preserve">
     <value>chkSetCheckV2RayCoreUpdateWhenStart</value>
   </data>
   <data name="label10.ToolTip" xml:space="preserve">
-    <value>Default custom inbound mode. Config means keep original inbound name.</value>
+    <value>Default custom inbound template.</value>
   </data>
   <data name="&gt;&gt;label12.Parent" xml:space="preserve">
     <value>groupBox5</value>
@@ -1889,8 +1943,8 @@
   <data name="chkSetUseV4.ToolTip" xml:space="preserve">
     <value>Priority use of in(out)bounds  when importing and editing.</value>
   </data>
-  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="&gt;&gt;chkIsLoad3rdPartyPlugins.Name" xml:space="preserve">
+    <value>chkIsLoad3rdPartyPlugins</value>
   </data>
   <data name="&gt;&gt;label4.Name" xml:space="preserve">
     <value>label4</value>
@@ -1898,8 +1952,8 @@
   <data name="tboxSettingsMaxCoreNum.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 14</value>
   </data>
-  <data name="label7.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
+  <data name="btnUpdateViaSubscription.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="&gt;&gt;label15.Name" xml:space="preserve">
     <value>label15</value>
@@ -1925,9 +1979,6 @@
   <data name="&gt;&gt;tboxDefSpeedtestTimeout.Parent" xml:space="preserve">
     <value>groupBox3</value>
   </data>
-  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="chkSetEnableDebugFile.ToolTip" xml:space="preserve">
     <value />
   </data>
@@ -1949,14 +2000,20 @@
   <data name="&gt;&gt;cboxSettingLanguage.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
+  <data name="label7.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
   <data name="&gt;&gt;label6.Parent" xml:space="preserve">
     <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;btnAddSubsUrl.Name" xml:space="preserve">
     <value>btnAddSubsUrl</value>
   </data>
-  <data name="label17.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 76</value>
+  <data name="groupBox3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 12</value>
+  </data>
+  <data name="label8.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 12</value>
@@ -1964,20 +2021,17 @@
   <data name="flyCustomTemplates.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="groupBox5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 114</value>
+  <data name="tabPageSetting.Text" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="cboxDefSpeedTestExpectedSize.Items5" xml:space="preserve">
     <value>512</value>
   </data>
-  <data name="&gt;&gt;tabPageConfigTemplates.Parent" xml:space="preserve">
-    <value>tabControl1</value>
+  <data name="cboxSettingsRandomSelectServerLatency.Items1" xml:space="preserve">
+    <value>1000</value>
   </data>
   <data name="&gt;&gt;flyCoresSetting.Name" xml:space="preserve">
     <value>flyCoresSetting</value>
-  </data>
-  <data name="label16.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
   </data>
   <data name="label16.ToolTip" xml:space="preserve">
     <value>Custom TLS fingerprint</value>
@@ -2006,17 +2060,17 @@
   <data name="tabPageSubscribe.Text" xml:space="preserve">
     <value>Subs.</value>
   </data>
-  <data name="tabPageConfigTemplates.ToolTip" xml:space="preserve">
-    <value>Custom config templates.</value>
+  <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="groupBox4.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+  <data name="cboxDefSpeedTestExpectedSize.Items9" xml:space="preserve">
+    <value>8192</value>
   </data>
   <data name="btnSetBrowseDebugFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 23</value>
   </data>
-  <data name="&gt;&gt;tabPageDefaults.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="cboxSettingsRandomSelectServerLatency.Items5" xml:space="preserve">
+    <value>10000</value>
   </data>
   <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 12</value>
@@ -2033,11 +2087,14 @@
   <data name="&gt;&gt;chkSetUseV4.Name" xml:space="preserve">
     <value>chkSetUseV4</value>
   </data>
-  <data name="&gt;&gt;chkSetCheckVgcUpdateWhenStart.Name" xml:space="preserve">
-    <value>chkSetCheckVgcUpdateWhenStart</value>
+  <data name="tboxDefImportAddr.Text" xml:space="preserve">
+    <value>127.0.0.1:1080</value>
   </data>
   <data name="btnSubsUseAll.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
+  </data>
+  <data name="groupBox3.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;tboxDefImportAddr.ZOrder" xml:space="preserve">
     <value>6</value>
@@ -2051,14 +2108,11 @@
   <data name="&gt;&gt;groupBox6.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;btnDefImportBrowseVemssDecodeTemplate.Name" xml:space="preserve">
-    <value>btnDefImportBrowseVemssDecodeTemplate</value>
+  <data name="cboxSettingsUtlsFingerprint.Items1" xml:space="preserve">
+    <value>chrome</value>
   </data>
   <data name="&gt;&gt;btnUpdateViaSubscription.ZOrder" xml:space="preserve">
     <value>4</value>
-  </data>
-  <data name="chkSetSelfSignedCert.ToolTip" xml:space="preserve">
-    <value>Supports self-signed certificate. </value>
   </data>
   <data name="&gt;&gt;cboxDefSpeedTestExpectedSize.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2069,8 +2123,8 @@
   <data name="&gt;&gt;chkDefSpeedtestIsUse.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="chkSetUpgradeUseProxy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 16</value>
+  <data name="&gt;&gt;groupBox8.Name" xml:space="preserve">
+    <value>groupBox8</value>
   </data>
   <data name="chkSubsIsAutoPatch.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -2084,29 +2138,17 @@
   <data name="chkSetServStatistics.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
-  <data name="&gt;&gt;tboxDefSpeedtestTimeout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="cboxSettingsUtlsFingerprint.Items3" xml:space="preserve">
+    <value>safari</value>
   </data>
   <data name="btnOptionExit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom</value>
-  </data>
-  <data name="&gt;&gt;tabPageConfigTemplates.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="label18.ToolTip" xml:space="preserve">
     <value>Custom user agent.</value>
   </data>
   <data name="btnCustomTemplatesAdd.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;chkIsLoad3rdPartyPlugins.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="chkSubsIsAutoPatch.Text" xml:space="preserve">
-    <value>Autopatch</value>
-  </data>
-  <data name="btnDefImportBrowseVemssDecodeTemplate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 21</value>
   </data>
   <data name="btnCoresSettingAdd.ToolTip" xml:space="preserve">
     <value>Add custom core settings.</value>
@@ -2123,20 +2165,20 @@
   <data name="chkIsUseCustomUserAgent.Size" type="System.Drawing.Size, System.Drawing">
     <value>42, 16</value>
   </data>
-  <data name="label17.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="btnCoresSettingAdd.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="cboxSettingsRandomSelectServerLatency.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 41</value>
   </data>
-  <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="tabPageSubscribe.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 26</value>
   </data>
   <data name="&gt;&gt;groupBox9.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="btnOptionSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom</value>
+  <data name="label17.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="flyCustomTemplates.Size" type="System.Drawing.Size, System.Drawing">
     <value>381, 381</value>
@@ -2147,14 +2189,8 @@
   <data name="&gt;&gt;chkDefImportSsShareLink.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tboxSetDebugFilePath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>80, 20</value>
-  </data>
-  <data name="chkSetUpgradeUseProxy.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;chkDefImportTrojanShareLink.Name" xml:space="preserve">
-    <value>chkDefImportTrojanShareLink</value>
+  <data name="label9.ToolTip" xml:space="preserve">
+    <value>Default proxy address.</value>
   </data>
   <data name="groupBox2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -2165,17 +2201,23 @@
   <data name="btnSetOpenStartupFolder.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="btnUpdateViaSubscription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>394, 34</value>
+  <data name="&gt;&gt;tboxDefSpeedtestTimeout.Name" xml:space="preserve">
+    <value>tboxDefSpeedtestTimeout</value>
+  </data>
+  <data name="&gt;&gt;cboxSettingsRandomSelectServerLatency.Name" xml:space="preserve">
+    <value>cboxSettingsRandomSelectServerLatency</value>
   </data>
   <data name="tboxDefImportAddr.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>271, 47</value>
+  <data name="tabPageSetting.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
-  <data name="chkIsLoad3rdPartyPlugins.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;label17.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="flySubsUrlContainer.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;btnUpdateViaSubscription.Name" xml:space="preserve">
     <value>btnUpdateViaSubscription</value>
@@ -2183,8 +2225,8 @@
   <data name="label20.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;tabPageCustomCoresSetting.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="chkSetServAutotrack.ToolTip" xml:space="preserve">
+    <value>Activate servers that were running before last shutdown after this software starts.</value>
   </data>
   <data name="&gt;&gt;btnCustomTemplatesAdd.Name" xml:space="preserve">
     <value>btnCustomTemplatesAdd</value>
@@ -2192,8 +2234,8 @@
   <data name="groupBox3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
-  <data name="label10.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="&gt;&gt;flyCustomTemplates.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="tboxSettingsMaxCoreNum.ToolTip" xml:space="preserve">
     <value />
@@ -2213,9 +2255,6 @@
   <data name="label6.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>144, 47</value>
-  </data>
   <data name="&gt;&gt;chkSetCheckV2RayCoreUpdateWhenStart.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -2231,11 +2270,11 @@
   <data name="cboxSettingLanguage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
+  <data name="&gt;&gt;btnCustomTemplatesAdd.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;flyCoresSetting.Type" xml:space="preserve">
     <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="cboxDefSpeedTestExpectedSize.Items4" xml:space="preserve">
-    <value>256</value>
   </data>
   <data name="chkIsEnableSystrayLeftClickCommand.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -2252,23 +2291,17 @@
   <data name="&gt;&gt;cboxCustomUserAgent.Parent" xml:space="preserve">
     <value>groupBox9</value>
   </data>
-  <data name="chkSubsIsUseProxy.ToolTip" xml:space="preserve">
-    <value>Use the first running HTTP server to update.</value>
-  </data>
   <data name="groupBox4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
-  </data>
-  <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="chkSetEnableDebugFile.Location" type="System.Drawing.Point, System.Drawing">
     <value>383, 22</value>
   </data>
-  <data name="btnCustomTemplatesAdd.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="&gt;&gt;cboxDefSpeedTestUrl.Name" xml:space="preserve">
+    <value>cboxDefSpeedTestUrl</value>
   </data>
-  <data name="btnDefImportBrowseVemssDecodeTemplate.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="tboxDefImportAddr.Location" type="System.Drawing.Point, System.Drawing">
+    <value>255, 18</value>
   </data>
   <data name="tabPageDefaults.ToolTip" xml:space="preserve">
     <value />
@@ -2276,14 +2309,11 @@
   <data name="chkSetCheckVgcUpdateWhenStart.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label15.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 45</value>
-  </data>
   <data name="chkSetCheckVgcUpdateWhenStart.ToolTip" xml:space="preserve">
     <value>Check for V2RayGCon update when this application starts.</value>
   </data>
-  <data name="btnCoresSettingAdd.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="label10.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;cboxCustomUserAgent.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -2294,8 +2324,8 @@
   <data name="chkIsLoad3rdPartyPlugins.Location" type="System.Drawing.Point, System.Drawing">
     <value>395, 35</value>
   </data>
-  <data name="cboxSettingsRandomSelectServerLatency.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="cboxDefSpeedTestUrl.Items3" xml:space="preserve">
     <value>https://www.github.com</value>
@@ -2303,20 +2333,20 @@
   <data name="&gt;&gt;chkIsUseCustomUserAgent.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;chkIsLoad3rdPartyPlugins.Name" xml:space="preserve">
-    <value>chkIsLoad3rdPartyPlugins</value>
+  <data name="tabPageSubscribe.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label15.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="chkDefImportIsUseVmessDecodeTemplate.ToolTip" xml:space="preserve">
     <value>使用此解码模板</value>
   </data>
-  <data name="chkSetSelfSignedCert.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 16</value>
+  <data name="chkSetCheckVgcUpdateWhenStart.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
-  <data name="cboxSettingsUtlsFingerprint.Items3" xml:space="preserve">
-    <value>safari</value>
-  </data>
-  <data name="groupBox3.ToolTip" xml:space="preserve">
-    <value />
+  <data name="tboxSetDebugFilePath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 20</value>
   </data>
   <data name="&gt;&gt;chkDefImportSsShareLink.Name" xml:space="preserve">
     <value>chkDefImportSsShareLink</value>
@@ -2324,8 +2354,8 @@
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="tabPageConfigTemplates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>479, 393</value>
+  <data name="groupBox5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="&gt;&gt;cboxSettingsRandomSelectServerLatency.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2335,12 +2365,6 @@
   </data>
   <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
-  </data>
-  <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;flySubsUrlContainer.Name" xml:space="preserve">
-    <value>flySubsUrlContainer</value>
   </data>
   <data name="chkSetServStatistics.Text" xml:space="preserve">
     <value>Statistic</value>
@@ -2354,8 +2378,8 @@
   <data name="chkIsLoad3rdPartyPlugins.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 16</value>
   </data>
-  <data name="&gt;&gt;chkDefSpeedtestIsUse.ZOrder" xml:space="preserve">
-    <value>4</value>
+  <data name="tboxDefImportAddr.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="&gt;&gt;cboxDefImportInbName.Name" xml:space="preserve">
     <value>cboxDefImportInbName</value>
@@ -2378,17 +2402,11 @@
   <data name="&gt;&gt;btnDefImportBrowseVemssDecodeTemplate.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="groupBox6.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
+  <data name="&gt;&gt;groupBox6.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="chkDefSpeedtestIsUse.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <data name="chkSetServAutotrack.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="label14.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
   </data>
   <data name="groupBox6.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -2396,11 +2414,11 @@
   <data name="&gt;&gt;chkIsLoad3rdPartyPlugins.Parent" xml:space="preserve">
     <value>tabPagePlugins</value>
   </data>
-  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>449, 102</value>
   </data>
-  <data name="label15.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="tboxDefImportAddr.ToolTip" xml:space="preserve">
+    <value>127.0.0.1:1080</value>
   </data>
   <data name="btnOptionExit.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 440</value>
@@ -2411,8 +2429,8 @@
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>389, 12</value>
   </data>
-  <data name="&gt;&gt;chkSetUpgradeUseProxy.Parent" xml:space="preserve">
-    <value>groupBox2</value>
+  <data name="&gt;&gt;chkSetCheckV2RayCoreUpdateWhenStart.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="cboxDefImportCoreName.Size" type="System.Drawing.Size, System.Drawing">
     <value>95, 20</value>
@@ -2435,8 +2453,8 @@
   <data name="&gt;&gt;chkSetServStatistics.Parent" xml:space="preserve">
     <value>groupBox5</value>
   </data>
-  <data name="&gt;&gt;chkSettingsEnableUtlsFingerprint.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label15.Text" xml:space="preserve">
+    <value>SLantency</value>
   </data>
   <data name="cboxSettingsUtlsFingerprint.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -2444,41 +2462,38 @@
   <data name="&gt;&gt;chkDefSpeedtestIsUse.Name" xml:space="preserve">
     <value>chkDefSpeedtestIsUse</value>
   </data>
-  <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 102</value>
+  <data name="&gt;&gt;cboxDefImportCoreName.Name" xml:space="preserve">
+    <value>cboxDefImportCoreName</value>
   </data>
   <data name="chkDefImportTrojanShareLink.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="groupBox9.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
   <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="tboxDefSpeedtestTimeout.ToolTip" xml:space="preserve">
-    <value>20000 (20 seconds)</value>
+  <data name="label20.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 47</value>
   </data>
   <data name="chkSettingsEnableUtlsFingerprint.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;tabPageSubscribe.Name" xml:space="preserve">
-    <value>tabPageSubscribe</value>
+  <data name="&gt;&gt;cboxDefImportCoreName.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="cboxSettingsUtlsFingerprint.Items1" xml:space="preserve">
-    <value>chrome</value>
+  <data name="label16.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 377</value>
+  <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>189, 18</value>
   </data>
-  <data name="&gt;&gt;cboxDefSpeedTestExpectedSize.Name" xml:space="preserve">
-    <value>cboxDefSpeedTestExpectedSize</value>
+  <data name="chkSetUseV4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="chkSettingsEnableUtlsFingerprint.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
-  <data name="&gt;&gt;btnOptionExit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 22</value>
   </data>
   <data name="chkDefImportSsShareLink.Location" type="System.Drawing.Point, System.Drawing">
     <value>188, 45</value>
@@ -2504,14 +2519,11 @@
   <data name="chkIsLoad3rdPartyPlugins.Text" xml:space="preserve">
     <value>Load 3rd</value>
   </data>
-  <data name="tabPageSetting.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="label18.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 20</value>
   </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="btnDefImportBrowseVemssDecodeTemplate.Text" xml:space="preserve">
-    <value>VmessTpl</value>
+  <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="chkIsLoad3rdPartyPlugins.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2525,8 +2537,8 @@
   <data name="&gt;&gt;btnSubsUseAll.Name" xml:space="preserve">
     <value>btnSubsUseAll</value>
   </data>
-  <data name="groupBox3.Text" xml:space="preserve">
-    <value>Speedtest</value>
+  <data name="&gt;&gt;chkDefImportTrojanShareLink.Name" xml:space="preserve">
+    <value>chkDefImportTrojanShareLink</value>
   </data>
   <data name="cboxDefSpeedTestUrl.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 18</value>
@@ -2540,26 +2552,26 @@
   <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
     <value>449, 73</value>
   </data>
-  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 12</value>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
   </data>
-  <data name="flyPluginsItemsContainer.AutoScroll" type="System.Boolean, mscorlib">
+  <data name="&gt;&gt;chkDefImportIsUseVmessDecodeTemplate.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label18.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 12</value>
+  <data name="chkSubsIsUseProxy.ToolTip" xml:space="preserve">
+    <value>Use the first running HTTP server to update.</value>
   </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 12</value>
-  </data>
-  <data name="&gt;&gt;label7.Name" xml:space="preserve">
-    <value>label7</value>
+  <data name="btnDefImportBrowseVemssDecodeTemplate.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="groupBox2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
-  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="&gt;&gt;flyPluginsItemsContainer.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -2570,11 +2582,11 @@
   <data name="label16.Text" xml:space="preserve">
     <value>uTLS</value>
   </data>
-  <data name="chkSetUpgradeUseProxy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 18</value>
+  <data name="&gt;&gt;tboxDefSpeedtestCycles.Name" xml:space="preserve">
+    <value>tboxDefSpeedtestCycles</value>
   </data>
-  <data name="tboxDefImportVmessDecodeTemplateUrl.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;chkSetSysPortable.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2585,8 +2597,8 @@
   <data name="&gt;&gt;cboxSettingLanguage.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="chkDefSpeedtestIsUse.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="&gt;&gt;chkSubsIsAutoPatch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="tboxDefSpeedtestCycles.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 21</value>
@@ -2612,20 +2624,20 @@
   <data name="cboxDefImportCoreName.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 43</value>
   </data>
-  <data name="label11.Text" xml:space="preserve">
-    <value>Timeout</value>
+  <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="&gt;&gt;flySubsUrlContainer.Parent" xml:space="preserve">
     <value>tabPageSubscribe</value>
   </data>
-  <data name="&gt;&gt;flyCustomTemplates.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="chkDefImportSsShareLink.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 16</value>
   </data>
   <data name="btnSetOpenStartupFolder.Text" xml:space="preserve">
     <value>Startup folder</value>
   </data>
-  <data name="btnCustomTemplatesAdd.ToolTip" xml:space="preserve">
-    <value>Add custom config template.</value>
+  <data name="cboxDefImportInbName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 20</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2642,35 +2654,29 @@
   <data name="cboxSettingsUtlsFingerprint.Items6" xml:space="preserve">
     <value>ios</value>
   </data>
-  <data name="label8.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="btnDefImportBrowseVemssDecodeTemplate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 21</value>
   </data>
   <data name="groupBox5.Size" type="System.Drawing.Size, System.Drawing">
     <value>449, 117</value>
   </data>
-  <data name="&gt;&gt;chkSubsIsAutoPatch.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;tabPageConfigTemplates.ZOrder" xml:space="preserve">
     <value>4</value>
-  </data>
-  <data name="chkSetServAutotrack.ToolTip" xml:space="preserve">
-    <value>Activate servers that were running before last shutdown after this software starts.</value>
   </data>
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="tboxDefImportAddr.Location" type="System.Drawing.Point, System.Drawing">
-    <value>255, 18</value>
+  <data name="cboxCustomUserAgent.Size" type="System.Drawing.Size, System.Drawing">
+    <value>305, 20</value>
   </data>
-  <data name="&gt;&gt;chkSetServStatistics.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="groupBox6.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="&gt;&gt;tboxDefSpeedtestTimeout.Name" xml:space="preserve">
-    <value>tboxDefSpeedtestTimeout</value>
+  <data name="label15.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 45</value>
   </data>
-  <data name="chkSubsIsAutoPatch.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="groupBox9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 193</value>
   </data>
   <data name="tabPagePlugins.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
@@ -2687,7 +2693,7 @@
   <data name="&gt;&gt;tabPageDefaults.Name" xml:space="preserve">
     <value>tabPageDefaults</value>
   </data>
-  <data name="groupBox5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="btnCustomTemplatesAdd.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 2, 2, 2</value>
   </data>
   <data name="&gt;&gt;label15.Type" xml:space="preserve">
@@ -2696,20 +2702,20 @@
   <data name="groupBox8.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="groupBox6.ToolTip" xml:space="preserve">
-    <value />
+  <data name="cboxCustomUserAgent.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
   </data>
   <data name="groupBox6.Size" type="System.Drawing.Size, System.Drawing">
     <value>449, 45</value>
   </data>
-  <data name="&gt;&gt;tboxDefSpeedtestCycles.Name" xml:space="preserve">
-    <value>tboxDefSpeedtestCycles</value>
+  <data name="label8.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;cboxDefSpeedTestUrl.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="groupBox8.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="cboxDefSpeedTestExpectedSize.Items4" xml:space="preserve">
+    <value>256</value>
   </data>
   <data name="btnAddSubsUrl.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -2723,8 +2729,8 @@
   <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
     <value>tabControl1</value>
   </data>
-  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 12</value>
+  <data name="tboxDefSpeedtestCycles.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 43</value>
   </data>
   <data name="btnRefreshPluginsPanel.Text" xml:space="preserve">
     <value>Refresh</value>
@@ -2732,17 +2738,20 @@
   <data name="&gt;&gt;btnOptionSave.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;chkDefImportIsUseVmessDecodeTemplate.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="chkSetServStatistics.ToolTip" xml:space="preserve">
+    <value>Enable statistics.</value>
   </data>
   <data name="chkSetSysPortable.Location" type="System.Drawing.Point, System.Drawing">
     <value>15, 18</value>
   </data>
-  <data name="tabPagePlugins.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 26</value>
+  <data name="groupBox1.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="&gt;&gt;groupBox4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="groupBox9.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;chkSetEnableDebugFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;chkIsUseCustomUserAgent.Parent" xml:space="preserve">
     <value>groupBox9</value>
@@ -2753,17 +2762,11 @@
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 12</value>
   </data>
-  <data name="&gt;&gt;groupBox6.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;tabPageConfigTemplates.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="cboxDefSpeedTestUrl.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;chkSetUpgradeUseProxy.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="chkSetUseV4.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="label14.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
   </data>
   <data name="label17.ToolTip" xml:space="preserve">
     <value>Run this command when leftclicking systray icon.</value>
@@ -2774,14 +2777,17 @@
   <data name="&gt;&gt;btnCoresSettingAdd.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="cboxSettingsRandomSelectServerLatency.Items4" xml:space="preserve">
-    <value>6000</value>
+  <data name="tboxDefImportVmessDecodeTemplateUrl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 69</value>
   </data>
   <data name="groupBox5.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;cboxSettingsRandomSelectServerLatency.Name" xml:space="preserve">
-    <value>cboxSettingsRandomSelectServerLatency</value>
+  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>271, 47</value>
+  </data>
+  <data name="label7.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="tboxSystrayLeftClickCommand.Location" type="System.Drawing.Point, System.Drawing">
     <value>80, 72</value>
@@ -2789,17 +2795,14 @@
   <data name="chkIsLoad3rdPartyPlugins.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="flySubsUrlContainer.AutoScroll" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="&gt;&gt;tabPageDefaults.Parent" xml:space="preserve">
     <value>tabControl1</value>
   </data>
   <data name="&gt;&gt;chkDefImportIsUseVmessDecodeTemplate.Name" xml:space="preserve">
     <value>chkDefImportIsUseVmessDecodeTemplate</value>
   </data>
-  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 12</value>
+  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="btnOptionExit.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -2813,14 +2816,11 @@
   <data name="&gt;&gt;chkSetSelfSignedCert.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="chkSetServStatistics.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="cboxSettingsUtlsFingerprint.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 67</value>
   </data>
-  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
-    <value>groupBox4</value>
-  </data>
-  <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="chkSetServStatistics.Location" type="System.Drawing.Point, System.Drawing">
+    <value>125, 92</value>
   </data>
   <data name="&gt;&gt;groupBox5.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2828,8 +2828,8 @@
   <data name="&gt;&gt;flyPluginsItemsContainer.Type" xml:space="preserve">
     <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="cboxSettingPageSize.Items2" xml:space="preserve">
-    <value>20</value>
+  <data name="&gt;&gt;tabPageSetting.Name" xml:space="preserve">
+    <value>tabPageSetting</value>
   </data>
   <data name="&gt;&gt;label10.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2837,11 +2837,8 @@
   <data name="&gt;&gt;groupBox6.Name" xml:space="preserve">
     <value>groupBox6</value>
   </data>
-  <data name="&gt;&gt;label6.Name" xml:space="preserve">
-    <value>label6</value>
-  </data>
-  <data name="&gt;&gt;cboxDefImportInbName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;chkSetUpgradeUseProxy.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="flySubsUrlContainer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -2849,17 +2846,20 @@
   <data name="&gt;&gt;label8.Name" xml:space="preserve">
     <value>label8</value>
   </data>
-  <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
-    <value>189, 18</value>
+  <data name="label20.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 12</value>
   </data>
   <data name="label4.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="tabPageSubscribe.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 26</value>
+  <data name="groupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
-  <data name="cboxSettingsRandomSelectServerLatency.Items5" xml:space="preserve">
-    <value>10000</value>
+  <data name="&gt;&gt;chkIsLoad3rdPartyPlugins.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabControl1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;cboxDefSpeedTestExpectedSize.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -2900,8 +2900,8 @@
   <data name="&gt;&gt;tboxSettingsMaxCoreNum.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tabControl1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="btnSetBrowseDebugFile.ToolTip" xml:space="preserve">
     <value>Browse debug file path.</value>
@@ -2909,8 +2909,8 @@
   <data name="label12.Text" xml:space="preserve">
     <value>Max cores</value>
   </data>
-  <data name="&gt;&gt;label16.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;flySubsUrlContainer.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="&gt;&gt;tboxSystrayLeftClickCommand.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2924,8 +2924,8 @@
   <data name="btnCoresSettingAdd.Text" xml:space="preserve">
     <value>Add</value>
   </data>
-  <data name="cboxCustomUserAgent.Items1" xml:space="preserve">
-    <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.42</value>
+  <data name="chkSetServAutotrack.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
   <data name="label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -2948,14 +2948,14 @@
   <data name="&gt;&gt;tboxDefImportAddr.Name" xml:space="preserve">
     <value>tboxDefImportAddr</value>
   </data>
-  <data name="tabPageDefaults.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="&gt;&gt;groupBox8.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="label18.Text" xml:space="preserve">
     <value>User agent</value>
   </data>
-  <data name="label9.ToolTip" xml:space="preserve">
-    <value>Default proxy address.</value>
+  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>186, 21</value>
   </data>
   <data name="&gt;&gt;tboxDefImportVmessDecodeTemplateUrl.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -2963,8 +2963,8 @@
   <data name="&gt;&gt;btnCustomTemplatesAdd.Parent" xml:space="preserve">
     <value>tabPageConfigTemplates</value>
   </data>
-  <data name="cboxDefSpeedTestUrl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>305, 20</value>
+  <data name="label18.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="&gt;&gt;tabPageCustomCoresSetting.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

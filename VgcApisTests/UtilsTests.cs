@@ -53,7 +53,8 @@ namespace VgcApisTests
         [DataRow(@"", 0)]
         [DataRow(null, 0)]
         [DataRow(@"PATH=c:\\abc\,n_1=23", 2)]
-        [DataRow(@"a=1 b=2", 2)]
+        [DataRow(@"a=1 b=2", 1)]
+        [DataRow(@"a=1, b=2", 2)]
         public void ParseEnvStringTest(string env, int exp)
         {
             var d = ParseEnvString(env);

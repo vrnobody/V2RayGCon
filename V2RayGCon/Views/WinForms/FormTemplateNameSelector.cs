@@ -13,6 +13,7 @@ namespace V2RayGCon.Views.WinForms
     public partial class FormTemplateNameSelector : Form
     {
         public string result = string.Empty;
+
         private readonly string names;
 
         public FormTemplateNameSelector(string names)
@@ -24,11 +25,36 @@ namespace V2RayGCon.Views.WinForms
             this.names = names;
         }
 
+        #region private methods
+        List<string> selected = new List<string>();
+
+        string GatherResult()
+        {
+            return string.Join(",", selected);
+        }
+
+        bool suppressEvent = false;
+
+        void CheckBoxChanged(CheckBox cbox)
+        {
+            if (suppressEvent)
+            {
+                return;
+            }
+            var name = cbox.Text;
+            selected.Remove(name);
+            if (cbox.Checked)
+            {
+                selected.Add(name);
+            }
+            tboxNames.Text = GatherResult();
+        }
+        #endregion
+
+        #region UI events
         private void btnOk_Click(object sender, EventArgs e)
         {
-            var chks = flyPanel.Controls.OfType<CheckBox>();
-            var s = chks.Where(c => c.Checked).Select(c => c.Text);
-            result = string.Join(", ", s);
+            result = GatherResult();
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -41,6 +67,8 @@ namespace V2RayGCon.Views.WinForms
         private void FormTemplateNameSelector_Load(object sender, EventArgs e)
         {
             var table = this.names?.Replace(", ", ",")?.Split(',');
+            selected.AddRange(table);
+            tboxNames.Text = GatherResult();
 
             var settings = Services.Settings.Instance;
             var names = settings.GetCustomConfigTemplates().Select(t => t.name);
@@ -51,8 +79,31 @@ namespace V2RayGCon.Views.WinForms
                     Text = name,
                     Checked = table != null && table.Contains(name),
                 };
+                chk.CheckedChanged += (s, a) => CheckBoxChanged(s as CheckBox);
                 flyPanel.Controls.Add(chk);
             }
         }
+
+        private void tboxNames_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter)
+            {
+                return;
+            }
+
+            e.SuppressKeyPress = true;
+
+            suppressEvent = true;
+            selected.Clear();
+            selected.AddRange(tboxNames.Text?.Replace(", ", ",")?.Split(','));
+
+            var chks = flyPanel.Controls.OfType<CheckBox>();
+            foreach (var chk in chks)
+            {
+                chk.Checked = selected.Contains(chk.Text);
+            }
+            suppressEvent = false;
+        }
+        #endregion
     }
 }

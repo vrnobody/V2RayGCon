@@ -397,7 +397,7 @@
     <value>7</value>
   </data>
   <data name="label6.ToolTip" xml:space="preserve">
-    <value>Speedtest inbound template name.</value>
+    <value>Merge this template before speedtesting.</value>
   </data>
   <data name="label8.ToolTip" xml:space="preserve">
     <value>通常留空就行</value>

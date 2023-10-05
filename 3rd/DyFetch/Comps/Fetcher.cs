@@ -1,5 +1,5 @@
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -10,13 +10,16 @@ namespace DyFetch.Comps
 {
     internal class Fetcher : IDisposable
     {
-        readonly ChromeDriver driver;
+        readonly FirefoxDriver driver;
         private bool disposedValue;
 
         public Fetcher(Models.Configs configs)
         {
             var options = CreateOptions(configs);
-            driver = new ChromeDriver(options);
+            var dir = configs.driverDir;
+            driver = string.IsNullOrEmpty(dir)
+                ? new FirefoxDriver(options)
+                : new FirefoxDriver(dir, options);
         }
 
         #region properties
@@ -77,9 +80,9 @@ namespace DyFetch.Comps
             return false;
         }
 
-        ChromeOptions CreateOptions(Models.Configs configs)
+        FirefoxOptions CreateOptions(Models.Configs configs)
         {
-            var options = new ChromeOptions();
+            var options = new FirefoxOptions();
 
             options.AddArgument("--window-size=1920,1080");
 
@@ -115,27 +118,16 @@ namespace DyFetch.Comps
             {
                 if (disposing)
                 {
-                    // TODO: �ͷ��й�״̬(�йܶ���)
                     driver?.Close();
                     driver?.Dispose();
                 }
 
-                // TODO: �ͷ�δ�йܵ���Դ(δ�йܵĶ���)����д�ս���
-                // TODO: �������ֶ�����Ϊ null
                 disposedValue = true;
             }
         }
 
-        // // TODO: ������Dispose(bool disposing)��ӵ�������ͷ�δ�й���Դ�Ĵ���ʱ������ս���
-        // ~Fetcher()
-        // {
-        //     // ��Ҫ���Ĵ˴��롣�뽫����������롰Dispose(bool disposing)��������
-        //     Dispose(disposing: false);
-        // }
-
         public void Dispose()
         {
-            // ��Ҫ���Ĵ˴��롣�뽫����������롰Dispose(bool disposing)��������
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }

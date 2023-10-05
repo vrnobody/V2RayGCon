@@ -1,4 +1,4 @@
-using NDesk.Options;
+﻿using NDesk.Options;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +16,7 @@ namespace DyFetch.Models
         public int timeout = -1;
         public string url = null;
         public int wait = -1;
+        public string driverDir = null;
 
         readonly OptionSet opts = null;
 
@@ -31,6 +32,7 @@ namespace DyFetch.Models
             {
                 { "pipein=", "anonymous input-pipe handle", v => pipeIn = v },
                 { "pipeout=", "anonymous output-pipe handle", v => pipeOut = v },
+                { "d|driver=", "firefox driver dir", v => driverDir = v },
                 { "s|headless", "headless mode", v => headless = v != null },
                 { "i|ignore", "ignore certificate errors", v => ignoreCertError = v != null },
                 { "u|url=", "the URL to download", v => url = v },
@@ -62,7 +64,7 @@ namespace DyFetch.Models
         public void ShowHelp()
         {
             Console.WriteLine("");
-            Console.WriteLine("DyFetch v0.0.1 2023-08-21");
+            Console.WriteLine("DyFetch v0.0.3 2023-10-05");
             Console.WriteLine("");
             Console.WriteLine("Usage:");
             Console.WriteLine(

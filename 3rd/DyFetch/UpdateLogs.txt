@@ -1,0 +1,7 @@
+
+v0.0.2
+switch to firefox driver
+
+v0.0.1
+first release
+using chrome driver

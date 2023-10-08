@@ -868,9 +868,9 @@ namespace VgcApis.Misc
                 throw new ArgumentNullException("URL must not null!");
             }
 
-            long to = Models.Consts.Core.SpeedtestTimeout;
+            long TIMEOUT = Models.Consts.Core.SpeedtestTimeout;
 
-            long latency = to;
+            long latency = TIMEOUT;
             long totalRead = 0;
             long expectedBytes = expectedSizeInKiB * 1024;
             bool onProgress(long read)
@@ -886,26 +886,18 @@ namespace VgcApis.Misc
             var maxTimeout =
                 timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
 
-            var done = new AutoResetEvent(false);
-            var t = new Task(
-                async () =>
-                {
-                    latency = await TimedDownloadWorker(url, port, onProgress, maxTimeout);
-                    done.Set();
-                },
-                TaskCreationOptions.LongRunning
-            );
-            t.ConfigureAwait(false);
-            t.Start();
-            done.WaitOne((int)(maxTimeout * 1.5));
-            done.Dispose();
+            try
+            {
+                latency = TimedDownloadWorker(url, port, onProgress, maxTimeout).Result;
+            }
+            catch { }
 
             if (totalRead > 0 && totalRead > expectedBytes)
             {
                 return new Tuple<long, long>(latency, totalRead);
             }
 
-            return new Tuple<long, long>(to, totalRead);
+            return new Tuple<long, long>(TIMEOUT, totalRead);
         }
 
         public static bool IsValidPort(string port)

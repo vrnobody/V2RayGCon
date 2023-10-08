@@ -943,8 +943,6 @@ namespace V2RayGCon.Misc
             {
                 wc.Dispose();
             }
-
-            dlCompleted.Dispose();
             return success;
         }
 
@@ -1020,7 +1018,6 @@ namespace V2RayGCon.Misc
                 // network operation always buggy.
                 wc.CancelAsync();
             }
-            dlCompleted.Dispose();
             return html;
         }
 

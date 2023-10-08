@@ -245,6 +245,15 @@ stat: <
             Assert.AreEqual(true, time < SpeedtestTimeout);
         }
 
+        [DataTestMethod]
+        [DataRow("https://www.thiswebsitedonotexist.test/")]
+        public void VisitWebPageSpeedTestFailTest(string url)
+        {
+            var r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, -1, 5000);
+            var time = r.Item1;
+            Assert.AreEqual(SpeedtestTimeout, time);
+        }
+
         [TestMethod]
         public void CreateDeleteAppFolderTest()
         {

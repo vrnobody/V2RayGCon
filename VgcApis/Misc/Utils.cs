@@ -810,18 +810,16 @@ namespace VgcApis.Misc
         )
         {
             long TIMEOUT = Models.Consts.Core.SpeedtestTimeout;
-            var cts = new CancellationTokenSource(maxTimeout);
-
             Stopwatch sw = new Stopwatch();
             try
             {
+                var token = new CancellationTokenSource(maxTimeout).Token;
                 using (HttpClient hc = CreateHttpClient(port))
                 {
                     hc.Timeout = TimeSpan.FromMilliseconds(maxTimeout);
                     var opt = HttpCompletionOption.ResponseHeadersRead;
                     sw.Start();
-                    var content = hc.GetAsync(url, cts.Token);
-                    using (var response = await hc.GetAsync(url, opt, cts.Token))
+                    using (var response = await hc.GetAsync(url, opt, token))
                     {
                         response.EnsureSuccessStatusCode();
                         using (var stream = await response.Content.ReadAsStreamAsync())
@@ -830,7 +828,7 @@ namespace VgcApis.Misc
                             long read;
                             do
                             {
-                                read = await stream.ReadAsync(buffer, 0, buffer.Length, cts.Token);
+                                read = await stream.ReadAsync(buffer, 0, buffer.Length, token);
                                 if (!onProgress.Invoke(read))
                                 {
                                     break;
@@ -844,7 +842,6 @@ namespace VgcApis.Misc
             }
             catch
             {
-                cts.Cancel();
                 // break point for debugging
             }
 

@@ -65,6 +65,7 @@ namespace NeoLuna.Models.Apis.Components
                 {
                     using (var client = new HttpClient())
                     {
+                        client.Timeout = TimeSpan.FromMilliseconds(timeout);
                         var token = new CancellationTokenSource(timeout).Token;
                         var content = new StringContent(text);
                         var resp = await client.PostAsync(url, content, token);

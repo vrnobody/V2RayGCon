@@ -240,6 +240,10 @@ stat: <
             var time = r.Item1;
             Assert.AreEqual(SpeedtestTimeout, time);
 
+            r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, -1, 1);
+            time = r.Item1;
+            Assert.AreEqual(SpeedtestTimeout, time);
+
             r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, -1, -1);
             time = r.Item1;
             Assert.AreEqual(true, time < SpeedtestTimeout);

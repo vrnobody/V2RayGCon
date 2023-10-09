@@ -795,6 +795,8 @@ namespace VgcApis.Misc
             {
                 hc = new HttpClient();
             }
+
+            hc.DefaultRequestHeaders.ConnectionClose = true;
             hc.DefaultRequestHeaders.Add(
                 Models.Consts.Webs.UserAgentKey,
                 Models.Consts.Webs.CustomUserAgent

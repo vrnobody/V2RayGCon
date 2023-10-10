@@ -780,74 +780,16 @@ namespace VgcApis.Misc
             return host;
         }
 
-        static HttpClient CreateHttpClient(int port)
+        public static WebClient CreateWebClient(int proxyPort)
         {
-            HttpClient hc;
-            if (port > 0 && port < 65536)
-            {
-                var httpClientHandler = new HttpClientHandler
-                {
-                    Proxy = new WebProxy(Models.Consts.Webs.LoopBackIP, port),
-                };
-                hc = new HttpClient(handler: httpClientHandler, disposeHandler: true);
-            }
-            else
-            {
-                hc = new HttpClient();
-            }
+            WebClient wc = new WebClient { Encoding = Encoding.UTF8, };
 
-            hc.DefaultRequestHeaders.ConnectionClose = true;
-            hc.DefaultRequestHeaders.Add(
-                Models.Consts.Webs.UserAgentKey,
-                Models.Consts.Webs.CustomUserAgent
-            );
-            return hc;
-        }
-
-        static async Task<long> TimedDownloadWorker(
-            string url,
-            int port,
-            Func<long, bool> onProgress,
-            int maxTimeout
-        )
-        {
-            long TIMEOUT = Models.Consts.Core.SpeedtestTimeout;
-            Stopwatch sw = new Stopwatch();
-            try
+            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
+            if (proxyPort > 0 && proxyPort < 65536)
             {
-                var token = new CancellationTokenSource(maxTimeout).Token;
-                using (HttpClient hc = CreateHttpClient(port))
-                {
-                    hc.Timeout = TimeSpan.FromMilliseconds(maxTimeout);
-                    var opt = HttpCompletionOption.ResponseHeadersRead;
-                    sw.Start();
-                    using (var response = await hc.GetAsync(url, opt, token))
-                    {
-                        response.EnsureSuccessStatusCode();
-                        using (var stream = await response.Content.ReadAsStreamAsync())
-                        {
-                            byte[] buffer = new byte[4 * 1024];
-                            long read;
-                            do
-                            {
-                                read = await stream.ReadAsync(buffer, 0, buffer.Length, token);
-                                if (!onProgress.Invoke(read))
-                                {
-                                    break;
-                                }
-                            } while (read > 0);
-                        }
-                    }
-                    sw.Stop();
-                }
-                return sw.ElapsedMilliseconds;
+                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, proxyPort);
             }
-            catch
-            {
-                // break point for debugging
-            }
-
-            return TIMEOUT;
+            return wc;
         }
 
         /// <summary>
@@ -870,36 +812,54 @@ namespace VgcApis.Misc
                 throw new ArgumentNullException("URL must not null!");
             }
 
-            long TIMEOUT = Models.Consts.Core.SpeedtestTimeout;
-
-            long latency = TIMEOUT;
-            long totalRead = 0;
             long expectedBytes = expectedSizeInKiB * 1024;
-            bool onProgress(long read)
-            {
-                totalRead += read;
-                if (totalRead > expectedBytes && totalRead > 0)
-                {
-                    return false;
-                }
-                return true;
-            }
 
-            var maxTimeout =
-                timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
+            timeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
+
+            var sw = new Stopwatch();
+            var dlCompleted = new AutoResetEvent(false);
+            long size = 0;
+
+            var wc = CreateWebClient(port);
+
+            wc.DownloadStringCompleted += (s, a) =>
+            {
+                dlCompleted.Set();
+            };
+
+            wc.DownloadProgressChanged += (s, a) =>
+            {
+                var b = a.BytesReceived;
+                lock (wc)
+                {
+                    if (b > size)
+                    {
+                        size = b;
+                    }
+                }
+                if (size > expectedBytes && expectedBytes >= 0)
+                {
+                    wc.CancelAsync();
+                }
+            };
 
             try
             {
-                latency = TimedDownloadWorker(url, port, onProgress, maxTimeout).Result;
+                sw.Restart();
+                wc.DownloadStringAsync(new Uri(url));
+                dlCompleted.WaitOne(timeout);
             }
             catch { }
+            sw.Stop();
+            wc.CancelAsync();
 
-            if (totalRead > 0 && totalRead > expectedBytes)
+            var r = Models.Consts.Core.SpeedtestTimeout;
+            var time = sw.ElapsedMilliseconds;
+            if (time <= timeout && size > 0 && size > expectedBytes)
             {
-                return new Tuple<long, long>(latency, totalRead);
+                r = time;
             }
-
-            return new Tuple<long, long>(TIMEOUT, totalRead);
+            return new Tuple<long, long>(r, size);
         }
 
         public static bool IsValidPort(string port)

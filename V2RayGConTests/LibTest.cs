@@ -236,7 +236,7 @@ stat: <
 #endif
         public void VisitWebPageSpeedTestTest(string url)
         {
-            var r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, 1024 * 1024, -1);
+            var r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, 10 * 1024, -1);
             var time = r.Item1;
             Assert.AreEqual(SpeedtestTimeout, time);
 
@@ -246,7 +246,8 @@ stat: <
 
             r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, -1, -1);
             time = r.Item1;
-            Assert.AreEqual(true, time < SpeedtestTimeout);
+            var ok = time < SpeedtestTimeout && time > 60 && r.Item2 > 100 * 1024;
+            Assert.IsTrue(ok);
         }
 
         [DataTestMethod]

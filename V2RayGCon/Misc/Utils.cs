@@ -895,71 +895,42 @@ namespace V2RayGCon.Misc
 
         static bool DownloadFileWorker(string url, string filename, int proxyPort, int timeout)
         {
-            var success = true;
-            if (timeout <= 0)
+            var success = false;
+
+            timeout = timeout > 0 ? timeout : VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
+            if (!VgcApis.Misc.Utils.IsHttpLink(url))
             {
-                timeout = VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
+                url = VgcApis.Misc.Utils.RelativePath2FullPath(url);
+                proxyPort = -1;
             }
 
-            WebClient wc = new WebClient();
-            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
+            var dlCompleted = new AutoResetEvent(false);
 
-            if (proxyPort > 0 && proxyPort < 65536)
-            {
-                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, proxyPort);
-            }
+            var wc = VgcApis.Misc.Utils.CreateWebClient(proxyPort);
 
-            AutoResetEvent dlCompleted = new AutoResetEvent(false);
             wc.DownloadFileCompleted += (s, a) =>
             {
-                if (a.Cancelled)
+                if (!a.Cancelled)
                 {
-                    success = false;
+                    success = true;
                 }
                 dlCompleted.Set();
             };
 
             try
             {
-                if (!VgcApis.Misc.Utils.IsHttpLink(url))
-                {
-                    url = VgcApis.Misc.Utils.RelativePath2FullPath(url);
-                }
-
                 wc.DownloadFileAsync(new Uri(url), filename);
+                dlCompleted.WaitOne(timeout);
+            }
+            catch { }
 
-                // 收到信号为True
-                if (!dlCompleted.WaitOne(timeout))
-                {
-                    success = false;
-                    wc.CancelAsync();
-                }
-            }
-            catch
-            {
-                success = false;
-            }
-            finally
-            {
-                wc.Dispose();
-            }
+            wc.CancelAsync();
+
             return success;
         }
 
         public static bool DownloadFile(string url, string filename, int proxyPort, int timeout) =>
             DownloadFileWorker(url, filename, proxyPort, timeout);
-
-        public static WebClient CreateWebClient(int proxyPort)
-        {
-            WebClient wc = new WebClient { Encoding = Encoding.UTF8, };
-
-            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
-            if (proxyPort > 0 && proxyPort < 65536)
-            {
-                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, proxyPort);
-            }
-            return wc;
-        }
 
         /// <summary>
         /// Download through http://127.0.0.1:proxyPort. Return string.Empty if sth. goes wrong.
@@ -972,52 +943,34 @@ namespace V2RayGCon.Misc
         {
             var html = string.Empty;
 
-            if (timeout <= 0)
-            {
-                timeout = VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
-            }
+            timeout = timeout > 0 ? timeout : VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
 
-            WebClient wc = null;
             if (!VgcApis.Misc.Utils.IsHttpLink(url))
             {
                 url = VgcApis.Misc.Utils.RelativePath2FullPath(url);
-                wc = CreateWebClient(-1);
+                proxyPort = -1;
             }
-            else
-            {
-                wc = CreateWebClient(proxyPort);
-            }
+            var dlCompleted = new AutoResetEvent(false);
 
-            AutoResetEvent dlCompleted = new AutoResetEvent(false);
+            var wc = VgcApis.Misc.Utils.CreateWebClient(proxyPort);
+
             wc.DownloadStringCompleted += (s, a) =>
             {
-                try
+                if (!a.Cancelled)
                 {
-                    if (!a.Cancelled)
-                    {
-                        html = a.Result.ToString();
-                    }
+                    html = a.Result.ToString();
                 }
-                catch { }
-
                 dlCompleted.Set();
-                (s as WebClient)?.Dispose();
             };
 
             try
             {
                 wc.DownloadStringAsync(new Uri(url));
-                // 收到信号为True
-                if (!dlCompleted.WaitOne(timeout))
-                {
-                    wc.CancelAsync();
-                }
+                dlCompleted.WaitOne(timeout);
             }
-            catch
-            {
-                // network operation always buggy.
-                wc.CancelAsync();
-            }
+            catch { }
+
+            wc.CancelAsync();
             return html;
         }
 

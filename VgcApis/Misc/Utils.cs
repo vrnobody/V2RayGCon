@@ -839,7 +839,7 @@ namespace VgcApis.Misc
                 }
                 if (size > expectedBytes && expectedBytes >= 0)
                 {
-                    wc.CancelAsync();
+                    CancelWebClientAsync(wc);
                 }
             };
 
@@ -851,15 +851,23 @@ namespace VgcApis.Misc
             }
             catch { }
             sw.Stop();
-            wc.CancelAsync();
+            CancelWebClientAsync(wc);
 
-            var r = Models.Consts.Core.SpeedtestTimeout;
             var time = sw.ElapsedMilliseconds;
-            if (time <= timeout && size > 0 && size > expectedBytes)
+            if (!(time <= timeout && size > 0 && size > expectedBytes))
             {
-                r = time;
+                time = Models.Consts.Core.SpeedtestTimeout;
             }
-            return new Tuple<long, long>(r, size);
+            return new Tuple<long, long>(time, size);
+        }
+
+        public static void CancelWebClientAsync(WebClient webClient)
+        {
+            try
+            {
+                webClient?.CancelAsync();
+            }
+            catch { }
         }
 
         public static bool IsValidPort(string port)

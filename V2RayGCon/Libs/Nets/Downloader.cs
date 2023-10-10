@@ -105,7 +105,7 @@ namespace V2RayGCon.Libs.Nets
 
         public void Cancel()
         {
-            webClient?.CancelAsync();
+            VgcApis.Misc.Utils.CancelWebClientAsync(webClient);
         }
         #endregion
 

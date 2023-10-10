@@ -141,7 +141,7 @@ namespace V2RayGCon.Views.Updater
         {
             if (VgcApis.Misc.UI.Confirm(I18N.CancelDownload))
             {
-                webClient.CancelAsync();
+                VgcApis.Misc.Utils.CancelWebClientAsync(webClient);
             }
         }
         #endregion

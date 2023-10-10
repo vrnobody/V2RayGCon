@@ -924,7 +924,7 @@ namespace V2RayGCon.Misc
             }
             catch { }
 
-            wc.CancelAsync();
+            VgcApis.Misc.Utils.CancelWebClientAsync(wc);
 
             return success;
         }
@@ -958,7 +958,12 @@ namespace V2RayGCon.Misc
             {
                 if (!a.Cancelled)
                 {
-                    html = a.Result.ToString();
+                    try
+                    {
+                        // 如果下载过程中遇到错误，a.Result会调用RaiseExceptionIfNecessary()抛出异常
+                        html = a.Result.ToString();
+                    }
+                    catch { }
                 }
                 dlCompleted.Set();
             };
@@ -970,7 +975,7 @@ namespace V2RayGCon.Misc
             }
             catch { }
 
-            wc.CancelAsync();
+            VgcApis.Misc.Utils.CancelWebClientAsync(wc);
             return html;
         }
 

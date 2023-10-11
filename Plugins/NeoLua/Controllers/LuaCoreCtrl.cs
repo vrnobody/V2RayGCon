@@ -280,6 +280,8 @@ namespace NeoLuna.Controllers
                     sb.AppendLine(Resources.Files.Datas.LuaPredefinedFunctions);
                     sb.AppendLine(script);
                     var src = sb.ToString();
+                    var dotDotDot = new KeyValuePair<string, Type>("...", typeof(object[]));
+                    var emptyArgs = new object[] { new object[] { } };
 
                     var chunk = core.CompileChunk(
                         src,
@@ -290,10 +292,11 @@ namespace NeoLuna.Controllers
                             DebugEngine = enableTracebackFeature
                                 ? LuaStackTraceDebugger.Default
                                 : null,
-                        }
+                        },
+                        dotDotDot
                     );
 
-                    var results = g.DoChunk(chunk);
+                    var results = g.DoChunk(chunk, emptyArgs);
                     if (results != null && results.Count > 0)
                     {
                         result = results[0].ToString();

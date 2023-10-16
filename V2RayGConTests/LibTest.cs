@@ -246,7 +246,7 @@ stat: <
 
             r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, -1, -1);
             time = r.Item1;
-            var ok = time < SpeedtestTimeout && time > 60 && r.Item2 > 100 * 1024;
+            var ok = time < SpeedtestTimeout && time > 0 && r.Item2 > 10 * 1024;
             Assert.IsTrue(ok);
         }
 

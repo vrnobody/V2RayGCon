@@ -357,6 +357,9 @@ namespace NeoLuna.Interfaces
         #endregion
 
         #region encode decode
+
+        string DetectConfigType(string config);
+
         bool IsCompressedBase64(string str);
 
         string CompressToBase64(string str);

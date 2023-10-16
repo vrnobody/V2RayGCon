@@ -164,6 +164,11 @@ namespace NeoLuna.Models.Apis.Components
         #endregion
 
         #region other ILuaMisc stuff
+        public string DetectConfigType(string config)
+        {
+            return VgcApis.Misc.Utils.DetectConfigType(config).ToString();
+        }
+
         public void Log(string message) => settings.SendLog(message);
 
         public string GetLogAsString()

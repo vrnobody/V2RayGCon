@@ -237,7 +237,7 @@ namespace V2RayGCon.Services
                 servers.RequireFormMainReload();
             }
 
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
                 Views.WinForms.FormImportLinksResult.ShowResult(results);
             });

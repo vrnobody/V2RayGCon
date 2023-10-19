@@ -23,7 +23,7 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            VgcApis.Misc.Utils.RunInBackground(() => Update(!isShowErrorUsingMessageBox));
+            VgcApis.Misc.Utils.RunInBgSlim(() => Update(!isShowErrorUsingMessageBox));
         }
 
         public void Run(Settings setting, Servers servers)

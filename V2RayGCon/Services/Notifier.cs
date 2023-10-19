@@ -166,7 +166,7 @@ namespace V2RayGCon.Services
             {
                 if (hkContexts.TryGetValue(keyMsg, out var context))
                 {
-                    VgcApis.Misc.Utils.RunInBackground(() =>
+                    VgcApis.Misc.Utils.RunInBgSlim(() =>
                     {
                         try
                         {
@@ -409,7 +409,7 @@ namespace V2RayGCon.Services
             {
                 if (next != null)
                 {
-                    VgcApis.Misc.Utils.RunInBackground(next);
+                    VgcApis.Misc.Utils.RunInBgSlim(next);
                 }
             }
 

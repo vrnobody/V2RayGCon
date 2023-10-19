@@ -332,7 +332,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                     return;
                 }
 
-                VgcApis.Misc.Utils.RunInBackground(() =>
+                VgcApis.Misc.Utils.RunInBgSlim(() =>
                 {
                     var links = Misc.Utils.FetchLinksFromSubcriptions(
                         subs,

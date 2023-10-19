@@ -37,7 +37,7 @@ namespace NeoLuna.Services
                 return;
             }
 
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
                 VgcApis.Misc.Utils.Sleep(delay);
                 foreach (var core in list)

@@ -1145,7 +1145,7 @@ namespace V2RayGCon.Services
                 coreServ.GetCoreCtrl().RunSpeedTestThen();
             }
 
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
                 while (setting.SpeedtestCounter > 0)
                 {
@@ -1275,7 +1275,7 @@ namespace V2RayGCon.Services
             var list = queryHandler.GetAllServers();
 
             var count = list.Count;
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
                 var taskList = new List<Task>();
                 for (int i = 0; i < round; i++)

@@ -531,12 +531,12 @@ namespace VgcApis.Misc
 
         public static void MsgBoxAsync(string content)
         {
-            Utils.RunInBackground(() => MsgBox(content));
+            Utils.RunInBgSlim(() => MsgBox(content));
         }
 
         public static void MsgBoxAsync(string title, string content)
         {
-            Utils.RunInBackground(() => MsgBox(title, content));
+            Utils.RunInBgSlim(() => MsgBox(title, content));
         }
 
         public static bool Confirm(string content)

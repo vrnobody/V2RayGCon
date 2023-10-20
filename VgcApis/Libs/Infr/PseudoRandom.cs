@@ -11,32 +11,18 @@ namespace VgcApis.Libs.Infr
     public static class PseudoRandom
     {
         // Global seed generator
-        private static readonly RNGCryptoServiceProvider global;
+        private static readonly RNGCryptoServiceProvider crnd;
 
-        // Thread-local pseudo-random generator
-        [ThreadStatic]
-        private static Random local;
-
-        // Gets or initializes a thread-local Random instance.
-        private static Random Local
-        {
-            get
-            {
-                Random random = local;
-                if (random == null)
-                {
-                    byte[] buffer = new byte[4];
-                    global.GetBytes(buffer);
-                    int seed = BitConverter.ToInt32(buffer, 0);
-                    random = local = new Random(seed);
-                }
-                return random;
-            }
-        }
+        private static readonly Random rnd;
 
         static PseudoRandom()
         {
-            global = new RNGCryptoServiceProvider();
+            crnd = new RNGCryptoServiceProvider();
+
+            byte[] buffer = new byte[4];
+            crnd.GetBytes(buffer);
+            int seed = BitConverter.ToInt32(buffer, 0);
+            rnd = new Random(seed);
         }
 
         /// <summary>
@@ -44,7 +30,10 @@ namespace VgcApis.Libs.Infr
         /// </summary>
         public static int Next()
         {
-            return Local.Next();
+            lock (rnd)
+            {
+                return rnd.Next();
+            }
         }
 
         /// <summary>
@@ -52,7 +41,10 @@ namespace VgcApis.Libs.Infr
         /// </summary>
         public static int Next(int maxValue)
         {
-            return Local.Next(maxValue);
+            lock (rnd)
+            {
+                return rnd.Next(maxValue);
+            }
         }
 
         /// <summary>
@@ -60,7 +52,10 @@ namespace VgcApis.Libs.Infr
         /// </summary>
         public static int Next(int minValue, int maxValue)
         {
-            return Local.Next(minValue, maxValue);
+            lock (rnd)
+            {
+                return rnd.Next(minValue, maxValue);
+            }
         }
 
         /// <summary>
@@ -68,7 +63,10 @@ namespace VgcApis.Libs.Infr
         /// </summary>
         public static double NextDouble()
         {
-            return Local.NextDouble();
+            lock (rnd)
+            {
+                return rnd.NextDouble();
+            }
         }
 
         /// <summary>
@@ -84,7 +82,10 @@ namespace VgcApis.Libs.Infr
         /// </summary>
         public static double NextDouble(double minValue, double maxValue)
         {
-            return Local.NextDouble() * (maxValue - minValue) + minValue;
+            lock (rnd)
+            {
+                return rnd.NextDouble() * (maxValue - minValue) + minValue;
+            }
         }
     }
 }

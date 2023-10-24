@@ -499,9 +499,6 @@ namespace V2RayGCon.Libs.V2Ray
                 {
                     proc.ErrorDataReceived -= SendLogHandler;
                     proc.OutputDataReceived -= SendLogHandler;
-
-                    proc.CancelOutputRead();
-                    proc.CancelErrorRead();
                 };
 
                 proc.ErrorDataReceived += SendLogHandler;

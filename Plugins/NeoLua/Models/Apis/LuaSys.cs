@@ -1533,8 +1533,6 @@ namespace NeoLuna.Models.Apis
                 {
                     p.ErrorDataReceived -= logHandler;
                     p.OutputDataReceived -= logHandler;
-                    p.CancelOutputRead();
-                    p.CancelErrorRead();
                 };
 
                 p.ErrorDataReceived += logHandler;

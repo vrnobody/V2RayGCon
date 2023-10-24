@@ -11,6 +11,10 @@ namespace DyFetch.Comps
         public StringWriter(Stream stream)
         {
             this.stream = stream;
+            if (stream.CanTimeout)
+            {
+                stream.WriteTimeout = 10 * 60 * 1000;
+            }
         }
 
         #region private methods

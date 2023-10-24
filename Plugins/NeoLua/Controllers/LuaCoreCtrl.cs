@@ -266,7 +266,7 @@ namespace NeoLuna.Controllers
             result = null;
 
             luaSys?.Dispose();
-            luaSys = new Models.Apis.LuaSys(this, luaApis, GetAllAssemblies);
+            luaSys = new Models.Apis.LuaSys(luaApis, GetAllAssemblies);
 
             luaSignal.ResetAllSignals();
 

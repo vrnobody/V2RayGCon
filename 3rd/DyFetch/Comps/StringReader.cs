@@ -11,6 +11,10 @@ namespace DyFetch.Comps
         public StringReader(Stream stream)
         {
             this.stream = stream;
+            if (stream.CanTimeout)
+            {
+                stream.ReadTimeout = 10 * 60 * 1000;
+            }
         }
 
         #region private methods

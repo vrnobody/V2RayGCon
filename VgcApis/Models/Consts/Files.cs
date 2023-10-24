@@ -2,6 +2,8 @@
 {
     public static class Files
     {
+        public static readonly int StreamDefaultTimeout = 10 * 60 * 1000;
+
         public static readonly string LibsDir = "libs";
 
         public static readonly string PluginsDir = "3rd\\plugins";

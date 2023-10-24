@@ -11,6 +11,10 @@ namespace VgcApis.Libs.Streams
         public StringWriter(Stream stream)
         {
             this.stream = stream;
+            if (stream.CanTimeout)
+            {
+                stream.WriteTimeout = Models.Consts.Files.StreamDefaultTimeout;
+            }
         }
 
         #region private methods

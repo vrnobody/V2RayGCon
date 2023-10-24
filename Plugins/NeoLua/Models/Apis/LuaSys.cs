@@ -76,7 +76,6 @@ namespace NeoLuna.Models.Apis
     internal class LuaSys : VgcApis.BaseClasses.Disposable, Interfaces.ILuaSys
     {
         readonly object procLocker = new object();
-        private readonly LuaCoreCtrl luaCoreCtrl;
         private readonly LuaApis luaApis;
         private readonly Func<List<Type>> getAllAssemblies;
         readonly List<Process> processes = new List<Process>();
@@ -100,9 +99,8 @@ namespace NeoLuna.Models.Apis
         readonly Services.LuaServer luaServer;
         readonly Services.AstServer astServer;
 
-        public LuaSys(LuaCoreCtrl luaCoreCtrl, LuaApis luaApis, Func<List<Type>> getAllAssemblies)
+        public LuaSys(LuaApis luaApis, Func<List<Type>> getAllAssemblies)
         {
-            this.luaCoreCtrl = luaCoreCtrl;
             this.luaApis = luaApis;
             this.getAllAssemblies = getAllAssemblies;
             this.postOffice = luaApis.GetPostOffice();
@@ -1535,6 +1533,8 @@ namespace NeoLuna.Models.Apis
                 {
                     p.ErrorDataReceived -= logHandler;
                     p.OutputDataReceived -= logHandler;
+                    p.CancelOutputRead();
+                    p.CancelErrorRead();
                 };
 
                 p.ErrorDataReceived += logHandler;
@@ -1588,7 +1588,6 @@ namespace NeoLuna.Models.Apis
                     if (!p.HasExited)
                     {
                         p.Kill();
-                        // VgcApis.Misc.Utils.KillProcessAndChildrens(p.Id);
                     }
                 }
                 catch { }

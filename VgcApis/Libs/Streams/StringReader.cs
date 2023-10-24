@@ -11,6 +11,10 @@ namespace VgcApis.Libs.Streams
         public StringReader(Stream stream)
         {
             this.stream = stream;
+            if (stream.CanTimeout)
+            {
+                stream.ReadTimeout = Models.Consts.Files.StreamDefaultTimeout;
+            }
         }
 
         #region private methods

@@ -495,6 +495,15 @@ namespace V2RayGCon.Libs.V2Ray
                     proc.Exited += OnCoreExited;
                 }
 
+                proc.Exited += (s, a) =>
+                {
+                    proc.ErrorDataReceived -= SendLogHandler;
+                    proc.OutputDataReceived -= SendLogHandler;
+
+                    proc.CancelOutputRead();
+                    proc.CancelErrorRead();
+                };
+
                 proc.ErrorDataReceived += SendLogHandler;
                 proc.OutputDataReceived += SendLogHandler;
             }

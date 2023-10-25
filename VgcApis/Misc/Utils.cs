@@ -224,6 +224,7 @@ namespace VgcApis.Misc
             Encoding encoding
         )
         {
+            var r = string.Empty;
             var p = CreateHeadlessProcess(exeFileName, args, encoding);
             try
             {
@@ -232,10 +233,11 @@ namespace VgcApis.Misc
                 {
                     p.Kill();
                 }
-                return p.StandardOutput.ReadToEnd() ?? string.Empty;
+                r = p.StandardOutput.ReadToEnd() ?? string.Empty;
             }
             catch { }
-            return string.Empty;
+            p?.Dispose();
+            return r;
         }
 
         public static bool IsAdmin()
@@ -816,6 +818,7 @@ namespace VgcApis.Misc
             wc.DownloadStringCompleted += (s, a) =>
             {
                 dlCompleted.Set();
+                (s as WebClient)?.Dispose();
             };
 
             wc.DownloadProgressChanged += (s, a) =>
@@ -1038,38 +1041,6 @@ namespace VgcApis.Misc
             sendCtrlCLocker.Set();
 
             return success;
-        }
-
-        public static void KillProcessAndChildrens(int pid)
-        {
-            ManagementObjectSearcher processSearcher = new ManagementObjectSearcher(
-                "Select * From Win32_Process Where ParentProcessID=" + pid
-            );
-            ManagementObjectCollection processCollection = processSearcher.Get();
-
-            // We must kill child processes first!
-            if (processCollection != null)
-            {
-                foreach (ManagementObject mo in processCollection)
-                {
-                    KillProcessAndChildrens(Convert.ToInt32(mo["ProcessID"])); //kill child processes(also kills childrens of childrens etc.)
-                }
-            }
-
-            // Then kill parents.
-            try
-            {
-                Process proc = Process.GetProcessById(pid);
-                if (!proc.HasExited)
-                {
-                    proc.Kill();
-                    proc.WaitForExit(1000);
-                }
-            }
-            catch
-            {
-                // Process already exited.
-            }
         }
 
         public static Task RunInBgSlim(Action worker)

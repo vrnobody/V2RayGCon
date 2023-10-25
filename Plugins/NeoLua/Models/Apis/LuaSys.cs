@@ -931,7 +931,7 @@ namespace NeoLuna.Models.Apis
 
         public void WaitForExit(Process proc) => proc?.WaitForExit();
 
-        public void Cleanup(Process proc) => proc?.Close();
+        public void Cleanup(Process proc) => proc?.Dispose();
 
         public void Kill(Process proc)
         {

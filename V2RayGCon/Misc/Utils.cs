@@ -915,6 +915,7 @@ namespace V2RayGCon.Misc
                     success = true;
                 }
                 dlCompleted.Set();
+                (s as WebClient)?.Dispose();
             };
 
             try
@@ -966,6 +967,7 @@ namespace V2RayGCon.Misc
                     catch { }
                 }
                 dlCompleted.Set();
+                (s as WebClient)?.Dispose();
             };
 
             try

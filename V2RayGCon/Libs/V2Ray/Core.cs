@@ -269,19 +269,16 @@ namespace V2RayGCon.Libs.V2Ray
         void StopCoreIgnoreError(Process core)
         {
             this.coreProc = null;
-
-            if (!IsProcRunning(core))
-            {
-                return;
-            }
-
-            try
+            if (IsProcRunning(core))
             {
                 isForcedExit = true;
-                core?.Kill();
-                core?.WaitForExit();
+                try
+                {
+                    core?.Kill();
+                    core?.WaitForExit();
+                }
+                catch { }
             }
-            catch { }
             VgcApis.Misc.Utils.Sleep(500);
         }
 
@@ -463,17 +460,14 @@ namespace V2RayGCon.Libs.V2Ray
             {
                 // Process.ExitCode may throw exceptions
                 msg = TranslateErrorCode(core.ExitCode);
-
-                // Close() could invoke CoreExit event
-                core.Close();
             }
             catch { }
+            core.Dispose();
 
             SendLog($"{I18N.ConcurrentV2RayCoreNum}{curConcurrentV2RayCoreNum}");
             SendLog(I18N.CoreExit);
 
             // do not run in background
-            // VgcApis.Misc.Utils.RunInBackground(() => InvokeEventOnCoreStatusChanged());
             InvokeEventOnCoreStatusChanged();
 
             if (!quiet && !string.IsNullOrEmpty(msg))
@@ -569,7 +563,7 @@ namespace V2RayGCon.Libs.V2Ray
             var input = proc.StandardInput;
             var buff = encoding.GetBytes(config);
             input.BaseStream.Write(buff, 0, buff.Length);
-            input.WriteLine();
+            input.Flush();
             input.Close();
         }
 

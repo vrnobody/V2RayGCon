@@ -1227,7 +1227,7 @@ namespace NeoLuna.Models.Apis
         {
             try
             {
-                File.WriteAllText(file, string.Empty);
+                VgcApis.Misc.Utils.ClearFile(file);
                 return true;
             }
             catch { }

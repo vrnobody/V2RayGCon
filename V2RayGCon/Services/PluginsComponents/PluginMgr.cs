@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -154,7 +154,7 @@ namespace V2RayGCon.Services.PluginsComponents
         {
             if (filename == "Luna")
             {
-                // ²»ÒªËÑË÷libsÄ¿Â¼µÄLuna.dll£¬ÄÇ¸ö°æ±¾²»¼æÈİ
+                // ä¸è¦æœç´¢libsç›®å½•çš„Luna.dllï¼Œé‚£ä¸ªç‰ˆæœ¬ä¸å…¼å®¹
                 var file = Path.Combine(VgcApis.Models.Consts.Files.PluginsDir, "Luna.dll");
                 if (File.Exists(file))
                 {
@@ -190,8 +190,8 @@ namespace V2RayGCon.Services.PluginsComponents
             var iName = nameof(VgcApis.Interfaces.IPlugin);
             try
             {
-                // ²»ÒªÓÃFile.ReadAllBytes()È»ºóAssembly.Load(bytes)
-                // ¶à´Î¼ÓÔØÏàÍ¬²å¼şÊ±£¬¶ÔÏóÃû³ÆºóÃæ»á¶à¸ö"_2"
+                // ä¸è¦ç”¨File.ReadAllBytes()ç„¶åAssembly.Load(bytes)
+                // å¤šæ¬¡åŠ è½½ç›¸åŒæ’ä»¶æ—¶ï¼Œå¯¹è±¡åç§°åé¢ä¼šå¤šä¸ª"_2"
                 var assembly = Assembly.LoadFrom(dllFile);
                 foreach (var ty in assembly.GetExportedTypes())
                 {
@@ -299,26 +299,26 @@ namespace V2RayGCon.Services.PluginsComponents
             {
                 if (disposing)
                 {
-                    // TODO: ÊÍ·ÅÍĞ¹Ü×´Ì¬(ÍĞ¹Ü¶ÔÏó)
+                    // TODO: é‡Šæ”¾æ‰˜ç®¡çŠ¶æ€(æ‰˜ç®¡å¯¹è±¡)
                     Cleanup();
                 }
 
-                // TODO: ÊÍ·ÅÎ´ÍĞ¹ÜµÄ×ÊÔ´(Î´ÍĞ¹ÜµÄ¶ÔÏó)²¢ÖØĞ´ÖÕ½áÆ÷
-                // TODO: ½«´óĞÍ×Ö¶ÎÉèÖÃÎª null
+                // TODO: é‡Šæ”¾æœªæ‰˜ç®¡çš„èµ„æº(æœªæ‰˜ç®¡çš„å¯¹è±¡)å¹¶é‡å†™ç»ˆç»“å™¨
+                // TODO: å°†å¤§å‹å­—æ®µè®¾ç½®ä¸º null
                 disposedValue = true;
             }
         }
 
-        // // TODO: ½öµ±¡°Dispose(bool disposing)¡±ÓµÓĞÓÃÓÚÊÍ·ÅÎ´ÍĞ¹Ü×ÊÔ´µÄ´úÂëÊ±²ÅÌæ´úÖÕ½áÆ÷
+        // // TODO: ä»…å½“â€œDispose(bool disposing)â€æ‹¥æœ‰ç”¨äºé‡Šæ”¾æœªæ‰˜ç®¡èµ„æºçš„ä»£ç æ—¶æ‰æ›¿ä»£ç»ˆç»“å™¨
         // ~PluginCache()
         // {
-        //     // ²»Òª¸ü¸Ä´Ë´úÂë¡£Çë½«ÇåÀí´úÂë·ÅÈë¡°Dispose(bool disposing)¡±·½·¨ÖĞ
+        //     // ä¸è¦æ›´æ”¹æ­¤ä»£ç ã€‚è¯·å°†æ¸…ç†ä»£ç æ”¾å…¥â€œDispose(bool disposing)â€æ–¹æ³•ä¸­
         //     Dispose(disposing: false);
         // }
 
         public void Dispose()
         {
-            // ²»Òª¸ü¸Ä´Ë´úÂë¡£Çë½«ÇåÀí´úÂë·ÅÈë¡°Dispose(bool disposing)¡±·½·¨ÖĞ
+            // ä¸è¦æ›´æ”¹æ­¤ä»£ç ã€‚è¯·å°†æ¸…ç†ä»£ç æ”¾å…¥â€œDispose(bool disposing)â€æ–¹æ³•ä¸­
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }

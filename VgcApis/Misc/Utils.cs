@@ -319,10 +319,7 @@ namespace VgcApis.Misc
         {
             using (FileStream fs = File.Open(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
-                lock (fs)
-                {
-                    fs.SetLength(0);
-                }
+                fs.SetLength(0);
             }
         }
 
@@ -346,19 +343,13 @@ namespace VgcApis.Misc
                 return url;
             }
 
-            using (var file = File.OpenText(filename))
+            int numberSeen = 0;
+            var lines = File.ReadLines(filename);
+            foreach (var line in lines)
             {
-                int numberSeen = 0;
-                var lines = File.ReadLines(filename);
-                foreach (var line in lines)
+                if (!string.IsNullOrEmpty(line) && Libs.Infr.PseudoRandom.Next(++numberSeen) == 0)
                 {
-                    if (
-                        !string.IsNullOrEmpty(line)
-                        && Libs.Infr.PseudoRandom.Next(++numberSeen) == 0
-                    )
-                    {
-                        url = line;
-                    }
+                    url = line;
                 }
             }
 

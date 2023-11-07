@@ -69,7 +69,6 @@ WinFormUI
 <b>WebUI引用到的包</b>  
 [ajaxorg/ace](https://github.com/ajaxorg/ace) 代码编辑器  
 [anish2690/vue-draggable-next](https://github.com/anish2690/vue-draggable-next) 拖放排序  
-[EHfive/v2ray-jsonschema](https://github.com/EHfive/v2ray-jsonschema) config.json自动补全  
 [HENNGE/vue3-pagination](https://github.com/HENNGE/vue3-pagination) 分页  
 [neocotic/qrious](https://github.com/neocotic/qrious) 二维码生成  
 [selimdoyranli/v-dropdown-menu](https://github.com/selimdoyranli/v-dropdown-menu) 弹出式菜单  

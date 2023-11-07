@@ -17,7 +17,7 @@ namespace VgcApis.Interfaces
         #region IConfiger
         new Models.Datas.InboundInfo GetInboundInfo();
 
-        new JObject GetFinalConfig();
+        new string GetFinalConfig();
         new string GetRawConfig();
         new string GetConfig();
         new string GetShareLink();

@@ -1,16 +1,8 @@
 {
-  "version": "1.8.6.0",
-  "md5": "9858A123CBA99FF6F74E15B80E8F5527",
-  "warnings": [
-    "备份！备份！备份！",
-    "先备份userSettings.json再升级！"
-  ],
+  "version": "1.8.7.0",
+  "md5": "09991ED7ECE0D899A61A5D3630132A04",
+  "warnings": [],
   "changes": [
-    "删除userSettings.json里面一些过时的配置项",
-    "Text编辑器里面添加简单编辑器",
-    "选项窗口Inbounds分页改名为模板分页",
-    "自定义core添加 环境变量 和 测速模板 配置项",
-    "提高主窗口响应速度",
-    "减少并发测速时线程占用数"
+    "更新至WebUI v1.0"
   ]
 }

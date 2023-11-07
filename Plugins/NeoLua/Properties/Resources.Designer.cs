@@ -140,7 +140,7 @@ namespace NeoLuna.Properties {
         }
         
         /// <summary>
-        ///   查找类似 0.0.4 的本地化字符串。
+        ///   查找类似 0.0.5 的本地化字符串。
         /// </summary>
         internal static string Version {
             get {

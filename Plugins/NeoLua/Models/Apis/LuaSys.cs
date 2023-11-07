@@ -1215,8 +1215,7 @@ namespace NeoLuna.Models.Apis
         {
             try
             {
-                text = VgcApis.Misc.Utils.FilterControlChars(text);
-                File.AppendAllText(file, text);
+                File.WriteAllText(file, text);
                 return true;
             }
             catch { }

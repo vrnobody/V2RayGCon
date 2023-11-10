@@ -47,7 +47,6 @@ namespace V2RayGCon.Views.UserControls
             var tag = "";
             tag += coreSettings.useFile ? "F" : "";
             tag += coreSettings.useStdin ? "I" : "";
-            tag += coreSettings.isSock5SpeedtestConfigTemplate ? "S" : "";
             tag += coreSettings.setWorkingDir ? "W" : "";
 
             rlbBinding.Text = tag;

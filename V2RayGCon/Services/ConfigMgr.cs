@@ -61,7 +61,7 @@ namespace V2RayGCon.Services
                 core.RestartCoreIgnoreError(sci.config);
                 if (core.WaitUntilReady())
                 {
-                    text = Misc.Utils.FetchWorker(sci.isSocks5, url, port, timeout);
+                    text = Misc.Utils.Fetch(url, port, timeout, sci.isSocks5);
                 }
                 core.StopCore();
             }
@@ -350,15 +350,14 @@ namespace V2RayGCon.Services
             }
 
             var coreS = setting.GetCustomCoresSetting().FirstOrDefault(cs => cs.name == coreName);
-            var isSocks5 = coreS?.isSock5SpeedtestConfigTemplate ?? false;
-
             var inbS = setting
                 .GetCustomConfigTemplates()
                 .FirstOrDefault(inb => inb.name == coreS?.speedtestConfigTemplateName);
+
             if (inbS != null)
             {
                 return new Models.Datas.SpeedTestConfigInfos(
-                    isSocks5,
+                    inbS.isSocks5Inbound,
                     inbS.MergeToConfig(rawConfig, port)
                 );
             }
@@ -384,7 +383,7 @@ namespace V2RayGCon.Services
 
             // debug
             var r = VgcApis.Misc.Utils.FormatConfig(json);
-            return new Models.Datas.SpeedTestConfigInfos(isSocks5, r);
+            return new Models.Datas.SpeedTestConfigInfos(false, r);
         }
 
         void ShowCurrentSpeedtestResult(

@@ -34,6 +34,7 @@ namespace V2RayGCon.Views.WinForms
                 name = tboxName.Text,
                 template = rtboxTemplate.Text,
                 jsonArrMergeOption = cboxMergeOption.Text,
+                isSocks5Inbound = chkIsSocks5Inbound.Checked,
             };
             return cs;
         }
@@ -42,6 +43,7 @@ namespace V2RayGCon.Views.WinForms
         {
             tboxName.Text = inbS.name;
             rtboxTemplate.Text = inbS.template;
+            chkIsSocks5Inbound.Checked = inbS.isSocks5Inbound;
 
             var opts = CustomConfigTemplate.GetJsonArrayMergeOptions();
             cboxMergeOption.Items.AddRange(opts.ToArray());

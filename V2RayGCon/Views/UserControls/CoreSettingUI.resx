@@ -223,13 +223,13 @@
     <value>2</value>
   </data>
   <data name="rlbBinding.Text" xml:space="preserve">
-    <value>FISW</value>
+    <value>FIW</value>
   </data>
   <data name="rlbBinding.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
   </data>
   <data name="rlbBinding.ToolTip" xml:space="preserve">
-    <value>(F)ile STD(I)N (S)OCKS5 (W)orking dir</value>
+    <value>(F)ile STD(I)N (W)orking dir</value>
   </data>
   <data name="&gt;&gt;rlbBinding.Name" xml:space="preserve">
     <value>rlbBinding</value>

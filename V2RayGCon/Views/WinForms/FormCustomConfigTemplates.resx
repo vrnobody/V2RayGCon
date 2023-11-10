@@ -146,6 +146,9 @@
   <data name="rtboxTemplate.Size" type="System.Drawing.Size, System.Drawing">
     <value>335, 201</value>
   </data>
+  <data name="chkIsSocks5Inbound.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -153,7 +156,7 @@
     <value>$this</value>
   </data>
   <data name="cboxMergeOption.Size" type="System.Drawing.Size, System.Drawing">
-    <value>335, 20</value>
+    <value>269, 20</value>
   </data>
   <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
@@ -198,8 +201,11 @@
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="chkIsSocks5Inbound.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
   <data name="&gt;&gt;cboxMergeOption.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;btnSave.Parent" xml:space="preserve">
     <value>$this</value>
@@ -217,7 +223,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;chkIsSocks5Inbound.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="btnFormat.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom</value>
@@ -232,7 +241,7 @@
     <value>29, 12</value>
   </data>
   <data name="&gt;&gt;btnTest.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -246,17 +255,20 @@
   <data name="&gt;&gt;label2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="btnCancel.ToolTip" xml:space="preserve">
-    <value />
+  <data name="chkIsSocks5Inbound.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 16</value>
   </data>
   <data name="rtboxTemplate.Text" xml:space="preserve">
     <value />
+  </data>
+  <data name="chkIsSocks5Inbound.Text" xml:space="preserve">
+    <value>SOCKS5</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 12</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;rtboxTemplate.Name" xml:space="preserve">
     <value>rtboxTemplate</value>
@@ -306,6 +318,9 @@
   <data name="btnTest.Text" xml:space="preserve">
     <value>Test</value>
   </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormCustomConfigTemplates</value>
+  </data>
   <data name="btnCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom</value>
   </data>
@@ -337,7 +352,7 @@
     <value>True</value>
   </data>
   <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="btnTest.Location" type="System.Drawing.Point, System.Drawing">
     <value>139, 275</value>
@@ -351,20 +366,29 @@
   <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <data name="chkIsSocks5Inbound.Location" type="System.Drawing.Point, System.Drawing">
+    <value>358, 41</value>
+  </data>
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
   </data>
   <data name="&gt;&gt;btnSave.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="btnSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom</value>
   </data>
   <data name="&gt;&gt;tboxName.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;chkIsSocks5Inbound.Name" xml:space="preserve">
+    <value>chkIsSocks5Inbound</value>
   </data>
   <data name="rtboxTemplate.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="chkIsSocks5Inbound.ToolTip" xml:space="preserve">
+    <value>Use SOCKS5 protocol while speedtesting.</value>
   </data>
   <data name="btnSave.Location" type="System.Drawing.Point, System.Drawing">
     <value>58, 275</value>
@@ -376,7 +400,7 @@
     <value>Custom config template</value>
   </data>
   <data name="&gt;&gt;btnFormat.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>Merge opt.</value>
@@ -389,6 +413,9 @@
   </data>
   <data name="&gt;&gt;btnSave.Name" xml:space="preserve">
     <value>btnSave</value>
+  </data>
+  <data name="&gt;&gt;backgroundWorker1.Type" xml:space="preserve">
+    <value>System.ComponentModel.BackgroundWorker, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="btnTest.ToolTip" xml:space="preserve">
     <value />
@@ -423,17 +450,29 @@
   <data name="&gt;&gt;tboxName.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;rtboxTemplate.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="btnCancel.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FormCustomConfigTemplates</value>
+  <data name="&gt;&gt;backgroundWorker1.Name" xml:space="preserve">
+    <value>backgroundWorker1</value>
+  </data>
+  <data name="&gt;&gt;rtboxTemplate.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;chkIsSocks5Inbound.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;chkIsSocks5Inbound.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="btnFormat.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
+  <data name="chkIsSocks5Inbound.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="&gt;&gt;btnFormat.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -447,10 +486,13 @@
   <data name="label1.Text" xml:space="preserve">
     <value>Name</value>
   </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+  <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>118, 17</value>
   </metadata>
 </root>

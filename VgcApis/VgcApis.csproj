@@ -41,9 +41,6 @@
     <Reference Include="HtmlAgilityPack, Version=1.11.51.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.51\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="MihaZupan.HttpToSocks5Proxy, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HttpToSocks5Proxy.1.4.0\lib\net45\MihaZupan.HttpToSocks5Proxy.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -200,6 +197,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Grpcs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\3rd\HttpToSocks5Proxy\HttpToSocks5Proxy.csproj">
+      <Project>{6f0b0a4c-ff9c-4b6e-99c8-451cbb03ec18}</Project>
+      <Name>HttpToSocks5Proxy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

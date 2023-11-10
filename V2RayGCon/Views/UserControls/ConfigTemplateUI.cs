@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using V2RayGCon.Models.Datas;
 using V2RayGCon.Resources.Resx;
@@ -46,10 +47,23 @@ namespace V2RayGCon.Views.UserControls
             var ty = VgcApis.Misc.Utils.DetectConfigType(tplS.template);
             rlbBinding.Text = ty.ToString();
             var tip = $"{I18N.Format}: {ty}";
+
+            var tails = new List<string>();
             if (ty == VgcApis.Models.Datas.Enums.ConfigType.json)
             {
-                tip += $" ({tplS.GetJsonArrMergeOption()})";
+                tails.Add(tplS.GetJsonArrMergeOption());
             }
+            if (tplS.isSocks5Inbound)
+            {
+                tails.Add("SOCKS5");
+            }
+
+            if (tails.Count > 0)
+            {
+                var t = string.Join(",", tails);
+                tip = $"{tip} ({t})";
+            }
+
             toolTip1.SetToolTip(rlbBinding, tip);
         }
 

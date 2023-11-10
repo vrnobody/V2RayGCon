@@ -22,7 +22,6 @@ namespace V2RayGCon.Models.Datas
         public bool useStdin = true;
 
         public string speedtestConfigTemplateName = "";
-        public bool isSock5SpeedtestConfigTemplate = false;
 
         public CustomCoreSettings() { }
 

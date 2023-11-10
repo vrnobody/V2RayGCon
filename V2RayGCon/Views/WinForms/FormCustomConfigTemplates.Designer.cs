@@ -38,10 +38,12 @@ namespace V2RayGCon.Views.WinForms
             this.btnCancel = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnFormat = new System.Windows.Forms.Button();
+            this.chkIsSocks5Inbound = new System.Windows.Forms.CheckBox();
             this.rtboxTemplate = new VgcApis.UserControls.ExRichTextBox();
             this.btnTest = new System.Windows.Forms.Button();
             this.cboxMergeOption = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // label1
@@ -86,6 +88,13 @@ namespace V2RayGCon.Views.WinForms
             this.btnFormat.UseVisualStyleBackColor = true;
             this.btnFormat.Click += new System.EventHandler(this.btnFormat_Click);
             // 
+            // chkIsSocks5Inbound
+            // 
+            resources.ApplyResources(this.chkIsSocks5Inbound, "chkIsSocks5Inbound");
+            this.chkIsSocks5Inbound.Name = "chkIsSocks5Inbound";
+            this.toolTip1.SetToolTip(this.chkIsSocks5Inbound, resources.GetString("chkIsSocks5Inbound.ToolTip"));
+            this.chkIsSocks5Inbound.UseVisualStyleBackColor = true;
+            // 
             // rtboxTemplate
             // 
             resources.ApplyResources(this.rtboxTemplate, "rtboxTemplate");
@@ -118,6 +127,7 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chkIsSocks5Inbound);
             this.Controls.Add(this.cboxMergeOption);
             this.Controls.Add(this.btnFormat);
             this.Controls.Add(this.rtboxTemplate);
@@ -149,5 +159,7 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.Button btnFormat;
         private System.Windows.Forms.ComboBox cboxMergeOption;
         private System.Windows.Forms.Label label3;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.CheckBox chkIsSocks5Inbound;
     }
 }

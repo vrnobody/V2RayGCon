@@ -46,7 +46,6 @@ namespace V2RayGCon.Views.WinForms
             this.btnDir = new System.Windows.Forms.Button();
             this.chkSetWorkingDir = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.cboxSpeedtestTplIsSocks = new System.Windows.Forms.CheckBox();
             this.tboxDir = new System.Windows.Forms.TextBox();
             this.tboxExe = new System.Windows.Forms.TextBox();
             this.cboxStdinEncoding = new System.Windows.Forms.ComboBox();
@@ -62,19 +61,16 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // tboxName
             // 
             resources.ApplyResources(this.tboxName, "tboxName");
             this.tboxName.Name = "tboxName";
-            this.toolTip1.SetToolTip(this.tboxName, resources.GetString("tboxName.ToolTip"));
             // 
             // btnSave
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
             this.btnSave.Name = "btnSave";
-            this.toolTip1.SetToolTip(this.btnSave, resources.GetString("btnSave.ToolTip"));
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -88,7 +84,6 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-            this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
             // 
             // label5
             // 
@@ -100,7 +95,6 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
-            this.toolTip1.SetToolTip(this.label7, resources.GetString("label7.ToolTip"));
             // 
             // label8
             // 
@@ -119,7 +113,6 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
-            this.toolTip1.SetToolTip(this.btnCancel, resources.GetString("btnCancel.ToolTip"));
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
@@ -151,38 +144,27 @@ namespace V2RayGCon.Views.WinForms
             this.label6.Name = "label6";
             this.toolTip1.SetToolTip(this.label6, resources.GetString("label6.ToolTip"));
             // 
-            // cboxSpeedtestTplIsSocks
-            // 
-            resources.ApplyResources(this.cboxSpeedtestTplIsSocks, "cboxSpeedtestTplIsSocks");
-            this.cboxSpeedtestTplIsSocks.Name = "cboxSpeedtestTplIsSocks";
-            this.toolTip1.SetToolTip(this.cboxSpeedtestTplIsSocks, resources.GetString("cboxSpeedtestTplIsSocks.ToolTip"));
-            this.cboxSpeedtestTplIsSocks.UseVisualStyleBackColor = true;
-            // 
             // tboxDir
             // 
             resources.ApplyResources(this.tboxDir, "tboxDir");
             this.tboxDir.Name = "tboxDir";
-            this.toolTip1.SetToolTip(this.tboxDir, resources.GetString("tboxDir.ToolTip"));
             // 
             // tboxExe
             // 
             resources.ApplyResources(this.tboxExe, "tboxExe");
             this.tboxExe.Name = "tboxExe";
-            this.toolTip1.SetToolTip(this.tboxExe, resources.GetString("tboxExe.ToolTip"));
             // 
             // cboxStdinEncoding
             // 
             resources.ApplyResources(this.cboxStdinEncoding, "cboxStdinEncoding");
             this.cboxStdinEncoding.FormattingEnabled = true;
             this.cboxStdinEncoding.Name = "cboxStdinEncoding";
-            this.toolTip1.SetToolTip(this.cboxStdinEncoding, resources.GetString("cboxStdinEncoding.ToolTip"));
             // 
             // cboxStdoutEncoding
             // 
             resources.ApplyResources(this.cboxStdoutEncoding, "cboxStdoutEncoding");
             this.cboxStdoutEncoding.FormattingEnabled = true;
             this.cboxStdoutEncoding.Name = "cboxStdoutEncoding";
-            this.toolTip1.SetToolTip(this.cboxStdoutEncoding, resources.GetString("cboxStdoutEncoding.ToolTip"));
             // 
             // cboxArgs
             // 
@@ -193,7 +175,6 @@ namespace V2RayGCon.Views.WinForms
             resources.GetString("cboxArgs.Items1"),
             resources.GetString("cboxArgs.Items2")});
             this.cboxArgs.Name = "cboxArgs";
-            this.toolTip1.SetToolTip(this.cboxArgs, resources.GetString("cboxArgs.ToolTip"));
             // 
             // cboxConfigFilename
             // 
@@ -203,19 +184,16 @@ namespace V2RayGCon.Views.WinForms
             resources.GetString("cboxConfigFilename.Items"),
             resources.GetString("cboxConfigFilename.Items1")});
             this.cboxConfigFilename.Name = "cboxConfigFilename";
-            this.toolTip1.SetToolTip(this.cboxConfigFilename, resources.GetString("cboxConfigFilename.ToolTip"));
             // 
             // tboxEnvVars
             // 
             resources.ApplyResources(this.tboxEnvVars, "tboxEnvVars");
             this.tboxEnvVars.Name = "tboxEnvVars";
-            this.toolTip1.SetToolTip(this.tboxEnvVars, resources.GetString("tboxEnvVars.ToolTip"));
             // 
             // label4
             // 
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
-            this.toolTip1.SetToolTip(this.label4, resources.GetString("label4.ToolTip"));
             // 
             // cboxSpeedtestInbTplName
             // 
@@ -225,13 +203,11 @@ namespace V2RayGCon.Views.WinForms
             this.cboxSpeedtestInbTplName.Items.AddRange(new object[] {
             resources.GetString("cboxSpeedtestInbTplName.Items")});
             this.cboxSpeedtestInbTplName.Name = "cboxSpeedtestInbTplName";
-            this.toolTip1.SetToolTip(this.cboxSpeedtestInbTplName, resources.GetString("cboxSpeedtestInbTplName.ToolTip"));
             // 
             // FormCustomCoreSettings
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.cboxSpeedtestTplIsSocks);
             this.Controls.Add(this.cboxSpeedtestInbTplName);
             this.Controls.Add(this.cboxConfigFilename);
             this.Controls.Add(this.btnDir);
@@ -256,7 +232,6 @@ namespace V2RayGCon.Views.WinForms
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "FormCustomCoreSettings";
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.FormCustomCoreSettings_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -289,6 +264,5 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cboxSpeedtestInbTplName;
-        private System.Windows.Forms.CheckBox cboxSpeedtestTplIsSocks;
     }
 }

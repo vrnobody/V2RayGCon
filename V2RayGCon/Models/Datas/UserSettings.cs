@@ -241,6 +241,7 @@ namespace V2RayGCon.Models.Datas
             {
                 index = 2,
                 name = "socks",
+                isSocks5Inbound = true,
                 template =
                     @"{
     ""inbounds"":[

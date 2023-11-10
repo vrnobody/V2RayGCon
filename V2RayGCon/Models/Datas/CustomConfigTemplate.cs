@@ -9,6 +9,7 @@ namespace V2RayGCon.Models.Datas
         public string name = "";
         public string jsonArrMergeOption = "";
         public string template = "";
+        public bool isSocks5Inbound = false;
 
         public CustomConfigTemplate() { }
 

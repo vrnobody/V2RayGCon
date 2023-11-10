@@ -55,13 +55,13 @@ namespace V2RayGCon.Services
             }
             try
             {
-                var config = CreateSpeedTestConfig(coreName, rawConfig, port);
+                var sci = CreateSpeedTestConfig(coreName, rawConfig, port);
                 var core = new Libs.V2Ray.Core(setting) { title = title };
                 core.SetCustomCoreName(coreName);
-                core.RestartCoreIgnoreError(config);
+                core.RestartCoreIgnoreError(sci.config);
                 if (core.WaitUntilReady())
                 {
-                    text = Misc.Utils.Fetch(url, port, timeout);
+                    text = Misc.Utils.FetchWorker(sci.isSocks5, url, port, timeout);
                 }
                 core.StopCore();
             }
@@ -245,9 +245,9 @@ namespace V2RayGCon.Services
             if (!setting.isSpeedtestCancelled)
             {
                 var port = VgcApis.Misc.Utils.GetFreeTcpPort();
-                var cfg = CreateSpeedTestConfig(coreName, rawConfig, port);
+                var sci = CreateSpeedTestConfig(coreName, rawConfig, port);
                 result = SpeedTestCore(
-                    cfg,
+                    sci,
                     title,
                     coreName,
                     testUrl,
@@ -260,7 +260,7 @@ namespace V2RayGCon.Services
         }
 
         LatencyTestResult SpeedTestCore(
-            string config,
+            Models.Datas.SpeedTestConfigInfos sci,
             string title,
             string coreName,
             string testUrl,
@@ -270,7 +270,7 @@ namespace V2RayGCon.Services
         )
         {
             log($"{I18N.SpeedtestPortNum}{port}");
-            if (string.IsNullOrEmpty(config))
+            if (string.IsNullOrEmpty(sci.config))
             {
                 log(I18N.DecodeImportFail);
                 return new LatencyTestResult(TIMEOUT, 0);
@@ -287,13 +287,14 @@ namespace V2RayGCon.Services
             long len = 0;
             try
             {
-                core.RestartCoreIgnoreError(config);
+                core.RestartCoreIgnoreError(sci.config);
                 if (core.WaitUntilReady())
                 {
                     var expectedSizeInKib = setting.isUseCustomSpeedtestSettings
                         ? setting.CustomSpeedtestExpectedSizeInKib
                         : -1;
                     var r = VgcApis.Misc.Utils.TimedDownloadTest(
+                        sci.isSocks5,
                         testUrl,
                         port,
                         expectedSizeInKib,
@@ -336,21 +337,30 @@ namespace V2RayGCon.Services
             setting.SpeedTestPool.Release();
         }
 
-        string CreateSpeedTestConfig(string coreName, string rawConfig, int port)
+        Models.Datas.SpeedTestConfigInfos CreateSpeedTestConfig(
+            string coreName,
+            string rawConfig,
+            int port
+        )
         {
-            var empty = string.Empty;
+            var empty = new Models.Datas.SpeedTestConfigInfos(false, string.Empty);
             if (port <= 0)
             {
                 return empty;
             }
 
             var coreS = setting.GetCustomCoresSetting().FirstOrDefault(cs => cs.name == coreName);
+            var isSocks5 = coreS?.isSock5SpeedtestConfigTemplate ?? false;
+
             var inbS = setting
                 .GetCustomConfigTemplates()
                 .FirstOrDefault(inb => inb.name == coreS?.speedtestConfigTemplateName);
             if (inbS != null)
             {
-                return inbS.MergeToConfig(rawConfig, port);
+                return new Models.Datas.SpeedTestConfigInfos(
+                    isSocks5,
+                    inbS.MergeToConfig(rawConfig, port)
+                );
             }
 
             var json = VgcApis.Misc.Utils.ParseJObject(rawConfig);
@@ -374,7 +384,7 @@ namespace V2RayGCon.Services
 
             // debug
             var r = VgcApis.Misc.Utils.FormatConfig(json);
-            return r;
+            return new Models.Datas.SpeedTestConfigInfos(isSocks5, r);
         }
 
         void ShowCurrentSpeedtestResult(

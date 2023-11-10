@@ -69,7 +69,7 @@ namespace V2RayGCon.Views.UserControls
             this.toolTip1.SetToolTip(this.rlbBinding, resources.GetString("rlbBinding.ToolTip"));
             this.rlbBinding.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbBinding_MouseDown);
             // 
-            // InboundSettingUI
+            // ConfigTemplateUI
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -78,7 +78,7 @@ namespace V2RayGCon.Views.UserControls
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.lbTitle);
-            this.Name = "InboundSettingUI";
+            this.Name = "ConfigTemplateUI";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CoreSettingUI_MouseDown);
             this.ResumeLayout(false);
             this.PerformLayout();

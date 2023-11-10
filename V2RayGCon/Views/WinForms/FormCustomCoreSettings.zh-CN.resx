@@ -205,6 +205,9 @@
   <data name="label6.ToolTip" xml:space="preserve">
     <value>测速时合并这个模板</value>
   </data>
+  <data name="cboxSpeedtestTplIsSocks.ToolTip" xml:space="preserve">
+    <value>测速模板使用SOCKS5协议</value>
+  </data>
   <data name="tboxDir.ToolTip" xml:space="preserve">
     <value />
   </data>

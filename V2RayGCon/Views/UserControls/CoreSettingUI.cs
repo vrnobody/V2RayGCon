@@ -13,7 +13,7 @@ namespace V2RayGCon.Views.UserControls
 
         public CoreSettingUI()
         {
-            // this.size = 347, 27
+            // this.size = 347, 28
             InitializeComponent();
         }
 
@@ -47,7 +47,9 @@ namespace V2RayGCon.Views.UserControls
             var tag = "";
             tag += coreSettings.useFile ? "F" : "";
             tag += coreSettings.useStdin ? "I" : "";
+            tag += coreSettings.isSock5SpeedtestConfigTemplate ? "S" : "";
             tag += coreSettings.setWorkingDir ? "W" : "";
+
             rlbBinding.Text = tag;
 
             var visible = !string.IsNullOrEmpty(tag);

@@ -137,10 +137,7 @@
     <value>删除配置</value>
   </data>
   <data name="rlbBinding.ToolTip" xml:space="preserve">
-    <value>(F)生成config文件 (I)使用STDIN (W)设置工作目录</value>
-  </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>347, 27</value>
+    <value>(F)生成config文件 (I)使用STDIN (S)OCKS5 (W)设置工作目录</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value />

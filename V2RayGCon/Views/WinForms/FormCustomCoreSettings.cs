@@ -57,6 +57,7 @@ namespace V2RayGCon.Views.WinForms
                 useFile = chkUseFile.Checked,
                 useStdin = chkUseStdin.Checked,
                 speedtestConfigTemplateName = GetCboxSpeedtestInbTplNameText(),
+                isSock5SpeedtestConfigTemplate = cboxSpeedtestTplIsSocks.Checked,
             };
             return cs;
         }
@@ -81,6 +82,8 @@ namespace V2RayGCon.Views.WinForms
                 cboxSpeedtestInbTplName,
                 coreSettings.speedtestConfigTemplateName
             );
+
+            cboxSpeedtestTplIsSocks.Checked = coreSettings.isSock5SpeedtestConfigTemplate;
         }
 
         void InitComboBoxes()

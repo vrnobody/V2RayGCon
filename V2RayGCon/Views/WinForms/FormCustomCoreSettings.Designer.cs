@@ -46,6 +46,7 @@ namespace V2RayGCon.Views.WinForms
             this.btnDir = new System.Windows.Forms.Button();
             this.chkSetWorkingDir = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.cboxSpeedtestTplIsSocks = new System.Windows.Forms.CheckBox();
             this.tboxDir = new System.Windows.Forms.TextBox();
             this.tboxExe = new System.Windows.Forms.TextBox();
             this.cboxStdinEncoding = new System.Windows.Forms.ComboBox();
@@ -150,6 +151,13 @@ namespace V2RayGCon.Views.WinForms
             this.label6.Name = "label6";
             this.toolTip1.SetToolTip(this.label6, resources.GetString("label6.ToolTip"));
             // 
+            // cboxSpeedtestTplIsSocks
+            // 
+            resources.ApplyResources(this.cboxSpeedtestTplIsSocks, "cboxSpeedtestTplIsSocks");
+            this.cboxSpeedtestTplIsSocks.Name = "cboxSpeedtestTplIsSocks";
+            this.toolTip1.SetToolTip(this.cboxSpeedtestTplIsSocks, resources.GetString("cboxSpeedtestTplIsSocks.ToolTip"));
+            this.cboxSpeedtestTplIsSocks.UseVisualStyleBackColor = true;
+            // 
             // tboxDir
             // 
             resources.ApplyResources(this.tboxDir, "tboxDir");
@@ -223,6 +231,7 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.cboxSpeedtestTplIsSocks);
             this.Controls.Add(this.cboxSpeedtestInbTplName);
             this.Controls.Add(this.cboxConfigFilename);
             this.Controls.Add(this.btnDir);
@@ -280,5 +289,6 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cboxSpeedtestInbTplName;
+        private System.Windows.Forms.CheckBox cboxSpeedtestTplIsSocks;
     }
 }

@@ -773,27 +773,38 @@ namespace VgcApis.Misc
             return host;
         }
 
-        public static WebClient CreateWebClient(int proxyPort)
+        public static WebClient CreateWebClient(bool isSocks5, int proxyPort)
         {
-            WebClient wc = new WebClient { Encoding = Encoding.UTF8, };
-
-            wc.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
+            var wc = new WebClient { Encoding = Encoding.UTF8 };
+            wc.Headers.Add(Models.Consts.Webs.UserAgent);
             if (proxyPort > 0 && proxyPort < 65536)
             {
-                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, proxyPort);
+                var localhost = Models.Consts.Webs.LoopBackIP;
+                if (isSocks5)
+                {
+                    wc.Proxy = new MihaZupan.HttpToSocks5Proxy(localhost, proxyPort);
+                }
+                else
+                {
+                    wc.Proxy = new WebProxy(localhost, proxyPort);
+                }
             }
             return wc;
         }
 
+        public static Tuple<long, long> TimedDownloadTest(
+            string url,
+            int port,
+            int expectedSizeInKiB,
+            int timeout
+        ) => TimedDownloadTest(false, url, port, expectedSizeInKiB, timeout);
+
         /// <summary>
         /// return (ms, recvBytesLen)
         /// </summary>
-        /// <param name="url"></param>
-        /// <param name="port"></param>
-        /// <param name="expectedSizeInKiB"></param>
-        /// <param name="timeout"></param>
         /// <returns>(ms, recvBytesLen)</returns>
         public static Tuple<long, long> TimedDownloadTest(
+            bool isSocks5,
             string url,
             int port,
             int expectedSizeInKiB,
@@ -813,7 +824,7 @@ namespace VgcApis.Misc
             var dlCompleted = new AutoResetEvent(false);
             long size = 0;
 
-            var wc = CreateWebClient(port);
+            var wc = CreateWebClient(isSocks5, port);
 
             wc.DownloadStringCompleted += (s, a) =>
             {

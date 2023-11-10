@@ -906,7 +906,7 @@ namespace V2RayGCon.Misc
 
             var dlCompleted = new AutoResetEvent(false);
 
-            var wc = VgcApis.Misc.Utils.CreateWebClient(proxyPort);
+            var wc = VgcApis.Misc.Utils.CreateWebClient(false, proxyPort);
 
             wc.DownloadFileCompleted += (s, a) =>
             {
@@ -940,7 +940,7 @@ namespace V2RayGCon.Misc
         /// <param name="proxyPort">1-65535, other value means download directly</param>
         /// <param name="timeout">millisecond, if &lt;1 then use default value 30000</param>
         /// <returns>If sth. goes wrong return string.Empty</returns>
-        static string FetchWorker(string url, int proxyPort, int timeout)
+        internal static string FetchWorker(bool isSocks5, string url, int proxyPort, int timeout)
         {
             var html = string.Empty;
 
@@ -953,7 +953,7 @@ namespace V2RayGCon.Misc
             }
             var dlCompleted = new AutoResetEvent(false);
 
-            var wc = VgcApis.Misc.Utils.CreateWebClient(proxyPort);
+            var wc = VgcApis.Misc.Utils.CreateWebClient(isSocks5, proxyPort);
 
             wc.DownloadStringCompleted += (s, a) =>
             {
@@ -982,7 +982,7 @@ namespace V2RayGCon.Misc
         }
 
         public static string Fetch(string url, int proxyPort, int timeout) =>
-            FetchWorker(url, proxyPort, timeout);
+            FetchWorker(false, url, proxyPort, timeout);
 
         public static string Fetch(string url) => Fetch(url, -1, -1);
 

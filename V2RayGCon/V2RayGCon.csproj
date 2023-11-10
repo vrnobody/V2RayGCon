@@ -102,6 +102,9 @@
     <Reference Include="ImpromptuInterface, Version=7.0.1.0, Culture=neutral, PublicKeyToken=0b1781c923b2975b, processorArchitecture=MSIL">
       <HintPath>..\packages\ImpromptuInterface.7.0.1\lib\net40\ImpromptuInterface.dll</HintPath>
     </Reference>
+    <Reference Include="MihaZupan.HttpToSocks5Proxy, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HttpToSocks5Proxy.1.4.0\lib\net45\MihaZupan.HttpToSocks5Proxy.dll</HintPath>
+    </Reference>
     <Reference Include="Moq, Version=4.14.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.14.1\lib\net45\Moq.dll</HintPath>
     </Reference>
@@ -153,6 +156,7 @@
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
     <Compile Include="Models\Datas\CustomConfigTemplate.cs" />
     <Compile Include="Models\Datas\SharelinkMetadata.cs" />
+    <Compile Include="Models\Datas\SpeedTestConfigInfos.cs" />
     <Compile Include="Models\Datas\SpeedTestOptions.cs" />
     <Compile Include="Models\Datas\UpdateInfo.cs" />
     <Compile Include="Resources\Resx\I18N1.Designer.cs">
@@ -614,7 +618,7 @@
     <PostBuildEvent>set "libsDir=libs\"
 set "copyFolderList=3rd"
 set "pluginDlls=VgcApis NeoLuna Pacman ProxySetter"
-set "otherDlls=HtmlAgilityPack Neo.Lua ImpromptuInterface Dynamitey AutocompleteMenu-ScintillaNET DotNetZip Newtonsoft ScintillaNET zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
+set "otherDlls=MihaZupan.HttpToSocks5Proxy HtmlAgilityPack Neo.Lua ImpromptuInterface Dynamitey AutocompleteMenu-ScintillaNET DotNetZip Newtonsoft ScintillaNET zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
 
 call:RemoveDbgFiles "%25otherDlls%25"
 

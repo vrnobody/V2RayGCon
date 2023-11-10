@@ -48,6 +48,7 @@ WinFormUI
 [jacobslusser/ScintillaNET](https://github.com/jacobslusser/ScintillaNET) 编辑器  
 [JamesNK/Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) 处理json  
 [micjahn/ZXing.Net](https://github.com/micjahn/ZXing.Net/) 处理二维码  
+[MihaZupan/HttpToSocks5Proxy](https://github.com/MihaZupan/HttpToSocks5Proxy/tree/archived/src/HttpToSocks5Proxy) HTTP转SOCKS5  
 [moq/moq4](https://github.com/moq/moq4) 自动补全  
 [mpeterv/luacheck](https://github.com/mpeterv/luacheck.git) Lua语义解释  
 [msva/lua-htmlparser](https://github.com/msva/lua-htmlparser) HTML解释器  

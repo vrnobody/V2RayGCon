@@ -13,7 +13,7 @@ namespace V2RayGCon.Views.UserControls
 
         public ConfigTemplateUI()
         {
-            // this.size = 346, 27
+            // this.size = 347, 28
             InitializeComponent();
         }
 

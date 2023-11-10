@@ -121,6 +121,9 @@
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>95, 12</value>
   </data>
+  <data name="&gt;&gt;cboxSpeedtestTplIsSocks.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tboxName.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -139,7 +142,7 @@
     <value>0</value>
   </data>
   <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>17</value>
   </data>
   <data name="label7.ToolTip" xml:space="preserve">
     <value />
@@ -148,7 +151,7 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tboxExe.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="chkSetWorkingDir.Text" xml:space="preserve">
     <value>Work dir</value>
@@ -187,7 +190,7 @@
     <value>299, 21</value>
   </data>
   <data name="&gt;&gt;tboxName.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="cboxStdoutEncoding.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -199,7 +202,7 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cboxConfigFilename.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="btnSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top</value>
@@ -216,6 +219,9 @@
   <data name="&gt;&gt;tboxName.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;cboxSpeedtestTplIsSocks.Name" xml:space="preserve">
+    <value>cboxSpeedtestTplIsSocks</value>
+  </data>
   <data name="chkSetWorkingDir.Location" type="System.Drawing.Point, System.Drawing">
     <value>346, 41</value>
   </data>
@@ -223,7 +229,7 @@
     <value>221, 21</value>
   </data>
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>18</value>
   </data>
   <data name="label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -237,6 +243,9 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Custom core settings</value>
   </data>
+  <data name="&gt;&gt;cboxSpeedtestTplIsSocks.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;cboxConfigFilename.Name" xml:space="preserve">
     <value>cboxConfigFilename</value>
   </data>
@@ -244,19 +253,19 @@
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>22</value>
+    <value>23</value>
   </data>
   <data name="chkUseStdin.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
   <data name="&gt;&gt;chkUseFile.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
   </data>
   <data name="&gt;&gt;tboxDir.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -283,7 +292,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>22</value>
   </data>
   <data name="btnDir.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -394,7 +403,7 @@
     <value>119, 145</value>
   </data>
   <data name="&gt;&gt;chkUseStdin.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="label6.ToolTip" xml:space="preserve">
     <value>Merge this template before speedtesting.</value>
@@ -409,7 +418,7 @@
     <value>12, 16</value>
   </data>
   <data name="&gt;&gt;tboxEnvVars.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="tboxDir.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -424,7 +433,7 @@
     <value>FormCustomCoreSettings</value>
   </data>
   <data name="cboxSpeedtestInbTplName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>299, 20</value>
+    <value>221, 20</value>
   </data>
   <data name="&gt;&gt;label4.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -442,7 +451,7 @@
     <value>10</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>21</value>
   </data>
   <data name="tboxDir.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -513,6 +522,9 @@
   <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
     <value>toolTip1</value>
   </data>
+  <data name="cboxSpeedtestTplIsSocks.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
   <data name="&gt;&gt;label8.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
@@ -523,19 +535,25 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cboxStdoutEncoding.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;label4.Name" xml:space="preserve">
     <value>label4</value>
   </data>
   <data name="&gt;&gt;cboxSpeedtestInbTplName.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
+  </data>
+  <data name="cboxSpeedtestTplIsSocks.Location" type="System.Drawing.Point, System.Drawing">
+    <value>346, 227</value>
   </data>
   <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 97</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
     <value>Executable</value>
+  </data>
+  <data name="cboxSpeedtestTplIsSocks.ToolTip" xml:space="preserve">
+    <value>Speedtest template use SOCKS5 protocol.</value>
   </data>
   <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -565,7 +583,7 @@
     <value>0</value>
   </data>
   <data name="&gt;&gt;chkSetWorkingDir.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="label6.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -601,13 +619,13 @@
     <value>Cancel</value>
   </data>
   <data name="&gt;&gt;cboxArgs.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="&gt;&gt;cboxConfigFilename.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cboxStdinEncoding.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="tboxEnvVars.ToolTip" xml:space="preserve">
     <value />
@@ -615,8 +633,8 @@
   <data name="&gt;&gt;label7.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="label3.ToolTip" xml:space="preserve">
-    <value />
+  <data name="cboxSpeedtestTplIsSocks.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 16</value>
   </data>
   <data name="cboxStdinEncoding.Size" type="System.Drawing.Size, System.Drawing">
     <value>299, 20</value>
@@ -648,6 +666,9 @@
   <data name="&gt;&gt;tboxExe.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label8.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -676,9 +697,9 @@
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>19</value>
   </data>
-  <data name="$this.ToolTip" xml:space="preserve">
+  <data name="label3.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="&gt;&gt;cboxSpeedtestInbTplName.Type" xml:space="preserve">
@@ -697,7 +718,7 @@
     <value>True</value>
   </data>
   <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="chkUseStdin.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -714,8 +735,8 @@
   <data name="label8.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="tboxExe.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;cboxSpeedtestTplIsSocks.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="cboxConfigFilename.Items" xml:space="preserve">
     <value>config.json</value>
@@ -725,6 +746,9 @@
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 12</value>
+  </data>
+  <data name="tboxExe.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;label3.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -747,6 +771,9 @@
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
   </data>
+  <data name="cboxSpeedtestTplIsSocks.Text" xml:space="preserve">
+    <value>SOCKS5</value>
+  </data>
   <data name="chkUseStdin.ToolTip" xml:space="preserve">
     <value>Pass config through STDIN.</value>
   </data>
@@ -760,7 +787,10 @@
     <value>2</value>
   </data>
   <data name="&gt;&gt;btnDir.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
+  </data>
+  <data name="cboxSpeedtestTplIsSocks.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="cboxSpeedtestInbTplName.ToolTip" xml:space="preserve">
     <value />
@@ -781,13 +811,13 @@
     <value>9</value>
   </data>
   <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>20</value>
   </data>
   <data name="chkSetWorkingDir.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
     <value>220, 256</value>
@@ -809,6 +839,9 @@
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 12</value>
+  </data>
+  <data name="cboxSpeedtestTplIsSocks.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
   </data>
   <data name="chkUseStdin.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 16</value>
@@ -841,7 +874,7 @@
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;btnSave.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="btnSave.ToolTip" xml:space="preserve">
     <value />

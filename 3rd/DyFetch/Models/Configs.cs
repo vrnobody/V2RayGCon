@@ -17,6 +17,7 @@ namespace DyFetch.Models
         public string url = null;
         public int wait = -1;
         public string driverDir = null;
+        public string file = null;
 
         readonly OptionSet opts = null;
 
@@ -32,14 +33,15 @@ namespace DyFetch.Models
             {
                 { "pipein=", "anonymous input-pipe handle", v => pipeIn = v },
                 { "pipeout=", "anonymous output-pipe handle", v => pipeOut = v },
-                { "d|driver=", "firefox driver dir", v => driverDir = v },
-                { "s|headless", "headless mode", v => headless = v != null },
-                { "i|ignore", "ignore certificate errors", v => ignoreCertError = v != null },
-                { "u|url=", "the URL to download", v => url = v },
-                { "p|proxy=", "HTTP proxy in host:port format", v => proxy = v },
-                { "t|timeout=", "wait timeout in milliseconds", (int v) => timeout = v },
                 { "c|css=", "wait until one of the css selectors match", v => csses.Add(v) },
-                { "w|wait=", "wait after match in milliseconds", (int v) => wait = v },
+                { "d|driver=", "firefox driver dir", v => driverDir = v },
+                { "f|file=", "save HTML to file", v => file = v },
+                { "i|ignore", "ignore certificate errors", v => ignoreCertError = v != null },
+                { "p|proxy=", "HTTP proxy in host:port format", v => proxy = v },
+                { "s|headless", "headless mode", v => headless = v != null },
+                { "t|timeout=", "wait timeout in milliseconds", (int v) => timeout = v },
+                { "u|url=", "the URL to download", v => url = v },
+                { "w|wait=", "wait until match in milliseconds", (int v) => wait = v },
                 { "h|help", "show help", v => help = v != null },
             };
         }

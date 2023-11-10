@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace DyFetch
 {
@@ -10,7 +11,7 @@ namespace DyFetch
             var configs = new Models.Configs(args);
 
             // -h 打印用法并结束程序
-            if (configs.help)
+            if (args.Length < 1 || configs.help)
             {
                 configs.ShowHelp();
                 Environment.Exit(0);
@@ -32,7 +33,16 @@ namespace DyFetch
                         configs.timeout,
                         configs.wait
                     );
-                    Console.WriteLine(html);
+
+                    var path = configs.file;
+                    if (string.IsNullOrEmpty(path))
+                    {
+                        Console.WriteLine(html);
+                    }
+                    else
+                    {
+                        File.WriteAllText(path, html);
+                    }
                 }
                 else
                 {
@@ -42,10 +52,10 @@ namespace DyFetch
                         // 详见Comps.Plumber.cs
                         plumber.Work();
                     }
-                    Console.WriteLine("Goodbye!");
                 }
             }
 
+            Console.WriteLine("Goodbye!");
             Environment.Exit(0);
         }
     }
@@ -69,7 +79,7 @@ local function CreateHandle()
     local args = "-pipein={0} -pipeout={1}"
     
     -- 创建子进程
-    return std.Sys:PipedProcRun(true, wdir, exe, args)
+    return std.Sys:PipedProcRun(true, wkDir, exe, args)
 end
 
 local function DyFetch(url)

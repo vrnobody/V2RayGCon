@@ -1,3 +1,5 @@
+v0.0.3
+add save to file option
 
 v0.0.2
 switch to firefox driver

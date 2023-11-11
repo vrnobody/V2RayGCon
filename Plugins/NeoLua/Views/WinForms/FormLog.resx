@@ -154,7 +154,7 @@
     <value>17, 17</value>
   </metadata>
   <data name="pauseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="pauseToolStripMenuItem.Text" xml:space="preserve">
     <value>Pause</value>
@@ -162,26 +162,17 @@
   <data name="pauseToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Stop log receiving.</value>
   </data>
-  <data name="resumeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 22</value>
-  </data>
-  <data name="resumeToolStripMenuItem.Text" xml:space="preserve">
-    <value>Resume</value>
-  </data>
-  <data name="resumeToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Continue to receive logs.</value>
-  </data>
   <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="copyToolStripMenuItem.Text" xml:space="preserve">
     <value>Copy</value>
   </data>
   <data name="clearToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="clearToolStripMenuItem.Text" xml:space="preserve">
     <value>Clear</value>
@@ -190,10 +181,10 @@
     <value>Clear log.</value>
   </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="closeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>122, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="closeToolStripMenuItem.Text" xml:space="preserve">
     <value>Close</value>
@@ -286,12 +277,6 @@
     <value>pauseToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;pauseToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;resumeToolStripMenuItem.Name" xml:space="preserve">
-    <value>resumeToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;resumeToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripMenuItem2.Name" xml:space="preserve">

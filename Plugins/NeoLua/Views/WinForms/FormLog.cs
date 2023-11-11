@@ -65,25 +65,16 @@ namespace NeoLuna.Views.WinForms
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            isPaused = !isPaused;
+            pauseToolStripMenuItem.Checked = isPaused;
             if (isPaused)
             {
-                return;
+                logUpdater.Pause();
             }
-            isPaused = true;
-            pauseToolStripMenuItem.Checked = isPaused;
-            logUpdater.Pause();
-        }
-
-        private void resumeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!isPaused)
+            else
             {
-                return;
+                logUpdater.Run();
             }
-
-            isPaused = false;
-            pauseToolStripMenuItem.Checked = isPaused;
-            logUpdater.Run();
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)

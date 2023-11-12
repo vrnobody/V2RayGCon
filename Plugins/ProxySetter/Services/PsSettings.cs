@@ -34,6 +34,17 @@
             setting.SendLog(string.Format("[{0}] {1}", name, contnet));
         }
 
+        public Model.Data.TunaSettings GetTunaSettings()
+        {
+            return userSettings.tunaSettings;
+        }
+
+        public void SaveTunaSettings(Model.Data.TunaSettings tunaSettings)
+        {
+            userSettings.tunaSettings = tunaSettings;
+            SaveUserSettings();
+        }
+
         /// <summary>
         /// return string.empty on error
         /// 0: white list  1: black list

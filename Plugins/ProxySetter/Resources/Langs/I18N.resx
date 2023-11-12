@@ -129,8 +129,14 @@
   <data name="Description" xml:space="preserve">
     <value>Auto update system proxy setting.</value>
   </data>
+  <data name="DetectRouteConfigFailed" xml:space="preserve">
+    <value>Detect route config failed!</value>
+  </data>
   <data name="Done" xml:space="preserve">
     <value>Done.</value>
+  </data>
+  <data name="ExeNotFound" xml:space="preserve">
+    <value>Exe file not exists!</value>
   </data>
   <data name="Failed" xml:space="preserve">
     <value>Failed!</value>
@@ -195,27 +201,46 @@ Please check port setting.</value>
   <data name="SystemProxySettingUpdated" xml:space="preserve">
     <value>System proxy setting updated.</value>
   </data>
+  <data name="TunaIsRunning" xml:space="preserve">
+    <value>Tuna is running</value>
+  </data>
+  <data name="TunaStarts" xml:space="preserve">
+    <value>Tuna starts.</value>
+  </data>
+  <data name="TunaStopped" xml:space="preserve">
+    <value>Tuna stopped.</value>
+  </data>
   <data name="UnregisterHotKey" xml:space="preserve">
     <value>Unregister hot key {0}</value>
   </data>
   <data name="UsageReadme" xml:space="preserve">
-    <value>// this is a comment
+    <value>In order to use Tuna, you have to download these two binaries:
+https://www.wintun.net/
+https://github.com/xjasonlyu/tun2socks
+
+This plug-in use the following project as the default PAC source.
+https://github.com/txthinking/blackwhite
+You can modify the default PAC in tab setting as follows.
+
+// this is a comment
+
 
 // add domain or IP or CIDR
+
 example.com
 192.168.1.1
+
 192.168.1.0/24
 
+
 // remove domain or IP or CIDR
+
 -example.com
 -192.168.1.1
 -192.168.1.0/24</value>
   </data>
   <data name="VisitPacDebugger" xml:space="preserve">
     <value>Visit PAC debugger webpage?</value>
-  </data>
-  <data name="VisitTxthinkingGithub" xml:space="preserve">
-    <value>Visit txthinking/blackwhite github page?</value>
   </data>
   <data name="WriteFileFail" xml:space="preserve">
     <value>Write file fail!</value>

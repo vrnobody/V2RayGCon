@@ -70,6 +70,15 @@ namespace VgcApis.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Clear log? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmClearLog {
+            get {
+                return ResourceManager.GetString("ConfirmClearLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Load file [{0}]? 的本地化字符串。
         /// </summary>
         internal static string ConfirmLoadFileContent {
@@ -129,6 +138,15 @@ namespace VgcApis.Resources.Langs {
         internal static string KeywordIsTooLong {
             get {
                 return ResourceManager.GetString("KeywordIsTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Log 的本地化字符串。
+        /// </summary>
+        internal static string Log {
+            get {
+                return ResourceManager.GetString("Log", resourceCulture);
             }
         }
         

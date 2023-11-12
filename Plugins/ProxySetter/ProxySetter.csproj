@@ -50,6 +50,7 @@
     <Compile Include="Controllers\FormVGCPluginCtrl.cs" />
     <Compile Include="Controllers\VGCPluginComponents\ComponentCtrl.cs" />
     <Compile Include="Controllers\VGCPluginComponents\TabBasicSetting.cs" />
+    <Compile Include="Controllers\VGCPluginComponents\TabTuna.cs" />
     <Compile Include="Controllers\VGCPluginComponents\TabUsage.cs" />
     <Compile Include="Controllers\VGCPluginComponents\TabStatus.cs" />
     <Compile Include="Controllers\VGCPluginComponents\TabPacCustomList.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Model\Data\PacUrlParams.cs" />
     <Compile Include="Model\Data\ProxySettings.cs" />
     <Compile Include="Model\Data\QueryParams.cs" />
+    <Compile Include="Model\Data\TunaSettings.cs" />
     <Compile Include="Model\Data\UserSettings.cs" />
     <Compile Include="Resources\Langs\StrConst.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -100,6 +102,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>I18N.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\TunaServer.cs" />
     <Compile Include="Views\WinForms\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>

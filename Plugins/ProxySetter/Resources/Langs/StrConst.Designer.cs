@@ -192,15 +192,6 @@ namespace ProxySetter.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 https://github.com/txthinking/blackwhite 的本地化字符串。
-        /// </summary>
-        internal static string TxthinkingPacProjectUrl {
-            get {
-                return ResourceManager.GetString("TxthinkingPacProjectUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 0-6.com
         ///0001688.com
         ///001cndc.com

@@ -17,7 +17,7 @@ namespace V2RayGCon.Models.Datas
 
         public static readonly Dictionary<int, StreamComponent> streamSettings = new Dictionary<
             int,
-            Models.Datas.StreamComponent
+            StreamComponent
         >
         {
             //public bool dropDownStyle;

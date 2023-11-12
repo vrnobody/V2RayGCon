@@ -97,11 +97,29 @@ namespace ProxySetter.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Detect route config failed! 的本地化字符串。
+        /// </summary>
+        internal static string DetectRouteConfigFailed {
+            get {
+                return ResourceManager.GetString("DetectRouteConfigFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Done. 的本地化字符串。
         /// </summary>
         internal static string Done {
             get {
                 return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Exe file not exists! 的本地化字符串。
+        /// </summary>
+        internal static string ExeNotFound {
+            get {
+                return ResourceManager.GetString("ExeNotFound", resourceCulture);
             }
         }
         
@@ -289,6 +307,33 @@ namespace ProxySetter.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Tuna is running 的本地化字符串。
+        /// </summary>
+        internal static string TunaIsRunning {
+            get {
+                return ResourceManager.GetString("TunaIsRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Tuna starts. 的本地化字符串。
+        /// </summary>
+        internal static string TunaStarts {
+            get {
+                return ResourceManager.GetString("TunaStarts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Tuna stopped. 的本地化字符串。
+        /// </summary>
+        internal static string TunaStopped {
+            get {
+                return ResourceManager.GetString("TunaStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Unregister hot key {0} 的本地化字符串。
         /// </summary>
         internal static string UnregisterHotKey {
@@ -298,14 +343,27 @@ namespace ProxySetter.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 // this is a comment
+        ///   查找类似 In order to use Tuna, you have to download these two binaries:
+        ///https://www.wintun.net/
+        ///https://github.com/xjasonlyu/tun2socks
+        ///
+        ///This plug-in use the following project as the default PAC source.
+        ///https://github.com/txthinking/blackwhite
+        ///You can modify the default PAC in tab setting as follows.
+        ///
+        ///// this is a comment
+        ///
         ///
         ///// add domain or IP or CIDR
+        ///
         ///example.com
         ///192.168.1.1
+        ///
         ///192.168.1.0/24
         ///
+        ///
         ///// remove domain or IP or CIDR
+        ///
         ///-example.com
         ///-192.168.1.1
         ///-192.168.1.0/24 的本地化字符串。
@@ -322,15 +380,6 @@ namespace ProxySetter.Resources.Langs {
         internal static string VisitPacDebugger {
             get {
                 return ResourceManager.GetString("VisitPacDebugger", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Visit txthinking/blackwhite github page? 的本地化字符串。
-        /// </summary>
-        internal static string VisitTxthinkingGithub {
-            get {
-                return ResourceManager.GetString("VisitTxthinkingGithub", resourceCulture);
             }
         }
         

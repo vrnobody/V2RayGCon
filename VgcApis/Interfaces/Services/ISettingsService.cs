@@ -4,6 +4,8 @@ namespace VgcApis.Interfaces.Services
 {
     public interface ISettingsService
     {
+        bool SetSendThrough(string host);
+
         void SaveUserSettingsNow();
 
         int GetSpeedtestQueueLength();

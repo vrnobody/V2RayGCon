@@ -26,6 +26,7 @@
         public static readonly string JsonExt = GenExtString("json");
         public static readonly string PacExt = GenExtString("pac");
         public static readonly string LuaExt = GenExtString("lua");
+        public static readonly string ExeExt = GenExtString("exe");
         public static readonly string TxtExt = GenExtString("txt");
         public static readonly string CsvExt = GenExtString("csv");
 

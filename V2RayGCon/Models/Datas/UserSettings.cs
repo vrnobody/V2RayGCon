@@ -250,7 +250,9 @@ namespace V2RayGCon.Models.Datas
             ""protocol"": ""socks"",
             ""port"": %port%,
             ""listen"": ""%host%"",
-            ""settings"": { }
+            ""settings"": {
+                ""udp"": true
+            }
         }
     ]
 }",

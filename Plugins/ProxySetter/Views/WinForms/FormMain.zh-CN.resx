@@ -402,28 +402,7 @@
   <data name="tabPac.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>215, 12</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>这个插件使用以下项目作为默认PAC源。</value>
-  </data>
-  <data name="label5.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tboxUsageReadMe.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="linkLabelUsageTxthinkingPac.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>251, 12</value>
-  </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>你可以在设置分页中像下面这样调整默认PAC。</value>
-  </data>
-  <data name="label7.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="groupBox5.Text" xml:space="preserve">
@@ -439,6 +418,108 @@
     <value>用法</value>
   </data>
   <data name="tabUsage.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkTunaDebug.ToolTip" xml:space="preserve">
+    <value>显示tun2socks窗口</value>
+  </data>
+  <data name="chkTunaAutoUpdateArguments.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 16</value>
+  </data>
+  <data name="chkTunaAutoUpdateArguments.Text" xml:space="preserve">
+    <value>自动更新参数</value>
+  </data>
+  <data name="chkTunaAutoUpdateArguments.ToolTip" xml:space="preserve">
+    <value>Tuna启动前根据网卡IP更新启动参数</value>
+  </data>
+  <data name="btnTunaBrowseExe.ToolTip" xml:space="preserve">
+    <value>浏览tun2socks.exe</value>
+  </data>
+  <data name="rtboxTunaStartupScript.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox6.Text" xml:space="preserve">
+    <value>启动参数</value>
+  </data>
+  <data name="groupBox6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="panel3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbTunaStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 12</value>
+  </data>
+  <data name="lbTunaStatus.Text" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="lbTunaStatus.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label11.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 12</value>
+  </data>
+  <data name="label12.Text" xml:space="preserve">
+    <value>TUN名字</value>
+  </data>
+  <data name="label12.ToolTip" xml:space="preserve">
+    <value>TUN虚拟网卡的名字</value>
+  </data>
+  <data name="label10.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>网卡IP</value>
+  </data>
+  <data name="label7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 12</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>代理地址</value>
+  </data>
+  <data name="label5.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTunaExePath.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTunaDns.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTunaTunIp.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTunaNicIp.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTunaProxy.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnTunaStop.Text" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="btnTunaStop.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnTunaStart.Text" xml:space="preserve">
+    <value>启动</value>
+  </data>
+  <data name="btnTunaStart.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnTunaDetect.Text" xml:space="preserve">
+    <value>生成参数</value>
+  </data>
+  <data name="btnTunaDetect.ToolTip" xml:space="preserve">
+    <value>自动生成参数</value>
+  </data>
+  <data name="tabTun.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="tabControl1.ToolTip" xml:space="preserve">

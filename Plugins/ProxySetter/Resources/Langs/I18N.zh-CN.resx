@@ -129,8 +129,14 @@
   <data name="Description" xml:space="preserve">
     <value>自动更新系统代理设置。</value>
   </data>
+  <data name="DetectRouteConfigFailed" xml:space="preserve">
+    <value>检测系统路由设置失败！</value>
+  </data>
   <data name="Done" xml:space="preserve">
     <value>完成</value>
+  </data>
+  <data name="ExeNotFound" xml:space="preserve">
+    <value>Exe文件不存在！</value>
   </data>
   <data name="Failed" xml:space="preserve">
     <value>失败</value>
@@ -192,27 +198,43 @@
   <data name="SystemProxySettingUpdated" xml:space="preserve">
     <value>系统代理设置已更新</value>
   </data>
+  <data name="TunaIsRunning" xml:space="preserve">
+    <value>Tuna运行中</value>
+  </data>
+  <data name="TunaStarts" xml:space="preserve">
+    <value>Tuna启动</value>
+  </data>
+  <data name="TunaStopped" xml:space="preserve">
+    <value>Tuna已停止</value>
+  </data>
   <data name="UnregisterHotKey" xml:space="preserve">
     <value>清除热键{0}</value>
   </data>
   <data name="UsageReadme" xml:space="preserve">
-    <value>// 这是一行注释
+    <value>使用Tuna前需要先下载以下两个软件：
+https://www.wintun.net/
+https://github.com/xjasonlyu/tun2socks
 
+这个插件的默认PAC是https://github.com/txthinking/blackwhite
+你可以在设置页面按以下格式修改默认PAC
+
+// 这是一行注释
 // 添加域名、IP、CIDR
+
 example.com
 192.168.1.1
+
 192.168.1.0/24
 
+
 // 删除域名、IP、CIDR
+
 -example.com
 -192.168.1.1
 -192.168.1.0/24</value>
   </data>
   <data name="VisitPacDebugger" xml:space="preserve">
     <value>打开PAC调试器页面？</value>
-  </data>
-  <data name="VisitTxthinkingGithub" xml:space="preserve">
-    <value>访问txthinking/blackwhite的github主页？</value>
   </data>
   <data name="WriteFileFail" xml:space="preserve">
     <value>写入文件错误！</value>

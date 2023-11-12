@@ -219,6 +219,18 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                         break;
                     }
                 }
+
+                var sth = setting.sendThroughHost;
+                if (!string.IsNullOrEmpty(sth))
+                {
+                    if (json["outbounds"] is JArray outbs)
+                    {
+                        foreach (var outb in outbs)
+                        {
+                            outb["sendThrough"] = sth;
+                        }
+                    }
+                }
                 var s = VgcApis.Misc.Utils.FormatConfig(json);
                 return s;
             }

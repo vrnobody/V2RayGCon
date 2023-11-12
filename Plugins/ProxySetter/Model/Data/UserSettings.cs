@@ -8,6 +8,8 @@
         public string tabPacBlackList { get; set; }
         public string sysProxySetting { get; set; }
 
+        public TunaSettings tunaSettings = new TunaSettings();
+
         #endregion
 
         public UserSettings()

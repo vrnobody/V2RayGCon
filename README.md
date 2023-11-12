@@ -63,6 +63,8 @@ WinFormUI
 [txthinking/blackwhite](https://github.com/txthinking/blackwhite) ProxySetter插件中的默认PAC  
 [v2ray/v2ray-core](https://github.com/v2ray/v2ray-core) v2ray-core服务端  
 [wilhelmy/lua-bencode](https://bitbucket.org/wilhelmy/lua-bencode) bencode(torrent)解释器  
+[wintun.net](https://www.wintun.net/) wintun.dll  
+[xjasonlyu/tun2socks](https://github.com/xjasonlyu/tun2socks) tun2socks  
 [XTLS/Xray-core](https://github.com/XTLS/Xray-core) Xray-core服务端  
   
 以及上面的部分包的依赖包。  

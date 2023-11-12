@@ -120,6 +120,9 @@
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
+  <data name="ConfirmClearLog" xml:space="preserve">
+    <value>Clear log?</value>
+  </data>
   <data name="ConfirmLoadFileContent" xml:space="preserve">
     <value>Load file [{0}]?</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="KeywordIsTooLong" xml:space="preserve">
     <value>Max keyword length is 100 character.</value>
+  </data>
+  <data name="Log" xml:space="preserve">
+    <value>Log</value>
   </data>
   <data name="NoMatchResult" xml:space="preserve">
     <value>No match result!</value>

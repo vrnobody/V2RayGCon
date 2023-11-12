@@ -10,6 +10,7 @@ namespace ProxySetter.Services
         PsSettings setting;
         PacServer pacServer;
         ServerTracker serverTracker;
+        TunaServer tunaServer;
 
         VgcApis.Interfaces.Services.IApiService vgcApi;
         Model.Data.ProxySettings orgSysProxySetting;
@@ -33,6 +34,7 @@ namespace ProxySetter.Services
             var vgcServer = api.GetServersService();
             var vgcNotifier = api.GetNotifierService();
 
+            tunaServer = new TunaServer();
             pacServer = new PacServer();
             setting = new PsSettings();
             serverTracker = new ServerTracker();
@@ -40,6 +42,7 @@ namespace ProxySetter.Services
             // dependency injection
             setting.Run(vgcSetting);
             pacServer.Run(setting);
+            tunaServer.Run(vgcApi, setting);
 
             serverTracker.OnSysProxyChanged += UpdateMenuItemCheckedStatHandler;
             serverTracker.Run(setting, pacServer, vgcServer, vgcNotifier);
@@ -55,7 +58,12 @@ namespace ProxySetter.Services
 
             VgcApis.Misc.UI.Invoke(() =>
             {
-                formMain = Views.WinForms.FormMain.CreateForm(setting, pacServer, serverTracker);
+                formMain = Views.WinForms.FormMain.CreateForm(
+                    setting,
+                    tunaServer,
+                    pacServer,
+                    serverTracker
+                );
                 formMain.FormClosed += (s, a) => formMain = null;
                 formMain.Show();
             });
@@ -70,6 +78,7 @@ namespace ProxySetter.Services
             serverTracker.OnSysProxyChanged -= UpdateMenuItemCheckedStatHandler;
             VgcApis.Misc.UI.CloseFormIgnoreError(formMain);
             serverTracker.Cleanup();
+            tunaServer?.Dispose();
             pacServer.Cleanup();
             setting.Cleanup();
             FileLogger.Info("ProxySetter: restore sys proxy settings");
@@ -78,6 +87,8 @@ namespace ProxySetter.Services
         }
 
         public ToolStripMenuItem[] GetSubMenu() => GenSubMenu();
+
+        public ToolStripMenuItem GetTunaMenu() => tunaServer.GetMenu();
         #endregion
 
         #region private methods

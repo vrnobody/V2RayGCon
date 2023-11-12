@@ -4,14 +4,8 @@ namespace ProxySetter.Controllers.VGCPluginComponents
 {
     class TabUsage : ComponentCtrl
     {
-        public TabUsage(LinkLabel linkLableTxthinkingPac, TextBox tboxReadme)
+        public TabUsage(TextBox tboxReadme)
         {
-            linkLableTxthinkingPac.Click += (s, a) =>
-                VgcApis.Misc.UI.VisitUrl(
-                    Resources.Langs.I18N.VisitTxthinkingGithub,
-                    Resources.Langs.StrConst.TxthinkingPacProjectUrl
-                );
-
             tboxReadme.Text = Resources.Langs.I18N.UsageReadme;
         }
 

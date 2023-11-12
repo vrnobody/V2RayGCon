@@ -7,6 +7,7 @@ namespace ProxySetter.Views.WinForms
     partial class FormMain : Form
     {
         readonly Services.PsSettings setting;
+        readonly Services.TunaServer tunaServer;
         readonly Services.PacServer pacServer;
         readonly Services.ServerTracker servTracker;
 
@@ -15,6 +16,7 @@ namespace ProxySetter.Views.WinForms
 
         public static FormMain CreateForm(
             Services.PsSettings setting,
+            Services.TunaServer tunaServer,
             Services.PacServer pacServer,
             Services.ServerTracker servTracker
         )
@@ -22,18 +24,20 @@ namespace ProxySetter.Views.WinForms
             FormMain r = null;
             VgcApis.Misc.UI.Invoke(() =>
             {
-                r = new FormMain(setting, pacServer, servTracker);
+                r = new FormMain(setting, tunaServer, pacServer, servTracker);
             });
             return r;
         }
 
         FormMain(
             Services.PsSettings setting,
+            Services.TunaServer tunaServer,
             Services.PacServer pacServer,
             Services.ServerTracker servTracker
         )
         {
             this.setting = setting;
+            this.tunaServer = tunaServer;
             this.pacServer = pacServer;
             this.servTracker = servTracker;
 
@@ -119,11 +123,27 @@ namespace ProxySetter.Views.WinForms
             var ctrl = new Controllers.FormVGCPluginCtrl();
 
             ctrl.Plug(
-                new Controllers.VGCPluginComponents.TabUsage(
-                    linkLabelUsageTxthinkingPac,
-                    tboxUsageReadMe
+                new Controllers.VGCPluginComponents.TabTuna(
+                    setting,
+                    tunaServer,
+                    lbTunaStatus,
+                    tboxTunaProxy,
+                    tboxTunaNicIp,
+                    tboxTunaTunIp,
+                    tboxTunaDns,
+                    tboxTunaExePath,
+                    tboxTunaTunName,
+                    chkTunaAutoUpdateArguments,
+                    chkTunaDebug,
+                    rtboxTunaStartupScript,
+                    btnTunaBrowseExe,
+                    btnTunaDetect,
+                    btnTunaStart,
+                    btnTunaStop
                 )
             );
+
+            ctrl.Plug(new Controllers.VGCPluginComponents.TabUsage(tboxUsageReadMe));
 
             ctrl.Plug(
                 new Controllers.VGCPluginComponents.TabStatus(

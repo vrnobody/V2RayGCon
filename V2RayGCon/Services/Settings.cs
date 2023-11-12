@@ -749,6 +749,22 @@ namespace V2RayGCon.Services
         #endregion
 
         #region public methods
+        public string sendThroughHost = "";
+
+        /// <summary>
+        /// Return false if not changed.
+        /// </summary>
+        /// <param name="host">IP address</param>
+        /// <returns>false if not changed</returns>
+        public bool SetSendThrough(string host)
+        {
+            if (host == sendThroughHost)
+            {
+                return false;
+            }
+            sendThroughHost = host;
+            return true;
+        }
 
         bool _isScreenLocked = false;
 

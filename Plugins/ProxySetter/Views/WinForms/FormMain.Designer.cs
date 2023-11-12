@@ -75,10 +75,29 @@
             this.tabUsage = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.tboxUsageReadMe = new System.Windows.Forms.TextBox();
-            this.linkLabelUsageTxthinkingPac = new System.Windows.Forms.LinkLabel();
+            this.tabTun = new System.Windows.Forms.TabPage();
+            this.chkTunaDebug = new System.Windows.Forms.CheckBox();
+            this.chkTunaAutoUpdateArguments = new System.Windows.Forms.CheckBox();
+            this.btnTunaBrowseExe = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.rtboxTunaStartupScript = new System.Windows.Forms.RichTextBox();
+            this.lbTunaStatus = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tboxTunaTunName = new System.Windows.Forms.TextBox();
+            this.tboxTunaExePath = new System.Windows.Forms.TextBox();
+            this.tboxTunaDns = new System.Windows.Forms.TextBox();
+            this.tboxTunaTunIp = new System.Windows.Forms.TextBox();
+            this.tboxTunaNicIp = new System.Windows.Forms.TextBox();
+            this.tboxTunaProxy = new System.Windows.Forms.TextBox();
+            this.btnTunaStop = new System.Windows.Forms.Button();
+            this.btnTunaStart = new System.Windows.Forms.Button();
+            this.btnTunaDetect = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -96,6 +115,9 @@
             this.tabUsage.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.tabTun.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -113,6 +135,7 @@
             this.tabControl1.Controls.Add(this.tabBasic);
             this.tabControl1.Controls.Add(this.tabPac);
             this.tabControl1.Controls.Add(this.tabUsage);
+            this.tabControl1.Controls.Add(this.tabTun);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.toolTip1.SetToolTip(this.tabControl1, resources.GetString("tabControl1.ToolTip"));
@@ -452,19 +475,10 @@
             // groupBox5
             // 
             resources.ApplyResources(this.groupBox5, "groupBox5");
-            this.groupBox5.Controls.Add(this.label5);
             this.groupBox5.Controls.Add(this.tboxUsageReadMe);
-            this.groupBox5.Controls.Add(this.linkLabelUsageTxthinkingPac);
-            this.groupBox5.Controls.Add(this.label7);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.TabStop = false;
             this.toolTip1.SetToolTip(this.groupBox5, resources.GetString("groupBox5.ToolTip"));
-            // 
-            // label5
-            // 
-            resources.ApplyResources(this.label5, "label5");
-            this.label5.Name = "label5";
-            this.toolTip1.SetToolTip(this.label5, resources.GetString("label5.ToolTip"));
             // 
             // tboxUsageReadMe
             // 
@@ -473,18 +487,166 @@
             this.tboxUsageReadMe.ReadOnly = true;
             this.toolTip1.SetToolTip(this.tboxUsageReadMe, resources.GetString("tboxUsageReadMe.ToolTip"));
             // 
-            // linkLabelUsageTxthinkingPac
+            // tabTun
             // 
-            resources.ApplyResources(this.linkLabelUsageTxthinkingPac, "linkLabelUsageTxthinkingPac");
-            this.linkLabelUsageTxthinkingPac.Name = "linkLabelUsageTxthinkingPac";
-            this.linkLabelUsageTxthinkingPac.TabStop = true;
-            this.toolTip1.SetToolTip(this.linkLabelUsageTxthinkingPac, resources.GetString("linkLabelUsageTxthinkingPac.ToolTip"));
+            resources.ApplyResources(this.tabTun, "tabTun");
+            this.tabTun.Controls.Add(this.chkTunaDebug);
+            this.tabTun.Controls.Add(this.chkTunaAutoUpdateArguments);
+            this.tabTun.Controls.Add(this.btnTunaBrowseExe);
+            this.tabTun.Controls.Add(this.panel3);
+            this.tabTun.Controls.Add(this.lbTunaStatus);
+            this.tabTun.Controls.Add(this.label11);
+            this.tabTun.Controls.Add(this.label12);
+            this.tabTun.Controls.Add(this.label10);
+            this.tabTun.Controls.Add(this.label7);
+            this.tabTun.Controls.Add(this.label5);
+            this.tabTun.Controls.Add(this.tboxTunaTunName);
+            this.tabTun.Controls.Add(this.tboxTunaExePath);
+            this.tabTun.Controls.Add(this.tboxTunaDns);
+            this.tabTun.Controls.Add(this.tboxTunaTunIp);
+            this.tabTun.Controls.Add(this.tboxTunaNicIp);
+            this.tabTun.Controls.Add(this.tboxTunaProxy);
+            this.tabTun.Controls.Add(this.btnTunaStop);
+            this.tabTun.Controls.Add(this.btnTunaStart);
+            this.tabTun.Controls.Add(this.btnTunaDetect);
+            this.tabTun.Name = "tabTun";
+            this.toolTip1.SetToolTip(this.tabTun, resources.GetString("tabTun.ToolTip"));
+            this.tabTun.UseVisualStyleBackColor = true;
+            // 
+            // chkTunaDebug
+            // 
+            resources.ApplyResources(this.chkTunaDebug, "chkTunaDebug");
+            this.chkTunaDebug.Name = "chkTunaDebug";
+            this.toolTip1.SetToolTip(this.chkTunaDebug, resources.GetString("chkTunaDebug.ToolTip"));
+            this.chkTunaDebug.UseVisualStyleBackColor = true;
+            // 
+            // chkTunaAutoUpdateArguments
+            // 
+            resources.ApplyResources(this.chkTunaAutoUpdateArguments, "chkTunaAutoUpdateArguments");
+            this.chkTunaAutoUpdateArguments.Name = "chkTunaAutoUpdateArguments";
+            this.toolTip1.SetToolTip(this.chkTunaAutoUpdateArguments, resources.GetString("chkTunaAutoUpdateArguments.ToolTip"));
+            this.chkTunaAutoUpdateArguments.UseVisualStyleBackColor = true;
+            // 
+            // btnTunaBrowseExe
+            // 
+            resources.ApplyResources(this.btnTunaBrowseExe, "btnTunaBrowseExe");
+            this.btnTunaBrowseExe.Name = "btnTunaBrowseExe";
+            this.toolTip1.SetToolTip(this.btnTunaBrowseExe, resources.GetString("btnTunaBrowseExe.ToolTip"));
+            this.btnTunaBrowseExe.UseVisualStyleBackColor = true;
+            // 
+            // panel3
+            // 
+            resources.ApplyResources(this.panel3, "panel3");
+            this.panel3.Controls.Add(this.groupBox6);
+            this.panel3.Name = "panel3";
+            this.toolTip1.SetToolTip(this.panel3, resources.GetString("panel3.ToolTip"));
+            // 
+            // groupBox6
+            // 
+            resources.ApplyResources(this.groupBox6, "groupBox6");
+            this.groupBox6.Controls.Add(this.rtboxTunaStartupScript);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.TabStop = false;
+            this.toolTip1.SetToolTip(this.groupBox6, resources.GetString("groupBox6.ToolTip"));
+            // 
+            // rtboxTunaStartupScript
+            // 
+            resources.ApplyResources(this.rtboxTunaStartupScript, "rtboxTunaStartupScript");
+            this.rtboxTunaStartupScript.Name = "rtboxTunaStartupScript";
+            this.toolTip1.SetToolTip(this.rtboxTunaStartupScript, resources.GetString("rtboxTunaStartupScript.ToolTip"));
+            // 
+            // lbTunaStatus
+            // 
+            resources.ApplyResources(this.lbTunaStatus, "lbTunaStatus");
+            this.lbTunaStatus.Name = "lbTunaStatus";
+            this.toolTip1.SetToolTip(this.lbTunaStatus, resources.GetString("lbTunaStatus.ToolTip"));
+            // 
+            // label11
+            // 
+            resources.ApplyResources(this.label11, "label11");
+            this.label11.Name = "label11";
+            this.toolTip1.SetToolTip(this.label11, resources.GetString("label11.ToolTip"));
+            // 
+            // label12
+            // 
+            resources.ApplyResources(this.label12, "label12");
+            this.label12.Name = "label12";
+            this.toolTip1.SetToolTip(this.label12, resources.GetString("label12.ToolTip"));
+            // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.Name = "label10";
+            this.toolTip1.SetToolTip(this.label10, resources.GetString("label10.ToolTip"));
             // 
             // label7
             // 
             resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
             this.toolTip1.SetToolTip(this.label7, resources.GetString("label7.ToolTip"));
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            this.toolTip1.SetToolTip(this.label5, resources.GetString("label5.ToolTip"));
+            // 
+            // tboxTunaTunName
+            // 
+            resources.ApplyResources(this.tboxTunaTunName, "tboxTunaTunName");
+            this.tboxTunaTunName.Name = "tboxTunaTunName";
+            this.toolTip1.SetToolTip(this.tboxTunaTunName, resources.GetString("tboxTunaTunName.ToolTip"));
+            // 
+            // tboxTunaExePath
+            // 
+            resources.ApplyResources(this.tboxTunaExePath, "tboxTunaExePath");
+            this.tboxTunaExePath.Name = "tboxTunaExePath";
+            this.toolTip1.SetToolTip(this.tboxTunaExePath, resources.GetString("tboxTunaExePath.ToolTip"));
+            // 
+            // tboxTunaDns
+            // 
+            resources.ApplyResources(this.tboxTunaDns, "tboxTunaDns");
+            this.tboxTunaDns.Name = "tboxTunaDns";
+            this.toolTip1.SetToolTip(this.tboxTunaDns, resources.GetString("tboxTunaDns.ToolTip"));
+            // 
+            // tboxTunaTunIp
+            // 
+            resources.ApplyResources(this.tboxTunaTunIp, "tboxTunaTunIp");
+            this.tboxTunaTunIp.Name = "tboxTunaTunIp";
+            this.toolTip1.SetToolTip(this.tboxTunaTunIp, resources.GetString("tboxTunaTunIp.ToolTip"));
+            // 
+            // tboxTunaNicIp
+            // 
+            resources.ApplyResources(this.tboxTunaNicIp, "tboxTunaNicIp");
+            this.tboxTunaNicIp.Name = "tboxTunaNicIp";
+            this.toolTip1.SetToolTip(this.tboxTunaNicIp, resources.GetString("tboxTunaNicIp.ToolTip"));
+            // 
+            // tboxTunaProxy
+            // 
+            resources.ApplyResources(this.tboxTunaProxy, "tboxTunaProxy");
+            this.tboxTunaProxy.Name = "tboxTunaProxy";
+            this.toolTip1.SetToolTip(this.tboxTunaProxy, resources.GetString("tboxTunaProxy.ToolTip"));
+            // 
+            // btnTunaStop
+            // 
+            resources.ApplyResources(this.btnTunaStop, "btnTunaStop");
+            this.btnTunaStop.Name = "btnTunaStop";
+            this.toolTip1.SetToolTip(this.btnTunaStop, resources.GetString("btnTunaStop.ToolTip"));
+            this.btnTunaStop.UseVisualStyleBackColor = true;
+            // 
+            // btnTunaStart
+            // 
+            resources.ApplyResources(this.btnTunaStart, "btnTunaStart");
+            this.btnTunaStart.Name = "btnTunaStart";
+            this.toolTip1.SetToolTip(this.btnTunaStart, resources.GetString("btnTunaStart.ToolTip"));
+            this.btnTunaStart.UseVisualStyleBackColor = true;
+            // 
+            // btnTunaDetect
+            // 
+            resources.ApplyResources(this.btnTunaDetect, "btnTunaDetect");
+            this.btnTunaDetect.Name = "btnTunaDetect";
+            this.toolTip1.SetToolTip(this.btnTunaDetect, resources.GetString("btnTunaDetect.ToolTip"));
+            this.btnTunaDetect.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
@@ -534,6 +696,10 @@
             this.panel2.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.tabTun.ResumeLayout(false);
+            this.tabTun.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -580,12 +746,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnBasicViewInNotepad;
         private System.Windows.Forms.TabPage tabUsage;
-        private System.Windows.Forms.TextBox tboxUsageReadMe;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.LinkLabel linkLabelUsageTxthinkingPac;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button btnSetSortWhitelist;
         private System.Windows.Forms.Button btnSetSortBlacklist;
         private System.Windows.Forms.CheckBox chkBasicUseHotkey;
@@ -594,5 +755,29 @@
         private System.Windows.Forms.TextBox tboxBasicHotkey;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox tboxUsageReadMe;
+        private System.Windows.Forms.TabPage tabTun;
+        private System.Windows.Forms.Label lbTunaStatus;
+        private System.Windows.Forms.RichTextBox rtboxTunaStartupScript;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tboxTunaTunIp;
+        private System.Windows.Forms.TextBox tboxTunaNicIp;
+        private System.Windows.Forms.TextBox tboxTunaProxy;
+        private System.Windows.Forms.Button btnTunaStop;
+        private System.Windows.Forms.Button btnTunaStart;
+        private System.Windows.Forms.Button btnTunaDetect;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btnTunaBrowseExe;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox tboxTunaExePath;
+        private System.Windows.Forms.TextBox tboxTunaDns;
+        private System.Windows.Forms.CheckBox chkTunaAutoUpdateArguments;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox tboxTunaTunName;
+        private System.Windows.Forms.CheckBox chkTunaDebug;
     }
 }

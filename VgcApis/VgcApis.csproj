@@ -162,6 +162,12 @@
     <Compile Include="WinForms\FormSearch.Designer.cs">
       <DependentUpon>FormSearch.cs</DependentUpon>
     </Compile>
+    <Compile Include="WinForms\FormLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\FormLog.Designer.cs">
+      <DependentUpon>FormLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="WinForms\HotKeyWindow.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +191,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\FormSearch.zh-CN.resx">
       <DependentUpon>FormSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\FormLog.resx">
+      <DependentUpon>FormLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\FormLog.zh-CN.resx">
+      <DependentUpon>FormLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -275,6 +275,7 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
         #region protected methods
         protected override void Cleanup()
         {
+            VgcApis.Misc.UI.CloseFormIgnoreError(formSearch);
             ReleaseEditorEvents();
         }
 

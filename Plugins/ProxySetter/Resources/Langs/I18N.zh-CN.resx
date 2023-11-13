@@ -136,7 +136,8 @@
     <value>完成</value>
   </data>
   <data name="ExeNotFound" xml:space="preserve">
-    <value>Exe文件不存在！</value>
+    <value>Exe文件不存在！
+{0}</value>
   </data>
   <data name="Failed" xml:space="preserve">
     <value>失败</value>
@@ -176,6 +177,9 @@
   </data>
   <data name="ParseKeyCodeFail" xml:space="preserve">
     <value>尝试解释热键名失败！请检查ProxySetter的热键设置。</value>
+  </data>
+  <data name="PleaseConfigTunaFirst" xml:space="preserve">
+    <value>请先在本插件的选项窗口中配置Tuna，并生成启动参数。</value>
   </data>
   <data name="RegHotKeySuccess" xml:space="preserve">
     <value>热键设置成功！</value>

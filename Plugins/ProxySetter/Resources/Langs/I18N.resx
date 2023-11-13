@@ -136,7 +136,8 @@
     <value>Done.</value>
   </data>
   <data name="ExeNotFound" xml:space="preserve">
-    <value>Exe file not exists!</value>
+    <value>Exe file not found!
+{0}</value>
   </data>
   <data name="Failed" xml:space="preserve">
     <value>Failed!</value>
@@ -178,6 +179,10 @@
     <value>Try to parse hotkey fail!
 Please check hotkey settings in ProxySetter plug-in.</value>
   </data>
+  <data name="PleaseConfigTunaFirst" xml:space="preserve">
+    <value>Please config Tuna in option window of this plug-in.
+And then click generate-button.</value>
+  </data>
   <data name="RegHotKeySuccess" xml:space="preserve">
     <value>Register hot key success!</value>
   </data>
@@ -202,7 +207,7 @@ Please check port setting.</value>
     <value>System proxy setting updated.</value>
   </data>
   <data name="TunaIsRunning" xml:space="preserve">
-    <value>Tuna is running</value>
+    <value>Tuna is running.</value>
   </data>
   <data name="TunaStarts" xml:space="preserve">
     <value>Tuna starts.</value>

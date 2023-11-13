@@ -115,7 +115,8 @@ namespace ProxySetter.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 Exe file not exists! 的本地化字符串。
+        ///   查找类似 Exe file not found!
+        ///{0} 的本地化字符串。
         /// </summary>
         internal static string ExeNotFound {
             get {
@@ -242,6 +243,16 @@ namespace ProxySetter.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Please config Tuna in option window of this plug-in.
+        ///And then click generate-button. 的本地化字符串。
+        /// </summary>
+        internal static string PleaseConfigTunaFirst {
+            get {
+                return ResourceManager.GetString("PleaseConfigTunaFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Register hot key success! 的本地化字符串。
         /// </summary>
         internal static string RegHotKeySuccess {
@@ -307,7 +318,7 @@ namespace ProxySetter.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 Tuna is running 的本地化字符串。
+        ///   查找类似 Tuna is running. 的本地化字符串。
         /// </summary>
         internal static string TunaIsRunning {
             get {

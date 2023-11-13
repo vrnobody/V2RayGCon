@@ -129,14 +129,22 @@ namespace ProxySetter.Services
                 return;
             }
 
+            var ts = settings.GetTunaSettings();
+            if (!File.Exists(ts.exe))
+            {
+                var msg = string.Format(I18N.ExeNotFound, ts.exe);
+                VgcApis.Misc.UI.MsgBox(msg);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(ts.startupScript))
+            {
+                VgcApis.Misc.UI.MsgBox(I18N.PleaseConfigTunaFirst);
+                return;
+            }
+
             try
             {
-                var ts = settings.GetTunaSettings();
-                if (!File.Exists(ts.exe))
-                {
-                    settings.SendLog(I18N.ExeNotFound);
-                    return;
-                }
                 if (ts.autoGenArgs && UpdateTunaSettings(ts))
                 {
                     settings.SaveTunaSettings(ts);
@@ -267,25 +275,24 @@ namespace ProxySetter.Services
             var path = Path.GetFullPath(tunaSettings.exe);
             var dir = Path.GetDirectoryName(path);
 
-            var winStyle = tunaSettings.isDebug
-                ? ProcessWindowStyle.Normal
-                : ProcessWindowStyle.Hidden;
-
             var p = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    WindowStyle = winStyle,
                     Verb = "runas",
                     FileName = path,
                     Arguments = args,
                     CreateNoWindow = !tunaSettings.isDebug,
                     UseShellExecute = true,
                     WorkingDirectory = dir,
-                }
+                },
+                EnableRaisingEvents = true,
             };
 
-            p.EnableRaisingEvents = true;
+            if (!tunaSettings.isDebug)
+            {
+                p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            }
 
             p.Exited += (s, a) => isRunning = false;
 

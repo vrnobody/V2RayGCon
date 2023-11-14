@@ -176,7 +176,7 @@ namespace V2RayGCon.Models.Datas
         // 预计2024-06删除
         void FixImportOptions()
         {
-            if (!string.IsNullOrEmpty(ImportOptions.DefaultCoreName))
+            if (!string.IsNullOrEmpty(ImportOptions.DefaultInboundName))
             {
                 return;
             }

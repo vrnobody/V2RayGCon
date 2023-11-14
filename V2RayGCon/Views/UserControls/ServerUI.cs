@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
@@ -64,6 +66,7 @@ namespace V2RayGCon.Views.UserControls
 
             ResetControls();
 
+            this.MouseEnter += ShowCtrlBtn;
             foreach (Control item in this.Controls)
             {
                 item.MouseEnter += ShowCtrlBtn;
@@ -106,9 +109,57 @@ namespace V2RayGCon.Views.UserControls
             cs.OnPropertyChanged -= OnCorePropertyChangesHandler;
         }
 
-        async void ShowCtrlBtn(object sender, EventArgs args)
+        static ServerUI currentServerUI = null;
+        static AutoResetEvent areHideButtons = new AutoResetEvent(true);
+
+        void ShowCtrlBtn(object sender, EventArgs args)
         {
-            await SetCtrlButtonsVisiblityLater(true);
+            var that = this;
+            currentServerUI = that;
+
+            if (!IsButtonsVisible())
+            {
+                SetCtrlButtonsVisiblity(true);
+            }
+
+            if (!areHideButtons.WaitOne(0))
+            {
+                return;
+            }
+
+            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            {
+                if (!(that.Parent is FlowLayoutPanel parent))
+                {
+                    areHideButtons.Set();
+                    return;
+                }
+
+                VgcApis.Misc.Utils.Sleep(500);
+                try
+                {
+                    that.Invoke(
+                        (MethodInvoker)
+                            delegate
+                            {
+                                var children = parent.Controls.OfType<ServerUI>();
+                                foreach (var child in children)
+                                {
+                                    if (
+                                        child != currentServerUI
+                                        && !child.IsDisposed
+                                        && child.IsButtonsVisible()
+                                    )
+                                    {
+                                        child.SetCtrlButtonsVisiblity(false);
+                                    }
+                                }
+                            }
+                    );
+                }
+                catch { }
+                areHideButtons.Set();
+            });
         }
 
         private void BindCoreCtrlEvents(VgcApis.Interfaces.ICoreServCtrl cs)
@@ -131,28 +182,7 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region private method
-        bool isCtrlBtnVisable = false;
 
-        async Task SetCtrlButtonsVisiblityLater(bool isVisable)
-        {
-            isCtrlBtnVisable = isVisable;
-            await Task.Delay(200);
-            SetCtrlButtonsVisiblity(isCtrlBtnVisable);
-        }
-
-        void SetCtrlButtonsVisiblity(bool isVisable)
-        {
-            try
-            {
-                if (btnStart.Visible != isVisable)
-                {
-                    btnStart.Visible = isVisable;
-                    btnStop.Visible = isVisable;
-                    btnMenu.Visible = isVisable;
-                }
-            }
-            catch { }
-        }
 
         void ShowModifyConfigsWinForm() => WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);
 
@@ -655,6 +685,22 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region public method
+        public bool IsButtonsVisible() => btnStart.Visible;
+
+        public void SetCtrlButtonsVisiblity(bool isVisable)
+        {
+            try
+            {
+                if (btnStart.Visible != isVisable)
+                {
+                    btnStart.Visible = isVisable;
+                    btnStop.Visible = isVisable;
+                    btnMenu.Visible = isVisable;
+                }
+            }
+            catch { }
+        }
+
         public void Rebind(VgcApis.Interfaces.ICoreServCtrl coreServCtrl)
         {
             ReleaseCoreCtrlEvents(this.coreServCtrl);
@@ -694,6 +740,8 @@ namespace V2RayGCon.Views.UserControls
             ReleaseCoreCtrlEvents(this.coreServCtrl);
             lazyUiUpdater?.Dispose();
             lazyHighlighter?.Dispose();
+
+            this.MouseEnter -= ShowCtrlBtn;
             foreach (Control item in this.Controls)
             {
                 item.MouseEnter -= ShowCtrlBtn;
@@ -823,16 +871,6 @@ namespace V2RayGCon.Views.UserControls
         private void lbLastModifyDate_MouseDown(object sender, MouseEventArgs e)
         {
             UserMouseDown();
-        }
-
-        private async void ServerUI_MouseEnter(object sender, EventArgs e)
-        {
-            await SetCtrlButtonsVisiblityLater(true);
-        }
-
-        private async void ServerUI_MouseLeave(object sender, EventArgs e)
-        {
-            await SetCtrlButtonsVisiblityLater(false);
         }
 
         private void btnShowPopupMenu_Click(object sender, EventArgs e)

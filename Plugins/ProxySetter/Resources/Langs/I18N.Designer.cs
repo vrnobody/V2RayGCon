@@ -357,6 +357,8 @@ namespace ProxySetter.Resources.Langs {
         ///   查找类似 In order to use Tuna, you have to download these two binaries:
         ///https://www.wintun.net/
         ///https://github.com/xjasonlyu/tun2socks
+        ///Tuna only supports IPv4! 
+        ///You have to modify arguments manully to support IPv6. 
         ///
         ///This plug-in use the following project as the default PAC source.
         ///https://github.com/txthinking/blackwhite
@@ -373,11 +375,7 @@ namespace ProxySetter.Resources.Langs {
         ///192.168.1.0/24
         ///
         ///
-        ///// remove domain or IP or CIDR
-        ///
-        ///-example.com
-        ///-192.168.1.1
-        ///-192.168.1.0/24 的本地化字符串。
+        ///// remove domain or IP or CI [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string UsageReadme {
             get {

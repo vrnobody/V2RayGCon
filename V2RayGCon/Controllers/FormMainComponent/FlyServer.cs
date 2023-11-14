@@ -772,9 +772,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void OnRequireFlyPanelReloadHandler(object sender, EventArgs args) =>
             RefreshFlyPanelLater();
 
-        void OnRequireFlyPanelUpdateHandler(object sender, EventArgs args) =>
-            RefreshFlyPanelLater();
-
         private void BindDragDropEvent()
         {
             flyPanel.DragEnter += (s, a) =>

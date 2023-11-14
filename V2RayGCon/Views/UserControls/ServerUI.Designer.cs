@@ -423,8 +423,6 @@
             this.Name = "ServerUI";
             this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ServerListItem_MouseDown);
-            this.MouseEnter += new System.EventHandler(this.ServerUI_MouseEnter);
-            this.MouseLeave += new System.EventHandler(this.ServerUI_MouseLeave);
             this.ctxMenuStripMore.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

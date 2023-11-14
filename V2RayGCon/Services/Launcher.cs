@@ -86,10 +86,10 @@ namespace V2RayGCon.Services
         void This_Function_Is_Used_For_Debugging()
         {
             // ShowPlugin(@"NeoLuna");
-            ShowPlugin(@"ProxySetter");
+            // ShowPlugin(@"ProxySetter");
 
-            Views.WinForms.FormLog.ShowForm();
-            // Views.WinForms.FormMain.ShowForm();
+            // Views.WinForms.FormLog.ShowForm();
+            Views.WinForms.FormMain.ShowForm();
 
             //notifier.InjectDebugMenuItem(new ToolStripMenuItem(
             //    "Debug",

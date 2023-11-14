@@ -218,6 +218,9 @@
     <value>使用Tuna前需要先下载以下两个软件：
 https://www.wintun.net/
 https://github.com/xjasonlyu/tun2socks
+Tuna自动生成的启动参数只支持IPv4，所以IPv6还是在裸奔
+需要手动修改启动参数才能支持IPv6
+tun会用到udp所以服务器的inbound最好是开启udp支持的socks协议
 
 这个插件的默认PAC是https://github.com/txthinking/blackwhite
 你可以在设置页面按以下格式修改默认PAC

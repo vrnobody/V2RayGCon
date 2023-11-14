@@ -193,14 +193,27 @@ namespace ProxySetter.Services
             var first = vgcServers
                 .GetAllServersOrderByIndex()
                 .FirstOrDefault(s => s.GetCoreCtrl().IsCoreRunning());
+
             if (first == null)
             {
                 return def;
             }
-            var inb = first.GetConfiger().GetInboundInfo();
-            var proto = inb.protocol == "socks" ? "socks5" : inb.protocol;
-            var host = VgcApis.Misc.Utils.FormatHost(inb.host);
-            return $"{proto}://{host}:{inb.port}";
+
+            var inbs = first.GetConfiger().GetAllInboundsInfo();
+            var info = inbs.FirstOrDefault(inb => inb.protocol == "socks");
+            if (info == null)
+            {
+                info = inbs.FirstOrDefault(inb => inb.protocol == "http");
+            }
+
+            if (info == null)
+            {
+                return def;
+            }
+
+            var proto = info.protocol == "socks" ? "socks5" : info.protocol;
+            var host = VgcApis.Misc.Utils.FormatHost(info.host);
+            return $"{proto}://{host}:{info.port}";
         }
 
         string[] GetFirstRoute(string tunIp)
@@ -263,10 +276,10 @@ namespace ProxySetter.Services
             ts.startupScript =
                 $"-device=\"{ts.tunName}\" \n"
                 + $"-proxy=\"{ts.proxy}\" \n"
-                + $"-tun-post-up=\"cmd /s /c \n"
-                + $"{setTunIp} \n"
-                + $"&& {setTunDns} \n"
-                + $"&& {setRouteTable}\"";
+                + $"-tun-post-up=\"cmd /c \n"
+                + $" {setTunIp}\n"
+                + (string.IsNullOrEmpty(ts.dns) ? "" : $" && {setTunDns}\n")
+                + $" && {setRouteTable}\"";
         }
 
         Process CreateTunProcess(Model.Data.TunaSettings tunaSettings)

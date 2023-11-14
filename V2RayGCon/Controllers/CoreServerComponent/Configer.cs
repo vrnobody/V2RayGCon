@@ -38,18 +38,28 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         #region public methods
-
         public VgcApis.Models.Datas.InboundInfo GetInboundInfo()
+        {
+            return GetAllInboundsInfo().FirstOrDefault();
+        }
+
+        public List<VgcApis.Models.Datas.InboundInfo> GetAllInboundsInfo()
         {
             var config = GetFinalConfig();
 
             if (VgcApis.Misc.Utils.IsYaml(config))
             {
-                return GetInboundInfoFromYaml(config);
+                var r = new List<VgcApis.Models.Datas.InboundInfo>();
+                var info = GetInboundInfoFromYaml(config);
+                if (info != null)
+                {
+                    r.Add(info);
+                }
+                return r;
             }
 
             var json = VgcApis.Misc.Utils.ParseJObject(config);
-            return GetInboundInfoFromJson(json);
+            return GetInboundsInfoFromJson(json);
         }
 
         public string GetShareLink()
@@ -111,22 +121,28 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             isSocks = false;
             port = 0;
 
-            var inbInfo = GetInboundInfo();
-            if (inbInfo == null)
+            var inbs = GetAllInboundsInfo();
+            var info = inbs.FirstOrDefault(inb => inb.protocol == "http");
+            if (info == null)
+            {
+                info = inbs.FirstOrDefault(inb => inb.protocol == "socks");
+            }
+
+            if (info == null)
             {
                 logger.Log(I18N.GetInboundInfoFail);
                 return false;
             }
 
-            var protocol = inbInfo.protocol ?? "";
-            port = inbInfo.port;
+            var protocol = info.protocol ?? "";
+            port = info.port;
 
             if (!IsProtocolMatchProxyRequirment(isGlobal, protocol))
             {
                 return false;
             }
 
-            isSocks = protocol.StartsWith("socks");
+            isSocks = protocol == "socks";
             return true;
         }
 
@@ -153,18 +169,15 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
             VgcApis.Misc.Utils.RunInBgSlim(() =>
             {
-                var inb = GetInboundInfo();
-                if (inb == null)
+                var lines = new List<string>() { name };
+
+                var inbs = GetAllInboundsInfo();
+                foreach (var inb in inbs)
                 {
-                    next(name);
-                    return;
+                    lines.Add($"{inb.protocol}://{inb.host}:{inb.port}");
                 }
-                if (string.IsNullOrEmpty(inb.host))
-                {
-                    next(string.Format("{0} {1}", name, inb.port));
-                    return;
-                }
-                next(string.Format("{0} {1}://{2}:{3}", name, inb.protocol, inb.host, inb.port));
+
+                next(string.Join(Environment.NewLine, lines));
             });
         }
 
@@ -238,29 +251,38 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return null;
         }
 
-        VgcApis.Models.Datas.InboundInfo GetInboundInfoFromJson(JObject json)
+        List<VgcApis.Models.Datas.InboundInfo> GetInboundsInfoFromJson(JObject json)
         {
+            var r = new List<VgcApis.Models.Datas.InboundInfo>();
             if (json == null)
             {
-                return null;
+                return r;
             }
 
-            foreach (var p in new string[] { "inbound", "inbounds.0" })
+            try
             {
-                var protocol = Misc.Utils.GetValue<string>(json, p, "protocol");
-                if (!string.IsNullOrEmpty(protocol))
+                var arr = json["inbounds"] as JArray;
+                foreach (JObject inb in arr)
                 {
-                    string host = Misc.Utils.GetValue<string>(json, p, "listen");
-                    return new VgcApis.Models.Datas.InboundInfo()
+                    if (inb == null)
                     {
-                        protocol = protocol,
-                        host = host ?? VgcApis.Models.Consts.Webs.LoopBackIP,
-                        port = Misc.Utils.GetValue<int>(json, p, "port")
+                        continue;
+                    }
+                    var info = new VgcApis.Models.Datas.InboundInfo()
+                    {
+                        protocol = Misc.Utils.GetValue<string>(inb, "protocol"),
+                        host = Misc.Utils.GetValue<string>(inb, "listen"),
+                        port = Misc.Utils.GetValue<int>(inb, "port"),
                     };
+                    if (!string.IsNullOrEmpty(info.protocol) && !string.IsNullOrEmpty(info.host))
+                    {
+                        r.Add(info);
+                    }
                 }
             }
+            catch { }
 
-            return null;
+            return r;
         }
 
         VgcApis.Models.Datas.InboundInfo GetInboundInfoFromYaml(string config)

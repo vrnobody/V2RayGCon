@@ -468,14 +468,16 @@ namespace V2RayGCon.Views.UserControls
 
         void UpdateInboundModeLabel(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreState)
         {
-            var name = coreState.GetInboundName();
-            var tooltip = name;
-
-            var info = coreServCtrl.GetConfiger().GetInboundInfo();
-            if (info != null)
+            var inbs = coreServCtrl.GetConfiger().GetAllInboundsInfo();
+            var lines = new List<string>();
+            for (int i = 0; i < inbs.Count(); i++)
             {
-                tooltip = $"inbound -> {info.protocol}://{info.host}:{info.port}";
+                var info = inbs[i];
+                lines.Add($"inbound[{i}] -> {info.protocol}://{info.host}:{info.port}");
             }
+
+            var name = coreState.GetInboundName();
+            var tooltip = lines.Count() > 0 ? string.Join(Environment.NewLine, lines) : name;
 
             UpdateControlTextAndTooltip(rlbInboundMode, name, tooltip);
         }

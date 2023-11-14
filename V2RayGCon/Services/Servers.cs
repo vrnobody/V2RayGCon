@@ -304,13 +304,16 @@ namespace V2RayGCon.Services
         /// <returns></returns>
         public int GetAvailableHttpProxyPort()
         {
-            List<ICoreServCtrl> list = GetRunningServers();
-
-            foreach (var serv in list)
+            var servs = GetRunningServers();
+            foreach (var serv in servs)
             {
-                if (serv.GetConfiger().IsSuitableToBeUsedAsSysProxy(true, out _, out int port))
+                var inbs = serv.GetConfiger().GetAllInboundsInfo();
+                foreach (var inb in inbs)
                 {
-                    return port;
+                    if (inb.protocol == "http")
+                    {
+                        return inb.port;
+                    }
                 }
             }
             return -1;

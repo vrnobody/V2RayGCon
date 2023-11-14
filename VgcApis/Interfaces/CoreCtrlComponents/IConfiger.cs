@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace VgcApis.Interfaces.CoreCtrlComponents
 {
@@ -9,6 +10,8 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         /// </summary>
         /// <returns>inbound信息</returns>
         Models.Datas.InboundInfo GetInboundInfo();
+
+        List<Models.Datas.InboundInfo> GetAllInboundsInfo();
 
         /// <summary>
         /// 获取传给v2ray-core的最终配置

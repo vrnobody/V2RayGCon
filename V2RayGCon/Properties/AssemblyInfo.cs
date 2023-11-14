@@ -33,11 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.8.7.7")]
+[assembly: AssemblyVersion("1.8.7.8")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v1.8.7.8 Refactor speedtest pool.
 v1.8.7.7 Fix default inbound template name always reset to http bug.
 v1.8.7.6 Fix ServerUI buttons not auto hided bug.
 v1.8.7.5 Add Tuna in ProxySetter plug-in.

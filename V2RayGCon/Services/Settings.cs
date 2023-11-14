@@ -368,12 +368,7 @@ namespace V2RayGCon.Services
             }
         }
 
-        SemaphoreSlim _speedTestPool = null;
-        public SemaphoreSlim SpeedTestPool
-        {
-            get => _speedTestPool;
-            private set { }
-        }
+        public VgcApis.Libs.Tasks.TicketPool SpeedTestPool = new VgcApis.Libs.Tasks.TicketPool();
 
         public bool isSpeedtestCancelled = false;
 
@@ -1177,7 +1172,7 @@ namespace V2RayGCon.Services
         void UpdateSpeedTestPool()
         {
             var poolSize = userSettings.MaxConcurrentV2RayCoreNum;
-            _speedTestPool = new SemaphoreSlim(poolSize, poolSize);
+            SpeedTestPool.SetPoolSize(poolSize);
         }
 
         void InitPluginsSettingCache()

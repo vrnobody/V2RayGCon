@@ -80,7 +80,7 @@ namespace V2RayGCon.Services
         )
         {
             Interlocked.Increment(ref setting.SpeedtestCounter);
-            setting.SpeedTestPool.Wait();
+            setting.SpeedTestPool.WaitOne();
             var result = DoSpeedTest(
                 rawConfig,
                 "Custom speed-test",
@@ -89,7 +89,7 @@ namespace V2RayGCon.Services
                 testTimeout,
                 null
             );
-            setting.SpeedTestPool.Release();
+            setting.SpeedTestPool.ReturnOne();
             Interlocked.Decrement(ref setting.SpeedtestCounter);
             WakeupLatencyTester();
             return result.latency;
@@ -98,7 +98,7 @@ namespace V2RayGCon.Services
         public long RunSpeedTest(string rawConfig)
         {
             Interlocked.Increment(ref setting.SpeedtestCounter);
-            setting.SpeedTestPool.Wait();
+            setting.SpeedTestPool.WaitOne();
             var url = GetDefaultSpeedtestUrl();
             var r = DoSpeedTest(
                 rawConfig,
@@ -108,7 +108,7 @@ namespace V2RayGCon.Services
                 GetDefaultTimeout(),
                 null
             );
-            setting.SpeedTestPool.Release();
+            setting.SpeedTestPool.ReturnOne();
             Interlocked.Decrement(ref setting.SpeedtestCounter);
             WakeupLatencyTester();
             return r.latency;
@@ -315,7 +315,7 @@ namespace V2RayGCon.Services
 
         void WakeupLatencyTester()
         {
-            if (!setting.SpeedTestPool.Wait(0))
+            if (!setting.SpeedTestPool.TryTakeOne())
             {
                 return;
             }
@@ -324,17 +324,24 @@ namespace V2RayGCon.Services
             {
                 if (coreServ != null)
                 {
-                    VgcApis.Misc.Utils.RunInBgSlim(() => DoLatencyTestOnCore(coreServ));
+                    VgcApis.Misc.Utils.RunInBgSlim(() =>
+                    {
+                        DoLatencyTestOnCore(coreServ);
+                        setting.SpeedTestPool.ReturnOne();
+                        Interlocked.Decrement(ref setting.SpeedtestCounter);
+                        WakeupLatencyTester();
+                    });
                     // 预防有线程意外终止，补个线程
                     WakeupLatencyTester();
                     return;
                 }
                 else
                 {
+                    // ???
                     Interlocked.Decrement(ref setting.SpeedtestCounter);
                 }
             }
-            setting.SpeedTestPool.Release();
+            setting.SpeedTestPool.ReturnOne();
         }
 
         Models.Datas.SpeedTestConfigInfos CreateSpeedTestConfig(
@@ -456,10 +463,7 @@ namespace V2RayGCon.Services
                 avgDelay = TIMEOUT;
             }
             ShowCurrentSpeedtestResult(coreStates, coreLogger, I18N.AvgSpeedtestResult, avgDelay);
-            setting.SpeedTestPool.Release();
-            Interlocked.Decrement(ref setting.SpeedtestCounter);
             coreCtrl.ReleaseSpeedTestLock();
-            WakeupLatencyTester();
         }
         #endregion
     }

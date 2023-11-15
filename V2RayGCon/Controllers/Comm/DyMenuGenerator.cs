@@ -96,9 +96,11 @@ namespace V2RayGCon.Controllers.Comm
                     return;
                 }
 
-                List<ToolStripMenuItem> misLoadServ,
-                    misReplaceServ;
-                GenGroupedMenuItemList(servInfos, out misLoadServ, out misReplaceServ);
+                GenGroupedMenuItemList(
+                    servInfos,
+                    out List<ToolStripMenuItem> misLoadServ,
+                    out List<ToolStripMenuItem> misReplaceServ
+                );
                 var miRootReplace = miReplaceServer.DropDownItems;
                 var miRootLoad = miLoadServer.DropDownItems;
                 miRootLoad.AddRange(misLoadServ.ToArray());

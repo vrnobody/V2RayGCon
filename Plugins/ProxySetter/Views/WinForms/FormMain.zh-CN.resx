@@ -420,14 +420,26 @@
   <data name="tabUsage.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="rtboxTunaDns.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkTunaModifySendThrough.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkTunaModifySendThrough.Text" xml:space="preserve">
+    <value>修改</value>
+  </data>
+  <data name="chkTunaModifySendThrough.ToolTip" xml:space="preserve">
+    <value>修改服务器outbounds的sendThrough设置</value>
+  </data>
+  <data name="chkTunaEnableIpv6.ToolTip" xml:space="preserve">
+    <value>启用IPv6支持</value>
+  </data>
   <data name="chkTunaDebug.ToolTip" xml:space="preserve">
     <value>显示tun2socks窗口</value>
   </data>
-  <data name="chkTunaAutoUpdateArguments.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 16</value>
-  </data>
   <data name="chkTunaAutoUpdateArguments.Text" xml:space="preserve">
-    <value>自动更新参数</value>
+    <value>自动</value>
   </data>
   <data name="chkTunaAutoUpdateArguments.ToolTip" xml:space="preserve">
     <value>Tuna启动前根据网卡IP更新启动参数</value>
@@ -456,8 +468,14 @@
   <data name="lbTunaStatus.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 12</value>
+  </data>
+  <data name="label11.Text" xml:space="preserve">
+    <value>DNS</value>
+  </data>
   <data name="label11.ToolTip" xml:space="preserve">
-    <value />
+    <value>DNS服务器，每个一行</value>
   </data>
   <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 12</value>
@@ -468,11 +486,20 @@
   <data name="label12.ToolTip" xml:space="preserve">
     <value>TUN虚拟网卡的名字</value>
   </data>
+  <data name="label14.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label10.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="label13.Text" xml:space="preserve">
+    <value>网卡IPv6</value>
+  </data>
+  <data name="label13.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="label7.Text" xml:space="preserve">
-    <value>网卡IP</value>
+    <value>网卡IPv4</value>
   </data>
   <data name="label7.ToolTip" xml:space="preserve">
     <value />
@@ -489,13 +516,16 @@
   <data name="tboxTunaExePath.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="tboxTunaDns.ToolTip" xml:space="preserve">
+  <data name="tboxTunaTunIpv4.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="tboxTunaTunIp.ToolTip" xml:space="preserve">
+  <data name="tboxTunaTunIpv6.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="tboxTunaNicIp.ToolTip" xml:space="preserve">
+  <data name="tboxTunaNicIpv6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTunaNicIpv4.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="tboxTunaProxy.ToolTip" xml:space="preserve">

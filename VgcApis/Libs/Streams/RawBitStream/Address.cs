@@ -71,8 +71,7 @@ namespace VgcApis.Libs.Streams.RawBitStream
         IPAddress ParseIpAddress(string input)
         {
             // https://stackoverflow.com/questions/799060/how-to-determine-if-a-string-is-a-valid-ipv4-or-ipv6-address-in-c
-            IPAddress address;
-            if (IPAddress.TryParse(input, out address))
+            if (IPAddress.TryParse(input, out IPAddress address))
             {
                 switch (address.AddressFamily)
                 {

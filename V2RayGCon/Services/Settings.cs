@@ -744,20 +744,22 @@ namespace V2RayGCon.Services
         #endregion
 
         #region public methods
-        public string sendThroughHost = "";
+        string sendThroughHostIpv4 = "";
+
+        public string GetSendThroughIpv4() => sendThroughHostIpv4;
 
         /// <summary>
         /// Return false if not changed.
         /// </summary>
         /// <param name="host">IP address</param>
         /// <returns>false if not changed</returns>
-        public bool SetSendThrough(string host)
+        public bool SetSendThroughIpv4(string host)
         {
-            if (host == sendThroughHost)
+            if (host == sendThroughHostIpv4)
             {
                 return false;
             }
-            sendThroughHost = host;
+            sendThroughHostIpv4 = host;
             return true;
         }
 

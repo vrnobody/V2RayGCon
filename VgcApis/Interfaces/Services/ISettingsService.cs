@@ -4,7 +4,9 @@ namespace VgcApis.Interfaces.Services
 {
     public interface ISettingsService
     {
-        bool SetSendThrough(string host);
+        string GetSendThroughIpv4();
+
+        bool SetSendThroughIpv4(string host);
 
         void SaveUserSettingsNow();
 

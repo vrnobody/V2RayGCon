@@ -761,9 +761,29 @@ namespace VgcApis.Misc
         #endregion
 
         #region net
+        public static bool IsIpv6(string ip)
+        {
+            if (
+                !string.IsNullOrEmpty(ip)
+                && IPAddress.TryParse(ip, out var address)
+                && address != null
+            )
+            {
+                if (address.AddressFamily == AddressFamily.InterNetworkV6)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static string FormatHost(string host)
         {
-            if (IPAddress.TryParse(host, out var address))
+            if (
+                !string.IsNullOrEmpty(host)
+                && IPAddress.TryParse(host, out var address)
+                && address != null
+            )
             {
                 if (address.AddressFamily == AddressFamily.InterNetworkV6)
                 {
@@ -1259,28 +1279,6 @@ namespace VgcApis.Misc
             }
 
             return depth < keys.Length ? null : curPos;
-        }
-
-        public static bool WriteAllTextNow(string path, string contents)
-        {
-            // https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
-            try
-            {
-                // get the bytes
-                var data = Encoding.UTF8.GetBytes(contents);
-
-                // write the data to a temp file
-                using (var tempFile = File.Create(path, 4096, FileOptions.WriteThrough))
-                {
-                    tempFile.Write(data, 0, data.Length);
-                }
-                return true;
-            }
-            catch (Exception e)
-            {
-                Libs.Sys.FileLogger.Error($"WriteAllTextNow() exception: {e}");
-            }
-            return false;
         }
 
         /// <summary>

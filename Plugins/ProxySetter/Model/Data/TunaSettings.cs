@@ -4,13 +4,18 @@
     {
         public string tunName = "wintun";
         public string proxy = "";
-        public string nicIp = "";
-        public string tunIp = "";
+
+        public string nicIpv4 = "";
+        public string tunIpv4 = "";
+        public string tunIpv6 = "";
+
         public string startupScript = "";
-        public string dns = "8.8.8.8";
+        public string dns = "8.8.8.8\n2001:4860:4860::8888";
         public string exe = "3rd/tun2socks/tun2socks.exe";
         public bool autoGenArgs = false;
         public bool isDebug = false;
+        public bool isEnableIpv6 = false;
+        public bool isModifySendThrough = true;
 
         public TunaSettings() { }
 
@@ -18,15 +23,18 @@
         {
             if (
                 o == null
-                || isDebug != o.isDebug
                 || tunName != o.tunName
                 || proxy != o.proxy
-                || nicIp != o.nicIp
-                || tunIp != o.tunIp
+                || nicIpv4 != o.nicIpv4
+                || tunIpv4 != o.tunIpv4
+                || tunIpv6 != o.tunIpv6
                 || startupScript != o.startupScript
                 || dns != o.dns
                 || exe != o.exe
                 || autoGenArgs != o.autoGenArgs
+                || isDebug != o.isDebug
+                || isEnableIpv6 != o.isEnableIpv6
+                || isModifySendThrough != o.isModifySendThrough
             )
             {
                 return false;

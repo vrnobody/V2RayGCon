@@ -7,10 +7,11 @@ namespace VgcApis.Libs.Tasks
 {
     public class TicketPool : IDisposable
     {
-        List<ManualResetEventSlim> waitQ = new List<ManualResetEventSlim>();
         int count = 0;
         int size = 0;
-        ManualResetEventSlim emptyWaiter = new ManualResetEventSlim(true);
+
+        readonly List<ManualResetEventSlim> waitQ = new List<ManualResetEventSlim>();
+        readonly ManualResetEventSlim emptyWaiter = new ManualResetEventSlim(true);
 
         public TicketPool()
             : this(0) { }

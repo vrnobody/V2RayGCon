@@ -110,7 +110,7 @@ namespace V2RayGCon.Views.UserControls
         }
 
         static ServerUI currentServerUI = null;
-        static AutoResetEvent areHideButtons = new AutoResetEvent(true);
+        static readonly AutoResetEvent areHideButtons = new AutoResetEvent(true);
 
         void ShowCtrlBtn(object sender, EventArgs args)
         {

@@ -233,14 +233,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     }
                 }
 
-                var sth = setting.sendThroughHost;
-                if (!string.IsNullOrEmpty(sth))
+                var send4 = setting.GetSendThroughIpv4();
+                if (!string.IsNullOrEmpty(send4))
                 {
                     if (json["outbounds"] is JArray outbs)
                     {
                         foreach (var outb in outbs)
                         {
-                            outb["sendThrough"] = sth;
+                            outb["sendThrough"] = send4;
                         }
                     }
                 }

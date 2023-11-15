@@ -16,6 +16,21 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+        [DataTestMethod]
+        [DataRow("::ffff:1.2.3.4", true)]
+        [DataRow("[::ffff:1234:1234]", true)]
+        [DataRow("2001:4860:4860::8888", true)]
+        [DataRow("[2001:4860:4860::8888]", true)]
+        [DataRow(null, false)]
+        [DataRow("", false)]
+        [DataRow("1.2.3.4", false)]
+        [DataRow("1.2.3.4.5", false)]
+        public void IsIpv6Test(string host, bool expected)
+        {
+            var r = IsIpv6(host);
+            Assert.AreEqual(expected, r);
+        }
+
         enum EnumForTest
         {
             replace = 0,

@@ -376,10 +376,9 @@ namespace NeoLuna.Models.Apis.SysCmpos
             try
             {
                 Stream input = new FileStream(filename, FileMode.Open);
-                string mime;
                 context.Response.ContentType = mimeTypeMaps.TryGetValue(
                     Path.GetExtension(filename),
-                    out mime
+                    out string mime
                 )
                     ? mime
                     : "application/octet-stream";

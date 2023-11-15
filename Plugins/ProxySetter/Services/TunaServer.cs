@@ -119,7 +119,7 @@ namespace ProxySetter.Services
             }
 
             Kill(3000);
-            vgcSettings.SetSendThrough("");
+            vgcSettings.SetSendThroughIpv4("");
         }
 
         public void Start()
@@ -153,16 +153,9 @@ namespace ProxySetter.Services
                 proc.Start();
                 isRunning = true;
 
-                if (vgcSettings.SetSendThrough(ts.nicIp))
+                if (ts.isModifySendThrough)
                 {
-                    var servs = vgcServers
-                        .GetAllServersOrderByIndex()
-                        .Where(s => s.GetCoreCtrl().IsCoreRunning())
-                        .ToList();
-                    foreach (var serv in servs)
-                    {
-                        serv.GetCoreCtrl().RestartCore();
-                    }
+                    ModifySendThrough(ts);
                 }
             }
             catch (Exception ex)
@@ -173,38 +166,73 @@ namespace ProxySetter.Services
 
         public bool UpdateTunaSettings(Model.Data.TunaSettings ts)
         {
-            var first = GetFirstRoute(ts.tunIp);
-
-            if (first == null)
+            var nic = GetNicInfoFromRoutes(ts.tunIpv4);
+            if (nic == null)
             {
                 return false;
             }
-            UpdateTunaSettingCore(ts, first[3], first[4]);
+
+            ts.nicIpv4 = nic.IPv4;
+
+            if (string.IsNullOrEmpty(ts.proxy))
+            {
+                ts.proxy = GetProxyInfo();
+            }
+
+            var parts = ts.nicIpv4?.Split('.');
+            if (parts != null && parts.Count() == 4)
+            {
+                var subnet = (VgcApis.Misc.Utils.Str2Int(parts[2]) + 20) % 256;
+                parts[2] = subnet.ToString();
+                if (string.IsNullOrEmpty(ts.tunIpv4))
+                {
+                    ts.tunIpv4 = string.Join(".", parts);
+                }
+                if (string.IsNullOrEmpty(ts.tunIpv6))
+                {
+                    ts.tunIpv6 = $"fcba:{subnet}::{parts[3]}";
+                }
+            }
+
+            var metric = Math.Max(1, nic.metric / 2);
+            ts.startupScript = GenStartupScript(ts, metric);
             return true;
         }
 
         #endregion
 
         #region private methods
+        void ModifySendThrough(Model.Data.TunaSettings ts)
+        {
+            var changed = vgcSettings.SetSendThroughIpv4(ts.nicIpv4);
+            if (!changed)
+            {
+                return;
+            }
+
+            var servs = vgcServers
+                .GetAllServersOrderByIndex()
+                .Where(s => s.GetCoreCtrl().IsCoreRunning())
+                .ToList();
+            foreach (var serv in servs)
+            {
+                serv.GetCoreCtrl().RestartCore();
+            }
+        }
+
         string GetProxyInfo()
         {
             var def = "socks5://127.0.0.1:1080";
 
-            var first = vgcServers
+            var inbs = vgcServers
                 .GetAllServersOrderByIndex()
-                .FirstOrDefault(s => s.GetCoreCtrl().IsCoreRunning());
+                .Where(s => s.GetCoreCtrl().IsCoreRunning())
+                .SelectMany(cs => cs.GetConfiger().GetAllInboundsInfo())
+                .ToList();
 
-            if (first == null)
-            {
-                return def;
-            }
-
-            var inbs = first.GetConfiger().GetAllInboundsInfo();
-            var info = inbs.FirstOrDefault(inb => inb.protocol == "socks");
-            if (info == null)
-            {
-                info = inbs.FirstOrDefault(inb => inb.protocol == "http");
-            }
+            var info =
+                inbs.FirstOrDefault(inb => inb.protocol == "socks")
+                ?? inbs.FirstOrDefault(inb => inb.protocol == "http");
 
             if (info == null)
             {
@@ -216,16 +244,11 @@ namespace ProxySetter.Services
             return $"{proto}://{host}:{info.port}";
         }
 
-        string[] GetFirstRoute(string tunIp)
+        NicInfos GetNicInfoFromRoutes(string tunIpv4)
         {
-            var s = VgcApis.Misc.Utils.ExecuteAndGetStdOut(
-                "route",
-                "print -4",
-                5000,
-                System.Text.Encoding.Default
-            );
-
-            var first = s?.Replace("\r", "")
+            var ipv4 = VgcApis.Misc.Utils
+                .ExecuteAndGetStdOut("route", "print -4", 5000, System.Text.Encoding.Default)
+                ?.Replace("\r", "")
                 .Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(
                     line => line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
@@ -233,58 +256,80 @@ namespace ProxySetter.Services
                 .Where(
                     parts =>
                         parts.Count() == 5
-                        && parts[0] == parts[1]
                         && parts[0] == "0.0.0.0"
-                        && parts[3] != tunIp
+                        && parts[1] == parts[0]
+                        && parts[3] != tunIpv4
                 )
                 .OrderBy(parts => VgcApis.Misc.Utils.Str2Int(parts[4]))
                 .FirstOrDefault();
 
-            return first;
+            if (ipv4 == null)
+            {
+                return null;
+            }
+
+            return new NicInfos { IPv4 = ipv4[3], metric = VgcApis.Misc.Utils.Str2Int(ipv4[4]) };
         }
 
-        void UpdateTunaSettingCore(Model.Data.TunaSettings ts, string nicIp, string metric)
+        string GenStartupScript(Model.Data.TunaSettings ts, int metric)
         {
-            ts.nicIp = nicIp;
-            var m = Math.Max(1, VgcApis.Misc.Utils.Str2Int(metric) / 2);
+            var setTunIpv4 =
+                $"netsh interface ipv4 set address name={ts.tunName} source=static addr={ts.tunIpv4} mask=255.255.255.0 gateway=none";
 
-            if (string.IsNullOrEmpty(ts.tunIp))
+            var setTunIpv6 = $"netsh interface ipv6 add address name={ts.tunName} {ts.tunIpv6}";
+
+            var setRoute4 =
+                $"netsh interface ipv4 add route 0.0.0.0/0 {ts.tunName} {ts.tunIpv4} metric={metric} store=active";
+
+            var setRoute6 =
+                $"netsh interface ipv6 add route ::/0 interface={ts.tunName} {ts.tunIpv6} metric={metric} store=active";
+
+            var dnses =
+                ts.dns
+                    ?.Replace("\r", "")
+                    .Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                ?? new string[0];
+
+            var list = new List<string>();
+            var tpl =
+                $"&& netsh interface {{0}} set dnsservers name={ts.tunName} source=static {{1}} primary";
+            foreach (var dns in dnses)
             {
-                var parts = ts.nicIp?.Split('.');
-                if (parts != null && parts.Count() == 4)
+                var isIpv6 = VgcApis.Misc.Utils.IsIpv6(dns);
+                if (!isIpv6 || ts.isEnableIpv6)
                 {
-                    var subnet = (VgcApis.Misc.Utils.Str2Int(parts[2]) + 20) % 256;
-                    parts[2] = subnet.ToString();
-                    ts.tunIp = string.Join(".", parts);
+                    var ipType = isIpv6 ? "ipv6" : "ipv4";
+                    list.Add(string.Format(tpl, ipType, dns));
                 }
             }
+            var setTunDns = string.Join("\n", list);
 
-            if (string.IsNullOrEmpty(ts.proxy))
+            var cmds = new List<string>()
             {
-                ts.proxy = GetProxyInfo();
+                $"-device=\"{ts.tunName}\"",
+                $"-proxy=\"{ts.proxy}\"",
+                $"-tun-post-up=\"cmd /c",
+                $"{setTunIpv4}",
+            };
+            if (ts.isEnableIpv6)
+            {
+                cmds.Add($"&& {setTunIpv6}");
             }
-
-            var setTunIp =
-                $"netsh interface ipv4 set address name={ts.tunName} source=static addr={ts.tunIp} mask=255.255.255.0 gateway=none";
-
-            var setTunDns =
-                $"netsh interface ipv4 set dns name={ts.tunName} source=static {ts.dns} primary";
-
-            var setRouteTable =
-                $"netsh interface ipv4 add route 0.0.0.0/0 {ts.tunName} {ts.tunIp} metric={m} store=active";
-
-            ts.startupScript =
-                $"-device=\"{ts.tunName}\" \n"
-                + $"-proxy=\"{ts.proxy}\" \n"
-                + $"-tun-post-up=\"cmd /c \n"
-                + $" {setTunIp}\n"
-                + (string.IsNullOrEmpty(ts.dns) ? "" : $" && {setTunDns}\n")
-                + $" && {setRouteTable}\"";
+            if (!string.IsNullOrEmpty(setTunDns))
+            {
+                cmds.Add($"{setTunDns}");
+            }
+            cmds.Add($"&& {setRoute4}");
+            if (ts.isEnableIpv6)
+            {
+                cmds.Add($"&& {setRoute6}");
+            }
+            return string.Join("\n", cmds) + "\"";
         }
 
         Process CreateTunProcess(Model.Data.TunaSettings tunaSettings)
         {
-            var args = tunaSettings.startupScript?.Replace("\n", "");
+            var args = tunaSettings.startupScript.Replace("\r", "").Replace("\n", " ");
             var path = Path.GetFullPath(tunaSettings.exe);
             var dir = Path.GetDirectoryName(path);
 
@@ -337,5 +382,11 @@ namespace ProxySetter.Services
         #region protected methods
 
         #endregion
+    }
+
+    class NicInfos
+    {
+        public string IPv4 = "";
+        public int metric = 20;
     }
 }

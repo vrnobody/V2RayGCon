@@ -824,7 +824,10 @@ namespace V2RayGCon.Services
 
             try
             {
-                var list = servers.GetRunningServers();
+                var list = servers
+                    .GetRunningServers()
+                    .OrderByDescending(cs => cs) // chain action begin with tail
+                    .ToList();
 
                 var iconType = AnalyzeSysTrayIconType(list);
 

@@ -83,7 +83,7 @@ jobs:
             Expand-Archive "download/${env:v2rayCorePkgName}" -DestinationPath "${outdir}/3rd/core"
             Invoke-WebRequest -Uri "${env:tun2socksZipUrl}" -OutFile "download/tun2socks.zip"
             Expand-Archive "download/tun2socks.zip" -DestinationPath "download/"
-            Copy-Item "download/tun2socks-windows-amd64.exe" -Destination "${outdir}/3rd/tun2socks/tun2sock.exe"
+            Copy-Item "download/tun2socks-windows-amd64.exe" -Destination "${outdir}/3rd/tun2socks/tun2socks.exe"
             Compress-Archive -Path ${outdir}/* ${env:projName}'-'${env:boxAppend}'.zip'
 
         - name: Calculate MD5 hash

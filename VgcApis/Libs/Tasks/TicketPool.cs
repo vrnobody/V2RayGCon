@@ -7,9 +7,10 @@ namespace VgcApis.Libs.Tasks
 {
     public class TicketPool : IDisposable
     {
-        List<ManualResetEvent> waitQ = new List<ManualResetEvent>();
+        List<ManualResetEventSlim> waitQ = new List<ManualResetEventSlim>();
         int count = 0;
         int size = 0;
+        ManualResetEventSlim emptyWaiter = new ManualResetEventSlim(true);
 
         public TicketPool()
             : this(0) { }
@@ -28,6 +29,12 @@ namespace VgcApis.Libs.Tasks
         #endregion
 
         #region public methods
+
+        public void WaitUntilEmpty()
+        {
+            emptyWaiter.Wait();
+        }
+
         public void WaitOne()
         {
             if (TryTakeOne())
@@ -40,12 +47,12 @@ namespace VgcApis.Libs.Tasks
                 return;
             }
 
-            var mev = new ManualResetEvent(false);
+            var mev = new ManualResetEventSlim(false);
             lock (waitQ)
             {
                 waitQ.Add(mev);
             }
-            mev.WaitOne();
+            mev.Wait();
         }
 
         public bool WaitOne(int ms)
@@ -65,20 +72,20 @@ namespace VgcApis.Libs.Tasks
                 return false;
             }
 
-            var mev = new ManualResetEvent(false);
+            var mev = new ManualResetEventSlim(false);
             lock (waitQ)
             {
                 waitQ.Add(mev);
             }
 
-            if (mev.WaitOne(ms))
+            if (mev.Wait(ms))
             {
                 return true;
             }
 
             lock (waitQ)
             {
-                if (mev.WaitOne(0))
+                if (mev.Wait(0))
                 {
                     return true;
                 }
@@ -100,7 +107,15 @@ namespace VgcApis.Libs.Tasks
             }
 
             Interlocked.Add(ref count, -1 * num);
-            CheckWaitQ();
+
+            Misc.Utils.RunInBgSlim(() =>
+            {
+                CheckWaitQ();
+                if (count < 1)
+                {
+                    emptyWaiter.Set();
+                }
+            });
         }
 
         public void ReturnOne() => Return(1);
@@ -115,6 +130,7 @@ namespace VgcApis.Libs.Tasks
             var n = Interlocked.Add(ref count, num);
             if (n <= size)
             {
+                emptyWaiter.Reset();
                 return true;
             }
             Interlocked.Add(ref count, -1 * num);

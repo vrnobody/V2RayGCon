@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,57 @@ namespace VgcApisTests.LibsTests
     [TestClass]
     public class TicketPoolTests
     {
+#if DEBUG
+        [TestMethod]
+        public void MultiThreadWaitEmptyTest()
+        {
+            ConcurrentQueue<string> r = new ConcurrentQueue<string>();
+            var pool = new VgcApis.Libs.Tasks.TicketPool(5);
+
+            var tasks = new List<Task>();
+            for (int i = 0; i < 3; i++)
+            {
+                var id = i;
+                var task = Task.Run(() =>
+                {
+                    r.Enqueue("TakeBegin");
+                    for (int j = 0; j < 10; j++)
+                    {
+                        if (pool.TryTakeOne())
+                        {
+                            Console.WriteLine($"Take[{id}] take one");
+                            Thread.Sleep(500);
+                            pool.ReturnOne();
+                        }
+                    }
+                    r.Enqueue("TakeEnd");
+                    Console.WriteLine($"Take[{id}] done!");
+                });
+                tasks.Add(task);
+            }
+
+            Thread.Sleep(1000);
+
+            for (int i = 0; i < 3; i++)
+            {
+                var id = i;
+                var task = Task.Run(() =>
+                {
+                    r.Enqueue("WaitBegin");
+                    Console.WriteLine($"Wait[{id}] waiting...");
+                    pool.WaitUntilEmpty();
+                    Console.WriteLine($"Wait[{id}] done!");
+                    r.Enqueue("WaitEnd");
+                });
+                tasks.Add(task);
+            }
+
+            Task.WaitAll(tasks.ToArray());
+            Assert.AreEqual("WaitEnd", r.Last());
+        }
+#endif
+
+#if DEBUG
         [TestMethod]
         public void MultiThreadTests()
         {
@@ -90,7 +142,9 @@ namespace VgcApisTests.LibsTests
             Assert.IsTrue(pool.Count() == 0);
             Assert.IsTrue(pool.GetWaitQueueSize() == 0);
         }
+#endif
 
+#if DEBUG
         [TestMethod]
         public void MultiThreadDisposeTests()
         {
@@ -117,6 +171,7 @@ namespace VgcApisTests.LibsTests
             Assert.IsTrue(pool.Count() > 0);
             Assert.IsTrue(pool.GetWaitQueueSize() == 0);
         }
+#endif
 
         [TestMethod]
         public void SingleThreadTests()

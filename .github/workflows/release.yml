@@ -29,6 +29,8 @@ jobs:
         # https://github.com/XTLS/Xray-core/releases/download/v1.4.0/Xray-windows-64.zip
         # v2rayCoreUrl: 'https://github.com/v2fly/v2ray-core/releases/download'
         v2rayCoreUrl: 'https://github.com/XTLS/Xray-core/releases/download'
+        winTunZipUrl: 'https://www.wintun.net/builds/wintun-0.14.1.zip'
+        tun2socksZipUrl: 'https://github.com/xjasonlyu/tun2socks/releases/download/v2.5.2/tun2socks-windows-amd64.zip'
 
     steps:
         - name: Checkout master
@@ -77,8 +79,15 @@ jobs:
           shell: pwsh
           run: |
             $outdir = "${env:projName}/bin/${env:projCfg}"
-            Invoke-WebRequest -Uri "${env:v2rayCoreUrl}/${env:v2rayCoreVer}/${env:v2rayCorePkgName}" -OutFile "${env:v2rayCorePkgName}"
-            Expand-Archive "${env:v2rayCorePkgName}" -DestinationPath "${outdir}/3rd/core"
+            New-Item -Name "download" -ItemType "directory"
+            Invoke-WebRequest -Uri "${env:v2rayCoreUrl}/${env:v2rayCoreVer}/${env:v2rayCorePkgName}" -OutFile "download/${env:v2rayCorePkgName}"
+            Expand-Archive "download/${env:v2rayCorePkgName}" -DestinationPath "${outdir}/3rd/core"
+            Invoke-WebRequest -Uri "${env:winTunZipUrl}" -OutFile "download/wintun.zip"
+            Expand-Archive "download/wintun.zip" -DestinationPath "download/"
+            Copy-Item "download/wintun/bin/amd64/wintun.dll" -Destination "${outdir}/3rd/tun2socks/"
+            Invoke-WebRequest -Uri "${env:tun2socksZipUrl}" -OutFile "download/tun2socks.zip"
+            Expand-Archive "download/tun2socks.zip" -DestinationPath "download/"
+            Copy-Item "download/tun2socks-windows-amd64.exe" -Destination "${outdir}/3rd/tun2socks/tun2sock.exe"
             Compress-Archive -Path ${outdir}/* ${env:projName}'-'${env:boxAppend}'.zip'
 
         - name: Calculate MD5 hash

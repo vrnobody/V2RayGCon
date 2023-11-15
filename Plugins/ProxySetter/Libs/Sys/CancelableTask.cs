@@ -24,6 +24,7 @@ namespace ProxySetter.Libs.Sys
             {
                 return;
             }
+            // do not use RunInBgSlim()!!! 2023-11
             VgcApis.Misc.Utils.RunInBackground(this.LongRunningTaskWrapper);
         }
         #endregion

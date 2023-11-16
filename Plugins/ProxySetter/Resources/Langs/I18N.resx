@@ -222,7 +222,7 @@ Please check port setting.</value>
     <value>In order to use Tuna, you have to download these two binaries:
 https://www.wintun.net/
 https://github.com/xjasonlyu/tun2socks
-Please read the online manual (chinese only) first.
+Please read the online manual first. (simple chinese)
 
 This plug-in use the following project as the default PAC source.
 https://github.com/txthinking/blackwhite

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -82,11 +82,19 @@ namespace V2RayGCon.Controllers.OptionComponent
             }
 
             // swap index
-            var destIdx = destItem.GetIndex() + 0.5;
-            var curIdx = (curItem.GetIndex() > destIdx) ? destIdx - 0.1 : destIdx + 0.1;
+            var curIdx = curItem.GetIndex();
+            var destIdx = destItem.GetIndex() - 0.5;
+            curIdx = curIdx < destIdx ? destIdx + 0.2 : destIdx - 0.2;
             destItem.SetIndex(destIdx);
             curItem.SetIndex(curIdx);
-            settings.ResetCustomConfigTemplatesIndex(); // this will invoke menu update event
+            destItem.SetIndex(destIdx);
+            curItem.SetIndex(curIdx);
+            settings.ResetCustomConfigTemplatesIndex();
+
+            // !must! reset item index!!
+            var destPos = panel.Controls.GetChildIndex(destItem, false);
+            panel.Controls.SetChildIndex(curItem, destPos);
+            panel.Invalidate();
 
             Refresh();
         }

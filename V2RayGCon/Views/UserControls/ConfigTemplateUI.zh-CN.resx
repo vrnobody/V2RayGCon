@@ -139,6 +139,9 @@
   <data name="rlbBinding.ToolTip" xml:space="preserve">
     <value>格式</value>
   </data>
+  <data name="chkIsInject.ToolTip" xml:space="preserve">
+    <value>向全部服务器注入此模板。用于添加routings。钩上后将不会在inbounds等选项里出现。</value>
+  </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value />
   </data>

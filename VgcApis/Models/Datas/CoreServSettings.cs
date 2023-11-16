@@ -14,7 +14,8 @@ namespace VgcApis.Models.Datas
 
         public double index;
         public bool isAutorun,
-            isUntrack;
+            isUntrack,
+            isAcceptInjecttion;
 
         public CoreServSettings()
         {
@@ -30,6 +31,7 @@ namespace VgcApis.Models.Datas
             index = 0;
             isAutorun = false;
             isUntrack = false;
+            isAcceptInjecttion = true;
         }
 
         public CoreServSettings(Interfaces.ICoreServCtrl coreServ)
@@ -46,6 +48,7 @@ namespace VgcApis.Models.Datas
 
             isAutorun = cs.IsAutoRun();
             isUntrack = cs.IsUntrack();
+            isAcceptInjecttion = cs.IsAcceptInjection();
             inboundAddress = cs.GetInboundAddr();
             serverName = cs.GetName();
 
@@ -78,6 +81,7 @@ namespace VgcApis.Models.Datas
                 || t.inboundName != inboundName
                 || t.isAutorun != isAutorun
                 || t.isUntrack != isUntrack
+                || t.isAcceptInjecttion != isAcceptInjecttion
             )
             {
                 return false;

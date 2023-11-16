@@ -807,7 +807,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 curItem.SetIndex(curIdx);
                 servers.ResetIndex();
 
-                // refresh panel
+                // !must! reset item index!!
                 var destPos = panel.Controls.GetChildIndex(destItem, false);
                 panel.Controls.SetChildIndex(curItem, destPos);
                 panel.Invalidate();

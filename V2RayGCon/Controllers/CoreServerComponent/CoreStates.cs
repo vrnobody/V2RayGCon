@@ -160,8 +160,11 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public void SetIsInjectSkipCnSite(bool isInjectSkipCnSite)
         {
-            SetSettingsPropertyOnDemand(ref coreInfo.isInjectSkipCNSite, true);
+            SetSettingsPropertyOnDemand(ref coreInfo.isInjectSkipCNSite, isInjectSkipCnSite);
         }
+
+        public void SetIsAcceptInjection(bool isEnabled) =>
+            SetSettingsPropertyOnDemand(ref coreInfo.isAcceptInjection, isEnabled);
 
         public void SetIsAutoRun(bool isAutoRun) =>
             SetSettingsPropertyOnDemand(ref coreInfo.isAutoRun, isAutoRun);
@@ -344,6 +347,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public string GetInboundIp() => coreInfo.inbIp;
 
         public int GetInboundPort() => coreInfo.inbPort;
+
+        public bool IsAcceptInjection() => coreInfo.isAcceptInjection;
 
         public bool IsAutoRun() => coreInfo.isAutoRun;
 

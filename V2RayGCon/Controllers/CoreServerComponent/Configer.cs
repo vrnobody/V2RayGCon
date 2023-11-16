@@ -78,24 +78,29 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 coreInfo.templates?.Replace(", ", ",")?.Split(',')?.ToList() ?? new List<string>();
             names.Add(coreInfo.inbName);
 
-            var tplsS = names
-                .Select(n => cfgTpls.FirstOrDefault(t => t.name == n))
-                .Where(t => t != null)
-                .ToList();
+            var tpls = coreInfo.isAcceptInjection
+                ? cfgTpls.Where(tpl => tpl.isInject).ToList()
+                : new List<Models.Datas.CustomConfigTemplate>();
+
+            tpls.AddRange(
+                names
+                    .Select(n => cfgTpls.FirstOrDefault(tpl => tpl.name == n))
+                    .Where(t => t != null)
+            );
 
             string r;
             var host = coreInfo.inbIp;
             var port = coreInfo.inbPort;
             if (VgcApis.Misc.Utils.IsJson(config))
             {
-                r = GenJsonFinalConfig(tplsS, config, host, port);
+                r = GenJsonFinalConfig(tpls, config, host, port);
             }
             else
             {
                 r = config;
-                foreach (var tplS in tplsS)
+                foreach (var tpl in tpls)
                 {
-                    r = tplS.MergeToConfig(r, host, port);
+                    r = tpl.MergeToConfig(r, host, port);
                     if (string.IsNullOrEmpty(r))
                     {
                         break;
@@ -214,7 +219,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         string GenJsonFinalConfig(
-            IEnumerable<Models.Datas.CustomConfigTemplate> tplsS,
+            IEnumerable<Models.Datas.CustomConfigTemplate> tplSs,
             string config,
             string host,
             int port
@@ -225,7 +230,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 var json = JObject.Parse(config);
                 InjectStatisticsConfigOnDemand(ref json);
                 MergeCustomTlsSettings(ref json);
-                foreach (var tplS in tplsS)
+                foreach (var tplS in tplSs)
                 {
                     if (tplS.MergeToJObject(ref json, host, port) != true)
                     {

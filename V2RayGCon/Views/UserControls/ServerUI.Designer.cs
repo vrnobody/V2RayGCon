@@ -401,6 +401,7 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.rlbSetting);
             this.Controls.Add(this.btnMenu);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
@@ -410,7 +411,6 @@
             this.Controls.Add(this.rlbTag1);
             this.Controls.Add(this.rlbSpeedtest);
             this.Controls.Add(this.rlbIsRunning);
-            this.Controls.Add(this.rlbSetting);
             this.Controls.Add(this.rlbMark);
             this.Controls.Add(this.rlbRemark);
             this.Controls.Add(this.rlbTotalNetFlow);

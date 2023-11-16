@@ -155,7 +155,7 @@
     <value>Ctrl + K，仅对json有效！</value>
   </data>
   <data name="chkIsSocks5Inbound.ToolTip" xml:space="preserve">
-    <value>测速时使用SOCKS5协议（不钩就用HTTP协议）</value>
+    <value>测速时使用SOCKS5协议否则用HTTP协议。只在设置为自定义core的测速模板时有效。</value>
   </data>
   <data name="rtboxTemplate.ToolTip" xml:space="preserve">
     <value />

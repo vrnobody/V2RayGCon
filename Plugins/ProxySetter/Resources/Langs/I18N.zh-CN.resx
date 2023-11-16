@@ -215,10 +215,11 @@
     <value>清除热键{0}</value>
   </data>
   <data name="UsageReadme" xml:space="preserve">
-    <value>使用Tuna前需要先下载以下两个软件：
+    <value>Tuna需要用到以下两个软件，请自行下载：
 https://www.wintun.net/
 https://github.com/xjasonlyu/tun2socks
-用法请看GitHub上的在线手册。注意启用tun之后PAC和系统代理将无效。
+v1.8.8及以上的V2RayGCon-box.zip包含上面两个软件。
+用法这里写不下，请看GitHub上的在线手册。
 
 默认PAC是https://github.com/txthinking/blackwhite
 可以在设置页面按以下格式修改默认PAC

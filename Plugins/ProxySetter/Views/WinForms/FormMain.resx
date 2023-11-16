@@ -121,10 +121,770 @@
   <data name="tableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tabTun.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="rtboxTunaDns.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 116</value>
+  </data>
+  <data name="rtboxTunaDns.Size" type="System.Drawing.Size, System.Drawing">
+    <value>255, 50</value>
+  </data>
+  <data name="rtboxTunaDns.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="rtboxTunaDns.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;rtboxTunaDns.Name" xml:space="preserve">
+    <value>rtboxTunaDns</value>
+  </data>
+  <data name="&gt;&gt;rtboxTunaDns.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rtboxTunaDns.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;rtboxTunaDns.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="chkTunaModifySendThrough.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkTunaModifySendThrough.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkTunaModifySendThrough.Location" type="System.Drawing.Point, System.Drawing">
+    <value>199, 226</value>
+  </data>
+  <data name="chkTunaModifySendThrough.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 16</value>
+  </data>
+  <data name="chkTunaModifySendThrough.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="chkTunaModifySendThrough.Text" xml:space="preserve">
+    <value>Modify</value>
+  </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="chkTunaModifySendThrough.ToolTip" xml:space="preserve">
+    <value>Modify sendThrough option of outbounds.</value>
+  </data>
+  <data name="&gt;&gt;chkTunaModifySendThrough.Name" xml:space="preserve">
+    <value>chkTunaModifySendThrough</value>
+  </data>
+  <data name="&gt;&gt;chkTunaModifySendThrough.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkTunaModifySendThrough.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;chkTunaModifySendThrough.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="chkTunaEnableIpv6.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkTunaEnableIpv6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkTunaEnableIpv6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>135, 226</value>
+  </data>
+  <data name="chkTunaEnableIpv6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkTunaEnableIpv6.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="chkTunaEnableIpv6.Text" xml:space="preserve">
+    <value>IPv6</value>
+  </data>
+  <data name="chkTunaEnableIpv6.ToolTip" xml:space="preserve">
+    <value>Enable IPv6 supports.</value>
+  </data>
+  <data name="&gt;&gt;chkTunaEnableIpv6.Name" xml:space="preserve">
+    <value>chkTunaEnableIpv6</value>
+  </data>
+  <data name="&gt;&gt;chkTunaEnableIpv6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkTunaEnableIpv6.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;chkTunaEnableIpv6.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="chkTunaAutorun.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="chkTunaAutorun.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkTunaAutorun.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkTunaAutorun.Location" type="System.Drawing.Point, System.Drawing">
+    <value>421, 297</value>
+  </data>
+  <data name="chkTunaAutorun.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 16</value>
+  </data>
+  <data name="chkTunaAutorun.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="chkTunaAutorun.Text" xml:space="preserve">
+    <value>Autorun</value>
+  </data>
+  <data name="chkTunaAutorun.ToolTip" xml:space="preserve">
+    <value>Start tun automatically.</value>
+  </data>
+  <data name="&gt;&gt;chkTunaAutorun.Name" xml:space="preserve">
+    <value>chkTunaAutorun</value>
+  </data>
+  <data name="&gt;&gt;chkTunaAutorun.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkTunaAutorun.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;chkTunaAutorun.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="chkTunaDebug.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkTunaDebug.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkTunaDebug.Location" type="System.Drawing.Point, System.Drawing">
+    <value>271, 226</value>
+  </data>
+  <data name="chkTunaDebug.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 16</value>
+  </data>
+  <data name="chkTunaDebug.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="chkTunaDebug.Text" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="chkTunaDebug.ToolTip" xml:space="preserve">
+    <value>Show tun2socks window.</value>
+  </data>
+  <data name="&gt;&gt;chkTunaDebug.Name" xml:space="preserve">
+    <value>chkTunaDebug</value>
+  </data>
+  <data name="&gt;&gt;chkTunaDebug.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkTunaDebug.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;chkTunaDebug.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="chkTunaAutoUpdateArguments.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkTunaAutoUpdateArguments.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 226</value>
+  </data>
+  <data name="chkTunaAutoUpdateArguments.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkTunaAutoUpdateArguments.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="chkTunaAutoUpdateArguments.Text" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="chkTunaAutoUpdateArguments.ToolTip" xml:space="preserve">
+    <value>Update arguments base on NIC IP before Tuna starts.</value>
+  </data>
+  <data name="&gt;&gt;chkTunaAutoUpdateArguments.Name" xml:space="preserve">
+    <value>chkTunaAutoUpdateArguments</value>
+  </data>
+  <data name="&gt;&gt;chkTunaAutoUpdateArguments.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkTunaAutoUpdateArguments.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;chkTunaAutoUpdateArguments.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="btnTunaBrowseExe.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 171</value>
+  </data>
+  <data name="btnTunaBrowseExe.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 23</value>
+  </data>
+  <data name="btnTunaBrowseExe.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="btnTunaBrowseExe.Text" xml:space="preserve">
+    <value>Exe</value>
+  </data>
+  <data name="btnTunaBrowseExe.ToolTip" xml:space="preserve">
+    <value>Browse tun2socks.exe</value>
+  </data>
+  <data name="&gt;&gt;btnTunaBrowseExe.Name" xml:space="preserve">
+    <value>btnTunaBrowseExe</value>
+  </data>
+  <data name="&gt;&gt;btnTunaBrowseExe.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnTunaBrowseExe.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;btnTunaBrowseExe.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="panel3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="rtboxTunaStartupScript.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="rtboxTunaStartupScript.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 17</value>
+  </data>
+  <data name="rtboxTunaStartupScript.Size" type="System.Drawing.Size, System.Drawing">
+    <value>312, 260</value>
+  </data>
+  <data name="rtboxTunaStartupScript.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="rtboxTunaStartupScript.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;rtboxTunaStartupScript.Name" xml:space="preserve">
+    <value>rtboxTunaStartupScript</value>
+  </data>
+  <data name="&gt;&gt;rtboxTunaStartupScript.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rtboxTunaStartupScript.Parent" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
+  <data name="&gt;&gt;rtboxTunaStartupScript.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="groupBox6.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="groupBox6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="groupBox6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>318, 280</value>
+  </data>
+  <data name="groupBox6.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="groupBox6.Text" xml:space="preserve">
+    <value>Arguments</value>
+  </data>
+  <data name="&gt;&gt;groupBox6.Name" xml:space="preserve">
+    <value>groupBox6</value>
+  </data>
+  <data name="&gt;&gt;groupBox6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox6.Parent" xml:space="preserve">
+    <value>panel3</value>
+  </data>
+  <data name="&gt;&gt;groupBox6.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="panel3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>331, 8</value>
+  </data>
+  <data name="panel3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>318, 280</value>
+  </data>
+  <data name="panel3.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;panel3.Name" xml:space="preserve">
+    <value>panel3</value>
+  </data>
+  <data name="&gt;&gt;panel3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel3.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;panel3.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="lbTunaStatus.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="lbTunaStatus.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbTunaStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 299</value>
+  </data>
+  <data name="lbTunaStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 12</value>
+  </data>
+  <data name="lbTunaStatus.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="lbTunaStatus.Text" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="&gt;&gt;lbTunaStatus.Name" xml:space="preserve">
+    <value>lbTunaStatus</value>
+  </data>
+  <data name="&gt;&gt;lbTunaStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbTunaStatus.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;lbTunaStatus.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 116</value>
+  </data>
+  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 12</value>
+  </data>
+  <data name="label11.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="label11.Text" xml:space="preserve">
+    <value>DNSes</value>
+  </data>
+  <data name="label11.ToolTip" xml:space="preserve">
+    <value>One DNS server per line.</value>
+  </data>
+  <data name="&gt;&gt;label11.Name" xml:space="preserve">
+    <value>label11</value>
+  </data>
+  <data name="&gt;&gt;label11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="label12.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 203</value>
+  </data>
+  <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 12</value>
+  </data>
+  <data name="label12.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="label12.Text" xml:space="preserve">
+    <value>TUN Name</value>
+  </data>
+  <data name="label12.ToolTip" xml:space="preserve">
+    <value>TUN device name.</value>
+  </data>
+  <data name="&gt;&gt;label12.Name" xml:space="preserve">
+    <value>label12</value>
+  </data>
+  <data name="&gt;&gt;label12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label12.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="label14.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 93</value>
+  </data>
+  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 12</value>
+  </data>
+  <data name="label14.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="label14.Text" xml:space="preserve">
+    <value>TUN IPv6</value>
+  </data>
+  <data name="&gt;&gt;label14.Name" xml:space="preserve">
+    <value>label14</value>
+  </data>
+  <data name="&gt;&gt;label14.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label14.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 66</value>
+  </data>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 12</value>
+  </data>
+  <data name="label10.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>TUN IPv4</value>
+  </data>
+  <data name="&gt;&gt;label10.Name" xml:space="preserve">
+    <value>label10</value>
+  </data>
+  <data name="&gt;&gt;label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 39</value>
+  </data>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 12</value>
+  </data>
+  <data name="label7.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>NIC IPv4</value>
+  </data>
+  <data name="&gt;&gt;label7.Name" xml:space="preserve">
+    <value>label7</value>
+  </data>
+  <data name="&gt;&gt;label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 12</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 12</value>
+  </data>
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Proxy</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="tboxTunaTunName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 199</value>
+  </data>
+  <data name="tboxTunaTunName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>255, 21</value>
+  </data>
+  <data name="tboxTunaTunName.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tboxTunaTunName.ToolTip" xml:space="preserve">
+    <value>TUN device name</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaTunName.Name" xml:space="preserve">
+    <value>tboxTunaTunName</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaTunName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaTunName.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaTunName.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="tboxTunaExePath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 172</value>
+  </data>
+  <data name="tboxTunaExePath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>255, 21</value>
+  </data>
+  <data name="tboxTunaExePath.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaExePath.Name" xml:space="preserve">
+    <value>tboxTunaExePath</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaExePath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaExePath.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaExePath.ZOrder" xml:space="preserve">
+    <value>16</value>
+  </data>
+  <data name="tboxTunaTunIpv4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 62</value>
+  </data>
+  <data name="tboxTunaTunIpv4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>255, 21</value>
+  </data>
+  <data name="tboxTunaTunIpv4.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaTunIpv4.Name" xml:space="preserve">
+    <value>tboxTunaTunIpv4</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaTunIpv4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaTunIpv4.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaTunIpv4.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
+  <data name="tboxTunaTunIpv6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 89</value>
+  </data>
+  <data name="tboxTunaTunIpv6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>255, 21</value>
+  </data>
+  <data name="tboxTunaTunIpv6.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaTunIpv6.Name" xml:space="preserve">
+    <value>tboxTunaTunIpv6</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaTunIpv6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaTunIpv6.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaTunIpv6.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
+  <data name="tboxTunaNicIpv4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 35</value>
+  </data>
+  <data name="tboxTunaNicIpv4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>255, 21</value>
+  </data>
+  <data name="tboxTunaNicIpv4.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaNicIpv4.Name" xml:space="preserve">
+    <value>tboxTunaNicIpv4</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaNicIpv4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaNicIpv4.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaNicIpv4.ZOrder" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="tboxTunaProxy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>70, 8</value>
+  </data>
+  <data name="tboxTunaProxy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>255, 21</value>
+  </data>
+  <data name="tboxTunaProxy.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaProxy.Name" xml:space="preserve">
+    <value>tboxTunaProxy</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaProxy.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaProxy.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;tboxTunaProxy.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="btnTunaStop.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="btnTunaStop.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnTunaStop.Location" type="System.Drawing.Point, System.Drawing">
+    <value>574, 294</value>
+  </data>
+  <data name="btnTunaStop.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btnTunaStop.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnTunaStop.Text" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="&gt;&gt;btnTunaStop.Name" xml:space="preserve">
+    <value>btnTunaStop</value>
+  </data>
+  <data name="&gt;&gt;btnTunaStop.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnTunaStop.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;btnTunaStop.ZOrder" xml:space="preserve">
+    <value>21</value>
+  </data>
+  <data name="btnTunaStart.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="btnTunaStart.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnTunaStart.Location" type="System.Drawing.Point, System.Drawing">
+    <value>493, 294</value>
+  </data>
+  <data name="btnTunaStart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btnTunaStart.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnTunaStart.Text" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="&gt;&gt;btnTunaStart.Name" xml:space="preserve">
+    <value>btnTunaStart</value>
+  </data>
+  <data name="&gt;&gt;btnTunaStart.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnTunaStart.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;btnTunaStart.ZOrder" xml:space="preserve">
+    <value>22</value>
+  </data>
+  <data name="btnTunaDetect.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="btnTunaDetect.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnTunaDetect.Location" type="System.Drawing.Point, System.Drawing">
+    <value>334, 294</value>
+  </data>
+  <data name="btnTunaDetect.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btnTunaDetect.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btnTunaDetect.Text" xml:space="preserve">
+    <value>Generate</value>
+  </data>
+  <data name="btnTunaDetect.ToolTip" xml:space="preserve">
+    <value>Auto generate arguments.</value>
+  </data>
+  <data name="&gt;&gt;btnTunaDetect.Name" xml:space="preserve">
+    <value>btnTunaDetect</value>
+  </data>
+  <data name="&gt;&gt;btnTunaDetect.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnTunaDetect.Parent" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;btnTunaDetect.ZOrder" xml:space="preserve">
+    <value>23</value>
+  </data>
+  <data name="tabTun.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabTun.Size" type="System.Drawing.Size, System.Drawing">
+    <value>657, 326</value>
+  </data>
+  <data name="tabTun.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="tabTun.Text" xml:space="preserve">
+    <value>Tuna</value>
+  </data>
+  <data name="&gt;&gt;tabTun.Name" xml:space="preserve">
+    <value>tabTun</value>
+  </data>
+  <data name="&gt;&gt;tabTun.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabTun.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabTun.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="tableLayoutPanel2.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="chkBasicUseHotkey.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
@@ -134,7 +894,6 @@
   <data name="chkBasicUseHotkey.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkBasicUseHotkey.Location" type="System.Drawing.Point, System.Drawing">
     <value>228, 181</value>
   </data>
@@ -147,9 +906,6 @@
   <data name="chkBasicUseHotkey.Text" xml:space="preserve">
     <value>Use</value>
   </data>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="chkBasicUseHotkey.ToolTip" xml:space="preserve">
     <value>Enable / disable global hotkey.</value>
   </data>
@@ -1105,7 +1861,7 @@
     <value>0</value>
   </data>
   <data name="tabBasic.Text" xml:space="preserve">
-    <value>Basic</value>
+    <value>PAC</value>
   </data>
   <data name="&gt;&gt;tabBasic.Name" xml:space="preserve">
     <value>tabBasic</value>
@@ -1117,7 +1873,7 @@
     <value>tabControl1</value>
   </data>
   <data name="&gt;&gt;tabBasic.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="tableLayoutPanel3.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1371,7 +2127,7 @@
     <value>tabControl1</value>
   </data>
   <data name="&gt;&gt;tabPac.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="tboxUsageReadMe.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -1488,723 +2244,6 @@
     <value>tabControl1</value>
   </data>
   <data name="&gt;&gt;tabUsage.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="rtboxTunaDns.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 116</value>
-  </data>
-  <data name="rtboxTunaDns.Size" type="System.Drawing.Size, System.Drawing">
-    <value>255, 50</value>
-  </data>
-  <data name="rtboxTunaDns.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="rtboxTunaDns.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;rtboxTunaDns.Name" xml:space="preserve">
-    <value>rtboxTunaDns</value>
-  </data>
-  <data name="&gt;&gt;rtboxTunaDns.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;rtboxTunaDns.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;rtboxTunaDns.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="chkTunaModifySendThrough.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkTunaModifySendThrough.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkTunaModifySendThrough.Location" type="System.Drawing.Point, System.Drawing">
-    <value>199, 226</value>
-  </data>
-  <data name="chkTunaModifySendThrough.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 16</value>
-  </data>
-  <data name="chkTunaModifySendThrough.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="chkTunaModifySendThrough.Text" xml:space="preserve">
-    <value>Modify</value>
-  </data>
-  <data name="chkTunaModifySendThrough.ToolTip" xml:space="preserve">
-    <value>Modify sendThrough option of outbounds.</value>
-  </data>
-  <data name="&gt;&gt;chkTunaModifySendThrough.Name" xml:space="preserve">
-    <value>chkTunaModifySendThrough</value>
-  </data>
-  <data name="&gt;&gt;chkTunaModifySendThrough.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkTunaModifySendThrough.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;chkTunaModifySendThrough.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="chkTunaEnableIpv6.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkTunaEnableIpv6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkTunaEnableIpv6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>135, 226</value>
-  </data>
-  <data name="chkTunaEnableIpv6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
-  <data name="chkTunaEnableIpv6.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="chkTunaEnableIpv6.Text" xml:space="preserve">
-    <value>IPv6</value>
-  </data>
-  <data name="chkTunaEnableIpv6.ToolTip" xml:space="preserve">
-    <value>Enable IPv6 supports.</value>
-  </data>
-  <data name="&gt;&gt;chkTunaEnableIpv6.Name" xml:space="preserve">
-    <value>chkTunaEnableIpv6</value>
-  </data>
-  <data name="&gt;&gt;chkTunaEnableIpv6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkTunaEnableIpv6.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;chkTunaEnableIpv6.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="chkTunaDebug.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkTunaDebug.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkTunaDebug.Location" type="System.Drawing.Point, System.Drawing">
-    <value>271, 226</value>
-  </data>
-  <data name="chkTunaDebug.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 16</value>
-  </data>
-  <data name="chkTunaDebug.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="chkTunaDebug.Text" xml:space="preserve">
-    <value>Debug</value>
-  </data>
-  <data name="chkTunaDebug.ToolTip" xml:space="preserve">
-    <value>Show tun2socks window.</value>
-  </data>
-  <data name="&gt;&gt;chkTunaDebug.Name" xml:space="preserve">
-    <value>chkTunaDebug</value>
-  </data>
-  <data name="&gt;&gt;chkTunaDebug.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkTunaDebug.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;chkTunaDebug.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="chkTunaAutoUpdateArguments.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkTunaAutoUpdateArguments.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 226</value>
-  </data>
-  <data name="chkTunaAutoUpdateArguments.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
-  <data name="chkTunaAutoUpdateArguments.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="chkTunaAutoUpdateArguments.Text" xml:space="preserve">
-    <value>Auto</value>
-  </data>
-  <data name="chkTunaAutoUpdateArguments.ToolTip" xml:space="preserve">
-    <value>Update arguments base on NIC IP before Tuna starts.</value>
-  </data>
-  <data name="&gt;&gt;chkTunaAutoUpdateArguments.Name" xml:space="preserve">
-    <value>chkTunaAutoUpdateArguments</value>
-  </data>
-  <data name="&gt;&gt;chkTunaAutoUpdateArguments.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkTunaAutoUpdateArguments.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;chkTunaAutoUpdateArguments.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="btnTunaBrowseExe.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 171</value>
-  </data>
-  <data name="btnTunaBrowseExe.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 23</value>
-  </data>
-  <data name="btnTunaBrowseExe.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="btnTunaBrowseExe.Text" xml:space="preserve">
-    <value>Exe</value>
-  </data>
-  <data name="btnTunaBrowseExe.ToolTip" xml:space="preserve">
-    <value>Browse tun2socks.exe</value>
-  </data>
-  <data name="&gt;&gt;btnTunaBrowseExe.Name" xml:space="preserve">
-    <value>btnTunaBrowseExe</value>
-  </data>
-  <data name="&gt;&gt;btnTunaBrowseExe.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnTunaBrowseExe.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;btnTunaBrowseExe.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="panel3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="rtboxTunaStartupScript.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="rtboxTunaStartupScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 17</value>
-  </data>
-  <data name="rtboxTunaStartupScript.Size" type="System.Drawing.Size, System.Drawing">
-    <value>312, 260</value>
-  </data>
-  <data name="rtboxTunaStartupScript.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="rtboxTunaStartupScript.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="&gt;&gt;rtboxTunaStartupScript.Name" xml:space="preserve">
-    <value>rtboxTunaStartupScript</value>
-  </data>
-  <data name="&gt;&gt;rtboxTunaStartupScript.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;rtboxTunaStartupScript.Parent" xml:space="preserve">
-    <value>groupBox6</value>
-  </data>
-  <data name="&gt;&gt;rtboxTunaStartupScript.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="groupBox6.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="groupBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="groupBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>318, 280</value>
-  </data>
-  <data name="groupBox6.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="groupBox6.Text" xml:space="preserve">
-    <value>Arguments</value>
-  </data>
-  <data name="&gt;&gt;groupBox6.Name" xml:space="preserve">
-    <value>groupBox6</value>
-  </data>
-  <data name="&gt;&gt;groupBox6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;groupBox6.Parent" xml:space="preserve">
-    <value>panel3</value>
-  </data>
-  <data name="&gt;&gt;groupBox6.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="panel3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>331, 8</value>
-  </data>
-  <data name="panel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>318, 280</value>
-  </data>
-  <data name="panel3.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;panel3.Name" xml:space="preserve">
-    <value>panel3</value>
-  </data>
-  <data name="&gt;&gt;panel3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel3.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;panel3.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="lbTunaStatus.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="lbTunaStatus.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbTunaStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 299</value>
-  </data>
-  <data name="lbTunaStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>41, 12</value>
-  </data>
-  <data name="lbTunaStatus.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="lbTunaStatus.Text" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="&gt;&gt;lbTunaStatus.Name" xml:space="preserve">
-    <value>lbTunaStatus</value>
-  </data>
-  <data name="&gt;&gt;lbTunaStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbTunaStatus.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;lbTunaStatus.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="label11.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 116</value>
-  </data>
-  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 12</value>
-  </data>
-  <data name="label11.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="label11.Text" xml:space="preserve">
-    <value>DNSes</value>
-  </data>
-  <data name="label11.ToolTip" xml:space="preserve">
-    <value>One DNS server per line.</value>
-  </data>
-  <data name="&gt;&gt;label11.Name" xml:space="preserve">
-    <value>label11</value>
-  </data>
-  <data name="&gt;&gt;label11.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label11.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="label12.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 203</value>
-  </data>
-  <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
-  </data>
-  <data name="label12.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="label12.Text" xml:space="preserve">
-    <value>TUN Name</value>
-  </data>
-  <data name="label12.ToolTip" xml:space="preserve">
-    <value>TUN device name.</value>
-  </data>
-  <data name="&gt;&gt;label12.Name" xml:space="preserve">
-    <value>label12</value>
-  </data>
-  <data name="&gt;&gt;label12.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label12.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="label14.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 93</value>
-  </data>
-  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
-  </data>
-  <data name="label14.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="label14.Text" xml:space="preserve">
-    <value>TUN IPv6</value>
-  </data>
-  <data name="&gt;&gt;label14.Name" xml:space="preserve">
-    <value>label14</value>
-  </data>
-  <data name="&gt;&gt;label14.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label14.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 66</value>
-  </data>
-  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
-  </data>
-  <data name="label10.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>TUN IPv4</value>
-  </data>
-  <data name="&gt;&gt;label10.Name" xml:space="preserve">
-    <value>label10</value>
-  </data>
-  <data name="&gt;&gt;label10.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 39</value>
-  </data>
-  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
-  </data>
-  <data name="label7.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>NIC IPv4</value>
-  </data>
-  <data name="&gt;&gt;label7.Name" xml:space="preserve">
-    <value>label7</value>
-  </data>
-  <data name="&gt;&gt;label7.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 12</value>
-  </data>
-  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 12</value>
-  </data>
-  <data name="label5.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>Proxy</value>
-  </data>
-  <data name="&gt;&gt;label5.Name" xml:space="preserve">
-    <value>label5</value>
-  </data>
-  <data name="&gt;&gt;label5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="tboxTunaTunName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 199</value>
-  </data>
-  <data name="tboxTunaTunName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>255, 21</value>
-  </data>
-  <data name="tboxTunaTunName.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tboxTunaTunName.ToolTip" xml:space="preserve">
-    <value>TUN device name</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaTunName.Name" xml:space="preserve">
-    <value>tboxTunaTunName</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaTunName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaTunName.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaTunName.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="tboxTunaExePath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 172</value>
-  </data>
-  <data name="tboxTunaExePath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>255, 21</value>
-  </data>
-  <data name="tboxTunaExePath.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaExePath.Name" xml:space="preserve">
-    <value>tboxTunaExePath</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaExePath.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaExePath.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaExePath.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="tboxTunaTunIpv4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 62</value>
-  </data>
-  <data name="tboxTunaTunIpv4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>255, 21</value>
-  </data>
-  <data name="tboxTunaTunIpv4.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaTunIpv4.Name" xml:space="preserve">
-    <value>tboxTunaTunIpv4</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaTunIpv4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaTunIpv4.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaTunIpv4.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="tboxTunaTunIpv6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 89</value>
-  </data>
-  <data name="tboxTunaTunIpv6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>255, 21</value>
-  </data>
-  <data name="tboxTunaTunIpv6.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaTunIpv6.Name" xml:space="preserve">
-    <value>tboxTunaTunIpv6</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaTunIpv6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaTunIpv6.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaTunIpv6.ZOrder" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="tboxTunaNicIpv4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 35</value>
-  </data>
-  <data name="tboxTunaNicIpv4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>255, 21</value>
-  </data>
-  <data name="tboxTunaNicIpv4.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaNicIpv4.Name" xml:space="preserve">
-    <value>tboxTunaNicIpv4</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaNicIpv4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaNicIpv4.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaNicIpv4.ZOrder" xml:space="preserve">
-    <value>18</value>
-  </data>
-  <data name="tboxTunaProxy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 8</value>
-  </data>
-  <data name="tboxTunaProxy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>255, 21</value>
-  </data>
-  <data name="tboxTunaProxy.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaProxy.Name" xml:space="preserve">
-    <value>tboxTunaProxy</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaProxy.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaProxy.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;tboxTunaProxy.ZOrder" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="btnTunaStop.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="btnTunaStop.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnTunaStop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>574, 294</value>
-  </data>
-  <data name="btnTunaStop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="btnTunaStop.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="btnTunaStop.Text" xml:space="preserve">
-    <value>Stop</value>
-  </data>
-  <data name="&gt;&gt;btnTunaStop.Name" xml:space="preserve">
-    <value>btnTunaStop</value>
-  </data>
-  <data name="&gt;&gt;btnTunaStop.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnTunaStop.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;btnTunaStop.ZOrder" xml:space="preserve">
-    <value>20</value>
-  </data>
-  <data name="btnTunaStart.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="btnTunaStart.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnTunaStart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>493, 294</value>
-  </data>
-  <data name="btnTunaStart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="btnTunaStart.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="btnTunaStart.Text" xml:space="preserve">
-    <value>Start</value>
-  </data>
-  <data name="&gt;&gt;btnTunaStart.Name" xml:space="preserve">
-    <value>btnTunaStart</value>
-  </data>
-  <data name="&gt;&gt;btnTunaStart.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnTunaStart.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;btnTunaStart.ZOrder" xml:space="preserve">
-    <value>21</value>
-  </data>
-  <data name="btnTunaDetect.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="btnTunaDetect.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnTunaDetect.Location" type="System.Drawing.Point, System.Drawing">
-    <value>334, 294</value>
-  </data>
-  <data name="btnTunaDetect.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="btnTunaDetect.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="btnTunaDetect.Text" xml:space="preserve">
-    <value>Generate</value>
-  </data>
-  <data name="btnTunaDetect.ToolTip" xml:space="preserve">
-    <value>Auto generate arguments.</value>
-  </data>
-  <data name="&gt;&gt;btnTunaDetect.Name" xml:space="preserve">
-    <value>btnTunaDetect</value>
-  </data>
-  <data name="&gt;&gt;btnTunaDetect.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btnTunaDetect.Parent" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;btnTunaDetect.ZOrder" xml:space="preserve">
-    <value>22</value>
-  </data>
-  <data name="tabTun.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
-  </data>
-  <data name="tabTun.Size" type="System.Drawing.Size, System.Drawing">
-    <value>657, 326</value>
-  </data>
-  <data name="tabTun.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="tabTun.Text" xml:space="preserve">
-    <value>Tuna</value>
-  </data>
-  <data name="&gt;&gt;tabTun.Name" xml:space="preserve">
-    <value>tabTun</value>
-  </data>
-  <data name="&gt;&gt;tabTun.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tabTun.Parent" xml:space="preserve">
-    <value>tabControl1</value>
-  </data>
-  <data name="&gt;&gt;tabTun.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="tabControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">

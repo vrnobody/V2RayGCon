@@ -22,6 +22,7 @@ namespace V2RayGCon.Views.UserControls
         public void Reload(CustomConfigTemplate tplSettings)
         {
             this.tplS = tplSettings;
+            chkIsInject.Checked = tplSettings.isInject;
             UpdateTitle();
         }
 
@@ -83,14 +84,20 @@ namespace V2RayGCon.Views.UserControls
             DoDragDrop(this, DragDropEffects.Move);
         }
 
-        private void lbTitle_MouseDown(object sender, MouseEventArgs e)
+        private void lbTitle_Click(object sender, EventArgs e)
         {
-            DoDragDrop(this, DragDropEffects.Move);
+            chkIsInject.Checked = !chkIsInject.Checked;
         }
 
         private void rlbBinding_MouseDown(object sender, MouseEventArgs e)
         {
             DoDragDrop(this, DragDropEffects.Move);
+        }
+
+        private void chkIsInject_CheckedChanged(object sender, EventArgs e)
+        {
+            tplS.isInject = chkIsInject.Checked;
+            Services.Settings.Instance.AddOrReplaceCustomConfigTemplateSettings(tplS);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -120,6 +127,7 @@ namespace V2RayGCon.Views.UserControls
                 }
             }
         }
+
         #endregion
     }
 }

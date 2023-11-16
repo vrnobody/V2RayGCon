@@ -144,6 +144,7 @@
   <ItemGroup>
     <Folder Include="Resources\Icons\TabSetting\" />
     <Folder Include="Resources\Icons\TabStatus\" />
+    <Folder Include="Resources\Icons\TabTuna\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\PAC\black.txt" />

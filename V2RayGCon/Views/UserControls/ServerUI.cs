@@ -603,6 +603,7 @@ namespace V2RayGCon.Views.UserControls
             var text =
                 (coreStates.IsAutoRun() ? "A" : "")
                 + (!string.IsNullOrEmpty(coreStates.GetCustomTemplateNames()) ? "C" : "")
+                + (coreStates.IsAcceptInjection() ? "" : "N")
                 + (coreStates.IsUntrack() ? "U" : "");
 
             UpdateControlTextOndemand(rlbSetting, text);

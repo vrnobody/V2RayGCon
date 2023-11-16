@@ -160,6 +160,12 @@ namespace V2RayGCon.Controllers
                 restartCore = true;
             }
 
+            if (ci.isAcceptInjection != cs.isAcceptInjecttion)
+            {
+                restartCore = true;
+                ci.isAcceptInjection = cs.isAcceptInjecttion;
+            }
+
             if (ci.templates != cs.templates)
             {
                 ci.templates = cs.templates;

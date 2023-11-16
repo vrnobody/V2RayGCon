@@ -195,6 +195,12 @@
         bool IsUntrack();
 
         /// <summary>
+        /// 当前服务器是否设置为不注入
+        /// </summary>
+        /// <returns>不注入</returns>
+        bool IsAcceptInjection();
+
+        /// <summary>
         /// 当前服务器是否已选中
         /// </summary>
         /// <returns>选中</returns>
@@ -287,6 +293,8 @@
         /// </summary>
         /// <param name="isAutoRun">是否自启动</param>
         void SetIsAutoRun(bool isAutoRun);
+
+        void SetIsAcceptInjection(bool isEnabled);
 
         /// <summary>
         /// 设置服务器不追踪选项

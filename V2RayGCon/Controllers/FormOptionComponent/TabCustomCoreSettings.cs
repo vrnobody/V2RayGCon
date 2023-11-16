@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -84,7 +84,12 @@ namespace V2RayGCon.Controllers.OptionComponent
             var curIdx = (curItem.GetIndex() > destIdx) ? destIdx - 0.1 : destIdx + 0.1;
             destItem.SetIndex(destIdx);
             curItem.SetIndex(curIdx);
-            settings.ResetCustomCoresIndex(); // this will invoke menu update event
+            settings.ResetCustomCoresIndex();
+
+            // !must! reset item index!!
+            var destPos = panel.Controls.GetChildIndex(destItem, false);
+            panel.Controls.SetChildIndex(curItem, destPos);
+            panel.Invalidate();
 
             Refresh();
         }

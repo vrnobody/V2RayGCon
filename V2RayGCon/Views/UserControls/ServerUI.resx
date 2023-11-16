@@ -178,7 +178,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;rlbTag1.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="rlbSpeedtest.Size" type="System.Drawing.Size, System.Drawing">
     <value>55, 18</value>
@@ -277,7 +277,7 @@
     <value>debugToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;rlbSpeedtest.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="rtboxServerTitle.Text" xml:space="preserve">
     <value>1.[testing] vmess.mkcp.tls@share.v2ray.com.very.long.url.address</value>
@@ -364,7 +364,7 @@
     <value>6, 12</value>
   </data>
   <data name="&gt;&gt;btnStart.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;toolStripMenuItem6.Name" xml:space="preserve">
     <value>toolStripMenuItem6</value>
@@ -373,7 +373,7 @@
     <value>178, 22</value>
   </data>
   <data name="&gt;&gt;rlbTag2.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;rlbLastModifyDate.Parent" xml:space="preserve">
     <value>$this</value>
@@ -391,7 +391,7 @@
     <value>≡</value>
   </data>
   <data name="&gt;&gt;rlbIsRunning.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="copyToolStripMenuItem.Text" xml:space="preserve">
     <value>Copy</value>
@@ -412,7 +412,7 @@
     <value>＞</value>
   </data>
   <data name="&gt;&gt;rlbTag3.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;logOfThisServerToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -562,7 +562,7 @@
     <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;rlbSetting.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>1</value>
   </data>
   <data name="rlbCoreName.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -589,13 +589,13 @@
     <value>$this</value>
   </data>
   <data name="rlbSetting.Size" type="System.Drawing.Size, System.Drawing">
-    <value>19, 18</value>
+    <value>31, 18</value>
   </data>
   <data name="btnStart.ToolTip" xml:space="preserve">
     <value>Start this server only.</value>
   </data>
   <data name="rlbSetting.Text" xml:space="preserve">
-    <value>A</value>
+    <value>ACNU</value>
   </data>
   <data name="moveToBottomToolStripMenuItem.Text" xml:space="preserve">
     <value>Bottom</value>
@@ -631,7 +631,7 @@
     <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;btnStop.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;rlbLastModifyDate.Type" xml:space="preserve">
     <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
@@ -724,7 +724,7 @@
     <value>Speed test result.</value>
   </data>
   <data name="rlbSetting.ToolTip" xml:space="preserve">
-    <value>(A)utorun / (C)onfig templates / (U)ntrack</value>
+    <value>(A)utorun / (C)ustom templates / (N)o injection / (U)ntrack</value>
   </data>
   <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 22</value>
@@ -874,7 +874,7 @@
     <value>True</value>
   </data>
   <data name="&gt;&gt;rlbCoreName.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;rlbIsRunning.Type" xml:space="preserve">
     <value>VgcApis.UserControls.RoundLabel, VgcApis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
@@ -973,7 +973,7 @@
     <value>144, 25</value>
   </data>
   <data name="&gt;&gt;btnMenu.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete</value>

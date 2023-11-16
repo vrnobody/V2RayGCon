@@ -141,6 +141,7 @@ namespace ProxySetter.Views.WinForms
                     rtboxTunaStartupScript,
                     btnTunaBrowseExe,
                     btnTunaDetect,
+                    chkTunaAutorun,
                     btnTunaStart,
                     btnTunaStop
                 )

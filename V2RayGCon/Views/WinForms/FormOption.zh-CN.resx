@@ -552,6 +552,15 @@
   <data name="tabPageCustomCoresSetting.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="label19.Size" type="System.Drawing.Size, System.Drawing">
+    <value>305, 12</value>
+  </data>
+  <data name="label19.Text" xml:space="preserve">
+    <value>钩选表示将相应模板注入所有服务器，注意看最终配置。</value>
+  </data>
+  <data name="label19.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnCustomTemplatesAdd.Text" xml:space="preserve">
     <value>添加</value>
   </data>

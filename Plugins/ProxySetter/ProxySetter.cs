@@ -36,6 +36,7 @@ namespace ProxySetter
                         (s, a) => ShowMainForm()
                     )
                 );
+                children.Add(new ToolStripSeparator());
                 children.Add(luncher?.GetTunaMenu());
                 children.Add(new ToolStripSeparator());
                 children.AddRange(luncher?.GetSubMenu());

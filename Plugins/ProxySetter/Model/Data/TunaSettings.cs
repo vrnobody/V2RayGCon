@@ -16,6 +16,7 @@
         public bool isDebug = false;
         public bool isEnableIpv6 = false;
         public bool isModifySendThrough = true;
+        public bool isAutorun = false;
 
         public TunaSettings() { }
 
@@ -35,6 +36,7 @@
                 || isDebug != o.isDebug
                 || isEnableIpv6 != o.isEnableIpv6
                 || isModifySendThrough != o.isModifySendThrough
+                || isAutorun != o.isAutorun
             )
             {
                 return false;

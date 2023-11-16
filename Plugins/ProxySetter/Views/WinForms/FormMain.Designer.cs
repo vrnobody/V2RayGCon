@@ -32,6 +32,33 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabTun = new System.Windows.Forms.TabPage();
+            this.rtboxTunaDns = new System.Windows.Forms.RichTextBox();
+            this.chkTunaModifySendThrough = new System.Windows.Forms.CheckBox();
+            this.chkTunaEnableIpv6 = new System.Windows.Forms.CheckBox();
+            this.chkTunaAutorun = new System.Windows.Forms.CheckBox();
+            this.chkTunaDebug = new System.Windows.Forms.CheckBox();
+            this.chkTunaAutoUpdateArguments = new System.Windows.Forms.CheckBox();
+            this.btnTunaBrowseExe = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.rtboxTunaStartupScript = new System.Windows.Forms.RichTextBox();
+            this.lbTunaStatus = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tboxTunaTunName = new System.Windows.Forms.TextBox();
+            this.tboxTunaExePath = new System.Windows.Forms.TextBox();
+            this.tboxTunaTunIpv4 = new System.Windows.Forms.TextBox();
+            this.tboxTunaTunIpv6 = new System.Windows.Forms.TextBox();
+            this.tboxTunaNicIpv4 = new System.Windows.Forms.TextBox();
+            this.tboxTunaProxy = new System.Windows.Forms.TextBox();
+            this.btnTunaStop = new System.Windows.Forms.Button();
+            this.btnTunaStart = new System.Windows.Forms.Button();
+            this.btnTunaDetect = new System.Windows.Forms.Button();
             this.tabBasic = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -76,38 +103,15 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tboxUsageReadMe = new System.Windows.Forms.TextBox();
-            this.tabTun = new System.Windows.Forms.TabPage();
-            this.rtboxTunaDns = new System.Windows.Forms.RichTextBox();
-            this.chkTunaModifySendThrough = new System.Windows.Forms.CheckBox();
-            this.chkTunaEnableIpv6 = new System.Windows.Forms.CheckBox();
-            this.chkTunaDebug = new System.Windows.Forms.CheckBox();
-            this.chkTunaAutoUpdateArguments = new System.Windows.Forms.CheckBox();
-            this.btnTunaBrowseExe = new System.Windows.Forms.Button();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.rtboxTunaStartupScript = new System.Windows.Forms.RichTextBox();
-            this.lbTunaStatus = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tboxTunaTunName = new System.Windows.Forms.TextBox();
-            this.tboxTunaExePath = new System.Windows.Forms.TextBox();
-            this.tboxTunaTunIpv4 = new System.Windows.Forms.TextBox();
-            this.tboxTunaTunIpv6 = new System.Windows.Forms.TextBox();
-            this.tboxTunaNicIpv4 = new System.Windows.Forms.TextBox();
-            this.tboxTunaProxy = new System.Windows.Forms.TextBox();
-            this.btnTunaStop = new System.Windows.Forms.Button();
-            this.btnTunaStart = new System.Windows.Forms.Button();
-            this.btnTunaDetect = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabTun.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.tabBasic.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -119,9 +123,6 @@
             this.tabUsage.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.tabTun.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -134,13 +135,195 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.tabTun);
             this.tabControl1.Controls.Add(this.tabBasic);
             this.tabControl1.Controls.Add(this.tabPac);
             this.tabControl1.Controls.Add(this.tabUsage);
-            this.tabControl1.Controls.Add(this.tabTun);
             resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
+            // 
+            // tabTun
+            // 
+            resources.ApplyResources(this.tabTun, "tabTun");
+            this.tabTun.Controls.Add(this.rtboxTunaDns);
+            this.tabTun.Controls.Add(this.chkTunaModifySendThrough);
+            this.tabTun.Controls.Add(this.chkTunaEnableIpv6);
+            this.tabTun.Controls.Add(this.chkTunaAutorun);
+            this.tabTun.Controls.Add(this.chkTunaDebug);
+            this.tabTun.Controls.Add(this.chkTunaAutoUpdateArguments);
+            this.tabTun.Controls.Add(this.btnTunaBrowseExe);
+            this.tabTun.Controls.Add(this.panel3);
+            this.tabTun.Controls.Add(this.lbTunaStatus);
+            this.tabTun.Controls.Add(this.label11);
+            this.tabTun.Controls.Add(this.label12);
+            this.tabTun.Controls.Add(this.label14);
+            this.tabTun.Controls.Add(this.label10);
+            this.tabTun.Controls.Add(this.label7);
+            this.tabTun.Controls.Add(this.label5);
+            this.tabTun.Controls.Add(this.tboxTunaTunName);
+            this.tabTun.Controls.Add(this.tboxTunaExePath);
+            this.tabTun.Controls.Add(this.tboxTunaTunIpv4);
+            this.tabTun.Controls.Add(this.tboxTunaTunIpv6);
+            this.tabTun.Controls.Add(this.tboxTunaNicIpv4);
+            this.tabTun.Controls.Add(this.tboxTunaProxy);
+            this.tabTun.Controls.Add(this.btnTunaStop);
+            this.tabTun.Controls.Add(this.btnTunaStart);
+            this.tabTun.Controls.Add(this.btnTunaDetect);
+            this.tabTun.Name = "tabTun";
+            this.tabTun.UseVisualStyleBackColor = true;
+            // 
+            // rtboxTunaDns
+            // 
+            resources.ApplyResources(this.rtboxTunaDns, "rtboxTunaDns");
+            this.rtboxTunaDns.Name = "rtboxTunaDns";
+            // 
+            // chkTunaModifySendThrough
+            // 
+            resources.ApplyResources(this.chkTunaModifySendThrough, "chkTunaModifySendThrough");
+            this.chkTunaModifySendThrough.Name = "chkTunaModifySendThrough";
+            this.toolTip1.SetToolTip(this.chkTunaModifySendThrough, resources.GetString("chkTunaModifySendThrough.ToolTip"));
+            this.chkTunaModifySendThrough.UseVisualStyleBackColor = true;
+            // 
+            // chkTunaEnableIpv6
+            // 
+            resources.ApplyResources(this.chkTunaEnableIpv6, "chkTunaEnableIpv6");
+            this.chkTunaEnableIpv6.Name = "chkTunaEnableIpv6";
+            this.toolTip1.SetToolTip(this.chkTunaEnableIpv6, resources.GetString("chkTunaEnableIpv6.ToolTip"));
+            this.chkTunaEnableIpv6.UseVisualStyleBackColor = true;
+            // 
+            // chkTunaAutorun
+            // 
+            resources.ApplyResources(this.chkTunaAutorun, "chkTunaAutorun");
+            this.chkTunaAutorun.Name = "chkTunaAutorun";
+            this.toolTip1.SetToolTip(this.chkTunaAutorun, resources.GetString("chkTunaAutorun.ToolTip"));
+            this.chkTunaAutorun.UseVisualStyleBackColor = true;
+            // 
+            // chkTunaDebug
+            // 
+            resources.ApplyResources(this.chkTunaDebug, "chkTunaDebug");
+            this.chkTunaDebug.Name = "chkTunaDebug";
+            this.toolTip1.SetToolTip(this.chkTunaDebug, resources.GetString("chkTunaDebug.ToolTip"));
+            this.chkTunaDebug.UseVisualStyleBackColor = true;
+            // 
+            // chkTunaAutoUpdateArguments
+            // 
+            resources.ApplyResources(this.chkTunaAutoUpdateArguments, "chkTunaAutoUpdateArguments");
+            this.chkTunaAutoUpdateArguments.Name = "chkTunaAutoUpdateArguments";
+            this.toolTip1.SetToolTip(this.chkTunaAutoUpdateArguments, resources.GetString("chkTunaAutoUpdateArguments.ToolTip"));
+            this.chkTunaAutoUpdateArguments.UseVisualStyleBackColor = true;
+            // 
+            // btnTunaBrowseExe
+            // 
+            resources.ApplyResources(this.btnTunaBrowseExe, "btnTunaBrowseExe");
+            this.btnTunaBrowseExe.Name = "btnTunaBrowseExe";
+            this.toolTip1.SetToolTip(this.btnTunaBrowseExe, resources.GetString("btnTunaBrowseExe.ToolTip"));
+            this.btnTunaBrowseExe.UseVisualStyleBackColor = true;
+            // 
+            // panel3
+            // 
+            resources.ApplyResources(this.panel3, "panel3");
+            this.panel3.Controls.Add(this.groupBox6);
+            this.panel3.Name = "panel3";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.rtboxTunaStartupScript);
+            resources.ApplyResources(this.groupBox6, "groupBox6");
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.TabStop = false;
+            // 
+            // rtboxTunaStartupScript
+            // 
+            resources.ApplyResources(this.rtboxTunaStartupScript, "rtboxTunaStartupScript");
+            this.rtboxTunaStartupScript.Name = "rtboxTunaStartupScript";
+            // 
+            // lbTunaStatus
+            // 
+            resources.ApplyResources(this.lbTunaStatus, "lbTunaStatus");
+            this.lbTunaStatus.Name = "lbTunaStatus";
+            // 
+            // label11
+            // 
+            resources.ApplyResources(this.label11, "label11");
+            this.label11.Name = "label11";
+            this.toolTip1.SetToolTip(this.label11, resources.GetString("label11.ToolTip"));
+            // 
+            // label12
+            // 
+            resources.ApplyResources(this.label12, "label12");
+            this.label12.Name = "label12";
+            this.toolTip1.SetToolTip(this.label12, resources.GetString("label12.ToolTip"));
+            // 
+            // label14
+            // 
+            resources.ApplyResources(this.label14, "label14");
+            this.label14.Name = "label14";
+            // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.Name = "label10";
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
+            // tboxTunaTunName
+            // 
+            resources.ApplyResources(this.tboxTunaTunName, "tboxTunaTunName");
+            this.tboxTunaTunName.Name = "tboxTunaTunName";
+            this.toolTip1.SetToolTip(this.tboxTunaTunName, resources.GetString("tboxTunaTunName.ToolTip"));
+            // 
+            // tboxTunaExePath
+            // 
+            resources.ApplyResources(this.tboxTunaExePath, "tboxTunaExePath");
+            this.tboxTunaExePath.Name = "tboxTunaExePath";
+            // 
+            // tboxTunaTunIpv4
+            // 
+            resources.ApplyResources(this.tboxTunaTunIpv4, "tboxTunaTunIpv4");
+            this.tboxTunaTunIpv4.Name = "tboxTunaTunIpv4";
+            // 
+            // tboxTunaTunIpv6
+            // 
+            resources.ApplyResources(this.tboxTunaTunIpv6, "tboxTunaTunIpv6");
+            this.tboxTunaTunIpv6.Name = "tboxTunaTunIpv6";
+            // 
+            // tboxTunaNicIpv4
+            // 
+            resources.ApplyResources(this.tboxTunaNicIpv4, "tboxTunaNicIpv4");
+            this.tboxTunaNicIpv4.Name = "tboxTunaNicIpv4";
+            // 
+            // tboxTunaProxy
+            // 
+            resources.ApplyResources(this.tboxTunaProxy, "tboxTunaProxy");
+            this.tboxTunaProxy.Name = "tboxTunaProxy";
+            // 
+            // btnTunaStop
+            // 
+            resources.ApplyResources(this.btnTunaStop, "btnTunaStop");
+            this.btnTunaStop.Name = "btnTunaStop";
+            this.btnTunaStop.UseVisualStyleBackColor = true;
+            // 
+            // btnTunaStart
+            // 
+            resources.ApplyResources(this.btnTunaStart, "btnTunaStart");
+            this.btnTunaStart.Name = "btnTunaStart";
+            this.btnTunaStart.UseVisualStyleBackColor = true;
+            // 
+            // btnTunaDetect
+            // 
+            resources.ApplyResources(this.btnTunaDetect, "btnTunaDetect");
+            this.btnTunaDetect.Name = "btnTunaDetect";
+            this.toolTip1.SetToolTip(this.btnTunaDetect, resources.GetString("btnTunaDetect.ToolTip"));
+            this.btnTunaDetect.UseVisualStyleBackColor = true;
             // 
             // tabBasic
             // 
@@ -462,180 +645,6 @@
             this.tboxUsageReadMe.Name = "tboxUsageReadMe";
             this.tboxUsageReadMe.ReadOnly = true;
             // 
-            // tabTun
-            // 
-            this.tabTun.Controls.Add(this.rtboxTunaDns);
-            this.tabTun.Controls.Add(this.chkTunaModifySendThrough);
-            this.tabTun.Controls.Add(this.chkTunaEnableIpv6);
-            this.tabTun.Controls.Add(this.chkTunaDebug);
-            this.tabTun.Controls.Add(this.chkTunaAutoUpdateArguments);
-            this.tabTun.Controls.Add(this.btnTunaBrowseExe);
-            this.tabTun.Controls.Add(this.panel3);
-            this.tabTun.Controls.Add(this.lbTunaStatus);
-            this.tabTun.Controls.Add(this.label11);
-            this.tabTun.Controls.Add(this.label12);
-            this.tabTun.Controls.Add(this.label14);
-            this.tabTun.Controls.Add(this.label10);
-            this.tabTun.Controls.Add(this.label7);
-            this.tabTun.Controls.Add(this.label5);
-            this.tabTun.Controls.Add(this.tboxTunaTunName);
-            this.tabTun.Controls.Add(this.tboxTunaExePath);
-            this.tabTun.Controls.Add(this.tboxTunaTunIpv4);
-            this.tabTun.Controls.Add(this.tboxTunaTunIpv6);
-            this.tabTun.Controls.Add(this.tboxTunaNicIpv4);
-            this.tabTun.Controls.Add(this.tboxTunaProxy);
-            this.tabTun.Controls.Add(this.btnTunaStop);
-            this.tabTun.Controls.Add(this.btnTunaStart);
-            this.tabTun.Controls.Add(this.btnTunaDetect);
-            resources.ApplyResources(this.tabTun, "tabTun");
-            this.tabTun.Name = "tabTun";
-            this.tabTun.UseVisualStyleBackColor = true;
-            // 
-            // rtboxTunaDns
-            // 
-            resources.ApplyResources(this.rtboxTunaDns, "rtboxTunaDns");
-            this.rtboxTunaDns.Name = "rtboxTunaDns";
-            // 
-            // chkTunaModifySendThrough
-            // 
-            resources.ApplyResources(this.chkTunaModifySendThrough, "chkTunaModifySendThrough");
-            this.chkTunaModifySendThrough.Name = "chkTunaModifySendThrough";
-            this.toolTip1.SetToolTip(this.chkTunaModifySendThrough, resources.GetString("chkTunaModifySendThrough.ToolTip"));
-            this.chkTunaModifySendThrough.UseVisualStyleBackColor = true;
-            // 
-            // chkTunaEnableIpv6
-            // 
-            resources.ApplyResources(this.chkTunaEnableIpv6, "chkTunaEnableIpv6");
-            this.chkTunaEnableIpv6.Name = "chkTunaEnableIpv6";
-            this.toolTip1.SetToolTip(this.chkTunaEnableIpv6, resources.GetString("chkTunaEnableIpv6.ToolTip"));
-            this.chkTunaEnableIpv6.UseVisualStyleBackColor = true;
-            // 
-            // chkTunaDebug
-            // 
-            resources.ApplyResources(this.chkTunaDebug, "chkTunaDebug");
-            this.chkTunaDebug.Name = "chkTunaDebug";
-            this.toolTip1.SetToolTip(this.chkTunaDebug, resources.GetString("chkTunaDebug.ToolTip"));
-            this.chkTunaDebug.UseVisualStyleBackColor = true;
-            // 
-            // chkTunaAutoUpdateArguments
-            // 
-            resources.ApplyResources(this.chkTunaAutoUpdateArguments, "chkTunaAutoUpdateArguments");
-            this.chkTunaAutoUpdateArguments.Name = "chkTunaAutoUpdateArguments";
-            this.toolTip1.SetToolTip(this.chkTunaAutoUpdateArguments, resources.GetString("chkTunaAutoUpdateArguments.ToolTip"));
-            this.chkTunaAutoUpdateArguments.UseVisualStyleBackColor = true;
-            // 
-            // btnTunaBrowseExe
-            // 
-            resources.ApplyResources(this.btnTunaBrowseExe, "btnTunaBrowseExe");
-            this.btnTunaBrowseExe.Name = "btnTunaBrowseExe";
-            this.toolTip1.SetToolTip(this.btnTunaBrowseExe, resources.GetString("btnTunaBrowseExe.ToolTip"));
-            this.btnTunaBrowseExe.UseVisualStyleBackColor = true;
-            // 
-            // panel3
-            // 
-            resources.ApplyResources(this.panel3, "panel3");
-            this.panel3.Controls.Add(this.groupBox6);
-            this.panel3.Name = "panel3";
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.rtboxTunaStartupScript);
-            resources.ApplyResources(this.groupBox6, "groupBox6");
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.TabStop = false;
-            // 
-            // rtboxTunaStartupScript
-            // 
-            resources.ApplyResources(this.rtboxTunaStartupScript, "rtboxTunaStartupScript");
-            this.rtboxTunaStartupScript.Name = "rtboxTunaStartupScript";
-            // 
-            // lbTunaStatus
-            // 
-            resources.ApplyResources(this.lbTunaStatus, "lbTunaStatus");
-            this.lbTunaStatus.Name = "lbTunaStatus";
-            // 
-            // label11
-            // 
-            resources.ApplyResources(this.label11, "label11");
-            this.label11.Name = "label11";
-            this.toolTip1.SetToolTip(this.label11, resources.GetString("label11.ToolTip"));
-            // 
-            // label12
-            // 
-            resources.ApplyResources(this.label12, "label12");
-            this.label12.Name = "label12";
-            this.toolTip1.SetToolTip(this.label12, resources.GetString("label12.ToolTip"));
-            // 
-            // label14
-            // 
-            resources.ApplyResources(this.label14, "label14");
-            this.label14.Name = "label14";
-            // 
-            // label10
-            // 
-            resources.ApplyResources(this.label10, "label10");
-            this.label10.Name = "label10";
-            // 
-            // label7
-            // 
-            resources.ApplyResources(this.label7, "label7");
-            this.label7.Name = "label7";
-            // 
-            // label5
-            // 
-            resources.ApplyResources(this.label5, "label5");
-            this.label5.Name = "label5";
-            // 
-            // tboxTunaTunName
-            // 
-            resources.ApplyResources(this.tboxTunaTunName, "tboxTunaTunName");
-            this.tboxTunaTunName.Name = "tboxTunaTunName";
-            this.toolTip1.SetToolTip(this.tboxTunaTunName, resources.GetString("tboxTunaTunName.ToolTip"));
-            // 
-            // tboxTunaExePath
-            // 
-            resources.ApplyResources(this.tboxTunaExePath, "tboxTunaExePath");
-            this.tboxTunaExePath.Name = "tboxTunaExePath";
-            // 
-            // tboxTunaTunIpv4
-            // 
-            resources.ApplyResources(this.tboxTunaTunIpv4, "tboxTunaTunIpv4");
-            this.tboxTunaTunIpv4.Name = "tboxTunaTunIpv4";
-            // 
-            // tboxTunaTunIpv6
-            // 
-            resources.ApplyResources(this.tboxTunaTunIpv6, "tboxTunaTunIpv6");
-            this.tboxTunaTunIpv6.Name = "tboxTunaTunIpv6";
-            // 
-            // tboxTunaNicIpv4
-            // 
-            resources.ApplyResources(this.tboxTunaNicIpv4, "tboxTunaNicIpv4");
-            this.tboxTunaNicIpv4.Name = "tboxTunaNicIpv4";
-            // 
-            // tboxTunaProxy
-            // 
-            resources.ApplyResources(this.tboxTunaProxy, "tboxTunaProxy");
-            this.tboxTunaProxy.Name = "tboxTunaProxy";
-            // 
-            // btnTunaStop
-            // 
-            resources.ApplyResources(this.btnTunaStop, "btnTunaStop");
-            this.btnTunaStop.Name = "btnTunaStop";
-            this.btnTunaStop.UseVisualStyleBackColor = true;
-            // 
-            // btnTunaStart
-            // 
-            resources.ApplyResources(this.btnTunaStart, "btnTunaStart");
-            this.btnTunaStart.Name = "btnTunaStart";
-            this.btnTunaStart.UseVisualStyleBackColor = true;
-            // 
-            // btnTunaDetect
-            // 
-            resources.ApplyResources(this.btnTunaDetect, "btnTunaDetect");
-            this.btnTunaDetect.Name = "btnTunaDetect";
-            this.toolTip1.SetToolTip(this.btnTunaDetect, resources.GetString("btnTunaDetect.ToolTip"));
-            this.btnTunaDetect.UseVisualStyleBackColor = true;
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.btnCancel);
@@ -666,6 +675,10 @@
             this.Shown += new System.EventHandler(this.FormPluginMain_Shown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.tabTun.ResumeLayout(false);
+            this.tabTun.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
             this.tabBasic.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -680,10 +693,6 @@
             this.panel2.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            this.tabTun.ResumeLayout(false);
-            this.tabTun.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -767,5 +776,6 @@
         private System.Windows.Forms.CheckBox chkTunaEnableIpv6;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.CheckBox chkTunaModifySendThrough;
+        private System.Windows.Forms.CheckBox chkTunaAutorun;
     }
 }

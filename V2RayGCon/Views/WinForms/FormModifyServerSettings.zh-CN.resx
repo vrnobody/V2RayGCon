@@ -190,6 +190,15 @@
   <data name="btnTemplates.ToolTip" xml:space="preserve">
     <value>自定义config模板名</value>
   </data>
+  <data name="chkInject.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 16</value>
+  </data>
+  <data name="chkInject.Text" xml:space="preserve">
+    <value>*注入</value>
+  </data>
+  <data name="chkInject.ToolTip" xml:space="preserve">
+    <value>接受自定义模板注入</value>
+  </data>
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 12</value>
   </data>

@@ -36,13 +36,14 @@ namespace V2RayGCon.Views.UserControls
             this.btnDelete = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.rlbBinding = new VgcApis.UserControls.RoundLabel();
+            this.chkIsInject = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lbTitle
             // 
             resources.ApplyResources(this.lbTitle, "lbTitle");
             this.lbTitle.Name = "lbTitle";
-            this.lbTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbTitle_MouseDown);
+            this.lbTitle.Click += new System.EventHandler(this.lbTitle_Click);
             // 
             // btnEdit
             // 
@@ -69,11 +70,20 @@ namespace V2RayGCon.Views.UserControls
             this.toolTip1.SetToolTip(this.rlbBinding, resources.GetString("rlbBinding.ToolTip"));
             this.rlbBinding.MouseDown += new System.Windows.Forms.MouseEventHandler(this.rlbBinding_MouseDown);
             // 
+            // chkIsInject
+            // 
+            resources.ApplyResources(this.chkIsInject, "chkIsInject");
+            this.chkIsInject.Name = "chkIsInject";
+            this.toolTip1.SetToolTip(this.chkIsInject, resources.GetString("chkIsInject.ToolTip"));
+            this.chkIsInject.UseVisualStyleBackColor = true;
+            this.chkIsInject.CheckedChanged += new System.EventHandler(this.chkIsInject_CheckedChanged);
+            // 
             // ConfigTemplateUI
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.chkIsInject);
             this.Controls.Add(this.rlbBinding);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
@@ -92,5 +102,6 @@ namespace V2RayGCon.Views.UserControls
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.ToolTip toolTip1;
         private VgcApis.UserControls.RoundLabel rlbBinding;
+        private System.Windows.Forms.CheckBox chkIsInject;
     }
 }

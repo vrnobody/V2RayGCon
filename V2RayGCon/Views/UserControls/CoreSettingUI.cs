@@ -53,7 +53,6 @@ namespace V2RayGCon.Views.UserControls
 
             var visible = !string.IsNullOrEmpty(tag);
             rlbBinding.Visible = visible;
-            lbTitle.Left = visible ? rlbBinding.Right + rlbBinding.Left : rlbBinding.Left;
         }
 
         private void InvokeOnRequireReloadIgnoreError()

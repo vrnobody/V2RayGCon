@@ -117,19 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="chkInIP.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxInPort.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkInPort.Text" xml:space="preserve">
     <value>端口</value>
+  </data>
+  <data name="chkInPort.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxInIP.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="chkMark.Text" xml:space="preserve">
     <value>标记</value>
   </data>
-  <data name="chkInMode.Text" xml:space="preserve">
-    <value>模式</value>
-  </data>
-  <data name="chkInMode.ToolTip" xml:space="preserve">
-    <value>Inbound协议，Config表示按原配置</value>
+  <data name="chkMark.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkInMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 16</value>
+  </data>
+  <data name="chkInMode.Text" xml:space="preserve">
+    <value>模板名</value>
+  </data>
+  <data name="chkInMode.ToolTip" xml:space="preserve">
+    <value>自定义模板名</value>
+  </data>
   <data name="chkIncrement.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 16</value>
   </data>
@@ -148,6 +166,15 @@
   <data name="chkShareOverLAN.ToolTip" xml:space="preserve">
     <value>允许局域网访问代理</value>
   </data>
+  <data name="cboxInName.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxMark.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnModify.Text" xml:space="preserve">
     <value>修改</value>
   </data>
@@ -157,8 +184,20 @@
   <data name="btnCancel.Text" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>选项</value>
+  <data name="btnCancel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxUntrack.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxCustomCoreName.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxAutorun.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxRemark.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="chkUntrack.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 16</value>
@@ -175,6 +214,9 @@
   <data name="chkRemark.Text" xml:space="preserve">
     <value>备注</value>
   </data>
+  <data name="chkRemark.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkCustomCore.ToolTip" xml:space="preserve">
     <value>自定义core</value>
   </data>
@@ -184,7 +226,19 @@
   <data name="chkAutorun.Text" xml:space="preserve">
     <value>自启动</value>
   </data>
+  <data name="chkAutorun.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>选项</value>
+  </data>
+  <data name="groupBox2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>批量修改</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

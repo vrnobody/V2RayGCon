@@ -89,7 +89,12 @@ namespace V2RayGCon.Views.WinForms
             cboxStdinEncoding.Items.AddRange(encodings);
             cboxStdoutEncoding.Items.AddRange(encodings);
 
-            var inbNames = settings.GetCustomConfigTemplates().Select(inb => inb.name).ToArray();
+            var inbNames = settings
+                .GetCustomConfigTemplates()
+                .Where(inb => !inb.isInject)
+                .Select(inb => inb.name)
+                .ToArray();
+
             cboxSpeedtestInbTplName.Items.AddRange(inbNames);
 
             foreach (

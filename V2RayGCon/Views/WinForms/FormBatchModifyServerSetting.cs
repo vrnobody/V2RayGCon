@@ -143,7 +143,11 @@ namespace V2RayGCon.Views.WinForms
         {
             var items = cboxInName.Items;
             items.Clear();
-            var names = settings.GetCustomConfigTemplates().Select(inb => inb.name).ToArray();
+            var names = settings
+                .GetCustomConfigTemplates()
+                .Where(inb => !inb.isInject)
+                .Select(inb => inb.name)
+                .ToArray();
             items.AddRange(names);
             VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxCustomCoreName);
         }

@@ -136,7 +136,7 @@
     <value>服务器运行状态</value>
   </data>
   <data name="rlbSetting.ToolTip" xml:space="preserve">
-    <value>A自启动，Config模板, U不追踪</value>
+    <value>A自启动，C自定义模板, N不注入模板, U不追踪</value>
   </data>
   <data name="rlbMark.ToolTip" xml:space="preserve">
     <value>标记</value>

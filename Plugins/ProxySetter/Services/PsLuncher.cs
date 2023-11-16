@@ -46,6 +46,15 @@ namespace ProxySetter.Services
 
             serverTracker.OnSysProxyChanged += UpdateMenuItemCheckedStatHandler;
             serverTracker.Run(setting, pacServer, vgcServer, vgcNotifier);
+
+            if (setting.GetTunaSettings().isAutorun)
+            {
+                VgcApis.Misc.Utils.RunInBgSlim(() =>
+                {
+                    VgcApis.Misc.Utils.Sleep(TimeSpan.FromSeconds(5));
+                    tunaServer.Start();
+                });
+            }
         }
 
         public void Show()

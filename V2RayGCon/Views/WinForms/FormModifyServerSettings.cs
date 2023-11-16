@@ -86,7 +86,11 @@ namespace V2RayGCon.Views.WinForms
             cboxCoreName.Items.AddRange(coreNames);
             VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxCoreName);
 
-            var inbNames = settings.GetCustomConfigTemplates().Select(inb => inb.name).ToArray();
+            var inbNames = settings
+                .GetCustomConfigTemplates()
+                .Where(inb => !inb.isInject)
+                .Select(inb => inb.name)
+                .ToArray();
             cboxInboundName.Items.AddRange(inbNames);
             VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxInboundName);
 
@@ -133,7 +137,8 @@ namespace V2RayGCon.Views.WinForms
                 customCoreName = cboxCoreName.SelectedIndex < 1 ? string.Empty : cboxCoreName.Text,
                 templates = tboxTemplates.Text,
                 isAutorun = chkAutoRun.Checked,
-                isUntrack = chkUntrack.Checked
+                isUntrack = chkUntrack.Checked,
+                isAcceptInjecttion = chkInject.Checked,
             };
             return result;
         }
@@ -154,6 +159,7 @@ namespace V2RayGCon.Views.WinForms
 
             chkAutoRun.Checked = s.isAutorun;
             chkUntrack.Checked = s.isUntrack;
+            chkInject.Checked = s.isAcceptInjecttion;
         }
 
         void UpdateShareLink()

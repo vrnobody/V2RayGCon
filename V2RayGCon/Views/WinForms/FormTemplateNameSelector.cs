@@ -78,7 +78,10 @@ namespace V2RayGCon.Views.WinForms
             tboxNames.Text = GatherResult();
 
             var settings = Services.Settings.Instance;
-            var names = settings.GetCustomConfigTemplates().Select(t => t.name);
+            var names = settings
+                .GetCustomConfigTemplates()
+                .Where(t => !t.isInject)
+                .Select(t => t.name);
             foreach (var name in names)
             {
                 var chk = new CheckBox

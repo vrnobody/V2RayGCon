@@ -27,6 +27,7 @@ namespace ProxySetter.Controllers.VGCPluginComponents
         private readonly RichTextBox rtboxStartup;
         private readonly Button btnExe;
         private readonly Button btnDetect;
+        private readonly CheckBox chkIsAutorun;
         private readonly Button btnStart;
         private readonly Button btnStop;
         #endregion
@@ -49,6 +50,7 @@ namespace ProxySetter.Controllers.VGCPluginComponents
             RichTextBox rtboxStartup,
             Button btnExe,
             Button btnDetect,
+            CheckBox chkIsAutorun,
             Button btnStart,
             Button btnStop
         )
@@ -73,6 +75,7 @@ namespace ProxySetter.Controllers.VGCPluginComponents
             this.rtboxStartup = rtboxStartup;
             this.btnExe = btnExe;
             this.btnDetect = btnDetect;
+            this.chkIsAutorun = chkIsAutorun;
             this.btnStart = btnStart;
             this.btnStop = btnStop;
 
@@ -188,6 +191,7 @@ namespace ProxySetter.Controllers.VGCPluginComponents
                 isEnableIpv6 = chkEnableIpv6.Checked,
                 isModifySendThrough = chkModifySendThrough.Checked,
                 autoGenArgs = chkAutoGenArgs.Checked,
+                isAutorun = chkIsAutorun.Checked,
             };
         }
 
@@ -206,6 +210,7 @@ namespace ProxySetter.Controllers.VGCPluginComponents
             chkEnableIpv6.Checked = ts.isEnableIpv6;
             chkModifySendThrough.Checked = ts.isModifySendThrough;
             chkDebug.Checked = ts.isDebug;
+            chkIsAutorun.Checked = ts.isAutorun;
 
             rtboxStartup.Text = ts.startupScript;
 

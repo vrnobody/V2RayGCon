@@ -11,7 +11,11 @@ namespace DyFetch
             var configs = new Models.Configs(args);
 
             // -h 打印用法并结束程序
-            if (args.Length < 1 || configs.help)
+            if (
+                args.Length < 1
+                || configs.help
+                || (string.IsNullOrEmpty(configs.pipeIn) && string.IsNullOrEmpty(configs.url))
+            )
             {
                 configs.ShowHelp();
                 Environment.Exit(0);
@@ -43,6 +47,7 @@ namespace DyFetch
                     {
                         File.WriteAllText(path, html);
                     }
+                    Console.WriteLine($"HTML len: {html.Length / 1024} KiB");
                 }
                 else
                 {

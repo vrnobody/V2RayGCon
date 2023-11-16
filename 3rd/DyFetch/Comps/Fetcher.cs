@@ -32,11 +32,13 @@ namespace DyFetch.Comps
             timeout = timeout > 0 ? timeout : Models.Consts.DefaultFetchTimeout;
             try
             {
-                var w = new WebDriverWait(driver, TimeSpan.FromMilliseconds(timeout));
+                var span = TimeSpan.FromMilliseconds(timeout);
+                var w = new WebDriverWait(driver, span);
                 driver.Navigate().GoToUrl(url);
                 if (csses != null && csses.Count > 0)
                 {
-                    WaitForOneOfCsses(csses, w);
+                    var cts = new CancellationTokenSource(span);
+                    WaitForOneOfCsses(csses, w, cts.Token);
                 }
                 if (wait > 0)
                 {
@@ -55,10 +57,14 @@ namespace DyFetch.Comps
         #endregion
 
         #region private methods
-        void WaitForOneOfCsses(IEnumerable<string> csses, WebDriverWait wait)
+        void WaitForOneOfCsses(
+            IEnumerable<string> csses,
+            WebDriverWait wait,
+            CancellationToken token
+        )
         {
             var bys = csses.Select(css => By.CssSelector(css)).ToList();
-            wait.Until(drv => WaitForOneOfBys(drv, bys));
+            wait.Until(drv => WaitForOneOfBys(drv, bys), token);
         }
 
         bool WaitForOneOfBys(IWebDriver drv, IEnumerable<By> bys)
@@ -70,21 +76,35 @@ namespace DyFetch.Comps
                     var el = drv.FindElement(by);
                     if (el.Displayed)
                     {
-                        Console.WriteLine("Match!");
+                        Console.WriteLine($"Match: {by.Criteria}");
                         return true;
                     }
                 }
                 catch { }
             }
+            Thread.Sleep(3000);
             Console.WriteLine("Not match!");
             return false;
+        }
+
+        void AddMemoryOptimizeOptions(FirefoxOptions options)
+        {
+            options.AddArgument("--start-maximized");
+            options.AddArgument("--disable-infobars");
+            options.AddArgument("--disable-extensions");
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-application-cache");
+            options.AddArgument("--disable-gpu");
+            options.AddArgument("--disable-dev-shm-usage");
         }
 
         FirefoxOptions CreateOptions(Models.Configs configs)
         {
             var options = new FirefoxOptions();
 
-            options.AddArgument("--window-size=1920,1080");
+            AddMemoryOptimizeOptions(options);
+
+            // options.AddArgument("--window-size=1920,1080");
 
             if (!string.IsNullOrEmpty(configs.proxy))
             {

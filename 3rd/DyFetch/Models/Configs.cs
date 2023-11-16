@@ -66,7 +66,7 @@ namespace DyFetch.Models
         public void ShowHelp()
         {
             Console.WriteLine("");
-            Console.WriteLine("DyFetch v0.0.3 2023-10-05");
+            Console.WriteLine("DyFetch v0.0.4 2023-11-16");
             Console.WriteLine("");
             Console.WriteLine("Usage:");
             Console.WriteLine(

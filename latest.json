@@ -1,8 +1,15 @@
 {
-  "version": "1.8.7.0",
-  "md5": "09991ED7ECE0D899A61A5D3630132A04",
+  "version": "1.8.8.0",
+  "md5": "199D35AEB7D9220D3C6C42A4F27859FF",
   "warnings": [],
   "changes": [
-    "更新至WebUI v1.0"
+    "ProxySetter插件添加Tuna分页，支持tun模式，详见手册",
+    "模板添加注入选项",
+    "支持对只有socks协议的自定义core进行测速",
+    "统一各日志窗口菜单项",
+    "修复选项窗口无法保存默认模板设置bug",
+    "修复服务器面板的按钮不会自动隐藏bug",
+    "修复Text编辑器打开搜索窗口时退出会报错bug",
+    "修复std.Sys:WriteAllText()只能追加文本bug"
   ]
 }

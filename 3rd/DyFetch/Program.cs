@@ -22,46 +22,47 @@ namespace DyFetch
             }
 
             // 创建selenium实例
-            using (var fetcher = new Comps.Fetcher(configs))
+
+            var pin = configs.pipeIn;
+            var pout = configs.pipeOut;
+
+            if (string.IsNullOrEmpty(pin) || string.IsNullOrEmpty(pout))
             {
-                var pin = configs.pipeIn;
-                var pout = configs.pipeOut;
-
-                if (string.IsNullOrEmpty(pin) || string.IsNullOrEmpty(pout))
+                // 在命令行窗口中运行，没有指定管道参数时
+                // 例如：DyFetch.exe -u "https://www.bing.com"
+                FetchOnce(configs);
+            }
+            else
+            {
+                // 在NeoLuna插件中通过std.Sys:PipedProcRun()调用DyFetch.exe时（下附Lua示例代码）
+                using (var fetcher = new Comps.Fetcher(configs))
+                using (var plumber = new Comps.Plumber(pin, pout))
                 {
-                    // 在命令行窗口中运行，没有指定管道参数时
-                    // 例如：DyFetch.exe -u "https://www.bing.com"
-                    var html = fetcher.Fetch(
-                        configs.url,
-                        configs.csses,
-                        configs.timeout,
-                        configs.wait
-                    );
-
-                    var path = configs.file;
-                    if (string.IsNullOrEmpty(path))
-                    {
-                        Console.WriteLine(html);
-                    }
-                    else
-                    {
-                        File.WriteAllText(path, html);
-                    }
-                    Console.WriteLine($"HTML len: {html.Length / 1024} KiB");
-                }
-                else
-                {
-                    // 在NeoLuna插件中通过std.Sys:PipedProcRun()调用DyFetch.exe时（下附Lua示例代码）
-                    using (var plumber = new Comps.Plumber(pin, pout, fetcher))
-                    {
-                        // 详见Comps.Plumber.cs
-                        plumber.Work();
-                    }
+                    // 详见Comps.Plumber.cs
+                    plumber.Work(fetcher);
                 }
             }
 
             Console.WriteLine("Goodbye!");
             Environment.Exit(0);
+        }
+
+        private static void FetchOnce(Models.Configs configs)
+        {
+            using (var fetcher = new Comps.Fetcher(configs))
+            {
+                var html = fetcher.Fetch(configs.url, configs.csses, configs.timeout, configs.wait);
+                var path = configs.file;
+                if (string.IsNullOrEmpty(path))
+                {
+                    Console.WriteLine(html);
+                }
+                else
+                {
+                    File.WriteAllText(path, html);
+                }
+                Console.WriteLine($"HTML len: {html.Length / 1024} KiB");
+            }
         }
     }
 }

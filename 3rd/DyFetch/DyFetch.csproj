@@ -61,6 +61,7 @@
     <Compile Include="Comps\Plumber.cs" />
     <Compile Include="Comps\StringReader.cs" />
     <Compile Include="Comps\StringWriter.cs" />
+    <Compile Include="Comps\Utils.cs" />
     <Compile Include="Models\Configs.cs" />
     <Compile Include="Models\Consts.cs" />
     <Compile Include="Models\Message.cs" />

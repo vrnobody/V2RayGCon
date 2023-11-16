@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+ï»¿using Newtonsoft.Json;
 using System;
 using System.IO.Pipes;
 
@@ -6,14 +6,12 @@ namespace DyFetch.Comps
 {
     internal class Plumber : IDisposable
     {
-        private readonly Fetcher fetcher;
         readonly AnonymousPipeClientStream pipeIn,
             pipeOut;
         private bool disposedValue;
 
-        public Plumber(string pipeIn, string pipeOut, Fetcher fetcher)
+        public Plumber(string pipeIn, string pipeOut)
         {
-            this.fetcher = fetcher;
             this.pipeIn = new AnonymousPipeClientStream(PipeDirection.In, pipeIn);
             this.pipeOut = new AnonymousPipeClientStream(PipeDirection.Out, pipeOut);
         }
@@ -25,27 +23,27 @@ namespace DyFetch.Comps
             {
                 if (disposing)
                 {
-                    // TODO: ÊÍ·ÅÍĞ¹Ü×´Ì¬(ÍĞ¹Ü¶ÔÏó)
-                    pipeIn?.Dispose();
-                    pipeOut?.Dispose();
+                    // TODO: é‡Šæ”¾æ‰˜ç®¡çŠ¶æ€(æ‰˜ç®¡å¯¹è±¡)
+                    Utils.DisposeObject(pipeIn);
+                    Utils.DisposeObject(pipeOut);
                 }
 
-                // TODO: ÊÍ·ÅÎ´ÍĞ¹ÜµÄ×ÊÔ´(Î´ÍĞ¹ÜµÄ¶ÔÏó)²¢ÖØĞ´ÖÕ½áÆ÷
-                // TODO: ½«´óĞÍ×Ö¶ÎÉèÖÃÎª null
+                // TODO: é‡Šæ”¾æœªæ‰˜ç®¡çš„èµ„æº(æœªæ‰˜ç®¡çš„å¯¹è±¡)å¹¶é‡å†™ç»ˆç»“å™¨
+                // TODO: å°†å¤§å‹å­—æ®µè®¾ç½®ä¸º null
                 disposedValue = true;
             }
         }
 
-        // // TODO: ½öµ±¡°Dispose(bool disposing)¡±ÓµÓĞÓÃÓÚÊÍ·ÅÎ´ÍĞ¹Ü×ÊÔ´µÄ´úÂëÊ±²ÅÌæ´úÖÕ½áÆ÷
+        // // TODO: ä»…å½“â€œDispose(bool disposing)â€æ‹¥æœ‰ç”¨äºé‡Šæ”¾æœªæ‰˜ç®¡èµ„æºçš„ä»£ç æ—¶æ‰æ›¿ä»£ç»ˆç»“å™¨
         // ~Plumber()
         // {
-        //     // ²»Òª¸ü¸Ä´Ë´úÂë¡£Çë½«ÇåÀí´úÂë·ÅÈë¡°Dispose(bool disposing)¡±·½·¨ÖĞ
+        //     // ä¸è¦æ›´æ”¹æ­¤ä»£ç ã€‚è¯·å°†æ¸…ç†ä»£ç æ”¾å…¥â€œDispose(bool disposing)â€æ–¹æ³•ä¸­
         //     Dispose(disposing: false);
         // }
 
         public void Dispose()
         {
-            // ²»Òª¸ü¸Ä´Ë´úÂë¡£Çë½«ÇåÀí´úÂë·ÅÈë¡°Dispose(bool disposing)¡±·½·¨ÖĞ
+            // ä¸è¦æ›´æ”¹æ­¤ä»£ç ã€‚è¯·å°†æ¸…ç†ä»£ç æ”¾å…¥â€œDispose(bool disposing)â€æ–¹æ³•ä¸­
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
@@ -56,32 +54,32 @@ namespace DyFetch.Comps
         #endregion
 
         #region public methods
-        public void Work()
+        public void Work(Fetcher fetcher)
         {
             var reader = new StringReader(pipeIn);
             var writer = new StringWriter(pipeOut);
+
             string str;
             do
             {
-                // ´ÓÊäÈë¹ÜµÀ¶ÁÈ¡ÃüÁî£¬¸ñÊ½Ïê¼ûModels.Message.cs
+                // ä»è¾“å…¥ç®¡é“è¯»å–å‘½ä»¤ï¼Œæ ¼å¼è¯¦è§Models.Message.cs
                 str = reader.Read();
                 if (str != null)
                 {
                     var msg = JsonConvert.DeserializeObject<Models.Message>(str);
                     Console.WriteLine($"Fetch:{msg.url}");
 
-                    // µ÷ÓÃselenium·ÃÎÊÃüÁîÖ¸¶¨µÄurl
+                    // è°ƒç”¨seleniumè®¿é—®å‘½ä»¤æŒ‡å®šçš„url
                     var html = fetcher.Fetch(msg.url, msg.csses, msg.timeout, msg.wait);
                     Console.WriteLine($"Send:{html.Length}");
 
-                    // °Ñ½á¹ûĞ´µ½Êä³ö¹ÜµÀ
+                    // æŠŠç»“æœå†™åˆ°è¾“å‡ºç®¡é“
                     writer.Write(html);
                 }
-
-                // Èç¹û¸¸½ø³Ì½áÊøStringReader.Read()½«µÃµ½null
+                // å¦‚æœçˆ¶è¿›ç¨‹ç»“æŸStringReader.Read()å°†å¾—åˆ°null
             } while (str != null);
-            Console.WriteLine("Read end.");
         }
+
         #endregion
 
         #region private methods

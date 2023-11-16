@@ -51,7 +51,7 @@ namespace DyFetch.Comps
             {
                 Console.WriteLine(ex.ToString());
             }
-            return string.Empty;
+            return "";
         }
 
         #endregion
@@ -82,13 +82,13 @@ namespace DyFetch.Comps
                 }
                 catch { }
             }
-            Thread.Sleep(3000);
-            Console.WriteLine("Not match!");
+            Console.WriteLine("No match!");
             return false;
         }
 
         void AddMemoryOptimizeOptions(FirefoxOptions options)
         {
+            //options.AddArgument("--window-size=1920,1080");
             options.AddArgument("--start-maximized");
             options.AddArgument("--disable-infobars");
             options.AddArgument("--disable-extensions");
@@ -102,9 +102,7 @@ namespace DyFetch.Comps
         {
             var options = new FirefoxOptions();
 
-            AddMemoryOptimizeOptions(options);
-
-            // options.AddArgument("--window-size=1920,1080");
+            // AddMemoryOptimizeOptions(options);
 
             if (!string.IsNullOrEmpty(configs.proxy))
             {
@@ -138,10 +136,17 @@ namespace DyFetch.Comps
             {
                 if (disposing)
                 {
-                    driver?.Close();
-                    driver?.Dispose();
+                    try
+                    {
+                        driver?.Close();
+                    }
+                    catch { }
+                    try
+                    {
+                        driver?.Quit();
+                    }
+                    catch { }
                 }
-
                 disposedValue = true;
             }
         }

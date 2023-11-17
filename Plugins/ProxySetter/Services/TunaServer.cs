@@ -17,6 +17,7 @@ namespace ProxySetter.Services
         PsSettings settings;
         VgcApis.Interfaces.Services.ISettingsService vgcSettings;
         VgcApis.Interfaces.Services.IServersService vgcServers;
+        VgcApis.Interfaces.Services.INotifierService vgcNotifier;
 
         public TunaServer() { }
 
@@ -25,6 +26,7 @@ namespace ProxySetter.Services
             this.settings = settings;
             vgcSettings = vgcApi.GetSettingService();
             vgcServers = vgcApi.GetServersService();
+            vgcNotifier = vgcApi.GetNotifierService();
         }
 
         #region IDisposable
@@ -74,12 +76,14 @@ namespace ProxySetter.Services
                 }
                 _isRunning = value;
                 VgcApis.Misc.UI.Invoke(() => menu.Checked = _isRunning);
+                vgcSettings.isTunMode = _isRunning;
                 settings.SendLog(_isRunning ? I18N.TunaStarts : I18N.TunaStopped);
                 try
                 {
                     onChanged?.Invoke(_isRunning);
                 }
                 catch { }
+                vgcNotifier.RefreshNotifyIconLater();
             }
         }
         #endregion

@@ -4,6 +4,8 @@ namespace VgcApis.Interfaces.Services
 {
     public interface ISettingsService
     {
+        bool isTunMode { get; set; }
+
         string GetSendThroughIpv4();
 
         bool SetSendThroughIpv4(string host);

@@ -61,6 +61,7 @@ namespace V2RayGCon.Services
             };
 
             orgIcon = ni.Icon.ToBitmap();
+
             niMenuRoot = ni.ContextMenuStrip;
             niMenuRoot.CreateControl();
             var handle = niMenuRoot.Handle;
@@ -792,6 +793,7 @@ namespace V2RayGCon.Services
         }
 
         SysTrayIconTypes curSysTrayIconType = SysTrayIconTypes.None;
+        bool curTunMode = false;
 
         void UpdateNotifyIconWorker(Action done)
         {
@@ -830,8 +832,9 @@ namespace V2RayGCon.Services
                     .ToList();
 
                 var iconType = AnalyzeSysTrayIconType(list);
+                var tunMode = setting.isTunMode;
 
-                if (iconType != curSysTrayIconType)
+                if (iconType != curSysTrayIconType || curTunMode != tunMode)
                 {
                     Invoke(() =>
                     {
@@ -841,6 +844,7 @@ namespace V2RayGCon.Services
                         org?.Dispose();
                     });
                     curSysTrayIconType = iconType;
+                    curTunMode = tunMode;
                 }
                 UpdateNotifyIconTextThen(list, finished);
             }
@@ -893,7 +897,8 @@ namespace V2RayGCon.Services
 
         private Bitmap CreateNotifyIconImage(SysTrayIconTypes iconType)
         {
-            var icon = new Bitmap(orgIcon);
+            var cache = setting.isTunMode ? VgcApis.Misc.UI.GetTunModeIconCache() : orgIcon;
+            var icon = new Bitmap(cache);
             var size = icon.Size;
 
             using (Graphics g = Graphics.FromImage(icon))

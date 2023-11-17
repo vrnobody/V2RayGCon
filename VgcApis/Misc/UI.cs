@@ -741,6 +741,17 @@ namespace VgcApis.Misc
 #endif
         }
 
+        static Bitmap tunIconCache = null;
+
+        public static Bitmap GetTunModeIconCache()
+        {
+            if (tunIconCache == null)
+            {
+                tunIconCache = Properties.Resources.icon_tun_mode.ToBitmap();
+            }
+            return tunIconCache;
+        }
+
         public static Icon GetAppIcon()
         {
 #if DEBUG

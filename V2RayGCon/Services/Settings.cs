@@ -248,6 +248,8 @@ namespace V2RayGCon.Services
         #endregion
 
         #region Properties
+        public bool isTunMode { get; set; } = false;
+
         public bool isLoad3rdPartyPlugins
         {
             get => userSettings.isLoad3rdPartyPlugins;
@@ -744,6 +746,8 @@ namespace V2RayGCon.Services
         #endregion
 
         #region public methods
+
+
         string sendThroughHostIpv4 = "";
 
         public string GetSendThroughIpv4() => sendThroughHostIpv4;

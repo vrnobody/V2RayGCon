@@ -324,7 +324,7 @@ namespace NeoLuna.Models.Apis
                 return;
             }
 
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 core.Abort();
                 core.Start();

@@ -727,7 +727,7 @@ ab12-_中文: |
             List<Task> tasks = new List<Task>();
             for (int i = 0; i < 30; i++)
             {
-                tasks.Add(RunInBgSlim(worker));
+                tasks.Add(RunInBackground(worker));
             }
 
             Task.WaitAll(tasks.ToArray());

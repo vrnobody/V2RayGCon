@@ -78,7 +78,7 @@ namespace V2RayGCon.Misc
 
         public static void ShowMessageBoxDoneAsync()
         {
-            VgcApis.Misc.Utils.RunInBgSlim(() => VgcApis.Misc.UI.MsgBox(I18N.Done));
+            VgcApis.Misc.Utils.RunInBackground(() => VgcApis.Misc.UI.MsgBox(I18N.Done));
         }
 
         public static bool UpdateControlOnDemand(Control control, int value)

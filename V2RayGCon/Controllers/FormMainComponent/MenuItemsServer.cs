@@ -184,7 +184,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             refreshSummary.Click += (s, a) =>
             {
                 cache.html.Clear();
-                VgcApis.Misc.Utils.RunInBgSlim(servers.UpdateAllServersSummary);
+                VgcApis.Misc.Utils.RunInBackground(servers.UpdateAllServersSummary);
             };
 
             deleteAllItems.Click += (s, a) =>

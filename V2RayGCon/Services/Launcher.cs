@@ -175,7 +175,7 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
 #if DEBUG
                 VgcApis.Misc.Utils.Sleep(5000);

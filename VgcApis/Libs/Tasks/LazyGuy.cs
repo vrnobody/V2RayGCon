@@ -126,7 +126,7 @@ namespace VgcApis.Libs.Tasks
         #region private method
         void TryDoTheJob()
         {
-            Misc.Utils.RunInBgSlim(TryDoTheJobCore);
+            Misc.Utils.RunInBackground(TryDoTheJobCore);
         }
 
         void TryDoTheJobCore()
@@ -221,7 +221,7 @@ namespace VgcApis.Libs.Tasks
 
             try
             {
-                Misc.Utils.RunInBgSlim(() => chainedTask?.Invoke(done));
+                Misc.Utils.RunInBackground(() => chainedTask?.Invoke(done));
             }
             catch
             {

@@ -178,7 +178,7 @@ namespace NeoLuna.Models.Apis.SysCmpos
 
         void HandleConnOut()
         {
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 try
                 {
@@ -204,7 +204,7 @@ namespace NeoLuna.Models.Apis.SysCmpos
 
         void HandleOneConnOut(HttpListenerContext ctx, string content)
         {
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 try
                 {
@@ -228,7 +228,7 @@ namespace NeoLuna.Models.Apis.SysCmpos
 
         void HandleConnIn()
         {
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 try
                 {
@@ -243,7 +243,7 @@ namespace NeoLuna.Models.Apis.SysCmpos
 
                         if (contexts.Keys.Count > FinalStageConnInLimit)
                         {
-                            VgcApis.Misc.Utils.RunInBgSlim(() =>
+                            VgcApis.Misc.Utils.RunInBackground(() =>
                             {
                                 try
                                 {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using V2RayGCon.Services;
@@ -41,7 +41,7 @@ namespace V2RayGCon.Controllers.Comm
         #region private method
         void ServerMenuOpeningHandler(object sender, EventArgs args)
         {
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 ReloadMenu();
             });

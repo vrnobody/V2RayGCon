@@ -127,7 +127,7 @@ namespace V2RayGCon.Views.UserControls
                 return;
             }
 
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 if (!(that.Parent is FlowLayoutPanel parent))
                 {

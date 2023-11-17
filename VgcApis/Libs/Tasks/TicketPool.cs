@@ -109,7 +109,7 @@ namespace VgcApis.Libs.Tasks
 
             Interlocked.Add(ref count, -1 * num);
 
-            Misc.Utils.RunInBgSlim(() =>
+            Misc.Utils.RunInBackground(() =>
             {
                 CheckWaitQ();
                 if (count < 1)

@@ -72,7 +72,7 @@ namespace V2RayGCon.Views.WinForms
         {
             var el = labelCoreVersion;
 
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 var core = new Libs.V2Ray.Core(setting);
                 var version = core.GetV2RayCoreVersion();
@@ -200,7 +200,7 @@ namespace V2RayGCon.Views.WinForms
                 VgcApis.Misc.UI.Invoke(() => done(versions));
             }
 
-            VgcApis.Misc.Utils.RunInBgSlim(worker);
+            VgcApis.Misc.Utils.RunInBackground(worker);
         }
 
         private void BtnUpdate_Click(object sender, EventArgs e)

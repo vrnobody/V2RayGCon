@@ -324,7 +324,7 @@ namespace V2RayGCon.Services
             {
                 if (coreServ != null)
                 {
-                    VgcApis.Misc.Utils.RunInBgSlim(() =>
+                    VgcApis.Misc.Utils.RunInBackground(() =>
                     {
                         DoLatencyTestOnCore(coreServ);
                         setting.SpeedTestPool.ReturnOne();

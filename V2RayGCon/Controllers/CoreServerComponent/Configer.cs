@@ -172,7 +172,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             var cs = GetParent().GetCoreStates();
             var name = $"{cs.GetIndex()}.[{cs.GetShortName()}]";
 
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 var lines = new List<string>() { name };
 

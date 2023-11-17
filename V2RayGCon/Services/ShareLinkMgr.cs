@@ -178,7 +178,7 @@ namespace V2RayGCon.Services
             bool isShowImportResults
         )
         {
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 var results = ImportLinksBatchModeSync(linkList, decoders);
                 if (isShowImportResults)
@@ -238,7 +238,7 @@ namespace V2RayGCon.Services
                 servers.RequireFormMainReload();
             }
 
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 Views.WinForms.FormImportLinksResult.ShowResult(results);
             });

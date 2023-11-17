@@ -506,7 +506,7 @@ namespace VgcApis.Misc
             var text = string.Format("{0}\n{1}", msg, url);
             if (Confirm(text))
             {
-                Utils.RunInBgSlim(() => System.Diagnostics.Process.Start(url));
+                Utils.RunInBackground(() => System.Diagnostics.Process.Start(url));
             }
         }
 
@@ -531,12 +531,12 @@ namespace VgcApis.Misc
 
         public static void MsgBoxAsync(string content)
         {
-            Utils.RunInBgSlim(() => MsgBox(content));
+            Utils.RunInBackground(() => MsgBox(content));
         }
 
         public static void MsgBoxAsync(string title, string content)
         {
-            Utils.RunInBgSlim(() => MsgBox(title, content));
+            Utils.RunInBackground(() => MsgBox(title, content));
         }
 
         public static bool Confirm(string content)

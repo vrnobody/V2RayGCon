@@ -49,7 +49,7 @@ namespace ProxySetter.Services
 
             if (setting.GetTunaSettings().isAutorun)
             {
-                VgcApis.Misc.Utils.RunInBgSlim(() =>
+                VgcApis.Misc.Utils.RunInBackground(() =>
                 {
                     VgcApis.Misc.Utils.Sleep(TimeSpan.FromSeconds(5));
                     tunaServer.Start();

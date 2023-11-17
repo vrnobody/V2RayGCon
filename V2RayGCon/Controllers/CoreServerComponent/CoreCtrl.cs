@@ -97,7 +97,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public void StopCoreThen() => StopCoreThen(null);
 
         public void StopCoreThen(Action next) =>
-            VgcApis.Misc.Utils.RunInBgSlim(() => StopCoreWorker(next));
+            VgcApis.Misc.Utils.RunInBackground(() => StopCoreWorker(next));
 
         public void RestartCore() => RestartCoreWorker(null, false);
 
@@ -106,7 +106,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public void RestartCoreThen() => RestartCoreThen(null);
 
         public void RestartCoreThen(Action next) =>
-            VgcApis.Misc.Utils.RunInBgSlim(() => RestartCoreWorker(next, false));
+            VgcApis.Misc.Utils.RunInBackground(() => RestartCoreWorker(next, false));
 
         public bool IsCoreRunning() => core.isRunning;
 
@@ -152,7 +152,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         void OnCoreStateChangedHandler(object sender, EventArgs args)
         {
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 if (core.isRunning)
                 {

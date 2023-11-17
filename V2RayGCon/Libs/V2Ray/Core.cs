@@ -514,7 +514,7 @@ namespace V2RayGCon.Libs.V2Ray
             fileLockers.TryGetValue(filename, out var r);
             var mre = r ?? n;
             mre.WaitOne();
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 VgcApis.Misc.Utils.Sleep(3000);
                 mre.Set();

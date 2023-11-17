@@ -24,7 +24,7 @@ namespace V2RayGCon.Libs.QRCode
 
         public static void ScanQRCode(Action<string> success, Action fail)
         {
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 foreach (var screen in Screen.AllScreens)
                 {

@@ -677,7 +677,7 @@ namespace V2RayGCon.Services
                 }
             }
 
-            VgcApis.Misc.Utils.RunInBgSlim(housekeeping);
+            VgcApis.Misc.Utils.RunInBackground(housekeeping);
             RefreshUiAfterCoreServersAreDeleted();
             return coreServs.Count;
         }
@@ -717,7 +717,7 @@ namespace V2RayGCon.Services
                 }
             }
 
-            VgcApis.Misc.Utils.RunInBgSlim(housekeeping);
+            VgcApis.Misc.Utils.RunInBackground(housekeeping);
             RefreshUiAfterCoreServersAreDeleted();
         }
 
@@ -1148,7 +1148,7 @@ namespace V2RayGCon.Services
                 coreServ.GetCoreCtrl().RunSpeedTestThen();
             }
 
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 while (setting.SpeedtestCounter > 0)
                 {
@@ -1278,7 +1278,7 @@ namespace V2RayGCon.Services
             var list = queryHandler.GetAllServers();
 
             var count = list.Count;
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 var taskList = new List<Task>();
                 for (int i = 0; i < round; i++)

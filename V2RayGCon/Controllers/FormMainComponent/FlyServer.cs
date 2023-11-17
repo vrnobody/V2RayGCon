@@ -136,7 +136,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 flyPanel.Controls.Clear();
                 flyPanel.ResumeLayout();
                 flyPanel.PerformLayout();
-                VgcApis.Misc.Utils.RunInBgSlim(() => DisposeFlyPanelControlByList(controlList));
+                VgcApis.Misc.Utils.RunInBackground(() => DisposeFlyPanelControlByList(controlList));
             }
             VgcApis.Misc.UI.Invoke(worker);
         }
@@ -368,7 +368,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void OnServerPropertyChangeHandler(object sender, EventArgs args)
         {
-            VgcApis.Misc.Utils.RunInBgSlim(() => lazyStatusBarUpdater?.Deadline());
+            VgcApis.Misc.Utils.RunInBackground(() => lazyStatusBarUpdater?.Deadline());
         }
 
         void SetSearchKeywords()
@@ -376,7 +376,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var keyword = searchKeywords;
             // bug
             var controls = GetAllServerControls();
-            VgcApis.Misc.Utils.RunInBgSlim(() =>
+            VgcApis.Misc.Utils.RunInBackground(() =>
             {
                 controls.ForEach(c => c.SetKeywords(keyword));
             });

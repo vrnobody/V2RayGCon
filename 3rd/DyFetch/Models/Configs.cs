@@ -17,9 +17,14 @@ namespace DyFetch.Models
         public string url = null;
         public int wait = -1;
         public string driverDir = null;
+        public string userDataDir = null;
         public string file = null;
+        public bool useChrome = false;
 
         readonly OptionSet opts = null;
+
+        readonly string version,
+            date;
 
         public Configs(string[] args)
             : this()
@@ -29,12 +34,14 @@ namespace DyFetch.Models
 
         public Configs()
         {
+            version = "0.0.5";
+            date = "2023-11-17";
+
             opts = new OptionSet()
             {
                 { "pipein=", "anonymous input-pipe handle", v => pipeIn = v },
                 { "pipeout=", "anonymous output-pipe handle", v => pipeOut = v },
                 { "c|css=", "wait until one of the css selectors match", v => csses.Add(v) },
-                { "d|driver=", "firefox driver dir", v => driverDir = v },
                 { "f|file=", "save HTML to file", v => file = v },
                 { "i|ignore", "ignore certificate errors", v => ignoreCertError = v != null },
                 { "p|proxy=", "HTTP proxy in host:port format", v => proxy = v },
@@ -42,6 +49,8 @@ namespace DyFetch.Models
                 { "t|timeout=", "wait timeout in milliseconds", (int v) => timeout = v },
                 { "u|url=", "the URL to download", v => url = v },
                 { "w|wait=", "wait until match in milliseconds", (int v) => wait = v },
+                { "chrome", "use chrome (default is firefox)", v => useChrome = v != null },
+                { "driver=", "broswer driver dir", v => driverDir = v },
                 { "h|help", "show help", v => help = v != null },
             };
         }
@@ -66,11 +75,11 @@ namespace DyFetch.Models
         public void ShowHelp()
         {
             Console.WriteLine("");
-            Console.WriteLine("DyFetch v0.0.4 2023-11-16");
+            Console.WriteLine($"DyFetch v{version} {date}");
             Console.WriteLine("");
             Console.WriteLine("Usage:");
             Console.WriteLine(
-                "DyFetch.exe -proxy=\"127.0.0.1:8080\" -t 20000 -u \"https://www.bing.com\""
+                "DyFetch.exe -proxy=\"127.0.0.1:8080\" -t 30000 -u \"https://www.bing.com\""
             );
             Console.WriteLine("");
             Console.WriteLine("Arguments:");

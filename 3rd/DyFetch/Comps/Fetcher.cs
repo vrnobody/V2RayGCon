@@ -1,8 +1,10 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -10,16 +12,12 @@ namespace DyFetch.Comps
 {
     internal class Fetcher : IDisposable
     {
-        readonly FirefoxDriver driver;
+        readonly WebDriver driver;
         private bool disposedValue;
 
         public Fetcher(Models.Configs configs)
         {
-            var options = CreateOptions(configs);
-            var dir = configs.driverDir;
-            driver = string.IsNullOrEmpty(dir)
-                ? new FirefoxDriver(options)
-                : new FirefoxDriver(dir, options);
+            driver = CreateDriver(configs);
         }
 
         #region properties
@@ -57,6 +55,26 @@ namespace DyFetch.Comps
         #endregion
 
         #region private methods
+        WebDriver CreateDriver(Models.Configs configs)
+        {
+            var dir = configs.driverDir;
+            var isCustomDrv = !string.IsNullOrEmpty(dir);
+            WebDriver drv;
+            if (configs.useChrome)
+            {
+                Console.WriteLine("using chrome driver");
+                var options = CreateChromeOptions(configs);
+                drv = isCustomDrv ? new ChromeDriver(dir, options) : new ChromeDriver(options);
+            }
+            else
+            {
+                Console.WriteLine("using firefox driver");
+                var options = CreateFirefoxOptions(configs);
+                drv = isCustomDrv ? new FirefoxDriver(dir, options) : new FirefoxDriver(options);
+            }
+            return drv;
+        }
+
         void WaitForOneOfCsses(
             IEnumerable<string> csses,
             WebDriverWait wait,
@@ -86,23 +104,19 @@ namespace DyFetch.Comps
             return false;
         }
 
-        void AddMemoryOptimizeOptions(FirefoxOptions options)
+        ChromeOptions CreateChromeOptions(Models.Configs configs)
         {
+            var options = new ChromeOptions();
+
             //options.AddArgument("--window-size=1920,1080");
-            options.AddArgument("--start-maximized");
-            options.AddArgument("--disable-infobars");
+            options.AddArgument("start-maximized");
+            options.AddArgument("disable-infobars");
+
             options.AddArgument("--disable-extensions");
             options.AddArgument("--no-sandbox");
             options.AddArgument("--disable-application-cache");
             options.AddArgument("--disable-gpu");
             options.AddArgument("--disable-dev-shm-usage");
-        }
-
-        FirefoxOptions CreateOptions(Models.Configs configs)
-        {
-            var options = new FirefoxOptions();
-
-            // AddMemoryOptimizeOptions(options);
 
             if (!string.IsNullOrEmpty(configs.proxy))
             {
@@ -125,6 +139,42 @@ namespace DyFetch.Comps
             {
                 options.AddArgument("ignore-certificate-errors");
             }
+
+            return options;
+        }
+
+        FirefoxOptions CreateFirefoxOptions(Models.Configs configs)
+        {
+            var options = new FirefoxOptions();
+
+            options.AddArgument("--disable-extensions");
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-application-cache");
+            options.AddArgument("--disable-gpu");
+            options.AddArgument("--disable-dev-shm-usage");
+
+            if (!string.IsNullOrEmpty(configs.proxy))
+            {
+                var proxy = new Proxy
+                {
+                    Kind = ProxyKind.Manual,
+                    IsAutoDetect = false,
+                    HttpProxy = configs.proxy,
+                    SslProxy = configs.proxy
+                };
+                options.Proxy = proxy;
+            }
+
+            if (configs.headless)
+            {
+                options.AddArgument("--headless");
+            }
+
+            if (configs.ignoreCertError)
+            {
+                options.AddArgument("ignore-certificate-errors");
+            }
+
             return options;
         }
         #endregion

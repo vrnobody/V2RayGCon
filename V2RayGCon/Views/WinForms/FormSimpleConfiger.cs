@@ -12,6 +12,7 @@ namespace V2RayGCon.Views.WinForms
         {
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
+            VgcApis.Misc.UI.AddTagToFormTitle(this);
             this.DialogResult = DialogResult.Cancel;
         }
 

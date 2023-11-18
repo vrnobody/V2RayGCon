@@ -18,6 +18,7 @@ namespace V2RayGCon.Views.WinForms
             InitializeComponent();
             results = importResults;
             VgcApis.Misc.UI.AutoSetFormIcon(this);
+            VgcApis.Misc.UI.AddTagToFormTitle(this);
         }
 
         private void FormImportLinksResult_Shown(object sender, EventArgs e)

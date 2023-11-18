@@ -503,9 +503,6 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="ServersAreRunning" xml:space="preserve">
     <value>个服务器正在运行</value>
   </data>
-  <data name="ExitOtherVGCFirst" xml:space="preserve">
-    <value>另一个V2RayGCon正在运行，请先退出。</value>
-  </data>
   <data name="SelectServerFirst" xml:space="preserve">
     <value>请先选择要进行此操作的服务器</value>
   </data>
@@ -812,5 +809,13 @@ https://github.com/v2ray/v2ray-core</value>
   </data>
   <data name="Format" xml:space="preserve">
     <value>格式</value>
+  </data>
+  <data name="UserSettingsFileIsLocked" xml:space="preserve">
+    <value>下面的配置文件被锁定：
+{0}
+
+请先退出另一个V2RayGCon实例。
+或者通过"-s"命令行参数启用其它配置文件：
+c:\vgc\V2RayGCon.exe -s s2.json</value>
   </data>
 </root>

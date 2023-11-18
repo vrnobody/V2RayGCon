@@ -107,7 +107,15 @@ namespace V2RayGCon.Misc
                 var rawVer = GetAssemblyVersion();
                 var ver = TrimVersionString(rawVer);
                 var name = VgcApis.Misc.Utils.GetAppName();
-                appNameAndVersion = $"{name} v{ver}";
+                var appTag = VgcApis.Misc.Utils.GetAppTag();
+                if (string.IsNullOrEmpty(appTag))
+                {
+                    appNameAndVersion = $"{name} v{ver}";
+                }
+                else
+                {
+                    appNameAndVersion = $"{appTag} {name} v{ver}";
+                }
             }
             return appNameAndVersion;
         }

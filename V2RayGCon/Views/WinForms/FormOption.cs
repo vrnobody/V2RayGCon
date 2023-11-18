@@ -22,6 +22,7 @@ namespace V2RayGCon.Views.WinForms
             InitializeComponent();
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);
+            VgcApis.Misc.UI.AddTagToFormTitle(this);
         }
 
         private void FormOption_Load(object sender, System.EventArgs e)

@@ -20,9 +20,11 @@ namespace V2RayGCon.Views.WinForms
             setting = Settings.Instance;
 
             InitializeComponent();
-            this.formTitle = this.Text;
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);
+            VgcApis.Misc.UI.AddTagToFormTitle(this);
+
+            this.formTitle = this.Text;
         }
 
         private void FormTextConfigEditor_Load(object sender, EventArgs e)

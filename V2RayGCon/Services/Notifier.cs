@@ -28,7 +28,8 @@ namespace V2RayGCon.Services
             .Consts
             .Intervals
             .NotifierMenuUpdateIntreval;
-        readonly Bitmap orgIcon;
+        readonly Bitmap orgIcon,
+            tunIcon;
 
         VgcApis.Libs.Tasks.LazyGuy lazyNotifierMenuUpdater;
 
@@ -55,12 +56,13 @@ namespace V2RayGCon.Services
             {
                 Text = I18N.Description,
                 Icon = VgcApis.Misc.UI.GetAppIcon(),
-                BalloonTipTitle = VgcApis.Misc.Utils.GetAppName(),
+                BalloonTipTitle = Misc.Utils.GetAppNameAndVer(),
                 ContextMenuStrip = new ContextMenuStrip(),
                 Visible = true,
             };
 
             orgIcon = ni.Icon.ToBitmap();
+            tunIcon = VgcApis.Misc.UI.GetTunModeIcon().ToBitmap();
 
             niMenuRoot = ni.ContextMenuStrip;
             niMenuRoot.CreateControl();
@@ -895,9 +897,57 @@ namespace V2RayGCon.Services
             return r;
         }
 
+        #region write tag to systry icon
+        private Font FindFont(Graphics g, string longString, Size Room, Font PreferedFont)
+        {
+            // https://stackoverflow.com/questions/19674743/dynamically-resizing-font-to-fit-space-while-using-graphics-drawstring
+            SizeF RealSize = g.MeasureString(longString, PreferedFont);
+            float HeightScaleRatio = Room.Height / RealSize.Height;
+            float WidthScaleRatio = Room.Width / RealSize.Width;
+
+            float ScaleRatio =
+                (HeightScaleRatio < WidthScaleRatio) ? HeightScaleRatio : WidthScaleRatio;
+
+            float ScaleFontSize = PreferedFont.Size * ScaleRatio;
+
+            return new Font(PreferedFont.FontFamily, ScaleFontSize);
+        }
+
+        void DrawTag(Graphics g, Bitmap bmp)
+        {
+            var tag = VgcApis.Misc.Utils.GetAppTagFirstChar();
+            if (string.IsNullOrEmpty(tag))
+            {
+                return;
+            }
+            // SimHei Microsoft YaHei
+            using (Font font1 = new Font("Microsoft YaHei", 32, FontStyle.Bold, GraphicsUnit.Pixel))
+            {
+                var rect = CalcDrawTagRect(bmp.Size);
+                StringFormat stringFormat = new StringFormat
+                {
+                    Alignment = StringAlignment.Near,
+                    LineAlignment = StringAlignment.Near,
+                };
+
+                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+                Font goodFont = FindFont(g, tag, rect.Size.ToSize(), font1);
+                g.DrawString(tag, goodFont, Brushes.White, rect, stringFormat);
+            }
+        }
+
+        RectangleF CalcDrawTagRect(Size size)
+        {
+            var w = size.Width * 0.75f;
+            var h = size.Height * 0.75f;
+            return new RectangleF(0f, 0f, w, h);
+        }
+
+        #endregion
+
         private Bitmap CreateNotifyIconImage(SysTrayIconTypes iconType)
         {
-            var cache = setting.isTunMode ? VgcApis.Misc.UI.GetTunModeIconCache() : orgIcon;
+            var cache = setting.isTunMode ? tunIcon : orgIcon;
             var icon = new Bitmap(cache);
             var size = icon.Size;
 
@@ -908,6 +958,7 @@ namespace V2RayGCon.Services
 
                 DrawProxyModeCornerCircle(g, size, iconType);
                 DrawIsRunningCornerMark(g, size, iconType);
+                DrawTag(g, icon);
             }
 
             return icon;

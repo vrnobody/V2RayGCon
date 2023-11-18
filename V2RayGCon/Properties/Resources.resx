@@ -185,9 +185,6 @@
     <value>https://raw.githubusercontent.com/vrnobody/V2RayGCon/version/latest.json</value>
     <comment>auto updater version/latest.json</comment>
   </data>
-  <data name="PortableUserSettingsBackup" xml:space="preserve">
-    <value>userSettings.bak</value>
-  </data>
   <data name="RemoteServer_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icon\TaskTray\RemoteServer_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

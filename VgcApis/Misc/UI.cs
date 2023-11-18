@@ -732,6 +732,15 @@ namespace VgcApis.Misc
             return groups;
         }
 
+        public static void AddTagToFormTitle(Form form)
+        {
+            var tag = Utils.GetAppTag();
+            if (!string.IsNullOrEmpty(tag))
+            {
+                form.Text = $"{tag} {form.Text}";
+            }
+        }
+
         public static void AutoSetFormIcon(Form form)
         {
 #if DEBUG
@@ -741,15 +750,9 @@ namespace VgcApis.Misc
 #endif
         }
 
-        static Bitmap tunIconCache = null;
-
-        public static Bitmap GetTunModeIconCache()
+        public static Icon GetTunModeIcon()
         {
-            if (tunIconCache == null)
-            {
-                tunIconCache = Properties.Resources.icon_tun_mode.ToBitmap();
-            }
-            return tunIconCache;
+            return Properties.Resources.icon_tun_mode;
         }
 
         public static Icon GetAppIcon()

@@ -37,6 +37,7 @@ namespace V2RayGCon.Views.WinForms
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             this.Text = I18N.Log + " - " + title;
+            VgcApis.Misc.UI.AddTagToFormTitle(this);
         }
 
         private void RefreshUi()

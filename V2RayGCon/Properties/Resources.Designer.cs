@@ -247,15 +247,6 @@ namespace V2RayGCon.Properties {
         }
         
         /// <summary>
-        ///   查找类似 userSettings.bak 的本地化字符串。
-        /// </summary>
-        internal static string PortableUserSettingsBackup {
-            get {
-                return ResourceManager.GetString("PortableUserSettingsBackup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 userSettings.json 的本地化字符串。
         /// </summary>
         internal static string PortableUserSettingsFilename {

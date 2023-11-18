@@ -11,13 +11,13 @@ namespace V2RayGCon.Services
 {
     class Launcher : VgcApis.BaseClasses.Disposable
     {
-        private readonly Settings setting;
-
         public ApplicationContext context { get; private set; }
 
+        readonly Settings setting;
+
+        Notifier notifier;
         Servers servers;
         Updater updater;
-        readonly Notifier notifier;
 
         bool isDisposing = false;
         List<IDisposable> services = new List<IDisposable>();
@@ -31,18 +31,23 @@ namespace V2RayGCon.Services
             appName = Misc.Utils.GetAppNameAndVer();
             VgcApis.Libs.Sys.FileLogger.Raw("\n");
             VgcApis.Libs.Sys.FileLogger.Info($"{appName} start");
-
-            notifier = Notifier.Instance;
         }
 
         #region public method
         public bool Warmup()
         {
-            Misc.Utils.EnableTls13Support();
-            if (setting.GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
+            switch (setting.GetShutdownReason())
             {
-                return false;
+                case VgcApis.Models.Datas.Enums.ShutdownReasons.ShowHelpInfo:
+                case VgcApis.Models.Datas.Enums.ShutdownReasons.FileLocked:
+                    return false;
+                case VgcApis.Models.Datas.Enums.ShutdownReasons.Abort:
+                    setting.DisposeFileMutex();
+                    return false;
             }
+
+            Misc.Utils.EnableTls13Support();
+            notifier = Notifier.Instance;
             SetCulture(setting.culture);
             return true;
         }

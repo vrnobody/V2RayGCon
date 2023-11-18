@@ -921,15 +921,6 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Another V2RayGCon is running, please exit first. 的本地化字符串。
-        /// </summary>
-        internal static string ExitOtherVGCFirst {
-            get {
-                return ResourceManager.GetString("ExitOtherVGCFirst", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Feedback 的本地化字符串。
         /// </summary>
         internal static string Feedback {
@@ -2009,6 +2000,19 @@ namespace V2RayGCon.Resources.Resx {
         internal static string User {
             get {
                 return ResourceManager.GetString("User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The following user settings file is locked:
+        ///{0}
+        ///
+        ///Please exit the other V2RayGCon instance or specify another user settings file like this:
+        ///c:\vgc\V2RayGCon.exe -s s2.json 的本地化字符串。
+        /// </summary>
+        internal static string UserSettingsFileIsLocked {
+            get {
+                return ResourceManager.GetString("UserSettingsFileIsLocked", resourceCulture);
             }
         }
         

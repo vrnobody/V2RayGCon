@@ -317,6 +317,34 @@ namespace VgcApis.Misc
         #endregion
 
         #region files
+        public static Mutex TryLockFile(string fullPath)
+        {
+            // https://stackoverflow.com/questions/19147/what-is-the-correct-way-to-create-a-single-instance-application
+            var md5 = ToHexString(Md5Hash(fullPath));
+            var name = "{84d287ae-c0b0-4c1a-9ecc-d98c26577c02}" + md5;
+            var mutex = new Mutex(true, name);
+            if (mutex.WaitOne(0))
+            {
+                return mutex;
+            }
+            mutex.Dispose();
+            return null;
+        }
+
+        public static string ReplaceFileExtention(string file, string dotExt)
+        {
+            try
+            {
+                var ext = Path.GetExtension(file);
+                if (!string.IsNullOrEmpty(ext))
+                {
+                    return file.Substring(0, file.Length - ext.Length) + dotExt;
+                }
+            }
+            catch { }
+            return file + dotExt;
+        }
+
         public static void ClearFile(string path)
         {
             using (FileStream fs = File.Open(path, FileMode.OpenOrCreate, FileAccess.ReadWrite))
@@ -360,7 +388,26 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
+        static string appTag = "";
 
+        public static void SetAppTag(string tag)
+        {
+            if (!string.IsNullOrEmpty(tag))
+            {
+                appTag = $"[{tag}]";
+            }
+        }
+
+        public static string GetAppTag() => appTag ?? "";
+
+        public static string GetAppTagFirstChar()
+        {
+            if (appTag.Length > 1)
+            {
+                return appTag.Substring(1, 1);
+            }
+            return null;
+        }
 
         public static int CountLeadingSpaces(string str)
         {

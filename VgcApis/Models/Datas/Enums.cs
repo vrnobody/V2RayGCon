@@ -39,6 +39,8 @@ namespace VgcApis.Models.Datas
             CloseByUser, // close by user
             Poweroff, // system shut down
             Abort, // attacked by aliens :>
+            FileLocked, // userSettings is occupied
+            ShowHelpInfo,
         }
 
         /// <summary>

@@ -24,6 +24,7 @@ namespace V2RayGCon.Views.WinForms
         {
             InitializeComponent();
             VgcApis.Misc.UI.AutoSetFormIcon(this);
+            VgcApis.Misc.UI.AddTagToFormTitle(this);
 
             setting = Services.Settings.Instance;
             this.FormClosed += (s, e) => logDisplayer?.Dispose();

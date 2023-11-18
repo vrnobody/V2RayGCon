@@ -506,9 +506,6 @@ Are you sure you want to continue?</value>
   <data name="ServersAreRunning" xml:space="preserve">
     <value>servers are running.</value>
   </data>
-  <data name="ExitOtherVGCFirst" xml:space="preserve">
-    <value>Another V2RayGCon is running, please exit first.</value>
-  </data>
   <data name="SelectServerFirst" xml:space="preserve">
     <value>Please select ther servers first.</value>
   </data>
@@ -822,5 +819,12 @@ Config editor supports JSON format only!</value>
   </data>
   <data name="Format" xml:space="preserve">
     <value>Format</value>
+  </data>
+  <data name="UserSettingsFileIsLocked" xml:space="preserve">
+    <value>The following user settings file is locked:
+{0}
+
+Please exit the other V2RayGCon instance or specify another user settings file like this:
+c:\vgc\V2RayGCon.exe -s s2.json</value>
   </data>
 </root>

@@ -105,6 +105,9 @@
     <Reference Include="Moq, Version=4.14.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.14.1\lib\net45\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="NDesk.Options, Version=1.2.5.0, Culture=neutral, PublicKeyToken=11d31d3c6b89255c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NDesk.Options.Core.1.2.5\lib\net45\NDesk.Options.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -149,6 +152,7 @@
     <Compile Include="Controllers\FormTextConfigEditorComponent\Editor.cs" />
     <Compile Include="Controllers\FormTextConfigEditorComponent\MenuUpdater.cs" />
     <Compile Include="Controllers\FormTextConfigEditorCtrl.cs" />
+    <Compile Include="Models\Datas\CmdArgs.cs" />
     <Compile Include="Models\Datas\CustomCoreSettings.cs" />
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
     <Compile Include="Models\Datas\CustomConfigTemplate.cs" />
@@ -616,7 +620,7 @@
     <PostBuildEvent>set "libsDir=libs\"
 set "copyFolderList=3rd"
 set "pluginDlls=VgcApis NeoLuna Pacman ProxySetter"
-set "otherDlls=MihaZupan.HttpToSocks5Proxy HtmlAgilityPack Neo.Lua ImpromptuInterface Dynamitey AutocompleteMenu-ScintillaNET DotNetZip Newtonsoft ScintillaNET zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
+set "otherDlls=NDesk.Options MihaZupan.HttpToSocks5Proxy HtmlAgilityPack Neo.Lua ImpromptuInterface Dynamitey AutocompleteMenu-ScintillaNET DotNetZip Newtonsoft ScintillaNET zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
 
 call:RemoveDbgFiles "%25otherDlls%25"
 

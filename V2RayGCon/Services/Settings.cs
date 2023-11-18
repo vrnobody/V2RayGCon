@@ -19,10 +19,12 @@ namespace V2RayGCon.Services
         : BaseClasses.SingletonService<Settings>,
             VgcApis.Interfaces.Services.ISettingsService
     {
-        readonly Models.Datas.UserSettings userSettings;
-        readonly VgcApis.Libs.Tasks.LazyGuy lazyBookKeeper;
+        readonly Models.Datas.CmdArgs cmdArgs;
+        Models.Datas.UserSettings userSettings;
+        VgcApis.Libs.Tasks.LazyGuy lazyBookKeeper;
 
         readonly object saveUserSettingsLocker = new object();
+        Mutex fileMutex;
 
         public event EventHandler OnPortableModeChanged;
         VgcApis.Models.Datas.Enums.ShutdownReasons shutdownReason = VgcApis
@@ -41,27 +43,28 @@ namespace V2RayGCon.Services
         // Singleton need this private ctor.
         Settings()
         {
-            userSettings = LoadUserSettings();
-            userSettings.Normalized(); // replace null with empty object.
+            var args = Environment.GetCommandLineArgs();
+            cmdArgs = new Models.Datas.CmdArgs(args);
+            VgcApis.Misc.Utils.SetAppTag(cmdArgs.tag);
 
-            InitCoreInfoCache();
-            InitLocalStorageCache(); // must init before plug-ins setting
-            InitPluginsSettingCache();
-            InitConfigTemplatesCache();
-
-            UpdateVgcApisUserAgent();
-
-            UpdateSpeedTestPool();
-            UpdateFileLoggerSetting();
-
-            lazyBookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
-                SaveUserSettingsWorker,
-                VgcApis.Models.Consts.Intervals.LazySaveUserSettingsDelay,
-                500
-            )
+            if (cmdArgs.help)
             {
-                Name = "Settings.SaveSettings",
-            };
+                var msg = cmdArgs.GetHelpMessage();
+                SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.ShowHelpInfo);
+                MessageBox.Show(msg);
+                return;
+            }
+
+            fileMutex = VgcApis.Misc.Utils.TryLockFile(cmdArgs.userSettings);
+            if (fileMutex == null)
+            {
+                SetShutdownReason(VgcApis.Models.Datas.Enums.ShutdownReasons.FileLocked);
+                var msg = string.Format(I18N.UserSettingsFileIsLocked, cmdArgs.userSettings);
+                MessageBox.Show(msg);
+                return;
+            }
+
+            Init();
         }
 
         #region custom core settings
@@ -746,7 +749,17 @@ namespace V2RayGCon.Services
         #endregion
 
         #region public methods
-
+        public void DisposeFileMutex()
+        {
+            var m = fileMutex;
+            if (m == null)
+            {
+                return;
+            }
+            fileMutex = null;
+            m.ReleaseMutex();
+            m.Dispose();
+        }
 
         string sendThroughHostIpv4 = "";
 
@@ -1056,6 +1069,31 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private method
+        void Init()
+        {
+            userSettings = LoadUserSettings();
+            userSettings.Normalized(); // replace null with empty object.
+
+            InitCoreInfoCache();
+            InitLocalStorageCache(); // must init before plug-ins setting
+            InitPluginsSettingCache();
+            InitConfigTemplatesCache();
+
+            UpdateVgcApisUserAgent();
+
+            UpdateSpeedTestPool();
+            UpdateFileLoggerSetting();
+
+            lazyBookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
+                SaveUserSettingsWorker,
+                VgcApis.Models.Consts.Intervals.LazySaveUserSettingsDelay,
+                500
+            )
+            {
+                Name = "Settings.SaveSettings",
+            };
+        }
+
         void InitLocalStorageCache()
         {
             try
@@ -1208,8 +1246,8 @@ namespace V2RayGCon.Services
         {
             DebugSendLog("Read user setting file");
 
-            var mainUsFilename = Constants.Strings.MainUserSettingsFilename;
-            var bakUsFilename = Constants.Strings.BackupUserSettingsFilename;
+            var mainUsFilename = cmdArgs.userSettings;
+            var bakUsFilename = cmdArgs.userSettingsBak;
             if (!File.Exists(mainUsFilename) && !File.Exists(bakUsFilename))
             {
                 DebugSendLog("setting file not exists");
@@ -1277,8 +1315,8 @@ namespace V2RayGCon.Services
                     userSettings,
                     coreInfoCache,
                     pluginsSettingCache,
-                    Constants.Strings.MainUserSettingsFilename,
-                    Constants.Strings.BackupUserSettingsFilename
+                    cmdArgs.userSettings,
+                    cmdArgs.userSettingsBak
                 );
                 if (ok)
                 {
@@ -1301,16 +1339,10 @@ namespace V2RayGCon.Services
             {
                 // 兄弟只能帮你到这了
                 var content = JsonConvert.SerializeObject(userSettings);
-                VgcApis.Libs.Sys.NotepadHelper.ShowMessage(
-                    content,
-                    Properties.Resources.PortableUserSettingsFilename
-                );
+                VgcApis.Libs.Sys.NotepadHelper.ShowMessage(content, cmdArgs.userSettings);
                 msg +=
                     Environment.NewLine
-                    + string.Format(
-                        I18N.AndThenSaveThisFileAs,
-                        Properties.Resources.PortableUserSettingsFilename
-                    );
+                    + string.Format(I18N.AndThenSaveThisFileAs, cmdArgs.userSettings);
             }
 
             msg += Environment.NewLine + I18N.OrDisablePortableMode;
@@ -1343,7 +1375,7 @@ namespace V2RayGCon.Services
             Models.Datas.UserSettings result = null;
             try
             {
-                var content = File.ReadAllText(Constants.Strings.MainUserSettingsFilename);
+                var content = File.ReadAllText(cmdArgs.userSettings);
                 result = JsonConvert.DeserializeObject<Models.Datas.UserSettings>(content);
             }
             catch { }
@@ -1352,7 +1384,7 @@ namespace V2RayGCon.Services
             if (result == null)
             {
                 result = VgcApis.Misc.Utils.LoadAndParseJsonFile<Models.Datas.UserSettings>(
-                    Constants.Strings.BackupUserSettingsFilename
+                    cmdArgs.userSettingsBak
                 );
             }
 
@@ -1365,8 +1397,8 @@ namespace V2RayGCon.Services
 
         Models.Datas.UserSettings LoadUserSettings()
         {
-            var mainUsFile = Constants.Strings.MainUserSettingsFilename;
-            var bakUsFile = Constants.Strings.BackupUserSettingsFilename;
+            var mainUsFile = cmdArgs.userSettings;
+            var bakUsFile = cmdArgs.userSettingsBak;
 
             var result = LoadUserSettingsFromFile() ?? LoadUserSettingsFromPorperties();
             if (
@@ -1407,11 +1439,13 @@ namespace V2RayGCon.Services
 
             return winFormRectListCache;
         }
+
         #endregion
 
         #region protected methods
         protected override void Cleanup()
         {
+            DisposeFileMutex();
             VgcApis.Libs.Sys.FileLogger.Info("Settings.Cleanup() begin");
             lazyBookKeeper?.Dispose();
             SaveUserSettingsNow();

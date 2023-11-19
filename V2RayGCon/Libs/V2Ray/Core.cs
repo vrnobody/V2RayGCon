@@ -501,24 +501,36 @@ namespace V2RayGCon.Libs.V2Ray
             catch { }
         }
 
-        static readonly ConcurrentDictionary<string, AutoResetEvent> fileLockers =
-            new ConcurrentDictionary<string, AutoResetEvent>();
-
         void WaitForFile(string filename)
         {
-            var n = new AutoResetEvent(true);
-            if (!fileLockers.ContainsKey(filename))
-            {
-                fileLockers.TryAdd(filename, n);
-            }
-            fileLockers.TryGetValue(filename, out var r);
-            var mre = r ?? n;
-            mre.WaitOne();
+            var md5 = VgcApis.Misc.Utils.ToHexString(VgcApis.Misc.Utils.Md5Hash(filename));
+            var name = "V2RayGCon-custom-core-config-file-" + md5;
+
+            var mre = new ManualResetEventSlim(false);
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                VgcApis.Misc.Utils.Sleep(3000);
-                mre.Set();
+#if DEBUG
+                SendLog($"waitting for file {title}");
+#endif
+                using (var mutex = new Mutex(false, name))
+                {
+                    mutex.WaitOne();
+                    try
+                    {
+                        mre.Set();
+                    }
+                    catch { }
+                    VgcApis.Misc.Utils.Sleep(TimeSpan.FromSeconds(3));
+                    mutex.ReleaseMutex();
+                }
+#if DEBUG
+                SendLog($"release file: {title}");
+#endif
             });
+            mre.Wait();
+#if DEBUG
+            SendLog($"write config file {title}");
+#endif
         }
 
         void StartCore(string config, bool quiet)
@@ -534,7 +546,7 @@ namespace V2RayGCon.Libs.V2Ray
 
             if (isCustomCore && cs.useFile)
             {
-                var fn = cs.configFile;
+                var fn = Path.GetFullPath(cs.configFile);
                 WaitForFile(fn);
                 File.WriteAllText(fn, config);
             }

@@ -33,11 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.8.8.3")]
+[assembly: AssemblyVersion("1.8.8.4")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v1.8.8.4 Fix file conflict happens while multiple processes are writing the same config file.
 v1.8.8.3 Support multiple instances of V2RayGCon.
 v1.8.8.2 Remove VgcApis.Misc.Utils.RunInBgSlim().
 v1.8.8.1 Change systray icon color while using tun mode.

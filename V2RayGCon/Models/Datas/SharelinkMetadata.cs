@@ -63,6 +63,8 @@ namespace V2RayGCon.Models.Datas
                 case "ss":
                 case "shadowsocks":
                     return EncodeToSsShareLink();
+                case "socks":
+                    return EncodeToSocksShareLink();
                 case "vmess":
                     var vmess = new Vmess(this);
                     return vmess?.ToVmessLink();
@@ -72,6 +74,24 @@ namespace V2RayGCon.Models.Datas
         #endregion
 
         #region private methods
+        string EncodeToSocksShareLink()
+        {
+            var auth = string.Format("{0}:{1}", auth1, auth2);
+            var userinfo = VgcApis.Misc.Utils
+                .Base64EncodeString(auth)
+                .Replace('+', '-')
+                .Replace('/', '_');
+
+            var url = string.Format(
+                "socks://{0}@{1}:{2}#{3}",
+                userinfo,
+                VgcApis.Misc.Utils.FormatHost(host),
+                port,
+                Uri.EscapeDataString(name)
+            );
+
+            return url;
+        }
 
         string EncodeToSsShareLink()
         {

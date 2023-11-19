@@ -1275,6 +1275,7 @@ namespace V2RayGCon.Misc
             switch (linkType)
             {
                 case Enums.LinkTypes.ss:
+                case Enums.LinkTypes.socks:
                     pattern =
                         GenLinkPrefix(linkType)
                         + "://"

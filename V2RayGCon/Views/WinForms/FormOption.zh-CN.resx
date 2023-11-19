@@ -430,6 +430,9 @@
   <data name="btnDefImportBrowseVemssDecodeTemplate.ToolTip" xml:space="preserve">
     <value>浏览 vmess://... 解码模板</value>
   </data>
+  <data name="chkDefImportSocksShareLink.ToolTip" xml:space="preserve">
+    <value>是否导入SOCKS分享链接</value>
+  </data>
   <data name="chkDefImportTrojanShareLink.ToolTip" xml:space="preserve">
     <value>导入时包含Trojan分享链接</value>
   </data>

@@ -18,7 +18,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             chkImportSsShareLink = null,
             chkImportTrojanShareLink = null,
             chkDefVmessDecodeTemplateEnabled = null;
-
+        private readonly CheckBox chkImportSocksShareLink;
         readonly TextBox tboxDefImportAddr = null,
             tboxSetSpeedtestCycles = null,
             tboxSetSpeedtestTimeout = null,
@@ -31,6 +31,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             ComboBox cboxDefCoreName,
             CheckBox chkImportSsShareLink,
             CheckBox chkImportTrojanShareLink,
+            CheckBox chkImportSocksShareLink,
             CheckBox chkSetSpeedtestIsUse,
             ComboBox cboxDefSpeedtestUrl,
             TextBox tboxSetSpeedtestCycles,
@@ -49,6 +50,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.tboxDefImportAddr = tboxDefImportAddr;
             this.chkImportSsShareLink = chkImportSsShareLink;
             this.chkImportTrojanShareLink = chkImportTrojanShareLink;
+            this.chkImportSocksShareLink = chkImportSocksShareLink;
             this.cboxDefCoreName = cboxDefCoreName;
             this.chkSetSpeedtestIsUse = chkSetSpeedtestIsUse;
             this.cboxDefSpeedtestUrl = cboxDefSpeedtestUrl;
@@ -86,6 +88,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             settings.DefaultCoreName = GetCboxCoreNameText();
             settings.DefaultInboundName = cboxDefInboundName.Text;
 
+            settings.CustomDefImportSocksShareLink = chkImportSocksShareLink.Checked;
             settings.CustomDefImportSsShareLink = chkImportSsShareLink.Checked;
             settings.CustomDefImportTrojanShareLink = chkImportTrojanShareLink.Checked;
 
@@ -124,6 +127,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                 || settings.DefaultInboundName != cboxDefInboundName.Text
                 || settings.CustomDefImportSsShareLink != chkImportSsShareLink.Checked
                 || settings.CustomDefImportTrojanShareLink != chkImportTrojanShareLink.Checked
+                || settings.CustomDefImportSocksShareLink != chkImportSocksShareLink.Checked
                 || settings.isUseCustomSpeedtestSettings != chkSetSpeedtestIsUse.Checked
                 || settings.CustomSpeedtestUrl != cboxDefSpeedtestUrl.Text
                 || settings.CustomSpeedtestExpectedSizeInKib
@@ -187,6 +191,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             chkImportSsShareLink.Checked = settings.CustomDefImportSsShareLink;
             chkImportTrojanShareLink.Checked = settings.CustomDefImportTrojanShareLink;
+            chkImportSocksShareLink.Checked = settings.CustomDefImportSocksShareLink;
 
             tboxDefImportAddr.TextChanged += OnTboxImportAddrTextChanged;
             tboxDefImportAddr.Text = string.Format(

@@ -43,6 +43,8 @@ namespace V2RayGCon.Services
                     return codecs.Decode<ShareLinkComponents.VlessDecoder>(shareLink);
                 case VgcApis.Models.Datas.Enums.LinkTypes.trojan:
                     return codecs.Decode<ShareLinkComponents.TrojanDecoder>(shareLink);
+                case VgcApis.Models.Datas.Enums.LinkTypes.socks:
+                    return codecs.Decode<ShareLinkComponents.SocksDecoder>(shareLink);
                 default:
                     break;
             }
@@ -73,6 +75,8 @@ namespace V2RayGCon.Services
         {
             switch (linkType)
             {
+                case VgcApis.Models.Datas.Enums.LinkTypes.socks:
+                    return codecs.Encode<ShareLinkComponents.SocksDecoder>(name, config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.ss:
                     return codecs.Encode<ShareLinkComponents.SsDecoder>(name, config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
@@ -165,6 +169,7 @@ namespace V2RayGCon.Services
                 VgcApis.Models.Datas.Enums.LinkTypes.vless,
                 VgcApis.Models.Datas.Enums.LinkTypes.trojan,
                 VgcApis.Models.Datas.Enums.LinkTypes.ss,
+                VgcApis.Models.Datas.Enums.LinkTypes.socks,
             };
 
         int CountImportSuccessResult(IEnumerable<string[]> result)

@@ -10,6 +10,7 @@
 
         public bool IsImportTrojanShareLink { get; set; }
 
+        public bool IsImportSocksShareLink { get; set; } = false;
         public bool IsImportSsShareLink { get; set; }
         public bool IsInjectGlobalImport { get; set; }
         public bool IsBypassCnSite { get; set; }

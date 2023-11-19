@@ -102,10 +102,12 @@ namespace V2RayGCon.Services.ShareLinkComponents
             var vmessDecoder = new VmessDecoder(cache, setting);
             var trojanDecoder = new TrojanDecoder();
             var vlessDecoder = new VlessDecoder();
+            var socksDecoder = new SocksDecoder(cache);
 
             AddChild(vlessDecoder);
             AddChild(trojanDecoder);
             AddChild(ssDecoder);
+            AddChild(socksDecoder);
             AddChild(v2cfgDecoder);
             AddChild(vmessDecoder);
         }
@@ -117,6 +119,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 GetChild<VlessDecoder>(),
                 GetChild<VmessDecoder>(),
             };
+
+            if (setting.CustomDefImportSocksShareLink)
+            {
+                r.Add(GetChild<SocksDecoder>());
+            }
 
             if (setting.CustomDefImportTrojanShareLink)
             {

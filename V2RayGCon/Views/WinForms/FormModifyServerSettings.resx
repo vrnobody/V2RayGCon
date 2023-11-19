@@ -804,6 +804,9 @@
   <data name="cboxShareLinkType.Items3" xml:space="preserve">
     <value>ss</value>
   </data>
+  <data name="cboxShareLinkType.Items4" xml:space="preserve">
+    <value>socks</value>
+  </data>
   <data name="cboxShareLinkType.Location" type="System.Drawing.Point, System.Drawing">
     <value>44, 20</value>
   </data>

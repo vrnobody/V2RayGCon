@@ -90,6 +90,8 @@ namespace VgcApis.Models.Datas
 
             trojan = 6,
             vless = 7,
+
+            socks = 8,
             unknow = 256, // for enum parse
         }
 

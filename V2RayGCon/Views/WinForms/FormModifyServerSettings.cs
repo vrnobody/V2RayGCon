@@ -111,6 +111,7 @@ namespace V2RayGCon.Views.WinForms
                 VgcApis.Models.Datas.Enums.LinkTypes.vless,
                 VgcApis.Models.Datas.Enums.LinkTypes.trojan,
                 VgcApis.Models.Datas.Enums.LinkTypes.ss,
+                VgcApis.Models.Datas.Enums.LinkTypes.socks,
             };
 
             for (int i = 0; i < ts.Count; i++)
@@ -180,6 +181,9 @@ namespace V2RayGCon.Views.WinForms
                     break;
                 case "trojan":
                     ty = VgcApis.Models.Datas.Enums.LinkTypes.trojan;
+                    break;
+                case "socks":
+                    ty = VgcApis.Models.Datas.Enums.LinkTypes.socks;
                     break;
                 default:
                     break;

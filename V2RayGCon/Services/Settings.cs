@@ -522,6 +522,16 @@ namespace V2RayGCon.Services
             }
         }
 
+        public bool CustomDefImportSocksShareLink
+        {
+            get => userSettings.ImportOptions.IsImportSocksShareLink;
+            set
+            {
+                userSettings.ImportOptions.IsImportSocksShareLink = value;
+                SaveSettingsLater();
+            }
+        }
+
         public bool CustomDefImportSsShareLink
         {
             get => userSettings.ImportOptions.IsImportSsShareLink;

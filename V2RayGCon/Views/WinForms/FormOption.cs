@@ -125,6 +125,7 @@ namespace V2RayGCon.Views.WinForms
                     cboxDefImportCoreName,
                     chkDefImportSsShareLink,
                     chkDefImportTrojanShareLink,
+                    chkDefImportSocksShareLink,
                     // speedtest
                     chkDefSpeedtestIsUse,
                     cboxDefSpeedTestUrl,

@@ -239,7 +239,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 }
 
                 var send4 = setting.GetSendThroughIpv4();
-                if (!string.IsNullOrEmpty(send4))
+                if (!states.IsIgnoreSendThrough() && !string.IsNullOrEmpty(send4))
                 {
                     if (json["outbounds"] is JArray outbs)
                     {

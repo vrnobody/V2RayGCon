@@ -827,4 +827,7 @@ Config editor supports JSON format only!</value>
 Please exit the other V2RayGCon instance or specify another user settings file like this:
 c:\vgc\V2RayGCon.exe -s s2.json</value>
   </data>
+  <data name="TunModeEanbled" xml:space="preserve">
+    <value>TUN mode enabled.</value>
+  </data>
 </root>

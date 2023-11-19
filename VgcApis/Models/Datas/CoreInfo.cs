@@ -14,6 +14,8 @@
 
         public bool isAcceptInjection = true;
 
+        public bool ignoreSendThrough = false;
+
         // flags
         public bool isAutoRun,
             isSelected,

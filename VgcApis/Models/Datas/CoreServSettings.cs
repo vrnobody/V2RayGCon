@@ -15,7 +15,8 @@ namespace VgcApis.Models.Datas
         public double index;
         public bool isAutorun,
             isUntrack,
-            isAcceptInjecttion;
+            isAcceptInjecttion,
+            ignoreSendThrough;
 
         public CoreServSettings()
         {
@@ -52,6 +53,8 @@ namespace VgcApis.Models.Datas
             inboundAddress = cs.GetInboundAddr();
             serverName = cs.GetName();
 
+            ignoreSendThrough = cs.IsIgnoreSendThrough();
+
             try
             {
                 var ccfg = coreServ.GetConfiger();
@@ -82,6 +85,7 @@ namespace VgcApis.Models.Datas
                 || t.isAutorun != isAutorun
                 || t.isUntrack != isUntrack
                 || t.isAcceptInjecttion != isAcceptInjecttion
+                || t.ignoreSendThrough != ignoreSendThrough
             )
             {
                 return false;

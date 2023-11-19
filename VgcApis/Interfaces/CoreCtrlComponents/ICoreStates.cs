@@ -200,6 +200,10 @@
         /// <returns>不注入</returns>
         bool IsAcceptInjection();
 
+        bool IsIgnoreSendThrough();
+
+        void SetIgnoreSendThrough(bool isIgnored);
+
         /// <summary>
         /// 当前服务器是否已选中
         /// </summary>

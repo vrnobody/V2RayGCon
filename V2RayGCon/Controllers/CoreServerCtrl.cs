@@ -160,6 +160,12 @@ namespace V2RayGCon.Controllers
                 restartCore = true;
             }
 
+            if (ci.ignoreSendThrough != cs.ignoreSendThrough)
+            {
+                restartCore = true;
+                ci.ignoreSendThrough = cs.ignoreSendThrough;
+            }
+
             if (ci.isAcceptInjection != cs.isAcceptInjecttion)
             {
                 restartCore = true;

@@ -1966,6 +1966,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 TUN mode enabled. 的本地化字符串。
+        /// </summary>
+        internal static string TunModeEanbled {
+            get {
+                return ResourceManager.GetString("TunModeEanbled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Unable to determine the filename of the update file! 的本地化字符串。
         /// </summary>
         internal static string UnableToDetermineFilenameMessage {

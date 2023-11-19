@@ -818,4 +818,7 @@ https://github.com/v2ray/v2ray-core</value>
 或者通过"-s"命令行参数启用其它配置文件：
 c:\vgc\V2RayGCon.exe -s s2.json</value>
   </data>
+  <data name="TunModeEanbled" xml:space="preserve">
+    <value>TUN模式已启用</value>
+  </data>
 </root>

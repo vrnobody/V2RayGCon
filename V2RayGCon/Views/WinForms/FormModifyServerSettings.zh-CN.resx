@@ -199,6 +199,9 @@
   <data name="chkInject.ToolTip" xml:space="preserve">
     <value>接受自定义模板注入</value>
   </data>
+  <data name="chkSendThrought.ToolTip" xml:space="preserve">
+    <value>是否允许启用TUN模式后自动修改sendThrought配置</value>
+  </data>
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 12</value>
   </data>

@@ -1083,6 +1083,11 @@ namespace V2RayGCon.Services
                 $"{Misc.Utils.GetAppNameAndVer()} - {I18N.Servers}: {servers.Count()}"
             };
 
+            if (curTunMode)
+            {
+                texts.Add(I18N.TunModeEanbled);
+            }
+
             void done()
             {
                 try

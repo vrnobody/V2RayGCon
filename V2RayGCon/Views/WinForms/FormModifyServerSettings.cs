@@ -139,6 +139,7 @@ namespace V2RayGCon.Views.WinForms
                 isAutorun = chkAutoRun.Checked,
                 isUntrack = chkUntrack.Checked,
                 isAcceptInjecttion = chkInject.Checked,
+                ignoreSendThrough = !chkSendThrought.Checked,
             };
             return result;
         }
@@ -160,6 +161,7 @@ namespace V2RayGCon.Views.WinForms
             chkAutoRun.Checked = s.isAutorun;
             chkUntrack.Checked = s.isUntrack;
             chkInject.Checked = s.isAcceptInjecttion;
+            chkSendThrought.Checked = !s.ignoreSendThrough;
         }
 
         void UpdateShareLink()

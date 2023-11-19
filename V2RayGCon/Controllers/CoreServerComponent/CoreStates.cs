@@ -158,10 +158,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
         }
 
-        public void SetIsInjectSkipCnSite(bool isInjectSkipCnSite)
-        {
-            SetSettingsPropertyOnDemand(ref coreInfo.isInjectSkipCNSite, isInjectSkipCnSite);
-        }
+        public bool IsIgnoreSendThrough() => coreInfo.ignoreSendThrough;
+
+        public void SetIgnoreSendThrough(bool ignored) =>
+            SetSettingsPropertyOnDemand(ref coreInfo.ignoreSendThrough, ignored);
 
         public void SetIsAcceptInjection(bool isEnabled) =>
             SetSettingsPropertyOnDemand(ref coreInfo.isAcceptInjection, isEnabled);
@@ -171,12 +171,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public void SetIsUntrack(bool isUntrack) =>
             SetSettingsPropertyOnDemand(ref coreInfo.isUntrack, isUntrack);
-
-        public void SetIsInjectImport(bool IsInjectImport)
-        {
-            SetSettingsPropertyOnDemand(ref coreInfo.isInjectImport, IsInjectImport, true);
-            configer.UpdateSummary();
-        }
 
         public VgcApis.Models.Datas.CoreInfo GetAllRawCoreInfo() => coreInfo;
 
@@ -355,10 +349,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public bool IsSelected() => coreInfo.isSelected;
 
         public bool IsUntrack() => coreInfo.isUntrack;
-
-        public bool IsInjectSkipCnSite() => coreInfo.isInjectSkipCNSite;
-
-        public bool IsInjectGlobalImport() => coreInfo.isInjectImport;
 
         public string GetTitle()
         {

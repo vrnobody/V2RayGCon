@@ -469,7 +469,7 @@
     <value>193, 25</value>
   </data>
   <data name="rlbSetting.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>35, 18</value>
+    <value>38, 18</value>
   </data>
   <data name="rlbLastModifyDate.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
@@ -589,13 +589,13 @@
     <value>$this</value>
   </data>
   <data name="rlbSetting.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 18</value>
+    <value>37, 18</value>
   </data>
   <data name="btnStart.ToolTip" xml:space="preserve">
     <value>Start this server only.</value>
   </data>
   <data name="rlbSetting.Text" xml:space="preserve">
-    <value>ACNU</value>
+    <value>ACINU</value>
   </data>
   <data name="moveToBottomToolStripMenuItem.Text" xml:space="preserve">
     <value>Bottom</value>
@@ -724,7 +724,7 @@
     <value>Speed test result.</value>
   </data>
   <data name="rlbSetting.ToolTip" xml:space="preserve">
-    <value>(A)utorun / (C)ustom templates / (N)o injection / (U)ntrack</value>
+    <value>(A)utorun / (C)ustom templates / (I)gnore sendThrough / (N)o injection / (U)ntrack</value>
   </data>
   <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 22</value>

@@ -1291,6 +1291,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 New server 的本地化字符串。
+        /// </summary>
+        internal static string NewServer {
+            get {
+                return ResourceManager.GetString("NewServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 New server name: 的本地化字符串。
         /// </summary>
         internal static string NewServerName {

@@ -18,12 +18,12 @@ namespace V2RayGCon.Views.UserControls
         #region public methods
         public void SetTitle(string title)
         {
-            lbName.Text = title ?? "";
+            lbName.Text = string.IsNullOrEmpty(title) ? I18N.NewServer : title;
             toolTip1.SetToolTip(lbName, title);
             tboxName.Visible = false;
         }
 
-        public string ToVeeShareLink()
+        public string ToShareLink()
         {
             var sc = new Models.Datas.SharelinkMetadata
             {
@@ -116,7 +116,7 @@ namespace V2RayGCon.Views.UserControls
 
         void InitControls()
         {
-            var protocols = new List<string> { "vless", "trojan", "vmess", "shadowsocks" };
+            var protocols = new List<string> { "vless", "trojan", "vmess", "shadowsocks", "socks" };
 
             Misc.UI.FillComboBox(cboxProtocol, protocols);
             var streamType = new List<string> { StreamTypeNone };

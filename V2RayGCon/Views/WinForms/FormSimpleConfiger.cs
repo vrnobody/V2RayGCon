@@ -39,7 +39,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            this.shareLink = this.SimpleConfigerUI1.ToVeeShareLink();
+            this.shareLink = this.SimpleConfigerUI1.ToShareLink();
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

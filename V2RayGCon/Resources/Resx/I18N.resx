@@ -827,4 +827,7 @@ c:\vgc\V2RayGCon.exe -s s2.json</value>
   <data name="TunModeEanbled" xml:space="preserve">
     <value>TUN mode enabled.</value>
   </data>
+  <data name="NewServer" xml:space="preserve">
+    <value>New server</value>
+  </data>
 </root>

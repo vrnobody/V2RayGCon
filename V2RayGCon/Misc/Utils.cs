@@ -107,15 +107,7 @@ namespace V2RayGCon.Misc
                 var rawVer = GetAssemblyVersion();
                 var ver = TrimVersionString(rawVer);
                 var name = VgcApis.Misc.Utils.GetAppName();
-                var appTag = VgcApis.Misc.Utils.GetAppTag();
-                if (string.IsNullOrEmpty(appTag))
-                {
-                    appNameAndVersion = $"{name} v{ver}";
-                }
-                else
-                {
-                    appNameAndVersion = $"{appTag} {name} v{ver}";
-                }
+                appNameAndVersion = VgcApis.Misc.Utils.PrependTag($"{name} v{ver}");
             }
             return appNameAndVersion;
         }
@@ -901,7 +893,13 @@ namespace V2RayGCon.Misc
 
         public static string UrlEncode(string value) => HttpUtility.UrlEncode(value);
 
-        static bool DownloadFileWorker(string url, string filename, int proxyPort, int timeout)
+        static bool DownloadFileWorker(
+            string url,
+            string filename,
+            string host,
+            int proxyPort,
+            int timeout
+        )
         {
             var success = false;
 
@@ -914,7 +912,7 @@ namespace V2RayGCon.Misc
 
             var dlCompleted = new AutoResetEvent(false);
 
-            var wc = VgcApis.Misc.Utils.CreateWebClient(false, proxyPort);
+            var wc = VgcApis.Misc.Utils.CreateWebClient(false, host, proxyPort);
 
             wc.DownloadFileCompleted += (s, a) =>
             {
@@ -938,8 +936,11 @@ namespace V2RayGCon.Misc
             return success;
         }
 
-        public static bool DownloadFile(string url, string filename, int proxyPort, int timeout) =>
-            DownloadFileWorker(url, filename, proxyPort, timeout);
+        public static bool DownloadFile(string url, string filename, int proxyPort, int timeout)
+        {
+            var localhost = VgcApis.Models.Consts.Webs.LoopBackIP;
+            return DownloadFileWorker(url, filename, localhost, proxyPort, timeout);
+        }
 
         /// <summary>
         /// Download through http://127.0.0.1:proxyPort. Return string.Empty if sth. goes wrong.
@@ -948,7 +949,13 @@ namespace V2RayGCon.Misc
         /// <param name="proxyPort">1-65535, other value means download directly</param>
         /// <param name="timeout">millisecond, if &lt;1 then use default value 30000</param>
         /// <returns>If sth. goes wrong return string.Empty</returns>
-        static string FetchWorker(bool isSocks5, string url, int proxyPort, int timeout)
+        static string FetchWorker(
+            bool isSocks5,
+            string url,
+            string host,
+            int proxyPort,
+            int timeout
+        )
         {
             var html = string.Empty;
 
@@ -961,7 +968,7 @@ namespace V2RayGCon.Misc
             }
             var dlCompleted = new AutoResetEvent(false);
 
-            var wc = VgcApis.Misc.Utils.CreateWebClient(isSocks5, proxyPort);
+            var wc = VgcApis.Misc.Utils.CreateWebClient(isSocks5, host, proxyPort);
 
             wc.DownloadStringCompleted += (s, a) =>
             {
@@ -989,16 +996,19 @@ namespace V2RayGCon.Misc
             return html;
         }
 
-        public static string Fetch(string url, int proxyPort, int timeout) =>
-            Fetch(url, proxyPort, timeout, false);
+        public static string Fetch(string url, int proxyPort, int timeout)
+        {
+            var host = VgcApis.Models.Consts.Webs.LoopBackIP;
+            return Fetch(url, host, proxyPort, timeout);
+        }
 
-        public static string Fetch(string url, int proxyPort, int timeout, bool isSocks5) =>
-            FetchWorker(isSocks5, url, proxyPort, timeout);
+        public static string Fetch(string url, string host, int proxyPort, int timeout) =>
+            FetchWorker(false, url, host, proxyPort, timeout);
 
-        public static string Fetch(string url) => Fetch(url, -1, -1);
-
-        public static string Fetch(string url, int timeout) => Fetch(url, -1, timeout);
-
+        public static string FetchSocks5(string url, string host, int proxyPort, int timeout)
+        {
+            return FetchWorker(true, url, host, proxyPort, timeout);
+        }
         #endregion
 
         #region files

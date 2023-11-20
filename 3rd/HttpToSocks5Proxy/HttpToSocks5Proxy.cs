@@ -181,7 +181,7 @@ namespace MihaZupan
                     }
                     catch (Exception)
                     {
-                        SendError(clientSocket, Enums.SocketConnectionResult.UnknownError);
+                        SendError(clientSocket, SocketConnectionResult.UnknownError);
                         success = false;
                     }
 

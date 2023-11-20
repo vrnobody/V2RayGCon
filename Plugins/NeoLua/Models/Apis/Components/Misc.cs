@@ -129,8 +129,7 @@ namespace NeoLuna.Models.Apis.Components
 
         public bool Confirm(string content) => VgcApis.Misc.UI.Confirm(content);
 
-        public void Alert(string content) =>
-            VgcApis.Misc.UI.MsgBox(VgcApis.Misc.Utils.GetAppName(), content);
+        public void Alert(string content) => VgcApis.Misc.UI.MsgBox(content);
 
         #endregion
 

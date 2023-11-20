@@ -13,7 +13,11 @@ namespace V2RayGCon.Models.Datas
 
         public List<CustomConfigTemplate> CustomInboundSettings = null;
 
+        public bool CustomVmessDecodeTemplateEnabled { get; set; } = false;
+        public string CustomVmessDecodeTemplateUrl { get; set; } = "";
+
         // ----------------------------------
+
 
         public bool isLoad3rdPartyPlugins { get; set; }
         public string CompressedUnicodeLocalStorage { get; set; }
@@ -23,9 +27,6 @@ namespace V2RayGCon.Models.Datas
 
         public string SystrayLeftClickCommand { get; set; }
         public bool isEnableSystrayLeftClickCommand { get; set; }
-
-        public bool CustomVmessDecodeTemplateEnabled { get; set; }
-        public string CustomVmessDecodeTemplateUrl { get; set; }
 
         public string DebugLogFilePath { get; set; }
         public bool isEnableDebugFile { get; set; }
@@ -100,9 +101,6 @@ namespace V2RayGCon.Models.Datas
             isEnableSystrayLeftClickCommand = false;
 
             SystrayLeftClickCommand = "http://localhost:4000/";
-
-            CustomVmessDecodeTemplateEnabled = false;
-            CustomVmessDecodeTemplateUrl = @"";
 
             isDownloadWin32V2RayCore = true;
             v2rayCoreDownloadSource = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(0);

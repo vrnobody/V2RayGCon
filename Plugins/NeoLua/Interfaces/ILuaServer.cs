@@ -34,7 +34,16 @@ namespace NeoLuna.Interfaces
         /// <param name="name">名字</param>
         /// <param name="config">服务器的config.json</param>
         /// <param name="mark">标记</param>
-        /// <returns></returns>
+        /// <returns>uid</returns>
+        string AddNew(string name, string config, string mark);
+
+        /// <summary>
+        /// 添加一个服务器。obsolete!新脚本请用AddNew()
+        /// </summary>
+        /// <param name="name">名字</param>
+        /// <param name="config">服务器的config.json</param>
+        /// <param name="mark">标记</param>
+        /// <returns>ok</returns>
         bool Add(string name, string config, string mark);
 
         /// <summary>

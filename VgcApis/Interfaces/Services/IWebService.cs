@@ -10,7 +10,11 @@ namespace VgcApis.Interfaces.Services
 
         string Search(string query, int start, int proxyPort, int timeout);
 
+        string FetchSocks5(string url, string host, int proxyPort, int timeout);
+
         string Fetch(string url, int proxyPort, int timeout);
+
+        string Fetch(string url, string host, int proxyPort, int timeout);
 
         bool Download(string url, string filename, int proxyPort, int timeout);
     }

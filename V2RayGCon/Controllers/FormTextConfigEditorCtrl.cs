@@ -31,11 +31,12 @@ namespace V2RayGCon.Controllers
                 I18N.NewServerName,
                 (name) =>
                 {
-                    if (!servers.AddServer(name, config, "", false))
+                    var uid = servers.AddServer(name, config, "", false);
+                    if (string.IsNullOrEmpty(uid))
                     {
                         VgcApis.Misc.UI.MsgBox(I18N.DuplicateServer);
                     }
-                    var uid = servers.GetServerByConfig(config)?.GetCoreStates()?.GetUid();
+                    uid = servers.GetServerByConfig(config)?.GetCoreStates()?.GetUid();
                     LoadConfigByUid(uid);
                 }
             );

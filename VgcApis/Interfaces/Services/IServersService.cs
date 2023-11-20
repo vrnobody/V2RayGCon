@@ -21,7 +21,7 @@ namespace VgcApis.Interfaces.Services
 
         int GetAvailableHttpProxyPort();
 
-        bool AddServer(string name, string config, string mark, bool quiet);
+        string AddServer(string name, string config, string mark, bool quiet);
 
         string ReplaceOrAddNewServer(string orgUid, string newName, string newConfig, string mark);
 

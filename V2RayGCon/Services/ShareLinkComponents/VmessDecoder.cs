@@ -11,12 +11,10 @@ namespace V2RayGCon.Services.ShareLinkComponents
             VgcApis.Interfaces.IShareLinkDecoder
     {
         readonly Cache cache;
-        private readonly Settings setting;
 
-        public VmessDecoder(Cache cache, Settings setting)
+        public VmessDecoder(Cache cache)
         {
             this.cache = cache;
-            this.setting = setting;
         }
         #region properties
 
@@ -53,8 +51,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var outVmess = LoadVmessDecodeTemplate();
-
+            var outVmess = cache.tpl.LoadTemplate("outbVmess");
             var streamToken = JObject.Parse(@"{streamSettings:{}}");
             streamToken["streamSettings"] = GenStreamSetting(vmess);
             var o = outVmess as JObject;
@@ -68,25 +65,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             var tpl = cache.tpl.LoadTemplate("tplLogWarn") as JObject;
             return GetParent()?.GenerateJsonConfing(tpl, outVmess);
-        }
-
-        JToken LoadVmessDecodeTemplate()
-        {
-            if (!setting.CustomVmessDecodeTemplateEnabled)
-            {
-                return cache.tpl.LoadTemplate("outbVmess");
-            }
-
-            try
-            {
-                var str = System.IO.File.ReadAllText(setting.CustomVmessDecodeTemplateUrl);
-                return JObject.Parse(str);
-            }
-            catch
-            {
-                setting.SendLog(I18N.LoadVemssDecodeTemplateFail);
-                throw;
-            }
         }
 
         JToken GenStreamSetting(Models.Datas.Vmess vmess)

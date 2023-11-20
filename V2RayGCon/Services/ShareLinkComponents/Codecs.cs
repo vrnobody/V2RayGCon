@@ -5,7 +5,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 {
     public sealed class Codecs : VgcApis.BaseClasses.ComponentOf<Codecs>
     {
-        Settings setting;
+        Settings settings;
         Cache cache;
 
         public Codecs() { }
@@ -70,12 +70,10 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return null;
         }
 
-#pragma warning disable CA1822 // Mark members as static
         public VgcApis.Models.Datas.DecodeResult Decode(
             string shareLink,
             VgcApis.Interfaces.IShareLinkDecoder decoder
         )
-#pragma warning restore CA1822 // Mark members as static
         {
             try
             {
@@ -92,14 +90,14 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return GetChild<TDecoder>()?.Decode(shareLink);
         }
 
-        public void Run(Cache cache, Settings setting)
+        public void Run(Cache cache, Settings settings)
         {
-            this.setting = setting;
+            this.settings = settings;
             this.cache = cache;
 
             var ssDecoder = new SsDecoder(cache);
             var v2cfgDecoder = new V2cfgDecoder();
-            var vmessDecoder = new VmessDecoder(cache, setting);
+            var vmessDecoder = new VmessDecoder(cache);
             var trojanDecoder = new TrojanDecoder();
             var vlessDecoder = new VlessDecoder();
             var socksDecoder = new SocksDecoder(cache);
@@ -114,23 +112,29 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public List<VgcApis.Interfaces.IShareLinkDecoder> GetDecoders(bool isIncludeV2cfgDecoder)
         {
-            var r = new List<VgcApis.Interfaces.IShareLinkDecoder>
-            {
-                GetChild<VlessDecoder>(),
-                GetChild<VmessDecoder>(),
-            };
+            var r = new List<VgcApis.Interfaces.IShareLinkDecoder>();
 
-            if (setting.CustomDefImportSocksShareLink)
+            if (settings.CustomDefImportVlessShareLink)
+            {
+                r.Add(GetChild<VlessDecoder>());
+            }
+
+            if (settings.CustomDefImportVmessShareLink)
+            {
+                r.Add(GetChild<VmessDecoder>());
+            }
+
+            if (settings.CustomDefImportSocksShareLink)
             {
                 r.Add(GetChild<SocksDecoder>());
             }
 
-            if (setting.CustomDefImportTrojanShareLink)
+            if (settings.CustomDefImportTrojanShareLink)
             {
                 r.Add(GetChild<TrojanDecoder>());
             }
 
-            if (setting.CustomDefImportSsShareLink)
+            if (settings.CustomDefImportSsShareLink)
             {
                 r.Add(GetChild<SsDecoder>());
             }
@@ -152,7 +156,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var isV4 = setting.isUseV4;
+            var isV4 = settings.isUseV4;
 
             var inb = Misc.Utils.CreateJObject(
                 (isV4 ? "inbounds.0" : "inbound"),

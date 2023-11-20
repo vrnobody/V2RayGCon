@@ -8,50 +8,47 @@ namespace V2RayGCon.Controllers.OptionComponent
     class TabDefaults : OptionComponentController
     {
         readonly Services.Settings settings;
-        private readonly ToolTip toolTip;
         readonly ComboBox cboxDefInboundName = null,
             cboxDefCoreName = null,
             cboxDefSpeedtestUrl = null,
             cboxDefSpeedtestExpectedSize = null;
-
+        private readonly CheckBox chkImportVmessShareLink;
+        private readonly CheckBox chkImportVlessShareLink;
         readonly CheckBox chkSetSpeedtestIsUse = null,
             chkImportSsShareLink = null,
-            chkImportTrojanShareLink = null,
-            chkDefVmessDecodeTemplateEnabled = null;
+            chkImportTrojanShareLink = null;
         private readonly CheckBox chkImportSocksShareLink;
         readonly TextBox tboxDefImportAddr = null,
             tboxSetSpeedtestCycles = null,
-            tboxSetSpeedtestTimeout = null,
-            tboxDefVmessDecodeTemplateUrl = null;
+            tboxSetSpeedtestTimeout = null;
 
         public TabDefaults(
-            ToolTip toolTip,
             ComboBox cboxDefInboundName,
             TextBox tboxDefImportAddr,
             ComboBox cboxDefCoreName,
+            CheckBox chkImportVmessShareLink,
+            CheckBox chkImportVlessShareLink,
             CheckBox chkImportSsShareLink,
             CheckBox chkImportTrojanShareLink,
             CheckBox chkImportSocksShareLink,
+            // speedtest
             CheckBox chkSetSpeedtestIsUse,
             ComboBox cboxDefSpeedtestUrl,
             TextBox tboxSetSpeedtestCycles,
             ComboBox cboxDefSpeedtestExpectedSize,
-            TextBox tboxSetSpeedtestTimeout,
-            TextBox tboxDefVmessDecodeTemplateUrl,
-            CheckBox chkDefVmessDecodeTemplateEnabled
+            TextBox tboxSetSpeedtestTimeout
         )
         {
             this.settings = Services.Settings.Instance;
 
-            this.tboxDefVmessDecodeTemplateUrl = tboxDefVmessDecodeTemplateUrl;
-            this.chkDefVmessDecodeTemplateEnabled = chkDefVmessDecodeTemplateEnabled;
-            this.toolTip = toolTip;
             this.cboxDefInboundName = cboxDefInboundName;
             this.tboxDefImportAddr = tboxDefImportAddr;
             this.chkImportSsShareLink = chkImportSsShareLink;
             this.chkImportTrojanShareLink = chkImportTrojanShareLink;
             this.chkImportSocksShareLink = chkImportSocksShareLink;
             this.cboxDefCoreName = cboxDefCoreName;
+            this.chkImportVmessShareLink = chkImportVmessShareLink;
+            this.chkImportVlessShareLink = chkImportVlessShareLink;
             this.chkSetSpeedtestIsUse = chkSetSpeedtestIsUse;
             this.cboxDefSpeedtestUrl = cboxDefSpeedtestUrl;
             this.tboxSetSpeedtestCycles = tboxSetSpeedtestCycles;
@@ -69,8 +66,8 @@ namespace V2RayGCon.Controllers.OptionComponent
                 return false;
             }
 
-            settings.CustomVmessDecodeTemplateEnabled = chkDefVmessDecodeTemplateEnabled.Checked;
-            settings.CustomVmessDecodeTemplateUrl = tboxDefVmessDecodeTemplateUrl.Text;
+            settings.CustomDefImportVlessShareLink = chkImportVlessShareLink.Checked;
+            settings.CustomDefImportVmessShareLink = chkImportVmessShareLink.Checked;
 
             // mode
             if (
@@ -118,9 +115,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             );
             if (
                 !success
-                || settings.CustomVmessDecodeTemplateUrl != tboxDefVmessDecodeTemplateUrl.Text
-                || settings.CustomVmessDecodeTemplateEnabled
-                    != chkDefVmessDecodeTemplateEnabled.Checked
+                || settings.CustomDefImportVlessShareLink != chkImportVlessShareLink.Checked
+                || settings.CustomDefImportVmessShareLink != chkImportVmessShareLink.Checked
                 || settings.CustomDefImportHost != host
                 || settings.CustomDefImportPort != port
                 || settings.DefaultCoreName != GetCboxCoreNameText()
@@ -178,17 +174,10 @@ namespace V2RayGCon.Controllers.OptionComponent
             VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxDefCoreName);
         }
 
-        void UpdateTooltip(ComboBox cbox)
-        {
-            toolTip.SetToolTip(cbox, cbox.Text);
-        }
-
         private void InitElement()
         {
-            // import
-            tboxDefVmessDecodeTemplateUrl.Text = settings.CustomVmessDecodeTemplateUrl;
-            chkDefVmessDecodeTemplateEnabled.Checked = settings.CustomVmessDecodeTemplateEnabled;
-
+            chkImportVmessShareLink.Checked = settings.CustomDefImportVmessShareLink;
+            chkImportVlessShareLink.Checked = settings.CustomDefImportVlessShareLink;
             chkImportSsShareLink.Checked = settings.CustomDefImportSsShareLink;
             chkImportTrojanShareLink.Checked = settings.CustomDefImportTrojanShareLink;
             chkImportSocksShareLink.Checked = settings.CustomDefImportSocksShareLink;
@@ -201,12 +190,10 @@ namespace V2RayGCon.Controllers.OptionComponent
             );
 
             RefreshCboxInboundName(this, EventArgs.Empty);
-            cboxDefInboundName.SelectedIndexChanged += (s, a) => UpdateTooltip(cboxDefInboundName);
             VgcApis.Misc.UI.SelectComboxByText(cboxDefInboundName, settings.DefaultInboundName);
             cboxDefInboundName.DropDown += RefreshCboxInboundName;
 
             RefreshCboxCoreName(this, EventArgs.Empty);
-            cboxDefCoreName.SelectedIndexChanged += (s, a) => UpdateTooltip(cboxDefCoreName);
             VgcApis.Misc.UI.SelectComboxByText(cboxDefCoreName, settings.DefaultCoreName);
             cboxDefCoreName.DropDown += RefreshCboxCoreName;
 

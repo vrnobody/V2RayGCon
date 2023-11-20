@@ -415,32 +415,38 @@
   <data name="cboxDefImportCoreName.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="tboxDefImportVmessDecodeTemplateUrl.ToolTip" xml:space="preserve">
-    <value />
+  <data name="chkDefImportVlessShareLink.ToolTip" xml:space="preserve">
+    <value>导入时处理vless链接</value>
   </data>
-  <data name="chkDefImportIsUseVmessDecodeTemplate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
-  <data name="chkDefImportIsUseVmessDecodeTemplate.Text" xml:space="preserve">
-    <value>使用</value>
-  </data>
-  <data name="btnDefImportBrowseVemssDecodeTemplate.Text" xml:space="preserve">
-    <value>解码模板</value>
-  </data>
-  <data name="btnDefImportBrowseVemssDecodeTemplate.ToolTip" xml:space="preserve">
-    <value>浏览 vmess://... 解码模板</value>
+  <data name="chkDefImportVmessShareLink.ToolTip" xml:space="preserve">
+    <value>导入时处理vmess链接</value>
   </data>
   <data name="chkDefImportSocksShareLink.ToolTip" xml:space="preserve">
-    <value>是否导入SOCKS分享链接</value>
+    <value>导入时处理socks链接</value>
+  </data>
+  <data name="chkDefImportUseDecoderMailbox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>392, 45</value>
+  </data>
+  <data name="chkDefImportUseDecoderMailbox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkDefImportUseDecoderMailbox.Text" xml:space="preserve">
+    <value>使用</value>
+  </data>
+  <data name="chkDefImportUseDecoderMailbox.ToolTip" xml:space="preserve">
+    <value>使用自定义解码器（详见GitHub手册）</value>
   </data>
   <data name="chkDefImportTrojanShareLink.ToolTip" xml:space="preserve">
-    <value>导入时包含Trojan分享链接</value>
+    <value>导入时处理trojan链接</value>
   </data>
   <data name="chkDefImportSsShareLink.ToolTip" xml:space="preserve">
-    <value>导入时包含shadowsocks分享链接</value>
+    <value>导入时处理ss链接</value>
   </data>
   <data name="cboxDefImportInbName.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="label21.ToolTip" xml:space="preserve">
+    <value>自定义解码器mailbox名（详见GitHub手册）</value>
   </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>

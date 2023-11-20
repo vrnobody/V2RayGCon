@@ -47,8 +47,7 @@ namespace V2RayGCon.Test.DecoderTests
             var subText = string.Join(Environment.NewLine, testLinks);
 
             var cache = Services.Cache.Instance;
-            var setting = Services.Settings.Instance;
-            var vmessDecoder = new Services.ShareLinkComponents.VmessDecoder(cache, setting);
+            var vmessDecoder = new Services.ShareLinkComponents.VmessDecoder(cache);
 
             var vmessLinks = vmessDecoder.ExtractLinksFromText(subText);
             foreach (var vmessLink in vmessLinks)

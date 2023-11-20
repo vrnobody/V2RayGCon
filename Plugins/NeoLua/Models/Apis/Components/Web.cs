@@ -123,6 +123,12 @@ namespace NeoLuna.Models.Apis.Components
         public string Fetch(string url, int proxyPort, int milliSeconds) =>
             vgcWeb.Fetch(url, proxyPort, milliSeconds);
 
+        public string Fetch(string url, string host, int proxyPort, int milliSeconds) =>
+            vgcWeb.Fetch(url, proxyPort, milliSeconds);
+
+        public string FetchSocks5(string url, string host, int proxyPort, int ms) =>
+            vgcWeb.FetchSocks5(url, host, proxyPort, ms);
+
         public string FetchWithCustomConfig(string rawConfig, string url) =>
             FetchWithCustomConfig(rawConfig, "", url, -1);
 

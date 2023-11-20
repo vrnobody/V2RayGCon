@@ -28,9 +28,15 @@ namespace NeoLuna.Models.Apis.Components
 
         public int CountSelected() => vgcServers.CountSelected();
 
-        public bool Add(string name, string config, string mark)
+        public string AddNew(string name, string config, string mark)
         {
             return vgcServers.AddServer(name, config, mark, false);
+        }
+
+        public bool Add(string name, string config, string mark)
+        {
+            var uid = AddNew(name, config, mark);
+            return !string.IsNullOrEmpty(uid);
         }
 
         public bool DeleteServerByConfig(string config) =>

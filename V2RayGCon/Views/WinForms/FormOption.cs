@@ -118,11 +118,13 @@ namespace V2RayGCon.Views.WinForms
 
             ctrl.Plug(
                 new Controllers.OptionComponent.TabDefaults(
-                    toolTip1,
                     // def import share link mode
                     cboxDefImportInbName,
                     tboxDefImportAddr,
                     cboxDefImportCoreName,
+                    // decoders
+                    chkDefImportVmessShareLink,
+                    chkDefImportVlessShareLink,
                     chkDefImportSsShareLink,
                     chkDefImportTrojanShareLink,
                     chkDefImportSocksShareLink,
@@ -131,9 +133,7 @@ namespace V2RayGCon.Views.WinForms
                     cboxDefSpeedTestUrl,
                     tboxDefSpeedtestCycles,
                     cboxDefSpeedTestExpectedSize,
-                    tboxDefSpeedtestTimeout,
-                    tboxDefImportVmessDecodeTemplateUrl,
-                    chkDefImportIsUseVmessDecodeTemplate
+                    tboxDefSpeedtestTimeout
                 )
             );
 
@@ -157,15 +157,6 @@ namespace V2RayGCon.Views.WinForms
         {
             this.optionCtrl.SaveAllOptions();
             VgcApis.Misc.UI.MsgBox(I18N.Done);
-        }
-
-        private void btnDefImportBrowseVemssDecodeTemplate_Click(object sender, System.EventArgs e)
-        {
-            var path = VgcApis.Misc.UI.ShowSelectFileDialog(VgcApis.Models.Consts.Files.JsonExt);
-            if (!string.IsNullOrWhiteSpace(path))
-            {
-                tboxDefImportVmessDecodeTemplateUrl.Text = path;
-            }
         }
         #endregion
     }

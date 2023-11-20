@@ -741,9 +741,6 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="Custom" xml:space="preserve">
     <value>自定义</value>
   </data>
-  <data name="LoadVemssDecodeTemplateFail" xml:space="preserve">
-    <value>加载vmess://...解码模板失败</value>
-  </data>
   <data name="NetFlowToolTipTpl" xml:space="preserve">
     <value>上传：{0} MiB 下载：{1} MiB</value>
   </data>

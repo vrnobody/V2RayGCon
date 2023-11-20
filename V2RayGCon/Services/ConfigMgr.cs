@@ -61,7 +61,10 @@ namespace V2RayGCon.Services
                 core.RestartCoreIgnoreError(sci.config);
                 if (core.WaitUntilReady())
                 {
-                    text = Misc.Utils.Fetch(url, port, timeout, sci.isSocks5);
+                    var host = VgcApis.Models.Consts.Webs.LoopBackIP;
+                    text = sci.isSocks5
+                        ? Misc.Utils.FetchSocks5(url, host, port, timeout)
+                        : Misc.Utils.Fetch(url, host, port, timeout);
                 }
                 core.StopCore();
             }

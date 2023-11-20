@@ -9,7 +9,7 @@ namespace VgcApis.WinForms
         public static FormLog CreateLogForm(string title, Libs.Sys.QueueLogger logger)
         {
             FormLog logForm = null;
-            VgcApis.Misc.UI.Invoke(() =>
+            Misc.UI.Invoke(() =>
             {
                 logForm = new FormLog(title, logger);
                 logForm.Show();
@@ -28,11 +28,11 @@ namespace VgcApis.WinForms
             this.qLogger = logger;
             logUpdater = new Libs.Tasks.Routine(
                 RefreshUi,
-                VgcApis.Models.Consts.Intervals.SiFormLogRefreshInterval
+                Models.Consts.Intervals.SiFormLogRefreshInterval
             );
 
             InitializeComponent();
-            VgcApis.Misc.UI.AutoSetFormIcon(this);
+            Misc.UI.AutoSetFormIcon(this);
             this.Text = I18N.Log + " - " + title;
         }
 
@@ -46,7 +46,7 @@ namespace VgcApis.WinForms
 
             updateTimestamp = timestamp;
             var logs = qLogger.GetLogAsString(true);
-            VgcApis.Misc.UI.UpdateRichTextBox(rtBoxLogger, logs);
+            Misc.UI.UpdateRichTextBox(rtBoxLogger, logs);
         }
 
         private void FormSingleServerLog_Load(object sender, EventArgs e)
@@ -64,7 +64,7 @@ namespace VgcApis.WinForms
 
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (VgcApis.Misc.UI.Confirm(I18N.ConfirmClearLog))
+            if (Misc.UI.Confirm(I18N.ConfirmClearLog))
             {
                 qLogger.Clear();
             }

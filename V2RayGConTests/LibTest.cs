@@ -145,7 +145,7 @@ stat: <
 #endif
         public void FetchTest(string url)
         {
-            var html = Fetch(url);
+            var html = Fetch(url, -1, -1);
             Assert.AreEqual(false, string.IsNullOrEmpty(html));
         }
 
@@ -170,7 +170,7 @@ stat: <
                     urls,
                     (u) =>
                     {
-                        return Fetch(u);
+                        return Fetch(u, -1, -1);
                     }
                 );
             }

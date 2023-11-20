@@ -33,11 +33,14 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.8.8.6")]
+[assembly: AssemblyVersion("1.8.8.7")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v1.8.8.7 Supports disable vmess/vless sharelink decoders.
+         Add std.Web:FetchSocks5().
+         Add std.Server:AddNew().
 v1.8.8.6 Supports socks://... sharelink.
 v1.8.8.5 Add ignore sendThrough option.
 v1.8.8.4 Fix file conflict happens while multiple processes are writing the same config file.

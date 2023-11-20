@@ -373,10 +373,10 @@ namespace VgcApis.Misc
             switch (err)
             {
                 case Models.Datas.Enums.SaveFileErrorCode.Success:
-                    VgcApis.Misc.UI.MsgBox(I18N.Done);
+                    MsgBox(I18N.Done);
                     break;
                 case Models.Datas.Enums.SaveFileErrorCode.Fail:
-                    VgcApis.Misc.UI.MsgBox(I18N.WriteFileFail);
+                    MsgBox(I18N.WriteFileFail);
                     break;
                 case Models.Datas.Enums.SaveFileErrorCode.Cancel:
                     // do nothing
@@ -512,16 +512,21 @@ namespace VgcApis.Misc
 
         public static void MsgBox(string content)
         {
-            MsgBox(Properties.Resources.AppName, content);
+            MsgBox("", content);
         }
 
         public static void MsgBox(string title, string content)
         {
+            if (string.IsNullOrEmpty(title))
+            {
+                title = Utils.PrependTag(Properties.Resources.AppName);
+            }
+
             Invoke(
                 () =>
                     MessageBox.Show(
                         content ?? string.Empty,
-                        title ?? string.Empty,
+                        title,
                         MessageBoxButtons.OK,
                         MessageBoxIcon.None,
                         MessageBoxDefaultButton.Button1
@@ -541,12 +546,13 @@ namespace VgcApis.Misc
 
         public static bool Confirm(string content)
         {
+            var title = $"{Properties.Resources.AppName} - {I18N.Confirm}";
             DialogResult ok = DialogResult.No;
             Invoke(() =>
             {
                 ok = MessageBox.Show(
                     content,
-                    $"{Properties.Resources.AppName} - {I18N.Confirm}",
+                    Utils.PrependTag(title),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question,
                     MessageBoxDefaultButton.Button2
@@ -734,11 +740,8 @@ namespace VgcApis.Misc
 
         public static void AddTagToFormTitle(Form form)
         {
-            var tag = Utils.GetAppTag();
-            if (!string.IsNullOrEmpty(tag))
-            {
-                form.Text = $"{tag} {form.Text}";
-            }
+            var title = Utils.PrependTag(form.Text);
+            form.Text = title;
         }
 
         public static void AutoSetFormIcon(Form form)

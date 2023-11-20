@@ -779,7 +779,7 @@ namespace V2RayGCon.Services
             return IsConfigInCache(config);
         }
 
-        public bool AddServer(string name, string config, string mark, bool quiet)
+        public string AddServer(string name, string config, string mark, bool quiet)
         {
             return AddServerWithConfigWorker(name, config, mark, quiet);
         }
@@ -846,12 +846,8 @@ namespace V2RayGCon.Services
                 return orgUid;
             }
 
-            AddServerWithConfigWorker(newName, newConfig, mark, false);
-            if (configCache.TryGetValue(newConfig, out var uid))
-            {
-                return uid;
-            }
-            return string.Empty;
+            var uid = AddServerWithConfigWorker(newName, newConfig, mark, false);
+            return uid;
         }
 
         #endregion
@@ -884,7 +880,12 @@ namespace V2RayGCon.Services
             return null;
         }
 
-        bool AddServerWithConfigWorker(string name, string config, string mark, bool quiet = false)
+        string AddServerWithConfigWorker(
+            string name,
+            string config,
+            string mark,
+            bool quiet = false
+        )
         {
             // unknow bug 2023-05-08
             mark = mark ?? @"";
@@ -892,19 +893,18 @@ namespace V2RayGCon.Services
             // first check
             if (IsConfigInCache(config))
             {
-                return false;
+                return "";
             }
 
+            var uid = Guid.NewGuid().ToString();
             var coreInfo = new VgcApis.Models.Datas.CoreInfo
             {
-                isInjectImport = setting.CustomDefImportGlobalImport,
-                isInjectSkipCNSite = setting.CustomDefImportBypassCnSite,
                 inbName = setting.DefaultInboundName,
                 inbIp = setting.CustomDefImportHost,
                 inbPort = setting.CustomDefImportPort,
                 customMark = mark,
                 customCoreName = setting.DefaultCoreName,
-                uid = Guid.NewGuid().ToString(),
+                uid = uid,
                 lastModifiedUtcTicks = DateTime.UtcNow.Ticks,
             };
 
@@ -937,7 +937,7 @@ namespace V2RayGCon.Services
             if (duplicated)
             {
                 newServer.Dispose();
-                return false;
+                return "";
             }
 
             BindEventsTo(newServer);
@@ -953,7 +953,7 @@ namespace V2RayGCon.Services
                 RequireFormMainReload();
             }
             lazyServerSettingsRecorder.Deadline();
-            return true;
+            return uid;
         }
 
         void AddToBootList(HashSet<Controllers.CoreServerCtrl> set, string config)

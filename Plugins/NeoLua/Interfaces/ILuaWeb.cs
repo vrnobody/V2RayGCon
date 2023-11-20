@@ -93,6 +93,26 @@ namespace NeoLuna.Interfaces
         string Fetch(string url, int proxyPort, int milliSeconds);
 
         /// <summary>
+        /// 下载url网页的内容
+        /// </summary>
+        /// <param name="url">一个网址</param>
+        /// /// <param name="host">代理主机地址</param>
+        /// <param name="port">代理端口</param>
+        /// <param name="milliSeconds">超时</param>
+        /// <returns>指定网址的内容</returns>
+        string Fetch(string url, string host, int port, int ms);
+
+        /// <summary>
+        /// 使用SOCKS5代理协议通过代理端口下载网页内容
+        /// </summary>
+        /// <param name="url">一个网址</param>
+        /// <param name="host">代理主机地址</param>
+        /// <param name="prot">代理端口</param>
+        /// <param name="ms">超时</param>
+        /// <returns>指定网址的内容</returns>
+        string FetchSocks5(string url, string host, int port, int ms);
+
+        /// <summary>
         /// 用自定义配置下载网页内容
         /// </summary>
         /// <param name="rawConfig">自定义配置</param>

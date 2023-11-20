@@ -147,7 +147,6 @@ namespace V2RayGCon.Services
             var pair = new string[] { text, "" };
             var linkList = new List<string[]> { pair };
             var decoders = codecs.GetDecoders(true);
-
             ImportLinksBatchModeAsync(linkList, decoders, true);
         }
 
@@ -283,7 +282,8 @@ namespace V2RayGCon.Services
             {
                 return new Tuple<bool, string>(false, I18N.DecodeFail);
             }
-            var ok = servers.AddServer(r.name, r.config, mark, true);
+            var uid = servers.AddServer(r.name, r.config, mark, true);
+            var ok = !string.IsNullOrEmpty(uid);
             var reason = ok ? I18N.Success : I18N.DuplicateServer;
             return new Tuple<bool, string>(ok, reason);
         }

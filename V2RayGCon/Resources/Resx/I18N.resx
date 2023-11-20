@@ -750,9 +750,6 @@ No, abort.</value>
   <data name="Custom" xml:space="preserve">
     <value>Custom</value>
   </data>
-  <data name="LoadVemssDecodeTemplateFail" xml:space="preserve">
-    <value>Load vemss://... decode template fails.</value>
-  </data>
   <data name="NetFlowToolTipTpl" xml:space="preserve">
     <value>Upload: {0} MiB Download: {1} MiB</value>
   </data>

@@ -289,30 +289,6 @@ namespace V2RayGCon.Services
 
         public int GetSpeedtestQueueLength() => SpeedtestCounter;
 
-        public bool CustomVmessDecodeTemplateEnabled
-        {
-            get => userSettings.CustomVmessDecodeTemplateEnabled;
-            set
-            {
-                userSettings.CustomVmessDecodeTemplateEnabled = value;
-                SaveSettingsLater();
-            }
-        }
-
-        public string CustomVmessDecodeTemplateUrl
-        {
-            get => userSettings.CustomVmessDecodeTemplateUrl;
-            set
-            {
-                if (userSettings.CustomVmessDecodeTemplateUrl == value)
-                {
-                    return;
-                }
-                userSettings.CustomVmessDecodeTemplateUrl = value;
-                SaveSettingsLater();
-            }
-        }
-
         public string CustomDefInbounds
         {
             get => userSettings.CustomInbounds;
@@ -462,26 +438,6 @@ namespace V2RayGCon.Services
             }
         }
 
-        public bool CustomDefImportGlobalImport
-        {
-            get => userSettings.ImportOptions.IsInjectGlobalImport;
-            set
-            {
-                userSettings.ImportOptions.IsInjectGlobalImport = value;
-                SaveSettingsLater();
-            }
-        }
-
-        public bool CustomDefImportBypassCnSite
-        {
-            get => userSettings.ImportOptions.IsBypassCnSite;
-            set
-            {
-                userSettings.ImportOptions.IsBypassCnSite = value;
-                SaveSettingsLater();
-            }
-        }
-
         public string uTlsFingerprint
         {
             get => userSettings.uTlsFingerprint;
@@ -508,6 +464,26 @@ namespace V2RayGCon.Services
             set
             {
                 userSettings.isSupportSelfSignedCert = value;
+                SaveSettingsLater();
+            }
+        }
+
+        public bool CustomDefImportVmessShareLink
+        {
+            get => userSettings.ImportOptions.IsImportVmessShareLink;
+            set
+            {
+                userSettings.ImportOptions.IsImportVmessShareLink = value;
+                SaveSettingsLater();
+            }
+        }
+
+        public bool CustomDefImportVlessShareLink
+        {
+            get => userSettings.ImportOptions.IsImportVlessShareLink;
+            set
+            {
+                userSettings.ImportOptions.IsImportVlessShareLink = value;
                 SaveSettingsLater();
             }
         }

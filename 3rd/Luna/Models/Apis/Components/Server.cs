@@ -34,7 +34,8 @@ namespace Luna.Models.Apis.Components
 
         public bool Add(string config, string name, string mark)
         {
-            return vgcServers.AddServer(name, config, mark, false);
+            var uid = vgcServers.AddServer(name, config, mark, false);
+            return !string.IsNullOrEmpty(uid);
         }
 
         public bool DeleteServerByConfig(string config) =>

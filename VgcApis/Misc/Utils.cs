@@ -398,7 +398,15 @@ namespace VgcApis.Misc
             }
         }
 
-        public static string GetAppTag() => appTag ?? "";
+        public static string PrependTag(string content)
+        {
+            if (!string.IsNullOrEmpty(appTag))
+            {
+                var c = content ?? "";
+                return $"{appTag} {c}";
+            }
+            return content;
+        }
 
         public static string GetAppTagFirstChar()
         {
@@ -840,20 +848,19 @@ namespace VgcApis.Misc
             return host;
         }
 
-        public static WebClient CreateWebClient(bool isSocks5, int proxyPort)
+        public static WebClient CreateWebClient(bool isSocks5, string host, int proxyPort)
         {
             var wc = new WebClient { Encoding = Encoding.UTF8 };
             wc.Headers.Add(Models.Consts.Webs.UserAgent);
             if (proxyPort > 0 && proxyPort < 65536)
             {
-                var localhost = Models.Consts.Webs.LoopBackIP;
                 if (isSocks5)
                 {
-                    wc.Proxy = new MihaZupan.HttpToSocks5Proxy(localhost, proxyPort);
+                    wc.Proxy = new MihaZupan.HttpToSocks5Proxy(host, proxyPort);
                 }
                 else
                 {
-                    wc.Proxy = new WebProxy(localhost, proxyPort);
+                    wc.Proxy = new WebProxy(host, proxyPort);
                 }
             }
             return wc;
@@ -891,7 +898,8 @@ namespace VgcApis.Misc
             var dlCompleted = new AutoResetEvent(false);
             long size = 0;
 
-            var wc = CreateWebClient(isSocks5, port);
+            var localhost = Models.Consts.Webs.LoopBackIP;
+            var wc = CreateWebClient(isSocks5, localhost, port);
 
             wc.DownloadStringCompleted += (s, a) =>
             {

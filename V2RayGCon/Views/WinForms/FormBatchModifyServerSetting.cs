@@ -43,6 +43,7 @@ namespace V2RayGCon.Views.WinForms
             InitializeComponent();
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);
+            FormClosed += (s, a) => formTemplateNames?.Close();
         }
 
         private void FormBatchModifyServerInfo_Shown(object sender, EventArgs e)
@@ -69,6 +70,9 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.SelectComboxByText(cboxCustomCoreName, first.customCoreName);
             this.cboxAutorun.SelectedIndex = first.isAutoRun ? 0 : 1;
             this.cboxUntrack.SelectedIndex = first.isUntrack ? 0 : 1;
+            this.cboxInject.SelectedIndex = first.isAcceptInjection ? 0 : 1;
+            this.cboxSendThrough.SelectedIndex = first.ignoreSendThrough ? 1 : 0;
+            this.tboxTemplates.Text = first.templates;
         }
 
         #region UI event
@@ -91,17 +95,24 @@ namespace V2RayGCon.Views.WinForms
             this.Close();
         }
 
-        string GetCustomCoreName()
+        FormTemplateNameSelector formTemplateNames = null;
+
+        private void btnTemplates_Click(object sender, EventArgs e)
         {
-            if (chkCustomCore.Checked)
+            if (formTemplateNames == null)
             {
-                if (cboxCustomCoreName.SelectedIndex < 1)
+                formTemplateNames = new FormTemplateNameSelector(tboxTemplates.Text);
+                formTemplateNames.FormClosed += (s, a) =>
                 {
-                    return string.Empty;
-                }
-                return cboxCustomCoreName.Text;
+                    if (formTemplateNames.DialogResult == DialogResult.OK)
+                    {
+                        tboxTemplates.Text = formTemplateNames.result;
+                    }
+                    formTemplateNames = null;
+                };
+                formTemplateNames.Show();
             }
-            return null;
+            formTemplateNames.Activate();
         }
 
         private void btnModify_Click(object sender, EventArgs e)
@@ -119,6 +130,9 @@ namespace V2RayGCon.Views.WinForms
             var newAutorun = chkAutorun.Checked ? cboxAutorun.SelectedIndex : -1;
             var newUntrack = chkUntrack.Checked ? cboxUntrack.SelectedIndex : -1;
             var isPortAutoIncrease = chkIncrement.Checked;
+            var newInject = chkInject.Checked ? cboxInject.SelectedIndex : -1;
+            var newSendThrough = chkSendThough.Checked ? cboxSendThrough.SelectedIndex : -1;
+            var newTemplates = chkTemplates.Checked ? (tboxTemplates.Text ?? "") : null;
 
             ModifyServersSetting(
                 list,
@@ -130,14 +144,28 @@ namespace V2RayGCon.Views.WinForms
                 newRemark,
                 newCoreName,
                 newAutorun,
-                newUntrack
+                newUntrack,
+                newInject,
+                newSendThrough,
+                newTemplates
             );
         }
 
         #endregion
 
         #region private method
-
+        string GetCustomCoreName()
+        {
+            if (chkCustomCore.Checked)
+            {
+                if (cboxCustomCoreName.SelectedIndex < 1)
+                {
+                    return string.Empty;
+                }
+                return cboxCustomCoreName.Text;
+            }
+            return null;
+        }
 
         void InitCboxCustomInboundName()
         {
@@ -172,7 +200,10 @@ namespace V2RayGCon.Views.WinForms
             string newRemark,
             string newCoreName,
             int newAutorun,
-            int newUntrack
+            int newUntrack,
+            int newInject,
+            int newSendThrough,
+            string newTemplates
         )
         {
             void worker(int index, Action next)
@@ -191,7 +222,10 @@ namespace V2RayGCon.Views.WinForms
                         newRemark,
                         newCoreName,
                         newAutorun,
-                        newUntrack
+                        newUntrack,
+                        newInject,
+                        newSendThrough,
+                        newTemplates
                     );
                     server.InvokeEventOnPropertyChange();
                     next();
@@ -211,7 +245,10 @@ namespace V2RayGCon.Views.WinForms
                             newRemark,
                             newCoreName,
                             newAutorun,
-                            newUntrack
+                            newUntrack,
+                            newInject,
+                            newSendThrough,
+                            newTemplates
                         );
                         server.GetCoreCtrl().RestartCoreThen();
                         next();
@@ -237,10 +274,28 @@ namespace V2RayGCon.Views.WinForms
             string newRemark,
             string newCoreName,
             int newAutorun,
-            int newUntrack
+            int newUntrack,
+            int newInject,
+            int newSendThrough,
+            string newTemplates
         )
         {
             var server = serverCtrl.GetCoreStates().GetAllRawCoreInfo();
+
+            if (newTemplates != null)
+            {
+                server.templates = newTemplates;
+            }
+
+            if (newSendThrough >= 0)
+            {
+                server.ignoreSendThrough = newSendThrough == 1;
+            }
+
+            if (newInject >= 0)
+            {
+                server.isAcceptInjection = newInject == 0;
+            }
 
             if (newAutorun >= 0)
             {

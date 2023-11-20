@@ -44,12 +44,19 @@
             this.btnModify = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnTemplates = new System.Windows.Forms.Button();
             this.cboxUntrack = new System.Windows.Forms.ComboBox();
             this.cboxCustomCoreName = new System.Windows.Forms.ComboBox();
+            this.cboxSendThrough = new System.Windows.Forms.ComboBox();
+            this.cboxInject = new System.Windows.Forms.ComboBox();
             this.cboxAutorun = new System.Windows.Forms.ComboBox();
+            this.tboxTemplates = new System.Windows.Forms.TextBox();
             this.tboxRemark = new System.Windows.Forms.TextBox();
             this.chkUntrack = new System.Windows.Forms.CheckBox();
+            this.chkTemplates = new System.Windows.Forms.CheckBox();
+            this.chkSendThough = new System.Windows.Forms.CheckBox();
             this.chkRemark = new System.Windows.Forms.CheckBox();
+            this.chkInject = new System.Windows.Forms.CheckBox();
             this.chkCustomCore = new System.Windows.Forms.CheckBox();
             this.chkAutorun = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -166,12 +173,19 @@
             // groupBox2
             // 
             resources.ApplyResources(this.groupBox2, "groupBox2");
+            this.groupBox2.Controls.Add(this.btnTemplates);
             this.groupBox2.Controls.Add(this.cboxUntrack);
             this.groupBox2.Controls.Add(this.cboxCustomCoreName);
+            this.groupBox2.Controls.Add(this.cboxSendThrough);
+            this.groupBox2.Controls.Add(this.cboxInject);
             this.groupBox2.Controls.Add(this.cboxAutorun);
+            this.groupBox2.Controls.Add(this.tboxTemplates);
             this.groupBox2.Controls.Add(this.tboxRemark);
             this.groupBox2.Controls.Add(this.chkUntrack);
+            this.groupBox2.Controls.Add(this.chkTemplates);
+            this.groupBox2.Controls.Add(this.chkSendThough);
             this.groupBox2.Controls.Add(this.chkRemark);
+            this.groupBox2.Controls.Add(this.chkInject);
             this.groupBox2.Controls.Add(this.chkCustomCore);
             this.groupBox2.Controls.Add(this.chkAutorun);
             this.groupBox2.Controls.Add(this.chkMark);
@@ -179,6 +193,14 @@
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             this.toolTip1.SetToolTip(this.groupBox2, resources.GetString("groupBox2.ToolTip"));
+            // 
+            // btnTemplates
+            // 
+            resources.ApplyResources(this.btnTemplates, "btnTemplates");
+            this.btnTemplates.Name = "btnTemplates";
+            this.toolTip1.SetToolTip(this.btnTemplates, resources.GetString("btnTemplates.ToolTip"));
+            this.btnTemplates.UseVisualStyleBackColor = true;
+            this.btnTemplates.Click += new System.EventHandler(this.btnTemplates_Click);
             // 
             // cboxUntrack
             // 
@@ -202,6 +224,28 @@
             this.cboxCustomCoreName.Name = "cboxCustomCoreName";
             this.toolTip1.SetToolTip(this.cboxCustomCoreName, resources.GetString("cboxCustomCoreName.ToolTip"));
             // 
+            // cboxSendThrough
+            // 
+            resources.ApplyResources(this.cboxSendThrough, "cboxSendThrough");
+            this.cboxSendThrough.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSendThrough.FormattingEnabled = true;
+            this.cboxSendThrough.Items.AddRange(new object[] {
+            resources.GetString("cboxSendThrough.Items"),
+            resources.GetString("cboxSendThrough.Items1")});
+            this.cboxSendThrough.Name = "cboxSendThrough";
+            this.toolTip1.SetToolTip(this.cboxSendThrough, resources.GetString("cboxSendThrough.ToolTip"));
+            // 
+            // cboxInject
+            // 
+            resources.ApplyResources(this.cboxInject, "cboxInject");
+            this.cboxInject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxInject.FormattingEnabled = true;
+            this.cboxInject.Items.AddRange(new object[] {
+            resources.GetString("cboxInject.Items"),
+            resources.GetString("cboxInject.Items1")});
+            this.cboxInject.Name = "cboxInject";
+            this.toolTip1.SetToolTip(this.cboxInject, resources.GetString("cboxInject.ToolTip"));
+            // 
             // cboxAutorun
             // 
             resources.ApplyResources(this.cboxAutorun, "cboxAutorun");
@@ -212,6 +256,12 @@
             resources.GetString("cboxAutorun.Items1")});
             this.cboxAutorun.Name = "cboxAutorun";
             this.toolTip1.SetToolTip(this.cboxAutorun, resources.GetString("cboxAutorun.ToolTip"));
+            // 
+            // tboxTemplates
+            // 
+            resources.ApplyResources(this.tboxTemplates, "tboxTemplates");
+            this.tboxTemplates.Name = "tboxTemplates";
+            this.toolTip1.SetToolTip(this.tboxTemplates, resources.GetString("tboxTemplates.ToolTip"));
             // 
             // tboxRemark
             // 
@@ -226,12 +276,33 @@
             this.toolTip1.SetToolTip(this.chkUntrack, resources.GetString("chkUntrack.ToolTip"));
             this.chkUntrack.UseVisualStyleBackColor = true;
             // 
+            // chkTemplates
+            // 
+            resources.ApplyResources(this.chkTemplates, "chkTemplates");
+            this.chkTemplates.Name = "chkTemplates";
+            this.toolTip1.SetToolTip(this.chkTemplates, resources.GetString("chkTemplates.ToolTip"));
+            this.chkTemplates.UseVisualStyleBackColor = true;
+            // 
+            // chkSendThough
+            // 
+            resources.ApplyResources(this.chkSendThough, "chkSendThough");
+            this.chkSendThough.Name = "chkSendThough";
+            this.toolTip1.SetToolTip(this.chkSendThough, resources.GetString("chkSendThough.ToolTip"));
+            this.chkSendThough.UseVisualStyleBackColor = true;
+            // 
             // chkRemark
             // 
             resources.ApplyResources(this.chkRemark, "chkRemark");
             this.chkRemark.Name = "chkRemark";
             this.toolTip1.SetToolTip(this.chkRemark, resources.GetString("chkRemark.ToolTip"));
             this.chkRemark.UseVisualStyleBackColor = true;
+            // 
+            // chkInject
+            // 
+            resources.ApplyResources(this.chkInject, "chkInject");
+            this.chkInject.Name = "chkInject";
+            this.toolTip1.SetToolTip(this.chkInject, resources.GetString("chkInject.ToolTip"));
+            this.chkInject.UseVisualStyleBackColor = true;
             // 
             // chkCustomCore
             // 
@@ -294,5 +365,12 @@
         private System.Windows.Forms.CheckBox chkRemark;
         private System.Windows.Forms.ComboBox cboxCustomCoreName;
         private System.Windows.Forms.CheckBox chkCustomCore;
+        private System.Windows.Forms.Button btnTemplates;
+        private System.Windows.Forms.ComboBox cboxSendThrough;
+        private System.Windows.Forms.ComboBox cboxInject;
+        private System.Windows.Forms.TextBox tboxTemplates;
+        private System.Windows.Forms.CheckBox chkTemplates;
+        private System.Windows.Forms.CheckBox chkSendThough;
+        private System.Windows.Forms.CheckBox chkInject;
     }
 }

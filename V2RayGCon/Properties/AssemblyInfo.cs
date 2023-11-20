@@ -39,8 +39,8 @@ using System.Runtime.InteropServices;
 /*
 
 v1.8.8.8 Remove wintun.dll from V2RayGCon.zip
-         Add more options in batch modifier
-         Supports sock outbound in simple editor
+         Add more options in batch modifier.
+         Supports sock outbound in simple editor.
 v1.8.8.7 Supports disable vmess/vless sharelink decoders.
          Add std.Web:FetchSocks5().
          Add std.Server:AddNew().

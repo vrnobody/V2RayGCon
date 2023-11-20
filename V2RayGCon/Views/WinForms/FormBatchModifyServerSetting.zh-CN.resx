@@ -187,13 +187,28 @@
   <data name="btnCancel.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="btnTemplates.Text" xml:space="preserve">
+    <value>选择模板</value>
+  </data>
+  <data name="btnTemplates.ToolTip" xml:space="preserve">
+    <value>选择模板</value>
+  </data>
   <data name="cboxUntrack.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="cboxCustomCoreName.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="cboxSendThrough.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cboxInject.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="cboxAutorun.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTemplates.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="tboxRemark.ToolTip" xml:space="preserve">
@@ -208,6 +223,15 @@
   <data name="chkUntrack.ToolTip" xml:space="preserve">
     <value>停止记录server的运行状态</value>
   </data>
+  <data name="chkTemplates.Text" xml:space="preserve">
+    <value>模板</value>
+  </data>
+  <data name="chkTemplates.ToolTip" xml:space="preserve">
+    <value>合并这些模板</value>
+  </data>
+  <data name="chkSendThough.ToolTip" xml:space="preserve">
+    <value>接受tun模式下自动设置sendThough项</value>
+  </data>
   <data name="chkRemark.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 16</value>
   </data>
@@ -216,6 +240,15 @@
   </data>
   <data name="chkRemark.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="chkInject.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 16</value>
+  </data>
+  <data name="chkInject.Text" xml:space="preserve">
+    <value>注入</value>
+  </data>
+  <data name="chkInject.ToolTip" xml:space="preserve">
+    <value>接受自定义模板注入</value>
   </data>
   <data name="chkCustomCore.ToolTip" xml:space="preserve">
     <value>自定义core</value>

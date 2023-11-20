@@ -91,13 +91,8 @@ namespace Luna.Models.Apis.Components
 
         public long TimedDownloadTesting(string url, int timeout, int kib, int proxyPort)
         {
-            try
-            {
-                var r = VgcApis.Misc.Utils.TimedDownloadTest(url, proxyPort, kib, timeout);
-                return r.Item1;
-            }
-            catch { }
-            return -1;
+            var r = VgcApis.Misc.Utils.TimedDownloadTest(url, proxyPort, kib, timeout);
+            return r.Item1;
         }
 
         public List<string> ExtractBase64String(string text, int minLen) =>

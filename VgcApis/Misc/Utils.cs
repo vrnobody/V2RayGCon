@@ -885,9 +885,10 @@ namespace VgcApis.Misc
             int timeout
         )
         {
+            var TIMEOUT = Models.Consts.Core.SpeedtestTimeout;
             if (string.IsNullOrEmpty(url))
             {
-                throw new ArgumentNullException("URL must not null!");
+                return new Tuple<long, long>(-1, 0);
             }
 
             long expectedBytes = expectedSizeInKiB * 1024;
@@ -936,7 +937,7 @@ namespace VgcApis.Misc
             var time = sw.ElapsedMilliseconds;
             if (!(time <= timeout && size > 0 && size > expectedBytes))
             {
-                time = Models.Consts.Core.SpeedtestTimeout;
+                time = TIMEOUT;
             }
             return new Tuple<long, long>(time, size);
         }

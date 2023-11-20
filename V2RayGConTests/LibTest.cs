@@ -250,13 +250,21 @@ stat: <
             Assert.IsTrue(ok);
         }
 
-        [DataTestMethod]
-        [DataRow("https://www.thiswebsitedonotexist.test/")]
-        public void VisitWebPageSpeedTestFailTest(string url)
+        [TestMethod]
+        public void VisitWebPageSpeedTestFailTest()
         {
+            var url = @"https://www.thiswebsitedonotexist.test/";
             var r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, -1, 5000);
             var time = r.Item1;
             Assert.AreEqual(SpeedtestTimeout, time);
+
+            var urls = new List<string>() { null, "" };
+            foreach (var u in urls)
+            {
+                r = VgcApis.Misc.Utils.TimedDownloadTest(u, -1, -1, 5000);
+                time = r.Item1;
+                Assert.AreEqual(-1, time);
+            }
         }
 
         [TestMethod]

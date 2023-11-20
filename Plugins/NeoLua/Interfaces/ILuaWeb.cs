@@ -219,7 +219,7 @@ namespace NeoLuna.Interfaces
         bool Tcping(string url, int ms, int proxyPort);
 
         /// <summary>
-        /// 带超时的下载测试
+        /// 带超时的下载测试（直连）
         /// </summary>
         /// <param name="url">目标url</param>
         /// <param name="timeout">超时</param>
@@ -228,7 +228,7 @@ namespace NeoLuna.Interfaces
         long TimedDownloadTesting(string url, int timeout, int kib);
 
         /// <summary>
-        /// 带超时的下载测试
+        /// 带超时的下载测试（HTTP代理协议)
         /// </summary>
         /// <param name="url">目标url</param>
         /// <param name="timeout">超时</param>
@@ -236,6 +236,16 @@ namespace NeoLuna.Interfaces
         /// <param name="proxyPort">代理端口</param>
         /// <returns>下载时长</returns>
         long TimedDownloadTesting(string url, int timeout, int kib, int proxyPort);
+
+        /// <summary>
+        /// 带超时的下载测试（SOCKS5代理协议）
+        /// </summary>
+        /// <param name="url">目标url</param>
+        /// <param name="timeout">超时</param>
+        /// <param name="kib">下载数据大小</param>
+        /// <param name="proxyPort">代理端口</param>
+        /// <returns>下载时长</returns>
+        long TimedDownloadTestingSocks5(string url, int timeout, int kib, int proxyPort);
 
         // direct connect
         /// <summary>

@@ -73,7 +73,7 @@ namespace V2RayGCon.Views.WinForms
                             }
                         }
                 );
-                Task.Delay(100).Wait();
+                VgcApis.Misc.Utils.Sleep(100);
             }
 
             Invoke(

@@ -1047,7 +1047,6 @@ namespace VgcApis.Misc
         {
             try
             {
-                // Task.Delay(ms).Wait();
                 Thread.Sleep(ms);
             }
             catch { }

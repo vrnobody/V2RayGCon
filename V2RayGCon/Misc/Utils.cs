@@ -912,7 +912,7 @@ namespace V2RayGCon.Misc
 
             var dlCompleted = new AutoResetEvent(false);
 
-            var wc = VgcApis.Misc.Utils.CreateWebClient(false, host, proxyPort);
+            var wc = VgcApis.Misc.Utils.CreateWebClient(false, host, proxyPort, null, null);
 
             wc.DownloadFileCompleted += (s, a) =>
             {
@@ -954,7 +954,9 @@ namespace V2RayGCon.Misc
             string url,
             string host,
             int proxyPort,
-            int timeout
+            int timeout,
+            string username,
+            string password
         )
         {
             var html = string.Empty;
@@ -968,7 +970,13 @@ namespace V2RayGCon.Misc
             }
             var dlCompleted = new AutoResetEvent(false);
 
-            var wc = VgcApis.Misc.Utils.CreateWebClient(isSocks5, host, proxyPort);
+            var wc = VgcApis.Misc.Utils.CreateWebClient(
+                isSocks5,
+                host,
+                proxyPort,
+                username,
+                password
+            );
 
             wc.DownloadStringCompleted += (s, a) =>
             {
@@ -1003,11 +1011,18 @@ namespace V2RayGCon.Misc
         }
 
         public static string Fetch(string url, string host, int proxyPort, int timeout) =>
-            FetchWorker(false, url, host, proxyPort, timeout);
+            FetchWorker(false, url, host, proxyPort, timeout, null, null);
 
-        public static string FetchSocks5(string url, string host, int proxyPort, int timeout)
+        public static string FetchSocks5(
+            string url,
+            string host,
+            int proxyPort,
+            int timeout,
+            string username,
+            string password
+        )
         {
-            return FetchWorker(true, url, host, proxyPort, timeout);
+            return FetchWorker(true, url, host, proxyPort, timeout, username, password);
         }
         #endregion
 

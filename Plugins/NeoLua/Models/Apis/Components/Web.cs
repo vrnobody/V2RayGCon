@@ -92,13 +92,36 @@ namespace NeoLuna.Models.Apis.Components
 
         public long TimedDownloadTesting(string url, int timeout, int kib, int proxyPort)
         {
-            var r = VgcApis.Misc.Utils.TimedDownloadTest(false, url, proxyPort, kib, timeout);
+            var r = VgcApis.Misc.Utils.TimedDownloadTest(
+                false,
+                url,
+                proxyPort,
+                kib,
+                timeout,
+                null,
+                null
+            );
             return r.Item1;
         }
 
-        public long TimedDownloadTestingSocks5(string url, int timeout, int kib, int proxyPort)
+        public long TimedDownloadTestingSocks5(
+            string url,
+            int timeout,
+            int kib,
+            int proxyPort,
+            string username,
+            string password
+        )
         {
-            var r = VgcApis.Misc.Utils.TimedDownloadTest(true, url, proxyPort, kib, timeout);
+            var r = VgcApis.Misc.Utils.TimedDownloadTest(
+                true,
+                url,
+                proxyPort,
+                kib,
+                timeout,
+                username,
+                password
+            );
             return r.Item1;
         }
 
@@ -127,8 +150,14 @@ namespace NeoLuna.Models.Apis.Components
         public string Fetch(string url, string host, int proxyPort, int milliSeconds) =>
             vgcWeb.Fetch(url, proxyPort, milliSeconds);
 
-        public string FetchSocks5(string url, string host, int proxyPort, int ms) =>
-            vgcWeb.FetchSocks5(url, host, proxyPort, ms);
+        public string FetchSocks5(
+            string url,
+            string host,
+            int proxyPort,
+            int ms,
+            string username,
+            string password
+        ) => vgcWeb.FetchSocks5(url, host, proxyPort, ms, username, password);
 
         public string FetchWithCustomConfig(string rawConfig, string url) =>
             FetchWithCustomConfig(rawConfig, "", url, -1);

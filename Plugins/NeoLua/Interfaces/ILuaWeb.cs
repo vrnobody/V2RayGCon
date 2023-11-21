@@ -108,9 +108,18 @@ namespace NeoLuna.Interfaces
         /// <param name="url">一个网址</param>
         /// <param name="host">代理主机地址</param>
         /// <param name="prot">代理端口</param>
+        /// <param name="username">用户名</param>
+        /// <param name="password">密码</param>
         /// <param name="ms">超时</param>
         /// <returns>指定网址的内容</returns>
-        string FetchSocks5(string url, string host, int port, int ms);
+        string FetchSocks5(
+            string url,
+            string host,
+            int port,
+            int ms,
+            string username,
+            string password
+        );
 
         /// <summary>
         /// 用自定义配置下载网页内容
@@ -234,6 +243,7 @@ namespace NeoLuna.Interfaces
         /// <param name="timeout">超时</param>
         /// <param name="kib">下载数据大小</param>
         /// <param name="proxyPort">代理端口</param>
+
         /// <returns>下载时长</returns>
         long TimedDownloadTesting(string url, int timeout, int kib, int proxyPort);
 
@@ -244,8 +254,17 @@ namespace NeoLuna.Interfaces
         /// <param name="timeout">超时</param>
         /// <param name="kib">下载数据大小</param>
         /// <param name="proxyPort">代理端口</param>
+        /// <param name="username">用户名</param>
+        /// <param name="password">密码</param>
         /// <returns>下载时长</returns>
-        long TimedDownloadTestingSocks5(string url, int timeout, int kib, int proxyPort);
+        long TimedDownloadTestingSocks5(
+            string url,
+            int timeout,
+            int kib,
+            int proxyPort,
+            string username,
+            string password
+        );
 
         // direct connect
         /// <summary>

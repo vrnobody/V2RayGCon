@@ -470,6 +470,10 @@ namespace V2RayGCon.Views.UserControls
         {
             var inbs = coreServCtrl.GetConfiger().GetAllInboundsInfo();
             var lines = new List<string>();
+            var tpl = coreState.GetInboundName();
+            var tplName = string.IsNullOrEmpty(tpl) ? $"{I18N.Empty}" : tpl;
+            lines.Add($"{I18N.Template}: {tplName}");
+
             for (int i = 0; i < inbs.Count(); i++)
             {
                 var info = inbs[i];

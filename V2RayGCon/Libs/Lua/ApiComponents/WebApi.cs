@@ -19,8 +19,14 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
             return Fetch(url, proxyPort, timeout);
         }
 
-        public string FetchSocks5(string url, string host, int proxyPort, int timeout) =>
-            Misc.Utils.FetchSocks5(url, host, proxyPort, timeout);
+        public string FetchSocks5(
+            string url,
+            string host,
+            int proxyPort,
+            int timeout,
+            string username,
+            string password
+        ) => Misc.Utils.FetchSocks5(url, host, proxyPort, timeout, username, password);
 
         public string Fetch(string url, int proxyPort, int timeout) =>
             Misc.Utils.Fetch(url, proxyPort, timeout);

@@ -1891,6 +1891,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Template 的本地化字符串。
+        /// </summary>
+        internal static string Template {
+            get {
+                return ResourceManager.GetString("Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Testing  的本地化字符串。
         /// </summary>
         internal static string Testing {

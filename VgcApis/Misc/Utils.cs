@@ -848,7 +848,13 @@ namespace VgcApis.Misc
             return host;
         }
 
-        public static WebClient CreateWebClient(bool isSocks5, string host, int proxyPort)
+        public static WebClient CreateWebClient(
+            bool isSocks5,
+            string host,
+            int proxyPort,
+            string username,
+            string password
+        )
         {
             var wc = new WebClient { Encoding = Encoding.UTF8 };
             wc.Headers.Add(Models.Consts.Webs.UserAgent);
@@ -856,7 +862,20 @@ namespace VgcApis.Misc
             {
                 if (isSocks5)
                 {
-                    wc.Proxy = new MihaZupan.HttpToSocks5Proxy(host, proxyPort);
+                    if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+                    {
+                        // throw exception if username or password is empty
+                        wc.Proxy = new MihaZupan.HttpToSocks5Proxy(
+                            host,
+                            proxyPort,
+                            username,
+                            password
+                        );
+                    }
+                    else
+                    {
+                        wc.Proxy = new MihaZupan.HttpToSocks5Proxy(host, proxyPort);
+                    }
                 }
                 else
                 {
@@ -871,7 +890,7 @@ namespace VgcApis.Misc
             int port,
             int expectedSizeInKiB,
             int timeout
-        ) => TimedDownloadTest(false, url, port, expectedSizeInKiB, timeout);
+        ) => TimedDownloadTest(false, url, port, expectedSizeInKiB, timeout, null, null);
 
         /// <summary>
         /// return (ms, recvBytesLen)
@@ -882,7 +901,9 @@ namespace VgcApis.Misc
             string url,
             int port,
             int expectedSizeInKiB,
-            int timeout
+            int timeout,
+            string username,
+            string password
         )
         {
             var TIMEOUT = Models.Consts.Core.SpeedtestTimeout;
@@ -900,7 +921,7 @@ namespace VgcApis.Misc
             long size = 0;
 
             var localhost = Models.Consts.Webs.LoopBackIP;
-            var wc = CreateWebClient(isSocks5, localhost, port);
+            var wc = CreateWebClient(isSocks5, localhost, port, username, password);
 
             wc.DownloadStringCompleted += (s, a) =>
             {

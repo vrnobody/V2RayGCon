@@ -63,7 +63,7 @@ namespace V2RayGCon.Services
                 {
                     var host = VgcApis.Models.Consts.Webs.LoopBackIP;
                     text = sci.isSocks5
-                        ? Misc.Utils.FetchSocks5(url, host, port, timeout)
+                        ? Misc.Utils.FetchSocks5(url, host, port, timeout, null, null)
                         : Misc.Utils.Fetch(url, host, port, timeout);
                 }
                 core.StopCore();
@@ -301,7 +301,9 @@ namespace V2RayGCon.Services
                         testUrl,
                         port,
                         expectedSizeInKib,
-                        testTimeout
+                        testTimeout,
+                        null,
+                        null
                     );
                     latency = r.Item1;
                     len = r.Item2;

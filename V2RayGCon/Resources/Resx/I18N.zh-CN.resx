@@ -821,4 +821,7 @@ c:\vgc\V2RayGCon.exe -s s2.json</value>
   <data name="NewServer" xml:space="preserve">
     <value>新服务器</value>
   </data>
+  <data name="Template" xml:space="preserve">
+    <value>模板</value>
+  </data>
 </root>

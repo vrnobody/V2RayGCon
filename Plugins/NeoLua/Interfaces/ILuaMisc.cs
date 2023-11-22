@@ -430,14 +430,14 @@ namespace NeoLuna.Interfaces
         /// </summary>
         /// <param name="shareLink">各种分享链接</param>
         /// <returns>用json表示的元数据</returns>
-        string DecodeShareLinkToMetadata(string shareLink);
+        LuaTable DecodeShareLinkToMetadata(string shareLink);
 
         /// <summary>
         /// 将分享链接元数据编码成分享链接
         /// </summary>
         /// <param name="meta">用json表示的元数据</param>
         /// <returns>分享链接</returns>
-        string EncodeMetadataToShareLink(string meta);
+        string EncodeMetadataToShareLink(LuaTable meta);
 
         // links = "vmess://... ss://...  (...)"
         /// <summary>

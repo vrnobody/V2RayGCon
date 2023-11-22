@@ -893,7 +893,7 @@ namespace V2RayGCon.Misc
 
         public static string UrlEncode(string value) => HttpUtility.UrlEncode(value);
 
-        static bool DownloadFileWorker(
+        public static bool DownloadFileWorker(
             string url,
             string filename,
             string host,
@@ -936,20 +936,14 @@ namespace V2RayGCon.Misc
             return success;
         }
 
-        public static bool DownloadFile(string url, string filename, int proxyPort, int timeout)
-        {
-            var localhost = VgcApis.Models.Consts.Webs.LoopBackIP;
-            return DownloadFileWorker(url, filename, localhost, proxyPort, timeout);
-        }
-
         /// <summary>
-        /// Download through http://127.0.0.1:proxyPort. Return string.Empty if sth. goes wrong.
+        /// Download through HTTP or SOCKS5 proxy. Return string.Empty if sth. goes wrong.
         /// </summary>
         /// <param name="url">string</param>
         /// <param name="proxyPort">1-65535, other value means download directly</param>
         /// <param name="timeout">millisecond, if &lt;1 then use default value 30000</param>
         /// <returns>If sth. goes wrong return string.Empty</returns>
-        static string FetchWorker(
+        public static string FetchWorker(
             bool isSocks5,
             string url,
             string host,
@@ -1007,22 +1001,7 @@ namespace V2RayGCon.Misc
         public static string Fetch(string url, int proxyPort, int timeout)
         {
             var host = VgcApis.Models.Consts.Webs.LoopBackIP;
-            return Fetch(url, host, proxyPort, timeout);
-        }
-
-        public static string Fetch(string url, string host, int proxyPort, int timeout) =>
-            FetchWorker(false, url, host, proxyPort, timeout, null, null);
-
-        public static string FetchSocks5(
-            string url,
-            string host,
-            int proxyPort,
-            int timeout,
-            string username,
-            string password
-        )
-        {
-            return FetchWorker(true, url, host, proxyPort, timeout, username, password);
+            return FetchWorker(false, url, host, proxyPort, timeout, null, null);
         }
         #endregion
 

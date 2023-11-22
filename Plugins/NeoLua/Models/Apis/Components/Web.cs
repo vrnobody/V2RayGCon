@@ -90,16 +90,26 @@ namespace NeoLuna.Models.Apis.Components
         public long TimedDownloadTesting(string url, int timeout, int kib) =>
             TimedDownloadTesting(url, timeout, kib, -1);
 
-        public long TimedDownloadTesting(string url, int timeout, int kib, int proxyPort)
+        public long TimedDownloadTesting(string url, int timeout, int kib, int proxyPort) =>
+            TimedDownloadTestingHttp(url, timeout, kib, proxyPort, null, null);
+
+        public long TimedDownloadTestingHttp(
+            string url,
+            int timeout,
+            int kib,
+            int proxyPort,
+            string username,
+            string password
+        )
         {
-            var r = VgcApis.Misc.Utils.TimedDownloadTest(
+            var r = VgcApis.Misc.Utils.TimedDownloadTestWorker(
                 false,
                 url,
                 proxyPort,
                 kib,
                 timeout,
-                null,
-                null
+                username,
+                password
             );
             return r.Item1;
         }
@@ -113,7 +123,7 @@ namespace NeoLuna.Models.Apis.Components
             string password
         )
         {
-            var r = VgcApis.Misc.Utils.TimedDownloadTest(
+            var r = VgcApis.Misc.Utils.TimedDownloadTestWorker(
                 true,
                 url,
                 proxyPort,
@@ -140,15 +150,27 @@ namespace NeoLuna.Models.Apis.Components
         public bool Download(string url, string filename, int proxyPort, int millSecond) =>
             vgcWeb.Download(url, filename, proxyPort, millSecond);
 
-        public string Fetch(string url) => vgcWeb.Fetch(url, -1, -1);
+        public string Fetch(string url) => Fetch(url, -1);
 
-        public string Fetch(string url, int milliSeconds) => vgcWeb.Fetch(url, -1, milliSeconds);
+        public string Fetch(string url, int milliSeconds) => Fetch(url, -1, milliSeconds);
 
-        public string Fetch(string url, int proxyPort, int milliSeconds) =>
-            vgcWeb.Fetch(url, proxyPort, milliSeconds);
+        public string Fetch(string url, int proxyPort, int milliSeconds)
+        {
+            var host = VgcApis.Models.Consts.Webs.LoopBackIP;
+            return FetchHttp(url, host, proxyPort, milliSeconds, null, null);
+        }
 
-        public string Fetch(string url, string host, int proxyPort, int milliSeconds) =>
-            vgcWeb.Fetch(url, proxyPort, milliSeconds);
+        public string FetchHttp(
+            string url,
+            string host,
+            int proxyPort,
+            int milliSeconds,
+            string username,
+            string password
+        )
+        {
+            return vgcWeb.RawFetch(false, url, host, proxyPort, milliSeconds, username, password);
+        }
 
         public string FetchSocks5(
             string url,
@@ -157,7 +179,7 @@ namespace NeoLuna.Models.Apis.Components
             int ms,
             string username,
             string password
-        ) => vgcWeb.FetchSocks5(url, host, proxyPort, ms, username, password);
+        ) => vgcWeb.RawFetch(true, url, host, proxyPort, ms, username, password);
 
         public string FetchWithCustomConfig(string rawConfig, string url) =>
             FetchWithCustomConfig(rawConfig, "", url, -1);

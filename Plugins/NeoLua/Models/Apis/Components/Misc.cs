@@ -6,6 +6,7 @@ using System.Data;
 using System.Threading;
 using System.Windows.Forms;
 using VgcApis.Interfaces;
+using Newtonsoft.Json;
 
 namespace NeoLuna.Models.Apis.Components
 {
@@ -134,14 +135,26 @@ namespace NeoLuna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc.Encodings
-        public string DecodeShareLinkToMetadata(string shareLink)
+        public LuaTable DecodeShareLinkToMetadata(string shareLink)
         {
-            return vgcSlinkMgr.DecodeShareLinkToMetadata(shareLink);
+            try
+            {
+                var str = vgcSlinkMgr.DecodeShareLinkToMetadata(shareLink);
+                return JsonConvert.DeserializeObject<LuaTable>(str);
+            }
+            catch { }
+            return null;
         }
 
-        public string EncodeMetadataToShareLink(string meta)
+        public string EncodeMetadataToShareLink(LuaTable meta)
         {
-            return vgcSlinkMgr.EncodeMetadataToShareLink(meta);
+            try
+            {
+                var s = JsonConvert.SerializeObject(meta);
+                return vgcSlinkMgr.EncodeMetadataToShareLink(s);
+            }
+            catch { }
+            return null;
         }
 
         public bool IsCompressedBase64(string str) =>

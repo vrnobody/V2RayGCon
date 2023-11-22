@@ -63,8 +63,8 @@ namespace V2RayGCon.Services
                 {
                     var host = VgcApis.Models.Consts.Webs.LoopBackIP;
                     text = sci.isSocks5
-                        ? Misc.Utils.FetchSocks5(url, host, port, timeout, null, null)
-                        : Misc.Utils.Fetch(url, host, port, timeout);
+                        ? Misc.Utils.FetchWorker(true, url, host, port, timeout, null, null)
+                        : Misc.Utils.Fetch(url, port, timeout);
                 }
                 core.StopCore();
             }
@@ -296,7 +296,7 @@ namespace V2RayGCon.Services
                     var expectedSizeInKib = setting.isUseCustomSpeedtestSettings
                         ? setting.CustomSpeedtestExpectedSizeInKib
                         : -1;
-                    var r = VgcApis.Misc.Utils.TimedDownloadTest(
+                    var r = VgcApis.Misc.Utils.TimedDownloadTestWorker(
                         sci.isSocks5,
                         testUrl,
                         port,

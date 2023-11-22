@@ -236,15 +236,23 @@ stat: <
 #endif
         public void VisitWebPageSpeedTestTest(string url)
         {
-            var r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, 10 * 1024, -1);
+            var r = VgcApis.Misc.Utils.TimedDownloadTestWorker(
+                false,
+                url,
+                -1,
+                10 * 1024,
+                -1,
+                null,
+                null
+            );
             var time = r.Item1;
             Assert.AreEqual(SpeedtestTimeout, time);
 
-            r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, -1, 1);
+            r = VgcApis.Misc.Utils.TimedDownloadTestWorker(false, url, -1, -1, 1, null, null);
             time = r.Item1;
             Assert.AreEqual(SpeedtestTimeout, time);
 
-            r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, -1, -1);
+            r = VgcApis.Misc.Utils.TimedDownloadTestWorker(false, url, -1, -1, -1, null, null);
             time = r.Item1;
             var ok = time < SpeedtestTimeout && time > 0 && r.Item2 > 10 * 1024;
             Assert.IsTrue(ok);
@@ -254,14 +262,22 @@ stat: <
         public void VisitWebPageSpeedTestFailTest()
         {
             var url = @"https://www.thiswebsitedonotexist.test/";
-            var r = VgcApis.Misc.Utils.TimedDownloadTest(url, -1, -1, 5000);
+            var r = VgcApis.Misc.Utils.TimedDownloadTestWorker(
+                false,
+                url,
+                -1,
+                -1,
+                5000,
+                null,
+                null
+            );
             var time = r.Item1;
             Assert.AreEqual(SpeedtestTimeout, time);
 
             var urls = new List<string>() { null, "" };
             foreach (var u in urls)
             {
-                r = VgcApis.Misc.Utils.TimedDownloadTest(u, -1, -1, 5000);
+                r = VgcApis.Misc.Utils.TimedDownloadTestWorker(false, u, -1, -1, 5000, null, null);
                 time = r.Item1;
                 Assert.AreEqual(-1, time);
             }

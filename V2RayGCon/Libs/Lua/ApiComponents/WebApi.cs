@@ -16,25 +16,23 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
         public string Search(string keywords, int first, int proxyPort, int timeout)
         {
             var url = Misc.Utils.GenSearchUrl(keywords, first);
-            return Fetch(url, proxyPort, timeout);
+            return Misc.Utils.Fetch(url, proxyPort, timeout);
         }
 
-        public string FetchSocks5(
+        public string RawFetch(
+            bool isSocks5,
             string url,
             string host,
             int proxyPort,
             int timeout,
             string username,
             string password
-        ) => Misc.Utils.FetchSocks5(url, host, proxyPort, timeout, username, password);
+        ) => Misc.Utils.FetchWorker(isSocks5, url, host, proxyPort, timeout, username, password);
 
-        public string Fetch(string url, int proxyPort, int timeout) =>
-            Misc.Utils.Fetch(url, proxyPort, timeout);
-
-        public string Fetch(string url, string host, int proxyPort, int timeout) =>
-            Misc.Utils.Fetch(url, host, proxyPort, timeout);
-
-        public bool Download(string url, string filename, int proxyPort, int timeout) =>
-            Misc.Utils.DownloadFile(url, filename, proxyPort, timeout);
+        public bool Download(string url, string filename, int proxyPort, int timeout)
+        {
+            var host = VgcApis.Models.Consts.Webs.LoopBackIP;
+            return Misc.Utils.DownloadFileWorker(url, filename, host, proxyPort, timeout);
+        }
     }
 }

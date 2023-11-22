@@ -858,45 +858,38 @@ namespace VgcApis.Misc
         {
             var wc = new WebClient { Encoding = Encoding.UTF8 };
             wc.Headers.Add(Models.Consts.Webs.UserAgent);
-            if (proxyPort > 0 && proxyPort < 65536)
+            if (proxyPort < 0 || proxyPort > 65535)
             {
-                if (isSocks5)
-                {
-                    if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
-                    {
-                        // throw exception if username or password is empty
-                        wc.Proxy = new MihaZupan.HttpToSocks5Proxy(
-                            host,
-                            proxyPort,
-                            username,
-                            password
-                        );
-                    }
-                    else
-                    {
-                        wc.Proxy = new MihaZupan.HttpToSocks5Proxy(host, proxyPort);
-                    }
-                }
-                else
-                {
-                    wc.Proxy = new WebProxy(host, proxyPort);
-                }
+                return wc;
+            }
+
+            var needAuth = !string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password);
+            if (isSocks5)
+            {
+                // throw exception if username or password is empty
+                wc.Proxy = needAuth
+                    ? new MihaZupan.HttpToSocks5Proxy(host, proxyPort, username, password)
+                    : new MihaZupan.HttpToSocks5Proxy(host, proxyPort);
+            }
+            else
+            {
+                wc.Proxy = needAuth
+                    ? new WebProxy(
+                        new Uri(string.Format("http://{0}:{1}", host, proxyPort)),
+                        true,
+                        null,
+                        new NetworkCredential(username, password)
+                    )
+                    : new WebProxy(host, proxyPort);
             }
             return wc;
         }
-
-        public static Tuple<long, long> TimedDownloadTest(
-            string url,
-            int port,
-            int expectedSizeInKiB,
-            int timeout
-        ) => TimedDownloadTest(false, url, port, expectedSizeInKiB, timeout, null, null);
 
         /// <summary>
         /// return (ms, recvBytesLen)
         /// </summary>
         /// <returns>(ms, recvBytesLen)</returns>
-        public static Tuple<long, long> TimedDownloadTest(
+        public static Tuple<long, long> TimedDownloadTestWorker(
             bool isSocks5,
             string url,
             int port,

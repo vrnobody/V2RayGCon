@@ -96,8 +96,17 @@ namespace NeoLuna.Interfaces
         /// /// <param name="host">代理主机地址</param>
         /// <param name="port">代理端口</param>
         /// <param name="milliSeconds">超时</param>
+        /// /// <param name="username">用户名</param>
+        /// <param name="password">密码</param>
         /// <returns>指定网址的内容</returns>
-        string Fetch(string url, string host, int port, int ms);
+        string FetchHttp(
+            string url,
+            string host,
+            int proxyPort,
+            int milliSeconds,
+            string username,
+            string password
+        );
 
         /// <summary>
         /// 使用SOCKS5代理协议通过代理端口下载网页内容
@@ -105,9 +114,9 @@ namespace NeoLuna.Interfaces
         /// <param name="url">一个网址</param>
         /// <param name="host">代理主机地址</param>
         /// <param name="prot">代理端口</param>
+        /// <param name="ms">超时</param>
         /// <param name="username">用户名</param>
         /// <param name="password">密码</param>
-        /// <param name="ms">超时</param>
         /// <returns>指定网址的内容</returns>
         string FetchSocks5(
             string url,
@@ -240,12 +249,30 @@ namespace NeoLuna.Interfaces
         /// <param name="timeout">超时</param>
         /// <param name="kib">下载数据大小</param>
         /// <param name="proxyPort">代理端口</param>
-
         /// <returns>下载时长</returns>
         long TimedDownloadTesting(string url, int timeout, int kib, int proxyPort);
 
         /// <summary>
-        /// 带超时的下载测试（SOCKS5代理协议）
+        /// 带超时的下载测试（HTTP代理协议+账号密码)
+        /// </summary>
+        /// <param name="url">目标url</param>
+        /// <param name="timeout">超时</param>
+        /// <param name="kib">下载数据大小</param>
+        /// <param name="proxyPort">代理端口</param>
+        /// <param name="username">账号</param>
+        /// <param name="password">密码</param>
+        /// <returns>下载时长</returns>
+        long TimedDownloadTestingHttp(
+            string url,
+            int timeout,
+            int kib,
+            int proxyPort,
+            string username,
+            string password
+        );
+
+        /// <summary>
+        /// 带超时的下载测试（SOCKS5代理协议+账号密码）
         /// </summary>
         /// <param name="url">目标url</param>
         /// <param name="timeout">超时</param>

@@ -91,7 +91,15 @@ namespace Luna.Models.Apis.Components
 
         public long TimedDownloadTesting(string url, int timeout, int kib, int proxyPort)
         {
-            var r = VgcApis.Misc.Utils.TimedDownloadTest(url, proxyPort, kib, timeout);
+            var r = VgcApis.Misc.Utils.TimedDownloadTestWorker(
+                false,
+                url,
+                proxyPort,
+                kib,
+                timeout,
+                null,
+                null
+            );
             return r.Item1;
         }
 
@@ -110,12 +118,15 @@ namespace Luna.Models.Apis.Components
         public bool Download(string url, string filename, int proxyPort, int millSecond) =>
             vgcWeb.Download(url, filename, proxyPort, millSecond);
 
-        public string Fetch(string url) => vgcWeb.Fetch(url, -1, -1);
+        public string Fetch(string url) => Fetch(url, -1);
 
-        public string Fetch(string url, int milliSeconds) => vgcWeb.Fetch(url, -1, milliSeconds);
+        public string Fetch(string url, int milliSeconds) => Fetch(url, -1, milliSeconds);
 
-        public string Fetch(string url, int proxyPort, int milliSeconds) =>
-            vgcWeb.Fetch(url, proxyPort, milliSeconds);
+        public string Fetch(string url, int proxyPort, int milliSeconds)
+        {
+            var host = VgcApis.Models.Consts.Webs.LoopBackIP;
+            return vgcWeb.RawFetch(false, url, host, proxyPort, milliSeconds, null, null);
+        }
 
         public string FetchWithCustomConfig(string rawConfig, string url) =>
             FetchWithCustomConfig(rawConfig, "", url, -1);

@@ -7,6 +7,13 @@ namespace NeoLuna.Interfaces
 {
     public interface ILuaMisc : ILogable
     {
+        // ------------ 预计 2024-06 删除 ----------------
+        string AddV2cfgPrefix(string b64Str);
+        string AddVmessPrefix(string b64Str);
+
+        // ----------------------------------------------
+
+
         #region winform things
         /// <summary>
         /// 在托盘弹个消息
@@ -378,22 +385,6 @@ namespace NeoLuna.Interfaces
         /// <returns>链接内容</returns>
         string GetLinkBody(string link);
 
-        // v2cfg://(b64Str)
-        /// <summary>
-        /// abcdefg => v2cfg://abcdefg
-        /// </summary>
-        /// <param name="b64Str">任意内容</param>
-        /// <returns>v2cfg://（任意内容）</returns>
-        string AddV2cfgPrefix(string b64Str);
-
-        // vmess://(b64Str)
-        /// <summary>
-        /// abcdefg => vmess://abcdefg
-        /// </summary>
-        /// <param name="b64Str">任意内容</param>
-        /// <returns>vmess://（任意内容）</returns>
-        string AddVmessPrefix(string b64Str);
-
         /// <summary>
         /// 对字符串进行Base64编码
         /// </summary>
@@ -432,7 +423,21 @@ namespace NeoLuna.Interfaces
         /// </summary>
         /// <param name="shareLink">各种分享链接</param>
         /// <returns>{name, config}</returns>
-        VgcApis.Models.Datas.DecodeResult DecodeShareLink(string shareLink);
+        LuaTable DecodeShareLink(string shareLink);
+
+        /// <summary>
+        /// 将各种分享链接解码成元数据
+        /// </summary>
+        /// <param name="shareLink">各种分享链接</param>
+        /// <returns>用json表示的元数据</returns>
+        string DecodeShareLinkToMetadata(string shareLink);
+
+        /// <summary>
+        /// 将分享链接元数据编码成分享链接
+        /// </summary>
+        /// <param name="meta">用json表示的元数据</param>
+        /// <returns>分享链接</returns>
+        string EncodeMetadataToShareLink(string meta);
 
         // links = "vmess://... ss://...  (...)"
         /// <summary>

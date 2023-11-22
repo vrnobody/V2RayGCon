@@ -134,6 +134,16 @@ namespace NeoLuna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc.Encodings
+        public string DecodeShareLinkToMetadata(string shareLink)
+        {
+            return vgcSlinkMgr.DecodeShareLinkToMetadata(shareLink);
+        }
+
+        public string EncodeMetadataToShareLink(string meta)
+        {
+            return vgcSlinkMgr.EncodeMetadataToShareLink(meta);
+        }
+
         public bool IsCompressedBase64(string str) =>
             VgcApis.Libs.Infr.ZipExtensions.IsCompressedBase64(str);
 
@@ -223,9 +233,11 @@ namespace NeoLuna.Models.Apis.Components
             );
         }
 
-        public VgcApis.Models.Datas.DecodeResult DecodeShareLink(string shareLink)
+        public LuaTable DecodeShareLink(string shareLink)
         {
-            return vgcSlinkMgr.DecodeShareLinkToConfig(shareLink);
+            var kv = vgcSlinkMgr.DecodeShareLinkToConfig(shareLink);
+            var r = new LuaTable { ["name"] = kv.name, ["config"] = kv.config, };
+            return r;
         }
 
         public string AddVmessPrefix(string b64Str) =>

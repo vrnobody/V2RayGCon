@@ -52,8 +52,7 @@ namespace V2RayGCon.Views.UserControls
 
         public void FromCoreConfig(string config)
         {
-            var sc = new Models.Datas.SharelinkMetadata(config);
-            if (sc == null)
+            if (!Models.Datas.SharelinkMetadata.TryParseConfig(config, out var sc) || sc == null)
             {
                 return;
             }

@@ -2,6 +2,9 @@
 {
     public interface IShareLinkMgrService
     {
+        string DecodeShareLinkToMetadata(string shareLink);
+        string EncodeMetadataToShareLink(string meta);
+
         Models.Datas.DecodeResult DecodeShareLinkToConfig(string shareLink);
 
         string EncodeConfigToShareLink(string name, string config);

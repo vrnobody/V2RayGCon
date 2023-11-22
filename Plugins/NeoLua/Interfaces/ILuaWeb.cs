@@ -5,6 +5,14 @@ namespace NeoLuna.Interfaces
 {
     public interface ILuaWeb
     {
+        // ---- 预计2024-06删除 ----
+        List<string> ExtractV2cfgLinks(string text);
+        List<string> ExtractVmessLinks(string text);
+        List<string> ExtractSsLinks(string text);
+
+        // ------------------------
+
+
         /// <summary>
         /// html-agility-pack
         /// </summary>
@@ -47,25 +55,14 @@ namespace NeoLuna.Interfaces
         List<string> ExtractAllShareLinks(string text);
 
         /// <summary>
-        /// 从字符串中提取出全部v2cfg://...链接
+        /// 从字符串中提取出全部(prefix)://...链接
+        /// 如果prefix不是支持的类型则返回nil
+        /// 如果是支持的类型但找不到链接则返回空List
         /// </summary>
         /// <param name="text">一段字符串</param>
-        /// <returns>v2cfg://...链接</returns>
-        List<string> ExtractV2cfgLinks(string text);
-
-        /// <summary>
-        /// 从字符串中提取出全部vmess://...链接
-        /// </summary>
-        /// <param name="text">一段字符串</param>
-        /// <returns>vmess://...链接</returns>
-        List<string> ExtractVmessLinks(string text);
-
-        /// <summary>
-        /// 从字符串中提取出全部ss://...链接
-        /// </summary>
-        /// <param name="text">一段字符串</param>
-        /// <returns>ss://...链接</returns>
-        List<string> ExtractSsLinks(string text);
+        /// <param name="prefix">链接名</param>
+        /// <returns>nil / List&lt;string></returns>
+        List<string> ExtractShareLinks(string text, string prefix);
 
         /// <summary>
         /// 下载url网页的内容

@@ -40,19 +40,20 @@ namespace V2RayGCon.Models.Datas
 
         public SharelinkMetadata() { }
 
-        public SharelinkMetadata(string config)
-            : this()
+        #region public methods
+        public static bool TryParseConfig(string config, out SharelinkMetadata meta)
         {
             try
             {
                 var json = JObject.Parse(config);
-                var src = Services.ShareLinkComponents.Comm.ExtractFromJsonConfig(json);
-                CopyFrom(src);
+                meta = Services.ShareLinkComponents.Comm.ExtractFromJsonConfig(json);
+                return true;
             }
             catch { }
+            meta = null;
+            return false;
         }
 
-        #region public methods
         public string ToShareLink()
         {
             switch (proto)

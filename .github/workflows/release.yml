@@ -17,6 +17,7 @@ jobs:
         projLuna: '3rd/Luna'
         pkgLunaPlugin: 'Luna-plugin.zip'
         releaseNoteUrl: "https://vrnobody.github.io/V2RayGCon/04-dev/01-release-log/"
+        obsoleteFeaturesUrl: "https://vrnobody.github.io/V2RayGCon/04-dev/obsolete-featrues/"
         verStr: '1.8.x'
         boxAppend: box
         webuiPkgName: 'webui.zip'
@@ -107,7 +108,8 @@ jobs:
             name: 'v${{ env.verStr }}'
             tag: ${{ env.verStr }}
             body: |
-              [Release logs 发布记录](${{ env.releaseNoteUrl }})
+              [将删除的功能列表](${{ env.obsoleteFeaturesUrl }})
+              [全部发布记录](${{ env.releaseNoteUrl }})
               
               #### 变化：
                * 变化1

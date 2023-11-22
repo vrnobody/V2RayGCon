@@ -197,6 +197,24 @@ namespace NeoLuna.Models.Apis.Components
             return r;
         }
 
+        public List<string> ExtractShareLinks(string text, string prefix)
+        {
+            try
+            {
+                if (
+                    VgcApis.Misc.Utils.TryParseEnum<VgcApis.Models.Datas.Enums.LinkTypes>(
+                        prefix,
+                        out var ty
+                    )
+                )
+                {
+                    return vgcWeb.ExtractLinks(text, ty);
+                }
+            }
+            catch { }
+            return null;
+        }
+
         public List<string> ExtractV2cfgLinks(string text) =>
             vgcWeb.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
 

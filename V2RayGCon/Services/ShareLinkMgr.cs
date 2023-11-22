@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -24,6 +25,30 @@ namespace V2RayGCon.Services
         #endregion
 
         #region IShareLinkMgrService methods
+        public string DecodeShareLinkToMetadata(string shareLink)
+        {
+            var r = DecodeShareLinkToConfig(shareLink);
+            if (
+                Models.Datas.SharelinkMetadata.TryParseConfig(r.config, out var meta)
+                && meta != null
+            )
+            {
+                meta.name = r.name;
+                return JsonConvert.SerializeObject(meta);
+            }
+            return null;
+        }
+
+        public string EncodeMetadataToShareLink(string meta)
+        {
+            try
+            {
+                var m = JsonConvert.DeserializeObject<Models.Datas.SharelinkMetadata>(meta);
+                return m.ToShareLink();
+            }
+            catch { }
+            return null;
+        }
 
         /// <summary>
         /// return null if fail!

@@ -1159,32 +1159,41 @@ namespace V2RayGCon.Services
             // VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() begin");
             try
             {
-                // local storage is design for storing small values
-                userSettings.CompressedUnicodeLocalStorage =
-                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
-                        localStorageCache
-                    );
+                lock (saveUserSettingsLocker)
+                {
+                    // local storage is design for storing small values
+                    userSettings.CompressedUnicodeLocalStorage =
+                        VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
+                            localStorageCache
+                        );
+
+                    userSettings.CompressedUnicodeCoreInfoList =
+                        VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
+                            coreInfoCache
+                        );
+
+                    userSettings.CompressedUnicodePluginsSetting =
+                        VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
+                            pluginsSettingCache
+                        );
+                }
 
                 if (userSettings.isPortable)
                 {
-                    lock (saveUserSettingsLocker)
-                    {
-                        // DebugSendLog("Try save settings to file.");
-                        SaveUserSettingsToFile();
-                    }
+                    // DebugSendLog("Try save settings to file.");
+                    SaveUserSettingsToFile();
                 }
                 else
                 {
-                    lock (saveUserSettingsLocker)
-                    {
-                        // DebugSendLog("Try save settings to properties");
-                        SetUserSettingFileIsPortableToFalse();
-                        SaveUserSettingsToProperties();
-                    }
+                    // DebugSendLog("Try save settings to properties");
+                    SetUserSettingFileIsPortableToFalse();
+                    SaveUserSettingsToProperties();
+
                     VgcApis.Libs.Sys.FileLogger.Info(
                         "Settings.SaveUserSettingsToProperties() done"
                     );
                 }
+
                 // VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() done");
                 return;
             }
@@ -1246,13 +1255,7 @@ namespace V2RayGCon.Services
             {
                 lock (saveUserSettingsLocker)
                 {
-                    Misc.Utils.ClumsyWriter(
-                        userSettings,
-                        null,
-                        null,
-                        mainUsFilename,
-                        bakUsFilename
-                    );
+                    Misc.Utils.ClumsyWriter(userSettings, mainUsFilename, bakUsFilename);
                 }
                 DebugSendLog("set portable option done");
                 return;
@@ -1271,19 +1274,12 @@ namespace V2RayGCon.Services
         {
             try
             {
-                userSettings.CompressedUnicodeCoreInfoList =
-                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
-                        coreInfoCache
-                    );
-
-                userSettings.CompressedUnicodePluginsSetting =
-                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
-                        pluginsSettingCache
-                    );
-
-                var us = JsonConvert.SerializeObject(userSettings);
-                Properties.Settings.Default.UserSettings = us;
-                Properties.Settings.Default.Save();
+                lock (saveUserSettingsLocker)
+                {
+                    var us = JsonConvert.SerializeObject(userSettings);
+                    Properties.Settings.Default.UserSettings = us;
+                    Properties.Settings.Default.Save();
+                }
             }
             catch
             {
@@ -1299,8 +1295,6 @@ namespace V2RayGCon.Services
             {
                 var ok = Misc.Utils.ClumsyWriter(
                     userSettings,
-                    coreInfoCache,
-                    pluginsSettingCache,
                     cmdArgs.userSettings,
                     cmdArgs.userSettingsBak
                 );
@@ -1312,8 +1306,8 @@ namespace V2RayGCon.Services
             }
 
             VgcApis.Libs.Sys.FileLogger.Error("Settings.SaverUserSettingsToFile() failed");
-            // main file or bak file write fail, clear cache
 
+            // main file or bak file write fail, clear cache
             WarnUserSaveSettingsFailed();
         }
 

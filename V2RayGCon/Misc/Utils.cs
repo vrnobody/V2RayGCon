@@ -1006,85 +1006,6 @@ namespace V2RayGCon.Misc
         #endregion
 
         #region files
-        internal static bool SerializeToFile(
-            string path,
-            Models.Datas.UserSettings userSettings,
-            List<CoreInfo> coreInfos,
-            Dictionary<string, string> pluginsSetting
-        )
-        {
-            try
-            {
-                // for debugging
-                if (coreInfos == null && pluginsSetting == null)
-                {
-                    WriteToFileAtOnce(path, userSettings);
-                    return true;
-                }
-
-                List<string> parts = SplitSerializedUserSettings(userSettings);
-                if (parts.Count != 5)
-                {
-                    return false;
-                }
-                VgcApis.Misc.Utils.ClearFile(path);
-                WriteToFileInParts(path, parts, coreInfos, pluginsSetting);
-                return true;
-            }
-            catch (Exception e)
-            {
-                VgcApis.Libs.Sys.FileLogger.Error($"WriteAllTextNow() exception: {e}");
-            }
-            return false;
-        }
-
-        // must lock userSettings.CompressedUnicodePluginsSetting first!
-        static List<string> SplitSerializedUserSettings(Models.Datas.UserSettings userSettings)
-        {
-            var coreInfoPlaceHolder = VgcApis.Models.Consts.Libs.coreInfoPlaceHolder;
-            var pluginPlaceHolder = VgcApis.Models.Consts.Libs.pluginPlaceHolder;
-
-            userSettings.CompressedUnicodePluginsSetting = pluginPlaceHolder;
-            userSettings.CompressedUnicodeCoreInfoList = coreInfoPlaceHolder;
-
-            var parts = new List<string>();
-            try
-            {
-                var json = JsonConvert.SerializeObject(userSettings, Formatting.Indented);
-                if (VgcApis.Misc.Utils.FindAll(json, pluginPlaceHolder).Count != 1)
-                {
-                    return parts;
-                }
-
-                var option = StringSplitOptions.RemoveEmptyEntries;
-                var p = json.Split(new string[] { pluginPlaceHolder }, option);
-                if (p.Length != 2)
-                {
-                    return parts;
-                }
-
-                if (VgcApis.Misc.Utils.FindAll(p[0], coreInfoPlaceHolder).Count == 1)
-                {
-                    var pp = p[0].Split(new string[] { coreInfoPlaceHolder }, option);
-                    parts.Add(pp[0]);
-                    parts.Add(coreInfoPlaceHolder);
-                    parts.Add(pp[1]);
-                    parts.Add(pluginPlaceHolder);
-                    parts.Add(p[1]);
-                }
-                else if (VgcApis.Misc.Utils.FindAll(p[1], coreInfoPlaceHolder).Count == 1)
-                {
-                    var pp = p[1].Split(new string[] { coreInfoPlaceHolder }, option);
-                    parts.Add(p[0]);
-                    parts.Add(pluginPlaceHolder);
-                    parts.Add(pp[0]);
-                    parts.Add(coreInfoPlaceHolder);
-                    parts.Add(pp[1]);
-                }
-            }
-            catch { }
-            return parts;
-        }
 
         private static void WriteToFileAtOnce(string path, Models.Datas.UserSettings userSettings)
         {
@@ -1102,71 +1023,22 @@ namespace V2RayGCon.Misc
             }
         }
 
-        private static void WriteToFileInParts(
-            string path,
-            List<string> parts,
-            List<CoreInfo> coreInfos,
-            Dictionary<string, string> pluginsSetting
-        )
-        {
-            var pluginPlaceHolder = VgcApis.Models.Consts.Libs.pluginPlaceHolder;
-            var coreInfoPlaceHolder = VgcApis.Models.Consts.Libs.coreInfoPlaceHolder;
-
-            foreach (var part in parts)
-            {
-                if (part == pluginPlaceHolder)
-                {
-                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectAsCompressedUnicodeBase64StringToFile(
-                        path,
-                        pluginsSetting
-                    );
-                }
-                else if (part == coreInfoPlaceHolder)
-                {
-                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectAsCompressedUnicodeBase64StringToFile(
-                        path,
-                        coreInfos
-                    );
-                }
-                else
-                {
-                    using (var writer = File.AppendText(path))
-                    {
-                        writer.Write(part);
-                    }
-                }
-            }
-        }
-
         internal static bool ClumsyWriter(
             Models.Datas.UserSettings userSettings,
-            List<CoreInfo> coreInfos,
-            Dictionary<string, string> pluginsSetting,
             string mainFilename,
             string bakFilename
         )
         {
             try
             {
-                if (SerializeToFile(mainFilename, userSettings, coreInfos, pluginsSetting))
-                {
-                    if (SerializeToFile(bakFilename, userSettings, coreInfos, pluginsSetting))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        VgcApis.Libs.Sys.FileLogger.Error(
-                            $"ClumsyWriter(): Write bak file failed!"
-                        );
-                    }
-                }
-                else
-                {
-                    VgcApis.Libs.Sys.FileLogger.Error($"ClumsyWriter(): Write main file failed!");
-                }
+                WriteToFileAtOnce(mainFilename, userSettings);
+                WriteToFileAtOnce(bakFilename, userSettings);
+                return true;
             }
-            catch { }
+            catch
+            {
+                VgcApis.Libs.Sys.FileLogger.Error($"ClumsyWriter(): Write file failed!");
+            }
             return false;
         }
 

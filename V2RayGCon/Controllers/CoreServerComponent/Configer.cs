@@ -49,13 +49,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
             if (VgcApis.Misc.Utils.IsYaml(config))
             {
-                var r = new List<VgcApis.Models.Datas.InboundInfo>();
-                var info = GetInboundInfoFromYaml(config);
-                if (info != null)
-                {
-                    r.Add(info);
-                }
-                return r;
+                return GetInboundsInfoFromYaml(config);
             }
 
             var json = VgcApis.Misc.Utils.ParseJObject(config);
@@ -290,21 +284,29 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return r;
         }
 
-        VgcApis.Models.Datas.InboundInfo GetInboundInfoFromYaml(string config)
+        List<VgcApis.Models.Datas.InboundInfo> GetInboundsInfoFromYaml(string config)
         {
+            var r = new List<VgcApis.Models.Datas.InboundInfo>();
             var pat = @"(.*):\r?\n +listen: ?([^\r\n]+)";
-            var g = Regex.Match(config, pat).Groups;
-            if (g.Count > 2)
+            var match = Regex.Match(config, pat);
+            while (match.Success)
             {
-                VgcApis.Misc.Utils.TryParseAddress(g[2].Value, out var host, out var port);
-                return new VgcApis.Models.Datas.InboundInfo()
+                var g = match.Groups;
+
+                if (g.Count > 2)
                 {
-                    protocol = g[1].Value,
-                    host = host,
-                    port = port,
-                };
+                    VgcApis.Misc.Utils.TryParseAddress(g[2].Value, out var host, out var port);
+                    var inb = new VgcApis.Models.Datas.InboundInfo()
+                    {
+                        protocol = g[1].Value,
+                        host = host,
+                        port = port,
+                    };
+                    r.Add(inb);
+                }
+                match = match.NextMatch();
             }
-            return null;
+            return r;
         }
 
         void InjectStatisticsConfigOnDemand(ref JObject config)

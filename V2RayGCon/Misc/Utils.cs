@@ -159,16 +159,45 @@ namespace V2RayGCon.Misc
 
         public static string ExtractSummaryFromYaml(string config)
         {
-            if (VgcApis.Misc.Utils.IsYaml(config))
+            var empty = "";
+            if (!VgcApis.Misc.Utils.IsYaml(config))
             {
-                var pat = @"server: *([^\n]*)";
-                var g = Regex.Match(config, pat).Groups;
-                if (g.Count > 1)
+                return empty;
+            }
+
+            var pat = @"server: *([^\n]*)";
+            var g = Regex.Match(config, pat).Groups;
+            if (g.Count < 2)
+            {
+                return empty;
+            }
+            var s = g[1].Value;
+            if (string.IsNullOrEmpty(s))
+            {
+                return empty;
+            }
+
+            if (!s.Contains("://"))
+            {
+                return $"unknow@{s}";
+            }
+
+            if (s.StartsWith("hy2://") || s.StartsWith("hysteria2://"))
+            {
+                var parts = s.Split(
+                    new char[] { '@', '/', '?', '#' },
+                    StringSplitOptions.RemoveEmptyEntries
+                );
+                if (parts != null && parts.Length > 2)
                 {
-                    return $"unknow@{g[1].Value}";
+                    if (VgcApis.Misc.Utils.TryParseAddress(parts[2], out var ip, out _))
+                    {
+                        var host = VgcApis.Misc.Utils.FormatHost(ip);
+                        return $"hy2@{host}";
+                    }
                 }
             }
-            return "";
+            return empty;
         }
 
         public static string ExtractSummaryFromJson(string config)

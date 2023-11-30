@@ -388,6 +388,26 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
+        public static string UriEncode(string content)
+        {
+            try
+            {
+                return Uri.EscapeDataString(content);
+            }
+            catch { }
+            return null;
+        }
+
+        public static string UriDecode(string content)
+        {
+            try
+            {
+                return Uri.UnescapeDataString(content);
+            }
+            catch { }
+            return null;
+        }
+
         static string appTag = "";
 
         public static void SetAppTag(string tag)

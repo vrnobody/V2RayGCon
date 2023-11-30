@@ -33,6 +33,20 @@ namespace NeoLuna.Interfaces
         int GetFreeTcpPort();
 
         /// <summary>
+        /// 编码URI字符串
+        /// </summary>
+        /// <param name="content">a b</param>
+        /// <returns>a%20b</returns>
+        string UriEncode(string content);
+
+        /// <summary>
+        /// 解码URI字符串
+        /// </summary>
+        /// <param name="content">a%20b</param>
+        /// <returns>a b</returns>
+        string UriDecode(string content);
+
+        /// <summary>
         /// 从字符串中提取出Base64编码的内容
         /// </summary>
         /// <param name="text">一段字符串</param>

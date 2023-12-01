@@ -1,0 +1,168 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>导入hy2://...链接 - V2RayGCon手册</title><meta name=generator content="Hugo 0.110.0"><link href=https://vrnobody.github.io/V2RayGConindex.xml rel=alternate type=application/rss+xml><link rel=canonical href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/hy2-decoder/><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/theme.min.css><script src=https://use.fontawesome.com/releases/v5.0.6/js/all.js></script>
+<link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/chroma.min.css><script src=https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js></script>
+<script src=https://vrnobody.github.io/V2RayGCon/js/bundle.js></script><style>:root{}.highlight{line-height:1.1}.highlight div{background-color:#eed!important}.highlight pre{background-color:#eed!important}</style><meta property="og:title" content="导入hy2://...链接"><meta property="og:description" content="hysteria2支持把分享链接写进配置，所以手搓个解码器很简单。 在NeoLuna的脚本编辑器中粘贴并运行以下代码： 1 2 3 4 5 6 7 8 9 10 11 12"><meta property="og:type" content="article"><meta property="og:url" content="https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/hy2-decoder/"><meta property="article:section" content="03-plugins"><meta property="article:published_time" content="2020-02-01T12:31:46+08:00"><meta property="article:modified_time" content="2020-02-01T12:31:46+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="导入hy2://...链接"><meta name=twitter:description content="hysteria2支持把分享链接写进配置，所以手搓个解码器很简单。 在NeoLuna的脚本编辑器中粘贴并运行以下代码： 1 2 3 4 5 6 7 8 9 10 11 12"><meta itemprop=name content="导入hy2://...链接"><meta itemprop=description content="hysteria2支持把分享链接写进配置，所以手搓个解码器很简单。 在NeoLuna的脚本编辑器中粘贴并运行以下代码： 1 2 3 4 5 6 7 8 9 10 11 12"><meta itemprop=datePublished content="2020-02-01T12:31:46+08:00"><meta itemprop=dateModified content="2020-02-01T12:31:46+08:00"><meta itemprop=wordCount content="532"><meta itemprop=keywords content></head><body><div class=container><header><h1>V2RayGCon手册</h1><img src=https://img.shields.io/github/release/vrnobody/V2RayGCon.svg alt="Release Badge"></header><div class=content-container><main><h1>导入hy2://...链接</h1><p>hysteria2支持把分享链接写进配置，所以手搓个解码器很简单。<br>在NeoLuna的脚本编辑器中粘贴并运行以下代码：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">69
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">70
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">71
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">72
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">73
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">74
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">75
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">76
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">77
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">78
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">79
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=display:flex><span><span style=color:green>-- 自定义core名称</span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> customCoreName = <span style=color:#a31515>&#34;hy2&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green>-- 自定义inbound模板</span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> customInboundTemplateName = <span style=color:#a31515>&#34;hy2http&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green>-- 设置标记</span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> customMark = <span style=color:#a31515>&#34;hy2serv&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green>-- 代码</span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> hasUriDecodeFunc = std.Sys:GetAppVersion() &gt;= <span style=color:#a31515>&#34;1.8.9.2&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> <span style=color:#00f>function</span> ExtractHy2ShareLinks(s)
+</span></span><span style=display:flex><span>    <span style=color:#00f>local</span> r = {}
+</span></span><span style=display:flex><span>    <span style=color:#00f>local</span> lines = string.split(s, <span style=color:#a31515>&#39;</span><span style=color:#a31515>\r\n</span><span style=color:#a31515>&#34; &#39;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#00f>for</span> _, line <span style=color:#00f>in</span> ipairs(lines) <span style=color:#00f>do</span>
+</span></span><span style=display:flex><span>        <span style=color:#00f>if</span> string.startswith(line, <span style=color:#a31515>&#34;hy2://&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:#00f>or</span> string.startswith(line, <span style=color:#a31515>&#34;hysteria2://&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:#00f>then</span>
+</span></span><span style=display:flex><span>            table.insert(r, line)
+</span></span><span style=display:flex><span>        <span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>    <span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>    <span style=color:#00f>return</span> r
+</span></span><span style=display:flex><span><span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> <span style=color:#00f>function</span> GetName(link)
+</span></span><span style=display:flex><span>    <span style=color:#00f>if</span> <span style=color:#00f>not</span> hasUriDecodeFunc <span style=color:#00f>then</span>
+</span></span><span style=display:flex><span>        <span style=color:#00f>return</span> <span style=color:#a31515>&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>    <span style=color:#00f>local</span> ps = string.split(link, <span style=color:#a31515>&#34;#&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#00f>return</span> #ps &gt; 1 <span style=color:#00f>and</span> std.Web:UriDecode(ps[#ps]) <span style=color:#00f>or</span> <span style=color:#a31515>&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> <span style=color:#00f>function</span> GenConfig(link)
+</span></span><span style=display:flex><span>    <span style=color:#00f>local</span> http = <span style=color:#a31515>[[
+</span></span></span><span style=display:flex><span><span style=color:#a31515>http:
+</span></span></span><span style=display:flex><span><span style=color:#a31515>  listen: 127.0.0.1:8080
+</span></span></span><span style=display:flex><span><span style=color:#a31515>
+</span></span></span><span style=display:flex><span><span style=color:#a31515>]]</span>
+</span></span><span style=display:flex><span>    <span style=color:#00f>return</span> http .. <span style=color:#a31515>&#34;server: &#34;</span> .. link
+</span></span><span style=display:flex><span><span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> <span style=color:#00f>function</span> ChangeServSettings(uid)
+</span></span><span style=display:flex><span>    <span style=color:#00f>local</span> wserv = std.Server:GetWrappedServerByUid(uid)
+</span></span><span style=display:flex><span>    <span style=color:#00f>if</span> wserv == <span style=color:#00f>nil</span> <span style=color:#00f>then</span>
+</span></span><span style=display:flex><span>        <span style=color:#00f>return</span>
+</span></span><span style=display:flex><span>    <span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>    wserv:SetCustomCoreName(customCoreName)
+</span></span><span style=display:flex><span>    wserv:SetInboundName(customInboundTemplateName)
+</span></span><span style=display:flex><span><span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> <span style=color:#00f>function</span> Import(links)
+</span></span><span style=display:flex><span>    <span style=color:#00f>local</span> c = 0
+</span></span><span style=display:flex><span>    <span style=color:#00f>for</span> _, link <span style=color:#00f>in</span> ipairs(links) <span style=color:#00f>do</span>
+</span></span><span style=display:flex><span>        <span style=color:#00f>local</span> name = GetName(link)
+</span></span><span style=display:flex><span>        <span style=color:#00f>local</span> config = GenConfig(link)
+</span></span><span style=display:flex><span>        <span style=color:#00f>local</span> uid = std.Server:AddNew(name, config, customMark)
+</span></span><span style=display:flex><span>        <span style=color:#00f>if</span> <span style=color:#00f>not</span> string.isempty(uid) <span style=color:#00f>then</span>
+</span></span><span style=display:flex><span>            c = c + 1
+</span></span><span style=display:flex><span>            ChangeServSettings(uid)
+</span></span><span style=display:flex><span>            print(<span style=color:#a31515>&#34;成功：&#34;</span>, link)
+</span></span><span style=display:flex><span>        <span style=color:#00f>else</span>
+</span></span><span style=display:flex><span>            print(<span style=color:#a31515>&#34;失败：&#34;</span>, link)
+</span></span><span style=display:flex><span>        <span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>    <span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>    <span style=color:#00f>return</span> <span style=color:#a31515>&#34;导入了[&#34;</span> .. c .. <span style=color:#a31515>&#34;]个服务器&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> <span style=color:#00f>function</span> Main()
+</span></span><span style=display:flex><span>    <span style=color:#00f>local</span> text = std.Misc:Input(<span style=color:#a31515>&#34;hy2://...链接：&#34;</span>, 10)
+</span></span><span style=display:flex><span>    <span style=color:#00f>local</span> msg = <span style=color:#a31515>&#34;内容为空&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#00f>if</span> <span style=color:#00f>not</span> string.isempty(text) <span style=color:#00f>then</span>
+</span></span><span style=display:flex><span>        <span style=color:#00f>local</span> links = ExtractHy2ShareLinks(text)
+</span></span><span style=display:flex><span>        msg = Import(links)
+</span></span><span style=display:flex><span>    <span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>    std.Misc:Alert(msg)
+</span></span><span style=display:flex><span><span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Main()
+</span></span></code></pre></td></tr></table></div></div><p>hy2http模板如下：</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>http:
+</span></span><span style=display:flex><span>  listen: %host%:%port%
+</span></span></code></pre></td></tr></table></div></div><p>hy2的自定义core配置：<br><figure><img src=../../../images/luna/hy2_custom_core_settings.png></figure><br>注：需要下载hysteria2内核放到3rd/hy2目录内</p><div class=edit-meta>Last updated on 1 Feb 2020<br>Published on 1 Feb 2020<br><a href=03-plugins/04-neoluna/hy2-decoder.md/edit/master/content/03-plugins/04-neoluna/hy2-decoder.md class=edit-page><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class=pagination><a class="nav nav-prev" href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/ title=NeoLuna><i class="fas fa-arrow-left" aria-hidden=true></i> Prev - NeoLuna</a>
+<a class="nav nav-next" href=https://vrnobody.github.io/V2RayGCon/03-plugins/02-pacman/ title=Pacman>Next - Pacman <i class="fas fa-arrow-right" aria-hidden=true></i></a></nav><footer><p class=powered>Powered by <a href=https://gohugo.io>Hugo</a>. Theme by <a href=https://themes.gohugo.io/hugo-theme-techdoc/>TechDoc</a>. Designed by <a href=https://github.com/thingsym/hugo-theme-techdoc>Thingsym</a>.</p></footer></main><div class=sidebar><nav class=open-menu><ul><li><a href=https://vrnobody.github.io/V2RayGCon>Home</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/>使用说明</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/10-set-system-proxy/>tun模式以及系统代理</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/12-subs-demo/>订阅</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/13-autorun/>开机启动</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/multiple-inst-lnk/>多实例</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/15-custom-inbounds/>导入链接选项</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/14-update-v2ray-core/>更新core</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/16-share-links/>各种分享链接</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/18-options/>选项</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/19-shortcut/>快捷键</a></li></ul></li><li class=parent><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/>插件</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/>Luna</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/02-core-server-events/>监听服务器事件</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/03-input-output-controls-demo/>输入输出控件</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/05-sysapi-demo/>Sys库示例</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/06-clr-lib-demo/>CLR库示例</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/30-internet/>网络相关</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/40-web-ui/>Web UI</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/50-all-functions/>全部函数</a></li></ul></li><li class=parent><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/>NeoLuna</a><ul class=sub-menu><li class=active><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/hy2-decoder/>导入hy2://...链接</a></li></ul></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/02-pacman/>Pacman</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/03-proxysetter/>ProxySetter</a></li></ul></li><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/>开发相关</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/01-release-log/>发布记录</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/obsolete-features/>将删除的功能</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/02-services-relationship/>各服务调用关系</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/03-concepts/>设计理念</a></li></ul></li></ul></nav><div class=sidebar-footer></div></div></div><a href=# id=backtothetop-fixed class=backtothetop data-backtothetop-duration=600 data-backtothetop-easing=easeOutQuart data-backtothetop-fixed-fadein=1000 data-backtothetop-fixed-fadeout=1000 data-backtothetop-fixed-bottom=10 data-backtothetop-fixed-right=20><span class="fa-layers fa-fw"><i class="fas fa-circle"></i>
+<i class="fas fa-arrow-circle-up"></i></span></a></div></body></html>

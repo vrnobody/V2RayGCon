@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
@@ -70,19 +71,29 @@ namespace V2RayGCon.Services.ShareLinkComponents
             var body = Misc.Utils.GetLinkBody(ssLink);
             var parts = body?.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (parts == null || parts.Length != 2)
+            if (parts == null || parts.Length < 1 || parts.Length > 2)
             {
                 return null;
             }
 
-            VgcApis.Misc.Utils.TryParseAddress(parts[1], out string ip, out int port);
-
             var outb = cache.tpl.LoadTemplate("outbSocks");
             var node = outb["settings"]["servers"][0];
+
+            // host:port
+            VgcApis.Misc.Utils.TryParseAddress(parts.Last(), out string ip, out int port);
             node["address"] = ip;
             node["port"] = port;
 
-            var auths = VgcApis.Misc.Utils.Base64DecodeToString(parts[0])?.Split(':');
+            if (parts.Length == 1)
+            {
+                return outb;
+            }
+
+            var s = parts[0].Contains(":")
+                ? parts[0]
+                : VgcApis.Misc.Utils.Base64DecodeToString(parts[0]);
+
+            var auths = s?.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
             if (
                 auths != null
                 && auths.Length == 2

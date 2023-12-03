@@ -260,7 +260,6 @@ namespace V2RayGCon.Libs.Nets
                 return;
             }
 
-            // If the code can run, don't change it! 2023-12
             webClient = new WebClient();
             webClient.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
 

@@ -939,31 +939,29 @@ namespace V2RayGCon.Misc
                 proxyPort = -1;
             }
 
-            using (var wc = VgcApis.Misc.Utils.CreateWebClient(false, host, proxyPort, null, null))
+            var dlCompleted = new AutoResetEvent(false);
+
+            var wc = VgcApis.Misc.Utils.CreateWebClient(false, host, proxyPort, null, null);
+
+            wc.DownloadFileCompleted += (s, a) =>
             {
-                wc.DownloadFileCompleted += (s, a) =>
+                if (!a.Cancelled)
                 {
-                    if (!a.Cancelled && a.Error == null)
-                    {
-                        success = true;
-                    }
-                };
-
-                var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(timeout));
-                wc.DownloadProgressChanged += (s, a) =>
-                {
-                    if (cts.IsCancellationRequested)
-                    {
-                        VgcApis.Misc.Utils.CancelWebClientAsync(wc);
-                    }
-                };
-
-                try
-                {
-                    wc.DownloadFileTaskAsync(new Uri(url), filename).Wait();
+                    success = true;
                 }
-                catch { }
+                dlCompleted.Set();
+                (s as WebClient)?.Dispose();
+            };
+
+            try
+            {
+                wc.DownloadFileAsync(new Uri(url), filename);
+                dlCompleted.WaitOne(timeout);
             }
+            catch { }
+
+            VgcApis.Misc.Utils.CancelWebClientAsync(wc);
+
             return success;
         }
 
@@ -993,46 +991,39 @@ namespace V2RayGCon.Misc
                 url = VgcApis.Misc.Utils.RelativePath2FullPath(url);
                 proxyPort = -1;
             }
+            var dlCompleted = new AutoResetEvent(false);
 
-            using (
-                var wc = VgcApis.Misc.Utils.CreateWebClient(
-                    isSocks5,
-                    host,
-                    proxyPort,
-                    username,
-                    password
-                )
-            )
+            var wc = VgcApis.Misc.Utils.CreateWebClient(
+                isSocks5,
+                host,
+                proxyPort,
+                username,
+                password
+            );
+
+            wc.DownloadStringCompleted += (s, a) =>
             {
-                wc.DownloadStringCompleted += (s, a) =>
+                if (!a.Cancelled)
                 {
-                    if (!a.Cancelled && a.Error == null)
+                    try
                     {
-                        try
-                        {
-                            // 如果下载过程中遇到错误，a.Result会调用RaiseExceptionIfNecessary()抛出异常
-                            html = a.Result.ToString();
-                        }
-                        catch { }
+                        // 如果下载过程中遇到错误，a.Result会调用RaiseExceptionIfNecessary()抛出异常
+                        html = a.Result.ToString();
                     }
-                };
-
-                var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(timeout));
-                wc.DownloadProgressChanged += (s, a) =>
-                {
-                    if (cts.IsCancellationRequested)
-                    {
-                        VgcApis.Misc.Utils.CancelWebClientAsync(wc);
-                    }
-                };
-
-                try
-                {
-                    wc.DownloadStringTaskAsync(new Uri(url)).Wait();
+                    catch { }
                 }
-                catch { }
-            }
+                dlCompleted.Set();
+                (s as WebClient)?.Dispose();
+            };
 
+            try
+            {
+                wc.DownloadStringAsync(new Uri(url));
+                dlCompleted.WaitOne(timeout);
+            }
+            catch { }
+
+            VgcApis.Misc.Utils.CancelWebClientAsync(wc);
             return html;
         }
 

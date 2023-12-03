@@ -33,12 +33,11 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.8.9.4")]
+[assembly: AssemblyVersion("1.8.9.3")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
-v1.8.9.4 Refactor std.Web:Fetch().
 v1.8.9.3 Enhance socks://... decoder.
 v1.8.9.2 Add std.Web.UriEncode/Decode().
 v1.8.9.1 Simplify write settings to file algo.

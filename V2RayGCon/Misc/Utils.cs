@@ -945,12 +945,11 @@ namespace V2RayGCon.Misc
 
             wc.DownloadFileCompleted += (s, a) =>
             {
-                if (!a.Cancelled)
+                if (!a.Cancelled && a.Error == null)
                 {
                     success = true;
                 }
                 dlCompleted.Set();
-                (s as WebClient)?.Dispose();
             };
 
             try
@@ -961,7 +960,7 @@ namespace V2RayGCon.Misc
             catch { }
 
             VgcApis.Misc.Utils.CancelWebClientAsync(wc);
-
+            wc.Dispose();
             return success;
         }
 
@@ -1003,7 +1002,7 @@ namespace V2RayGCon.Misc
 
             wc.DownloadStringCompleted += (s, a) =>
             {
-                if (!a.Cancelled)
+                if (!a.Cancelled && a.Error == null)
                 {
                     try
                     {
@@ -1013,7 +1012,6 @@ namespace V2RayGCon.Misc
                     catch { }
                 }
                 dlCompleted.Set();
-                (s as WebClient)?.Dispose();
             };
 
             try
@@ -1024,6 +1022,7 @@ namespace V2RayGCon.Misc
             catch { }
 
             VgcApis.Misc.Utils.CancelWebClientAsync(wc);
+            wc.Dispose();
             return html;
         }
 

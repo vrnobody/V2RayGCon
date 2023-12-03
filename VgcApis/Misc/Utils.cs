@@ -939,7 +939,6 @@ namespace VgcApis.Misc
             wc.DownloadStringCompleted += (s, a) =>
             {
                 dlCompleted.Set();
-                (s as WebClient)?.Dispose();
             };
 
             wc.DownloadProgressChanged += (s, a) =>
@@ -967,6 +966,7 @@ namespace VgcApis.Misc
             catch { }
             sw.Stop();
             CancelWebClientAsync(wc);
+            wc.Dispose();
 
             var time = sw.ElapsedMilliseconds;
             if (!(time <= timeout && size > 0 && size > expectedBytes))

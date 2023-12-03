@@ -28,6 +28,8 @@ namespace VgcApis.Interfaces
         #endregion
 
         #region ICoreCtrl
+
+        new bool IsSpeedTesting();
         new void ReleaseSpeedTestLock();
         new bool IsCoreRunning();
         new void RunSpeedTest();

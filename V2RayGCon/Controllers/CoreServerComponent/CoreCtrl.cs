@@ -41,6 +41,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         #region public mehtods
+        public bool IsSpeedTesting() => !speedTestingEvt.WaitOne(0);
+
         public void ReleaseSpeedTestLock()
         {
             speedTestingEvt.Set();

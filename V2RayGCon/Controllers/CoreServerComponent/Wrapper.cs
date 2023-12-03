@@ -60,7 +60,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                         return true;
                     }
                 }
-                else if (funcName == "Unwrap")
+                else if (funcName == nameof(VgcApis.Interfaces.IWrappedCoreServCtrl.Unwrap))
                 {
                     result = coreServCtrl;
                     return true;

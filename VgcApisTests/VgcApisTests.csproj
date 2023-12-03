@@ -61,6 +61,7 @@
     <Compile Include="Base64Tests.cs" />
     <Compile Include="BitStreamTests.cs" />
     <Compile Include="LibsTests\TicketPoolTests.cs" />
+    <Compile Include="ReflectionTests.cs" />
     <Compile Include="ZipExtensionsTests.cs" />
     <Compile Include="StringReadWriterTests.cs" />
     <Compile Include="RecorderTests.cs" />

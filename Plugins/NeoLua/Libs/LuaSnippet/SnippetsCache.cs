@@ -211,8 +211,24 @@ namespace NeoLuna.Libs.LuaSnippet
                 new Tuple<string, Type>("std.Server", typeof(Interfaces.ILuaServer)),
                 new Tuple<string, Type>("std.Web", typeof(Interfaces.ILuaWeb)),
                 new Tuple<string, Type>("std.Signal", typeof(Interfaces.ILuaSignal)),
-                // 2023-08-01 测试结果 Wrap()开销9ns，Invoke()开销2ns，还可以接受。
+                // 2023-08-01 测试结果 Wrap()开销9us，Invoke()开销2us，还可以接受。
                 new Tuple<string, Type>("wserv", typeof(VgcApis.Interfaces.IWrappedCoreServCtrl)),
+                new Tuple<string, Type>(
+                    "wserv",
+                    typeof(VgcApis.Interfaces.CoreCtrlComponents.IConfiger)
+                ),
+                new Tuple<string, Type>(
+                    "wserv",
+                    typeof(VgcApis.Interfaces.CoreCtrlComponents.ICoreCtrl)
+                ),
+                new Tuple<string, Type>(
+                    "wserv",
+                    typeof(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates)
+                ),
+                new Tuple<string, Type>(
+                    "wserv",
+                    typeof(VgcApis.Interfaces.CoreCtrlComponents.ILogger)
+                ),
                 new Tuple<string, Type>("coreServ", typeof(VgcApis.Interfaces.ICoreServCtrl)),
                 new Tuple<string, Type>(
                     "coreConfiger",

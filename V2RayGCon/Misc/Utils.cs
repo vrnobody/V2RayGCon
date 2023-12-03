@@ -939,29 +939,31 @@ namespace V2RayGCon.Misc
                 proxyPort = -1;
             }
 
-            var dlCompleted = new AutoResetEvent(false);
-
-            var wc = VgcApis.Misc.Utils.CreateWebClient(false, host, proxyPort, null, null);
-
-            wc.DownloadFileCompleted += (s, a) =>
+            using (var wc = VgcApis.Misc.Utils.CreateWebClient(false, host, proxyPort, null, null))
             {
-                if (!a.Cancelled)
+                wc.DownloadFileCompleted += (s, a) =>
                 {
-                    success = true;
+                    if (!a.Cancelled && a.Error == null)
+                    {
+                        success = true;
+                    }
+                };
+
+                var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(timeout));
+                wc.DownloadProgressChanged += (s, a) =>
+                {
+                    if (cts.IsCancellationRequested)
+                    {
+                        VgcApis.Misc.Utils.CancelWebClientAsync(wc);
+                    }
+                };
+
+                try
+                {
+                    wc.DownloadFileTaskAsync(new Uri(url), filename).Wait();
                 }
-                dlCompleted.Set();
-                (s as WebClient)?.Dispose();
-            };
-
-            try
-            {
-                wc.DownloadFileAsync(new Uri(url), filename);
-                dlCompleted.WaitOne(timeout);
+                catch { }
             }
-            catch { }
-
-            VgcApis.Misc.Utils.CancelWebClientAsync(wc);
-
             return success;
         }
 
@@ -991,39 +993,46 @@ namespace V2RayGCon.Misc
                 url = VgcApis.Misc.Utils.RelativePath2FullPath(url);
                 proxyPort = -1;
             }
-            var dlCompleted = new AutoResetEvent(false);
 
-            var wc = VgcApis.Misc.Utils.CreateWebClient(
-                isSocks5,
-                host,
-                proxyPort,
-                username,
-                password
-            );
-
-            wc.DownloadStringCompleted += (s, a) =>
+            using (
+                var wc = VgcApis.Misc.Utils.CreateWebClient(
+                    isSocks5,
+                    host,
+                    proxyPort,
+                    username,
+                    password
+                )
+            )
             {
-                if (!a.Cancelled)
+                wc.DownloadStringCompleted += (s, a) =>
                 {
-                    try
+                    if (!a.Cancelled && a.Error == null)
                     {
-                        // 如果下载过程中遇到错误，a.Result会调用RaiseExceptionIfNecessary()抛出异常
-                        html = a.Result.ToString();
+                        try
+                        {
+                            // 如果下载过程中遇到错误，a.Result会调用RaiseExceptionIfNecessary()抛出异常
+                            html = a.Result.ToString();
+                        }
+                        catch { }
                     }
-                    catch { }
+                };
+
+                var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(timeout));
+                wc.DownloadProgressChanged += (s, a) =>
+                {
+                    if (cts.IsCancellationRequested)
+                    {
+                        VgcApis.Misc.Utils.CancelWebClientAsync(wc);
+                    }
+                };
+
+                try
+                {
+                    wc.DownloadStringTaskAsync(new Uri(url)).Wait();
                 }
-                dlCompleted.Set();
-                (s as WebClient)?.Dispose();
-            };
-
-            try
-            {
-                wc.DownloadStringAsync(new Uri(url));
-                dlCompleted.WaitOne(timeout);
+                catch { }
             }
-            catch { }
 
-            VgcApis.Misc.Utils.CancelWebClientAsync(wc);
             return html;
         }
 

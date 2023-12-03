@@ -929,44 +929,36 @@ namespace VgcApis.Misc
 
             timeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
 
-            var sw = new Stopwatch();
-            var dlCompleted = new AutoResetEvent(false);
             long size = 0;
-
+            var sw = new Stopwatch();
             var localhost = Models.Consts.Webs.LoopBackIP;
-            var wc = CreateWebClient(isSocks5, localhost, port, username, password);
-
-            wc.DownloadStringCompleted += (s, a) =>
+            using (var wc = CreateWebClient(isSocks5, localhost, port, username, password))
             {
-                dlCompleted.Set();
-                (s as WebClient)?.Dispose();
-            };
-
-            wc.DownloadProgressChanged += (s, a) =>
-            {
-                var b = a.BytesReceived;
-                lock (wc)
+                var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(timeout));
+                wc.DownloadProgressChanged += (s, a) =>
                 {
-                    if (b > size)
+                    var b = a.BytesReceived;
+                    lock (wc)
                     {
-                        size = b;
+                        if (b > size)
+                        {
+                            size = b;
+                        }
                     }
-                }
-                if (size > expectedBytes && expectedBytes >= 0)
-                {
-                    CancelWebClientAsync(wc);
-                }
-            };
+                    if ((size > expectedBytes && expectedBytes >= 0) || cts.IsCancellationRequested)
+                    {
+                        CancelWebClientAsync(wc);
+                    }
+                };
 
-            try
-            {
-                sw.Restart();
-                wc.DownloadStringAsync(new Uri(url));
-                dlCompleted.WaitOne(timeout);
+                try
+                {
+                    sw.Restart();
+                    wc.DownloadDataTaskAsync(new Uri(url)).Wait();
+                }
+                catch { }
+                sw.Stop();
             }
-            catch { }
-            sw.Stop();
-            CancelWebClientAsync(wc);
 
             var time = sw.ElapsedMilliseconds;
             if (!(time <= timeout && size > 0 && size > expectedBytes))

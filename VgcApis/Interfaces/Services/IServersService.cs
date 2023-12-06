@@ -19,7 +19,10 @@ namespace VgcApis.Interfaces.Services
 
         int DeleteServerByUids(List<string> uids);
 
+        List<VgcApis.Models.Datas.InboundInfo> GetAllActiveInboundsInfo();
+
         int GetAvailableHttpProxyPort();
+        int GetAvailableSocksProxyPort();
 
         string AddServer(string name, string config, string mark, bool quiet);
 

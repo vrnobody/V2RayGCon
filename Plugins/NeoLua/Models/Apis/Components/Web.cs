@@ -1,6 +1,9 @@
 ﻿using HtmlAgilityPack;
+using Neo.IronLua;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Threading;
@@ -144,7 +147,29 @@ namespace NeoLuna.Models.Apis.Components
 
         public List<string> ExtractBase64String(string text) => ExtractBase64String(text, 1);
 
-        public int GetProxyPort() => vgcServers.GetAvailableHttpProxyPort();
+        public int GetProxyPort() => GetHttpProxyPort();
+
+        public int GetHttpProxyPort() => vgcServers.GetAvailableHttpProxyPort();
+
+        public int GetSocksProxyPort() => vgcServers.GetAvailableSocksProxyPort();
+
+        public LuaTable GetAllActiveProxiesInfo()
+        {
+            var infos = vgcServers.GetAllActiveInboundsInfo();
+            try
+            {
+                var r = new LuaTable();
+                foreach (var info in infos)
+                {
+                    var json = JsonConvert.SerializeObject(info);
+                    var t = JsonConvert.DeserializeObject<LuaTable>(json);
+                    r.Add(t);
+                }
+                return r;
+            }
+            catch { }
+            return null;
+        }
 
         public bool Download(string url, string filename) => vgcWeb.Download(url, filename, -1, -1);
 

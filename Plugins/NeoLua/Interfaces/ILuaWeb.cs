@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Neo.IronLua;
 using System.Collections.Generic;
 
 namespace NeoLuna.Interfaces
@@ -187,9 +188,26 @@ namespace NeoLuna.Interfaces
         /// <returns>是否下载成功</returns>
         bool Download(string url, string filename, int proxyPort, int millSeconds);
 
-        // the first running http server's port number
         /// <summary>
-        /// 获取当前运行的服务器的代理端口号
+        /// 返回所有运行中的服务器的inbound信息
+        /// </summary>
+        /// <returns>inbound信息table</returns>
+        LuaTable GetAllActiveProxiesInfo();
+
+        /// <summary>
+        /// 获取首个运行中的SOCKS代理端口号
+        /// </summary>
+        /// <returns>代理端口号</returns>
+        int GetSocksProxyPort();
+
+        /// <summary>
+        /// 获取首个运行中的HTTP代理端口号
+        /// </summary>
+        /// <returns>代理端口号</returns>
+        int GetHttpProxyPort();
+
+        /// <summary>
+        /// obsolete! 请用改用GetHttpProxyPort()
         /// </summary>
         /// <returns>代理端口号</returns>
         int GetProxyPort();

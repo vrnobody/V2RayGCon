@@ -33,11 +33,14 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.8.9.5")]
+[assembly: AssemblyVersion("1.8.9.6")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v1.8.9.6 Add std.Web:GetAllActiveProxiesInfo().
+         Add std.Web:GetSocksProxyPort().
+         Add std.Web:GetHttpProxyPort().
 v1.8.9.5 Add coreCtrl:IsSpeedTesting().
 v1.8.9.4 Refactor std.Web:Fetch().
 v1.8.9.3 Enhance socks://... decoder.

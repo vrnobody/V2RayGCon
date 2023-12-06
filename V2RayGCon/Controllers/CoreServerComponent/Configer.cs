@@ -267,9 +267,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     {
                         continue;
                     }
+
                     var info = new VgcApis.Models.Datas.InboundInfo()
                     {
-                        protocol = Misc.Utils.GetValue<string>(inb, "protocol"),
+                        protocol = Misc.Utils.GetValue<string>(inb, "protocol")?.ToLower() ?? "",
                         host = Misc.Utils.GetValue<string>(inb, "listen"),
                         port = Misc.Utils.GetValue<int>(inb, "port"),
                     };
@@ -298,7 +299,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     VgcApis.Misc.Utils.TryParseAddress(g[2].Value, out var host, out var port);
                     var inb = new VgcApis.Models.Datas.InboundInfo()
                     {
-                        protocol = g[1].Value,
+                        protocol = g[1].Value?.ToLower() ?? "",
                         host = host,
                         port = port,
                     };

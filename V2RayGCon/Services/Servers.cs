@@ -298,26 +298,24 @@ namespace V2RayGCon.Services
         public void RequireFormMainReload() =>
             InvokeEventHandlerIgnoreError(OnRequireFlyPanelReload, this, EventArgs.Empty);
 
+        public List<VgcApis.Models.Datas.InboundInfo> GetAllActiveInboundsInfo()
+        {
+            var servs = GetRunningServers();
+            return servs
+                .Select(s => s.GetConfiger().GetAllInboundsInfo())
+                .SelectMany(inf => inf)
+                .ToList();
+        }
+
         /// <summary>
         /// return -1 when fail
         /// </summary>
         /// <returns></returns>
-        public int GetAvailableHttpProxyPort()
-        {
-            var servs = GetRunningServers();
-            foreach (var serv in servs)
-            {
-                var inbs = serv.GetConfiger().GetAllInboundsInfo();
-                foreach (var inb in inbs)
-                {
-                    if (inb.protocol == "http")
-                    {
-                        return inb.port;
-                    }
-                }
-            }
-            return -1;
-        }
+        public int GetAvailableHttpProxyPort() =>
+            GetAvailableProxyPort(new List<string>() { "http" });
+
+        public int GetAvailableSocksProxyPort() =>
+            GetAvailableProxyPort(new List<string>() { "socks", "socks5" });
 
         public void UpdateServerTrackerSettings(bool isTrackerOn)
         {
@@ -853,6 +851,23 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
+        int GetAvailableProxyPort(IEnumerable<string> protocols)
+        {
+            var servs = GetRunningServers();
+            foreach (var serv in servs)
+            {
+                var inbs = serv.GetConfiger().GetAllInboundsInfo();
+                foreach (var inb in inbs)
+                {
+                    if (inb.protocol != null && protocols.Contains(inb.protocol))
+                    {
+                        return inb.port;
+                    }
+                }
+            }
+            return -1;
+        }
+
         void ClearSortedCoreServCacheHandler(object sender, EventArgs args)
         {
             if (sortedCoreServListCache != null)

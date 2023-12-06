@@ -24,6 +24,8 @@ namespace V2RayGCon.Libs.Nets
         string _source = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(0);
 
         public int proxyPort { get; set; } = -1;
+        public bool isSocks5 { get; set; } = false;
+
         WebClient webClient;
         readonly Services.Settings setting;
 
@@ -260,13 +262,13 @@ namespace V2RayGCon.Libs.Nets
                 return;
             }
 
-            webClient = new WebClient();
-            webClient.Headers.Add(VgcApis.Models.Consts.Webs.UserAgent);
-
-            if (proxyPort > 0)
-            {
-                webClient.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, proxyPort);
-            }
+            var webClient = VgcApis.Misc.Utils.CreateWebClient(
+                isSocks5,
+                VgcApis.Models.Consts.Webs.LoopBackIP,
+                proxyPort,
+                null,
+                null
+            );
 
             webClient.DownloadProgressChanged += (s, a) =>
             {

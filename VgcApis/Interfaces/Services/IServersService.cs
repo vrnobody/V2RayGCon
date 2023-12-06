@@ -21,6 +21,8 @@ namespace VgcApis.Interfaces.Services
 
         List<VgcApis.Models.Datas.InboundInfo> GetAllActiveInboundsInfo();
 
+        bool GetAvailableProxyInfo(out bool isSocks5, out int port);
+
         int GetAvailableHttpProxyPort();
         int GetAvailableSocksProxyPort();
 

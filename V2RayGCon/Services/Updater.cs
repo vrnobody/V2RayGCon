@@ -36,16 +36,35 @@ namespace V2RayGCon.Services
         #region private methods
         void Update(bool isQuiet)
         {
-            var port = GetAvailableProxyPort(isQuiet);
+            if (!GetAvailableProxyInfo(out var isSocks5, out var port))
+            {
+                if (isQuiet)
+                {
+                    setting.SendLog(I18N.NoQualifyProxyServer);
+                }
+                else
+                {
+                    VgcApis.Misc.UI.MsgBox(I18N.NoQualifyProxyServer);
+                }
+            }
+
             var source = Properties.Resources.LatestVersionInfoUrl;
-            var info = GetUpdateInfoFrom(source, port);
+            var info = GetUpdateInfoFrom(source, isSocks5, port);
             UpdateWorker(info, isQuiet);
         }
 
-        Models.Datas.UpdateInfo GetUpdateInfoFrom(string url, int port)
+        Models.Datas.UpdateInfo GetUpdateInfoFrom(string url, bool isSocks5, int port)
         {
             var timeout = VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
-            var str = Misc.Utils.Fetch(url, port, timeout);
+            var str = Misc.Utils.FetchWorker(
+                isSocks5,
+                url,
+                VgcApis.Models.Consts.Webs.LoopBackIP,
+                port,
+                timeout,
+                null,
+                null
+            );
             if (string.IsNullOrEmpty(str))
             {
                 return null;
@@ -162,27 +181,16 @@ namespace V2RayGCon.Services
             return VgcApis.Misc.UI.Confirm(msg.ToString());
         }
 
-        int GetAvailableProxyPort(bool isQuiet)
+        bool GetAvailableProxyInfo(out bool isSocks5, out int port)
         {
             if (setting.isUpdateUseProxy)
             {
-                var port = servers.GetAvailableHttpProxyPort();
-                if (port > 0)
-                {
-                    return port;
-                }
+                return servers.GetAvailableProxyInfo(out isSocks5, out port);
             }
 
-            if (isQuiet)
-            {
-                setting.SendLog(I18N.NoQualifyProxyServer);
-            }
-            else
-            {
-                VgcApis.Misc.UI.MsgBox(I18N.NoQualifyProxyServer);
-            }
-
-            return -1;
+            isSocks5 = false;
+            port = -1;
+            return false;
         }
 
         #endregion

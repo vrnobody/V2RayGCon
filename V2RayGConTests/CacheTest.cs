@@ -18,55 +18,6 @@ namespace V2RayGCon.Test
         [TestMethod]
         public void GeneralCacheNormalTest() { }
 
-        [TestMethod]
-        public void HTMLFailTest()
-        {
-            Assert.ThrowsException<WebException>(() =>
-            {
-                var t = cache.html[""];
-            });
-        }
-
-        [DataTestMethod]
-#if DEBUG
-        [DataRow("https://www.baidu.com/")]
-        [DataRow("https://www.sogou.com/,https://www.baidu.com/")]
-#else
-        [DataRow("https://www.github.com/")]
-        [DataRow("https://www.bing.com/,https://www.github.com/")]
-#endif
-        public void HTMLNormalTest(string rawData)
-        {
-            var data = rawData.Split(',');
-            var urls = new List<string>();
-            var len = data.Length;
-            for (var i = 0; i < 1000; i++)
-            {
-                urls.Add(data[i % len]);
-            }
-            var html = cache.html;
-            html.Clear();
-
-            try
-            {
-                Misc.Utils.ExecuteInParallel(
-                    urls,
-                    (url) =>
-                    {
-                        return html[url];
-                    }
-                );
-            }
-            catch
-            {
-                Assert.Fail();
-            }
-
-            Assert.AreEqual(data.Length, html.Count);
-            html.Clear();
-            Assert.AreEqual(0, html.Count);
-        }
-
         [DataTestMethod]
         [DataRow(@"tplLogWarn", @"{'log': {'loglevel': 'warning'}}")]
         public void LoadTplTest(string key, string expect)

@@ -225,9 +225,13 @@ namespace NeoLuna.Models.Apis.Components
             return text ?? string.Empty;
         }
 
-        public int UpdateSubscriptions() => vgcSlinkMgr.UpdateSubscriptions(-1);
+        public int UpdateSubscriptions() => UpdateSubscriptions(-1);
 
-        public int UpdateSubscriptions(int proxyPort) => vgcSlinkMgr.UpdateSubscriptions(proxyPort);
+        public int UpdateSubscriptions(int proxyPort) =>
+            vgcSlinkMgr.UpdateSubscriptions(false, proxyPort);
+
+        public int UpdateSubscriptionsSocks5(int proxyPort) =>
+            vgcSlinkMgr.UpdateSubscriptions(true, proxyPort);
 
         public List<string> ExtractAllShareLinks(string text)
         {

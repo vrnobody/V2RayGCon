@@ -17,6 +17,6 @@
 
         int ImportLinksWithOutV2cfgLinksSync(string links, string mark);
 
-        int UpdateSubscriptions(int proxyPort);
+        int UpdateSubscriptions(bool isSocks5, int proxyPort);
     }
 }

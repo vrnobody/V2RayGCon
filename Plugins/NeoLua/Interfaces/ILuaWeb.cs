@@ -329,12 +329,18 @@ namespace NeoLuna.Interfaces
         /// <returns>获得新服务器数量</returns>
         int UpdateSubscriptions();
 
-        // through proxy
         /// <summary>
-        /// 通过代理更新订阅
+        /// 通过HTTP代理更新订阅
         /// </summary>
         /// <param name="proxyPort">代理端口</param>
         /// <returns>获得新服务器数量</returns>
         int UpdateSubscriptions(int proxyPort);
+
+        /// <summary>
+        /// 通过SOCKS代理更新订阅
+        /// </summary>
+        /// <param name="proxyPort">代理端口</param>
+        /// <returns>获得新服务器数量</returns>
+        int UpdateSubscriptionsSocks5(int proxyPort);
     }
 }

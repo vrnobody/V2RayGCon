@@ -125,11 +125,11 @@ namespace V2RayGCon.Services
             return codecs.GetChild<T>();
         }
 
-        public int UpdateSubscriptions(int proxyPort)
+        public int UpdateSubscriptions(bool isSocks5, int proxyPort)
         {
             var enabledSubs = settings.GetSubscriptionItems().Where(s => s.isUse).ToList();
 
-            var links = Misc.Utils.FetchLinksFromSubcriptions(enabledSubs, proxyPort);
+            var links = Misc.Utils.FetchLinksFromSubcriptions(enabledSubs, isSocks5, proxyPort);
             var decoders = codecs.GetDecoders(false);
             var results = ImportLinksBatchModeSync(links, decoders);
             return CountImportSuccessResult(results);

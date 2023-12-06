@@ -183,7 +183,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             refreshSummary.Click += (s, a) =>
             {
-                cache.html.Clear();
                 VgcApis.Misc.Utils.RunInBackground(servers.UpdateAllServersSummary);
             };
 

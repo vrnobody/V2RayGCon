@@ -269,9 +269,10 @@ namespace V2RayGCon.Views.Updater
         MyWebClient CreateWebClient()
         {
             var port = -1;
+            var isSocks5 = false;
             if (settings.isUpdateUseProxy)
             {
-                port = servers.GetAvailableHttpProxyPort();
+                servers.GetAvailableProxyInfo(out isSocks5, out port);
             }
 
             MyWebClient wc = new MyWebClient { Encoding = Encoding.UTF8, };
@@ -280,7 +281,15 @@ namespace V2RayGCon.Views.Updater
 
             if (port > 0 && port < 65536)
             {
-                wc.Proxy = new WebProxy(VgcApis.Models.Consts.Webs.LoopBackIP, port);
+                var host = VgcApis.Models.Consts.Webs.LoopBackIP;
+                if (isSocks5)
+                {
+                    wc.Proxy = new MihaZupan.HttpToSocks5Proxy(host, port);
+                }
+                else
+                {
+                    wc.Proxy = new WebProxy(host, port);
+                }
             }
 
             return wc;

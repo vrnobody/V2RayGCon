@@ -207,12 +207,12 @@ namespace V2RayGCon.Services
 
             var src = setting.v2rayCoreDownloadSource;
             var port = -1;
+            var isSocks5 = false;
             if (setting.isUpdateUseProxy)
             {
-                port = servers.GetAvailableHttpProxyPort();
+                servers.GetAvailableProxyInfo(out isSocks5, out port);
             }
-
-            var vers = Misc.Utils.GetOnlineV2RayCoreVersionList(port, src);
+            var vers = Misc.Utils.GetOnlineV2RayCoreVersionList(isSocks5, port, src);
             if (vers.Count < 1)
             {
                 return;

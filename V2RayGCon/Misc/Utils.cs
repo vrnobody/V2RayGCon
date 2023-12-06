@@ -806,7 +806,11 @@ namespace V2RayGCon.Misc
 
         #region net
 
-        static public List<string> GetOnlineV2RayCoreVersionList(int proxyPort, string sourceUrl)
+        static public List<string> GetOnlineV2RayCoreVersionList(
+            bool isSocks5,
+            int proxyPort,
+            string sourceUrl
+        )
         {
             List<string> versions = new List<string> { };
 
@@ -815,7 +819,15 @@ namespace V2RayGCon.Misc
             // https://github.com/XTLS/Xray-core/releases",
             var apiUrl = sourceUrl.Replace(@"github.com", @"api.github.com/repos");
 
-            string text = Fetch(apiUrl, proxyPort, -1);
+            string text = FetchWorker(
+                isSocks5,
+                apiUrl,
+                VgcApis.Models.Consts.Webs.LoopBackIP,
+                proxyPort,
+                -1,
+                null,
+                null
+            );
             if (string.IsNullOrEmpty(text))
             {
                 return versions;
@@ -844,6 +856,7 @@ namespace V2RayGCon.Misc
         /// <returns></returns>
         public static List<string[]> FetchLinksFromSubcriptions(
             List<Models.Datas.SubscriptionItem> subscriptions,
+            bool isSocks5,
             int proxyPort
         )
         {
@@ -852,10 +865,14 @@ namespace V2RayGCon.Misc
                 var url = subItem.url;
                 var mark = subItem.isSetMark ? subItem.alias : null;
 
-                var subsString = Fetch(
+                var subsString = FetchWorker(
+                    isSocks5,
                     url,
+                    VgcApis.Models.Consts.Webs.LoopBackIP,
                     proxyPort,
-                    VgcApis.Models.Consts.Import.ParseImportTimeout
+                    VgcApis.Models.Consts.Import.ParseImportTimeout,
+                    null,
+                    null
                 );
 
                 if (string.IsNullOrEmpty(subsString))

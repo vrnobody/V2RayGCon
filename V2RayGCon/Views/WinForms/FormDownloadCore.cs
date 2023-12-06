@@ -95,7 +95,7 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.Invoke(() => btnDownload.Enabled = true);
         }
 
-        void DownloadV2RayCore(int proxyPort)
+        void DownloadV2RayCore(bool isSocks5, int proxyPort)
         {
             var idx = cboxDownloadSource.SelectedIndex;
 
@@ -110,6 +110,7 @@ namespace V2RayGCon.Views.WinForms
             downloader.SetArchitecture(cboxArch.SelectedIndex == 1);
             downloader.SetVersion(cboxVer.Text);
             downloader.proxyPort = proxyPort;
+            downloader.isSocks5 = isSocks5;
 
             downloader.OnProgress += (p) => UpdateProgressBar(p);
 
@@ -168,7 +169,17 @@ namespace V2RayGCon.Views.WinForms
             var sourceUrl = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(
                 cboxDownloadSource.SelectedIndex
             );
-            int proxyPort = chkUseProxy.Checked ? servers.GetAvailableHttpProxyPort() : -1;
+
+            var proxyPort = -1;
+            var isSocks5 = false;
+
+            if (chkUseProxy.Checked)
+            {
+                if (setting.isUpdateUseProxy)
+                {
+                    servers.GetAvailableProxyInfo(out isSocks5, out proxyPort);
+                }
+            }
             var isV2fly = cboxDownloadSource.SelectedIndex == 1;
 
             void done(List<string> versions)
@@ -186,7 +197,11 @@ namespace V2RayGCon.Views.WinForms
 
             void worker()
             {
-                var versions = Misc.Utils.GetOnlineV2RayCoreVersionList(proxyPort, sourceUrl);
+                var versions = Misc.Utils.GetOnlineV2RayCoreVersionList(
+                    isSocks5,
+                    proxyPort,
+                    sourceUrl
+                );
 
                 if (isV2fly)
                 {
@@ -211,18 +226,18 @@ namespace V2RayGCon.Views.WinForms
                 return;
             }
 
+            bool isSocks5 = false;
             int proxyPort = -1;
             if (chkUseProxy.Checked)
             {
-                proxyPort = servers.GetAvailableHttpProxyPort();
-                if (proxyPort <= 0)
+                if (!servers.GetAvailableProxyInfo(out isSocks5, out proxyPort))
                 {
                     VgcApis.Misc.UI.MsgBoxAsync(I18N.NoQualifyProxyServer);
                 }
             }
 
             btnDownload.Enabled = false;
-            DownloadV2RayCore(proxyPort);
+            DownloadV2RayCore(isSocks5, proxyPort);
         }
 
         void BtnCancel_Click(object sender, EventArgs e)

@@ -312,10 +312,32 @@ namespace V2RayGCon.Services
         /// </summary>
         /// <returns></returns>
         public int GetAvailableHttpProxyPort() =>
-            GetAvailableProxyPort(new List<string>() { "http" });
+            GetAvailableProxyPortCore(new List<string>() { "http" });
 
         public int GetAvailableSocksProxyPort() =>
-            GetAvailableProxyPort(new List<string>() { "socks", "socks5" });
+            GetAvailableProxyPortCore(new List<string>() { "socks", "socks5" });
+
+        public bool GetAvailableProxyInfo(out bool isSocks5, out int port)
+        {
+            var protocols = new List<string>() { "http", "socks", "socks5" };
+            var servs = GetRunningServers();
+            foreach (var serv in servs)
+            {
+                var inbs = serv.GetConfiger().GetAllInboundsInfo();
+                foreach (var inb in inbs)
+                {
+                    if (inb.protocol != null && protocols.Contains(inb.protocol))
+                    {
+                        isSocks5 = inb.protocol != "http";
+                        port = inb.port;
+                        return true;
+                    }
+                }
+            }
+            isSocks5 = false;
+            port = -1;
+            return false;
+        }
 
         public void UpdateServerTrackerSettings(bool isTrackerOn)
         {
@@ -851,7 +873,7 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
-        int GetAvailableProxyPort(IEnumerable<string> protocols)
+        int GetAvailableProxyPortCore(IEnumerable<string> protocols)
         {
             var servs = GetRunningServers();
             foreach (var serv in servs)

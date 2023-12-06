@@ -282,7 +282,6 @@
     </Compile>
     <Compile Include="Services\Caches\CoreCache.cs" />
     <Compile Include="BaseClasses\CacheComponent.cs" />
-    <Compile Include="Services\Caches\HTML.cs" />
     <Compile Include="Models\Datas\Enums.cs" />
     <Compile Include="Models\Datas\Shadowsocks.cs" />
     <Compile Include="Models\Datas\Table.cs" />
@@ -587,6 +586,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\3rd\HttpToSocks5Proxy\HttpToSocks5Proxy.csproj">
+      <Project>{6f0b0a4c-ff9c-4b6e-99c8-451cbb03ec18}</Project>
+      <Name>HttpToSocks5Proxy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\3rd\ZipExtractor\ZipExtractor.csproj">
       <Project>{91de558c-6db8-429b-a069-c0491dcff15b}</Project>
       <Name>ZipExtractor</Name>

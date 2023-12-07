@@ -1057,11 +1057,10 @@ namespace VgcApis.Misc
 
         public static void DoItLater(Action action, long ms)
         {
-            System.Threading.Timer timer = null;
-            timer = new System.Threading.Timer(
-                (_) =>
+            var timer = new System.Threading.Timer(
+                (state) =>
                 {
-                    timer.Dispose();
+                    (state as System.Threading.Timer)?.Dispose();
                     action();
                 }
             );

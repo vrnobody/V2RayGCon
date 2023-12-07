@@ -65,8 +65,11 @@ namespace Luna.Models.Apis.Components
                     using (var client = new HttpClient())
                     {
                         client.Timeout = TimeSpan.FromMilliseconds(timeout);
-                        var token = new CancellationTokenSource(timeout).Token;
                         var content = new StringContent(text);
+
+                        var cts = new CancellationTokenSource(timeout);
+                        var token = cts.Token;
+                        token.Register(() => cts.Dispose());
                         var resp = await client.PostAsync(url, content, token);
                         return await resp.Content.ReadAsStringAsync();
                     }

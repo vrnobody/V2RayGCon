@@ -36,7 +36,9 @@ namespace DyFetch.Comps
                 if (csses != null && csses.Count > 0)
                 {
                     var cts = new CancellationTokenSource(span);
-                    WaitForOneOfCsses(csses, w, cts.Token);
+                    var token = cts.Token;
+                    token.Register(() => cts.Dispose());
+                    WaitForOneOfCsses(csses, w, token);
                 }
                 if (wait > 0)
                 {

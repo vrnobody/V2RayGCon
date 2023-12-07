@@ -1,15 +1,11 @@
 {
-  "version": "1.8.9.0",
-  "md5": "B877C37964633E34C398C61567596B55",
+  "version": "1.9.0.0",
+  "md5": "4A09C2C4F9E98927906CA973AAAC2DE5",
   "warnings": [],
   "changes": [
-    "支持开启多个V2RayGCon图形界面功能（详见手册：多实例）",
-    "支持导入socks://...分享链接",
-    "开启tun模式后托盘图标变成便便色",
-    "批量修改窗口添加更多可修改项",
-    "选项窗口支持钩选是否导入vmess/vless链接",
-    "选项窗口移除vmess解码模板功能",
-    "服务器设置窗口添加忽略sendThrough注入选项",
-    "NeoLuna添加std.Web:FetchSocks5()等多个函数"
+    "支持通过SOCKS5协议更新订阅、升级core等",
+    "支持解码用户名和密码是明文的socks://...链接",
+    "优化yaml类型的hy2配置的摘要显示",
+    "添加std.Web:GetSocksProxyPort()等多个函数"
   ]
 }

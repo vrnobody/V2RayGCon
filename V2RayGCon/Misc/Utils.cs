@@ -966,13 +966,18 @@ namespace V2RayGCon.Misc
                 {
                     success = true;
                 }
-                dlCompleted.Set();
+                try
+                {
+                    dlCompleted.Set();
+                }
+                catch { }
             };
 
             try
             {
                 wc.DownloadFileAsync(new Uri(url), filename);
                 dlCompleted.WaitOne(timeout);
+                dlCompleted.Dispose();
             }
             catch { }
 
@@ -1028,13 +1033,18 @@ namespace V2RayGCon.Misc
                     }
                     catch { }
                 }
-                dlCompleted.Set();
+                try
+                {
+                    dlCompleted.Set();
+                }
+                catch { }
             };
 
             try
             {
                 wc.DownloadStringAsync(new Uri(url));
                 dlCompleted.WaitOne(timeout);
+                dlCompleted.Dispose();
             }
             catch { }
 

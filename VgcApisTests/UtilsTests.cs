@@ -846,6 +846,8 @@ ab12-_中文: |
         [TestMethod]
         public void LazyGuySingleTaskTest()
         {
+            // 这个测试有概率会失败。
+
             var str = "";
 
             void task()

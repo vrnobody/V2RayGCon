@@ -30,19 +30,25 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
             var shareLink = @"";
             AutoResetEvent are = new AutoResetEvent(false);
 
+            void Set()
+            {
+                try
+                {
+                    are.Set();
+                }
+                catch { }
+            }
+
             void Success(string result)
             {
                 shareLink = result;
-                are.Set();
+                Set();
             }
 
-            void Fail()
-            {
-                are.Set();
-            }
-
-            QRCode.QRCode.ScanQRCode(Success, Fail);
+            QRCode.QRCode.ScanQRCode(Success, Set);
             are.WaitOne(10000);
+            are.Dispose();
+
             return shareLink;
         }
 

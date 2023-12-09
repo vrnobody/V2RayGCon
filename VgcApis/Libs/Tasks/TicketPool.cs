@@ -54,6 +54,7 @@ namespace VgcApis.Libs.Tasks
                 waitQ.Add(mev);
             }
             mev.Wait();
+            mev.Dispose();
         }
 
         public bool WaitOne(int ms)
@@ -81,6 +82,7 @@ namespace VgcApis.Libs.Tasks
 
             if (mev.Wait(ms))
             {
+                mev.Dispose();
                 return true;
             }
 
@@ -88,9 +90,11 @@ namespace VgcApis.Libs.Tasks
             {
                 if (mev.Wait(0))
                 {
+                    mev.Dispose();
                     return true;
                 }
                 waitQ.Remove(mev);
+                mev.Dispose();
             }
             return false;
         }

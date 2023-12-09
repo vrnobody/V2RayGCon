@@ -222,8 +222,7 @@ namespace V2RayGCon.Controllers
         {
             isDisposed = true;
             InvokeEventOnCoreClosing();
-            coreCtrl?.StopCore();
-            coreCtrl?.ReleaseEvents();
+            coreCtrl?.DisposeCore();
         }
         #endregion
     }

@@ -373,6 +373,8 @@ namespace NeoLuna.Controllers
             {
                 AbortNow();
             }
+            coreStopBar.WaitOne();
+            coreStopBar.Dispose();
         }
         #endregion
     }

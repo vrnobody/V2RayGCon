@@ -938,7 +938,11 @@ namespace VgcApis.Misc
 
             wc.DownloadStringCompleted += (s, a) =>
             {
-                dlCompleted.Set();
+                try
+                {
+                    dlCompleted.Set();
+                }
+                catch { }
             };
 
             wc.DownloadProgressChanged += (s, a) =>
@@ -962,6 +966,7 @@ namespace VgcApis.Misc
                 sw.Restart();
                 wc.DownloadStringAsync(new Uri(url));
                 dlCompleted.WaitOne(timeout);
+                dlCompleted.Dispose();
             }
             catch { }
             sw.Stop();

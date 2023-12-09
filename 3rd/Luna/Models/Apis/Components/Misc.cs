@@ -357,6 +357,7 @@ namespace Luna.Models.Apis.Components
                 form.Activate();
             });
             done.WaitOne();
+            done.Dispose();
             VgcApis.Misc.UI.Invoke(() =>
             {
                 r = form.GetResult();

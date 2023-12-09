@@ -16,9 +16,12 @@ namespace VgcApisTests.LibsTests
         [TestMethod]
         public void MultiThreadWaitEmptyTest()
         {
+            // 这个测试有概率会失败。
+
             ConcurrentQueue<string> r = new ConcurrentQueue<string>();
             var pool = new VgcApis.Libs.Tasks.TicketPool(5);
 
+            Assert.IsTrue(pool.TryTakeOne());
             var tasks = new List<Task>();
             for (int i = 0; i < 3; i++)
             {
@@ -57,7 +60,11 @@ namespace VgcApisTests.LibsTests
                 tasks.Add(task);
             }
 
+            Thread.Sleep(3000);
+            pool.ReturnOne();
+
             Task.WaitAll(tasks.ToArray());
+
             Assert.AreEqual("WaitEnd", r.Last());
         }
 #endif

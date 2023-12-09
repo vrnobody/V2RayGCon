@@ -11,5 +11,10 @@ namespace VgcApis.Libs.Tasks
         public void Remove() => mlocker.Release();
 
         public bool Install() => mlocker.Wait(0);
+
+        ~Bar()
+        {
+            mlocker.Dispose();
+        }
     }
 }

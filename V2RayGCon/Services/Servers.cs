@@ -520,6 +520,7 @@ namespace V2RayGCon.Services
             var evDone = new AutoResetEvent(false);
             var success = BatchSpeedTestWorkerThen(GetSelectedServers(), () => evDone.Set());
             evDone.WaitOne();
+            evDone.Dispose();
             return success;
         }
 
@@ -1337,6 +1338,7 @@ namespace V2RayGCon.Services
                                 server.GetCoreCtrl().RestartCoreThen(() => sayGoodbye.Set());
                             }
                             sayGoodbye.WaitOne();
+                            sayGoodbye.Dispose();
                         },
                         TaskCreationOptions.LongRunning
                     );

@@ -41,6 +41,13 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         #region public mehtods
+        public void DisposeCore()
+        {
+            StopCore();
+            ReleaseEvents();
+            core.Dispose();
+        }
+
         public bool IsSpeedTesting() => !speedTestingEvt.WaitOne(0);
 
         public void ReleaseSpeedTestLock()

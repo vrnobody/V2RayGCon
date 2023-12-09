@@ -355,6 +355,9 @@ namespace Luna.Controllers
             {
                 AbortNow();
             }
+
+            coreStopBar.WaitOne();
+            coreStopBar.Dispose();
         }
         #endregion
     }

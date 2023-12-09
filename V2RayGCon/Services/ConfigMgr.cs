@@ -53,10 +53,10 @@ namespace V2RayGCon.Services
             {
                 return text;
             }
+            var core = new Libs.V2Ray.Core(setting) { title = title };
             try
             {
                 var sci = CreateSpeedTestConfig(coreName, rawConfig, port);
-                var core = new Libs.V2Ray.Core(setting) { title = title };
                 core.SetCustomCoreName(coreName);
                 core.RestartCoreIgnoreError(sci.config);
                 if (core.WaitUntilReady())
@@ -71,6 +71,10 @@ namespace V2RayGCon.Services
             catch
             {
                 return string.Empty;
+            }
+            finally
+            {
+                core.Dispose();
             }
             return text;
         }
@@ -315,6 +319,7 @@ namespace V2RayGCon.Services
             {
                 core.OnLog -= log;
             }
+            core.Dispose();
             return new LatencyTestResult(latency, len);
         }
 

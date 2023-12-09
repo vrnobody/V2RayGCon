@@ -16,6 +16,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         VgcApis.Libs.Tasks.Routine bookKeeper;
         readonly VgcApis.Libs.Tasks.Bar isRecording = new VgcApis.Libs.Tasks.Bar();
+        readonly ManualResetEvent speedTestingEvt = new ManualResetEvent(true);
 
         public CoreCtrl(Services.Settings setting, CoreInfo coreInfo, Services.ConfigMgr configMgr)
         {
@@ -46,13 +47,18 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             StopCore();
             ReleaseEvents();
             core.Dispose();
+            speedTestingEvt.Dispose();
         }
 
         public bool IsSpeedTesting() => !speedTestingEvt.WaitOne(0);
 
         public void ReleaseSpeedTestLock()
         {
-            speedTestingEvt.Set();
+            try
+            {
+                speedTestingEvt.Set();
+            }
+            catch { }
         }
 
         public string GetCustomCoreName() => coreInfo.customCoreName;
@@ -173,8 +179,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 }
             });
         }
-
-        readonly ManualResetEvent speedTestingEvt = new ManualResetEvent(true);
 
         void AddToSpeedTestQueue()
         {

@@ -24,10 +24,12 @@ namespace V2RayGCon.Views.UserControls
 
         private void WelcomeFlyPanelComponent_Load(object sender, System.EventArgs e)
         {
-            var core = new Libs.V2Ray.Core(setting);
-            if (!core.IsV2RayExecutableExist())
+            using (var core = new Libs.V2Ray.Core(setting))
             {
-                return;
+                if (!core.IsV2RayExecutableExist())
+                {
+                    return;
+                }
             }
 
             pnlBasicUsage.Top = pnlDownloadV2RayCore.Top;

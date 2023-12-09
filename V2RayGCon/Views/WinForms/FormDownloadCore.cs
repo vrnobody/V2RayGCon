@@ -74,8 +74,11 @@ namespace V2RayGCon.Views.WinForms
 
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                var core = new Libs.V2Ray.Core(setting);
-                var version = core.GetV2RayCoreVersion();
+                string version;
+                using (var core = new Libs.V2Ray.Core(setting))
+                {
+                    version = core.GetV2RayCoreVersion();
+                }
                 var msg = string.IsNullOrEmpty(version)
                     ? I18N.GetCoreVerFail
                     : string.Format(I18N.CurrentCoreVerIs, version);

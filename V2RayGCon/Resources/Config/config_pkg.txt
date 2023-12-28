@@ -31,9 +31,7 @@
         {
           "type": "field",
           "inboundTag": [
-            "agentin",
-            "http",
-            "socks"
+            "agentin"
           ],
           "balancerTag": "pacman"
         }

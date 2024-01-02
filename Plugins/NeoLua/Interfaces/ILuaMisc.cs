@@ -1,6 +1,5 @@
-﻿using Neo.IronLua;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Neo.IronLua;
 using VgcApis.Interfaces;
 
 namespace NeoLuna.Interfaces
@@ -364,6 +363,7 @@ namespace NeoLuna.Interfaces
         #endregion
 
         #region encode decode
+        string ToJson(object o);
 
         string DetectConfigType(string config);
 

@@ -1,10 +1,10 @@
-﻿using Luna.Services;
-using NLua;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading;
 using System.Windows.Forms;
+using Luna.Services;
+using NLua;
 using VgcApis.Interfaces;
 
 namespace Luna.Models.Apis.Components
@@ -135,6 +135,11 @@ namespace Luna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc.Encodings
+        public string ToJson(object o)
+        {
+            return VgcApis.Misc.Utils.ToJson(o);
+        }
+
         public string Md5(string str)
         {
             var b = VgcApis.Misc.Utils.Md5Hash(str);

@@ -1,12 +1,12 @@
-﻿using NeoLuna.Services;
-using Neo.IronLua;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading;
 using System.Windows.Forms;
-using VgcApis.Interfaces;
+using Neo.IronLua;
+using NeoLuna.Services;
 using Newtonsoft.Json;
+using VgcApis.Interfaces;
 
 namespace NeoLuna.Models.Apis.Components
 {
@@ -135,6 +135,11 @@ namespace NeoLuna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc.Encodings
+        public string ToJson(object o)
+        {
+            return VgcApis.Misc.Utils.ToJson(o);
+        }
+
         public LuaTable DecodeShareLinkToMetadata(string shareLink)
         {
             try

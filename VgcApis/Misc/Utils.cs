@@ -1477,6 +1477,16 @@ namespace VgcApis.Misc
             return Regex.Replace(str, @"\p{Cc}+", string.Empty);
         }
 
+        public static string ToJson(object o)
+        {
+            try
+            {
+                return JsonConvert.SerializeObject(o, Formatting.Indented);
+            }
+            catch { }
+            return null;
+        }
+
         public static string FormatConfig(JObject config)
         {
             try

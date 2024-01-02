@@ -187,10 +187,10 @@ namespace NeoLuna.Models.Apis.Components
             );
         }
 
-        public string PackServersAsPkgRandom(LuaTable uids)
+        public string PackServersToString(LuaTable uids)
         {
             var list = global::NeoLuna.Misc.Utils.LuaTableToList(uids, false);
-            return vgcServers.PackServersAsPkgRandom(list);
+            return vgcServers.PackServersToString(list);
         }
 
         public string PackServersWithUids(

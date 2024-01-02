@@ -75,7 +75,7 @@ namespace VgcApis.Interfaces.Services
 
         void UpdateAllServersSummary();
 
-        string PackServersAsPkgRandom(List<string> uids);
+        string PackServersToString(List<string> uids);
 
         string PackServersWithUidsV4(
             List<string> uids,

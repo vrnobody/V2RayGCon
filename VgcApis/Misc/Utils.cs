@@ -698,22 +698,20 @@ namespace VgcApis.Misc
         {
             var ellipsis = Models.Consts.AutoEllipsis.ellipsis;
             var defFont = Models.Consts.AutoEllipsis.defFont;
-
             if (string.IsNullOrEmpty(text) || lenInAscii <= 0)
             {
                 return string.Empty;
             }
 
-            var width = TextRenderer.MeasureText(text, defFont).Width;
+            var t = text.Replace('\r', ' ').Replace('\n', ' ');
+            var width = TextRenderer.MeasureText(t, defFont).Width;
             var baseline = TextRenderer.MeasureText(new string('a', lenInAscii), defFont).Width;
-
             if (width <= baseline)
             {
                 return text;
             }
-
-            int end = Math.Min(text.Length, lenInAscii);
-            int pos = BinarySearchForEllipsisPos(text, 0, end, baseline);
+            int end = Math.Min(t.Length, lenInAscii);
+            int pos = BinarySearchForEllipsisPos(t, 0, end, baseline);
             return text.Substring(0, pos) + ellipsis;
         }
 

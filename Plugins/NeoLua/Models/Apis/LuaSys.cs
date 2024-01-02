@@ -1546,7 +1546,7 @@ namespace NeoLuna.Models.Apis
             return null;
         }
 
-        public string RunAndGetStdOut(
+        public string RunAndGetResult(
             string exe,
             string args,
             string workingDir,

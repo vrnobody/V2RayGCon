@@ -500,7 +500,7 @@ namespace NeoLuna.Interfaces
         /// <param name="inputEncoding">stdin的编码</param>
         /// <param name="outputEncoding">stdout的编码</param>
         /// <returns>输出内容</returns>
-        string RunAndGetStdOut(
+        string RunAndGetResult(
             string exe,
             string args,
             string workingDir,

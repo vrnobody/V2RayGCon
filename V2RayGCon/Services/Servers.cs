@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +6,11 @@ using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Interfaces;
-using static VgcApis.Models.Datas.Enums;
 using VgcApis.Models.Consts;
+using static VgcApis.Models.Datas.Enums;
 
 namespace V2RayGCon.Services
 {
@@ -441,7 +441,7 @@ namespace V2RayGCon.Services
             }
         }
 
-        public string PackServersAsPkgRandom(List<string> uids)
+        public string PackServersToString(List<string> uids)
         {
             var servList = GetServersByUids(uids);
             if (servList == null || servList.Count < 1)

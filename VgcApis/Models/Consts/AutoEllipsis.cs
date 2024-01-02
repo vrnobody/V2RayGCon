@@ -17,7 +17,7 @@ namespace VgcApis.Models.Consts
         public static int QrcodeTextMaxLength = 128;
 
         public static int NotifierSysProxyInfoMaxLength = 50;
-        public static int NotifierTextMaxLength = 63;
+        public static int NotifierTextMaxLength = 120;
 
         public static int MarkLabelTextMaxLength = 40;
     }

@@ -142,7 +142,7 @@ namespace NeoLuna.Interfaces
         /// </summary>
         /// <param name="uids">要打包的服务器uid列表</param>
         /// <returns>打包后的config.json字符串</returns>
-        string PackServersAsPkgRandom(LuaTable uids);
+        string PackServersToString(LuaTable uids);
 
         /// <summary>
         /// 将选中的服务器打包成均衡策略为leastPing的服务器包

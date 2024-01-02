@@ -38,8 +38,8 @@ using System.Runtime.InteropServices;
 
 /*
 
-v1.9.0.4 Add std.Sys:RunAndGetStdOut().
-v1.9.0.3 Add std.Server:PackServersAsPkgRandom().
+v1.9.0.4 Add std.Sys:RunAndGetResult().
+v1.9.0.3 Add std.Server:PackServersToString().
          Add coreConfiger:SetConfigQuiet().
 v1.9.0.2 Dispose EventWaitHandle.
 v1.9.0.1 Dispose CancellationTokenSource after cancelled.

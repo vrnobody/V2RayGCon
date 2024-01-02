@@ -3,11 +3,14 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Interfaces;
+using static VgcApis.Models.Datas.Enums;
+using VgcApis.Models.Consts;
 
 namespace V2RayGCon.Services
 {
@@ -43,7 +46,7 @@ namespace V2RayGCon.Services
         {
             lazyServerSettingsRecorder = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveServersSettingsWorker,
-                VgcApis.Models.Consts.Intervals.LazySaveServerListIntreval,
+                Intervals.LazySaveServerListIntreval,
                 2 * 1000
             )
             {
@@ -438,14 +441,26 @@ namespace V2RayGCon.Services
             }
         }
 
+        public string PackServersAsPkgRandom(List<string> uids)
+        {
+            var servList = GetServersByUids(uids);
+            if (servList == null || servList.Count < 1)
+            {
+                return null;
+            }
+            var ty = PackageTypes.Balancer;
+            var package = configMgr.GenV4ServersPackageConfig(servList, ty);
+            return VgcApis.Misc.Utils.FormatConfig(package);
+        }
+
         public string PackServersWithUidsV4(
             List<string> uids,
             string orgUid,
             string pkgName,
             string interval,
             string url,
-            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
-            VgcApis.Models.Datas.Enums.PackageTypes packageType
+            BalancerStrategies strategy,
+            PackageTypes packageType
         )
         {
             var coreServs = queryHandler.GetServersByUids(uids);
@@ -465,8 +480,8 @@ namespace V2RayGCon.Services
             string pkgName,
             string interval,
             string url,
-            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
-            VgcApis.Models.Datas.Enums.PackageTypes packageType
+            BalancerStrategies strategy,
+            PackageTypes packageType
         )
         {
             var servList = GetSelectedServers();
@@ -492,8 +507,8 @@ namespace V2RayGCon.Services
             string packageName,
             string interval,
             string url,
-            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
-            VgcApis.Models.Datas.Enums.PackageTypes packageType
+            BalancerStrategies strategy,
+            PackageTypes packageType
         )
         {
             if (servList == null || servList.Count < 1)
@@ -1100,12 +1115,12 @@ namespace V2RayGCon.Services
             ref JObject config,
             string interval,
             string url,
-            VgcApis.Models.Datas.Enums.BalancerStrategies strategy
+            BalancerStrategies strategy
         )
         {
             switch (strategy)
             {
-                case VgcApis.Models.Datas.Enums.BalancerStrategies.LeastPing:
+                case BalancerStrategies.LeastPing:
                     try
                     {
                         config["observatory"] = JObject.Parse("{subjectSelector:['agentout']}");
@@ -1134,8 +1149,8 @@ namespace V2RayGCon.Services
             string packageName,
             string interval,
             string url,
-            VgcApis.Models.Datas.Enums.BalancerStrategies strategy,
-            VgcApis.Models.Datas.Enums.PackageTypes packageType
+            BalancerStrategies strategy,
+            PackageTypes packageType
         )
         {
             if (servList == null || servList.Count < 1)
@@ -1148,11 +1163,11 @@ namespace V2RayGCon.Services
 
             switch (packageType)
             {
-                case VgcApis.Models.Datas.Enums.PackageTypes.Balancer:
+                case PackageTypes.Balancer:
                     InjectBalacerStrategy(ref package, interval, url, strategy);
                     mark = @"PackageV4";
                     break;
-                case VgcApis.Models.Datas.Enums.PackageTypes.Chain:
+                case PackageTypes.Chain:
                 default:
                     mark = @"ChainV4";
                     break;
@@ -1240,15 +1255,15 @@ namespace V2RayGCon.Services
             }
 
             var coreInfo = coreServ.GetCoreStates().GetAllRawCoreInfo();
-            switch ((VgcApis.Models.Datas.Enums.ProxyTypes)coreInfo.customInbType)
+            switch ((ProxyTypes)coreInfo.customInbType)
             {
-                case VgcApis.Models.Datas.Enums.ProxyTypes.SOCKS:
+                case ProxyTypes.SOCKS:
                     name = "socks";
                     break;
-                case VgcApis.Models.Datas.Enums.ProxyTypes.Custom:
+                case ProxyTypes.Custom:
                     name = "custom";
                     break;
-                case VgcApis.Models.Datas.Enums.ProxyTypes.Config:
+                case ProxyTypes.Config:
                     name = "config";
                     break;
                 default:
@@ -1275,7 +1290,7 @@ namespace V2RayGCon.Services
                     name = Misc.Utils.GetAliasFromConfig(json);
                     coreState.SetName(name);
                 }
-                json.Remove(VgcApis.Models.Consts.Config.SectionKeyV2rayGCon);
+                json.Remove(Config.SectionKeyV2rayGCon);
                 var formated = VgcApis.Misc.Utils.FormatConfig(json);
                 coreServ.GetConfiger().SetConfig(formated);
             }
@@ -1290,7 +1305,7 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() begin");
 
             setting.isServerTrackerOn = false;
-            if (setting.GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.Abort)
+            if (setting.GetShutdownReason() == ShutdownReasons.Abort)
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() abort");
                 return;

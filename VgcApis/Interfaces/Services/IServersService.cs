@@ -19,7 +19,7 @@ namespace VgcApis.Interfaces.Services
 
         int DeleteServerByUids(List<string> uids);
 
-        List<VgcApis.Models.Datas.InboundInfo> GetAllActiveInboundsInfo();
+        List<Models.Datas.InboundInfo> GetAllActiveInboundsInfo();
 
         bool GetAvailableProxyInfo(out bool isSocks5, out int port);
 
@@ -74,6 +74,8 @@ namespace VgcApis.Interfaces.Services
         void StopAllServersThen(Action lambda = null);
 
         void UpdateAllServersSummary();
+
+        string PackServersAsPkgRandom(List<string> uids);
 
         string PackServersWithUidsV4(
             List<string> uids,

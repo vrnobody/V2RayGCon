@@ -1,5 +1,5 @@
-﻿using Neo.IronLua;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Neo.IronLua;
 using VgcApis.Interfaces;
 
 namespace NeoLuna.Interfaces
@@ -136,6 +136,13 @@ namespace NeoLuna.Interfaces
             string interval,
             string url
         );
+
+        /// <summary>
+        /// 将服务器打包成blancer.random的服务器包
+        /// </summary>
+        /// <param name="uids">要打包的服务器uid列表</param>
+        /// <returns>打包后的config.json字符串</returns>
+        string PackServersAsPkgRandom(LuaTable uids);
 
         /// <summary>
         /// 将选中的服务器打包成均衡策略为leastPing的服务器包

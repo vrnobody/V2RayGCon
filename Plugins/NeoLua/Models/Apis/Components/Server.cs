@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using VgcApis.Interfaces;
 using Neo.IronLua;
+using VgcApis.Interfaces;
 
 namespace NeoLuna.Models.Apis.Components
 {
@@ -185,6 +185,12 @@ namespace NeoLuna.Models.Apis.Components
                 st,
                 VgcApis.Models.Datas.Enums.PackageTypes.Balancer
             );
+        }
+
+        public string PackServersAsPkgRandom(LuaTable uids)
+        {
+            var list = global::NeoLuna.Misc.Utils.LuaTableToList(uids, false);
+            return vgcServers.PackServersAsPkgRandom(list);
         }
 
         public string PackServersWithUids(

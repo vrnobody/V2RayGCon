@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
@@ -145,15 +145,23 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return true;
         }
 
-        public void SetConfig(string newConfig)
+        public bool SetConfigQuiet(string newConfig)
         {
             if (string.IsNullOrEmpty(newConfig) || coreInfo.GetConfig() == newConfig)
             {
-                return;
+                return false;
             }
-
             coreInfo.SetConfig(newConfig);
             UpdateSummary();
+            return true;
+        }
+
+        public void SetConfig(string newConfig)
+        {
+            if (!SetConfigQuiet(newConfig))
+            {
+                return;
+            }
 
             if (coreCtrl.IsCoreRunning())
             {

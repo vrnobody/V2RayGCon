@@ -38,7 +38,14 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         string GetShareLink();
 
         /// <summary>
-        /// 修改config.json
+        /// 修改config.json，但不重启服务器。
+        /// </summary>
+        /// <param name="newConfig">新的config.json</param>
+        /// <returns>是否修改成功</returns>
+        bool SetConfigQuiet(string newConfig);
+
+        /// <summary>
+        /// 修改config.json，并重启正在运行的服务器
         /// </summary>
         /// <param name="newConfig">新的config.json</param>
         void SetConfig(string newConfig);

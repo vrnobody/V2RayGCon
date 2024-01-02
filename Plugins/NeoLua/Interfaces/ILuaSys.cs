@@ -1,8 +1,8 @@
-﻿using Neo.IronLua;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using Neo.IronLua;
 using VgcApis.Interfaces.PostOfficeComponents;
 
 namespace NeoLuna.Interfaces
@@ -487,6 +487,27 @@ namespace NeoLuna.Interfaces
             Encoding inputEncoding,
             Encoding outputEncoding,
             VgcApis.Interfaces.ILogable logable
+        );
+
+        /// <summary>
+        /// 执行exe并读取输出
+        /// </summary>
+        /// <param name="exe">可执行文件地址</param>
+        /// <param name="args">传入参数</param>
+        /// <param name="workingDir">工作目录</param>
+        /// <param name="stdin">向stdin注入数据</param>
+        /// <param name="timeout">超时（ms）</param>
+        /// <param name="inputEncoding">stdin的编码</param>
+        /// <param name="outputEncoding">stdout的编码</param>
+        /// <returns>输出内容</returns>
+        string RunAndGetStdOut(
+            string exe,
+            string args,
+            string workingDir,
+            string stdin,
+            int timeout,
+            Encoding inputEncoding,
+            Encoding outputEncoding
         );
 
         /// <summary>

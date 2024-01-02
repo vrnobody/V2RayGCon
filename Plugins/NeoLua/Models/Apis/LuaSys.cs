@@ -1,9 +1,4 @@
-﻿using NeoLuna.Controllers;
-using NeoLuna.Resources.Langs;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Neo.IronLua;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Neo.IronLua;
+using NeoLuna.Controllers;
+using NeoLuna.Resources.Langs;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using VgcApis.Interfaces;
 
 namespace NeoLuna.Models.Apis
 {
@@ -69,6 +70,54 @@ namespace NeoLuna.Models.Apis
         public VgcApis.Libs.Sys.QueueLogger logger;
         public LuaCoreCtrl coreCtrl;
         public string lastLogSend = "";
+    }
+
+    class StrLogger : ILogable, IDisposable
+    {
+        List<string> strs = new List<string>();
+        private bool disposedValue;
+
+        public StrLogger() { }
+
+        public string GetContent()
+        {
+            return string.Join("\n", strs);
+        }
+
+        public void Log(string message)
+        {
+            strs.Add(message);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: 释放托管状态(托管对象)
+                    strs.Clear();
+                }
+
+                // TODO: 释放未托管的资源(未托管的对象)并重写终结器
+                // TODO: 将大型字段设置为 null
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: 仅当“Dispose(bool disposing)”拥有用于释放未托管资源的代码时才替代终结器
+        // ~StrLogger()
+        // {
+        //     // 不要更改此代码。请将清理代码放入“Dispose(bool disposing)”方法中
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // 不要更改此代码。请将清理代码放入“Dispose(bool disposing)”方法中
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
     }
 
     #endregion
@@ -808,12 +857,12 @@ namespace NeoLuna.Models.Apis
         public string GetPublicInfosOfType(Type type)
         {
             var nl = Environment.NewLine;
-            var evs = VgcApis.Misc.Utils
-                .GetPublicEventsInfoOfType(type)
+            var evs = VgcApis
+                .Misc.Utils.GetPublicEventsInfoOfType(type)
                 .Select(infos => $"{infos.Item1} {infos.Item2}")
                 .ToList();
-            var props = VgcApis.Misc.Utils
-                .GetPublicPropsInfoOfType(type)
+            var props = VgcApis
+                .Misc.Utils.GetPublicPropsInfoOfType(type)
                 .Select(infos => $"{infos.Item1} {infos.Item2}")
                 .ToList();
 
@@ -1182,8 +1231,8 @@ namespace NeoLuna.Models.Apis
                 var name = Microsoft.Win32.Registry.GetValue(root, @"ProductName", @"")?.ToString();
                 var arch = Environment.Is64BitOperatingSystem ? @"x64" : @"x86";
                 var id = Microsoft.Win32.Registry.GetValue(root, @"ReleaseId", "")?.ToString();
-                var build = Microsoft.Win32.Registry
-                    .GetValue(root, @"CurrentBuildNumber", @"")
+                var build = Microsoft
+                    .Win32.Registry.GetValue(root, @"CurrentBuildNumber", @"")
                     ?.ToString();
 
                 osReleaseId = $"{name} {arch} {id} build {build}";
@@ -1466,7 +1515,7 @@ namespace NeoLuna.Models.Apis
 
         Process RunProcWrapper(
             bool isTracking,
-            string exePath,
+            string exe,
             string args,
             string stdin,
             LuaTable envs,
@@ -1479,13 +1528,14 @@ namespace NeoLuna.Models.Apis
         {
             try
             {
-                return RunProcWorker(
+                return CreateProcessAndStart(
                     isTracking,
-                    exePath,
+                    exe,
                     args,
-                    stdin,
+                    null,
                     envs,
                     hasWindow,
+                    stdin,
                     redirectOutput,
                     inputEncoding,
                     outputEncoding,
@@ -1496,13 +1546,58 @@ namespace NeoLuna.Models.Apis
             return null;
         }
 
-        Process RunProcWorker(
+        public string RunAndGetStdOut(
+            string exe,
+            string args,
+            string workingDir,
+            string stdin,
+            int timeout,
+            Encoding inputEncoding,
+            Encoding outputEncoding
+        )
+        {
+            Process p = null;
+            var strLogger = new StrLogger();
+            try
+            {
+                p = CreateProcessAndStart(
+                    true,
+                    exe,
+                    args,
+                    workingDir,
+                    null,
+                    false,
+                    stdin,
+                    true,
+                    inputEncoding,
+                    outputEncoding,
+                    strLogger
+                );
+                if (!p.WaitForExit(timeout))
+                {
+                    p.Kill();
+                }
+            }
+            catch { }
+            try
+            {
+                p?.WaitForExit(1000);
+            }
+            catch { }
+            var r = strLogger.GetContent();
+            strLogger.Dispose();
+            p?.Dispose();
+            return r;
+        }
+
+        Process CreateProcessAndStart(
             bool isTracking,
             string exePath,
             string args,
-            string stdin,
+            string workingDir,
             LuaTable envs,
             bool hasWindow,
+            string stdin,
             bool redirectOutput,
             Encoding inputEncoding,
             Encoding outputEncoding,
@@ -1523,6 +1618,11 @@ namespace NeoLuna.Models.Apis
                     RedirectStandardOutput = redirectOutput,
                 }
             };
+
+            if (!string.IsNullOrEmpty(workingDir))
+            {
+                p.StartInfo.WorkingDirectory = workingDir;
+            }
 
             DataReceivedEventHandler logHandler = CreateLogHandler(outputEncoding, logable);
 

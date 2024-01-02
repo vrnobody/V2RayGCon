@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using ScintillaNET;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -19,6 +16,9 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using ScintillaNET;
 using VgcApis.Resources.Langs;
 
 namespace VgcApis.Misc
@@ -191,23 +191,30 @@ namespace VgcApis.Misc
         /// RedirectStandardOutput = true,
         /// CreateNoWindow = true,
         /// </summary>
-        /// <param name="exeFileName"></param>
+        /// <param name="exe"></param>
         /// <param name="args"></param>
         /// <returns></returns>
         public static Process CreateHeadlessProcess(
-            string exeFileName,
+            string exe,
             string args,
+            string workingDir,
             Encoding encoding
         )
         {
             var startInfo = new ProcessStartInfo
             {
-                FileName = exeFileName,
+                FileName = exe,
                 Arguments = args,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
+                RedirectStandardError = true,
                 CreateNoWindow = true,
             };
+
+            if (!string.IsNullOrEmpty(workingDir))
+            {
+                startInfo.WorkingDirectory = workingDir;
+            }
 
             if (encoding != null)
             {
@@ -225,7 +232,7 @@ namespace VgcApis.Misc
         )
         {
             var r = string.Empty;
-            var p = CreateHeadlessProcess(exeFileName, args, encoding);
+            var p = CreateHeadlessProcess(exeFileName, args, null, encoding);
             try
             {
                 p.Start();
@@ -1220,8 +1227,8 @@ namespace VgcApis.Misc
 
         public static JToken GenHttpInbound(string host, int port)
         {
-            var tpl = Models.Consts.Config.HttpInboundsTemplate
-                .Replace("%host%", host)
+            var tpl = Models
+                .Consts.Config.HttpInboundsTemplate.Replace("%host%", host)
                 .Replace("%port%", port.ToString());
             return JToken.Parse(tpl);
         }
@@ -2126,8 +2133,8 @@ namespace VgcApis.Misc
 
         public static List<Type> GetAllAssembliesType()
         {
-            return AppDomain.CurrentDomain
-                .GetAssemblies()
+            return AppDomain
+                .CurrentDomain.GetAssemblies()
                 .SelectMany(t => t.GetTypes())
                 .Where(t => t.IsClass)
                 .ToList();

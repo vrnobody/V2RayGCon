@@ -72,51 +72,34 @@ namespace NeoLuna.Models.Apis
         public string lastLogSend = "";
     }
 
-    class StrLogger : ILogable, IDisposable
+    class StrLogger : ILogable
     {
+        bool stopped = false;
         List<string> strs = new List<string>();
-        private bool disposedValue;
 
         public StrLogger() { }
 
         public string GetContent()
         {
-            return string.Join("\n", strs);
+            lock (strs)
+            {
+                var r = string.Join("\n", strs);
+                stopped = true;
+                strs.Clear();
+                return r;
+            }
         }
 
         public void Log(string message)
         {
-            strs.Add(message);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
+            if (stopped)
             {
-                if (disposing)
-                {
-                    // TODO: 释放托管状态(托管对象)
-                    strs.Clear();
-                }
-
-                // TODO: 释放未托管的资源(未托管的对象)并重写终结器
-                // TODO: 将大型字段设置为 null
-                disposedValue = true;
+                return;
             }
-        }
-
-        // // TODO: 仅当“Dispose(bool disposing)”拥有用于释放未托管资源的代码时才替代终结器
-        // ~StrLogger()
-        // {
-        //     // 不要更改此代码。请将清理代码放入“Dispose(bool disposing)”方法中
-        //     Dispose(disposing: false);
-        // }
-
-        public void Dispose()
-        {
-            // 不要更改此代码。请将清理代码放入“Dispose(bool disposing)”方法中
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
+            lock (strs)
+            {
+                strs.Add(message);
+            }
         }
     }
 
@@ -1584,8 +1567,8 @@ namespace NeoLuna.Models.Apis
                 p?.WaitForExit(1000);
             }
             catch { }
+            VgcApis.Misc.Utils.Sleep(500);
             var r = strLogger.GetContent();
-            strLogger.Dispose();
             p?.Dispose();
             return r;
         }

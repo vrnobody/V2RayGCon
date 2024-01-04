@@ -1,11 +1,8 @@
 {
-  "version": "1.9.0.0",
-  "md5": "4A09C2C4F9E98927906CA973AAAC2DE5",
+  "version": "1.9.1.0",
+  "md5": "FC21177074C24EAF38D2AC17EF9BCA85",
   "warnings": [],
   "changes": [
-    "支持通过SOCKS5协议更新订阅、升级core等",
-    "支持解码用户名和密码是明文的socks://...链接",
-    "优化yaml类型的hy2配置的摘要显示",
-    "添加std.Web:GetSocksProxyPort()等多个函数"
+    "支持热切换outbounds，详见手册"
   ]
 }

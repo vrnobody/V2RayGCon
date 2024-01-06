@@ -23,6 +23,8 @@ namespace VgcApis.Interfaces.Services
             bool hasShift
         );
 
+        void SetNotifyIconTag(string tag);
+
         bool UnregisterHotKey(string hotKeyHandle);
 
         void RefreshNotifyIconLater();

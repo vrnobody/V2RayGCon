@@ -315,6 +315,19 @@ namespace V2RayGCon.Services
         #endregion
 
         #region public method
+
+
+        public void SetNotifyIconTag(string tag)
+        {
+            if (niTag == tag)
+            {
+                return;
+            }
+            niTag = tag;
+            requiredRedrawIcon = true;
+            RefreshNotifyIconLater();
+        }
+
         public void Notify(string title, string content, int timeout)
         {
             Invoke(() => ni.ShowBalloonTip(timeout, title, content, ToolTipIcon.None));
@@ -796,6 +809,8 @@ namespace V2RayGCon.Services
 
         SysTrayIconTypes curSysTrayIconType = SysTrayIconTypes.None;
         bool curTunMode = false;
+        bool requiredRedrawIcon = false;
+        string niTag = "";
 
         void UpdateNotifyIconWorker(Action done)
         {
@@ -836,8 +851,9 @@ namespace V2RayGCon.Services
                 var iconType = AnalyzeSysTrayIconType(list);
                 var tunMode = setting.isTunMode;
 
-                if (iconType != curSysTrayIconType || curTunMode != tunMode)
+                if (iconType != curSysTrayIconType || curTunMode != tunMode || requiredRedrawIcon)
                 {
+                    requiredRedrawIcon = false;
                     Invoke(() =>
                     {
                         var icon = CreateNotifyIconImage(iconType);
@@ -915,7 +931,9 @@ namespace V2RayGCon.Services
 
         void DrawTag(Graphics g, Bitmap bmp)
         {
-            var tag = VgcApis.Misc.Utils.GetAppTagFirstChar();
+            var tag = string.IsNullOrEmpty(niTag)
+                ? VgcApis.Misc.Utils.GetAppTagFirstChar()
+                : niTag.Substring(0, 1);
             if (string.IsNullOrEmpty(tag))
             {
                 return;

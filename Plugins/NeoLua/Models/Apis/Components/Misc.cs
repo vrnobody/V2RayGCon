@@ -36,6 +36,8 @@ namespace NeoLuna.Models.Apis.Components
         }
 
         #region ILuaMisc.WinForms
+        public void SetNotifyIconTag(string tag) => vgcNotifier.SetNotifyIconTag(tag);
+
         public void Notify(string title, string content, int ms) =>
             vgcNotifier.Notify(title, content, ms);
 

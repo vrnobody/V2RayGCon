@@ -15,6 +15,12 @@ namespace NeoLuna.Interfaces
 
         #region winform things
         /// <summary>
+        /// 修改标签（在托盘图标及主窗显示的标签）
+        /// </summary>
+        /// <param name="tag">标签内容</param>
+        void SetNotifyIconTag(string tag);
+
+        /// <summary>
         /// 在托盘弹个消息
         /// </summary>
         /// <param name="title">标题</param>

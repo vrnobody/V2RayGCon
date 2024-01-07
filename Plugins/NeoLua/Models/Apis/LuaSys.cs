@@ -47,13 +47,13 @@ namespace NeoLuna.Models.Apis
     class CoreEvHook
     {
         public CoreEvTypes evType { get; set; }
-        public VgcApis.Interfaces.ICoreServCtrl coreServCtrl { get; set; }
+        public ICoreServCtrl coreServCtrl { get; set; }
         public VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailBox { get; set; }
         public EventHandler evHandler { get; set; }
 
         public CoreEvHook(
             CoreEvTypes evType,
-            VgcApis.Interfaces.ICoreServCtrl coreServCtrl,
+            ICoreServCtrl coreServCtrl,
             VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailBox,
             EventHandler evHandler
         )
@@ -713,7 +713,7 @@ namespace NeoLuna.Models.Apis
                 var addr = mailbox.GetAddress();
                 void handler(object s, EventArgs a)
                 {
-                    if (!(s is VgcApis.Interfaces.ICoreServCtrl coreServ))
+                    if (!(s is ICoreServCtrl coreServ))
                     {
                         return;
                     }
@@ -740,7 +740,7 @@ namespace NeoLuna.Models.Apis
         }
 
         public string RegisterCoreEvent(
-            VgcApis.Interfaces.ICoreServCtrl coreServ,
+            ICoreServCtrl coreServ,
             VgcApis.Interfaces.PostOfficeComponents.ILuaMailBox mailbox,
             int evType,
             int evCode
@@ -1082,7 +1082,7 @@ namespace NeoLuna.Models.Apis
             bool redirectOutput,
             Encoding inputEncoding,
             Encoding outputEncoding,
-            VgcApis.Interfaces.ILogable logable
+            ILogable logable
         ) =>
             RunProcWrapper(
                 true,
@@ -1446,10 +1446,7 @@ namespace NeoLuna.Models.Apis
         #endregion
 
         #region private methods
-        DataReceivedEventHandler CreateLogHandler(
-            Encoding encoding,
-            VgcApis.Interfaces.ILogable logable
-        )
+        DataReceivedEventHandler CreateLogHandler(Encoding encoding, ILogable logable)
         {
             var ec = encoding;
             Func<string, string> decode = (s) => s;
@@ -1506,7 +1503,7 @@ namespace NeoLuna.Models.Apis
             bool redirectOutput,
             Encoding inputEncoding,
             Encoding outputEncoding,
-            VgcApis.Interfaces.ILogable logable
+            ILogable logable
         )
         {
             try
@@ -1544,7 +1541,7 @@ namespace NeoLuna.Models.Apis
             try
             {
                 p = CreateProcessAndStart(
-                    true,
+                    false,
                     exe,
                     args,
                     workingDir,
@@ -1584,7 +1581,7 @@ namespace NeoLuna.Models.Apis
             bool redirectOutput,
             Encoding inputEncoding,
             Encoding outputEncoding,
-            VgcApis.Interfaces.ILogable logable
+            ILogable logable
         )
         {
             var useStdIn = !string.IsNullOrEmpty(stdin);

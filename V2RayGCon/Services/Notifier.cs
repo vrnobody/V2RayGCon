@@ -1321,6 +1321,7 @@ namespace V2RayGCon.Services
             DestroyHotKeyWindow();
             ReleaseServerEvents();
             ni.Visible = false;
+            serversMenuUpdateBar.Dispose();
         }
         #endregion
     }

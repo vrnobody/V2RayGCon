@@ -48,6 +48,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             ReleaseEvents();
             core.Dispose();
             speedTestingEvt.Dispose();
+            isRecording.Dispose();
         }
 
         public bool IsSpeedTesting() => !speedTestingEvt.WaitOne(0);

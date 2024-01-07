@@ -1320,6 +1320,7 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() save data");
             lazyServerSettingsRecorder?.Dispose();
             SaveServersSettingsWorker();
+            speedTestingBar.Dispose();
         }
 
         #endregion

@@ -41,6 +41,7 @@ namespace VgcApis.Libs.Tasks
         {
             schedule.Stop();
             schedule.Dispose();
+            bar.Dispose();
         }
         #endregion
 

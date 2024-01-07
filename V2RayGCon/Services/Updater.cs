@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 using V2RayGCon.Resources.Resx;
+using VgcApis.Libs.Tasks;
 
 namespace V2RayGCon.Services
 {
@@ -10,14 +11,14 @@ namespace V2RayGCon.Services
     {
         Settings setting;
         Servers servers;
-        readonly VgcApis.Libs.Tasks.Bar updateBar = new VgcApis.Libs.Tasks.Bar();
+        readonly Bar bar = new Bar();
 
         Updater() { }
 
         #region public methods
         public void CheckForUpdate(bool isShowErrorUsingMessageBox)
         {
-            if (!updateBar.Install())
+            if (!bar.Install())
             {
                 VgcApis.Misc.UI.MsgBoxAsync(I18N.UpdatingPleaseWait);
                 return;
@@ -116,12 +117,12 @@ namespace V2RayGCon.Services
             if (!CheckUpdateInfo(info, isQuiet) || !ConfirmUpdate(info))
             {
                 // must confirm first
-                updateBar.Remove();
+                bar.Remove();
                 return;
             }
 
             // if download file failed or cancelled, user can try again
-            updateBar.Remove();
+            bar.Remove();
 
             try
             {
@@ -196,7 +197,10 @@ namespace V2RayGCon.Services
         #endregion
 
         #region protected methods
-        protected override void Cleanup() { }
+        protected override void Cleanup()
+        {
+            bar.Dispose();
+        }
         #endregion
     }
 }

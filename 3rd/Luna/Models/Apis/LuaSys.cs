@@ -1,9 +1,4 @@
-﻿using Luna.Controllers;
-using Luna.Resources.Langs;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using NLua;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Luna.Controllers;
+using Luna.Resources.Langs;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using NLua;
 
 namespace Luna.Models.Apis
 {
@@ -154,7 +154,7 @@ namespace Luna.Models.Apis
             {
                 if (kv.Value is JArray && kv.Key == Services.AstServer.KEY_PROPERTY)
                 {
-                    foreach (string prop in kv.Value as JArray)
+                    foreach (string prop in (kv.Value as JArray).Select(v => (string)v))
                     {
                         var snp = ToSnippet($"{varName}.{prop}", "snippet");
                         snippets.Add(snp);
@@ -811,12 +811,12 @@ namespace Luna.Models.Apis
         public string GetPublicInfosOfType(Type type)
         {
             var nl = Environment.NewLine;
-            var evs = VgcApis.Misc.Utils
-                .GetPublicEventsInfoOfType(type)
+            var evs = VgcApis
+                .Misc.Utils.GetPublicEventsInfoOfType(type)
                 .Select(infos => $"{infos.Item1} {infos.Item2}")
                 .ToList();
-            var props = VgcApis.Misc.Utils
-                .GetPublicPropsInfoOfType(type)
+            var props = VgcApis
+                .Misc.Utils.GetPublicPropsInfoOfType(type)
                 .Select(infos => $"{infos.Item1} {infos.Item2}")
                 .ToList();
 
@@ -1129,8 +1129,8 @@ namespace Luna.Models.Apis
                 var name = Microsoft.Win32.Registry.GetValue(root, @"ProductName", @"")?.ToString();
                 var arch = Environment.Is64BitOperatingSystem ? @"x64" : @"x86";
                 var id = Microsoft.Win32.Registry.GetValue(root, @"ReleaseId", "")?.ToString();
-                var build = Microsoft.Win32.Registry
-                    .GetValue(root, @"CurrentBuildNumber", @"")
+                var build = Microsoft
+                    .Win32.Registry.GetValue(root, @"CurrentBuildNumber", @"")
                     ?.ToString();
 
                 osReleaseId = $"{name} {arch} {id} build {build}";

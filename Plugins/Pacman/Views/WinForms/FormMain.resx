@@ -459,6 +459,9 @@
   <data name="cboxBalancerStrategy.Items1" xml:space="preserve">
     <value>leastPing</value>
   </data>
+  <data name="cboxBalancerStrategy.Items2" xml:space="preserve">
+    <value>roundRobin</value>
+  </data>
   <data name="cboxBalancerStrategy.Location" type="System.Drawing.Point, System.Drawing">
     <value>63, 0</value>
   </data>
@@ -582,7 +585,7 @@
   <data name="btnPull.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAGxJREFUOE/NjNEJgDAMBTNbVnA3v1zDQZxE/cmv8oqBECm+VgQDR9PAnWDM7Oih
+        wgAADsIBFShKgAAAAGxJREFUOE/NjNEJgDAMBTNbVnA3v1zDQZxE/cmv8oqBECm+VgQDR9PAnWDM7Oih
         yBh8VLWJnwa2daegAzJMhXz/PjDOS3ljwG/gMQAJggd8pwNRjhE6kCNRBlQAQMwyoAM1qoEWboEeLv3N
         iJxnTngNYdMDJwAAAABJRU5ErkJggg==
 </value>
@@ -623,7 +626,7 @@
   <data name="btnRefreshSelected.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAZVJREFUOE+Fkj9LQlEYxm9DEIHSEtkaRZ/AIZLGaA+iCNvDIWisPkNTQ1lagoQG
+        wwAADsMBx2+oZAAAAZVJREFUOE+Fkj9LQlEYxm9DEIHSEtkaRZ/AIZLGaA+iCNvDIWisPkNTQ1lagoQG
         DRlBzWbgFmGLUpoYQli0eAeX0/s7nnMTvdELD57zPn/Oe47XcV1X/YMxx5Ssx83ytxA5yye+aLa+vQD5
         DQrqgowgoM2UbHzNoC/g+PC2pA5unugVvRACEO5fPf4ZIFisNb9UYD2l+ybk3AYsvbx/qtG1M01uJx/8
         AiLttlu33MjqqXqufcDNEZDYShQ0EdnNKREOBJiDQsI15ndymovF83ApiNeZWFY3s/kyTd8AStYbF/dl
@@ -669,7 +672,7 @@
   <data name="btnDeleteSelected.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAMpJREFUOE+9kT0OAiEQRvcCXsN6S2tquYOFN/BEHkFuYKell/CnEuKGduQjzAR2
+        wwAADsMBx2+oZAAAAMpJREFUOE+9kT0OAiEQRvcCXsN6S2tquYOFN/BEHkFuYKell/CnEuKGduQjzAR2
         QWM0Fm8ZCPP4YDvvfR+wCdTFnIi6V0Bg95s1AdT2ena75ULmkARQV+nc7UJo2M5nsYlrjGGDCJRSE6Ig
         fFa5hJuRBM2IyQJ7d0Iu6Dk2C1L8gqYgb8bINSTGmLixRSEAqPk6EAyPoTithlwBoMbi6XiQ5reC9Ejx
         //ODaa2LqC1EkIPFGmjgRHmqiaDGzwRj/p/ga8GYjwR1PD0BJukEAmtoABIAAAAASUVORK5CYII=
@@ -711,7 +714,7 @@
   <data name="btnSelectNone.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAFNJREFUOE/d0DEKACAIheHO5v3vUi2uhYGS8ELIpoZvevITFWYeGStARJAeoU24
+        wwAADsMBx2+oZAAAAFNJREFUOE/d0DEKACAIheHO5v3vUi2uhYGS8ELIpoZvevITFWYeGStARJAeoU24
         QKvd0YNo/ymA7AHEAhlvAuh5Qo/QJlzg9EnR/lMA2QOIBe7xmB8/M+5EyWaTAAAAAElFTkSuQmCC
 </value>
   </data>
@@ -751,7 +754,7 @@
   <data name="btnSelectInvert.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAFlJREFUOE9j+Pbt239KMNgAJycnrBiuKHgOVoxiwIf3H1EwTQyAyQ2cAegYxQBs
+        wwAADsMBx2+oZAAAAFlJREFUOE9j+Pbt239KMNgAJycnrBiuKHgOVoxiwIf3H1EwTQyAyQ2cAegYxQBs
         mGgDKMHUMQCb80AYpgib90CYJANwBTKKATDJgTMAHVPVAGwYbgD5+Nt/AEreDT45ac8TAAAAAElFTkSu
         QmCC
 </value>
@@ -792,7 +795,7 @@
   <data name="btnSelectAll.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAFJJREFUOE+t0TEKACAMQ1Hv6PW8o7p0rbRDkVAQbIY3pXwEm4hohQdaH6k4SjbD
+        wwAADsMBx2+oZAAAAFJJREFUOE+t0TEKACAMQ1Hv6PW8o7p0rbRDkVAQbIY3pXwEm4hohQdaH6k4SjbD
         D6y53X3w2rkBhAHEC1RwAtnzTBwlm+EHyt9YDiAMIF7gn+gBdn3mfzow6H8AAAAASUVORK5CYII=
 </value>
   </data>

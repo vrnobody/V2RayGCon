@@ -197,7 +197,8 @@
             this.cboxBalancerStrategy.FormattingEnabled = true;
             this.cboxBalancerStrategy.Items.AddRange(new object[] {
             resources.GetString("cboxBalancerStrategy.Items"),
-            resources.GetString("cboxBalancerStrategy.Items1")});
+            resources.GetString("cboxBalancerStrategy.Items1"),
+            resources.GetString("cboxBalancerStrategy.Items2")});
             resources.ApplyResources(this.cboxBalancerStrategy, "cboxBalancerStrategy");
             this.cboxBalancerStrategy.Name = "cboxBalancerStrategy";
             this.cboxBalancerStrategy.SelectedIndexChanged += new System.EventHandler(this.cboxBalancerStrategy_SelectedIndexChanged);

@@ -1,14 +1,14 @@
-﻿using AutocompleteMenuNS;
-using Luna.Libs.LuaSnippet;
-using Luna.Services;
-using Newtonsoft.Json.Linq;
-using ScintillaNET;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using AutocompleteMenuNS;
+using Luna.Libs.LuaSnippet;
+using Luna.Services;
+using Newtonsoft.Json.Linq;
+using ScintillaNET;
 
 namespace Luna.Controllers.FormEditorCtrl
 {
@@ -202,7 +202,7 @@ namespace Luna.Controllers.FormEditorCtrl
             {
                 if (kv.Value is JArray && kv.Key == AstServer.KEY_PROPERTY)
                 {
-                    foreach (string prop in kv.Value as JArray)
+                    foreach (string prop in (kv.Value as JArray).Select(v => (string)v))
                     {
                         var snp = new LuaKeywordSnippets($"{varName}.{prop}");
                         snippets.Add(snp);

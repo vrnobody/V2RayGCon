@@ -570,7 +570,8 @@ namespace VgcApis.Misc
                 return text;
             }
 
-            if (config[0] == '{' && config[config.Length - 1] == '}')
+            var mark = $"{config[0]}{config[config.Length - 1]}";
+            if (mark == "{}" || mark == "[]")
             {
                 return Models.Datas.Enums.ConfigType.json;
             }
@@ -1487,7 +1488,7 @@ namespace VgcApis.Misc
             return null;
         }
 
-        public static string FormatConfig(JObject config)
+        public static string FormatConfig(JToken config)
         {
             try
             {
@@ -1499,7 +1500,7 @@ namespace VgcApis.Misc
 
         public static string FormatConfig(string config)
         {
-            var json = ParseJObject(config);
+            var json = ParseJToken(config);
             return FormatConfig(json);
         }
 
@@ -1511,6 +1512,19 @@ namespace VgcApis.Misc
         public static bool IsJson(string config)
         {
             return DetectConfigType(config) == Models.Datas.Enums.ConfigType.json;
+        }
+
+        public static JToken ParseJToken(string config)
+        {
+            if (IsJson(config))
+            {
+                try
+                {
+                    return JToken.Parse(config);
+                }
+                catch { }
+            }
+            return null;
         }
 
         public static JObject ParseJObject(string config)

@@ -1,14 +1,14 @@
-﻿using AutocompleteMenuNS;
-using NeoLuna.Libs.LuaSnippet;
-using NeoLuna.Services;
-using Newtonsoft.Json.Linq;
-using ScintillaNET;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using AutocompleteMenuNS;
+using NeoLuna.Libs.LuaSnippet;
+using NeoLuna.Services;
+using Newtonsoft.Json.Linq;
+using ScintillaNET;
 
 namespace NeoLuna.Controllers.FormEditorCtrl
 {
@@ -199,7 +199,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
             {
                 if (kv.Value is JArray && kv.Key == AstServer.KEY_PROPERTY)
                 {
-                    foreach (string prop in kv.Value as JArray)
+                    foreach (string prop in (kv.Value as JArray).Select(v => (string)v))
                     {
                         var snp = new LuaKeywordSnippets($"{name}.{prop}");
                         snippets.Add(snp);

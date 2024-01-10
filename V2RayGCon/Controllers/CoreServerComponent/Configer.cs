@@ -269,7 +269,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             try
             {
                 var arr = json["inbounds"] as JArray;
-                foreach (JObject inb in arr)
+                foreach (JObject inb in arr.Cast<JObject>())
                 {
                     if (inb == null)
                     {

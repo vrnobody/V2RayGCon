@@ -22,6 +22,9 @@ namespace NeoLuna.Models.Apis.Components
 
         public int BalancerStrategyLeastPing { get; } =
             (int)VgcApis.Models.Datas.Enums.BalancerStrategies.LeastPing;
+
+        public int BalancerStrategyRoundRobin { get; } =
+            (int)VgcApis.Models.Datas.Enums.BalancerStrategies.RoundRobin;
         #endregion
 
         public int Count() => vgcServers.Count();

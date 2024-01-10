@@ -183,7 +183,7 @@ namespace NeoLuna.Models.Apis
             {
                 if (kv.Value is JArray && kv.Key == Services.AstServer.KEY_PROPERTY)
                 {
-                    foreach (string prop in kv.Value as JArray)
+                    foreach (string prop in (kv.Value as JArray).Select(v => (string)v))
                     {
                         var snp = ToSnippet($"{varName}.{prop}", "snippet");
                         snippets.Add(snp);

@@ -1,10 +1,10 @@
-﻿using ScintillaNET;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using ScintillaNET;
 
 namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
 {
@@ -241,12 +241,21 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
             editor.FirstVisibleLine = Math.Max(0, top);
         }
 
+        string lastDropDownContent = null;
+
         void OnCboxNavigatorDropDownHandler(object sender, EventArgs args)
         {
+            if (_content == lastDropDownContent)
+            {
+                return;
+            }
+
+            lastDropDownContent = _content;
+
             var lines = editor.Lines.Select(line => line.Text).ToList();
             tags = VgcApis.Misc.Utils.GetConfigTags(lines);
             var keys = tags.Keys.ToList();
-            keys.Sort(VgcApis.Misc.Utils.TagStringComparer);
+            keys.Sort();
             var items = cboxNavigation.Items;
             items.Clear();
             items.AddRange(keys.ToArray());

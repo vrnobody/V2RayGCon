@@ -1120,10 +1120,20 @@ namespace V2RayGCon.Services
         {
             switch (strategy)
             {
+                case BalancerStrategies.RoundRobin:
+                    try
+                    {
+                        config["routing"]["balancers"][0]["strategy"] = JObject.Parse(
+                            "{type:'roundRobin'}"
+                        );
+                    }
+                    catch { }
+                    break;
                 case BalancerStrategies.LeastPing:
                     try
                     {
-                        config["observatory"] = JObject.Parse("{subjectSelector:['agentout']}");
+                        var prefix = Config.servsPkgTagPrefix;
+                        config["observatory"] = JObject.Parse($"{{subjectSelector:['{prefix}']}}");
                         if (!string.IsNullOrWhiteSpace(interval))
                         {
                             config["observatory"]["probeInterval"] = interval;

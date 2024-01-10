@@ -1,7 +1,4 @@
-﻿using Ionic.Zip;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
+using Ionic.Zip;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Models.Datas;
 
@@ -49,7 +49,7 @@ namespace V2RayGCon.Misc
             try
             {
                 var json = JObject.Parse(result);
-                foreach (JObject o in json["stat"])
+                foreach (JObject o in json["stat"].Cast<JObject>())
                 {
                     var name = o["name"].ToString();
                     if (name.EndsWith("uplink"))
@@ -140,7 +140,7 @@ namespace V2RayGCon.Misc
                     var outboundDtr = GetKey(json, key);
                     if (outboundDtr != null && outboundDtr is JArray)
                     {
-                        foreach (JObject item in outboundDtr)
+                        foreach (JObject item in outboundDtr.Cast<JObject>())
                         {
                             result.Add(item);
                         }
@@ -574,11 +574,11 @@ namespace V2RayGCon.Misc
                 body[key] = JArray.Parse(@"[]");
             }
 
-            foreach (JObject n in mixin[key])
+            foreach (JObject n in mixin[key].Cast<JObject>())
             {
                 void innerLoop()
                 {
-                    foreach (JObject m in body[key])
+                    foreach (JObject m in body[key].Cast<JObject>())
                     {
                         var mt = m["tag"];
                         var nt = n["tag"];
@@ -918,7 +918,9 @@ namespace V2RayGCon.Misc
             var baseUrl = GetBaseUrl(url);
 
             if (
-                string.IsNullOrEmpty(baseUrl) || string.IsNullOrEmpty(href) || !href.StartsWith("/")
+                string.IsNullOrEmpty(baseUrl)
+                || string.IsNullOrEmpty(href)
+                || !href.StartsWith("/")
             )
             {
                 return href;

@@ -1,9 +1,10 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading;
+using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
@@ -161,6 +162,7 @@ namespace V2RayGCon.Services
             var package = cache.tpl.LoadPackage("chainV4Tpl");
             var outbounds = package["outbounds"] as JArray;
 
+            var counter = 0;
             JObject prev = null;
             for (var i = 0; i < servList.Count; i++)
             {
@@ -168,10 +170,10 @@ namespace V2RayGCon.Services
                 var finalConfig = s.GetConfiger().GetFinalConfig();
                 var json = VgcApis.Misc.Utils.ParseJObject(finalConfig);
                 var parts = Misc.Utils.ExtractOutboundsFromConfig(json);
-                var c = 0;
-                foreach (JObject p in parts)
+
+                foreach (JObject p in parts.Cast<JObject>())
                 {
-                    var tag = $"node{i}s{c++}";
+                    var tag = $"{VgcApis.Models.Consts.Config.servsPkgTagPrefix}{counter++:d6}";
                     p["tag"] = tag;
                     if (prev != null)
                     {
@@ -180,15 +182,6 @@ namespace V2RayGCon.Services
                         outbounds.Add(prev);
                     }
                     prev = p;
-                }
-                var name = s.GetCoreStates().GetName();
-                if (c == 0)
-                {
-                    setting.SendLog(I18N.PackageFail + ": " + name);
-                }
-                else
-                {
-                    setting.SendLog(I18N.PackageSuccess + ": " + name);
                 }
             }
             outbounds.Add(prev);
@@ -199,26 +192,24 @@ namespace V2RayGCon.Services
         {
             var package = cache.tpl.LoadPackage("pkgV4Tpl");
             var outbounds = package["outbounds"] as JArray;
+
+            var prefix = VgcApis.Models.Consts.Config.servsPkgTagPrefix;
+            package["routing"]["balancers"][0]["selector"] = prefix;
+            var counter = 0;
             for (var i = 0; i < servList.Count; i++)
             {
                 var s = servList[i];
                 var finalConfig = s.GetConfiger().GetFinalConfig();
                 var json = VgcApis.Misc.Utils.ParseJObject(finalConfig);
                 var parts = Misc.Utils.ExtractOutboundsFromConfig(json);
-                var c = 0;
-                foreach (JObject p in parts)
+                foreach (JObject p in parts.Cast<JObject>())
                 {
-                    p["tag"] = $"agentout{i}s{c++}";
+                    if (p == null)
+                    {
+                        continue;
+                    }
+                    p["tag"] = $"{prefix}{counter++:d6}";
                     outbounds.Add(p);
-                }
-                var name = s.GetCoreStates().GetName();
-                if (c == 0)
-                {
-                    setting.SendLog(I18N.PackageFail + ": " + name);
-                }
-                else
-                {
-                    setting.SendLog(I18N.PackageSuccess + ": " + name);
                 }
             }
             return package;

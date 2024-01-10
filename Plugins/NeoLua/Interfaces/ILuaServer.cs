@@ -17,6 +17,11 @@ namespace NeoLuna.Interfaces
         int BalancerStrategyLeastPing { get; }
 
         /// <summary>
+        /// 用于向PackSelectedServers传入打包策略。
+        /// </summary>
+        int BalancerStrategyRoundRobin { get; }
+
+        /// <summary>
         /// 获取服务器总数
         /// </summary>
         /// <returns>服务器总数</returns>

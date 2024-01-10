@@ -63,46 +63,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return Services.ShareLinkMgr.Instance.EncodeConfigToShareLink(name, config);
         }
 
-        public string GetFinalConfig()
-        {
-            var config = GetConfig();
-            var cfgTpls = setting.GetCustomConfigTemplates();
-
-            var names =
-                coreInfo.templates?.Replace(", ", ",")?.Split(',')?.ToList() ?? new List<string>();
-            names.Add(coreInfo.inbName);
-
-            var tpls = coreInfo.isAcceptInjection
-                ? cfgTpls.Where(tpl => tpl.isInject).ToList()
-                : new List<Models.Datas.CustomConfigTemplate>();
-
-            tpls.AddRange(
-                names
-                    .Select(n => cfgTpls.FirstOrDefault(tpl => tpl.name == n))
-                    .Where(t => t != null)
-            );
-
-            string r;
-            var host = coreInfo.inbIp;
-            var port = coreInfo.inbPort;
-            if (VgcApis.Misc.Utils.IsJson(config))
-            {
-                r = GenJsonFinalConfig(tpls, config, host, port);
-            }
-            else
-            {
-                r = config;
-                foreach (var tpl in tpls)
-                {
-                    r = tpl.MergeToConfig(r, host, port);
-                    if (string.IsNullOrEmpty(r))
-                    {
-                        break;
-                    }
-                }
-            }
-            return string.IsNullOrEmpty(r) ? config : r;
-        }
+        public string GetFinalConfig() => GetFinalConfigCore(false);
 
         public string GetRawConfig() => coreInfo.config;
 
@@ -188,9 +149,52 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             });
         }
 
+        public string GetFinalConfigCore(bool isSetStatPort)
+        {
+            var config = GetConfig();
+            var cfgTpls = setting.GetCustomConfigTemplates();
+
+            var names =
+                coreInfo.templates?.Replace(", ", ",")?.Split(',')?.ToList() ?? new List<string>();
+            names.Add(coreInfo.inbName);
+
+            var tpls = coreInfo.isAcceptInjection
+                ? cfgTpls.Where(tpl => tpl.isInject).ToList()
+                : new List<Models.Datas.CustomConfigTemplate>();
+
+            tpls.AddRange(
+                names
+                    .Select(n => cfgTpls.FirstOrDefault(tpl => tpl.name == n))
+                    .Where(t => t != null)
+            );
+
+            string r;
+            var host = coreInfo.inbIp;
+            var port = coreInfo.inbPort;
+            if (VgcApis.Misc.Utils.IsJson(config))
+            {
+                r = GenJsonFinalConfig(tpls, config, host, port, isSetStatPort);
+            }
+            else
+            {
+                r = config;
+                foreach (var tpl in tpls)
+                {
+                    r = tpl.MergeToConfig(r, host, port);
+                    if (string.IsNullOrEmpty(r))
+                    {
+                        break;
+                    }
+                }
+            }
+            return string.IsNullOrEmpty(r) ? config : r;
+        }
+
         #endregion
 
         #region private methods
+
+
         void MergeCustomTlsSettings(ref JObject config)
         {
             var outB =
@@ -224,13 +228,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             IEnumerable<Models.Datas.CustomConfigTemplate> tplSs,
             string config,
             string host,
-            int port
+            int port,
+            bool isSetStatPort
         )
         {
             try
             {
                 var json = JObject.Parse(config);
-                InjectStatisticsConfigOnDemand(ref json);
+                InjectStatisticsConfigOnDemand(ref json, isSetStatPort);
                 MergeCustomTlsSettings(ref json);
                 foreach (var tplS in tplSs)
                 {
@@ -318,25 +323,27 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return r;
         }
 
-        void InjectStatisticsConfigOnDemand(ref JObject config)
+        void InjectStatisticsConfigOnDemand(ref JObject config, bool isSetStatPort)
         {
             if (!setting.isEnableStatistics)
             {
                 return;
             }
 
-            var freePort = VgcApis.Misc.Utils.GetFreeTcpPort();
+            var freePort = isSetStatPort ? VgcApis.Misc.Utils.GetFreeTcpPort() : 8080;
             if (freePort <= 0)
             {
                 return;
             }
 
-            states.SetStatPort(freePort);
+            if (isSetStatPort)
+            {
+                states.SetStatPort(freePort);
+            }
 
             var result = cache.tpl.LoadTemplate("statsApiV4Inb") as JObject;
             result["inbounds"][0]["port"] = freePort;
             Misc.Utils.CombineConfigWithRoutingInFront(ref result, config);
-            result["inbounds"][0]["tag"] = "agentin";
 
             var statsTpl = cache.tpl.LoadTemplate("statsApiV4Tpl") as JObject;
             Misc.Utils.CombineConfigWithRoutingInFront(ref result, statsTpl);

@@ -54,11 +54,11 @@ namespace V2RayGCon.Misc
                     var name = o["name"].ToString();
                     if (name.EndsWith("uplink"))
                     {
-                        up = o["value"].Value<int>();
+                        up += o["value"].Value<int>();
                     }
                     if (name.EndsWith("downlink"))
                     {
-                        down = o["value"].Value<int>();
+                        down += o["value"].Value<int>();
                     }
                 }
             }

@@ -209,7 +209,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             try
             {
-                string cfg = configer.GetFinalConfigCore(true);
+                string cfg = configer.GenFinalConfig(true);
                 core.title = coreStates.GetTitle();
                 if (isQuiet)
                 {

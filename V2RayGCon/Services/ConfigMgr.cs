@@ -173,7 +173,8 @@ namespace V2RayGCon.Services
 
                 foreach (JObject p in parts.Cast<JObject>())
                 {
-                    var tag = $"{VgcApis.Models.Consts.Config.servsPkgTagPrefix}{counter++:d6}";
+                    var prefix = VgcApis.Models.Consts.Config.servsPkgTagPrefix;
+                    var tag = $"{prefix}{counter++:d6}";
                     p["tag"] = tag;
                     if (prev != null)
                     {
@@ -194,7 +195,7 @@ namespace V2RayGCon.Services
             var outbounds = package["outbounds"] as JArray;
 
             var prefix = VgcApis.Models.Consts.Config.servsPkgTagPrefix;
-            package["routing"]["balancers"][0]["selector"] = prefix;
+            package["routing"]["balancers"][0]["selector"] = JArray.Parse($"['{prefix}']");
             var counter = 0;
             for (var i = 0; i < servList.Count; i++)
             {

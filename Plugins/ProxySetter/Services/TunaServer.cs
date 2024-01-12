@@ -1,10 +1,10 @@
-﻿using ProxySetter.Resources.Langs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using ProxySetter.Resources.Langs;
 
 namespace ProxySetter.Services
 {
@@ -198,7 +198,7 @@ namespace ProxySetter.Services
                 }
             }
 
-            var metric = Math.Max(1, nic.metric / 2);
+            var metric = Math.Max(1, nic.metric / 3);
             ts.startupScript = GenStartupScript(ts, metric);
             return true;
         }
@@ -250,8 +250,13 @@ namespace ProxySetter.Services
 
         NicInfos GetNicInfoFromRoutes(string tunIpv4)
         {
-            var ipv4 = VgcApis.Misc.Utils
-                .ExecuteAndGetStdOut("route", "print -4", 5000, System.Text.Encoding.Default)
+            var ipv4 = VgcApis
+                .Misc.Utils.ExecuteAndGetStdOut(
+                    "route",
+                    "print -4",
+                    5000,
+                    System.Text.Encoding.Default
+                )
                 ?.Replace("\r", "")
                 .Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(
@@ -289,8 +294,7 @@ namespace ProxySetter.Services
                 $"netsh interface ipv6 add route ::/0 interface={ts.tunName} {ts.tunIpv6} metric={metric} store=active";
 
             var dnses =
-                ts.dns
-                    ?.Replace("\r", "")
+                ts.dns?.Replace("\r", "")
                     .Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
                 ?? new string[0];
 

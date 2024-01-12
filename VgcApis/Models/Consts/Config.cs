@@ -4,7 +4,7 @@ namespace VgcApis.Models.Consts
 {
     public static class Config
     {
-        public static readonly string servsPkgTagPrefix = @"node-";
+        public static readonly string servsPkgTagPrefix = @"agentout";
 
         public static readonly string HttpInboundsTemplate =
             @"[{'tag': 'agentin','protocol': 'http','port': %port%,'listen': '%host%','settings': {}}]";

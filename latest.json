@@ -1,8 +1,11 @@
 {
-  "version": "1.9.1.0",
-  "md5": "FC21177074C24EAF38D2AC17EF9BCA85",
+  "version": "1.9.2.0",
+  "md5": "38E28061C32D6B2CF188D4C67BD91CDE",
   "warnings": [],
   "changes": [
-    "支持热切换outbounds，详见手册"
+    "修复流量统计失效bug，仅支持默认core默认配置",
+    "添加std.Misc:SetNotifyIconTag()临时修改托盘标签",
+    "Pacman插件支持roundRobin均衡策略",
+    "打包服务器时tag改为agentout+6位数字"
   ]
 }

@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.IO;
 using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace VgcApis.Libs.Infr
 {
@@ -24,47 +24,50 @@ namespace VgcApis.Libs.Infr
                         CryptoStreamMode.Write
                     )
                 )
+                using (var gZipStream = new GZipStream(base64Stream, CompressionMode.Compress))
+                using (StreamWriter writer = new StreamWriter(gZipStream, Encoding.Unicode))
+                using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
                 {
-                    using (var gZipStream = new GZipStream(base64Stream, CompressionMode.Compress))
-                    {
-                        using (StreamWriter writer = new StreamWriter(gZipStream, Encoding.Unicode))
-                        using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
-                        {
-                            JsonSerializer ser = new JsonSerializer();
-                            ser.Serialize(jsonWriter, value);
-                        }
-                    }
+                    JsonSerializer ser = new JsonSerializer();
+                    ser.Serialize(jsonWriter, value);
                 }
             }
         }
 
         public static string SerializeObjectToCompressedUnicodeBase64(object value)
         {
-            using (var outputStream = new MemoryStream())
+            var dest = new MemoryStream();
+            using (
+                var b64 = new CryptoStream(dest, new ToBase64Transform(), CryptoStreamMode.Write)
+            )
+            using (var gZipStream = new GZipStream(b64, CompressionMode.Compress))
+            using (var writer = new StreamWriter(gZipStream, Encoding.Unicode))
+            using (var jsonWriter = new JsonTextWriter(writer))
             {
-                using (var gZipStream = new GZipStream(outputStream, CompressionMode.Compress))
-                {
-                    using (StreamWriter writer = new StreamWriter(gZipStream, Encoding.Unicode))
-                    using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
-                    {
-                        JsonSerializer ser = new JsonSerializer();
-                        ser.Serialize(jsonWriter, value);
-                    }
-                }
-                var o = outputStream.ToArray();
-                return Convert.ToBase64String(o);
+                JsonSerializer ser = new JsonSerializer();
+                ser.Serialize(jsonWriter, value);
             }
+            var s = Encoding.ASCII.GetString(dest.ToArray());
+            dest.Dispose();
+            return s;
         }
 
         public static T DeserializeObjectFromCompressedUnicodeBase64<T>(string b64Str)
         {
-            var b64Bytes = Convert.FromBase64String(b64Str);
-            using (var sourceStream = new MemoryStream(b64Bytes))
-            using (var gZipStream = new GZipStream(sourceStream, CompressionMode.Decompress))
-            using (StreamReader reader = new StreamReader(gZipStream, Encoding.Unicode))
-            using (JsonTextReader jsonReader = new JsonTextReader(reader))
+            using (var src = new MemoryStream())
+            using (var w = new StreamWriter(src, Encoding.ASCII))
+            using (
+                var b64 = new CryptoStream(src, new FromBase64Transform(), CryptoStreamMode.Read)
+            )
+            using (var gzip = new GZipStream(b64, CompressionMode.Decompress))
+            using (var reader = new StreamReader(gzip, Encoding.Unicode))
+            using (var jsonReader = new JsonTextReader(reader))
             {
-                JsonSerializer ser = new JsonSerializer();
+                w.Write(b64Str);
+                w.Flush();
+                src.Position = 0;
+
+                var ser = new JsonSerializer();
                 return ser.Deserialize<T>(jsonReader);
             }
         }
@@ -84,52 +87,36 @@ namespace VgcApis.Libs.Infr
 
         public static string CompressToBase64(string data)
         {
-            var b = Encoding.Unicode.GetBytes(data);
-            return Convert.ToBase64String(Compress(b));
+            var dest = new MemoryStream();
+            using (
+                var b64 = new CryptoStream(dest, new ToBase64Transform(), CryptoStreamMode.Write)
+            )
+            using (var gzip = new GZipStream(b64, CompressionMode.Compress))
+            using (var w = new StreamWriter(gzip, Encoding.Unicode))
+            {
+                w.Write(data);
+            }
+            var s = Encoding.ASCII.GetString(dest.ToArray());
+            dest.Dispose();
+            return s;
         }
 
         public static string DecompressFromBase64(string data)
         {
-            var b64 = Convert.FromBase64String(data);
-            return Encoding.Unicode.GetString(Decompress(b64));
-        }
-
-        public static byte[] Compress(byte[] data)
-        {
-            using (var sourceStream = new MemoryStream(data))
-            using (var destinationStream = new MemoryStream())
+            using (var src = new MemoryStream())
+            using (var w = new StreamWriter(src, Encoding.ASCII))
+            using (
+                var b64 = new CryptoStream(src, new FromBase64Transform(), CryptoStreamMode.Read)
+            )
+            using (var gzip = new GZipStream(b64, CompressionMode.Decompress))
+            using (var r = new StreamReader(gzip, Encoding.Unicode))
             {
-                CompressTo(sourceStream, destinationStream);
-                return destinationStream.ToArray();
-            }
-        }
+                w.Write(data);
+                w.Flush();
+                src.Position = 0;
 
-        public static byte[] Decompress(byte[] data)
-        {
-            using (var sourceStream = new MemoryStream(data))
-            using (var destinationStream = new MemoryStream())
-            {
-                DecompressTo(sourceStream, destinationStream);
-                return destinationStream.ToArray();
-            }
-        }
-        #endregion
-
-        #region private
-        static void CompressTo(Stream inputStream, Stream outputStream)
-        {
-            using (var gZipStream = new GZipStream(outputStream, CompressionMode.Compress))
-            {
-                inputStream.CopyTo(gZipStream);
-                gZipStream.Flush();
-            }
-        }
-
-        static void DecompressTo(Stream inputStream, Stream outputStream)
-        {
-            using (var gZipStream = new GZipStream(inputStream, CompressionMode.Decompress))
-            {
-                gZipStream.CopyTo(outputStream);
+                var s = r.ReadToEnd();
+                return s;
             }
         }
         #endregion

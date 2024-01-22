@@ -1,8 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using VgcApis.Libs.Infr;
 
 namespace VgcApisTests
@@ -66,21 +66,6 @@ namespace VgcApisTests
             var de = ZipExtensions.DecompressFromBase64(cs);
 
             Assert.AreEqual(s, de);
-        }
-
-        [DataTestMethod]
-        [DataRow("hello, world!")]
-        [DataRow("he中llo780, wo文rld!123")]
-        [DataRow("😀😀😣👨‍🦰🎗🥙🛴❣")]
-        [DataRow("\uD83C")]
-        [DataRow("")]
-        public void ZipByteTest(string s)
-        {
-            var bytes = Encoding.UTF8.GetBytes(s);
-            var cb = ZipExtensions.Compress(bytes);
-            var de = ZipExtensions.Decompress(cb);
-
-            Assert.IsTrue(bytes.SequenceEqual(de));
         }
     }
 }

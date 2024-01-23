@@ -1130,7 +1130,7 @@ namespace V2RayGCon.Services
                 {
                     list[index]
                         .GetCoreCtrl()
-                        .GetterInfoForNotifyIconf(s =>
+                        .GatherInfoForNotifyIcon(s =>
                         {
                             texts.Add(s);
                             next?.Invoke();

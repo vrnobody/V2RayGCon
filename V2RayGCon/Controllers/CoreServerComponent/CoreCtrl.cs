@@ -45,8 +45,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         #region public mehtods
-        public void GetterInfoForNotifyIconf(Action<string> next)
+        public void GatherInfoForNotifyIcon(Action<string> next)
         {
+            if (next == null)
+            {
+                inbsInfoCache = null;
+                return;
+            }
+
             var cache = inbsInfoCache;
             if (!string.IsNullOrEmpty(cache))
             {

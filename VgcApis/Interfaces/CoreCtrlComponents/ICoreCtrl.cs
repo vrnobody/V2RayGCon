@@ -102,6 +102,6 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         /// 内部使用，脚本不使用此函数。
         /// </summary>
         /// <param name="next"></param>
-        void GetterInfoForNotifyIconf(Action<string> next);
+        void GatherInfoForNotifyIcon(Action<string> next);
     }
 }

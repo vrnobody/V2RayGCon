@@ -130,25 +130,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
         }
 
-        public void GetterInfoForNotifyIconf(Action<string> next)
-        {
-            var cs = GetParent().GetCoreStates();
-            var name = $"{cs.GetIndex()}.[{cs.GetShortName()}]";
-
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                var lines = new List<string>() { name };
-
-                var inbs = GetAllInboundsInfo();
-                foreach (var inb in inbs)
-                {
-                    lines.Add($"{inb.protocol}://{inb.host}:{inb.port}");
-                }
-
-                next(string.Join(Environment.NewLine, lines));
-            });
-        }
-
         public string GenFinalConfig(bool isSetStatPort)
         {
             var config = GetConfig();

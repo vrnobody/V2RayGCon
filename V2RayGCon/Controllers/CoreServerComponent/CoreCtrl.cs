@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Models.Datas;
@@ -13,6 +14,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         readonly Services.Settings setting;
         readonly Services.ConfigMgr configMgr;
         readonly CoreInfo coreInfo;
+
+        string inbsInfoCache = null;
 
         VgcApis.Libs.Tasks.Routine bookKeeper;
         readonly VgcApis.Libs.Tasks.Bar isRecording = new VgcApis.Libs.Tasks.Bar();
@@ -42,6 +45,32 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         #region public mehtods
+        public void GetterInfoForNotifyIconf(Action<string> next)
+        {
+            var cache = inbsInfoCache;
+            if (!string.IsNullOrEmpty(cache))
+            {
+                next(cache);
+                return;
+            }
+
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                var cs = GetParent().GetCoreStates();
+                var cc = GetParent().GetConfiger();
+                var name = $"{cs.GetIndex()}.[{cs.GetShortName()}]";
+                var lines = new List<string>() { name };
+                var inbs = cc.GetAllInboundsInfo();
+                foreach (var inb in inbs)
+                {
+                    lines.Add($"{inb.protocol}://{inb.host}:{inb.port}");
+                }
+                var info = string.Join(Environment.NewLine, lines);
+                inbsInfoCache = info;
+                next(info);
+            });
+        }
+
         public void DisposeCore()
         {
             StopCore();
@@ -207,6 +236,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         void RestartCoreWorker(Action next, bool isQuiet)
         {
+            inbsInfoCache = null;
             try
             {
                 string cfg = configer.GenFinalConfig(true);

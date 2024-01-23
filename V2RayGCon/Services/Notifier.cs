@@ -1129,7 +1129,7 @@ namespace V2RayGCon.Services
                 try
                 {
                     list[index]
-                        .GetConfiger()
+                        .GetCoreCtrl()
                         .GetterInfoForNotifyIconf(s =>
                         {
                             texts.Add(s);

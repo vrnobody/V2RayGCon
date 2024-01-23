@@ -63,11 +63,5 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         /// 更新服务器摘要（摘要需要从config.json得出，所以更新功能放入IConfiger）
         /// </summary>
         void UpdateSummary();
-
-        /// <summary>
-        /// 内部使用，脚本不使用此函数。
-        /// </summary>
-        /// <param name="next"></param>
-        void GetterInfoForNotifyIconf(Action<string> next);
     }
 }

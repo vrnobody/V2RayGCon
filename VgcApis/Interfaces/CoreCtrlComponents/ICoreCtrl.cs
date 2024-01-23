@@ -98,6 +98,10 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         /// <param name="next"></param>
         void RestartCoreThen(Action next);
 
-        // Models.Datas.StatsSample TakeStatisticsSample();
+        /// <summary>
+        /// 内部使用，脚本不使用此函数。
+        /// </summary>
+        /// <param name="next"></param>
+        void GetterInfoForNotifyIconf(Action<string> next);
     }
 }

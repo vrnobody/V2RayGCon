@@ -97,11 +97,5 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         /// </summary>
         /// <param name="next"></param>
         void RestartCoreThen(Action next);
-
-        /// <summary>
-        /// 内部使用，脚本不使用此函数。
-        /// </summary>
-        /// <param name="next"></param>
-        void GatherInfoForNotifyIcon(Action<string> next);
     }
 }

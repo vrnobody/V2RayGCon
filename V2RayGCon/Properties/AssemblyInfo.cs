@@ -38,7 +38,7 @@ using System.Runtime.InteropServices;
 
 /*
 
-v1.9.2.2 Move coreConfiger:GetterInfoForNotifyIconf() to coreCtrl:GatherInfoForNotifyIcon().
+v1.9.2.2 Refactor coreConfiger:GatherInfoForNotifyIcon().
 v1.9.2.1 Disable config compression.
 --------------------------------------------------------------------
 v1.9.1.4 Change server tag back to "agentout+index".

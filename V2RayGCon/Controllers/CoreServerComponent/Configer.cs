@@ -15,6 +15,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         readonly Services.Cache cache;
         readonly VgcApis.Models.Datas.CoreInfo coreInfo;
 
+        string inbsInfoCache = null;
+
         CoreStates states;
         Logger logger;
         CoreCtrl coreCtrl;
@@ -43,8 +45,43 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return GetAllInboundsInfo().FirstOrDefault();
         }
 
+        public void GatherInfoForNotifyIcon(Action<string> next)
+        {
+            if (next == null)
+            {
+                inbsInfoCache = null;
+                return;
+            }
+
+            var cache = inbsInfoCache;
+            if (!string.IsNullOrEmpty(cache))
+            {
+                next(cache);
+                return;
+            }
+
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                var cs = GetParent().GetCoreStates();
+                var cc = GetParent().GetConfiger();
+                var name = $"{cs.GetIndex()}.[{cs.GetShortName()}]";
+                var lines = new List<string>() { name };
+                var inbs = cc.GetAllInboundsInfo();
+                foreach (var inb in inbs)
+                {
+                    lines.Add($"{inb.protocol}://{inb.host}:{inb.port}");
+                }
+                var info = string.Join(Environment.NewLine, lines);
+                inbsInfoCache = info;
+                next(info);
+            });
+        }
+
         public List<VgcApis.Models.Datas.InboundInfo> GetAllInboundsInfo()
         {
+            // clear cache
+            GatherInfoForNotifyIcon(null);
+
             var config = GetFinalConfig();
 
             if (VgcApis.Misc.Utils.IsYaml(config))
@@ -73,6 +110,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             var config = GetFinalConfig();
             UpdateSummaryCore(config);
+
+            // clear cache
+            GatherInfoForNotifyIcon(null);
+
             GetParent().InvokeEventOnPropertyChange();
         }
 

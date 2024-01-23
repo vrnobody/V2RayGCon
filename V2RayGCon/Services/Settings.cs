@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +9,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
@@ -1073,7 +1073,7 @@ namespace V2RayGCon.Services
             lazyBookKeeper = new VgcApis.Libs.Tasks.LazyGuy(
                 SaveUserSettingsWorker,
                 VgcApis.Models.Consts.Intervals.LazySaveUserSettingsDelay,
-                500
+                5000
             )
             {
                 Name = "Settings.SaveSettings",
@@ -1156,7 +1156,7 @@ namespace V2RayGCon.Services
 
         void SaveUserSettingsWorker()
         {
-            // VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() begin");
+            VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() begin");
             try
             {
                 lock (saveUserSettingsLocker)
@@ -1180,12 +1180,12 @@ namespace V2RayGCon.Services
 
                 if (userSettings.isPortable)
                 {
-                    // DebugSendLog("Try save settings to file.");
+                    DebugSendLog("Try save settings to file.");
                     SaveUserSettingsToFile();
                 }
                 else
                 {
-                    // DebugSendLog("Try save settings to properties");
+                    DebugSendLog("Try save settings to properties");
                     SetUserSettingFileIsPortableToFalse();
                     SaveUserSettingsToProperties();
 
@@ -1194,7 +1194,7 @@ namespace V2RayGCon.Services
                     );
                 }
 
-                // VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() done");
+                VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() done");
                 return;
             }
             catch { }

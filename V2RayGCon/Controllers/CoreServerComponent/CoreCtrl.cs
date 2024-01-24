@@ -209,9 +209,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         void RestartCoreWorker(Action next, bool isQuiet)
         {
-            // clear cache
-            configer.GatherInfoForNotifyIcon(null);
-
+            configer.ClearInboundsInfoCache();
             try
             {
                 string cfg = configer.GenFinalConfig(true);

@@ -65,6 +65,11 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         void UpdateSummary();
 
         /// <summary>
+        /// 清理GatherInfoForNotifyIcon()的cache
+        /// </summary>
+        void ClearInboundsInfoCache();
+
+        /// <summary>
         /// 内部使用，脚本不要使用此函数。
         /// </summary>
         /// <param name="next">为null时清空cache</param>

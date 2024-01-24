@@ -45,11 +45,15 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return GetAllInboundsInfo().FirstOrDefault();
         }
 
+        public void ClearInboundsInfoCache()
+        {
+            inbsInfoCache = null;
+        }
+
         public void GatherInfoForNotifyIcon(Action<string> next)
         {
             if (next == null)
             {
-                inbsInfoCache = null;
                 return;
             }
 
@@ -79,9 +83,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public List<VgcApis.Models.Datas.InboundInfo> GetAllInboundsInfo()
         {
-            // clear cache
-            GatherInfoForNotifyIcon(null);
-
             var config = GetFinalConfig();
 
             if (VgcApis.Misc.Utils.IsYaml(config))
@@ -110,10 +111,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             var config = GetFinalConfig();
             UpdateSummaryCore(config);
-
-            // clear cache
-            GatherInfoForNotifyIcon(null);
-
+            ClearInboundsInfoCache();
             GetParent().InvokeEventOnPropertyChange();
         }
 

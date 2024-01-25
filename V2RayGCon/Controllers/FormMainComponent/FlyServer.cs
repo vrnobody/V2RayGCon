@@ -125,6 +125,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
             lazyStatusBarUpdater?.Dispose();
 
             RemoveAllServersConrol();
+
+            Views.UserControls.ServerUI.currentServerUI = null;
         }
 
         public void RemoveAllServersConrol()

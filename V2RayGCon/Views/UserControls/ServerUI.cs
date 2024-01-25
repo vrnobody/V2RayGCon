@@ -109,7 +109,7 @@ namespace V2RayGCon.Views.UserControls
             cs.OnPropertyChanged -= OnCorePropertyChangesHandler;
         }
 
-        static ServerUI currentServerUI = null;
+        public static ServerUI currentServerUI = null;
         static readonly AutoResetEvent areHideButtons = new AutoResetEvent(true);
 
         void ShowCtrlBtn(object sender, EventArgs args)

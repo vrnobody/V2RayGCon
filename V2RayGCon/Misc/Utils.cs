@@ -1064,24 +1064,20 @@ namespace V2RayGCon.Misc
 
         #region files
 
-        private static void WriteToFileAtOnce(string path, Models.Datas.UserSettings userSettings)
+        private static void WriteToFileAtOnce(string path, string userSettings)
         {
             // https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
-            using (var fs = File.Create(path, 64 * 1024, FileOptions.WriteThrough))
+            using (var fs = File.Create(path, 48 * 1024, FileOptions.WriteThrough))
             {
-                using (StreamWriter sw = new StreamWriter(fs))
+                using (var w = new StreamWriter(fs))
                 {
-                    using (JsonTextWriter jw = new JsonTextWriter(sw))
-                    {
-                        JsonSerializer js = new JsonSerializer();
-                        js.Serialize(jw, userSettings);
-                    }
+                    w.Write(userSettings);
                 }
             }
         }
 
         internal static bool ClumsyWriter(
-            Models.Datas.UserSettings userSettings,
+            string userSettings,
             string mainFilename,
             string bakFilename
         )

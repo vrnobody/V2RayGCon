@@ -136,10 +136,7 @@ namespace VgcApis.Libs.Sys
         #endregion
 
         #region protected methods
-        protected override void Cleanup()
-        {
-            bar.Dispose();
-        }
+        protected override void Cleanup() { }
         #endregion
     }
 }

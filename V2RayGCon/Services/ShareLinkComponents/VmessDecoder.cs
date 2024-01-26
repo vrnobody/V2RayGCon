@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using V2RayGCon.Resources.Resx;
+using Newtonsoft.Json.Linq;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {

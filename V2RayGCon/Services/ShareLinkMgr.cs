@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
+using Newtonsoft.Json;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services

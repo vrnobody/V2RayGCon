@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-
-namespace VgcApis.Interfaces
+﻿namespace VgcApis.Interfaces
 {
     public interface IWrappedCoreServCtrl
         : CoreCtrlComponents.IConfiger,

@@ -1,9 +1,8 @@
-﻿using NDesk.Options;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using NDesk.Options;
 
 namespace V2RayGCon.Models.Datas
 {

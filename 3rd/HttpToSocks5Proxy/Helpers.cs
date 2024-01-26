@@ -1,9 +1,8 @@
-﻿using MihaZupan.Enums;
-using System;
+﻿using System;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using MihaZupan.Dns;
+using MihaZupan.Enums;
 
 namespace MihaZupan
 {
@@ -20,7 +19,12 @@ namespace MihaZupan
             return SocketConnectionResult.ConnectionError;
         }
 
-        public static bool ContainsDoubleNewLine(this byte[] buffer, int offset, int limit, out int endOfHeader)
+        public static bool ContainsDoubleNewLine(
+            this byte[] buffer,
+            int offset,
+            int limit,
+            out int endOfHeader
+        )
         {
             const byte R = (byte)'\r';
             const byte N = (byte)'\n';
@@ -49,10 +53,18 @@ namespace MihaZupan
         private static readonly string[] HopByHopHeaders = new string[]
         {
             // ref: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers
-            "CONNECTION", "KEEP-ALIVE", "PROXY-AUTHENTICATE", "PROXY-AUTHORIZATION", "TE", "TRAILER", "TRANSFER-ENCODING", "UPGRADE"
+            "CONNECTION",
+            "KEEP-ALIVE",
+            "PROXY-AUTHENTICATE",
+            "PROXY-AUTHORIZATION",
+            "TE",
+            "TRAILER",
+            "TRANSFER-ENCODING",
+            "UPGRADE"
         };
-        public static bool IsHopByHopHeader(this string header)
-            => HopByHopHeaders.Contains(header, StringComparer.OrdinalIgnoreCase);
+
+        public static bool IsHopByHopHeader(this string header) =>
+            HopByHopHeaders.Contains(header, StringComparer.OrdinalIgnoreCase);
 
         public static AddressType GetAddressType(string hostname)
         {
@@ -69,6 +81,7 @@ namespace MihaZupan
             }
             return AddressType.DomainName;
         }
+
         public static void TryDispose(this Socket socket)
         {
             if (socket is null)
@@ -88,6 +101,7 @@ namespace MihaZupan
             }
             catch { }
         }
+
         public static void TryDispose(this SocketAsyncEventArgs saea)
         {
             if (saea is null)

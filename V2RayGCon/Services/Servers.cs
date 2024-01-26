@@ -2,10 +2,8 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Interfaces;
@@ -1330,7 +1328,6 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.FileLogger.Info("Servers.Cleanup() save data");
             lazyServerSettingsRecorder?.Dispose();
             SaveServersSettingsWorker();
-            speedTestingBar.Dispose();
         }
 
         #endregion

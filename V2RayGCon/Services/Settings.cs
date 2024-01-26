@@ -12,7 +12,6 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
-using static ScintillaNET.Style;
 
 namespace V2RayGCon.Services
 {

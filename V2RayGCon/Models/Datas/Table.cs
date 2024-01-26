@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Models.Datas
 {

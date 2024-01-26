@@ -2,7 +2,6 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon
 {

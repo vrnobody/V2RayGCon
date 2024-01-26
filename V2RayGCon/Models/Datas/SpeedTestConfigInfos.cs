@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace V2RayGCon.Models.Datas
+﻿namespace V2RayGCon.Models.Datas
 {
     internal class SpeedTestConfigInfos
     {

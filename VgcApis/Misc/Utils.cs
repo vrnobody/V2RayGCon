@@ -4,9 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Management;
 using System.Net;
-using System.Net.Http;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -934,10 +932,13 @@ namespace VgcApis.Misc
             timeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
             var localhost = Models.Consts.Webs.LoopBackIP;
             var wc = CreateWebClient(isSocks5, localhost, port, username, password);
-            DoItLater(() =>
-            {
-                CancelWebClientAsync(wc);
-            },timeout);
+            DoItLater(
+                () =>
+                {
+                    CancelWebClientAsync(wc);
+                },
+                timeout
+            );
 
             var buff = new byte[4 * 1024];
             long size = 0;

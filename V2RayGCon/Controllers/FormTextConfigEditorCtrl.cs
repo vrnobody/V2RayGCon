@@ -1,5 +1,4 @@
-﻿using System.Windows.Forms;
-using V2RayGCon.Resources.Resx;
+﻿using V2RayGCon.Resources.Resx;
 using V2RayGCon.Views.WinForms;
 
 namespace V2RayGCon.Controllers

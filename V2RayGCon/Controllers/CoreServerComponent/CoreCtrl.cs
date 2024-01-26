@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Models.Datas;
@@ -16,7 +15,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         readonly CoreInfo coreInfo;
 
         VgcApis.Libs.Tasks.Routine bookKeeper;
-        readonly VgcApis.Libs.Tasks.Bar isRecording = new VgcApis.Libs.Tasks.Bar();
+        readonly VgcApis.Libs.Tasks.Bar isRecordingBar = new VgcApis.Libs.Tasks.Bar();
         readonly ManualResetEvent speedTestingEvt = new ManualResetEvent(true);
 
         public CoreCtrl(Services.Settings setting, CoreInfo coreInfo, Services.ConfigMgr configMgr)
@@ -50,7 +49,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             ReleaseEvents();
             core.Dispose();
             speedTestingEvt.Dispose();
-            isRecording.Dispose();
         }
 
         public bool IsSpeedTesting() => !speedTestingEvt.WaitOne(0);
@@ -149,7 +147,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 || !IsCoreRunning()
                 || setting.IsScreenLocked()
                 || setting.IsClosing()
-                || !isRecording.Install()
+                || !isRecordingBar.Install()
             )
             {
                 return;
@@ -165,7 +163,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 }
             }
             catch { }
-            isRecording.Remove();
+            isRecordingBar.Remove();
         }
 
         void OnCoreStateChangedHandler(object sender, EventArgs args)

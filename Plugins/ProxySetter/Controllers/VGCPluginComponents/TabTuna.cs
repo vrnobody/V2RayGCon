@@ -1,8 +1,6 @@
-﻿using ProxySetter.Resources.Langs;
+﻿using System.Windows.Forms;
+using ProxySetter.Resources.Langs;
 using ProxySetter.Services;
-using System;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace ProxySetter.Controllers.VGCPluginComponents
 {

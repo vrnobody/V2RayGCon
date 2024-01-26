@@ -7,7 +7,7 @@ namespace NeoLunaTests
     public class SnippetsCacheTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void CreateBestMatchSnippetsTest()
         {
             var editor = new ScintillaNET.Scintilla();
             var sc = new NeoLuna.Libs.LuaSnippet.SnippetsCache();

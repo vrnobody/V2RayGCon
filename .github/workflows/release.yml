@@ -43,7 +43,7 @@ jobs:
             $Host.Version
 
         - name: Setup .net framework build enviroment
-          uses: vrnobody/Setup-DotNetFrameworkEnv@v1.10.1
+          uses: vrnobody/Setup-DotNetFrameworkEnv@v1.20
 
         - name: Restore NuGet packages
           run: nuget restore ${env:projName}.sln

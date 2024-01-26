@@ -42,8 +42,8 @@ namespace Luna.Libs.LuaSnippet
         #region private methods
 
         List<string> GetAllNameapaces() =>
-            VgcApis.Misc.Utils
-                .GetAllAssembliesType()
+            VgcApis
+                .Misc.Utils.GetAllAssembliesType()
                 .Select(t => t.Namespace)
                 .Distinct()
                 .Where(
@@ -55,10 +55,10 @@ namespace Luna.Libs.LuaSnippet
                             || n.StartsWith("AutoUpdaterDotNET")
                             || n.StartsWith("Internal.Cryptography")
                             || n.StartsWith("Luna")
+                            || n.StartsWith("NeoLuna")
                             || n.StartsWith("Pacman")
                             || n.StartsWith("ProxySetter")
                             || n.StartsWith("ResourceEmbedderCompilerGenerated")
-                            || n.StartsWith("Statistics")
                             || n.StartsWith("V2RayGCon")
                             || n.StartsWith("VgcApis")
                         )
@@ -68,8 +68,8 @@ namespace Luna.Libs.LuaSnippet
         IEnumerable<string> GetAllAssembliesName()
         {
             var nsps = GetAllNameapaces();
-            return AppDomain.CurrentDomain
-                .GetAssemblies()
+            return AppDomain
+                .CurrentDomain.GetAssemblies()
                 .Select(asm => asm.FullName)
                 .Where(
                     fn =>
@@ -134,8 +134,8 @@ namespace Luna.Libs.LuaSnippet
         List<LuaSubFuncSnippets> GenLuaPredefinedFuncSnippets(
             IEnumerable<LuaSubFuncSnippets> append
         ) =>
-            Models.Consts.Lua.LuaPredefinedSubFunctions
-                .Select(fn => new LuaSubFuncSnippets(fn, "."))
+            Models
+                .Consts.Lua.LuaPredefinedSubFunctions.Select(fn => new LuaSubFuncSnippets(fn, "."))
                 .Union(append)
                 .ToList();
 
@@ -188,28 +188,28 @@ namespace Luna.Libs.LuaSnippet
             );
             var apiEvents = apis.SelectMany(
                 api =>
-                    VgcApis.Misc.Utils
-                        .GetPublicEventsInfoOfType(api.Item2)
+                    VgcApis
+                        .Misc.Utils.GetPublicEventsInfoOfType(api.Item2)
                         .Select(infos => $"{api.Item1}.{infos.Item2}")
             );
             var apiProps = apis.SelectMany(
                 api =>
-                    VgcApis.Misc.Utils
-                        .GetPublicPropsInfoOfType(api.Item2)
+                    VgcApis
+                        .Misc.Utils.GetPublicPropsInfoOfType(api.Item2)
                         .Select(infos => $"{api.Item1}.{infos.Item2}")
             );
             var importClrSnippet = GetAllAssembliesName();
 
             var apiFuncs = apis.SelectMany(
                 api =>
-                    VgcApis.Misc.Utils
-                        .GetPublicMethodNameAndParam(api.Item2)
+                    VgcApis
+                        .Misc.Utils.GetPublicMethodNameAndParam(api.Item2)
                         .Select(info =>
                         {
                             // void Misc:Stop(int ms)
-                            var t1 = $"{info.Item1} {api.Item1}:{info.Item2}({info.Item4})";
+                            var t1 = $"{info[0]} {api.Item1}:{info[1]}({info[3]})";
                             // Misc:Stop(ms)
-                            var t2 = $"{api.Item1}:{info.Item2}({info.Item3})";
+                            var t2 = $"{api.Item1}:{info[1]}({info[2]})";
                             return new Tuple<string, string>(t1, t2);
                         })
             );
@@ -233,8 +233,11 @@ namespace Luna.Libs.LuaSnippet
         }
 
         IEnumerable<string> GetLuaSubFunctions() =>
-            Models.Consts.Lua.LuaSubFunctions
-                .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+            Models
+                .Consts.Lua.LuaSubFunctions.Split(
+                    new char[] { ' ' },
+                    StringSplitOptions.RemoveEmptyEntries
+                )
                 .OrderBy(s => s)
                 .Select(s => $"{s}()");
 
@@ -333,29 +336,29 @@ namespace Luna.Libs.LuaSnippet
             keywords.OrderBy(k => k).Select(e => new LuaKeywordSnippets(e)).ToList();
 
         IEnumerable<LuaSubFuncSnippets> GenApisPropSnippet(string apiName, Type type) =>
-            VgcApis.Misc.Utils
-                .GetPublicPropsInfoOfType(type)
+            VgcApis
+                .Misc.Utils.GetPublicPropsInfoOfType(type)
                 .OrderBy(infos => infos.Item2)
                 .Select(infos => new LuaSubFuncSnippets($"{apiName}.{infos.Item2}", "."));
 
         IEnumerable<LuaSubFuncSnippets> GenApisEventSnippet(string apiName, Type type) =>
-            VgcApis.Misc.Utils
-                .GetPublicEventsInfoOfType(type)
+            VgcApis
+                .Misc.Utils.GetPublicEventsInfoOfType(type)
                 .OrderBy(infos => infos.Item2)
                 .Select(infos => new LuaSubFuncSnippets($"{apiName}.{infos.Item2}", "."));
 
         IEnumerable<ApiFunctionSnippets> GenApiFunctionSnippetItems(string apiName, Type type) =>
-            VgcApis.Misc.Utils
-                .GetPublicMethodNameAndParam(type)
-                .OrderBy(info => info.Item2) // item2 = method name
+            VgcApis
+                .Misc.Utils.GetPublicMethodNameAndParam(type)
+                .OrderBy(info => info[1]) // item2 = method name
                 .Select(
                     info =>
                         new ApiFunctionSnippets(
-                            info.Item1, // return type
+                            info[0], // return type
                             apiName,
-                            info.Item2, // methodName,
-                            info.Item3, // paramStr,
-                            info.Item4, // paramWithType,
+                            info[1], // methodName,
+                            info[2], // paramStr,
+                            info[3], // paramWithType,
                             @""
                         )
                 );

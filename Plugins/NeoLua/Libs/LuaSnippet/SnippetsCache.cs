@@ -7,10 +7,10 @@ namespace NeoLuna.Libs.LuaSnippet
 {
     internal sealed class SnippetsCache : VgcApis.BaseClasses.Disposable
     {
-        List<LuaKeywordSnippets> keywordCache;
-        List<LuaFuncSnippets> functionCache;
-        List<LuaSubFuncSnippets> subFunctionCache;
-        List<ApiFunctionSnippets> apiFunctionCache;
+        List<string> keywords;
+        List<string> functions;
+        List<string> subfunctions;
+        List<List<string>> apifunctions;
 
         List<Dictionary<string, string>> webUiLuaSnippetsCache =
             new List<Dictionary<string, string>>();
@@ -26,6 +26,30 @@ namespace NeoLuna.Libs.LuaSnippet
 
         public BestMatchSnippets CreateBestMatchSnippets(ScintillaNET.Scintilla editor)
         {
+            // 所有snippets继承于AutocompleteItem
+            // AutocompleteMenu的myForm会引用NeoLunaEditor，AutocompleteItem.Parent会引用AutocompleteMenu
+            // 如果直接缓存snippets会导致NeoLunaEditor无法释放
+            // 2024-01-26
+
+            var keywordCache = GenKeywordSnippetItems(keywords);
+            var functionCache = functions.Select(e => new LuaFuncSnippets($"{e}()")).ToList();
+            var subFunctionCache = subfunctions
+                .Select(e => new LuaSubFuncSnippets(e, "."))
+                .ToList();
+            var apiFunctionCache = apifunctions
+                .Select(
+                    info =>
+                        new ApiFunctionSnippets(
+                            info[0], // return type
+                            info[4], // api name
+                            info[1], // methodName,
+                            info[2], // paramStr,
+                            info[3], // paramWithType,
+                            @""
+                        )
+                )
+                .ToList();
+
             return new BestMatchSnippets(
                 editor,
                 apiFunctionCache,
@@ -46,11 +70,11 @@ namespace NeoLuna.Libs.LuaSnippet
                 .ToString()
                 .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                 .Union(initValues)
-                .Union(new string[] { "setmetatable(o, {__index = mn})" })
+                .Union(new string[] { "setmetatable(o, {__index = M})" })
                 .OrderBy(e => e)
                 .ToList();
 
-        List<LuaFuncSnippets> GenLuaFunctionSnippet()
+        List<string> GenLuaFunctions()
         {
             var funcs =
                 string.Join(" ", Models.Consts.Lua.NeoLuaPredefinedFunctions)
@@ -61,27 +85,12 @@ namespace NeoLuna.Libs.LuaSnippet
                 .Replace("dofile", "")
                 .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                 .OrderBy(s => s)
-                .Select(e =>
-                {
-                    try
-                    {
-                        return new LuaFuncSnippets($"{e}()");
-                    }
-                    catch { }
-                    return null;
-                })
-                .Where(e => e != null)
                 .ToList();
             return r;
         }
 
-        List<LuaSubFuncSnippets> GenLuaPredefinedFuncSnippets(
-            IEnumerable<LuaSubFuncSnippets> append
-        ) =>
-            Models.Consts.Lua.LuaPredefinedSubFunctions
-                .Select(fn => new LuaSubFuncSnippets(fn, "."))
-                .Union(append)
-                .ToList();
+        List<string> GenLuaPredefinedFuncs(IEnumerable<string> append) =>
+            Models.Consts.Lua.LuaPredefinedSubFunctions.Union(append).ToList();
 
         List<Dictionary<string, string>> GenWebUiSnippets(List<Tuple<string, Type>> apis)
         {
@@ -132,27 +141,27 @@ namespace NeoLuna.Libs.LuaSnippet
             );
             var apiEvents = apis.SelectMany(
                 api =>
-                    VgcApis.Misc.Utils
-                        .GetPublicEventsInfoOfType(api.Item2)
+                    VgcApis
+                        .Misc.Utils.GetPublicEventsInfoOfType(api.Item2)
                         .Select(infos => $"{api.Item1}.{infos.Item2}")
             );
             var apiProps = apis.SelectMany(
                 api =>
-                    VgcApis.Misc.Utils
-                        .GetPublicPropsInfoOfType(api.Item2)
+                    VgcApis
+                        .Misc.Utils.GetPublicPropsInfoOfType(api.Item2)
                         .Select(infos => $"{api.Item1}.{infos.Item2}")
             );
 
             var apiFuncs = apis.SelectMany(
                 api =>
-                    VgcApis.Misc.Utils
-                        .GetPublicMethodNameAndParam(api.Item2)
+                    VgcApis
+                        .Misc.Utils.GetPublicMethodNameAndParam(api.Item2)
                         .Select(info =>
                         {
                             // void Misc:Stop(int ms)
-                            var t1 = $"{info.Item1} {api.Item1}:{info.Item2}({info.Item4})";
+                            var t1 = $"{info[0]} {api.Item1}:{info[1]}({info[3]})";
                             // Misc:Stop(ms)
-                            var t2 = $"{api.Item1}:{info.Item2}({info.Item3})";
+                            var t2 = $"{api.Item1}:{info[1]}({info[2]})";
                             return new Tuple<string, string>(t1, t2);
                         })
             );
@@ -175,24 +184,13 @@ namespace NeoLuna.Libs.LuaSnippet
         }
 
         IEnumerable<string> GetLuaSubFunctions() =>
-            Models.Consts.Lua.LuaSubFunctions
-                .Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+            Models
+                .Consts.Lua.LuaSubFunctions.Split(
+                    new char[] { ' ' },
+                    StringSplitOptions.RemoveEmptyEntries
+                )
                 .OrderBy(s => s)
                 .Select(s => $"{s}()");
-
-        List<LuaSubFuncSnippets> GenLuaSubFunctionSnippet() =>
-            GetLuaSubFunctions()
-                .Select(e =>
-                {
-                    try
-                    {
-                        return new LuaSubFuncSnippets(e, ".");
-                    }
-                    catch { }
-                    return null;
-                })
-                .Where(e => e != null)
-                .ToList();
 
         void GenSnippetCaches()
         {
@@ -250,56 +248,43 @@ namespace NeoLuna.Libs.LuaSnippet
 
             webUiLuaSnippetsCache = GenWebUiSnippets(apis);
 
-            keywordCache = GenKeywordSnippetItems(GenKeywords(apis.Select(e => e.Item1)));
-            functionCache = GenLuaFunctionSnippet();
+            keywords = GenKeywords(apis.Select(e => e.Item1));
+            functions = GenLuaFunctions();
 
-            var orgLuaSubFuncSnippet = GenLuaSubFunctionSnippet();
-
-            var apiEvSnippets = apis.SelectMany(api => GenApisEventSnippet(api.Item1, api.Item2));
-            var apiPropSnippets = apis.SelectMany(api => GenApisPropSnippet(api.Item1, api.Item2));
-
-            subFunctionCache = apiPropSnippets
-                .Concat(apiEvSnippets)
-                .Concat(GenLuaPredefinedFuncSnippets(orgLuaSubFuncSnippet))
+            var apiEvents = apis.SelectMany(api => GenApisEvents(api.Item1, api.Item2));
+            var apiPorps = apis.SelectMany(api => GenApisProps(api.Item1, api.Item2));
+            subfunctions = GenLuaPredefinedFuncs(GetLuaSubFunctions())
+                .Concat(apiPorps)
+                .Concat(apiEvents)
                 .ToList();
 
-            apiFunctionCache = apis.SelectMany(
-                    api => GenApiFunctionSnippetItems(api.Item1, api.Item2)
-                )
-                .ToList();
+            apifunctions = apis.SelectMany(api => GenApiFunctions(api.Item1, api.Item2)).ToList();
         }
 
         List<LuaKeywordSnippets> GenKeywordSnippetItems(IEnumerable<string> keywords) =>
             keywords.OrderBy(k => k).Select(e => new LuaKeywordSnippets(e)).ToList();
 
-        IEnumerable<LuaSubFuncSnippets> GenApisPropSnippet(string apiName, Type type) =>
-            VgcApis.Misc.Utils
-                .GetPublicPropsInfoOfType(type)
+        IEnumerable<string> GenApisProps(string apiName, Type type) =>
+            VgcApis
+                .Misc.Utils.GetPublicPropsInfoOfType(type)
                 .OrderBy(infos => infos.Item2)
-                .Select(infos => new LuaSubFuncSnippets($"{apiName}.{infos.Item2}", "."));
+                .Select(infos => $"{apiName}.{infos.Item2}");
 
-        IEnumerable<LuaSubFuncSnippets> GenApisEventSnippet(string apiName, Type type) =>
-            VgcApis.Misc.Utils
-                .GetPublicEventsInfoOfType(type)
+        IEnumerable<string> GenApisEvents(string apiName, Type type) =>
+            VgcApis
+                .Misc.Utils.GetPublicEventsInfoOfType(type)
                 .OrderBy(infos => infos.Item2)
-                .Select(infos => new LuaSubFuncSnippets($"{apiName}.{infos.Item2}", "."));
+                .Select(infos => $"{apiName}.{infos.Item2}");
 
-        IEnumerable<ApiFunctionSnippets> GenApiFunctionSnippetItems(string apiName, Type type) =>
-            VgcApis.Misc.Utils
-                .GetPublicMethodNameAndParam(type)
-                .OrderBy(info => info.Item2) // item2 = method name
-                .Select(
-                    info =>
-                        new ApiFunctionSnippets(
-                            info.Item1, // return type
-                            apiName,
-                            info.Item2, // methodName,
-                            info.Item3, // paramStr,
-                            info.Item4, // paramWithType,
-                            @""
-                        )
-                );
-
+        IEnumerable<List<string>> GenApiFunctions(string apiName, Type type) =>
+            VgcApis
+                .Misc.Utils.GetPublicMethodNameAndParam(type)
+                .Select(l =>
+                {
+                    l.Add(apiName);
+                    return l;
+                })
+                .OrderBy(info => info[1]); // info[1]: method name
         #endregion
 
         #region protected methods

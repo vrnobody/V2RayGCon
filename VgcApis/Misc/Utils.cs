@@ -2244,11 +2244,9 @@ namespace VgcApis.Misc
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static List<Tuple<string, string, string, string>> GetPublicMethodNameAndParam(
-            Type type
-        )
+        public static List<List<string>> GetPublicMethodNameAndParam(Type type)
         {
-            var fullNames = new List<Tuple<string, string, string, string>>();
+            var fullNames = new List<List<string>>();
             var methods = type.GetMethods();
             foreach (var method in methods)
             {
@@ -2264,12 +2262,7 @@ namespace VgcApis.Misc
                 var paramStrs = GenParamStr(method);
                 var returnType = GetFriendlyTypeName(method.ReturnType);
                 fullNames.Add(
-                    new Tuple<string, string, string, string>(
-                        returnType,
-                        name,
-                        paramStrs.Item1,
-                        paramStrs.Item2
-                    )
+                    new List<string>() { returnType, name, paramStrs.Item1, paramStrs.Item2, }
                 );
             }
             return fullNames;

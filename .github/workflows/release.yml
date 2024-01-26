@@ -60,6 +60,7 @@ jobs:
             Invoke-VSTest "V2RayGConTests\bin\${{ env.projCfg }}\V2RayGCon.Test.dll"
             Invoke-VSTest "VgcApisTests\bin\${{ env.projCfg }}\VgcApisTests.dll"
             Invoke-VSTest "Plugins\ProxySetterTests\bin\${{ env.projCfg }}\ProxySetterTests.dll"
+            Invoke-VSTest "Plugins\NeoLunaTests\bin\${{ env.projCfg }}\NeoLunaTests.dll"
 
         - name: Create ${{ env.pkgLunaPlugin }}
           shell: pwsh

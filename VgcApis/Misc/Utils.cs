@@ -934,11 +934,10 @@ namespace VgcApis.Misc
             timeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
             var localhost = Models.Consts.Webs.LoopBackIP;
             var wc = CreateWebClient(isSocks5, localhost, port, username, password);
-            RunInBackground(() =>
+            DoItLater(() =>
             {
-                Sleep(TimeSpan.FromMilliseconds(timeout));
                 CancelWebClientAsync(wc);
-            });
+            },timeout);
 
             var buff = new byte[4 * 1024];
             long size = 0;

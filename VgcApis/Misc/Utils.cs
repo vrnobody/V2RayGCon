@@ -925,64 +925,50 @@ namespace VgcApis.Misc
             string password
         )
         {
-            var TIMEOUT = Models.Consts.Core.SpeedtestTimeout;
             if (string.IsNullOrEmpty(url))
             {
                 return new Tuple<long, long>(-1, 0);
             }
 
-            long expectedBytes = expectedSizeInKiB * 1024;
-
+            long expectedSizeInBytes = expectedSizeInKiB * 1024;
             timeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
-
-            var sw = new Stopwatch();
-            var dlCompleted = new AutoResetEvent(false);
-            long size = 0;
-
             var localhost = Models.Consts.Webs.LoopBackIP;
             var wc = CreateWebClient(isSocks5, localhost, port, username, password);
-
-            wc.DownloadStringCompleted += (s, a) =>
+            RunInBackground(() =>
             {
-                try
-                {
-                    dlCompleted.Set();
-                }
-                catch { }
-            };
+                Sleep(TimeSpan.FromMilliseconds(timeout));
+                CancelWebClientAsync(wc);
+            });
 
-            wc.DownloadProgressChanged += (s, a) =>
-            {
-                var b = a.BytesReceived;
-                lock (wc)
-                {
-                    if (b > size)
-                    {
-                        size = b;
-                    }
-                }
-                if (size > expectedBytes && expectedBytes >= 0)
-                {
-                    CancelWebClientAsync(wc);
-                }
-            };
-
+            var buff = new byte[4 * 1024];
+            long size = 0;
+            var sw = new Stopwatch();
+            sw.Restart();
             try
             {
-                sw.Restart();
-                wc.DownloadStringAsync(new Uri(url));
-                dlCompleted.WaitOne(timeout);
-                dlCompleted.Dispose();
+                using (var stream = wc.OpenRead(url))
+                {
+                    stream.ReadTimeout = timeout;
+                    int n = 1;
+                    while (
+                        n > 0
+                        && (expectedSizeInBytes < 0 || size <= expectedSizeInBytes)
+                        && timeout >= sw.ElapsedMilliseconds
+                    )
+                    {
+                        n = stream.Read(buff, 0, buff.Length);
+                        size += n;
+                    }
+                }
             }
             catch { }
             sw.Stop();
-            CancelWebClientAsync(wc);
             wc.Dispose();
 
             var time = sw.ElapsedMilliseconds;
-            if (!(time <= timeout && size > 0 && size > expectedBytes))
+            if (!(time <= timeout && size > 0 && size > expectedSizeInBytes))
             {
-                time = TIMEOUT;
+                time = Models.Consts.Core.SpeedtestTimeout;
             }
             return new Tuple<long, long>(time, size);
         }

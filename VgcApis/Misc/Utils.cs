@@ -2046,6 +2046,11 @@ namespace VgcApis.Misc
 
         public static bool CopyToClipboard(string content)
         {
+            if (string.IsNullOrEmpty(content))
+            {
+                return false;
+            }
+
             try
             {
                 Clipboard.SetText(content);

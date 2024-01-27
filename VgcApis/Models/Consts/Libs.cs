@@ -9,8 +9,8 @@
         #endregion
 
         #region VgcApis.Libs.Sys.CacheLogger
-        public const int MaxCacheLoggerLineNumber = 500;
-        public const int MinCacheLoggerLineNumber = MaxCacheLoggerLineNumber * 2 / 5;
+        public static int DefaultLoggerCacheLines = 500;
+        public static int MainLoggerCacheLines = 800;
         #endregion
     }
 }

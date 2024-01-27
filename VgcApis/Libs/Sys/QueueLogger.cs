@@ -8,22 +8,18 @@ namespace VgcApis.Libs.Sys
     {
         long logTimestamp = DateTime.Now.Ticks;
 
-        readonly int maxLineNumber;
-        readonly int minLineNumber;
+        readonly int capacity;
+        int tail = 0;
 
         readonly object logLock = new object();
-        Queue<string> logs = new Queue<string>();
+        List<string> logs = new List<string>();
 
         public QueueLogger()
-            : this(
-                Models.Consts.Libs.MinCacheLoggerLineNumber,
-                Models.Consts.Libs.MaxCacheLoggerLineNumber
-            ) { }
+            : this(Models.Consts.Libs.DefaultLoggerCacheLines) { }
 
-        public QueueLogger(int minLineNumber, int maxLineNumber)
+        public QueueLogger(int capacity)
         {
-            this.minLineNumber = minLineNumber;
-            this.maxLineNumber = maxLineNumber;
+            this.capacity = capacity;
         }
 
         #region public methods
@@ -33,7 +29,8 @@ namespace VgcApis.Libs.Sys
         {
             lock (logLock)
             {
-                logs = new Queue<string>();
+                logs = new List<string>();
+                tail = 0;
             }
             UpdateLogTimestamp();
         }
@@ -42,12 +39,24 @@ namespace VgcApis.Libs.Sys
 
         public void Log(string message)
         {
+            if (isDisposed)
+            {
+                return;
+            }
+
             lock (logLock)
             {
-                logs.Enqueue(message ?? @"");
+                if (logs.Count < capacity)
+                {
+                    logs.Add(message ?? @"");
+                }
+                else
+                {
+                    logs[tail] = message ?? "";
+                    tail = (tail + 1) % logs.Count;
+                }
             }
             UpdateLogTimestamp();
-            TrimLogCache();
         }
 
         public string GetLogAsString(bool hasNewLineAtTheEnd)
@@ -67,14 +76,8 @@ namespace VgcApis.Libs.Sys
                 {
                     logStrCacheTimestamp = -1;
                 }
-                if (logStrCache != string.Empty)
-                {
-                    logStrCache = string.Empty;
-                }
-                if (trimedLogStrCache != string.Empty)
-                {
-                    trimedLogStrCache = string.Empty;
-                }
+                logStrCache = "";
+                trimedLogStrCache = "";
             }
         }
 
@@ -92,12 +95,16 @@ namespace VgcApis.Libs.Sys
                     var sb = new StringBuilder();
                     lock (logLock)
                     {
-                        foreach (var line in logs)
+                        for (int i = tail; i < logs.Count; i++)
                         {
-                            sb.AppendLine(line);
+                            sb.AppendLine(logs[i]);
+                        }
+
+                        for (int i = 0; i < tail; i++)
+                        {
+                            sb.AppendLine(logs[i]);
                         }
                     }
-                    sb.AppendLine();
                     logStrCache = sb.ToString();
                     trimedLogStrCache = Misc.Utils.TrimTrailingNewLine(logStrCache);
                     logStrCacheTimestamp = logTimestamp;
@@ -106,37 +113,13 @@ namespace VgcApis.Libs.Sys
             return hasNewLineAtTheEnd ? logStrCache : trimedLogStrCache;
         }
 
-        readonly Tasks.Bar bar = new Tasks.Bar();
-
-        void TrimLogCache()
-        {
-            if (!bar.Install())
-            {
-                return;
-            }
-
-            var count = logs.Count;
-            if (count < maxLineNumber)
-            {
-                bar.Remove();
-                return;
-            }
-
-            lock (logLock)
-            {
-                var num = logs.Count - minLineNumber;
-                for (int i = 0; i < num; i++)
-                {
-                    logs.Dequeue();
-                }
-            }
-            bar.Remove();
-        }
-
         #endregion
 
         #region protected methods
-        protected override void Cleanup() { }
+        protected override void Cleanup()
+        {
+            Clear();
+        }
         #endregion
     }
 }

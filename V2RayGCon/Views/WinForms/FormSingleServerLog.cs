@@ -92,5 +92,12 @@ namespace V2RayGCon.Views.WinForms
                 logUpdater.Restart();
             }
         }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var logs = rtBoxLogger.Text;
+            var msg = VgcApis.Misc.Utils.CopyToClipboard(logs) ? I18N.CopySuccess : I18N.CopyFail;
+            VgcApis.Misc.UI.MsgBoxAsync(msg);
+        }
     }
 }

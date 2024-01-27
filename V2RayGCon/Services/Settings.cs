@@ -649,7 +649,9 @@ namespace V2RayGCon.Services
         }
 
         public CultureInfo orgCulture = null;
-        readonly VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger(400, 800);
+        readonly VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger(
+            VgcApis.Models.Consts.Libs.MainLoggerCacheLines
+        );
 
         public long GetLogTimestamp() => qLogger.GetTimestamp();
 

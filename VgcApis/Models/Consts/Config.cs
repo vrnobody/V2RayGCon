@@ -4,6 +4,8 @@ namespace VgcApis.Models.Consts
 {
     public static class Config
     {
+        public static readonly int MinCompressConfigLen = 1 * 1024 * 1024;
+
         public static readonly string servsPkgTagPrefix = @"agentout";
 
         public static readonly string HttpInboundsTemplate =

@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Base64Tests.cs" />
     <Compile Include="BitStreamTests.cs" />
+    <Compile Include="LibsTests\RoutineTests.cs" />
     <Compile Include="LibsTests\BarTests.cs" />
     <Compile Include="LibsTests\TicketPoolTests.cs" />
     <Compile Include="Experiments.cs" />

@@ -1,11 +1,11 @@
-﻿using NeoLuna.Resources.Langs;
-using NeoLuna.Views.WinForms;
-using ScintillaNET;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using NeoLuna.Resources.Langs;
+using NeoLuna.Views.WinForms;
+using ScintillaNET;
 
 namespace NeoLuna.Controllers.FormEditorCtrl
 {
@@ -88,7 +88,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
             BindEvents();
             ReloadScriptName();
 
-            logUpdater.Run();
+            logUpdater.Restart();
 
             /*
             #if DEBUG

@@ -14,11 +14,11 @@ namespace VgcApis.BaseClasses
         public Disposable() { }
 
         #region IDisposable
-        private bool disposedValue;
+        protected bool isDisposed;
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!isDisposed)
             {
                 if (disposing)
                 {
@@ -29,7 +29,7 @@ namespace VgcApis.BaseClasses
                 // TODO: 释放未托管的资源(未托管的对象)并重写终结器
                 // TODO: 将大型字段设置为 null
                 CleanupUnmanagedResources();
-                disposedValue = true;
+                isDisposed = true;
             }
         }
 

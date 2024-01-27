@@ -34,7 +34,7 @@ namespace V2RayGCon.Views.WinForms
         private void FormLog_Load(object sender, EventArgs e)
         {
             logDisplayer = new VgcApis.Libs.Tasks.Routine(UpdateLog, 500);
-            logDisplayer.Run();
+            logDisplayer.Restart();
             // throw new NullReferenceException("for debugging");
         }
 
@@ -66,11 +66,11 @@ namespace V2RayGCon.Views.WinForms
             pauseToolStripMenuItem.Checked = pause;
             if (pause)
             {
-                logDisplayer.Pause();
+                logDisplayer.Stop();
             }
             else
             {
-                logDisplayer.Run();
+                logDisplayer.Restart();
             }
         }
 

@@ -1,6 +1,6 @@
-﻿using NeoLuna.Resources.Langs;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using NeoLuna.Resources.Langs;
 
 namespace NeoLuna.Views.WinForms
 {
@@ -39,7 +39,7 @@ namespace NeoLuna.Views.WinForms
 
         private void FormSingleServerLog_Load(object sender, EventArgs e)
         {
-            logUpdater.Run();
+            logUpdater.Restart();
         }
 
         private void FormSingleServerLog_FormClosed(object sender, FormClosedEventArgs e)
@@ -69,11 +69,11 @@ namespace NeoLuna.Views.WinForms
             pauseToolStripMenuItem.Checked = isPaused;
             if (isPaused)
             {
-                logUpdater.Pause();
+                logUpdater.Stop();
             }
             else
             {
-                logUpdater.Run();
+                logUpdater.Restart();
             }
         }
 

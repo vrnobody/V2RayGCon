@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Timers;
+using System.Threading.Tasks;
 
 namespace VgcApis.Libs.Tasks
 {
     public sealed class Routine : BaseClasses.Disposable
     {
         readonly Action action;
-        readonly Timer timer;
-        readonly Bar bar;
+        readonly int interval;
+        readonly object locker = new object();
+        bool isRunning = false;
+        bool again = false;
 
         public Routine(Action action, int interval)
         {
@@ -17,58 +19,70 @@ namespace VgcApis.Libs.Tasks
             {
                 throw new ArgumentException("Interval must greater then zero.");
             }
-
-            bar = new Bar();
-            timer = CreateTimer(interval);
-            timer.Elapsed += Task;
+            this.interval = interval;
         }
 
         #region public methods
-        /// <summary>
-        /// Start routine.
-        /// </summary>
-        public void Run() => timer.Start();
 
-        public void Pause() => timer.Stop();
+        public void Restart()
+        {
+            if (isDisposed)
+            {
+                return;
+            }
+            var stopped = false;
+            lock (locker)
+            {
+                again = true;
+                if (!isRunning)
+                {
+                    stopped = true;
+                    isRunning = true;
+                }
+            }
+
+            if (stopped)
+            {
+                DoWork();
+            }
+        }
+
+        public void Stop()
+        {
+            lock (locker)
+            {
+                again = false;
+            }
+        }
 
         #endregion
 
         #region protected methods
-        /// <summary>
-        /// Dispose timer only!
-        /// </summary>
+
         protected override void Cleanup()
         {
-            timer.Stop();
-            timer.Dispose();
+            Stop();
         }
         #endregion
 
         #region private methods
-        void Task(object sender, EventArgs args)
+        void DoWork()
         {
-            if (!bar.Install())
-            {
-                return;
-            }
-
-            try
-            {
-                action();
-            }
-            finally
-            {
-                bar.Remove();
-            }
+            Task.Delay(interval)
+                .ContinueWith(_ =>
+                {
+                    lock (locker)
+                    {
+                        if (!again)
+                        {
+                            isRunning = false;
+                            return;
+                        }
+                    }
+                    action();
+                    DoWork();
+                });
         }
-
-        Timer CreateTimer(int interval) =>
-            new Timer
-            {
-                AutoReset = true,
-                Interval = interval,
-                Enabled = false,
-            };
         #endregion
     }
 }

@@ -1,11 +1,11 @@
-﻿using Luna.Resources.Langs;
-using Luna.Views.WinForms;
-using ScintillaNET;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Luna.Resources.Langs;
+using Luna.Views.WinForms;
+using ScintillaNET;
 
 namespace Luna.Controllers.FormEditorCtrl
 {
@@ -88,7 +88,7 @@ namespace Luna.Controllers.FormEditorCtrl
             BindEvents();
             ReloadScriptName();
 
-            logUpdater.Run();
+            logUpdater.Restart();
 
             /*
             #if DEBUG

@@ -55,7 +55,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void FormSingleServerLog_Load(object sender, EventArgs e)
         {
-            logUpdater.Run();
+            logUpdater.Restart();
         }
 
         private void FormSingleServerLog_FormClosed(object sender, FormClosedEventArgs e)
@@ -85,11 +85,11 @@ namespace V2RayGCon.Views.WinForms
             pauseToolStripMenuItem.Checked = isPaused;
             if (isPaused)
             {
-                logUpdater.Pause();
+                logUpdater.Stop();
             }
             else
             {
-                logUpdater.Run();
+                logUpdater.Restart();
             }
         }
     }

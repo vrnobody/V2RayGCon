@@ -193,7 +193,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         void StopCoreWorker(Action next)
         {
-            bookKeeper?.Pause();
+            bookKeeper?.Stop();
             try
             {
                 GetParent().InvokeEventOnCoreClosing();
@@ -220,7 +220,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 {
                     core.RestartCore(cfg);
                 }
-                bookKeeper?.Run();
+                bookKeeper?.Restart();
             }
             finally
             {

@@ -262,13 +262,13 @@ namespace V2RayGCon.Services
 
         #region server tracking
 
-        Libs.Sys.CancelableTimeout lazyServerTrackingTimer = null;
+        VgcApis.Libs.Tasks.CancelableTimeout lazyServerTrackingTimer = null;
 
         void DoServerTrackingLater(Action onTimeout)
         {
             lazyServerTrackingTimer?.Release();
             lazyServerTrackingTimer = null;
-            lazyServerTrackingTimer = new Libs.Sys.CancelableTimeout(onTimeout, 2000);
+            lazyServerTrackingTimer = new VgcApis.Libs.Tasks.CancelableTimeout(onTimeout, 2000);
             lazyServerTrackingTimer.Start();
         }
 
@@ -554,12 +554,12 @@ namespace V2RayGCon.Services
 
         public bool IsRunningSpeedTest()
         {
-            var r = speedTestingBar.Install();
-            if (r)
+            if (!speedTestingBar.Install())
             {
-                speedTestingBar.Remove();
+                return true;
             }
-            return !r;
+            speedTestingBar.Remove();
+            return false;
         }
 
         public void StopSpeedTest()

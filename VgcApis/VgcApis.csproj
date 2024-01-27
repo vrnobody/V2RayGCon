@@ -86,6 +86,7 @@
     <Compile Include="Libs\Sys\NotepadHelper.cs" />
     <Compile Include="Libs\Sys\ScreenExtensions.cs" />
     <Compile Include="Libs\Tasks\Bar.cs" />
+    <Compile Include="Libs\Tasks\CancelableTask.cs" />
     <Compile Include="Libs\Tasks\Routine.cs" />
     <Compile Include="BaseClasses\Disposable.cs" />
     <Compile Include="BaseClasses\AuxSiWinForm.cs" />

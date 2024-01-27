@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace ProxySetter.Libs.Sys
+namespace VgcApis.Libs.Tasks
 {
     public class CancelableTask
     {

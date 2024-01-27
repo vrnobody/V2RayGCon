@@ -6,7 +6,7 @@ namespace VgcApis.Libs.Tasks
     public sealed class Routine : BaseClasses.Disposable
     {
         readonly Action action;
-        readonly Timer schedule;
+        readonly Timer timer;
         readonly Bar bar;
 
         public Routine(Action action, int interval)
@@ -19,17 +19,17 @@ namespace VgcApis.Libs.Tasks
             }
 
             bar = new Bar();
-            schedule = MakeSchedule(interval);
-            schedule.Elapsed += Task;
+            timer = CreateTimer(interval);
+            timer.Elapsed += Task;
         }
 
         #region public methods
         /// <summary>
         /// Start routine.
         /// </summary>
-        public void Run() => schedule.Start();
+        public void Run() => timer.Start();
 
-        public void Pause() => schedule.Stop();
+        public void Pause() => timer.Stop();
 
         #endregion
 
@@ -39,8 +39,8 @@ namespace VgcApis.Libs.Tasks
         /// </summary>
         protected override void Cleanup()
         {
-            schedule.Stop();
-            schedule.Dispose();
+            timer.Stop();
+            timer.Dispose();
         }
         #endregion
 
@@ -62,7 +62,7 @@ namespace VgcApis.Libs.Tasks
             }
         }
 
-        Timer MakeSchedule(int interval) =>
+        Timer CreateTimer(int interval) =>
             new Timer
             {
                 AutoReset = true,

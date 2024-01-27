@@ -1,8 +1,8 @@
-﻿using ProxySetter.Resources.Langs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using ProxySetter.Resources.Langs;
 
 namespace ProxySetter.Services
 {
@@ -165,13 +165,16 @@ namespace ProxySetter.Services
             catch { }
         }
 
-        Libs.Sys.CancelableTimeout lazyProxyUpdateTimer = null;
+        VgcApis.Libs.Tasks.CancelableTimeout lazyProxyUpdateTimer = null;
 
         void WakeupLazyProxyUpdater()
         {
             if (lazyProxyUpdateTimer == null)
             {
-                lazyProxyUpdateTimer = new Libs.Sys.CancelableTimeout(LazyProxyUpdater, 2000);
+                lazyProxyUpdateTimer = new VgcApis.Libs.Tasks.CancelableTimeout(
+                    LazyProxyUpdater,
+                    2000
+                );
             }
             lazyProxyUpdateTimer.Start();
         }

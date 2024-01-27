@@ -55,8 +55,6 @@
     <Compile Include="Controllers\VGCPluginComponents\TabStatus.cs" />
     <Compile Include="Controllers\VGCPluginComponents\TabPacCustomList.cs" />
     <Compile Include="Libs\Nets\PacGenerator.cs" />
-    <Compile Include="Libs\Sys\CancelableTask.cs" />
-    <Compile Include="Libs\Sys\CancelableTimeout.cs" />
     <Compile Include="Libs\Sys\ProxySetter.cs" />
     <Compile Include="Libs\Sys\WinInet.cs" />
     <Compile Include="Misc\Utils.cs" />

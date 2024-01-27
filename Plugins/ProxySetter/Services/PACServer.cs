@@ -1,8 +1,8 @@
-﻿using ProxySetter.Resources.Langs;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using ProxySetter.Resources.Langs;
 
 namespace ProxySetter.Services
 {
@@ -18,7 +18,7 @@ namespace ProxySetter.Services
 
         readonly object webServerLock = new object();
         HttpListener webListener = null;
-        Libs.Sys.CancelableTask webResponser = null;
+        VgcApis.Libs.Tasks.CancelableTask webResponser = null;
 
         public PacServer() { }
 
@@ -185,13 +185,13 @@ namespace ProxySetter.Services
             customPacFileWatcher.EnableRaisingEvents = true;
         }
 
-        Libs.Sys.CancelableTimeout lazyCustomPacFileCacheUpdateTimer = null;
+        VgcApis.Libs.Tasks.CancelableTimeout lazyCustomPacFileCacheUpdateTimer = null;
 
         void LazyCustomPacFileCacheUpdate()
         {
             if (lazyCustomPacFileCacheUpdateTimer == null)
             {
-                lazyCustomPacFileCacheUpdateTimer = new Libs.Sys.CancelableTimeout(
+                lazyCustomPacFileCacheUpdateTimer = new VgcApis.Libs.Tasks.CancelableTimeout(
                     UpdateCustomPacCache,
                     2000
                 );
@@ -234,7 +234,7 @@ namespace ProxySetter.Services
                 return false;
             }
 
-            webResponser = new Libs.Sys.CancelableTask(WebResponseWorker);
+            webResponser = new VgcApis.Libs.Tasks.CancelableTask(WebResponseWorker);
             webResponser.Start();
             return true;
         }
@@ -287,14 +287,14 @@ namespace ProxySetter.Services
             customPacFileWatcher = null;
         }
 
-        Libs.Sys.CancelableTimeout lazyStateChangeTimer = null;
+        VgcApis.Libs.Tasks.CancelableTimeout lazyStateChangeTimer = null;
 
         void LazyInvokeOnPacServerStateChange()
         {
             // Create on demand.
             if (lazyStateChangeTimer == null)
             {
-                lazyStateChangeTimer = new Libs.Sys.CancelableTimeout(
+                lazyStateChangeTimer = new VgcApis.Libs.Tasks.CancelableTimeout(
                     () =>
                     {
                         try
@@ -367,8 +367,8 @@ namespace ProxySetter.Services
             string pacContent
         )
         {
-            var html = StrConst.PacDebuggerTpl
-                .Replace("__PacMode__", mode)
+            var html = StrConst
+                .PacDebuggerTpl.Replace("__PacMode__", mode)
                 .Replace("__PacServerUrl__", url)
                 .Replace("__PACFileContent__", pacContent);
             var mime = "text/html; charset=UTF-8";

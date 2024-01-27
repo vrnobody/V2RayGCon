@@ -195,7 +195,6 @@
     <Compile Include="Libs\QRCode\QRCode.cs" />
     <Compile Include="Libs\Sys\SafeNativeMethods.cs" />
     <Compile Include="Misc\UI.cs" />
-    <Compile Include="Libs\Sys\CancelableTimeout.cs" />
     <Compile Include="BaseClasses\IFormMainFlyPanelComponent.cs" />
     <Compile Include="BaseClasses\IFormComponentController.cs" />
     <Compile Include="BaseClasses\FormController.cs" />

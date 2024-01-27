@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static VgcApis.Misc.Utils;
 using static VgcApis.Models.Datas.Enums;
 
@@ -16,6 +16,32 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+        [TestMethod]
+        public void DoItLaterTest()
+        {
+            var d = 0;
+            DoItLater(
+                () =>
+                {
+                    d++;
+                },
+                500
+            );
+            Assert.AreEqual(0, d);
+            Sleep(1000);
+            Assert.AreEqual(1, d);
+            DoItLater(
+                () =>
+                {
+                    d += 2;
+                },
+                TimeSpan.FromMilliseconds(500)
+            );
+            Assert.AreEqual(1, d);
+            Sleep(1000);
+            Assert.AreEqual(3, d);
+        }
+
         [DataTestMethod]
         [DataRow("::ffff:1.2.3.4", true)]
         [DataRow("[::ffff:1234:1234]", true)]

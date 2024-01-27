@@ -1070,17 +1070,14 @@ namespace VgcApis.Misc
         #endregion
 
         #region Task
+        public static void DoItLater(Action action, TimeSpan span)
+        {
+            _ = Task.Delay(span).ContinueWith(_ => action());
+        }
 
         public static void DoItLater(Action action, long ms)
         {
-            var timer = new System.Threading.Timer(
-                (state) =>
-                {
-                    (state as System.Threading.Timer)?.Dispose();
-                    action();
-                }
-            );
-            timer.Change(ms, Timeout.Infinite);
+            DoItLater(action, TimeSpan.FromMilliseconds(ms));
         }
 
         public static void Sleep(TimeSpan timespan)

@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Moq;
-using Newtonsoft.Json.Linq;
-using System.IO;
-using System.Collections.Concurrent;
-using System.Collections.ObjectModel;
 using Neo.IronLua;
+using Newtonsoft.Json.Linq;
 
 namespace NeoLuna.Services
 {
@@ -199,9 +199,9 @@ namespace NeoLuna.Services
         {
             try
             {
-                var keep = 100;
+                var keep = 50;
                 var keys = cache.Keys.ToList();
-                if (keys.Count > keep * 2)
+                if (keys.Count > keep * 1.5)
                 {
                     var cut = keys.Count - keep;
                     for (int i = 0; i < cut; i++)
@@ -278,18 +278,17 @@ namespace NeoLuna.Services
         {
             lock (codeCacheLock)
             {
-                while (hotCacheKeys.Count > 50)
+                var keep = 50;
+                while (hotCacheKeys.Count > keep)
                 {
                     hotCacheKeys.TryDequeue(out _);
                 }
 
-                if (astCodeCache.Count > 200)
+                if (astCodeCache.Count > keep * 1.5)
                 {
                     var keys = astCodeCache.Keys;
-                    var filterd = keys.Where(k => !hotCacheKeys.Contains(k))
-                        .Skip(100 - hotCacheKeys.Count)
-                        .ToList();
-                    foreach (var k in filterd)
+                    var rm = keys.Where(k => !hotCacheKeys.Contains(k)).ToList();
+                    foreach (var k in rm)
                     {
                         astCodeCache.TryRemove(k, out _);
                     }

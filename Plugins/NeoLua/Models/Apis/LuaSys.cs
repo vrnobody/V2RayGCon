@@ -1638,13 +1638,12 @@ namespace NeoLuna.Models.Apis
 
             if (useStdIn)
             {
-                var ie = inputEncoding ?? EncodingCmd936;
-                var buff = ie.GetBytes(stdin);
-
-                var input = p.StandardInput;
-                input.BaseStream.Write(buff, 0, buff.Length);
-                input.WriteLine();
-                input.Close();
+                var ie = inputEncoding ?? EncodingDefault;
+                using (var s = p.StandardInput.BaseStream)
+                using (var w = new StreamWriter(s, ie))
+                {
+                    w.Write(stdin);
+                }
             }
 
             return p;

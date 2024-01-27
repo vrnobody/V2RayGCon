@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -393,6 +394,23 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
+        static ArrayPool<byte> bufferPool = ArrayPool<byte>.Shared;
+
+        public static byte[] RentBuffer()
+        {
+            return bufferPool.Rent(Models.Consts.Libs.DefaultBufferSize);
+        }
+
+        public static byte[] RentBuffer(int size)
+        {
+            return bufferPool.Rent(size);
+        }
+
+        public static void ReturnBuffer(byte[] buff)
+        {
+            bufferPool.Return(buff);
+        }
+
         public static string UriEncode(string content)
         {
             try
@@ -940,7 +958,7 @@ namespace VgcApis.Misc
                 timeout
             );
 
-            var buff = new byte[4 * 1024];
+            var buffer = RentBuffer();
             long size = 0;
             var sw = new Stopwatch();
             sw.Restart();
@@ -956,13 +974,14 @@ namespace VgcApis.Misc
                         && timeout >= sw.ElapsedMilliseconds
                     )
                     {
-                        n = stream.Read(buff, 0, buff.Length);
+                        n = stream.Read(buffer, 0, buffer.Length);
                         size += n;
                     }
                 }
             }
             catch { }
             sw.Stop();
+            ReturnBuffer(buffer);
             wc.Dispose();
 
             var time = sw.ElapsedMilliseconds;

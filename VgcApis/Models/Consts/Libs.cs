@@ -2,6 +2,8 @@
 {
     public static class Libs
     {
+        public static int DefaultBufferSize = 4 * 1024;
+
         #region system
         public static string UiThreadName = @"VgcUiThread";
         #endregion

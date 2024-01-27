@@ -11,8 +11,6 @@ namespace V2RayGCon.Libs.V2Ray
 {
     public class Core : IDisposable
     {
-        readonly Encoding utf8 = Encoding.UTF8;
-
         public event Action<string> OnLog;
         public event EventHandler OnCoreStatusChanged;
 
@@ -374,8 +372,8 @@ namespace V2RayGCon.Libs.V2Ray
                     RedirectStandardError = true,
                     RedirectStandardInput = true,
                     // 定时炸弹
-                    StandardOutputEncoding = utf8,
-                    StandardErrorEncoding = utf8,
+                    StandardOutputEncoding = Encoding.UTF8,
+                    StandardErrorEncoding = Encoding.UTF8,
                 }
             };
             p.EnableRaisingEvents = true;
@@ -559,7 +557,7 @@ namespace V2RayGCon.Libs.V2Ray
 
             if (!isCustomCore || cs.useStdin)
             {
-                var ec = isCustomCore ? cs.GetStdInEncoding() : utf8;
+                var ec = isCustomCore ? cs.GetStdInEncoding() : Encoding.Default;
                 WriteConfigToStandardInput(core, config, ec);
             }
 
@@ -572,11 +570,11 @@ namespace V2RayGCon.Libs.V2Ray
 
         private void WriteConfigToStandardInput(Process proc, string config, Encoding encoding)
         {
-            var input = proc.StandardInput;
-            var buff = encoding.GetBytes(config);
-            input.BaseStream.Write(buff, 0, buff.Length);
-            input.Flush();
-            input.Close();
+            using (var s = proc.StandardInput.BaseStream)
+            using (var w = new StreamWriter(s, encoding))
+            {
+                w.Write(config);
+            }
         }
 
         void SendLogHandler(object sender, DataReceivedEventArgs args)

@@ -397,10 +397,11 @@ namespace Luna.Models.Apis.SysCmpos
             context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
             context.Response.AddHeader("Last-Modified", lastModified.ToString("r"));
 
-            byte[] buffer = new byte[1024 * 32];
+            var buffer = VgcApis.Misc.Utils.RentBuffer();
             int nbytes;
             while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
                 context.Response.OutputStream.Write(buffer, 0, nbytes);
+            VgcApis.Misc.Utils.ReturnBuffer(buffer);
             input.Close();
             context.Response.OutputStream.Flush();
             context.Response.StatusCode = (int)HttpStatusCode.OK;

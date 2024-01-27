@@ -40,9 +40,19 @@ namespace V2RayGCon.Models.Datas
 
         public static List<string> GetEncodings() => encodings;
 
-        public Encoding GetStdInEncoding() => TranslateEncoding(stdInEncoding);
+        public Encoding GetStdInEncoding()
+        {
+            return string.IsNullOrEmpty(stdInEncoding)
+                ? Encoding.Default
+                : TranslateEncoding(stdInEncoding);
+        }
 
-        public Encoding GetStdOutEncoding() => TranslateEncoding(stdOutEncoding);
+        public Encoding GetStdOutEncoding()
+        {
+            return string.IsNullOrEmpty(stdInEncoding)
+                ? Encoding.UTF8
+                : TranslateEncoding(stdOutEncoding);
+        }
 
         public static Encoding TranslateEncoding(string encoding)
         {

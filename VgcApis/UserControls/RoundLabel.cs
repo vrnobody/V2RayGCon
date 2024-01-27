@@ -11,10 +11,7 @@ namespace VgcApis.UserControls
         [Browsable(true)]
         public Color _BackColor { get; set; }
 
-        public RoundLabel()
-        {
-            this.DoubleBuffered = true;
-        }
+        public RoundLabel() { }
 
         protected override void OnPaint(PaintEventArgs e)
         {

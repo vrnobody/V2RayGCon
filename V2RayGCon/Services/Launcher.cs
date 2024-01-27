@@ -288,7 +288,6 @@ namespace V2RayGCon.Services
             };
 
             // dependency injection
-            cache.Run(setting);
             configMgr.Run(setting, cache);
             servers.Run(setting, cache, configMgr);
             updater.Run(setting, servers);
@@ -357,13 +356,13 @@ namespace V2RayGCon.Services
 
             var ci = new CultureInfo(cultureString);
 
-            Thread.CurrentThread.CurrentCulture
-                .GetType()
+            Thread
+                .CurrentThread.CurrentCulture.GetType()
                 .GetProperty("DefaultThreadCurrentCulture")
                 .SetValue(Thread.CurrentThread.CurrentCulture, ci, null);
 
-            Thread.CurrentThread.CurrentCulture
-                .GetType()
+            Thread
+                .CurrentThread.CurrentCulture.GetType()
                 .GetProperty("DefaultThreadCurrentUICulture")
                 .SetValue(Thread.CurrentThread.CurrentCulture, ci, null);
         }

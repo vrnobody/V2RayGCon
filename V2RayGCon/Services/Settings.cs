@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using Dynamitey;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
@@ -377,33 +378,6 @@ namespace V2RayGCon.Services
             set
             {
                 userSettings.isAutoPatchSubsInfo = value;
-                SaveSettingsLater();
-            }
-        }
-
-        public Dictionary<string, string> decodeCache
-        {
-            get
-            {
-                Dictionary<string, string> r = null;
-                try
-                {
-                    r =
-                        VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
-                            Dictionary<string, string>
-                        >(userSettings.CompressedUnicodeDecodeCache);
-                }
-                catch { }
-                if (r != null)
-                {
-                    return r;
-                }
-                return r ?? new Dictionary<string, string>();
-            }
-            set
-            {
-                userSettings.CompressedUnicodeDecodeCache =
-                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(value);
                 SaveSettingsLater();
             }
         }
@@ -1054,7 +1028,7 @@ namespace V2RayGCon.Services
             InitLocalStorageCache(); // must init before plug-ins setting
             InitPluginsSettingCache();
             InitConfigTemplatesCache();
-            ReleaseLargeStrings();
+            ReplaceLargeStringsWithPlaceHolder();
 
             UpdateVgcApisUserAgent();
 
@@ -1138,42 +1112,100 @@ namespace V2RayGCon.Services
             }
         }
 
-        void ReleaseLargeStrings()
+        enum PlaceHolderNames
         {
-            userSettings.CompressedUnicodeLocalStorage = null;
-            userSettings.CompressedUnicodeCoreInfoList = null;
-            userSettings.CompressedUnicodePluginsSetting = null;
-            userSettings.CompressedUnicodeCustomConfigTemplates = null;
+            LocalStorage,
+            CoreInfoList,
+            PluginsSetting,
+            CustomConfigTemplates,
+        }
+
+        Dictionary<string, string> placeHolders = CreatePlaceHolders();
+
+        static Dictionary<string, string> CreatePlaceHolders()
+        {
+            var prefix = @"vgc-placeholder-😀😁😂";
+            var ph = new Dictionary<string, string>() { };
+            foreach (var name in Enum.GetNames(typeof(PlaceHolderNames)))
+            {
+                ph[name] = $"{prefix}-{name}";
+            }
+            return ph;
+        }
+
+        void ReplaceLargeStringsWithPlaceHolder()
+        {
+            userSettings.CompressedUnicodeLocalStorage = placeHolders[
+                PlaceHolderNames.LocalStorage.ToString()
+            ];
+            userSettings.CompressedUnicodeCoreInfoList = placeHolders[
+                PlaceHolderNames.CoreInfoList.ToString()
+            ];
+            userSettings.CompressedUnicodePluginsSetting = placeHolders[
+                PlaceHolderNames.PluginsSetting.ToString()
+            ];
+            userSettings.CompressedUnicodeCustomConfigTemplates = placeHolders[
+                PlaceHolderNames.CustomConfigTemplates.ToString()
+            ];
+        }
+
+        string ReplacePlaceHoldersWithData(string source, Dictionary<string, string> datas)
+        {
+            var r = new List<string>() { source };
+            foreach (var name in Enum.GetNames(typeof(PlaceHolderNames)))
+            {
+                var t = new List<string>();
+                var ph = placeHolders[name];
+                foreach (var str in r)
+                {
+                    if (str.Contains(ph))
+                    {
+                        var ps = str.Split(
+                            new string[] { ph },
+                            StringSplitOptions.RemoveEmptyEntries
+                        );
+                        t.Add(ps[0]);
+                        t.Add(datas[name]);
+                        t.Add(ps[1]);
+                    }
+                    else
+                    {
+                        t.Add(str);
+                    }
+                }
+                r = t;
+            }
+            return string.Join("", r);
         }
 
         string SerializeUserSettings()
         {
+            string us = null;
             try
             {
-                userSettings.CompressedUnicodeCustomConfigTemplates =
+                var ds = new Dictionary<string, string>();
+                ds[PlaceHolderNames.CustomConfigTemplates.ToString()] =
                     VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
                         configTemplateCache
                     );
-                userSettings.CompressedUnicodeLocalStorage =
+                ds[PlaceHolderNames.LocalStorage.ToString()] =
                     VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
                         localStorageCache
                     );
-                userSettings.CompressedUnicodeCoreInfoList =
+                ds[PlaceHolderNames.CoreInfoList.ToString()] =
                     VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
                         coreInfoCache
                     );
-                userSettings.CompressedUnicodePluginsSetting =
+                ds[PlaceHolderNames.PluginsSetting.ToString()] =
                     VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
                         pluginsSettingCache
                     );
-                return JsonConvert.SerializeObject(userSettings, Formatting.Indented);
+
+                var s = JsonConvert.SerializeObject(userSettings, Formatting.Indented);
+                us = ReplacePlaceHoldersWithData(s, ds);
             }
             catch { }
-            finally
-            {
-                ReleaseLargeStrings();
-            }
-            return null;
+            return us;
         }
 
         void SaveUserSettingsWorker()

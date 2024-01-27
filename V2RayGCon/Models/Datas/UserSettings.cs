@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace V2RayGCon.Models.Datas
 {
@@ -15,6 +15,12 @@ namespace V2RayGCon.Models.Datas
 
         public bool CustomVmessDecodeTemplateEnabled { get; set; } = false;
         public string CustomVmessDecodeTemplateUrl { get; set; } = "";
+
+        // ----------------------------------
+
+        // obsolete 预计2024-09删除
+        // ----------------------------------
+        public string CompressedUnicodeDecodeCache { get; set; }
 
         // ----------------------------------
 
@@ -63,8 +69,6 @@ namespace V2RayGCon.Models.Datas
         public string MultiConfItems { get; set; }
 
         public string ImportUrls { get; set; }
-
-        public string CompressedUnicodeDecodeCache { get; set; }
 
         public string SubscribeUrls { get; set; }
 
@@ -131,8 +135,6 @@ namespace V2RayGCon.Models.Datas
 
             MultiConfItems = string.Empty;
             ImportUrls = string.Empty;
-
-            CompressedUnicodeDecodeCache = string.Empty;
 
             SubscribeUrls = @"[]";
 

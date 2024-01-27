@@ -8,7 +8,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
 {
     class MenuItemsServer : FormMainComponentController
     {
-        readonly Services.Cache cache;
         readonly Services.Settings settings;
         readonly Services.Servers servers;
         readonly Services.ShareLinkMgr slinkMgr;
@@ -40,7 +39,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem sortByUploadTotal
         )
         {
-            cache = Services.Cache.Instance;
             servers = Services.Servers.Instance;
             slinkMgr = Services.ShareLinkMgr.Instance;
             settings = Services.Settings.Instance;
@@ -193,7 +191,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     return;
                 }
                 Services.Servers.Instance.DeleteAllServers();
-                Services.Cache.Instance.core.Clear();
             };
 
             deleteSelected.Click += RunWhenSelectionIsNotEmptyHandler(() =>

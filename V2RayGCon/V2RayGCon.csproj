@@ -282,7 +282,6 @@
     <Compile Include="Views\UserControls\WelcomeUI.Designer.cs">
       <DependentUpon>WelcomeUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\Caches\CoreCache.cs" />
     <Compile Include="BaseClasses\CacheComponent.cs" />
     <Compile Include="Models\Datas\Enums.cs" />
     <Compile Include="Models\Datas\Shadowsocks.cs" />

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace VgcApisTests.LibsTests

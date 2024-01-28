@@ -764,7 +764,7 @@ namespace VgcApis.Misc
 
             try
             {
-                var groups = Regex.Match(url, Models.Consts.Patterns.GitHuhFileUrl).Groups;
+                var groups = Regex.Match(url, Patterns.GitHuhFileUrl).Groups;
                 if (groups != null && groups.Count == 3)
                 {
                     var repo = groups[1];
@@ -778,7 +778,7 @@ namespace VgcApis.Misc
 
             try
             {
-                var groups = Regex.Match(url, Models.Consts.Patterns.GitHuhFileUrl).Groups;
+                var groups = Regex.Match(url, Patterns.GitHuhFileUrl).Groups;
                 if (groups != null && groups.Count == 3)
                 {
                     var repo = groups[1];
@@ -798,9 +798,7 @@ namespace VgcApis.Misc
             alias = string.Empty;
             try
             {
-                var groups = Regex
-                    .Match(url, Models.Consts.Patterns.ExtractAliasFromSubscriptUrl)
-                    .Groups;
+                var groups = Regex.Match(url, Patterns.ExtractAliasFromSubscriptUrl).Groups;
                 if (groups != null && groups.Count == 2)
                 {
                     alias = groups[1].Value;
@@ -862,7 +860,7 @@ namespace VgcApis.Misc
             {
                 return 0;
             }
-            return System.Text.Encoding.ASCII.GetByteCount(s);
+            return s.Length * 2;
         }
 
         #endregion
@@ -909,7 +907,7 @@ namespace VgcApis.Misc
         )
         {
             var wc = new WebClient { Encoding = Encoding.UTF8 };
-            wc.Headers.Add(Models.Consts.Webs.UserAgent);
+            wc.Headers.Add(Webs.UserAgent);
             if (proxyPort < 0 || proxyPort > 65535)
             {
                 return wc;
@@ -957,8 +955,8 @@ namespace VgcApis.Misc
             }
 
             long expectedSizeInBytes = expectedSizeInKiB * 1024;
-            timeout = timeout > 0 ? timeout : Models.Consts.Intervals.DefaultSpeedTestTimeout;
-            var localhost = Models.Consts.Webs.LoopBackIP;
+            timeout = timeout > 0 ? timeout : Intervals.DefaultSpeedTestTimeout;
+            var localhost = Webs.LoopBackIP;
             var wc = CreateWebClient(isSocks5, localhost, port, username, password);
             DoItLater(
                 () =>
@@ -997,7 +995,7 @@ namespace VgcApis.Misc
             var time = sw.ElapsedMilliseconds;
             if (!(time <= timeout && size > 0 && size > expectedSizeInBytes))
             {
-                time = Models.Consts.Core.SpeedtestTimeout;
+                time = Core.SpeedtestTimeout;
             }
             return new Tuple<long, long>(time, size);
         }
@@ -1023,7 +1021,7 @@ namespace VgcApis.Misc
 
         public static bool TryParseAddress(string address, out string ip, out int port)
         {
-            ip = Models.Consts.Webs.LoopBackIP;
+            ip = Webs.LoopBackIP;
             port = 1080;
 
             int index = address.LastIndexOf(':');
@@ -1155,7 +1153,7 @@ namespace VgcApis.Misc
             const int CTRL_C_EVENT = 0;
 
             var success = false;
-            if (!sendCtrlCLocker.WaitOne(Models.Consts.Core.SendCtrlCTimeout))
+            if (!sendCtrlCLocker.WaitOne(Core.SendCtrlCTimeout))
             {
                 return false;
             }
@@ -1168,7 +1166,7 @@ namespace VgcApis.Misc
                     {
                         if (
                             Libs.Sys.ConsoleCtrls.GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0)
-                            && proc.WaitForExit(Models.Consts.Core.SendCtrlCTimeout)
+                            && proc.WaitForExit(Core.SendCtrlCTimeout)
                         )
                         {
                             success = true;
@@ -1233,13 +1231,13 @@ namespace VgcApis.Misc
         #region Json
         public static JToken GenHttpInbound(int port)
         {
-            return GenHttpInbound(Models.Consts.Webs.LoopBackIP, port);
+            return GenHttpInbound(Webs.LoopBackIP, port);
         }
 
         public static JToken GenHttpInbound(string host, int port)
         {
-            var tpl = Models
-                .Consts.Config.HttpInboundsTemplate.Replace("%host%", host)
+            var tpl = Config
+                .HttpInboundsTemplate.Replace("%host%", host)
                 .Replace("%port%", port.ToString());
             return JToken.Parse(tpl);
         }
@@ -1721,7 +1719,7 @@ namespace VgcApis.Misc
             var b64s = new List<string>();
             try
             {
-                var matches = Regex.Matches(text, Models.Consts.Patterns.Base64NonStandard);
+                var matches = Regex.Matches(text, Patterns.Base64NonStandard);
                 foreach (Match match in matches)
                 {
                     var v = match.Value;
@@ -1934,7 +1932,7 @@ namespace VgcApis.Misc
 
         public static bool AreEqual(double left, double right)
         {
-            return Math.Abs(left - right) < Models.Consts.Config.FloatPointNumberTolerance;
+            return Math.Abs(left - right) < Config.FloatPointNumberTolerance;
         }
 
         public static long SpeedtestMean(long left, long right, double weight) =>
@@ -2021,7 +2019,7 @@ namespace VgcApis.Misc
 
         public static bool IsImportResultSuccess(string[] result)
         {
-            return result[3] == Models.Consts.Import.MarkImportSuccess;
+            return result[3] == Import.MarkImportSuccess;
         }
 
         public static bool IsHttpLink(string link)
@@ -2079,7 +2077,7 @@ namespace VgcApis.Misc
             // z:\vgc\libs\vgcapi.dll
             var vgcApiDllFile = Assembly.GetExecutingAssembly().Location;
             var parent = new DirectoryInfo(vgcApiDllFile).Parent;
-            if (parent.Name == Models.Consts.Files.LibsDir)
+            if (parent.Name == Files.LibsDir)
             {
                 parent = parent.Parent;
             }
@@ -2087,7 +2085,7 @@ namespace VgcApis.Misc
         }
 
         public static string GetCoreFolderFullPath() =>
-            Path.Combine(GetAppDir(), Models.Consts.Files.CoreFolderNameInside3rd);
+            Path.Combine(GetAppDir(), Files.CoreFolderNameInside3rd);
 
         public static string GetAppDir() => appDirCache;
 

@@ -60,13 +60,15 @@
   <ItemGroup>
     <Compile Include="Base64Tests.cs" />
     <Compile Include="BitStreamTests.cs" />
+    <Compile Include="LibsTests\AsciiStreamTests.cs" />
+    <Compile Include="LibsTests\UnicodeStreamTests.cs" />
     <Compile Include="LibsTests\QueueLoggerTests.cs" />
     <Compile Include="LibsTests\RoutineTests.cs" />
     <Compile Include="LibsTests\BarTests.cs" />
     <Compile Include="LibsTests\TicketPoolTests.cs" />
     <Compile Include="Experiments.cs" />
     <Compile Include="ReflectionTests.cs" />
-    <Compile Include="ZipExtensionsTests.cs" />
+    <Compile Include="LibsTests\ZipExtensionsTests.cs" />
     <Compile Include="StringReadWriterTests.cs" />
     <Compile Include="RecorderTests.cs" />
     <Compile Include="Crc8Tests.cs" />

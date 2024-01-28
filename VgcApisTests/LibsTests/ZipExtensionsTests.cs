@@ -4,12 +4,26 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using VgcApis.Libs.Infr;
 
-namespace VgcApisTests
+namespace VgcApisTests.LibsTests
 {
     [TestClass]
     public class ZipExtensionsTests
     {
         public ZipExtensionsTests() { }
+
+        [DataTestMethod]
+        [DataRow(
+            "heloworld😀😂中文1",
+            "H4sIAAAAAAAEAPv/L4MhlSGHIZ+hHIiLgKwUBtsbDPdsbzDd0/VrTzVkAAAgk1AFIgAAAA=="
+        )]
+        public void BaseLineTest(string src, string compressed)
+        {
+            var cr = ZipExtensions.CompressToBase64(src);
+            Assert.AreEqual(compressed, cr);
+
+            var dr = ZipExtensions.DecompressFromBase64(compressed);
+            Assert.AreEqual(src, dr);
+        }
 
         [DataTestMethod]
         [DataRow("hello, world!")]

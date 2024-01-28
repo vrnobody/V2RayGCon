@@ -9,7 +9,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using Dynamitey;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
@@ -1137,12 +1136,12 @@ namespace V2RayGCon.Services
 
         static Dictionary<string, string> CreatePlaceHolders()
         {
-            var prefix = @"vgc-placeholder-😀😂";
+            var mark = @"vgc-placeholder";
             var uid = Guid.NewGuid().ToString();
             var ph = new Dictionary<string, string>() { };
             foreach (var name in Enum.GetNames(typeof(PlaceHolderNames)))
             {
-                ph[name] = $"{prefix}-{uid}-{name}";
+                ph[name] = $"{name}-{mark}-{uid}";
             }
             return ph;
         }

@@ -102,7 +102,7 @@
 
         public void SetConfig(string config)
         {
-            if (config != null && config.Length > Consts.Config.MinCompressConfigLen)
+            if (Misc.Utils.StrLenInBytes(config) > Consts.Libs.MinCompressStringLength)
             {
                 this.config = Libs.Infr.ZipExtensions.CompressToBase64(config);
             }

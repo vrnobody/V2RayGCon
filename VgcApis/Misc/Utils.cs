@@ -18,6 +18,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ScintillaNET;
+using VgcApis.Models.Consts;
 using VgcApis.Resources.Langs;
 
 namespace VgcApis.Misc
@@ -853,6 +854,15 @@ namespace VgcApis.Misc
             tmpList.Sort(StringComparer.Ordinal);
             result.AddRange(tmpList);
             return result;
+        }
+
+        public static int StrLenInBytes(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return 0;
+            }
+            return System.Text.Encoding.ASCII.GetByteCount(s);
         }
 
         #endregion

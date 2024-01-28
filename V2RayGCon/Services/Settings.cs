@@ -868,26 +868,37 @@ namespace V2RayGCon.Services
         /// <returns></returns>
         public string GetPluginsSetting(string pluginName)
         {
+            string config = null;
             lock (saveUserSettingsLocker)
             {
                 if (pluginsSettingCache.ContainsKey(pluginName))
                 {
-                    return pluginsSettingCache[pluginName];
+                    config = pluginsSettingCache[pluginName];
                 }
             }
-            return null;
+            if (VgcApis.Libs.Infr.ZipExtensions.IsCompressedBase64(config))
+            {
+                return VgcApis.Libs.Infr.ZipExtensions.DecompressFromBase64(config);
+            }
+            return config;
         }
 
-        public void SavePluginsSetting(string pluginName, string value)
+        public void SavePluginsSetting(string pluginName, string config)
         {
             if (string.IsNullOrEmpty(pluginName))
             {
                 return;
             }
-
+            if (
+                VgcApis.Misc.Utils.StrLenInBytes(config)
+                > VgcApis.Models.Consts.Libs.MinCompressStringLength
+            )
+            {
+                config = VgcApis.Libs.Infr.ZipExtensions.CompressToBase64(config);
+            }
             lock (saveUserSettingsLocker)
             {
-                pluginsSettingCache[pluginName] = value;
+                pluginsSettingCache[pluginName] = config;
             }
             SaveSettingsLater();
         }
@@ -1126,11 +1137,12 @@ namespace V2RayGCon.Services
 
         static Dictionary<string, string> CreatePlaceHolders()
         {
-            var prefix = @"vgc-placeholder-😀😁😂";
+            var prefix = @"vgc-placeholder-😀😂";
+            var uid = Guid.NewGuid().ToString();
             var ph = new Dictionary<string, string>() { };
             foreach (var name in Enum.GetNames(typeof(PlaceHolderNames)))
             {
-                ph[name] = $"{prefix}-{name}";
+                ph[name] = $"{prefix}-{uid}-{name}";
             }
             return ph;
         }

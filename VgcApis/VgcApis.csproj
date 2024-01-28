@@ -68,6 +68,8 @@
     <Compile Include="Interfaces\PostOfficeComponents\ILuaMail.cs" />
     <Compile Include="Interfaces\PostOfficeComponents\ILuaMailBox.cs" />
     <Compile Include="Interfaces\Services\IPostOffice.cs" />
+    <Compile Include="Libs\Infr\StringLruCache.cs" />
+    <Compile Include="Libs\Infr\LruCache.cs" />
     <Compile Include="Libs\Streams\ArrayPoolMemoryStream.cs" />
     <Compile Include="Libs\Infr\Recorder.cs" />
     <Compile Include="Libs\Infr\PseudoRandom.cs" />

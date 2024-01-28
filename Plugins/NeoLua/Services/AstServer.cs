@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Moq;
 using Neo.IronLua;
@@ -82,11 +80,8 @@ namespace NeoLuna.Services
                 return;
             }
 
-            lock (moduleCacheLock)
-            {
-                astModuleCache.TryRemove(mn, out _);
-                astModuleExCache.TryRemove(mn, out _);
-            }
+            astModuleCache.Remove(mn);
+            astModuleExCache.Remove(mn);
 
             try
             {
@@ -99,13 +94,12 @@ namespace NeoLuna.Services
 
         #region properties
         FileSystemWatcher fsWatcher;
-        readonly ConcurrentQueue<string> hotCacheKeys = new ConcurrentQueue<string>();
-        readonly ConcurrentDictionary<string, JObject> astCodeCache =
-            new ConcurrentDictionary<string, JObject>();
-        readonly ConcurrentDictionary<string, JObject> astModuleCache =
-            new ConcurrentDictionary<string, JObject>();
-        readonly ConcurrentDictionary<string, JObject> astModuleExCache =
-            new ConcurrentDictionary<string, JObject>();
+        readonly VgcApis.Libs.Infr.StringLruCache<JObject> astCodeCache =
+            new VgcApis.Libs.Infr.StringLruCache<JObject>();
+        readonly VgcApis.Libs.Infr.StringLruCache<JObject> astModuleCache =
+            new VgcApis.Libs.Infr.StringLruCache<JObject>();
+        readonly VgcApis.Libs.Infr.StringLruCache<JObject> astModuleExCache =
+            new VgcApis.Libs.Infr.StringLruCache<JObject>();
 
         internal enum AnalyzeModes
         {
@@ -127,7 +121,7 @@ namespace NeoLuna.Services
         public JObject AnalyzeModule(string path, bool isExMode)
         {
             var cache = isExMode ? astModuleExCache : astModuleCache;
-            if (cache.TryGetValue(path, out var ast))
+            if (cache.TryGet(path, out var ast))
             {
                 return ast;
             }
@@ -136,25 +130,20 @@ namespace NeoLuna.Services
             var mAst = AnalyzeModuleCore(path, mode);
             if (mAst != null)
             {
-                lock (moduleCacheLock)
-                {
-                    TrimModuleAstCache(cache);
-                    cache.TryAdd(path, mAst);
-                }
+                cache.Add(path, mAst);
             }
             return mAst;
         }
 
         public JObject AnalyzeCode(string code)
         {
-            if (astCodeCache.TryGetValue(code, out var cachedAst))
+            if (astCodeCache.TryGet(code, out var cachedAst))
             {
-                hotCacheKeys.Enqueue(code);
                 return cachedAst;
             }
 
             var ast = AnalyzeCore(code, AnalyzeModes.SourceCode);
-            AddToAstCodeCache(code, ast);
+            astCodeCache.Add(code, ast);
             return ast;
         }
 
@@ -163,9 +152,6 @@ namespace NeoLuna.Services
         #endregion
 
         #region private methods
-        readonly object moduleCacheLock = new object();
-        readonly object codeCacheLock = new object();
-
         List<string> requireModuleNamesCache;
 
         void UpdateRequireModuleNameCache()
@@ -189,28 +175,7 @@ namespace NeoLuna.Services
             }
             catch { }
 
-            lock (moduleCacheLock)
-            {
-                requireModuleNamesCache = requiresNames;
-            }
-        }
-
-        void TrimModuleAstCache<TKey, TValue>(ConcurrentDictionary<TKey, TValue> cache)
-        {
-            try
-            {
-                var keep = 50;
-                var keys = cache.Keys.ToList();
-                if (keys.Count > keep * 1.5)
-                {
-                    var cut = keys.Count - keep;
-                    for (int i = 0; i < cut; i++)
-                    {
-                        cache.TryRemove(keys[i], out _);
-                    }
-                }
-            }
-            catch { }
+            requireModuleNamesCache = requiresNames;
         }
 
         JObject AnalyzeCore(string code, AnalyzeModes analyzeMode)
@@ -272,30 +237,6 @@ namespace NeoLuna.Services
 
             var script = sb.ToString();
             return script;
-        }
-
-        void AddToAstCodeCache(string key, JObject value)
-        {
-            lock (codeCacheLock)
-            {
-                var keep = 50;
-                while (hotCacheKeys.Count > keep)
-                {
-                    hotCacheKeys.TryDequeue(out _);
-                }
-
-                if (astCodeCache.Count > keep * 1.5)
-                {
-                    var keys = astCodeCache.Keys;
-                    var rm = keys.Where(k => !hotCacheKeys.Contains(k)).ToList();
-                    foreach (var k in rm)
-                    {
-                        astCodeCache.TryRemove(k, out _);
-                    }
-                }
-
-                astCodeCache.TryAdd(key, value);
-            }
         }
 
         JObject AnalyzeModuleCore(string path, AnalyzeModes mode)

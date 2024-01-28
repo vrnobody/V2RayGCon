@@ -752,6 +752,11 @@ namespace VgcApis.Misc
 
         public static byte[] Md5Hash(string text)
         {
+            if (string.IsNullOrEmpty(text))
+            {
+                return new byte[0];
+            }
+
             using (MD5 md5Hasher = MD5.Create())
             {
                 return md5Hasher.ComputeHash(Encoding.UTF8.GetBytes(text));

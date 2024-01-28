@@ -61,6 +61,7 @@
     <Compile Include="Base64Tests.cs" />
     <Compile Include="BitStreamTests.cs" />
     <Compile Include="LibsTests\AsciiStreamTests.cs" />
+    <Compile Include="LibsTests\StringLruCacheTests.cs" />
     <Compile Include="LibsTests\UnicodeStreamTests.cs" />
     <Compile Include="LibsTests\QueueLoggerTests.cs" />
     <Compile Include="LibsTests\RoutineTests.cs" />

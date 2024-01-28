@@ -10,7 +10,6 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services
@@ -151,16 +150,16 @@ namespace V2RayGCon.Services
 
         void InitConfigTemplatesCache()
         {
+            List<Models.Datas.CustomConfigTemplate> tpl = null;
             try
             {
-                configTemplateCache =
-                    VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
-                        List<Models.Datas.CustomConfigTemplate>
-                    >(userSettings.CompressedUnicodeCustomConfigTemplates);
+                tpl = VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                    List<Models.Datas.CustomConfigTemplate>
+                >(userSettings.CompressedUnicodeCustomConfigTemplates);
             }
             catch { }
             configTemplateCache =
-                configTemplateCache
+                tpl
                 ?? userSettings.CustomInboundSettings?.ToList()
                 ?? new List<Models.Datas.CustomConfigTemplate>();
             userSettings.CustomInboundSettings = null;
@@ -1033,6 +1032,8 @@ namespace V2RayGCon.Services
         #region private method
         void Init()
         {
+            CreatePlaceHolders();
+
             userSettings = LoadUserSettings();
             userSettings.Normalized(); // replace null with empty object.
 
@@ -1059,21 +1060,20 @@ namespace V2RayGCon.Services
 
         void InitLocalStorageCache()
         {
+            ConcurrentDictionary<string, string> ls = null;
             try
             {
-                var ls =
-                    VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
-                        ConcurrentDictionary<string, string>
-                    >(userSettings.CompressedUnicodeLocalStorage);
-                localStorageCache = ls;
+                ls = VgcApis.Libs.Infr.ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                    ConcurrentDictionary<string, string>
+                >(userSettings.CompressedUnicodeLocalStorage);
             }
             catch { }
+            localStorageCache = ls ?? new ConcurrentDictionary<string, string>();
         }
 
         void InitCoreInfoCache()
         {
             List<VgcApis.Models.Datas.CoreInfo> coreInfos = null;
-
             try
             {
                 var ucs = userSettings.CompressedUnicodeCoreInfoList;
@@ -1083,26 +1083,7 @@ namespace V2RayGCon.Services
                     >(ucs);
             }
             catch { }
-
-            if (coreInfos == null)
-            {
-                coreInfos = new List<VgcApis.Models.Datas.CoreInfo>();
-            }
-
-            // make sure every config of server can be parsed correctly
-            var result = coreInfos
-                .Where(c =>
-                {
-                    try
-                    {
-                        return JObject.Parse(c.GetConfig()) != null;
-                    }
-                    catch { }
-                    return false;
-                })
-                .ToList();
-
-            coreInfoCache = coreInfos;
+            coreInfoCache = coreInfos ?? new List<VgcApis.Models.Datas.CoreInfo>();
         }
 
         void UpdateVgcApisUserAgent()
@@ -1132,18 +1113,21 @@ namespace V2RayGCon.Services
             CustomConfigTemplates,
         }
 
-        Dictionary<string, string> placeHolders = CreatePlaceHolders();
+        Dictionary<string, string> placeHolders = new Dictionary<string, string>();
+        Dictionary<string, string> placeholdersLookupTable = new Dictionary<string, string>();
 
-        static Dictionary<string, string> CreatePlaceHolders()
+        void CreatePlaceHolders()
         {
             var mark = @"vgc-placeholder";
             var uid = Guid.NewGuid().ToString();
-            var ph = new Dictionary<string, string>() { };
+            var ph = placeHolders;
+            var plt = placeholdersLookupTable;
             foreach (var name in Enum.GetNames(typeof(PlaceHolderNames)))
             {
-                ph[name] = $"{name}-{mark}-{uid}";
+                var v = $"{name}-{mark}-{uid}";
+                ph[name] = v;
+                plt[v] = name;
             }
-            return ph;
         }
 
         void ReplaceLargeStringsWithPlaceHolder()
@@ -1162,31 +1146,43 @@ namespace V2RayGCon.Services
             ];
         }
 
-        string ReplacePlaceHoldersWithData(string source, Dictionary<string, string> datas)
+        string ReplacePlaceHoldersWithData(string source)
         {
-            var r = new List<string>() { source };
-            foreach (var name in Enum.GetNames(typeof(PlaceHolderNames)))
+            var delims = placeholdersLookupTable.Keys;
+            var r = VgcApis.Misc.Utils.SplitAndKeep(source, delims);
+            for (int i = 0; i < r.Count; i++)
             {
-                var t = new List<string>();
-                var ph = placeHolders[name];
-                foreach (var str in r)
+                var ph = r[i];
+                if (
+                    !placeholdersLookupTable.TryGetValue(ph, out string name)
+                    || string.IsNullOrEmpty(name)
+                )
                 {
-                    if (str.Contains(ph))
-                    {
-                        var ps = str.Split(
-                            new string[] { ph },
-                            StringSplitOptions.RemoveEmptyEntries
-                        );
-                        t.Add(ps[0]);
-                        t.Add(datas[name]);
-                        t.Add(ps[1]);
-                    }
-                    else
-                    {
-                        t.Add(str);
-                    }
+                    continue;
                 }
-                r = t;
+                object o;
+                if (name == PlaceHolderNames.CustomConfigTemplates.ToString())
+                {
+                    o = configTemplateCache;
+                }
+                else if (name == PlaceHolderNames.LocalStorage.ToString())
+                {
+                    o = localStorageCache;
+                }
+                else if (name == PlaceHolderNames.CoreInfoList.ToString())
+                {
+                    o = coreInfoCache;
+                }
+                else if (name == PlaceHolderNames.PluginsSetting.ToString())
+                {
+                    o = pluginsSettingCache;
+                }
+                else
+                {
+                    throw new ArgumentException($"Unknown placeholder name: {name}");
+                }
+                var s = VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(o);
+                r[i] = s;
             }
             return string.Join("", r);
         }
@@ -1196,26 +1192,8 @@ namespace V2RayGCon.Services
             string us = null;
             try
             {
-                var ds = new Dictionary<string, string>();
-                ds[PlaceHolderNames.CustomConfigTemplates.ToString()] =
-                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
-                        configTemplateCache
-                    );
-                ds[PlaceHolderNames.LocalStorage.ToString()] =
-                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
-                        localStorageCache
-                    );
-                ds[PlaceHolderNames.CoreInfoList.ToString()] =
-                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
-                        coreInfoCache
-                    );
-                ds[PlaceHolderNames.PluginsSetting.ToString()] =
-                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
-                        pluginsSettingCache
-                    );
-
                 var s = JsonConvert.SerializeObject(userSettings, Formatting.Indented);
-                us = ReplacePlaceHoldersWithData(s, ds);
+                us = ReplacePlaceHoldersWithData(s);
             }
             catch { }
             return us;
@@ -1273,8 +1251,6 @@ namespace V2RayGCon.Services
 
         void InitPluginsSettingCache()
         {
-            var empty = new Dictionary<string, string>();
-
             Dictionary<string, string> pluginsSetting = null;
             try
             {
@@ -1286,7 +1262,7 @@ namespace V2RayGCon.Services
             }
             catch { }
 
-            pluginsSettingCache = pluginsSetting ?? empty;
+            pluginsSettingCache = pluginsSetting ?? new Dictionary<string, string>();
         }
 
         void SetUserSettingFileIsPortableToFalse(string us)

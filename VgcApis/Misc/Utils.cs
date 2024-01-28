@@ -395,6 +395,54 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
+
+        public static List<string> SplitAndKeep(string s, IEnumerable<string> delimiters)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return new List<string>();
+            }
+            var unique = delimiters.Distinct().ToList();
+            return SplitAndKeepCore(s, 0, s.Length, unique);
+        }
+
+        static List<string> SplitAndKeepCore(
+            string s,
+            int start,
+            int end,
+            IEnumerable<string> delimiters
+        )
+        {
+            var r = new List<string>();
+            var delim = delimiters.FirstOrDefault();
+            if (start >= end)
+            {
+                return r;
+            }
+            if (string.IsNullOrEmpty(delim))
+            {
+                r.Add(s.Substring(start, end - start));
+                return r;
+            }
+            var otherDelims = delimiters.Skip(1).ToList();
+            int iFirst = start;
+            do
+            {
+                int iLast = s.IndexOf(delim, iFirst, end - iFirst);
+                if (iLast < 0)
+                {
+                    var remains = SplitAndKeepCore(s, iFirst, end, otherDelims);
+                    r.AddRange(remains);
+                    break;
+                }
+                var left = SplitAndKeepCore(s, iFirst, iLast, otherDelims);
+                r.AddRange(left);
+                r.Add(delim);
+                iFirst = iLast + delim.Length;
+            } while (iFirst < end);
+            return r;
+        }
+
         static ArrayPool<byte> bufferPool = ArrayPool<byte>.Shared;
 
         public static byte[] RentBuffer()

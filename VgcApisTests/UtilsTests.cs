@@ -16,6 +16,28 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+        [DataTestMethod]
+        [DataRow(
+            "VAL中文UE中1=5V文ALU😀E2=6.He😀😀😀ll🤗🤩oWorld",
+            "😀😀,中1,中文,🤗,2,He",
+            "VAL,中文,UE,中1,=5V文ALU😀E,2,=6.,He,😀😀,😀ll,🤗,🤩oWorld"
+        )]
+        [DataRow("[a link|http://www.google.com]", "[,|,]", "[,a link,|,http://www.google.com,]")]
+        [DataRow("VALUE1=5VALUE2=6.HelloWorld", ".,=,=,.", "VALUE1,=,5VALUE2,=,6,.,HelloWorld")]
+        [DataRow(
+            "VALUE1=5VALUE2=6.HelloWorld",
+            "World,Hello,.,=,VALUE,,.,=,VALUE,,,,",
+            "VALUE,1,=,5,VALUE,2,=,6,.,Hello,World"
+        )]
+        [DataRow("", ",,,,,", "")]
+        public void SplitAndKeepTests(string s, string delimiters, string exp)
+        {
+            var delims = delimiters.Split(',');
+            var list = SplitAndKeep(s, delims);
+            var r = string.Join(",", list);
+            Assert.AreEqual(exp, r);
+        }
+
         [TestMethod]
         public void DoItLaterTest()
         {

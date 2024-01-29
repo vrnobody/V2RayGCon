@@ -500,7 +500,7 @@ namespace V2RayGCon.Libs.V2Ray
 
         void WaitForFile(string filename)
         {
-            var md5 = VgcApis.Misc.Utils.ToHexString(VgcApis.Misc.Utils.Md5Hash(filename));
+            var md5 = VgcApis.Misc.Utils.Md5Hex(filename);
             var name = "V2RayGCon-custom-core-config-file-" + md5;
 
             var mre = new ManualResetEventSlim(false);

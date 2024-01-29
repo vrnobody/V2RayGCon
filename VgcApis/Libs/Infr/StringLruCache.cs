@@ -10,26 +10,20 @@
 
         public new bool TryGet(string key, out V value)
         {
-            var k = Md5(key);
+            var k = Misc.Utils.Md5Hex(key);
             return base.TryGet(k, out value);
         }
 
         public new void Add(string key, V val)
         {
-            var k = Md5(key);
+            var k = Misc.Utils.Md5Hex(key);
             base.Add(k, val);
         }
 
         public new bool Remove(string key)
         {
-            var k = Md5(key);
+            var k = Misc.Utils.Md5Hex(key);
             return base.Remove(k);
-        }
-
-        private string Md5(string str)
-        {
-            var b = Misc.Utils.Md5Hash(str);
-            return Misc.Utils.ToHexString(b);
         }
     }
 }

@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 
 namespace V2RayGCon.Services.ServersComponents
 {
@@ -52,8 +52,7 @@ namespace V2RayGCon.Services.ServersComponents
             {
                 return string.Empty;
             }
-            var hash = VgcApis.Misc.Utils.Sha256Hash(config);
-            return VgcApis.Misc.Utils.ToHexString(hash);
+            return VgcApis.Misc.Utils.Sha256Hex(config);
         }
 
         #endregion

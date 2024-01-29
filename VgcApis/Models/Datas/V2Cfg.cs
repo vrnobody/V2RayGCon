@@ -51,8 +51,7 @@
 
             try
             {
-                var bytes = Misc.Utils.Sha256Hash(name + config);
-                var hash = Misc.Utils.ToHexString(bytes);
+                var hash = Misc.Utils.Sha256Hex(name + config);
                 return this.hash == hash;
             }
             catch { }
@@ -70,8 +69,7 @@
 
         void UpdateHash()
         {
-            var bytes = Misc.Utils.Sha256Hash(name + config);
-            this.hash = Misc.Utils.ToHexString(bytes);
+            this.hash = Misc.Utils.Sha256Hex(name + config);
         }
         #endregion
     }

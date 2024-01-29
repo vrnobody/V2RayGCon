@@ -16,6 +16,21 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+        [TestMethod]
+        public void HashFunctionsBaselineTests()
+        {
+            var s = "hello123中文😀";
+            Assert.AreEqual("32cf9edfde0bc4468f6dab923dc20d3c", Md5Hex(s));
+            Assert.AreEqual(
+                "3376a5a910db4818bae776cea3295e1797e4e2d9d1a8d1d6e773fcec8071cc9c",
+                Sha256Hex(s)
+            );
+            Assert.AreEqual(
+                "1498275515c38e6f4269e8602a1f5a9ad84690c523dd16d06cad8b0a7f55a71927d8587d947e5e9cd98da0e9736341fff976fd70cdd65389749a07e1ddc6530d",
+                Sha512Hex(s)
+            );
+        }
+
         [DataTestMethod]
         [DataRow(
             "VAL中文UE中1=5V文ALU😀E2=6.He😀😀😀ll🤗🤩oWorld",

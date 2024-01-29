@@ -142,20 +142,17 @@ namespace Luna.Models.Apis.Components
 
         public string Md5(string str)
         {
-            var b = VgcApis.Misc.Utils.Md5Hash(str);
-            return VgcApis.Misc.Utils.ToHexString(b);
+            return VgcApis.Misc.Utils.Md5Hex(str);
         }
 
         public string Sha256(string str)
         {
-            var b = VgcApis.Misc.Utils.Sha256Hash(str);
-            return VgcApis.Misc.Utils.ToHexString(b);
+            return VgcApis.Misc.Utils.Sha256Hex(str);
         }
 
         public string Sha512(string str)
         {
-            var b = VgcApis.Misc.Utils.Sha512Hash(str);
-            return VgcApis.Misc.Utils.ToHexString(b);
+            return VgcApis.Misc.Utils.Sha512Hex(str);
         }
         #endregion
 

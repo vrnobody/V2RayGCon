@@ -327,7 +327,7 @@ namespace VgcApis.Misc
         public static Mutex TryLockFile(string fullPath)
         {
             // https://stackoverflow.com/questions/19147/what-is-the-correct-way-to-create-a-single-instance-application
-            var md5 = ToHexString(Md5Hash(fullPath));
+            var md5 = Md5Hex(fullPath);
             var name = "{84d287ae-c0b0-4c1a-9ecc-d98c26577c02}" + md5;
             var mutex = new Mutex(true, name);
             if (mutex.WaitOne(0))
@@ -750,11 +750,29 @@ namespace VgcApis.Misc
             }
         }
 
+        public static string Sha512Hex(string text)
+        {
+            var b = Sha512Hash(text);
+            return ToHexString(b);
+        }
+
+        public static string Sha256Hex(string text)
+        {
+            var b = Sha256Hash(text);
+            return ToHexString(b);
+        }
+
+        public static string Md5Hex(string text)
+        {
+            var b = Md5Hash(text);
+            return ToHexString(b);
+        }
+
         public static byte[] Md5Hash(string text)
         {
             if (string.IsNullOrEmpty(text))
             {
-                return new byte[0];
+                return null;
             }
 
             using (MD5 md5Hasher = MD5.Create())

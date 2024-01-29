@@ -58,7 +58,7 @@ namespace VgcApis.Libs.Infr
 
         public static T DeserializeObjectFromCompressedUnicodeBase64<T>(string b64Str)
         {
-            using (var src = new Streams.AsciiStringStream(b64Str))
+            using (var src = new Streams.ReadonlyStringStream(b64Str, Encoding.ASCII))
             using (
                 var b64 = new CryptoStream(src, new FromBase64Transform(), CryptoStreamMode.Read)
             )
@@ -106,7 +106,7 @@ namespace VgcApis.Libs.Infr
 
         public static string DecompressFromBase64(string data)
         {
-            using (var src = new Streams.AsciiStringStream(data))
+            using (var src = new Streams.ReadonlyStringStream(data, Encoding.ASCII))
             using (
                 var b64 = new CryptoStream(src, new FromBase64Transform(), CryptoStreamMode.Read)
             )

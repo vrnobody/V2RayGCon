@@ -715,9 +715,9 @@ namespace VgcApis.Misc
 
         public static string ToHexString(byte[] bytes)
         {
-            if (bytes == null)
+            if (bytes == null || bytes.Length == 0)
             {
-                return null;
+                return "";
             }
 
             // js hash function return lower case hex string

@@ -38,6 +38,7 @@ using System.Runtime.InteropServices;
 
 /*
 
+v1.9.2.12 Merge Ascii/UnicodeStringStream into ReadonlyStringStream.
 v1.9.2.11 Add LRU cache.
 v1.9.2.10 Add ArrayPoolMemoryStream, AsciiStringStream, UnicodeStringStream.
 v1.9.2.9 Re-enable config compression.

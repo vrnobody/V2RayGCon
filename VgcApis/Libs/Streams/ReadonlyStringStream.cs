@@ -8,14 +8,11 @@ namespace VgcApis.Libs.Streams
 {
     public class ReadonlyStringStream : Stream
     {
-        readonly string str;
-
         readonly ArrayPool<char> pool = ArrayPool<char>.Shared;
-
-        // int ReadUnicode(byte[] dest, int offset, int count)
+        readonly string str;
         readonly bool isAscii;
-
         readonly int len;
+
         int pos = 0;
         bool canRead = true;
         char[] buff;
@@ -23,7 +20,7 @@ namespace VgcApis.Libs.Streams
         public ReadonlyStringStream(string source, Encoding encoding)
         {
             this.str = source ?? "";
-            this.buff = pool.Rent(4 * 1024);
+            this.buff = pool.Rent(2 * 1024);
 
             if (encoding == Encoding.ASCII)
             {
@@ -92,16 +89,11 @@ namespace VgcApis.Libs.Streams
         #region private methods
         int ReadAscii(byte[] dest, int offset, int count)
         {
-            count = Math.Min(count, len - pos);
+            count = Math.Min(Math.Min(count, len - pos), buff.Length);
             if (!canRead || count < 1)
             {
+                canRead = false;
                 return 0;
-            }
-
-            if (buff.Length < count)
-            {
-                pool.Return(this.buff);
-                this.buff = pool.Rent(count);
             }
 
             str.CopyTo(pos, buff, 0, count);

@@ -10,6 +10,9 @@ namespace VgcApis.Libs.Streams
 
     public sealed partial class ArrayPoolMemoryStream : Stream
     {
+        public ArrayPoolMemoryStream()
+            : this(null) { }
+
         public ArrayPoolMemoryStream(Encoding encoding)
         {
             m_Pool = ArrayPool<byte>.Shared;
@@ -17,7 +20,7 @@ namespace VgcApis.Libs.Streams
             _Length = 0;
             _CanWrite = true;
             _Position = 0;
-            this.encoding = encoding;
+            this._encoding = encoding;
         }
 
         public override bool CanRead
@@ -97,16 +100,17 @@ namespace VgcApis.Libs.Streams
             }
         }
 
-        string result = "";
+        string _decodedString = "";
 
-        public string GetString() => result;
+        public string GetString() => _decodedString;
 
         protected override void Dispose(bool disposing)
         {
-            if (_Length > 0)
+            if (_encoding != null && _Length > 0)
             {
-                result = this.encoding.GetString(_currentbuffer, 0, _Length);
+                _decodedString = this._encoding.GetString(_currentbuffer, 0, _Length);
             }
+
             base.Dispose(disposing);
             if (m_Pool != null && _currentbuffer != null)
             {
@@ -170,7 +174,7 @@ namespace VgcApis.Libs.Streams
         bool _CanWrite;
         int _Length;
         int _Position;
-        private readonly Encoding encoding;
+        private readonly Encoding _encoding;
 
         public override int Read(byte[] buffer, int offset, int count)
         {

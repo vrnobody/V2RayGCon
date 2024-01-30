@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Base64Tests.cs" />
     <Compile Include="BitStreamTests.cs" />
+    <Compile Include="LibsTests\ArrayPoolMemoryStreamTests.cs" />
     <Compile Include="LibsTests\AsciiRoStrStreamTests.cs" />
     <Compile Include="LibsTests\StringLruCacheTests.cs" />
     <Compile Include="LibsTests\UnicodeRoStrStreamTests.cs" />

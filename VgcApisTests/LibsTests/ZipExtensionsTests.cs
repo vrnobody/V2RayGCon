@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using VgcApis.Libs.Infr;
@@ -10,6 +12,65 @@ namespace VgcApisTests.LibsTests
     public class ZipExtensionsTests
     {
         public ZipExtensionsTests() { }
+
+        [TestMethod]
+        public void SerializeToStreamTest()
+        {
+            var o1 = new Dictionary<string, List<string>>()
+            {
+                { "hello", "1,2,3,4,5".Split(',').ToList() },
+                { "world", "ab,中文,😀,😂".Split(',').ToList() },
+            };
+            var o2 = new Dictionary<string, List<string>>()
+            {
+                { "中文1", "1,2,3,4,5".Split(',').ToList() },
+                { "😀,😂", "ab,中文,😀,😂".Split(',').ToList() },
+            };
+
+            var dest = new VgcApis.Libs.Streams.ArrayPoolMemoryStream(Encoding.ASCII);
+            using (var w = new StreamWriter(dest))
+            {
+                ZipExtensions.SerializeObjectAsCompressedUnicodeBase64ToStream(dest, o1);
+                w.Write(",");
+                w.Flush();
+                ZipExtensions.SerializeObjectAsCompressedUnicodeBase64ToStream(dest, o2);
+            }
+            dest.Dispose();
+            var str = dest.GetString();
+            Assert.IsFalse(string.IsNullOrEmpty(str));
+            var parts = str.Split(',');
+            Assert.AreEqual(2, parts.Length);
+
+            var r1 = ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                Dictionary<string, List<string>>
+            >(parts[0]);
+            CompareDicts(o1, r1);
+
+            var r2 = ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<
+                Dictionary<string, List<string>>
+            >(parts[1]);
+            CompareDicts(o2, r2);
+        }
+
+        void CompareDicts(
+            Dictionary<string, List<string>> src,
+            Dictionary<string, List<string>> dest
+        )
+        {
+            Assert.IsFalse(src == null);
+            Assert.IsFalse(dest == null);
+            foreach (var kv in src)
+            {
+                var key = kv.Key;
+                Assert.IsTrue(dest.ContainsKey(key));
+                var vs = kv.Value;
+                var ds = dest[key];
+                for (int i = 0; i < vs.Count; i++)
+                {
+                    Assert.AreEqual(vs[i], ds[i]);
+                }
+            }
+        }
 
         [DataTestMethod]
         [DataRow(

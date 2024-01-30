@@ -73,6 +73,7 @@
     <Compile Include="Libs\Streams\ArrayPoolMemoryStream.cs" />
     <Compile Include="Libs\Infr\Recorder.cs" />
     <Compile Include="Libs\Infr\PseudoRandom.cs" />
+    <Compile Include="Libs\Streams\KeepStreamOpenWrapper.cs" />
     <Compile Include="Libs\Streams\ReadonlyStringStream.cs" />
     <Compile Include="Libs\Infr\ZipExtensions.cs" />
     <Compile Include="Libs\Streams\BitStream.cs" />

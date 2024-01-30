@@ -1105,7 +1105,7 @@ namespace V2RayGCon.Services
             }
         }
 
-        enum PlaceHolderNames
+        enum PlaceHolders
         {
             LocalStorage,
             CoreInfoList,
@@ -1113,117 +1113,103 @@ namespace V2RayGCon.Services
             CustomConfigTemplates,
         }
 
-        Dictionary<string, string> placeHolders = new Dictionary<string, string>();
-        Dictionary<string, string> placeholdersLookupTable = new Dictionary<string, string>();
+        Dictionary<PlaceHolders, string> placeHolderTable = new Dictionary<PlaceHolders, string>();
+        Dictionary<string, PlaceHolders> placeHolderLookupTable =
+            new Dictionary<string, PlaceHolders>();
 
         void CreatePlaceHolders()
         {
             var mark = @"vgc-placeholder";
             var uid = Guid.NewGuid().ToString();
-            var ph = placeHolders;
-            var plt = placeholdersLookupTable;
-            foreach (var name in Enum.GetNames(typeof(PlaceHolderNames)))
+            var ph = placeHolderTable;
+            var plt = placeHolderLookupTable;
+            foreach (var nameStr in Enum.GetNames(typeof(PlaceHolders)))
             {
-                var v = $"{name}-{mark}-{uid}";
-                ph[name] = v;
-                plt[v] = name;
+                if (Enum.TryParse<PlaceHolders>(nameStr, out var name))
+                {
+                    var v = $"{nameStr}-{mark}-{uid}";
+                    ph[name] = v;
+                    plt[v] = name;
+                }
             }
         }
 
         void ReplaceLargeStringsWithPlaceHolder()
         {
-            userSettings.CompressedUnicodeLocalStorage = placeHolders[
-                PlaceHolderNames.LocalStorage.ToString()
+            userSettings.CompressedUnicodeLocalStorage = placeHolderTable[
+                PlaceHolders.LocalStorage
             ];
-            userSettings.CompressedUnicodeCoreInfoList = placeHolders[
-                PlaceHolderNames.CoreInfoList.ToString()
+            userSettings.CompressedUnicodeCoreInfoList = placeHolderTable[
+                PlaceHolders.CoreInfoList
             ];
-            userSettings.CompressedUnicodePluginsSetting = placeHolders[
-                PlaceHolderNames.PluginsSetting.ToString()
+            userSettings.CompressedUnicodePluginsSetting = placeHolderTable[
+                PlaceHolders.PluginsSetting
             ];
-            userSettings.CompressedUnicodeCustomConfigTemplates = placeHolders[
-                PlaceHolderNames.CustomConfigTemplates.ToString()
+            userSettings.CompressedUnicodeCustomConfigTemplates = placeHolderTable[
+                PlaceHolders.CustomConfigTemplates
             ];
         }
 
-        string ReplacePlaceHoldersWithData(string source)
+        object GetTargetByPlaceHolderName(PlaceHolders name)
         {
-            var delims = placeholdersLookupTable.Keys;
-            var r = VgcApis.Misc.Utils.SplitAndKeep(source, delims);
-            for (int i = 0; i < r.Count; i++)
+            switch (name)
             {
-                var ph = r[i];
-                if (
-                    !placeholdersLookupTable.TryGetValue(ph, out string name)
-                    || string.IsNullOrEmpty(name)
-                )
+                case PlaceHolders.CustomConfigTemplates:
+                    return configTemplateCache;
+                case PlaceHolders.LocalStorage:
+                    return localStorageCache;
+                case PlaceHolders.CoreInfoList:
+                    return coreInfoCache;
+                case PlaceHolders.PluginsSetting:
+                    return pluginsSettingCache;
+                default:
+                    throw new ArgumentException($"Unknown placeholder name: {name}");
+            }
+        }
+
+        string ReplacePlaceHoldersWithData(string configSlim)
+        {
+            var parts = VgcApis.Misc.Utils.SplitAndKeep(configSlim, placeHolderLookupTable.Keys);
+            for (int i = 0; i < parts.Count; i++)
+            {
+                var ph = parts[i];
+                if (!placeHolderLookupTable.TryGetValue(ph, out var name))
                 {
                     continue;
                 }
-                object o;
-                if (name == PlaceHolderNames.CustomConfigTemplates.ToString())
-                {
-                    o = configTemplateCache;
-                }
-                else if (name == PlaceHolderNames.LocalStorage.ToString())
-                {
-                    o = localStorageCache;
-                }
-                else if (name == PlaceHolderNames.CoreInfoList.ToString())
-                {
-                    o = coreInfoCache;
-                }
-                else if (name == PlaceHolderNames.PluginsSetting.ToString())
-                {
-                    o = pluginsSettingCache;
-                }
-                else
-                {
-                    throw new ArgumentException($"Unknown placeholder name: {name}");
-                }
+                var o = GetTargetByPlaceHolderName(name);
                 var s = VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(o);
-                r[i] = s;
+                parts[i] = s;
             }
-            return string.Join("", r);
-        }
-
-        string SerializeUserSettings()
-        {
-            string us = null;
-            try
-            {
-                var s = JsonConvert.SerializeObject(userSettings, Formatting.Indented);
-                us = ReplacePlaceHoldersWithData(s);
-            }
-            catch { }
-            return us;
+            return string.Join("", parts);
         }
 
         void SaveUserSettingsWorker()
         {
             VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() begin");
-            string json = null;
+            string configSlim = null;
             var isPortable = true;
             try
             {
                 lock (saveUserSettingsLocker)
                 {
-                    json = SerializeUserSettings();
+                    configSlim = JsonConvert.SerializeObject(userSettings, Formatting.Indented);
                     isPortable = userSettings.isPortable;
                 }
 
-                if (!string.IsNullOrEmpty(json))
+                if (!string.IsNullOrEmpty(configSlim))
                 {
                     if (isPortable)
                     {
                         DebugSendLog("Try save settings to file.");
-                        SaveUserSettingsToFile(json);
+                        SaveUserSettingsToFile(configSlim);
                     }
                     else
                     {
                         DebugSendLog("Try save settings to properties");
-                        SetUserSettingFileIsPortableToFalse(json);
-                        SaveUserSettingsToProperties(json);
+                        SetUserSettingFileIsPortableToFalse(configSlim);
+                        var configFull = ReplacePlaceHoldersWithData(configSlim);
+                        SaveUserSettingsToProperties(configFull);
                         VgcApis.Libs.Sys.FileLogger.Info(
                             "Settings.SaveUserSettingsToProperties() done"
                         );
@@ -1305,11 +1291,51 @@ namespace V2RayGCon.Services
             }
         }
 
-        void SaveUserSettingsToFile(string us)
+        void WriteFileStream(List<string> parts, string filename)
         {
+            // https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
+            var bufferSize = VgcApis.Models.Consts.Libs.DefaultBufferSize;
+            using (var fs = File.Create(filename, bufferSize, FileOptions.WriteThrough))
+            using (var w = new StreamWriter(fs))
+            {
+                foreach (var part in parts)
+                {
+                    if (!placeHolderLookupTable.TryGetValue(part, out var name))
+                    {
+                        w.Write(part);
+                        w.Flush();
+                        continue;
+                    }
+
+                    var o = GetTargetByPlaceHolderName(name);
+                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectAsCompressedUnicodeBase64ToStream(
+                        fs,
+                        o
+                    );
+                }
+            }
+        }
+
+        bool TryWriteUserSettings(List<string> parts, string main, string bak)
+        {
+            try
+            {
+                WriteFileStream(parts, main);
+                WriteFileStream(parts, bak);
+                return true;
+            }
+            catch
+            {
+                VgcApis.Libs.Sys.FileLogger.Error($"Write file failed!");
+            }
+            return false;
+        }
+
+        void SaveUserSettingsToFile(string configSlim)
+        {
+            var parts = VgcApis.Misc.Utils.SplitAndKeep(configSlim, placeHolderLookupTable.Keys);
             VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() write file");
-            var ok = Misc.Utils.ClumsyWriter(us, cmdArgs.userSettings, cmdArgs.userSettingsBak);
-            if (ok)
+            if (TryWriteUserSettings(parts, cmdArgs.userSettings, cmdArgs.userSettingsBak))
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() success");
                 return;
@@ -1317,18 +1343,18 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.FileLogger.Error("Settings.SaverUserSettingsToFile() failed");
 
             // main file or bak file write fail, clear cache
-            WarnUserSaveSettingsFailed();
+            WarnUserSaveSettingsFailed(configSlim);
         }
 
-        private void WarnUserSaveSettingsFailed()
+        private void WarnUserSaveSettingsFailed(string configSlim)
         {
             var msg = I18N.SaveUserSettingsToFileFail;
 
             if (isClosing)
             {
                 // 兄弟只能帮你到这了
-                var content = JsonConvert.SerializeObject(userSettings);
-                VgcApis.Libs.Sys.NotepadHelper.ShowMessage(content, cmdArgs.userSettings);
+                var fullConfig = ReplacePlaceHoldersWithData(configSlim);
+                VgcApis.Libs.Sys.NotepadHelper.ShowMessage(fullConfig, cmdArgs.userSettings);
                 msg +=
                     Environment.NewLine
                     + string.Format(I18N.AndThenSaveThisFileAs, cmdArgs.userSettings);
@@ -1336,7 +1362,14 @@ namespace V2RayGCon.Services
 
             msg += Environment.NewLine + I18N.OrDisablePortableMode;
             // do not block any function in background service
-            VgcApis.Misc.UI.MsgBoxAsync(msg);
+            if (isClosing)
+            {
+                VgcApis.Libs.Sys.NotepadHelper.ShowMessage(msg, "Warning!!");
+            }
+            else
+            {
+                VgcApis.Misc.UI.MsgBoxAsync(msg);
+            }
         }
 
         Models.Datas.UserSettings LoadUserSettingsFromPorperties()

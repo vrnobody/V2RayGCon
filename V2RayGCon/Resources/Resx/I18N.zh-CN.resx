@@ -643,7 +643,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>导入订阅设置？</value>
   </data>
   <data name="AndThenSaveThisFileAs" xml:space="preserve">
-    <value>然后将此文本另存为 {0}。</value>
+    <value>并把记事本中的json数据另存为 {0}。</value>
   </data>
   <data name="OrDisablePortableMode" xml:space="preserve">
     <value>或者在选项中关闭便携模式。</value>

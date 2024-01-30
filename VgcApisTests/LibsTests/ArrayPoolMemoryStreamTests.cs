@@ -52,7 +52,7 @@ namespace VgcApisTests.LibsTests
             stream.Dispose();
             Assert.AreEqual(str, stream.GetString());
 
-            var len = 10;
+            var len = 64 * 1024;
             str = VgcApis.Misc.Utils.RandomHex(len) + "😀hello中文1";
             encoding = Encoding.Unicode;
             stream = new VgcApis.Libs.Streams.ArrayPoolMemoryStream(encoding);

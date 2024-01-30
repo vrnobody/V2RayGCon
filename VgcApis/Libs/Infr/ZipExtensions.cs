@@ -9,27 +9,18 @@ namespace VgcApis.Libs.Infr
     public static class ZipExtensions
     {
         #region public
-        public static void SerializeObjectAsCompressedUnicodeBase64StringToFile(
-            string path,
-            object value
-        )
+        public static void SerializeObjectAsCompressedUnicodeBase64ToStream(Stream s, object value)
         {
-            using (var file = File.Open(path, FileMode.Append))
+            using (var wrapper = new Streams.KeepStreamOpenWrapper(s))
+            using (
+                var b64 = new CryptoStream(wrapper, new ToBase64Transform(), CryptoStreamMode.Write)
+            )
+            using (var gzip = new GZipStream(b64, CompressionMode.Compress))
+            using (var w = new StreamWriter(gzip, Encoding.Unicode))
+            using (var jw = new JsonTextWriter(w))
             {
-                using (
-                    CryptoStream base64Stream = new CryptoStream(
-                        file,
-                        new ToBase64Transform(),
-                        CryptoStreamMode.Write
-                    )
-                )
-                using (var gZipStream = new GZipStream(base64Stream, CompressionMode.Compress))
-                using (StreamWriter writer = new StreamWriter(gZipStream, Encoding.Unicode))
-                using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
-                {
-                    JsonSerializer ser = new JsonSerializer();
-                    ser.Serialize(jsonWriter, value);
-                }
+                var ser = new JsonSerializer();
+                ser.Serialize(jw, value);
             }
         }
 

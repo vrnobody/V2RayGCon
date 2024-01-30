@@ -1477,11 +1477,10 @@ namespace V2RayGCon.Services
         #endregion
 
         #region debug
-        void DebugSendLog(string content)
+        [System.Diagnostics.Conditional("DEBUG")]
+        public void DebugSendLog(string content)
         {
-#if DEBUG
-            SendLog($"(Debug) {content}");
-#endif
+            SendLog($"(Debug {DateTime.Now.ToString()}) {content}");
         }
         #endregion
     }

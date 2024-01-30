@@ -19,13 +19,15 @@ namespace VgcApis.Misc
 
         public static void Put(string json, JObject o)
         {
-            recyclebin[json] = o;
-            Task.Delay(delay).ContinueWith(_ => recyclebin.TryRemove(json, out var _));
+            var hash = Utils.Sha256Hex(json);
+            recyclebin[hash] = o;
+            Task.Delay(delay).ContinueWith(_ => recyclebin.TryRemove(hash, out var _));
         }
 
         public static bool TryTake(string json, out JObject o)
         {
-            return recyclebin.TryRemove(json, out o);
+            var hash = Utils.Sha256Hex(json);
+            return recyclebin.TryRemove(hash, out o);
         }
     }
 }

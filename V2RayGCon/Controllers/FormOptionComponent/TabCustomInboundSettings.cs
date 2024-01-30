@@ -15,6 +15,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         public TabCustomInboundSettings(FlowLayoutPanel flyPanel, Button btnAdd)
         {
             this.settings = Settings.Instance;
+
             this.flyPanel = flyPanel;
             this.btnAdd = btnAdd;
 

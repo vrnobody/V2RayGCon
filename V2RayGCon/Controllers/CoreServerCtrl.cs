@@ -24,7 +24,7 @@ namespace V2RayGCon.Controllers
         CoreServerComponent.Configer configer;
         CoreServerComponent.CoreCtrl coreCtrl;
 
-        bool isDisposed = false;
+        new bool isDisposed = false;
 
         public CoreServerCtrl(CoreInfo coreInfo)
         {
@@ -46,7 +46,7 @@ namespace V2RayGCon.Controllers
             coreCtrl = new CoreServerComponent.CoreCtrl(setting, coreInfo, configMgr);
             states = new CoreServerComponent.CoreStates(servers, coreInfo);
             logger = new CoreServerComponent.Logger(setting);
-            configer = new CoreServerComponent.Configer(setting, cache, coreInfo);
+            configer = new CoreServerComponent.Configer(setting, servSvc, cache, coreInfo);
 
             AddChild(coreCtrl);
             AddChild(states);
@@ -80,6 +80,7 @@ namespace V2RayGCon.Controllers
 
         bool SetCustomInboundInfo(CoreServSettings cs)
         {
+            // caller will call UpdateSummary().
             var ci = coreInfo;
             var restartCore = false;
             if (cs.inboundName != ci.inbName)

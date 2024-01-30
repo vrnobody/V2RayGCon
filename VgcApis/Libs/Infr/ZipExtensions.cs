@@ -9,8 +9,12 @@ namespace VgcApis.Libs.Infr
     public static class ZipExtensions
     {
         #region public
-        public static void SerializeObjectAsCompressedUnicodeBase64ToStream(Stream s, object value)
+        public static void SerializeObjectAsCompressedUnicodeBase64ToStream(Stream s, object o)
         {
+            if (o == null)
+            {
+                return;
+            }
             using (var wrapper = new Streams.KeepStreamOpenWrapper(s))
             using (
                 var b64 = new CryptoStream(wrapper, new ToBase64Transform(), CryptoStreamMode.Write)
@@ -20,12 +24,16 @@ namespace VgcApis.Libs.Infr
             using (var jw = new JsonTextWriter(w))
             {
                 var ser = new JsonSerializer();
-                ser.Serialize(jw, value);
+                ser.Serialize(jw, o);
             }
         }
 
         public static string SerializeObjectToCompressedUnicodeBase64(object value)
         {
+            if (value == null)
+            {
+                return "";
+            }
             using (var dest = new Streams.ArrayPoolMemoryStream(Encoding.ASCII))
             {
                 using (
@@ -48,7 +56,13 @@ namespace VgcApis.Libs.Infr
         }
 
         public static T DeserializeObjectFromCompressedUnicodeBase64<T>(string b64Str)
+            where T : class
         {
+            if (string.IsNullOrEmpty(b64Str))
+            {
+                return default;
+            }
+
             using (var src = new Streams.ReadonlyStringStream(b64Str, Encoding.ASCII))
             using (
                 var b64 = new CryptoStream(src, new FromBase64Transform(), CryptoStreamMode.Read)
@@ -77,6 +91,10 @@ namespace VgcApis.Libs.Infr
 
         public static string CompressToBase64(string data)
         {
+            if (string.IsNullOrEmpty(data))
+            {
+                return "";
+            }
             using (var dest = new Streams.ArrayPoolMemoryStream(Encoding.ASCII))
             {
                 using (
@@ -97,6 +115,11 @@ namespace VgcApis.Libs.Infr
 
         public static string DecompressFromBase64(string data)
         {
+            if (string.IsNullOrEmpty(data))
+            {
+                return "";
+            }
+
             using (var src = new Streams.ReadonlyStringStream(data, Encoding.ASCII))
             using (
                 var b64 = new CryptoStream(src, new FromBase64Transform(), CryptoStreamMode.Read)

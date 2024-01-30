@@ -820,6 +820,19 @@ namespace V2RayGCon.Services
             return AddServerWithConfigWorker(name, config, mark, quiet);
         }
 
+        public bool TryUpdateConfigCache(string uid, string newConfig)
+        {
+            locker.EnterReadLock();
+            try
+            {
+                return configCache.TryUpdate(uid, newConfig);
+            }
+            finally
+            {
+                locker.ExitReadLock();
+            }
+        }
+
         public bool ReplaceServerConfig(string orgConfig, string newConfig)
         {
             Controllers.CoreServerCtrl coreServ = null;
@@ -843,8 +856,6 @@ namespace V2RayGCon.Services
                 return false;
             }
 
-            configCache.TryRemove(orgConfig, out _);
-            configCache.TryAdd(newConfig, uid);
             coreServ.GetConfiger().SetConfig(newConfig);
             coreServ.GetCoreStates().SetLastModifiedUtcTicks(DateTime.UtcNow.Ticks);
             return true;

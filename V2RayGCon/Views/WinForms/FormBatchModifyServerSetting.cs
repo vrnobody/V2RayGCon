@@ -337,6 +337,8 @@ namespace V2RayGCon.Views.WinForms
             {
                 serverCtrl.GetCoreCtrl().SetCustomCoreName(newCoreName);
             }
+
+            serverCtrl.GetConfiger().UpdateSummary();
         }
 
         #endregion

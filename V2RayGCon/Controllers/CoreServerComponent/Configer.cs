@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
+using V2RayGCon.Services;
 using VgcApis.Models.Datas;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
@@ -14,18 +15,25 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             VgcApis.Interfaces.CoreCtrlComponents.IConfiger
     {
         readonly Services.Settings setting;
+        private readonly Servers servers;
         readonly Services.Cache cache;
         readonly CoreInfo coreInfo;
 
-        List<string> inbsInfoCache = null;
+        List<InboundInfo> inbsInfoCache = null;
 
         CoreStates states;
         Logger logger;
         CoreCtrl coreCtrl;
 
-        public Configer(Services.Settings setting, Services.Cache cache, CoreInfo coreInfo)
+        public Configer(
+            Services.Settings setting,
+            Services.Servers servers,
+            Services.Cache cache,
+            CoreInfo coreInfo
+        )
         {
             this.setting = setting;
+            this.servers = servers;
             this.cache = cache;
             this.coreInfo = coreInfo;
         }
@@ -48,16 +56,15 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             var cache = inbsInfoCache;
             if (cache == null)
             {
-                // setting.SendLog("re-gen inbounds info");
-                var inbs = GetAllInboundsInfo();
-                cache = FormatInboundInfo(inbs);
+                setting.DebugSendLog("re-gen inbounds info");
+                cache = GetAllInboundsInfo();
                 inbsInfoCache = cache;
             }
             else
             {
-                // setting.SendLog("get inbounds info from cache");
+                setting.DebugSendLog("get inbounds info from cache");
             }
-            return cache.AsReadOnly();
+            return FormatInboundInfo(cache).AsReadOnly();
         }
 
         public void GatherInfoForNotifyIcon(Action<string> next)
@@ -102,12 +109,15 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GetFinalConfig() => GenFinalConfig(false);
 
+        public void ClearFinalConfigCache() => coreInfo.SetFinalConfigCache(null);
+
         public string GetRawConfig() => coreInfo.config;
 
         public string GetConfig() => coreInfo.GetConfig();
 
         public void UpdateSummary()
         {
+            coreInfo.SetFinalConfigCache(null);
             var config = GetFinalConfig();
             UpdateSummaryCore(config);
             GetParent().InvokeEventOnPropertyChange();
@@ -150,6 +160,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 return false;
             }
             coreInfo.SetConfig(newConfig);
+            var uid = GetParent().GetCoreStates().GetUid();
+            servers.TryUpdateConfigCache(uid, newConfig);
             UpdateSummary();
             return true;
         }
@@ -169,6 +181,12 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GenFinalConfig(bool isSetStatPort)
         {
+            var r = isSetStatPort ? "" : coreInfo.GetFinalConfigCache();
+            if (!string.IsNullOrEmpty(r))
+            {
+                return r;
+            }
+
             var cfgTpls = setting.GetCustomConfigTemplates();
             var names =
                 coreInfo.templates?.Replace(", ", ",")?.Split(',')?.ToList() ?? new List<string>();
@@ -183,7 +201,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     .Select(n => cfgTpls.FirstOrDefault(tpl => tpl.name == n))
                     .Where(t => t != null)
             );
-            string r = null;
             var host = coreInfo.inbIp;
             var port = coreInfo.inbPort;
 
@@ -194,6 +211,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 {
                     var json = InjectStatisticsConfigOnDemand(config, isSetStatPort);
                     r = GenJsonFinalConfig(ref json, tpls, host, port);
+                    VgcApis.Misc.JsonRecycleBin.Put(r, json);
                 }
                 else
                 {
@@ -209,7 +227,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 }
             }
             catch { }
-            return string.IsNullOrEmpty(r) ? config : r;
+            r = string.IsNullOrEmpty(r) ? config : r;
+            coreInfo.SetFinalConfigCache(r);
+            return r;
         }
 
         #endregion
@@ -349,12 +369,12 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             if (!VgcApis.Misc.JsonRecycleBin.TryTake(config, out var json))
             {
-                // setting.SendLog($"parse config len: {config.Length / 1024} KiB");
+                setting.DebugSendLog($"parse config len: {config.Length / 1024} KiB");
                 json = JObject.Parse(config);
             }
             else
             {
-                // setting.SendLog("get config from recyclebin");
+                setting.DebugSendLog("get config from recyclebin");
             }
 
             if (!setting.isEnableStatistics)
@@ -388,20 +408,27 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             inbsInfoCache = null;
             try
             {
-                List<InboundInfo> inbs;
                 var s = "";
                 switch (ty)
                 {
                     case Enums.ConfigType.json:
-                        var json = VgcApis.Misc.Utils.ParseJObject(config);
-                        inbs = GetInboundsInfoFromJson(json);
-                        inbsInfoCache = FormatInboundInfo(inbs);
+                        if (!VgcApis.Misc.JsonRecycleBin.TryTake(config, out var json))
+                        {
+                            json = VgcApis.Misc.Utils.ParseJObject(config);
+                            setting.DebugSendLog(
+                                $"update summary parse json: {config.Length / 1024} KiB"
+                            );
+                        }
+                        else
+                        {
+                            setting.DebugSendLog("update summary get json from recyclebin");
+                        }
+                        inbsInfoCache = GetInboundsInfoFromJson(json);
                         s = Misc.Utils.ExtractSummaryFromJson(json);
                         break;
                     case Enums.ConfigType.yaml:
                         s = Misc.Utils.ExtractSummaryFromYaml(config);
-                        inbs = GetInboundsInfoFromYaml(config);
-                        inbsInfoCache = FormatInboundInfo(inbs);
+                        inbsInfoCache = GetInboundsInfoFromYaml(config);
                         break;
                     default:
                         break;

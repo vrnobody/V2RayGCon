@@ -29,12 +29,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             UpdateStatusWithSpeedTestResult();
         }
 
-        #region properties
-
-
-
-        #endregion
-
         #region public methods
         public string GetCustomTemplateNames()
         {
@@ -220,6 +214,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             if (ip != coreInfo.inbIp)
             {
                 coreInfo.inbIp = ip;
+                configer.UpdateSummary();
                 GetParent().InvokeEventOnPropertyChange();
             }
         }
@@ -229,6 +224,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             if (port != coreInfo.inbPort)
             {
                 coreInfo.inbPort = port;
+                configer.UpdateSummary();
                 GetParent().InvokeEventOnPropertyChange();
             }
         }
@@ -251,6 +247,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
             if (changed)
             {
+                configer.UpdateSummary();
                 GetParent().InvokeEventOnPropertyChange();
             }
         }
@@ -261,8 +258,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             {
                 return;
             }
-
             coreInfo.inbName = name;
+
+            configer.UpdateSummary();
             GetParent().InvokeEventOnPropertyChange();
             if (coreCtrl.IsCoreRunning())
             {

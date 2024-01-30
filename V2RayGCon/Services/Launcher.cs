@@ -63,9 +63,7 @@ namespace V2RayGCon.Services
             setting.SendLog($"{nv} started.");
             setting.SendLog($"{dir}");
 
-#if DEBUG
             This_Function_Is_Used_For_Debugging();
-#endif
         }
 
         #endregion
@@ -87,7 +85,7 @@ namespace V2RayGCon.Services
             }
         }
 
-#if DEBUG
+        [System.Diagnostics.Conditional("DEBUG")]
         void This_Function_Is_Used_For_Debugging()
         {
             // ShowPlugin(@"NeoLuna");
@@ -113,7 +111,7 @@ namespace V2RayGCon.Services
             // Views.WinForms.FormSimpleEditor.GetForm();
             // Views.WinForms.FormDownloadCore.GetForm();
         }
-#endif
+
         #endregion
 
         #region private method

@@ -7,6 +7,11 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
     public interface IConfiger
     {
         /// <summary>
+        /// 清理最终配置缓存
+        /// </summary>
+        void ClearFinalConfigCache();
+
+        /// <summary>
         /// 从缓存格式化的inbounds信息
         /// </summary>
         /// <returns>格式化的inbounds信息</returns>

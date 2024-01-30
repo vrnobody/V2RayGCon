@@ -12,6 +12,8 @@
         // plain text of config.json
         public string config;
 
+        public string finalConfigCache;
+
         public string templates;
 
         public bool isAcceptInjection = true;
@@ -91,25 +93,48 @@
             tag3 = string.Empty;
         }
 
+        #region public methods
+        public string GetFinalConfigCache()
+        {
+            return DeCompressOndemand(finalConfigCache);
+        }
+
+        public void SetFinalConfigCache(string config)
+        {
+            var c = CompressOnDemand(config);
+            this.finalConfigCache = c;
+        }
+
         public string GetConfig()
         {
-            if (Libs.Infr.ZipExtensions.IsCompressedBase64(config))
-            {
-                return Libs.Infr.ZipExtensions.DecompressFromBase64(config);
-            }
-            return config;
+            return DeCompressOndemand(config);
         }
 
         public void SetConfig(string config)
         {
-            if (Misc.Utils.StrLenInBytes(config) > Consts.Libs.MinCompressStringLength)
-            {
-                this.config = Libs.Infr.ZipExtensions.CompressToBase64(config);
-            }
-            else
-            {
-                this.config = config;
-            }
+            var c = CompressOnDemand(config);
+            this.config = c;
         }
+        #endregion
+
+        #region private methods
+        string DeCompressOndemand(string s)
+        {
+            if (Libs.Infr.ZipExtensions.IsCompressedBase64(s))
+            {
+                return Libs.Infr.ZipExtensions.DecompressFromBase64(s);
+            }
+            return s;
+        }
+
+        string CompressOnDemand(string s)
+        {
+            if (Misc.Utils.StrLenInBytes(s) > Consts.Libs.MinCompressStringLength)
+            {
+                return Libs.Infr.ZipExtensions.CompressToBase64(s);
+            }
+            return s;
+        }
+        #endregion
     }
 }

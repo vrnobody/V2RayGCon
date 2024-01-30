@@ -86,6 +86,28 @@ namespace VgcApisTests.LibsTests
             Assert.AreEqual(src, dr);
         }
 
+        [TestMethod]
+        public void NullStringTest()
+        {
+            var rnull = ZipExtensions.CompressToBase64(null);
+            Assert.AreEqual("", rnull);
+
+            rnull = ZipExtensions.DecompressFromBase64(null);
+            Assert.AreEqual("", rnull);
+
+            rnull = ZipExtensions.SerializeObjectToCompressedUnicodeBase64(null);
+            Assert.AreEqual("", rnull);
+
+            var onull = ZipExtensions.DeserializeObjectFromCompressedUnicodeBase64<object>(null);
+            Assert.AreEqual(null, onull);
+
+            using (var s = new MemoryStream())
+            {
+                ZipExtensions.SerializeObjectAsCompressedUnicodeBase64ToStream(s, null);
+                Assert.AreEqual(0, s.Length);
+            }
+        }
+
         [DataTestMethod]
         [DataRow("hello, world!")]
         [DataRow("he中llo780, wo文rld!123")]

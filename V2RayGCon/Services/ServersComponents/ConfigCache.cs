@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Linq;
 
 namespace V2RayGCon.Services.ServersComponents
 {
@@ -9,10 +10,6 @@ namespace V2RayGCon.Services.ServersComponents
 
         public ConfigCache() { }
 
-        #region properties
-
-        #endregion
-
         #region public methods
         public void Clear() => cache.Clear();
 
@@ -20,6 +17,18 @@ namespace V2RayGCon.Services.ServersComponents
         {
             var hash = GetHash(config);
             return cache.ContainsKey(hash);
+        }
+
+        public bool TryUpdate(string uid, string newConfig)
+        {
+            var key = cache.FirstOrDefault(kv => kv.Value == uid).Key;
+            if (!string.IsNullOrEmpty(key))
+            {
+                cache.TryRemove(key, out _);
+            }
+
+            var hash = GetHash(newConfig);
+            return cache.TryAdd(hash, uid);
         }
 
         public bool TryAdd(string config, string uid)

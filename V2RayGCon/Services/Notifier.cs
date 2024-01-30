@@ -1096,6 +1096,7 @@ namespace V2RayGCon.Services
         void UpdateNotifyIconTextThen(List<ICoreServCtrl> list, Action finished)
         {
             var count = list.Count;
+
             var texts = new List<string>
             {
                 $"{Misc.Utils.GetAppNameAndVer()} - {I18N.Servers}: {servers.Count()}"
@@ -1113,9 +1114,13 @@ namespace V2RayGCon.Services
                     var sysProxyInfo = GetterSysProxyInfo();
                     if (!string.IsNullOrEmpty(sysProxyInfo))
                     {
-                        int len = VgcApis.Models.Consts.AutoEllipsis.NotifierSysProxyInfoMaxLength;
+                        var maxLen = VgcApis
+                            .Models
+                            .Consts
+                            .AutoEllipsis
+                            .NotifierSysProxyInfoMaxLength;
                         texts.Add(
-                            I18N.CurSysProxy + VgcApis.Misc.Utils.AutoEllipsis(sysProxyInfo, len)
+                            I18N.CurSysProxy + VgcApis.Misc.Utils.AutoEllipsis(sysProxyInfo, maxLen)
                         );
                     }
                     SetNotifyIconText(string.Join(Environment.NewLine, texts));
@@ -1124,8 +1129,16 @@ namespace V2RayGCon.Services
                 finished?.Invoke();
             }
 
+            var textLen = texts.Select(t => t.Length).Sum();
+            var niTextMaxLen = VgcApis.Models.Consts.AutoEllipsis.NotifierTextMaxLength;
             void worker(int index, Action next)
             {
+                if (textLen > niTextMaxLen)
+                {
+                    next?.Invoke();
+                    return;
+                }
+
                 try
                 {
                     list[index]
@@ -1133,6 +1146,7 @@ namespace V2RayGCon.Services
                         .GatherInfoForNotifyIcon(s =>
                         {
                             texts.Add(s);
+                            textLen += s.Length;
                             next?.Invoke();
                         });
                     return;

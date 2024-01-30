@@ -12,8 +12,6 @@
         // plain text of config.json
         public string config;
 
-        public string finalConfigCache;
-
         public string templates;
 
         public bool isAcceptInjection = true;
@@ -94,17 +92,6 @@
         }
 
         #region public methods
-        public string GetFinalConfigCache()
-        {
-            return DeCompressOndemand(finalConfigCache);
-        }
-
-        public void SetFinalConfigCache(string config)
-        {
-            var c = CompressOnDemand(config);
-            this.finalConfigCache = c;
-        }
-
         public string GetConfig()
         {
             return DeCompressOndemand(config);

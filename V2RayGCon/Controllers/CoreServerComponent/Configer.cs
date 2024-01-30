@@ -45,6 +45,37 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             coreCtrl = GetSibling<CoreCtrl>();
         }
 
+        #region properties
+        string finalConfigCache;
+        readonly int minFinalConfigSize = 96 * 1024;
+
+        string FinalConfigCache
+        {
+            get
+            {
+                var s = finalConfigCache;
+                if (VgcApis.Libs.Infr.ZipExtensions.IsCompressedBase64(s))
+                {
+                    return VgcApis.Libs.Infr.ZipExtensions.DecompressFromBase64(s);
+                }
+                return s;
+            }
+            set
+            {
+                var s = value;
+                if (!string.IsNullOrEmpty(s) && s.Length > minFinalConfigSize)
+                {
+                    s = VgcApis.Libs.Infr.ZipExtensions.CompressToBase64(s);
+                }
+                else
+                {
+                    s = null;
+                }
+                finalConfigCache = s;
+            }
+        }
+        #endregion
+
         #region public methods
         public InboundInfo GetInboundInfo()
         {
@@ -109,7 +140,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GetFinalConfig() => GenFinalConfig(false);
 
-        public void ClearFinalConfigCache() => coreInfo.SetFinalConfigCache(null);
+        public void ClearFinalConfigCache() => FinalConfigCache = null;
 
         public string GetRawConfig() => coreInfo.config;
 
@@ -117,7 +148,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public void UpdateSummary()
         {
-            coreInfo.SetFinalConfigCache(null);
+            ClearFinalConfigCache();
             var config = GetFinalConfig();
             UpdateSummaryCore(config);
             GetParent().InvokeEventOnPropertyChange();
@@ -181,7 +212,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GenFinalConfig(bool isSetStatPort)
         {
-            var r = isSetStatPort ? "" : coreInfo.GetFinalConfigCache();
+            var r = isSetStatPort ? "" : FinalConfigCache;
             if (!string.IsNullOrEmpty(r))
             {
                 return r;
@@ -228,7 +259,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
             catch { }
             r = string.IsNullOrEmpty(r) ? config : r;
-            coreInfo.SetFinalConfigCache(r);
+            FinalConfigCache = r;
             return r;
         }
 

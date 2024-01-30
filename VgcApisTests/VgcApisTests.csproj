@@ -69,6 +69,7 @@
     <Compile Include="LibsTests\BarTests.cs" />
     <Compile Include="LibsTests\TicketPoolTests.cs" />
     <Compile Include="Experiments.cs" />
+    <Compile Include="MiscTests\JsonRecycleBinTests.cs" />
     <Compile Include="ReflectionTests.cs" />
     <Compile Include="LibsTests\ZipExtensionsTests.cs" />
     <Compile Include="StringReadWriterTests.cs" />

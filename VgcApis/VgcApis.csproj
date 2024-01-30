@@ -98,6 +98,7 @@
     <Compile Include="Libs\Sys\QueueLogger.cs" />
     <Compile Include="BaseClasses\ComponentOf.cs" />
     <Compile Include="Libs\Tasks\TicketPool.cs" />
+    <Compile Include="Misc\JsonRecycleBin.cs" />
     <Compile Include="Models\Consts\BitStream.cs" />
     <Compile Include="Models\Consts\Config.cs" />
     <Compile Include="Models\Consts\Core.cs" />

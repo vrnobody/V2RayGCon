@@ -84,7 +84,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             );
 
             coreInfo.title = string.Empty;
-            configer.ClearInboundsInfoCache();
             GetParent().InvokeEventOnPropertyChange();
         }
 
@@ -152,7 +151,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
             coreInfo.index = index;
             coreInfo.title = string.Empty;
-            configer.ClearInboundsInfoCache();
             GetParent().InvokeEventOnIndexChange();
             if (!quiet)
             {

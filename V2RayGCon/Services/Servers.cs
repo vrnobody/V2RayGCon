@@ -448,7 +448,9 @@ namespace V2RayGCon.Services
             }
             var ty = PackageTypes.Balancer;
             var package = configMgr.GenV4ServersPackageConfig(servList, ty);
-            return VgcApis.Misc.Utils.FormatConfig(package);
+            var config = VgcApis.Misc.Utils.FormatConfig(package);
+            VgcApis.Misc.JsonRecycleBin.Put(config, package);
+            return config;
         }
 
         public string PackServersWithUidsV4(
@@ -1187,6 +1189,7 @@ namespace V2RayGCon.Services
             }
 
             var newConfig = VgcApis.Misc.Utils.FormatConfig(package);
+            VgcApis.Misc.JsonRecycleBin.Put(newConfig, package);
             string newUid = ReplaceOrAddNewServer(orgUid, packageName, newConfig, mark);
 
             UpdateMarkList();

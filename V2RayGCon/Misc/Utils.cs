@@ -200,9 +200,8 @@ namespace V2RayGCon.Misc
             return empty;
         }
 
-        public static string ExtractSummaryFromJson(string config)
+        public static string ExtractSummaryFromJson(JObject json)
         {
-            var json = VgcApis.Misc.Utils.ParseJObject(config);
             if (json == null)
             {
                 return string.Empty;

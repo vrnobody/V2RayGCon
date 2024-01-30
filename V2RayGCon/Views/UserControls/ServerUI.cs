@@ -467,16 +467,16 @@ namespace V2RayGCon.Views.UserControls
 
         void UpdateInboundModeLabel(VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreState)
         {
-            var inbs = coreServCtrl.GetConfiger().GetAllInboundsInfo();
             var lines = new List<string>();
             var tpl = coreState.GetInboundName();
             var tplName = string.IsNullOrEmpty(tpl) ? $"{I18N.Empty}" : tpl;
             lines.Add($"{I18N.Template}: {tplName}");
 
+            var inbs = coreServCtrl.GetConfiger().GetFormattedInboundsInfoFromCache();
             for (int i = 0; i < inbs.Count(); i++)
             {
                 var info = inbs[i];
-                lines.Add($"inbound[{i}] -> {info.protocol}://{info.host}:{info.port}");
+                lines.Add($"inbound[{i}] -> {inbs[i]}");
             }
 
             var name = coreState.GetInboundName();

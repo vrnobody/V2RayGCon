@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace VgcApis.Interfaces.CoreCtrlComponents
 {
     public interface IConfiger
     {
+        /// <summary>
+        /// 从缓存格式化的inbounds信息
+        /// </summary>
+        /// <returns>格式化的inbounds信息</returns>
+        ReadOnlyCollection<string> GetFormattedInboundsInfoFromCache();
+
         /// <summary>
         /// 获取当前inbound主要信息
         /// </summary>
@@ -63,11 +70,6 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         /// 更新服务器摘要（摘要需要从config.json得出，所以更新功能放入IConfiger）
         /// </summary>
         void UpdateSummary();
-
-        /// <summary>
-        /// 清理GatherInfoForNotifyIcon()的cache
-        /// </summary>
-        void ClearInboundsInfoCache();
 
         /// <summary>
         /// 内部使用，脚本不要使用此函数。

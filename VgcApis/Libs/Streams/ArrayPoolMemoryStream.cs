@@ -67,7 +67,7 @@ namespace VgcApis.Libs.Streams
 
         /// <summary>set stream length</summary>
         /// <remarks>if length is larger than current buffer length, re-allocating buffer</remarks>
-        /// <exception cref="System.InvalidOperationException">if stream is readonly</exception>
+        /// <exception cref="InvalidOperationException">if stream is readonly</exception>
         public override void SetLength(long value)
         {
             if (!_CanWrite)
@@ -123,7 +123,7 @@ namespace VgcApis.Libs.Streams
 
         /// <summary>ensure the buffer size</summary>
         /// <remarks>capacity != stream buffer length</remarks>
-        /// <exception cref="System.InvalidOperationException">if stream is readonly</exception>
+        /// <exception cref="InvalidOperationException">if stream is readonly</exception>
         public void Reserve(int capacity)
         {
             if (!_CanWrite)
@@ -193,7 +193,7 @@ namespace VgcApis.Libs.Streams
 
         /// <summary>write data to stream</summary>
         /// <remarks>if stream data length is over int.MaxValue, this method throws IndexOutOfRangeException</remarks>
-        /// <exception cref="System.InvalidOperationException">if stream is readonly</exception>
+        /// <exception cref="InvalidOperationException">if stream is readonly</exception>
         public override void Write(byte[] buffer, int offset, int count)
         {
             if (!_CanWrite)
@@ -215,7 +215,7 @@ namespace VgcApis.Libs.Streams
 
         /// <summary>shrink internal buffer by re-allocating memory</summary>
         /// <remarks>if internal buffer is shorter than minimumRequired, nothing to do</remarks>
-        /// <exception cref="System.InvalidOperationException">if stream is readonly</exception>
+        /// <exception cref="InvalidOperationException">if stream is readonly</exception>
         public void Shrink(int minimumRequired)
         {
             if (!_CanWrite)

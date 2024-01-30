@@ -207,7 +207,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         void RestartCoreWorker(Action next, bool isQuiet)
         {
-            configer.ClearInboundsInfoCache();
             try
             {
                 string cfg = configer.GenFinalConfig(true);

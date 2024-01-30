@@ -370,7 +370,7 @@ namespace V2RayGCon.Services
                 );
             }
 
-            var json = VgcApis.Misc.Utils.ParseJObject(rawConfig);
+            var json = VgcApis.Misc.RecycleBin.Parse(rawConfig);
             if (json == null)
             {
                 return empty;

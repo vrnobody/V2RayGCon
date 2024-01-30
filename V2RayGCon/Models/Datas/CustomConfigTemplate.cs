@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace V2RayGCon.Models.Datas
 {
@@ -61,7 +61,7 @@ namespace V2RayGCon.Models.Datas
                     r = MergeToYaml(config, host, port);
                     break;
                 case VgcApis.Models.Datas.Enums.ConfigType.json:
-                    var json = VgcApis.Misc.Utils.ParseJObject(config);
+                    var json = VgcApis.Misc.RecycleBin.Parse(config);
                     if (json != null && MergeToJObject(ref json, host, port))
                     {
                         r = VgcApis.Misc.Utils.FormatConfig(json);

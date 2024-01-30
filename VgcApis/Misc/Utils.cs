@@ -1151,7 +1151,7 @@ namespace VgcApis.Misc
         #region Task
         public static void DoItLater(Action action, TimeSpan span)
         {
-            _ = Task.Delay(span).ContinueWith(_ => action());
+            Task.Delay(span).ContinueWith(_ => action()).ConfigureAwait(false);
         }
 
         public static void DoItLater(Action action, long ms)

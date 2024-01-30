@@ -67,10 +67,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 {
                     s = VgcApis.Libs.Infr.ZipExtensions.CompressToBase64(s);
                 }
-                else
-                {
-                    s = null;
-                }
                 finalConfigCache = s;
             }
         }
@@ -398,16 +394,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         JObject InjectStatisticsConfigOnDemand(string config, bool isSetStatPort)
         {
-            if (!VgcApis.Misc.RecycleBin.TryTake<JObject>(config, out var json))
-            {
-                setting.DebugSendLog($"parse config len: {config.Length / 1024} KiB");
-                json = JObject.Parse(config);
-            }
-            else
-            {
-                setting.DebugSendLog("get config from recyclebin");
-            }
-
+            var json = VgcApis.Misc.RecycleBin.Parse(config);
             if (!setting.isEnableStatistics)
             {
                 return json;
@@ -443,17 +430,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 switch (ty)
                 {
                     case Enums.ConfigType.json:
-                        if (!VgcApis.Misc.RecycleBin.TryTake<JObject>(config, out var json))
-                        {
-                            json = VgcApis.Misc.Utils.ParseJObject(config);
-                            setting.DebugSendLog(
-                                $"update summary parse json: {config.Length / 1024} KiB"
-                            );
-                        }
-                        else
-                        {
-                            setting.DebugSendLog("update summary get json from recyclebin");
-                        }
+                        var json = VgcApis.Misc.RecycleBin.Parse(config);
                         inbsInfoCache = GetInboundsInfoFromJson(json);
                         s = Misc.Utils.ExtractSummaryFromJson(json);
                         break;

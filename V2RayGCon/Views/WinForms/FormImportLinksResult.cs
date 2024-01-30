@@ -46,7 +46,7 @@ namespace V2RayGCon.Views.WinForms
         private void ResultLoader(int total, int min, int max)
         {
             int count = 0;
-            int seg = 500;
+            int seg = 1000;
 
             var it = results.GetEnumerator();
 

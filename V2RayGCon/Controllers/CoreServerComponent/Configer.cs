@@ -104,7 +104,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             var name = GetSibling<CoreStates>().GetName();
             var config = GetConfig();
-            return Services.ShareLinkMgr.Instance.EncodeConfigToShareLink(name, config);
+            return ShareLinkMgr.Instance.EncodeConfigToShareLink(name, config);
         }
 
         public string GetFinalConfig() => GenFinalConfig(false);
@@ -211,7 +211,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 {
                     var json = InjectStatisticsConfigOnDemand(config, isSetStatPort);
                     r = GenJsonFinalConfig(ref json, tpls, host, port);
-                    VgcApis.Misc.JsonRecycleBin.Put(r, json);
+                    VgcApis.Misc.RecycleBin.Put(r, json);
                 }
                 else
                 {
@@ -367,7 +367,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         JObject InjectStatisticsConfigOnDemand(string config, bool isSetStatPort)
         {
-            if (!VgcApis.Misc.JsonRecycleBin.TryTake(config, out var json))
+            if (!VgcApis.Misc.RecycleBin.TryTake<JObject>(config, out var json))
             {
                 setting.DebugSendLog($"parse config len: {config.Length / 1024} KiB");
                 json = JObject.Parse(config);
@@ -412,7 +412,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 switch (ty)
                 {
                     case Enums.ConfigType.json:
-                        if (!VgcApis.Misc.JsonRecycleBin.TryTake(config, out var json))
+                        if (!VgcApis.Misc.RecycleBin.TryTake<JObject>(config, out var json))
                         {
                             json = VgcApis.Misc.Utils.ParseJObject(config);
                             setting.DebugSendLog(

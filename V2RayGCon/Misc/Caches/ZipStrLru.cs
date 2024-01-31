@@ -1,11 +1,15 @@
-﻿using VgcApis.Libs.Infr;
+﻿using System.Web.UI.WebControls;
+using VgcApis.Libs.Infr;
 
 namespace V2RayGCon.Misc.Caches
 {
     internal static class ZipStrLru
     {
-        public static readonly int capacity = 20;
-        public static readonly int minSize = 96 * 1024;
+        // only final config editor will use this cache
+        // not very useful 2024-01-31
+        public static readonly int capacity = 10;
+
+        public static readonly int minSize = 128 * 1024;
         static readonly LRUCache<string, Node> cache = new LRUCache<string, Node>(capacity);
 
         static ZipStrLru() { }
@@ -18,6 +22,7 @@ namespace V2RayGCon.Misc.Caches
                 return false;
             }
 
+            VgcApis.Misc.Logger.Debug($"ZipStrLru cache: {key} {content.Length / 1024} KiB");
             var zipped = false;
             if (!ZipExtensions.IsCompressedBase64(content))
             {
@@ -46,12 +51,14 @@ namespace V2RayGCon.Misc.Caches
             {
                 content = node.content;
             }
+            VgcApis.Misc.Logger.Debug($"ZipStrLru reuse cache: {key}");
             return true;
         }
 
         public static bool TryRemove(string key)
         {
             key = HashOnDemand(key);
+            VgcApis.Misc.Logger.Debug($"ZipStrLru remove cache : {key}");
             return cache.Remove(key);
         }
         #endregion

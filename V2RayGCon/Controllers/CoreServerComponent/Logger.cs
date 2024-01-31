@@ -7,12 +7,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             VgcApis.Interfaces.CoreCtrlComponents.ILogger
     {
         readonly VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger();
-        readonly Services.Settings setting;
 
-        public Logger(Services.Settings setting)
-        {
-            this.setting = setting;
-        }
+        public Logger() { }
 
         #region public methods
         public Action<string> GetLoggerInstance() => Log;
@@ -25,11 +21,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public void Log(string message)
         {
             qLogger.Log(message);
-            try
-            {
-                setting.SendLog($"[{coreInfo.GetIndex()}.{coreInfo.GetShortName()}] {message}");
-            }
-            catch { }
+            VgcApis.Misc.Logger.Log($"[{coreInfo.GetIndex()}.{coreInfo.GetShortName()}] {message}");
         }
 
         CoreStates coreInfo;

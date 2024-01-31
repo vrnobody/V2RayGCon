@@ -39,7 +39,7 @@ namespace NeoLuna.Services
         {
             var name = Properties.Resources.Name;
             qLogger.Log(content);
-            vgcSetting.SendLog(string.Format("[{0}] {1}", name, content));
+            VgcApis.Misc.Logger.Log($"[{name}]", content);
         }
 
         public bool IsClosing() => _isDisposing || vgcSetting.IsClosing();

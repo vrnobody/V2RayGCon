@@ -32,10 +32,10 @@ namespace Luna.Services
 
         #region public methods
 
-        public void SendLog(string contnet)
+        public void SendLog(string content)
         {
             var name = Properties.Resources.Name;
-            vgcSetting.SendLog(string.Format("[{0}] {1}", name, contnet));
+            VgcApis.Misc.Logger.Log($"[{name}]", content);
         }
 
         public bool IsClosing() => _isDisposing || vgcSetting.IsClosing();

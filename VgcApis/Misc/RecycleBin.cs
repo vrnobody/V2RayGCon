@@ -7,12 +7,13 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using VgcApis.Models.Consts;
 
 namespace VgcApis.Misc
 {
     public static class RecycleBin
     {
-        static readonly BlockingCollection<Node> rmQueue = new BlockingCollection<Node>(100);
+        static readonly BlockingCollection<Node> rmQueue = new BlockingCollection<Node>();
         public static readonly TimeSpan timeout = TimeSpan.FromSeconds(10);
 
         static ConcurrentDictionary<string, object> cache =
@@ -37,15 +38,20 @@ namespace VgcApis.Misc
             {
                 return json;
             }
+            Logger.Debug($"recyclebin parse new json {config.Length / 1024} KiB");
             return Utils.ParseJObject(config);
         }
 
-        public static bool TryTake<T>(string key, out T o)
+        public static bool TryTake<T>(string config, out T o)
             where T : class
         {
-            var hash = Utils.Sha256Hex(key);
+            var hash = Utils.Sha256Hex(config);
             var ok = cache.TryRemove(hash, out var v);
             o = v as T;
+            if (ok)
+            {
+                Logger.Debug($"recyclebin reuse json {config.Length / 1024} KiB");
+            }
             return ok && o != null;
         }
         #endregion
@@ -56,13 +62,27 @@ namespace VgcApis.Misc
             var node = rmQueue.Take();
             var diff = node.expired.Subtract(DateTime.Now).TotalMilliseconds;
             var delay = (int)(Math.Max(diff, 0));
-            Task.Delay(delay)
-                .ContinueWith(_ =>
-                {
-                    cache.TryRemove(node.hash, out var _);
-                    Recycle();
-                })
-                .ConfigureAwait(false);
+
+            if (delay > 800)
+            {
+                Task.Delay(delay)
+                    .ContinueWith(_ =>
+                    {
+                        if (cache.TryRemove(node.hash, out var _))
+                        {
+                            Logger.Debug($"recyclebin drop slow");
+                        }
+                        Recycle();
+                    })
+                    .ConfigureAwait(false);
+                return;
+            }
+
+            if (cache.TryRemove(node.hash, out var _))
+            {
+                Logger.Debug($"recyclebin drop fast");
+            }
+            Recycle();
         }
         #endregion
 

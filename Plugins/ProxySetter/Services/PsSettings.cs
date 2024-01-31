@@ -28,10 +28,10 @@
 #endif
         }
 
-        public void SendLog(string contnet)
+        public void SendLog(string contents)
         {
             var name = Properties.Resources.Name;
-            setting.SendLog(string.Format("[{0}] {1}", name, contnet));
+            VgcApis.Misc.Logger.Log($"[{name}]", contents);
         }
 
         public Model.Data.TunaSettings GetTunaSettings()

@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Controllers.OptionComponent
@@ -361,7 +361,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             }
 
             downloadFailUrls.Insert(0, "");
-            setting.SendLog(
+            VgcApis.Misc.Logger.Log(
                 string.Join(Environment.NewLine + I18N.DownloadFail + @" ", downloadFailUrls)
             );
         }

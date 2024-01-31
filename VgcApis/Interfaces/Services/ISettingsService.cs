@@ -18,9 +18,6 @@ namespace VgcApis.Interfaces.Services
 
         bool IsClosing();
 
-        string GetLogContent();
-
-        void SendLog(string log);
         void SavePluginsSetting(string pluginName, string value);
         string GetPluginsSetting(string pluginName);
 

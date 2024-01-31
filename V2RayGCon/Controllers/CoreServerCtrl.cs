@@ -44,7 +44,7 @@ namespace V2RayGCon.Controllers
             //external dependency injection
             coreCtrl = new CoreServerComponent.CoreCtrl(setting, coreInfo, configMgr);
             states = new CoreServerComponent.CoreStates(servers, coreInfo);
-            logger = new CoreServerComponent.Logger(setting);
+            logger = new CoreServerComponent.Logger();
             configer = new CoreServerComponent.Configer(setting, servSvc, coreInfo);
 
             AddChild(coreCtrl);

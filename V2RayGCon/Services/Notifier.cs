@@ -351,7 +351,7 @@ namespace V2RayGCon.Services
                     link,
                     VgcApis.Models.Consts.AutoEllipsis.QrcodeTextMaxLength
                 );
-                setting.SendLog($"QRCode: {msg}");
+                VgcApis.Misc.Logger.Log($"QRCode: {msg}");
                 slinkMgr.ImportLinkWithOutV2cfgLinks(link);
             }
 

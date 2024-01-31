@@ -41,7 +41,7 @@ namespace V2RayGCon.Services
             {
                 if (isQuiet)
                 {
-                    setting.SendLog(I18N.NoQualifyProxyServer);
+                    VgcApis.Misc.Logger.Log(I18N.NoQualifyProxyServer);
                 }
                 else
                 {
@@ -103,7 +103,9 @@ namespace V2RayGCon.Services
 
             if (isQuiet)
             {
-                setting.SendLog(infos == null ? I18N.FetchUpdateInfoFail : I18N.NoUpdateTryLater);
+                VgcApis.Misc.Logger.Log(
+                    infos == null ? I18N.FetchUpdateInfoFail : I18N.NoUpdateTryLater
+                );
             }
             else
             {

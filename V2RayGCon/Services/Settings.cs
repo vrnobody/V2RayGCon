@@ -647,15 +647,6 @@ namespace V2RayGCon.Services
         }
 
         public CultureInfo orgCulture = null;
-        readonly VgcApis.Libs.Sys.QueueLogger qLogger = new VgcApis.Libs.Sys.QueueLogger(
-            VgcApis.Models.Consts.Libs.MainLoggerCacheLines
-        );
-
-        public long GetLogTimestamp() => qLogger.GetTimestamp();
-
-        public string GetLogContent() => qLogger.GetLogAsString(true);
-
-        public void SendLog(string log) => qLogger.Log(log);
 
         public Models.Datas.Enums.Cultures culture
         {
@@ -1221,12 +1212,12 @@ namespace V2RayGCon.Services
                 {
                     if (isPortable)
                     {
-                        DebugSendLog("Try save settings to file.");
+                        VgcApis.Misc.Logger.Debug("Try save settings to file.");
                         SaveUserSettingsToFile(configSlim);
                     }
                     else
                     {
-                        DebugSendLog("Try save settings to properties");
+                        VgcApis.Misc.Logger.Debug("Try save settings to properties");
                         SetUserSettingFileIsPortableToFalse(configSlim);
                         var configFull = ReplacePlaceHoldersWithData(configSlim);
                         SaveUserSettingsToProperties(configFull);
@@ -1244,7 +1235,11 @@ namespace V2RayGCon.Services
             if (GetShutdownReason() == VgcApis.Models.Datas.Enums.ShutdownReasons.CloseByUser)
             {
                 var serializedUserSettings = JsonConvert.SerializeObject(userSettings);
-                SendLog("UserSettings: " + Environment.NewLine + serializedUserSettings);
+                VgcApis.Misc.Logger.Log(
+                    "UserSettings:",
+                    Environment.NewLine,
+                    serializedUserSettings
+                );
                 throw new ArgumentException("Validate serialized user settings fail!");
             }
         }
@@ -1273,19 +1268,19 @@ namespace V2RayGCon.Services
 
         void SetUserSettingFileIsPortableToFalse(string us)
         {
-            DebugSendLog("set portable to false");
+            VgcApis.Misc.Logger.Debug("set portable to false");
             var mainUsFilename = cmdArgs.userSettings;
             var bakUsFilename = cmdArgs.userSettingsBak;
             if (!File.Exists(mainUsFilename) && !File.Exists(bakUsFilename))
             {
-                DebugSendLog("setting file not exists");
+                VgcApis.Misc.Logger.Debug("setting file not exists");
                 return;
             }
 
             try
             {
                 Misc.Utils.ClumsyWriter(us, mainUsFilename, bakUsFilename);
-                DebugSendLog("set portable option done");
+                VgcApis.Misc.Logger.Debug("set portable option done");
                 return;
             }
             catch { }
@@ -1307,7 +1302,7 @@ namespace V2RayGCon.Services
             }
             catch
             {
-                DebugSendLog("Save user settings to Properties fail!");
+                VgcApis.Misc.Logger.Debug("Save user settings to Properties fail!");
             }
         }
 
@@ -1402,7 +1397,7 @@ namespace V2RayGCon.Services
                 );
                 if (us != null)
                 {
-                    DebugSendLog("Read user settings from Properties.Usersettings");
+                    VgcApis.Misc.Logger.Debug("Read user settings from Properties.Usersettings");
                     return us;
                 }
             }
@@ -1491,16 +1486,7 @@ namespace V2RayGCon.Services
             VgcApis.Libs.Sys.FileLogger.Info("Settings.Cleanup() begin");
             lazyBookKeeper?.Dispose();
             SaveUserSettingsNow();
-            qLogger.Dispose();
             VgcApis.Libs.Sys.FileLogger.Info("Settings.Cleanup() done");
-        }
-        #endregion
-
-        #region debug
-        [System.Diagnostics.Conditional("DEBUG")]
-        public void DebugSendLog(string content)
-        {
-            SendLog($"(Debug {DateTime.Now.ToString()}) {content}");
         }
         #endregion
     }

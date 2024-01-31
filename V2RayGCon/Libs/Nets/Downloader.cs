@@ -81,7 +81,7 @@ namespace V2RayGCon.Libs.Nets
             var filename = GetLocalFilename();
             if (string.IsNullOrEmpty(path) || string.IsNullOrEmpty(filename))
             {
-                setting.SendLog(I18N.LocateTargetFolderFail);
+                VgcApis.Misc.Logger.Log(I18N.LocateTargetFolderFail);
                 return false;
             }
 
@@ -93,7 +93,9 @@ namespace V2RayGCon.Libs.Nets
             }
             catch (Exception ex)
             {
-                setting.SendLog(I18N.DecompressFileFail + Environment.NewLine + ex.ToString());
+                VgcApis.Misc.Logger.Log(
+                    I18N.DecompressFileFail + Environment.NewLine + ex.ToString()
+                );
                 return false;
             }
             return true;
@@ -214,7 +216,7 @@ namespace V2RayGCon.Libs.Nets
                 return;
             }
 
-            setting.SendLog(string.Format("{0}", I18N.DownloadCompleted));
+            VgcApis.Misc.Logger.Log(string.Format("{0}", I18N.DownloadCompleted));
             UpdateCore();
         }
 
@@ -280,7 +282,7 @@ namespace V2RayGCon.Libs.Nets
                 DownloadCompleted(a.Cancelled);
             };
 
-            setting.SendLog(string.Format("{0}:{1}", I18N.Download, url));
+            VgcApis.Misc.Logger.Log(string.Format("{0}:{1}", I18N.Download, url));
             webClient.DownloadFileAsync(new Uri(url), filename);
         }
 

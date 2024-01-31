@@ -50,13 +50,13 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             var cache = inbsInfoCache;
             if (cache == null)
             {
-                setting.DebugSendLog("re-gen inbounds info");
+                // VgcApis.Misc.Logger.Debug("re-gen inbounds info");
                 cache = GetAllInboundsInfo();
                 inbsInfoCache = cache;
             }
             else
             {
-                setting.DebugSendLog("get inbounds info from cache");
+                // VgcApis.Misc.Logger.Debug("get inbounds info from cache");
             }
             return FormatInboundInfo(cache).AsReadOnly();
         }

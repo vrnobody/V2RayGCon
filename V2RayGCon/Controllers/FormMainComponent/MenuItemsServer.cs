@@ -152,7 +152,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             stopBatchSpeedtest.Click += (s, a) =>
             {
-                settings.SendLog(I18N.StoppingSpeedtest);
+                VgcApis.Misc.Logger.Log(I18N.StoppingSpeedtest);
                 settings.isSpeedtestCancelled = true;
             };
 

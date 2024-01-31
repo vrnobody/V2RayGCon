@@ -161,8 +161,7 @@ namespace Luna.Models.Apis.Components
 
         public string GetLogAsString()
         {
-            var log = vgcSettings.GetLogContent();
-            return VgcApis.Misc.Utils.TrimTrailingNewLine(log);
+            return VgcApis.Misc.Logger.GetTrimedContent();
         }
 
         public int GetSpeedtestQueueLength() => vgcSettings.GetSpeedtestQueueLength();

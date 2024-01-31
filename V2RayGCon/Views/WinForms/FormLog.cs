@@ -14,8 +14,6 @@ namespace V2RayGCon.Views.WinForms
         public static void ShowForm() => auxSiForm.ShowForm();
         #endregion
 
-        readonly Services.Settings setting;
-
         long updateTimeStamp = DateTime.Now.Ticks;
 
         VgcApis.Libs.Tasks.Routine logDisplayer;
@@ -26,7 +24,6 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             VgcApis.Misc.UI.AddTagToFormTitle(this);
 
-            setting = Services.Settings.Instance;
             this.FormClosed += (s, e) => logDisplayer?.Dispose();
             Misc.UI.SetFormLocation(this, Models.Datas.Enums.FormLocations.BottomLeft);
         }
@@ -41,13 +38,13 @@ namespace V2RayGCon.Views.WinForms
         #region private methods
         void UpdateLog()
         {
-            var timestamp = setting.GetLogTimestamp();
+            var timestamp = VgcApis.Misc.Logger.GetTimestamp();
             if (updateTimeStamp == timestamp)
             {
                 return;
             }
             updateTimeStamp = timestamp;
-            var text = setting.GetLogContent();
+            var text = VgcApis.Misc.Logger.GetContent();
 
             VgcApis.Misc.UI.UpdateRichTextBox(rtBoxLogger, text);
         }

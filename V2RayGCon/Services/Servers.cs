@@ -1202,7 +1202,7 @@ namespace V2RayGCon.Services
             string newUid = ReplaceOrAddNewServer(orgUid, packageName, newConfig, mark);
 
             UpdateMarkList();
-            setting.SendLog(I18N.PackageDone);
+            VgcApis.Misc.Logger.Log(I18N.PackageDone);
             return newUid;
         }
 
@@ -1228,7 +1228,7 @@ namespace V2RayGCon.Services
                     setting.SpeedTestPool.WaitUntilEmpty();
                 }
                 speedTestingBar.Remove();
-                setting.SendLog(I18N.SpeedTestFinished);
+                VgcApis.Misc.Logger.Log(I18N.SpeedTestFinished);
                 next?.Invoke();
             });
             return true;

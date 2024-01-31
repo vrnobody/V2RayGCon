@@ -60,8 +60,8 @@ namespace V2RayGCon.Services
 
             var nv = Misc.Utils.GetAppNameAndVer();
             var dir = VgcApis.Misc.Utils.GetAppDir(); // init VgcApi.dll
-            setting.SendLog($"{nv} started.");
-            setting.SendLog($"{dir}");
+            VgcApis.Misc.Logger.Log($"{nv} started.");
+            VgcApis.Misc.Logger.Log($"{dir}");
 
             This_Function_Is_Used_For_Debugging();
         }
@@ -144,7 +144,7 @@ namespace V2RayGCon.Services
             try
             {
                 log += nl + nl + exception.ToString();
-                log += nl + nl + setting.GetLogContent();
+                log += nl + nl + VgcApis.Misc.Logger.GetContent();
             }
             catch { }
 

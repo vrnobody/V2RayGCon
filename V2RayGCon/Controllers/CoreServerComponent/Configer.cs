@@ -388,6 +388,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             statsCfg["inbounds"][0]["port"] = states.GetStatPort();
             VgcApis.Misc.Utils.CombineConfigWithRoutingInFront(ref statsCfg, json);
 
+            // json did no change
+            VgcApis.Misc.RecycleBin.Put(config, json);
+
             var statsTpl = Misc.Caches.Jsons.LoadTemplate("statsApiV4Tpl") as JObject;
             VgcApis.Misc.Utils.CombineConfigWithRoutingInFront(ref statsCfg, statsTpl);
             return statsCfg;
@@ -407,6 +410,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                         var json = VgcApis.Misc.RecycleBin.Parse(config);
                         inbsInfoCache = GetInboundsInfoFromJson(json);
                         s = VgcApis.Misc.Utils.ExtractSummaryFromJson(json);
+                        VgcApis.Misc.RecycleBin.Put(config, json);
                         break;
                     case Enums.ConfigType.yaml:
                         s = VgcApis.Misc.Utils.ExtractSummaryFromYaml(config);

@@ -65,6 +65,7 @@ namespace V2RayGCon.Models.Datas
                     if (json != null && MergeToJObject(ref json, host, port))
                     {
                         r = VgcApis.Misc.Utils.FormatConfig(json);
+                        // port is random, do not put json back to recyclebin
                     }
                     break;
                 default:

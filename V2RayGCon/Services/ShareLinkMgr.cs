@@ -174,12 +174,12 @@ namespace V2RayGCon.Services
             ImportLinksBatchModeAsync(linkList, decoders, true);
         }
 
-        public void Run(Settings settings, Servers servers, Cache cache)
+        public void Run(Settings settings, Servers servers)
         {
             this.settings = settings;
             this.servers = servers;
 
-            codecs.Run(cache, settings);
+            codecs.Run(settings);
         }
 
         #endregion

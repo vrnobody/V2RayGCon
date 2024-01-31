@@ -1,6 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 
 namespace V2RayGCon.Test
 {
@@ -37,7 +37,7 @@ namespace V2RayGCon.Test
         {
             var m = JObject.Parse(main);
             var s = JObject.Parse(sub);
-            Assert.AreEqual(expect, Misc.Utils.Contains(m, s));
+            Assert.AreEqual(expect, VgcApis.Misc.Utils.Contains(m, s));
         }
 
         [DataTestMethod]
@@ -48,7 +48,7 @@ namespace V2RayGCon.Test
         {
             Assert.ThrowsException<KeyNotFoundException>(() =>
             {
-                Misc.Utils.CreateJObject(path);
+                VgcApis.Misc.Utils.CreateJObject(path);
             });
         }
 
@@ -60,7 +60,7 @@ namespace V2RayGCon.Test
         public void CreateJObjectWithChildTest(string path, string child, string expect)
         {
             var c = JToken.Parse(child);
-            var result = Misc.Utils.CreateJObject(path, c);
+            var result = VgcApis.Misc.Utils.CreateJObject(path, c);
             var e = JObject.Parse(expect);
             Assert.AreEqual(true, JToken.DeepEquals(result, e));
         }
@@ -73,7 +73,7 @@ namespace V2RayGCon.Test
         [DataRow("", @"{}")]
         public void CreateJObjectNormalTest(string path, string expect)
         {
-            var result = Misc.Utils.CreateJObject(path);
+            var result = VgcApis.Misc.Utils.CreateJObject(path);
             var e = JObject.Parse(expect);
             Assert.AreEqual(true, JToken.DeepEquals(result, e));
         }
@@ -83,7 +83,7 @@ namespace V2RayGCon.Test
         [DataRow(@"{}", "")]
         public void TryExtractJObjectPartFailTest(string json, string path)
         {
-            var stat = Misc.Utils.TryExtractJObjectPart(
+            var stat = VgcApis.Misc.Utils.TryExtractJObjectPart(
                 JObject.Parse(json),
                 path,
                 out JObject part
@@ -99,7 +99,7 @@ namespace V2RayGCon.Test
         public void TryExtractJObjectPartNormalTest(string json, string path, string expect)
         {
             var source = JObject.Parse(json);
-            var stat = Misc.Utils.TryExtractJObjectPart(source, path, out JObject part);
+            var stat = VgcApis.Misc.Utils.TryExtractJObjectPart(source, path, out JObject part);
             var e = JObject.Parse(expect);
 
             Assert.AreEqual(true, stat);
@@ -114,7 +114,7 @@ namespace V2RayGCon.Test
         [DataRow("", "", "")]
         public void PathParseTest(string path, string parent, string key)
         {
-            var v = Misc.Utils.ParsePathIntoParentAndKey(path);
+            var v = VgcApis.Misc.Utils.ParsePathIntoParentAndKey(path);
             Assert.AreEqual(parent, v.Item1);
             Assert.AreEqual(key, v.Item2);
         }
@@ -194,7 +194,7 @@ namespace V2RayGCon.Test
             var body = JObject.Parse(left);
             var mixin = JObject.Parse(right);
 
-            Misc.Utils.CombineConfigWithRoutingInFront(ref body, mixin);
+            VgcApis.Misc.Utils.CombineConfigWithRoutingInFront(ref body, mixin);
 
             var e = JObject.Parse(expect);
             // var dbg = body.ToString();
@@ -226,7 +226,7 @@ namespace V2RayGCon.Test
         public void MergeJson(string bodyStr, string mixinStr, string expect)
         {
             var body = JObject.Parse(bodyStr);
-            Misc.Utils.MergeJson(body, JObject.Parse(mixinStr));
+            VgcApis.Misc.Utils.MergeJson(body, JObject.Parse(mixinStr));
 
             var e = JObject.Parse(expect);
             Assert.AreEqual(true, JToken.DeepEquals(body, e));

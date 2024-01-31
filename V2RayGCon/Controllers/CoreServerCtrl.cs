@@ -34,7 +34,6 @@ namespace V2RayGCon.Controllers
         Services.Servers servSvc = null;
 
         public void Run(
-            Services.Cache cache,
             Services.Settings setting,
             Services.ConfigMgr configMgr,
             Services.Servers servers
@@ -46,7 +45,7 @@ namespace V2RayGCon.Controllers
             coreCtrl = new CoreServerComponent.CoreCtrl(setting, coreInfo, configMgr);
             states = new CoreServerComponent.CoreStates(servers, coreInfo);
             logger = new CoreServerComponent.Logger(setting);
-            configer = new CoreServerComponent.Configer(setting, servSvc, cache, coreInfo);
+            configer = new CoreServerComponent.Configer(setting, servSvc, coreInfo);
 
             AddChild(coreCtrl);
             AddChild(states);

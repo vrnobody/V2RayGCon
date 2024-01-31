@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
@@ -8,12 +8,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         : VgcApis.BaseClasses.ComponentOf<Codecs>,
             VgcApis.Interfaces.IShareLinkDecoder
     {
-        readonly Cache cache;
-
-        public SsDecoder(Cache cache)
-        {
-            this.cache = cache;
-        }
+        public SsDecoder() { }
 
         #region properties
 
@@ -38,7 +33,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var tpl = cache.tpl.LoadTemplate("tplLogWarn") as JObject;
+            var tpl = Misc.Caches.Jsons.LoadTemplate("tplLogWarn") as JObject;
             var name = string.Empty;
             if (parts.Length > 1 && !string.IsNullOrEmpty(parts[1]))
             {
@@ -77,7 +72,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
 
             VgcApis.Misc.Utils.TryParseAddress(ss.addr, out string ip, out int port);
-            var outbSs = cache.tpl.LoadTemplate("outbSs");
+            var outbSs = Misc.Caches.Jsons.LoadTemplate("outbSs");
             var node = outbSs["settings"]["servers"][0];
             node["address"] = ip;
             node["port"] = port;

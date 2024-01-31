@@ -15,56 +15,79 @@ namespace VgcApisTests.LibsTests
         [TestMethod]
         public void MultiThreadWaitEmptyTest()
         {
-            // 这个测试有概率会失败。
+            var logs = new ConcurrentQueue<string>();
 
-            ConcurrentQueue<string> r = new ConcurrentQueue<string>();
             var pool = new VgcApis.Libs.Tasks.TicketPool(5);
 
             Assert.IsTrue(pool.TryTakeOne());
-            var tasks = new List<Task>();
+            var waiters = new List<Task>();
             for (int i = 0; i < 3; i++)
             {
                 var id = i;
                 var task = Task.Run(() =>
                 {
-                    r.Enqueue("TakeBegin");
-                    for (int j = 0; j < 10; j++)
+                    logs.Enqueue($"Waiter[{id}] waiting");
+                    pool.WaitUntilEmpty();
+                    logs.Enqueue($"Waiter[{id}] done");
+                });
+                waiters.Add(task);
+            }
+
+            Assert.IsTrue(pool.TryTake(4));
+            var customers = new List<Task>();
+            for (int i = 0; i < 10; i++)
+            {
+                var id = i;
+                var task = Task.Run(() =>
+                {
+                    logs.Enqueue($"Customer[{id}] come");
+                    var count = 0;
+                    while (count < 20)
                     {
+                        Thread.Sleep(200);
                         if (pool.TryTakeOne())
                         {
-                            Console.WriteLine($"Take[{id}] take one");
-                            Thread.Sleep(500);
+                            count++;
                             pool.ReturnOne();
                         }
                     }
-                    r.Enqueue("TakeEnd");
-                    Console.WriteLine($"Take[{id}] done!");
+                    logs.Enqueue($"Customer[{id}] leave");
                 });
-                tasks.Add(task);
+                customers.Add(task);
             }
+
+            Thread.Sleep(4000);
+            foreach (var customer in customers)
+            {
+                Assert.IsFalse(customer.IsCompleted);
+            }
+            foreach (var waiter in waiters)
+            {
+                Assert.IsFalse(waiter.IsCompleted);
+            }
+
+            logs.Enqueue("begin to serve");
+            pool.Return(4);
 
             Thread.Sleep(1000);
-
-            for (int i = 0; i < 3; i++)
+            foreach (var waiter in waiters)
             {
-                var id = i;
-                var task = Task.Run(() =>
-                {
-                    r.Enqueue("WaitBegin");
-                    Console.WriteLine($"Wait[{id}] waiting...");
-                    pool.WaitUntilEmpty();
-                    Console.WriteLine($"Wait[{id}] done!");
-                    r.Enqueue("WaitEnd");
-                });
-                tasks.Add(task);
+                Assert.IsFalse(waiter.IsCompleted);
             }
 
-            Thread.Sleep(3000);
+            Task.WaitAll(customers.ToArray());
             pool.ReturnOne();
+            Thread.Sleep(1000);
+            foreach (var waiter in waiters)
+            {
+                Assert.IsTrue(waiter.IsCompleted);
+            }
+            Task.WaitAll(waiters.ToArray());
 
-            Task.WaitAll(tasks.ToArray());
-
-            Assert.AreEqual("WaitEnd", r.Last());
+            foreach (var log in logs)
+            {
+                Console.WriteLine(log);
+            }
         }
 #endif
 

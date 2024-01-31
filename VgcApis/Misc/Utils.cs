@@ -1299,6 +1299,546 @@ namespace VgcApis.Misc
         }
         #endregion
 
+
+        #region vgc Json
+        public static JArray ExtractOutboundsFromConfig(JObject json)
+        {
+            var result = new JArray();
+            if (json == null)
+            {
+                return result;
+            }
+
+            try
+            {
+                var outbound = GetKey(json, "outbound");
+                if (outbound != null && outbound is JObject)
+                {
+                    result.Add(outbound);
+                }
+            }
+            catch { }
+
+            foreach (var key in new string[] { "outboundDetour", "outbounds" })
+            {
+                try
+                {
+                    var outboundDtr = GetKey(json, key);
+                    if (outboundDtr != null && outboundDtr is JArray)
+                    {
+                        foreach (JObject item in outboundDtr.Cast<JObject>())
+                        {
+                            result.Add(item);
+                        }
+                    }
+                }
+                catch { }
+            }
+            return result;
+        }
+
+        public static string GetAliasFromConfig(JObject config)
+        {
+            var name = GetValue<string>(config, "v2raygcon.alias");
+            return string.IsNullOrEmpty(name) ? I18N.Empty : name;
+        }
+
+        public static string ExtractSummaryFromYaml(string config)
+        {
+            var empty = "";
+            if (!VgcApis.Misc.Utils.IsYaml(config))
+            {
+                return empty;
+            }
+
+            var pat = @"server: *([^\n]*)";
+            var g = Regex.Match(config, pat).Groups;
+            if (g.Count < 2)
+            {
+                return empty;
+            }
+            var s = g[1].Value;
+            if (string.IsNullOrEmpty(s))
+            {
+                return empty;
+            }
+
+            if (!s.Contains("://"))
+            {
+                return $"unknow@{s}";
+            }
+
+            if (s.StartsWith("hy2://") || s.StartsWith("hysteria2://"))
+            {
+                var parts = s.Split(
+                    new char[] { '@', '/', '?', '#' },
+                    StringSplitOptions.RemoveEmptyEntries
+                );
+                if (parts != null && parts.Length > 2)
+                {
+                    if (VgcApis.Misc.Utils.TryParseAddress(parts[2], out var ip, out _))
+                    {
+                        var host = VgcApis.Misc.Utils.FormatHost(ip);
+                        return $"hy2@{host}";
+                    }
+                }
+            }
+            return empty;
+        }
+
+        public static string ExtractSummaryFromJson(JObject json)
+        {
+            if (json == null)
+            {
+                return string.Empty;
+            }
+
+            var count = json["outbounds"]?.Count() ?? 0;
+            var strategy = GetValue<string>(json, "routing.balancers.0.strategy.type");
+            if (!string.IsNullOrEmpty(strategy))
+            {
+                return $"balancer: {count} {strategy}";
+            }
+
+            var tag = GetValue<string>(json, "routing.balancers.0.tag");
+            if (!string.IsNullOrEmpty(tag))
+            {
+                return $"balancer: {count} random";
+            }
+
+            var proxy = GetValue<string>(json, "outbounds.0.proxySettings.tag");
+            if (!string.IsNullOrEmpty(proxy))
+            {
+                return $"proxychain: {count}";
+            }
+
+            var result = GetSummaryFromConfig(json, "outbounds.0");
+            if (string.IsNullOrEmpty(result))
+            {
+                result = GetSummaryFromConfig(json, "outbound");
+            }
+            return result;
+        }
+
+        static string GetStreamSettingInfo(JObject json, string root)
+        {
+            var streamType = GetValue<string>(json, root + ".streamSettings.network")?.ToLower();
+            // "tcp" | "kcp" | "ws" | "http" | "domainsocket" | "quic"
+            string result;
+            switch (streamType)
+            {
+                case null:
+                    result = "";
+                    break;
+                case "domainsocket":
+                    result = "ds";
+                    break;
+                default:
+                    result = streamType;
+                    break;
+            }
+
+            var sec = GetValue<string>(json, root + ".streamSettings.security")?.ToLower();
+            if (!string.IsNullOrWhiteSpace(sec) && sec != "none")
+            {
+                result += $".{sec}";
+            }
+            return result;
+        }
+
+        static string GetSummaryFromConfig(JObject json, string root)
+        {
+            var protocol = GetValue<string>(json, root + ".protocol")?.ToLower();
+            if (protocol == null)
+            {
+                return string.Empty;
+            }
+
+            string addrKey = root;
+            switch (protocol)
+            {
+                case "vless":
+                case "vmess":
+                    addrKey += ".settings.vnext.0.address";
+                    break;
+                case "shadowsocks":
+                    protocol = "ss";
+                    addrKey += ".settings.servers.0.address";
+                    break;
+                case "trojan":
+                case "socks":
+                case "http":
+                    addrKey += ".settings.servers.0.address";
+                    break;
+            }
+
+            string addr = GetValue<string>(json, addrKey);
+            string streamType = GetStreamSettingInfo(json, root);
+
+            return protocol
+                + (string.IsNullOrEmpty(streamType) ? "" : $".{streamType}")
+                + (string.IsNullOrEmpty(addr) ? "" : "@" + VgcApis.Misc.Utils.FormatHost(addr));
+        }
+
+        static bool Contains(JProperty main, JProperty sub)
+        {
+            return Contains(main.Value, sub.Value);
+        }
+
+        static bool Contains(JArray main, JArray sub)
+        {
+            foreach (var sItem in sub)
+            {
+                foreach (var mItem in main)
+                {
+                    if (Contains(mItem, sItem))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        static bool Contains(JObject main, JObject sub)
+        {
+            foreach (var item in sub)
+            {
+                var key = item.Key;
+                if (!main.ContainsKey(key))
+                {
+                    return false;
+                }
+
+                if (!Contains(main[key], sub[key]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool Contains(JValue main, JValue sub)
+        {
+            return main.Equals(sub);
+        }
+
+        public static bool Contains(JToken main, JToken sub)
+        {
+            if (main.Type != sub.Type)
+            {
+                return false;
+            }
+
+            switch (sub.Type)
+            {
+                case JTokenType.Property:
+                    return Contains(main as JProperty, sub as JProperty);
+                case JTokenType.Object:
+                    return Contains(main as JObject, sub as JObject);
+                case JTokenType.Array:
+                    return Contains(main as JArray, sub as JArray);
+                default:
+                    return Contains(main as JValue, sub as JValue);
+            }
+        }
+
+        public static Tuple<string, string> ParsePathIntoParentAndKey(string path)
+        {
+            var index = path.LastIndexOf('.');
+            string key;
+            string parent = string.Empty;
+            if (index < 0)
+            {
+                key = path;
+            }
+            else if (index == 0)
+            {
+                key = path.Substring(1);
+            }
+            else
+            {
+                key = path.Substring(index + 1);
+                parent = path.Substring(0, index);
+            }
+
+            return new Tuple<string, string>(parent, key);
+        }
+
+        public static JObject CreateJObject(string path)
+        {
+            return CreateJObject(path, null);
+        }
+
+        public static JObject CreateJObject(string path, JToken child)
+        {
+            JToken result;
+            if (child == null)
+            {
+                result = JToken.Parse(@"{}");
+            }
+            else
+            {
+                result = child;
+            }
+
+            if (string.IsNullOrEmpty(path))
+            {
+                return JObject.Parse(@"{}");
+            }
+
+            JToken tempNode;
+            foreach (var p in path.Split('.').Reverse())
+            {
+                if (string.IsNullOrEmpty(p))
+                {
+                    throw new KeyNotFoundException("Parent contain empty key");
+                }
+
+                if (int.TryParse(p, out int num))
+                {
+                    if (num != 0)
+                    {
+                        throw new KeyNotFoundException("All parents must be JObject");
+                    }
+                    tempNode = JArray.Parse(@"[{}]");
+                    tempNode[0] = result;
+                }
+                else
+                {
+                    tempNode = JObject.Parse(@"{}");
+                    tempNode[p] = result;
+                }
+                result = tempNode;
+            }
+
+            return result as JObject;
+        }
+
+        public static bool TrySetValue<T>(JToken json, string path, T value)
+        {
+            var parts = ParsePathIntoParentAndKey(path);
+            var key = parts.Item2;
+            var parent = parts.Item1;
+
+            var node = string.IsNullOrEmpty(parent) ? json : GetKey(json, parent);
+            if (node == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                switch (node)
+                {
+                    case JObject o:
+                        o[key] = new JValue(value);
+                        return true;
+                    case JArray a:
+                        a[VgcApis.Misc.Utils.Str2Int(key)] = new JValue(value);
+                        return true;
+                    default:
+                        break;
+                }
+            }
+            catch { }
+            return false;
+        }
+
+        public static bool TryExtractJObjectPart(JObject source, string path, out JObject result)
+        {
+            var parts = ParsePathIntoParentAndKey(path);
+            var key = parts.Item2;
+            var parentPath = parts.Item1;
+            result = null;
+
+            if (string.IsNullOrEmpty(key))
+            {
+                // throw new KeyNotFoundException("Key is empty");
+                return false;
+            }
+
+            var node = GetKey(source, path);
+            if (node == null)
+            {
+                // throw new KeyNotFoundException("This JObject has no key: " + path);
+                return false;
+            }
+
+            result = CreateJObject(parentPath);
+
+            var parent = string.IsNullOrEmpty(parentPath) ? result : GetKey(result, parentPath);
+
+            if (parent == null || !(parent is JObject))
+            {
+                // throw new KeyNotFoundException("Create parent JObject fail!");
+                return false;
+            }
+
+            parent[key] = node.DeepClone();
+            return true;
+        }
+
+        public static void RemoveKeyFromJObject(JObject json, string path)
+        {
+            var parts = ParsePathIntoParentAndKey(path);
+
+            var parent = parts.Item1;
+            var key = parts.Item2;
+
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new KeyNotFoundException();
+            }
+
+            var node = string.IsNullOrEmpty(parent) ? json : GetKey(json, parent);
+
+            if (node == null || !(node is JObject))
+            {
+                throw new KeyNotFoundException();
+            }
+
+            (node as JObject).Property(key)?.Remove();
+        }
+
+        static void ConcatJson(JObject body, JObject mixin)
+        {
+            body.Merge(
+                mixin,
+                new JsonMergeSettings
+                {
+                    MergeArrayHandling = MergeArrayHandling.Concat,
+                    MergeNullValueHandling = MergeNullValueHandling.Ignore,
+                }
+            );
+        }
+
+        public static void UnionJson(JObject body, JObject mixin)
+        {
+            body.Merge(
+                mixin,
+                new JsonMergeSettings
+                {
+                    MergeArrayHandling = MergeArrayHandling.Union,
+                    MergeNullValueHandling = MergeNullValueHandling.Ignore,
+                }
+            );
+        }
+
+        public static void CombineConfigWithRoutingInFront(ref JObject body, JObject mixin)
+        {
+            List<string> keys = new List<string>
+            {
+                "inbounds",
+                "outbounds",
+                "inboundDetour",
+                "outboundDetour",
+                "routing.rules",
+                "routing.balancers",
+                "routing.settings.rules",
+            };
+            CombineConfigWorker(ref body, mixin, keys);
+        }
+
+        static JObject CombineJArray(JObject body, JObject mixin, string key)
+        {
+            if (mixin == null)
+            {
+                return body;
+            }
+
+            if (body == null)
+            {
+                body = JObject.Parse(@"{}");
+                ConcatJson(body, mixin);
+                return body;
+            }
+
+            if (!(body[key] is JArray))
+            {
+                body[key] = JArray.Parse(@"[]");
+            }
+
+            foreach (JObject n in mixin[key].Cast<JObject>())
+            {
+                void innerLoop()
+                {
+                    foreach (JObject m in body[key].Cast<JObject>())
+                    {
+                        var mt = m["tag"];
+                        var nt = n["tag"];
+                        if (mt != null && nt != null && mt.ToString() == nt.ToString())
+                        {
+                            UnionJson(m, n);
+                            return;
+                        }
+                    }
+                    (body[key] as JArray).Insert(0, n);
+                }
+                innerLoop();
+            }
+            return body;
+        }
+
+        static void CombineConfigWorker(ref JObject body, JObject mixin, IEnumerable<string> keys)
+        {
+            JObject backup = JObject.Parse(@"{}");
+
+            // add to front
+            foreach (var key in keys)
+            {
+                if (TryExtractJObjectPart(body, key, out JObject nodeBody))
+                {
+                    RemoveKeyFromJObject(body, key);
+                }
+
+                if (TryExtractJObjectPart(mixin, key, out JObject nodeMixin))
+                {
+                    ConcatJson(backup, nodeMixin);
+                    RemoveKeyFromJObject(mixin, key);
+
+                    switch (key)
+                    {
+                        case "inbounds":
+                        case "outbounds":
+                        case "inboundDetour":
+                        case "outboundDetour":
+                            nodeBody = CombineJArray(nodeBody, nodeMixin, key);
+                            break;
+                        default:
+                            ConcatJson(body, nodeMixin);
+                            break;
+                    }
+                }
+
+                if (nodeBody != null)
+                {
+                    UnionJson(body, nodeBody);
+                }
+            }
+
+            MergeJson(body, mixin);
+
+            // restore mixin
+            ConcatJson(mixin, backup);
+        }
+
+        public static void MergeJson(JObject body, JObject mixin)
+        {
+            body.Merge(
+                mixin,
+                new JsonMergeSettings
+                {
+                    MergeArrayHandling = MergeArrayHandling.Merge,
+                    MergeNullValueHandling = MergeNullValueHandling.Merge
+                }
+            );
+        }
+
+        #endregion
+
+
+
         #region Json
         public static JToken GenHttpInbound(int port)
         {

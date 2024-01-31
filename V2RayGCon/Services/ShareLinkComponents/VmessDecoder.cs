@@ -8,12 +8,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         : VgcApis.BaseClasses.ComponentOf<Codecs>,
             VgcApis.Interfaces.IShareLinkDecoder
     {
-        readonly Cache cache;
-
-        public VmessDecoder(Cache cache)
-        {
-            this.cache = cache;
-        }
+        public VmessDecoder() { }
         #region properties
 
         #endregion
@@ -52,11 +47,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var outVmess = cache.tpl.LoadTemplate("outbVmess");
+            var outVmess = Misc.Caches.Jsons.LoadTemplate("outbVmess");
             var streamToken = JObject.Parse(@"{streamSettings:{}}");
             streamToken["streamSettings"] = GenStreamSetting(vmess);
             var o = outVmess as JObject;
-            Misc.Utils.MergeJson(o, streamToken);
+            VgcApis.Misc.Utils.MergeJson(o, streamToken);
 
             var node = outVmess["settings"]["vnext"][0];
             node["address"] = vmess.add;
@@ -64,7 +59,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             node["users"][0]["id"] = vmess.id;
             node["users"][0]["alterId"] = VgcApis.Misc.Utils.Str2Int(vmess.aid);
 
-            var tpl = cache.tpl.LoadTemplate("tplLogWarn") as JObject;
+            var tpl = Misc.Caches.Jsons.LoadTemplate("tplLogWarn") as JObject;
             return GetParent()?.GenerateJsonConfing(tpl, outVmess);
         }
 
@@ -89,7 +84,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 streamType = "grpc_multi";
             }
 
-            var streamToken = cache.tpl.LoadTemplate(streamType);
+            var streamToken = Misc.Caches.Jsons.LoadTemplate(streamType);
             try
             {
                 FillStreamSettingsDetail(vmess, streamType, streamToken);

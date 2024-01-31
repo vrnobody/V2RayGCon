@@ -138,6 +138,9 @@
   <data name="Done" xml:space="preserve">
     <value>Done.</value>
   </data>
+  <data name="Empty" xml:space="preserve">
+    <value>(Empty)</value>
+  </data>
   <data name="FileIsEmpty" xml:space="preserve">
     <value>File [{0}] is empty.</value>
   </data>

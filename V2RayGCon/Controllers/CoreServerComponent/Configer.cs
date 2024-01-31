@@ -14,9 +14,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         : VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
             VgcApis.Interfaces.CoreCtrlComponents.IConfiger
     {
-        readonly Services.Settings setting;
+        readonly Settings setting;
         private readonly Servers servers;
-        readonly Services.Cache cache;
+
         readonly CoreInfo coreInfo;
 
         List<InboundInfo> inbsInfoCache = null;
@@ -25,16 +25,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         Logger logger;
         CoreCtrl coreCtrl;
 
-        public Configer(
-            Services.Settings setting,
-            Services.Servers servers,
-            Services.Cache cache,
-            CoreInfo coreInfo
-        )
+        public Configer(Settings setting, Servers servers, CoreInfo coreInfo)
         {
             this.setting = setting;
             this.servers = servers;
-            this.cache = cache;
             this.coreInfo = coreInfo;
         }
 
@@ -44,33 +38,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             logger = GetSibling<Logger>();
             coreCtrl = GetSibling<CoreCtrl>();
         }
-
-        #region properties
-        string finalConfigCache;
-        readonly int minFinalConfigSize = 96 * 1024;
-
-        string FinalConfigCache
-        {
-            get
-            {
-                var s = finalConfigCache;
-                if (VgcApis.Libs.Infr.ZipExtensions.IsCompressedBase64(s))
-                {
-                    return VgcApis.Libs.Infr.ZipExtensions.DecompressFromBase64(s);
-                }
-                return s;
-            }
-            set
-            {
-                var s = value;
-                if (!string.IsNullOrEmpty(s) && s.Length > minFinalConfigSize)
-                {
-                    s = VgcApis.Libs.Infr.ZipExtensions.CompressToBase64(s);
-                }
-                finalConfigCache = s;
-            }
-        }
-        #endregion
 
         #region public methods
         public InboundInfo GetInboundInfo()
@@ -136,7 +103,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GetFinalConfig() => GenFinalConfig(false);
 
-        public void ClearFinalConfigCache() => FinalConfigCache = null;
+        public void ClearFinalConfigCache() => Misc.Caches.ZipStrLru.TryRemove(states.GetUid());
 
         public string GetRawConfig() => coreInfo.config;
 
@@ -208,7 +175,12 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public string GenFinalConfig(bool isSetStatPort)
         {
-            var r = isSetStatPort ? "" : FinalConfigCache;
+            var uid = states.GetUid();
+            var r = "";
+            if (!isSetStatPort && Misc.Caches.ZipStrLru.TryGet(uid, out var str))
+            {
+                r = str;
+            }
             if (!string.IsNullOrEmpty(r))
             {
                 return r;
@@ -255,7 +227,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
             catch { }
             r = string.IsNullOrEmpty(r) ? config : r;
-            FinalConfigCache = r;
+            Misc.Caches.ZipStrLru.Put(uid, r);
             return r;
         }
 
@@ -275,14 +247,15 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         void MergeCustomTlsSettings(ref JObject config)
         {
             var outB =
-                Misc.Utils.GetKey(config, "outbound") ?? Misc.Utils.GetKey(config, "outbounds.0");
+                VgcApis.Misc.Utils.GetKey(config, "outbound")
+                ?? VgcApis.Misc.Utils.GetKey(config, "outbounds.0");
 
             if (outB == null)
             {
                 return;
             }
 
-            if (!(Misc.Utils.GetKey(outB, "streamSettings") is JObject streamSettings))
+            if (!(VgcApis.Misc.Utils.GetKey(outB, "streamSettings") is JObject streamSettings))
             {
                 return;
             }
@@ -290,14 +263,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             if (setting.isSupportSelfSignedCert)
             {
                 var selfSigned = JObject.Parse(@"{tlsSettings: {allowInsecure: true}}");
-                Misc.Utils.MergeJson(streamSettings, selfSigned);
+                VgcApis.Misc.Utils.MergeJson(streamSettings, selfSigned);
             }
 
             if (setting.isEnableUtlsFingerprint)
             {
                 var uTlsFingerprint = JObject.Parse(@"{tlsSettings: {}}");
                 uTlsFingerprint["tlsSettings"]["fingerprint"] = setting.uTlsFingerprint;
-                Misc.Utils.MergeJson(streamSettings, uTlsFingerprint);
+                VgcApis.Misc.Utils.MergeJson(streamSettings, uTlsFingerprint);
             }
         }
 
@@ -352,9 +325,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
                     var info = new InboundInfo()
                     {
-                        protocol = Misc.Utils.GetValue<string>(inb, "protocol")?.ToLower() ?? "",
-                        host = Misc.Utils.GetValue<string>(inb, "listen"),
-                        port = Misc.Utils.GetValue<int>(inb, "port"),
+                        protocol =
+                            VgcApis.Misc.Utils.GetValue<string>(inb, "protocol")?.ToLower() ?? "",
+                        host = VgcApis.Misc.Utils.GetValue<string>(inb, "listen"),
+                        port = VgcApis.Misc.Utils.GetValue<int>(inb, "port"),
                     };
                     if (!string.IsNullOrEmpty(info.protocol) && !string.IsNullOrEmpty(info.host))
                     {
@@ -410,12 +384,12 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 states.SetStatPort(freePort);
             }
 
-            var statsCfg = cache.tpl.LoadTemplate("statsApiV4Inb") as JObject;
+            var statsCfg = Misc.Caches.Jsons.LoadTemplate("statsApiV4Inb") as JObject;
             statsCfg["inbounds"][0]["port"] = states.GetStatPort();
-            Misc.Utils.CombineConfigWithRoutingInFront(ref statsCfg, json);
+            VgcApis.Misc.Utils.CombineConfigWithRoutingInFront(ref statsCfg, json);
 
-            var statsTpl = cache.tpl.LoadTemplate("statsApiV4Tpl") as JObject;
-            Misc.Utils.CombineConfigWithRoutingInFront(ref statsCfg, statsTpl);
+            var statsTpl = Misc.Caches.Jsons.LoadTemplate("statsApiV4Tpl") as JObject;
+            VgcApis.Misc.Utils.CombineConfigWithRoutingInFront(ref statsCfg, statsTpl);
             return statsCfg;
         }
 
@@ -432,10 +406,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     case Enums.ConfigType.json:
                         var json = VgcApis.Misc.RecycleBin.Parse(config);
                         inbsInfoCache = GetInboundsInfoFromJson(json);
-                        s = Misc.Utils.ExtractSummaryFromJson(json);
+                        s = VgcApis.Misc.Utils.ExtractSummaryFromJson(json);
                         break;
                     case Enums.ConfigType.yaml:
-                        s = Misc.Utils.ExtractSummaryFromYaml(config);
+                        s = VgcApis.Misc.Utils.ExtractSummaryFromYaml(config);
                         inbsInfoCache = GetInboundsInfoFromYaml(config);
                         break;
                     default:

@@ -29,7 +29,6 @@ namespace V2RayGCon.Services
             VgcApis.Interfaces.Services.IConfigMgrService
     {
         Settings setting;
-        Cache cache;
 
         static readonly long TIMEOUT = VgcApis.Models.Consts.Core.SpeedtestTimeout;
 
@@ -147,10 +146,9 @@ namespace V2RayGCon.Services
             return package;
         }
 
-        public void Run(Settings setting, Cache cache)
+        public void Run(Settings setting)
         {
             this.setting = setting;
-            this.cache = cache;
         }
 
         #endregion
@@ -158,7 +156,7 @@ namespace V2RayGCon.Services
         #region private methods
         JObject GenV4ChainConfig(List<VgcApis.Interfaces.ICoreServCtrl> servList)
         {
-            var package = cache.tpl.LoadPackage("chainV4Tpl");
+            var package = Misc.Caches.Jsons.LoadPackage("chainV4Tpl");
             var outbounds = package["outbounds"] as JArray;
 
             var counter = 0;
@@ -168,7 +166,7 @@ namespace V2RayGCon.Services
                 var s = servList[i];
                 var finalConfig = s.GetConfiger().GetFinalConfig();
                 var json = VgcApis.Misc.Utils.ParseJObject(finalConfig);
-                var parts = Misc.Utils.ExtractOutboundsFromConfig(json);
+                var parts = VgcApis.Misc.Utils.ExtractOutboundsFromConfig(json);
 
                 foreach (JObject p in parts.Cast<JObject>())
                 {
@@ -190,7 +188,7 @@ namespace V2RayGCon.Services
 
         JObject GenV4BalancerConfig(List<VgcApis.Interfaces.ICoreServCtrl> servList)
         {
-            var package = cache.tpl.LoadPackage("pkgV4Tpl");
+            var package = Misc.Caches.Jsons.LoadPackage("pkgV4Tpl");
             var outbounds = package["outbounds"] as JArray;
 
             var prefix = VgcApis.Models.Consts.Config.servsPkgTagPrefix;
@@ -201,7 +199,7 @@ namespace V2RayGCon.Services
                 var s = servList[i];
                 var finalConfig = s.GetConfiger().GetFinalConfig();
                 var json = VgcApis.Misc.Utils.ParseJObject(finalConfig);
-                var parts = Misc.Utils.ExtractOutboundsFromConfig(json);
+                var parts = VgcApis.Misc.Utils.ExtractOutboundsFromConfig(json);
                 foreach (JObject p in parts.Cast<JObject>())
                 {
                     if (p == null)
@@ -379,7 +377,7 @@ namespace V2RayGCon.Services
             json["inbounds"] = VgcApis.Misc.Utils.GenHttpInbound(port);
 
             // inject log config
-            var nodeLog = Misc.Utils.GetKey(json, "log");
+            var nodeLog = VgcApis.Misc.Utils.GetKey(json, "log");
             if (nodeLog != null && nodeLog is JObject)
             {
                 nodeLog["loglevel"] = "warning";

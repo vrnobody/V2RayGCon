@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
@@ -9,12 +9,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         : VgcApis.BaseClasses.ComponentOf<Codecs>,
             VgcApis.Interfaces.IShareLinkDecoder
     {
-        readonly Cache cache;
-
-        public SocksDecoder(Cache cache)
-        {
-            this.cache = cache;
-        }
+        public SocksDecoder() { }
 
         #region properties
 
@@ -42,7 +37,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 name = Uri.UnescapeDataString(parts[1]);
             }
 
-            var tpl = cache.tpl.LoadTemplate("tplLogWarn") as JObject;
+            var tpl = Misc.Caches.Jsons.LoadTemplate("tplLogWarn") as JObject;
             var config = GetParent()?.GenerateJsonConfing(tpl, outbound);
             return new VgcApis.Models.Datas.DecodeResult(name, config);
         }
@@ -76,7 +71,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var outb = cache.tpl.LoadTemplate("outbSocks");
+            var outb = Misc.Caches.Jsons.LoadTemplate("outbSocks");
             var node = outb["settings"]["servers"][0];
 
             // host:port

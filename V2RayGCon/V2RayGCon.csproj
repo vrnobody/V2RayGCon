@@ -155,6 +155,7 @@
     <Compile Include="Controllers\FormTextConfigEditorComponent\Editor.cs" />
     <Compile Include="Controllers\FormTextConfigEditorComponent\MenuUpdater.cs" />
     <Compile Include="Controllers\FormTextConfigEditorCtrl.cs" />
+    <Compile Include="Misc\Caches\ZipStrLru.cs" />
     <Compile Include="Models\Datas\CmdArgs.cs" />
     <Compile Include="Models\Datas\CustomCoreSettings.cs" />
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
@@ -292,8 +293,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Models\Datas\Vmess.cs" />
-    <Compile Include="Services\Cache.cs" />
-    <Compile Include="Services\Caches\Template.cs" />
+    <Compile Include="Misc\Caches\Jsons.cs" />
     <Compile Include="Libs\Nets\Downloader.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Views\WinForms\FormCustomConfigTemplates.cs">

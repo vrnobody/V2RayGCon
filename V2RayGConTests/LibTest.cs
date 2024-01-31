@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json.Linq;
 using V2RayGCon.Test.Resource.Resx;
 using static V2RayGCon.Misc.Utils;
 
@@ -303,7 +303,7 @@ stat: <
         {
             var r = JObject.Parse(json);
             var e = JObject.Parse(expect);
-            TrySetValue(r, path, value);
+            VgcApis.Misc.Utils.TrySetValue(r, path, value);
             Assert.AreEqual(true, JToken.DeepEquals(e, r));
         }
 
@@ -314,7 +314,7 @@ stat: <
         {
             var r = JObject.Parse(json);
             var e = JObject.Parse(expect);
-            TrySetValue(r, path, value);
+            VgcApis.Misc.Utils.TrySetValue(r, path, value);
             Assert.AreEqual(true, JToken.DeepEquals(e, r));
         }
 
@@ -328,7 +328,7 @@ stat: <
             var j = JObject.Parse(json);
             Assert.ThrowsException<KeyNotFoundException>(() =>
             {
-                RemoveKeyFromJObject(j, key);
+                VgcApis.Misc.Utils.RemoveKeyFromJObject(j, key);
             });
         }
 
@@ -342,7 +342,7 @@ stat: <
         {
             // outboundDetour inboundDetour
             var j = JObject.Parse(json);
-            RemoveKeyFromJObject(j, key);
+            VgcApis.Misc.Utils.RemoveKeyFromJObject(j, key);
             var e = JObject.Parse(expect);
             Assert.AreEqual(true, JToken.DeepEquals(e, j));
         }
@@ -393,22 +393,25 @@ stat: <
         [TestMethod]
         public void GetValue_GetBoolFromString_ReturnDefault()
         {
-            var json = Services.Cache.Instance.tpl.LoadMinConfig();
-            Assert.AreEqual(default, GetValue<bool>(json, "log.loglevel"));
+            var json = Misc.Caches.Jsons.LoadMinConfig();
+            Assert.AreEqual(default, VgcApis.Misc.Utils.GetValue<bool>(json, "log.loglevel"));
         }
 
         [TestMethod]
         public void GetValue_GetStringNotExist_ReturnNull()
         {
-            var json = Services.Cache.Instance.tpl.LoadMinConfig();
-            Assert.AreEqual(string.Empty, GetValue<string>(json, "log.keyNotExist"));
+            var json = Misc.Caches.Jsons.LoadMinConfig();
+            Assert.AreEqual(
+                string.Empty,
+                VgcApis.Misc.Utils.GetValue<string>(json, "log.keyNotExist")
+            );
         }
 
         [TestMethod]
         public void GetValue_KeyNotExist_ReturnDefault()
         {
-            var json = Services.Cache.Instance.tpl.LoadMinConfig();
-            var value = GetValue<int>(json, "log.key_not_exist");
+            var json = Misc.Caches.Jsons.LoadMinConfig();
+            var value = VgcApis.Misc.Utils.GetValue<int>(json, "log.key_not_exist");
             Assert.AreEqual(default, value);
         }
 

@@ -78,8 +78,9 @@
     <Compile Include="DecoderTests\VmessShareLinkTests.cs" />
     <Compile Include="Experiments\CoreServCtrlWrapperPerfTests.cs" />
     <Compile Include="Experiments\FileReadWriteTests.cs" />
+    <Compile Include="MiscCachesTests\ZipStrLruTests.cs" />
     <Compile Include="UITest.cs" />
-    <Compile Include="CacheTest.cs" />
+    <Compile Include="MiscCachesTests\CacheTest.cs" />
     <Compile Include="CoreServerTest.cs" />
     <Compile Include="LibTest.cs" />
     <Compile Include="ImportTest.cs" />

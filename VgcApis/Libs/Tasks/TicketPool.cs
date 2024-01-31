@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace VgcApis.Libs.Tasks
 {
@@ -24,10 +25,6 @@ namespace VgcApis.Libs.Tasks
             }
             this.size = capacity;
         }
-
-        #region properties
-
-        #endregion
 
         #region public methods
 
@@ -112,15 +109,16 @@ namespace VgcApis.Libs.Tasks
             }
 
             Interlocked.Add(ref count, -1 * num);
-
-            Misc.Utils.RunInBackground(() =>
-            {
-                CheckWaitQ();
-                if (count < 1)
+            Task.Delay(5)
+                .ContinueWith(_ =>
                 {
-                    emptyWaiter.Set();
-                }
-            });
+                    CheckWaitQ();
+                    if (count < 1)
+                    {
+                        emptyWaiter.Set();
+                    }
+                })
+                .ConfigureAwait(false);
         }
 
         public void ReturnOne() => Return(1);

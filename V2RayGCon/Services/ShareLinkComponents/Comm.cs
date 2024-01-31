@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
@@ -100,10 +100,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return vc;
         }
 
-        public static JToken GenStreamSetting(
-            Cache cache,
-            Models.Datas.SharelinkMetadata streamSettings
-        )
+        public static JToken GenStreamSetting(Models.Datas.SharelinkMetadata streamSettings)
         {
             var ss = streamSettings;
             // insert stream type
@@ -120,7 +117,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             {
                 st = "tcp_http";
             }
-            var token = cache.tpl.LoadTemplate(st);
+            var token = Misc.Caches.Jsons.LoadTemplate(st);
             try
             {
                 FillInStreamSetting(ss, st, mainParam, token);

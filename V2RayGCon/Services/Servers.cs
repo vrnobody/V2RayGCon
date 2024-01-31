@@ -17,7 +17,6 @@ namespace V2RayGCon.Services
             VgcApis.Interfaces.Services.IServersService
     {
         Settings setting = null;
-        Cache cache = null;
         ConfigMgr configMgr;
 
         ServersComponents.QueryHandler queryHandler;
@@ -52,10 +51,9 @@ namespace V2RayGCon.Services
             };
         }
 
-        public void Run(Settings setting, Cache cache, ConfigMgr configMgr)
+        public void Run(Settings setting, ConfigMgr configMgr)
         {
             this.configMgr = configMgr;
-            this.cache = cache;
             this.setting = setting;
             InitServerCtrlList();
             UpdateMarkList();
@@ -975,7 +973,7 @@ namespace V2RayGCon.Services
             coreInfo.SetConfig(config);
 
             var newServer = new Controllers.CoreServerCtrl(coreInfo);
-            newServer.Run(cache, setting, configMgr, this);
+            newServer.Run(setting, configMgr, this);
 
             bool duplicated = true;
             locker.EnterWriteLock();
@@ -1256,7 +1254,7 @@ namespace V2RayGCon.Services
             foreach (var kv in coreServCache)
             {
                 var coreServ = kv.Value;
-                coreServ.Run(cache, setting, configMgr, this);
+                coreServ.Run(setting, configMgr, this);
 
                 // 预计2024-06删除这两个函数
                 PatchConfig(coreServ);
@@ -1309,7 +1307,7 @@ namespace V2RayGCon.Services
                 var name = coreState.GetName();
                 if (string.IsNullOrEmpty(name))
                 {
-                    name = Misc.Utils.GetAliasFromConfig(json);
+                    name = VgcApis.Misc.Utils.GetAliasFromConfig(json);
                     coreState.SetName(name);
                 }
                 json.Remove(Config.SectionKeyV2rayGCon);

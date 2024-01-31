@@ -135,7 +135,7 @@ namespace V2RayGCon.Models.Datas
 
             if (jsonArrMergeOption == extJsonArrMergeOption)
             {
-                Misc.Utils.CombineConfigWithRoutingInFront(ref body, mixin);
+                VgcApis.Misc.Utils.CombineConfigWithRoutingInFront(ref body, mixin);
                 return;
             }
 

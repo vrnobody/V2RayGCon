@@ -1,7 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace V2RayGCon.Test.DecoderTests
 {
@@ -46,8 +46,7 @@ namespace V2RayGCon.Test.DecoderTests
             var testLinks = testData.Select(e => e.Item2).ToList();
             var subText = string.Join(Environment.NewLine, testLinks);
 
-            var cache = Services.Cache.Instance;
-            var vmessDecoder = new Services.ShareLinkComponents.VmessDecoder(cache);
+            var vmessDecoder = new Services.ShareLinkComponents.VmessDecoder();
 
             var vmessLinks = vmessDecoder.ExtractLinksFromText(subText);
             foreach (var vmessLink in vmessLinks)

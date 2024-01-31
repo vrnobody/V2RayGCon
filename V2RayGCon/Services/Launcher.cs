@@ -267,7 +267,6 @@ namespace V2RayGCon.Services
             updater = Updater.Instance;
 
             // warn-up
-            var cache = Cache.Instance;
             var configMgr = ConfigMgr.Instance;
             var slinkMgr = ShareLinkMgr.Instance;
             var pluginsServ = PluginsServer.Instance;
@@ -286,10 +285,10 @@ namespace V2RayGCon.Services
             };
 
             // dependency injection
-            configMgr.Run(setting, cache);
-            servers.Run(setting, cache, configMgr);
+            configMgr.Run(setting);
+            servers.Run(setting, configMgr);
             updater.Run(setting, servers);
-            slinkMgr.Run(setting, servers, cache);
+            slinkMgr.Run(setting, servers);
             notifier.Run(setting, servers, slinkMgr, updater);
             pluginsServ.Run(setting, servers, configMgr, slinkMgr, notifier);
         }

@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
@@ -59,7 +59,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             var config = VgcApis.Misc.Utils.Base64DecodeToString(linkBody);
             var json = JObject.Parse(config);
-            var name = Misc.Utils.GetAliasFromConfig(json);
+            var name = VgcApis.Misc.Utils.GetAliasFromConfig(json);
             json.Remove(VgcApis.Models.Consts.Config.SectionKeyV2rayGCon);
             var cfg = VgcApis.Misc.Utils.FormatConfig(json);
             return new VgcApis.Models.Datas.DecodeResult(name, cfg);

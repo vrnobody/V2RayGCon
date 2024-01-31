@@ -1,7 +1,7 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace V2RayGCon.Test.Experiments
 {
@@ -9,7 +9,6 @@ namespace V2RayGCon.Test.Experiments
     public class CoreServCtrlWrapperPerfTests
     {
 #if DEBUG
-        static readonly Services.Cache cache = Services.Cache.Instance;
         static readonly Services.Settings setting = Services.Settings.Instance;
         static readonly Services.ConfigMgr configMgr = Services.ConfigMgr.Instance;
         static readonly Services.Servers servers = Services.Servers.Instance;
@@ -22,7 +21,7 @@ namespace V2RayGCon.Test.Experiments
                 name = VgcApis.Misc.Utils.RandomHex(16),
             };
             var csv = new Controllers.CoreServerCtrl(ci);
-            csv.Run(cache, setting, configMgr, servers);
+            csv.Run(setting, configMgr, servers);
             return csv;
         }
 

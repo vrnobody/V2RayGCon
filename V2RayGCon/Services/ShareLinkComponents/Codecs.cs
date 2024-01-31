@@ -1,12 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
     public sealed class Codecs : VgcApis.BaseClasses.ComponentOf<Codecs>
     {
         Settings settings;
-        Cache cache;
 
         public Codecs() { }
 
@@ -18,16 +17,16 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var outbSs = cache.tpl.LoadTemplate("outbTrojan");
+            var outbSs = Misc.Caches.Jsons.LoadTemplate("outbTrojan");
 
-            outbSs["streamSettings"] = Comm.GenStreamSetting(cache, vee);
+            outbSs["streamSettings"] = Comm.GenStreamSetting(vee);
             var node = outbSs["settings"]["servers"][0];
             node["address"] = vee.host;
             node["port"] = vee.port;
             node["password"] = vee.auth1;
             node["flow"] = vee.auth2;
 
-            var tpl = cache.tpl.LoadTemplate("tplLogWarn") as JObject;
+            var tpl = Misc.Caches.Jsons.LoadTemplate("tplLogWarn") as JObject;
             return GenerateJsonConfing(tpl, outbSs);
         }
 
@@ -38,8 +37,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var outVmess = cache.tpl.LoadTemplate("outbVless");
-            outVmess["streamSettings"] = Comm.GenStreamSetting(cache, vee);
+            var outVmess = Misc.Caches.Jsons.LoadTemplate("outbVless");
+            outVmess["streamSettings"] = Comm.GenStreamSetting(vee);
 
             outVmess["protocol"] = "vless";
             var node = outVmess["settings"]["vnext"][0];
@@ -51,7 +50,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 node["users"][0]["flow"] = vee.auth2;
             }
             node["users"][0]["encryption"] = "none";
-            var tpl = cache.tpl.LoadTemplate("tplLogWarn") as JObject;
+            var tpl = Misc.Caches.Jsons.LoadTemplate("tplLogWarn") as JObject;
             return GenerateJsonConfing(tpl, outVmess);
         }
         #endregion
@@ -90,17 +89,15 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return GetChild<TDecoder>()?.Decode(shareLink);
         }
 
-        public void Run(Cache cache, Settings settings)
+        public void Run(Settings settings)
         {
             this.settings = settings;
-            this.cache = cache;
-
-            var ssDecoder = new SsDecoder(cache);
+            var ssDecoder = new SsDecoder();
             var v2cfgDecoder = new V2cfgDecoder();
-            var vmessDecoder = new VmessDecoder(cache);
+            var vmessDecoder = new VmessDecoder();
             var trojanDecoder = new TrojanDecoder();
             var vlessDecoder = new VlessDecoder();
-            var socksDecoder = new SocksDecoder(cache);
+            var socksDecoder = new SocksDecoder();
 
             AddChild(vlessDecoder);
             AddChild(trojanDecoder);
@@ -158,15 +155,18 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             var isV4 = settings.isUseV4;
 
-            var inb = Misc.Utils.CreateJObject(
+            var inb = VgcApis.Misc.Utils.CreateJObject(
                 (isV4 ? "inbounds.0" : "inbound"),
-                cache.tpl.LoadTemplate("inbSimSock")
+                Misc.Caches.Jsons.LoadTemplate("inbSimSock")
             );
 
-            var outb = Misc.Utils.CreateJObject((isV4 ? "outbounds.0" : "outbound"), outbound);
+            var outb = VgcApis.Misc.Utils.CreateJObject(
+                (isV4 ? "outbounds.0" : "outbound"),
+                outbound
+            );
 
-            Misc.Utils.MergeJson(template, inb);
-            Misc.Utils.MergeJson(template, outb);
+            VgcApis.Misc.Utils.MergeJson(template, inb);
+            VgcApis.Misc.Utils.MergeJson(template, outb);
             var key = VgcApis.Models.Consts.Config.SectionKeyV2rayGCon;
             template.Remove(key);
             return VgcApis.Misc.Utils.FormatConfig(template);

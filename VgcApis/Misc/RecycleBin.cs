@@ -65,17 +65,17 @@ namespace VgcApis.Misc
                 .ConfigureAwait(false);
         }
         #endregion
-    }
 
-    struct Node
-    {
-        public readonly string hash;
-        public readonly DateTime expired;
-
-        public Node(string hash)
+        struct Node
         {
-            this.hash = hash;
-            this.expired = DateTime.Now.Add(RecycleBin.timeout);
+            public readonly string hash;
+            public readonly DateTime expired;
+
+            public Node(string hash)
+            {
+                this.hash = hash;
+                this.expired = DateTime.Now.Add(RecycleBin.timeout);
+            }
         }
     }
 }

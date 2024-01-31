@@ -881,6 +881,26 @@ namespace V2RayGCon.Services
             return config;
         }
 
+        public List<string> GetPluginsSettinKeys()
+        {
+            lock (saveUserSettingsLocker)
+            {
+                return pluginsSettingCache.Keys.ToList();
+            }
+        }
+
+        public bool RemovePluginsSettinKey(string key)
+        {
+            lock (saveUserSettingsLocker)
+            {
+                if (pluginsSettingCache.ContainsKey(key))
+                {
+                    return pluginsSettingCache.Remove(key);
+                }
+            }
+            return false;
+        }
+
         public void SavePluginsSetting(string pluginName, string config)
         {
             if (string.IsNullOrEmpty(pluginName))

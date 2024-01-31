@@ -142,6 +142,12 @@ namespace NeoLuna.Interfaces
         /// 如果突然蓝屏、死机、断电什么的可能会丢失5分钟内的数据。
         /// </summary>
         void SaveV2RayGConSettingsNow();
+
+        string GetPluginsSetting(string pluginName);
+
+        List<string> GetPluginsSettinKeys();
+
+        bool RemovePluginsSettinKey(string key);
         #endregion
 
         #region core event

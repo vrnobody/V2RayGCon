@@ -1228,6 +1228,21 @@ namespace NeoLuna.Models.Apis
             vgcSettingsService.SaveUserSettingsNow();
         }
 
+        public string GetPluginsSetting(string pluginName)
+        {
+            return vgcSettingsService.GetPluginsSetting(pluginName);
+        }
+
+        public List<string> GetPluginsSettinKeys()
+        {
+            return vgcSettingsService.GetPluginsSettinKeys();
+        }
+
+        public bool RemovePluginsSettinKey(string key)
+        {
+            return vgcSettingsService.RemovePluginsSettinKey(key);
+        }
+
         public string GetAppVersion()
         {
             var vgcUtils = luaApis.GetVgcUtilsService();

@@ -24,6 +24,9 @@ namespace VgcApis.Interfaces.Services
         void SavePluginsSetting(string pluginName, string value);
         string GetPluginsSetting(string pluginName);
 
+        List<string> GetPluginsSettinKeys();
+        bool RemovePluginsSettinKey(string key);
+
         List<string> GetLocalStorageKeys();
 
         bool RemoveLocalStorage(string key);

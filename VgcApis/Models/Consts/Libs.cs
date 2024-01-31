@@ -2,7 +2,7 @@
 {
     public static class Libs
     {
-        public static readonly int MinCompressStringLength = 512 * 1024;
+        public static readonly int MinCompressStringLength = 256 * 1024;
         public static readonly int DefaultBufferSize = 4 * 1024;
 
         #region system

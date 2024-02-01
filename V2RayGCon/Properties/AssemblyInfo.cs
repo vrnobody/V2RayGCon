@@ -33,11 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.9.2.16")]
+[assembly: AssemblyVersion("1.9.2.17")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v1.9.2.17 Adjust save user settings interval from 5 minutes to 20 minutes.
 v1.9.2.16 Move global logger to VgcApis.
 v1.9.2.15 Add std.Sys:GetPluginSettingKeys().
 v1.9.2.14 Add Misc.Caches.ZipStrLru().

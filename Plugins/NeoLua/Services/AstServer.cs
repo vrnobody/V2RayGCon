@@ -95,11 +95,11 @@ namespace NeoLuna.Services
         #region properties
         FileSystemWatcher fsWatcher;
         readonly VgcApis.Libs.Infr.StringLruCache<JObject> astCodeCache =
-            new VgcApis.Libs.Infr.StringLruCache<JObject>();
+            new VgcApis.Libs.Infr.StringLruCache<JObject>(30, TimeSpan.FromMinutes(30));
         readonly VgcApis.Libs.Infr.StringLruCache<JObject> astModuleCache =
-            new VgcApis.Libs.Infr.StringLruCache<JObject>();
+            new VgcApis.Libs.Infr.StringLruCache<JObject>(20, TimeSpan.FromMinutes(30));
         readonly VgcApis.Libs.Infr.StringLruCache<JObject> astModuleExCache =
-            new VgcApis.Libs.Infr.StringLruCache<JObject>();
+            new VgcApis.Libs.Infr.StringLruCache<JObject>(20, TimeSpan.FromMinutes(30));
 
         internal enum AnalyzeModes
         {

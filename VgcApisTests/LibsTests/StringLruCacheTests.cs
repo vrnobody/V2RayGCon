@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -8,9 +9,38 @@ namespace VgcApisTests.LibsTests
     public class StringLruCacheTests
     {
         [TestMethod]
-        public void SingleThreadTest()
+        public void SingleThreadTimeoutTest()
         {
-            var cache = new VgcApis.Libs.Infr.StringLruCache<int>();
+            var cap = 10;
+            var timeout = TimeSpan.FromSeconds(3);
+            var cache = new VgcApis.Libs.Infr.StringLruCache<int>(cap, timeout);
+            for (int i = 0; i < cap; i++)
+            {
+                cache.Add(i.ToString(), i);
+            }
+
+            VgcApis.Misc.Utils.Sleep((int)timeout.TotalMilliseconds / 2);
+            int half = cap / 2;
+            var ok = cache.TryGet(half.ToString(), out var v);
+            Assert.IsTrue(ok);
+            Assert.AreEqual(half, v);
+
+            VgcApis.Misc.Utils.Sleep((int)timeout.TotalMilliseconds);
+            ok = cache.TryGet(half.ToString(), out v);
+            Assert.IsFalse(ok);
+            Assert.AreEqual(0, v);
+        }
+
+        [DataTestMethod]
+        [DataRow(-1)]
+        [DataRow(0)]
+        [DataRow(5)]
+        public void SingleThreadTest(int seconds)
+        {
+            var cache = new VgcApis.Libs.Infr.StringLruCache<int>(
+                20,
+                TimeSpan.FromSeconds(seconds)
+            );
             var ok = cache.TryGet(null, out var v);
             Assert.IsFalse(ok);
             Assert.AreEqual(0, v);
@@ -19,34 +49,38 @@ namespace VgcApisTests.LibsTests
             Assert.IsFalse(ok);
             Assert.AreEqual(0, v);
 
-            for (int i = 0; i < 100; i++)
+            var max = cache.capacity;
+            for (int i = 0; i < max * 2; i++)
             {
                 cache.Add(i.ToString(), i);
             }
 
-            ok = cache.TryGet("1", out v);
+            var notExist = max / 2;
+            ok = cache.TryGet(notExist.ToString(), out v);
             Assert.IsFalse(ok);
             Assert.AreEqual(0, v);
 
-            ok = cache.TryGet("88", out v);
+            int exist = (int)(max * 1.5);
+            ok = cache.TryGet(exist.ToString(), out v);
             Assert.IsTrue(ok);
-            Assert.AreEqual(88, v);
+            Assert.AreEqual(exist, v);
 
-            ok = cache.Remove("88");
+            ok = cache.Remove(exist.ToString());
             Assert.IsTrue(ok);
-            ok = cache.TryGet("88", out v);
+            ok = cache.TryGet(exist.ToString(), out v);
             Assert.IsFalse(ok);
             Assert.AreEqual(0, v);
 
-            cache.Add("88", 88);
-            ok = cache.TryGet("88", out v);
+            cache.Add(exist.ToString(), exist);
+            ok = cache.TryGet(exist.ToString(), out v);
             Assert.IsTrue(ok);
-            Assert.AreEqual(88, v);
+            Assert.AreEqual(exist, v);
 
-            ok = cache.Remove("22");
+            notExist = notExist - 1;
+            ok = cache.Remove(notExist.ToString());
             Assert.IsFalse(ok);
 
-            ok = cache.TryGet("22", out v);
+            ok = cache.TryGet(notExist.ToString(), out v);
             Assert.IsFalse(ok);
             Assert.AreEqual(0, v);
 
@@ -64,7 +98,7 @@ namespace VgcApisTests.LibsTests
         [TestMethod]
         public void MultiThreadsTest()
         {
-            var cache = new VgcApis.Libs.Infr.StringLruCache<int>();
+            var cache = new VgcApis.Libs.Infr.StringLruCache<int>(20, TimeSpan.MinValue);
             var tasks = new List<Task>();
 
             for (int i = 0; i < 10; i++)

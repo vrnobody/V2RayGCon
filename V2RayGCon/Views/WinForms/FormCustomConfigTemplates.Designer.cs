@@ -50,19 +50,16 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // tboxName
             // 
             resources.ApplyResources(this.tboxName, "tboxName");
             this.tboxName.Name = "tboxName";
-            this.toolTip1.SetToolTip(this.tboxName, resources.GetString("tboxName.ToolTip"));
             // 
             // btnSave
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
             this.btnSave.Name = "btnSave";
-            this.toolTip1.SetToolTip(this.btnSave, resources.GetString("btnSave.ToolTip"));
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -76,7 +73,6 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
-            this.toolTip1.SetToolTip(this.btnCancel, resources.GetString("btnCancel.ToolTip"));
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
@@ -97,15 +93,14 @@ namespace V2RayGCon.Views.WinForms
             // 
             // rtboxTemplate
             // 
+            this.rtboxTemplate.AcceptsTab = true;
             resources.ApplyResources(this.rtboxTemplate, "rtboxTemplate");
             this.rtboxTemplate.Name = "rtboxTemplate";
-            this.toolTip1.SetToolTip(this.rtboxTemplate, resources.GetString("rtboxTemplate.ToolTip"));
             // 
             // btnTest
             // 
             resources.ApplyResources(this.btnTest, "btnTest");
             this.btnTest.Name = "btnTest";
-            this.toolTip1.SetToolTip(this.btnTest, resources.GetString("btnTest.ToolTip"));
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
@@ -115,13 +110,11 @@ namespace V2RayGCon.Views.WinForms
             this.cboxMergeOption.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxMergeOption.FormattingEnabled = true;
             this.cboxMergeOption.Name = "cboxMergeOption";
-            this.toolTip1.SetToolTip(this.cboxMergeOption, resources.GetString("cboxMergeOption.ToolTip"));
             // 
             // label3
             // 
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-            this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
             // 
             // FormCustomConfigTemplates
             // 
@@ -139,7 +132,6 @@ namespace V2RayGCon.Views.WinForms
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "FormCustomConfigTemplates";
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.FormCustomCoreSettings_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

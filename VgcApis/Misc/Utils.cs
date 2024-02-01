@@ -2554,23 +2554,37 @@ namespace VgcApis.Misc
             return JsonConvert.SerializeObject(serializeObject);
         }
 
+        public static bool SerializableEqual(object src, object target)
+        {
+            if (src == null || target == null)
+            {
+                return false;
+            }
+            if (src == target)
+            {
+                return true;
+            }
+
+            return JsonConvert.SerializeObject(src) == JsonConvert.SerializeObject(target);
+        }
+
         /// <summary>
         /// return null if fail
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="a"></param>
+        /// <param name="src"></param>
         /// <returns></returns>
-        public static T Clone<T>(T a)
+        public static T Clone<T>(T src)
             where T : class
         {
-            if (a == null)
+            if (src == null)
             {
                 return null;
             }
 
             try
             {
-                return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(a));
+                return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(src));
             }
             catch { }
             return null;

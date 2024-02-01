@@ -8,40 +8,33 @@ namespace V2RayGCon.Views.UserControls
 {
     public partial class ConfigTemplateUI : UserControl
     {
-        public event EventHandler OnRequireReload;
+        CustomConfigTemplate tplS;
 
-        private CustomConfigTemplate tplS;
-
-        public ConfigTemplateUI()
+        public ConfigTemplateUI(CustomConfigTemplate tplSettings)
         {
             // this.size = 347, 28
             InitializeComponent();
+
+            this.tplS = tplSettings;
+            Reload();
         }
 
         #region public mehtod
-        public void Reload(CustomConfigTemplate tplSettings)
-        {
-            this.tplS = tplSettings;
-            chkIsInject.Checked = tplSettings.isInject;
-            UpdateTitle();
-        }
+
+        public CustomConfigTemplate GetTemplateSettings() => tplS;
 
         public void SetIndex(double index)
         {
-            var ctrl = tplS;
-            if (ctrl == null)
-            {
-                return;
-            }
-            ctrl.index = index;
+            tplS.index = index;
+            Reload();
         }
-
-        public double GetIndex() => tplS?.index ?? -1;
         #endregion
 
         #region private method
-        void UpdateTitle()
+        void Reload()
         {
+            chkIsInject.Checked = tplS.isInject;
+
             var title = $"{tplS.index}.{tplS.name}";
             lbTitle.Text = title;
             toolTip1.SetToolTip(lbTitle, title);
@@ -68,14 +61,6 @@ namespace V2RayGCon.Views.UserControls
             toolTip1.SetToolTip(rlbBinding, tip);
         }
 
-        private void InvokeOnRequireReloadIgnoreError()
-        {
-            try
-            {
-                OnRequireReload?.Invoke(this, EventArgs.Empty);
-            }
-            catch { }
-        }
         #endregion
 
         #region UI event handler
@@ -97,7 +82,6 @@ namespace V2RayGCon.Views.UserControls
         private void chkIsInject_CheckedChanged(object sender, EventArgs e)
         {
             tplS.isInject = chkIsInject.Checked;
-            Services.Settings.Instance.AddOrReplaceCustomConfigTemplateSettings(tplS);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -107,9 +91,8 @@ namespace V2RayGCon.Views.UserControls
             {
                 if (form.DialogResult == DialogResult.OK)
                 {
-                    var inbSet = form.inbS;
-                    Services.Settings.Instance.AddOrReplaceCustomConfigTemplateSettings(inbSet);
-                    InvokeOnRequireReloadIgnoreError();
+                    this.tplS = form.inbS;
+                    Reload();
                 }
             };
             form.Show();
@@ -120,14 +103,9 @@ namespace V2RayGCon.Views.UserControls
             var msg = string.Format(I18N.ConfirmDeleteTpl, tplS.name);
             if (VgcApis.Misc.UI.Confirm(msg))
             {
-                var ok = Services.Settings.Instance.RemoveCustomConfigTemplateByName(tplS.name);
-                if (ok)
-                {
-                    InvokeOnRequireReloadIgnoreError();
-                }
+                Parent.Controls.Remove(this);
             }
         }
-
         #endregion
     }
 }

@@ -27,16 +27,12 @@ namespace V2RayGCon.Views.WinForms
         }
 
         #region private method
-        CustomConfigTemplate GatherCoreSettings()
+        void GatherCoreSettings()
         {
-            var cs = new CustomConfigTemplate
-            {
-                name = tboxName.Text,
-                template = rtboxTemplate.Text,
-                jsonArrMergeOption = cboxMergeOption.Text,
-                isSocks5Inbound = chkIsSocks5Inbound.Checked,
-            };
-            return cs;
+            inbS.name = tboxName.Text;
+            inbS.template = rtboxTemplate.Text;
+            inbS.jsonArrMergeOption = cboxMergeOption.Text;
+            inbS.isSocks5Inbound = chkIsSocks5Inbound.Checked;
         }
 
         void InitControls()
@@ -77,14 +73,14 @@ namespace V2RayGCon.Views.WinForms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            this.inbS = GatherCoreSettings();
+            GatherCoreSettings();
             this.DialogResult = DialogResult.OK;
             Close();
         }
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            var inbS = GatherCoreSettings();
+            GatherCoreSettings();
             var tpl = inbS.GetFormatedTemplate("127.0.0.1", 1080);
             VgcApis.Misc.UI.MsgBoxAsync(tpl);
         }

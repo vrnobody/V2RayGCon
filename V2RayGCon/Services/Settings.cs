@@ -165,6 +165,7 @@ namespace V2RayGCon.Services
             userSettings.CustomInboundSettings = null;
         }
 
+        // use by TabDefault
         public string DefaultInboundName
         {
             get => userSettings.ImportOptions.DefaultInboundName;
@@ -178,63 +179,35 @@ namespace V2RayGCon.Services
             }
         }
 
-        public List<Models.Datas.CustomConfigTemplate> GetCustomConfigTemplates()
+        public ReadOnlyCollection<Models.Datas.CustomConfigTemplate> GetCustomConfigTemplates()
         {
             lock (saveUserSettingsLocker)
             {
-                return configTemplateCache.OrderBy(inb => inb.index).ToList();
+                return configTemplateCache.OrderBy(inb => inb.index).ToList().AsReadOnly();
             }
         }
 
-        public void ResetCustomConfigTemplatesIndex()
+        string CalcInjectTemplatesHash(IEnumerable<Models.Datas.CustomConfigTemplate> templates)
         {
+            var hashs = templates
+                .Where(tpl => tpl.isInject && !string.IsNullOrEmpty(tpl.template))
+                .Select(tpl => VgcApis.Misc.Utils.Sha256Hex(tpl.template))
+                .OrderBy(h => h);
+            return string.Join(",", hashs);
+        }
+
+        public bool ReplaceCustomConfigTemplates(List<Models.Datas.CustomConfigTemplate> tpls)
+        {
+            var injectTemplatesChanged = false;
             lock (saveUserSettingsLocker)
             {
-                var inbs = GetCustomConfigTemplates();
-                var idx = 1.0;
-                foreach (var inb in inbs)
-                {
-                    inb.index = idx++;
-                }
+                var oldHash = CalcInjectTemplatesHash(configTemplateCache);
+                var newHash = CalcInjectTemplatesHash(tpls);
+                injectTemplatesChanged = oldHash != newHash;
+                configTemplateCache = VgcApis.Misc.Utils.Clone(tpls);
             }
             SaveSettingsLater();
-        }
-
-        public bool RemoveCustomConfigTemplateByName(string name)
-        {
-            lock (saveUserSettingsLocker)
-            {
-                var tpl = configTemplateCache.FirstOrDefault(t => t.name == name);
-                if (tpl != null)
-                {
-                    configTemplateCache.Remove(tpl);
-                    ResetCustomConfigTemplatesIndex();
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public void AddOrReplaceCustomConfigTemplateSettings(Models.Datas.CustomConfigTemplate tpl)
-        {
-            if (tpl == null)
-            {
-                return;
-            }
-
-            tpl.index = configTemplateCache.Count + 1;
-
-            lock (saveUserSettingsLocker)
-            {
-                var oldTpl = configTemplateCache.FirstOrDefault(t => t.name == tpl.name);
-                if (oldTpl != null)
-                {
-                    tpl.index = oldTpl.index;
-                    configTemplateCache.Remove(oldTpl);
-                }
-                configTemplateCache.Add(tpl);
-            }
-            SaveSettingsLater();
+            return injectTemplatesChanged;
         }
 
         #endregion

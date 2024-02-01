@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using V2RayGCon.Models.Datas;
 using V2RayGCon.Services;
 
 namespace V2RayGCon.Controllers.OptionComponent
@@ -9,44 +11,67 @@ namespace V2RayGCon.Controllers.OptionComponent
     public class TabCustomInboundSettings : OptionComponentController
     {
         private readonly Settings settings;
+        private readonly Servers servers;
         private readonly FlowLayoutPanel flyPanel;
         private readonly Button btnAdd;
+        List<CustomConfigTemplate> datas;
 
         public TabCustomInboundSettings(FlowLayoutPanel flyPanel, Button btnAdd)
         {
             this.settings = Settings.Instance;
+            this.servers = Servers.Instance;
 
             this.flyPanel = flyPanel;
             this.btnAdd = btnAdd;
 
             BindButtonAdd();
             BindFlyPanelDragDropEvent();
-            Refresh();
+
+            datas =
+                VgcApis.Misc.Utils.Clone(settings.GetCustomConfigTemplates())?.ToList()
+                ?? new List<CustomConfigTemplate>();
+
+            InitPanel();
         }
-
-        #region properties
-
-        #endregion
 
         #region public methods
-        public override void Cleanup()
-        {
-            ReleaseEventHandler();
-        }
+        public override void Cleanup() { }
 
         public override bool IsOptionsChanged()
         {
-            return false;
+            var src = settings.GetCustomConfigTemplates();
+            GatherTemplatesSetting();
+            return !VgcApis.Misc.Utils.SerializableEqual(src, datas);
         }
 
         public override bool SaveOptions()
         {
+            if (!IsOptionsChanged())
+            {
+                return false;
+            }
+            var requireUpdateSummary = settings.ReplaceCustomConfigTemplates(datas);
+            if (requireUpdateSummary)
+            {
+                VgcApis.Misc.Utils.DoItLater(servers.UpdateAllServersSummary, 3000);
+            }
             return true;
         }
         #endregion
 
         #region private methods
-
+        void GatherTemplatesSetting()
+        {
+            datas.Clear();
+            var ucs = flyPanel.Controls.OfType<Views.UserControls.ConfigTemplateUI>();
+            var index = 1;
+            foreach (var uc in ucs)
+            {
+                uc.SetIndex(index++);
+                var tpl = uc.GetTemplateSettings();
+                datas.Add(tpl);
+            }
+        }
 
         void BindFlyPanelDragDropEvent()
         {
@@ -82,22 +107,10 @@ namespace V2RayGCon.Controllers.OptionComponent
                 return;
             }
 
-            // swap index
-            var curIdx = curItem.GetIndex();
-            var destIdx = destItem.GetIndex() - 0.5;
-            curIdx = curIdx < destIdx ? destIdx + 0.2 : destIdx - 0.2;
-            destItem.SetIndex(destIdx);
-            curItem.SetIndex(curIdx);
-            destItem.SetIndex(destIdx);
-            curItem.SetIndex(curIdx);
-            settings.ResetCustomConfigTemplatesIndex();
-
             // !must! reset item index!!
             var destPos = panel.Controls.GetChildIndex(destItem, false);
             panel.Controls.SetChildIndex(curItem, destPos);
             panel.Invalidate();
-
-            Refresh();
         }
 
         void BindButtonAdd()
@@ -110,58 +123,25 @@ namespace V2RayGCon.Controllers.OptionComponent
                     if (form.DialogResult == DialogResult.OK)
                     {
                         var inbS = form.inbS;
-                        settings.AddOrReplaceCustomConfigTemplateSettings(inbS);
-                        Refresh();
+                        VgcApis.Misc.UI.Invoke(() =>
+                        {
+                            var uc = new Views.UserControls.ConfigTemplateUI(inbS);
+                            flyPanel.Controls.Add(uc);
+                            uc.SetIndex(flyPanel.Controls.Count);
+                        });
                     }
                 };
                 form.Show();
             };
         }
 
-        void OnRequireReloadHandler(object sender, EventArgs args)
+        void InitPanel()
         {
-            Refresh();
-        }
-
-        void ReleaseEventHandler()
-        {
-            var inbUis = flyPanel.Controls.OfType<Views.UserControls.ConfigTemplateUI>();
-            foreach (var inb in inbUis)
-            {
-                inb.OnRequireReload -= OnRequireReloadHandler;
-            }
-        }
-
-        void Refresh()
-        {
-            VgcApis.Misc.UI.Invoke(RefreshPanelCore);
-        }
-
-        void KeepNthControls(int num)
-        {
-            var ctrls = flyPanel.Controls;
-            while (ctrls.Count > num)
-            {
-                ctrls.RemoveAt(ctrls.Count - 1);
-            }
-
-            while (ctrls.Count < num)
-            {
-                ctrls.Add(new Views.UserControls.ConfigTemplateUI());
-            }
-        }
-
-        void RefreshPanelCore()
-        {
-            ReleaseEventHandler();
-            var inbs = settings.GetCustomConfigTemplates();
             flyPanel.SuspendLayout();
-            KeepNthControls(inbs.Count);
-            for (var i = 0; i < inbs.Count; i++)
+            for (var i = 0; i < datas.Count; i++)
             {
-                var ui = flyPanel.Controls[i] as Views.UserControls.ConfigTemplateUI;
-                ui.Reload(inbs[i]);
-                ui.OnRequireReload += OnRequireReloadHandler;
+                var uc = new Views.UserControls.ConfigTemplateUI(datas[i]);
+                flyPanel.Controls.Add(uc);
             }
             flyPanel.ResumeLayout();
         }

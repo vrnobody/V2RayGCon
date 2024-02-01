@@ -13,6 +13,7 @@ namespace NeoLuna.Services
     {
         public event Action OnFileChanged;
         Libs.LuaSnippet.SnippetsCache snpCache;
+        VgcApis.Libs.Tasks.LazyGuy cacheRecycler;
 
         public AstServer() { }
 
@@ -21,6 +22,7 @@ namespace NeoLuna.Services
             this.snpCache = new Libs.LuaSnippet.SnippetsCache();
             UpdateRequireModuleNameCache();
             fsWatcher = CreateFileSystemWatcher(@"3rd/neolua");
+            cacheRecycler = new VgcApis.Libs.Tasks.LazyGuy(RenewCacheWorker, 30 * 60 * 1000, 1000);
         }
 
         #region constants
@@ -35,6 +37,7 @@ namespace NeoLuna.Services
         #endregion
 
         #region file watching
+        FileSystemWatcher fsWatcher;
 
         void StopFileSystemWatcher()
         {
@@ -80,6 +83,7 @@ namespace NeoLuna.Services
                 return;
             }
 
+            RenewCacheLater();
             astModuleCache.Remove(mn);
             astModuleExCache.Remove(mn);
 
@@ -92,14 +96,22 @@ namespace NeoLuna.Services
 
         #endregion
 
-        #region properties
-        FileSystemWatcher fsWatcher;
-        readonly VgcApis.Libs.Infr.StringLruCache<JObject> astCodeCache =
-            new VgcApis.Libs.Infr.StringLruCache<JObject>(30, TimeSpan.FromMinutes(30));
-        readonly VgcApis.Libs.Infr.StringLruCache<JObject> astModuleCache =
-            new VgcApis.Libs.Infr.StringLruCache<JObject>(20, TimeSpan.FromMinutes(30));
-        readonly VgcApis.Libs.Infr.StringLruCache<JObject> astModuleExCache =
-            new VgcApis.Libs.Infr.StringLruCache<JObject>(20, TimeSpan.FromMinutes(30));
+        #region caches
+        VgcApis.Libs.Infr.StringLruCache<JObject> astCodeCache =
+            new VgcApis.Libs.Infr.StringLruCache<JObject>();
+        VgcApis.Libs.Infr.StringLruCache<JObject> astModuleCache =
+            new VgcApis.Libs.Infr.StringLruCache<JObject>();
+        VgcApis.Libs.Infr.StringLruCache<JObject> astModuleExCache =
+            new VgcApis.Libs.Infr.StringLruCache<JObject>();
+
+        void RenewCacheLater() => cacheRecycler.Postpone();
+
+        void RenewCacheWorker()
+        {
+            astCodeCache = new VgcApis.Libs.Infr.StringLruCache<JObject>();
+            astModuleCache = new VgcApis.Libs.Infr.StringLruCache<JObject>();
+            astModuleExCache = new VgcApis.Libs.Infr.StringLruCache<JObject>();
+        }
 
         internal enum AnalyzeModes
         {
@@ -120,6 +132,7 @@ namespace NeoLuna.Services
 
         public JObject AnalyzeModule(string path, bool isExMode)
         {
+            RenewCacheLater();
             var cache = isExMode ? astModuleExCache : astModuleCache;
             if (cache.TryGet(path, out var ast))
             {
@@ -137,6 +150,7 @@ namespace NeoLuna.Services
 
         public JObject AnalyzeCode(string code)
         {
+            RenewCacheLater();
             if (astCodeCache.TryGet(code, out var cachedAst))
             {
                 return cachedAst;
@@ -276,6 +290,7 @@ namespace NeoLuna.Services
         {
             StopFileSystemWatcher();
             snpCache?.Dispose();
+            cacheRecycler?.Dispose();
         }
         #endregion
     }

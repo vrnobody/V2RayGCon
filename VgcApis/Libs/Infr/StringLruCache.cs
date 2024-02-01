@@ -14,6 +14,9 @@ namespace VgcApis.Libs.Infr
         readonly bool autoRemove = false;
         readonly LRUCache<string, V> cache;
 
+        public StringLruCache()
+            : this(30, TimeSpan.MinValue) { }
+
         public StringLruCache(int capacity, TimeSpan timeout)
         {
             this.capacity = capacity;

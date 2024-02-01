@@ -105,7 +105,7 @@ namespace V2RayGCon.Misc
             if (string.IsNullOrEmpty(appNameAndVersion))
             {
                 var rawVer = GetAssemblyVersion();
-                var ver = TrimVersionString(rawVer);
+                var ver = VgcApis.Misc.Utils.TrimVersionString(rawVer);
                 var name = VgcApis.Misc.Utils.GetAppName();
                 appNameAndVersion = VgcApis.Misc.Utils.PrependTag($"{name} v{ver}");
             }
@@ -127,7 +127,7 @@ namespace V2RayGCon.Misc
             var links = new List<string>();
             try
             {
-                string pattern = GenPattern(linkType);
+                string pattern = VgcApis.Misc.Utils.GenPattern(linkType);
                 var matches = Regex.Matches("\n" + text, pattern, RegexOptions.IgnoreCase);
 
                 foreach (Match match in matches)
@@ -146,7 +146,8 @@ namespace V2RayGCon.Misc
         {
             try
             {
-                string plainText = VgcApis.Misc.Utils.Base64DecodeToString(GetLinkBody(link));
+                var body = VgcApis.Misc.Utils.GetLinkBody(link);
+                string plainText = VgcApis.Misc.Utils.Base64DecodeToString(body);
                 var vmess = JsonConvert.DeserializeObject<Models.Datas.Vmess>(plainText);
                 if (
                     !string.IsNullOrEmpty(vmess.add)
@@ -200,47 +201,6 @@ namespace V2RayGCon.Misc
             return null;
         }
 
-        public static JArray Str2JArray(string content)
-        {
-            var arr = new JArray();
-            var items = content.Replace(" ", "").Split(',');
-            foreach (var item in items)
-            {
-                if (item.Length > 0)
-                {
-                    arr.Add(item);
-                }
-            }
-            return arr;
-        }
-
-        public static string JArray2Str(JArray array)
-        {
-            if (array == null)
-            {
-                return string.Empty;
-            }
-            List<string> s = new List<string>();
-
-            foreach (var item in array.Children())
-            {
-                try
-                {
-                    var v = item.Value<string>();
-                    if (!string.IsNullOrEmpty(v))
-                    {
-                        s.Add(v);
-                    }
-                }
-                catch { }
-            }
-
-            if (s.Count <= 0)
-            {
-                return string.Empty;
-            }
-            return string.Join(",", s);
-        }
         #endregion
 
         #region net
@@ -258,7 +218,7 @@ namespace V2RayGCon.Misc
             // https://github.com/XTLS/Xray-core/releases",
             var apiUrl = sourceUrl.Replace(@"github.com", @"api.github.com/repos");
 
-            string text = FetchWorker(
+            string text = VgcApis.Misc.Utils.FetchWorker(
                 isSocks5,
                 apiUrl,
                 VgcApis.Models.Consts.Webs.LoopBackIP,
@@ -304,7 +264,7 @@ namespace V2RayGCon.Misc
                 var url = subItem.url;
                 var mark = subItem.isSetMark ? subItem.alias : null;
 
-                var subsString = FetchWorker(
+                var subsString = VgcApis.Misc.Utils.FetchWorker(
                     isSocks5,
                     url,
                     VgcApis.Models.Consts.Webs.LoopBackIP,
@@ -334,173 +294,10 @@ namespace V2RayGCon.Misc
                 return new string[] { string.Join("\n", links), mark };
             }
 
-            return ExecuteInParallel(subscriptions, worker);
+            return VgcApis.Misc.Utils.ExecuteInParallel(subscriptions, worker);
         }
 
-        public static string GetBaseUrl(string url)
-        {
-            try
-            {
-                var uri = new Uri(url);
-                var baseUri = uri.GetLeftPart(UriPartial.Authority);
-                return baseUri;
-            }
-            catch (ArgumentNullException) { }
-            catch (UriFormatException) { }
-            catch (ArgumentException) { }
-            catch (InvalidOperationException) { }
-            return "";
-        }
-
-        public static string PatchHref(string url, string href)
-        {
-            var baseUrl = GetBaseUrl(url);
-
-            if (
-                string.IsNullOrEmpty(baseUrl)
-                || string.IsNullOrEmpty(href)
-                || !href.StartsWith("/")
-            )
-            {
-                return href;
-            }
-
-            return baseUrl + href;
-        }
-
-        public static string GenSearchUrl(string query, int start)
-        {
-            var url = VgcApis.Models.Consts.Webs.SearchUrlPrefix + UrlEncode(query);
-            if (start > 0)
-            {
-                url += VgcApis.Models.Consts.Webs.SearchPagePrefix + start.ToString();
-            }
-            return url;
-        }
-
-        public static string UrlEncode(string value) => HttpUtility.UrlEncode(value);
-
-        public static bool DownloadFileWorker(
-            string url,
-            string filename,
-            string host,
-            int proxyPort,
-            int timeout
-        )
-        {
-            var success = false;
-
-            timeout = timeout > 0 ? timeout : VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
-            if (!VgcApis.Misc.Utils.IsHttpLink(url))
-            {
-                url = VgcApis.Misc.Utils.RelativePath2FullPath(url);
-                proxyPort = -1;
-            }
-
-            var dlCompleted = new AutoResetEvent(false);
-
-            var wc = VgcApis.Misc.Utils.CreateWebClient(false, host, proxyPort, null, null);
-
-            wc.DownloadFileCompleted += (s, a) =>
-            {
-                if (!a.Cancelled && a.Error == null)
-                {
-                    success = true;
-                }
-                try
-                {
-                    dlCompleted.Set();
-                }
-                catch { }
-            };
-
-            try
-            {
-                wc.DownloadFileAsync(new Uri(url), filename);
-                dlCompleted.WaitOne(timeout);
-                dlCompleted.Dispose();
-            }
-            catch { }
-
-            VgcApis.Misc.Utils.CancelWebClientAsync(wc);
-            wc.Dispose();
-            return success;
-        }
-
-        /// <summary>
-        /// Download through HTTP or SOCKS5 proxy. Return string.Empty if sth. goes wrong.
-        /// </summary>
-        /// <param name="url">string</param>
-        /// <param name="proxyPort">1-65535, other value means download directly</param>
-        /// <param name="timeout">millisecond, if &lt;1 then use default value 30000</param>
-        /// <returns>If sth. goes wrong return string.Empty</returns>
-        public static string FetchWorker(
-            bool isSocks5,
-            string url,
-            string host,
-            int proxyPort,
-            int timeout,
-            string username,
-            string password
-        )
-        {
-            var html = string.Empty;
-
-            timeout = timeout > 0 ? timeout : VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
-
-            if (!VgcApis.Misc.Utils.IsHttpLink(url))
-            {
-                url = VgcApis.Misc.Utils.RelativePath2FullPath(url);
-                proxyPort = -1;
-            }
-            var dlCompleted = new AutoResetEvent(false);
-
-            var wc = VgcApis.Misc.Utils.CreateWebClient(
-                isSocks5,
-                host,
-                proxyPort,
-                username,
-                password
-            );
-
-            wc.DownloadStringCompleted += (s, a) =>
-            {
-                if (!a.Cancelled && a.Error == null)
-                {
-                    try
-                    {
-                        // 如果下载过程中遇到错误，a.Result会调用RaiseExceptionIfNecessary()抛出异常
-                        html = a.Result.ToString();
-                    }
-                    catch { }
-                }
-                try
-                {
-                    dlCompleted.Set();
-                }
-                catch { }
-            };
-
-            try
-            {
-                wc.DownloadStringAsync(new Uri(url));
-                dlCompleted.WaitOne(timeout);
-                dlCompleted.Dispose();
-            }
-            catch { }
-
-            VgcApis.Misc.Utils.CancelWebClientAsync(wc);
-            wc.Dispose();
-            return html;
-        }
-
-        public static string Fetch(string url, int proxyPort, int timeout)
-        {
-            var host = VgcApis.Models.Consts.Webs.LoopBackIP;
-            return FetchWorker(false, url, host, proxyPort, timeout, null, null);
-        }
         #endregion
-
         #region files
 
         private static void WriteToFileAtOnce(string path, string userSettings)
@@ -535,22 +332,6 @@ namespace V2RayGCon.Misc
             return false;
         }
 
-        public static string GetSha256SumFromFile(string file)
-        {
-            // http://peterkellner.net/2010/11/24/efficiently-generating-sha256-checksum-for-files-using-csharp/
-            try
-            {
-                using (FileStream stream = File.OpenRead(file))
-                {
-                    var sha = new SHA256Managed();
-                    byte[] checksum = sha.ComputeHash(stream);
-                    return BitConverter.ToString(checksum).Replace("-", String.Empty).ToLower();
-                }
-            }
-            catch { }
-            return string.Empty;
-        }
-
         public static string GetSysAppDataFolder()
         {
             var appData = Environment.GetFolderPath(
@@ -579,124 +360,11 @@ namespace V2RayGCon.Misc
         #region Miscellaneous
 
 
-        public static string TrimVersionString(string version)
-        {
-            for (int i = 0; i < 2; i++)
-            {
-                if (!version.EndsWith(".0"))
-                {
-                    return version;
-                }
-                var len = version.Length;
-                version = version.Substring(0, len - 2);
-            }
-
-            return version;
-        }
 
         public static string GetAssemblyVersion()
         {
             Version version = Assembly.GetEntryAssembly().GetName().Version;
             return version.ToString();
-        }
-
-        public static bool AreEqual(double a, double b)
-        {
-            return Math.Abs(a - b) < 0.000001;
-        }
-
-        public static string SHA256(string randomString)
-        {
-            var crypt = new SHA256Managed();
-            var hash = new StringBuilder();
-            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(randomString ?? string.Empty));
-            foreach (byte theByte in crypto)
-            {
-                hash.Append(theByte.ToString("x2"));
-            }
-            return hash.ToString();
-        }
-
-        // 懒得改调用处的代码了。
-        public static int Clamp(int value, int min, int max) =>
-            VgcApis.Misc.Utils.Clamp(value, min, max);
-
-        public static int GetIndexIgnoreCase(Dictionary<int, string> dict, string value)
-        {
-            foreach (var data in dict)
-            {
-                if (
-                    !string.IsNullOrEmpty(data.Value)
-                    && data.Value.Equals(value, StringComparison.CurrentCultureIgnoreCase)
-                )
-                {
-                    return data.Key;
-                }
-            }
-            return -1;
-        }
-
-        static string GenLinkPrefix(Enums.LinkTypes linkType) => $"{linkType}";
-
-        public static string GenPattern(Enums.LinkTypes linkType)
-        {
-            string pattern;
-            switch (linkType)
-            {
-                case Enums.LinkTypes.ss:
-                case Enums.LinkTypes.socks:
-                    pattern =
-                        GenLinkPrefix(linkType)
-                        + "://"
-                        + VgcApis.Models.Consts.Patterns.SsShareLinkContent;
-                    break;
-                case Enums.LinkTypes.vmess:
-                case Enums.LinkTypes.v2cfg:
-                    pattern =
-                        GenLinkPrefix(linkType)
-                        + "://"
-                        + VgcApis.Models.Consts.Patterns.Base64NonStandard;
-                    break;
-                case Enums.LinkTypes.http:
-                case Enums.LinkTypes.https:
-                    pattern = VgcApis.Models.Consts.Patterns.HttpUrl;
-                    break;
-                case Enums.LinkTypes.trojan:
-                    pattern =
-                        GenLinkPrefix(linkType)
-                        + "://"
-                        + VgcApis.Models.Consts.Patterns.UriContentNonStandard;
-                    break;
-                case Enums.LinkTypes.vless:
-                    // pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.UriContent;
-                    pattern =
-                        GenLinkPrefix(linkType)
-                        + "://"
-                        + VgcApis.Models.Consts.Patterns.UriContentNonStandard;
-                    break;
-                default:
-                    throw new NotSupportedException($"Not supported link type {linkType}:// ...");
-            }
-
-            return VgcApis.Models.Consts.Patterns.NonAlphabets + pattern;
-        }
-
-        public static string AddLinkPrefix(string b64Content, Enums.LinkTypes linkType)
-        {
-            return GenLinkPrefix(linkType) + "://" + b64Content;
-        }
-
-        public static string GetLinkBody(string link)
-        {
-            var needle = @"://";
-            var index = link.IndexOf(needle);
-
-            if (index < 0)
-            {
-                throw new ArgumentException($"Not a valid link ${link}");
-            }
-
-            return link.Substring(index + needle.Length);
         }
 
         public static void ZipFileDecompress(string zipFile, string outFolder)
@@ -710,23 +378,12 @@ namespace V2RayGCon.Misc
         #endregion
 
         #region UI related
-        public static void CopyToClipboardAndPrompt(string content) =>
-            VgcApis.Misc.UI.MsgBox(CopyToClipboard(content) ? I18N.CopySuccess : I18N.CopyFail);
 
-        public static bool CopyToClipboard(string content)
+
+        public static void CopyToClipboardAndPrompt(string content)
         {
-            if (string.IsNullOrEmpty(content))
-            {
-                return false;
-            }
-
-            try
-            {
-                Clipboard.SetText(content);
-                return true;
-            }
-            catch { }
-            return false;
+            var ok = VgcApis.Misc.Utils.CopyToClipboard(content);
+            VgcApis.Misc.UI.MsgBox(ok ? I18N.CopySuccess : I18N.CopyFail);
         }
 
         public static void EnableTls13Support()
@@ -765,135 +422,7 @@ namespace V2RayGCon.Misc
             }
         }
 
-        public static string GetClipboardText()
-        {
-            if (Clipboard.ContainsText(TextDataFormat.Text))
-            {
-                return Clipboard.GetText(TextDataFormat.Text);
-            }
-            return string.Empty;
-        }
         #endregion
-
-        #region task and process
-
-        /*
-         * ChainActionHelper loops from [count - 1] to [0]
-         *
-         * These integers, which is index in this example,
-         * will be transfered into worker function one by one.
-         *
-         * The second parameter "next" is generated automatically
-         * for chaining up all workers.
-         *
-         * e.g.
-         *
-         * Action<int,Action> worker = (index, next)=>{
-         *
-         *   // do something accroding to index
-         *   Debug.WriteLine(index);
-         *
-         *   // call next when done
-         *   next();
-         * }
-         *
-         * Action done = ()=>{
-         *   // do something when all done
-         *   // or simply set to null
-         * }
-         *
-         * Finally call this function like this.
-         * ChainActionHelper(10, worker, done);
-         */
-
-        public static void ChainActionHelperAsync(
-            int countdown,
-            Action<int, Action> worker,
-            Action done = null
-        )
-        {
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                ChainActionHelperWorker(countdown, worker, done)();
-            });
-        }
-
-        // wrapper
-        public static void ChainActionHelper(
-            int countdown,
-            Action<int, Action> worker,
-            Action done = null
-        )
-        {
-            ChainActionHelperWorker(countdown, worker, done)();
-        }
-
-        static Action ChainActionHelperWorker(
-            int countdown,
-            Action<int, Action> worker,
-            Action done = null
-        )
-        {
-            int _index = countdown - 1;
-
-            return () =>
-            {
-                if (_index < 0)
-                {
-                    done?.Invoke();
-                    return;
-                }
-
-                worker(_index, ChainActionHelperWorker(_index, worker, done));
-            };
-        }
-
-        public static void ExecuteInParallel<TParam>(
-            IEnumerable<TParam> param,
-            Action<TParam> worker
-        ) =>
-            ExecuteInParallel(
-                param,
-                (p) =>
-                {
-                    worker(p);
-                    // ExecuteInParallel require a return value
-                    return "nothing";
-                }
-            );
-
-        public static List<TResult> ExecuteInParallel<TParam, TResult>(
-            IEnumerable<TParam> param,
-            Func<TParam, TResult> worker
-        )
-        {
-            var result = new List<TResult>();
-
-            if (param.Count() <= 0)
-            {
-                return result;
-            }
-
-            var taskList = new List<Task<TResult>>();
-            foreach (var value in param)
-            {
-                var task = new Task<TResult>(() => worker(value), TaskCreationOptions.LongRunning);
-                taskList.Add(task);
-                task.Start();
-            }
-
-            Task.WaitAll(taskList.ToArray());
-
-            foreach (var task in taskList)
-            {
-                result.Add(task.Result);
-                task.Dispose();
-            }
-
-            return result;
-        }
-        #endregion
-
         #region for Testing
         public static string[] TestingGetResourceConfigJson()
         {

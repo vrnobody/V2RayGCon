@@ -36,7 +36,7 @@ namespace V2RayGCon.Views.Updater
 
             this.downloadUrl = string.Format(
                 VgcApis.Models.Consts.Webs.ReleaseDownloadUrlTpl,
-                Misc.Utils.TrimVersionString(info.version)
+                VgcApis.Misc.Utils.TrimVersionString(info.version)
             );
 
             lbSource.Text = downloadUrl;

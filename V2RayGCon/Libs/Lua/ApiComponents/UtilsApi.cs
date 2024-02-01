@@ -13,13 +13,13 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
         public string GetAppVersion() => Misc.Utils.GetAssemblyVersion();
 
         public string AddLinkPrefix(string linkBody, VgcApis.Models.Datas.Enums.LinkTypes type) =>
-            Misc.Utils.AddLinkPrefix(linkBody, type);
+            VgcApis.Misc.Utils.AddLinkPrefix(linkBody, type);
 
         public string GetLinkBody(string link)
         {
             try
             {
-                return Misc.Utils.GetLinkBody(link);
+                return VgcApis.Misc.Utils.GetLinkBody(link);
             }
             catch { }
             return string.Empty;
@@ -52,13 +52,6 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
             return shareLink;
         }
 
-        public void ExecuteInParallel<TParam>(IEnumerable<TParam> source, Action<TParam> worker) =>
-            Misc.Utils.ExecuteInParallel(source, worker);
-
-        public void ExecuteInParallel<TParam, TResult>(
-            IEnumerable<TParam> source,
-            Func<TParam, TResult> worker
-        ) => Misc.Utils.ExecuteInParallel(source, worker);
         #endregion
     }
 }

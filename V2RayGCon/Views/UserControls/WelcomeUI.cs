@@ -60,7 +60,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void lbCopyFromClipboard_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            string text = Misc.Utils.GetClipboardText();
+            string text = VgcApis.Misc.Utils.ReadFromClipboard();
             slinkMgr.ImportLinkWithOutV2cfgLinks(text);
         }
 

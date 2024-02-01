@@ -112,7 +112,7 @@ namespace V2RayGCon.Models.Datas
             }
 
             string content = JsonConvert.SerializeObject(vmess);
-            return Misc.Utils.AddLinkPrefix(
+            return VgcApis.Misc.Utils.AddLinkPrefix(
                 VgcApis.Misc.Utils.Base64EncodeString(content),
                 VgcApis.Models.Datas.Enums.LinkTypes.vmess
             );

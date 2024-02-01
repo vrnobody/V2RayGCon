@@ -63,7 +63,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #region private methods
         JToken SocksLink2Outbound(string ssLink)
         {
-            var body = Misc.Utils.GetLinkBody(ssLink);
+            var body = VgcApis.Misc.Utils.GetLinkBody(ssLink);
             var parts = body?.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
 
             if (parts == null || parts.Length < 1 || parts.Length > 2)

@@ -123,7 +123,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             // menu file
             importLinkFromClipboard.Click += (s, a) =>
             {
-                string text = Misc.Utils.GetClipboardText();
+                string text = VgcApis.Misc.Utils.ReadFromClipboard();
                 slinkMgr.ImportLinkWithV2cfgLinks(text);
             };
         }

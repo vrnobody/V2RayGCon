@@ -14,11 +14,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ScintillaNET;
 using VgcApis.Models.Consts;
+using VgcApis.Models.Datas;
 using VgcApis.Resources.Langs;
 
 namespace VgcApis.Misc
@@ -26,6 +28,21 @@ namespace VgcApis.Misc
     public static class Utils
     {
         #region collections
+        public static int GetKeyIgnoreCase(Dictionary<int, string> dict, string value)
+        {
+            foreach (var data in dict)
+            {
+                if (
+                    !string.IsNullOrEmpty(data.Value)
+                    && data.Value.Equals(value, StringComparison.CurrentCultureIgnoreCase)
+                )
+                {
+                    return data.Key;
+                }
+            }
+            return -1;
+        }
+
         public static bool TryGetDictValue<T>(
             Dictionary<string[], T> dict,
             string[] key,
@@ -737,6 +754,22 @@ namespace VgcApis.Misc
             }
         }
 
+        public static string GetSha256SumFromFile(string file)
+        {
+            // http://peterkellner.net/2010/11/24/efficiently-generating-sha256-checksum-for-files-using-csharp/
+            try
+            {
+                using (FileStream stream = File.OpenRead(file))
+                {
+                    var sha = new SHA256Managed();
+                    byte[] checksum = sha.ComputeHash(stream);
+                    return BitConverter.ToString(checksum).Replace("-", String.Empty).ToLower();
+                }
+            }
+            catch { }
+            return string.Empty;
+        }
+
         public static byte[] Sha256Hash(string text)
         {
             if (string.IsNullOrEmpty(text))
@@ -1029,13 +1062,7 @@ namespace VgcApis.Misc
             timeout = timeout > 0 ? timeout : Intervals.DefaultSpeedTestTimeout;
             var localhost = Webs.LoopBackIP;
             var wc = CreateWebClient(isSocks5, localhost, port, username, password);
-            DoItLater(
-                () =>
-                {
-                    CancelWebClientAsync(wc);
-                },
-                timeout
-            );
+            DoItLater(() => CancelWebClientAsync(wc), timeout);
 
             var buffer = RentBuffer();
             long size = 0;
@@ -1146,7 +1173,257 @@ namespace VgcApis.Misc
             }
             return port;
         }
+
+        public static string GetBaseUrl(string url)
+        {
+            try
+            {
+                var uri = new Uri(url);
+                var baseUri = uri.GetLeftPart(UriPartial.Authority);
+                return baseUri;
+            }
+            catch (ArgumentNullException) { }
+            catch (UriFormatException) { }
+            catch (ArgumentException) { }
+            catch (InvalidOperationException) { }
+            return "";
+        }
+
+        public static string PatchHref(string url, string href)
+        {
+            var baseUrl = GetBaseUrl(url);
+
+            if (
+                string.IsNullOrEmpty(baseUrl)
+                || string.IsNullOrEmpty(href)
+                || !href.StartsWith("/")
+            )
+            {
+                return href;
+            }
+
+            return baseUrl + href;
+        }
+
+        public static string GenSearchUrl(string query, int start)
+        {
+            var url = Webs.SearchUrlPrefix + UrlEncode(query);
+            if (start > 0)
+            {
+                url += Webs.SearchPagePrefix + start.ToString();
+            }
+            return url;
+        }
+
+        public static string UrlEncode(string value) => HttpUtility.UrlEncode(value);
+
+        public static bool DownloadFileWorker(
+            string url,
+            string filename,
+            string host,
+            int proxyPort,
+            int timeout
+        )
+        {
+            var success = false;
+
+            if (!IsHttpLink(url))
+            {
+                url = RelativePath2FullPath(url);
+                proxyPort = -1;
+            }
+
+            var wc = CreateWebClient(false, host, proxyPort, null, null);
+            if (timeout == 0)
+            {
+                DoItLater(() => CancelWebClientAsync(wc), Intervals.DefaultFetchTimeout);
+            }
+            else if (timeout > 0)
+            {
+                DoItLater(() => CancelWebClientAsync(wc), timeout);
+            }
+            try
+            {
+                wc.DownloadFile(new Uri(url), filename);
+                success = true;
+            }
+            catch { }
+            wc.Dispose();
+            return success;
+        }
+
+        /// <summary>
+        /// Download through HTTP or SOCKS5 proxy. Return string.Empty if sth. goes wrong.
+        /// </summary>
+        /// <param name="url">string</param>
+        /// <param name="proxyPort">1-65535, other value means download directly</param>
+        /// <param name="timeout">millisecond, if &lt;1 then use default value 30000</param>
+        /// <returns>If sth. goes wrong return string.Empty</returns>
+        public static string FetchWorker(
+            bool isSocks5,
+            string url,
+            string host,
+            int proxyPort,
+            int timeout,
+            string username,
+            string password
+        )
+        {
+            if (!IsHttpLink(url))
+            {
+                url = RelativePath2FullPath(url);
+                proxyPort = -1;
+            }
+
+            var wc = CreateWebClient(isSocks5, host, proxyPort, username, password);
+            if (timeout == 0)
+            {
+                DoItLater(() => CancelWebClientAsync(wc), Intervals.DefaultFetchTimeout);
+            }
+            else if (timeout > 0)
+            {
+                DoItLater(() => CancelWebClientAsync(wc), timeout);
+            }
+
+            var html = string.Empty;
+            try
+            {
+                html = wc.DownloadString(new Uri(url));
+            }
+            catch { }
+            wc.Dispose();
+            return html;
+        }
+
+        public static string Fetch(string url, int proxyPort, int timeout)
+        {
+            var host = Webs.LoopBackIP;
+            return FetchWorker(false, url, host, proxyPort, timeout, null, null);
+        }
+
         #endregion
+
+
+        #region ChainAction
+
+        /*
+         * ChainActionHelper loops from [count - 1] to [0]
+         *
+         * These integers, which is index in this example,
+         * will be transfered into worker function one by one.
+         *
+         * The second parameter "next" is generated automatically
+         * for chaining up all workers.
+         *
+         * e.g.
+         *
+         * Action<int,Action> worker = (index, next)=>{
+         *
+         *   // do something accroding to index
+         *   Debug.WriteLine(index);
+         *
+         *   // call next when done
+         *   next();
+         * }
+         *
+         * Action done = ()=>{
+         *   // do something when all done
+         *   // or simply set to null
+         * }
+         *
+         * Finally call this function like this.
+         * ChainActionHelper(10, worker, done);
+         */
+
+        public static void ChainActionHelperAsync(
+            int countdown,
+            Action<int, Action> worker,
+            Action done = null
+        )
+        {
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                ChainActionHelperWorker(countdown, worker, done)();
+            });
+        }
+
+        // wrapper
+        public static void ChainActionHelper(
+            int countdown,
+            Action<int, Action> worker,
+            Action done = null
+        )
+        {
+            ChainActionHelperWorker(countdown, worker, done)();
+        }
+
+        static Action ChainActionHelperWorker(
+            int countdown,
+            Action<int, Action> worker,
+            Action done = null
+        )
+        {
+            int _index = countdown - 1;
+
+            return () =>
+            {
+                if (_index < 0)
+                {
+                    done?.Invoke();
+                    return;
+                }
+
+                worker(_index, ChainActionHelperWorker(_index, worker, done));
+            };
+        }
+
+        public static void ExecuteInParallel<TParam>(
+            IEnumerable<TParam> param,
+            Action<TParam> worker
+        ) =>
+            ExecuteInParallel(
+                param,
+                (p) =>
+                {
+                    worker(p);
+                    // ExecuteInParallel require a return value
+                    return "nothing";
+                }
+            );
+
+        public static List<TResult> ExecuteInParallel<TParam, TResult>(
+            IEnumerable<TParam> param,
+            Func<TParam, TResult> worker
+        )
+        {
+            var result = new List<TResult>();
+
+            if (param.Count() <= 0)
+            {
+                return result;
+            }
+
+            var taskList = new List<Task<TResult>>();
+            foreach (var value in param)
+            {
+                var task = new Task<TResult>(() => worker(value), TaskCreationOptions.LongRunning);
+                taskList.Add(task);
+                task.Start();
+            }
+
+            Task.WaitAll(taskList.ToArray());
+
+            foreach (var task in taskList)
+            {
+                result.Add(task.Result);
+                task.Dispose();
+            }
+
+            return result;
+        }
+        #endregion
+
+
 
         #region Task
         public static void DoItLater(Action action, TimeSpan span)
@@ -1301,6 +1578,48 @@ namespace VgcApis.Misc
 
 
         #region vgc Json
+        public static string JArray2Str(JArray array)
+        {
+            if (array == null)
+            {
+                return string.Empty;
+            }
+            List<string> s = new List<string>();
+
+            foreach (var item in array.Children())
+            {
+                try
+                {
+                    var v = item.Value<string>();
+                    if (!string.IsNullOrEmpty(v))
+                    {
+                        s.Add(v);
+                    }
+                }
+                catch { }
+            }
+
+            if (s.Count <= 0)
+            {
+                return string.Empty;
+            }
+            return string.Join(",", s);
+        }
+
+        public static JArray Str2JArray(string content)
+        {
+            var arr = new JArray();
+            var items = content.Replace(" ", "").Split(',');
+            foreach (var item in items)
+            {
+                if (item.Length > 0)
+                {
+                    arr.Add(item);
+                }
+            }
+            return arr;
+        }
+
         public static JArray ExtractOutboundsFromConfig(JObject json)
         {
             var result = new JArray();
@@ -1346,7 +1665,7 @@ namespace VgcApis.Misc
         public static string ExtractSummaryFromYaml(string config)
         {
             var empty = "";
-            if (!VgcApis.Misc.Utils.IsYaml(config))
+            if (!IsYaml(config))
             {
                 return empty;
             }
@@ -1376,9 +1695,9 @@ namespace VgcApis.Misc
                 );
                 if (parts != null && parts.Length > 2)
                 {
-                    if (VgcApis.Misc.Utils.TryParseAddress(parts[2], out var ip, out _))
+                    if (TryParseAddress(parts[2], out var ip, out _))
                     {
-                        var host = VgcApis.Misc.Utils.FormatHost(ip);
+                        var host = FormatHost(ip);
                         return $"hy2@{host}";
                     }
                 }
@@ -1477,7 +1796,7 @@ namespace VgcApis.Misc
 
             return protocol
                 + (string.IsNullOrEmpty(streamType) ? "" : $".{streamType}")
-                + (string.IsNullOrEmpty(addr) ? "" : "@" + VgcApis.Misc.Utils.FormatHost(addr));
+                + (string.IsNullOrEmpty(addr) ? "" : "@" + FormatHost(addr));
         }
 
         static bool Contains(JProperty main, JProperty sub)
@@ -1635,7 +1954,7 @@ namespace VgcApis.Misc
                         o[key] = new JValue(value);
                         return true;
                     case JArray a:
-                        a[VgcApis.Misc.Utils.Str2Int(key)] = new JValue(value);
+                        a[Str2Int(key)] = new JValue(value);
                         return true;
                     default:
                         break;
@@ -2259,6 +2578,21 @@ namespace VgcApis.Misc
         #endregion
 
         #region string processor
+        public static string TrimVersionString(string version)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                if (!version.EndsWith(".0"))
+                {
+                    return version;
+                }
+                var len = version.Length;
+                version = version.Substring(0, len - 2);
+            }
+
+            return version;
+        }
+
         public static string Base64EncodeBytes(byte[] bytes)
         {
             if (bytes == null || bytes.Length < 1)
@@ -2454,6 +2788,69 @@ namespace VgcApis.Misc
             return marks;
         }
 
+        static string GenLinkPrefix(Enums.LinkTypes linkType) => $"{linkType}";
+
+        public static string GenPattern(Enums.LinkTypes linkType)
+        {
+            string pattern;
+            switch (linkType)
+            {
+                case Enums.LinkTypes.ss:
+                case Enums.LinkTypes.socks:
+                    pattern =
+                        GenLinkPrefix(linkType)
+                        + "://"
+                        + VgcApis.Models.Consts.Patterns.SsShareLinkContent;
+                    break;
+                case Enums.LinkTypes.vmess:
+                case Enums.LinkTypes.v2cfg:
+                    pattern =
+                        GenLinkPrefix(linkType)
+                        + "://"
+                        + VgcApis.Models.Consts.Patterns.Base64NonStandard;
+                    break;
+                case Enums.LinkTypes.http:
+                case Enums.LinkTypes.https:
+                    pattern = VgcApis.Models.Consts.Patterns.HttpUrl;
+                    break;
+                case Enums.LinkTypes.trojan:
+                    pattern =
+                        GenLinkPrefix(linkType)
+                        + "://"
+                        + VgcApis.Models.Consts.Patterns.UriContentNonStandard;
+                    break;
+                case Enums.LinkTypes.vless:
+                    // pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.UriContent;
+                    pattern =
+                        GenLinkPrefix(linkType)
+                        + "://"
+                        + VgcApis.Models.Consts.Patterns.UriContentNonStandard;
+                    break;
+                default:
+                    throw new NotSupportedException($"Not supported link type {linkType}:// ...");
+            }
+
+            return VgcApis.Models.Consts.Patterns.NonAlphabets + pattern;
+        }
+
+        public static string AddLinkPrefix(string b64Content, Enums.LinkTypes linkType)
+        {
+            return GenLinkPrefix(linkType) + "://" + b64Content;
+        }
+
+        public static string GetLinkBody(string link)
+        {
+            var needle = @"://";
+            var index = link.IndexOf(needle);
+
+            if (index < 0)
+            {
+                throw new ArgumentException($"Not a valid link ${link}");
+            }
+
+            return link.Substring(index + needle.Length);
+        }
+
         public static string GetLinkPrefix(string shareLink)
         {
             var index = shareLink.IndexOf(@"://");
@@ -2507,6 +2904,7 @@ namespace VgcApis.Misc
         #endregion
 
         #region numbers
+
 
         public static List<string> EnumToList<TEnum>()
             where TEnum : struct
@@ -2653,7 +3051,7 @@ namespace VgcApis.Misc
             return Path.Combine(appDir, path);
         }
 
-        public static string CopyFromClipboard()
+        public static string ReadFromClipboard()
         {
             try
             {
@@ -2665,17 +3063,15 @@ namespace VgcApis.Misc
 
         public static bool CopyToClipboard(string content)
         {
-            if (string.IsNullOrEmpty(content))
+            if (!string.IsNullOrEmpty(content))
             {
-                return false;
+                try
+                {
+                    Clipboard.SetText(content);
+                    return true;
+                }
+                catch { }
             }
-
-            try
-            {
-                Clipboard.SetText(content);
-                return true;
-            }
-            catch { }
             return false;
         }
 

@@ -155,7 +155,7 @@ namespace V2RayGCon.Views.UserControls
             var url = tboxUrl.Text;
             if (string.IsNullOrEmpty(url))
             {
-                var clipboard = VgcApis.Misc.Utils.CopyFromClipboard();
+                var clipboard = VgcApis.Misc.Utils.ReadFromClipboard();
                 if (!string.IsNullOrEmpty(clipboard))
                 {
                     tboxUrl.Text = clipboard;

@@ -89,7 +89,7 @@ namespace V2RayGCon.Views.WinForms
 
         void UpdateProgressBar(int percentage)
         {
-            var v = Misc.Utils.Clamp(percentage, 1, 101);
+            var v = VgcApis.Misc.Utils.Clamp(percentage, 1, 101);
             VgcApis.Misc.UI.Invoke(() => pgBarDownload.Value = v);
         }
 

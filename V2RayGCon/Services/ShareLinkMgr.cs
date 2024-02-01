@@ -246,7 +246,7 @@ namespace V2RayGCon.Services
                 return ImportShareLinks(job.Item1, job.Item2, job.Item3);
             }
 
-            var results = Misc.Utils.ExecuteInParallel(jobs, worker).SelectMany(r => r);
+            var results = VgcApis.Misc.Utils.ExecuteInParallel(jobs, worker).SelectMany(r => r);
             servers.RequireFormMainReload();
             return results;
         }

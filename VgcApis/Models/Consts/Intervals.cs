@@ -14,7 +14,7 @@
         public static int LazySaveLunaSettingsInterval = 3 * 60 * 1000;
 
         public static int DefaultSpeedTestTimeout = 20 * 1000;
-        public static int DefaultFetchTimeout = 30 * 1000;
+        public static int DefaultFetchTimeout = 60 * 1000;
 
         public static int NotifierMenuUpdateIntreval = 1000;
 

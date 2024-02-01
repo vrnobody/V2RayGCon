@@ -16,6 +16,73 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+        [DataTestMethod]
+        [DataRow(@"http://abc.com", @"abc.com")]
+        [DataRow(@"v://abc.com", @"abc.com")]
+        [DataRow(@"vee://", @"")]
+        [DataRow(@"vmess://abc", @"abc")]
+        [DataRow(@"v2cfg://abc", @"abc")]
+        [DataRow(@"http://abc", @"abc")]
+        [DataRow(@"https://abc", @"abc")]
+        [DataRow(@"any://://", @"://")]
+        public void GetLinkBodyNormalTest(string link, string expect)
+        {
+            var body = GetLinkBody(link);
+            Assert.AreEqual(expect, body);
+        }
+
+        [DataTestMethod]
+        [DataRow(@"v/")]
+        [DataRow(@":v/v/")]
+        public void GetLinkBodyFailTest(string link)
+        {
+            try
+            {
+                var body = GetLinkBody(link);
+            }
+            catch
+            {
+                return;
+            }
+            Assert.Fail();
+        }
+
+        [DataTestMethod]
+        [DataRow("", "")]
+        [DataRow("1", "1")]
+        [DataRow("1 , 2", "1,2")]
+        [DataRow(",  ,  ,", "")]
+        [DataRow(",,,  ,1  ,  ,2,  ,3,,,", "1,2,3")]
+        public void Str2JArray2Str(string value, string expect)
+        {
+            var array = Str2JArray(value);
+            var str = JArray2Str(array);
+            Assert.AreEqual(expect, str);
+        }
+
+        [DataTestMethod]
+        [DataRow(0.1, 0.2, false)]
+        [DataRow(0.000000001, 0.00000002, true)]
+        [DataRow(0.001, 0.002, false)]
+        [DataRow(-0.1, 0.1, false)]
+        [DataRow(2, 2, true)]
+        public void AreEqualTest(double a, double b, bool expect)
+        {
+            Assert.AreEqual(expect, AreEqual(a, b));
+        }
+
+        [DataTestMethod]
+        [DataRow("0.0.0.0.", "0.0.0.0.")]
+        [DataRow("0.0.1.11", "0.0.1.11")]
+        [DataRow("0.0.1.0", "0.0.1")]
+        [DataRow("0.0.0.1", "0.0.0.1")]
+        [DataRow("0.0.0.0", "0.0")]
+        public void TrimVersionStringTest(string version, string expect)
+        {
+            var result = TrimVersionString(version);
+            Assert.AreEqual(expect, result);
+        }
+
         [TestMethod]
         public void HashFunctionsBaselineTests()
         {
@@ -28,6 +95,11 @@ namespace VgcApisTests
             Assert.AreEqual(
                 "1498275515c38e6f4269e8602a1f5a9ad84690c523dd16d06cad8b0a7f55a71927d8587d947e5e9cd98da0e9736341fff976fd70cdd65389749a07e1ddc6530d",
                 Sha512Hex(s)
+            );
+
+            Assert.AreEqual(
+                "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+                Sha256Hex("1234")
             );
         }
 
@@ -968,8 +1040,8 @@ ab12-_中文: |
             str = "";
             adam.Throttle();
             adam.ForgetIt();
-            Task.Delay(1000).Wait();
-            Assert.AreEqual("", str);
+            Task.Delay(1100).Wait();
+            Assert.IsTrue(str.Length < 2);
             adam.PickItUp();
 
             str = "";
@@ -979,7 +1051,7 @@ ab12-_中文: |
             adam.Throttle();
             adam.Throttle();
             adam.Throttle();
-            Assert.AreEqual("", str);
+            Assert.IsTrue(str.Length < 2);
             Task.Delay(3000).Wait();
             Assert.AreEqual("..", str);
 

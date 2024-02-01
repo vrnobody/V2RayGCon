@@ -138,7 +138,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         void SetIndexWorker(double index, bool quiet)
         {
-            if (Misc.Utils.AreEqual(coreInfo.index, index))
+            if (VgcApis.Misc.Utils.AreEqual(coreInfo.index, index))
             {
                 return;
             }

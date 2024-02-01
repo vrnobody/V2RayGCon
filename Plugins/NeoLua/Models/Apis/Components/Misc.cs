@@ -41,6 +41,16 @@ namespace NeoLuna.Models.Apis.Components
         public void Notify(string title, string content, int ms) =>
             vgcNotifier.Notify(title, content, ms);
 
+        public string ReadFromClipboard()
+        {
+            string r = "";
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                r = VgcApis.Misc.Utils.ReadFromClipboard();
+            });
+            return r;
+        }
+
         public bool CopyToClipboard(string content)
         {
             bool ok = false;
@@ -257,10 +267,10 @@ namespace NeoLuna.Models.Apis.Components
         }
 
         public string AddVmessPrefix(string b64Str) =>
-            vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
+            VgcApis.Misc.Utils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
 
         public string AddV2cfgPrefix(string b64Str) =>
-            vgcUtils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
+            VgcApis.Misc.Utils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
 
         /// <summary>
         /// null: failed
@@ -279,7 +289,7 @@ namespace NeoLuna.Models.Apis.Components
         public string Base64Decode(string b64Str) =>
             VgcApis.Misc.Utils.Base64DecodeToString(b64Str);
 
-        public string GetLinkBody(string link) => vgcUtils.GetLinkBody(link);
+        public string GetLinkBody(string link) => VgcApis.Misc.Utils.GetLinkBody(link);
 
         public string PredefinedFunctions() => Resources.Files.Datas.LuaPredefinedFunctions;
 

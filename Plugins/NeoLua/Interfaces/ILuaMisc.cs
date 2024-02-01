@@ -36,6 +36,12 @@ namespace NeoLuna.Interfaces
         bool CopyToClipboard(string content);
 
         /// <summary>
+        /// 从剪切板读取字符串
+        /// </summary>
+        /// <returns>字符串内容</returns>
+        string ReadFromClipboard();
+
+        /// <summary>
         /// 调出Json编辑器窗口
         /// </summary>
         /// <param name="config">预置内容</param>

@@ -237,7 +237,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             if (!string.IsNullOrEmpty(ss.tlsAlpn))
             {
-                o["alpn"] = Misc.Utils.Str2JArray(ss.tlsAlpn);
+                o["alpn"] = VgcApis.Misc.Utils.Str2JArray(ss.tlsAlpn);
             }
 
             if (tt == "reality")
@@ -276,11 +276,12 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 case "tcp_http":
                     token["tcpSettings"]["header"]["type"] = mainParam;
-                    token["tcpSettings"]["header"]["request"]["path"] = Misc.Utils.Str2JArray(
-                        string.IsNullOrEmpty(ss.streamParam2) ? "/" : ss.streamParam2
-                    );
+                    token["tcpSettings"]["header"]["request"]["path"] =
+                        VgcApis.Misc.Utils.Str2JArray(
+                            string.IsNullOrEmpty(ss.streamParam2) ? "/" : ss.streamParam2
+                        );
                     token["tcpSettings"]["header"]["request"]["headers"]["Host"] =
-                        Misc.Utils.Str2JArray(ss.streamParam3);
+                        VgcApis.Misc.Utils.Str2JArray(ss.streamParam3);
                     break;
                 case "kcp":
                     token["kcpSettings"]["header"]["type"] = mainParam;
@@ -295,7 +296,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 case "h2":
                     token["httpSettings"]["path"] = mainParam;
-                    token["httpSettings"]["host"] = Misc.Utils.Str2JArray(ss.streamParam2);
+                    token["httpSettings"]["host"] = VgcApis.Misc.Utils.Str2JArray(ss.streamParam2);
                     break;
                 case "quic":
                     token["quicSettings"]["header"]["type"] = mainParam;
@@ -350,7 +351,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                         var hosts = isUseV4
                             ? config["outbounds"][0]["streamSettings"]["httpSettings"]["host"]
                             : config["outbound"]["streamSettings"]["httpSettings"]["host"];
-                        result.streamParam2 = Misc.Utils.JArray2Str(hosts as JArray);
+                        result.streamParam2 = VgcApis.Misc.Utils.JArray2Str(hosts as JArray);
                     }
                     catch { }
                     break;
@@ -380,7 +381,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     : json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"][
                         "path"
                     ];
-                result.streamParam2 = Misc.Utils.JArray2Str(path as JArray);
+                result.streamParam2 = VgcApis.Misc.Utils.JArray2Str(path as JArray);
             }
             catch { }
             try
@@ -392,7 +393,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     : json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"][
                         "headers"
                     ]["Host"];
-                result.streamParam3 = Misc.Utils.JArray2Str(hosts as JArray);
+                result.streamParam3 = VgcApis.Misc.Utils.JArray2Str(hosts as JArray);
             }
             catch { }
         }
@@ -420,7 +421,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             {
                 // do not support v3.x config
                 var alpn = config["outbounds"][0]["streamSettings"][ts]["alpn"];
-                result.tlsAlpn = Misc.Utils.JArray2Str(alpn as JArray);
+                result.tlsAlpn = VgcApis.Misc.Utils.JArray2Str(alpn as JArray);
             }
             catch { }
 

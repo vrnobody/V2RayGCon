@@ -622,11 +622,11 @@ namespace V2RayGCon.Services
             get
             {
                 var size = userSettings.ServerPanelPageSize;
-                return Misc.Utils.Clamp(size, 1, 101);
+                return VgcApis.Misc.Utils.Clamp(size, 1, 101);
             }
             set
             {
-                userSettings.ServerPanelPageSize = Misc.Utils.Clamp(value, 1, 101);
+                userSettings.ServerPanelPageSize = VgcApis.Misc.Utils.Clamp(value, 1, 101);
                 SaveSettingsLater();
             }
         }
@@ -636,11 +636,11 @@ namespace V2RayGCon.Services
             get
             {
                 var size = userSettings.MaxConcurrentV2RayCoreNum;
-                return Misc.Utils.Clamp(size, 1, 1001);
+                return VgcApis.Misc.Utils.Clamp(size, 1, 1001);
             }
             set
             {
-                userSettings.MaxConcurrentV2RayCoreNum = Misc.Utils.Clamp(value, 1, 1001);
+                userSettings.MaxConcurrentV2RayCoreNum = VgcApis.Misc.Utils.Clamp(value, 1, 1001);
                 UpdateSpeedTestPool();
                 SaveSettingsLater();
             }
@@ -969,8 +969,8 @@ namespace V2RayGCon.Services
 
             form.Width = Math.Max(rect.Width, 300);
             form.Height = Math.Max(rect.Height, 200);
-            form.Left = Misc.Utils.Clamp(rect.Left, 0, screen.Right - form.Width);
-            form.Top = Misc.Utils.Clamp(rect.Top, 0, screen.Bottom - form.Height);
+            form.Left = VgcApis.Misc.Utils.Clamp(rect.Left, 0, screen.Right - form.Width);
+            form.Top = VgcApis.Misc.Utils.Clamp(rect.Top, 0, screen.Bottom - form.Height);
         }
 
         public List<Models.Datas.PluginInfoItem> GetPluginInfoItems()

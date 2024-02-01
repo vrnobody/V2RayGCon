@@ -6,7 +6,7 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
         : VgcApis.BaseClasses.Disposable,
             VgcApis.Interfaces.Services.IWebService
     {
-        public string PatchHref(string url, string href) => Misc.Utils.PatchHref(url, href);
+        public string PatchHref(string url, string href) => VgcApis.Misc.Utils.PatchHref(url, href);
 
         public List<string> ExtractLinks(
             string text,
@@ -15,8 +15,8 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
 
         public string Search(string keywords, int first, int proxyPort, int timeout)
         {
-            var url = Misc.Utils.GenSearchUrl(keywords, first);
-            return Misc.Utils.Fetch(url, proxyPort, timeout);
+            var url = VgcApis.Misc.Utils.GenSearchUrl(keywords, first);
+            return VgcApis.Misc.Utils.Fetch(url, proxyPort, timeout);
         }
 
         public string RawFetch(
@@ -27,12 +27,21 @@ namespace V2RayGCon.Libs.Lua.ApiComponents
             int timeout,
             string username,
             string password
-        ) => Misc.Utils.FetchWorker(isSocks5, url, host, proxyPort, timeout, username, password);
+        ) =>
+            VgcApis.Misc.Utils.FetchWorker(
+                isSocks5,
+                url,
+                host,
+                proxyPort,
+                timeout,
+                username,
+                password
+            );
 
         public bool Download(string url, string filename, int proxyPort, int timeout)
         {
             var host = VgcApis.Models.Consts.Webs.LoopBackIP;
-            return Misc.Utils.DownloadFileWorker(url, filename, host, proxyPort, timeout);
+            return VgcApis.Misc.Utils.DownloadFileWorker(url, filename, host, proxyPort, timeout);
         }
     }
 }

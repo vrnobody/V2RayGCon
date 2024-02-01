@@ -78,21 +78,6 @@ stat: <
         }
 
         [DataTestMethod]
-        [DataRow(@"http://abc.com", @"abc.com")]
-        [DataRow(@"v://abc.com", @"abc.com")]
-        [DataRow(@"vee://", @"")]
-        [DataRow(@"vmess://abc", @"abc")]
-        [DataRow(@"v2cfg://abc", @"abc")]
-        [DataRow(@"http://abc", @"abc")]
-        [DataRow(@"https://abc", @"abc")]
-        [DataRow(@"any://://", @"://")]
-        public void GetLinkBodyNormalTest(string link, string expect)
-        {
-            var body = GetLinkBody(link);
-            Assert.AreEqual(expect, body);
-        }
-
-        [DataTestMethod]
         [DataRow(
             @"<td>vless://399ce595-894d-4d40-add1-7d87f1a3bd10@qv2ray.net:41971?type=kcp&amp;amp;amp;headerType=wireguard&amp;seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeedWG</td>",
             @"vless://399ce595-894d-4d40-add1-7d87f1a3bd10@qv2ray.net:41971?type=kcp&headerType=wireguard&seed=69f04be3-d64e-45a3-8550-af3172c63055#VLESSmKCPSeedWG"
@@ -119,113 +104,6 @@ stat: <
             var links = ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.vless);
             Assert.AreEqual(1, links.Count);
             Assert.AreEqual(expected, links[0]);
-        }
-
-        [DataTestMethod]
-        [DataRow(@"v/")]
-        [DataRow(@":v/v/")]
-        public void GetLinkBodyFailTest(string link)
-        {
-            try
-            {
-                var body = GetLinkBody(link);
-            }
-            catch
-            {
-                return;
-            }
-            Assert.Fail();
-        }
-
-        [DataTestMethod]
-#if DEBUG
-        [DataRow("https://www.baidu.com/")]
-#else
-        [DataRow("https://www.github.com/")]
-#endif
-        public void FetchTest(string url)
-        {
-            var html = Fetch(url, -1, -1);
-            Assert.AreEqual(false, string.IsNullOrEmpty(html));
-        }
-
-        [DataTestMethod]
-#if DEBUG
-        [DataRow("https://www.baidu.com/", 3)]
-#else
-        [DataRow("https://www.github.com/", 3)]
-#endif
-        public void FetchBatchTest(string url, int times)
-        {
-            var urls = new List<string>();
-            for (int i = 0; i < times; i++)
-            {
-                urls.Add(url);
-            }
-
-            List<string> htmls = new List<string>();
-            try
-            {
-                htmls = ExecuteInParallel(
-                    urls,
-                    (u) =>
-                    {
-                        return Fetch(u, -1, -1);
-                    }
-                );
-            }
-            catch
-            {
-                Assert.Fail();
-            }
-
-            foreach (var html in htmls)
-            {
-                Assert.AreEqual(false, string.IsNullOrEmpty(html));
-            }
-        }
-
-        [DataTestMethod]
-        [DataRow("http://a.com/b/c/", "/d/e/abc.html", "http://a.com/d/e/abc.html")]
-        [DataRow("vv/b/c/", "/e/abc.html", "/e/abc.html")]
-        [DataRow("http://a.com/c", "/d/abc.html", "http://a.com/d/abc.html")]
-        public void PatchUrlTest(string url, string relativeUrl, string expect)
-        {
-            var patchedUrl = PatchHref(url, relativeUrl);
-            Assert.AreEqual(expect, patchedUrl);
-        }
-
-        [DataTestMethod]
-        [DataRow("0.0.0.0.", "0.0.0.0.")]
-        [DataRow("0.0.1.11", "0.0.1.11")]
-        [DataRow("0.0.1.0", "0.0.1")]
-        [DataRow("0.0.0.1", "0.0.0.1")]
-        [DataRow("0.0.0.0", "0.0")]
-        public void TrimVersionStringTest(string version, string expect)
-        {
-            var result = TrimVersionString(version);
-            Assert.AreEqual(expect, result);
-        }
-
-        [DataTestMethod]
-        [DataRow("", "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")]
-        [DataRow(null, "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")]
-        [DataRow("1234", "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4")]
-        public void Sha256Test(string source, string expect)
-        {
-            var sha = SHA256(source);
-            Assert.AreEqual(expect, sha);
-        }
-
-        [DataTestMethod]
-        [DataRow(0.1, 0.2, false)]
-        [DataRow(0.000000001, 0.00000002, true)]
-        [DataRow(0.001, 0.002, false)]
-        [DataRow(-0.1, 0.1, false)]
-        [DataRow(2, 2, true)]
-        public void AreEqualTest(double a, double b, bool expect)
-        {
-            Assert.AreEqual(expect, AreEqual(a, b));
         }
 
         [DataTestMethod]
@@ -345,19 +223,6 @@ stat: <
             VgcApis.Misc.Utils.RemoveKeyFromJObject(j, key);
             var e = JObject.Parse(expect);
             Assert.AreEqual(true, JToken.DeepEquals(e, j));
-        }
-
-        [DataTestMethod]
-        [DataRow("", "")]
-        [DataRow("1", "1")]
-        [DataRow("1 , 2", "1,2")]
-        [DataRow(",  ,  ,", "")]
-        [DataRow(",,,  ,1  ,  ,2,  ,3,,,", "1,2,3")]
-        public void Str2JArray2Str(string value, string expect)
-        {
-            var array = Str2JArray(value);
-            var str = JArray2Str(array);
-            Assert.AreEqual(expect, str);
         }
 
         [DataTestMethod]

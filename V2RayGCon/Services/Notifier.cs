@@ -1163,7 +1163,7 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            Misc.Utils.ChainActionHelperAsync(count, worker, done);
+            VgcApis.Misc.Utils.ChainActionHelperAsync(count, worker, done);
         }
 
         private void SetNotifyIconText(string rawText)
@@ -1243,7 +1243,7 @@ namespace V2RayGCon.Services
                         Properties.Resources.CopyLongTextToClipboard_16x,
                         (s, a) =>
                         {
-                            string links = Misc.Utils.GetClipboardText();
+                            string links = VgcApis.Misc.Utils.ReadFromClipboard();
                             slinkMgr.ImportLinkWithOutV2cfgLinks(links);
                         }
                     ),

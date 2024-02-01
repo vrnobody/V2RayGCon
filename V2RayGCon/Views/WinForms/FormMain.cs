@@ -106,7 +106,7 @@ namespace V2RayGCon.Views.WinForms
 
             toolStripButtonImportFromClipboard.Click += (s, a) =>
             {
-                string text = Misc.Utils.GetClipboardText();
+                string text = VgcApis.Misc.Utils.ReadFromClipboard();
                 slinkMgr.ImportLinkWithOutV2cfgLinks(text);
             };
 

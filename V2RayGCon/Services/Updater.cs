@@ -57,7 +57,7 @@ namespace V2RayGCon.Services
         Models.Datas.UpdateInfo GetUpdateInfoFrom(string url, bool isSocks5, int port)
         {
             var timeout = VgcApis.Models.Consts.Intervals.DefaultFetchTimeout;
-            var str = Misc.Utils.FetchWorker(
+            var str = VgcApis.Misc.Utils.FetchWorker(
                 isSocks5,
                 url,
                 VgcApis.Models.Consts.Webs.LoopBackIP,
@@ -162,7 +162,7 @@ namespace V2RayGCon.Services
                 return false;
             }
 
-            var tag = Misc.Utils.TrimVersionString(info.version);
+            var tag = VgcApis.Misc.Utils.TrimVersionString(info.version);
             StringBuilder msg = new StringBuilder(string.Format(I18N.ConfirmUpgradeVgc, tag));
 
             var warnings = info.warnings;

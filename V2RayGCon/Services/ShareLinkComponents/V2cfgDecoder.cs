@@ -18,7 +18,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             try
             {
-                var linkBody = Misc.Utils.GetLinkBody(shareLink);
+                var linkBody = VgcApis.Misc.Utils.GetLinkBody(shareLink);
                 if (VgcApis.Libs.Infr.ZipExtensions.IsCompressedBase64(linkBody))
                 {
                     return DecodeV2cfg(linkBody);
@@ -37,7 +37,10 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
             var v2cfg = new VgcApis.Models.Datas.V2Cfg(name, config);
             var body = v2cfg.ToCompressedString();
-            return Misc.Utils.AddLinkPrefix(body, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
+            return VgcApis.Misc.Utils.AddLinkPrefix(
+                body,
+                VgcApis.Models.Datas.Enums.LinkTypes.v2cfg
+            );
         }
 
         public List<string> ExtractLinksFromText(string text) =>

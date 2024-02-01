@@ -62,8 +62,8 @@ namespace V2RayGCon.Services
                 {
                     var host = VgcApis.Models.Consts.Webs.LoopBackIP;
                     text = sci.isSocks5
-                        ? Misc.Utils.FetchWorker(true, url, host, port, timeout, null, null)
-                        : Misc.Utils.Fetch(url, port, timeout);
+                        ? VgcApis.Misc.Utils.FetchWorker(true, url, host, port, timeout, null, null)
+                        : VgcApis.Misc.Utils.Fetch(url, port, timeout);
                 }
                 core.StopCore();
             }

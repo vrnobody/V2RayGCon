@@ -593,7 +593,7 @@ namespace V2RayGCon.Services
                     coreServ.GetCoreCtrl().RestartCoreThen(next);
                 }
             }
-            Misc.Utils.ChainActionHelperAsync(coreServs.Count, worker, done);
+            VgcApis.Misc.Utils.ChainActionHelperAsync(coreServs.Count, worker, done);
         }
 
         public void WakeupServersInBootList()
@@ -605,7 +605,7 @@ namespace V2RayGCon.Services
                 bootList[index].GetCoreCtrl().RestartCoreThen(next);
             }
 
-            Misc.Utils.ChainActionHelperAsync(bootList.Count, worker);
+            VgcApis.Misc.Utils.ChainActionHelperAsync(bootList.Count, worker);
         }
 
         public void RestartSelectedServersThen(Action done = null)
@@ -615,7 +615,7 @@ namespace V2RayGCon.Services
             {
                 list[index].GetCoreCtrl().RestartCoreThen(next);
             }
-            Misc.Utils.ChainActionHelperAsync(list.Count, worker, done);
+            VgcApis.Misc.Utils.ChainActionHelperAsync(list.Count, worker, done);
         }
 
         public void StopSelectedServersThen(Action lambda = null)
@@ -627,7 +627,7 @@ namespace V2RayGCon.Services
                 list[index].GetCoreCtrl().StopCoreThen(next);
             }
 
-            Misc.Utils.ChainActionHelperAsync(list.Count, worker, lambda);
+            VgcApis.Misc.Utils.ChainActionHelperAsync(list.Count, worker, lambda);
         }
 
         public void StopAllServers()
@@ -652,7 +652,7 @@ namespace V2RayGCon.Services
             {
                 list[index].GetCoreCtrl().StopCoreThen(next);
             }
-            Misc.Utils.ChainActionHelperAsync(list.Count, worker, lambda);
+            VgcApis.Misc.Utils.ChainActionHelperAsync(list.Count, worker, lambda);
         }
 
         public bool DeleteServerByUid(string uid)

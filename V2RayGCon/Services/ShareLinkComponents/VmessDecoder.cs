@@ -133,11 +133,12 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 case "tcp_http":
                     streamToken["tcpSettings"]["header"]["type"] = vmess.type;
-                    streamToken["tcpSettings"]["header"]["request"]["path"] = Misc.Utils.Str2JArray(
-                        string.IsNullOrEmpty(vmess.path) ? "/" : vmess.path
-                    );
+                    streamToken["tcpSettings"]["header"]["request"]["path"] =
+                        VgcApis.Misc.Utils.Str2JArray(
+                            string.IsNullOrEmpty(vmess.path) ? "/" : vmess.path
+                        );
                     streamToken["tcpSettings"]["header"]["request"]["headers"]["Host"] =
-                        Misc.Utils.Str2JArray(vmess.host);
+                        VgcApis.Misc.Utils.Str2JArray(vmess.host);
                     break;
                 case "kcp":
                     streamToken["kcpSettings"]["header"]["type"] = vmess.type;
@@ -157,7 +158,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 case "h2":
                     streamToken["httpSettings"]["path"] = vmess.path;
-                    streamToken["httpSettings"]["host"] = Misc.Utils.Str2JArray(vmess.host);
+                    streamToken["httpSettings"]["host"] = VgcApis.Misc.Utils.Str2JArray(vmess.host);
                     break;
             }
         }

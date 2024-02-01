@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NLua;
 using VgcApis.Interfaces;
 
 namespace Luna.Interfaces
@@ -7,11 +8,23 @@ namespace Luna.Interfaces
     {
         #region winform things
         /// <summary>
+        /// 在UI线程执行lua函数
+        /// </summary>
+        /// <param name="func">lua函数</param>
+        void Invoke(LuaFunction func);
+
+        /// <summary>
         /// 复制内容到剪切板
         /// </summary>
         /// <param name="content">字符串内容</param>
         /// <returns></returns>
         bool CopyToClipboard(string content);
+
+        /// <summary>
+        /// 从剪切板读取字符串
+        /// </summary>
+        /// <returns>字符串内容</returns>
+        string ReadFromClipboard();
 
         /// <summary>
         /// 调出Json编辑器窗口

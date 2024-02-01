@@ -94,7 +94,7 @@ namespace VgcApis.Misc
             public Node(string hash)
             {
                 this.hash = hash;
-                this.expired = DateTime.Now.Add(RecycleBin.timeout);
+                this.expired = DateTime.Now.Add(timeout);
             }
         }
     }

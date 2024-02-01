@@ -356,7 +356,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var count = serverList.Count;
             var pageSize = setting.serverPanelPageSize;
             totalPageNumber = (int)Math.Ceiling(1.0 * count / pageSize);
-            curPageNumber = Misc.Utils.Clamp(curPageNumber, 0, totalPageNumber);
+            curPageNumber = VgcApis.Misc.Utils.Clamp(curPageNumber, 0, totalPageNumber);
 
             if (serverList.Count <= 0)
             {

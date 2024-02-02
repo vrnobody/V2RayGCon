@@ -13,8 +13,13 @@ namespace VgcApis.Misc
 {
     public static class RecycleBin
     {
+#if DEBUG
+        public static readonly int minSize = 1 * 1024;
+#else
+        public static readonly int minSize = 4 * 1024;
+#endif
         static readonly BlockingCollection<Node> rmQueue = new BlockingCollection<Node>();
-        public static readonly TimeSpan timeout = TimeSpan.FromSeconds(10);
+        public static readonly TimeSpan timeout = TimeSpan.FromSeconds(8);
 
         static ConcurrentDictionary<string, object> cache =
             new ConcurrentDictionary<string, object>();
@@ -27,6 +32,10 @@ namespace VgcApis.Misc
         #region public methods
         public static void Put(string key, object o)
         {
+            if (string.IsNullOrEmpty(key) || key.Length < minSize)
+            {
+                return;
+            }
             var hash = Utils.Sha256Hex(key);
             cache[hash] = o;
             rmQueue.Add(new Node(hash));

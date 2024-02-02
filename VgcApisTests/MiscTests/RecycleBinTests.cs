@@ -27,6 +27,14 @@ namespace VgcApisTests.MiscTests
             var j = JsonConvert.SerializeObject(o);
             RecycleBin.Put(j, o);
             var ok = RecycleBin.TryTake<object>(j, out var r);
+            Assert.IsFalse(ok); // too small
+            Assert.AreEqual(null, r);
+
+            o["padding"] = Utils.RandomHex(RecycleBin.minSize);
+
+            j = JsonConvert.SerializeObject(o);
+            RecycleBin.Put(j, o);
+            ok = RecycleBin.TryTake<object>(j, out r);
             Assert.IsTrue(ok);
             Assert.IsTrue(r is JObject);
             Assert.AreEqual(o, r);

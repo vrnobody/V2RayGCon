@@ -40,6 +40,7 @@ using System.Runtime.InteropServices;
 
 v1.9.3.1 Cache final config when stat is off.
          Save inbounds-info-cache to disk.
+         Set RecycleBin min config size to 4 KiB.
 --------------------------------------------------------------------
 v1.9.2.19 Refresh summary after inject-template-settings changed.
 v1.9.2.18 Add timeout to StringLruCache().

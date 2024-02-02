@@ -7,9 +7,13 @@ namespace V2RayGCon.Misc.Caches
     {
         // only final config editor will use this cache
         // not very useful 2024-01-31
-        public static readonly int capacity = 10;
+        public static readonly int capacity = 20;
 
+#if DEBUG
+        public static readonly int minSize = 2 * 1024;
+#else
         public static readonly int minSize = 128 * 1024;
+#endif
         static readonly LRUCache<string, Node> cache = new LRUCache<string, Node>(capacity);
 
         static ZipStrLru() { }

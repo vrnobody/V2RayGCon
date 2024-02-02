@@ -1,4 +1,6 @@
-﻿namespace VgcApis.Models.Datas
+﻿using System.Collections.Generic;
+
+namespace VgcApis.Models.Datas
 {
     public class CoreInfo
     {
@@ -49,6 +51,8 @@
         public string tag1,
             tag2,
             tag3;
+
+        public List<InboundInfo> inboundsInfoCache = null;
 
         public CoreInfo()
         {

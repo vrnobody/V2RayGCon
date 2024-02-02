@@ -19,8 +19,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         readonly CoreInfo coreInfo;
 
-        List<InboundInfo> inbsInfoCache = null;
-
         CoreStates states;
         Logger logger;
         CoreCtrl coreCtrl;
@@ -39,6 +37,18 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             coreCtrl = GetSibling<CoreCtrl>();
         }
 
+        #region properties
+        List<VgcApis.Models.Datas.InboundInfo> InbsInfoCache
+        {
+            get => coreInfo.inboundsInfoCache;
+            set
+            {
+                coreInfo.inboundsInfoCache = value;
+                GetParent().InvokeEventOnPropertyChange();
+            }
+        }
+        #endregion
+
         #region public methods
         public InboundInfo GetInboundInfo()
         {
@@ -47,12 +57,12 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public ReadOnlyCollection<string> GetFormattedInboundsInfoFromCache()
         {
-            var cache = inbsInfoCache;
+            var cache = InbsInfoCache;
             if (cache == null)
             {
                 // VgcApis.Misc.Logger.Debug("re-gen inbounds info");
                 cache = GetAllInboundsInfo();
-                inbsInfoCache = cache;
+                InbsInfoCache = cache;
             }
             else
             {
@@ -227,7 +237,10 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
             catch { }
             r = string.IsNullOrEmpty(r) ? config : r;
-            Misc.Caches.ZipStrLru.Put(uid, r);
+            if (!isSetStatPort)
+            {
+                Misc.Caches.ZipStrLru.Put(uid, r);
+            }
             return r;
         }
 
@@ -400,7 +413,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             var ty = VgcApis.Misc.Utils.DetectConfigType(config);
             var summary = $"<unknow {ty}>";
-            inbsInfoCache = null;
+            List<InboundInfo> inbsInfoCache = null;
             try
             {
                 var s = "";
@@ -425,6 +438,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 }
             }
             catch { }
+            InbsInfoCache = inbsInfoCache;
 
             coreInfo.summary = VgcApis.Misc.Utils.FilterControlChars(summary);
 

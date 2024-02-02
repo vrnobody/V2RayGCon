@@ -33,11 +33,13 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.9.3.0")]
+[assembly: AssemblyVersion("1.9.3.1")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v1.9.3.1 Cache final config when stat is off.
+         Save inbounds-info-cache to disk.
 --------------------------------------------------------------------
 v1.9.2.19 Refresh summary after inject-template-settings changed.
 v1.9.2.18 Add timeout to StringLruCache().

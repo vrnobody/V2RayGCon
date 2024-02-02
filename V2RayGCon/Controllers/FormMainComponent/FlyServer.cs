@@ -729,6 +729,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void PerformSearch()
         {
             searchKeywords = cboxKeyword.Text;
+            this.tslbTotal.Text = I18N.Searching;
             RefreshFlyPanelNow();
         }
 

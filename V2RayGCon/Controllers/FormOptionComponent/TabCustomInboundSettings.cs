@@ -53,7 +53,23 @@ namespace V2RayGCon.Controllers.OptionComponent
             var requireUpdateSummary = settings.ReplaceCustomConfigTemplates(datas);
             if (requireUpdateSummary)
             {
-                VgcApis.Misc.Utils.DoItLater(servers.UpdateAllServersSummary, 3000);
+                VgcApis.Misc.Utils.DoItLater(
+                    () =>
+                    {
+                        var servs = servers
+                            .GetAllServersOrderByIndex()
+                            .Where(s => s.GetCoreStates().IsAcceptInjection())
+                            .ToList();
+                        foreach (var serv in servs)
+                        {
+                            serv.GetConfiger().UpdateSummary();
+                            VgcApis.Misc.Logger.Debug(
+                                $"update summary: {serv.GetCoreStates().GetTitle()}"
+                            );
+                        }
+                    },
+                    3000
+                );
             }
             return true;
         }

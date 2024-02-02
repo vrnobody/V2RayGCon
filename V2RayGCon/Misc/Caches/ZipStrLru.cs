@@ -58,8 +58,12 @@ namespace V2RayGCon.Misc.Caches
         public static bool TryRemove(string key)
         {
             key = HashOnDemand(key);
-            VgcApis.Misc.Logger.Debug($"ZipStrLru remove cache : {key}");
-            return cache.Remove(key);
+            if (cache.Remove(key))
+            {
+                VgcApis.Misc.Logger.Debug($"ZipStrLru remove cache : {key}");
+                return true;
+            }
+            return false;
         }
         #endregion
 

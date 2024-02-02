@@ -824,4 +824,7 @@ c:\vgc\V2RayGCon.exe -s s2.json</value>
   <data name="Template" xml:space="preserve">
     <value>模板</value>
   </data>
+  <data name="Searching" xml:space="preserve">
+    <value>搜索中...</value>
+  </data>
 </root>

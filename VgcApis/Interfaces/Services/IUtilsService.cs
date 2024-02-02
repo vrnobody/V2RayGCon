@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace VgcApis.Interfaces.Services
+﻿namespace VgcApis.Interfaces.Services
 {
     public interface IUtilsService
     {

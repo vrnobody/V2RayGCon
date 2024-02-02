@@ -1,5 +1,4 @@
-﻿using System.Web.UI.WebControls;
-using VgcApis.Libs.Infr;
+﻿using VgcApis.Libs.Infr;
 
 namespace V2RayGCon.Misc.Caches
 {
@@ -34,14 +33,14 @@ namespace V2RayGCon.Misc.Caches
                 content = ZipExtensions.CompressToBase64(content);
             }
 
-            key = HashOnDemand(key);
+            key = GetHash(key);
             cache.Add(key, new Node(zipped, content));
             return true;
         }
 
         public static bool TryGet(string key, out string content)
         {
-            key = HashOnDemand(key);
+            key = GetHash(key);
             if (!cache.TryGet(key, out var node))
             {
                 content = "";
@@ -61,7 +60,7 @@ namespace V2RayGCon.Misc.Caches
 
         public static bool TryRemove(string key)
         {
-            key = HashOnDemand(key);
+            key = GetHash(key);
             if (cache.Remove(key))
             {
                 VgcApis.Misc.Logger.Debug($"ZipStrLru remove cache : {key}");
@@ -72,13 +71,9 @@ namespace V2RayGCon.Misc.Caches
         #endregion
 
         #region private methods
-        static string HashOnDemand(string key)
+        static string GetHash(string key)
         {
-            if (!string.IsNullOrEmpty(key) && key.Length > 1024)
-            {
-                return VgcApis.Misc.Utils.Sha256Hex(key);
-            }
-            return key ?? "";
+            return VgcApis.Misc.Utils.Sha256Hex(key);
         }
 
         struct Node

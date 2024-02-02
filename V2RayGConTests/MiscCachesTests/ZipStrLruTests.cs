@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json.Linq;
 using V2RayGCon.Misc.Caches;
 using VgcApis.Misc;
 

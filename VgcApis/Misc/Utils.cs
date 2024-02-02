@@ -644,7 +644,7 @@ namespace VgcApis.Misc
             return sb.ToString()?.Replace("\r\n", "\n");
         }
 
-        public static Models.Datas.Enums.ConfigType DetectConfigType(string config)
+        public static Enums.ConfigType DetectConfigType(string config)
         {
             var text = Models.Datas.Enums.ConfigType.text;
             if (string.IsNullOrEmpty(config) || config.Length < 2)
@@ -2877,13 +2877,12 @@ namespace VgcApis.Misc
             return prefix.ToLower();
         }
 
-        public static Models.Datas.Enums.LinkTypes DetectLinkType(string shareLink)
+        public static Enums.LinkTypes DetectLinkType(string shareLink)
         {
             var unknow = Models.Datas.Enums.LinkTypes.unknow;
             var prefix = GetLinkPrefix(shareLink);
             if (
-                !string.IsNullOrEmpty(prefix)
-                && Enum.TryParse(prefix, out Models.Datas.Enums.LinkTypes linkType)
+                !string.IsNullOrEmpty(prefix) && Enum.TryParse(prefix, out Enums.LinkTypes linkType)
             )
             {
                 return linkType;

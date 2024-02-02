@@ -38,7 +38,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         #region properties
-        List<VgcApis.Models.Datas.InboundInfo> InbsInfoCache
+        List<InboundInfo> InbsInfoCache
         {
             get => coreInfo.inboundsInfoCache;
             set
@@ -68,7 +68,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             {
                 // VgcApis.Misc.Logger.Debug("get inbounds info from cache");
             }
-            return FormatInboundInfo(cache).AsReadOnly();
+            return cache.Select(c => c.ToString()).ToList().AsReadOnly();
+            ;
         }
 
         public void GatherInfoForNotifyIcon(Action<string> next)
@@ -247,15 +248,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         #endregion
 
         #region private methods
-        List<string> FormatInboundInfo(IEnumerable<InboundInfo> inbsInfo)
-        {
-            var r = new List<string>();
-            foreach (var inb in inbsInfo)
-            {
-                r.Add($"{inb.protocol}://{inb.host}:{inb.port}");
-            }
-            return r;
-        }
 
         void MergeCustomTlsSettings(ref JObject config)
         {
@@ -336,13 +328,11 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                         continue;
                     }
 
-                    var info = new InboundInfo()
-                    {
-                        protocol =
-                            VgcApis.Misc.Utils.GetValue<string>(inb, "protocol")?.ToLower() ?? "",
-                        host = VgcApis.Misc.Utils.GetValue<string>(inb, "listen"),
-                        port = VgcApis.Misc.Utils.GetValue<int>(inb, "port"),
-                    };
+                    var info = new InboundInfo(
+                        VgcApis.Misc.Utils.GetValue<string>(inb, "protocol")?.ToLower() ?? "",
+                        VgcApis.Misc.Utils.GetValue<string>(inb, "listen"),
+                        VgcApis.Misc.Utils.GetValue<int>(inb, "port")
+                    );
                     if (!string.IsNullOrEmpty(info.protocol) && !string.IsNullOrEmpty(info.host))
                     {
                         r.Add(info);
@@ -366,12 +356,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 if (g.Count > 2)
                 {
                     VgcApis.Misc.Utils.TryParseAddress(g[2].Value, out var host, out var port);
-                    var inb = new InboundInfo()
-                    {
-                        protocol = g[1].Value?.ToLower() ?? "",
-                        host = host,
-                        port = port,
-                    };
+                    var protocol = g[1].Value?.ToLower() ?? "";
+                    var inb = new InboundInfo(protocol, host, port);
                     r.Add(inb);
                 }
                 match = match.NextMatch();
@@ -401,7 +387,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             statsCfg["inbounds"][0]["port"] = states.GetStatPort();
             VgcApis.Misc.Utils.CombineConfigWithRoutingInFront(ref statsCfg, json);
 
-            // json did no change
+            // json is not changed
             VgcApis.Misc.RecycleBin.Put(config, json);
 
             var statsTpl = Misc.Caches.Jsons.LoadTemplate("statsApiV4Tpl") as JObject;
@@ -413,7 +399,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             var ty = VgcApis.Misc.Utils.DetectConfigType(config);
             var summary = $"<unknow {ty}>";
-            List<InboundInfo> inbsInfoCache = null;
+            List<InboundInfo> inbsInfo = null;
             try
             {
                 var s = "";
@@ -421,13 +407,13 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 {
                     case Enums.ConfigType.json:
                         var json = VgcApis.Misc.RecycleBin.Parse(config);
-                        inbsInfoCache = GetInboundsInfoFromJson(json);
+                        inbsInfo = GetInboundsInfoFromJson(json);
                         s = VgcApis.Misc.Utils.ExtractSummaryFromJson(json);
                         VgcApis.Misc.RecycleBin.Put(config, json);
                         break;
                     case Enums.ConfigType.yaml:
                         s = VgcApis.Misc.Utils.ExtractSummaryFromYaml(config);
-                        inbsInfoCache = GetInboundsInfoFromYaml(config);
+                        inbsInfo = GetInboundsInfoFromYaml(config);
                         break;
                     default:
                         break;
@@ -438,7 +424,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 }
             }
             catch { }
-            InbsInfoCache = inbsInfoCache;
+            InbsInfoCache = inbsInfo;
 
             coreInfo.summary = VgcApis.Misc.Utils.FilterControlChars(summary);
 

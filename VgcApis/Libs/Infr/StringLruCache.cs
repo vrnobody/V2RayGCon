@@ -81,18 +81,18 @@ namespace VgcApis.Libs.Infr
             }
             CollectMem();
         }
-
-        struct Node
-        {
-            public readonly string hash;
-            public readonly DateTime expired;
-
-            public Node(string hash, TimeSpan timeout)
-            {
-                this.hash = hash;
-                this.expired = DateTime.Now.Add(timeout);
-            }
-        }
         #endregion
+    }
+
+    struct Node
+    {
+        public readonly string hash;
+        public readonly DateTime expired;
+
+        public Node(string hash, TimeSpan timeout)
+        {
+            this.hash = hash;
+            this.expired = DateTime.Now.Add(timeout);
+        }
     }
 }

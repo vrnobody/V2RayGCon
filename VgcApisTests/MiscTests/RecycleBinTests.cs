@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using VgcApis.Misc;
@@ -34,7 +28,7 @@ namespace VgcApisTests.MiscTests
 
             j = JsonConvert.SerializeObject(o);
             RecycleBin.Put(j, o);
-            ok = RecycleBin.TryTake<object>(j, out r);
+            ok = RecycleBin.TryTake(j, out r);
             Assert.IsTrue(ok);
             Assert.IsTrue(r is JObject);
             Assert.AreEqual(o, r);

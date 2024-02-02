@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Management;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using VgcApis.Models.Consts;
 
 namespace VgcApis.Misc
 {
@@ -18,11 +12,15 @@ namespace VgcApis.Misc
 #else
         public static readonly int minSize = 4 * 1024;
 #endif
-        static readonly BlockingCollection<Node> rmQueue = new BlockingCollection<Node>();
-        public static readonly TimeSpan timeout = TimeSpan.FromSeconds(8);
 
-        static ConcurrentDictionary<string, object> cache =
-            new ConcurrentDictionary<string, object>();
+        public static readonly int capacity = 30;
+
+        static readonly BlockingCollection<HashNode> rmQueue = new BlockingCollection<HashNode>();
+        public static readonly TimeSpan timeout = TimeSpan.FromSeconds(10);
+
+        static Libs.Infr.LRUCache<string, object> cache = new Libs.Infr.LRUCache<string, object>(
+            capacity
+        );
 
         static RecycleBin()
         {
@@ -32,13 +30,16 @@ namespace VgcApis.Misc
         #region public methods
         public static void Put(string key, object o)
         {
+            // disable this function
+            // return;
+
             if (string.IsNullOrEmpty(key) || key.Length < minSize)
             {
                 return;
             }
             var hash = Utils.Sha256Hex(key);
-            cache[hash] = o;
-            rmQueue.Add(new Node(hash));
+            cache.Add(hash, o);
+            rmQueue.Add(new HashNode(hash, timeout));
         }
 
         public static JObject Parse(string config)
@@ -55,7 +56,8 @@ namespace VgcApis.Misc
             where T : class
         {
             var hash = Utils.Sha256Hex(config);
-            var ok = cache.TryRemove(hash, out var v);
+            var ok = cache.TryGet(hash, out var v);
+            cache.Remove(hash);
             o = v as T;
             if (ok)
             {
@@ -77,7 +79,7 @@ namespace VgcApis.Misc
                 Task.Delay(delay)
                     .ContinueWith(_ =>
                     {
-                        if (cache.TryRemove(node.hash, out var _))
+                        if (cache.Remove(node.hash))
                         {
                             Logger.Debug($"recyclebin drop slow");
                         }
@@ -87,24 +89,24 @@ namespace VgcApis.Misc
                 return;
             }
 
-            if (cache.TryRemove(node.hash, out var _))
+            if (cache.Remove(node.hash))
             {
                 Logger.Debug($"recyclebin drop fast");
             }
             Recycle();
         }
         #endregion
+    }
 
-        struct Node
+    struct HashNode
+    {
+        public readonly string hash;
+        public readonly DateTime expired;
+
+        public HashNode(string hash, TimeSpan timeout)
         {
-            public readonly string hash;
-            public readonly DateTime expired;
-
-            public Node(string hash)
-            {
-                this.hash = hash;
-                this.expired = DateTime.Now.Add(timeout);
-            }
+            this.hash = hash;
+            this.expired = DateTime.Now.Add(timeout);
         }
     }
 }

@@ -102,7 +102,6 @@ namespace V2RayGCon.Views.WinForms
                     tboxSettingsMaxCoreNum,
                     cboxSettingsRandomSelectServerLatency,
                     chkSetSysPortable,
-                    chkSetUseV4,
                     chkSetSelfSignedCert,
                     cboxSettingsUtlsFingerprint,
                     chkSettingsEnableUtlsFingerprint,

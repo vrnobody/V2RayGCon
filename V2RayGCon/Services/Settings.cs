@@ -363,16 +363,6 @@ namespace V2RayGCon.Services
             }
         }
 
-        public bool isUseV4
-        {
-            get => userSettings.isUseV4Format;
-            set
-            {
-                userSettings.isUseV4Format = value;
-                SaveSettingsLater();
-            }
-        }
-
         public string uTlsFingerprint
         {
             get => userSettings.uTlsFingerprint;

@@ -642,39 +642,6 @@
   <data name="&gt;&gt;btnSetOpenStartupFolder.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="chkSetUseV4.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkSetUseV4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>125, 18</value>
-  </data>
-  <data name="chkSetUseV4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="chkSetUseV4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 16</value>
-  </data>
-  <data name="chkSetUseV4.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="chkSetUseV4.Text" xml:space="preserve">
-    <value>Prefer v4 format</value>
-  </data>
-  <data name="chkSetUseV4.ToolTip" xml:space="preserve">
-    <value>Priority use of in(out)bounds  when importing and editing.</value>
-  </data>
-  <data name="&gt;&gt;chkSetUseV4.Name" xml:space="preserve">
-    <value>chkSetUseV4</value>
-  </data>
-  <data name="&gt;&gt;chkSetUseV4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkSetUseV4.Parent" xml:space="preserve">
-    <value>groupBox6</value>
-  </data>
-  <data name="&gt;&gt;chkSetUseV4.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="chkSetSysPortable.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -706,7 +673,7 @@
     <value>groupBox6</value>
   </data>
   <data name="&gt;&gt;chkSetSysPortable.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="groupBox6.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 235</value>

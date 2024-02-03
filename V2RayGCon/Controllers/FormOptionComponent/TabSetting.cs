@@ -17,7 +17,6 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         private readonly CheckBox chkServAutoTrack = null,
             chkPortableMode = null,
-            chkSetUseV4 = null,
             chkSetEnableStat = null,
             chkSetUpdateUseProxy = null,
             chkSetCheckVgcUpdateWhenAppStart = null,
@@ -41,7 +40,6 @@ namespace V2RayGCon.Controllers.OptionComponent
             TextBox tboxMaxCoreNum,
             ComboBox cboxRandomSelectServerLatency,
             CheckBox chkPortableMode,
-            CheckBox chkSetUseV4,
             CheckBox chkSetIsSupportSelfSignedCert,
             ComboBox cboxSettingsUtlsFingerprint,
             CheckBox chkSettingsEnableUtlsFingerprint,
@@ -68,7 +66,6 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.tboxMaxCoreNum = tboxMaxCoreNum;
             this.cboxRandomSelectServerLatency = cboxRandomSelectServerLatency;
             this.chkPortableMode = chkPortableMode;
-            this.chkSetUseV4 = chkSetUseV4;
 
             this.chkSetIsSupportSelfSignedCert = chkSetIsSupportSelfSignedCert;
             this.cboxSettingsUtlsFingerprint = cboxSettingsUtlsFingerprint;
@@ -107,7 +104,6 @@ namespace V2RayGCon.Controllers.OptionComponent
                 setting.isCheckV2RayCoreUpdateWhenAppStart;
 
             chkSetEnableStat.Checked = setting.isEnableStatistics;
-            chkSetUseV4.Checked = setting.isUseV4;
 
             chkSetIsSupportSelfSignedCert.Checked = setting.isSupportSelfSignedCert;
             cboxSettingsUtlsFingerprint.Text = setting.uTlsFingerprint;
@@ -176,10 +172,8 @@ namespace V2RayGCon.Controllers.OptionComponent
             setting.isEnableUtlsFingerprint = chkSetIsEnableUtlsFingerprint.Checked;
 
             setting.isPortable = chkPortableMode.Checked;
-            setting.isUseV4 = chkSetUseV4.Checked;
 
-            // Must enable v4 mode first.
-            setting.isEnableStatistics = setting.isUseV4 && chkSetEnableStat.Checked;
+            setting.isEnableStatistics = chkSetEnableStat.Checked;
 
             setting.SaveUserSettingsNow();
             return true;
@@ -188,8 +182,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         public override bool IsOptionsChanged()
         {
             if (
-                setting.isUseV4 != chkSetUseV4.Checked
-                || setting.CustomUserAgent != cboxCustomUserAgent.Text
+                setting.CustomUserAgent != cboxCustomUserAgent.Text
                 || setting.isUseCustomUserAgent != chkIsUseCustomUserAgent.Checked
                 || setting.isEnableSystrayLeftClickCommand
                     != chkIsEnableSystrayLeftClickCommand.Checked

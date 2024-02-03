@@ -153,17 +153,12 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var isV4 = settings.isUseV4;
-
             var inb = VgcApis.Misc.Utils.CreateJObject(
-                (isV4 ? "inbounds.0" : "inbound"),
+                "inbounds.0",
                 Misc.Caches.Jsons.LoadTemplate("inbSimSock")
             );
 
-            var outb = VgcApis.Misc.Utils.CreateJObject(
-                (isV4 ? "outbounds.0" : "outbound"),
-                outbound
-            );
+            var outb = VgcApis.Misc.Utils.CreateJObject("outbounds.0", outbound);
 
             VgcApis.Misc.Utils.MergeJson(template, inb);
             VgcApis.Misc.Utils.MergeJson(template, outb);

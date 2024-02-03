@@ -1643,29 +1643,17 @@ namespace VgcApis.Misc
 
             try
             {
-                var outbound = GetKey(json, "outbound");
-                if (outbound != null && outbound is JObject)
+                var outboundDtr = GetKey(json, "outbounds");
+                if (outboundDtr != null && outboundDtr is JArray)
                 {
-                    result.Add(outbound);
+                    foreach (JObject item in outboundDtr.Cast<JObject>())
+                    {
+                        result.Add(item);
+                    }
                 }
             }
             catch { }
 
-            foreach (var key in new string[] { "outboundDetour", "outbounds" })
-            {
-                try
-                {
-                    var outboundDtr = GetKey(json, key);
-                    if (outboundDtr != null && outboundDtr is JArray)
-                    {
-                        foreach (JObject item in outboundDtr.Cast<JObject>())
-                        {
-                            result.Add(item);
-                        }
-                    }
-                }
-                catch { }
-            }
             return result;
         }
 

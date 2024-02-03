@@ -22,6 +22,8 @@ namespace V2RayGCon.Models.Datas
         // ----------------------------------
         public string CompressedUnicodeDecodeCache { get; set; }
 
+        public bool isUseV4Format { get; set; }
+
         // ----------------------------------
 
 
@@ -57,7 +59,7 @@ namespace V2RayGCon.Models.Datas
 
         public int ServerPanelPageSize { get; set; }
         public bool isEnableStat { get; set; } = false;
-        public bool isUseV4Format { get; set; }
+
         public bool CfgShowToolPanel { get; set; }
         public bool isPortable { get; set; }
         public bool isCheckUpdateWhenAppStart { get; set; }
@@ -129,7 +131,6 @@ namespace V2RayGCon.Models.Datas
             isCheckV2RayCoreUpdateWhenAppStart = false;
 
             isUpdateUseProxy = true;
-            isUseV4Format = true;
             CfgShowToolPanel = true;
             isPortable = true;
 

@@ -6,7 +6,8 @@ namespace VgcApis.Libs.Infr
     // https://stackoverflow.com/questions/754233/is-it-there-any-lru-implementation-of-idictionary
     public class LRUCache<K, V>
     {
-        int capacity;
+        public readonly int capacity;
+
         Dictionary<K, LinkedListNode<LRUCacheItem<K, V>>> cacheMap =
             new Dictionary<K, LinkedListNode<LRUCacheItem<K, V>>>();
         LinkedList<LRUCacheItem<K, V>> lruList = new LinkedList<LRUCacheItem<K, V>>();
@@ -21,6 +22,9 @@ namespace VgcApis.Libs.Infr
             }
             this.capacity = capacity;
         }
+
+        #region public methods
+        public int GetSize() => cacheMap.Count;
 
         public bool TryGet(K key, out V value)
         {
@@ -75,6 +79,9 @@ namespace VgcApis.Libs.Infr
                 return false;
             }
         }
+        #endregion
+
+        #region private methods
 
         void RemoveFirst()
         {
@@ -85,6 +92,7 @@ namespace VgcApis.Libs.Infr
             // Remove from cache
             cacheMap.Remove(node.Value.key);
         }
+        #endregion
     }
 
     class LRUCacheItem<K, V>

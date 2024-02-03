@@ -8,10 +8,9 @@ namespace VgcApis.Libs.Infr
     public class StringLruCache<V>
     {
         public readonly TimeSpan timeout;
-        public readonly int capacity;
 
-        readonly BlockingCollection<Node> rmQueue = new BlockingCollection<Node>();
         readonly bool autoRemove = false;
+        readonly BlockingCollection<Node> rmQueue = new BlockingCollection<Node>();
         readonly LRUCache<string, V> cache;
 
         public StringLruCache()
@@ -19,7 +18,6 @@ namespace VgcApis.Libs.Infr
 
         public StringLruCache(int capacity, TimeSpan timeout)
         {
-            this.capacity = capacity;
             cache = new LRUCache<string, V>(capacity);
             this.timeout = timeout;
             if (timeout > TimeSpan.Zero)
@@ -29,7 +27,19 @@ namespace VgcApis.Libs.Infr
             }
         }
 
+        #region properties
+        public int capacity
+        {
+            get => cache.capacity;
+            private set { }
+        }
+        #endregion
+
         #region public methods
+        public int GetRecycleQueueLength() => rmQueue.Count;
+
+        public int GetSize() => cache.GetSize();
+
         public bool TryGet(string key, out V value)
         {
             var k = Utils.Md5Hex(key);

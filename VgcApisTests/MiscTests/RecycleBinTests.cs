@@ -18,20 +18,26 @@ namespace VgcApisTests.MiscTests
             }"
             );
 
-            var j = JsonConvert.SerializeObject(o);
-            RecycleBin.Put(j, o);
-            var ok = RecycleBin.TryTake<object>(j, out var r);
-            Assert.IsFalse(ok); // too small
+            var size = RecycleBin.GetSize();
+            Assert.AreEqual(0, size);
+            Assert.AreEqual(0, RecycleBin.GetRecycleQueueLength());
+            var ok = RecycleBin.TryTake<object>(null, out var r);
+            Assert.IsFalse(ok);
             Assert.AreEqual(null, r);
 
-            o["padding"] = Utils.RandomHex(RecycleBin.minSize);
-
-            j = JsonConvert.SerializeObject(o);
+            var j = JsonConvert.SerializeObject(o);
             RecycleBin.Put(j, o);
+            size = RecycleBin.GetSize();
+            Assert.AreEqual(1, size);
+            Assert.AreEqual(1, RecycleBin.GetRecycleQueueLength());
+
             ok = RecycleBin.TryTake(j, out r);
             Assert.IsTrue(ok);
             Assert.IsTrue(r is JObject);
             Assert.AreEqual(o, r);
+            size = RecycleBin.GetSize();
+            Assert.AreEqual(0, size);
+
             var j2 = JsonConvert.SerializeObject(r);
             Assert.AreEqual(j, j2);
 
@@ -42,14 +48,27 @@ namespace VgcApisTests.MiscTests
             Assert.AreNotEqual(o, r);
 
             RecycleBin.Put(j, o);
+            RecycleBin.Put(j, o);
+            Assert.AreEqual(3, RecycleBin.GetRecycleQueueLength());
+            size = RecycleBin.GetSize();
+            Assert.AreEqual(1, size);
+
             Utils.Sleep(3000);
+            // 500ms take one
+            Assert.AreEqual(2, RecycleBin.GetRecycleQueueLength());
             r = RecycleBin.Parse(j);
             Assert.AreEqual(o, r);
+            size = RecycleBin.GetSize();
+            Assert.AreEqual(0, size);
 
             RecycleBin.Put(j, o);
+            Assert.AreEqual(3, RecycleBin.GetRecycleQueueLength());
             Utils.Sleep(RecycleBin.timeout);
             ok = RecycleBin.TryTake<JObject>(j, out _);
             Assert.IsFalse(ok);
+            size = RecycleBin.GetSize();
+            Assert.AreEqual(0, size);
+            Assert.AreEqual(0, RecycleBin.GetRecycleQueueLength());
         }
     }
 }

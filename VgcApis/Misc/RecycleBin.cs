@@ -7,20 +7,12 @@ namespace VgcApis.Misc
 {
     public static class RecycleBin
     {
-#if DEBUG
-        public static readonly int minSize = 1 * 1024;
-#else
-        public static readonly int minSize = 4 * 1024;
-#endif
-
-        public static readonly int capacity = 30;
-
-        static readonly BlockingCollection<HashNode> rmQueue = new BlockingCollection<HashNode>();
+        static readonly BlockingCollection<RecycleBinHashNode> rmQueue =
+            new BlockingCollection<RecycleBinHashNode>();
         public static readonly TimeSpan timeout = TimeSpan.FromSeconds(10);
 
-        static Libs.Infr.LRUCache<string, object> cache = new Libs.Infr.LRUCache<string, object>(
-            capacity
-        );
+        static ConcurrentDictionary<string, object> cache =
+            new ConcurrentDictionary<string, object>();
 
         static RecycleBin()
         {
@@ -28,18 +20,15 @@ namespace VgcApis.Misc
         }
 
         #region public methods
+        public static int GetSize() => cache.Count;
+
+        public static int GetRecycleQueueLength() => rmQueue.Count;
+
         public static void Put(string key, object o)
         {
-            // disable this function
-            // return;
-
-            if (string.IsNullOrEmpty(key) || key.Length < minSize)
-            {
-                return;
-            }
             var hash = Utils.Sha256Hex(key);
-            cache.Add(hash, o);
-            rmQueue.Add(new HashNode(hash, timeout));
+            cache.AddOrUpdate(hash, o, (_, __) => o);
+            rmQueue.Add(new RecycleBinHashNode(hash, timeout));
         }
 
         public static JObject Parse(string config)
@@ -56,8 +45,7 @@ namespace VgcApis.Misc
             where T : class
         {
             var hash = Utils.Sha256Hex(config);
-            var ok = cache.TryGet(hash, out var v);
-            cache.Remove(hash);
+            var ok = cache.TryRemove(hash, out var v);
             o = v as T;
             if (ok)
             {
@@ -79,7 +67,7 @@ namespace VgcApis.Misc
                 Task.Delay(delay)
                     .ContinueWith(_ =>
                     {
-                        if (cache.Remove(node.hash))
+                        if (cache.TryRemove(node.hash, out var _))
                         {
                             Logger.Debug($"recyclebin drop slow");
                         }
@@ -89,7 +77,7 @@ namespace VgcApis.Misc
                 return;
             }
 
-            if (cache.Remove(node.hash))
+            if (cache.TryRemove(node.hash, out var _))
             {
                 Logger.Debug($"recyclebin drop fast");
             }
@@ -98,12 +86,12 @@ namespace VgcApis.Misc
         #endregion
     }
 
-    struct HashNode
+    struct RecycleBinHashNode
     {
         public readonly string hash;
         public readonly DateTime expired;
 
-        public HashNode(string hash, TimeSpan timeout)
+        public RecycleBinHashNode(string hash, TimeSpan timeout)
         {
             this.hash = hash;
             this.expired = DateTime.Now.Add(timeout);

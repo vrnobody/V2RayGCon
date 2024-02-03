@@ -387,7 +387,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             statsCfg["inbounds"][0]["port"] = states.GetStatPort();
             VgcApis.Misc.Utils.CombineConfigWithRoutingInFront(ref statsCfg, json);
 
-            // json is not changed
+            // json has not changed
             VgcApis.Misc.RecycleBin.Put(config, json);
 
             var statsTpl = Misc.Caches.Jsons.LoadTemplate("statsApiV4Tpl") as JObject;

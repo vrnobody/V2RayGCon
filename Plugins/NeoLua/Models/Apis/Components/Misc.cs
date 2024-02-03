@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using Neo.IronLua;
@@ -200,6 +201,11 @@ namespace NeoLuna.Models.Apis.Components
         #endregion
 
         #region other ILuaMisc stuff
+        public void ClearRegexCache()
+        {
+            VgcApis.Misc.Utils.ClearRegexCache();
+        }
+
         public string DetectConfigType(string config)
         {
             return VgcApis.Misc.Utils.DetectConfigType(config).ToString();

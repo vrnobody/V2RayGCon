@@ -88,14 +88,6 @@ namespace V2RayGCon.Controllers.OptionComponent
             return GetCurOptions() != oldOptions;
         }
 
-        public void Merge(string rawSetting)
-        {
-            var mergedSettings = MergeIntoCurSubsItems(rawSetting);
-            setting.SetSubscriptionConfig(mergedSettings);
-            Misc.UI.ClearFlowLayoutPanel(this.flyPanel);
-            InitPanel();
-        }
-
         public void MarkDuplicatedSubsInfo()
         {
             VgcApis.Misc.UI.Invoke(MarkDuplicatedSubsInfoWorker);
@@ -207,28 +199,6 @@ namespace V2RayGCon.Controllers.OptionComponent
             {
                 subsUi.UpdateTextBoxColor(alias, urls);
             }
-        }
-
-        string MergeIntoCurSubsItems(string rawSubsSetting)
-        {
-            var subs = new List<Models.Datas.SubscriptionItem>();
-            try
-            {
-                var items = JsonConvert.DeserializeObject<List<Models.Datas.SubscriptionItem>>(
-                    rawSubsSetting
-                );
-                if (items != null)
-                {
-                    subs = items;
-                }
-            }
-            catch { }
-
-            var curSubs = setting.GetSubscriptionItems();
-            var urls = curSubs.Select(s => s.url).ToList();
-            curSubs.AddRange(subs.Where(s => !urls.Contains(s.url)));
-            var sorted = curSubs.OrderBy(s => s.alias).ToList();
-            return JsonConvert.SerializeObject(sorted);
         }
 
         string GetCurOptions()

@@ -12,6 +12,12 @@ namespace NeoLuna.Interfaces
 
         // ----------------------------------------------
 
+        #region do net stuff
+        /// <summary>
+        /// 清理.net Regex缓存
+        /// </summary>
+        void ClearRegexCache();
+        #endregion
 
         #region winform things
         /// <summary>

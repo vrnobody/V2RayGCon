@@ -22,7 +22,7 @@ namespace NeoLuna.Services
             this.snpCache = new Libs.LuaSnippet.SnippetsCache();
             UpdateRequireModuleNameCache();
             fsWatcher = CreateFileSystemWatcher(@"3rd/neolua");
-            cacheRecycler = new VgcApis.Libs.Tasks.LazyGuy(RenewCacheWorker, 30 * 60 * 1000, 1000);
+            cacheRecycler = new VgcApis.Libs.Tasks.LazyGuy(RenewCacheWorker, 20 * 60 * 1000, 1000);
         }
 
         #region constants
@@ -98,7 +98,7 @@ namespace NeoLuna.Services
 
         #region caches
         VgcApis.Libs.Infr.StringLruCache<JObject> astCodeCache =
-            new VgcApis.Libs.Infr.StringLruCache<JObject>();
+            new VgcApis.Libs.Infr.StringLruCache<JObject>(60, TimeSpan.MinValue);
         VgcApis.Libs.Infr.StringLruCache<JObject> astModuleCache =
             new VgcApis.Libs.Infr.StringLruCache<JObject>();
         VgcApis.Libs.Infr.StringLruCache<JObject> astModuleExCache =

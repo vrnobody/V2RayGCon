@@ -27,6 +27,8 @@ namespace VgcApis.Misc
 {
     public static class Utils
     {
+        static readonly object locker = new object();
+
         #region collections
         public static int GetKeyIgnoreCase(Dictionary<int, string> dict, string value)
         {
@@ -1423,7 +1425,18 @@ namespace VgcApis.Misc
         }
         #endregion
 
+        #region dot net thing
 
+        static public void ClearRegexCache()
+        {
+            lock (locker)
+            {
+                var size = Regex.CacheSize;
+                Regex.CacheSize = 0;
+                Regex.CacheSize = size;
+            }
+        }
+        #endregion
 
         #region Task
         public static void DoItLater(Action action, TimeSpan span)

@@ -131,7 +131,9 @@ namespace V2RayGCon.Services
             var links = Misc.Utils.FetchLinksFromSubcriptions(enabledSubs, isSocks5, proxyPort);
             var decoders = codecs.GetDecoders(false);
             var results = ImportLinksBatchModeSync(links, decoders);
-            return CountImportSuccessResult(results);
+            var n = CountImportSuccessResult(results);
+            VgcApis.Misc.Utils.ClearRegexCache();
+            return n;
         }
 
         public int ImportLinksWithOutV2cfgLinksSync(string links, string mark)

@@ -1441,7 +1441,19 @@ namespace VgcApis.Misc
         #region Task
         public static void DoItLater(Action action, TimeSpan span)
         {
-            Task.Delay(span).ContinueWith(_ => action()).ConfigureAwait(false);
+            Action work = () =>
+            {
+                try
+                {
+                    action?.Invoke();
+                }
+                catch (Exception e)
+                {
+                    Libs.Sys.FileLogger.Error($"DoItLater:\n{e}");
+                    throw;
+                }
+            };
+            Task.Delay(span).ContinueWith(_ => work()).ConfigureAwait(false);
         }
 
         public static void DoItLater(Action action, long ms)
@@ -1566,7 +1578,7 @@ namespace VgcApis.Misc
                 }
                 catch (Exception e)
                 {
-                    Libs.Sys.FileLogger.Error($"Background task error:\n{e}");
+                    Libs.Sys.FileLogger.Error($"RunInBackground:\n{e}");
                     throw;
                 }
             }

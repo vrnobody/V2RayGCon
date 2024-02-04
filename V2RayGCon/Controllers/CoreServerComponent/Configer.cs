@@ -294,13 +294,15 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             var json = InjectStatisticsConfigOnDemand(tuple.Item1, isSetStatPort);
             MergeTemplatesSetting(ref json, tpls, host, port);
 
-            var outbs = (json["outbounds"] ?? new JArray())
-                .Select(outb =>
-                {
-                    modifier?.Invoke(outb as JObject);
-                    return VgcApis.Misc.Utils.FormatConfig(outb, padding);
-                })
-                .Concat(tuple.Item2)
+            // coreServ.outbounds -> tpl.outbounds
+            var outbs = tuple
+                .Item2.Concat(
+                    (json["outbounds"] ?? new JArray()).Select(outb =>
+                    {
+                        modifier?.Invoke(outb as JObject);
+                        return VgcApis.Misc.Utils.FormatConfig(outb, padding);
+                    })
+                )
                 .ToList();
 
             var placeholder = $"vgc-outbounds-{Guid.NewGuid()}";

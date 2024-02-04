@@ -1496,6 +1496,11 @@ namespace NeoLuna.Models.Apis
 
         void TrackdownProcess(Process proc)
         {
+            if (proc == null || proc.HasExited)
+            {
+                return;
+            }
+
             lock (procLocker)
             {
                 if (processes.Contains(proc))

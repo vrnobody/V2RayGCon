@@ -1931,7 +1931,12 @@ namespace VgcApis.Misc
             {
                 if (part != ph)
                 {
-                    r.Add(part?.TrimEnd() ?? "");
+                    var p = part?.TrimEnd() ?? "";
+                    if(p.StartsWith("\r\n"))
+                    {
+                        p = p.Substring(2);
+                    }
+                    r.Add(p);
                     continue;
                 }
                 r.Add(string.Join(",\n", outbounds));

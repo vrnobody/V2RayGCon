@@ -311,9 +311,9 @@ namespace VgcApis.Misc
 
             keyCode = (uint)key;
 
-            uint ctrl = hasCtrl ? (uint)Models.Datas.Enums.ModifierKeys.Control : 0;
-            uint alt = hasAlt ? (uint)Models.Datas.Enums.ModifierKeys.Alt : 0;
-            uint shift = hasShift ? (uint)Models.Datas.Enums.ModifierKeys.Shift : 0;
+            uint ctrl = hasCtrl ? (uint)Enums.ModifierKeys.Control : 0;
+            uint alt = hasAlt ? (uint)Enums.ModifierKeys.Alt : 0;
+            uint shift = hasShift ? (uint)Enums.ModifierKeys.Shift : 0;
 
             modifier = ctrl | alt | shift;
 
@@ -648,7 +648,7 @@ namespace VgcApis.Misc
 
         public static Enums.ConfigType DetectConfigType(string config)
         {
-            var text = Models.Datas.Enums.ConfigType.text;
+            var text = Enums.ConfigType.text;
             if (string.IsNullOrEmpty(config) || config.Length < 2)
             {
                 return text;
@@ -657,7 +657,7 @@ namespace VgcApis.Misc
             var mark = $"{config[0]}{config[config.Length - 1]}";
             if (mark == "{}" || mark == "[]")
             {
-                return Models.Datas.Enums.ConfigType.json;
+                return Enums.ConfigType.json;
             }
 
             if (
@@ -665,7 +665,7 @@ namespace VgcApis.Misc
                 || Regex.IsMatch(config, @"\n[a-zA-Z][\w\-_]*:")
             )
             {
-                return Models.Datas.Enums.ConfigType.yaml;
+                return Enums.ConfigType.yaml;
             }
 
             return text;
@@ -1343,7 +1343,7 @@ namespace VgcApis.Misc
             Action done = null
         )
         {
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            RunInBackground(() =>
             {
                 ChainActionHelperWorker(countdown, worker, done)();
             });
@@ -1590,7 +1590,343 @@ namespace VgcApis.Misc
         #endregion
 
 
-        #region vgc Json
+        #region VGC Json
+        static List<string> GetTagsFromOutbounds(JsonTextReader jr)
+        {
+            var tags = new List<string>();
+            var lv = 0;
+            while (jr.Read())
+            {
+                switch (jr.TokenType)
+                {
+                    case JsonToken.PropertyName:
+                        var name = jr.Value.ToString();
+                        if (name == "tag")
+                        {
+                            var tag = jr.ReadAsString();
+                            if (!string.IsNullOrEmpty(tag))
+                            {
+                                tags.Add(tag);
+                            }
+                        }
+                        break;
+                    case JsonToken.StartArray:
+                        lv++;
+                        break;
+                    case JsonToken.EndArray:
+                        lv--;
+                        break;
+                    default:
+                        break;
+                }
+                if (lv < 0)
+                {
+                    break;
+                }
+            }
+            return tags;
+        }
+
+        public static List<string> GetAllOutboundTagsFromJson(string json)
+        {
+            var r = new List<string>();
+            try
+            {
+                using (var sr = new StringReader(json))
+                using (var jr = new JsonTextReader(sr))
+                {
+                    while (jr.Read())
+                    {
+                        switch (jr.TokenType)
+                        {
+                            case JsonToken.PropertyName:
+                                var name = jr.Value as string;
+                                if (name == "outbounds")
+                                {
+                                    jr.Read();
+                                    r = GetTagsFromOutbounds(jr);
+                                }
+                                else
+                                {
+                                    jr.Skip();
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch { }
+            return r;
+        }
+
+        public static string ExtractSummaryFromJsonConfig(string config)
+        {
+            var json = ExtractRoutingAndOutbounds(config);
+            if (json == null)
+            {
+                return string.Empty;
+            }
+
+            var count = json["outbounds"]?.Count() ?? 0;
+            var strategy = GetValue<string>(json, "routing.balancers.0.strategy.type");
+            if (!string.IsNullOrEmpty(strategy))
+            {
+                return $"balancer: {count} {strategy}";
+            }
+
+            var tag = GetValue<string>(json, "routing.balancers.0.tag");
+            if (!string.IsNullOrEmpty(tag))
+            {
+                return $"balancer: {count} random";
+            }
+
+            var proxy = GetValue<string>(json, "outbounds.0.proxySettings.tag");
+            if (!string.IsNullOrEmpty(proxy))
+            {
+                return $"proxychain: {count}";
+            }
+
+            var result = GetSummaryFromConfig(json, "outbounds.0");
+            if (string.IsNullOrEmpty(result))
+            {
+                result = GetSummaryFromConfig(json, "outbound");
+            }
+            return result;
+        }
+
+        public static List<InboundInfo> GetInboundsInfoFromJsonConfig(string config)
+        {
+            var r = new List<InboundInfo>();
+            var arr = GetFirstJsonProperty<JArray>("inbounds", config);
+            if (arr == null)
+            {
+                return r;
+            }
+
+            try
+            {
+                foreach (JObject inb in arr.Cast<JObject>())
+                {
+                    if (inb == null)
+                    {
+                        continue;
+                    }
+
+                    var info = new InboundInfo(
+                        GetValue<string>(inb, "protocol")?.ToLower() ?? "",
+                        GetValue<string>(inb, "listen"),
+                        GetValue<int>(inb, "port")
+                    );
+                    if (!string.IsNullOrEmpty(info.protocol) && !string.IsNullOrEmpty(info.host))
+                    {
+                        r.Add(info);
+                    }
+                }
+            }
+            catch { }
+
+            return r;
+        }
+
+        static JArray ExtractAndTrimOutbounds(JsonReader jr, JsonSerializer ser, int keepTopNth)
+        {
+            var c = 0;
+            var arr = new JArray();
+            while (jr.Read())
+            {
+                switch (jr.TokenType)
+                {
+                    case JsonToken.StartObject:
+                        var to = new JObject();
+                        if (c++ < keepTopNth)
+                        {
+                            to = ser.Deserialize<JObject>(jr);
+                        }
+                        else
+                        {
+                            jr.Skip();
+                        }
+                        arr.Add(to);
+                        break;
+                    case JsonToken.EndArray:
+                        return arr;
+                    default:
+                        break;
+                }
+            }
+            return arr;
+        }
+
+        static JObject ExtractRoutingAndOutbounds(string json)
+        {
+            try
+            {
+                var o = new JObject();
+                var ser = new JsonSerializer();
+                using (var sr = new StringReader(json))
+                using (var jr = new JsonTextReader(sr))
+                {
+                    while (jr.Read())
+                    {
+                        switch (jr.TokenType)
+                        {
+                            case JsonToken.PropertyName:
+                                var name = jr.Value as string;
+                                if (name == "outbounds")
+                                {
+                                    jr.Read();
+                                    o[name] = ExtractAndTrimOutbounds(jr, ser, 1);
+                                }
+                                else if (name == "routing")
+                                {
+                                    jr.Read();
+                                    o[name] = ser.Deserialize<JObject>(jr);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                return o;
+            }
+            catch { }
+            return null;
+        }
+
+        static List<string> ExtractOutboundsString(
+            JsonReader jr,
+            JsonSerializer ser,
+            Action<JObject> modifier
+        )
+        {
+            var padding = Config.FormatOutboundPaddingLeft;
+            var r = new List<string>();
+            while (jr.Read())
+            {
+                switch (jr.TokenType)
+                {
+                    case JsonToken.EndArray:
+                        return r;
+                    default:
+                        var outb = ser.Deserialize<JObject>(jr);
+                        modifier?.Invoke(outb);
+                        r.Add(FormatConfig(outb, padding));
+                        break;
+                }
+            }
+            return r;
+        }
+
+        public static Tuple<JObject, List<string>> ParseJsonIntoBasicConfigAndOutbounds(
+            string json,
+            Action<JObject> modifier
+        )
+        {
+            var o = new JObject();
+            var l = new List<string>();
+            try
+            {
+                var ser = new JsonSerializer();
+                using (var sr = new StringReader(json))
+                using (var jr = new JsonTextReader(sr))
+                {
+                    while (jr.Read())
+                    {
+                        switch (jr.TokenType)
+                        {
+                            case JsonToken.PropertyName:
+                                var name = jr.Value as string;
+                                if (name == "outbounds")
+                                {
+                                    jr.Read();
+                                    l = ExtractOutboundsString(jr, ser, modifier);
+                                }
+                                else
+                                {
+                                    jr.Read();
+                                    o[name] = ser.Deserialize<JToken>(jr);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch { }
+            return new Tuple<JObject, List<string>>(o, l);
+        }
+
+        public static T GetFirstJsonProperty<T>(string propertyName, string json)
+        {
+            // https://stackoverflow.com/questions/19438472/json-net-deserialize-a-specific-property
+            try
+            {
+                using (var stringReader = new StringReader(json))
+                using (var jsonReader = new JsonTextReader(stringReader))
+                {
+                    int level = 0;
+
+                    while (jsonReader.Read())
+                    {
+                        switch (jsonReader.TokenType)
+                        {
+                            case JsonToken.PropertyName:
+                                if (level != 1)
+                                    break;
+                                if ((string)jsonReader.Value == propertyName)
+                                {
+                                    jsonReader.Read();
+
+                                    var serializer = new JsonSerializer();
+                                    var r = serializer.Deserialize<T>(jsonReader);
+                                    return r;
+                                }
+                                break;
+
+                            case JsonToken.StartArray:
+                            case JsonToken.StartConstructor:
+                            case JsonToken.StartObject:
+                                level++;
+                                break;
+
+                            case JsonToken.EndArray:
+                            case JsonToken.EndConstructor:
+                            case JsonToken.EndObject:
+                                level--;
+                                break;
+                        }
+                    }
+                }
+            }
+            catch { }
+            return default;
+        }
+
+        public static string InjectOutboundsIntoBasicConfig(
+            string config,
+            string placeHolder,
+            List<string> outbounds
+        )
+        {
+            var ph = $"\"{placeHolder}\"";
+            var r = new List<string>();
+            var parts = SplitAndKeep(config, new List<string> { ph });
+            foreach (var part in parts)
+            {
+                if (part != ph)
+                {
+                    r.Add(part?.TrimEnd() ?? "");
+                    continue;
+                }
+                r.Add(string.Join(",\n", outbounds));
+            }
+            return string.Join("\n", r);
+        }
+
         public static string JArray2Str(JArray array)
         {
             if (array == null)
@@ -1643,10 +1979,10 @@ namespace VgcApis.Misc
 
             try
             {
-                var outboundDtr = GetKey(json, "outbounds");
-                if (outboundDtr != null && outboundDtr is JArray)
+                var outbs = GetKey(json, "outbounds");
+                if (outbs != null && outbs is JArray)
                 {
-                    foreach (JObject item in outboundDtr.Cast<JObject>())
+                    foreach (JObject item in outbs.Cast<JObject>())
                     {
                         result.Add(item);
                     }
@@ -1704,40 +2040,6 @@ namespace VgcApis.Misc
                 }
             }
             return empty;
-        }
-
-        public static string ExtractSummaryFromJson(JObject json)
-        {
-            if (json == null)
-            {
-                return string.Empty;
-            }
-
-            var count = json["outbounds"]?.Count() ?? 0;
-            var strategy = GetValue<string>(json, "routing.balancers.0.strategy.type");
-            if (!string.IsNullOrEmpty(strategy))
-            {
-                return $"balancer: {count} {strategy}";
-            }
-
-            var tag = GetValue<string>(json, "routing.balancers.0.tag");
-            if (!string.IsNullOrEmpty(tag))
-            {
-                return $"balancer: {count} random";
-            }
-
-            var proxy = GetValue<string>(json, "outbounds.0.proxySettings.tag");
-            if (!string.IsNullOrEmpty(proxy))
-            {
-                return $"proxychain: {count}";
-            }
-
-            var result = GetSummaryFromConfig(json, "outbounds.0");
-            if (string.IsNullOrEmpty(result))
-            {
-                result = GetSummaryFromConfig(json, "outbound");
-            }
-            return result;
         }
 
         static string GetStreamSettingInfo(JObject json, string root)
@@ -2429,14 +2731,26 @@ namespace VgcApis.Misc
             return null;
         }
 
-        public static string FormatConfig(JToken config)
+        public static string FormatConfig(JToken config, string paddingLeft = "")
         {
+            var r = "";
             try
             {
-                return config?.ToString() ?? string.Empty;
+                r = config?.ToString() ?? string.Empty;
             }
             catch { }
-            return string.Empty;
+
+            if (!string.IsNullOrEmpty(r) && !string.IsNullOrEmpty(paddingLeft))
+            {
+                var list = new List<string>();
+                var ps = r.Split('\n');
+                foreach (var p in ps)
+                {
+                    list.Add($"{paddingLeft}{p}");
+                }
+                return string.Join("\n", list);
+            }
+            return r;
         }
 
         public static string FormatConfig(string config)
@@ -2447,12 +2761,12 @@ namespace VgcApis.Misc
 
         public static bool IsYaml(string config)
         {
-            return DetectConfigType(config) == Models.Datas.Enums.ConfigType.yaml;
+            return DetectConfigType(config) == Enums.ConfigType.yaml;
         }
 
         public static bool IsJson(string config)
         {
-            return DetectConfigType(config) == Models.Datas.Enums.ConfigType.json;
+            return DetectConfigType(config) == Enums.ConfigType.json;
         }
 
         public static JToken ParseJToken(string config)
@@ -2812,40 +3126,28 @@ namespace VgcApis.Misc
             {
                 case Enums.LinkTypes.ss:
                 case Enums.LinkTypes.socks:
-                    pattern =
-                        GenLinkPrefix(linkType)
-                        + "://"
-                        + VgcApis.Models.Consts.Patterns.SsShareLinkContent;
+                    pattern = GenLinkPrefix(linkType) + "://" + Patterns.SsShareLinkContent;
                     break;
                 case Enums.LinkTypes.vmess:
                 case Enums.LinkTypes.v2cfg:
-                    pattern =
-                        GenLinkPrefix(linkType)
-                        + "://"
-                        + VgcApis.Models.Consts.Patterns.Base64NonStandard;
+                    pattern = GenLinkPrefix(linkType) + "://" + Patterns.Base64NonStandard;
                     break;
                 case Enums.LinkTypes.http:
                 case Enums.LinkTypes.https:
-                    pattern = VgcApis.Models.Consts.Patterns.HttpUrl;
+                    pattern = Patterns.HttpUrl;
                     break;
                 case Enums.LinkTypes.trojan:
-                    pattern =
-                        GenLinkPrefix(linkType)
-                        + "://"
-                        + VgcApis.Models.Consts.Patterns.UriContentNonStandard;
+                    pattern = GenLinkPrefix(linkType) + "://" + Patterns.UriContentNonStandard;
                     break;
                 case Enums.LinkTypes.vless:
                     // pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.UriContent;
-                    pattern =
-                        GenLinkPrefix(linkType)
-                        + "://"
-                        + VgcApis.Models.Consts.Patterns.UriContentNonStandard;
+                    pattern = GenLinkPrefix(linkType) + "://" + Patterns.UriContentNonStandard;
                     break;
                 default:
                     throw new NotSupportedException($"Not supported link type {linkType}:// ...");
             }
 
-            return VgcApis.Models.Consts.Patterns.NonAlphabets + pattern;
+            return Patterns.NonAlphabets + pattern;
         }
 
         public static string AddLinkPrefix(string b64Content, Enums.LinkTypes linkType)
@@ -2880,7 +3182,7 @@ namespace VgcApis.Misc
 
         public static Enums.LinkTypes DetectLinkType(string shareLink)
         {
-            var unknow = Models.Datas.Enums.LinkTypes.unknow;
+            var unknow = Enums.LinkTypes.unknow;
             var prefix = GetLinkPrefix(shareLink);
             if (
                 !string.IsNullOrEmpty(prefix) && Enum.TryParse(prefix, out Enums.LinkTypes linkType)

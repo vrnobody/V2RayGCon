@@ -1,0 +1,29 @@
+{
+  "routing": {
+    "balancers": [
+      {
+        "tag": "pacman",
+        "selector": [
+          "agentout"
+        ]
+      }
+    ],
+    "rules": [
+      {
+        "inboundTag": [
+          "api-in"
+        ],
+        "outboundTag": "api-serv",
+        "type": "field"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "http",
+          "socks"
+        ],
+        "balancerTag": "pacman"
+      }
+    ]
+  }
+}

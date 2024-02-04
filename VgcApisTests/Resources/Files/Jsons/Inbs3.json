@@ -1,0 +1,29 @@
+{
+  "inbounds": [
+    {
+      "tag": "http",
+      "protocol": "http",
+      "port": 8080,
+      "listen": "127.0.0.1",
+      "settings": {}
+    },
+    {
+      "tag": "socks",
+      "protocol": "socks",
+      "port": 1080,
+      "listen": "127.0.0.1",
+      "settings": {
+        "udp": true
+      }
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": 10085,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "127.0.0.1"
+      },
+      "tag": "api-in"
+    }
+  ]
+}

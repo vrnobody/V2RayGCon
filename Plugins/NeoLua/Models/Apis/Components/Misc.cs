@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using Neo.IronLua;
@@ -148,6 +147,9 @@ namespace NeoLuna.Models.Apis.Components
         #endregion
 
         #region ILuaMisc.Encodings
+        public List<string> GetOutboundTags(string config) =>
+            VgcApis.Misc.Utils.GetAllOutboundTagsFromJson(config);
+
         public string ToJson(object o)
         {
             return VgcApis.Misc.Utils.ToJson(o);

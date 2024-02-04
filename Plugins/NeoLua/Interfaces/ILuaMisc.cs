@@ -381,6 +381,8 @@ namespace NeoLuna.Interfaces
         #endregion
 
         #region encode decode
+        List<string> GetOutboundTags(string config);
+
         string ToJson(object o);
 
         string DetectConfigType(string config);

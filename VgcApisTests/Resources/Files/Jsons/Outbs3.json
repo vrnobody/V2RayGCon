@@ -1,0 +1,98 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "agentin",
+      "port": 1080,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {}
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "1.2.3.4",
+            "port": 1234,
+            "users": [
+              {
+                "id": "e773487b-659c-4839-8f48-c1e0290d939d",
+                "encryption": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "tag": "agentout1",
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "wsSettings": {
+          "path": "/?ed=2048",
+          "headers": {
+            "Host": "baidu.com"
+          }
+        }
+      }
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "bing.com",
+            "port": 1235,
+            "users": [
+              {
+                "id": "5c7e39fa-8238-4f5e-98a9-006fb1fb2fc5",
+                "alterId": 0,
+                "security": "auto"
+              }
+            ]
+          }
+        ]
+      },
+      "tag": "agentout2",
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "wsSettings": {
+          "path": "/search",
+          "headers": {
+            "Host": "bing.com"
+          }
+        }
+      }
+    },
+      {
+      "protocol": "trojan",
+      "settings": {
+        "servers": [
+          {
+            "address": "2.3.4.5",
+            "port": 2345,
+            "password": "eab3ff21b3b5",
+            "flow": ""
+          }
+        ]
+      },
+      "tag": "agentout3",
+      "streamSettings": {
+        "network": "tcp",
+        "security": "tls",
+        "tcpSettings": {},
+        "tlsSettings": {
+          "serverName": "163.com",
+          "alpn": [
+            "http/1.1"
+          ]
+        }
+      }
+    }
+  ]
+}

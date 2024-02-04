@@ -23,6 +23,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         Logger logger;
         CoreCtrl coreCtrl;
 
+        readonly object finalConfigLocker = new object();
+        FinalConfigCacheSettings lastCacheSettings = new FinalConfigCacheSettings();
+
         public Configer(Settings setting, Servers servers, CoreInfo coreInfo)
         {
             this.setting = setting;
@@ -95,14 +98,16 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public List<InboundInfo> GetAllInboundsInfo()
         {
             var config = GetFinalConfig();
-
-            if (VgcApis.Misc.Utils.IsYaml(config))
+            var ty = VgcApis.Misc.Utils.DetectConfigType(config);
+            switch (ty)
             {
-                return GetInboundsInfoFromYaml(config);
+                case Enums.ConfigType.yaml:
+                    return GetInboundsInfoFromYaml(config);
+                case Enums.ConfigType.json:
+                    return VgcApis.Misc.Utils.GetInboundsInfoFromJsonConfig(config);
+                default:
+                    return new List<InboundInfo>();
             }
-
-            var json = VgcApis.Misc.Utils.ParseJObject(config);
-            return GetInboundsInfoFromJson(json);
         }
 
         public string GetShareLink()
@@ -112,7 +117,32 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return ShareLinkMgr.Instance.EncodeConfigToShareLink(name, config);
         }
 
-        public string GetFinalConfig() => GenFinalConfig(false);
+        public string GetFinalConfig()
+        {
+            lock (finalConfigLocker)
+            {
+                var uid = states.GetUid();
+                var send4 = states.IsIgnoreSendThrough() ? "" : setting.GetSendThroughIpv4();
+                if (
+                    IsFinalConfigCacheValid(send4)
+                    && Misc.Caches.ZipStrLru.TryGet(uid, out var r)
+                    && !string.IsNullOrEmpty(r)
+                )
+                {
+                    VgcApis.Misc.Logger.Debug("get final config from cache");
+                    return r;
+                }
+                r = GenFinalConfigCore(false);
+                lastCacheSettings = new FinalConfigCacheSettings()
+                {
+                    enableUtls = setting.isEnableUtlsFingerprint,
+                    fingerprint = setting.uTlsFingerprint,
+                    sendThrough = send4,
+                };
+                Misc.Caches.ZipStrLru.Put(uid, r);
+                return r;
+            }
+        }
 
         public void ClearFinalConfigCache() => Misc.Caches.ZipStrLru.TryRemove(states.GetUid());
 
@@ -184,44 +214,51 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
         }
 
-        public string GenFinalConfig(bool isSetStatPort)
+        public string GenFinalConfig()
         {
-            var uid = states.GetUid();
-            var r = "";
-            if (!isSetStatPort && Misc.Caches.ZipStrLru.TryGet(uid, out var str))
+            lock (finalConfigLocker)
             {
-                r = str;
-            }
-            if (!string.IsNullOrEmpty(r))
-            {
+                var r = GenFinalConfigCore(true);
                 return r;
             }
+        }
 
-            var cfgTpls = setting.GetCustomConfigTemplates();
-            var names =
-                coreInfo.templates?.Replace(", ", ",")?.Split(',')?.ToList() ?? new List<string>();
-            names.Add(coreInfo.inbName);
+        #endregion
 
-            var tpls = coreInfo.isAcceptInjection
-                ? cfgTpls.Where(tpl => tpl.isInject).ToList()
-                : new List<Models.Datas.CustomConfigTemplate>();
+        #region private methods
 
-            tpls.AddRange(
-                names
-                    .Select(n => cfgTpls.FirstOrDefault(tpl => tpl.name == n))
-                    .Where(t => t != null)
-            );
+        bool IsFinalConfigCacheValid(string sendThrough)
+        {
+            if (
+                lastCacheSettings.enableUtls != setting.isEnableUtlsFingerprint
+                || lastCacheSettings.fingerprint != setting.uTlsFingerprint
+            )
+            {
+                return false;
+            }
+
+            if (lastCacheSettings.sendThrough != sendThrough)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        string GenFinalConfigCore(bool isSetStatPort)
+        {
+            VgcApis.Misc.Logger.Debug("regenerate final config");
+
+            var tpls = GetCustomTemplates();
+            var config = GetConfig();
             var host = coreInfo.inbIp;
             var port = coreInfo.inbPort;
 
-            var config = GetConfig();
+            var r = "";
             try
             {
                 if (VgcApis.Misc.Utils.IsJson(config))
                 {
-                    var json = InjectStatisticsConfigOnDemand(config, isSetStatPort);
-                    r = GenJsonFinalConfig(ref json, tpls, host, port);
-                    VgcApis.Misc.RecycleBin.Put(r, json);
+                    r = GenJsonFinalConfig(tpls, config, isSetStatPort, host, port);
                 }
                 else
                 {
@@ -238,55 +275,86 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
             catch { }
             r = string.IsNullOrEmpty(r) ? config : r;
-            if (!isSetStatPort)
-            {
-                Misc.Caches.ZipStrLru.Put(uid, r);
-            }
             return r;
         }
 
-        #endregion
-
-        #region private methods
-
-        void MergeCustomTlsSettings(ref JObject config)
+        private string GenJsonFinalConfig(
+            List<Models.Datas.CustomConfigTemplate> tpls,
+            string config,
+            bool isSetStatPort,
+            string host,
+            int port
+        )
         {
-            var outB =
-                VgcApis.Misc.Utils.GetKey(config, "outbound")
-                ?? VgcApis.Misc.Utils.GetKey(config, "outbounds.0");
+            var padding = VgcApis.Models.Consts.Config.FormatOutboundPaddingLeft;
+            string r;
+            var modifier = CreateTlsAndSendThroughModifier();
+            var tuple = VgcApis.Misc.Utils.ParseJsonIntoBasicConfigAndOutbounds(config, modifier);
 
-            if (outB == null)
-            {
-                return;
-            }
+            var json = InjectStatisticsConfigOnDemand(tuple.Item1, isSetStatPort);
+            MergeTemplatesSetting(ref json, tpls, host, port);
 
-            if (!(VgcApis.Misc.Utils.GetKey(outB, "streamSettings") is JObject streamSettings))
-            {
-                return;
-            }
+            var outbs = (json["outbounds"] ?? new JArray())
+                .Select(outb =>
+                {
+                    modifier?.Invoke(outb as JObject);
+                    return VgcApis.Misc.Utils.FormatConfig(outb, padding);
+                })
+                .Concat(tuple.Item2)
+                .ToList();
 
-            if (setting.isSupportSelfSignedCert)
-            {
-                var selfSigned = JObject.Parse(@"{tlsSettings: {allowInsecure: true}}");
-                VgcApis.Misc.Utils.MergeJson(streamSettings, selfSigned);
-            }
-
-            if (setting.isEnableUtlsFingerprint)
-            {
-                var uTlsFingerprint = JObject.Parse(@"{tlsSettings: {}}");
-                uTlsFingerprint["tlsSettings"]["fingerprint"] = setting.uTlsFingerprint;
-                VgcApis.Misc.Utils.MergeJson(streamSettings, uTlsFingerprint);
-            }
+            var placeholder = $"vgc-outbounds-{Guid.NewGuid()}";
+            json["outbounds"] = new JArray { placeholder };
+            var c = VgcApis.Misc.Utils.FormatConfig(json);
+            r = VgcApis.Misc.Utils.InjectOutboundsIntoBasicConfig(c, placeholder, outbs);
+            return r;
         }
 
-        string GenJsonFinalConfig(
+        private List<Models.Datas.CustomConfigTemplate> GetCustomTemplates()
+        {
+            var cfgTpls = setting.GetCustomConfigTemplates();
+            var names =
+                coreInfo.templates?.Replace(", ", ",")?.Split(',')?.ToList() ?? new List<string>();
+            names.Add(coreInfo.inbName);
+
+            var tpls = coreInfo.isAcceptInjection
+                ? cfgTpls.Where(tpl => tpl.isInject).ToList()
+                : new List<Models.Datas.CustomConfigTemplate>();
+
+            tpls.AddRange(
+                names
+                    .Select(n => cfgTpls.FirstOrDefault(tpl => tpl.name == n))
+                    .Where(t => t != null)
+            );
+            return tpls;
+        }
+
+        private Action<JObject> CreateTlsAndSendThroughModifier()
+        {
+            var send4 = states.IsIgnoreSendThrough() ? "" : setting.GetSendThroughIpv4();
+            JObject selfSigned = null;
+            JObject uTlsFingerprint = null;
+            if (setting.isSupportSelfSignedCert)
+            {
+                selfSigned = JObject.Parse(@"{tlsSettings: {allowInsecure: true}}");
+            }
+            if (setting.isEnableUtlsFingerprint)
+            {
+                uTlsFingerprint = JObject.Parse(@"{tlsSettings: {}}");
+                uTlsFingerprint["tlsSettings"]["fingerprint"] = setting.uTlsFingerprint;
+            }
+
+            return (json) =>
+                AddTlsAndSendthroughSettingsToOutbound(json, send4, selfSigned, uTlsFingerprint);
+        }
+
+        void MergeTemplatesSetting(
             ref JObject json,
             IEnumerable<Models.Datas.CustomConfigTemplate> tplSs,
             string host,
             int port
         )
         {
-            MergeCustomTlsSettings(ref json);
             foreach (var tplS in tplSs)
             {
                 if (tplS.MergeToJObject(ref json, host, port) != true)
@@ -294,54 +362,45 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     break;
                 }
             }
-
-            var send4 = setting.GetSendThroughIpv4();
-            if (!states.IsIgnoreSendThrough() && !string.IsNullOrEmpty(send4))
-            {
-                if (json["outbounds"] is JArray outbs)
-                {
-                    foreach (var outb in outbs)
-                    {
-                        outb["sendThrough"] = send4;
-                    }
-                }
-            }
-            var s = VgcApis.Misc.Utils.FormatConfig(json);
-            return s;
         }
 
-        List<InboundInfo> GetInboundsInfoFromJson(JObject json)
+        void AddTlsAndSendthroughSettingsToOutbound(
+            JObject json,
+            string send4,
+            JObject selfSigned,
+            JObject uTlsFingerprint
+        )
         {
-            var r = new List<InboundInfo>();
             if (json == null)
             {
-                return r;
+                return;
             }
 
-            try
+            if (VgcApis.Misc.Utils.GetKey(json, "streamSettings") is JObject streamS)
             {
-                var arr = json["inbounds"] as JArray;
-                foreach (JObject inb in arr.Cast<JObject>())
+                if (selfSigned != null)
                 {
-                    if (inb == null)
-                    {
-                        continue;
-                    }
+                    VgcApis.Misc.Utils.MergeJson(streamS, selfSigned);
+                }
 
-                    var info = new InboundInfo(
-                        VgcApis.Misc.Utils.GetValue<string>(inb, "protocol")?.ToLower() ?? "",
-                        VgcApis.Misc.Utils.GetValue<string>(inb, "listen"),
-                        VgcApis.Misc.Utils.GetValue<int>(inb, "port")
-                    );
-                    if (!string.IsNullOrEmpty(info.protocol) && !string.IsNullOrEmpty(info.host))
-                    {
-                        r.Add(info);
-                    }
+                if (uTlsFingerprint != null)
+                {
+                    VgcApis.Misc.Utils.MergeJson(streamS, uTlsFingerprint);
                 }
             }
-            catch { }
 
-            return r;
+            var key = "sendThrough";
+            if (string.IsNullOrEmpty(send4))
+            {
+                if (json.ContainsKey(key))
+                {
+                    json[key].Remove();
+                }
+            }
+            else
+            {
+                json[key] = send4;
+            }
         }
 
         List<InboundInfo> GetInboundsInfoFromYaml(string config)
@@ -365,9 +424,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return r;
         }
 
-        JObject InjectStatisticsConfigOnDemand(string config, bool isSetStatPort)
+        JObject InjectStatisticsConfigOnDemand(JObject json, bool isSetStatPort)
         {
-            var json = VgcApis.Misc.RecycleBin.Parse(config);
             if (!setting.isEnableStatistics)
             {
                 return json;
@@ -387,9 +445,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             statsCfg["inbounds"][0]["port"] = states.GetStatPort();
             VgcApis.Misc.Utils.CombineConfigWithRoutingInFront(ref statsCfg, json);
 
-            // json has not changed
-            VgcApis.Misc.RecycleBin.Put(config, json);
-
             var statsTpl = Misc.Caches.Jsons.LoadTemplate("statsApiV4Tpl") as JObject;
             VgcApis.Misc.Utils.CombineConfigWithRoutingInFront(ref statsCfg, statsTpl);
             return statsCfg;
@@ -406,10 +461,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 switch (ty)
                 {
                     case Enums.ConfigType.json:
-                        var json = VgcApis.Misc.RecycleBin.Parse(config);
-                        inbsInfo = GetInboundsInfoFromJson(json);
-                        s = VgcApis.Misc.Utils.ExtractSummaryFromJson(json);
-                        VgcApis.Misc.RecycleBin.Put(config, json);
+                        inbsInfo = VgcApis.Misc.Utils.GetInboundsInfoFromJsonConfig(config);
+                        s = VgcApis.Misc.Utils.ExtractSummaryFromJsonConfig(config);
                         break;
                     case Enums.ConfigType.yaml:
                         s = VgcApis.Misc.Utils.ExtractSummaryFromYaml(config);
@@ -452,5 +505,12 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         #endregion
+    }
+
+    struct FinalConfigCacheSettings
+    {
+        public string fingerprint;
+        public bool enableUtls;
+        public string sendThrough;
     }
 }

@@ -444,10 +444,7 @@ namespace V2RayGCon.Services
             {
                 return null;
             }
-            var ty = PackageTypes.Balancer;
-            var package = configMgr.GenV4ServersPackageConfig(servList, ty);
-            var config = VgcApis.Misc.Utils.FormatConfig(package);
-            VgcApis.Misc.RecycleBin.Put(config, package);
+            var config = configMgr.GenV4BalancerConfig(servList, "", "", BalancerStrategies.Random);
             return config;
         }
 
@@ -1120,48 +1117,6 @@ namespace V2RayGCon.Services
             SortServers(selectedServers, sorter);
         }
 
-        void InjectBalacerStrategy(
-            ref JObject config,
-            string interval,
-            string url,
-            BalancerStrategies strategy
-        )
-        {
-            switch (strategy)
-            {
-                case BalancerStrategies.RoundRobin:
-                    try
-                    {
-                        config["routing"]["balancers"][0]["strategy"] = JObject.Parse(
-                            "{type:'roundRobin'}"
-                        );
-                    }
-                    catch { }
-                    break;
-                case BalancerStrategies.LeastPing:
-                    try
-                    {
-                        var prefix = Config.servsPkgTagPrefix;
-                        config["observatory"] = JObject.Parse($"{{subjectSelector:['{prefix}']}}");
-                        if (!string.IsNullOrWhiteSpace(interval))
-                        {
-                            config["observatory"]["probeInterval"] = interval;
-                        }
-                        if (!string.IsNullOrWhiteSpace(url))
-                        {
-                            config["observatory"]["probeURL"] = url;
-                        }
-                        config["routing"]["balancers"][0]["strategy"] = JObject.Parse(
-                            "{type:'leastPing'}"
-                        );
-                    }
-                    catch { }
-                    break;
-                default:
-                    break;
-            }
-        }
-
         string PackServersIntoV4PackageWorker(
             List<ICoreServCtrl> servList,
             string orgUid,
@@ -1177,17 +1132,19 @@ namespace V2RayGCon.Services
                 return "";
             }
 
-            JObject package = configMgr.GenV4ServersPackageConfig(servList, packageType);
-            string mark;
+            var mark = "error23";
+            var newConfig = mark;
 
             switch (packageType)
             {
                 case PackageTypes.Balancer:
-                    InjectBalacerStrategy(ref package, interval, url, strategy);
+                    newConfig = configMgr.GenV4BalancerConfig(servList, interval, url, strategy);
                     mark = @"PackageV4";
                     break;
                 case PackageTypes.Chain:
                 default:
+                    var chains = configMgr.GenV4ChainConfig(servList);
+                    newConfig = VgcApis.Misc.Utils.FormatConfig(chains);
                     mark = @"ChainV4";
                     break;
             }
@@ -1197,10 +1154,7 @@ namespace V2RayGCon.Services
                 packageName = mark;
             }
 
-            var newConfig = VgcApis.Misc.Utils.FormatConfig(package);
-            VgcApis.Misc.RecycleBin.Put(newConfig, package);
             string newUid = ReplaceOrAddNewServer(orgUid, packageName, newConfig, mark);
-
             UpdateMarkList();
             VgcApis.Misc.Logger.Log(I18N.PackageDone);
             return newUid;

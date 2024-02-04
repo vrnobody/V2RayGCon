@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
+using VgcApis.Models.Consts;
+using static VgcApis.Models.Datas.Enums;
 
 namespace V2RayGCon.Services
 {
@@ -30,7 +32,7 @@ namespace V2RayGCon.Services
     {
         Settings setting;
 
-        static readonly long TIMEOUT = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+        static readonly long TIMEOUT = Core.SpeedtestTimeout;
 
         readonly ConcurrentQueue<VgcApis.Interfaces.ICoreServCtrl> coreServs =
             new ConcurrentQueue<VgcApis.Interfaces.ICoreServCtrl>();
@@ -60,7 +62,7 @@ namespace V2RayGCon.Services
                 core.RestartCoreIgnoreError(sci.config);
                 if (core.WaitUntilReady())
                 {
-                    var host = VgcApis.Models.Consts.Webs.LoopBackIP;
+                    var host = Webs.LoopBackIP;
                     text = sci.isSocks5
                         ? VgcApis.Misc.Utils.FetchWorker(true, url, host, port, timeout, null, null)
                         : VgcApis.Misc.Utils.Fetch(url, port, timeout);
@@ -127,34 +129,12 @@ namespace V2RayGCon.Services
             WakeupLatencyTester();
         }
 
-        public JObject GenV4ServersPackageConfig(
-            List<VgcApis.Interfaces.ICoreServCtrl> servList,
-            VgcApis.Models.Datas.Enums.PackageTypes packageType
-        )
-        {
-            JObject package;
-            switch (packageType)
-            {
-                case VgcApis.Models.Datas.Enums.PackageTypes.Chain:
-                    package = GenV4ChainConfig(servList);
-                    break;
-                case VgcApis.Models.Datas.Enums.PackageTypes.Balancer:
-                default:
-                    package = GenV4BalancerConfig(servList);
-                    break;
-            }
-            return package;
-        }
-
         public void Run(Settings setting)
         {
             this.setting = setting;
         }
 
-        #endregion
-
-        #region private methods
-        JObject GenV4ChainConfig(List<VgcApis.Interfaces.ICoreServCtrl> servList)
+        public JObject GenV4ChainConfig(List<VgcApis.Interfaces.ICoreServCtrl> servList)
         {
             var package = Misc.Caches.Jsons.LoadPackage("chainV4Tpl");
             var outbounds = package["outbounds"] as JArray;
@@ -164,13 +144,13 @@ namespace V2RayGCon.Services
             for (var i = 0; i < servList.Count; i++)
             {
                 var s = servList[i];
-                var finalConfig = s.GetConfiger().GetFinalConfig();
-                var json = VgcApis.Misc.Utils.ParseJObject(finalConfig);
+                var config = s.GetConfiger().GetConfig();
+                var json = VgcApis.Misc.Utils.ParseJObject(config);
                 var parts = VgcApis.Misc.Utils.ExtractOutboundsFromConfig(json);
 
                 foreach (JObject p in parts.Cast<JObject>())
                 {
-                    var prefix = VgcApis.Models.Consts.Config.servsPkgTagPrefix;
+                    var prefix = Config.ServsPkgTagPrefix;
                     var tag = $"{prefix}{counter++:d6}";
                     p["tag"] = tag;
                     if (prev != null)
@@ -186,31 +166,95 @@ namespace V2RayGCon.Services
             return package;
         }
 
-        JObject GenV4BalancerConfig(List<VgcApis.Interfaces.ICoreServCtrl> servList)
+        public string GenV4BalancerConfig(
+            List<VgcApis.Interfaces.ICoreServCtrl> servList,
+            string interval,
+            string url,
+            BalancerStrategies strategy
+        )
         {
-            var package = Misc.Caches.Jsons.LoadPackage("pkgV4Tpl");
-            var outbounds = package["outbounds"] as JArray;
+            var prefix = Config.ServsPkgTagPrefix;
+            var placeHolder = $"vgc-outbounds-{Guid.NewGuid()}";
 
-            var prefix = VgcApis.Models.Consts.Config.servsPkgTagPrefix;
-            package["routing"]["balancers"][0]["selector"] = JArray.Parse($"['{prefix}']");
+            // create basic config without outbounds
+            var tpl = Misc.Caches.Jsons.LoadPackage("pkgV4Tpl");
+            InjectBalacerStrategy(ref tpl, interval, url, strategy);
+            tpl["routing"]["balancers"][0]["selector"] = JArray.Parse($"['{prefix}']");
+            tpl["outbounds"] = new JArray { placeHolder };
+            var tplStr = VgcApis.Misc.Utils.FormatConfig(tpl);
+
+            // parse outbounds
+            var outbounds = new List<string>();
+            var padding = Config.FormatOutboundPaddingLeft;
             var counter = 0;
             for (var i = 0; i < servList.Count; i++)
             {
-                var s = servList[i];
-                var finalConfig = s.GetConfiger().GetFinalConfig();
-                var json = VgcApis.Misc.Utils.ParseJObject(finalConfig);
-                var parts = VgcApis.Misc.Utils.ExtractOutboundsFromConfig(json);
-                foreach (JObject p in parts.Cast<JObject>())
+                var coreServ = servList[i];
+                var config = coreServ.GetConfiger().GetConfig();
+                var json = VgcApis.Misc.Utils.ParseJObject(config);
+                var subOutbs = VgcApis.Misc.Utils.ExtractOutboundsFromConfig(json);
+                foreach (JObject outb in subOutbs.Cast<JObject>())
                 {
-                    if (p == null)
+                    if (outb == null)
                     {
                         continue;
                     }
-                    p["tag"] = $"{prefix}{counter++:d6}";
-                    outbounds.Add(p);
+                    outb["tag"] = $"{prefix}{counter++:d6}";
+                    var c = VgcApis.Misc.Utils.FormatConfig(outb, padding);
+                    outbounds.Add(c);
                 }
             }
-            return package;
+
+            var r = VgcApis.Misc.Utils.InjectOutboundsIntoBasicConfig(
+                tplStr,
+                placeHolder,
+                outbounds
+            );
+            return r;
+        }
+        #endregion
+
+        #region private methods
+        void InjectBalacerStrategy(
+            ref JObject config,
+            string interval,
+            string url,
+            BalancerStrategies strategy
+        )
+        {
+            switch (strategy)
+            {
+                case BalancerStrategies.RoundRobin:
+                    try
+                    {
+                        config["routing"]["balancers"][0]["strategy"] = JObject.Parse(
+                            "{type:'roundRobin'}"
+                        );
+                    }
+                    catch { }
+                    break;
+                case BalancerStrategies.LeastPing:
+                    try
+                    {
+                        var prefix = Config.ServsPkgTagPrefix;
+                        config["observatory"] = JObject.Parse($"{{subjectSelector:['{prefix}']}}");
+                        if (!string.IsNullOrWhiteSpace(interval))
+                        {
+                            config["observatory"]["probeInterval"] = interval;
+                        }
+                        if (!string.IsNullOrWhiteSpace(url))
+                        {
+                            config["observatory"]["probeURL"] = url;
+                        }
+                        config["routing"]["balancers"][0]["strategy"] = JObject.Parse(
+                            "{type:'leastPing'}"
+                        );
+                    }
+                    catch { }
+                    break;
+                default:
+                    break;
+            }
         }
 
         int GetDefaultTimeout()
@@ -220,13 +264,11 @@ namespace V2RayGCon.Services
             {
                 return customTimeout;
             }
-            return VgcApis.Models.Consts.Intervals.DefaultSpeedTestTimeout;
+            return Intervals.DefaultSpeedTestTimeout;
         }
 
         string GetDefaultSpeedtestUrl() =>
-            setting.isUseCustomSpeedtestSettings
-                ? setting.CustomSpeedtestUrl
-                : VgcApis.Models.Consts.Webs.GoogleDotCom;
+            setting.isUseCustomSpeedtestSettings ? setting.CustomSpeedtestUrl : Webs.GoogleDotCom;
 
         LatencyTestResult DoSpeedTest(
             string rawConfig,
@@ -237,7 +279,7 @@ namespace V2RayGCon.Services
             Action<string> logDeliever
         )
         {
-            var result = new LatencyTestResult(VgcApis.Models.Consts.Core.SpeedtestAbort, 0);
+            var result = new LatencyTestResult(Core.SpeedtestAbort, 0);
             if (!setting.isSpeedtestCancelled)
             {
                 var port = VgcApis.Misc.Utils.GetFreeTcpPort();
@@ -368,7 +410,7 @@ namespace V2RayGCon.Services
                 );
             }
 
-            var json = VgcApis.Misc.RecycleBin.Parse(rawConfig);
+            var json = VgcApis.Misc.Utils.ParseJObject(rawConfig);
             if (json == null)
             {
                 return empty;
@@ -452,7 +494,7 @@ namespace V2RayGCon.Services
                 avgDelay = VgcApis.Misc.Utils.SpeedtestMean(
                     avgDelay,
                     curDelay,
-                    VgcApis.Models.Consts.Config.CustomSpeedtestMeanWeight
+                    Config.CustomSpeedtestMeanWeight
                 );
             }
 

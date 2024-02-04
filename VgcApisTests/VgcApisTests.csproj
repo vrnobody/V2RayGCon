@@ -69,10 +69,16 @@
     <Compile Include="LibsTests\BarTests.cs" />
     <Compile Include="LibsTests\TicketPoolTests.cs" />
     <Compile Include="Experiments.cs" />
+    <Compile Include="MiscTests\JsonReaderTests.cs" />
     <Compile Include="MiscTests\FetchTests.cs" />
     <Compile Include="MiscTests\RecycleBinTests.cs" />
     <Compile Include="ReflectionTests.cs" />
     <Compile Include="LibsTests\ZipExtensionsTests.cs" />
+    <Compile Include="Resources\Resx\Jsons.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Jsons.resx</DependentUpon>
+    </Compile>
     <Compile Include="StringReadWriterTests.cs" />
     <Compile Include="RecorderTests.cs" />
     <Compile Include="Crc8Tests.cs" />
@@ -94,6 +100,16 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Resources\Files\Jsons\Inbs3.json" />
+    <None Include="Resources\Files\Jsons\Outbs3.json" />
+    <None Include="Resources\Files\Jsons\RoutingRandom.json" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Resx\Jsons.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Jsons.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

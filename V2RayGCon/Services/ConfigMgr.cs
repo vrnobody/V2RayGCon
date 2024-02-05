@@ -196,6 +196,7 @@ namespace V2RayGCon.Services
             }
 
             var r = VgcApis.Misc.Utils.InjectOutboundsIntoBasicConfig(pkg, placeHolder, outbounds);
+            VgcApis.Misc.Utils.CollectOnHighPressure(r.Length);
             return r;
         }
         #endregion

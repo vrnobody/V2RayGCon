@@ -205,6 +205,16 @@ namespace VgcApis.Misc
         #endregion
 
         #region system
+        public static void CollectOnHighPressure(int pressure)
+        {
+            if (pressure < 64 * 1024)
+            {
+                return;
+            }
+            VgcApis.Misc.Logger.Debug("GC.Collect()");
+            GC.Collect();
+        }
+
         /// <summary>
         /// UseShellExecute = false,
         /// RedirectStandardOutput = true,
@@ -1305,7 +1315,6 @@ namespace VgcApis.Misc
 
         #endregion
 
-
         #region ChainAction
 
         /*
@@ -1600,7 +1609,6 @@ namespace VgcApis.Misc
             return Task.FromResult(false);
         }
         #endregion
-
 
         #region VGC Json
         static List<string> GetTagsFromOutbounds(JsonTextReader jr)
@@ -2482,8 +2490,6 @@ namespace VgcApis.Misc
         }
 
         #endregion
-
-
 
         #region Json
         public static JToken GenHttpInbound(int port)

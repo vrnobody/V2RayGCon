@@ -1675,7 +1675,7 @@ namespace VgcApis.Misc
 
         public static string ExtractSummaryFromJsonConfig(string config)
         {
-            var json = ExtractRoutingAndOutbounds(config);
+            var json = ExtractRoutingAndFirstOutbound(config);
             if (json == null)
             {
                 return string.Empty;
@@ -1751,16 +1751,16 @@ namespace VgcApis.Misc
                 switch (jr.TokenType)
                 {
                     case JsonToken.StartObject:
-                        var to = new JObject();
+                        var outb = new JObject();
                         if (c++ < keepTopNth)
                         {
-                            to = ser.Deserialize<JObject>(jr);
+                            outb = ser.Deserialize<JObject>(jr);
                         }
                         else
                         {
                             jr.Skip();
                         }
-                        arr.Add(to);
+                        arr.Add(outb);
                         break;
                     case JsonToken.EndArray:
                         return arr;
@@ -1771,11 +1771,11 @@ namespace VgcApis.Misc
             return arr;
         }
 
-        static JObject ExtractRoutingAndOutbounds(string json)
+        static JObject ExtractRoutingAndFirstOutbound(string json)
         {
             try
             {
-                var o = new JObject();
+                var r = new JObject();
                 var ser = new JsonSerializer();
                 using (var sr = new StringReader(json))
                 using (var jr = new JsonTextReader(sr))
@@ -1789,12 +1789,12 @@ namespace VgcApis.Misc
                                 if (name == "outbounds")
                                 {
                                     jr.Read();
-                                    o[name] = ExtractAndTrimOutbounds(jr, ser, 1);
+                                    r[name] = ExtractAndTrimOutbounds(jr, ser, 1);
                                 }
                                 else if (name == "routing")
                                 {
                                     jr.Read();
-                                    o[name] = ser.Deserialize<JObject>(jr);
+                                    r[name] = ser.Deserialize<JObject>(jr);
                                 }
                                 break;
                             default:
@@ -1802,19 +1802,18 @@ namespace VgcApis.Misc
                         }
                     }
                 }
-                return o;
+                return r;
             }
             catch { }
             return null;
         }
 
-        static List<string> ExtractOutboundsString(
+        static List<string> ExtractOutboundsAsStrings(
             JsonReader jr,
             JsonSerializer ser,
             Action<JObject> modifier
         )
         {
-            var padding = Config.FormatOutboundPaddingLeft;
             var r = new List<string>();
             while (jr.Read())
             {
@@ -1823,26 +1822,38 @@ namespace VgcApis.Misc
                     case JsonToken.EndArray:
                         return r;
                     default:
-                        var outb = ser.Deserialize<JObject>(jr);
-                        modifier?.Invoke(outb);
-                        r.Add(FormatConfig(outb, padding));
+                        var s = SerializeOneOutbound(jr, ser, modifier);
+                        r.Add(s);
                         break;
                 }
             }
             return r;
         }
 
-        public static Tuple<JObject, List<string>> ParseJsonIntoBasicConfigAndOutbounds(
-            string json,
+        static string SerializeOneOutbound(
+            JsonReader jr,
+            JsonSerializer ser,
             Action<JObject> modifier
         )
         {
-            var o = new JObject();
-            var l = new List<string>();
+            var outb = ser.Deserialize<JObject>(jr);
+            modifier?.Invoke(outb);
+            var padding = Config.FormatOutboundPaddingLeft;
+            var r = FormatConfig(outb, padding);
+            return r;
+        }
+
+        public static Tuple<JObject, List<string>> ParseAndSplitOutboundsFromConfig(
+            string config,
+            Action<JObject> modifier
+        )
+        {
+            var json = new JObject();
+            var outbounds = new List<string>();
             try
             {
                 var ser = new JsonSerializer();
-                using (var sr = new StringReader(json))
+                using (var sr = new StringReader(config))
                 using (var jr = new JsonTextReader(sr))
                 {
                     while (jr.Read())
@@ -1854,12 +1865,12 @@ namespace VgcApis.Misc
                                 if (name == "outbounds")
                                 {
                                     jr.Read();
-                                    l = ExtractOutboundsString(jr, ser, modifier);
+                                    outbounds = ExtractOutboundsAsStrings(jr, ser, modifier);
                                 }
                                 else
                                 {
                                     jr.Read();
-                                    o[name] = ser.Deserialize<JToken>(jr);
+                                    json[name] = ser.Deserialize<JToken>(jr);
                                 }
                                 break;
                             default:
@@ -1869,7 +1880,7 @@ namespace VgcApis.Misc
                 }
             }
             catch { }
-            return new Tuple<JObject, List<string>>(o, l);
+            return new Tuple<JObject, List<string>>(json, outbounds);
         }
 
         public static T GetFirstJsonProperty<T>(string propertyName, string json)
@@ -1924,19 +1935,15 @@ namespace VgcApis.Misc
             List<string> outbounds
         )
         {
-            var ph = $"\"{placeHolder}\"";
+            var nl = Environment.NewLine;
+            var ph = $"\"{placeHolder}\"{nl}";
             var r = new List<string>();
             var parts = SplitAndKeep(config, new List<string> { ph });
             foreach (var part in parts)
             {
                 if (part != ph)
                 {
-                    var p = part?.TrimEnd() ?? "";
-                    if(p.StartsWith("\r\n"))
-                    {
-                        p = p.Substring(2);
-                    }
-                    r.Add(p);
+                    r.Add(part?.TrimEnd());
                     continue;
                 }
                 r.Add(string.Join(",\n", outbounds));
@@ -2748,25 +2755,23 @@ namespace VgcApis.Misc
             return null;
         }
 
-        public static string FormatConfig(JToken config, string paddingLeft = "")
+        public static string FormatConfig(JToken config, string padding = "")
         {
             var r = "";
             try
             {
-                r = config?.ToString() ?? string.Empty;
+                var encoding = Encoding.UTF8;
+                var apms = new Libs.Streams.ArrayPoolMemoryStream(encoding);
+                using (apms)
+                using (var sw = new StreamWriter(apms))
+                {
+                    var jw = new Libs.Streams.JsonTextWriterWithPadding(sw, padding);
+                    jw.Formatting = Formatting.Indented;
+                    config.WriteTo(jw);
+                }
+                r = apms.GetString();
             }
             catch { }
-
-            if (!string.IsNullOrEmpty(r) && !string.IsNullOrEmpty(paddingLeft))
-            {
-                var list = new List<string>();
-                var ps = r.Split('\n');
-                foreach (var p in ps)
-                {
-                    list.Add($"{paddingLeft}{p}");
-                }
-                return string.Join("\n", list);
-            }
             return r;
         }
 

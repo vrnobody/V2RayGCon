@@ -42,7 +42,7 @@ namespace VgcApisTests.MiscTests
         public void ParseJsonIntoBasicConfigAndOutboundsTest()
         {
             var json = Encoding.UTF8.GetString(Jsons.Outbs3);
-            var tp = ParseJsonIntoBasicConfigAndOutbounds(json, null);
+            var tp = ParseAndSplitOutboundsFromConfig(json, null);
             Assert.AreEqual("agentin", tp.Item1["inbounds"][0]["tag"]);
             Assert.AreEqual(false, tp.Item1.ContainsKey("outbounds"));
             Assert.AreEqual(3, tp.Item2.Count);

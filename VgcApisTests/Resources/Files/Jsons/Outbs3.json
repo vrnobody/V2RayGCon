@@ -13,6 +13,7 @@
   ],
   "outbounds": [
     {
+      "测试": "中文1😀abc",
       "protocol": "vless",
       "settings": {
         "vnext": [

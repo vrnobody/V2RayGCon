@@ -173,15 +173,15 @@ namespace V2RayGCon.Services
             BalancerStrategies strategy
         )
         {
-            var prefix = Config.ServsPkgTagPrefix;
+            var tagPrefix = Config.ServsPkgTagPrefix;
             var placeHolder = $"vgc-outbounds-{Guid.NewGuid()}";
 
             // create basic config without outbounds
             var tpl = Misc.Caches.Jsons.LoadPackage("pkgV4Tpl");
+            tpl["routing"]["balancers"][0]["selector"] = JArray.Parse($"['{tagPrefix}']");
             InjectBalacerStrategy(ref tpl, interval, url, strategy);
-            tpl["routing"]["balancers"][0]["selector"] = JArray.Parse($"['{prefix}']");
             tpl["outbounds"] = new JArray { placeHolder };
-            var tplStr = VgcApis.Misc.Utils.FormatConfig(tpl);
+            var pkg = VgcApis.Misc.Utils.FormatConfig(tpl);
 
             // parse outbounds
             var outbounds = new List<string>();
@@ -191,30 +191,40 @@ namespace V2RayGCon.Services
             {
                 var coreServ = servList[i];
                 var config = coreServ.GetConfiger().GetConfig();
-                var json = VgcApis.Misc.Utils.ParseJObject(config);
-                var subOutbs = VgcApis.Misc.Utils.ExtractOutboundsFromConfig(json);
-                foreach (JObject outb in subOutbs.Cast<JObject>())
-                {
-                    if (outb == null)
-                    {
-                        continue;
-                    }
-                    outb["tag"] = $"{prefix}{counter++:d6}";
-                    var c = VgcApis.Misc.Utils.FormatConfig(outb, padding);
-                    outbounds.Add(c);
-                }
+                var outbs = ExtractOutboundsFromConfig(config, ref counter, tagPrefix, padding);
+                outbounds.AddRange(outbs);
             }
 
-            var r = VgcApis.Misc.Utils.InjectOutboundsIntoBasicConfig(
-                tplStr,
-                placeHolder,
-                outbounds
-            );
+            var r = VgcApis.Misc.Utils.InjectOutboundsIntoBasicConfig(pkg, placeHolder, outbounds);
             return r;
         }
         #endregion
 
         #region private methods
+
+        List<string> ExtractOutboundsFromConfig(
+            string config,
+            ref int counter,
+            string prefix,
+            string padding
+        )
+        {
+            var r = new List<string>();
+            var json = VgcApis.Misc.Utils.ParseJObject(config);
+            var outbounds = VgcApis.Misc.Utils.ExtractOutboundsFromConfig(json);
+            foreach (JObject outbound in outbounds.Cast<JObject>())
+            {
+                if (outbound == null)
+                {
+                    continue;
+                }
+                outbound["tag"] = $"{prefix}{counter++:d6}";
+                var c = VgcApis.Misc.Utils.FormatConfig(outbound, padding);
+                r.Add(c);
+            }
+            return r;
+        }
+
         void InjectBalacerStrategy(
             ref JObject config,
             string interval,

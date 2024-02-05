@@ -244,7 +244,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return true;
         }
 
-        string GenFinalConfigCore(bool isSetStatPort)
+        string GenFinalConfigCore(bool enableStats)
         {
             VgcApis.Misc.Logger.Debug("regenerate final config");
 
@@ -258,7 +258,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             {
                 if (VgcApis.Misc.Utils.IsJson(config))
                 {
-                    r = GenJsonFinalConfig(tpls, config, isSetStatPort, host, port);
+                    r = GenJsonFinalConfig(tpls, config, enableStats, host, port);
                 }
                 else
                 {
@@ -278,36 +278,40 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return r;
         }
 
-        private string GenJsonFinalConfig(
+        string GenJsonFinalConfig(
             List<Models.Datas.CustomConfigTemplate> tpls,
             string config,
-            bool isSetStatPort,
+            bool enableStats,
             string host,
             int port
         )
         {
-            var padding = VgcApis.Models.Consts.Config.FormatOutboundPaddingLeft;
             string r;
             var modifier = CreateTlsAndSendThroughModifier();
-            var tuple = VgcApis.Misc.Utils.ParseJsonIntoBasicConfigAndOutbounds(config, modifier);
+            var tuple = VgcApis.Misc.Utils.ParseAndSplitOutboundsFromConfig(config, modifier);
 
-            var json = InjectStatisticsConfigOnDemand(tuple.Item1, isSetStatPort);
-            MergeTemplatesSetting(ref json, tpls, host, port);
+            var mergedTpls = tuple.Item1;
+            if (setting.isEnableStatistics && enableStats)
+            {
+                mergedTpls = InjectStatisticsConfig(mergedTpls);
+            }
+            MergeTemplatesSetting(ref mergedTpls, tpls, host, port);
 
             // coreServ.outbounds -> tpl.outbounds
             var outbs = tuple
                 .Item2.Concat(
-                    (json["outbounds"] ?? new JArray()).Select(outb =>
+                    (mergedTpls["outbounds"] ?? new JArray()).Select(outb =>
                     {
                         modifier?.Invoke(outb as JObject);
+                        var padding = VgcApis.Models.Consts.Config.FormatOutboundPaddingLeft;
                         return VgcApis.Misc.Utils.FormatConfig(outb, padding);
                     })
                 )
                 .ToList();
 
             var placeholder = $"vgc-outbounds-{Guid.NewGuid()}";
-            json["outbounds"] = new JArray { placeholder };
-            var c = VgcApis.Misc.Utils.FormatConfig(json);
+            mergedTpls["outbounds"] = new JArray { placeholder };
+            var c = VgcApis.Misc.Utils.FormatConfig(mergedTpls);
             r = VgcApis.Misc.Utils.InjectOutboundsIntoBasicConfig(c, placeholder, outbs);
             return r;
         }
@@ -426,22 +430,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return r;
         }
 
-        JObject InjectStatisticsConfigOnDemand(JObject json, bool isSetStatPort)
+        JObject InjectStatisticsConfig(JObject json)
         {
-            if (!setting.isEnableStatistics)
+            var freePort = VgcApis.Misc.Utils.GetFreeTcpPort();
+            if (freePort < 1)
             {
                 return json;
             }
-
-            if (isSetStatPort)
-            {
-                var freePort = VgcApis.Misc.Utils.GetFreeTcpPort();
-                if (freePort < 1)
-                {
-                    return json;
-                }
-                states.SetStatPort(freePort);
-            }
+            states.SetStatPort(freePort);
 
             var statsCfg = Misc.Caches.Jsons.LoadTemplate("statsApiV4Inb") as JObject;
             statsCfg["inbounds"][0]["port"] = states.GetStatPort();

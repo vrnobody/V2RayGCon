@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 using V2RayGCon.Services;
+using VgcApis.Models.Consts;
 using VgcApis.Models.Datas;
 
 namespace V2RayGCon.Controllers.CoreServerComponent
@@ -190,6 +191,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         public bool SetConfigQuiet(string newConfig)
         {
+            CollectOnHighPressure(newConfig.Length);
             if (string.IsNullOrEmpty(newConfig) || coreInfo.GetConfig() == newConfig)
             {
                 return false;
@@ -244,12 +246,24 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return true;
         }
 
+        void CollectOnHighPressure(int pressure)
+        {
+            if (pressure < 64 * 1024)
+            {
+                return;
+            }
+            VgcApis.Misc.Logger.Debug("GC.Collect()");
+            GC.Collect();
+        }
+
         string GenFinalConfigCore(bool enableStats)
         {
             VgcApis.Misc.Logger.Debug("regenerate final config");
 
-            var tpls = GetCustomTemplates();
             var config = GetConfig();
+            CollectOnHighPressure(config.Length);
+
+            var tpls = GetCustomTemplates();
             var host = coreInfo.inbIp;
             var port = coreInfo.inbPort;
 

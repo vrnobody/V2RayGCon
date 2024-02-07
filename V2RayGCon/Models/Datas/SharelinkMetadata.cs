@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace V2RayGCon.Models.Datas
 {
@@ -45,7 +45,7 @@ namespace V2RayGCon.Models.Datas
         {
             try
             {
-                var json = JObject.Parse(config);
+                var json = VgcApis.Misc.Utils.ExtractRoutingAndFirstOutbound(config);
                 meta = Services.ShareLinkComponents.Comm.ExtractFromJsonConfig(json);
                 return true;
             }
@@ -78,8 +78,8 @@ namespace V2RayGCon.Models.Datas
         string EncodeToSocksShareLink()
         {
             var auth = string.Format("{0}:{1}", auth1, auth2);
-            var userinfo = VgcApis.Misc.Utils
-                .Base64EncodeString(auth)
+            var userinfo = VgcApis
+                .Misc.Utils.Base64EncodeString(auth)
                 .Replace('+', '-')
                 .Replace('/', '_');
 
@@ -97,8 +97,8 @@ namespace V2RayGCon.Models.Datas
         string EncodeToSsShareLink()
         {
             var auth = string.Format("{0}:{1}", auth2, auth1);
-            var userinfo = VgcApis.Misc.Utils
-                .Base64EncodeString(auth)
+            var userinfo = VgcApis
+                .Misc.Utils.Base64EncodeString(auth)
                 .Replace("=", "")
                 .Replace('+', '-')
                 .Replace('/', '_');

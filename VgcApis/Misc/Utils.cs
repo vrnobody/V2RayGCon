@@ -1779,7 +1779,7 @@ namespace VgcApis.Misc
             return arr;
         }
 
-        static JObject ExtractRoutingAndFirstOutbound(string json)
+        public static JObject ExtractRoutingAndFirstOutbound(string json)
         {
             try
             {

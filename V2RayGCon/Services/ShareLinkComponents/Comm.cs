@@ -134,13 +134,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             var root = "outbounds.0";
             var proto = GetStr(root, "protocol")?.ToLower();
-            var isUseV4 = true;
-            if (string.IsNullOrEmpty(proto))
-            {
-                root = "outbound";
-                isUseV4 = false;
-                proto = GetStr(root, "protocol")?.ToLower();
-            }
 
             if (string.IsNullOrEmpty(proto))
             {
@@ -166,7 +159,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             };
 
             ExtractFirstOutboundFromJsonConfig(result, config, mainPrefix, proto);
-            ExtractStreamSettings(result, config, isUseV4, root);
+            ExtractStreamSettings(result, config, root);
             return result;
         }
         #endregion
@@ -311,7 +304,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
         static void ExtractStreamSettings(
             Models.Datas.SharelinkMetadata result,
             JObject config,
-            bool isUseV4,
             string root
         )
         {
@@ -333,7 +325,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     mainParam = GetStr(subPrefix, "tcpSettings.header.type");
                     if (mainParam?.ToLower() == "http")
                     {
-                        ExtractTcpHttpSettings(result, config, isUseV4);
+                        ExtractTcpHttpSettings(result, config);
                     }
                     break;
                 case "kcp":
@@ -348,9 +340,9 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     mainParam = GetStr(subPrefix, "httpSettings.path");
                     try
                     {
-                        var hosts = isUseV4
-                            ? config["outbounds"][0]["streamSettings"]["httpSettings"]["host"]
-                            : config["outbound"]["streamSettings"]["httpSettings"]["host"];
+                        var hosts = config["outbounds"][0]["streamSettings"]["httpSettings"][
+                            "host"
+                        ];
                         result.streamParam2 = VgcApis.Misc.Utils.JArray2Str(hosts as JArray);
                     }
                     catch { }
@@ -366,33 +358,21 @@ namespace V2RayGCon.Services.ShareLinkComponents
             result.streamParam1 = mainParam;
         }
 
-        static void ExtractTcpHttpSettings(
-            Models.Datas.SharelinkMetadata result,
-            JObject json,
-            bool isUseV4
-        )
+        static void ExtractTcpHttpSettings(Models.Datas.SharelinkMetadata result, JObject json)
         {
             try
             {
-                var path = isUseV4
-                    ? json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"]["request"][
-                        "path"
-                    ]
-                    : json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"][
-                        "path"
-                    ];
+                var path = json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"][
+                    "request"
+                ]["path"];
                 result.streamParam2 = VgcApis.Misc.Utils.JArray2Str(path as JArray);
             }
             catch { }
             try
             {
-                var hosts = isUseV4
-                    ? json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"]["request"][
-                        "headers"
-                    ]["Host"]
-                    : json["outbound"]["streamSettings"]["tcpSettings"]["header"]["request"][
-                        "headers"
-                    ]["Host"];
+                var hosts = json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"][
+                    "request"
+                ]["headers"]["Host"];
                 result.streamParam3 = VgcApis.Misc.Utils.JArray2Str(hosts as JArray);
             }
             catch { }

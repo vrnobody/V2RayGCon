@@ -101,7 +101,7 @@
     <Compile Include="BaseClasses\ComponentOf.cs" />
     <Compile Include="Libs\Tasks\TicketPool.cs" />
     <Compile Include="Misc\Logger.cs" />
-    <Compile Include="Misc\RecycleBin.cs" />
+    <Compile Include="Libs\Infr\RecycleBin.cs" />
     <Compile Include="Models\Consts\BitStream.cs" />
     <Compile Include="Models\Consts\Config.cs" />
     <Compile Include="Models\Consts\Core.cs" />

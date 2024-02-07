@@ -2,36 +2,37 @@
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using VgcApis.Misc;
 
-namespace VgcApis.Misc
+namespace VgcApis.Libs.Infr
 {
-    public static class RecycleBin
+    public class RecycleBin
     {
-        static readonly BlockingCollection<RecycleBinHashNode> rmQueue =
+        readonly BlockingCollection<RecycleBinHashNode> rmQueue =
             new BlockingCollection<RecycleBinHashNode>();
-        public static readonly TimeSpan timeout = TimeSpan.FromSeconds(10);
 
-        static ConcurrentDictionary<string, object> cache =
-            new ConcurrentDictionary<string, object>();
+        public readonly TimeSpan timeout = TimeSpan.FromSeconds(10);
 
-        static RecycleBin()
+        ConcurrentDictionary<string, object> cache = new ConcurrentDictionary<string, object>();
+
+        public RecycleBin()
         {
             Task.Delay(500).ContinueWith(_ => Recycle()).ConfigureAwait(false);
         }
 
         #region public methods
-        public static int GetSize() => cache.Count;
+        public int GetSize() => cache.Count;
 
-        public static int GetRecycleQueueLength() => rmQueue.Count;
+        public int GetRecycleQueueLength() => rmQueue.Count;
 
-        public static void Put(string key, object o)
+        public void Put(string key, object o)
         {
             var hash = Utils.Sha256Hex(key);
             cache.AddOrUpdate(hash, o, (_, __) => o);
             rmQueue.Add(new RecycleBinHashNode(hash, timeout));
         }
 
-        public static JObject Parse(string config)
+        public JObject Parse(string config)
         {
             if (TryTake<JObject>(config, out var json))
             {
@@ -41,7 +42,7 @@ namespace VgcApis.Misc
             return Utils.ParseJObject(config);
         }
 
-        public static bool TryTake<T>(string config, out T o)
+        public bool TryTake<T>(string config, out T o)
             where T : class
         {
             var hash = Utils.Sha256Hex(config);
@@ -56,7 +57,7 @@ namespace VgcApis.Misc
         #endregion
 
         #region private methods
-        static void Recycle()
+        void Recycle()
         {
             var node = rmQueue.Take();
             var diff = node.expired.Subtract(DateTime.Now).TotalMilliseconds;

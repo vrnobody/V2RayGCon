@@ -207,7 +207,7 @@ namespace VgcApis.Misc
         #region system
         public static void CollectOnHighPressure(int pressure)
         {
-            if (pressure < 64 * 1024)
+            if (pressure < 256 * 1024)
             {
                 return;
             }

@@ -55,10 +55,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                 VgcApis.Misc.Utils.DoItLater(
                     () =>
                     {
-                        var servs = servers
-                            .GetAllServersOrderByIndex()
-                            .Where(s => s.GetCoreStates().IsAcceptInjection())
-                            .ToList();
+                        var servs = servers.GetAllServersOrderByIndex().ToList();
                         foreach (var serv in servs)
                         {
                             serv.GetConfiger().UpdateSummary();

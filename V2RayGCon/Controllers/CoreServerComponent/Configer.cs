@@ -118,32 +118,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return ShareLinkMgr.Instance.EncodeConfigToShareLink(name, config);
         }
 
-        public string GetFinalConfig()
-        {
-            lock (finalConfigLocker)
-            {
-                var uid = states.GetUid();
-                var send4 = states.IsIgnoreSendThrough() ? "" : setting.GetSendThroughIpv4();
-                if (
-                    IsFinalConfigCacheValid(send4)
-                    && Misc.Caches.ZipStrLru.TryGet(uid, out var r)
-                    && !string.IsNullOrEmpty(r)
-                )
-                {
-                    VgcApis.Misc.Logger.Debug("get final config from cache");
-                    return r;
-                }
-                r = GenFinalConfigCore(false);
-                lastCacheSettings = new FinalConfigCacheSettings()
-                {
-                    enableUtls = setting.isEnableUtlsFingerprint,
-                    fingerprint = setting.uTlsFingerprint,
-                    sendThrough = send4,
-                };
-                Misc.Caches.ZipStrLru.Put(uid, r);
-                return r;
-            }
-        }
+        public string GetFinalConfig() => GetFinalConfigFromCache(false);
+
+        public string GenFinalConfig() => GetFinalConfigFromCache(true);
 
         public void ClearFinalConfigCache() => Misc.Caches.ZipStrLru.TryRemove(states.GetUid());
 
@@ -215,37 +192,57 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
         }
 
-        public string GenFinalConfig()
-        {
-            lock (finalConfigLocker)
-            {
-                var r = GenFinalConfigCore(true);
-                return r;
-            }
-        }
-
         #endregion
 
         #region private methods
 
-        bool IsFinalConfigCacheValid(string sendThrough)
+        bool IsFinalConfigCacheValid(string sendThrough, bool resetStatsPort)
         {
             if (
-                lastCacheSettings.enableUtls != setting.isEnableUtlsFingerprint
+                resetStatsPort
+                || lastCacheSettings.enableUtls != setting.isEnableUtlsFingerprint
                 || lastCacheSettings.fingerprint != setting.uTlsFingerprint
+                || lastCacheSettings.enableStats != setting.isEnableStatistics
+                || lastCacheSettings.sendThrough != sendThrough
+                || lastCacheSettings.useSelfSignedCert != setting.isSupportSelfSignedCert
             )
-            {
-                return false;
-            }
-
-            if (lastCacheSettings.sendThrough != sendThrough)
             {
                 return false;
             }
             return true;
         }
 
-        string GenFinalConfigCore(bool enableStats)
+        string GetFinalConfigFromCache(bool resetStatsPort)
+        {
+            lock (finalConfigLocker)
+            {
+                var uid = states.GetUid();
+                var send4 = states.IsIgnoreSendThrough() ? "" : setting.GetSendThroughIpv4();
+
+                if (
+                    IsFinalConfigCacheValid(send4, resetStatsPort)
+                    && Misc.Caches.ZipStrLru.TryGet(uid, out var r)
+                    && !string.IsNullOrEmpty(r)
+                )
+                {
+                    VgcApis.Misc.Logger.Debug("get final config from cache");
+                    return r;
+                }
+                r = GenFinalConfigCore(resetStatsPort);
+                lastCacheSettings = new FinalConfigCacheSettings()
+                {
+                    enableUtls = setting.isEnableUtlsFingerprint,
+                    fingerprint = setting.uTlsFingerprint,
+                    sendThrough = send4,
+                    enableStats = setting.isEnableStatistics,
+                    useSelfSignedCert = setting.isSupportSelfSignedCert,
+                };
+                Misc.Caches.ZipStrLru.Put(uid, r);
+                return r;
+            }
+        }
+
+        string GenFinalConfigCore(bool resetStatsPort)
         {
             VgcApis.Misc.Logger.Debug("regenerate final config");
 
@@ -259,7 +256,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             {
                 if (VgcApis.Misc.Utils.IsJson(config))
                 {
-                    r = GenJsonFinalConfig(tpls, config, enableStats, host, port);
+                    r = GenJsonFinalConfig(config, tpls, host, port, resetStatsPort);
                 }
                 else
                 {
@@ -281,11 +278,11 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         }
 
         string GenJsonFinalConfig(
-            List<Models.Datas.CustomConfigTemplate> tpls,
             string config,
-            bool enableStats,
+            List<Models.Datas.CustomConfigTemplate> tpls,
             string host,
-            int port
+            int port,
+            bool resetStatsPort
         )
         {
             string r;
@@ -293,19 +290,19 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             var tuple = VgcApis.Misc.Utils.ParseAndSplitOutboundsFromConfig(config, modifier);
 
             var mergedTpls = tuple.Item1;
-            if (setting.isEnableStatistics && enableStats)
+            if (setting.isEnableStatistics)
             {
-                mergedTpls = InjectStatisticsConfig(mergedTpls);
+                mergedTpls = InjectStatisticsConfig(mergedTpls, resetStatsPort);
             }
             MergeTemplatesSetting(ref mergedTpls, tpls, host, port);
 
-            // coreServ.outbounds -> tpl.outbounds
+            // coreServ.outbounds + tpl.outbounds
             var outbs = tuple
                 .Item2.Concat(
                     (mergedTpls["outbounds"] ?? new JArray()).Select(outb =>
                     {
                         modifier?.Invoke(outb as JObject);
-                        var padding = VgcApis.Models.Consts.Config.FormatOutboundPaddingLeft;
+                        var padding = Config.FormatOutboundPaddingLeft;
                         return VgcApis.Misc.Utils.FormatConfig(outb, padding);
                     })
                 )
@@ -432,17 +429,21 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return r;
         }
 
-        JObject InjectStatisticsConfig(JObject json)
+        JObject InjectStatisticsConfig(JObject json, bool resetStatPort)
         {
-            var freePort = VgcApis.Misc.Utils.GetFreeTcpPort();
-            if (freePort < 1)
+            var freePort = states.GetStatPort();
+            if (resetStatPort)
             {
-                return json;
+                freePort = VgcApis.Misc.Utils.GetFreeTcpPort();
+                states.SetStatPort(freePort);
+                if (freePort < 1)
+                {
+                    return json;
+                }
             }
-            states.SetStatPort(freePort);
 
             var statsCfg = Misc.Caches.Jsons.LoadTemplate("statsApiV4Inb") as JObject;
-            statsCfg["inbounds"][0]["port"] = states.GetStatPort();
+            statsCfg["inbounds"][0]["port"] = freePort;
             VgcApis.Misc.Utils.CombineConfigWithRoutingInFront(ref statsCfg, json);
 
             var statsTpl = Misc.Caches.Jsons.LoadTemplate("statsApiV4Tpl") as JObject;
@@ -512,5 +513,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public string fingerprint;
         public bool enableUtls;
         public string sendThrough;
+        public bool enableStats;
+        public bool useSelfSignedCert;
     }
 }

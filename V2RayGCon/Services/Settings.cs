@@ -189,10 +189,7 @@ namespace V2RayGCon.Services
 
         string CalcInjectTemplatesHash(IEnumerable<Models.Datas.CustomConfigTemplate> templates)
         {
-            var hashs = templates
-                .Where(tpl => tpl.isInject && !string.IsNullOrEmpty(tpl.template))
-                .Select(tpl => VgcApis.Misc.Utils.Sha256Hex(tpl.template))
-                .OrderBy(h => h);
+            var hashs = templates.Select(tpl => VgcApis.Misc.Utils.Sha256Hex(tpl.template));
             return string.Join(",", hashs);
         }
 

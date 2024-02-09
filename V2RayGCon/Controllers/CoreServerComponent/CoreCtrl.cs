@@ -209,9 +209,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             try
             {
-                var cfg = setting.isEnableStatistics
-                    ? configer.GenFinalConfig()
-                    : configer.GetFinalConfig();
+                var cfg = configer.GenFinalConfig();
                 core.title = coreStates.GetTitle();
                 if (isQuiet)
                 {

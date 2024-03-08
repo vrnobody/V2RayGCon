@@ -23,6 +23,7 @@ namespace VgcApis.Models.Datas
             Random = 0,
             LeastPing = 1,
             RoundRobin = 2,
+            LeastLoad = 3,
         }
 
         [Flags]

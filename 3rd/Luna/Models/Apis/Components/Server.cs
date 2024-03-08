@@ -1,6 +1,6 @@
-﻿using NLua;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using NLua;
 using VgcApis.Interfaces;
 
 namespace Luna.Models.Apis.Components
@@ -22,6 +22,12 @@ namespace Luna.Models.Apis.Components
 
         public int BalancerStrategyLeastPing { get; } =
             (int)VgcApis.Models.Datas.Enums.BalancerStrategies.LeastPing;
+
+        public int BalancerStrategyRoundRobin { get; } =
+            (int)VgcApis.Models.Datas.Enums.BalancerStrategies.RoundRobin;
+
+        public int BalancerStrategyLeastLoad { get; } =
+            (int)VgcApis.Models.Datas.Enums.BalancerStrategies.LeastLoad;
         #endregion
 
         public int Count() => vgcServers.Count();

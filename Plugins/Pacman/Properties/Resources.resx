@@ -121,8 +121,8 @@
     <value>Pacman</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>0.0.9</value>
-    <comment>ProbeURL + ProbeInterval</comment>
+    <value>0.1.0</value>
+    <comment>leastLoad</comment>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="pacman_x32" type="System.Resources.ResXFileRef, System.Windows.Forms">

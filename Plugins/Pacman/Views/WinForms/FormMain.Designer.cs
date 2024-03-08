@@ -174,7 +174,9 @@
             resources.GetString("cboxObsUrl.Items2"),
             resources.GetString("cboxObsUrl.Items3"),
             resources.GetString("cboxObsUrl.Items4"),
-            resources.GetString("cboxObsUrl.Items5")});
+            resources.GetString("cboxObsUrl.Items5"),
+            resources.GetString("cboxObsUrl.Items6"),
+            resources.GetString("cboxObsUrl.Items7")});
             this.cboxObsUrl.Name = "cboxObsUrl";
             // 
             // cboxObsInterval
@@ -185,10 +187,7 @@
             resources.GetString("cboxObsInterval.Items"),
             resources.GetString("cboxObsInterval.Items1"),
             resources.GetString("cboxObsInterval.Items2"),
-            resources.GetString("cboxObsInterval.Items3"),
-            resources.GetString("cboxObsInterval.Items4"),
-            resources.GetString("cboxObsInterval.Items5"),
-            resources.GetString("cboxObsInterval.Items6")});
+            resources.GetString("cboxObsInterval.Items3")});
             this.cboxObsInterval.Name = "cboxObsInterval";
             // 
             // cboxBalancerStrategy
@@ -198,7 +197,8 @@
             this.cboxBalancerStrategy.Items.AddRange(new object[] {
             resources.GetString("cboxBalancerStrategy.Items"),
             resources.GetString("cboxBalancerStrategy.Items1"),
-            resources.GetString("cboxBalancerStrategy.Items2")});
+            resources.GetString("cboxBalancerStrategy.Items2"),
+            resources.GetString("cboxBalancerStrategy.Items3")});
             resources.ApplyResources(this.cboxBalancerStrategy, "cboxBalancerStrategy");
             this.cboxBalancerStrategy.Name = "cboxBalancerStrategy";
             this.cboxBalancerStrategy.SelectedIndexChanged += new System.EventHandler(this.cboxBalancerStrategy_SelectedIndexChanged);

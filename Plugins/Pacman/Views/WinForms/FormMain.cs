@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Pacman.Views.WinForms
@@ -75,9 +76,20 @@ namespace Pacman.Views.WinForms
 
         private void cboxBalancerStrategy_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var visable = cboxBalancerStrategy.SelectedIndex == 1;
-            cboxObsInterval.Enabled = visable;
-            cboxObsUrl.Enabled = visable;
+            var visible = false;
+            var strategy = (VgcApis.Models.Datas.Enums.BalancerStrategies)
+                cboxBalancerStrategy.SelectedIndex;
+            switch (strategy)
+            {
+                case VgcApis.Models.Datas.Enums.BalancerStrategies.LeastLoad:
+                case VgcApis.Models.Datas.Enums.BalancerStrategies.LeastPing:
+                    visible = true;
+                    break;
+                default:
+                    break;
+            }
+            cboxObsInterval.Enabled = visible;
+            cboxObsUrl.Enabled = visible;
         }
         #endregion
     }

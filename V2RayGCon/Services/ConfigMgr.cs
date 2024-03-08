@@ -244,6 +244,28 @@ namespace V2RayGCon.Services
                     }
                     catch { }
                     break;
+                case BalancerStrategies.LeastLoad:
+                    try
+                    {
+                        config["routing"]["balancers"][0]["strategy"] = JObject.Parse(
+                            "{type:'leastLoad'}"
+                        );
+                        var tplKey = "burstObservatory";
+                        var burstCfg = Misc.Caches.Jsons.LoadPackage(tplKey);
+                        var prefix = Config.ServsPkgTagPrefix;
+                        burstCfg["subjectSelector"] = JArray.Parse($"['{prefix}']");
+                        if (!string.IsNullOrWhiteSpace(interval))
+                        {
+                            burstCfg["pingConfig"]["interval"] = interval;
+                        }
+                        if (!string.IsNullOrWhiteSpace(url))
+                        {
+                            burstCfg["pingConfig"]["destination"] = url;
+                        }
+                        config[tplKey] = burstCfg;
+                    }
+                    catch { }
+                    break;
                 case BalancerStrategies.LeastPing:
                     try
                     {

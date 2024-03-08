@@ -382,10 +382,16 @@
     <value>https://www.youtube.com</value>
   </data>
   <data name="cboxObsUrl.Items4" xml:space="preserve">
-    <value>https://api.v2fly.org/checkConnection.svgz</value>
+    <value>http://cp.cloudflare.com</value>
   </data>
   <data name="cboxObsUrl.Items5" xml:space="preserve">
-    <value>http://ovh.net/files/1Mio.dat</value>
+    <value>http://www.gstatic.com/generate_204</value>
+  </data>
+  <data name="cboxObsUrl.Items6" xml:space="preserve">
+    <value>http://www.google.com/gen_204</value>
+  </data>
+  <data name="cboxObsUrl.Items7" xml:space="preserve">
+    <value>http://captive.apple.com</value>
   </data>
   <data name="cboxObsUrl.Location" type="System.Drawing.Point, System.Drawing">
     <value>185, 25</value>
@@ -412,25 +418,16 @@
     <value>False</value>
   </data>
   <data name="cboxObsInterval.Items" xml:space="preserve">
-    <value>500ms</value>
+    <value>900ms</value>
   </data>
   <data name="cboxObsInterval.Items1" xml:space="preserve">
-    <value>8s</value>
+    <value>5s</value>
   </data>
   <data name="cboxObsInterval.Items2" xml:space="preserve">
-    <value>16s</value>
+    <value>30m</value>
   </data>
   <data name="cboxObsInterval.Items3" xml:space="preserve">
-    <value>32s</value>
-  </data>
-  <data name="cboxObsInterval.Items4" xml:space="preserve">
-    <value>1m</value>
-  </data>
-  <data name="cboxObsInterval.Items5" xml:space="preserve">
-    <value>2m</value>
-  </data>
-  <data name="cboxObsInterval.Items6" xml:space="preserve">
-    <value>4m</value>
+    <value>1h</value>
   </data>
   <data name="cboxObsInterval.Location" type="System.Drawing.Point, System.Drawing">
     <value>63, 25</value>
@@ -461,6 +458,9 @@
   </data>
   <data name="cboxBalancerStrategy.Items2" xml:space="preserve">
     <value>roundRobin</value>
+  </data>
+  <data name="cboxBalancerStrategy.Items3" xml:space="preserve">
+    <value>leastLoad</value>
   </data>
   <data name="cboxBalancerStrategy.Location" type="System.Drawing.Point, System.Drawing">
     <value>63, 0</value>
@@ -585,7 +585,7 @@
   <data name="btnPull.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAGxJREFUOE/NjNEJgDAMBTNbVnA3v1zDQZxE/cmv8oqBECm+VgQDR9PAnWDM7Oih
+        wAAADsABataJCQAAAGxJREFUOE/NjNEJgDAMBTNbVnA3v1zDQZxE/cmv8oqBECm+VgQDR9PAnWDM7Oih
         yBh8VLWJnwa2daegAzJMhXz/PjDOS3ljwG/gMQAJggd8pwNRjhE6kCNRBlQAQMwyoAM1qoEWboEeLv3N
         iJxnTngNYdMDJwAAAABJRU5ErkJggg==
 </value>
@@ -626,7 +626,7 @@
   <data name="btnRefreshSelected.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAZVJREFUOE+Fkj9LQlEYxm9DEIHSEtkaRZ/AIZLGaA+iCNvDIWisPkNTQ1lagoQG
+        wQAADsEBuJFr7QAAAZVJREFUOE+Fkj9LQlEYxm9DEIHSEtkaRZ/AIZLGaA+iCNvDIWisPkNTQ1lagoQG
         DRlBzWbgFmGLUpoYQli0eAeX0/s7nnMTvdELD57zPn/Oe47XcV1X/YMxx5Ssx83ytxA5yye+aLa+vQD5
         DQrqgowgoM2UbHzNoC/g+PC2pA5unugVvRACEO5fPf4ZIFisNb9UYD2l+ybk3AYsvbx/qtG1M01uJx/8
         AiLttlu33MjqqXqufcDNEZDYShQ0EdnNKREOBJiDQsI15ndymovF83ApiNeZWFY3s/kyTd8AStYbF/dl
@@ -672,7 +672,7 @@
   <data name="btnDeleteSelected.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAMpJREFUOE+9kT0OAiEQRvcCXsN6S2tquYOFN/BEHkFuYKell/CnEuKGduQjzAR2
+        wQAADsEBuJFr7QAAAMpJREFUOE+9kT0OAiEQRvcCXsN6S2tquYOFN/BEHkFuYKell/CnEuKGduQjzAR2
         QWM0Fm8ZCPP4YDvvfR+wCdTFnIi6V0Bg95s1AdT2ena75ULmkARQV+nc7UJo2M5nsYlrjGGDCJRSE6Ig
         fFa5hJuRBM2IyQJ7d0Iu6Dk2C1L8gqYgb8bINSTGmLixRSEAqPk6EAyPoTithlwBoMbi6XiQ5reC9Ejx
         //ODaa2LqC1EkIPFGmjgRHmqiaDGzwRj/p/ga8GYjwR1PD0BJukEAmtoABIAAAAASUVORK5CYII=
@@ -714,7 +714,7 @@
   <data name="btnSelectNone.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAFNJREFUOE/d0DEKACAIheHO5v3vUi2uhYGS8ELIpoZvevITFWYeGStARJAeoU24
+        wQAADsEBuJFr7QAAAFNJREFUOE/d0DEKACAIheHO5v3vUi2uhYGS8ELIpoZvevITFWYeGStARJAeoU24
         QKvd0YNo/ymA7AHEAhlvAuh5Qo/QJlzg9EnR/lMA2QOIBe7xmB8/M+5EyWaTAAAAAElFTkSuQmCC
 </value>
   </data>
@@ -754,7 +754,7 @@
   <data name="btnSelectInvert.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAFlJREFUOE9j+Pbt239KMNgAJycnrBiuKHgOVoxiwIf3H1EwTQyAyQ2cAegYxQBs
+        wQAADsEBuJFr7QAAAFlJREFUOE9j+Pbt239KMNgAJycnrBiuKHgOVoxiwIf3H1EwTQyAyQ2cAegYxQBs
         mGgDKMHUMQCb80AYpgib90CYJANwBTKKATDJgTMAHVPVAGwYbgD5+Nt/AEreDT45ac8TAAAAAElFTkSu
         QmCC
 </value>
@@ -795,7 +795,7 @@
   <data name="btnSelectAll.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAFJJREFUOE+t0TEKACAMQ1Hv6PW8o7p0rbRDkVAQbIY3pXwEm4hohQdaH6k4SjbD
+        wQAADsEBuJFr7QAAAFJJREFUOE+t0TEKACAMQ1Hv6PW8o7p0rbRDkVAQbIY3pXwEm4hohQdaH6k4SjbD
         D6y53X3w2rkBhAHEC1RwAtnzTBwlm+EHyt9YDiAMIF7gn+gBdn3mfzow6H8AAAAASUVORK5CYII=
 </value>
   </data>

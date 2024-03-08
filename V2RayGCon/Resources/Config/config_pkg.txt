@@ -47,5 +47,17 @@
       }
     ],
     "outbounds": []
+  },
+  "burstObservatory": {
+    "subjectSelector": [
+      "agentout"
+    ],
+    "pingConfig": {
+      "destination": "http://www.google.com/gen_204",
+      "interval": "1h",
+      "connectivity": "https://detectportal.firefox.com/success.txt",
+      "timeout": "30s",
+      "sampling": 2
+    }
   }
 }

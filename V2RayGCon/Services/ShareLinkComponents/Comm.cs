@@ -71,12 +71,14 @@ namespace V2RayGCon.Services.ShareLinkComponents
             switch (vc.streamType)
             {
                 case "grpc":
+                    vc.streamParam3 = GetValue("authority", @"");
                     vc.streamParam2 = GetValue("serviceName", @"");
                     vc.streamParam1 = (GetValue("mode", @"multi") == "multi").ToString().ToLower();
                     // 不知道guna怎么配置T.T
                     break;
                 case "ws":
                 case "h2":
+                case "httpupgrade":
                     vc.streamParam2 = GetValue("host", parts[1]);
                     vc.streamParam1 = GetValue("path", "/");
                     break;
@@ -104,7 +106,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             var ss = streamSettings;
             // insert stream type
-            string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic", "grpc" };
+            string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic", "grpc", "httpupgrade" };
             string st = ss?.streamType?.ToLower();
 
             if (!streamTypes.Contains(st))
@@ -254,8 +256,17 @@ namespace V2RayGCon.Services.ShareLinkComponents
             switch (st)
             {
                 case "grpc":
+                    var auth = ss.streamParam3;
+                    if (!string.IsNullOrEmpty(auth))
+                    {
+                        token["grpcSettings"]["authority"] = auth;
+                    }
                     token["grpcSettings"]["multiMode"] = mainParam.ToLower() == "true";
-                    token["grpcSettings"]["serviceName"] = ss.streamParam2;
+                    var sn = ss.streamParam2;
+                    if (!string.IsNullOrEmpty(sn))
+                    {
+                        token["grpcSettings"]["serviceName"] = sn;
+                    }
                     break;
                 case "tcp":
                     if (string.IsNullOrEmpty(mainParam) || mainParam == "none")
@@ -282,6 +293,10 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     {
                         token["kcpSettings"]["seed"] = ss.streamParam2;
                     }
+                    break;
+                case "httpupgrade":
+                    token["httpupgradeSettings"]["path"] = mainParam;
+                    token["httpupgradeSettings"]["host"] = ss.streamParam2;
                     break;
                 case "ws":
                     token["wsSettings"]["path"] = mainParam;
@@ -320,6 +335,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 case "grpc":
                     mainParam = GetStr(subPrefix, "grpcSettings.multiMode").ToLower();
                     result.streamParam2 = GetStr(subPrefix, "grpcSettings.serviceName");
+                    result.streamParam3 = GetStr(subPrefix, "grpcSettings.authority");
                     break;
                 case "tcp":
                     mainParam = GetStr(subPrefix, "tcpSettings.header.type");
@@ -335,6 +351,10 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 case "ws":
                     mainParam = GetStr(subPrefix, "wsSettings.path");
                     result.streamParam2 = GetStr(subPrefix, "wsSettings.headers.Host");
+                    break;
+                case "httpupgrade":
+                    mainParam = GetStr(subPrefix, "httpupgradeSettings.path");
+                    result.streamParam2 = GetStr(subPrefix, "httpupgradeSettings.host");
                     break;
                 case "h2":
                     mainParam = GetStr(subPrefix, "httpSettings.path");

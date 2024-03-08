@@ -224,6 +224,13 @@
       "path": ""
     }
   },
+  "httpupgrade": {
+    "network": "httpupgrade",
+    "security": "tls",
+    "httpupgradeSettings": {
+      "path": "/"
+    }
+  },
   "ws": {
     "network": "ws",
     "security": "tls",
@@ -238,7 +245,7 @@
     "network": "grpc",
     "security": "tls",
     "grpcSettings": {
-      "serviceName": "name",
+      "serviceName": "/",
       "multiMode": false
     }
   },

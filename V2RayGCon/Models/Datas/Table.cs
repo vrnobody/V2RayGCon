@@ -130,12 +130,28 @@ namespace V2RayGCon.Models.Datas
                     {
                         "grpcSettings.multiMode",
                         "grpcSettings.serviceName",
+                        "grpcSettings.authority",
                     },
                     options = new Dictionary<string, string>
                     {
                         { "true", "grpc_multi" },
                         { "false", "grpc" },
                     },
+                }
+            },
+            {
+                6,
+                new StreamComponent
+                {
+                    dropDownStyle = false,
+                    name = "HTTPupgrade",
+                    network = "httpupgrade",
+                    paths = new List<string>
+                    {
+                        "httpupgradeSettings.path",
+                        "httpupgradeSettings.host",
+                    },
+                    options = new Dictionary<string, string> { { "none", "httpupgrade" }, },
                 }
             },
         };

@@ -8,10 +8,6 @@ namespace V2RayGCon.Services.ShareLinkComponents
     {
         public VlessDecoder() { }
 
-        #region properties
-
-        #endregion
-
         #region public methods
         public VgcApis.Models.Datas.DecodeResult Decode(string shareLink)
         {

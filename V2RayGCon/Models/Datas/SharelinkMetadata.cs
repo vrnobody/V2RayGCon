@@ -121,8 +121,10 @@ namespace V2RayGCon.Models.Datas
                 case "grpc":
                     ps["serviceName"] = streamParam2;
                     ps["mode"] = streamParam1 == @"false" ? "gun" : "multi";
+                    ps["authority"] = streamParam3;
                     // 不知道guna怎么配置T.T
                     break;
+                case "httpupgrade":
                 case "ws":
                 case "h2":
                     if (!string.IsNullOrWhiteSpace(streamParam1))

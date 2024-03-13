@@ -1,11 +1,10 @@
 {
-  "version": "1.9.4.0",
-  "md5": "6B07C42DF16D0E984EC204AD52165901",
+  "version": "1.9.5.0",
+  "md5": "0128799D5264D393366BE73F4290D63B",
   "warnings": [],
   "changes": [
-    "移除旧配置格式v2ray v3的支持",
-    "修复一处内存泄露",
-    "提高大配置文件(1k+ outbounds）的处理速度",
-    "简化合并规则，outbounds改为仅追加"
+    "Pacman插件支持leastLoad均衡策略",
+    "vless/trojan分享链接支持HTTPUpgrade及gRPC的authority参数",
+    "修复修改配置模板不生效的bug"
   ]
 }

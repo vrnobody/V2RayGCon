@@ -1,0 +1,6 @@
+<header>
+<h1>{{ .Site.Title }}</h1>
+{{ with .Site.Params.github_release_badge }}
+<img src="{{ . }}" alt="Release Badge" />
+{{end}}
+</header>

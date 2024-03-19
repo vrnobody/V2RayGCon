@@ -1,0 +1,33 @@
+name: manual
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - manual
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout manual
+        uses: actions/checkout@v4
+        with:
+          ref: manual
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.119.0'
+          # extended: true
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public

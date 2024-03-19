@@ -1,0 +1,18 @@
+<style>
+:root {
+  {{- with .Site.Params.custom_font_color }}--custom-font-color: {{ . }};{{ end -}}
+  {{- with .Site.Params.custom_background_color }}--custom-background-color: {{ . }};{{ end -}}
+}
+
+.highlight{
+    line-height: 1.1;   
+}
+
+.highlight div{
+  background-color: #eed !important;
+}
+
+.highlight pre{
+  background-color: #eed !important;
+}
+</style>

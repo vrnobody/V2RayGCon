@@ -1,0 +1,72 @@
+baseURL = "https://vrnobody.github.io/V2RayGCon"
+
+languageCode = "zh-cn"
+DefaultContentLanguage = "zh"
+title = "V2RayGCon手册"
+theme = "hugo-theme-techdoc"
+
+hasCJKLanguage = true
+metaDataFormat = "yaml"
+
+# pygmentsCodeFences = true
+# pygmentsUseClasses = true
+# PygmentsStyle = "perldoc"
+
+defaultContentLanguage = "zh"
+defaultContentLanguageInSubdir= false
+enableMissingTranslationPlaceholders = false
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = false
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = true
+    lineNumbersInTable = true
+    noClasses = true
+    style = "vs"
+    tabWidth = 4
+
+[Params]
+
+    # Souce Code repository section
+    github_release_badge = "https://img.shields.io/github/release/vrnobody/V2RayGCon.svg"
+
+    # Documentation repository section
+    # documentation repository (set edit link to documentation repository)
+    github_doc_repository = "https://github.com/vrnobody/manual"
+
+    # Analytic section
+    # google_analytics_id = "" # Your Google Analytics tracking id
+    # tag_manager_container_id = "" # Your Google Tag Manager container id
+    # google_site_verification = "" # Your Google Site Verification for Search Console
+
+    # Open Graph and Twitter Cards settings section
+    # title = "Hugo Techdoc Theme"
+    # images = ["og-image.png"]
+    # See https://gohugo.io/templates/internal/#open-graph
+    # See https://gohugo.io/templates/internal/#twitter-cards
+
+    # Theme settings section
+    # Theme color
+    custom_font_color = ""
+    custom_background_color = ""
+
+    # Documentation Menu section
+    # Menu style settings
+    menu_style = "open-menu" # "open-menu" or "slide-menu"
+
+    # Date format
+    dateformat = "" # default "2 Jan 2006"
+    # See the format reference https://gohugo.io/functions/format/#hugo-date-and-time-templating-reference
+
+    # path name excluded from documentation menu
+    menu_exclusion = [
+        "archives",
+        "archive",
+        "blog",
+        "entry",
+        "post",
+        "posts"
+    ]

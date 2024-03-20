@@ -4,7 +4,7 @@ namespace VgcApis.Models.Consts
 {
     public static class Config
     {
-        public static readonly string FormatOutboundPaddingLeft = @"    ";
+        public static readonly string OutboundsLeftPadding = @"    ";
 
         public static readonly string ServsPkgTagPrefix = @"agentout";
 

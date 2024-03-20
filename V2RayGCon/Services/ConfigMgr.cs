@@ -185,7 +185,7 @@ namespace V2RayGCon.Services
 
             // parse outbounds
             var outbounds = new List<string>();
-            var padding = Config.FormatOutboundPaddingLeft;
+            var padding = Config.OutboundsLeftPadding;
             var counter = 0;
             for (var i = 0; i < servList.Count; i++)
             {

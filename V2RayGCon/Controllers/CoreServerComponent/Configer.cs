@@ -302,7 +302,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                     (mergedTpls["outbounds"] ?? new JArray()).Select(outb =>
                     {
                         modifier?.Invoke(outb as JObject);
-                        var padding = Config.FormatOutboundPaddingLeft;
+                        var padding = Config.OutboundsLeftPadding;
                         return VgcApis.Misc.Utils.FormatConfig(outb, padding);
                     })
                 )

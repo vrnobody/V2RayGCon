@@ -12,6 +12,12 @@
     }
   ],
   "outbounds": [
+      /* { 
+        "world": 123
+      } */
+
+      // hello
+
     {
       "测试": "中文1😀abc",
       "protocol": "vless",

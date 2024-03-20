@@ -1829,9 +1829,11 @@ namespace VgcApis.Misc
                 {
                     case JsonToken.EndArray:
                         return r;
-                    default:
+                    case JsonToken.StartObject:
                         var s = SerializeOneOutbound(jr, ser, modifier);
                         r.Add(s);
+                        break;
+                    default:
                         break;
                 }
             }
@@ -1846,7 +1848,7 @@ namespace VgcApis.Misc
         {
             var outb = ser.Deserialize<JObject>(jr);
             modifier?.Invoke(outb);
-            var padding = Config.FormatOutboundPaddingLeft;
+            var padding = Config.OutboundsLeftPadding;
             var r = FormatConfig(outb, padding);
             return r;
         }

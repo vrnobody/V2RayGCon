@@ -1727,9 +1727,9 @@ namespace VgcApis.Misc
 
             try
             {
-                foreach (JObject inb in arr.Cast<JObject>())
+                foreach (var item in arr)
                 {
-                    if (inb == null)
+                    if (!(item is JObject inb))
                     {
                         continue;
                     }
@@ -2016,9 +2016,12 @@ namespace VgcApis.Misc
                 var outbs = GetKey(json, "outbounds");
                 if (outbs != null && outbs is JArray)
                 {
-                    foreach (JObject item in outbs.Cast<JObject>())
+                    foreach (var item in outbs)
                     {
-                        result.Add(item);
+                        if (item is JObject outb)
+                        {
+                            result.Add(outb);
+                        }
                     }
                 }
             }
@@ -2415,12 +2418,22 @@ namespace VgcApis.Misc
                 body[key] = JArray.Parse(@"[]");
             }
 
-            foreach (JObject n in mixin[key].Cast<JObject>())
+            foreach (var item1 in mixin[key])
             {
+                if (!(item1 is JObject n))
+                {
+                    continue;
+                }
+
                 void innerLoop()
                 {
-                    foreach (JObject m in body[key].Cast<JObject>())
+                    foreach (var item2 in body[key])
                     {
+                        if (!(item2 is JObject m))
+                        {
+                            continue;
+                        }
+
                         var mt = m["tag"];
                         var nt = n["tag"];
                         if (mt != null && nt != null && mt.ToString() == nt.ToString())

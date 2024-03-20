@@ -43,8 +43,13 @@ namespace V2RayGCon.Misc
             try
             {
                 var json = JObject.Parse(result);
-                foreach (JObject o in json["stat"].Cast<JObject>())
+                foreach (var item in json["stat"])
                 {
+                    if (!(item is JObject o))
+                    {
+                        continue;
+                    }
+
                     var name = o["name"].ToString();
                     if (name.EndsWith("uplink"))
                     {

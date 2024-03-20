@@ -69,6 +69,11 @@ namespace VgcApisTests.MiscTests
             Assert.AreEqual("dokodemo-door", info.protocol);
             Assert.AreEqual("127.0.0.1", info.host);
             Assert.AreEqual(10085, info.port);
+
+            info = inbsInfo.First();
+            Assert.AreEqual("http", info.protocol);
+            Assert.AreEqual("127.0.0.1", info.host);
+            Assert.AreEqual(8080, info.port);
         }
 
         [TestMethod]
@@ -89,7 +94,8 @@ namespace VgcApisTests.MiscTests
         {
             var json = Encoding.UTF8.GetString(Jsons.Outbs3);
             var outbs = GetFirstJsonProperty<JArray>("outbounds", json);
-            Assert.AreEqual(3, outbs.Count);
+            // 2 comments +  3 outbounds = 5
+            Assert.AreEqual(5, outbs.Count);
         }
     }
 }

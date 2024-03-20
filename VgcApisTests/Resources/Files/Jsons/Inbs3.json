@@ -1,6 +1,12 @@
 {
   "inbounds": [
+      // hello
+      /*
+      {"1":1},
+      */
     {
+        /* {"w", 1}, */
+    // hello
       "tag": "http",
       "protocol": "http",
       "port": 8080,
@@ -8,18 +14,23 @@
       "settings": {}
     },
     {
+        /* "tag":"error", */
       "tag": "socks",
       "protocol": "socks",
       "port": 1080,
       "listen": "127.0.0.1",
       "settings": {
+          /* {"w", 1}, */
+    // hello
         "udp": true
       }
     },
     {
+        /* "protocol":"error", */
       "listen": "127.0.0.1",
       "port": 10085,
       "protocol": "dokodemo-door",
+      /* "protocol":"error", */
       "settings": {
         "address": "127.0.0.1"
       },

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Models.Consts;
@@ -148,8 +149,13 @@ namespace V2RayGCon.Services
                 var json = VgcApis.Misc.Utils.ParseJObject(config);
                 var parts = VgcApis.Misc.Utils.ExtractOutboundsFromConfig(json);
 
-                foreach (JObject p in parts.Cast<JObject>())
+                foreach (var item in parts)
                 {
+                    if (!(item is JObject p))
+                    {
+                        continue;
+                    }
+
                     var prefix = Config.ServsPkgTagPrefix;
                     var tag = $"{prefix}{counter++:d6}";
                     p["tag"] = tag;
@@ -213,12 +219,13 @@ namespace V2RayGCon.Services
             var r = new List<string>();
             var json = VgcApis.Misc.Utils.ParseJObject(config);
             var outbounds = VgcApis.Misc.Utils.ExtractOutboundsFromConfig(json);
-            foreach (JObject outbound in outbounds.Cast<JObject>())
+            foreach (var item in outbounds)
             {
-                if (outbound == null)
+                if (!(item is JObject outbound))
                 {
                     continue;
                 }
+
                 outbound["tag"] = $"{prefix}{counter++:d6}";
                 var c = VgcApis.Misc.Utils.FormatConfig(outbound, padding);
                 r.Add(c);

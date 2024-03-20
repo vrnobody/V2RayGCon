@@ -117,6 +117,9 @@ namespace V2RayGCon.Views.WinForms
 
         private void btnModify_Click(object sender, EventArgs e)
         {
+            btnModify.Enabled = false;
+            btnCancel.Enabled = false;
+
             var list = servers.GetSelectedServers();
 
             var newInbName = chkInMode.Checked ? cboxInName.Text : null;

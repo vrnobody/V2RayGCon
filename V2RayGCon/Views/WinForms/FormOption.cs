@@ -46,10 +46,6 @@ namespace V2RayGCon.Views.WinForms
             };
         }
 
-        #region public method
-
-        #endregion
-
         #region private method
 
         private Controllers.FormOptionCtrl InitOptionCtrl()
@@ -154,8 +150,14 @@ namespace V2RayGCon.Views.WinForms
 
         private void btnOptionSave_Click(object sender, System.EventArgs e)
         {
+            btnOptionSave.Enabled = false;
+            btnOptionExit.Enabled = false;
+
             this.optionCtrl.SaveAllOptions();
             VgcApis.Misc.UI.MsgBox(I18N.Done);
+
+            btnOptionSave.Enabled = true;
+            btnOptionExit.Enabled = true;
         }
         #endregion
     }

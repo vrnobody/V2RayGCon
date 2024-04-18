@@ -1,7 +1,8 @@
-﻿using ScintillaNET;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
+using ScintillaNET;
 
 namespace NeoLuna.Misc
 {
@@ -70,7 +71,12 @@ namespace NeoLuna.Misc
 
             // String Manipulation & Mathematical
             // Input and Output Facilities and System Facilities
-            scintilla.SetKeywords(2, Models.Consts.Lua.LuaSubFunctions);
+            var luaPdf = Models
+                .Consts.Lua.LuaPredefinedSubFunctions.Select(fn => fn.Split('(').FirstOrDefault())
+                .Distinct()
+                .Where(s => !string.IsNullOrEmpty(s));
+            var luaSubFuncs = $"{Models.Consts.Lua.LuaSubFunctions} {string.Join(" ", luaPdf)}";
+            scintilla.SetKeywords(2, luaSubFuncs);
 
             scintilla.SetKeywords(3, Models.Consts.Lua.LuaModules);
 

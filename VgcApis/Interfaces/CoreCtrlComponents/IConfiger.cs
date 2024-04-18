@@ -50,6 +50,12 @@ namespace VgcApis.Interfaces.CoreCtrlComponents
         string GetShareLink();
 
         /// <summary>
+        /// 获取分享链接元数据
+        /// </summary>
+        /// <returns>分享链接元数据</returns>
+        Models.Datas.SharelinkMetaData GetShareLinkMetaData();
+
+        /// <summary>
         /// 修改config.json，但不重启服务器。
         /// </summary>
         /// <param name="newConfig">新的config.json</param>

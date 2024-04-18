@@ -211,7 +211,7 @@ namespace VgcApis.Misc
             {
                 return;
             }
-            VgcApis.Misc.Logger.Debug("GC.Collect()");
+            Logger.Debug("GC.Collect()");
             GC.Collect();
         }
 

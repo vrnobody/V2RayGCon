@@ -111,6 +111,21 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             }
         }
 
+        public SharelinkMetaData GetShareLinkMetaData()
+        {
+            var name = GetSibling<CoreStates>().GetName();
+            var config = GetConfig();
+            if (
+                Services.ShareLinkComponents.Comm.TryParseConfig(config, out var meta)
+                && meta != null
+            )
+            {
+                meta.name = name;
+                return meta;
+            }
+            return null;
+        }
+
         public string GetShareLink()
         {
             var name = GetSibling<CoreStates>().GetName();

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace V2RayGCon.Models.Datas
+namespace VgcApis.Models.Datas
 {
     public class Vmess
     {
@@ -35,7 +35,7 @@ namespace V2RayGCon.Models.Datas
             path = string.Empty; // v1: "" v2: ws->path h2->path
         }
 
-        public Vmess(SharelinkMetadata vc)
+        public Vmess(SharelinkMetaData vc)
             : this()
         {
             v = "2";
@@ -112,9 +112,9 @@ namespace V2RayGCon.Models.Datas
             }
 
             string content = JsonConvert.SerializeObject(vmess);
-            return VgcApis.Misc.Utils.AddLinkPrefix(
-                VgcApis.Misc.Utils.Base64EncodeString(content),
-                VgcApis.Models.Datas.Enums.LinkTypes.vmess
+            return Misc.Utils.AddLinkPrefix(
+                Misc.Utils.Base64EncodeString(content),
+                Enums.LinkTypes.vmess
             );
         }
     }

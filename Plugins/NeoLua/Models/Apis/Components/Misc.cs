@@ -253,6 +253,15 @@ namespace NeoLuna.Models.Apis.Components
 
         public List<string> LocalStorageKeys() => settings.ShareMemoryKeys();
 
+        public VgcApis.Models.Datas.SharelinkMetaData EncodeToShareLinkMetaData(string config)
+        {
+            if (vgcSlinkMgr.TryParseConfig(config, out var meta) && meta != null)
+            {
+                return meta;
+            }
+            return null;
+        }
+
         public string EncodeToShareLink(string name, string config)
         {
             return vgcSlinkMgr.EncodeConfigToShareLink(name, config);

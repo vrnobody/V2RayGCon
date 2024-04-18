@@ -10,7 +10,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         public Codecs() { }
 
         #region vless and trojan
-        public string TrojanToConfig(Models.Datas.SharelinkMetadata vee)
+        public string TrojanToConfig(VgcApis.Models.Datas.SharelinkMetaData vee)
         {
             if (vee == null)
             {
@@ -30,7 +30,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return GenerateJsonConfing(tpl, outbSs);
         }
 
-        public string VlessToConfig(Models.Datas.SharelinkMetadata vee)
+        public string VlessToConfig(VgcApis.Models.Datas.SharelinkMetaData vee)
         {
             if (vee == null)
             {

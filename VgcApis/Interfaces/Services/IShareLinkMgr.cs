@@ -1,19 +1,19 @@
-﻿namespace VgcApis.Interfaces.Services
+﻿using VgcApis.Models.Datas;
+
+namespace VgcApis.Interfaces.Services
 {
     public interface IShareLinkMgrService
     {
         string DecodeShareLinkToMetadata(string shareLink);
         string EncodeMetadataToShareLink(string meta);
 
-        Models.Datas.DecodeResult DecodeShareLinkToConfig(string shareLink);
+        DecodeResult DecodeShareLinkToConfig(string shareLink);
 
         string EncodeConfigToShareLink(string name, string config);
 
-        string EncodeConfigToShareLink(
-            string name,
-            string config,
-            Models.Datas.Enums.LinkTypes linkType
-        );
+        bool TryParseConfig(string config, out SharelinkMetaData meta);
+
+        string EncodeConfigToShareLink(string name, string config, Enums.LinkTypes linkType);
 
         int ImportLinksWithOutV2cfgLinksSync(string links, string mark);
 

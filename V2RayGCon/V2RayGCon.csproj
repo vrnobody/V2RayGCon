@@ -160,7 +160,6 @@
     <Compile Include="Models\Datas\CustomCoreSettings.cs" />
     <Compile Include="Models\Datas\ImportSharelinkOptions.cs" />
     <Compile Include="Models\Datas\CustomConfigTemplate.cs" />
-    <Compile Include="Models\Datas\SharelinkMetadata.cs" />
     <Compile Include="Models\Datas\SpeedTestConfigInfos.cs" />
     <Compile Include="Models\Datas\SpeedTestOptions.cs" />
     <Compile Include="Models\Datas\UpdateInfo.cs" />
@@ -292,7 +291,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Models\Datas\Vmess.cs" />
     <Compile Include="Misc\Caches\Jsons.cs" />
     <Compile Include="Libs\Nets\Downloader.cs" />
     <Compile Include="Settings.cs" />

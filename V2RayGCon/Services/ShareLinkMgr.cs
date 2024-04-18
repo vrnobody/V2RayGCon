@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using V2RayGCon.Resources.Resx;
+using V2RayGCon.Services.ShareLinkComponents;
+using VgcApis.Models.Datas;
 
 namespace V2RayGCon.Services
 {
@@ -12,11 +14,11 @@ namespace V2RayGCon.Services
     {
         Settings settings;
         Servers servers;
-        readonly ShareLinkComponents.Codecs codecs;
+        readonly Codecs codecs;
 
         public ShareLinkMgr()
         {
-            codecs = new ShareLinkComponents.Codecs();
+            codecs = new Codecs();
         }
 
         #region properties
@@ -27,10 +29,7 @@ namespace V2RayGCon.Services
         public string DecodeShareLinkToMetadata(string shareLink)
         {
             var r = DecodeShareLinkToConfig(shareLink);
-            if (
-                Models.Datas.SharelinkMetadata.TryParseConfig(r.config, out var meta)
-                && meta != null
-            )
+            if (Comm.TryParseConfig(r.config, out var meta) && meta != null)
             {
                 meta.name = r.name;
                 return JsonConvert.SerializeObject(meta);
@@ -38,11 +37,17 @@ namespace V2RayGCon.Services
             return null;
         }
 
+        public bool TryParseConfig(string config, out SharelinkMetaData meta)
+        {
+            var r = Comm.TryParseConfig(config, out meta);
+            return r;
+        }
+
         public string EncodeMetadataToShareLink(string meta)
         {
             try
             {
-                var m = JsonConvert.DeserializeObject<Models.Datas.SharelinkMetadata>(meta);
+                var m = JsonConvert.DeserializeObject<SharelinkMetaData>(meta);
                 return m.ToShareLink();
             }
             catch { }
@@ -52,23 +57,23 @@ namespace V2RayGCon.Services
         /// <summary>
         /// return null if fail!
         /// </summary>
-        public VgcApis.Models.Datas.DecodeResult DecodeShareLinkToConfig(string shareLink)
+        public DecodeResult DecodeShareLinkToConfig(string shareLink)
         {
             var linkType = VgcApis.Misc.Utils.DetectLinkType(shareLink);
             switch (linkType)
             {
                 case VgcApis.Models.Datas.Enums.LinkTypes.ss:
-                    return codecs.Decode<ShareLinkComponents.SsDecoder>(shareLink);
+                    return codecs.Decode<SsDecoder>(shareLink);
                 case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
-                    return codecs.Decode<ShareLinkComponents.VmessDecoder>(shareLink);
+                    return codecs.Decode<VmessDecoder>(shareLink);
                 case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
-                    return codecs.Decode<ShareLinkComponents.V2cfgDecoder>(shareLink);
+                    return codecs.Decode<V2cfgDecoder>(shareLink);
                 case VgcApis.Models.Datas.Enums.LinkTypes.vless:
-                    return codecs.Decode<ShareLinkComponents.VlessDecoder>(shareLink);
+                    return codecs.Decode<VlessDecoder>(shareLink);
                 case VgcApis.Models.Datas.Enums.LinkTypes.trojan:
-                    return codecs.Decode<ShareLinkComponents.TrojanDecoder>(shareLink);
+                    return codecs.Decode<TrojanDecoder>(shareLink);
                 case VgcApis.Models.Datas.Enums.LinkTypes.socks:
-                    return codecs.Decode<ShareLinkComponents.SocksDecoder>(shareLink);
+                    return codecs.Decode<SocksDecoder>(shareLink);
                 default:
                     break;
             }
@@ -91,26 +96,22 @@ namespace V2RayGCon.Services
         /// <summary>
         /// return null if fail!
         /// </summary>
-        public string EncodeConfigToShareLink(
-            string name,
-            string config,
-            VgcApis.Models.Datas.Enums.LinkTypes linkType
-        )
+        public string EncodeConfigToShareLink(string name, string config, Enums.LinkTypes linkType)
         {
             switch (linkType)
             {
                 case VgcApis.Models.Datas.Enums.LinkTypes.socks:
-                    return codecs.Encode<ShareLinkComponents.SocksDecoder>(name, config);
+                    return codecs.Encode<SocksDecoder>(name, config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.ss:
-                    return codecs.Encode<ShareLinkComponents.SsDecoder>(name, config);
+                    return codecs.Encode<SsDecoder>(name, config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
-                    return codecs.Encode<ShareLinkComponents.VmessDecoder>(name, config);
+                    return codecs.Encode<VmessDecoder>(name, config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
-                    return codecs.Encode<ShareLinkComponents.V2cfgDecoder>(name, config);
+                    return codecs.Encode<V2cfgDecoder>(name, config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.vless:
-                    return codecs.Encode<ShareLinkComponents.VlessDecoder>(name, config);
+                    return codecs.Encode<VlessDecoder>(name, config);
                 case VgcApis.Models.Datas.Enums.LinkTypes.trojan:
-                    return codecs.Encode<ShareLinkComponents.TrojanDecoder>(name, config);
+                    return codecs.Encode<TrojanDecoder>(name, config);
                 default:
                     return null;
             }
@@ -119,7 +120,7 @@ namespace V2RayGCon.Services
 
         #region public methods
         public T GetCodec<T>()
-            where T : VgcApis.BaseClasses.ComponentOf<ShareLinkComponents.Codecs>
+            where T : VgcApis.BaseClasses.ComponentOf<Codecs>
         {
             return codecs.GetChild<T>();
         }
@@ -187,15 +188,14 @@ namespace V2RayGCon.Services
         #endregion
 
         #region private methods
-        static readonly List<VgcApis.Models.Datas.Enums.LinkTypes> linkTypes =
-            new List<VgcApis.Models.Datas.Enums.LinkTypes>
-            {
-                VgcApis.Models.Datas.Enums.LinkTypes.vmess,
-                VgcApis.Models.Datas.Enums.LinkTypes.vless,
-                VgcApis.Models.Datas.Enums.LinkTypes.trojan,
-                VgcApis.Models.Datas.Enums.LinkTypes.ss,
-                VgcApis.Models.Datas.Enums.LinkTypes.socks,
-            };
+        static readonly List<Enums.LinkTypes> linkTypes = new List<Enums.LinkTypes>
+        {
+            VgcApis.Models.Datas.Enums.LinkTypes.vmess,
+            VgcApis.Models.Datas.Enums.LinkTypes.vless,
+            VgcApis.Models.Datas.Enums.LinkTypes.trojan,
+            VgcApis.Models.Datas.Enums.LinkTypes.ss,
+            VgcApis.Models.Datas.Enums.LinkTypes.socks,
+        };
 
         int CountImportSuccessResult(IEnumerable<string[]> result)
         {
@@ -299,10 +299,7 @@ namespace V2RayGCon.Services
             return importResults.Any(r => VgcApis.Misc.Utils.IsImportResultSuccess(r));
         }
 
-        private Tuple<bool, string> AddLinkToServerList(
-            VgcApis.Models.Datas.DecodeResult r,
-            string mark
-        )
+        private Tuple<bool, string> AddLinkToServerList(DecodeResult r, string mark)
         {
             if (r == null || string.IsNullOrEmpty(r.config))
             {

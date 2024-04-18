@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VgcApis.Models.Datas;
 
 namespace V2RayGCon.Test.DecoderTests
 {
     [TestClass]
     public class VmessShareLinkTests
     {
-        List<Tuple<Models.Datas.Vmess, string>> GenVmessTestData()
+        List<Tuple<Vmess, string>> GenVmessTestData()
         {
-            var data = new List<Tuple<Models.Datas.Vmess, string>>();
+            var data = new List<Tuple<Vmess, string>>();
 
-            var vmessStandard = new Models.Datas.Vmess
+            var vmessStandard = new Vmess
             {
                 v = "2",
                 add = "1.2.3.4",
@@ -23,7 +24,7 @@ namespace V2RayGCon.Test.DecoderTests
 
             var linkStandard = vmessStandard.ToVmessLink();
 
-            var vmessNonStandard = new Models.Datas.Vmess
+            var vmessNonStandard = new Vmess
             {
                 v = "2",
                 add = "1.2.3.4",
@@ -34,8 +35,8 @@ namespace V2RayGCon.Test.DecoderTests
 
             var linkNonStandard = vmessNonStandard.ToVmessLink().Replace(@"=", @"");
 
-            data.Add(new Tuple<Models.Datas.Vmess, string>(vmessStandard, linkStandard));
-            data.Add(new Tuple<Models.Datas.Vmess, string>(vmessNonStandard, linkNonStandard));
+            data.Add(new Tuple<Vmess, string>(vmessStandard, linkStandard));
+            data.Add(new Tuple<Vmess, string>(vmessNonStandard, linkNonStandard));
             return data;
         }
 
@@ -62,10 +63,7 @@ namespace V2RayGCon.Test.DecoderTests
             var vmessLinks = testData.Select(e => e.Item2).ToList();
             var subText = string.Join(Environment.NewLine, vmessLinks);
 
-            var extracted = Misc.Utils.ExtractLinks(
-                subText,
-                VgcApis.Models.Datas.Enums.LinkTypes.vmess
-            );
+            var extracted = Misc.Utils.ExtractLinks(subText, Enums.LinkTypes.vmess);
 
             Assert.AreEqual(testData.Count, extracted.Count);
             foreach (var link in extracted)
@@ -89,7 +87,7 @@ namespace V2RayGCon.Test.DecoderTests
         [TestMethod]
         public void DecodeVmessFailTest()
         {
-            var errorVmess = new Models.Datas.Vmess
+            var errorVmess = new Vmess
             {
                 id = "1234", // invalid GUID
                 port = "1234",

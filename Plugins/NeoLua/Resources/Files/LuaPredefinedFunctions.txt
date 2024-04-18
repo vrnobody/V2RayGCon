@@ -16,7 +16,7 @@ end
 -- os.exit = function() print("os.exit() is disabled") end
 
 -- copy from NLua
-function each(o)
+function Each(o)
     local e = o:GetEnumerator()
     return function()
         if e:MoveNext() then
@@ -69,6 +69,35 @@ table.contains = function(haystack, needle)
     return false
 end
 
+table.length = function(T)
+    if T == nil or type(T) ~= "table" then
+        return -1
+    end
+    local count = 0
+    for _ in pairs(T) do count = count + 1 end
+    return count
+end
+
+table.sortedkeys = function(t)
+    assert(type(t) == "table", 'table.sortedkeys(t): param type error')
+    local keys = {}
+    for k in pairs(t) do
+        table.insert(keys, k)
+    end
+    table.sort(keys, function (a, b) return t[a] < t[b] end)
+    return keys
+end
+
+table.sortedkeysdesc = function(t)
+    assert(type(t) == "table", 'table.sortedkeys(t): param type error')
+    local keys = {}
+    for k in pairs(t) do
+        table.insert(keys, k)
+    end
+    table.sort(keys, function (a, b) return t[a] > t[b] end)
+    return keys
+end
+
 table.keys = function(t)
     assert(type(t) == "table", "param t must be table")
     local numKeys = {}
@@ -86,15 +115,6 @@ table.keys = function(t)
         table.insert(numKeys, v)
     end
     return numKeys
-end
-
-table.length = function(T)
-    if T == nil or type(T) ~= "table" then
-        return -1
-    end
-    local count = 0
-    for _ in pairs(T) do count = count + 1 end
-    return count
 end
 
 table.dump = function(t, indent, header, level, maxLevel)

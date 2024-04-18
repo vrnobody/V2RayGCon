@@ -42,6 +42,8 @@ namespace NeoLuna.Models.Consts
             "string.isempty(text)",
             "string.startswith(text, keyword)",
             "table.contains(haystack, needle)",
+            "table.sortedkeys(t)",
+            "table.sortedkeysdesc(t)",
             "table.keys(t)",
             "table.length(t)",
             "table.load(str)",

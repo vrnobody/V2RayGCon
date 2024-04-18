@@ -2,16 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using VgcApis.Models.Datas;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
     public static class Comm
     {
         #region public methods
-        public static Models.Datas.SharelinkMetadata ParseNonStandarUriShareLink(
-            string proto,
-            string url
-        )
+        public static bool TryParseConfig(string config, out SharelinkMetaData meta)
+        {
+            try
+            {
+                var json = VgcApis.Misc.Utils.ExtractRoutingAndFirstOutbound(config);
+                meta = ExtractFromJsonConfig(json);
+                return true;
+            }
+            catch { }
+            meta = null;
+            return false;
+        }
+
+        public static SharelinkMetaData ParseNonStandarUriShareLink(string proto, string url)
         {
             var header = proto + "://";
 
@@ -32,7 +43,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 return null;
             }
 
-            var vc = new Models.Datas.SharelinkMetadata
+            var vc = new SharelinkMetaData
             {
                 name = parts.Last(),
                 proto = proto,
@@ -102,7 +113,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return vc;
         }
 
-        public static JToken GenStreamSetting(Models.Datas.SharelinkMetadata streamSettings)
+        public static JToken GenStreamSetting(SharelinkMetaData streamSettings)
         {
             var ss = streamSettings;
             // insert stream type
@@ -130,7 +141,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return token;
         }
 
-        public static Models.Datas.SharelinkMetadata ExtractFromJsonConfig(JObject config)
+        public static SharelinkMetaData ExtractFromJsonConfig(JObject config)
         {
             var GetStr = VgcApis.Misc.Utils.GetStringByPrefixAndKeyHelper(config);
 
@@ -153,7 +164,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             var mainPrefix = root + "." + $"settings.{key}.0";
 
-            var result = new Models.Datas.SharelinkMetadata
+            var result = new SharelinkMetaData
             {
                 proto = proto,
                 host = GetStr(mainPrefix, "address"),
@@ -170,7 +181,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
 
         static void ExtractFirstOutboundFromJsonConfig(
-            Models.Datas.SharelinkMetadata result,
+            SharelinkMetaData result,
             JObject config,
             string prefix,
             string protocol
@@ -208,7 +219,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
         }
 
-        private static void FillInTlsSetting(Models.Datas.SharelinkMetadata ss, JToken token)
+        private static void FillInTlsSetting(SharelinkMetaData ss, JToken token)
         {
             var tt = string.IsNullOrEmpty(ss.tlsType) ? "none" : ss.tlsType;
             token["security"] = tt;
@@ -247,7 +258,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         }
 
         private static void FillInStreamSetting(
-            Models.Datas.SharelinkMetadata ss,
+            SharelinkMetaData ss,
             string st,
             string mainParam,
             JToken token
@@ -316,11 +327,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
         }
 
-        static void ExtractStreamSettings(
-            Models.Datas.SharelinkMetadata result,
-            JObject config,
-            string root
-        )
+        static void ExtractStreamSettings(SharelinkMetaData result, JObject config, string root)
         {
             var GetStr = VgcApis.Misc.Utils.GetStringByPrefixAndKeyHelper(config);
 
@@ -378,7 +385,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             result.streamParam1 = mainParam;
         }
 
-        static void ExtractTcpHttpSettings(Models.Datas.SharelinkMetadata result, JObject json)
+        static void ExtractTcpHttpSettings(SharelinkMetaData result, JObject json)
         {
             try
             {
@@ -399,7 +406,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         }
 
         static void ExtractTlsSettings(
-            Models.Datas.SharelinkMetadata result,
+            SharelinkMetaData result,
             JObject config,
             Func<string, string, string> reader,
             string prefix

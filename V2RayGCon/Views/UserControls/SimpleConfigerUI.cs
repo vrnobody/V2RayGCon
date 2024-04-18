@@ -25,7 +25,7 @@ namespace V2RayGCon.Views.UserControls
 
         public string ToShareLink()
         {
-            var sc = new Models.Datas.SharelinkMetadata
+            var sc = new VgcApis.Models.Datas.SharelinkMetaData
             {
                 name = tboxName.Text,
                 proto = cboxProtocol.Text,
@@ -52,7 +52,7 @@ namespace V2RayGCon.Views.UserControls
 
         public void FromCoreConfig(string config)
         {
-            if (!Models.Datas.SharelinkMetadata.TryParseConfig(config, out var sc) || sc == null)
+            if (!Services.ShareLinkComponents.Comm.TryParseConfig(config, out var sc) || sc == null)
             {
                 return;
             }

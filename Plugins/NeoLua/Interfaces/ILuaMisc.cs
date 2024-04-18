@@ -423,6 +423,13 @@ namespace NeoLuna.Interfaces
         byte[] Base64DecodeToBytes(string b64Str);
 
         /// <summary>
+        /// 从json类型的config中提取分享链接元数据
+        /// </summary>
+        /// <param name="config">json类型的config</param>
+        /// <returns>分享链接元数据</returns>
+        VgcApis.Models.Datas.SharelinkMetaData EncodeToShareLinkMetaData(string config);
+
+        /// <summary>
         /// 将config编码为分享链接
         /// </summary>
         /// <param name="name">链接名</param>

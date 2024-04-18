@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using static ScintillaNET.Style;
 
-namespace V2RayGCon.Models.Datas
+namespace VgcApis.Models.Datas
 {
-    public class SharelinkMetadata
+    public class SharelinkMetaData
     {
         public string name = string.Empty;
         public string proto = string.Empty;
@@ -38,20 +39,29 @@ namespace V2RayGCon.Models.Datas
         // tls.alpn (not support yet)
         public string tlsAlpn = string.Empty;
 
-        public SharelinkMetadata() { }
+        public SharelinkMetaData() { }
 
         #region public methods
-        public static bool TryParseConfig(string config, out SharelinkMetadata meta)
+
+        public string ToJson()
         {
             try
             {
-                var json = VgcApis.Misc.Utils.ExtractRoutingAndFirstOutbound(config);
-                meta = Services.ShareLinkComponents.Comm.ExtractFromJsonConfig(json);
-                return true;
+                return Misc.Utils.ToJson(this);
             }
             catch { }
-            meta = null;
-            return false;
+            return null;
+        }
+
+        public string ToHash()
+        {
+            var json = ToJson();
+            try
+            {
+                return Misc.Utils.Sha256Hex(json);
+            }
+            catch { }
+            return null;
         }
 
         public string ToShareLink()
@@ -78,15 +88,12 @@ namespace V2RayGCon.Models.Datas
         string EncodeToSocksShareLink()
         {
             var auth = string.Format("{0}:{1}", auth1, auth2);
-            var userinfo = VgcApis
-                .Misc.Utils.Base64EncodeString(auth)
-                .Replace('+', '-')
-                .Replace('/', '_');
+            var userinfo = Misc.Utils.Base64EncodeString(auth).Replace('+', '-').Replace('/', '_');
 
             var url = string.Format(
                 "socks://{0}@{1}:{2}#{3}",
                 userinfo,
-                VgcApis.Misc.Utils.FormatHost(host),
+                Misc.Utils.FormatHost(host),
                 port,
                 Uri.EscapeDataString(name)
             );
@@ -97,8 +104,7 @@ namespace V2RayGCon.Models.Datas
         string EncodeToSsShareLink()
         {
             var auth = string.Format("{0}:{1}", auth2, auth1);
-            var userinfo = VgcApis
-                .Misc.Utils.Base64EncodeString(auth)
+            var userinfo = Misc.Utils.Base64EncodeString(auth)
                 .Replace("=", "")
                 .Replace('+', '-')
                 .Replace('/', '_');
@@ -180,7 +186,7 @@ namespace V2RayGCon.Models.Datas
                 "{0}://{1}@{2}:{3}?{4}#{5}",
                 proto,
                 Uri.EscapeDataString(auth1),
-                VgcApis.Misc.Utils.FormatHost(host),
+                Misc.Utils.FormatHost(host),
                 port,
                 string.Join("&", pms),
                 Uri.EscapeDataString(name)
@@ -206,7 +212,7 @@ namespace V2RayGCon.Models.Datas
         #endregion
 
         #region protected methods
-        protected void CopyFrom(SharelinkMetadata source)
+        protected void CopyFrom(SharelinkMetaData source)
         {
             name = source.name;
             proto = source.proto;

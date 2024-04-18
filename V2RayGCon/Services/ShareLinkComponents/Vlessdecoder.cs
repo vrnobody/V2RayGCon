@@ -23,11 +23,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public string Encode(string name, string config)
         {
-            if (
-                Models.Datas.SharelinkMetadata.TryParseConfig(config, out var vc)
-                && vc != null
-                && vc.proto == "vless"
-            )
+            if (Comm.TryParseConfig(config, out var vc) && vc != null && vc.proto == "vless")
             {
                 vc.name = name;
                 return vc.ToShareLink();

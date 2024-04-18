@@ -141,13 +141,13 @@ namespace V2RayGCon.Misc
             return links;
         }
 
-        public static Models.Datas.Vmess VmessLink2Vmess(string link)
+        public static Vmess VmessLink2Vmess(string link)
         {
             try
             {
                 var body = VgcApis.Misc.Utils.GetLinkBody(link);
                 string plainText = VgcApis.Misc.Utils.Base64DecodeToString(body);
-                var vmess = JsonConvert.DeserializeObject<Models.Datas.Vmess>(plainText);
+                var vmess = JsonConvert.DeserializeObject<Vmess>(plainText);
                 if (
                     !string.IsNullOrEmpty(vmess.add)
                     && !string.IsNullOrEmpty(vmess.port)

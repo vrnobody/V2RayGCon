@@ -23,11 +23,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         public string Encode(string name, string config)
         {
-            if (
-                Models.Datas.SharelinkMetadata.TryParseConfig(config, out var vc)
-                && vc != null
-                && vc.proto == "vmess"
-            )
+            if (Comm.TryParseConfig(config, out var vc) && vc != null && vc.proto == "vmess")
             {
                 vc.name = name;
                 return vc.ToShareLink();
@@ -40,7 +36,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region private methods
-        string Vmess2Config(Models.Datas.Vmess vmess)
+        string Vmess2Config(VgcApis.Models.Datas.Vmess vmess)
         {
             if (vmess == null)
             {
@@ -63,7 +59,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return GetParent()?.GenerateJsonConfing(tpl, outVmess);
         }
 
-        JToken GenStreamSetting(Models.Datas.Vmess vmess)
+        JToken GenStreamSetting(VgcApis.Models.Datas.Vmess vmess)
         {
             // insert stream type
             string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic", "grpc" };
@@ -112,7 +108,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         }
 
         private static void FillStreamSettingsDetail(
-            Models.Datas.Vmess vmess,
+            VgcApis.Models.Datas.Vmess vmess,
             string streamType,
             JToken streamToken
         )

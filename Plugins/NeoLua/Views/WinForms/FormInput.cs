@@ -55,14 +55,25 @@ namespace NeoLuna.Views.WinForms
             rtboxInput.Text = content ?? string.Empty;
             toolTip1.SetToolTip(lbTitle, title);
             VgcApis.Misc.UI.AddContextMenu(rtboxInput);
+            if (lines < 2)
+            {
+                rtboxInput.Multiline = false;
+                rtboxInput.AcceptsTab = false;
+                this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            }
+        }
+
+        void OnOk()
+        {
+            SetResult();
+            Close();
         }
         #endregion
 
         #region UI event handlers
         private void btnOk_Click(object sender, EventArgs e)
         {
-            SetResult();
-            Close();
+            OnOk();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -75,6 +86,12 @@ namespace NeoLuna.Views.WinForms
             var kc = e.KeyCode;
             switch (kc)
             {
+                case Keys.Enter:
+                    if (lines < 2)
+                    {
+                        OnOk();
+                    }
+                    return;
                 case Keys.Escape:
                     Close();
                     return;

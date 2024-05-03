@@ -58,6 +58,7 @@
             // 
             // rtboxInput
             // 
+            this.rtboxInput.AcceptsTab = true;
             resources.ApplyResources(this.rtboxInput, "rtboxInput");
             this.rtboxInput.DetectUrls = false;
             this.rtboxInput.Name = "rtboxInput";

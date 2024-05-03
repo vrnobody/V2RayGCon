@@ -38,6 +38,7 @@ using System.Runtime.InteropServices;
 
 /*
 
+v1.9.5.4 Improve Enter key and Tab key UX of std.Misc:Input().
 v1.9.5.3 Add std.Misc:EncodeToShareLinkMetaData().
          Add table.sortedkeys(), table.sortedkeysdesc().
 v1.9.5.2 Supports comments in config.

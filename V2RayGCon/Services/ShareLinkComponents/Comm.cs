@@ -72,7 +72,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             vc.auth2 = GetValue("flow", "");
             vc.streamType = GetValue("type", "tcp");
             vc.tlsType = GetValue("security", "none");
-            vc.tlsServName = GetValue("sni", parts[1]);
+            vc.tlsServName = GetValue("sni", vc.host);
             vc.tlsFingerPrint = GetValue("fp", "");
             vc.tlsAlpn = Uri.UnescapeDataString(GetValue("alpn", ""));
             vc.tlsParam1 = GetValue("pbk", "");
@@ -90,7 +90,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 case "ws":
                 case "h2":
                 case "httpupgrade":
-                    vc.streamParam2 = GetValue("host", parts[1]);
+                    vc.streamParam2 = GetValue("host", vc.host);
                     vc.streamParam1 = GetValue("path", "/");
                     break;
                 case "tcp":
@@ -113,19 +113,18 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return vc;
         }
 
-        public static JToken GenStreamSetting(SharelinkMetaData streamSettings)
+        public static JToken GenStreamSetting(SharelinkMetaData meta)
         {
-            var ss = streamSettings;
             // insert stream type
             string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic", "grpc", "httpupgrade" };
-            string st = ss?.streamType?.ToLower();
+            string st = meta?.streamType?.ToLower();
 
             if (!streamTypes.Contains(st))
             {
                 return JToken.Parse(@"{}");
             }
 
-            string mainParam = ss.streamParam1;
+            string mainParam = meta.streamParam1;
             if (st == "tcp" && mainParam == "http")
             {
                 st = "tcp_http";
@@ -133,8 +132,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
             var token = Misc.Caches.Jsons.LoadTemplate(st);
             try
             {
-                FillInStreamSetting(ss, st, mainParam, token);
-                FillInTlsSetting(ss, token);
+                FillInStreamSetting(meta, st, mainParam, token);
+                FillInTlsSetting(meta, token);
             }
             catch { }
 
@@ -181,7 +180,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
 
         static void ExtractFirstOutboundFromJsonConfig(
-            SharelinkMetaData result,
+            SharelinkMetaData meta,
             JObject config,
             string prefix,
             string protocol
@@ -193,35 +192,35 @@ namespace V2RayGCon.Services.ShareLinkComponents
             {
                 case "vmess":
                     prefix += ".users.0";
-                    result.auth1 = GetStr(prefix, "id");
+                    meta.auth1 = GetStr(prefix, "id");
                     break;
                 case "vless":
                     prefix += ".users.0";
-                    result.auth1 = GetStr(prefix, "id");
-                    result.auth2 = GetStr(prefix, "flow");
+                    meta.auth1 = GetStr(prefix, "id");
+                    meta.auth2 = GetStr(prefix, "flow");
                     break;
                 case "trojan":
-                    result.auth1 = GetStr(prefix, "password");
-                    result.auth2 = GetStr(prefix, "flow");
+                    meta.auth1 = GetStr(prefix, "password");
+                    meta.auth2 = GetStr(prefix, "flow");
                     break;
                 case "shadowsocks":
-                    result.auth1 = GetStr(prefix, "password");
-                    result.auth2 = GetStr(prefix, "method");
+                    meta.auth1 = GetStr(prefix, "password");
+                    meta.auth2 = GetStr(prefix, "method");
                     break;
                 case "socks":
                 case "http":
                     prefix += ".users.0";
-                    result.auth1 = GetStr(prefix, "user");
-                    result.auth2 = GetStr(prefix, "pass");
+                    meta.auth1 = GetStr(prefix, "user");
+                    meta.auth2 = GetStr(prefix, "pass");
                     break;
                 default:
                     break;
             }
         }
 
-        private static void FillInTlsSetting(SharelinkMetaData ss, JToken token)
+        private static void FillInTlsSetting(SharelinkMetaData meta, JToken token)
         {
-            var tt = string.IsNullOrEmpty(ss.tlsType) ? "none" : ss.tlsType;
+            var tt = string.IsNullOrEmpty(meta.tlsType) ? "none" : meta.tlsType;
             token["security"] = tt;
             if (tt == "none")
             {
@@ -238,19 +237,19 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 }
             }
 
-            SetValue("serverName", ss.tlsServName);
-            SetValue("fingerprint", ss.tlsFingerPrint);
+            SetValue("serverName", meta.tlsServName);
+            SetValue("fingerprint", meta.tlsFingerPrint);
 
-            if (!string.IsNullOrEmpty(ss.tlsAlpn))
+            if (!string.IsNullOrEmpty(meta.tlsAlpn))
             {
-                o["alpn"] = VgcApis.Misc.Utils.Str2JArray(ss.tlsAlpn);
+                o["alpn"] = VgcApis.Misc.Utils.Str2JArray(meta.tlsAlpn);
             }
 
             if (tt == "reality")
             {
-                o["publicKey"] = ss.tlsParam1;
-                SetValue("shortId", ss.tlsParam2);
-                SetValue("spiderX", ss.tlsParam3);
+                o["publicKey"] = meta.tlsParam1;
+                SetValue("shortId", meta.tlsParam2);
+                SetValue("spiderX", meta.tlsParam3);
             }
 
             var k = $"{tt}Settings";
@@ -258,22 +257,22 @@ namespace V2RayGCon.Services.ShareLinkComponents
         }
 
         private static void FillInStreamSetting(
-            SharelinkMetaData ss,
-            string st,
+            SharelinkMetaData meta,
+            string streamType,
             string mainParam,
             JToken token
         )
         {
-            switch (st)
+            switch (streamType)
             {
                 case "grpc":
-                    var auth = ss.streamParam3;
+                    var auth = meta.streamParam3;
                     if (!string.IsNullOrEmpty(auth))
                     {
                         token["grpcSettings"]["authority"] = auth;
                     }
                     token["grpcSettings"]["multiMode"] = mainParam.ToLower() == "true";
-                    var sn = ss.streamParam2;
+                    var sn = meta.streamParam2;
                     if (!string.IsNullOrEmpty(sn))
                     {
                         token["grpcSettings"]["serviceName"] = sn;
@@ -293,75 +292,77 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     token["tcpSettings"]["header"]["type"] = mainParam;
                     token["tcpSettings"]["header"]["request"]["path"] =
                         VgcApis.Misc.Utils.Str2JArray(
-                            string.IsNullOrEmpty(ss.streamParam2) ? "/" : ss.streamParam2
+                            string.IsNullOrEmpty(meta.streamParam2) ? "/" : meta.streamParam2
                         );
                     token["tcpSettings"]["header"]["request"]["headers"]["Host"] =
-                        VgcApis.Misc.Utils.Str2JArray(ss.streamParam3);
+                        VgcApis.Misc.Utils.Str2JArray(meta.streamParam3);
                     break;
                 case "kcp":
                     token["kcpSettings"]["header"]["type"] = mainParam;
-                    if (!string.IsNullOrEmpty(ss.streamParam2))
+                    if (!string.IsNullOrEmpty(meta.streamParam2))
                     {
-                        token["kcpSettings"]["seed"] = ss.streamParam2;
+                        token["kcpSettings"]["seed"] = meta.streamParam2;
                     }
                     break;
                 case "httpupgrade":
                     token["httpupgradeSettings"]["path"] = mainParam;
-                    token["httpupgradeSettings"]["host"] = ss.streamParam2;
+                    token["httpupgradeSettings"]["host"] = meta.streamParam2;
                     break;
                 case "ws":
                     token["wsSettings"]["path"] = mainParam;
-                    token["wsSettings"]["headers"]["Host"] = ss.streamParam2;
+                    token["wsSettings"]["headers"]["Host"] = meta.streamParam2;
                     break;
                 case "h2":
                     token["httpSettings"]["path"] = mainParam;
-                    token["httpSettings"]["host"] = VgcApis.Misc.Utils.Str2JArray(ss.streamParam2);
+                    token["httpSettings"]["host"] = VgcApis.Misc.Utils.Str2JArray(
+                        meta.streamParam2
+                    );
                     break;
                 case "quic":
                     token["quicSettings"]["header"]["type"] = mainParam;
-                    token["quicSettings"]["security"] = ss.streamParam2;
-                    token["quicSettings"]["key"] = ss.streamParam3;
+                    token["quicSettings"]["security"] = meta.streamParam2;
+                    token["quicSettings"]["key"] = meta.streamParam3;
                     break;
                 default:
                     break;
             }
         }
 
-        static void ExtractStreamSettings(SharelinkMetaData result, JObject config, string root)
+        static void ExtractStreamSettings(SharelinkMetaData meta, JObject config, string root)
         {
             var GetStr = VgcApis.Misc.Utils.GetStringByPrefixAndKeyHelper(config);
 
             var subPrefix = root + "." + "streamSettings";
-            result.streamType = GetStr(subPrefix, "network");
+            meta.streamType = GetStr(subPrefix, "network");
 
-            ExtractTlsSettings(result, config, GetStr, subPrefix);
+            ExtractTlsSettings(meta, config, GetStr, subPrefix);
 
             var mainParam = "";
-            switch (result.streamType)
+            switch (meta.streamType)
             {
                 case "grpc":
                     mainParam = GetStr(subPrefix, "grpcSettings.multiMode").ToLower();
-                    result.streamParam2 = GetStr(subPrefix, "grpcSettings.serviceName");
-                    result.streamParam3 = GetStr(subPrefix, "grpcSettings.authority");
+                    meta.streamParam2 = GetStr(subPrefix, "grpcSettings.serviceName");
+                    meta.streamParam3 = GetStr(subPrefix, "grpcSettings.authority");
                     break;
                 case "tcp":
                     mainParam = GetStr(subPrefix, "tcpSettings.header.type");
                     if (mainParam?.ToLower() == "http")
                     {
-                        ExtractTcpHttpSettings(result, config);
+                        ExtractTcpHttpSettings(meta, config);
                     }
                     break;
                 case "kcp":
                     mainParam = GetStr(subPrefix, "kcpSettings.header.type");
-                    result.streamParam2 = GetStr(subPrefix, "kcpSettings.seed");
+                    meta.streamParam2 = GetStr(subPrefix, "kcpSettings.seed");
                     break;
                 case "ws":
                     mainParam = GetStr(subPrefix, "wsSettings.path");
-                    result.streamParam2 = GetStr(subPrefix, "wsSettings.headers.Host");
+                    meta.streamParam2 = GetStr(subPrefix, "wsSettings.headers.Host");
                     break;
                 case "httpupgrade":
                     mainParam = GetStr(subPrefix, "httpupgradeSettings.path");
-                    result.streamParam2 = GetStr(subPrefix, "httpupgradeSettings.host");
+                    meta.streamParam2 = GetStr(subPrefix, "httpupgradeSettings.host");
                     break;
                 case "h2":
                     mainParam = GetStr(subPrefix, "httpSettings.path");
@@ -370,29 +371,29 @@ namespace V2RayGCon.Services.ShareLinkComponents
                         var hosts = config["outbounds"][0]["streamSettings"]["httpSettings"][
                             "host"
                         ];
-                        result.streamParam2 = VgcApis.Misc.Utils.JArray2Str(hosts as JArray);
+                        meta.streamParam2 = VgcApis.Misc.Utils.JArray2Str(hosts as JArray);
                     }
                     catch { }
                     break;
                 case "quic":
                     mainParam = GetStr(subPrefix, "quicSettings.header.type");
-                    result.streamParam2 = GetStr(subPrefix, "quicSettings.security");
-                    result.streamParam3 = GetStr(subPrefix, "quicSettings.key");
+                    meta.streamParam2 = GetStr(subPrefix, "quicSettings.security");
+                    meta.streamParam3 = GetStr(subPrefix, "quicSettings.key");
                     break;
                 default:
                     break;
             }
-            result.streamParam1 = mainParam;
+            meta.streamParam1 = mainParam;
         }
 
-        static void ExtractTcpHttpSettings(SharelinkMetaData result, JObject json)
+        static void ExtractTcpHttpSettings(SharelinkMetaData meta, JObject json)
         {
             try
             {
                 var path = json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"][
                     "request"
                 ]["path"];
-                result.streamParam2 = VgcApis.Misc.Utils.JArray2Str(path as JArray);
+                meta.streamParam2 = VgcApis.Misc.Utils.JArray2Str(path as JArray);
             }
             catch { }
             try
@@ -400,20 +401,20 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 var hosts = json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"][
                     "request"
                 ]["headers"]["Host"];
-                result.streamParam3 = VgcApis.Misc.Utils.JArray2Str(hosts as JArray);
+                meta.streamParam3 = VgcApis.Misc.Utils.JArray2Str(hosts as JArray);
             }
             catch { }
         }
 
         static void ExtractTlsSettings(
-            SharelinkMetaData result,
+            SharelinkMetaData meta,
             JObject config,
             Func<string, string, string> reader,
             string prefix
         )
         {
             var tt = reader(prefix, "security")?.ToLower();
-            result.tlsType = tt;
+            meta.tlsType = tt;
 
             if (tt != "xtls" && tt != "tls" && tt != "reality")
             {
@@ -421,22 +422,22 @@ namespace V2RayGCon.Services.ShareLinkComponents
             }
 
             var ts = $"{tt}Settings";
-            result.tlsServName = reader(prefix, $"{ts}.serverName") ?? "";
-            result.tlsFingerPrint = reader(prefix, $"{ts}.fingerprint") ?? "";
+            meta.tlsServName = reader(prefix, $"{ts}.serverName") ?? "";
+            meta.tlsFingerPrint = reader(prefix, $"{ts}.fingerprint") ?? "";
 
             try
             {
                 // do not support v3.x config
                 var alpn = config["outbounds"][0]["streamSettings"][ts]["alpn"];
-                result.tlsAlpn = VgcApis.Misc.Utils.JArray2Str(alpn as JArray);
+                meta.tlsAlpn = VgcApis.Misc.Utils.JArray2Str(alpn as JArray);
             }
             catch { }
 
             if (tt == "reality")
             {
-                result.tlsParam1 = reader(prefix, $"{ts}.publicKey") ?? "";
-                result.tlsParam2 = reader(prefix, $"{ts}.shortId") ?? "";
-                result.tlsParam3 = reader(prefix, $"{ts}.spiderX") ?? "";
+                meta.tlsParam1 = reader(prefix, $"{ts}.publicKey") ?? "";
+                meta.tlsParam2 = reader(prefix, $"{ts}.shortId") ?? "";
+                meta.tlsParam3 = reader(prefix, $"{ts}.spiderX") ?? "";
             }
         }
         #endregion

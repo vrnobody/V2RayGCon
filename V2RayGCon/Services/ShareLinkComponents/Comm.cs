@@ -72,12 +72,19 @@ namespace V2RayGCon.Services.ShareLinkComponents
             vc.auth2 = GetValue("flow", "");
             vc.streamType = GetValue("type", "tcp");
             vc.tlsType = GetValue("security", "none");
-            vc.tlsServName = GetValue("sni", vc.host);
+            vc.tlsServName = GetValue("sni", "");
             vc.tlsFingerPrint = GetValue("fp", "");
             vc.tlsAlpn = Uri.UnescapeDataString(GetValue("alpn", ""));
             vc.tlsParam1 = GetValue("pbk", "");
             vc.tlsParam2 = GetValue("sid", "");
             vc.tlsParam3 = Uri.UnescapeDataString(GetValue("spx", ""));
+
+            // patch sni
+            var hostIsDomain = !VgcApis.Misc.Utils.TryParseIp(vc.host, out _);
+            if (string.IsNullOrEmpty(vc.tlsServName) && hostIsDomain)
+            {
+                vc.tlsServName = vc.host;
+            }
 
             switch (vc.streamType)
             {
@@ -90,7 +97,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 case "ws":
                 case "h2":
                 case "httpupgrade":
-                    vc.streamParam2 = GetValue("host", vc.host);
+                    vc.streamParam2 = GetValue("host", "");
+                    if (string.IsNullOrEmpty(vc.streamParam2) && hostIsDomain)
+                    {
+                        vc.streamParam2 = vc.host;
+                    }
                     vc.streamParam1 = GetValue("path", "/");
                     break;
                 case "tcp":
@@ -306,11 +317,17 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 case "httpupgrade":
                     token["httpupgradeSettings"]["path"] = mainParam;
-                    token["httpupgradeSettings"]["host"] = meta.streamParam2;
+                    if (!string.IsNullOrEmpty(meta.streamParam2))
+                    {
+                        token["httpupgradeSettings"]["host"] = meta.streamParam2;
+                    }
                     break;
                 case "ws":
                     token["wsSettings"]["path"] = mainParam;
-                    token["wsSettings"]["headers"]["Host"] = meta.streamParam2;
+                    if (!string.IsNullOrEmpty(meta.streamParam2))
+                    {
+                        token["wsSettings"]["headers"]["Host"] = meta.streamParam2;
+                    }
                     break;
                 case "h2":
                     token["httpSettings"]["path"] = mainParam;

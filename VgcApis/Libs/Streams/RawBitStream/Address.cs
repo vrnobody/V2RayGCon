@@ -26,7 +26,7 @@ namespace VgcApis.Libs.Streams.RawBitStream
         public void Write(string address)
         {
             var bitStream = GetParent();
-            var ip = ParseIpAddress(address);
+            Misc.Utils.TryParseIp(address, out var ip);
             var str = Utils.CutBytes(Encoding.UTF8.GetBytes(address));
             var ipBytes = ip?.GetAddressBytes();
             if (ipBytes != null && ipBytes.Length < str.Length)
@@ -68,23 +68,6 @@ namespace VgcApis.Libs.Streams.RawBitStream
             return bitStream.Read() == true;
         }
 
-        IPAddress ParseIpAddress(string input)
-        {
-            // https://stackoverflow.com/questions/799060/how-to-determine-if-a-string-is-a-valid-ipv4-or-ipv6-address-in-c
-            if (IPAddress.TryParse(input, out IPAddress address))
-            {
-                switch (address.AddressFamily)
-                {
-                    case AddressFamily.InterNetwork:
-                    case AddressFamily.InterNetworkV6:
-                        return address;
-                    default:
-                        // umm... yeah... I'm going to need to take your red packet and...
-                        break;
-                }
-            }
-            return null;
-        }
         #endregion
 
         #region protected methods

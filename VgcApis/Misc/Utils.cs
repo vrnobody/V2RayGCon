@@ -1129,9 +1129,28 @@ namespace VgcApis.Misc
             return port > 0 && port < 65536;
         }
 
-        public static bool TryParseAddress(string address, out string ip, out int port)
+        public static bool TryParseIp(string ip, out IPAddress address)
         {
-            ip = Webs.LoopBackIP;
+            // https://stackoverflow.com/questions/799060/how-to-determine-if-a-string-is-a-valid-ipv4-or-ipv6-address-in-c
+            if (IPAddress.TryParse(ip, out address))
+            {
+                switch (address.AddressFamily)
+                {
+                    case AddressFamily.InterNetwork:
+                    case AddressFamily.InterNetworkV6:
+                        return true;
+                    default:
+                        // umm... yeah... I'm going to need to take your red packet and...
+                        break;
+                }
+            }
+            address = null;
+            return false;
+        }
+
+        public static bool TryParseAddress(string address, out string host, out int port)
+        {
+            host = Webs.LoopBackIP;
             port = 1080;
 
             int index = address.LastIndexOf(':');
@@ -1140,15 +1159,15 @@ namespace VgcApis.Misc
                 return false;
             }
 
-            var ipStr = address.Substring(0, index);
-            var portInt = Str2Int(address.Substring(index + 1));
-            if (string.IsNullOrEmpty(ipStr) || portInt < 1 || portInt > 65535)
+            var h = address.Substring(0, index);
+            var p = Str2Int(address.Substring(index + 1));
+            if (string.IsNullOrEmpty(h) || p < 1 || p > 65535)
             {
                 return false;
             }
 
-            ip = ipStr;
-            port = portInt;
+            host = h;
+            port = p;
             return true;
         }
 

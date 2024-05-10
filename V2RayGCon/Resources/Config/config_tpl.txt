@@ -235,10 +235,8 @@
     "network": "ws",
     "security": "tls",
     "wsSettings": {
-      "path": "",
-      "headers": {
-        "Host": ""
-      }
+      "path": "/",
+      "headers": {}
     }
   },
   "grpc": {

@@ -56,6 +56,14 @@ namespace VgcApisTests.MiscTests
             var json = Encoding.UTF8.GetString(Jsons.Outbs3);
             var summary = ExtractSummaryFromJsonConfig(json);
             Assert.AreEqual("vless.ws@1.2.3.4", summary);
+
+            json = Encoding.UTF8.GetString(Jsons.RoutingLeastLoad);
+            summary = ExtractSummaryFromJsonConfig(json);
+            Assert.AreEqual("balancer: 4 leastLoad", summary);
+
+            json = Encoding.UTF8.GetString(Jsons.RoutingRandom);
+            summary = ExtractSummaryFromJsonConfig(json);
+            Assert.AreEqual("balancer: 0 random", summary);
         }
 
         [TestMethod]

@@ -83,6 +83,16 @@ namespace VgcApisTests.Resources.Resx {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
+        internal static byte[] RoutingLeastLoad {
+            get {
+                object obj = ResourceManager.GetObject("RoutingLeastLoad", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
         internal static byte[] RoutingRandom {
             get {
                 object obj = ResourceManager.GetObject("RoutingRandom", resourceCulture);

@@ -1,0 +1,180 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "routing": {
+    "balancers": [
+      {
+        "tag": "pacman",
+        "selector": [
+          "agentout"
+        ],
+        "strategy": {
+          "type": "leastLoad"
+        }
+      },
+      {
+        "tag": "pacman",
+        "selector": [
+          "agentout"
+        ]
+      }
+    ],
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "agentin"
+        ],
+        "balancerTag": "pacman"
+      }
+    ]
+  },
+  "inbounds": [
+    {
+      "port": 1080,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {},
+      "tag": "agentin"
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "1.2.3.4",
+            "port": 443,
+            "users": [
+              {
+                "id": "700e9d09-3729-44c5-9381-2637486470be",
+                "encryption": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "tag": "agentout000000",
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "wsSettings": {
+          "path": "/?ed=2056",
+          "headers": {
+            "Host": "bing.com"
+          }
+        },
+        "tlsSettings": {
+          "serverName": "bing.com"
+        }
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "1.2.3.4",
+            "port": 443,
+            "users": [
+              {
+                "id": "700e9d09-3729-44c5-9381-2637486470be",
+                "encryption": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "tag": "agentout000000",
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "wsSettings": {
+          "path": "/?ed=2056",
+          "headers": {
+            "Host": "bing.com"
+          }
+        },
+        "tlsSettings": {
+          "serverName": "bing.com"
+        }
+      }
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "1.2.3.4",
+            "port": 443,
+            "users": [
+              {
+                "id": "700e9d09-3729-44c5-9381-2637486470be",
+                "encryption": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "tag": "agentout000001",
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "wsSettings": {
+          "path": "/?ed=2056",
+          "headers": {
+            "Host": "bing.com"
+          }
+        },
+        "tlsSettings": {
+          "serverName": "bing.com"
+        }
+      }
+    },
+    {
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "1.2.3.4",
+            "port": 443,
+            "users": [
+              {
+                "id": "700e9d09-3729-44c5-9381-2637486470be",
+                "encryption": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "tag": "agentout000002",
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "wsSettings": {
+          "path": "/?ed=2056",
+          "headers": {
+            "Host": "bing.com"
+          }
+        },
+        "tlsSettings": {
+          "serverName": "bing.com"
+        }
+      }
+    }
+  ],
+  "burstObservatory": {
+    "subjectSelector": [
+      "agentout"
+    ],
+    "pingConfig": {
+      "destination": "http://www.google.com/gen_204",
+      "interval": "60s",
+      "connectivity": "https://detectportal.firefox.com/success.txt",
+      "timeout": "30s",
+      "sampling": 2
+    }
+  }
+}

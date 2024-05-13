@@ -13,7 +13,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             try
             {
-                var json = VgcApis.Misc.Utils.ExtractRoutingAndFirstOutbound(config);
+                var json = VgcApis.Misc.Utils.ExtractTrimedRoutingAndOutbound(config);
                 meta = ExtractFromJsonConfig(json);
                 return true;
             }

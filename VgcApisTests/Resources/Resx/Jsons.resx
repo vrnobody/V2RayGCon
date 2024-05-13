@@ -124,6 +124,9 @@
   <data name="Outbs3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\Jsons\outbs3.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="RoutingLeastLoad" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Files\Jsons\RoutingLeastLoad.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="RoutingRandom" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Files\Jsons\RoutingRandom.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

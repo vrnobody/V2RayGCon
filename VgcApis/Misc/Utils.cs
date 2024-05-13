@@ -1702,7 +1702,7 @@ namespace VgcApis.Misc
 
         public static string ExtractSummaryFromJsonConfig(string config)
         {
-            var json = ExtractRoutingAndFirstOutbound(config);
+            var json = ExtractTrimedRoutingAndOutbound(config);
             if (json == null)
             {
                 return string.Empty;
@@ -1769,7 +1769,7 @@ namespace VgcApis.Misc
             return r;
         }
 
-        static JArray ExtractAndTrimOutbounds(JsonReader jr, JsonSerializer ser, int keepTopNth)
+        static JArray ExtractTrimedJarr(JsonReader jr, JsonSerializer ser, int keepNth)
         {
             var c = 0;
             var arr = new JArray();
@@ -1779,7 +1779,7 @@ namespace VgcApis.Misc
                 {
                     case JsonToken.StartObject:
                         var outb = new JObject();
-                        if (c++ < keepTopNth)
+                        if (c++ < keepNth)
                         {
                             outb = ser.Deserialize<JObject>(jr);
                         }
@@ -1798,7 +1798,36 @@ namespace VgcApis.Misc
             return arr;
         }
 
-        public static JObject ExtractRoutingAndFirstOutbound(string json)
+        static JObject ExtractTrimedRouting(JsonReader jr, JsonSerializer ser)
+        {
+            var key = "balancers";
+            var r = new JObject();
+            while (jr.Read())
+            {
+                switch (jr.TokenType)
+                {
+                    case JsonToken.PropertyName:
+                        var name = jr.Value as string;
+                        if (name == key)
+                        {
+                            jr.Read();
+                            r[key] = ExtractTrimedJarr(jr, ser, 1);
+                        }
+                        else
+                        {
+                            jr.Skip();
+                        }
+                        break;
+                    case JsonToken.EndObject:
+                        return r;
+                    default:
+                        break;
+                }
+            }
+            return r;
+        }
+
+        public static JObject ExtractTrimedRoutingAndOutbound(string json)
         {
             try
             {
@@ -1816,12 +1845,12 @@ namespace VgcApis.Misc
                                 if (name == "outbounds")
                                 {
                                     jr.Read();
-                                    r[name] = ExtractAndTrimOutbounds(jr, ser, 1);
+                                    r[name] = ExtractTrimedJarr(jr, ser, 1);
                                 }
                                 else if (name == "routing")
                                 {
                                     jr.Read();
-                                    r[name] = ser.Deserialize<JObject>(jr);
+                                    r[name] = ExtractTrimedRouting(jr, ser);
                                 }
                                 break;
                             default:

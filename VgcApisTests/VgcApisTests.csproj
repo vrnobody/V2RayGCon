@@ -102,6 +102,7 @@
     <None Include="packages.config" />
     <None Include="Resources\Files\Jsons\Inbs3.json" />
     <None Include="Resources\Files\Jsons\Outbs3.json" />
+    <None Include="Resources\Files\Jsons\RoutingLeastLoad.json" />
     <None Include="Resources\Files\Jsons\RoutingRandom.json" />
   </ItemGroup>
   <ItemGroup />

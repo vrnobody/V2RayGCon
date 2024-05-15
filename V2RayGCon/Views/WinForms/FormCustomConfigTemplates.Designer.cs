@@ -39,10 +39,12 @@ namespace V2RayGCon.Views.WinForms
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnFormat = new System.Windows.Forms.Button();
             this.chkIsSocks5Inbound = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.rtboxTemplate = new VgcApis.UserControls.ExRichTextBox();
             this.btnTest = new System.Windows.Forms.Button();
             this.cboxMergeOption = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.tboxMergeParams = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
@@ -91,6 +93,12 @@ namespace V2RayGCon.Views.WinForms
             this.toolTip1.SetToolTip(this.chkIsSocks5Inbound, resources.GetString("chkIsSocks5Inbound.ToolTip"));
             this.chkIsSocks5Inbound.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            this.toolTip1.SetToolTip(this.label4, resources.GetString("label4.ToolTip"));
+            // 
             // rtboxTemplate
             // 
             this.rtboxTemplate.AcceptsTab = true;
@@ -106,20 +114,27 @@ namespace V2RayGCon.Views.WinForms
             // 
             // cboxMergeOption
             // 
-            resources.ApplyResources(this.cboxMergeOption, "cboxMergeOption");
             this.cboxMergeOption.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxMergeOption.FormattingEnabled = true;
+            resources.ApplyResources(this.cboxMergeOption, "cboxMergeOption");
             this.cboxMergeOption.Name = "cboxMergeOption";
+            this.cboxMergeOption.TextChanged += new System.EventHandler(this.cboxMergeOption_TextChanged);
             // 
             // label3
             // 
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
             // 
+            // tboxMergeParams
+            // 
+            resources.ApplyResources(this.tboxMergeParams, "tboxMergeParams");
+            this.tboxMergeParams.Name = "tboxMergeParams";
+            // 
             // FormCustomConfigTemplates
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.tboxMergeParams);
             this.Controls.Add(this.chkIsSocks5Inbound);
             this.Controls.Add(this.cboxMergeOption);
             this.Controls.Add(this.btnFormat);
@@ -129,6 +144,7 @@ namespace V2RayGCon.Views.WinForms
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tboxName);
             this.Controls.Add(this.label3);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "FormCustomConfigTemplates";
@@ -153,5 +169,7 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.Label label3;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.CheckBox chkIsSocks5Inbound;
+        private System.Windows.Forms.TextBox tboxMergeParams;
+        private System.Windows.Forms.Label label4;
     }
 }

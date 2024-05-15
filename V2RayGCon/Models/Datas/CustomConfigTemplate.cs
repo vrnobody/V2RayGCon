@@ -8,6 +8,7 @@ namespace V2RayGCon.Models.Datas
         public double index = 0;
         public string name = "";
         public string jsonArrMergeOption = "";
+        public string mergeParams = "";
         public string template = "";
         public bool isSocks5Inbound = false;
         public bool isInject = false;
@@ -15,22 +16,29 @@ namespace V2RayGCon.Models.Datas
         public CustomConfigTemplate() { }
 
         #region static
-        static readonly string extJsonArrMergeOption = "ByTag";
+        public static readonly string MergeOptionByTag = "ByTag";
+        public static readonly string MergeOptionOutbound = "ModifyOutbound";
 
         public static List<string> GetJsonArrayMergeOptions()
         {
             var r = VgcApis.Misc.Utils.EnumToList<MergeArrayHandling>();
-            r.Add(extJsonArrMergeOption);
+            r.Add(MergeOptionByTag);
+            r.Add(MergeOptionOutbound);
             return r;
         }
         #endregion
 
         #region public
+        public bool IsOutboundTemplate()
+        {
+            return jsonArrMergeOption == MergeOptionOutbound;
+        }
+
         public string GetJsonArrMergeOption()
         {
-            if (jsonArrMergeOption == extJsonArrMergeOption)
+            if (jsonArrMergeOption == MergeOptionByTag || jsonArrMergeOption == MergeOptionOutbound)
             {
-                return extJsonArrMergeOption;
+                return jsonArrMergeOption;
             }
             if (
                 VgcApis.Misc.Utils.TryParseEnum<MergeArrayHandling>(jsonArrMergeOption, out var mah)
@@ -134,7 +142,7 @@ namespace V2RayGCon.Models.Datas
                 return;
             }
 
-            if (jsonArrMergeOption == extJsonArrMergeOption)
+            if (jsonArrMergeOption == MergeOptionByTag)
             {
                 VgcApis.Misc.Utils.CombineConfigWithRoutingInFront(ref body, mixin);
                 return;

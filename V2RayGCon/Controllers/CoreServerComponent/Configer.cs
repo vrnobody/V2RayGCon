@@ -301,7 +301,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         )
         {
             string r;
-            var modifier = CreateTlsAndSendThroughModifier();
+            var modifier = CreateTlsAndSendThroughModifier(tpls);
             var tuple = VgcApis.Misc.Utils.ParseAndSplitOutboundsFromConfig(config, modifier);
 
             var mergedTpls = tuple.Item1;
@@ -349,7 +349,9 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             return tpls;
         }
 
-        private Action<JObject> CreateTlsAndSendThroughModifier()
+        Action<JObject> CreateTlsAndSendThroughModifier(
+            IEnumerable<Models.Datas.CustomConfigTemplate> tpls
+        )
         {
             var send4 = states.IsIgnoreSendThrough() ? "" : setting.GetSendThroughIpv4();
             JObject selfSigned = null;
@@ -364,8 +366,54 @@ namespace V2RayGCon.Controllers.CoreServerComponent
                 uTlsFingerprint["tlsSettings"]["fingerprint"] = setting.uTlsFingerprint;
             }
 
-            return (json) =>
+            var outbTpls = tpls.Where(tpl => tpl.IsOutboundTemplate())
+                .OrderBy(tpl => tpl.index)
+                .Select(tpl =>
+                {
+                    try
+                    {
+                        var mixin = JObject.Parse(tpl.template);
+                        var tagPrefix = tpl.mergeParams;
+                        return new Tuple<JObject, string>(mixin, tagPrefix);
+                    }
+                    catch { }
+                    return null;
+                })
+                .Where(tp => tp != null)
+                .ToList();
+
+            void M(JObject json)
+            {
+                if (json == null)
+                {
+                    return;
+                }
                 AddTlsAndSendthroughSettingsToOutbound(json, send4, selfSigned, uTlsFingerprint);
+                if (outbTpls.Count > 0)
+                {
+                    foreach (var outbTpl in outbTpls)
+                    {
+                        MergeOutboundTemplate(json, outbTpl.Item1, outbTpl.Item2);
+                    }
+                }
+            }
+
+            return M;
+        }
+
+        void MergeOutboundTemplate(JObject json, JObject mixin, string tagPrefix)
+        {
+            if (string.IsNullOrEmpty(tagPrefix))
+            {
+                VgcApis.Misc.Utils.MergeJson(json, mixin);
+                return;
+            }
+
+            var tag = VgcApis.Misc.Utils.GetValue<string>(json, "tag");
+            if (!string.IsNullOrEmpty(tag) && tag.StartsWith(tagPrefix))
+            {
+                VgcApis.Misc.Utils.MergeJson(json, mixin);
+            }
         }
 
         void MergeTemplatesSetting(
@@ -377,7 +425,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         {
             foreach (var tplS in tplSs)
             {
-                if (tplS.MergeToJObject(ref json, host, port) != true)
+                if (!tplS.IsOutboundTemplate() && tplS.MergeToJObject(ref json, host, port) != true)
                 {
                     break;
                 }
@@ -391,11 +439,6 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             JObject uTlsFingerprint
         )
         {
-            if (json == null)
-            {
-                return;
-            }
-
             if (VgcApis.Misc.Utils.GetKey(json, "streamSettings") is JObject streamS)
             {
                 if (selfSigned != null)

@@ -157,6 +157,15 @@
   <data name="chkIsSocks5Inbound.ToolTip" xml:space="preserve">
     <value>测速时使用SOCKS5协议否则用HTTP协议。只在设置为自定义core的测速模板时有效。</value>
   </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 12</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>参数</value>
+  </data>
+  <data name="label4.ToolTip" xml:space="preserve">
+    <value>合并附加参数。</value>
+  </data>
   <data name="rtboxTemplate.ToolTip" xml:space="preserve">
     <value />
   </data>
@@ -176,6 +185,9 @@
     <value>模板</value>
   </data>
   <data name="label3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxMergeParams.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="$this.Text" xml:space="preserve">

@@ -7,13 +7,13 @@ weight: 20
 
 V2RayGCon v1.9.1+  
 
-以前想给服务器包添加、删除节点，通常要用Pacman插件或者lua脚本重新打包生成配置，然后替换当前服务器的config并重启。这会导致所有连接断开，体验不是很好。xray/v2ray支持通过grpc调用api接口来热增删节点。但是它没提供查询当前节点的方法，删除节点永远返回成功"{}"。于是调用api一段时间后，只有上帝和gdb知道core里面究竟还剩下哪些节点。  
+以前想给服务器包添加、删除节点，通常要用Pacman插件或者lua脚本重新打包生成配置，然后替换当前服务器的config并重启。这会导致所有连接断开，体验不是很好。xray/v2ray支持通过GRPC调用API接口来热增删节点。但是它没提供查询当前节点的方法，删除节点永远返回成功 "{}"。于是调用API一段时间后，只有上帝和gdb知道core里面究竟还剩下哪些节点。  
 
-为了改进core的api体验，于是有了[Xray-core experimental](https://github.com/vrnobody/Xray-core)这个项目。这个项目fork自Xray-core v1.8.6，修改、添加了一些api命令，让热增删节点功能更易用。下面是一个通过调用api把测速结果小于5000ms的节点替换掉第一个服务器outbounds的示例。  
+为了改进core的API体验，于是有了[Xray-core experimental](https://github.com/vrnobody/Xray-core)这个项目。这个项目fork自Xray-core v1.8.6，修改、添加了一些API命令，让热增删节点功能更易用。下面是一个通过调用API把测速结果小于5000ms的节点替换掉第一个服务器outbounds的示例。  
 
 先下载修改版xray解压并替换掉原来的xray.exe（也可以配置自定义内核，把修改版xray.exe放到其他文件夹）。  
   
-然后配置一个开启了http/socks/api功能的模板，应用到第一个服务器上。示例中的api端口是12345。  
+然后配置一个开启了http/socks/api功能的模板，应用到第一个服务器上。示例中的API端口是12345。  
 ```json
 {
   "log": {
@@ -82,7 +82,7 @@ V2RayGCon v1.9.1+
 }
 ```
 
-接着启动服务器（不然没法用api命令）  
+接着启动服务器（不然没法用API命令）  
 
 最后在NeoLuna插件中运行以下脚本：  
 ```lua
@@ -92,7 +92,7 @@ local xray = "./3rd/core/xray.exe"
 -- 只打包测速结果小于5000毫秒的服务器
 local latency = 5000
 
--- api端口
+-- API端口
 local apiPort = 12345
 
 -- 把多个服务器打包成配置包
@@ -112,7 +112,7 @@ local function PackServers(latency)
     return std.Server:PackServersToString(uids)
 end
 
--- 辅助函数，执行api命令
+-- 辅助函数，执行API命令
 local function ExecApiCmd(port, cmd, arg, stdin)
     local timeout = 10 * 1000
     local args = 'api ' .. cmd .. ' --server=127.0.0.1:' .. tostring(port)
@@ -127,13 +127,13 @@ end
 
 local function Main()
 
-    -- 调用api清除所有outbounds
+    -- 调用API清除所有outbounds
     ExecApiCmd(apiPort, "rmo", '"*"', nil)
     
     -- 生成配置包
     local config = PackServers(latency)
     
-    -- 调用api把配置包添加到服务器中
+    -- 调用API把配置包添加到服务器中
     ExecApiCmd(apiPort, "ado", nil, config)
     
     -- 把配置包存入第一个服务器

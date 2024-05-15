@@ -5,7 +5,7 @@ draft: false
 weight: 10
 ---
 
-开启TUN模式或者设置系统代理前，需要先在`选项`窗口中启用`ProxySetter`插件  
+开启 “TUN模式” 或者设置系统代理前，需要先在 “选项” 窗口中启用 `ProxySetter` 插件  
 {{< figure src="../../images/forms/form_option_plugins.png" >}}
 
 然后可以通过托盘图标的右键菜单快速切换模式  

@@ -5,10 +5,5 @@ draft: false
 weight: 4
 ---
 
-这里写些没什么人看的设计原理之类的东东。  
-
-各种链接平均长度(bytes)：  
-vless/trojan: 200  
-vmess: 300  
-config.json: 1000  
-UserSettings.json: 240  
+这是个项目使用 Visual Studio 2019 编写。如果你用的是 Visual Studio 2022 请看下面这链接：  
+[https://stackoverflow.com/questions/70022194/open-net-framework-4-5-project-in-vs-2022-is-there-any-workaround](https://stackoverflow.com/questions/70022194/open-net-framework-4-5-project-in-vs-2022-is-there-any-workaround)  

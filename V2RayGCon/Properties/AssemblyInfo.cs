@@ -33,11 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.9.5.7")]
+[assembly: AssemblyVersion("1.9.5.8")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v1.9.5.8 Show info of first outbound in summary of chained outbounds.
 v1.9.5.7 Add custom template type 'ModifyOutbound'.
 v1.9.5.6 Refactoring.
 v1.9.5.5 Remove port in sni. Issue #25.

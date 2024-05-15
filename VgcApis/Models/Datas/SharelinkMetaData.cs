@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json.Linq;
-using static ScintillaNET.Style;
 
 namespace VgcApis.Models.Datas
 {

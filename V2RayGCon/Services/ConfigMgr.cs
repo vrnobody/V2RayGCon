@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Models.Consts;
@@ -11,7 +10,7 @@ using static VgcApis.Models.Datas.Enums;
 
 namespace V2RayGCon.Services
 {
-    #region test result
+    #region latency test result
     class LatencyTestResult
     {
         public long latency;

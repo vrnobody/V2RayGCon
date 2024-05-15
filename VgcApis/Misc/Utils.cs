@@ -1721,12 +1721,6 @@ namespace VgcApis.Misc
                 return $"balancer: {count} random";
             }
 
-            var proxy = GetValue<string>(json, "outbounds.0.proxySettings.tag");
-            if (!string.IsNullOrEmpty(proxy))
-            {
-                return $"proxychain: {count}";
-            }
-
             var result = GetSummaryFromConfig(json, "outbounds.0");
             if (string.IsNullOrEmpty(result))
             {

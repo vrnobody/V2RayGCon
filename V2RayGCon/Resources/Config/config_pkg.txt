@@ -55,9 +55,9 @@
     "pingConfig": {
       "destination": "http://www.google.com/gen_204",
       "interval": "1h",
-      "connectivity": "https://detectportal.firefox.com/success.txt",
+      "connectivity": "",
       "timeout": "30s",
-      "sampling": 2
+      "sampling": 3
     }
   }
 }

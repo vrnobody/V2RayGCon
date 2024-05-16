@@ -912,12 +912,20 @@ namespace V2RayGCon.Views.UserControls
 
         private void rlbTotalNetFlow_Click(object sender, EventArgs e)
         {
-            ShowModifyConfigsWinForm();
+            if (VgcApis.Misc.UI.Confirm(I18N.ConfirmClearStat))
+            {
+                var s = coreServCtrl.GetCoreStates();
+                s.SetDownlinkTotal(0);
+                s.SetUplinkTotal(0);
+            }
         }
 
         private void rlbSpeedtest_Click(object sender, EventArgs e)
         {
-            ShowModifyConfigsWinForm();
+            if (VgcApis.Misc.UI.Confirm(I18N.ConfirmClearSpeedTestResults))
+            {
+                coreServCtrl.GetCoreStates().SetSpeedTestResult(0);
+            }
         }
 
         private void textEditortoolStripMenuItem_Click(object sender, EventArgs e)

@@ -6,6 +6,7 @@ using System.Threading;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Models.Consts;
+using static System.Net.Mime.MediaTypeNames;
 using static VgcApis.Models.Datas.Enums;
 
 namespace V2RayGCon.Services
@@ -473,26 +474,9 @@ namespace V2RayGCon.Services
             return new Models.Datas.SpeedTestConfigInfos(false, r);
         }
 
-        void ShowCurrentSpeedtestResult(
-            VgcApis.Interfaces.CoreCtrlComponents.ICoreStates coreStates,
-            VgcApis.Interfaces.CoreCtrlComponents.ILogger coreLogger,
-            string prefix,
-            long delay
-        )
-        {
-            if (delay <= 0)
-            {
-                delay = TIMEOUT;
-            }
-            var text = delay == TIMEOUT ? I18N.Timeout : $"{delay}ms";
-            coreStates.SetStatus(text);
-            coreStates.SetSpeedTestResult(delay);
-            coreLogger.Log($"{prefix}{text}");
-        }
-
         void DoLatencyTestOnCore(VgcApis.Interfaces.ICoreServCtrl coreServ)
         {
-            long avgDelay = -1;
+            long avgDelay = 0;
             long curDelay = TIMEOUT;
             var cycles = Math.Max(
                 1,
@@ -506,6 +490,7 @@ namespace V2RayGCon.Services
             var coreName = coreCtrl.GetCustomCoreName();
             var config = coreServ.GetConfiger().GetFinalConfig();
             var url = GetDefaultSpeedtestUrl();
+            var text = "";
 
             for (int i = 0; i < cycles && !setting.isSpeedtestCancelled; i++)
             {
@@ -519,30 +504,37 @@ namespace V2RayGCon.Services
                 );
                 curDelay = sr.latency;
                 coreStates.AddStatSample(new VgcApis.Models.Datas.StatsSample(0, sr.size));
-                ShowCurrentSpeedtestResult(
-                    coreStates,
-                    coreLogger,
-                    I18N.CurSpeedtestResult,
-                    curDelay
-                );
-                if (curDelay == TIMEOUT)
+
+                // abort
+                if (curDelay <= 0)
                 {
                     continue;
                 }
 
-                avgDelay = VgcApis.Misc.Utils.SpeedtestMean(
-                    avgDelay,
-                    curDelay,
-                    Config.CustomSpeedtestMeanWeight
-                );
+                text = curDelay == TIMEOUT ? I18N.Timeout : $"{curDelay}ms";
+                coreStates.SetStatus(text);
+                coreLogger.Log($"{I18N.CurSpeedtestResult}{text}");
+
+                if (curDelay != TIMEOUT)
+                {
+                    avgDelay = VgcApis.Misc.Utils.SpeedtestMean(
+                        avgDelay,
+                        curDelay,
+                        Config.CustomSpeedtestMeanWeight
+                    );
+                }
             }
 
-            // all speedtest timeout
-            if (avgDelay <= 0)
+            // all speedtest timeouted
+            if (avgDelay <= 0 && !setting.isSpeedtestCancelled)
             {
                 avgDelay = TIMEOUT;
             }
-            ShowCurrentSpeedtestResult(coreStates, coreLogger, I18N.AvgSpeedtestResult, avgDelay);
+            text = avgDelay == TIMEOUT ? I18N.Timeout : $"{avgDelay}ms";
+            coreStates.SetStatus(avgDelay > 0 ? text : "");
+            coreLogger.Log($"{I18N.AvgSpeedtestResult}{text}");
+            coreStates.SetSpeedTestResult(avgDelay);
+
             coreCtrl.ReleaseSpeedTestLock();
         }
         #endregion

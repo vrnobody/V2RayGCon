@@ -143,6 +143,10 @@ namespace V2RayGCon.Controllers
             cst.SetName(cs.serverName);
             ci.customMark = cs.mark;
             ci.customRemark = cs.remark;
+            ci.tag1 = cs.tag1;
+            ci.tag2 = cs.tag2;
+            ci.tag3 = cs.tag3;
+
             ci.isAutoRun = cs.isAutorun;
             ci.isUntrack = cs.isUntrack;
 

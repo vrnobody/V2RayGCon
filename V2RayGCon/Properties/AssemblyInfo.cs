@@ -33,11 +33,13 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.9.5.10")]
+[assembly: AssemblyVersion("1.9.6.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+--------------------------------------------------------------------
+v1.9.5.11 Server settings panel supports tags editing.
 v1.9.5.10 Remove connectivity conf-item in leastLoad servers package.
 v1.9.5.9 Set latency to zero if speed test is cancelled.
          Prompt to clear record when clicking the latency label or statistic label.

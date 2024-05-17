@@ -135,6 +135,9 @@ namespace V2RayGCon.Views.WinForms
                 inboundAddress = cboxInboundAddress.Text,
                 mark = cboxMark.Text,
                 remark = tboxRemark.Text,
+                tag1 = tboxTag1.Text,
+                tag2 = tboxTag2.Text,
+                tag3 = tboxTag3.Text,
                 customCoreName = cboxCoreName.SelectedIndex < 1 ? string.Empty : cboxCoreName.Text,
                 templates = tboxTemplates.Text,
                 isAutorun = chkAutoRun.Checked,
@@ -154,6 +157,9 @@ namespace V2RayGCon.Views.WinForms
             cboxInboundAddress.Text = s.inboundAddress;
             cboxMark.Text = s.mark;
             tboxRemark.Text = s.remark;
+            tboxTag1.Text = s.tag1;
+            tboxTag2.Text = s.tag2;
+            tboxTag3.Text = s.tag3;
 
             VgcApis.Misc.UI.SelectComboxByText(cboxCoreName, s.customCoreName);
             VgcApis.Misc.UI.SelectComboxByText(cboxInboundName, s.inboundName);

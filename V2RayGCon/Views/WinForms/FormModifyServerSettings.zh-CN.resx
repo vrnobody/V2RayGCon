@@ -202,6 +202,33 @@
   <data name="chkSendThrough.ToolTip" xml:space="preserve">
     <value>接受tun模式下自动修改sendThrough</value>
   </data>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 12</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>标签1</value>
+  </data>
+  <data name="label7.ToolTip" xml:space="preserve">
+    <value>标签</value>
+  </data>
+  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 12</value>
+  </data>
+  <data name="label9.Text" xml:space="preserve">
+    <value>标签2</value>
+  </data>
+  <data name="label9.ToolTip" xml:space="preserve">
+    <value>标签</value>
+  </data>
+  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 12</value>
+  </data>
+  <data name="label11.Text" xml:space="preserve">
+    <value>标签3</value>
+  </data>
+  <data name="label11.ToolTip" xml:space="preserve">
+    <value>标签</value>
+  </data>
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 12</value>
   </data>
@@ -224,6 +251,15 @@
     <value>保存</value>
   </data>
   <data name="btnOK.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTag3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTag2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tboxTag1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="cboxCoreName.Items" xml:space="preserve">

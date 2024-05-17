@@ -9,6 +9,9 @@ namespace VgcApis.Models.Datas
             inboundAddress,
             mark,
             remark,
+            tag1,
+            tag2,
+            tag3,
             customCoreName,
             templates;
 
@@ -26,6 +29,10 @@ namespace VgcApis.Models.Datas
             inboundAddress = em;
             mark = em;
             remark = em;
+            tag1 = em;
+            tag2 = em;
+            tag3 = em;
+
             customCoreName = em;
             templates = em;
 
@@ -43,6 +50,10 @@ namespace VgcApis.Models.Datas
             index = cs.GetIndex();
             mark = cs.GetMark();
             remark = cs.GetRemark();
+            tag1 = cs.GetTag1();
+            tag2 = cs.GetTag2();
+            tag3 = cs.GetTag3();
+
             inboundName = cs.GetInboundName();
             customCoreName = coreServ.GetCoreCtrl().GetCustomCoreName();
             templates = cs.GetCustomTemplateNames();
@@ -80,6 +91,9 @@ namespace VgcApis.Models.Datas
                 || t.inboundAddress != inboundAddress
                 || t.mark != mark
                 || t.remark != remark
+                || t.tag1 != tag1
+                || t.tag2 != tag2
+                || t.tag3 != tag3
                 || t.customCoreName != customCoreName
                 || t.inboundName != inboundName
                 || t.isAutorun != isAutorun

@@ -47,12 +47,18 @@
             this.btnTemplates = new System.Windows.Forms.Button();
             this.chkInject = new System.Windows.Forms.CheckBox();
             this.chkSendThrough = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.tboxRemark = new System.Windows.Forms.TextBox();
             this.pboxQrcode = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tboxTemplates = new System.Windows.Forms.TextBox();
             this.btnOK = new System.Windows.Forms.Button();
+            this.tboxTag3 = new System.Windows.Forms.TextBox();
+            this.tboxTag2 = new System.Windows.Forms.TextBox();
+            this.tboxTag1 = new System.Windows.Forms.TextBox();
             this.cboxCoreName = new System.Windows.Forms.ComboBox();
             this.cboxZoomMode = new System.Windows.Forms.ComboBox();
             this.cboxShareLinkType = new System.Windows.Forms.ComboBox();
@@ -179,6 +185,24 @@
             this.toolTip1.SetToolTip(this.chkSendThrough, resources.GetString("chkSendThrough.ToolTip"));
             this.chkSendThrough.UseVisualStyleBackColor = true;
             // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
+            this.toolTip1.SetToolTip(this.label7, resources.GetString("label7.ToolTip"));
+            // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.Name = "label9";
+            this.toolTip1.SetToolTip(this.label9, resources.GetString("label9.ToolTip"));
+            // 
+            // label11
+            // 
+            resources.ApplyResources(this.label11, "label11");
+            this.label11.Name = "label11";
+            this.toolTip1.SetToolTip(this.label11, resources.GetString("label11.ToolTip"));
+            // 
             // label10
             // 
             resources.ApplyResources(this.label10, "label10");
@@ -217,8 +241,14 @@
             this.groupBox1.Controls.Add(this.chkInject);
             this.groupBox1.Controls.Add(this.chkUntrack);
             this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.chkAutoRun);
+            this.groupBox1.Controls.Add(this.tboxTag3);
+            this.groupBox1.Controls.Add(this.tboxTag2);
+            this.groupBox1.Controls.Add(this.tboxTag1);
             this.groupBox1.Controls.Add(this.tboxRemark);
             this.groupBox1.Controls.Add(this.cboxCoreName);
             this.groupBox1.Controls.Add(this.cboxMark);
@@ -239,6 +269,24 @@
             this.toolTip1.SetToolTip(this.btnOK, resources.GetString("btnOK.ToolTip"));
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // tboxTag3
+            // 
+            resources.ApplyResources(this.tboxTag3, "tboxTag3");
+            this.tboxTag3.Name = "tboxTag3";
+            this.toolTip1.SetToolTip(this.tboxTag3, resources.GetString("tboxTag3.ToolTip"));
+            // 
+            // tboxTag2
+            // 
+            resources.ApplyResources(this.tboxTag2, "tboxTag2");
+            this.tboxTag2.Name = "tboxTag2";
+            this.toolTip1.SetToolTip(this.tboxTag2, resources.GetString("tboxTag2.ToolTip"));
+            // 
+            // tboxTag1
+            // 
+            resources.ApplyResources(this.tboxTag1, "tboxTag1");
+            this.tboxTag1.Name = "tboxTag1";
+            this.toolTip1.SetToolTip(this.tboxTag1, resources.GetString("tboxTag1.ToolTip"));
             // 
             // cboxCoreName
             // 
@@ -384,5 +432,11 @@
         private System.Windows.Forms.TextBox tboxTemplates;
         private System.Windows.Forms.CheckBox chkInject;
         private System.Windows.Forms.CheckBox chkSendThrough;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox tboxTag3;
+        private System.Windows.Forms.TextBox tboxTag2;
+        private System.Windows.Forms.TextBox tboxTag1;
     }
 }

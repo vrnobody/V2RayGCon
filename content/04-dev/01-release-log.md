@@ -5,6 +5,17 @@ draft: false
 weight: 10
 ---
 
+##### `v1.9.6.0`
+自定义模板中添加ModifyOutbound合并方式，详见手册：前置代理  
+服务器设置面板支持修改标签1-3  
+NeoLuna添加wserv:GetShareLinkMetaData()函数  
+修复导入分享链接SNI多加了port的bug(issue #25)  
+修复JSON配置不能使用注释的bug  
+Pacman插件生成的配置的connectivity项改为空字符串  
+点击服务器面板的延迟或者流量标签时，弹出清除数据窗口  
+停止测速时，清除未完成测速的服务器的延迟数据（原来当作超时处理）  
+链式代理的摘要改为显示第一个outbound的信息  
+
 ##### `v1.9.5.0`
 Pacman插件支持leastLoad均衡策略  
 vless/trojan分享链接支持HTTPUpgrade及gRPC的authority参数  

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using VgcApis.Models.Datas;
 
 namespace V2RayGCon.Services.ShareLinkComponents
 {
@@ -14,11 +15,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region public methods
-        public VgcApis.Models.Datas.DecodeResult Decode(string shareLink)
+        public DecodeResult Decode(string shareLink)
         {
             var vmess = Misc.Utils.VmessLink2Vmess(shareLink);
             var config = Vmess2Config(vmess);
-            return new VgcApis.Models.Datas.DecodeResult(vmess.ps, config);
+            return new DecodeResult(vmess.ps, config);
         }
 
         public string Encode(string name, string config)
@@ -32,11 +33,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
         }
 
         public List<string> ExtractLinksFromText(string text) =>
-            Misc.Utils.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
+            Misc.Utils.ExtractLinks(text, Enums.LinkTypes.vmess);
         #endregion
 
         #region private methods
-        string Vmess2Config(VgcApis.Models.Datas.Vmess vmess)
+        string Vmess2Config(Vmess vmess)
         {
             if (vmess == null)
             {
@@ -59,7 +60,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return GetParent()?.GenerateJsonConfing(tpl, outVmess);
         }
 
-        JToken GenStreamSetting(VgcApis.Models.Datas.Vmess vmess)
+        JToken GenStreamSetting(Vmess vmess)
         {
             // insert stream type
             string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic", "grpc" };
@@ -83,32 +84,44 @@ namespace V2RayGCon.Services.ShareLinkComponents
             var streamToken = Misc.Caches.Jsons.LoadTemplate(streamType);
             try
             {
+                FillInTlsSettings(vmess, streamToken);
                 FillStreamSettingsDetail(vmess, streamType, streamToken);
             }
             catch { }
-
-            var isUseTls = vmess.tls?.ToLower() == "tls";
-            try
-            {
-                streamToken["security"] = isUseTls ? "tls" : "none";
-            }
-            catch { }
-
-            if (isUseTls && !string.IsNullOrWhiteSpace(vmess.sni))
-            {
-                try
-                {
-                    streamToken["tlsSettings"] = JObject.Parse(@"{}");
-                    streamToken["tlsSettings"]["allowInsecure"] = false;
-                    streamToken["tlsSettings"]["serverName"] = vmess.sni;
-                }
-                catch { }
-            }
             return streamToken;
         }
 
+        private static void FillInTlsSettings(Vmess vmess, JToken stream)
+        {
+            var ty = vmess.tls?.ToLower() == "tls" ? "tls" : "none";
+            stream["security"] = ty;
+            if(ty == "none")
+            {
+                return;
+            }
+            var o = new JObject();
+
+            void SetValue(string key, string value)
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    o[key] = value;
+                }
+            }
+            SetValue("serverName", vmess.sni);
+            SetValue("fingerprint", vmess.fp);
+
+            o["allowInsecure"] = false;
+            if (!string.IsNullOrEmpty(vmess.alpn))
+            {
+                o["alpn"] = VgcApis.Misc.Utils.Str2JArray(vmess.alpn);
+            }
+
+            stream["tlsSettings"] = o;
+        }
+
         private static void FillStreamSettingsDetail(
-            VgcApis.Models.Datas.Vmess vmess,
+            Vmess vmess,
             string streamType,
             JToken streamToken
         )
@@ -144,10 +157,9 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     }
                     break;
                 case "ws":
-                    streamToken["wsSettings"]["path"] = string.IsNullOrEmpty(vmess.v)
-                        ? vmess.host
-                        : vmess.path;
-                    if (vmess.v == "2" && !string.IsNullOrEmpty(vmess.host))
+                    // 2024-05-17 应该没人用v1了吧。
+                    streamToken["wsSettings"]["path"] = vmess.path;
+                    if (!string.IsNullOrEmpty(vmess.host))
                     {
                         streamToken["wsSettings"]["headers"]["Host"] = vmess.host;
                     }

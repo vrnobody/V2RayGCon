@@ -1209,68 +1209,11 @@ namespace V2RayGCon.Services
             {
                 var coreServ = kv.Value;
                 coreServ.Run(setting, configMgr, this);
-
-                // 预计2024-06删除这两个函数
-                PatchConfig(coreServ);
-                FixInboundName(coreServ);
-
                 var cfg = coreServ.GetConfiger().GetConfig();
                 configCache.TryAdd(cfg, coreServ.GetCoreStates().GetUid());
                 BindEventsTo(coreServ);
             }
         }
-
-        void FixInboundName(Controllers.CoreServerCtrl coreServ)
-        {
-            var name = coreServ.GetCoreStates().GetInboundName();
-            if (!string.IsNullOrEmpty(name))
-            {
-                return;
-            }
-
-            var coreInfo = coreServ.GetCoreStates().GetAllRawCoreInfo();
-            switch ((ProxyTypes)coreInfo.customInbType)
-            {
-                case ProxyTypes.SOCKS:
-                    name = "socks";
-                    break;
-                case ProxyTypes.Custom:
-                    name = "custom";
-                    break;
-                case ProxyTypes.Config:
-                    name = "config";
-                    break;
-                default:
-                    name = "http";
-                    break;
-            }
-            coreInfo.inbName = name;
-        }
-
-        void PatchConfig(Controllers.CoreServerCtrl coreServ)
-        {
-            var config = coreServ.GetConfiger().GetConfig();
-            if (VgcApis.Misc.Utils.IsJson(config))
-            {
-                return;
-            }
-            try
-            {
-                var json = JObject.Parse(config);
-                var coreState = coreServ.GetCoreStates();
-                var name = coreState.GetName();
-                if (string.IsNullOrEmpty(name))
-                {
-                    name = VgcApis.Misc.Utils.GetAliasFromConfig(json);
-                    coreState.SetName(name);
-                }
-                json.Remove(Config.SectionKeyV2rayGCon);
-                var formated = VgcApis.Misc.Utils.FormatConfig(json);
-                coreServ.GetConfiger().SetConfig(formated);
-            }
-            catch { }
-        }
-
         #endregion
 
         #region protected methods

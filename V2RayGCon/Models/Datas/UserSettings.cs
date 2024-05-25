@@ -7,26 +7,6 @@ namespace V2RayGCon.Models.Datas
     {
         #region public properties
 
-        // obsolete 预计2024-06删除
-        // ----------------------------------
-        public string CustomInbounds { get; set; } = @"[]";
-
-        public List<CustomConfigTemplate> CustomInboundSettings = null;
-
-        public bool CustomVmessDecodeTemplateEnabled { get; set; } = false;
-        public string CustomVmessDecodeTemplateUrl { get; set; } = "";
-
-        // ----------------------------------
-
-        // obsolete 预计2024-09删除
-        // ----------------------------------
-        public string CompressedUnicodeDecodeCache { get; set; }
-
-        public bool isUseV4Format { get; set; }
-
-        // ----------------------------------
-
-
         public bool isLoad3rdPartyPlugins { get; set; }
         public string CompressedUnicodeLocalStorage { get; set; }
 
@@ -158,80 +138,20 @@ namespace V2RayGCon.Models.Datas
         public void Normalized()
         {
             V2RayCoreDownloadVersionList = V2RayCoreDownloadVersionList ?? new List<string>();
-
             ImportOptions = ImportOptions ?? new ImportSharelinkOptions();
-            FixImportOptions();
-
             SpeedtestOptions = SpeedtestOptions ?? new SpeedTestOptions();
             CustomCoreSettings = CustomCoreSettings ?? new List<CustomCoreSettings>();
 
-            // plan to delete on 2024-06
-            // ----------------
-            CustomInboundSettings = CustomInboundSettings ?? CreateDefaultConfigTemplates();
-            FixCustomInbounds(); // 必须在CustomInboundSettings创建后
-            // ----------------
+            if (string.IsNullOrEmpty(CompressedUnicodeCustomConfigTemplates))
+            {
+                CompressedUnicodeCustomConfigTemplates = 
+                    VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
+                        CreateDefaultConfigTemplates());
+            }
         }
         #endregion
 
-        #region private methods
-        // 预计2024-06删除
-        void FixImportOptions()
-        {
-            if (!string.IsNullOrEmpty(ImportOptions.DefaultInboundName))
-            {
-                return;
-            }
-
-            string name;
-            var inbTy = (Enums.ProxyTypes)ImportOptions.Mode;
-            switch (inbTy)
-            {
-                case Enums.ProxyTypes.Config:
-                    name = "config";
-                    break;
-                case Enums.ProxyTypes.SOCKS:
-                    name = "socks";
-                    break;
-                case Enums.ProxyTypes.Custom:
-                    name = "custom";
-                    break;
-                default:
-                    name = "http";
-                    break;
-            }
-            ImportOptions.DefaultInboundName = name;
-        }
-
-        // 预计2024-06删除
-        void FixCustomInbounds()
-        {
-            if (string.IsNullOrEmpty(CustomInbounds))
-            {
-                return;
-            }
-
-            try
-            {
-                var inbs = JArray.Parse(CustomInbounds);
-                if (inbs.Count > 0)
-                {
-                    var index = CustomInboundSettings.Count + 1;
-                    var tpl = string.Format("{{inbounds:{0}}}", CustomInbounds);
-                    var config = VgcApis.Misc.Utils.FormatConfig(tpl);
-                    CustomInboundSettings.Add(
-                        new CustomConfigTemplate()
-                        {
-                            index = index,
-                            name = "custom",
-                            template = config,
-                        }
-                    );
-                }
-                CustomInbounds = @"";
-            }
-            catch { }
-        }
-
+        #region private methods       
         List<CustomConfigTemplate> CreateDefaultConfigTemplates()
         {
             var r = new List<CustomConfigTemplate>();

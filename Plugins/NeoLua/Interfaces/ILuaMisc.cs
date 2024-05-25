@@ -6,12 +6,6 @@ namespace NeoLuna.Interfaces
 {
     public interface ILuaMisc : ILogable
     {
-        // ------------ 预计 2024-06 删除 ----------------
-        string AddV2cfgPrefix(string b64Str);
-        string AddVmessPrefix(string b64Str);
-
-        // ----------------------------------------------
-
         #region do net stuff
         /// <summary>
         /// 清理.net Regex缓存

@@ -282,12 +282,7 @@ namespace NeoLuna.Models.Apis.Components
             var r = new LuaTable { ["name"] = kv.name, ["config"] = kv.config, };
             return r;
         }
-
-        public string AddVmessPrefix(string b64Str) =>
-            VgcApis.Misc.Utils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
-
-        public string AddV2cfgPrefix(string b64Str) =>
-            VgcApis.Misc.Utils.AddLinkPrefix(b64Str, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
+        
 
         /// <summary>
         /// null: failed

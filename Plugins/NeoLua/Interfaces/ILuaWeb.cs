@@ -6,14 +6,6 @@ namespace NeoLuna.Interfaces
 {
     public interface ILuaWeb
     {
-        // ---- 预计2024-06删除 ----
-        List<string> ExtractV2cfgLinks(string text);
-        List<string> ExtractVmessLinks(string text);
-        List<string> ExtractSsLinks(string text);
-
-        // ------------------------
-
-
         /// <summary>
         /// html-agility-pack
         /// </summary>

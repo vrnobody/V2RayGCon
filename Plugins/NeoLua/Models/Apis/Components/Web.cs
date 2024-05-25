@@ -271,15 +271,6 @@ namespace NeoLuna.Models.Apis.Components
             return null;
         }
 
-        public List<string> ExtractV2cfgLinks(string text) =>
-            vgcWeb.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.v2cfg);
-
-        public List<string> ExtractVmessLinks(string text) =>
-            vgcWeb.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.vmess);
-
-        public List<string> ExtractSsLinks(string text) =>
-            vgcWeb.ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.ss);
-
         public string Search(string keywords, int first, int proxyPort) =>
             vgcWeb.Search(keywords, first, proxyPort, 20 * 1000);
 

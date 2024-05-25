@@ -160,9 +160,7 @@ namespace V2RayGCon.Services
             catch { }
             configTemplateCache =
                 tpl
-                ?? userSettings.CustomInboundSettings?.ToList()
                 ?? new List<Models.Datas.CustomConfigTemplate>();
-            userSettings.CustomInboundSettings = null;
         }
 
         // use by TabDefault
@@ -248,19 +246,6 @@ namespace V2RayGCon.Services
 
         public int GetSpeedtestQueueLength() => SpeedtestCounter;
 
-        public string CustomDefInbounds
-        {
-            get => userSettings.CustomInbounds;
-            set
-            {
-                if (userSettings.CustomInbounds == value)
-                {
-                    return;
-                }
-                userSettings.CustomInbounds = value;
-                SaveSettingsLater();
-            }
-        }
 
         public string DebugLogFilePath
         {

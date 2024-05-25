@@ -4,13 +4,6 @@ namespace VgcApis.Models.Datas
 {
     public class CoreInfo
     {
-        // ---- obsolete 预计2024-06删除 ----
-        public int customInbType = (int)Enums.ProxyTypes.HTTP;
-        public bool isInjectImport,
-            isInjectSkipCNSite;
-
-        // ---------------------------------
-
         // plain text of config.json
         public string config;
 

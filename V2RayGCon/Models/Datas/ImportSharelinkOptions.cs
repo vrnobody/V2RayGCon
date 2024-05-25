@@ -2,14 +2,6 @@
 {
     public class ImportSharelinkOptions
     {
-        // obsolete 预计2024-06删除
-        // ----------------------------------
-        public int Mode { get; set; } = (int)Enums.ProxyTypes.HTTP; // Models.Datas.Enum.ProxyTypes
-        public bool IsBypassCnSite { get; set; } = false;
-        public bool IsInjectGlobalImport { get; set; } = false;
-
-        // ----------------------------------
-
         public bool IsImportVmessShareLink { get; set; } = true;
         public bool IsImportVlessShareLink { get; set; } = true;
 

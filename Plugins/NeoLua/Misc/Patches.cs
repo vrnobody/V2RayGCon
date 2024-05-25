@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Neo.IronLua;
 
 namespace NeoLuna.Misc
@@ -18,7 +18,7 @@ namespace NeoLuna.Misc
             g["string"] = strLibCache;
             g["table"] = tableLibCache;
 
-            // û������.
+            // leave math alone
             // g["math"] = mathLibCache;
         }
         #endregion

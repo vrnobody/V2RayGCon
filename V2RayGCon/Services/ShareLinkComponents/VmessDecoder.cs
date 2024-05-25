@@ -158,10 +158,23 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 case "ws":
                     // 2024-05-17 应该没人用v1了吧。
-                    streamToken["wsSettings"]["path"] = vmess.path;
+                    // 2024-05-25 竟然还有人用v1。
                     if (!string.IsNullOrEmpty(vmess.host))
                     {
-                        streamToken["wsSettings"]["headers"]["Host"] = vmess.host;
+                        if (vmess.host.StartsWith("/"))
+                        {
+                            // v1
+                            streamToken["wsSettings"]["path"] = vmess.host;
+                        }
+                        else
+                        {
+                            streamToken["wsSettings"]["headers"]["Host"] = vmess.host;
+                        }
+                    }
+                    // many thanks to those guys who do not set vmess.v to "2"
+                    if (!string.IsNullOrEmpty(vmess.path))
+                    {
+                        streamToken["wsSettings"]["path"] = vmess.path;
                     }
                     break;
                 case "h2":

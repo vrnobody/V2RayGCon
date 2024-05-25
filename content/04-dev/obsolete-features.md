@@ -5,7 +5,7 @@ draft: false
 weight: 20
 ---
 
-##### 预计删除时间2024-06
+##### 2024-05-25 已删除以下功能
 NeoLuna插件内的下列函数：  
 std.Misc:AddV2cfgPrefix(b64Str)  
 std.Misc:AddVmessPrefix(b64Str)  

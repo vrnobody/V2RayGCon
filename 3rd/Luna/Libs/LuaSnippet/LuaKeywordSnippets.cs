@@ -1,5 +1,5 @@
-﻿using AutocompleteMenuNS;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using AutocompleteMenuNS;
 
 namespace Luna.Libs.LuaSnippet
 {

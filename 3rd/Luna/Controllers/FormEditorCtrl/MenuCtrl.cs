@@ -1,7 +1,7 @@
-﻿using Luna.Resources.Langs;
-using Luna.Services;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using Luna.Resources.Langs;
+using Luna.Services;
 
 namespace Luna.Controllers.FormEditorCtrl
 {

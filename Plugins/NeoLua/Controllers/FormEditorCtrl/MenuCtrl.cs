@@ -1,7 +1,7 @@
-﻿using NeoLuna.Resources.Langs;
-using NeoLuna.Services;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using NeoLuna.Resources.Langs;
+using NeoLuna.Services;
 
 namespace NeoLuna.Controllers.FormEditorCtrl
 {

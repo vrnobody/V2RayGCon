@@ -102,7 +102,8 @@ namespace VgcApis.Models.Datas
         string EncodeToSsShareLink()
         {
             var auth = string.Format("{0}:{1}", auth2, auth1);
-            var userinfo = Misc.Utils.Base64EncodeString(auth)
+            var userinfo = Misc
+                .Utils.Base64EncodeString(auth)
                 .Replace("=", "")
                 .Replace('+', '-')
                 .Replace('/', '_');

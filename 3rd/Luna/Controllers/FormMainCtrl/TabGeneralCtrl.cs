@@ -1,12 +1,12 @@
-﻿using Luna.Resources.Langs;
-using Luna.Views.UserControls;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Luna.Resources.Langs;
+using Luna.Views.UserControls;
+using Newtonsoft.Json;
 
 namespace Luna.Controllers.FormMainCtrl
 {

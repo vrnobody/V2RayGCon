@@ -1,6 +1,6 @@
-﻿using ProxySetter.Resources.Langs;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
+using ProxySetter.Resources.Langs;
 
 namespace ProxySetter
 {

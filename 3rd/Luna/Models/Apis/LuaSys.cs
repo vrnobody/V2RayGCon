@@ -1226,7 +1226,8 @@ namespace Luna.Models.Apis
         List<string> ListFiles(string path, string exts, char[] spliters)
         {
             List<string> files;
-            var extList = exts?.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
+            var extList = exts
+                ?.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(e => "." + e.Trim().ToLower())
                 .Where(e => e.Length > 1)
                 .ToList();
@@ -1235,11 +1236,10 @@ namespace Luna.Models.Apis
             {
                 files = Directory
                     .GetFiles(path)
-                    .Where(
-                        f =>
-                            !string.IsNullOrEmpty(
-                                extList.FirstOrDefault(ext => f.ToLower().EndsWith(ext))
-                            )
+                    .Where(f =>
+                        !string.IsNullOrEmpty(
+                            extList.FirstOrDefault(ext => f.ToLower().EndsWith(ext))
+                        )
                     )
                     .Select(f => f.Split(spliters).LastOrDefault())
                     .ToList();

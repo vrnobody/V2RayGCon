@@ -1,7 +1,7 @@
-﻿using ScintillaNET;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using ScintillaNET;
 
 namespace Luna.Misc
 {

@@ -1,6 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProxySetter.Model.Data;
-using System.Collections.Generic;
 using static VgcApis.Misc.Utils;
 
 namespace ProxySetterTests

@@ -1,6 +1,6 @@
-﻿using NeoLuna.Models.Data;
+﻿using System.Windows.Forms;
+using NeoLuna.Models.Data;
 using NeoLuna.Resources.Langs;
-using System.Windows.Forms;
 
 namespace NeoLuna.Views.WinForms
 {

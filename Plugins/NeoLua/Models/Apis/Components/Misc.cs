@@ -282,7 +282,6 @@ namespace NeoLuna.Models.Apis.Components
             var r = new LuaTable { ["name"] = kv.name, ["config"] = kv.config, };
             return r;
         }
-        
 
         /// <summary>
         /// null: failed

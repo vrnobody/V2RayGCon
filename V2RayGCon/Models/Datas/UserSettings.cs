@@ -144,14 +144,15 @@ namespace V2RayGCon.Models.Datas
 
             if (string.IsNullOrEmpty(CompressedUnicodeCustomConfigTemplates))
             {
-                CompressedUnicodeCustomConfigTemplates = 
+                CompressedUnicodeCustomConfigTemplates =
                     VgcApis.Libs.Infr.ZipExtensions.SerializeObjectToCompressedUnicodeBase64(
-                        CreateDefaultConfigTemplates());
+                        CreateDefaultConfigTemplates()
+                    );
             }
         }
         #endregion
 
-        #region private methods       
+        #region private methods
         List<CustomConfigTemplate> CreateDefaultConfigTemplates()
         {
             var r = new List<CustomConfigTemplate>();

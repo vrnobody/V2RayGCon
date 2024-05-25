@@ -1,8 +1,8 @@
-﻿using AutocompleteMenuNS;
-using ScintillaNET;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AutocompleteMenuNS;
+using ScintillaNET;
 
 namespace Luna.Libs.LuaSnippet
 {

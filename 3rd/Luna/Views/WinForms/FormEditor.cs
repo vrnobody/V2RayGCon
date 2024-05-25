@@ -1,6 +1,6 @@
-﻿using Luna.Models.Data;
+﻿using System.Windows.Forms;
+using Luna.Models.Data;
 using Luna.Resources.Langs;
-using System.Windows.Forms;
 
 namespace Luna.Views.WinForms
 {

@@ -1,5 +1,5 @@
-﻿using Pacman.Resources.Langs;
-using System.Drawing;
+﻿using System.Drawing;
+using Pacman.Resources.Langs;
 
 namespace Pacman
 {

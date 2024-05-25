@@ -92,8 +92,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 SelectAllPagesWhere(el => el.GetCoreCtrl().IsCoreRunning());
 
             selectTimeoutAllPages.Click += (s, a) =>
-                SelectAllPagesWhere(
-                    el => el.GetCoreStates().GetSpeedTestResult() == SpeedtestTimeout
+                SelectAllPagesWhere(el =>
+                    el.GetCoreStates().GetSpeedTestResult() == SpeedtestTimeout
                 );
 
             selectNoSpeedTestAllPages.Click += (s, a) =>
@@ -132,8 +132,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 SelectAllServersWhere(el => el.GetCoreStates().GetSpeedTestResult() <= 0);
 
             selectTimeoutAllServers.Click += (s, a) =>
-                SelectAllServersWhere(
-                    el => el.GetCoreStates().GetSpeedTestResult() == SpeedtestTimeout
+                SelectAllServersWhere(el =>
+                    el.GetCoreStates().GetSpeedTestResult() == SpeedtestTimeout
                 );
 
             selectRunningAllServers.Click += (s, a) =>

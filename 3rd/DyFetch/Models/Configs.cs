@@ -1,6 +1,6 @@
-﻿using NDesk.Options;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using NDesk.Options;
 
 namespace DyFetch.Models
 {

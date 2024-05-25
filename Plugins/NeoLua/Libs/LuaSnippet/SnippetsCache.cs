@@ -37,17 +37,14 @@ namespace NeoLuna.Libs.LuaSnippet
                 .Select(e => new LuaSubFuncSnippets(e, "."))
                 .ToList();
             var apiFunctionCache = apifunctions
-                .Select(
-                    info =>
-                        new ApiFunctionSnippets(
-                            info[0], // return type
-                            info[4], // api name
-                            info[1], // methodName,
-                            info[2], // paramStr,
-                            info[3], // paramWithType,
-                            @""
-                        )
-                )
+                .Select(info => new ApiFunctionSnippets(
+                    info[0], // return type
+                    info[4], // api name
+                    info[1], // methodName,
+                    info[2], // paramStr,
+                    info[3], // paramWithType,
+                    @""
+                ))
                 .ToList();
 
             return new BestMatchSnippets(
@@ -139,31 +136,28 @@ namespace NeoLuna.Libs.LuaSnippet
             var predefinedFunctions = Models.Consts.Lua.LuaPredefinedSubFunctions.Concat(
                 Models.Consts.Lua.NeoLuaPredefinedFunctions
             );
-            var apiEvents = apis.SelectMany(
-                api =>
-                    VgcApis
-                        .Misc.Utils.GetPublicEventsInfoOfType(api.Item2)
-                        .Select(infos => $"{api.Item1}.{infos.Item2}")
+            var apiEvents = apis.SelectMany(api =>
+                VgcApis
+                    .Misc.Utils.GetPublicEventsInfoOfType(api.Item2)
+                    .Select(infos => $"{api.Item1}.{infos.Item2}")
             );
-            var apiProps = apis.SelectMany(
-                api =>
-                    VgcApis
-                        .Misc.Utils.GetPublicPropsInfoOfType(api.Item2)
-                        .Select(infos => $"{api.Item1}.{infos.Item2}")
+            var apiProps = apis.SelectMany(api =>
+                VgcApis
+                    .Misc.Utils.GetPublicPropsInfoOfType(api.Item2)
+                    .Select(infos => $"{api.Item1}.{infos.Item2}")
             );
 
-            var apiFuncs = apis.SelectMany(
-                api =>
-                    VgcApis
-                        .Misc.Utils.GetPublicMethodNameAndParam(api.Item2)
-                        .Select(info =>
-                        {
-                            // void Misc:Stop(int ms)
-                            var t1 = $"{info[0]} {api.Item1}:{info[1]}({info[3]})";
-                            // Misc:Stop(ms)
-                            var t2 = $"{api.Item1}:{info[1]}({info[2]})";
-                            return new Tuple<string, string>(t1, t2);
-                        })
+            var apiFuncs = apis.SelectMany(api =>
+                VgcApis
+                    .Misc.Utils.GetPublicMethodNameAndParam(api.Item2)
+                    .Select(info =>
+                    {
+                        // void Misc:Stop(int ms)
+                        var t1 = $"{info[0]} {api.Item1}:{info[1]}({info[3]})";
+                        // Misc:Stop(ms)
+                        var t2 = $"{api.Item1}:{info[1]}({info[2]})";
+                        return new Tuple<string, string>(t1, t2);
+                    })
             );
 
             var snippets = (

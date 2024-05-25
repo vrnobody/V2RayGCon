@@ -1,5 +1,5 @@
-﻿using Luna.Resources.Langs;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using Luna.Resources.Langs;
 
 namespace Luna.Views.WinForms
 {

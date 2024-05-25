@@ -259,15 +259,14 @@ namespace ProxySetter.Services
                 )
                 ?.Replace("\r", "")
                 .Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(
-                    line => line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(line =>
+                    line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                 )
-                .Where(
-                    parts =>
-                        parts.Count() == 5
-                        && parts[0] == "0.0.0.0"
-                        && parts[1] == parts[0]
-                        && parts[3] != tunIpv4
+                .Where(parts =>
+                    parts.Count() == 5
+                    && parts[0] == "0.0.0.0"
+                    && parts[1] == parts[0]
+                    && parts[3] != tunIpv4
                 )
                 .OrderBy(parts => VgcApis.Misc.Utils.Str2Int(parts[4]))
                 .FirstOrDefault();

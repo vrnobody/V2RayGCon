@@ -5,8 +5,10 @@ namespace MihaZupan
 {
     internal class SocketRelay
     {
-        private SocketAsyncEventArgs RecSAEA, SendSAEA;
-        private Socket Source, Target;
+        private SocketAsyncEventArgs RecSAEA,
+            SendSAEA;
+        private Socket Source,
+            Target;
         private byte[] Buffer;
 
         public bool Receiving;
@@ -22,14 +24,8 @@ namespace MihaZupan
             Source = source;
             Target = target;
             Buffer = new byte[81920];
-            RecSAEA = new SocketAsyncEventArgs()
-            {
-                UserToken = this
-            };
-            SendSAEA = new SocketAsyncEventArgs()
-            {
-                UserToken = this
-            };
+            RecSAEA = new SocketAsyncEventArgs() { UserToken = this };
+            SendSAEA = new SocketAsyncEventArgs() { UserToken = this };
             RecSAEA.SetBuffer(Buffer, 0, Buffer.Length);
             SendSAEA.SetBuffer(Buffer, 0, Buffer.Length);
             RecSAEA.Completed += OnAsyncOperationCompleted;
@@ -102,7 +98,8 @@ namespace MihaZupan
                             if (Target.SendAsync(SendSAEA))
                                 return;
                         }
-                        else Receiving = true;
+                        else
+                            Receiving = true;
                     }
                 }
             }

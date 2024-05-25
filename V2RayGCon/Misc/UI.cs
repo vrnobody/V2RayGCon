@@ -1,10 +1,10 @@
-﻿using ScintillaNET;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using ScintillaNET;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Misc

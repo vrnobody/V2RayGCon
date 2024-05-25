@@ -1,12 +1,12 @@
-﻿using NeoLuna.Resources.Langs;
-using NeoLuna.Views.UserControls;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using NeoLuna.Resources.Langs;
+using NeoLuna.Views.UserControls;
+using Newtonsoft.Json;
 
 namespace NeoLuna.Controllers.FormMainCtrl
 {

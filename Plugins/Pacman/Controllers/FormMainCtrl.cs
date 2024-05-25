@@ -1,9 +1,9 @@
-﻿using Pacman.Resources.Langs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Pacman.Resources.Langs;
 
 namespace Pacman.Controllers
 {
@@ -315,8 +315,8 @@ namespace Pacman.Controllers
             {
                 var states = serverCtrl.GetCoreStates();
 
-                var found = curList.FirstOrDefault(
-                    b => b.uid == serverCtrl.GetCoreStates().GetUid()
+                var found = curList.FirstOrDefault(b =>
+                    b.uid == serverCtrl.GetCoreStates().GetUid()
                 );
                 if (found != null)
                 {

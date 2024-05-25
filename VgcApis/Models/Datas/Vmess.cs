@@ -24,7 +24,7 @@ namespace VgcApis.Models.Datas
         {
             v = string.Empty; // v1:"" v2:"2"
             ps = string.Empty; // alias
-            
+
             add = string.Empty; // ip,hostname
             port = string.Empty; // port
 

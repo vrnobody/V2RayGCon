@@ -99,9 +99,8 @@ namespace V2RayGCon.Services.ServersComponents
             GetServers(kv => kv.Value.GetCoreStates().IsSelected());
 
         public List<ICoreServCtrl> GetTrackableServerList() =>
-            GetServers(
-                kv =>
-                    kv.Value.GetCoreCtrl().IsCoreRunning() && !kv.Value.GetCoreStates().IsUntrack()
+            GetServers(kv =>
+                kv.Value.GetCoreCtrl().IsCoreRunning() && !kv.Value.GetCoreStates().IsUntrack()
             );
 
         #endregion

@@ -256,8 +256,8 @@ namespace ProxySetter.Services
                 setting.GetBasicSetting().sysProxyMode
                 == (int)Model.Data.Enum.SystemProxyModes.Global;
 
-            var curServ = serverList.FirstOrDefault(
-                s => s.GetConfiger().GetConfig() == curServerConfig
+            var curServ = serverList.FirstOrDefault(s =>
+                s.GetConfiger().GetConfig() == curServerConfig
             );
             if (curServ != null)
             {

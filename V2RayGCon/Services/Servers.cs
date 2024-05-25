@@ -367,8 +367,8 @@ namespace V2RayGCon.Services
                 locker.EnterReadLock();
                 try
                 {
-                    selectedServersCountCache = coreServCache.Count(
-                        kv => kv.Value.GetCoreStates().IsSelected()
+                    selectedServersCountCache = coreServCache.Count(kv =>
+                        kv.Value.GetCoreStates().IsSelected()
                     );
                 }
                 finally

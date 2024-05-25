@@ -1,7 +1,7 @@
-﻿using NeoLuna.Resources.Langs;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using NeoLuna.Resources.Langs;
 
 namespace NeoLuna
 {

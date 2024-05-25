@@ -334,7 +334,8 @@ namespace Luna.Controllers.FormEditorCtrl
 
         bool FallbackScrollToFunction(string text)
         {
-            text = text?.Replace(":", ".")
+            text = text
+                ?.Replace(":", ".")
                 ?.Replace(" ", "")
                 ?.Replace("['", ".")
                 ?.Replace("[\"", ".")
@@ -546,9 +547,8 @@ namespace Luna.Controllers.FormEditorCtrl
                     foreach (var kv in ast[key] as JObject)
                     {
                         var ps = (kv.Value as JObject)[AstServer.KEY_PARAMS] as JArray;
-                        var luaLineNumber = (kv.Value as JObject)[
-                            AstServer.KEY_LINE_NUM
-                        ].Value<int>();
+                        var luaLineNumber = (kv.Value as JObject)[AstServer.KEY_LINE_NUM]
+                            .Value<int>();
                         var sps = string.Join(", ", ps);
                         var fn = $"{kv.Key}({sps})";
                         funcs.Add(fn, luaLineNumber - 1);

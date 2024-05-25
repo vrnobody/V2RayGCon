@@ -106,8 +106,8 @@ namespace V2RayGCon.Services
         {
             lock (saveUserSettingsLocker)
             {
-                var coreSettings = userSettings.CustomCoreSettings.FirstOrDefault(
-                    cs => cs.name == name
+                var coreSettings = userSettings.CustomCoreSettings.FirstOrDefault(cs =>
+                    cs.name == name
                 );
                 if (coreSettings != null)
                 {
@@ -130,8 +130,8 @@ namespace V2RayGCon.Services
 
             lock (saveUserSettingsLocker)
             {
-                var coreS = userSettings.CustomCoreSettings.FirstOrDefault(
-                    cs => cs.name == coreSettings.name
+                var coreS = userSettings.CustomCoreSettings.FirstOrDefault(cs =>
+                    cs.name == coreSettings.name
                 );
                 if (coreS != null)
                 {
@@ -158,9 +158,7 @@ namespace V2RayGCon.Services
                 >(userSettings.CompressedUnicodeCustomConfigTemplates);
             }
             catch { }
-            configTemplateCache =
-                tpl
-                ?? new List<Models.Datas.CustomConfigTemplate>();
+            configTemplateCache = tpl ?? new List<Models.Datas.CustomConfigTemplate>();
         }
 
         // use by TabDefault
@@ -245,7 +243,6 @@ namespace V2RayGCon.Services
         public int SpeedtestCounter = 0;
 
         public int GetSpeedtestQueueLength() => SpeedtestCounter;
-
 
         public string DebugLogFilePath
         {

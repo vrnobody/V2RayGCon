@@ -95,7 +95,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             var ty = vmess.tls?.ToLower() == "tls" ? "tls" : "none";
             stream["security"] = ty;
-            if(ty == "none")
+            if (ty == "none")
             {
                 return;
             }

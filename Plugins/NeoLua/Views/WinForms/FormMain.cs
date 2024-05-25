@@ -1,5 +1,5 @@
-﻿using NeoLuna.Resources.Langs;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using NeoLuna.Resources.Langs;
 
 namespace NeoLuna.Views.WinForms
 {

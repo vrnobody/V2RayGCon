@@ -46,22 +46,21 @@ namespace Luna.Libs.LuaSnippet
                 .Misc.Utils.GetAllAssembliesType()
                 .Select(t => t.Namespace)
                 .Distinct()
-                .Where(
-                    n =>
-                        !(
-                            string.IsNullOrEmpty(n)
-                            || n.StartsWith("<")
-                            || n.StartsWith("AutocompleteMenuNS")
-                            || n.StartsWith("AutoUpdaterDotNET")
-                            || n.StartsWith("Internal.Cryptography")
-                            || n.StartsWith("Luna")
-                            || n.StartsWith("NeoLuna")
-                            || n.StartsWith("Pacman")
-                            || n.StartsWith("ProxySetter")
-                            || n.StartsWith("ResourceEmbedderCompilerGenerated")
-                            || n.StartsWith("V2RayGCon")
-                            || n.StartsWith("VgcApis")
-                        )
+                .Where(n =>
+                    !(
+                        string.IsNullOrEmpty(n)
+                        || n.StartsWith("<")
+                        || n.StartsWith("AutocompleteMenuNS")
+                        || n.StartsWith("AutoUpdaterDotNET")
+                        || n.StartsWith("Internal.Cryptography")
+                        || n.StartsWith("Luna")
+                        || n.StartsWith("NeoLuna")
+                        || n.StartsWith("Pacman")
+                        || n.StartsWith("ProxySetter")
+                        || n.StartsWith("ResourceEmbedderCompilerGenerated")
+                        || n.StartsWith("V2RayGCon")
+                        || n.StartsWith("VgcApis")
+                    )
                 )
                 .ToList();
 
@@ -71,10 +70,9 @@ namespace Luna.Libs.LuaSnippet
             return AppDomain
                 .CurrentDomain.GetAssemblies()
                 .Select(asm => asm.FullName)
-                .Where(
-                    fn =>
-                        !string.IsNullOrEmpty(fn)
-                        && nsps.Where(nsp => fn.StartsWith(nsp)).FirstOrDefault() != null
+                .Where(fn =>
+                    !string.IsNullOrEmpty(fn)
+                    && nsps.Where(nsp => fn.StartsWith(nsp)).FirstOrDefault() != null
                 )
                 .Union(nsps)
                 .OrderBy(n => n)
@@ -186,32 +184,29 @@ namespace Luna.Libs.LuaSnippet
             var predefinedFunctions = Models.Consts.Lua.LuaPredefinedSubFunctions.Concat(
                 Models.Consts.Lua.NLuaPredefinedFunctions
             );
-            var apiEvents = apis.SelectMany(
-                api =>
-                    VgcApis
-                        .Misc.Utils.GetPublicEventsInfoOfType(api.Item2)
-                        .Select(infos => $"{api.Item1}.{infos.Item2}")
+            var apiEvents = apis.SelectMany(api =>
+                VgcApis
+                    .Misc.Utils.GetPublicEventsInfoOfType(api.Item2)
+                    .Select(infos => $"{api.Item1}.{infos.Item2}")
             );
-            var apiProps = apis.SelectMany(
-                api =>
-                    VgcApis
-                        .Misc.Utils.GetPublicPropsInfoOfType(api.Item2)
-                        .Select(infos => $"{api.Item1}.{infos.Item2}")
+            var apiProps = apis.SelectMany(api =>
+                VgcApis
+                    .Misc.Utils.GetPublicPropsInfoOfType(api.Item2)
+                    .Select(infos => $"{api.Item1}.{infos.Item2}")
             );
             var importClrSnippet = GetAllAssembliesName();
 
-            var apiFuncs = apis.SelectMany(
-                api =>
-                    VgcApis
-                        .Misc.Utils.GetPublicMethodNameAndParam(api.Item2)
-                        .Select(info =>
-                        {
-                            // void Misc:Stop(int ms)
-                            var t1 = $"{info[0]} {api.Item1}:{info[1]}({info[3]})";
-                            // Misc:Stop(ms)
-                            var t2 = $"{api.Item1}:{info[1]}({info[2]})";
-                            return new Tuple<string, string>(t1, t2);
-                        })
+            var apiFuncs = apis.SelectMany(api =>
+                VgcApis
+                    .Misc.Utils.GetPublicMethodNameAndParam(api.Item2)
+                    .Select(info =>
+                    {
+                        // void Misc:Stop(int ms)
+                        var t1 = $"{info[0]} {api.Item1}:{info[1]}({info[3]})";
+                        // Misc:Stop(ms)
+                        var t2 = $"{api.Item1}:{info[1]}({info[2]})";
+                        return new Tuple<string, string>(t1, t2);
+                    })
             );
 
             var snippets = (
@@ -326,8 +321,8 @@ namespace Luna.Libs.LuaSnippet
 
             importClrCache = GenLuaImportClrSnippet();
 
-            apiFunctionCache = apis.SelectMany(
-                    api => GenApiFunctionSnippetItems(api.Item1, api.Item2)
+            apiFunctionCache = apis.SelectMany(api =>
+                    GenApiFunctionSnippetItems(api.Item1, api.Item2)
                 )
                 .ToList();
         }
@@ -351,17 +346,14 @@ namespace Luna.Libs.LuaSnippet
             VgcApis
                 .Misc.Utils.GetPublicMethodNameAndParam(type)
                 .OrderBy(info => info[1]) // item2 = method name
-                .Select(
-                    info =>
-                        new ApiFunctionSnippets(
-                            info[0], // return type
-                            apiName,
-                            info[1], // methodName,
-                            info[2], // paramStr,
-                            info[3], // paramWithType,
-                            @""
-                        )
-                );
+                .Select(info => new ApiFunctionSnippets(
+                    info[0], // return type
+                    apiName,
+                    info[1], // methodName,
+                    info[2], // paramStr,
+                    info[3], // paramWithType,
+                    @""
+                ));
 
         #endregion
 

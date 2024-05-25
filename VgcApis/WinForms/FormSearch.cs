@@ -1,8 +1,8 @@
-﻿using ScintillaNET;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using ScintillaNET;
 using VgcApis.Resources.Langs;
 
 namespace VgcApis.WinForms

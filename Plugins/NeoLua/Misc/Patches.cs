@@ -1,5 +1,5 @@
-using Neo.IronLua;
 using System;
+using Neo.IronLua;
 
 namespace NeoLuna.Misc
 {
@@ -18,7 +18,7 @@ namespace NeoLuna.Misc
             g["string"] = strLibCache;
             g["table"] = tableLibCache;
 
-            // 没这需求.
+            // 没锟斤拷锟斤拷锟斤拷.
             // g["math"] = mathLibCache;
         }
         #endregion

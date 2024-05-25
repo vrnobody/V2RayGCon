@@ -1,16 +1,22 @@
-﻿using MihaZupan.Enums;
-using MihaZupan.Enums.Socks5;
-using System;
+﻿using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using MihaZupan.Dns;
+using MihaZupan.Enums;
+using MihaZupan.Enums.Socks5;
 
 namespace MihaZupan
 {
     internal static class Socks5
     {
-        public static SocketConnectionResult TryCreateTunnel(Socket socks5Socket, string destAddress, int destPort, ProxyInfo proxy, IDnsResolver dnsResolver = null)
+        public static SocketConnectionResult TryCreateTunnel(
+            Socket socks5Socket,
+            string destAddress,
+            int destPort,
+            ProxyInfo proxy,
+            IDnsResolver dnsResolver = null
+        )
         {
             try
             {
@@ -46,7 +52,10 @@ namespace MihaZupan
                 else if (buffer[1] != (byte)Authentication.NoAuthentication)
                     return SocketConnectionResult.AuthenticationError;
 
-                if (dnsResolver != null && Helpers.GetAddressType(destAddress) == AddressType.DomainName)
+                if (
+                    dnsResolver != null
+                    && Helpers.GetAddressType(destAddress) == AddressType.DomainName
+                )
                 {
                     var ipAddress = dnsResolver.TryResolve(destAddress);
                     if (ipAddress == null)
@@ -58,7 +67,14 @@ namespace MihaZupan
                 }
 
                 // SEND REQUEST
-                socks5Socket.Send(BuildRequestMessage(Command.Connect, Helpers.GetAddressType(destAddress), destAddress, destPort));
+                socks5Socket.Send(
+                    BuildRequestMessage(
+                        Command.Connect,
+                        Helpers.GetAddressType(destAddress),
+                        destAddress,
+                        destPort
+                    )
+                );
 
                 // RECEIVE RESPONSE
                 int received = socks5Socket.Receive(buffer);
@@ -120,7 +136,13 @@ namespace MihaZupan
             }
             return hello;
         }
-        private static byte[] BuildRequestMessage(Command command, AddressType addressType, string address, int port)
+
+        private static byte[] BuildRequestMessage(
+            Command command,
+            AddressType addressType,
+            string address,
+            int port
+        )
         {
             int addressLength;
             byte[] addressBytes;
@@ -154,20 +176,29 @@ namespace MihaZupan
             request[request.Length - 1] = (byte)(port % 256);
             return request;
         }
+
         public static byte[] BuildAuthenticationMessage(string username, string password)
         {
             byte[] usernameBytes = Encoding.UTF8.GetBytes(username);
-            if (usernameBytes.Length > 255) throw new ArgumentOutOfRangeException("Username is too long");
+            if (usernameBytes.Length > 255)
+                throw new ArgumentOutOfRangeException("Username is too long");
 
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            if (passwordBytes.Length > 255) throw new ArgumentOutOfRangeException("Password is too long");
+            if (passwordBytes.Length > 255)
+                throw new ArgumentOutOfRangeException("Password is too long");
 
             byte[] authMessage = new byte[3 + usernameBytes.Length + passwordBytes.Length];
             authMessage[0] = SubnegotiationVersion;
             authMessage[1] = (byte)usernameBytes.Length;
             Array.Copy(usernameBytes, 0, authMessage, 2, usernameBytes.Length);
             authMessage[2 + usernameBytes.Length] = (byte)passwordBytes.Length;
-            Array.Copy(passwordBytes, 0, authMessage, 3 + usernameBytes.Length, passwordBytes.Length);
+            Array.Copy(
+                passwordBytes,
+                0,
+                authMessage,
+                3 + usernameBytes.Length,
+                passwordBytes.Length
+            );
             return authMessage;
         }
     }

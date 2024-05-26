@@ -9,7 +9,7 @@ V2RayGCon v1.9.1+
 
 以前想给服务器包添加、删除节点，通常要用Pacman插件或者lua脚本重新打包生成配置，然后替换当前服务器的config并重启。这会导致所有连接断开，体验不是很好。xray/v2ray支持通过GRPC调用API接口来热增删节点。但是它没提供查询当前节点的方法，删除节点永远返回成功 "{}"。于是调用API一段时间后，只有上帝和gdb知道core里面究竟还剩下哪些节点。  
 
-为了改进core的API体验，于是有了[Xray-core experimental](https://github.com/vrnobody/Xray-core)这个项目。这个项目fork自Xray-core v1.8.6，修改、添加了一些API命令，让热增删节点功能更易用。下面是一个通过调用API把测速结果小于5000ms的节点替换掉第一个服务器outbounds的示例。  
+为了改进core的API体验，于是有了[xraye](https://github.com/vrnobody/xraye)这个项目。这个项目fork自[Xray-core](https://github.com/xtls/xray-core)，修改、添加了一些API命令，让热增删节点功能更易用。下面是一个通过调用API把测速结果小于5000ms的节点替换掉第一个服务器outbounds的示例。  
 
 先下载修改版xray解压并替换掉原来的xray.exe（也可以配置自定义内核，把修改版xray.exe放到其他文件夹）。  
   

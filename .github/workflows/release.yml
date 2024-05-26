@@ -1,6 +1,7 @@
 name: release
 
 on:
+  workflow_dispatch:
   push:
     # Pattern matched against refs/tags
     tags:        
@@ -18,14 +19,14 @@ jobs:
         pkgLunaPlugin: 'Luna-plugin.zip'
         releaseNoteUrl: "https://vrnobody.github.io/V2RayGCon/04-dev/01-release-log/"
         obsoleteFeaturesUrl: "https://vrnobody.github.io/V2RayGCon/04-dev/obsolete-features/"
-        verStr: '1.9.x'
+        verStr: '1.9.'
         boxAppend: box
         webuiPkgName: 'webui.zip'
         webuiVer: '1.0.1.1'
         webuiUrl: 'https://github.com/vrnobody/WebUI/releases/download'
         # v2rayCorePkgName: 'v2ray-windows-64.zip'
         v2rayCorePkgName: 'Xray-windows-64.zip'
-        v2rayCoreVer: 'v1.8.11'
+        v2rayCoreVer: 'v1.8.13'
         # https://github.com/v2ray/v2ray-core/releases/download/v4.20.0/v2ray-windows-32.zip
         # https://github.com/XTLS/Xray-core/releases/download/v1.4.0/Xray-windows-64.zip
         # v2rayCoreUrl: 'https://github.com/v2fly/v2ray-core/releases/download'
@@ -123,7 +124,7 @@ jobs:
               #### 备注:
               WebUI v${{ env.webuiVer }}
               ${{ env.projName }}-${{ env.boxAppend }}.zip打包了Xray-core-win64 ${{ env.v2rayCoreVer }}
-              xray-core v1.8.6起不支持win7，使用win7的用户可以试下[这个fork](https://github.com/vrnobody/Xray-core/releases)
+              xray-core v1.8.6起不支持win7，使用win7的用户可以试下[xraye](https://github.com/vrnobody/xraye)这个项目
             draft: true
             prerelease: false
             artifacts: "${{ env.projName }}.zip,${{ env.projName }}-${{ env.boxAppend }}.zip,${{ env.pkgLunaPlugin }}"

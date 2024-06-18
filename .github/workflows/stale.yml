@@ -12,8 +12,8 @@ jobs:
     steps:
       - uses: actions/stale@v8
         with:
-          stale-issue-message: 'This issue has been open 30 days with no activity. This will be closed in 7 days.'
-          close-issue-message: 'This issue was closed because it has been stalled for 7 days with no activity.'
+          stale-issue-message: 'This issue has been inactive for 30 days. It would be closed in 7 days.'
+          close-issue-message: 'This issue is closed for inactivity.'
           days-before-issue-stale: 30
           days-before-issue-close: 7
           stale-issue-label: 'nobot'

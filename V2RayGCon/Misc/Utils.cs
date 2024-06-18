@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using Ionic.Zip;
 using Newtonsoft.Json;
@@ -365,7 +366,15 @@ namespace V2RayGCon.Misc
             return version.ToString();
         }
 
-        public static void ZipFileDecompress(string zipFile, string outFolder)
+        public static bool VerifyZipFile(string zipFile)
+        {
+            using (ZipFile zip = ZipFile.Read(zipFile))
+            {
+                return zip.Entries.Count > 0;
+            }
+        }
+
+        public static void DecompressZipFile(string zipFile, string outFolder)
         {
             // let downloader handle exception
             using (ZipFile zip = ZipFile.Read(zipFile))

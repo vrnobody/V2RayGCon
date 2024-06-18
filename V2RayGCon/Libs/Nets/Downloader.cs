@@ -77,9 +77,9 @@ namespace V2RayGCon.Libs.Nets
 
         public bool UnzipPackage()
         {
-            var path = GetLocalFolderPath();
-            var filename = GetLocalFilename();
-            if (string.IsNullOrEmpty(path) || string.IsNullOrEmpty(filename))
+            var dir = GetLocalFolderPath();
+            var src = GetLocalFilename();
+            if (string.IsNullOrEmpty(dir) || string.IsNullOrEmpty(src))
             {
                 VgcApis.Misc.Logger.Log(I18N.LocateTargetFolderFail);
                 return false;
@@ -88,8 +88,12 @@ namespace V2RayGCon.Libs.Nets
             VgcApis.Misc.Utils.Sleep(1000);
             try
             {
-                RemoveOldExe(path);
-                Misc.Utils.ZipFileDecompress(filename, path);
+                var ok = Misc.Utils.VerifyZipFile(src);
+                if (ok)
+                {
+                    RemoveOldExe(dir);
+                    Misc.Utils.DecompressZipFile(src, dir);
+                }
             }
             catch (Exception ex)
             {
@@ -180,10 +184,6 @@ namespace V2RayGCon.Libs.Nets
         void UpdateCore()
         {
             var servers = Services.Servers.Instance;
-
-            // var pluginServ = Services.PluginsServer.Instance;
-            // pluginServ.StopAllPlugins();
-
             VgcApis.Misc.Utils.Sleep(1000);
 
             var activeServerList = servers.GetRunningServers();
@@ -191,9 +191,6 @@ namespace V2RayGCon.Libs.Nets
             {
                 var status = UnzipPackage();
                 NotifyDownloadResults(status);
-
-                // pluginServ.RestartAllPlugins();
-
                 if (activeServerList.Count > 0)
                 {
                     servers.RestartServersThen(activeServerList);

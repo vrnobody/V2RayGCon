@@ -231,6 +231,13 @@
       "path": "/"
     }
   },
+  "splithttp": {
+    "network": "splithttp",
+    "security": "tls",
+    "splithttpSettings": {
+      "path": "/"
+    }
+  },
   "ws": {
     "network": "ws",
     "security": "tls",

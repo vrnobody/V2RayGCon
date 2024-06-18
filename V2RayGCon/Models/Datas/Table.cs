@@ -154,6 +154,21 @@ namespace V2RayGCon.Models.Datas
                     options = new Dictionary<string, string> { { "none", "httpupgrade" }, },
                 }
             },
+            {
+                7,
+                new StreamComponent
+                {
+                    dropDownStyle = false,
+                    name = "SplitHTTP",
+                    network = "splithttp",
+                    paths = new List<string>
+                    {
+                        "splithttpSettings.path",
+                        "splithttpSettings.host",
+                    },
+                    options = new Dictionary<string, string> { { "none", "splithttp" }, },
+                }
+            },
         };
     }
 }

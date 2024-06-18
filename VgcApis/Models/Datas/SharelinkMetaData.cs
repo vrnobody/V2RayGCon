@@ -129,6 +129,7 @@ namespace VgcApis.Models.Datas
                     ps["authority"] = streamParam3;
                     // 不知道guna怎么配置T.T
                     break;
+                case "splithttp":
                 case "httpupgrade":
                 case "ws":
                 case "h2":

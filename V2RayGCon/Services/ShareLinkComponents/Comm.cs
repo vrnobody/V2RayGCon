@@ -97,6 +97,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 case "ws":
                 case "h2":
                 case "httpupgrade":
+                case "splithttp":
                     vc.streamParam2 = GetValue("host", "");
                     if (string.IsNullOrEmpty(vc.streamParam2) && hostIsDomain)
                     {
@@ -127,7 +128,17 @@ namespace V2RayGCon.Services.ShareLinkComponents
         public static JToken GenStreamSetting(SharelinkMetaData meta)
         {
             // insert stream type
-            string[] streamTypes = { "ws", "tcp", "kcp", "h2", "quic", "grpc", "httpupgrade" };
+            string[] streamTypes =
+            {
+                "ws",
+                "tcp",
+                "kcp",
+                "h2",
+                "quic",
+                "grpc",
+                "httpupgrade",
+                "splithttp"
+            };
             string st = meta?.streamType?.ToLower();
 
             if (!streamTypes.Contains(st))
@@ -316,10 +327,12 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     }
                     break;
                 case "httpupgrade":
-                    token["httpupgradeSettings"]["path"] = mainParam;
+                case "splithttp":
+                    var key = $"{streamType}Settings";
+                    token[key]["path"] = mainParam;
                     if (!string.IsNullOrEmpty(meta.streamParam2))
                     {
-                        token["httpupgradeSettings"]["host"] = meta.streamParam2;
+                        token[key]["host"] = meta.streamParam2;
                     }
                     break;
                 case "ws":
@@ -378,8 +391,9 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     meta.streamParam2 = GetStr(subPrefix, "wsSettings.headers.Host");
                     break;
                 case "httpupgrade":
-                    mainParam = GetStr(subPrefix, "httpupgradeSettings.path");
-                    meta.streamParam2 = GetStr(subPrefix, "httpupgradeSettings.host");
+                case "splithttp":
+                    mainParam = GetStr(subPrefix, $"{meta.streamType}Settings.path");
+                    meta.streamParam2 = GetStr(subPrefix, $"{meta.streamType}Settings.host");
                     break;
                 case "h2":
                     mainParam = GetStr(subPrefix, "httpSettings.path");

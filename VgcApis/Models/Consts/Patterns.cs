@@ -8,6 +8,7 @@
         public const string GitHubReadmeUrl = @"https://github.com(/[^/]+/[^/]+)/blob(/.*)";
         public const string GitHuhFileUrl = @"https://github.com(/[^/]+/[^/]+)/blob(/.*)";
 
+        public const string ExtractRemarksFromSubscriptUrl = @"[^\w]remarks=([%\w]+)";
         public const string ExtractAliasFromSubscriptUrl = @"//[^/]+/([^/]+)";
 
         public const string JsonSnippetSearchPattern = @"[:/,_\.\-\\\*\$\w]";

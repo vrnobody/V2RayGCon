@@ -914,6 +914,21 @@ namespace VgcApis.Misc
             alias = string.Empty;
             try
             {
+                // try remarks first
+                var groups = Regex.Match(url, Patterns.ExtractRemarksFromSubscriptUrl).Groups;
+                if (groups != null && groups.Count > 1)
+                {
+                    alias = UriDecode(groups[1].Value);
+                    if (!string.IsNullOrEmpty(alias))
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch { }
+            try
+            {
+                // try parse GitHub username
                 var groups = Regex.Match(url, Patterns.ExtractAliasFromSubscriptUrl).Groups;
                 if (groups != null && groups.Count == 2)
                 {
@@ -921,9 +936,7 @@ namespace VgcApis.Misc
                     return !string.IsNullOrEmpty(alias);
                 }
             }
-            catch (ArgumentException) { }
-            catch (RegexMatchTimeoutException) { }
-
+            catch { }
             return false;
         }
 

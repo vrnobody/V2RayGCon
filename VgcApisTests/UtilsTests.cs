@@ -617,6 +617,20 @@ ab12-_中文: |
         }
 
         [DataTestMethod]
+        [DataRow(
+            @"中文 abc😀123",
+            @"https://www.github.com/abc/a/b/c/d.html?remarks=%E4%B8%AD%E6%96%87%20abc%F0%9F%98%80123"
+        )]
+        [DataRow(
+            @"中文 abc😀123",
+            @"https://www.github.com/abc/a/b/c/d.html;remarks=%E4%B8%AD%E6%96%87%20abc%F0%9F%98%80123"
+        )]
+        [DataRow(@"中文", @"https://www.github.com/abc/a/b/c/d.html?&remarks=中文😀123abc")]
+        [DataRow(
+            @"1234",
+            @"https://www.github.com/abc/a/b/c/d.html?&remarks=1234&remarks=中文😀123abc"
+        )]
+        [DataRow(@"abc", @"https://www.github.com/abc/a/b/c/d.htmlremarks=test")]
         [DataRow(@"abc", @"https://www.github.com/abc/a/b/c/d.html")]
         [DataRow(@"a1中b2文", @"https://www.github.com/a1中b2文/a/b/c/d.html")]
         [DataRow(@"index.html", @"https://www.github.com/index.html")]

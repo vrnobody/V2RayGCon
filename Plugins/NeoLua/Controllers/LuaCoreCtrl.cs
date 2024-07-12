@@ -297,10 +297,7 @@ namespace NeoLuna.Controllers
                     );
 
                     var results = g.DoChunk(chunk, emptyArgs);
-                    if (results != null && results.Count > 0)
-                    {
-                        result = results[0].ToString();
-                    }
+                    result = results?.GetValueOrDefault(0, "");
                 }
             }
             catch (Exception e)

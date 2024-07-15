@@ -33,7 +33,6 @@ namespace V2RayGCon.Libs.Nets
         {
             this.setting = setting;
             SetArchitecture(false);
-            webClient = null;
         }
 
         #region public method
@@ -45,10 +44,9 @@ namespace V2RayGCon.Libs.Nets
         public void SetArchitecture(bool win64 = false)
         {
             var arch = win64 ? "64" : "32";
-            _packageName =
-                coreType == CoreTypes.Xray
-                    ? $"Xray-windows-{arch}.zip"
-                    : $"v2ray-windows-{arch}.zip";
+            var sys = setting.isDownloadWin7XrayCore ? "win7" : "windows";
+            var core = coreType == CoreTypes.Xray ? "Xray" : "v2ray";
+            _packageName = $"{core}-{sys}-{arch}.zip";
         }
 
         public void SetVersion(string version)
@@ -261,7 +259,7 @@ namespace V2RayGCon.Libs.Nets
                 return;
             }
 
-            var webClient = VgcApis.Misc.Utils.CreateWebClient(
+            var wc = VgcApis.Misc.Utils.CreateWebClient(
                 isSocks5,
                 VgcApis.Models.Consts.Webs.LoopBackIP,
                 proxyPort,
@@ -269,18 +267,25 @@ namespace V2RayGCon.Libs.Nets
                 null
             );
 
-            webClient.DownloadProgressChanged += (s, a) =>
+            var maxPercentage = 0;
+            wc.DownloadProgressChanged += (s, a) =>
             {
-                SendProgress(a.ProgressPercentage);
+                var p = VgcApis.Misc.Utils.Clamp(a.ProgressPercentage, 1, 101);
+                if (p > maxPercentage)
+                {
+                    maxPercentage = p;
+                    SendProgress(p);
+                }
             };
 
-            webClient.DownloadFileCompleted += (s, a) =>
+            wc.DownloadFileCompleted += (s, a) =>
             {
                 DownloadCompleted(a.Cancelled);
             };
 
+            webClient = wc;
             VgcApis.Misc.Logger.Log(string.Format("{0}:{1}", I18N.Download, url));
-            webClient.DownloadFileAsync(new Uri(url), filename);
+            wc.DownloadFileAsync(new Uri(url), filename);
         }
 
         #endregion

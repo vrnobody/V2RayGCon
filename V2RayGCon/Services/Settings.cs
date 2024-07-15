@@ -312,6 +312,16 @@ namespace V2RayGCon.Services
             }
         }
 
+        public bool isDownloadWin7XrayCore
+        {
+            get => userSettings.isDownloadWin7XrayCore;
+            set
+            {
+                userSettings.isDownloadWin7XrayCore = value;
+                SaveSettingsLater();
+            }
+        }
+
         public bool isDownloadWin32V2RayCore
         {
             get => userSettings.isDownloadWin32V2RayCore;

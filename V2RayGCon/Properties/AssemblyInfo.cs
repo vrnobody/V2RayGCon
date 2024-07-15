@@ -33,11 +33,13 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.9.7.2")]
+[assembly: AssemblyVersion("1.9.7.3")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v1.9.7.3 Supports downloading xray-core win7 binary.
+         Fix core updater can not be cancelled bug.
 v1.9.7.2 Try to fix IndexOutOfRangeException in LuaCoreCtrl.
 v1.9.7.1 Support remarks param in subscription url.
 --------------------------------------------------------------------

@@ -29,6 +29,7 @@ namespace V2RayGCon.Models.Datas
 
         // FormDownloadCore
         public bool isDownloadWin32V2RayCore { get; set; }
+        public bool isDownloadWin7XrayCore { get; set; } = false;
         public string v2rayCoreDownloadSource { get; set; }
         public List<string> V2RayCoreDownloadVersionList = null;
 

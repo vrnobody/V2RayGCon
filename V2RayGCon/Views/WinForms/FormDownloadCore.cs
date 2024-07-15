@@ -51,6 +51,7 @@ namespace V2RayGCon.Views.WinForms
             RefreshV2RayCoreSourceUrls();
             RefreshLocalV2RayCoreVersion();
             chkUseProxy.Checked = setting.isUpdateUseProxy;
+            chkWin7.Checked = setting.isDownloadWin7XrayCore;
         }
 
         #region private methods
@@ -89,8 +90,7 @@ namespace V2RayGCon.Views.WinForms
 
         void UpdateProgressBar(int percentage)
         {
-            var v = VgcApis.Misc.Utils.Clamp(percentage, 1, 101);
-            VgcApis.Misc.UI.Invoke(() => pgBarDownload.Value = v);
+            VgcApis.Misc.UI.Invoke(() => pgBarDownload.Value = percentage);
         }
 
         void EnableBtnDownload()
@@ -279,6 +279,16 @@ namespace V2RayGCon.Views.WinForms
             var url = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(index);
             setting.v2rayCoreDownloadSource = url;
         }
+
+        private void chkWin7_CheckedChanged(object sender, EventArgs e)
+        {
+            var isWin7 = chkWin7.Checked;
+            if (isWin7 != setting.isDownloadWin7XrayCore)
+            {
+                setting.isDownloadWin7XrayCore = isWin7;
+            }
+        }
+
         #endregion
     }
 }

@@ -154,6 +154,9 @@
   <data name="chkUseProxy.ToolTip" xml:space="preserve">
     <value>随机选一个HTTP代理来下载v2ray-core</value>
   </data>
+  <data name="chkWin7.ToolTip" xml:space="preserve">
+    <value>下载xray-core的win7版</value>
+  </data>
   <data name="btnExit.Text" xml:space="preserve">
     <value>退出</value>
   </data>
@@ -161,9 +164,6 @@
     <value />
   </data>
   <data name="pgBarDownload.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label1.ToolTip" xml:space="preserve">
     <value />
   </data>
   <data name="cboxArch.Items" xml:space="preserve">

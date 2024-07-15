@@ -24,12 +24,9 @@ jobs:
         webuiPkgName: 'webui.zip'
         webuiVer: '1.0.1.1'
         webuiUrl: 'https://github.com/vrnobody/WebUI/releases/download'
-        # v2rayCorePkgName: 'v2ray-windows-64.zip'
-        v2rayCorePkgName: 'Xray-windows-64.zip'
-        v2rayCoreVer: 'v1.8.15'
-        # https://github.com/v2ray/v2ray-core/releases/download/v4.20.0/v2ray-windows-32.zip
+        v2rayCorePkgName: 'Xray-win7-32.zip'
+        v2rayCoreVer: 'v1.8.17'
         # https://github.com/XTLS/Xray-core/releases/download/v1.4.0/Xray-windows-64.zip
-        # v2rayCoreUrl: 'https://github.com/v2fly/v2ray-core/releases/download'
         v2rayCoreUrl: 'https://github.com/XTLS/Xray-core/releases/download'
         tun2socksZipUrl: 'https://github.com/xjasonlyu/tun2socks/releases/download/v2.5.2/tun2socks-windows-amd64.zip'
 
@@ -123,8 +120,7 @@ jobs:
 
               #### 备注:
               WebUI v${{ env.webuiVer }}
-              ${{ env.projName }}-${{ env.boxAppend }}.zip打包了Xray-core-win64 ${{ env.v2rayCoreVer }}
-              xray-core v1.8.6起不支持win7，使用win7的用户可以试下[xraye](https://github.com/vrnobody/xraye)这个项目
+              ${{ env.projName }}-${{ env.boxAppend }}.zip打包了${{ env.v2rayCorePkgName }} ${{ env.v2rayCoreVer }}
             draft: true
             prerelease: false
             artifacts: "${{ env.projName }}.zip,${{ env.projName }}-${{ env.boxAppend }}.zip,${{ env.pkgLunaPlugin }}"

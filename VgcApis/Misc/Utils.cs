@@ -1278,14 +1278,13 @@ namespace VgcApis.Misc
             }
 
             var wc = CreateWebClient(false, host, proxyPort, null, null);
-            if (timeout == 0)
+
+            if (timeout >= 0)
             {
-                DoItLater(() => CancelWebClientAsync(wc), Intervals.DefaultFetchTimeout);
-            }
-            else if (timeout > 0)
-            {
+                timeout = timeout == 0 ? Intervals.DefaultFetchTimeout : timeout;
                 DoItLater(() => CancelWebClientAsync(wc), timeout);
             }
+
             try
             {
                 wc.DownloadFile(new Uri(url), filename);
@@ -1320,12 +1319,10 @@ namespace VgcApis.Misc
             }
 
             var wc = CreateWebClient(isSocks5, host, proxyPort, username, password);
-            if (timeout == 0)
+
+            if (timeout >= 0)
             {
-                DoItLater(() => CancelWebClientAsync(wc), Intervals.DefaultFetchTimeout);
-            }
-            else if (timeout > 0)
-            {
+                timeout = timeout == 0 ? Intervals.DefaultFetchTimeout : timeout;
                 DoItLater(() => CancelWebClientAsync(wc), timeout);
             }
 

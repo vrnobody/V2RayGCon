@@ -3,7 +3,7 @@
     public static class Patterns
     {
         public static string V2RayCoreReleaseAssets =
-            @"/[v2X]+ray-core/releases/download/(v[\.0-9]+)/[v2X]+ray-windows-64.zip";
+            @"/releases/download/(v[\.0-9a-zA-Z\-]+)/[v2X]+ray-windows-64.zip";
 
         public const string GitHubReadmeUrl = @"https://github.com(/[^/]+/[^/]+)/blob(/.*)";
         public const string GitHuhFileUrl = @"https://github.com(/[^/]+/[^/]+)/blob(/.*)";

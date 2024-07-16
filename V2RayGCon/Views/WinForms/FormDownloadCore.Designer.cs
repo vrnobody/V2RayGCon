@@ -158,10 +158,6 @@
             // 
             this.cboxDownloadSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxDownloadSource.FormattingEnabled = true;
-            this.cboxDownloadSource.Items.AddRange(new object[] {
-            resources.GetString("cboxDownloadSource.Items"),
-            resources.GetString("cboxDownloadSource.Items1"),
-            resources.GetString("cboxDownloadSource.Items2")});
             resources.ApplyResources(this.cboxDownloadSource, "cboxDownloadSource");
             this.cboxDownloadSource.Name = "cboxDownloadSource";
             this.cboxDownloadSource.SelectedIndexChanged += new System.EventHandler(this.cboxDownloadSource_SelectedIndexChanged);

@@ -28,7 +28,7 @@ namespace V2RayGCon.Models.Datas
         public SpeedTestOptions SpeedtestOptions = null;
 
         // FormDownloadCore
-        public bool isDownloadWin32V2RayCore { get; set; }
+        public bool isDownloadWin32V2RayCore { get; set; } = false;
         public bool isDownloadWin7XrayCore { get; set; } = false;
         public string v2rayCoreDownloadSource { get; set; }
         public List<string> V2RayCoreDownloadVersionList = null;
@@ -89,8 +89,7 @@ namespace V2RayGCon.Models.Datas
 
             SystrayLeftClickCommand = "http://localhost:4000/";
 
-            isDownloadWin32V2RayCore = true;
-            v2rayCoreDownloadSource = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(0);
+            v2rayCoreDownloadSource = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(2);
 
             DebugLogFilePath = @"";
             isEnableDebugFile = false;
@@ -138,7 +137,9 @@ namespace V2RayGCon.Models.Datas
         #region public methods
         public void Normalized()
         {
-            V2RayCoreDownloadVersionList = V2RayCoreDownloadVersionList ?? new List<string>();
+            V2RayCoreDownloadVersionList =
+                V2RayCoreDownloadVersionList
+                ?? new List<string> { "v1.8.18", "v1.8.15", "v1.8.13", };
             ImportOptions = ImportOptions ?? new ImportSharelinkOptions();
             SpeedtestOptions = SpeedtestOptions ?? new SpeedTestOptions();
             CustomCoreSettings = CustomCoreSettings ?? new List<CustomCoreSettings>();

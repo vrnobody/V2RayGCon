@@ -691,9 +691,7 @@ namespace V2RayGCon.Services
 
         public ReadOnlyCollection<string> GetV2RayCoreVersionList()
         {
-            var result =
-                userSettings.V2RayCoreDownloadVersionList
-                ?? new List<string> { "v4.27.5", "v4.27.0", "v4.26.0", "v4.25.1" };
+            var result = userSettings.V2RayCoreDownloadVersionList;
             return result.AsReadOnly();
         }
 

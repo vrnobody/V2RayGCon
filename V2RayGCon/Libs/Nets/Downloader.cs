@@ -18,10 +18,11 @@ namespace V2RayGCon.Libs.Nets
             V2Ray,
         }
 
-        public CoreTypes coreType = CoreTypes.V2Ray;
+        public string sourceUrl = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(2);
+        public string version = @"v1.8.18";
+
+        readonly CoreTypes coreType = CoreTypes.Xray;
         string _packageName;
-        string _version = @"v4.27.0";
-        string _source = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(0);
 
         public int proxyPort { get; set; } = -1;
         public bool isSocks5 { get; set; } = false;
@@ -29,35 +30,14 @@ namespace V2RayGCon.Libs.Nets
         WebClient webClient;
         readonly Services.Settings setting;
 
-        public Downloader(Services.Settings setting)
+        public Downloader(Services.Settings setting, CoreTypes coreType, bool is64bit)
         {
             this.setting = setting;
-            SetArchitecture(false);
+            this.coreType = coreType;
+            UpdatePackageName(is64bit);
         }
 
         #region public method
-        public void SetSource(int index)
-        {
-            _source = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(index);
-        }
-
-        public void SetArchitecture(bool win64 = false)
-        {
-            var arch = win64 ? "64" : "32";
-            var sys = setting.isDownloadWin7XrayCore ? "win7" : "windows";
-            var core = coreType == CoreTypes.Xray ? "Xray" : "v2ray";
-            _packageName = $"{core}-{sys}-{arch}.zip";
-        }
-
-        public void SetVersion(string version)
-        {
-            _version = version;
-        }
-
-        public string GetPackageName()
-        {
-            return _packageName;
-        }
 
         public void DownloadV2RayCore()
         {
@@ -116,6 +96,14 @@ namespace V2RayGCon.Libs.Nets
         #endregion
 
         #region private method
+        void UpdatePackageName(bool is64bit = false)
+        {
+            var arch = is64bit ? "64" : "32";
+            var sys = setting.isDownloadWin7XrayCore ? "win7" : "windows";
+            var core = coreType == CoreTypes.Xray ? "Xray" : "v2ray";
+            _packageName = $"{core}-{sys}-{arch}.zip";
+        }
+
         void RemoveOldExe(string path)
         {
             string[] exes = new string[]
@@ -245,8 +233,8 @@ namespace V2RayGCon.Libs.Nets
         string GenReleaseUrl()
         {
             // tail =  "/releases/download/{0}/{1}";
-            string tpl = _source + @"/download/{0}/{1}";
-            return string.Format(tpl, _version, _packageName);
+            string tpl = sourceUrl + @"/download/{0}/{1}";
+            return string.Format(tpl, version, _packageName);
         }
 
         void Download()

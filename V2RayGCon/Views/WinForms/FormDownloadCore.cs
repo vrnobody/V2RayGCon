@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -101,21 +102,22 @@ namespace V2RayGCon.Views.WinForms
         void DownloadV2RayCore(bool isSocks5, int proxyPort)
         {
             var idx = cboxDownloadSource.SelectedIndex;
-
-            downloader = new Libs.Nets.Downloader(setting)
+            var coreType = Libs.Nets.Downloader.CoreTypes.Xray;
+            if (idx == 0 || idx == 1)
             {
-                coreType =
-                    idx == 2
-                        ? Libs.Nets.Downloader.CoreTypes.Xray
-                        : Libs.Nets.Downloader.CoreTypes.V2Ray
-            };
-            downloader.SetSource(idx);
-            downloader.SetArchitecture(cboxArch.SelectedIndex == 1);
-            downloader.SetVersion(cboxVer.Text);
-            downloader.proxyPort = proxyPort;
-            downloader.isSocks5 = isSocks5;
+                coreType = Libs.Nets.Downloader.CoreTypes.V2Ray;
+            }
 
-            downloader.OnProgress += (p) => UpdateProgressBar(p);
+            var is64bit = cboxArch.SelectedIndex == 1;
+            downloader = new Libs.Nets.Downloader(setting, coreType, is64bit)
+            {
+                sourceUrl = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(idx),
+                version = cboxVer.Text,
+                proxyPort = proxyPort,
+                isSocks5 = isSocks5,
+            };
+
+            downloader.OnProgress += UpdateProgressBar;
 
             downloader.OnDownloadCompleted += (s, a) =>
             {

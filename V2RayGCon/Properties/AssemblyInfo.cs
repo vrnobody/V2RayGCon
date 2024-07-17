@@ -38,6 +38,7 @@ using System.Runtime.InteropServices;
 
 /*
 
+v1.9.7.5 Fix startup core version check bug.
 v1.9.7.4 Add vrnobody/xraye to core download-source.
 v1.9.7.3 Supports downloading xray-core win7 binary.
          Fix core updater can not be cancelled bug.

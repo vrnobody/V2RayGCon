@@ -221,11 +221,14 @@ namespace V2RayGCon.Services
             setting.SaveV2RayCoreVersionList(vers);
 
             var first = vers.First();
-            var current = new Version(curVerStr);
-            var latest = new Version(first.Substring(1));
-
             var msg = string.Format(I18N.ConfirmUpgradeV2rayCore, first);
-            if (latest > current && VgcApis.Misc.UI.Confirm(msg))
+
+            if (
+                VgcApis.Misc.Utils.TryParseVersionString(first, out var vRemote)
+                && VgcApis.Misc.Utils.TryParseVersionString(curVerStr, out var vLocal)
+                && vRemote > vLocal
+                && VgcApis.Misc.UI.Confirm(msg)
+            )
             {
                 Views.WinForms.FormDownloadCore.ShowForm();
             }

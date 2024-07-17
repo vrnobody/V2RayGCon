@@ -17,6 +17,26 @@ namespace VgcApisTests
     public class UtilsTests
     {
         [DataTestMethod]
+        [DataRow(@"", false, "")]
+        [DataRow(@"w1.2.3", false, "")]
+        [DataRow(@"v1.2.3.", false, "")]
+        [DataRow(@"v1.2.3.4.5", false, "")]
+        [DataRow(@"v1.2.3.4", true, "1.2.3.4")]
+        [DataRow(@"v1.2-exp1", true, "1.2")]
+        [DataRow(@"v1.2tttttt-exp1", true, "1.2")]
+        [DataRow(@"v0.0.0.0-exp13", true, "0.0.0.0")]
+        public void TryParseVersionStringTest(string str, bool success, string exp)
+        {
+            var ok = TryParseVersionString(str, out var ver);
+            Assert.AreEqual(success, ok);
+            if (ok)
+            {
+                var expVer = new Version(exp);
+                Assert.IsTrue(expVer.Equals(ver));
+            }
+        }
+
+        [DataTestMethod]
         [DataRow(@"http://abc.com", @"abc.com")]
         [DataRow(@"v://abc.com", @"abc.com")]
         [DataRow(@"vee://", @"")]

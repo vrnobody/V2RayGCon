@@ -3002,6 +3002,22 @@ namespace VgcApis.Misc
         #endregion
 
         #region string processor
+        public static bool TryParseVersionString(string versionString, out Version version)
+        {
+            try
+            {
+                var groups = Regex.Match(versionString, @"^v?([\.\d]+)").Groups;
+                if (groups != null && groups.Count > 1)
+                {
+                    version = new Version(groups[1].Value);
+                    return true;
+                }
+            }
+            catch { }
+            version = default;
+            return false;
+        }
+
         public static string TrimVersionString(string version)
         {
             for (int i = 0; i < 2; i++)

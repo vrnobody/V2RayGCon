@@ -9,6 +9,10 @@ on:
 
 jobs:
   build:
+    permissions:
+      id-token: write
+      contents: read
+      attestations: write
 
     runs-on: windows-2019
 
@@ -25,7 +29,7 @@ jobs:
         webuiVer: '1.0.1.1'
         webuiUrl: 'https://github.com/vrnobody/WebUI/releases/download'
         v2rayCorePkgName: 'Xray-win7-64.zip'
-        v2rayCoreVer: 'v1.8.18'
+        v2rayCoreVer: 'v1.8.20'
         # https://github.com/XTLS/Xray-core/releases/download/v1.4.0/Xray-windows-64.zip
         v2rayCoreUrl: 'https://github.com/XTLS/Xray-core/releases/download'
         tun2socksZipUrl: 'https://github.com/xjasonlyu/tun2socks/releases/download/v2.5.2/tun2socks-windows-amd64.zip'
@@ -99,6 +103,11 @@ jobs:
             echo "hashVgcZip=${hv1}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
             echo "hashVgcBoxZip=${hv2}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
             echo "hashLunaPluginZip=${hv3}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+        - name: Attest
+          uses: actions/attest-build-provenance@v1
+          with:
+            subject-path: "${{ env.projName }}.zip,${{ env.projName }}-${{ env.boxAppend }}.zip,${{ env.pkgLunaPlugin }}"
 
         - name: Publish Release
           uses: ncipollo/release-action@v1.12.0

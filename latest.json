@@ -1,11 +1,11 @@
 {
-  "version": "1.9.7.0",
-  "md5": "B363AEC61B2A0B4CE5A4B8C631BFD287",
+  "version": "1.9.8.0",
+  "md5": "3E3B79A312222CE67133FFA2BF759117",
   "warnings": [],
   "changes": [
-    "支持SplitHTTP传输方式",
-    "没版本信息的vmess链接当作v2处理",
-    "修复更新core功能的一个bug",
-    "移除一些旧的兼容代码"
+    "添加vrnobody/xraye作为更新源",
+    "支持更新win7版xray-core",
+    "支持订阅链接中的remarks参数",
+    "修复下载core窗口无法停止的bug"
   ]
 }

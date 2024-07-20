@@ -17,131 +17,134 @@ jobs:
     runs-on: windows-2019
 
     env:
-        projName: V2RayGCon
-        projCfg: Release
-        projLuna: '3rd/Luna'
-        pkgLunaPlugin: 'Luna-plugin.zip'
-        releaseNoteUrl: "https://vrnobody.github.io/V2RayGCon/04-dev/01-release-log/"
-        obsoleteFeaturesUrl: "https://vrnobody.github.io/V2RayGCon/04-dev/obsolete-features/"
-        verStr: '1.9.'
-        boxAppend: box
-        webuiPkgName: 'webui.zip'
-        webuiVer: '1.0.1.1'
-        webuiUrl: 'https://github.com/vrnobody/WebUI/releases/download'
-        v2rayCorePkgName: 'Xray-win7-64.zip'
-        v2rayCoreVer: 'v1.8.20'
-        # https://github.com/XTLS/Xray-core/releases/download/v1.4.0/Xray-windows-64.zip
-        v2rayCoreUrl: 'https://github.com/XTLS/Xray-core/releases/download'
-        tun2socksZipUrl: 'https://github.com/xjasonlyu/tun2socks/releases/download/v2.5.2/tun2socks-windows-amd64.zip'
+      projName: V2RayGCon
+      projCfg: Release
+      projLuna: '3rd/Luna'
+      pkgLunaPlugin: 'Luna-plugin.zip'
+      publishDir: './publish_assets'
+      releaseNoteUrl: "https://vrnobody.github.io/V2RayGCon/04-dev/01-release-log/"
+      obsoleteFeaturesUrl: "https://vrnobody.github.io/V2RayGCon/04-dev/obsolete-features/"
+      boxAppend: box
+      webuiPkgName: 'webui.zip'
+      webuiVer: '1.0.1.1'
+      webuiUrl: 'https://github.com/vrnobody/WebUI/releases/download'
+      v2rayCorePkgName: 'Xray-win7-64.zip'
+      v2rayCoreVer: 'v1.8.20'
+      # https://github.com/XTLS/Xray-core/releases/download/v1.4.0/Xray-windows-64.zip
+      v2rayCoreUrl: 'https://github.com/XTLS/Xray-core/releases/download'
+      tun2socksZipUrl: 'https://github.com/xjasonlyu/tun2socks/releases/download/v2.5.2/tun2socks-windows-amd64.zip'
+      actionRunsUrl: 'https://github.com/vrnobody/V2RayGCon/actions/runs/'
 
     steps:
-        - name: Checkout master
-          uses: actions/checkout@v4
+      - name: Checkout master
+        uses: actions/checkout@v4
 
-        - name: Show system information
-          run: |
-            python --version
-            echo "power shell version:"
-            $Host.Version
+      - name: Show system information
+        run: |
+          python --version
+          echo "power shell version:"
+          $Host.Version
 
-        - name: Setup .net framework build enviroment
-          uses: vrnobody/Setup-DotNetFrameworkEnv@v1.20
+      - name: Setup .net framework build enviroment
+        uses: vrnobody/Setup-DotNetFrameworkEnv@v1.20
 
-        - name: Restore NuGet packages
-          run: nuget restore ${env:projName}.sln
+      - name: Restore NuGet packages
+        run: nuget restore ${env:projName}.sln
 
-        - name: Build solution
-          run: msbuild ${env:projName}.sln -p:Configuration=${env:projCfg}
+      - name: Build solution
+        run: msbuild ${env:projName}.sln -p:Configuration=${env:projCfg}
 
-        - name: Run unit tests
-          run: |
-            function Invoke-VSTest {
-              & "vstest.console.exe" $args
-              if(-not $?){ throw "fail!" }
+      - name: Run unit tests
+        run: |
+          function Invoke-VSTest {
+            & "vstest.console.exe" $args
+            if(-not $?){ throw "fail!" }
+          }
+          Invoke-VSTest "V2RayGConTests\bin\${{ env.projCfg }}\V2RayGCon.Test.dll"
+          Invoke-VSTest "VgcApisTests\bin\${{ env.projCfg }}\VgcApisTests.dll"
+          Invoke-VSTest "Plugins\ProxySetterTests\bin\${{ env.projCfg }}\ProxySetterTests.dll"
+          Invoke-VSTest "Plugins\NeoLunaTests\bin\${{ env.projCfg }}\NeoLunaTests.dll"
+
+      - name: Create publish asset directory
+        shell: pwsh
+        run: mkdir "${env:publishDir}"
+
+      - name: Create Luna-plugin.zip
+        shell: pwsh
+        run: |
+          $outdir = "${env:projLuna}/bin/${env:projCfg}"
+          Compress-Archive -Path "${outdir}/*" "${env:publishDir}/${env:pkgLunaPlugin}"
+
+      - name: Create V2RayGCon.zip
+        shell: pwsh
+        run: |
+          $outdir = "${env:projName}/bin/${env:projCfg}"
+          Invoke-WebRequest -Uri "${env:webuiUrl}/${env:webuiVer}/${env:webuiPkgName}" -OutFile "${env:webuiPkgName}"
+          Expand-Archive "${env:webuiPkgName}" -DestinationPath "${outdir}/3rd/neolua/webui"
+          Compress-Archive -Path "${outdir}/*" "${env:publishDir}/${env:projName}.zip"
+
+      - name: Create V2RayGCon-box.zip
+        shell: pwsh
+        run: |
+          $outdir = "${env:projName}/bin/${env:projCfg}"
+          New-Item -Name "download" -ItemType "directory"
+          Invoke-WebRequest -Uri "${env:v2rayCoreUrl}/${env:v2rayCoreVer}/${env:v2rayCorePkgName}" -OutFile "download/${env:v2rayCorePkgName}"
+          Expand-Archive "download/${env:v2rayCorePkgName}" -DestinationPath "${outdir}/3rd/core"
+          Invoke-WebRequest -Uri "${env:tun2socksZipUrl}" -OutFile "download/tun2socks.zip"
+          Expand-Archive "download/tun2socks.zip" -DestinationPath "download/"
+          Copy-Item "download/tun2socks-windows-amd64.exe" -Destination "${outdir}/3rd/tun2socks/tun2socks.exe"
+          Copy-Item "${env:projName}/Resources/Pkg/wintun.dll" -Destination "${outdir}/3rd/tun2socks/wintun.dll"
+          Compress-Archive -Path "${outdir}/*" "${env:publishDir}/${env:projName}-${env:boxAppend}.zip"
+
+      - name: Calculate hashes
+        shell: pwsh
+        run: |
+          function SetEnv($Key, $Value){
+            echo "${Key}=${Value}" | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
+          }
+          function SetSummary($Content){
+            echo "${Content}" | Out-File -FilePath ${env:GITHUB_STEP_SUMMARY} -Encoding utf8 -Append
+          }
+          function HashFile($Name, $Key) {
+            SetSummary "### ${Name}"
+            $algos = @('Md5','Sha256')
+            foreach ($algo in $algos) {
+              $infos = Get-FileHash "${env:publishDir}/${Name}" -Algorithm "${algo}"
+              $hash = ${infos}.Hash
+              SetEnv "hash${Key}${algo}" "${hash}"
+              SetSummary "${algo}: ${hash}"
             }
-            Invoke-VSTest "V2RayGConTests\bin\${{ env.projCfg }}\V2RayGCon.Test.dll"
-            Invoke-VSTest "VgcApisTests\bin\${{ env.projCfg }}\VgcApisTests.dll"
-            Invoke-VSTest "Plugins\ProxySetterTests\bin\${{ env.projCfg }}\ProxySetterTests.dll"
-            Invoke-VSTest "Plugins\NeoLunaTests\bin\${{ env.projCfg }}\NeoLunaTests.dll"
+          }
+          HashFile "${env:projName}.zip" "Vgc"
+          HashFile "${env:projName}-${env:boxAppend}.zip" "VgcBox"
+          HashFile "${env:pkgLunaPlugin}" "Luna"
 
-        - name: Create ${{ env.pkgLunaPlugin }}
-          shell: pwsh
-          run: |
-            $outdir = "${env:projLuna}/bin/${env:projCfg}"
-            Compress-Archive -Path ${outdir}/* ${env:pkgLunaPlugin}
+      - name: Attest
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: "${{ env.publishDir }}/*.zip"
 
-        - name: Create V2RayGCon.zip
-          shell: pwsh
-          run: |
-            $outdir = "${env:projName}/bin/${env:projCfg}"
-            Invoke-WebRequest -Uri "${env:webuiUrl}/${env:webuiVer}/${env:webuiPkgName}" -OutFile "${env:webuiPkgName}"
-            Expand-Archive "${env:webuiPkgName}" -DestinationPath "${outdir}/3rd/neolua/webui"
-            Compress-Archive -Path ${outdir}/* ${env:projName}'.zip'
+      - name: Publish Release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          name: "v${{ github.ref_name }}"
+          body: |
+            [\[全部发布记录\]](${{ env.releaseNoteUrl }}) [\[GitHub action\]](${{ env.actionRunsUrl }}${{ github.run_id }}) [\[将删除的功能\]](${{ env.obsoleteFeaturesUrl }})
 
-        - name: Create V2RayGCon-box.zip
-          shell: pwsh
-          run: |
-            $outdir = "${env:projName}/bin/${env:projCfg}"
-            New-Item -Name "download" -ItemType "directory"
-            Invoke-WebRequest -Uri "${env:v2rayCoreUrl}/${env:v2rayCoreVer}/${env:v2rayCorePkgName}" -OutFile "download/${env:v2rayCorePkgName}"
-            Expand-Archive "download/${env:v2rayCorePkgName}" -DestinationPath "${outdir}/3rd/core"
-            Invoke-WebRequest -Uri "${env:tun2socksZipUrl}" -OutFile "download/tun2socks.zip"
-            Expand-Archive "download/tun2socks.zip" -DestinationPath "download/"
-            Copy-Item "download/tun2socks-windows-amd64.exe" -Destination "${outdir}/3rd/tun2socks/tun2socks.exe"
-            Copy-Item "${env:projName}/Resources/Pkg/wintun.dll" -Destination "${outdir}/3rd/tun2socks/wintun.dll"
-            Compress-Archive -Path ${outdir}/* ${env:projName}'-'${env:boxAppend}'.zip'
+            #### 变化：
+              * 变化1
 
-        - name: Calculate MD5 hash
-          shell: pwsh
-          run: |
-            $mainhash = Get-FileHash "${env:projName}.zip" -Algorithm MD5
-            $mh = ${mainhash}.Hash
-            echo "${env:projName}.zip (${mh})"
-            echo "### MD5 hash" | Out-File -FilePath ${env:GITHUB_STEP_SUMMARY} -Encoding utf8 -Append
-            echo "${env:projName}.zip (${mh})" | Out-File -FilePath ${env:GITHUB_STEP_SUMMARY} -Encoding utf8 -Append
+            #### MD5:
+            ${{ env.projName }}.zip (${{ env.hashVgcMd5 }})
 
-        - name: Calculate SHA256 hashes
-          shell: pwsh
-          run: |
-            $hash1 = Get-FileHash "${env:projName}.zip" -Algorithm SHA256
-            $hash2 = Get-FileHash "${env:projName}-${env:boxAppend}.zip" -Algorithm SHA256
-            $hash3 = Get-FileHash "${env:pkgLunaPlugin}" -Algorithm SHA256
-            $hv1 = ${hash1}.Hash
-            $hv2 = ${hash2}.Hash
-            $hv3 = ${hash3}.Hash
-            echo "hashVgcZip=${hv1}" | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
-            echo "hashVgcBoxZip=${hv2}" | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
-            echo "hashLunaPluginZip=${hv3}" | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
-            echo "### SHA256 hashes" | Out-File -FilePath ${env:GITHUB_STEP_SUMMARY} -Encoding utf8 -Append
-            echo "${env:projName}.zip (${hv1})" | Out-File -FilePath ${env:GITHUB_STEP_SUMMARY} -Encoding utf8 -Append
-            echo "${env:projName}-${env:boxAppend}.zip (${hv2})" | Out-File -FilePath ${env:GITHUB_STEP_SUMMARY} -Encoding utf8 -Append
-            echo "${env:pkgLunaPlugin}.zip (${hv3})" | Out-File -FilePath ${env:GITHUB_STEP_SUMMARY} -Encoding utf8 -Append
+            #### SHA256:
+            ${{ env.projName }}.zip (${{ env.hashVgcSha256 }})
+            ${{ env.projName }}-${{ env.boxAppend }}.zip (${{ env.hashVgcBoxSha256 }})
+            ${{ env.pkgLunaPlugin }} (${{ env.hashLunaSha256 }})
 
-        - name: Attest
-          uses: actions/attest-build-provenance@v1
-          with:
-            subject-path: "${{ env.projName }}.zip,${{ env.projName }}-${{ env.boxAppend }}.zip,${{ env.pkgLunaPlugin }}"
-
-        - name: Publish Release
-          uses: ncipollo/release-action@v1.14.0
-          with:
-            name: 'v${{ env.verStr }}'
-            tag: ${{ env.verStr }}
-            body: |
-              [将删除的功能列表](${{ env.obsoleteFeaturesUrl }})
-              [全部发布记录](${{ env.releaseNoteUrl }})
-              
-              #### 变化：
-               * 变化1
-              
-              #### SHA256:
-              ${{ env.projName }}.zip (${{ env.hashVgcZip }})
-              ${{ env.projName }}-${{ env.boxAppend }}.zip (${{ env.hashVgcBoxZip }})
-              ${{ env.pkgLunaPlugin }} (${{ env.hashLunaPluginZip }})
-
-              #### 备注:
-              WebUI v${{ env.webuiVer }}
-              ${{ env.projName }}-${{ env.boxAppend }}.zip打包了${{ env.v2rayCorePkgName }} ${{ env.v2rayCoreVer }}
-            draft: true
-            prerelease: false
-            artifacts: "${{ env.projName }}.zip,${{ env.projName }}-${{ env.boxAppend }}.zip,${{ env.pkgLunaPlugin }}"
+            #### 备注:
+            WebUI v${{ env.webuiVer }}
+            ${{ env.projName }}-${{ env.boxAppend }}.zip 打包了 ${{ env.v2rayCorePkgName }} ${{ env.v2rayCoreVer }}
+          draft: true
+          prerelease: false
+          artifacts: "${{ env.publishDir }}/*.zip"

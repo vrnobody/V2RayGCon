@@ -9,52 +9,51 @@ on:
 jobs:
   build:
     env:
-        projName: V2RayGCon
-        projCfg: Release
+      projName: V2RayGCon
+      projCfg: Release
 
     runs-on: windows-2019
 
     steps:
+      - name: Checkout master
+        uses: actions/checkout@v4
 
-        - name: Checkout master
-          uses: actions/checkout@v4
+      - name: Show versions
+        run: |
+          python --version
+          echo "power shell version:"
+          $Host.Version
 
-        - name: Show versions
-          run: |
-            python --version
-            echo "power shell version:"
-            $Host.Version
+      - name: Export env test
+        run: |
+          echo "hello=world" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
-        - name: Export env test
-          run: |
-            echo "hello=world" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      - name: Show value of env
+        run: |
+          echo "1. hello = $hello"
+          echo "2. hello = ${hello}"
+          echo "3. hello = ${ env.hello }"
+          echo "4. hello = ${{ env.hello }}"
 
-        - name: Show value of env
-          run: |
-            echo "1. hello = $hello"
-            echo "2. hello = ${hello}"
-            echo "3. hello = ${ env.hello }"
-            echo "4. hello = ${{ env.hello }}"
+      - name: Setup .net framework env
+        uses: vrnobody/Setup-DotNetFrameworkEnv@v1.20
 
-        - name: Setup .net framework env
-          uses: vrnobody/Setup-DotNetFrameworkEnv@v1.20
+      - name: Restore packages
+        run: nuget restore ${env:projName}.sln
 
-        - name: Restore packages
-          run: nuget restore ${env:projName}.sln
+      - name: Build with MSBuild
+        run: msbuild ${env:projName}.sln -p:Configuration=${env:projCfg}
 
-        - name: Build with MSBuild
-          run: msbuild ${env:projName}.sln -p:Configuration=${env:projCfg}
+      - name: Run unit tests
+        run: |
+          function Invoke-VSTest {
+            & "vstest.console.exe" $args
+            if(-not $?){ throw "fail!" }
+          }
+          Invoke-VSTest "V2RayGConTests\bin\${{ env.projCfg }}\V2RayGCon.Test.dll"
+          Invoke-VSTest "VgcApisTests\bin\${{ env.projCfg }}\VgcApisTests.dll"
+          Invoke-VSTest "Plugins\ProxySetterTests\bin\${{ env.projCfg }}\ProxySetterTests.dll"
+          Invoke-VSTest "Plugins\NeoLunaTests\bin\${{ env.projCfg }}\NeoLunaTests.dll"
 
-        - name: Run unit tests
-          run: |
-            function Invoke-VSTest {
-              & "vstest.console.exe" $args
-              if(-not $?){ throw "fail!" }
-            }
-            Invoke-VSTest "V2RayGConTests\bin\${{ env.projCfg }}\V2RayGCon.Test.dll"
-            Invoke-VSTest "VgcApisTests\bin\${{ env.projCfg }}\VgcApisTests.dll"
-            Invoke-VSTest "Plugins\ProxySetterTests\bin\${{ env.projCfg }}\ProxySetterTests.dll"
-            Invoke-VSTest "Plugins\NeoLunaTests\bin\${{ env.projCfg }}\NeoLunaTests.dll"
-
-        - name: All done!
-          run: echo "All done!"
+      - name: All done!
+        run: echo "All done!"

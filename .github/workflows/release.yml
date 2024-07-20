@@ -11,7 +11,7 @@ jobs:
   build:
     permissions:
       id-token: write
-      contents: read
+      contents: write
       attestations: write
 
     runs-on: windows-2019
@@ -96,7 +96,8 @@ jobs:
           run: |
             $mainhash = Get-FileHash "${env:projName}.zip" -Algorithm MD5
             $mh = $mainhash.Hash
-            echo "${env:projName}.zip (${mh})" >> $GITHUB_STEP_SUMMARY
+            echo "${env:projName}.zip (${mh})"
+            echo "${env:projName}.zip (${mh})" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
 
         - name: Calculate SHA256 hashes
           shell: pwsh
@@ -111,10 +112,14 @@ jobs:
             echo "hashVgcBoxZip=${hv2}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
             echo "hashLunaPluginZip=${hv3}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
-        - name: Publish Release
-          uses: ncipollo/release-action@v1.12.0
+        - name: Attest
+          uses: actions/attest-build-provenance@v1
           with:
-            token: ${{ secrets.GITHUB_TOKEN }}
+            subject-path: "${{ env.projName }}.zip,${{ env.projName }}-${{ env.boxAppend }}.zip,${{ env.pkgLunaPlugin }}"
+
+        - name: Publish Release
+          uses: ncipollo/release-action@v1.14.0
+          with:
             name: 'v${{ env.verStr }}'
             tag: ${{ env.verStr }}
             body: |
@@ -135,8 +140,3 @@ jobs:
             draft: true
             prerelease: false
             artifacts: "${{ env.projName }}.zip,${{ env.projName }}-${{ env.boxAppend }}.zip,${{ env.pkgLunaPlugin }}"
-
-        - name: Attest
-          uses: actions/attest-build-provenance@v1
-          with:
-            subject-path: "${{ env.projName }}.zip,${{ env.projName }}-${{ env.boxAppend }}.zip,${{ env.pkgLunaPlugin }}"

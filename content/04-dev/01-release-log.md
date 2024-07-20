@@ -5,6 +5,12 @@ draft: false
 weight: 10
 ---
 
+##### `v1.9.8.0`
+添加vrnobody/xraye作为更新源  
+支持更新win7版xray-core  
+支持订阅链接中的remarks参数  
+修复下载core窗口无法停止的bug  
+
 ##### `v1.9.7.0`
 支持SplitHTTP传输方式  
 没版本信息的vmess链接当作v2处理  

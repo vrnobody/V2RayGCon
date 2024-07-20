@@ -94,20 +94,22 @@ jobs:
         - name: Calculate MD5 hash
           shell: pwsh
           run: |
-            $hash1 = Get-FileHash "${env:projName}.zip" -Algorithm MD5
-            $hash2 = Get-FileHash "${env:projName}-${env:boxAppend}.zip" -Algorithm MD5
-            $hash3 = Get-FileHash "${env:pkgLunaPlugin}" -Algorithm MD5
+            $mainhash = Get-FileHash "${env:projName}.zip" -Algorithm MD5
+            $mh = $mainhash.Hash
+            echo "${env:projName}.zip (${mh})" >> $GITHUB_STEP_SUMMARY
+
+        - name: Calculate SHA256 hashes
+          shell: pwsh
+          run: |
+            $hash1 = Get-FileHash "${env:projName}.zip" -Algorithm SHA256
+            $hash2 = Get-FileHash "${env:projName}-${env:boxAppend}.zip" -Algorithm SHA256
+            $hash3 = Get-FileHash "${env:pkgLunaPlugin}" -Algorithm SHA256
             $hv1 = $hash1.Hash
             $hv2 = $hash2.Hash
             $hv3 = $hash3.Hash
             echo "hashVgcZip=${hv1}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
             echo "hashVgcBoxZip=${hv2}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
             echo "hashLunaPluginZip=${hv3}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
-        - name: Attest
-          uses: actions/attest-build-provenance@v1
-          with:
-            subject-path: "${{ env.projName }}.zip,${{ env.projName }}-${{ env.boxAppend }}.zip,${{ env.pkgLunaPlugin }}"
 
         - name: Publish Release
           uses: ncipollo/release-action@v1.12.0
@@ -122,7 +124,7 @@ jobs:
               #### 变化：
                * 变化1
               
-              #### MD5:
+              #### SHA256:
               ${{ env.projName }}.zip (${{ env.hashVgcZip }})
               ${{ env.projName }}-${{ env.boxAppend }}.zip (${{ env.hashVgcBoxZip }})
               ${{ env.pkgLunaPlugin }} (${{ env.hashLunaPluginZip }})
@@ -133,3 +135,8 @@ jobs:
             draft: true
             prerelease: false
             artifacts: "${{ env.projName }}.zip,${{ env.projName }}-${{ env.boxAppend }}.zip,${{ env.pkgLunaPlugin }}"
+
+        - name: Attest
+          uses: actions/attest-build-provenance@v1
+          with:
+            subject-path: "${{ env.projName }}.zip,${{ env.projName }}-${{ env.boxAppend }}.zip,${{ env.pkgLunaPlugin }}"

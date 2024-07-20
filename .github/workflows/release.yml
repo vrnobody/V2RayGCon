@@ -97,6 +97,7 @@ jobs:
             $mainhash = Get-FileHash "${env:projName}.zip" -Algorithm MD5
             $mh = $mainhash.Hash
             echo "${env:projName}.zip (${mh})"
+            echo "### MD5 hash" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
             echo "${env:projName}.zip (${mh})" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
 
         - name: Calculate SHA256 hashes

@@ -71,8 +71,7 @@ namespace V2RayGCon.Services
 
             CreateContextMenuStrip(niMenuRoot, miServersRoot, miPluginsRoot);
 
-            VgcApis.Misc.UI.Invoke = Invoke;
-            VgcApis.Misc.UI.InvokeThen = InvokeThen;
+            VgcApis.Misc.UI.BindInvokeThenFunc(InvokeThen);
         }
 
         public void Run(

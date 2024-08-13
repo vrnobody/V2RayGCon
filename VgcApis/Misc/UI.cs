@@ -238,9 +238,20 @@ namespace VgcApis.Misc
             return Thread.CurrentThread.Name == Models.Consts.Libs.UiThreadName;
         }
 
-        public static Action<Action> Invoke;
+        public static void Invoke(Action action) => InvokeThen(action, null);
 
-        public static Action<Action, Action> InvokeThen;
+        public static void BindInvokeThenFunc(Action<Action, Action> worker)
+        {
+            // Replace InvokeThen after boot successfully.
+            InvokeThen = worker;
+        }
+
+        public static Action<Action, Action> InvokeThen = (action, next) =>
+        {
+            // This default implement could be replaced by BindInvokeThenFunc().
+            action?.Invoke();
+            next?.Invoke();
+        };
 
         // https://stackoverflow.com/questions/87795/how-to-prevent-flickering-in-listview-when-updating-a-single-listviewitems-text
         public static void DoubleBuffered(this Control control, bool enable)
@@ -253,7 +264,7 @@ namespace VgcApis.Misc
 
         public static void UpdateRichTextBox(RichTextBox box, string content)
         {
-            Invoke?.Invoke(() =>
+            Invoke(() =>
             {
                 if (box == null || box.IsDisposed)
                 {

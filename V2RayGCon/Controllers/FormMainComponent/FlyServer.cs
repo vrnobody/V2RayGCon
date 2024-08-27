@@ -90,18 +90,15 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 r = servers.GetAllServersOrderByIndex();
             }
+            else if (TryParseSearchKeywordAsIndex(out var index))
+            {
+                r = SearchIndex(index);
+            }
             else
             {
-                var index = ParseSearchKeywordToIndex();
-                if (index > 0)
-                {
-                    r = SearchIndex(index);
-                }
-                else
-                {
-                    r = SearchAllInfos(keyword);
-                }
+                r = SearchAllInfos(keyword);
             }
+
             matchCountCache = r.Count;
             return r;
         }
@@ -191,18 +188,19 @@ namespace V2RayGCon.Controllers.FormMainComponent
         #endregion
 
         #region private method
-        int ParseSearchKeywordToIndex()
+        bool TryParseSearchKeywordAsIndex(out int index)
         {
+            index = -1;
             if (
                 !string.IsNullOrEmpty(searchKeywords)
                 && searchKeywords.Length > 1
                 && searchKeywords[0] == '#'
-                && int.TryParse(searchKeywords.Substring(1), out var index)
+                && int.TryParse(searchKeywords.Substring(1), out index)
             )
             {
-                return index;
+                return true;
             }
-            return -1;
+            return false;
         }
 
         List<VgcApis.Interfaces.ICoreServCtrl> SearchIndex(int index)
@@ -254,8 +252,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void ScrollIntoView()
         {
-            var index = ParseSearchKeywordToIndex();
-            if (index <= 0)
+            if (TryParseSearchKeywordAsIndex(out var index))
             {
                 return;
             }
@@ -700,9 +697,37 @@ namespace V2RayGCon.Controllers.FormMainComponent
             formMain.Width += width - flyPanel.ClientSize.Width;
         }
 
+        bool isSearchTested = false;
+
+        void RunSearchTest()
+        {
+            lock (cboxKeyword)
+            {
+                if (isSearchTested)
+                {
+                    return;
+                }
+                isSearchTested = true;
+            }
+
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                var keyword = Guid.NewGuid().ToString();
+                VgcApis.Libs.Sys.FileLogger.Info(
+                    $"triggering JIT on SearchAllInfos() with param: \"{keyword}\""
+                );
+                var servs = SearchAllInfos(keyword);
+                VgcApis.Libs.Sys.FileLogger.Info(
+                    $"got {servs.Count} results from SearchAllInfos()"
+                );
+            });
+        }
+
         private void InitComboBoxMarkFilter()
         {
             UpdateMarkFilterItemList(cboxKeyword);
+
+            cboxKeyword.MouseEnter += (s, e) => RunSearchTest();
 
             cboxKeyword.DropDown += (s, e) =>
             {

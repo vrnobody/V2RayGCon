@@ -172,16 +172,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             GetFlyPanel()
                 .GetFilteredList()
-                .AsParallel()
-                .ForAll(s => s.GetCoreStates().SetIsSelected(condiction(s)));
+                .ForEach(s => s.GetCoreStates().SetIsSelected(condiction(s)));
         }
 
         void SelectAllServersWhere(Func<VgcApis.Interfaces.ICoreServCtrl, bool> condiction)
         {
             servers
                 .GetAllServersOrderByIndex()
-                .AsParallel()
-                .ForAll(s => s.GetCoreStates().SetIsSelected(condiction(s)));
+                .ForEach(s => s.GetCoreStates().SetIsSelected(condiction(s)));
         }
 
         FlyServer GetFlyPanel()

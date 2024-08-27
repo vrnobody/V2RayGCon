@@ -282,8 +282,6 @@ namespace V2RayGCon.Services
         {
             var links = decoder.ExtractLinksFromText(text);
             var results = links
-                .AsParallel()
-                .AsOrdered()
                 .Select(link =>
                 {
                     var r = codecs.Decode(link, decoder);

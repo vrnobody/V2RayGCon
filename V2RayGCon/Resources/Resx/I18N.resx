@@ -358,7 +358,7 @@ Please use [Add new server] or [Replace server].</value>
     <value>Decode fail.</value>
   </data>
   <data name="Success" xml:space="preserve">
-    <value>Success.</value>
+    <value>Success</value>
   </data>
   <data name="NoLinkFound" xml:space="preserve">
     <value>No links found.</value>
@@ -835,5 +835,8 @@ c:\vgc\V2RayGCon.exe -s s2.json</value>
   </data>
   <data name="Searching" xml:space="preserve">
     <value>Searching...</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Failed</value>
   </data>
 </root>

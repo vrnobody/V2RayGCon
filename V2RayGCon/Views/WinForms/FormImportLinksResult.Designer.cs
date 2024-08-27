@@ -39,6 +39,7 @@
             this.btnCopySelected = new System.Windows.Forms.Button();
             this.btnCopyAll = new System.Windows.Forms.Button();
             this.pbLoading = new System.Windows.Forms.ProgressBar();
+            this.lbResult = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lvResult
@@ -103,10 +104,16 @@
             resources.ApplyResources(this.pbLoading, "pbLoading");
             this.pbLoading.Name = "pbLoading";
             // 
+            // lbResult
+            // 
+            resources.ApplyResources(this.lbResult, "lbResult");
+            this.lbResult.Name = "lbResult";
+            // 
             // FormImportLinksResult
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lbResult);
             this.Controls.Add(this.pbLoading);
             this.Controls.Add(this.lvResult);
             this.Controls.Add(this.btnCopySelected);
@@ -115,6 +122,7 @@
             this.Name = "FormImportLinksResult";
             this.Shown += new System.EventHandler(this.FormImportLinksResult_Shown);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -130,5 +138,6 @@
         private System.Windows.Forms.Button btnCopyAll;
         private System.Windows.Forms.ColumnHeader mark;
         private System.Windows.Forms.ProgressBar pbLoading;
+        private System.Windows.Forms.Label lbResult;
     }
 }

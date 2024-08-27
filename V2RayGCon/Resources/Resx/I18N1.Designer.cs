@@ -921,6 +921,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Failed 的本地化字符串。
+        /// </summary>
+        internal static string Failed {
+            get {
+                return ResourceManager.GetString("Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Feedback 的本地化字符串。
         /// </summary>
         internal static string Feedback {
@@ -1808,7 +1817,7 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Success. 的本地化字符串。
+        ///   查找类似 Success 的本地化字符串。
         /// </summary>
         internal static string Success {
             get {

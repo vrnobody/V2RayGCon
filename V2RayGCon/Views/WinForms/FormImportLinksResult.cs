@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Views.WinForms
 {
@@ -47,9 +48,9 @@ namespace V2RayGCon.Views.WinForms
         {
             int count = 0;
             int seg = 1000;
+            int ok = 0;
 
             var it = results.GetEnumerator();
-
             bool stop = false;
             while (!stop)
             {
@@ -70,18 +71,24 @@ namespace V2RayGCon.Views.WinForms
                                 result[0] = (++count).ToString();
                                 var item = new ListViewItem(result);
                                 lvResult.Items.Add(item);
+                                if (VgcApis.Misc.Utils.IsImportResultSuccess(result))
+                                {
+                                    ok++;
+                                }
                             }
                         }
                 );
                 VgcApis.Misc.Utils.Sleep(100);
             }
+            it.Dispose();
 
             Invoke(
                 (MethodInvoker)
                     delegate
                     {
+                        lbResult.Text =
+                            $"{I18N.Success}: {ok} {I18N.Failed}: {count - ok} {I18N.Total}: {count}";
                         lvResult.ResumeLayout();
-                        lvResult.Items[lvResult.Items.Count - 1].EnsureVisible();
                         pbLoading.Visible = false;
                     }
             );

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About" xml:space="preserve">
+    <value>关于</value>
+  </data>
   <data name="CannotParseJson" xml:space="preserve">
     <value>无法解析JSON文件，丢弃更改?</value>
   </data>
@@ -364,9 +367,6 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="Reason" xml:space="preserve">
     <value>原因</value>
   </data>
-  <data name="About" xml:space="preserve">
-    <value>关于</value>
-  </data>
   <data name="Import" xml:space="preserve">
     <value>Import</value>
   </data>
@@ -422,11 +422,11 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="ConfirmDeleteControl" xml:space="preserve">
     <value>删除此项？</value>
   </data>
-  <data name="ConfirmImportServers" xml:space="preserve">
-    <value>从备份文件中导入服务器（客户端）配置？</value>
-  </data>
   <data name="SaveChangeFirst" xml:space="preserve">
     <value>请先保存已更改的配置项!</value>
+  </data>
+  <data name="ConfirmImportServers" xml:space="preserve">
+    <value>从备份文件中导入服务器（客户端）配置？</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>编辑</value>
@@ -542,9 +542,6 @@ https://github.com/v2ray/v2ray-core</value>
   </data>
   <data name="StatusBarPagerInfoTpl" xml:space="preserve">
     <value>第{0}/{1}页</value>
-  </data>
-  <data name="StatusBarMessageTpl" xml:space="preserve">
-    <value>共{0}/{1}个服务器 选中{2}/{3}项</value>
   </data>
   <data name="SysProxyRequireHttpOrSocksMode" xml:space="preserve">
     <value>请先把模式设为HTTP或SOCKS</value>
@@ -699,6 +696,9 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="StatusBarPagerMenuItemTpl" xml:space="preserve">
     <value>第{0}页 ({1,5:D5} - {2,5:D5})</value>
   </data>
+  <data name="StatusBarMessageTpl" xml:space="preserve">
+    <value>共{0}/{1}个服务器 选中{2}/{3}项</value>
+  </data>
   <data name="TotalNum" xml:space="preserve">
     <value>合计：</value>
   </data>
@@ -826,5 +826,8 @@ c:\vgc\V2RayGCon.exe -s s2.json</value>
   </data>
   <data name="Searching" xml:space="preserve">
     <value>搜索中...</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>失败</value>
   </data>
 </root>

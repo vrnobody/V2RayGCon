@@ -138,6 +138,13 @@
   <data name="btnCopyAll.Text" xml:space="preserve">
     <value>复制全部</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="lbResult.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 12</value>
+  </data>
+  <data name="lbResult.Text" xml:space="preserve">
+    <value>加载中...</value>
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>导入结果</value>
   </data>

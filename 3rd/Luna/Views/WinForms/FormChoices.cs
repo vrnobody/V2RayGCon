@@ -90,6 +90,17 @@ namespace Luna.Views.WinForms
                 checkBoxes.Add(control);
             }
         }
+
+        void ToggleCheckBox(int index)
+        {
+            if (index < 0 || index >= checkBoxes.Count)
+            {
+                return;
+            }
+
+            var control = checkBoxes[index];
+            control.Checked = !control.Checked;
+        }
         #endregion
 
         #region UI event handlers
@@ -106,9 +117,15 @@ namespace Luna.Views.WinForms
 
         private void FormChoices_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
+            var kc = e.KeyCode;
+            if (kc == Keys.Escape)
             {
                 VgcApis.Misc.UI.CloseFormIgnoreError(this);
+                return;
+            }
+            if (VgcApis.Misc.UI.TryParseNumKeyToIndex(kc, out int index))
+            {
+                ToggleCheckBox(index);
             }
         }
         #endregion

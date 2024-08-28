@@ -162,20 +162,14 @@ namespace NeoLuna.Views.WinForms
         private void FormChoice_KeyDown(object sender, KeyEventArgs e)
         {
             var kc = e.KeyCode;
-            switch (kc)
+            if (kc == Keys.Escape)
             {
-                case Keys.Escape:
-                    VgcApis.Misc.UI.CloseFormIgnoreError(this);
-                    return;
-                case Keys.D0:
-                    Choose(9);
-                    return;
-            }
-
-            if (kc >= Keys.D1 && kc <= Keys.D9)
-            {
-                Choose(kc - Keys.D1);
+                VgcApis.Misc.UI.CloseFormIgnoreError(this);
                 return;
+            }
+            if (VgcApis.Misc.UI.TryParseNumKeyToIndex(kc, out int index))
+            {
+                Choose(index);
             }
         }
 

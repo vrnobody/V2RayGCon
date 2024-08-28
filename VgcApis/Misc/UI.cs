@@ -575,6 +575,22 @@ namespace VgcApis.Misc
         #endregion
 
         #region winform
+        public static bool TryParseNumKeyToIndex(Keys key, out int index)
+        {
+            index = -1;
+            var keys = new Keys[] { Keys.D0, Keys.NumPad0 };
+            var range = 10;
+            foreach (var start in keys)
+            {
+                if (key >= start && key < start + range)
+                {
+                    index = (key - start - 1 + range) % range;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static void GetUserInput(string title, Action<string> onOk, Action onCancel = null)
         {
             var form = new WinForms.FormInput(title);

@@ -33,11 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.9.8.3")]
+[assembly: AssemblyVersion("1.9.8.4")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v1.9.8.4 Improve selecting servers performance.
 v1.9.8.3 Show totals in form import result.
 v1.9.8.2 Improve search experience in form main.
 v1.9.8.1 Fix MessageBox do not show up in boot-stage bug.

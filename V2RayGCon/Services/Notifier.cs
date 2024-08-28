@@ -1162,7 +1162,7 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            VgcApis.Misc.Utils.ChainActionHelperAsync(count, worker, done);
+            VgcApis.Misc.Utils.InvokeChainActionsAsync(count, worker, done);
         }
 
         private void SetNotifyIconText(string rawText)

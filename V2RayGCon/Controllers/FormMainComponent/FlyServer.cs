@@ -367,7 +367,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void OnServerPropertyChangeHandler(object sender, EventArgs args)
         {
-            VgcApis.Misc.Utils.RunInBackground(() => lazyStatusBarUpdater?.Deadline());
+            lazyStatusBarUpdater?.Deadline();
         }
 
         void SetSearchKeywords()

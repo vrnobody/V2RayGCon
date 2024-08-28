@@ -168,17 +168,14 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         void OnCoreStateChangedHandler(object sender, EventArgs args)
         {
-            VgcApis.Misc.Utils.RunInBackground(() =>
+            if (core.isRunning)
             {
-                if (core.isRunning)
-                {
-                    GetParent().InvokeEventOnCoreStart();
-                }
-                else
-                {
-                    GetParent().InvokeEventOnCoreStop();
-                }
-            });
+                GetParent().InvokeEventOnCoreStart();
+            }
+            else
+            {
+                GetParent().InvokeEventOnCoreStop();
+            }
         }
 
         void AddToSpeedTestQueue()

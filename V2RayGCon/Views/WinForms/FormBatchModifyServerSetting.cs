@@ -265,7 +265,7 @@ namespace V2RayGCon.Views.WinForms
                 VgcApis.Misc.UI.Invoke(() => that.Close());
             }
 
-            VgcApis.Misc.Utils.ChainActionHelperAsync(list.Count, worker, done);
+            VgcApis.Misc.Utils.InvokeChainActionsAsync(list.Count, worker, done);
         }
 
         void ModifyServerSetting(

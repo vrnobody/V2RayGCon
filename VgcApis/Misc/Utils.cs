@@ -1347,35 +1347,30 @@ namespace VgcApis.Misc
         #region ChainAction
 
         /*
-         * ChainActionHelper loops from [count - 1] to [0]
-         *
-         * These integers, which is index in this example,
-         * will be transfered into worker function one by one.
-         *
-         * The second parameter "next" is generated automatically
-         * for chaining up all workers.
+         * ChainActionHelper countdown from [count - 1] to [0].
+         * These integers are passed to worker funtion by <index> parameter.
+         * The second parameter "next" is used for chaining up worker functions.
          *
          * e.g.
          *
-         * Action<int,Action> worker = (index, next)=>{
+         * Action<int, Action> worker = (index, next) => {
          *
          *   // do something accroding to index
          *   Debug.WriteLine(index);
          *
-         *   // call next when done
+         *   // invoke next worker
          *   next();
          * }
          *
-         * Action done = ()=>{
-         *   // do something when all done
+         * Action done = () => {
+         *   // do something after all done
          *   // or simply set to null
          * }
          *
-         * Finally call this function like this.
-         * ChainActionHelper(10, worker, done);
+         * Finally call the following function like this.
+         * ChainActionHelperAsync(10, worker, done);
          */
-
-        public static void ChainActionHelperAsync(
+        public static void InvokeChainActionsAsync(
             int countdown,
             Action<int, Action> worker,
             Action done = null
@@ -1383,38 +1378,39 @@ namespace VgcApis.Misc
         {
             RunInBackground(() =>
             {
-                ChainActionHelperWorker(countdown, worker, done)();
+                InvokeChainActions(countdown, worker, done);
             });
         }
 
         // wrapper
-        public static void ChainActionHelper(
+        public static void InvokeChainActions(
             int countdown,
             Action<int, Action> worker,
             Action done = null
         )
         {
-            ChainActionHelperWorker(countdown, worker, done)();
+            var chain = CreateActionsChain(countdown, worker, done);
+            chain.Invoke();
         }
 
-        static Action ChainActionHelperWorker(
+        static Action CreateActionsChain(
             int countdown,
             Action<int, Action> worker,
             Action done = null
         )
         {
-            int _index = countdown - 1;
-
-            return () =>
+            int index = countdown - 1;
+            Action chain = () =>
             {
-                if (_index < 0)
+                if (index < 0)
                 {
                     done?.Invoke();
                     return;
                 }
-
-                worker(_index, ChainActionHelperWorker(_index, worker, done));
+                var next = CreateActionsChain(index, worker, done);
+                worker(index, next);
             };
+            return chain;
         }
 
         public static void ExecuteInParallel<TParam>(
@@ -1479,7 +1475,7 @@ namespace VgcApis.Misc
         #region Task
         public static void DoItLater(Action action, TimeSpan span)
         {
-            Action work = () =>
+            void work()
             {
                 try
                 {
@@ -1490,7 +1486,7 @@ namespace VgcApis.Misc
                     Libs.Sys.FileLogger.Error($"DoItLater:\n{e}");
                     throw;
                 }
-            };
+            }
             Task.Delay(span).ContinueWith(_ => work()).ConfigureAwait(false);
         }
 

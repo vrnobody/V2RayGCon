@@ -78,6 +78,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             BindDragDropEvent();
             WatchServers();
             RefreshFlyPanelNow();
+            DoSearchOptimizationLater(800);
         }
 
         #region public method
@@ -697,37 +698,27 @@ namespace V2RayGCon.Controllers.FormMainComponent
             formMain.Width += width - flyPanel.ClientSize.Width;
         }
 
-        bool isSearchTested = false;
-
-        void RunSearchTest()
+        void DoSearchOptimizationLater(long ms)
         {
-            lock (cboxKeyword)
-            {
-                if (isSearchTested)
+            VgcApis.Misc.Utils.DoItLater(
+                () =>
                 {
-                    return;
-                }
-                isSearchTested = true;
-            }
-
-            VgcApis.Misc.Utils.RunInBackground(() =>
-            {
-                var keyword = Guid.NewGuid().ToString();
-                VgcApis.Libs.Sys.FileLogger.Info(
-                    $"triggering JIT on SearchAllInfos() with param: \"{keyword}\""
-                );
-                var servs = SearchAllInfos(keyword);
-                VgcApis.Libs.Sys.FileLogger.Info(
-                    $"got {servs.Count} results from SearchAllInfos()"
-                );
-            });
+                    var keyword = $"🕙😀中文{Guid.NewGuid()}🚭";
+                    VgcApis.Libs.Sys.FileLogger.Info(
+                        $"trigger JIT on SearchAllInfos() with param: \"{keyword}\""
+                    );
+                    var servs = SearchAllInfos(keyword);
+                    VgcApis.Libs.Sys.FileLogger.Info(
+                        $"got {servs.Count} results from SearchAllInfos()"
+                    );
+                },
+                ms
+            );
         }
 
         private void InitComboBoxMarkFilter()
         {
             UpdateMarkFilterItemList(cboxKeyword);
-
-            cboxKeyword.MouseEnter += (s, e) => RunSearchTest();
 
             cboxKeyword.DropDown += (s, e) =>
             {

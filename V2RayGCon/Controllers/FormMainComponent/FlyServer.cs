@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
+using VgcApis.Interfaces;
 
 namespace V2RayGCon.Controllers.FormMainComponent
 {
@@ -78,28 +79,29 @@ namespace V2RayGCon.Controllers.FormMainComponent
             BindDragDropEvent();
             WatchServers();
             RefreshFlyPanelNow();
-            DoSearchOptimizationLater(800);
+            DoSearchOptimization();
         }
 
         #region public method
 
-        public List<VgcApis.Interfaces.ICoreServCtrl> GetFilteredList()
+        public List<ICoreServCtrl> GetFilteredList()
         {
             var keyword = searchKeywords?.Replace(@" ", "");
-            List<VgcApis.Interfaces.ICoreServCtrl> r;
+            var servs = servers.GetAllServersOrderByIndex();
+
+            matchCountCache = servs.Count;
             if (string.IsNullOrEmpty(keyword))
             {
-                r = servers.GetAllServersOrderByIndex();
-            }
-            else if (TryParseSearchKeywordAsIndex(out var index))
-            {
-                r = SearchIndex(index);
-            }
-            else
-            {
-                r = SearchAllInfos(keyword);
+                return servs;
             }
 
+            if (TryParseSearchKeywordAsIndex(out var index))
+            {
+                curPageNumber = (index - 1) / setting.serverPanelPageSize;
+                return servs;
+            }
+
+            var r = SearchAllInfos(servs, keyword);
             matchCountCache = r.Count;
             return r;
         }
@@ -204,13 +206,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             return false;
         }
 
-        List<VgcApis.Interfaces.ICoreServCtrl> SearchIndex(int index)
-        {
-            var r = servers.GetAllServersOrderByIndex();
-            curPageNumber = (int)((index - 1) / setting.serverPanelPageSize);
-            return r;
-        }
-
         bool IsPartialMatchCi(Dictionary<string, bool> cache, string content, string keyword)
         {
             if (string.IsNullOrEmpty(content))
@@ -224,17 +219,13 @@ namespace V2RayGCon.Controllers.FormMainComponent
             return cache[content];
         }
 
-        List<VgcApis.Interfaces.ICoreServCtrl> SearchAllInfos(string keyword)
+        List<ICoreServCtrl> SearchAllInfos(IEnumerable<ICoreServCtrl> servs, string keyword)
         {
-            // setting.SendLog($"Call SearchAllInfos({keyword})");
-
             Dictionary<string, bool> cache = new Dictionary<string, bool>();
 
-            var list = servers.GetAllServersOrderByIndex();
-            var r = new List<VgcApis.Interfaces.ICoreServCtrl>();
-            for (int i = 0; i < list.Count; i++)
+            var r = new List<ICoreServCtrl>();
+            foreach (var s in servs)
             {
-                var s = list[i];
                 var st = s.GetCoreStates();
                 if (
                     IsPartialMatchCi(cache, st.GetTag1(), keyword)
@@ -321,7 +312,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private void BindServUiToCoreServCtrl(
             List<Views.UserControls.ServerUI> servUis,
-            List<VgcApis.Interfaces.ICoreServCtrl> coreServs
+            List<ICoreServCtrl> coreServs
         )
         {
             if (servUis.Count != coreServs.Count)
@@ -347,9 +338,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             servers.OnServerPropertyChange -= OnServerPropertyChangeHandler;
         }
 
-        List<VgcApis.Interfaces.ICoreServCtrl> GenPagedServerList(
-            List<VgcApis.Interfaces.ICoreServCtrl> serverList
-        )
+        List<ICoreServCtrl> GenPagedServerList(List<ICoreServCtrl> serverList)
         {
             var count = serverList.Count;
             var pageSize = setting.serverPanelPageSize;
@@ -405,7 +394,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private void StatusBarPagerDropdownMenuOpeningHandler(object sender, EventArgs args)
         {
-            List<VgcApis.Interfaces.ICoreServCtrl> flist = GetFilteredList();
+            List<ICoreServCtrl> flist = GetFilteredList();
             var cpn = VgcApis.Misc.Utils.Clamp(curPageNumber, 0, totalPageNumber);
             var groupSize = VgcApis.Models.Consts.Config.MenuItemGroupSize;
             var pageSize = setting.serverPanelPageSize;
@@ -426,7 +415,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         List<ToolStripMenuItem> CreateDynamicPagingMenu(
-            List<VgcApis.Interfaces.ICoreServCtrl> filteredList,
+            List<ICoreServCtrl> filteredList,
             int pageSize,
             int currentPageNumber,
             int groupSize,
@@ -497,7 +486,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         private List<ToolStripMenuItem> CreateBasicMenuItems(
-            List<VgcApis.Interfaces.ICoreServCtrl> filteredList,
+            List<ICoreServCtrl> filteredList,
             int currentPageNumber,
             int start,
             int end,
@@ -551,7 +540,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         public List<ToolStripMenuItem> AutoGroupMenuItems(
-            List<VgcApis.Interfaces.ICoreServCtrl> filteredList,
+            List<ICoreServCtrl> filteredList,
             List<ToolStripMenuItem> menuItems,
             int groupSize
         )
@@ -569,7 +558,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         List<ToolStripMenuItem> GroupPagerItemsWorker(
-            List<VgcApis.Interfaces.ICoreServCtrl> filteredList,
+            List<ICoreServCtrl> filteredList,
             IEnumerable<ToolStripMenuItem> menuItems,
             int maxIdx,
             int groupSize,
@@ -607,7 +596,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             return groups;
         }
 
-        int GetIndex(List<VgcApis.Interfaces.ICoreServCtrl> list, int index)
+        int GetIndex(List<ICoreServCtrl> list, int index)
         {
             var i = Math.Max(0, Math.Min(list.Count - 1, index));
             var c = list[i];
@@ -698,22 +687,15 @@ namespace V2RayGCon.Controllers.FormMainComponent
             formMain.Width += width - flyPanel.ClientSize.Width;
         }
 
-        void DoSearchOptimizationLater(long ms)
+        void DoSearchOptimization()
         {
-            VgcApis.Misc.Utils.DoItLater(
-                () =>
-                {
-                    var keyword = $"🕙😀中文{Guid.NewGuid()}🚭";
-                    VgcApis.Libs.Sys.FileLogger.Info(
-                        $"trigger JIT on SearchAllInfos() with param: \"{keyword}\""
-                    );
-                    var servs = SearchAllInfos(keyword);
-                    VgcApis.Libs.Sys.FileLogger.Info(
-                        $"got {servs.Count} results from SearchAllInfos()"
-                    );
-                },
-                ms
+            var keyword = $"🕙😀中文{Guid.NewGuid()}🚭";
+            VgcApis.Libs.Sys.FileLogger.Info(
+                $"trigger JIT on SearchAllInfos() with param: \"{keyword}\""
             );
+            var servs = servers.GetAllServersOrderByIndex().Take(5);
+            var r = SearchAllInfos(servs, keyword);
+            VgcApis.Libs.Sys.FileLogger.Info($"got {r.Count} results from SearchAllInfos()");
         }
 
         private void InitComboBoxMarkFilter()

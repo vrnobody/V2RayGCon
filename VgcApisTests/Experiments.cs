@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,14 @@ namespace VgcApisTests
     public class Experiments
     {
         public Experiments() { }
+
+        [TestMethod]
+        public void TakeMoreThanListLengthTest()
+        {
+            var list = new int[] { 1, 2, 3 };
+            var r = list.Take(10).ToList();
+            Assert.AreEqual(3, r.Count);
+        }
 
         [TestMethod]
         public void GzipStreamTest()

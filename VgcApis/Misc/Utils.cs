@@ -839,15 +839,35 @@ namespace VgcApis.Misc
             }
 
             var t = text.Replace('\r', ' ').Replace('\n', ' ');
-            var width = TextRenderer.MeasureText(t, defFont).Width;
-            var baseline = TextRenderer.MeasureText(new string('a', lenInAscii), defFont).Width;
-            if (width <= baseline)
+            var width = GetUnicodeByteCount(t);
+            if (width <= lenInAscii)
             {
                 return text;
             }
             int end = Math.Min(t.Length, lenInAscii);
-            int pos = BinarySearchForEllipsisPos(t, 0, end, baseline);
+            int pos = BinarySearchForEllipsisPos(t, 0, end, lenInAscii);
             return text.Substring(0, pos) + ellipsis;
+        }
+
+        public static string GetLongestString(IEnumerable<string> strs)
+        {
+            int max = 0;
+            string r = "";
+            foreach (var str in strs)
+            {
+                var n = GetUnicodeByteCount(str);
+                if (n > max)
+                {
+                    r = str;
+                    max = n;
+                }
+            }
+            return r;
+        }
+
+        static int GetUnicodeByteCount(string text)
+        {
+            return System.Text.UnicodeEncoding.Default.GetByteCount(text);
         }
 
         static int BinarySearchForEllipsisPos(string text, int start, int end, int baseline)
@@ -856,7 +876,7 @@ namespace VgcApis.Misc
             while (mid != start && mid != end)
             {
                 var s = text.Substring(0, mid) + Models.Consts.AutoEllipsis.ellipsis;
-                var w = TextRenderer.MeasureText(s, Models.Consts.AutoEllipsis.defFont).Width;
+                var w = GetUnicodeByteCount(s);
                 if (w == baseline)
                 {
                     return mid;

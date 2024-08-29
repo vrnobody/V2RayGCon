@@ -544,83 +544,42 @@ ab12-_中文: |
         }
 
         [DataTestMethod]
-        [DataRow(
-            "中iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii试",
-            34,
-            true,
-            "中iiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
-        )]
-        [DataRow(
-            "中aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa文",
-            34,
-            true,
-            "中aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        )]
-        [DataRow("中iiiii试", 6, true, "中ii")]
-        [DataRow("中文aa测试", 8, true, "中文aa")]
-        [DataRow("中文aa测试", 7, true, "中文a")]
-        [DataRow("中文aa测试", 6, true, "中文")]
-        [DataRow("中aaa文测试", 6, true, "中aa")]
-        [DataRow("中aaa文测试", 5, true, "中a")]
-        [DataRow("中文测试", 4, true, "中")]
-        [DataRow("中文测试", 3, true, "")]
-        [DataRow("a中文测试", 9, false, "a中文测试")]
-        [DataRow("a中文测试", 7, true, "a中文")]
-        [DataRow("a中文测试", 6, true, "a中")]
-        [DataRow("a中文测试", 5, true, "a中")]
-        [DataRow("a中文测试", 4, true, "a")]
-        [DataRow("a中文测试", 3, true, "a")]
-        [DataRow("a中文测试", 2, true, "")]
-        [DataRow("a中文测试", 1, true, "")]
-        [DataRow("a中文测试", 0, false, "")]
-        [DataRow("a中文测试", -1, false, "")]
-        [DataRow("aaaaaaaaa", 5, true, "aaa")]
-        [DataRow("", 100, false, "")]
-#pragma warning disable IDE0079 // 请删除不必要的忽略
-#pragma warning disable IDE0060 // 删除未使用的参数
-        public void AutoEllipsisTest(string org, int len, bool isEllipsised, string expect)
-#pragma warning restore IDE0079 // 请删除不必要的忽略
-#pragma warning restore IDE0060 // 删除未使用的参数
+        [DataRow("中iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii试", 34, "中iiiiiiiiiiiiiiiiiiiiiiiiiiiiii")]
+        [DataRow("中aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa文", 34, "中aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        [DataRow("中iiiii试", 6, "中ii")]
+        [DataRow("中文aa测试", 8, "中文aa")]
+        [DataRow("中文aa测试", 7, "中文a")]
+        [DataRow("中文aa测试", 6, "中文")]
+        [DataRow("中aaa文测试", 6, "中aa")]
+        [DataRow("中aaa文测试", 5, "中a")]
+        [DataRow("中文测试", 4, "中")]
+        [DataRow("中文测试", 3, "")]
+        [DataRow("a中文测试", 9, "a中文测试")]
+        [DataRow("a中文测试", 7, "a中文")]
+        [DataRow("a中文测试", 6, "a中")]
+        [DataRow("a中文测试", 5, "a中")]
+        [DataRow("a中文测试", 4, "a")]
+        [DataRow("a中文测试", 3, "a")]
+        [DataRow("a中文测试", 2, "")]
+        [DataRow("a中文测试", 1, "")]
+        [DataRow("a中文测试", 0, "")]
+        [DataRow("a中文测试", -1, "")]
+        [DataRow("aaaaaaaaa", 5, "aaa")]
+        [DataRow("", 100, "")]
+        public void AutoEllipsisTest(string org, int len, string expect)
         {
-            var defFont = VgcApis.Models.Consts.AutoEllipsis.defFont;
-            var orgLen = org.Length;
-            var result = AutoEllipsis(org, len);
-
-            if (orgLen <= 0 || len <= 0)
-            {
-                Assert.AreEqual(string.Empty, result);
-                return;
-            }
-
-            var orgWidth = TextRenderer.MeasureText(org, defFont).Width;
-            var resultWidth = TextRenderer.MeasureText(result, defFont).Width;
-            var expectedWidth = TextRenderer.MeasureText(new string('a', len), defFont).Width;
-
-            if (orgWidth <= expectedWidth)
-            {
-                Assert.AreEqual(org, result);
-                return;
-            }
-
             var ellipsis = VgcApis.Models.Consts.AutoEllipsis.ellipsis;
-            Assert.AreEqual(ellipsis.Last(), result.Last());
-
-            var d = TextRenderer.MeasureText(ellipsis, defFont).Width;
-
-            if (resultWidth <= d)
-            {
-                return;
-            }
-
-            Assert.IsTrue(resultWidth <= expectedWidth);
-            Assert.IsTrue(resultWidth >= expectedWidth - d);
-
-            /* 以下代码只对特定字体有效
-            string ellipsis = VgcApis.Models.Consts.AutoEllipsis.ellipsis;
             var cut = AutoEllipsis(org, len);
-            var exp = expect + (isEllipsised ? ellipsis : "");
+            var exp = expect;
+            if (len < ellipsis.Length)
+            {
+                exp = "";
+            }
+            else if (org != expect)
+            {
+                exp = $"{expect}{ellipsis}";
+            }
             Assert.AreEqual(exp, cut);
-            */
         }
 
         [DataTestMethod]

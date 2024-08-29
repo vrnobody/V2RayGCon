@@ -89,42 +89,30 @@ namespace VgcApis.Misc
 
         public static void ResetComboBoxDropdownMenuWidth(ToolStripComboBox cbox)
         {
-            int maxWidth = 0;
-            int tempWidth;
-            var font = cbox.Font;
-
+            var texts = new HashSet<string>();
             foreach (var item in cbox.Items)
             {
-                tempWidth = TextRenderer.MeasureText(item.ToString(), font).Width;
-                if (tempWidth > maxWidth)
-                {
-                    maxWidth = tempWidth;
-                }
+                texts.Add(item.ToString());
             }
-            cbox.DropDownWidth = Math.Max(
-                cbox.Width,
-                maxWidth + SystemInformation.VerticalScrollBarWidth
-            );
+            cbox.DropDownWidth = Math.Max(cbox.Width, GetMaxTextWidth(texts, cbox.Font));
+        }
+
+        static int GetMaxTextWidth(IEnumerable<string> texts, Font font)
+        {
+            var s = Utils.GetLongestString(texts);
+            var margin = SystemInformation.VerticalScrollBarWidth * 1.2;
+            var width = TextRenderer.MeasureText(s, font).Width + (int)margin;
+            return width;
         }
 
         public static void ResetComboBoxDropdownMenuWidth(ComboBox cbox)
         {
-            int maxWidth = 0;
-            int tempWidth;
-            var font = cbox.Font;
-
+            var texts = new HashSet<string>();
             foreach (var item in cbox.Items)
             {
-                tempWidth = TextRenderer.MeasureText(item.ToString(), font).Width;
-                if (tempWidth > maxWidth)
-                {
-                    maxWidth = tempWidth;
-                }
+                texts.Add(item.ToString());
             }
-            cbox.DropDownWidth = Math.Max(
-                cbox.Width,
-                maxWidth + SystemInformation.VerticalScrollBarWidth
-            );
+            cbox.DropDownWidth = Math.Max(cbox.Width, GetMaxTextWidth(texts, cbox.Font));
         }
 
         public static void AddContextMenu(RichTextBox rtb)

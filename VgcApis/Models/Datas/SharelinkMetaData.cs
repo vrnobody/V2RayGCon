@@ -18,7 +18,24 @@ namespace VgcApis.Models.Datas
         public string streamParam2 = string.Empty;
         public string streamParam3 = string.Empty;
 
-        public string tlsType = @"none";
+        public string _tlsType = @"none";
+        static HashSet<string> supportedTlsTypes = new HashSet<string>
+        {
+            "none",
+            "tls",
+            "xtls",
+            "reality"
+        };
+        public string tlsType
+        {
+            get => _tlsType;
+            set
+            {
+                var lower = value?.ToLower() ?? "";
+                _tlsType = supportedTlsTypes.Contains(lower) ? lower : "none";
+            }
+        }
+
         public string tlsServName = @"";
         public bool useSelfSignCert = false;
 

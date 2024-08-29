@@ -867,7 +867,24 @@ namespace VgcApis.Misc
 
         static int GetUnicodeByteCount(string text)
         {
-            return System.Text.UnicodeEncoding.Default.GetByteCount(text);
+            if (string.IsNullOrEmpty(text))
+            {
+                return 0;
+            }
+
+            try
+            {
+                return Encoding.GetEncoding(936).GetByteCount(text);
+            }
+            catch { }
+
+            try
+            {
+                return Encoding.Default.GetByteCount(text);
+            }
+            catch { }
+
+            return text.Length;
         }
 
         static int BinarySearchForEllipsisPos(string text, int start, int end, int baseline)

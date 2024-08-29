@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
@@ -3553,7 +3554,40 @@ namespace VgcApis.Misc
 
         #region reflection
 
-        static public string GetPublicFieldsInfoOfType(Type type)
+        // https://www.liranchen.com/2010/08/forcing-jit-compilation-during-runtime.html
+        static readonly HashSet<string> jitedFullTypeNames = new HashSet<string>();
+
+        public static void PreJITMethodsOnce(Type curType)
+        {
+            var name = curType.FullName;
+            lock (jitedFullTypeNames)
+            {
+                if (jitedFullTypeNames.Contains(name))
+                {
+                    return;
+                }
+                jitedFullTypeNames.Add(name);
+            }
+
+            MethodInfo[] methods = curType.GetMethods(
+                BindingFlags.DeclaredOnly
+                    | BindingFlags.NonPublic
+                    | BindingFlags.Public
+                    | BindingFlags.Instance
+                    | BindingFlags.Static
+            );
+
+            foreach (MethodInfo curMethod in methods)
+            {
+                if (curMethod.IsAbstract || curMethod.ContainsGenericParameters)
+                {
+                    continue;
+                }
+                RuntimeHelpers.PrepareMethod(curMethod.MethodHandle);
+            }
+        }
+
+        public static string GetPublicFieldsInfoOfType(Type type)
         {
             var fields = type.GetFields(
                     BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance

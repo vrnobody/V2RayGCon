@@ -191,6 +191,17 @@ namespace V2RayGCon.Controllers.FormMainComponent
         #endregion
 
         #region private method
+        void DoSearchOptimization()
+        {
+            VgcApis.Misc.Utils.PreJITMethodsOnce(typeof(FlyServer));
+
+            var keyword = $"🕙😀中文{Guid.NewGuid()}🚭";
+            VgcApis.Libs.Sys.FileLogger.Info($"Testing SearchAllInfos() with param: \"{keyword}\"");
+            var servs = servers.GetAllServersOrderByIndex().Take(5);
+            var r = SearchAllInfos(servs, keyword);
+            VgcApis.Libs.Sys.FileLogger.Info($"Get {r.Count} results from SearchAllInfos()");
+        }
+
         bool TryParseSearchKeywordAsIndex(out int index)
         {
             index = -1;
@@ -685,17 +696,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             }
 
             formMain.Width += width - flyPanel.ClientSize.Width;
-        }
-
-        void DoSearchOptimization()
-        {
-            var keyword = $"🕙😀中文{Guid.NewGuid()}🚭";
-            VgcApis.Libs.Sys.FileLogger.Info(
-                $"trigger JIT on SearchAllInfos() with param: \"{keyword}\""
-            );
-            var servs = servers.GetAllServersOrderByIndex().Take(5);
-            var r = SearchAllInfos(servs, keyword);
-            VgcApis.Libs.Sys.FileLogger.Info($"got {r.Count} results from SearchAllInfos()");
         }
 
         private void InitComboBoxMarkFilter()

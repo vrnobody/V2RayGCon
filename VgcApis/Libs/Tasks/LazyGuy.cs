@@ -11,7 +11,8 @@ namespace VgcApis.Libs.Tasks
         private readonly long ticks;
         private readonly int expectedWorkTime;
         readonly AutoResetEvent jobToken = new AutoResetEvent(true);
-        readonly AutoResetEvent waitToken = new AutoResetEvent(true);
+
+        readonly Bar waitBarrier = new Bar();
 
         bool isCancelled = false;
         Action retry = null;
@@ -56,7 +57,7 @@ namespace VgcApis.Libs.Tasks
         /// </summary>
         public void Deadline()
         {
-            if (isCancelled || !waitToken.WaitOne(0))
+            if (isCancelled || !waitBarrier.Install())
             {
                 return;
             }
@@ -73,7 +74,7 @@ namespace VgcApis.Libs.Tasks
         public void Postpone()
         {
             postPoneCheckpoint = DateTime.Now.Ticks + ticks;
-            if (isCancelled || !waitToken.WaitOne(0))
+            if (isCancelled || !waitBarrier.Install())
             {
                 return;
             }
@@ -97,7 +98,7 @@ namespace VgcApis.Libs.Tasks
         /// </summary>
         public void Throttle()
         {
-            if (isCancelled || !waitToken.WaitOne(0))
+            if (isCancelled || !waitBarrier.Install())
             {
                 return;
             }
@@ -132,7 +133,7 @@ namespace VgcApis.Libs.Tasks
         void TryDoTheJobCore()
         {
             var ready = jobToken.WaitOne(expectedWorkTime);
-            waitToken.Set();
+            waitBarrier.Remove();
             if (ready)
             {
                 DoTheJob();

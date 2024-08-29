@@ -86,18 +86,22 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         public List<ICoreServCtrl> GetFilteredList()
         {
-            var keyword = searchKeywords?.Replace(@" ", "");
+            var isNumber = VgcApis.Misc.Utils.TryParseSearchKeywordAsIndex(
+                searchKeywords,
+                out var index,
+                out var keyword
+            );
             var servs = servers.GetAllServersOrderByIndex();
 
             matchCountCache = servs.Count;
-            if (string.IsNullOrEmpty(keyword))
+            if (isNumber)
             {
+                curPageNumber = (index - 1) / setting.serverPanelPageSize;
                 return servs;
             }
 
-            if (TryParseSearchKeywordAsIndex(out var index))
+            if (string.IsNullOrEmpty(keyword))
             {
-                curPageNumber = (index - 1) / setting.serverPanelPageSize;
                 return servs;
             }
 
@@ -153,7 +157,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             // may cause dead lock in UI thread
             int selectedServersCount = servers.CountSelected();
 
-            SetSearchKeywords();
+            HighlightSearchKeywords();
 
             void worker()
             {
@@ -202,21 +206,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             VgcApis.Libs.Sys.FileLogger.Info($"Get {r.Count} results from SearchAllInfos()");
         }
 
-        bool TryParseSearchKeywordAsIndex(out int index)
-        {
-            index = -1;
-            if (
-                !string.IsNullOrEmpty(searchKeywords)
-                && searchKeywords.Length > 1
-                && searchKeywords[0] == '#'
-                && int.TryParse(searchKeywords.Substring(1), out index)
-            )
-            {
-                return true;
-            }
-            return false;
-        }
-
         bool IsPartialMatchCi(Dictionary<string, bool> cache, string content, string keyword)
         {
             if (string.IsNullOrEmpty(content))
@@ -245,6 +234,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     || IsPartialMatchCi(cache, st.GetMark(), keyword)
                     || IsPartialMatchCi(cache, st.GetRemark(), keyword)
                     || VgcApis.Misc.Utils.PartialMatchCi(st.GetTitle(), keyword)
+                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetName(), keyword)
                 )
                 {
                     r.Add(s);
@@ -255,7 +245,13 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void ScrollIntoView()
         {
-            if (!TryParseSearchKeywordAsIndex(out var index))
+            if (
+                !VgcApis.Misc.Utils.TryParseSearchKeywordAsIndex(
+                    searchKeywords,
+                    out var index,
+                    out _
+                )
+            )
             {
                 return;
             }
@@ -371,14 +367,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
             lazyStatusBarUpdater?.Deadline();
         }
 
-        void SetSearchKeywords()
+        void HighlightSearchKeywords()
         {
             var keyword = searchKeywords;
             // bug
             var controls = GetAllServerControls();
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                controls.ForEach(c => c.SetKeywords(keyword));
+                controls.ForEach(c => c.SetHighlightKeywords(keyword));
             });
         }
 
@@ -519,7 +515,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 void onClick(object s, EventArgs a)
                 {
                     curPageNumber = pn;
-                    ClearCboxKeywordIndex();
+                    ClearIndexSearchKeyword();
                     isFocusOnFormMain = true;
                     RefreshFlyPanelNow();
                 }
@@ -629,7 +625,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             tslbPrePage.Click += (s, a) =>
             {
-                ClearCboxKeywordIndex();
+                ClearIndexSearchKeyword();
                 curPageNumber--;
                 isFocusOnFormMain = true;
                 RefreshFlyPanelNow();
@@ -637,7 +633,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             tslbNextPage.Click += (s, a) =>
             {
-                ClearCboxKeywordIndex();
+                ClearIndexSearchKeyword();
                 curPageNumber++;
                 isFocusOnFormMain = true;
                 RefreshFlyPanelNow();
@@ -652,9 +648,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
             miResizeFormMain.Click += (s, a) => ResizeFormMain();
         }
 
-        void ClearCboxKeywordIndex()
+        void ClearIndexSearchKeyword()
         {
-            if (searchKeywords?.StartsWith("#") == true)
+            if (VgcApis.Misc.Utils.TryParseSearchKeywordAsIndex(searchKeywords, out _, out _))
             {
                 cboxKeyword.Text = "";
                 searchKeywords = "";
@@ -733,8 +729,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void UpdateMarkFilterItemList(ToolStripComboBox marker)
         {
+            var marks = servers
+                .GetMarkList()
+                .Select(m => m.StartsWith("#") ? $"#{m}" : m)
+                .ToArray();
             marker.Items.Clear();
-            marker.Items.AddRange(servers.GetMarkList());
+            marker.Items.AddRange(marks);
         }
 
         void DisposeFlyPanelControlByList(List<Views.UserControls.ServerUI> controlList)

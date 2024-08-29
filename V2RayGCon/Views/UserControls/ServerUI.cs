@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Windows.Forms;
+using V2RayGCon.Controllers;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Views.UserControls
@@ -18,7 +20,7 @@ namespace V2RayGCon.Views.UserControls
         readonly Services.ShareLinkMgr slinkMgr;
         VgcApis.Interfaces.ICoreServCtrl coreServCtrl;
 
-        string keyword = null;
+        Highlighter highlighter;
         readonly VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater,
             lazyHighlighter;
 
@@ -56,7 +58,7 @@ namespace V2RayGCon.Views.UserControls
                 Name = "ServerUi.RefreshPanel",
             };
 
-            lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(HighLightKeywordsThen, 400, 1000)
+            lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(HighlightTitle, 400, 1000)
             {
                 Name = "ServerUi.HighLight",
             };
@@ -185,60 +187,17 @@ namespace V2RayGCon.Views.UserControls
 
         void ShowModifyConfigsWinForm() => WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);
 
-        void HighLightIndex()
+        void HighlightTitle()
         {
-            if ($"#{(int)GetIndex()}" != keyword)
+            var h = highlighter;
+            if (h == null)
             {
                 return;
             }
-
-            rtboxServerTitle.SelectionStart = 0;
-            rtboxServerTitle.SelectionLength = keyword.Length - 1;
-            rtboxServerTitle.SelectionBackColor = Color.Yellow;
-        }
-
-        void HighLightKeyWords()
-        {
-            var box = rtboxServerTitle;
-            var title = box.Text.ToLower();
-
-            if (string.IsNullOrEmpty(keyword))
+            VgcApis.Misc.UI.Invoke(() =>
             {
-                return;
-            }
-
-            if (keyword.StartsWith("#"))
-            {
-                HighLightIndex();
-                return;
-            }
-
-            if (!VgcApis.Misc.Utils.PartialMatchCi(title, keyword))
-            {
-                return;
-            }
-
-            int idxTitle = 0,
-                idxKeyword = 0;
-            while (idxTitle < title.Length && idxKeyword < keyword.Length)
-            {
-                if (title[idxTitle].CompareTo(keyword[idxKeyword]) == 0)
-                {
-                    box.SelectionStart = idxTitle;
-                    box.SelectionLength = 1;
-                    box.SelectionBackColor = Color.Yellow;
-                    idxKeyword++;
-                }
-                idxTitle++;
-            }
-            box.SelectionStart = 0;
-            box.SelectionLength = 0;
-            box.DeselectAll();
-        }
-
-        void HighLightKeywordsThen()
-        {
-            VgcApis.Misc.UI.Invoke(HighLightKeyWords);
+                h.DoHighlight(rtboxServerTitle);
+            });
         }
 
         void StartThisServerOnlyThen(Action done = null)
@@ -717,14 +676,9 @@ namespace V2RayGCon.Views.UserControls
             RefreshUiLater();
         }
 
-        public void SetKeywords(string keywords)
+        public void SetHighlightKeywords(string keywords)
         {
-            this.keyword = keywords?.Replace(@" ", "")?.ToLower();
-            if (string.IsNullOrEmpty(keyword))
-            {
-                return;
-            }
-
+            highlighter = new Highlighter(keywords, GetIndex(), GetTitle());
             lazyHighlighter?.Deadline();
         }
 
@@ -949,6 +903,97 @@ namespace V2RayGCon.Views.UserControls
         {
             ShowModifyConfigsWinForm();
         }
+        #endregion
+    }
+
+    class Highlighter
+    {
+        readonly bool isNumber;
+        readonly string keyword;
+        readonly int index;
+        public readonly bool isHighlightRequired;
+
+        public Highlighter(string source, double coreIndex, string title)
+        {
+            isNumber = VgcApis.Misc.Utils.TryParseSearchKeywordAsIndex(
+                source,
+                out index,
+                out keyword
+            );
+            isHighlightRequired = IsIndexOrTitleMatched(coreIndex, title);
+        }
+
+        public void DoHighlight(VgcApis.UserControls.ExRichTextBox box)
+        {
+            if (!isHighlightRequired)
+            {
+                ResetHighlighting(box);
+            }
+            else if (isNumber)
+            {
+                HighlightIndex(box);
+            }
+            else
+            {
+                HighLightTitle(box);
+            }
+        }
+
+        #region private methods
+        bool IsIndexOrTitleMatched(double coreIndex, string title)
+        {
+            if (isNumber)
+            {
+                return index == (int)coreIndex;
+            }
+            return VgcApis.Misc.Utils.PartialMatchCi(title, keyword);
+        }
+
+        void ResetHighlighting(VgcApis.UserControls.ExRichTextBox box)
+        {
+            var title = box.Text;
+            if (string.IsNullOrEmpty(title))
+            {
+                return;
+            }
+            box.SelectionStart = 0;
+            box.SelectionLength = title.Length - 1;
+            box.SelectionBackColor = box.BackColor;
+        }
+
+        void HighlightIndex(VgcApis.UserControls.ExRichTextBox box)
+        {
+            var title = box.Text;
+            if (string.IsNullOrEmpty(title))
+            {
+                return;
+            }
+            box.SelectionStart = 0;
+            box.SelectionLength = Math.Min(title.Length, $"{index}".Length);
+            box.SelectionBackColor = Color.Yellow;
+        }
+
+        void HighLightTitle(VgcApis.UserControls.ExRichTextBox box)
+        {
+            var title = box.Text.ToLower();
+            int idxTitle = 0,
+                idxKeyword = 0;
+            while (idxTitle < title.Length && idxKeyword < keyword.Length)
+            {
+                if (title[idxTitle].CompareTo(keyword[idxKeyword]) == 0)
+                {
+                    box.SelectionStart = idxTitle;
+                    box.SelectionLength = 1;
+                    box.SelectionBackColor = Color.Yellow;
+                    idxKeyword++;
+                }
+                idxTitle++;
+            }
+            box.SelectionStart = 0;
+            box.SelectionLength = 0;
+            box.DeselectAll();
+        }
+
         #endregion
     }
 }

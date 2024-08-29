@@ -17,6 +17,37 @@ namespace VgcApisTests
     public class UtilsTests
     {
         [DataTestMethod]
+        [DataRow("", false, 0, "")]
+        [DataRow("1", false, 0, "1")]
+        [DataRow("#-1", true, -1, "")]
+        [DataRow("#-0", true, 0, "")]
+        [DataRow("#0", true, 0, "")]
+        [DataRow("#", true, 0, "")]
+        [DataRow("#123", true, 123, "")]
+        [DataRow("##123", false, 0, "#123")]
+        [DataRow("a B cDEf 1  2,,,3中文😀", false, 0, "abcdef12,,,3中文😀")]
+        [DataRow("#a B cDEf 1  2,,,3中文😀", true, 0, "")]
+        [DataRow("##a #B cD#Ef 1  2,,,3中文😀", false, 0, "#a#bcd#ef12,,,3中文😀")]
+        public void TryParseSearchKeywordAsIndexTest(
+            string s,
+            bool expIsNumber,
+            int expIndex,
+            string expKeyword
+        )
+        {
+            var isNumber = TryParseSearchKeywordAsIndex(s, out var index, out var keyword);
+            Assert.AreEqual(expIsNumber, isNumber);
+            if (isNumber)
+            {
+                Assert.AreEqual(expIndex, index);
+            }
+            else
+            {
+                Assert.AreEqual(expKeyword, keyword);
+            }
+        }
+
+        [DataTestMethod]
         [DataRow(@"", false, "")]
         [DataRow(@"w1.2.3", false, "")]
         [DataRow(@"v1.2.3.", false, "")]

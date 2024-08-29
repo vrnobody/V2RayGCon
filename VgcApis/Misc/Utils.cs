@@ -425,6 +425,29 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
+        public static bool TryParseSearchKeywordAsIndex(string s, out int index, out string keyword)
+        {
+            index = 0;
+            keyword = s?.ToLower()?.Replace(@" ", "") ?? "";
+
+            if (keyword.StartsWith("##"))
+            {
+                keyword = keyword.Substring(1);
+                return false;
+            }
+
+            if (keyword.StartsWith("#"))
+            {
+                keyword = keyword.Substring(1);
+                if (!int.TryParse(keyword, out index))
+                {
+                    index = 0;
+                }
+                return true;
+            }
+
+            return false;
+        }
 
         public static List<string> SplitAndKeep(string s, IEnumerable<string> delimiters)
         {
@@ -3207,13 +3230,17 @@ namespace VgcApis.Misc
         }
 
         public static bool PartialMatchCi(string source, string partial) =>
-            PartialMatch(source.ToLower(), partial.ToLower());
+            MeasureSimilarityCi(source, partial) > 0;
 
         public static bool PartialMatch(string source, string partial) =>
             MeasureSimilarity(source, partial) > 0;
 
-        public static long MeasureSimilarityCi(string source, string partial) =>
-            MeasureSimilarity(source.ToLower(), partial.ToLower());
+        public static long MeasureSimilarityCi(string source, string partial)
+        {
+            source = source?.ToLower() ?? "";
+            partial = partial?.ToLower() ?? "";
+            return MeasureSimilarity(source, partial);
+        }
 
         /// <summary>
         /// -1: not match

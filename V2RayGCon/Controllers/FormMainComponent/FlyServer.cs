@@ -255,7 +255,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void ScrollIntoView()
         {
-            if (TryParseSearchKeywordAsIndex(out var index))
+            if (!TryParseSearchKeywordAsIndex(out var index))
             {
                 return;
             }

@@ -1,11 +1,11 @@
 {
-  "version": "1.9.8.0",
-  "md5": "3E3B79A312222CE67133FFA2BF759117",
+  "version": "1.9.9.0",
+  "md5": "9F846D1A159AC5700F77E3AEE7EAA1C9",
   "warnings": [],
   "changes": [
-    "添加vrnobody/xraye作为更新源",
-    "支持更新win7版xray-core",
-    "支持订阅链接中的remarks参数",
-    "修复下载core窗口无法停止的bug"
+    "修复配置文件损坏时没弹出错误信息窗口bug",
+    "优化搜索、全选速度",
+    "导入结果窗口显示数量统计信息",
+    "NeoLuna插件的单选、多选窗口支持小键盘数字键"
   ]
 }

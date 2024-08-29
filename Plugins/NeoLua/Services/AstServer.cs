@@ -22,7 +22,7 @@ namespace NeoLuna.Services
             this.snpCache = new Libs.LuaSnippet.SnippetsCache();
             UpdateRequireModuleNameCache();
             fsWatcher = CreateFileSystemWatcher(@"3rd/neolua");
-            cacheRecycler = new VgcApis.Libs.Tasks.LazyGuy(RenewCacheWorker, 20 * 60 * 1000, 1000);
+            cacheRecycler = new VgcApis.Libs.Tasks.LazyGuy(RenewCacheWorker, 10 * 60 * 1000, 1000);
         }
 
         #region constants

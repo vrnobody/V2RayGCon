@@ -16,7 +16,8 @@ namespace VgcApis.Libs.Streams
         public ArrayPoolMemoryStream(Encoding encoding)
         {
             m_Pool = ArrayPool<byte>.Shared;
-            _currentbuffer = m_Pool.Rent(4 * 1024);
+            // LOH 85000 bytes
+            _currentbuffer = m_Pool.Rent(64 * 1024);
             _Length = 0;
             _CanWrite = true;
             _Position = 0;

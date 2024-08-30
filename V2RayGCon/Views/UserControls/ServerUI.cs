@@ -196,6 +196,7 @@ namespace V2RayGCon.Views.UserControls
             {
                 return;
             }
+
             VgcApis.Misc.UI.Invoke(() =>
             {
                 h.DoHighlight(rtboxServerTitle, GetIndex());
@@ -689,7 +690,7 @@ namespace V2RayGCon.Views.UserControls
             coreServCtrl.GetCoreStates().SetIsSelected(selected);
         }
 
-        public double GetIndex() => coreServCtrl.GetCoreStates().GetIndex();
+        public double GetIndex() => coreServCtrl?.GetCoreStates().GetIndex() ?? double.MinValue;
 
         public void SetIndex(double index)
         {

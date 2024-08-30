@@ -862,7 +862,7 @@ namespace VgcApis.Misc
             }
 
             var t = text.Replace('\r', ' ').Replace('\n', ' ');
-            var width = GetUnicodeByteCount(t);
+            var width = GetByteCount(t);
             if (width <= lenInAscii)
             {
                 return text;
@@ -878,7 +878,7 @@ namespace VgcApis.Misc
             string r = "";
             foreach (var str in strs)
             {
-                var n = GetUnicodeByteCount(str);
+                var n = GetByteCount(str);
                 if (n > max)
                 {
                     r = str;
@@ -888,7 +888,7 @@ namespace VgcApis.Misc
             return r;
         }
 
-        static int GetUnicodeByteCount(string text)
+        static int GetByteCount(string text)
         {
             if (string.IsNullOrEmpty(text))
             {
@@ -916,7 +916,7 @@ namespace VgcApis.Misc
             while (mid != start && mid != end)
             {
                 var s = text.Substring(0, mid) + Models.Consts.AutoEllipsis.ellipsis;
-                var w = GetUnicodeByteCount(s);
+                var w = GetByteCount(s);
                 if (w == baseline)
                 {
                     return mid;

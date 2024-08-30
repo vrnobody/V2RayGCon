@@ -86,16 +86,18 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         public List<ICoreServCtrl> GetFilteredList()
         {
+            var servs = servers.GetAllServersOrderByIndex();
+
             var isNumber = VgcApis.Misc.Utils.TryParseSearchKeywordAsIndex(
                 searchKeywords,
                 out var index,
                 out var keyword
             );
-            var servs = servers.GetAllServersOrderByIndex();
 
             matchCountCache = servs.Count;
             if (isNumber)
             {
+                index = (index < 1 || index > servs.Count) ? servs.Count : index;
                 curPageNumber = (index - 1) / setting.serverPanelPageSize;
                 return servs;
             }
@@ -245,25 +247,30 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void ScrollIntoView()
         {
-            if (
-                !VgcApis.Misc.Utils.TryParseSearchKeywordAsIndex(
-                    searchKeywords,
-                    out var index,
-                    out _
-                )
-            )
+            var isNumber = VgcApis.Misc.Utils.TryParseSearchKeywordAsIndex(
+                searchKeywords,
+                out var index,
+                out _
+            );
+
+            if (!isNumber)
             {
                 return;
             }
 
-            var controls = GetAllServerControls();
+            List<Views.UserControls.ServerUI> controls = GetAllServerControls();
+            Views.UserControls.ServerUI p = null;
             foreach (var c in controls)
             {
+                p = c;
                 if ((int)c.GetIndex() == index)
                 {
-                    flyPanel.ScrollControlIntoView(c);
-                    return;
+                    break;
                 }
+            }
+            if (p != null)
+            {
+                flyPanel.ScrollControlIntoView(p);
             }
         }
 
@@ -374,7 +381,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var controls = GetAllServerControls();
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                controls.ForEach(c => c.SetHighlightKeywords(keyword));
+                controls.ForEach(c => c.SetHighlightKeyword(keyword));
             });
         }
 
@@ -650,7 +657,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void ClearIndexSearchKeyword()
         {
-            if (VgcApis.Misc.Utils.TryParseSearchKeywordAsIndex(searchKeywords, out _, out _))
+            var isNumber = VgcApis.Misc.Utils.TryParseSearchKeywordAsIndex(
+                searchKeywords,
+                out _,
+                out _
+            );
+            if (isNumber)
             {
                 cboxKeyword.Text = "";
                 searchKeywords = "";

@@ -18,6 +18,7 @@ namespace V2RayGCon.Views.UserControls
         readonly Services.Servers servers;
         readonly Services.Settings settings;
         readonly Services.ShareLinkMgr slinkMgr;
+
         VgcApis.Interfaces.ICoreServCtrl coreServCtrl;
 
         Highlighter highlighter;
@@ -36,7 +37,7 @@ namespace V2RayGCon.Views.UserControls
             settings = Services.Settings.Instance;
 
             InitializeComponent();
-            InitButtomLine();
+            InitBottomLine();
 
             roundLables = new List<Control>
             {
@@ -58,7 +59,7 @@ namespace V2RayGCon.Views.UserControls
                 Name = "ServerUi.RefreshPanel",
             };
 
-            lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(HighlightTitle, 400, 1000)
+            lazyHighlighter = new VgcApis.Libs.Tasks.LazyGuy(HighlightWorker, 400, 1000)
             {
                 Name = "ServerUi.HighLight",
             };
@@ -74,43 +75,9 @@ namespace V2RayGCon.Views.UserControls
             }
         }
 
-        private void InitButtomLine()
-        {
-            Controls.Add(
-                new Label()
-                {
-                    Height = 1,
-                    Dock = DockStyle.Bottom,
-                    BackColor = Color.LightGray
-                }
-            );
-        }
-
-        private void ResetControls()
-        {
-            rtboxServerTitle.BackColor = BackColor;
-            SetCtrlButtonsVisiblity(false);
-        }
-
-        private void InitButtonBackgroundImage()
-        {
-            CreateBgImgForButton(btnStart, ButtonTypes.Start);
-            CreateBgImgForButton(btnStop, ButtonTypes.Stop);
-            CreateBgImgForButton(btnMenu, ButtonTypes.Menu);
-        }
-
-        private void ReleaseCoreCtrlEvents(VgcApis.Interfaces.ICoreServCtrl cs)
-        {
-            if (cs == null)
-            {
-                return;
-            }
-            cs.OnCoreStart -= OnCorePropertyChangesHandler;
-            cs.OnCoreStop -= OnCorePropertyChangesHandler;
-            cs.OnPropertyChanged -= OnCorePropertyChangesHandler;
-        }
-
+        #region auto hide control buttons
         public static ServerUI currentServerUI = null;
+
         static readonly AutoResetEvent areHideButtons = new AutoResetEvent(true);
 
         void ShowCtrlBtn(object sender, EventArgs args)
@@ -162,6 +129,52 @@ namespace V2RayGCon.Views.UserControls
                 areHideButtons.Set();
             });
         }
+        #endregion
+
+        #region interface VgcApis.Models.IDropableControl
+        public string GetTitle() => coreServCtrl.GetCoreStates().GetTitle();
+
+        public string GetUid() => coreServCtrl.GetCoreStates().GetUid();
+
+        public string GetStatus() => coreServCtrl.GetCoreStates().GetStatus();
+        #endregion
+
+        #region private method
+        private void InitBottomLine()
+        {
+            Controls.Add(
+                new Label()
+                {
+                    Height = 1,
+                    Dock = DockStyle.Bottom,
+                    BackColor = Color.LightGray
+                }
+            );
+        }
+
+        private void ResetControls()
+        {
+            rtboxServerTitle.BackColor = BackColor;
+            SetCtrlButtonsVisiblity(false);
+        }
+
+        private void InitButtonBackgroundImage()
+        {
+            CreateBgImgForButton(btnStart, ButtonTypes.Start);
+            CreateBgImgForButton(btnStop, ButtonTypes.Stop);
+            CreateBgImgForButton(btnMenu, ButtonTypes.Menu);
+        }
+
+        private void ReleaseCoreCtrlEvents(VgcApis.Interfaces.ICoreServCtrl cs)
+        {
+            if (cs == null)
+            {
+                return;
+            }
+            cs.OnCoreStart -= OnCorePropertyChangesHandler;
+            cs.OnCoreStop -= OnCorePropertyChangesHandler;
+            cs.OnPropertyChanged -= OnCorePropertyChangesHandler;
+        }
 
         private void BindCoreCtrlEvents(VgcApis.Interfaces.ICoreServCtrl cs)
         {
@@ -174,20 +187,9 @@ namespace V2RayGCon.Views.UserControls
             cs.OnPropertyChanged += OnCorePropertyChangesHandler;
         }
 
-        #region interface VgcApis.Models.IDropableControl
-        public string GetTitle() => coreServCtrl.GetCoreStates().GetTitle();
-
-        public string GetUid() => coreServCtrl.GetCoreStates().GetUid();
-
-        public string GetStatus() => coreServCtrl.GetCoreStates().GetStatus();
-        #endregion
-
-        #region private method
-
-
         void ShowModifyConfigsWinForm() => WinForms.FormModifyServerSettings.ShowForm(coreServCtrl);
 
-        void HighlightTitle()
+        void HighlightWorker()
         {
             var h = highlighter;
             if (h == null)
@@ -196,7 +198,7 @@ namespace V2RayGCon.Views.UserControls
             }
             VgcApis.Misc.UI.Invoke(() =>
             {
-                h.DoHighlight(rtboxServerTitle);
+                h.DoHighlight(rtboxServerTitle, GetIndex());
             });
         }
 
@@ -255,7 +257,7 @@ namespace V2RayGCon.Views.UserControls
 
             void third()
             {
-                lazyHighlighter?.Postpone();
+                HighlightLater();
                 done?.Invoke();
             }
 
@@ -267,6 +269,11 @@ namespace V2RayGCon.Views.UserControls
                     VgcApis.Misc.UI.InvokeThen(second, third);
                 }
             );
+        }
+
+        void HighlightLater()
+        {
+            lazyHighlighter?.Postpone();
         }
 
         void UpdateCoreNameLabel(VgcApis.Interfaces.CoreCtrlComponents.ICoreCtrl cc)
@@ -676,10 +683,10 @@ namespace V2RayGCon.Views.UserControls
             RefreshUiLater();
         }
 
-        public void SetHighlightKeywords(string keywords)
+        public void SetHighlightKeyword(string keyword)
         {
-            highlighter = new Highlighter(keywords, GetIndex(), GetTitle());
-            lazyHighlighter?.Deadline();
+            highlighter = new Highlighter(keyword);
+            HighlightLater();
         }
 
         public string GetConfig() => coreServCtrl?.GetConfiger()?.GetConfig() ?? "";
@@ -911,23 +918,21 @@ namespace V2RayGCon.Views.UserControls
         readonly bool isNumber;
         readonly string keyword;
         readonly int index;
-        public readonly bool isHighlightRequired;
 
-        public Highlighter(string source, double coreIndex, string title)
+        public Highlighter(string keyword)
         {
             isNumber = VgcApis.Misc.Utils.TryParseSearchKeywordAsIndex(
-                source,
+                keyword,
                 out index,
-                out keyword
+                out this.keyword
             );
-            isHighlightRequired = IsIndexOrTitleMatched(coreIndex, title);
         }
 
-        public void DoHighlight(VgcApis.UserControls.ExRichTextBox box)
+        public void DoHighlight(RichTextBox box, double coreIndex)
         {
-            if (!isHighlightRequired)
+            if (IsResetRequired(coreIndex, box.Text))
             {
-                ResetHighlighting(box);
+                ResetTitle(box);
             }
             else if (isNumber)
             {
@@ -940,16 +945,20 @@ namespace V2RayGCon.Views.UserControls
         }
 
         #region private methods
-        bool IsIndexOrTitleMatched(double coreIndex, string title)
+        bool IsResetRequired(double index, string title)
         {
+            if (string.IsNullOrEmpty(keyword) || string.IsNullOrEmpty(title))
+            {
+                return true;
+            }
             if (isNumber)
             {
-                return index == (int)coreIndex;
+                return this.index != (int)index;
             }
-            return VgcApis.Misc.Utils.PartialMatchCi(title, keyword);
+            return !VgcApis.Misc.Utils.PartialMatchCi(title, keyword);
         }
 
-        void ResetHighlighting(VgcApis.UserControls.ExRichTextBox box)
+        void ResetTitle(RichTextBox box)
         {
             var title = box.Text;
             if (string.IsNullOrEmpty(title))
@@ -961,7 +970,7 @@ namespace V2RayGCon.Views.UserControls
             box.SelectionBackColor = box.BackColor;
         }
 
-        void HighlightIndex(VgcApis.UserControls.ExRichTextBox box)
+        void HighlightIndex(RichTextBox box)
         {
             var title = box.Text;
             if (string.IsNullOrEmpty(title))
@@ -973,7 +982,7 @@ namespace V2RayGCon.Views.UserControls
             box.SelectionBackColor = Color.Yellow;
         }
 
-        void HighLightTitle(VgcApis.UserControls.ExRichTextBox box)
+        void HighLightTitle(RichTextBox box)
         {
             var title = box.Text.ToLower();
             int idxTitle = 0,

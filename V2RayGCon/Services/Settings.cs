@@ -1261,13 +1261,14 @@ namespace V2RayGCon.Services
             }
         }
 
-        void WriteMemoryStreamToFile(MemoryStream source, string filename)
+        void WriteMemoryStreamToFile(Stream source, string filename)
         {
             // https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
             var bufferSize = VgcApis.Models.Consts.Libs.FilestreamBufferSize;
             using (var fs = File.Create(filename, bufferSize, FileOptions.WriteThrough))
             {
-                source.WriteTo(fs);
+                source.Position = 0;
+                source.CopyTo(fs);
             }
         }
 
@@ -1299,7 +1300,7 @@ namespace V2RayGCon.Services
         {
             try
             {
-                using (var stream = new MemoryStream())
+                using (var stream = new VgcApis.Libs.Streams.ArrayPoolMemoryStream())
                 using (var w = new StreamWriter(stream))
                 {
                     VgcApis.Libs.Sys.FileLogger.Info(
@@ -1323,7 +1324,6 @@ namespace V2RayGCon.Services
         void SaveUserSettingsToFile(string configSlim)
         {
             var parts = VgcApis.Misc.Utils.SplitAndKeep(configSlim, placeHolderLookupTable.Keys);
-            VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() write file");
             if (TryWriteUserSettings(parts, cmdArgs.userSettings, cmdArgs.userSettingsBak))
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() success");

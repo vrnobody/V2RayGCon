@@ -302,7 +302,7 @@ namespace V2RayGCon.Misc
         private static void WriteToFileAtOnce(string path, string userSettings)
         {
             // https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
-            var bufferSize = VgcApis.Models.Consts.Libs.DefaultBufferSize;
+            var bufferSize = VgcApis.Models.Consts.Libs.FilestreamBufferSize;
             using (var fs = File.Create(path, bufferSize, FileOptions.WriteThrough))
             {
                 using (var w = new StreamWriter(fs))

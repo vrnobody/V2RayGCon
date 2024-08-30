@@ -79,7 +79,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             BindDragDropEvent();
             WatchServers();
             RefreshFlyPanelNow();
-            DoSearchOptimization();
         }
 
         #region public method
@@ -197,17 +196,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
         #endregion
 
         #region private method
-        void DoSearchOptimization()
-        {
-            VgcApis.Misc.Utils.PreJITMethodsOnce(typeof(FlyServer));
-
-            var keyword = $"🕙😀中文{Guid.NewGuid()}🚭";
-            VgcApis.Libs.Sys.FileLogger.Info($"Testing SearchAllInfos() with param: \"{keyword}\"");
-            var servs = servers.GetAllServersOrderByIndex().Take(5);
-            var r = SearchAllInfos(servs, keyword);
-            VgcApis.Libs.Sys.FileLogger.Info($"Get {r.Count} results from SearchAllInfos()");
-        }
-
         bool IsPartialMatchCi(Dictionary<string, bool> cache, string content, string keyword)
         {
             if (string.IsNullOrEmpty(content))

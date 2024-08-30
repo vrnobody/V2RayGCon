@@ -1408,7 +1408,7 @@ namespace VgcApis.Misc
         #region ChainAction
 
         /*
-         * ChainActionHelper countdown from [count - 1] to [0].
+         * ChainActionHelper count between [0, max).
          * These integers are passed to worker funtion by <index> parameter.
          * The second parameter "next" is used for chaining up worker functions.
          *
@@ -1432,45 +1432,40 @@ namespace VgcApis.Misc
          * ChainActionHelperAsync(10, worker, done);
          */
         public static void InvokeChainActionsAsync(
-            int countdown,
+            int max,
             Action<int, Action> worker,
             Action done = null
         )
         {
             RunInBackground(() =>
             {
-                InvokeChainActions(countdown, worker, done);
+                InvokeChainActions(max, worker, done);
             });
         }
 
         // wrapper
         public static void InvokeChainActions(
-            int countdown,
+            int max,
             Action<int, Action> worker,
             Action done = null
         )
         {
-            var chain = CreateActionsChain(countdown, worker, done);
+            var chain = CreateActionsChain(0, max, worker, done);
             chain.Invoke();
         }
 
-        static Action CreateActionsChain(
-            int countdown,
-            Action<int, Action> worker,
-            Action done = null
-        )
+        static Action CreateActionsChain(int cur, int max, Action<int, Action> worker, Action done)
         {
-            int index = countdown - 1;
-            Action chain = () =>
+            void chain()
             {
-                if (index < 0)
+                if (cur >= max)
                 {
                     done?.Invoke();
                     return;
                 }
-                var next = CreateActionsChain(index, worker, done);
-                worker(index, next);
-            };
+                var next = CreateActionsChain(cur + 1, max, worker, done);
+                worker(cur, next);
+            }
             return chain;
         }
 
@@ -1567,6 +1562,11 @@ namespace VgcApis.Misc
 
         public static void Sleep(int ms)
         {
+            if (ms < 1)
+            {
+                return;
+            }
+
             try
             {
                 Thread.Sleep(ms);

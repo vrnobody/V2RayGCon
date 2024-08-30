@@ -226,6 +226,18 @@ namespace VgcApis.Misc
             return Thread.CurrentThread.Name == Models.Consts.Libs.UiThreadName;
         }
 
+        public static void InvokeAllAsync(int ms, params Action[] actions)
+        {
+            Utils.RunInBackground(() =>
+            {
+                foreach (var action in actions)
+                {
+                    Invoke(action);
+                    Utils.Sleep(ms);
+                }
+            });
+        }
+
         public static void Invoke(Action action) => InvokeThen(action, null);
 
         public static void BindInvokeThenFunc(Action<Action, Action> worker)

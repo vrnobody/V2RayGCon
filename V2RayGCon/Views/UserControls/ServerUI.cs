@@ -261,14 +261,7 @@ namespace V2RayGCon.Views.UserControls
                 done?.Invoke();
             }
 
-            VgcApis.Misc.UI.InvokeThen(
-                first,
-                () =>
-                {
-                    VgcApis.Misc.Utils.Sleep(1);
-                    VgcApis.Misc.UI.InvokeThen(second, third);
-                }
-            );
+            VgcApis.Misc.UI.InvokeAllAsync(10, first, second, third);
         }
 
         void HighlightLater()

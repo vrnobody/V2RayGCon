@@ -842,12 +842,9 @@ namespace V2RayGCon.Services
 
             try
             {
-                var list = servers
-                    .GetRunningServers()
-                    .OrderByDescending(cs => cs) // chain action begin with tail
-                    .ToList();
+                var coreServs = servers.GetRunningServers().OrderBy(cs => cs).ToList();
 
-                var iconType = AnalyzeSysTrayIconType(list);
+                var iconType = AnalyzeSysTrayIconType(coreServs);
                 var tunMode = setting.isTunMode;
 
                 if (iconType != curSysTrayIconType || curTunMode != tunMode || requiredRedrawIcon)
@@ -863,7 +860,7 @@ namespace V2RayGCon.Services
                     curSysTrayIconType = iconType;
                     curTunMode = tunMode;
                 }
-                UpdateNotifyIconTextThen(list, finished);
+                UpdateNotifyIconTextThen(coreServs, finished);
             }
             catch (Exception e)
             {
@@ -1092,9 +1089,9 @@ namespace V2RayGCon.Services
             return null;
         }
 
-        void UpdateNotifyIconTextThen(List<ICoreServCtrl> list, Action finished)
+        void UpdateNotifyIconTextThen(List<ICoreServCtrl> coreServs, Action finished)
         {
-            var count = list.Count;
+            var count = coreServs.Count;
 
             var texts = new List<string>
             {
@@ -1140,7 +1137,7 @@ namespace V2RayGCon.Services
 
                 try
                 {
-                    list[index]
+                    coreServs[index]
                         .GetConfiger()
                         .GatherInfoForNotifyIcon(s =>
                         {

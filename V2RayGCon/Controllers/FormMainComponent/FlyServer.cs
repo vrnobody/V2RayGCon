@@ -183,7 +183,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 var relex = statusBarUpdateInterval - (DateTime.Now.Millisecond - start);
                 VgcApis.Misc.Utils.Sleep(Math.Max(0, relex));
-                done();
+                done?.Invoke();
             }
 
             VgcApis.Misc.UI.InvokeThen(worker, next);

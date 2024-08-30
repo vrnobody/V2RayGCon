@@ -206,7 +206,7 @@
     <value>移动</value>
   </data>
   <data name="autoShareLinkToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>只包含部分配置信息</value>
+    <value>只包含第一个出站的主要配置信息</value>
   </data>
   <data name="v2cfgToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>包含全部配置信息</value>
@@ -273,12 +273,6 @@
   </data>
   <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 214</value>
-  </data>
-  <data name="ctxMenuStripMore.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtboxServerTitle.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value>拖放可调整顺序</value>

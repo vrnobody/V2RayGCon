@@ -15,6 +15,19 @@ namespace VgcApisTests
         public Experiments() { }
 
         [TestMethod]
+        public void EmptyStringTest()
+        {
+            Assert.IsFalse("" == null);
+            Assert.IsTrue("" == "");
+            Assert.IsFalse("" == "a");
+            Assert.IsTrue("" == string.Empty);
+            Assert.IsTrue("a".Contains(""));
+            Assert.IsFalse("".Equals("a"));
+            Assert.IsFalse("a".Equals(""));
+            Assert.IsTrue("".Equals(""));
+        }
+
+        [TestMethod]
         public void TakeMoreThanListLengthTest()
         {
             var list = new int[] { 1, 2, 3 };

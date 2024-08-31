@@ -87,27 +87,23 @@ namespace V2RayGCon.Controllers.FormMainComponent
         public List<ICoreServCtrl> GetFilteredList()
         {
             var servs = servers.GetAllServersOrderByIndex();
-
-            var isNumber = VgcApis.Misc.Utils.TryParseSearchKeywordAsIndex(
-                searchKeywords,
-                out var index,
-                out var keyword
-            );
+            var kws = kwSearcher;
 
             matchCountCache = servs.Count;
-            if (isNumber)
+            if (kws.IsIndex())
             {
+                var index = kws.GetIndex();
                 index = (index < 1 || index > servs.Count) ? servs.Count : index;
                 curPageNumber = (index - 1) / setting.serverPanelPageSize;
                 return servs;
             }
 
-            if (string.IsNullOrEmpty(keyword))
+            if (string.IsNullOrEmpty(kws.GetKeyword()) && kws.GetContentNames().Count() < 1)
             {
                 return servs;
             }
 
-            var r = SearchAllInfos(servs, keyword);
+            var r = servs.Where(serv => kws.Match(serv)).ToList();
             matchCountCache = r.Count;
             return r;
         }
@@ -201,63 +197,22 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             VgcApis.Misc.Utils.PreJITMethodsOnce(typeof(FlyServer));
 
-            var keyword = $"🕙😀中文{Guid.NewGuid()}🚭";
+            var keyword = $"uuid {Guid.NewGuid()}";
+            var si = new VgcApis.Libs.Infr.KeywordSearcher(keyword);
             VgcApis.Libs.Sys.FileLogger.Info($"Testing SearchAllInfos() with param: \"{keyword}\"");
-            var servs = servers.GetAllServersOrderByIndex().Take(5);
-            var r = SearchAllInfos(servs, keyword);
+            var r = servers.GetAllServersOrderByIndex().Take(5).Where(s => si.Match(s)).ToList();
             VgcApis.Libs.Sys.FileLogger.Info($"Get {r.Count} results from SearchAllInfos()");
-        }
-
-        bool IsPartialMatchCi(Dictionary<string, bool> cache, string content, string keyword)
-        {
-            if (string.IsNullOrEmpty(content))
-            {
-                return false;
-            }
-            if (!cache.ContainsKey(content))
-            {
-                cache[content] = VgcApis.Misc.Utils.PartialMatchCi(content, keyword);
-            }
-            return cache[content];
-        }
-
-        List<ICoreServCtrl> SearchAllInfos(IEnumerable<ICoreServCtrl> servs, string keyword)
-        {
-            Dictionary<string, bool> cache = new Dictionary<string, bool>();
-
-            var r = new List<ICoreServCtrl>();
-            foreach (var s in servs)
-            {
-                var st = s.GetCoreStates();
-                if (
-                    IsPartialMatchCi(cache, st.GetTag1(), keyword)
-                    || IsPartialMatchCi(cache, st.GetTag2(), keyword)
-                    || IsPartialMatchCi(cache, st.GetTag3(), keyword)
-                    || IsPartialMatchCi(cache, st.GetMark(), keyword)
-                    || IsPartialMatchCi(cache, st.GetRemark(), keyword)
-                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetTitle(), keyword)
-                    || VgcApis.Misc.Utils.PartialMatchCi(st.GetName(), keyword)
-                )
-                {
-                    r.Add(s);
-                }
-            }
-            return r;
         }
 
         void ScrollIntoView()
         {
-            var isNumber = VgcApis.Misc.Utils.TryParseSearchKeywordAsIndex(
-                searchKeywords,
-                out var index,
-                out _
-            );
-
-            if (!isNumber)
+            var kws = kwSearcher;
+            if (!kws.IsIndex())
             {
                 return;
             }
 
+            var index = kws.GetIndex();
             List<Views.UserControls.ServerUI> controls = GetAllServerControls();
             Views.UserControls.ServerUI p = null;
             foreach (var c in controls)
@@ -376,12 +331,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void HighlightSearchKeywords()
         {
-            var keyword = searchKeywords;
+            var kws = kwSearcher;
             // bug
             var controls = GetAllServerControls();
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                controls.ForEach(c => c.SetHighlightKeyword(keyword));
+                controls.ForEach(c => c.SetSearchItem(kws));
             });
         }
 
@@ -618,7 +573,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             return (int)r;
         }
 
-        string searchKeywords = "";
+        VgcApis.Libs.Infr.KeywordSearcher kwSearcher = new VgcApis.Libs.Infr.KeywordSearcher("");
         int matchCountCache = 0;
 
         private void InitFormControls(
@@ -626,7 +581,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem miResizeFormMain
         )
         {
-            InitComboBoxMarkFilter();
+            InitComboBoxKeyword();
 
             tsdbtnPager.DropDownOpening += StatusBarPagerDropdownMenuOpeningHandler;
 
@@ -657,15 +612,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void ClearIndexSearchKeyword()
         {
-            var isNumber = VgcApis.Misc.Utils.TryParseSearchKeywordAsIndex(
-                searchKeywords,
-                out _,
-                out _
-            );
-            if (isNumber)
+            if (kwSearcher.IsIndex())
             {
                 cboxKeyword.Text = "";
-                searchKeywords = "";
+                kwSearcher = new VgcApis.Libs.Infr.KeywordSearcher("");
             }
         }
 
@@ -706,13 +656,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
             formMain.Width += width - flyPanel.ClientSize.Width;
         }
 
-        private void InitComboBoxMarkFilter()
+        private void InitComboBoxKeyword()
         {
-            UpdateMarkFilterItemList(cboxKeyword);
+            AddAutoCompleteItemsToComboBoxKeyword(cboxKeyword);
+            UpdateMarkFilterItems(cboxKeyword);
 
             cboxKeyword.DropDown += (s, e) =>
             {
-                UpdateMarkFilterItemList(cboxKeyword);
+                UpdateMarkFilterItems(cboxKeyword);
                 VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxKeyword);
             };
 
@@ -725,21 +676,21 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 if (e.KeyCode == Keys.Enter)
                 {
-                    PerformSearch();
                     e.Handled = true;
                     e.SuppressKeyPress = true;
+                    PerformSearch();
                 }
             };
         }
 
         void PerformSearch()
         {
-            searchKeywords = cboxKeyword.Text;
+            kwSearcher = new VgcApis.Libs.Infr.KeywordSearcher(cboxKeyword.Text);
             this.tslbTotal.Text = I18N.Searching;
             RefreshFlyPanelNow();
         }
 
-        void UpdateMarkFilterItemList(ToolStripComboBox marker)
+        void UpdateMarkFilterItems(ToolStripComboBox marker)
         {
             var marks = servers
                 .GetMarkList()
@@ -747,6 +698,23 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 .ToArray();
             marker.Items.Clear();
             marker.Items.AddRange(marks);
+        }
+
+        void AddAutoCompleteItemsToComboBoxKeyword(ToolStripComboBox box)
+        {
+            IEnumerable<string> mtys = VgcApis
+                .Libs.Infr.KeywordSearcher.GetMatchTypes()
+                .Select(mty => $"#mark {mty.ToString().ToLower()}");
+
+            IEnumerable<string> tips = VgcApis
+                .Libs.Infr.KeywordSearcher.GetContentNamesWithoutIndex()
+                .Select(ty => $"#{ty.ToString().ToLower()}")
+                .Concat(mtys)
+                .Concat(new List<string>() { "#-1" });
+
+            box.AutoCompleteCustomSource.AddRange(tips.ToArray());
+            box.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            box.AutoCompleteSource = AutoCompleteSource.CustomSource;
         }
 
         void DisposeFlyPanelControlByList(List<Views.UserControls.ServerUI> controlList)

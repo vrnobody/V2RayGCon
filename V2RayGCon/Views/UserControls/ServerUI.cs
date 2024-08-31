@@ -677,9 +677,9 @@ namespace V2RayGCon.Views.UserControls
             RefreshUiLater();
         }
 
-        public void SetHighlightKeyword(string keyword)
+        public void SetSearchItem(VgcApis.Libs.Infr.KeywordSearcher searchItem)
         {
-            highlighter = new Highlighter(keyword);
+            highlighter = new Highlighter(searchItem);
             HighlightLater();
         }
 
@@ -910,49 +910,55 @@ namespace V2RayGCon.Views.UserControls
     class Highlighter
     {
         readonly bool isNumber;
-        readonly string keyword;
+        readonly string keyword = "";
         readonly int index;
 
-        public Highlighter(string keyword)
+        static readonly List<VgcApis.Libs.Infr.KeywordSearcher.ContentNames> contentNames =
+            new List<VgcApis.Libs.Infr.KeywordSearcher.ContentNames>()
+            {
+                VgcApis.Libs.Infr.KeywordSearcher.ContentNames.Title,
+                VgcApis.Libs.Infr.KeywordSearcher.ContentNames.Summary,
+                VgcApis.Libs.Infr.KeywordSearcher.ContentNames.Name,
+            };
+
+        public Highlighter(VgcApis.Libs.Infr.KeywordSearcher kwSearcher)
         {
-            isNumber = VgcApis.Misc.Utils.TryParseSearchKeywordAsIndex(
-                keyword,
-                out index,
-                out this.keyword
-            );
+            isNumber = kwSearcher.IsIndex();
+            index = kwSearcher.GetIndex();
+
+            foreach (var cname in contentNames)
+            {
+                if (kwSearcher.HasContentName(cname))
+                {
+                    keyword = kwSearcher.GetKeyword();
+                    break;
+                }
+            }
         }
 
         public void DoHighlight(RichTextBox box, double coreIndex)
         {
-            if (IsResetRequired(coreIndex, box.Text))
+            var title = box.Text?.ToLower();
+            if (string.IsNullOrEmpty(title))
             {
-                ResetTitle(box);
+                return;
             }
-            else if (isNumber)
+
+            ClearHighlighting(box);
+            if (isNumber && coreIndex == this.index)
             {
-                HighlightIndex(box);
+                HighlightIndex(box, title);
             }
-            else
+            else if (
+                !string.IsNullOrEmpty(keyword) && VgcApis.Misc.Utils.PartialMatchCi(title, keyword)
+            )
             {
-                HighLightTitle(box);
+                HighLightTitle(box, title);
             }
         }
 
         #region private methods
-        bool IsResetRequired(double index, string title)
-        {
-            if (string.IsNullOrEmpty(keyword) || string.IsNullOrEmpty(title))
-            {
-                return true;
-            }
-            if (isNumber)
-            {
-                return this.index != (int)index;
-            }
-            return !VgcApis.Misc.Utils.PartialMatchCi(title, keyword);
-        }
-
-        void ResetTitle(RichTextBox box)
+        void ClearHighlighting(RichTextBox box)
         {
             var title = box.Text;
             if (string.IsNullOrEmpty(title))
@@ -964,23 +970,17 @@ namespace V2RayGCon.Views.UserControls
             box.SelectionBackColor = box.BackColor;
         }
 
-        void HighlightIndex(RichTextBox box)
+        void HighlightIndex(RichTextBox box, string title)
         {
-            var title = box.Text;
-            if (string.IsNullOrEmpty(title))
-            {
-                return;
-            }
             box.SelectionStart = 0;
             box.SelectionLength = Math.Min(title.Length, $"{index}".Length);
             box.SelectionBackColor = Color.Yellow;
         }
 
-        void HighLightTitle(RichTextBox box)
+        void HighLightTitle(RichTextBox box, string title)
         {
-            var title = box.Text.ToLower();
-            int idxTitle = 0,
-                idxKeyword = 0;
+            int idxTitle = 0;
+            int idxKeyword = 0;
             while (idxTitle < title.Length && idxKeyword < keyword.Length)
             {
                 if (title[idxTitle].CompareTo(keyword[idxKeyword]) == 0)

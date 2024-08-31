@@ -6,17 +6,10 @@ using VgcApis.Misc;
 namespace VgcApisTests.MiscTests
 {
     [TestClass]
-    public class ChainActionsTests
+    public class SearchItemTests
     {
-#if DEBUG
         [TestMethod]
         public void ChainActionsSyncTest()
-        {
-            ChainActionsSyncTestWorker();
-        }
-#endif
-
-        void ChainActionsSyncTestWorker()
         {
             var data = new List<int>();
             for (int i = 1; i <= 10; i++)

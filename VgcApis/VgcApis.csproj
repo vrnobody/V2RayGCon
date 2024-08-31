@@ -141,6 +141,7 @@
     <Compile Include="Models\Datas\InboundInfo.cs" />
     <Compile Include="Models\Datas\LuaMail.cs" />
     <Compile Include="Models\Datas\LuaMailBox.cs" />
+    <Compile Include="Libs\Infr\KeywordSearcher.cs" />
     <Compile Include="Models\Datas\SharelinkMetaData.cs" />
     <Compile Include="Models\Datas\StatsSample.cs" />
     <Compile Include="Interfaces\Services\IUtilsService.cs" />

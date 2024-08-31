@@ -73,6 +73,7 @@
     <Compile Include="MiscTests\JsonReaderTests.cs" />
     <Compile Include="MiscTests\FetchTests.cs" />
     <Compile Include="LibsTests\RecycleBinTests.cs" />
+    <Compile Include="LibsTests\KeywordSearcherTests.cs" />
     <Compile Include="ReflectionTests.cs" />
     <Compile Include="LibsTests\ZipExtensionsTests.cs" />
     <Compile Include="Resources\Resx\Jsons.Designer.cs">

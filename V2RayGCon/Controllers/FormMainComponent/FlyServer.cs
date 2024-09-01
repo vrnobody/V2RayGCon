@@ -86,24 +86,26 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         public List<ICoreServCtrl> GetFilteredList()
         {
-            var servs = servers.GetAllServersOrderByIndex();
-            var kws = kwSearcher;
-
-            matchCountCache = servs.Count;
-            if (kws.IsIndex())
+            var kwsr = kwSearcher;
+            var stype = kwsr.GetSearchType();
+            if (stype == VgcApis.Libs.Infr.KeywordParser.SearchTypes.Error)
             {
-                var index = kws.GetIndex();
+                matchCountCache = 0;
+                return new List<ICoreServCtrl>();
+            }
+
+            var servs = servers.GetAllServersOrderByIndex();
+            matchCountCache = servs.Count;
+
+            if (stype == VgcApis.Libs.Infr.KeywordParser.SearchTypes.Index)
+            {
+                var index = kwsr.GetIndex();
                 index = (index < 1 || index > servs.Count) ? servs.Count : index;
                 curPageNumber = (index - 1) / setting.serverPanelPageSize;
                 return servs;
             }
 
-            if (string.IsNullOrEmpty(kws.GetKeyword()) && kws.GetContentNames().Count() < 1)
-            {
-                return servs;
-            }
-
-            var r = servs.Where(serv => kws.Match(serv)).ToList();
+            var r = servs.Where(serv => kwsr.Match(serv)).ToList();
             matchCountCache = r.Count;
             return r;
         }
@@ -198,7 +200,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             VgcApis.Misc.Utils.PreJITMethodsOnce(typeof(FlyServer));
 
             var keyword = $"uuid {Guid.NewGuid()}";
-            var si = new VgcApis.Libs.Infr.KeywordSearcher(keyword);
+            var si = new VgcApis.Libs.Infr.KeywordParser(keyword);
             VgcApis.Libs.Sys.FileLogger.Info($"Testing SearchAllInfos() with param: \"{keyword}\"");
             var r = servers.GetAllServersOrderByIndex().Take(5).Where(s => si.Match(s)).ToList();
             VgcApis.Libs.Sys.FileLogger.Info($"Get {r.Count} results from SearchAllInfos()");
@@ -207,7 +209,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         void ScrollIntoView()
         {
             var kws = kwSearcher;
-            if (!kws.IsIndex())
+            if (kws.GetSearchType() != VgcApis.Libs.Infr.KeywordParser.SearchTypes.Index)
             {
                 return;
             }
@@ -336,7 +338,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var controls = GetAllServerControls();
             VgcApis.Misc.Utils.RunInBackground(() =>
             {
-                controls.ForEach(c => c.SetSearchItem(kws));
+                controls.ForEach(c => c.SetKeywordParser(kws));
             });
         }
 
@@ -573,7 +575,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             return (int)r;
         }
 
-        VgcApis.Libs.Infr.KeywordSearcher kwSearcher = new VgcApis.Libs.Infr.KeywordSearcher("");
+        VgcApis.Libs.Infr.KeywordParser kwSearcher = new VgcApis.Libs.Infr.KeywordParser("");
         int matchCountCache = 0;
 
         private void InitFormControls(
@@ -612,10 +614,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void ClearIndexSearchKeyword()
         {
-            if (kwSearcher.IsIndex())
+            if (kwSearcher.GetSearchType() == VgcApis.Libs.Infr.KeywordParser.SearchTypes.Index)
             {
                 cboxKeyword.Text = "";
-                kwSearcher = new VgcApis.Libs.Infr.KeywordSearcher("");
+                kwSearcher = new VgcApis.Libs.Infr.KeywordParser("");
             }
         }
 
@@ -685,7 +687,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void PerformSearch()
         {
-            kwSearcher = new VgcApis.Libs.Infr.KeywordSearcher(cboxKeyword.Text);
+            kwSearcher = new VgcApis.Libs.Infr.KeywordParser(cboxKeyword.Text);
             this.tslbTotal.Text = I18N.Searching;
             RefreshFlyPanelNow();
         }
@@ -702,19 +704,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void AddAutoCompleteItemsToComboBoxKeyword(ToolStripComboBox box)
         {
-            var cnames = VgcApis.Libs.Infr.KeywordSearcher.GetContentNamesWithoutIndex();
-
-            IEnumerable<string> mtys = VgcApis
-                .Libs.Infr.KeywordSearcher.GetMatchTypes()
-                .Select(mty =>
-                    $"#{cnames.First().ToString().ToLower()} {mty.ToString().ToLower()}"
-                );
-
-            IEnumerable<string> tips = cnames
-                .Select(ty => $"#{ty.ToString().ToLower()}")
-                .Concat(mtys)
-                .Concat(new List<string>() { "#" });
-
+            var tips = VgcApis.Libs.Infr.KeywordParser.GetTips();
             box.AutoCompleteCustomSource.AddRange(tips.ToArray());
             box.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             box.AutoCompleteSource = AutoCompleteSource.CustomSource;

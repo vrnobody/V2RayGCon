@@ -147,7 +147,7 @@ namespace V2RayGCon.Views.UserControls
                 {
                     Height = 1,
                     Dock = DockStyle.Bottom,
-                    BackColor = Color.LightGray
+                    BackColor = Color.LightGray,
                 }
             );
         }
@@ -677,9 +677,9 @@ namespace V2RayGCon.Views.UserControls
             RefreshUiLater();
         }
 
-        public void SetSearchItem(VgcApis.Libs.Infr.KeywordSearcher searchItem)
+        public void SetKeywordParser(VgcApis.Libs.Infr.KeywordParser kwParser)
         {
-            highlighter = new Highlighter(searchItem);
+            highlighter = new Highlighter(kwParser);
             HighlightLater();
         }
 
@@ -913,26 +913,22 @@ namespace V2RayGCon.Views.UserControls
         readonly string keyword = "";
         readonly int index;
 
-        static readonly List<VgcApis.Libs.Infr.KeywordSearcher.ContentNames> contentNames =
-            new List<VgcApis.Libs.Infr.KeywordSearcher.ContentNames>()
+        static readonly List<VgcApis.Libs.Infr.KeywordParser.StringContentNames> contentNames =
+            new List<VgcApis.Libs.Infr.KeywordParser.StringContentNames>()
             {
-                VgcApis.Libs.Infr.KeywordSearcher.ContentNames.Title,
-                VgcApis.Libs.Infr.KeywordSearcher.ContentNames.Summary,
-                VgcApis.Libs.Infr.KeywordSearcher.ContentNames.Name,
+                VgcApis.Libs.Infr.KeywordParser.StringContentNames.Title,
+                VgcApis.Libs.Infr.KeywordParser.StringContentNames.Summary,
+                VgcApis.Libs.Infr.KeywordParser.StringContentNames.Name,
             };
 
-        public Highlighter(VgcApis.Libs.Infr.KeywordSearcher kwSearcher)
+        public Highlighter(VgcApis.Libs.Infr.KeywordParser kwSearcher)
         {
-            isNumber = kwSearcher.IsIndex();
+            isNumber =
+                kwSearcher.GetSearchType() == VgcApis.Libs.Infr.KeywordParser.SearchTypes.Index;
             index = kwSearcher.GetIndex();
-
-            foreach (var cname in contentNames)
+            if (kwSearcher.RequireTitleHighlighting())
             {
-                if (kwSearcher.HasContentName(cname))
-                {
-                    keyword = kwSearcher.GetKeyword();
-                    break;
-                }
+                keyword = kwSearcher.GetKeyword();
             }
         }
 
@@ -955,6 +951,8 @@ namespace V2RayGCon.Views.UserControls
             {
                 HighLightTitle(box, title);
             }
+            box.SelectionStart = 0;
+            box.SelectionLength = 0;
         }
 
         #region private methods
@@ -966,7 +964,7 @@ namespace V2RayGCon.Views.UserControls
                 return;
             }
             box.SelectionStart = 0;
-            box.SelectionLength = title.Length - 1;
+            box.SelectionLength = title.Length;
             box.SelectionBackColor = box.BackColor;
         }
 

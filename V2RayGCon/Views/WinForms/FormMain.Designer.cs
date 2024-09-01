@@ -175,6 +175,7 @@ namespace V2RayGCon.Views.WinForms
             // 
             // toolStrip1
             // 
+            this.toolStrip1.CanOverflow = false;
             resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonImportFromClipboard,
@@ -842,6 +843,7 @@ namespace V2RayGCon.Views.WinForms
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.toolStripContainer2.ContentPanel.ResumeLayout(false);
             this.toolStripContainer2.TopToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer2.TopToolStripPanel.PerformLayout();
             this.toolStripContainer2.ResumeLayout(false);
             this.toolStripContainer2.PerformLayout();
             this.toolStrip1.ResumeLayout(false);

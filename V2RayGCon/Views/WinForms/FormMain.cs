@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -22,7 +24,8 @@ namespace V2RayGCon.Views.WinForms
         Controllers.FormMainCtrl formMainCtrl;
         readonly string formTitle = "";
 
-        Rectangle searchBoxBounds = new Rectangle();
+        int searchBoxWidthSmall;
+        int searchBoxWidthLarge;
 
         public FormMain()
         {
@@ -32,7 +35,11 @@ namespace V2RayGCon.Views.WinForms
             Misc.UI.AutoScaleToolStripControls(this, 16);
 
             formTitle = Misc.Utils.GetAppNameAndVer();
-            searchBoxBounds = toolStripComboBoxMarkFilter.Bounds;
+            searchBoxWidthSmall = toolStripComboBoxMarkFilter.Width;
+            searchBoxWidthLarge =
+                searchBoxWidthSmall
+                + toolStripComboBoxMarkFilter.Bounds.Left
+                - toolStripButtonImportFromClipboard.Bounds.Left;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -283,26 +290,42 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         #region UI event handler
-        void ZoomSearchBoxSize(bool isLarge)
-        {
-            var box = toolStripComboBoxMarkFilter;
-            box.Width = 1;
+        readonly List<ToolStripItem> tsItems = new List<ToolStripItem>();
 
-            var visible = !isLarge;
-            foreach (ToolStripItem control in toolStrip1.Items)
+        List<ToolStripItem> GetAllToolStripItems()
+        {
+            lock (tsItems)
             {
-                if (control == box || control == toolStripLabelSearch)
+                if (tsItems.Count < 1)
                 {
-                    continue;
-                }
-                if (control.Visible != visible)
-                {
-                    control.Visible = visible;
+                    var tmp = new List<ToolStripItem>();
+                    foreach (ToolStripItem control in toolStrip1.Items)
+                    {
+                        if (
+                            control == toolStripComboBoxMarkFilter
+                            || control == toolStripLabelSearch
+                        )
+                        {
+                            continue;
+                        }
+                        tmp.Add(control);
+                    }
+                    tsItems.AddRange(tmp.OrderBy(c => c.Bounds.Left));
                 }
             }
+            return tsItems;
+        }
 
-            var width = (int)(0.9 * searchBoxBounds.Left + searchBoxBounds.Width);
-            box.Width = isLarge ? (int)width : searchBoxBounds.Width;
+        void ZoomSearchBoxSize(bool isZoomin)
+        {
+            toolStrip1.SuspendLayout();
+            var box = toolStripComboBoxMarkFilter;
+            foreach (var c in GetAllToolStripItems())
+            {
+                c.Visible = !isZoomin;
+            }
+            box.Width = isZoomin ? searchBoxWidthLarge : searchBoxWidthSmall;
+            toolStrip1.ResumeLayout();
         }
 
         private void toolStripComboBoxMarkFilter_Enter(object sender, EventArgs e)

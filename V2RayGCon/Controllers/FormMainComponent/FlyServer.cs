@@ -702,15 +702,18 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void AddAutoCompleteItemsToComboBoxKeyword(ToolStripComboBox box)
         {
+            var cnames = VgcApis.Libs.Infr.KeywordSearcher.GetContentNamesWithoutIndex();
+
             IEnumerable<string> mtys = VgcApis
                 .Libs.Infr.KeywordSearcher.GetMatchTypes()
-                .Select(mty => $"#mark {mty.ToString().ToLower()}");
+                .Select(mty =>
+                    $"#{cnames.First().ToString().ToLower()} {mty.ToString().ToLower()}"
+                );
 
-            IEnumerable<string> tips = VgcApis
-                .Libs.Infr.KeywordSearcher.GetContentNamesWithoutIndex()
+            IEnumerable<string> tips = cnames
                 .Select(ty => $"#{ty.ToString().ToLower()}")
                 .Concat(mtys)
-                .Concat(new List<string>() { "#-1" });
+                .Concat(new List<string>() { "#" });
 
             box.AutoCompleteCustomSource.AddRange(tips.ToArray());
             box.AutoCompleteMode = AutoCompleteMode.SuggestAppend;

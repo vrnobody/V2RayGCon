@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 
@@ -21,6 +22,8 @@ namespace V2RayGCon.Views.WinForms
         Controllers.FormMainCtrl formMainCtrl;
         readonly string formTitle = "";
 
+        Rectangle searchBoxBounds = new Rectangle();
+
         public FormMain()
         {
             CreateHandle();
@@ -29,6 +32,7 @@ namespace V2RayGCon.Views.WinForms
             Misc.UI.AutoScaleToolStripControls(this, 16);
 
             formTitle = Misc.Utils.GetAppNameAndVer();
+            searchBoxBounds = toolStripComboBoxMarkFilter.Bounds;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -268,12 +272,49 @@ namespace V2RayGCon.Views.WinForms
                     toolStripComboBoxMarkFilter.SelectAll();
                     toolStripComboBoxMarkFilter.Focus();
                     break;
+                case (Keys.Escape):
+                    flyServerListContainer.Focus();
+                    return true;
+                default:
+                    break;
             }
             return base.ProcessCmdKey(ref msg, keyCode);
         }
         #endregion
 
         #region UI event handler
+        void ZoomSearchBoxSize(bool isLarge)
+        {
+            var box = toolStripComboBoxMarkFilter;
+            box.Width = 1;
+
+            var visible = !isLarge;
+            foreach (ToolStripItem control in toolStrip1.Items)
+            {
+                if (control == box || control == toolStripLabelSearch)
+                {
+                    continue;
+                }
+                if (control.Visible != visible)
+                {
+                    control.Visible = visible;
+                }
+            }
+
+            var width = (int)(0.9 * searchBoxBounds.Left + searchBoxBounds.Width);
+            box.Width = isLarge ? (int)width : searchBoxBounds.Width;
+        }
+
+        private void toolStripComboBoxMarkFilter_Enter(object sender, EventArgs e)
+        {
+            ZoomSearchBoxSize(true);
+        }
+
+        private void toolStripComboBoxMarkFilter_Leave(object sender, EventArgs e)
+        {
+            ZoomSearchBoxSize(false);
+        }
+
         private void closeWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();

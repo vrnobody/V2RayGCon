@@ -304,8 +304,10 @@ namespace V2RayGCon.Views.WinForms
             // 
             // toolStripComboBoxMarkFilter
             // 
-            this.toolStripComboBoxMarkFilter.Name = "toolStripComboBoxMarkFilter";
             resources.ApplyResources(this.toolStripComboBoxMarkFilter, "toolStripComboBoxMarkFilter");
+            this.toolStripComboBoxMarkFilter.Name = "toolStripComboBoxMarkFilter";
+            this.toolStripComboBoxMarkFilter.Enter += new System.EventHandler(this.toolStripComboBoxMarkFilter_Enter);
+            this.toolStripComboBoxMarkFilter.Leave += new System.EventHandler(this.toolStripComboBoxMarkFilter_Leave);
             // 
             // toolStripLabelSearch
             // 
@@ -840,7 +842,6 @@ namespace V2RayGCon.Views.WinForms
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.toolStripContainer2.ContentPanel.ResumeLayout(false);
             this.toolStripContainer2.TopToolStripPanel.ResumeLayout(false);
-            this.toolStripContainer2.TopToolStripPanel.PerformLayout();
             this.toolStripContainer2.ResumeLayout(false);
             this.toolStripContainer2.PerformLayout();
             this.toolStrip1.ResumeLayout(false);

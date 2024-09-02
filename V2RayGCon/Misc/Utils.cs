@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 using Ionic.Zip;
 using Newtonsoft.Json;
@@ -275,7 +274,7 @@ namespace V2RayGCon.Misc
 
                 if (string.IsNullOrEmpty(subsString))
                 {
-                    return new string[] { string.Empty, $"[{subItem.alias}] {url}", };
+                    return new string[] { string.Empty, $"[{subItem.alias}] {url}" };
                 }
 
                 var links = new List<string> { subsString };
@@ -433,7 +432,7 @@ namespace V2RayGCon.Misc
         #region for Testing
         public static string[] TestingGetResourceConfigJson()
         {
-            return new string[] { StrConst.config_min, StrConst.config_tpl, StrConst.config_pkg, };
+            return new string[] { StrConst.config_min, StrConst.config_tpl, StrConst.config_pkg };
         }
         #endregion
     }

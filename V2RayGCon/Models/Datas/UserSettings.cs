@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 
 namespace V2RayGCon.Models.Datas
 {
@@ -139,7 +138,7 @@ namespace V2RayGCon.Models.Datas
         {
             V2RayCoreDownloadVersionList =
                 V2RayCoreDownloadVersionList
-                ?? new List<string> { "v1.8.18", "v1.8.15", "v1.8.13", };
+                ?? new List<string> { "v1.8.18", "v1.8.15", "v1.8.13" };
             ImportOptions = ImportOptions ?? new ImportSharelinkOptions();
             SpeedtestOptions = SpeedtestOptions ?? new SpeedTestOptions();
             CustomCoreSettings = CustomCoreSettings ?? new List<CustomCoreSettings>();
@@ -159,7 +158,7 @@ namespace V2RayGCon.Models.Datas
         {
             var r = new List<CustomConfigTemplate>();
 
-            var config = new CustomConfigTemplate() { index = 1, name = "config", };
+            var config = new CustomConfigTemplate() { index = 1, name = "config" };
 
             var socks = new CustomConfigTemplate()
             {

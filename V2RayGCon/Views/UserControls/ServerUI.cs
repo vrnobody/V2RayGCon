@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Windows.Forms;
-using V2RayGCon.Controllers;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Views.UserControls
@@ -21,7 +19,7 @@ namespace V2RayGCon.Views.UserControls
 
         VgcApis.Interfaces.ICoreServCtrl coreServCtrl;
 
-        Highlighter highlighter;
+        VgcApis.Libs.Infr.Highlighter highlighter = new VgcApis.Libs.Infr.Highlighter();
         readonly VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater,
             lazyHighlighter;
 
@@ -191,15 +189,9 @@ namespace V2RayGCon.Views.UserControls
 
         void HighlightWorker()
         {
-            var h = highlighter;
-            if (h == null)
-            {
-                return;
-            }
-
             VgcApis.Misc.UI.Invoke(() =>
             {
-                h.DoHighlight(rtboxServerTitle, GetIndex());
+                this.highlighter.Highlight(rtboxServerTitle, GetIndex());
             });
         }
 
@@ -677,9 +669,10 @@ namespace V2RayGCon.Views.UserControls
             RefreshUiLater();
         }
 
-        public void SetKeywordParser(VgcApis.Libs.Infr.KeywordParser kwParser)
+        public void ChangeHighlighter(VgcApis.Libs.Infr.Highlighter hi)
         {
-            highlighter = new Highlighter(kwParser);
+            this.highlighter =
+                hi ?? throw new ArgumentNullException("forget some thing?", nameof(hi));
             HighlightLater();
         }
 
@@ -904,97 +897,6 @@ namespace V2RayGCon.Views.UserControls
         {
             ShowModifyConfigsWinForm();
         }
-        #endregion
-    }
-
-    class Highlighter
-    {
-        readonly bool isNumber;
-        readonly string keyword = "";
-        readonly int index;
-
-        static readonly List<VgcApis.Libs.Infr.KeywordParser.StringContentNames> contentNames =
-            new List<VgcApis.Libs.Infr.KeywordParser.StringContentNames>()
-            {
-                VgcApis.Libs.Infr.KeywordParser.StringContentNames.Title,
-                VgcApis.Libs.Infr.KeywordParser.StringContentNames.Summary,
-                VgcApis.Libs.Infr.KeywordParser.StringContentNames.Name,
-            };
-
-        public Highlighter(VgcApis.Libs.Infr.KeywordParser kwSearcher)
-        {
-            isNumber =
-                kwSearcher.GetSearchType() == VgcApis.Libs.Infr.KeywordParser.SearchTypes.Index;
-            index = kwSearcher.GetIndex();
-            if (kwSearcher.RequireTitleHighlighting())
-            {
-                keyword = kwSearcher.GetKeyword();
-            }
-        }
-
-        public void DoHighlight(RichTextBox box, double coreIndex)
-        {
-            var title = box.Text?.ToLower();
-            if (string.IsNullOrEmpty(title))
-            {
-                return;
-            }
-
-            ClearHighlighting(box);
-            if (isNumber && coreIndex == this.index)
-            {
-                HighlightIndex(box, title);
-            }
-            else if (
-                !string.IsNullOrEmpty(keyword) && VgcApis.Misc.Utils.PartialMatchCi(title, keyword)
-            )
-            {
-                HighLightTitle(box, title);
-            }
-            box.SelectionStart = 0;
-            box.SelectionLength = 0;
-        }
-
-        #region private methods
-        void ClearHighlighting(RichTextBox box)
-        {
-            var title = box.Text;
-            if (string.IsNullOrEmpty(title))
-            {
-                return;
-            }
-            box.SelectionStart = 0;
-            box.SelectionLength = title.Length;
-            box.SelectionBackColor = box.BackColor;
-        }
-
-        void HighlightIndex(RichTextBox box, string title)
-        {
-            box.SelectionStart = 0;
-            box.SelectionLength = Math.Min(title.Length, $"{index}".Length);
-            box.SelectionBackColor = Color.Yellow;
-        }
-
-        void HighLightTitle(RichTextBox box, string title)
-        {
-            int idxTitle = 0;
-            int idxKeyword = 0;
-            while (idxTitle < title.Length && idxKeyword < keyword.Length)
-            {
-                if (title[idxTitle].CompareTo(keyword[idxKeyword]) == 0)
-                {
-                    box.SelectionStart = idxTitle;
-                    box.SelectionLength = 1;
-                    box.SelectionBackColor = Color.Yellow;
-                    idxKeyword++;
-                }
-                idxTitle++;
-            }
-            box.SelectionStart = 0;
-            box.SelectionLength = 0;
-            box.DeselectAll();
-        }
-
         #endregion
     }
 }

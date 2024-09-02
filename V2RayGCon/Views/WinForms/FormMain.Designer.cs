@@ -309,6 +309,7 @@ namespace V2RayGCon.Views.WinForms
             this.toolStripComboBoxMarkFilter.Name = "toolStripComboBoxMarkFilter";
             this.toolStripComboBoxMarkFilter.Enter += new System.EventHandler(this.toolStripComboBoxMarkFilter_Enter);
             this.toolStripComboBoxMarkFilter.Leave += new System.EventHandler(this.toolStripComboBoxMarkFilter_Leave);
+            this.toolStripComboBoxMarkFilter.MouseEnter += new System.EventHandler(this.toolStripComboBoxMarkFilter_MouseEnter);
             // 
             // toolStripLabelSearch
             // 

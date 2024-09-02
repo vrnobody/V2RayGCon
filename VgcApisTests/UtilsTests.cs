@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static VgcApis.Misc.Utils;
 using static VgcApis.Models.Datas.Enums;
@@ -229,7 +228,7 @@ namespace VgcApisTests
         [TestMethod]
         public void EnumTest()
         {
-            var values = new string[] { "replace", "concat", "union", "merge", "tag", };
+            var values = new string[] { "replace", "concat", "union", "merge", "tag" };
 
             for (int i = 0; i < values.Length; i++)
             {
@@ -499,7 +498,10 @@ ab12-_中文: |
             @"vless://1234@[1::2:3:4]:1234?security=reality\u0026encryption=none\u0026headerType=none\u0026type=tcp\u0026flow=xtls-rprx-vision#1aA中😀",
             @"vless://1234@[1::2:3:4]:1234?security=reality&encryption=none&headerType=none&type=tcp&flow=xtls-rprx-vision#1aA中😀"
         )]
-        [DataRow(@"\u8ba1\u7b97\u673a\u2022\u7f51\u7edc\u2022\u6280\u672f\u7c7b", "计算机•网络•技术类")]
+        [DataRow(
+            @"\u8ba1\u7b97\u673a\u2022\u7f51\u7edc\u2022\u6280\u672f\u7c7b",
+            "计算机•网络•技术类"
+        )]
         [DataRow(null, null)]
         [DataRow("", "")]
         [DataRow("1aA中😀", "1aA中😀")]

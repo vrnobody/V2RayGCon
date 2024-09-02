@@ -6,7 +6,6 @@ using System.Threading;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Models.Consts;
-using static System.Net.Mime.MediaTypeNames;
 using static VgcApis.Models.Datas.Enums;
 
 namespace V2RayGCon.Services

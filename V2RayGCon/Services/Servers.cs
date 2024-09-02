@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Interfaces;
 using VgcApis.Models.Consts;
@@ -344,7 +343,9 @@ namespace V2RayGCon.Services
             {
                 isTrackerOn = isTrackerOn,
                 curServer = string.Empty, // obsolete
-                serverList = new List<string>() //obsolete
+                serverList =
+                    new List<string>() //obsolete
+                ,
             };
 
             tracker.uids = tracker.isTrackerOn

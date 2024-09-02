@@ -62,17 +62,17 @@ namespace V2RayGCon.Services
             var linkType = VgcApis.Misc.Utils.DetectLinkType(shareLink);
             switch (linkType)
             {
-                case VgcApis.Models.Datas.Enums.LinkTypes.ss:
+                case Enums.LinkTypes.ss:
                     return codecs.Decode<SsDecoder>(shareLink);
-                case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
+                case Enums.LinkTypes.vmess:
                     return codecs.Decode<VmessDecoder>(shareLink);
-                case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
+                case Enums.LinkTypes.v2cfg:
                     return codecs.Decode<V2cfgDecoder>(shareLink);
-                case VgcApis.Models.Datas.Enums.LinkTypes.vless:
+                case Enums.LinkTypes.vless:
                     return codecs.Decode<VlessDecoder>(shareLink);
-                case VgcApis.Models.Datas.Enums.LinkTypes.trojan:
+                case Enums.LinkTypes.trojan:
                     return codecs.Decode<TrojanDecoder>(shareLink);
-                case VgcApis.Models.Datas.Enums.LinkTypes.socks:
+                case Enums.LinkTypes.socks:
                     return codecs.Decode<SocksDecoder>(shareLink);
                 default:
                     break;
@@ -100,17 +100,17 @@ namespace V2RayGCon.Services
         {
             switch (linkType)
             {
-                case VgcApis.Models.Datas.Enums.LinkTypes.socks:
+                case Enums.LinkTypes.socks:
                     return codecs.Encode<SocksDecoder>(name, config);
-                case VgcApis.Models.Datas.Enums.LinkTypes.ss:
+                case Enums.LinkTypes.ss:
                     return codecs.Encode<SsDecoder>(name, config);
-                case VgcApis.Models.Datas.Enums.LinkTypes.vmess:
+                case Enums.LinkTypes.vmess:
                     return codecs.Encode<VmessDecoder>(name, config);
-                case VgcApis.Models.Datas.Enums.LinkTypes.v2cfg:
+                case Enums.LinkTypes.v2cfg:
                     return codecs.Encode<V2cfgDecoder>(name, config);
-                case VgcApis.Models.Datas.Enums.LinkTypes.vless:
+                case Enums.LinkTypes.vless:
                     return codecs.Encode<VlessDecoder>(name, config);
-                case VgcApis.Models.Datas.Enums.LinkTypes.trojan:
+                case Enums.LinkTypes.trojan:
                     return codecs.Encode<TrojanDecoder>(name, config);
                 default:
                     return null;
@@ -190,11 +190,11 @@ namespace V2RayGCon.Services
         #region private methods
         static readonly List<Enums.LinkTypes> linkTypes = new List<Enums.LinkTypes>
         {
-            VgcApis.Models.Datas.Enums.LinkTypes.vmess,
-            VgcApis.Models.Datas.Enums.LinkTypes.vless,
-            VgcApis.Models.Datas.Enums.LinkTypes.trojan,
-            VgcApis.Models.Datas.Enums.LinkTypes.ss,
-            VgcApis.Models.Datas.Enums.LinkTypes.socks,
+            Enums.LinkTypes.vmess,
+            Enums.LinkTypes.vless,
+            Enums.LinkTypes.trojan,
+            Enums.LinkTypes.ss,
+            Enums.LinkTypes.socks,
         };
 
         int CountImportSuccessResult(IEnumerable<string[]> result)

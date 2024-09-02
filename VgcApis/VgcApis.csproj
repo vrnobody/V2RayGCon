@@ -69,6 +69,13 @@
     <Compile Include="Interfaces\PostOfficeComponents\ILuaMail.cs" />
     <Compile Include="Interfaces\PostOfficeComponents\ILuaMailBox.cs" />
     <Compile Include="Interfaces\Services\IPostOffice.cs" />
+    <Compile Include="Libs\Infr\KwParserComps\SimpleIndexFilter.cs" />
+    <Compile Include="Libs\Infr\KwParserComps\SimpleTitleFilter.cs" />
+    <Compile Include="Libs\Infr\KwParserComps\Helpers.cs" />
+    <Compile Include="Libs\Infr\Highlighter.cs" />
+    <Compile Include="Libs\Infr\KwParserComps\Interfaces.cs" />
+    <Compile Include="Libs\Infr\KwParserComps\AdvStringFilter.cs" />
+    <Compile Include="Libs\Infr\KwParserComps\AdvNumberFilter.cs" />
     <Compile Include="Libs\Infr\StringLruCache.cs" />
     <Compile Include="Libs\Infr\LruCache.cs" />
     <Compile Include="Libs\Streams\ArrayPoolMemoryStream.cs" />
@@ -141,7 +148,7 @@
     <Compile Include="Models\Datas\InboundInfo.cs" />
     <Compile Include="Models\Datas\LuaMail.cs" />
     <Compile Include="Models\Datas\LuaMailBox.cs" />
-    <Compile Include="Libs\Infr\KeywordParser.cs" />
+    <Compile Include="Libs\Infr\KeywordFilter.cs" />
     <Compile Include="Models\Datas\SharelinkMetaData.cs" />
     <Compile Include="Models\Datas\StatsSample.cs" />
     <Compile Include="Interfaces\Services\IUtilsService.cs" />

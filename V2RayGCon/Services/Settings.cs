@@ -7,14 +7,9 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices.ComTypes;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
-using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Services

@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static VgcApis.Misc.UI;
-using static VgcApis.Models.Datas.Enums;
 
 namespace VgcApisTests
 {

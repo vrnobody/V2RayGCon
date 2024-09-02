@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
@@ -290,6 +289,11 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         #region UI event handler
+        private void toolStripComboBoxMarkFilter_MouseEnter(object sender, EventArgs e)
+        {
+            toolStripComboBoxMarkFilter.Focus();
+        }
+
         readonly List<ToolStripItem> tsItems = new List<ToolStripItem>();
 
         List<ToolStripItem> GetAllToolStripItems()
@@ -316,8 +320,16 @@ namespace V2RayGCon.Views.WinForms
             return tsItems;
         }
 
+        bool curZoomState = false;
+
         void ZoomSearchBoxSize(bool isZoomin)
         {
+            if (curZoomState == isZoomin)
+            {
+                return;
+            }
+            curZoomState = isZoomin;
+
             toolStrip1.SuspendLayout();
             var box = toolStripComboBoxMarkFilter;
             foreach (var c in GetAllToolStripItems())

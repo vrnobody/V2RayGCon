@@ -12,6 +12,8 @@ namespace V2RayGCon.Controllers.OptionComponent
         private readonly FlowLayoutPanel flyPanel;
         private readonly Button btnAdd;
 
+        bool changed = false;
+
         public TabCustomCoreSettings(FlowLayoutPanel flyPanel, Button btnAdd)
         {
             this.settings = Settings.Instance;
@@ -34,12 +36,14 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         public override bool IsOptionsChanged()
         {
-            return false;
+            return changed;
         }
 
         public override bool SaveOptions()
         {
-            return true;
+            var r = changed;
+            changed = false;
+            return r;
         }
         #endregion
 
@@ -54,6 +58,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             flyPanel.DragDrop += (s, a) =>
             {
+                changed = true;
                 var data = a.Data;
                 if (data.GetDataPresent(typeof(Views.UserControls.CoreSettingUI)))
                 {
@@ -98,6 +103,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         {
             btnAdd.Click += (s, a) =>
             {
+                changed = true;
                 var form = new Views.WinForms.FormCustomCoreSettings();
                 form.FormClosed += (_, __) =>
                 {
@@ -114,6 +120,7 @@ namespace V2RayGCon.Controllers.OptionComponent
 
         void OnRequireReloadHandler(object sender, EventArgs args)
         {
+            changed = true;
             Refresh();
         }
 

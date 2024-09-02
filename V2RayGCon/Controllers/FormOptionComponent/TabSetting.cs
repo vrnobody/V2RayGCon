@@ -175,7 +175,6 @@ namespace V2RayGCon.Controllers.OptionComponent
 
             setting.isEnableStatistics = chkSetEnableStat.Checked;
 
-            setting.SaveUserSettingsNow();
             return true;
         }
 

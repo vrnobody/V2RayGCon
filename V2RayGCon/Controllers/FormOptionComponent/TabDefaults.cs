@@ -102,7 +102,6 @@ namespace V2RayGCon.Controllers.OptionComponent
                 tboxSetSpeedtestTimeout.Text
             );
 
-            settings.SaveUserSettingsNow();
             return true;
         }
 

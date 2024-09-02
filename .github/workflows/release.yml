@@ -29,7 +29,7 @@ jobs:
       webuiVer: '1.0.1.1'
       webuiUrl: 'https://github.com/vrnobody/WebUI/releases/download'
       v2rayCorePkgName: 'Xray-win7-64.zip'
-      v2rayCoreVer: 'v1.8.23'
+      v2rayCoreVer: 'v1.8.24'
       # https://github.com/XTLS/Xray-core/releases/download/v1.4.0/Xray-windows-64.zip
       v2rayCoreUrl: 'https://github.com/XTLS/Xray-core/releases/download'
       tun2socksZipUrl: 'https://github.com/xjasonlyu/tun2socks/releases/download/v2.5.2/tun2socks-windows-amd64.zip'

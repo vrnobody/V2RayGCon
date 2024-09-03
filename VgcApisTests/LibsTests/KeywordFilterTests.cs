@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VgcApis.Libs.Infr;
 using VgcApis.Libs.Infr.KwFilterComps;
@@ -9,6 +10,40 @@ namespace VgcApisTests.LibsTests
     public class KeywordFilterTests
     {
         #region adv number filter
+        [TestMethod]
+        [DataRow("#MOd  <  02", 1, true)]
+        [DataRow("#moD  <  2", 2, true)]
+        [DataRow("#moD  <  02", 3, false)]
+        [DataRow("#MOd  >  2", 1, false)]
+        [DataRow("#moD  >  02", 2, true)]
+        [DataRow("#moD  >  2", 3, true)]
+        public void AdvNumberFilterTagModifyDayTest(string keyword, long value, bool expResult)
+        {
+            var np = AdvNumberFilter.CreateFilter(keyword);
+            Assert.IsNotNull(np);
+            var now = DateTime.UtcNow.ToLocalTime();
+            var y = (now.Year % 100) * 10000;
+            var m = now.Month * 100;
+            var r = np.MatchCore(value + y + m);
+            Assert.AreEqual(expResult, r);
+        }
+
+        [TestMethod]
+        [DataRow("#MOd  <  802", 801, true)]
+        [DataRow("#moD  <  0802", 802, true)]
+        [DataRow("#moD  <  802", 803, false)]
+        [DataRow("#MOd  >  0802", 801, false)]
+        [DataRow("#moD  >  802", 802, true)]
+        [DataRow("#moD  >  0802", 803, true)]
+        public void AdvNumberFilterTagModifyMonthDayTest(string keyword, long value, bool expResult)
+        {
+            var np = AdvNumberFilter.CreateFilter(keyword);
+            Assert.IsNotNull(np);
+            var y = (DateTime.UtcNow.ToLocalTime().Year % 100) * 10000;
+            var r = np.MatchCore(value + y);
+            Assert.AreEqual(expResult, r);
+        }
+
         [DataTestMethod]
         [DataRow("#lten ~ -1 2", -3, false)]
         [DataRow("#lten ~ -1 2", 3, false)]
@@ -22,8 +57,9 @@ namespace VgcApisTests.LibsTests
         [DataRow("#upd > -1", 456, true)]
         [DataRow("#down > -1", -456, false)]
         [DataRow("#prt > 1080 ", 1080, true)]
-        [DataRow("#moD  >  0802", 802, true)]
-        [DataRow("#moD  <  0802", 803, false)]
+        [DataRow("#MOd  <  240802", 240801, true)]
+        [DataRow("#moD  >  240802", 240802, true)]
+        [DataRow("#moD  <  240802", 240803, false)]
         public void AdvNumberFilterMatchCoreTest(string keyword, long value, bool expResult)
         {
             var np = AdvNumberFilter.CreateFilter(keyword);
@@ -198,7 +234,7 @@ namespace VgcApisTests.LibsTests
         #endregion
 
         #region simple title filter
-
+        [DataTestMethod]
         [DataRow(" a ,😀 文", ";-,a 中,😀文,bc", true)]
         [DataRow("a", "", false)]
         [DataRow("", "aa", true)]

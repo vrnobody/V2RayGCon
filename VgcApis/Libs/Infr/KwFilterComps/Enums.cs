@@ -12,6 +12,9 @@
         Tag1,
         Tag2,
         Tag3,
+        Selected,
+        Core,
+        Modify,
     }
 
     public enum StringOperators
@@ -32,6 +35,7 @@
         Latency,
         Upload,
         Download,
+        Port,
     }
 
     public enum NumberOperators

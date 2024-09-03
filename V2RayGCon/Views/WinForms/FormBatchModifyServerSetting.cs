@@ -120,7 +120,7 @@ namespace V2RayGCon.Views.WinForms
             btnModify.Enabled = false;
             btnCancel.Enabled = false;
 
-            var list = servers.GetSelectedServers();
+            var coreServs = servers.GetSelectedServers().OrderBy(s => s).ToList();
 
             var newInbName = chkInMode.Checked ? cboxInName.Text : null;
             var newIP = chkInIP.Checked ? tboxInIP.Text : null;
@@ -138,7 +138,7 @@ namespace V2RayGCon.Views.WinForms
             var newTemplates = chkTemplates.Checked ? (tboxTemplates.Text ?? "") : null;
 
             ModifyServersSetting(
-                list,
+                coreServs,
                 newInbName,
                 newIP,
                 newPort,
@@ -194,7 +194,7 @@ namespace V2RayGCon.Views.WinForms
         }
 
         void ModifyServersSetting(
-            List<VgcApis.Interfaces.ICoreServCtrl> list,
+            List<VgcApis.Interfaces.ICoreServCtrl> coreServs,
             string newInbName,
             string newIP,
             int newPort,
@@ -213,7 +213,7 @@ namespace V2RayGCon.Views.WinForms
             {
                 var portNumber = isPortAutoIncrease ? newPort + index : newPort;
 
-                var server = list[index];
+                var server = coreServs[index];
                 if (!server.GetCoreCtrl().IsCoreRunning())
                 {
                     ModifyServerSetting(
@@ -265,7 +265,7 @@ namespace V2RayGCon.Views.WinForms
                 VgcApis.Misc.UI.Invoke(() => that.Close());
             }
 
-            VgcApis.Misc.Utils.InvokeChainActionsAsync(list.Count, worker, done);
+            VgcApis.Misc.Utils.InvokeChainActionsAsync(coreServs.Count, worker, done);
         }
 
         void ModifyServerSetting(

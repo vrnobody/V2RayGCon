@@ -49,11 +49,11 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             var r = new List<Interfaces.ICoreServCtrl>();
             foreach (var coreServ in coreServs)
             {
-                var cs = coreServ.GetCoreStates();
+                var cst = coreServ.GetCoreStates();
                 foreach (var cname in tagNames)
                 {
                     if (
-                        TryGetStrTagValue(cs, cname, out var content)
+                        TryGetStrTagValue(coreServ, cst, cname, out var content)
                         && CachedMatchCore(cname, content)
                     )
                     {
@@ -154,7 +154,12 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             return null;
         }
 
-        bool TryGetStrTagValue(ICoreStates cs, StringTagNames tag, out string r)
+        bool TryGetStrTagValue(
+            Interfaces.ICoreServCtrl coreServ,
+            ICoreStates cs,
+            StringTagNames tag,
+            out string r
+        )
         {
             switch (tag)
             {
@@ -181,6 +186,16 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                     break;
                 case StringTagNames.Title:
                     r = cs.GetTitle();
+                    break;
+                case StringTagNames.Core:
+                    r = coreServ.GetCoreCtrl().GetCustomCoreName();
+                    break;
+                case StringTagNames.Selected:
+                    r = cs.IsSelected().ToString();
+                    break;
+                case StringTagNames.Modify:
+                    var tick = cs.GetLastModifiedUtcTicks();
+                    r = new DateTime(tick).ToLocalTime().ToString("yyMMdd");
                     break;
                 default:
                     r = "";
@@ -218,7 +233,8 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             {
                 return null;
             }
-            var kws = kw.Substring(1)
+            var kws = kw.ToLower()
+                .Substring(1)
                 ?.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             if (!TryParseTagName(kws[0], out var cnames))

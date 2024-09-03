@@ -125,6 +125,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                     // MiB
                     r = cs.GetDownlinkTotalInBytes() / Helpers.MiB;
                     return true;
+                case NumberTagNames.Port:
+                    r = cs.GetInboundPort();
+                    return true;
             }
             r = 0;
             return false;
@@ -164,7 +167,8 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             {
                 return null;
             }
-            var kws = kw.Substring(1)
+            var kws = kw.ToLower()
+                .Substring(1)
                 ?.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             if (kws.Length < 3)

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using VgcApis.Interfaces.CoreCtrlComponents;
-using static VgcApis.Libs.Infr.KeywordFilter;
 
-namespace VgcApis.Libs.Infr.KwParserComps
+namespace VgcApis.Libs.Infr.KwFilterComps
 {
     public class AdvStringFilter : IAdvanceFilter<StringTagNames, StringOperators, string>
     {
@@ -102,7 +101,7 @@ namespace VgcApis.Libs.Infr.KwParserComps
 
         #endregion
 
-        #region private methods
+        #region creator
 
         Highlighter CreateHighlighter()
         {

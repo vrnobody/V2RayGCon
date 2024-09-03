@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VgcApis.Libs.Infr.KwParserComps
+namespace VgcApis.Libs.Infr.KwFilterComps
 {
     public interface ISimpleFilter
     {

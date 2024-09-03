@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using VgcApis.Interfaces;
-using VgcApis.Libs.Infr.KwParserComps;
+using VgcApis.Libs.Infr.KwFilterComps;
 
 namespace VgcApis.Libs.Infr
 {
@@ -81,8 +80,6 @@ namespace VgcApis.Libs.Infr
 
         #endregion
 
-
-
         #region private methods
 
         static List<string> CreateTipsCache()
@@ -96,48 +93,6 @@ namespace VgcApis.Libs.Infr
             r.AddRange(numNames);
 
             return r;
-        }
-
-        #endregion
-
-        #region enums
-
-        public enum StringTagNames
-        {
-            Title,
-            Name,
-            Summary,
-            Mark,
-            Remark,
-            Tag1,
-            Tag2,
-            Tag3,
-        }
-
-        public enum NumberTagNames
-        {
-            Latency,
-            Upload,
-            Download,
-        }
-
-        public enum NumberOperators
-        {
-            LargerThen,
-            SmallerThen,
-            Between,
-            Is,
-            Not,
-        }
-
-        public enum StringOperators
-        {
-            IS,
-            NOT,
-            HAS,
-            HASNOT,
-            LIKE,
-            UNLIKE,
         }
 
         #endregion

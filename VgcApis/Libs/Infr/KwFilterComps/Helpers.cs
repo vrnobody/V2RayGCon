@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace VgcApis.Libs.Infr.KwParserComps
+namespace VgcApis.Libs.Infr.KwFilterComps
 {
     internal static class Helpers
     {

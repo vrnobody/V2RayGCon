@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using VgcApis.Interfaces.CoreCtrlComponents;
-using static VgcApis.Libs.Infr.KeywordFilter;
 
-namespace VgcApis.Libs.Infr.KwParserComps
+namespace VgcApis.Libs.Infr.KwFilterComps
 {
     internal class AdvNumberFilter : IAdvanceFilter<NumberTagNames, NumberOperators, long>
     {
@@ -133,8 +132,7 @@ namespace VgcApis.Libs.Infr.KwParserComps
 
         #endregion
 
-        #region IParser.CreateParser
-
+        #region creator
 
         static bool TryParseContenName(string name, out HashSet<NumberTagNames> r)
         {

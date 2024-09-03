@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VgcApis.Libs.Infr;
-using VgcApis.Libs.Infr.KwParserComps;
+using VgcApis.Libs.Infr.KwFilterComps;
 
 namespace VgcApisTests.LibsTests
 {
@@ -102,40 +102,16 @@ namespace VgcApisTests.LibsTests
         }
 
         [DataTestMethod]
-        [DataRow(
-            "#upd = 123 456 aaa",
-            KeywordFilter.NumberTagNames.Upload,
-            KeywordFilter.NumberOperators.Is
-        )]
-        [DataRow(
-            "#upd ! 123 456 aaa",
-            KeywordFilter.NumberTagNames.Upload,
-            KeywordFilter.NumberOperators.Not
-        )]
-        [DataRow(
-            "#upd ~ 123 123 aaa",
-            KeywordFilter.NumberTagNames.Upload,
-            KeywordFilter.NumberOperators.Between
-        )]
-        [DataRow(
-            "#upd ~ 123 456 aaa",
-            KeywordFilter.NumberTagNames.Upload,
-            KeywordFilter.NumberOperators.Between
-        )]
-        [DataRow(
-            "#download > 0000123 bbbb",
-            KeywordFilter.NumberTagNames.Download,
-            KeywordFilter.NumberOperators.LargerThen
-        )]
-        [DataRow(
-            "#lat < 123",
-            KeywordFilter.NumberTagNames.Latency,
-            KeywordFilter.NumberOperators.SmallerThen
-        )]
+        [DataRow("#upd = 123 456 aaa", NumberTagNames.Upload, NumberOperators.Is)]
+        [DataRow("#upd ! 123 456 aaa", NumberTagNames.Upload, NumberOperators.Not)]
+        [DataRow("#upd ~ 123 123 aaa", NumberTagNames.Upload, NumberOperators.Between)]
+        [DataRow("#upd ~ 123 456 aaa", NumberTagNames.Upload, NumberOperators.Between)]
+        [DataRow("#download > 0000123 bbbb", NumberTagNames.Download, NumberOperators.LargerThen)]
+        [DataRow("#lat < 123", NumberTagNames.Latency, NumberOperators.SmallerThen)]
         public void AdvNumberFilterParseTagNameAndOperatorTest(
             string kw,
-            KeywordFilter.NumberTagNames expContentName,
-            KeywordFilter.NumberOperators expOp
+            NumberTagNames expContentName,
+            NumberOperators expOp
         )
         {
             var parser = AdvNumberFilter.CreateFilter(kw);
@@ -149,50 +125,35 @@ namespace VgcApisTests.LibsTests
         }
 
         [DataTestMethod]
-        [DataRow(
-            "#name is is",
-            "is",
-            KeywordFilter.StringOperators.IS,
-            KeywordFilter.StringTagNames.Name
-        )]
+        [DataRow("#name is is", "is", StringOperators.IS, StringTagNames.Name)]
         [DataRow(
             "#tg1 not a B ,;😁! cDDE 中文",
             "ab,;😁!cdde中文",
-            KeywordFilter.StringOperators.NOT,
-            KeywordFilter.StringTagNames.Tag1
+            StringOperators.NOT,
+            StringTagNames.Tag1
         )]
-        [DataRow(
-            "#summary has",
-            "",
-            KeywordFilter.StringOperators.HAS,
-            KeywordFilter.StringTagNames.Summary
-        )]
+        [DataRow("#summary has", "", StringOperators.HAS, StringTagNames.Summary)]
         [DataRow(
             "#ttl hasnot 测 A 试 1 😊 ",
             "测a试1😊",
-            KeywordFilter.StringOperators.HASNOT,
-            KeywordFilter.StringTagNames.Title
+            StringOperators.HASNOT,
+            StringTagNames.Title
         )]
-        [DataRow("#tg2", "", KeywordFilter.StringOperators.LIKE, KeywordFilter.StringTagNames.Tag2)]
-        [DataRow(
-            "#summary has",
-            "",
-            KeywordFilter.StringOperators.HAS,
-            KeywordFilter.StringTagNames.Summary
-        )]
+        [DataRow("#tg2", "", StringOperators.LIKE, StringTagNames.Tag2)]
+        [DataRow("#summary has", "", StringOperators.HAS, StringTagNames.Summary)]
         [DataRow(
             "#tg",
             "",
-            KeywordFilter.StringOperators.LIKE,
-            KeywordFilter.StringTagNames.Tag1,
-            KeywordFilter.StringTagNames.Tag2,
-            KeywordFilter.StringTagNames.Tag3
+            StringOperators.LIKE,
+            StringTagNames.Tag1,
+            StringTagNames.Tag2,
+            StringTagNames.Tag3
         )]
         public void AdvStringFilterParseTagNameAndOpTest(
             string kw,
             string expKw,
-            KeywordFilter.StringOperators expMatchType,
-            params KeywordFilter.StringTagNames[] expContentNames
+            StringOperators expMatchType,
+            params StringTagNames[] expContentNames
         )
         {
             var parser = AdvStringFilter.CreateFilter(kw);

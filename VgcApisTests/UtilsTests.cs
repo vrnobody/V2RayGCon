@@ -15,61 +15,87 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+        #region short date int
+
+
         [TestMethod]
-        public void ToShortDateStrTest()
+        public void ToShortDateIntTest()
         {
             var now = DateTime.UtcNow.ToLocalTime();
-            var r = ToShortDateStr(now, null);
-            Assert.AreEqual(now.ToString("yyMMdd"), r);
-            r = ToShortDateStr(now, "");
-            Assert.AreEqual(now.ToString("yyMMdd"), r);
-            r = ToShortDateStr(now, "00000");
-            Assert.AreEqual("000000", r);
-            r = ToShortDateStr(now, "0000");
-            Assert.AreEqual(now.ToString("yy0000"), r);
-            r = ToShortDateStr(now, "10000");
-            Assert.AreEqual("010000", r);
-            r = ToShortDateStr(now, "990000");
-            Assert.AreEqual("990000", r);
-            r = ToShortDateStr(now, "1234567890");
-            Assert.AreEqual("123456", r);
-        }
+            long r = ToShortDateInt(now, 0);
+            long exp = Str2Int(now.ToString("yyyyMMdd"));
+            Assert.AreEqual(exp, r);
 
-        [DataTestMethod]
-        [DataRow("010199", "010199")]
-        [DataRow("10199", "010199")]
-        [DataRow("999999", "999999")]
-        public void ToShortDateStrYearMonthDayTest(string src, string exp)
-        {
-            var now = DateTime.UtcNow.ToLocalTime();
-            var r = ToShortDateStr(now, src);
+            r = ToShortDateInt(now, -1111);
+            exp = Str2Int(now.ToString("yyyyMMdd"));
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 1);
+            exp = Str2Int(now.ToString("yyyyMM")) * 100 + 1;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 1);
+            exp = Str2Int(now.ToString("yyyyMM")) * 100 + 1;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 12);
+            exp = Str2Int(now.ToString("yyyyMM")) * 100 + 12;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 100);
+            exp = Str2Int(now.ToString("yyyy")) * 10000 + 100;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 123);
+            exp = Str2Int(now.ToString("yyyy")) * 10000 + 123;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 4400);
+            exp = Str2Int(now.ToString("yyyy")) * 10000 + 4400;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 4444);
+            exp = Str2Int(now.ToString("yyyy")) * 10000 + 4444;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 12344);
+            exp = (Str2Int(now.ToString("yyyy")) / 100) * 1000000 + 12344;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 10044);
+            exp = (Str2Int(now.ToString("yyyy")) / 100) * 1000000 + 10044;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 12300);
+            exp = (Str2Int(now.ToString("yyyy")) / 100) * 1000000 + 12300;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 102344);
+            exp = (Str2Int(now.ToString("yyyy")) / 100) * 1000000 + 102344;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 240230);
+            exp = (Str2Int(now.ToString("yyyy")) / 100) * 1000000 + 240230;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 990044);
+            exp = (Str2Int(now.ToString("yyyy")) / 100) * 1000000 + 990044;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 1102344);
+            exp = 1102344;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 20240230);
+            exp = 20240230;
+            Assert.AreEqual(exp, r);
+
+            r = ToShortDateInt(now, 2221102344);
+            exp = 2221102344;
             Assert.AreEqual(exp, r);
         }
 
-        [DataTestMethod]
-        [DataRow("000", "0000")]
-        [DataRow("199", "0199")]
-        [DataRow("9999", "9999")]
-        public void ToShortDateStrMonthDayTest(string src, string exp)
-        {
-            var now = DateTime.UtcNow.ToLocalTime();
-            var r = ToShortDateStr(now, src);
-            exp = $"{now.ToString("yy")}{exp}";
-            Assert.AreEqual(exp, r);
-        }
-
-        [DataTestMethod]
-        [DataRow("0", "00")]
-        [DataRow("1", "01")]
-        [DataRow("99", "99")]
-        public void ToShortDateStrDayTest(string src, string exp)
-        {
-            var now = DateTime.UtcNow.ToLocalTime();
-            var r = ToShortDateStr(now, src);
-            exp = $"{now:yyMM}{exp}";
-            Assert.AreEqual(exp, r);
-        }
-
+        #endregion
         [DataTestMethod]
         [DataRow("", false, 0, "")]
         [DataRow("1", false, 0, "1")]
@@ -983,8 +1009,9 @@ ab12-_中文: |
         [DataRow("-1.234", -1)]
         [DataRow("1.432", 1)]
         [DataRow("1.678", 2)]
+        [DataRow("20240902", 20240902)]
         [DataRow("-1.678", -2)]
-        public void Str2Int(string value, int expect)
+        public void Str2IntTest(string value, int expect)
         {
             Assert.AreEqual(expect, VgcApis.Misc.Utils.Str2Int(value));
         }

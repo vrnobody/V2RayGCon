@@ -15,6 +15,24 @@ namespace VgcApisTests
         public Experiments() { }
 
         [TestMethod]
+        public void DateTimeTest()
+        {
+            var now = DateTime.Now;
+            var utcnow = DateTime.UtcNow;
+            var localnow = now.ToLocalTime();
+            var localutcnow = utcnow.ToLocalTime();
+            var locallocal = now.ToLocalTime().ToLocalTime();
+
+            var tick = utcnow.Ticks;
+            var d = new DateTime(tick, DateTimeKind.Utc);
+            var dlocal = d.ToLocalTime();
+
+            // break here
+            // mouse hover to see each value
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
         public void EmptyStringTest()
         {
             Assert.IsFalse("" == null);

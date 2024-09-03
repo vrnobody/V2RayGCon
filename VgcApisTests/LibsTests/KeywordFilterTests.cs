@@ -20,11 +20,11 @@ namespace VgcApisTests.LibsTests
         public void AdvNumberFilterTagModifyDayTest(string keyword, long value, bool expResult)
         {
             var np = AdvNumberFilter.CreateFilter(keyword);
-            Assert.IsNotNull(np);
             var now = DateTime.UtcNow.ToLocalTime();
-            var y = (now.Year % 100) * 10000;
-            var m = now.Month * 100;
-            var r = np.MatchCore(value + y + m);
+
+            Assert.IsNotNull(np);
+            var d = VgcApis.Misc.Utils.Str2Int(now.ToString("yyyyMM")) * 100;
+            var r = np.MatchCore(value + d);
             Assert.AreEqual(expResult, r);
         }
 
@@ -38,9 +38,23 @@ namespace VgcApisTests.LibsTests
         public void AdvNumberFilterTagModifyMonthDayTest(string keyword, long value, bool expResult)
         {
             var np = AdvNumberFilter.CreateFilter(keyword);
+            var d = DateTime.UtcNow.ToLocalTime().Year * 10000;
+
             Assert.IsNotNull(np);
-            var y = (DateTime.UtcNow.ToLocalTime().Year % 100) * 10000;
-            var r = np.MatchCore(value + y);
+            var r = np.MatchCore(value + d);
+            Assert.AreEqual(expResult, r);
+        }
+
+        [DataRow("#MOd  <  240802", 240801, true)]
+        [DataRow("#moD  >  240802", 240802, true)]
+        [DataRow("#moD  <  240802", 240803, false)]
+        public void AdvNumberFilterTagModifyYMDTest(string keyword, long value, bool expResult)
+        {
+            var np = AdvNumberFilter.CreateFilter(keyword);
+            var d = (DateTime.UtcNow.ToLocalTime().Year / 100) * 1000000;
+
+            Assert.IsNotNull(np);
+            var r = np.MatchCore(value + d);
             Assert.AreEqual(expResult, r);
         }
 
@@ -57,9 +71,11 @@ namespace VgcApisTests.LibsTests
         [DataRow("#upd > -1", 456, true)]
         [DataRow("#down > -1", -456, false)]
         [DataRow("#prt > 1080 ", 1080, true)]
-        [DataRow("#MOd  <  240802", 240801, true)]
-        [DataRow("#moD  >  240802", 240802, true)]
-        [DataRow("#moD  <  240802", 240803, false)]
+        [DataRow("#MOd  <  20240802", 20240801, true)]
+        [DataRow("#moD  >  20240802", 20240802, true)]
+        [DataRow("#moD  <  20240802", 20240803, false)]
+        [DataRow("#moD  <  120240802", 120240701, true)]
+        [DataRow("#moD  <  120240802", 120240803, false)]
         public void AdvNumberFilterMatchCoreTest(string keyword, long value, bool expResult)
         {
             var np = AdvNumberFilter.CreateFilter(keyword);

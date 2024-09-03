@@ -424,32 +424,48 @@ namespace VgcApis.Misc
         }
         #endregion
 
-        #region string
-        public static string ToShortDateStr(DateTime now, string s)
+        #region datetime
+        public static long ToShortDateInt(DateTime localNow, long date)
         {
-            if (string.IsNullOrEmpty(s))
+            // int is 32 bit, max value is 2,147,483,647
+            if (date <= 0)
             {
-                return now.ToString("yyMMdd");
+                return Str2Int(localNow.ToString("yyyyMMdd"));
+            }
+            else if (date >= 1000000)
+            {
+                return date;
             }
 
-            var y = now.Year % 100;
-            var m = now.Month;
-            switch (s.Length)
+            var y = localNow.Year;
+            var m = localNow.Month;
+            long r = y / 100 * 1000000;
+
+            if (date < 10000)
             {
-                case 1:
-                    return $"{y:D2}{m:D2}0{s}";
-                case 2:
-                    return $"{y:D2}{m:D2}{s}";
-                case 3:
-                    return $"{y:D2}0{s}";
-                case 4:
-                    return $"{y:D2}{s}";
-                case 5:
-                    return $"0{s}";
-                default:
-                    return s.Substring(0, 6);
+                r += (y % 100) * 10000;
             }
+            else
+            {
+                r += ((date / 10000) % 100) * 10000;
+            }
+
+            if (date < 100)
+            {
+                r += m * 100;
+            }
+            else
+            {
+                r += ((date / 100) % 100) * 100;
+            }
+
+            r += date % 100;
+            return r;
         }
+
+        #endregion
+
+        #region string
 
         public static bool TryParseSearchKeywordAsIndex(string s, out int index, out string keyword)
         {
@@ -3446,11 +3462,14 @@ namespace VgcApis.Misc
 
         public static int Str2Int(string value)
         {
+            if (int.TryParse(value, out var d))
+            {
+                return d;
+            }
             if (float.TryParse(value, out float f))
             {
                 return (int)Math.Round(f);
             }
-            ;
             return 0;
         }
 

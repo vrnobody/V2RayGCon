@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using VgcApis.Interfaces.CoreCtrlComponents;
 
 namespace VgcApis.Libs.Infr.KwFilterComps
@@ -21,13 +20,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 
             if (this.contentNames.Contains(NumberTagNames.Modify))
             {
-                var now = DateTime.UtcNow.ToLocalTime();
-                this.first = Misc.Utils.Str2Int(
-                    Misc.Utils.ToShortDateStr(now, this.first.ToString())
-                );
-                this.second = Misc.Utils.Str2Int(
-                    Misc.Utils.ToShortDateStr(now, this.second.ToString())
-                );
+                var now = DateTime.Now.ToLocalTime();
+                this.first = Misc.Utils.ToShortDateInt(now, this.first);
+                this.second = Misc.Utils.ToShortDateInt(now, this.second);
             }
 
             if (this.first > this.second && this.op == NumberOperators.Between)
@@ -155,8 +150,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                     r = cs.GetInboundPort();
                     return true;
                 case NumberTagNames.Modify:
-                    var tick = cs.GetLastModifiedUtcTicks();
-                    var str = new DateTime(tick).ToLocalTime().ToString("yyMMdd");
+                    var utick = cs.GetLastModifiedUtcTicks();
+                    var d = new DateTime(utick, DateTimeKind.Utc).ToLocalTime();
+                    var str = d.ToString("yyyyMMdd");
                     r = (long)Misc.Utils.Str2Int(str);
                     return true;
             }

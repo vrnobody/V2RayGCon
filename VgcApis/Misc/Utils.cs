@@ -85,7 +85,7 @@ namespace VgcApis.Misc
         public static void ClearControlKeys(Scintilla scintilla, List<Keys> extra)
         {
             // key binding
-            var keys = new List<Keys>() { Keys.F, Keys.G, Keys.H, Keys.K, Keys.N, Keys.P, Keys.S, };
+            var keys = new List<Keys>() { Keys.F, Keys.G, Keys.H, Keys.K, Keys.N, Keys.P, Keys.S };
 
             if (extra != null && extra.Count() > 0)
             {
@@ -251,7 +251,7 @@ namespace VgcApis.Misc
                 startInfo.StandardOutputEncoding = encoding;
             }
 
-            return new Process { StartInfo = startInfo, };
+            return new Process { StartInfo = startInfo };
         }
 
         public static string ExecuteAndGetStdOut(
@@ -425,6 +425,32 @@ namespace VgcApis.Misc
         #endregion
 
         #region string
+        public static string ToShortDateStr(DateTime now, string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return now.ToString("yyMMdd");
+            }
+
+            var y = now.Year % 100;
+            var m = now.Month;
+            switch (s.Length)
+            {
+                case 1:
+                    return $"{y:D2}{m:D2}0{s}";
+                case 2:
+                    return $"{y:D2}{m:D2}{s}";
+                case 3:
+                    return $"{y:D2}0{s}";
+                case 4:
+                    return $"{y:D2}{s}";
+                case 5:
+                    return $"0{s}";
+                default:
+                    return s.Substring(0, 6);
+            }
+        }
+
         public static bool TryParseSearchKeywordAsIndex(string s, out int index, out string keyword)
         {
             index = 0;
@@ -2608,7 +2634,7 @@ namespace VgcApis.Misc
                 new JsonMergeSettings
                 {
                     MergeArrayHandling = MergeArrayHandling.Merge,
-                    MergeNullValueHandling = MergeNullValueHandling.Merge
+                    MergeNullValueHandling = MergeNullValueHandling.Merge,
                 }
             );
         }
@@ -3394,6 +3420,7 @@ namespace VgcApis.Misc
         #region numbers
 
 
+
         public static List<string> EnumToList<TEnum>()
             where TEnum : struct
         {
@@ -3805,7 +3832,7 @@ namespace VgcApis.Misc
                 var paramStrs = GenParamStr(method);
                 var returnType = GetFriendlyTypeName(method.ReturnType);
                 fullNames.Add(
-                    new List<string>() { returnType, name, paramStrs.Item1, paramStrs.Item2, }
+                    new List<string>() { returnType, name, paramStrs.Item1, paramStrs.Item2 }
                 );
             }
             return fullNames;

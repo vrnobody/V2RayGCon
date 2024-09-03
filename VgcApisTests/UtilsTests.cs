@@ -15,6 +15,61 @@ namespace VgcApisTests
     [TestClass]
     public class UtilsTests
     {
+        [TestMethod]
+        public void ToShortDateStrTest()
+        {
+            var now = DateTime.UtcNow.ToLocalTime();
+            var r = ToShortDateStr(now, null);
+            Assert.AreEqual(now.ToString("yyMMdd"), r);
+            r = ToShortDateStr(now, "");
+            Assert.AreEqual(now.ToString("yyMMdd"), r);
+            r = ToShortDateStr(now, "00000");
+            Assert.AreEqual("000000", r);
+            r = ToShortDateStr(now, "0000");
+            Assert.AreEqual(now.ToString("yy0000"), r);
+            r = ToShortDateStr(now, "10000");
+            Assert.AreEqual("010000", r);
+            r = ToShortDateStr(now, "990000");
+            Assert.AreEqual("990000", r);
+            r = ToShortDateStr(now, "1234567890");
+            Assert.AreEqual("123456", r);
+        }
+
+        [DataTestMethod]
+        [DataRow("010199", "010199")]
+        [DataRow("10199", "010199")]
+        [DataRow("999999", "999999")]
+        public void ToShortDateStrYearMonthDayTest(string src, string exp)
+        {
+            var now = DateTime.UtcNow.ToLocalTime();
+            var r = ToShortDateStr(now, src);
+            Assert.AreEqual(exp, r);
+        }
+
+        [DataTestMethod]
+        [DataRow("000", "0000")]
+        [DataRow("199", "0199")]
+        [DataRow("9999", "9999")]
+        public void ToShortDateStrMonthDayTest(string src, string exp)
+        {
+            var now = DateTime.UtcNow.ToLocalTime();
+            var r = ToShortDateStr(now, src);
+            exp = $"{now.ToString("yy")}{exp}";
+            Assert.AreEqual(exp, r);
+        }
+
+        [DataTestMethod]
+        [DataRow("0", "00")]
+        [DataRow("1", "01")]
+        [DataRow("99", "99")]
+        public void ToShortDateStrDayTest(string src, string exp)
+        {
+            var now = DateTime.UtcNow.ToLocalTime();
+            var r = ToShortDateStr(now, src);
+            exp = $"{now:yyMM}{exp}";
+            Assert.AreEqual(exp, r);
+        }
+
         [DataTestMethod]
         [DataRow("", false, 0, "")]
         [DataRow("1", false, 0, "1")]
@@ -907,186 +962,6 @@ ab12-_中文: |
                 ports.Add(port);
             }
         }
-
-#if DEBUG
-        [TestMethod]
-        public void LazyGuyChainedTaskTest()
-        {
-            var str = "";
-
-            void secTask(Action done)
-            {
-                Task.Delay(200).Wait();
-                str += "2";
-                done();
-            }
-
-            void firstTask(Action done)
-            {
-                Task.Delay(200).Wait();
-                str += "1";
-                secTask(done);
-            }
-
-            var alex = new VgcApis.Libs.Tasks.LazyGuy(firstTask, 1000, 300);
-
-            str = "";
-            alex.Deadline();
-            alex.Throttle();
-            alex.Deadline();
-            alex.Throttle();
-            Assert.AreEqual("", str);
-            Task.Delay(3000).Wait();
-            Assert.AreEqual("12", str);
-
-            str = "";
-            alex.Postpone();
-            alex.Deadline();
-            alex.Postpone();
-            alex.Throttle();
-            Task.Delay(500).Wait();
-            Assert.AreEqual("", str);
-            Task.Delay(3000).Wait();
-            Assert.AreEqual("12", str);
-
-            str = "";
-            alex.Postpone();
-            Task.Delay(500).Wait();
-            alex.Postpone();
-            Task.Delay(500).Wait();
-            alex.Postpone();
-            Task.Delay(500).Wait();
-            alex.Postpone();
-            Task.Delay(500).Wait();
-            alex.Postpone();
-            Assert.AreEqual("", str);
-            Task.Delay(3000).Wait();
-            Assert.AreEqual("12", str);
-
-            str = "";
-            alex.Deadline();
-            alex.Deadline();
-            alex.Deadline();
-            Assert.AreEqual("", str);
-            Task.Delay(5000).Wait();
-            Assert.AreEqual("12", str);
-
-            str = "";
-            alex.Deadline();
-            alex.Deadline();
-            alex.Deadline();
-            alex.ForgetIt();
-            Assert.AreEqual("", str);
-            Task.Delay(3000).Wait();
-            Assert.AreEqual("", str);
-            alex.PickItUp();
-
-            str = "";
-            alex.Throttle();
-            alex.Throttle();
-            alex.Throttle();
-            alex.ForgetIt();
-            Assert.AreEqual("", str);
-            Task.Delay(3000).Wait();
-            var ok = str == "" || str == "12";
-            Assert.IsTrue(ok);
-            alex.PickItUp();
-
-            str = "";
-            alex.Throttle();
-            Task.Delay(100).Wait();
-            alex.Throttle();
-            alex.Throttle();
-            Assert.AreEqual("", str);
-            Task.Delay(5000).Wait();
-            Assert.AreEqual("1212", str);
-        }
-#endif
-
-#if DEBUG
-        [TestMethod]
-        public void LazyGuySingleTaskTest()
-        {
-            // 这个测试有概率会失败。
-
-            var str = "";
-
-            void task()
-            {
-                Task.Delay(200).Wait();
-                str += ".";
-            }
-
-            var adam = new VgcApis.Libs.Tasks.LazyGuy(task, 1000, 300);
-
-            str = "";
-            adam.Postpone();
-            Task.Delay(500).Wait();
-            Console.WriteLine("500 x 1");
-            adam.Postpone();
-            Task.Delay(500).Wait();
-            Console.WriteLine("500 x 2");
-            adam.Postpone();
-            Task.Delay(500).Wait();
-            Console.WriteLine("500 x 3");
-            adam.Postpone();
-            Task.Delay(500).Wait();
-            Console.WriteLine("500 x 4");
-            adam.Postpone();
-            Assert.AreEqual("", str);
-            Task.Delay(3000).Wait();
-            Assert.AreEqual(".", str);
-
-            str = "";
-            adam.Deadline();
-            Task.Delay(10).Wait();
-            adam.Deadline();
-            Task.Delay(10).Wait();
-            adam.Deadline();
-            Task.Delay(10).Wait();
-            adam.Deadline();
-            Task.Delay(10).Wait();
-            adam.Deadline();
-            Assert.AreEqual("", str);
-            Task.Delay(3000).Wait();
-            Assert.AreEqual(".", str);
-
-            str = "";
-            adam.Deadline();
-            Task.Delay(3000).Wait();
-            Assert.AreEqual(".", str);
-
-            str = "";
-            adam.Deadline();
-            adam.ForgetIt();
-            Task.Delay(3000).Wait();
-            Assert.AreEqual("", str);
-            adam.PickItUp();
-
-            str = "";
-            adam.Throttle();
-            adam.ForgetIt();
-            Task.Delay(1100).Wait();
-            Assert.IsTrue(str.Length < 2);
-            adam.PickItUp();
-
-            str = "";
-            adam.Throttle();
-            Task.Delay(50).Wait(); // wait for task spin up
-            adam.Throttle();
-            adam.Throttle();
-            adam.Throttle();
-            adam.Throttle();
-            Assert.IsTrue(str.Length < 2);
-            Task.Delay(3000).Wait();
-            Assert.AreEqual("..", str);
-
-            str = "";
-            adam.Throttle();
-            Task.Delay(1000).Wait();
-            Assert.AreEqual(".", str);
-        }
-#endif
 
         [DataTestMethod]
         [DataRow(null)]

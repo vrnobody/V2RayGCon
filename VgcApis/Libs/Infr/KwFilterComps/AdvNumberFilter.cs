@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using VgcApis.Interfaces.CoreCtrlComponents;
 
 namespace VgcApis.Libs.Infr.KwFilterComps
@@ -17,6 +18,24 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             this.op = op;
             this.first = firstNumber;
             this.second = secondNumber;
+
+            if (this.contentNames.Contains(NumberTagNames.Modify))
+            {
+                var now = DateTime.UtcNow.ToLocalTime();
+                this.first = Misc.Utils.Str2Int(
+                    Misc.Utils.ToShortDateStr(now, this.first.ToString())
+                );
+                this.second = Misc.Utils.Str2Int(
+                    Misc.Utils.ToShortDateStr(now, this.second.ToString())
+                );
+            }
+
+            if (this.first > this.second && this.op == NumberOperators.Between)
+            {
+                var tmp = this.first;
+                this.first = this.second;
+                this.second = tmp;
+            }
 
             this.matcher = CreateMatcher(this.op, this.first, this.second);
         }
@@ -90,6 +109,8 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region private methods
+
+
         Func<long, bool> CreateMatcher(NumberOperators numMatchingType, long first, long second)
         {
             switch (numMatchingType)
@@ -231,13 +252,6 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 if (!ok)
                 {
                     return false;
-                }
-
-                if (firstNumber > secondNumber)
-                {
-                    var tmp = firstNumber;
-                    firstNumber = secondNumber;
-                    secondNumber = tmp;
                 }
             }
             return true;

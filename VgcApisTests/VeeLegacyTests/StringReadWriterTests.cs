@@ -2,7 +2,7 @@
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace VgcApisTests
+namespace VgcApisTests.VeeLegacyTests
 {
     [TestClass]
     public class StringReadWriterTests
@@ -46,7 +46,7 @@ namespace VgcApisTests
             s = reader.Read();
             Assert.AreEqual(@"", s);
 
-            var strs = new List<string>() { null, "123", @"", @"abcd1🎈🎆🧨234中文", };
+            var strs = new List<string>() { null, "123", @"", @"abcd1🎈🎆🧨234中文" };
             stream.Position = 0;
             foreach (var str in strs)
             {

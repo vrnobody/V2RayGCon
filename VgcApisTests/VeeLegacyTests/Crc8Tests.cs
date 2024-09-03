@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace VgcApisTests
+namespace VgcApisTests.VeeLegacyTests
 {
     [TestClass]
     public class Crc8Tests

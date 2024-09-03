@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace VgcApisTests
+namespace VgcApisTests.VeeLegacyTests
 {
     [TestClass]
     public class RawBitStreamTests

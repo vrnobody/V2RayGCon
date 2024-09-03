@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base64Tests.cs" />
-    <Compile Include="BitStreamTests.cs" />
+    <Compile Include="VeeLegacyTests\BitStreamTests.cs" />
     <Compile Include="LibsTests\ArrayPoolMemoryStreamTests.cs" />
     <Compile Include="LibsTests\AsciiRoStrStreamTests.cs" />
     <Compile Include="LibsTests\StringLruCacheTests.cs" />
@@ -74,6 +74,7 @@
     <Compile Include="MiscTests\FetchTests.cs" />
     <Compile Include="LibsTests\RecycleBinTests.cs" />
     <Compile Include="LibsTests\KeywordFilterTests.cs" />
+    <Compile Include="MiscTests\LazyGuyTests.cs" />
     <Compile Include="ReflectionTests.cs" />
     <Compile Include="LibsTests\ZipExtensionsTests.cs" />
     <Compile Include="Resources\Resx\Jsons.Designer.cs">
@@ -81,15 +82,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Jsons.resx</DependentUpon>
     </Compile>
-    <Compile Include="StringReadWriterTests.cs" />
-    <Compile Include="RecorderTests.cs" />
-    <Compile Include="Crc8Tests.cs" />
+    <Compile Include="VeeLegacyTests\StringReadWriterTests.cs" />
+    <Compile Include="VeeLegacyTests\RecorderTests.cs" />
+    <Compile Include="VeeLegacyTests\Crc8Tests.cs" />
     <Compile Include="IComponentOfTests\CompLv3.cs" />
     <Compile Include="IComponentOfTests\CompLv2.cs" />
     <Compile Include="IComponentOfTests\CompLv1.cs" />
     <Compile Include="IComponentOfTests\Container.cs" />
     <Compile Include="IComponentOfTests\IPlugableTests.cs" />
-    <Compile Include="RawBitStreamTests.cs" />
+    <Compile Include="VeeLegacyTests\RawBitStreamTests.cs" />
     <Compile Include="UiTests.cs" />
     <Compile Include="UtilsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

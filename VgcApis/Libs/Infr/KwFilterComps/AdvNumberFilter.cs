@@ -62,7 +62,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 var cs = coreServ.GetCoreStates();
                 foreach (var cname in contentNames)
                 {
-                    if (TryGetContent(cs, cname, out var number) && MatchCore(number))
+                    if (TryGetContent(coreServ, cs, cname, out var number) && MatchCore(number))
                     {
                         r.Add(coreServ);
                         break;
@@ -110,7 +110,12 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             return null;
         }
 
-        bool TryGetContent(ICoreStates cs, NumberTagNames cname, out long r)
+        bool TryGetContent(
+            Interfaces.ICoreServCtrl coreServ,
+            ICoreStates cs,
+            NumberTagNames cname,
+            out long r
+        )
         {
             switch (cname)
             {
@@ -127,6 +132,11 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                     return true;
                 case NumberTagNames.Port:
                     r = cs.GetInboundPort();
+                    return true;
+                case NumberTagNames.Modify:
+                    var tick = cs.GetLastModifiedUtcTicks();
+                    var str = new DateTime(tick).ToLocalTime().ToString("yyMMdd");
+                    r = (long)Misc.Utils.Str2Int(str);
                     return true;
             }
             r = 0;

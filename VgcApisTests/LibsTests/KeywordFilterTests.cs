@@ -13,15 +13,17 @@ namespace VgcApisTests.LibsTests
         [DataRow("#lten ~ -1 2", -3, false)]
         [DataRow("#lten ~ -1 2", 3, false)]
         [DataRow("#lten ~ -1 2", 1, true)]
-        [DataRow("#upd = -1", -1, true)]
+        [DataRow("#Upd = -1", -1, true)]
         [DataRow("#upd = -2", 1, false)]
-        [DataRow("#upd ! -1", 456, true)]
+        [DataRow("#uPd ! -1", 456, true)]
         [DataRow("#upd ! -1", -1, false)]
-        [DataRow("#lten ~ -1 2", -1, true)]
-        [DataRow("#latency < 200", 123, true)]
+        [DataRow("#lTeN ~ -1 2", -1, true)]
+        [DataRow("#lAtency < 200", 123, true)]
         [DataRow("#upd > -1", 456, true)]
         [DataRow("#down > -1", -456, false)]
         [DataRow("#prt > 1080 ", 1080, true)]
+        [DataRow("#moD  >  0802", 802, true)]
+        [DataRow("#moD  <  0802", 803, false)]
         public void AdvNumberFilterMatchCoreTest(string keyword, long value, bool expResult)
         {
             var np = AdvNumberFilter.CreateFilter(keyword);
@@ -36,6 +38,8 @@ namespace VgcApisTests.LibsTests
         [DataRow("#upd ~ 123 456 aaa", NumberTagNames.Upload, NumberOperators.Between)]
         [DataRow("#download > 0000123 bbbb", NumberTagNames.Download, NumberOperators.LargerThen)]
         [DataRow("#lat < 123", NumberTagNames.Latency, NumberOperators.SmallerThen)]
+        [DataRow("#prt = 1080", NumberTagNames.Port, NumberOperators.Is)]
+        [DataRow("#mod ! 123", NumberTagNames.Modify, NumberOperators.Not)]
         public void AdvNumberFilterParseTagNameAndOperatorTest(
             string kw,
             NumberTagNames expContentName,
@@ -66,6 +70,7 @@ namespace VgcApisTests.LibsTests
         [DataRow("#upD    >    100")]
         [DataRow("#dOwN   ~    321   45")]
         [DataRow("#port  =    1080")]
+        [DataRow("#modify  =   240230")]
         public void CreateAdvNumberFilterTest(string kw)
         {
             var kwf = new KeywordFilter(kw);
@@ -117,7 +122,6 @@ namespace VgcApisTests.LibsTests
             StringTagNames.Tag3
         )]
         [DataRow("#coRe hAs raY", "ray", StringOperators.HAS, StringTagNames.Core)]
-        [DataRow("#moD  Not  0802", "0802", StringOperators.NOT, StringTagNames.Modify)]
         [DataRow("#selt uNlike  fAl", "fal", StringOperators.UNLIKE, StringTagNames.Selected)]
         public void AdvStringFilterParseTagNameAndOpTest(
             string kw,
@@ -190,9 +194,11 @@ namespace VgcApisTests.LibsTests
             Assert.IsNotNull(kws);
             Assert.AreEqual(exp, kws.MatchCore(content));
         }
+
         #endregion
 
         #region simple title filter
+
         [DataRow(" a ,😀 文", ";-,a 中,😀文,bc", true)]
         [DataRow("a", "", false)]
         [DataRow("", "aa", true)]
@@ -245,6 +251,7 @@ namespace VgcApisTests.LibsTests
             var f = kwf.GetFilter();
             Assert.IsTrue(f is SimpleTitleFilter);
         }
+
         #endregion
 
         #region simple index filter
@@ -299,6 +306,7 @@ namespace VgcApisTests.LibsTests
             var f = kwf.GetFilter();
             Assert.IsNull(f);
         }
+
         #endregion
     }
 }

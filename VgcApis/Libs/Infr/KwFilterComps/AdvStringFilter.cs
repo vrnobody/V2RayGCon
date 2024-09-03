@@ -193,10 +193,6 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 case StringTagNames.Selected:
                     r = cs.IsSelected().ToString();
                     break;
-                case StringTagNames.Modify:
-                    var tick = cs.GetLastModifiedUtcTicks();
-                    r = new DateTime(tick).ToLocalTime().ToString("yyMMdd");
-                    break;
                 default:
                     r = "";
                     return false;

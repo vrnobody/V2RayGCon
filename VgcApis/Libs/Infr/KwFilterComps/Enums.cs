@@ -14,7 +14,6 @@
         Tag3,
         Selected,
         Core,
-        Modify,
     }
 
     public enum StringOperators
@@ -36,6 +35,7 @@
         Upload,
         Download,
         Port,
+        Modify,
     }
 
     public enum NumberOperators

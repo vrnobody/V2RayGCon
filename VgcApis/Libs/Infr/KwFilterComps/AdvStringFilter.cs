@@ -145,9 +145,12 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                         {
                             return !string.IsNullOrEmpty(c);
                         }
-
                         return !Misc.Utils.PartialMatch(c, k);
                     };
+                case StringOperators.STARTS:
+                    return (c) => c.StartsWith(k);
+                case StringOperators.ENDS:
+                    return (c) => c.EndsWith(k);
                 default:
                     break;
             }

@@ -24,6 +24,8 @@
         HASNOT,
         LIKE,
         UNLIKE,
+        STARTS,
+        ENDS,
     }
 
     #endregion

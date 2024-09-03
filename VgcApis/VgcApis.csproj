@@ -172,6 +172,9 @@
     <Compile Include="UserControls\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UserControls\ExToolStripComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UserControls\RoundLabel.cs">
       <SubType>Component</SubType>
     </Compile>

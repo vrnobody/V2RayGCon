@@ -432,34 +432,34 @@ namespace VgcApis.Misc
             {
                 return Str2Int(localNow.ToString("yyyyMMdd"));
             }
-            else if (date >= 1000000)
+
+            if (date > 99_99_99)
             {
                 return date;
             }
 
-            var y = localNow.Year;
-            var m = localNow.Month;
-            long r = y / 100 * 1000000;
+            long r = (localNow.Year / 100) * 100;
 
-            if (date < 10000)
+            if (date <= 99_99)
             {
-                r += (y % 100) * 10000;
+                r += localNow.Year % 100;
             }
             else
             {
-                r += ((date / 10000) % 100) * 10000;
+                r += (date / 1_00_00) % 100;
             }
+            r *= 100;
 
-            if (date < 100)
+            if (date <= 99)
             {
-                r += m * 100;
+                r += localNow.Month;
             }
             else
             {
-                r += ((date / 100) % 100) * 100;
+                r += (date / 100) % 100;
             }
 
-            r += date % 100;
+            r = (r * 100) + (date % 100);
             return r;
         }
 

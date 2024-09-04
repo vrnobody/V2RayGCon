@@ -278,9 +278,6 @@ namespace V2RayGCon.Views.WinForms
                     toolStripComboBoxMarkFilter.SelectAll();
                     toolStripComboBoxMarkFilter.Focus();
                     break;
-                case (Keys.Escape):
-                    flyServerListContainer.Focus();
-                    return true;
                 default:
                     break;
             }

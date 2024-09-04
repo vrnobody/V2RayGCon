@@ -148,6 +148,8 @@
     <Compile Include="Controllers\Comm\DyMenuGenerator.cs" />
     <Compile Include="Controllers\Comm\IDyMenuHelper.cs" />
     <Compile Include="Controllers\CoreServerComponent\Wrapper.cs" />
+    <Compile Include="Controllers\FormMainComponent\Acm.cs" />
+    <Compile Include="Controllers\FormMainComponent\Snippets.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabCustomInboundSettings.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabCustomCoreSettings.cs" />
     <Compile Include="Controllers\FormOptionComponent\TabDefaults.cs" />

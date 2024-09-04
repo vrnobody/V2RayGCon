@@ -53,7 +53,7 @@ namespace V2RayGCon.Views.WinForms
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonShowFormLog = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripComboBoxMarkFilter = new VgcApis.UserControls.ExToolStripComboBox();
+            this.toolStripComboBoxMarkFilter = new VgcApis.UserControls.AcmComboBox();
             this.toolStripLabelSearch = new System.Windows.Forms.ToolStripLabel();
             this.mainMneuStrip = new System.Windows.Forms.MenuStrip();
             this.operationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();

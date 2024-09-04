@@ -1,6 +1,11 @@
 ﻿namespace VgcApis.Libs.Infr.KwFilterComps
 {
     #region strings
+    public enum AcmImageIndex
+    {
+        Number = 0,
+        String = 1,
+    }
 
     public enum StringTagNames
     {

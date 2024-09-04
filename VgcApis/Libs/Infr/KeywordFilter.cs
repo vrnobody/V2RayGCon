@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using VgcApis.Libs.Infr.KwFilterComps;
+using VgcApis.UserControls.AcmComboBoxComps;
 
 namespace VgcApis.Libs.Infr
 {
@@ -48,7 +49,7 @@ namespace VgcApis.Libs.Infr
         #endregion
 
         #region lookup tables
-        static readonly List<string> tips = CreateTipsCache();
+        static readonly List<AutocompleteItem> tips = CreateTipsCache();
 
         static readonly List<Func<string, ISimpleFilter>> filterCreators = new List<
             Func<string, ISimpleFilter>
@@ -76,22 +77,15 @@ namespace VgcApis.Libs.Infr
             return isIndexFilter;
         }
 
-        public static ReadOnlyCollection<string> GetTips() => tips.AsReadOnly();
+        public static ReadOnlyCollection<AutocompleteItem> GetTips() => tips.AsReadOnly();
 
         #endregion
 
         #region private methods
 
-        static List<string> CreateTipsCache()
+        static List<AutocompleteItem> CreateTipsCache()
         {
-            var r = new List<string>() { "#" };
-
-            var snames = Enum.GetNames(typeof(StringTagNames)).Select(n => $"#{n.ToLower()}");
-            r.AddRange(snames);
-
-            var numNames = Enum.GetNames(typeof(NumberTagNames)).Select(n => $"#{n.ToLower()}");
-            r.AddRange(numNames);
-
+            var r = AdvNumberFilter.GetTips().Concat(AdvStringFilter.GetTips()).ToList();
             return r;
         }
 

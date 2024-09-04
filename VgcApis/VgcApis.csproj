@@ -69,6 +69,23 @@
     <Compile Include="Interfaces\PostOfficeComponents\ILuaMail.cs" />
     <Compile Include="Interfaces\PostOfficeComponents\ILuaMailBox.cs" />
     <Compile Include="Interfaces\Services\IPostOffice.cs" />
+    <Compile Include="UserControls\AcmComboBoxComps\AutocompleteItem.cs" />
+    <Compile Include="UserControls\AcmComboBoxComps\AutocompleteItems.cs" />
+    <Compile Include="UserControls\AcmComboBoxComps\AutocompleteListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\AcmComboBoxComps\AutocompleteMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\AcmComboBoxComps\AutocompleteMenuHost.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\AcmComboBoxComps\Colors.cs" />
+    <Compile Include="UserControls\AcmComboBoxComps\EventArgs.cs" />
+    <Compile Include="UserControls\AcmComboBoxComps\ExToolStripComboBoxWrapper.cs" />
+    <Compile Include="UserControls\AcmComboBoxComps\IAutocompleteListView.cs" />
+    <Compile Include="UserControls\AcmComboBoxComps\ITextBoxWrapper.cs" />
+    <Compile Include="UserControls\AcmComboBoxComps\Range.cs" />
     <Compile Include="Libs\Infr\KwFilterComps\Enums.cs" />
     <Compile Include="Libs\Infr\KwFilterComps\SimpleIndexFilter.cs" />
     <Compile Include="Libs\Infr\KwFilterComps\SimpleTitleFilter.cs" />
@@ -172,7 +189,7 @@
     <Compile Include="UserControls\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UserControls\ExToolStripComboBox.cs">
+    <Compile Include="UserControls\AcmComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UserControls\RoundLabel.cs">
@@ -199,6 +216,7 @@
     <Compile Include="WinForms\HotKeyWindow.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="UserControls\AcmComboBoxComps\AutocompleteMenu.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -229,6 +247,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="UserControls\AcmComboBoxComps\README.md" />
     <None Include="packages.config" />
     <None Include="Resources\icons\icon_dark.ico" />
   </ItemGroup>
@@ -246,6 +265,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icons\icon_tun_mode.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons\Integer_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons\String_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons\DomainType_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons\TextBlock_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

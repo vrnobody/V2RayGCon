@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using VgcApis.Interfaces.CoreCtrlComponents;
+using VgcApis.UserControls.AcmComboBoxComps;
 
 namespace VgcApis.Libs.Infr.KwFilterComps
 {
@@ -53,21 +55,23 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         static readonly Dictionary<string, NumberTagNames> contentNameLookupTable =
             Helpers.CreateEnumLookupTable<NumberTagNames>();
 
-        static readonly Dictionary<string, NumberOperators> operatorLookupTable = new Dictionary<
-            string,
-            NumberOperators
-        >()
-        {
-            { ">", NumberOperators.LargerThen },
-            { "<", NumberOperators.SmallerThen },
-            { "=", NumberOperators.Is },
-            { "!", NumberOperators.Not },
-            { "~", NumberOperators.Between },
-        };
+        internal static readonly Dictionary<string, NumberOperators> operatorLookupTable =
+            new Dictionary<string, NumberOperators>()
+            {
+                { ">", NumberOperators.LargerThen },
+                { "<", NumberOperators.SmallerThen },
+                { "=", NumberOperators.Is },
+                { "!", NumberOperators.Not },
+                { "~", NumberOperators.Between },
+            };
+
+        static List<AutocompleteItem> tips = CreateTipsCache(operatorLookupTable.Keys);
 
         #endregion
 
         #region public methods
+        internal static ReadOnlyCollection<AutocompleteItem> GetTips() => tips.AsReadOnly();
+
         public List<Interfaces.ICoreServCtrl> Filter(List<Interfaces.ICoreServCtrl> coreServs)
         {
             var r = new List<Interfaces.ICoreServCtrl>();
@@ -104,7 +108,22 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region private methods
+        static List<AutocompleteItem> CreateTipsCache(IEnumerable<string> keys)
+        {
+            var imgIndex = (int)AcmImageIndex.Number;
+            var r = new List<AutocompleteItem>() { new AutocompleteItem("#0", imgIndex) };
 
+            foreach (var tag in Enum.GetNames(typeof(NumberTagNames)))
+            {
+                r.Add(new AutocompleteItem($"#{tag.ToLower()}", imgIndex));
+                foreach (var op in keys)
+                {
+                    r.Add(new AutocompleteItem($"#{tag.ToLower()} {op} ", imgIndex));
+                }
+            }
+
+            return r;
+        }
 
         Func<long, bool> CreateMatcher(NumberOperators numMatchingType, long first, long second)
         {

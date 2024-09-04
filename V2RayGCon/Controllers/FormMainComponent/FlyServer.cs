@@ -17,7 +17,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
         readonly FlowLayoutPanel flyPanel;
         readonly Services.Servers servers;
         readonly Services.Settings setting;
-        readonly ToolStripComboBox cboxKeyword;
+        readonly VgcApis.UserControls.AcmComboBox cboxKeyword;
         readonly ToolStripStatusLabel tslbTotal,
             tslbPrePage,
             tslbNextPage;
@@ -31,6 +31,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
         int curPageNumber = 0;
         int totalPageNumber = 1;
         bool isFocusOnFormMain;
+
+        readonly Acm acm;
 
         public FlyServer(
             Form formMain,
@@ -49,7 +51,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             this.formMain = formMain;
             this.flyPanel = panel;
-            this.cboxKeyword = cboxKeyword;
+            this.cboxKeyword = cboxKeyword as VgcApis.UserControls.AcmComboBox;
             this.tsdbtnPager = tsdbtnPager;
             this.tslbTotal = tslbTotal;
             this.tslbPrePage = tslbPrePage;
@@ -77,6 +79,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             InitFormControls(lbClearKeyword, miResizeFormMain);
             BindDragDropEvent();
+            this.acm = new Acm(this.cboxKeyword);
             WatchServers();
             RefreshFlyPanelNow();
             DoSearchOptimization();
@@ -122,6 +125,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             lazyFlyPanelUpdater?.Dispose();
             lazyStatusBarUpdater?.Dispose();
+
+            this.acm?.Dispose();
 
             RemoveAllServersConrol();
 
@@ -649,7 +654,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private void InitComboBoxKeyword()
         {
-            AddAutoCompleteItemsToComboBoxKeyword(cboxKeyword);
             UpdateMarkFilterItems(cboxKeyword);
 
             cboxKeyword.DropDown += (s, e) =>
@@ -671,6 +675,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
                     e.SuppressKeyPress = true;
                     PerformSearch();
                 }
+                else if (e.KeyCode == Keys.Escape)
+                {
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                    flyPanel.Focus();
+                }
             };
         }
 
@@ -686,14 +696,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var marks = servers.GetMarkList().Select(mk => $"#mark like {mk}").ToArray();
             marker.Items.Clear();
             marker.Items.AddRange(marks);
-        }
-
-        void AddAutoCompleteItemsToComboBoxKeyword(ToolStripComboBox box)
-        {
-            var tips = VgcApis.Libs.Infr.KeywordFilter.GetTips();
-            box.AutoCompleteCustomSource.AddRange(tips.ToArray());
-            box.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            box.AutoCompleteSource = AutoCompleteSource.CustomSource;
         }
 
         void DisposeFlyPanelControlByList(List<Views.UserControls.ServerUI> controlList)

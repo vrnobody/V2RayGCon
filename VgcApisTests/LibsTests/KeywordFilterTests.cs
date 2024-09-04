@@ -149,6 +149,22 @@ namespace VgcApisTests.LibsTests
         }
 
         [DataTestMethod]
+        [DataRow("#TiLE \"\"", "", StringOperators.LIKE, StringTagNames.Title)]
+        [DataRow("#TiLE  hAs  \"\"", "", StringOperators.HAS, StringTagNames.Title)]
+        [DataRow("#TiLE", "", StringOperators.LIKE, StringTagNames.Title)]
+        [DataRow(
+            "#tITle     \" is \" \"\"\" not  \"\"\"  ",
+            " is \"not\"",
+            StringOperators.LIKE,
+            StringTagNames.Title
+        )]
+        [DataRow("#TiLE \" is \"", " is ", StringOperators.LIKE, StringTagNames.Title)]
+        [DataRow(
+            "#tg1 not a B ,;😁! cDDE 中文",
+            "ab,;😁!cdde中文",
+            StringOperators.NOT,
+            StringTagNames.Tag1
+        )]
         [DataRow("#NaMe  IS Is", "is", StringOperators.IS, StringTagNames.Name)]
         [DataRow(
             "#tg1 not a B ,;😁! cDDE 中文",
@@ -195,6 +211,10 @@ namespace VgcApisTests.LibsTests
         }
 
         [DataTestMethod]
+        [DataRow("#tITlE   Is   \"\" ", "", true)]
+        [DataRow("#tItlE   Is   \"\" ", "   ", false)]
+        [DataRow("#tItlE   not   \" \" \" \" \" \" ", "   ", false)]
+        [DataRow("#tItlE   not   \"  \" ", "   ", true)]
         [DataRow("#tg not a", "A", false)]
         [DataRow("#tg unlike abc", "abcd", false)]
         [DataRow("#tG  uNlike abc", "bcd", true)]
@@ -359,6 +379,73 @@ namespace VgcApisTests.LibsTests
             Assert.IsNull(f);
         }
 
+        #endregion
+
+        #region text parser
+        [DataTestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        public void TextParserCoreEmptyStringTest(string src)
+        {
+            var r = Helpers.ParseTextCore(src, ' ', '"').ToList();
+            Assert.AreEqual(0, r.Count);
+        }
+
+        [DataTestMethod]
+        [DataRow("    ", "", "", "", "", "")]
+        [DataRow(" \"  \" ", "", "  ", "")]
+        [DataRow(" \"\"\" ", "", "\"", "")]
+        public void TextParserCoreTest(string src, params string[] tokens)
+        {
+            var r = Helpers.ParseTextCore(src, ' ', '"').ToList();
+            Assert.AreEqual(tokens.Length, r.Count);
+            for (int i = 0; i < tokens.Length; i++)
+            {
+                Assert.AreEqual(tokens[i], r[i]);
+            }
+        }
+
+        [DataTestMethod]
+        [DataRow("    ")]
+        [DataRow("")]
+        [DataRow(null)]
+        public void TokenizerEmptyStringTest(string src)
+        {
+            var tks = Helpers.Tokenize(src);
+            Assert.AreEqual(0, tks.Length);
+        }
+
+        [DataTestMethod]
+        [DataRow("#1 \"引号\"粘连测试\"  ", "#1", "引号\"粘连测试")]
+        [DataRow(
+            "   \"tag\"   \"not\"  \"test 测试 abc\"   def  ",
+            "tag",
+            "not",
+            "test 测试 abc",
+            "def"
+        )]
+        [DataRow(" \"tag\" \"not\" \"test\"测试 abc\" def ", "tag", "not", "test\"测试 abc", "def")]
+        [DataRow(
+            "tag is \" t  est 测试\"中文\" 测试   😊   a  b c   \"测试 😊 a b c\" ",
+            "tag",
+            "is",
+            " t  est 测试\"中文",
+            "测试",
+            "😊",
+            "a",
+            "b",
+            "c",
+            "测试 😊 a b c"
+        )]
+        public void TokenizerTest(string src, params string[] tokens)
+        {
+            var tks = Helpers.Tokenize(src);
+            Assert.AreEqual(tokens.Length, tks.Length);
+            for (int i = 0; i < tokens.Length; i++)
+            {
+                Assert.AreEqual(tokens[i], tks[i]);
+            }
+        }
         #endregion
     }
 }

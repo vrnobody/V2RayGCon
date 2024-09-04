@@ -194,10 +194,8 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             {
                 return null;
             }
-            var kws = kw.ToLower()
-                .Substring(1)
-                ?.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
+            var kws = Helpers.Tokenize(kw.ToLower().Substring(1));
             if (kws.Length < 3)
             {
                 // #latency < 100

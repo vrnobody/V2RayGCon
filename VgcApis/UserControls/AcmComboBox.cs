@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace VgcApis.UserControls
@@ -19,20 +20,11 @@ namespace VgcApis.UserControls
             set { _readonly = value; }
         }
 
-        public Point GetPositionFromCharIndex(int index)
+        public void InvokeKeyDownCallback(Keys key)
         {
-            return Point.Empty;
+            base.OnKeyDown(new KeyEventArgs(key));
         }
 
-        public Form FindForm()
-        {
-            return this.GetCurrentParent().FindForm();
-        }
-
-        public void InvokeKeyDown(Keys keyCode)
-        {
-            base.OnKeyDown(new KeyEventArgs(keyCode));
-        }
         #endregion
 
         #region disable keys
@@ -42,8 +34,8 @@ namespace VgcApis.UserControls
             {
                 case Keys.Down:
                 case Keys.Up:
-                    e.Handled = true;
                     e.SuppressKeyPress = true;
+                    e.Handled = true;
                     break;
             }
             base.OnKeyDown(e);
@@ -55,17 +47,22 @@ namespace VgcApis.UserControls
             {
                 return true;
             }
-            var action = OnAcmKeyDown;
-            if (action != null && action.GetInvocationList().Length > 0)
+
+            const int WM_KEYDOWN = 0x100;
+            if (m.Msg == WM_KEYDOWN)
             {
-                action.Invoke(this, new KeyEventArgs(keyData));
-                switch (keyData)
+                var action = OnAcmKeyDown;
+                if (action != null && action.GetInvocationList().Length > 0)
                 {
-                    case Keys.Enter:
-                    case Keys.Up:
-                    case Keys.Down:
-                    case Keys.Escape:
-                        return true;
+                    action.Invoke(this, new KeyEventArgs(keyData));
+                    switch (keyData)
+                    {
+                        case Keys.Down:
+                        case Keys.Up:
+                        case Keys.Escape:
+                        case Keys.Enter:
+                            return true;
+                    }
                 }
             }
             return base.ProcessCmdKey(ref m, keyData);

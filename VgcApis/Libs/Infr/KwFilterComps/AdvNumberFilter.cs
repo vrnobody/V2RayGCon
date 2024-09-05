@@ -65,12 +65,12 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 { "~", NumberOperators.Between },
             };
 
-        static List<AutocompleteItem> tips = CreateTipsCache(operatorLookupTable.Keys);
+        static List<string> tips = CreateTipsCache(operatorLookupTable.Keys);
 
         #endregion
 
         #region public methods
-        internal static ReadOnlyCollection<AutocompleteItem> GetTips() => tips.AsReadOnly();
+        internal static ReadOnlyCollection<string> GetTips() => tips.AsReadOnly();
 
         public List<Interfaces.ICoreServCtrl> Filter(List<Interfaces.ICoreServCtrl> coreServs)
         {
@@ -108,20 +108,17 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region private methods
-        static List<AutocompleteItem> CreateTipsCache(IEnumerable<string> keys)
+        static List<string> CreateTipsCache(IEnumerable<string> keys)
         {
-            var imgIndex = (int)AcmImageIndex.Number;
-            var r = new List<AutocompleteItem>() { new AutocompleteItem("#0", imgIndex) };
-
+            var r = new List<string>() { "#0" };
             foreach (var tag in Enum.GetNames(typeof(NumberTagNames)))
             {
-                r.Add(new AutocompleteItem($"#{tag.ToLower()}", imgIndex));
+                r.Add($"#{tag.ToLower()}");
                 foreach (var op in keys)
                 {
-                    r.Add(new AutocompleteItem($"#{tag.ToLower()} {op} ", imgIndex));
+                    r.Add($"#{tag.ToLower()} {op} ");
                 }
             }
-
             return r;
         }
 

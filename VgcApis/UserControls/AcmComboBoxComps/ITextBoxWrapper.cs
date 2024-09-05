@@ -16,7 +16,7 @@ namespace VgcApis.UserControls.AcmComboBoxComps
 
         void Focus();
 
-        void InvokeKeyDown(Keys keyCode);
+        void InvokeKeyDownCallback(Keys e);
 
         event EventHandler LostFocus;
         event KeyEventHandler KeyDown;

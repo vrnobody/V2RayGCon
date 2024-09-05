@@ -350,8 +350,8 @@ namespace VgcApis.UserControls.AcmComboBoxComps
                 if (e.Button == MouseButtons.Left)
                 {
                     SelectedItemIndex = i;
-                    ScrollToSelected();
                     Invalidate();
+                    OnItemSelected();
                 }
             }
         }
@@ -376,18 +376,6 @@ namespace VgcApis.UserControls.AcmComboBoxComps
                     HighlightedItemIndex = i;
                     Invalidate();
                 }
-            }
-        }
-
-        protected override void OnMouseDoubleClick(MouseEventArgs e)
-        {
-            int i = PointToItemIndex(e.Location);
-            if (i >= 0)
-            {
-                base.OnMouseDoubleClick(e);
-                SelectedItemIndex = i;
-                Invalidate();
-                OnItemSelected();
             }
         }
 

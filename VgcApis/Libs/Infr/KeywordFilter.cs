@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using VgcApis.Libs.Infr.KwFilterComps;
-using VgcApis.UserControls.AcmComboBoxComps;
 
 namespace VgcApis.Libs.Infr
 {
@@ -26,9 +24,6 @@ namespace VgcApis.Libs.Infr
             {
                 var err = $"Fail to create filter for keyword: \"{keyword}\"";
                 Sys.FileLogger.Error(err);
-
-                // fallback
-                // f = new SimpleIndexFilter(0);
             }
 
             if (f is SimpleIndexFilter sif)
@@ -49,7 +44,6 @@ namespace VgcApis.Libs.Infr
         #endregion
 
         #region lookup tables
-        static readonly List<AutocompleteItem> tips = CreateTipsCache();
 
         static readonly List<Func<string, ISimpleFilter>> filterCreators = new List<
             Func<string, ISimpleFilter>
@@ -63,6 +57,9 @@ namespace VgcApis.Libs.Infr
         #endregion
 
         #region public methods
+        static public ReadOnlyCollection<string> GetNumericTips() => AdvNumberFilter.GetTips();
+
+        public static ReadOnlyCollection<string> GetStringTips() => AdvStringFilter.GetTips();
 
         public ISimpleFilter GetFilter() => this.filter;
 
@@ -77,17 +74,9 @@ namespace VgcApis.Libs.Infr
             return isIndexFilter;
         }
 
-        public static ReadOnlyCollection<AutocompleteItem> GetTips() => tips.AsReadOnly();
-
         #endregion
 
         #region private methods
-
-        static List<AutocompleteItem> CreateTipsCache()
-        {
-            var r = AdvNumberFilter.GetTips().Concat(AdvStringFilter.GetTips()).ToList();
-            return r;
-        }
 
         #endregion
     }

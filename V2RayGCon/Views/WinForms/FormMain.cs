@@ -272,14 +272,18 @@ namespace V2RayGCon.Views.WinForms
         #region bind hotkey
         protected override bool ProcessCmdKey(ref Message msg, Keys keyCode)
         {
-            switch (keyCode)
+            const int WM_KEYDOWN = 0x100;
+            if (msg.Msg == WM_KEYDOWN)
             {
-                case (Keys.Control | Keys.F):
-                    toolStripComboBoxMarkFilter.SelectAll();
-                    toolStripComboBoxMarkFilter.Focus();
-                    break;
-                default:
-                    break;
+                switch (keyCode)
+                {
+                    case Keys.Control | Keys.F:
+                        toolStripComboBoxMarkFilter.SelectAll();
+                        toolStripComboBoxMarkFilter.Focus();
+                        break;
+                    default:
+                        break;
+                }
             }
             return base.ProcessCmdKey(ref msg, keyCode);
         }

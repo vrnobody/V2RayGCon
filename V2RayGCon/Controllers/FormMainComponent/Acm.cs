@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using VgcApis.UserControls;
 using VgcApis.UserControls.AcmComboBoxComps;
@@ -30,20 +31,27 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         AutocompleteMenu CreateAcm(AcmComboBox box)
         {
-            var tips = VgcApis.Libs.Infr.KeywordFilter.GetTips();
-            var snippets = new Snippets(box, tips);
-            var c = box.Control;
-
             var m = new AutocompleteMenu()
             {
                 MaximumSize = new Size(300, 200),
                 ToolTipDuration = 20000,
                 SearchPattern = "#",
                 MinFragmentLength = 1,
+                ImageList = new ImageList(),
             };
 
+            m.ImageList.Images.Add(Properties.Resources.DomainType_16x);
+            m.ImageList.Images.Add(Properties.Resources.TextBlock_16x);
+
+            var numSnippets = VgcApis
+                .Libs.Infr.KeywordFilter.GetNumericTips()
+                .Select(t => new Snippet(t, 0));
+            var strSnippets = VgcApis
+                .Libs.Infr.KeywordFilter.GetStringTips()
+                .Select(t => new Snippet(t, 1));
+
             m.TargetControlWrapper = new ExToolStripComboBoxWrapper(box);
-            m.SetAutocompleteItems(snippets);
+            m.SetAutocompleteItems(numSnippets.Concat(strSnippets));
             return m;
         }
         #endregion

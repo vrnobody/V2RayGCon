@@ -65,18 +65,6 @@ namespace VgcApis.UserControls.AcmComboBoxComps
 
             SearchPattern = @"[\w\.]";
             MinFragmentLength = 2;
-
-            var imgs = new Image[2];
-            imgs[(int)Libs.Infr.KwFilterComps.AcmImageIndex.Number] = Properties
-                .Resources
-                .DomainType_16x;
-            imgs[(int)Libs.Infr.KwFilterComps.AcmImageIndex.String] = Properties
-                .Resources
-                .TextBlock_16x;
-            var imgList = new ImageList();
-            imgList.Images.AddRange(imgs);
-
-            this.ImageList = imgList;
         }
 
         protected override void Dispose(bool disposing)
@@ -429,11 +417,11 @@ namespace VgcApis.UserControls.AcmComboBoxComps
                         return;
                     case Keys.Escape:
                         timer.Stop();
-                        TargetControlWrapper.InvokeKeyDown(Keys.Escape);
+                        TargetControlWrapper.InvokeKeyDownCallback(Keys.Escape);
                         e.SuppressKeyPress = true;
                         return;
                     case Keys.Enter:
-                        TargetControlWrapper.InvokeKeyDown(Keys.Enter);
+                        TargetControlWrapper.InvokeKeyDownCallback(Keys.Enter);
                         e.SuppressKeyPress = true;
                         return;
                 }

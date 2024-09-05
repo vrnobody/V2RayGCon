@@ -30,7 +30,8 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region lookup tables
-        static List<AutocompleteItem> tips = CreateTipsCache();
+
+        static List<string> tips = CreateTipsCache();
 
         static readonly Dictionary<string, StringTagNames> tagNameLookupTable =
             Helpers.CreateEnumLookupTable<StringTagNames>();
@@ -49,7 +50,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 
 
         #region public methods
-        internal static ReadOnlyCollection<AutocompleteItem> GetTips() => tips.AsReadOnly();
+        internal static ReadOnlyCollection<string> GetTips() => tips.AsReadOnly();
 
         public List<Interfaces.ICoreServCtrl> Filter(List<Interfaces.ICoreServCtrl> coreServs)
         {
@@ -109,20 +110,17 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region private methods
-        static List<AutocompleteItem> CreateTipsCache()
+        static List<string> CreateTipsCache()
         {
-            var imgIndex = (int)AcmImageIndex.String;
-            var r = new List<AutocompleteItem>() { };
-
+            var r = new List<string>() { };
             foreach (var tag in Enum.GetNames(typeof(StringTagNames)))
             {
-                r.Add(new AutocompleteItem($"#{tag.ToLower()}", imgIndex));
+                r.Add($"#{tag.ToLower()}");
                 foreach (var op in Enum.GetNames(typeof(StringOperators)))
                 {
-                    r.Add(new AutocompleteItem($"#{tag.ToLower()} {op.ToLower()} ", imgIndex));
+                    r.Add($"#{tag.ToLower()} {op.ToLower()} ");
                 }
             }
-
             return r;
         }
         #endregion

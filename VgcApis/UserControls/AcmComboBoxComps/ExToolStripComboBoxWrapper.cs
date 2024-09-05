@@ -29,16 +29,16 @@ namespace VgcApis.UserControls.AcmComboBoxComps
             set => target.Text = value ?? "";
         }
 
-        public void InvokeKeyDown(Keys keyCode)
-        {
-            target.InvokeKeyDown(keyCode);
-        }
-
         public void Focus()
         {
             target.Focus();
             var p = Math.Max(0, target.Text.Length);
             target.Select(p, 0);
+        }
+
+        public void InvokeKeyDownCallback(Keys key)
+        {
+            target.InvokeKeyDownCallback(key);
         }
 
         //Events

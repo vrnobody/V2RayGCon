@@ -34,7 +34,7 @@ namespace V2RayGCon.Services
 
         static readonly long TIMEOUT = Core.SpeedtestTimeout;
 
-        readonly ConcurrentQueue<VgcApis.Interfaces.ICoreServCtrl> coreServs =
+        readonly ConcurrentQueue<VgcApis.Interfaces.ICoreServCtrl> latencyTestingQueue =
             new ConcurrentQueue<VgcApis.Interfaces.ICoreServCtrl>();
 
         ConfigMgr() { }
@@ -124,7 +124,7 @@ namespace V2RayGCon.Services
 
         public void AddToSpeedTestQueue(VgcApis.Interfaces.ICoreServCtrl coreServ)
         {
-            coreServs.Enqueue(coreServ);
+            latencyTestingQueue.Enqueue(coreServ);
             Interlocked.Increment(ref setting.SpeedtestCounter);
             WakeupLatencyTester();
         }
@@ -400,7 +400,7 @@ namespace V2RayGCon.Services
                 return;
             }
 
-            if (coreServs.Count > 0 && coreServs.TryDequeue(out var coreServ))
+            if (latencyTestingQueue.Count > 0 && latencyTestingQueue.TryDequeue(out var coreServ))
             {
                 if (coreServ != null)
                 {

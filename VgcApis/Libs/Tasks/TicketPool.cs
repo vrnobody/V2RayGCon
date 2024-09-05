@@ -8,6 +8,8 @@ namespace VgcApis.Libs.Tasks
 {
     public class TicketPool : IDisposable
     {
+        int historyMaxSize = 0;
+
         int count = 0;
         int size = 0;
 
@@ -130,10 +132,16 @@ namespace VgcApis.Libs.Tasks
                 throw new ArgumentOutOfRangeException("Num should be a positve number.");
             }
 
+            if (count >= size)
+            {
+                return false;
+            }
+
             var n = Interlocked.Add(ref count, num);
             if (n <= size)
             {
                 emptyWaiter.Reset();
+                MarkDownMaxSize(n);
                 return true;
             }
             Interlocked.Add(ref count, -1 * num);
@@ -148,6 +156,8 @@ namespace VgcApis.Libs.Tasks
 
         public int GetPoolSize() => size;
 
+        public int GetHistoryMaxSize() => historyMaxSize;
+
         public void SetPoolSize(int capacity)
         {
             if (capacity < 0)
@@ -160,9 +170,18 @@ namespace VgcApis.Libs.Tasks
         #endregion
 
         #region private methods
+        void MarkDownMaxSize(int n)
+        {
+            var v = historyMaxSize;
+            while (n > v)
+            {
+                v = Interlocked.CompareExchange(ref historyMaxSize, n, v);
+            }
+        }
+
         void CheckWaitQ()
         {
-            if (count > size)
+            if (count >= size)
             {
                 return;
             }

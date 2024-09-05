@@ -82,6 +82,7 @@ namespace VgcApisTests.LibsTests
                 Assert.IsTrue(waiter.IsCompleted);
             }
             Task.WaitAll(waiters.ToArray());
+            Assert.AreEqual(5, pool.GetHistoryMaxSize());
 
             foreach (var log in logs)
             {
@@ -169,6 +170,7 @@ namespace VgcApisTests.LibsTests
             Task.WaitAll(tasks.ToArray());
             Assert.IsTrue(pool.Count() == 0);
             Assert.IsTrue(pool.GetWaitQueueSize() == 0);
+            Assert.AreEqual(5, pool.GetHistoryMaxSize());
         }
 #endif
 
@@ -194,10 +196,12 @@ namespace VgcApisTests.LibsTests
             Thread.Sleep(5000);
             Assert.IsTrue(pool.Count() == 5);
             Assert.IsTrue(pool.GetWaitQueueSize() > 0);
+            Assert.AreEqual(5, pool.GetHistoryMaxSize());
             pool.Dispose();
             Task.WaitAll(tasks.ToArray());
             Assert.IsTrue(pool.Count() > 0);
             Assert.IsTrue(pool.GetWaitQueueSize() == 0);
+            Assert.AreEqual(5, pool.GetHistoryMaxSize());
         }
 #endif
 
@@ -208,10 +212,19 @@ namespace VgcApisTests.LibsTests
             Assert.IsTrue(pool.TryTake(5));
             Assert.IsFalse(pool.IsEmpty());
             Assert.IsTrue(pool.Count() == 5);
+            Assert.AreEqual(5, pool.GetHistoryMaxSize());
 
             Assert.IsTrue(pool.TryTake(5));
             Assert.IsTrue(pool.Count() == 10);
             Assert.IsTrue(pool.IsEmpty());
+            Assert.AreEqual(10, pool.GetHistoryMaxSize());
+
+            Assert.IsFalse(pool.TryTake(1));
+            Assert.IsFalse(pool.TryTake(1));
+            Assert.IsFalse(pool.TryTake(1));
+            Assert.IsTrue(pool.Count() == 10);
+            Assert.IsTrue(pool.IsEmpty());
+            Assert.AreEqual(10, pool.GetHistoryMaxSize());
 
             Assert.IsTrue(pool.GetPoolSize() == 10);
             pool.SetPoolSize(15);
@@ -234,6 +247,8 @@ namespace VgcApisTests.LibsTests
             Assert.IsTrue(pool.WaitOne(0));
             pool.Return(10);
             Assert.IsTrue(pool.Count() == 0);
+
+            Assert.AreEqual(11, pool.GetHistoryMaxSize());
         }
     }
 }

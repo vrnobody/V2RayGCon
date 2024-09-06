@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace VgcApis.Libs.Infr.KwFilterComps
 {

@@ -21,82 +21,76 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             return r;
         }
 
-        internal static string[] Tokenize(string str)
-        {
-            if (string.IsNullOrWhiteSpace(str))
-            {
-                return new string[] { };
-            }
-            var r = ParseTextCore(str, ' ', '"').Where(t => !string.IsNullOrEmpty(t)).ToArray();
-            return r;
-        }
-
         // credit: https://stackoverflow.com/questions/14655023/split-a-string-that-has-white-spaces-unless-they-are-enclosed-within-quotes
         // usage: var parsedText = ParseText(streamR, ' ', '"');
-        internal static IEnumerable<string> ParseTextCore(
-            string line,
-            char delimiter,
-            char textQualifier
-        )
+        internal static string[] Tokenize(string line)
         {
-            if (line == null)
-                yield break;
-            else
+            if (string.IsNullOrWhiteSpace(line))
             {
-                char prevChar = '\0';
-                char nextChar = '\0';
-                char currentChar = '\0';
+                return new string[0];
+            }
 
-                bool inString = false;
+            var ZERO = '\0';
 
-                StringBuilder token = new StringBuilder();
+            char delimiter = ' ';
+            char textQualifier = '"';
+            var seps = new HashSet<char>($"()|&{delimiter}".Select(c => c));
 
-                for (int i = 0; i < line.Length; i++)
+            var r = new List<string>();
+
+            char prevChar = ZERO;
+            char nextChar = ZERO;
+            char currentChar = ZERO;
+            bool inString = false;
+
+            StringBuilder token = new StringBuilder();
+            for (int i = 0; i < line.Length; i++)
+            {
+                prevChar = i > 0 ? line[i - 1] : ZERO;
+                currentChar = line[i];
+                nextChar = (i + 1 < line.Length) ? line[i + 1] : ZERO;
+
+                if (
+                    currentChar == textQualifier
+                    && (prevChar == ZERO || seps.Contains(prevChar))
+                    && !inString
+                )
                 {
-                    currentChar = line[i];
-
-                    if (i > 0)
-                        prevChar = line[i - 1];
-                    else
-                        prevChar = '\0';
-
-                    if (i + 1 < line.Length)
-                        nextChar = line[i + 1];
-                    else
-                        nextChar = '\0';
-
-                    if (
-                        currentChar == textQualifier
-                        && (prevChar == '\0' || prevChar == delimiter)
-                        && !inString
-                    )
-                    {
-                        inString = true;
-                        continue;
-                    }
-
-                    if (
-                        currentChar == textQualifier
-                        && (nextChar == '\0' || nextChar == delimiter)
-                        && inString
-                    )
-                    {
-                        inString = false;
-                        continue;
-                    }
-
-                    if (currentChar == delimiter && !inString)
-                    {
-                        yield return token.ToString();
-                        token = token.Remove(0, token.Length);
-                        continue;
-                    }
-
-                    token = token.Append(currentChar);
+                    inString = true;
+                    continue;
                 }
 
-                yield return token.ToString();
+                if (
+                    currentChar == textQualifier
+                    && (nextChar == ZERO || seps.Contains(nextChar))
+                    && inString
+                )
+                {
+                    inString = false;
+                    continue;
+                }
+
+                if (!inString && seps.Contains(currentChar))
+                {
+                    if (token.Length > 0)
+                    {
+                        r.Add(token.ToString());
+                        token = token.Remove(0, token.Length);
+                    }
+                    if (currentChar != delimiter)
+                    {
+                        r.Add(currentChar.ToString());
+                    }
+                    continue;
+                }
+                token = token.Append(currentChar);
             }
+            if (token.Length > 0)
+            {
+                r.Add(token.ToString());
+                token = token.Remove(0, token.Length);
+            }
+            return r.ToArray();
         }
     }
 }

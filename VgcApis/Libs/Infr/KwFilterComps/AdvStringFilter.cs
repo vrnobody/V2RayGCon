@@ -250,15 +250,20 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             return ok;
         }
 
-        internal static AdvStringFilter CreateFilter(string kw)
+        internal static AdvStringFilter CreateFilter(string[] kws)
         {
-            if (string.IsNullOrEmpty(kw) || !kw.StartsWith("#") || "#".Equals(kw))
+            if (kws.Length < 1)
             {
                 return null;
             }
-            var kws = Helpers.Tokenize(kw.ToLower().Substring(1));
 
-            if (!TryParseTagName(kws[0], out var cnames))
+            var tag = kws[0];
+            if (string.IsNullOrEmpty(tag) || !tag.StartsWith("#") || tag.Length < 2)
+            {
+                return null;
+            }
+
+            if (!TryParseTagName(tag.Substring(1), out var cnames))
             {
                 return null;
             }

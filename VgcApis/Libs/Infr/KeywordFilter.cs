@@ -9,15 +9,22 @@ namespace VgcApis.Libs.Infr
     {
         public KeywordFilter(string keyword)
         {
-            ISimpleFilter f = null;
+            ISimpleFilter f = SimpleIndexFilter.CreateFilter(keyword);
 
-            foreach (var creator in filterCreators)
+            keyword = keyword?.ToLower() ?? "";
+            if (f == null)
             {
-                f = creator.Invoke(keyword);
-                if (f != null)
-                {
-                    break;
-                }
+                f = SimpleTitleFilter.CreateFilter(keyword);
+            }
+
+            string[] tokens = Helpers.Tokenize(keyword);
+            if (f == null)
+            {
+                f = AdvNumberFilter.CreateFilter(tokens);
+            }
+            if (f == null)
+            {
+                f = AdvStringFilter.CreateFilter(tokens);
             }
 
             if (f == null)
@@ -41,19 +48,6 @@ namespace VgcApis.Libs.Infr
         readonly ISimpleFilter filter;
         readonly Highlighter emptyHighlighter = new Highlighter();
 
-        #endregion
-
-        #region lookup tables
-
-        static readonly List<Func<string, ISimpleFilter>> filterCreators = new List<
-            Func<string, ISimpleFilter>
-        >()
-        {
-            (kw) => SimpleIndexFilter.CreateFilter(kw),
-            (kw) => AdvStringFilter.CreateFilter(kw),
-            (kw) => AdvNumberFilter.CreateFilter(kw),
-            (kw) => SimpleTitleFilter.CreateFilter(kw),
-        };
         #endregion
 
         #region public methods

@@ -204,21 +204,21 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         }
 
         // remove later
-        internal static AdvNumberFilter CreateFilter(string kw)
+        internal static AdvNumberFilter CreateFilter(string[] kws)
         {
-            if (string.IsNullOrEmpty(kw) || !kw.StartsWith("#") || "#".Equals(kw))
-            {
-                return null;
-            }
-
-            var kws = Helpers.Tokenize(kw.ToLower().Substring(1));
             if (kws.Length < 3)
             {
                 // #latency < 100
                 return null;
             }
 
-            if (!TryParseContenName(kws[0], out var cnames))
+            var tag = kws[0];
+            if (string.IsNullOrEmpty(tag) || !tag.StartsWith("#") || tag.Length < 2)
+            {
+                return null;
+            }
+
+            if (!TryParseContenName(tag.Substring(1), out var cnames))
             {
                 return null;
             }

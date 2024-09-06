@@ -20,7 +20,8 @@ namespace VgcApisTests.LibsTests
         [DataRow("#moD  >  2", 3, true)]
         public void AdvNumberFilterTagModifyDayTest(string keyword, long value, bool expResult)
         {
-            var np = AdvNumberFilter.CreateFilter(keyword);
+            string[] tokens = Helpers.Tokenize(keyword.ToLower());
+            var np = AdvNumberFilter.CreateFilter(tokens);
             var now = DateTime.UtcNow.ToLocalTime();
 
             Assert.IsNotNull(np);
@@ -38,7 +39,8 @@ namespace VgcApisTests.LibsTests
         [DataRow("#moD  >  0802", 803, true)]
         public void AdvNumberFilterTagModifyMonthDayTest(string keyword, long value, bool expResult)
         {
-            var np = AdvNumberFilter.CreateFilter(keyword);
+            string[] tokens = Helpers.Tokenize(keyword.ToLower());
+            var np = AdvNumberFilter.CreateFilter(tokens);
             var d = DateTime.UtcNow.ToLocalTime().Year * 10000;
 
             Assert.IsNotNull(np);
@@ -51,7 +53,8 @@ namespace VgcApisTests.LibsTests
         [DataRow("#moD  <  240802", 240803, false)]
         public void AdvNumberFilterTagModifyYMDTest(string keyword, long value, bool expResult)
         {
-            var np = AdvNumberFilter.CreateFilter(keyword);
+            string[] tokens = Helpers.Tokenize(keyword.ToLower());
+            var np = AdvNumberFilter.CreateFilter(tokens);
             var d = (DateTime.UtcNow.ToLocalTime().Year / 100) * 1000000;
 
             Assert.IsNotNull(np);
@@ -79,7 +82,8 @@ namespace VgcApisTests.LibsTests
         [DataRow("#moD  <  120240802", 120240803, false)]
         public void AdvNumberFilterMatchCoreTest(string keyword, long value, bool expResult)
         {
-            var np = AdvNumberFilter.CreateFilter(keyword);
+            string[] tokens = Helpers.Tokenize(keyword.ToLower());
+            var np = AdvNumberFilter.CreateFilter(tokens);
             Assert.IsNotNull(np);
             Assert.AreEqual(expResult, np.MatchCore(value));
         }
@@ -99,7 +103,8 @@ namespace VgcApisTests.LibsTests
             NumberOperators expOp
         )
         {
-            var parser = AdvNumberFilter.CreateFilter(kw);
+            string[] tokens = Helpers.Tokenize(kw.ToLower());
+            var parser = AdvNumberFilter.CreateFilter(tokens);
             Assert.IsNotNull(parser);
 
             var cnames = parser.GetTagNames();
@@ -199,7 +204,8 @@ namespace VgcApisTests.LibsTests
             params StringTagNames[] expContentNames
         )
         {
-            var parser = AdvStringFilter.CreateFilter(kw);
+            string[] tokens = Helpers.Tokenize(kw.ToLower());
+            var parser = AdvStringFilter.CreateFilter(tokens);
             Assert.IsNotNull(parser);
             Assert.AreEqual(expKw, parser.GetParsedKeyword());
             Assert.AreEqual(expMatchType, parser.GetOperator());
@@ -263,7 +269,8 @@ namespace VgcApisTests.LibsTests
         [DataRow("#tg", "", true)]
         public void AdvStringFilterMatchCoreTest(string keyword, string content, bool exp)
         {
-            var kws = AdvStringFilter.CreateFilter(keyword);
+            string[] tokens = Helpers.Tokenize(keyword.ToLower());
+            var kws = AdvStringFilter.CreateFilter(tokens);
             Assert.IsNotNull(kws);
             Assert.AreEqual(exp, kws.MatchCore(content));
         }
@@ -384,28 +391,42 @@ namespace VgcApisTests.LibsTests
 
         #region text parser
         [DataTestMethod]
-        [DataRow(null)]
-        [DataRow("")]
-        public void TextParserCoreEmptyStringTest(string src)
+        [DataRow("#! (#mk is \" \")|", "#!", "(", "#mk", "is", " ", ")", "|")]
+        [DataRow(
+            " ( #mk     is     \" \" \"&\"    )    &   (    #smm   not    \"a ) (b c\"",
+            "(",
+            "#mk",
+            "is",
+            " ",
+            "&",
+            ")",
+            "&",
+            "(",
+            "#smm",
+            "not",
+            "a ) (b c"
+        )]
+        [DataRow(
+            "(#mk is \"\")&(#smm not \"a b c\")",
+            "(",
+            "#mk",
+            "is",
+            // "", empty string is ignored!
+            ")",
+            "&",
+            "(",
+            "#smm",
+            "not",
+            "a b c",
+            ")"
+        )]
+        public void TokenizeExpressionTest(string src, params string[] tokens)
         {
-            var r = Helpers.ParseTextCore(src, ' ', '"').ToList();
-            // GitHub Action: 1
-            // local test: 0
-            var exp = new List<int> { 0, 1 };
-            Assert.IsTrue(exp.Contains(r.Count));
-        }
-
-        [DataTestMethod]
-        [DataRow("    ", "", "", "", "", "")]
-        [DataRow(" \"  \" ", "", "  ", "")]
-        [DataRow(" \"\"\" ", "", "\"", "")]
-        public void TextParserCoreTest(string src, params string[] tokens)
-        {
-            var r = Helpers.ParseTextCore(src, ' ', '"').ToList();
-            Assert.AreEqual(tokens.Length, r.Count);
+            var tks = Helpers.Tokenize(src);
+            Assert.AreEqual(tokens.Length, tks.Length);
             for (int i = 0; i < tokens.Length; i++)
             {
-                Assert.AreEqual(tokens[i], r[i]);
+                Assert.AreEqual(tokens[i], tks[i]);
             }
         }
 
@@ -413,7 +434,7 @@ namespace VgcApisTests.LibsTests
         [DataRow("    ")]
         [DataRow("")]
         [DataRow(null)]
-        public void TokenizerEmptyStringTest(string src)
+        public void TokenizeEmptyStringTest(string src)
         {
             var tks = Helpers.Tokenize(src);
             Assert.AreEqual(0, tks.Length);
@@ -441,7 +462,7 @@ namespace VgcApisTests.LibsTests
             "c",
             "测试 😊 a b c"
         )]
-        public void TokenizerTest(string src, params string[] tokens)
+        public void TokenizeStringTest(string src, params string[] tokens)
         {
             var tks = Helpers.Tokenize(src);
             Assert.AreEqual(tokens.Length, tks.Length);

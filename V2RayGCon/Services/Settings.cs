@@ -1295,8 +1295,7 @@ namespace V2RayGCon.Services
         {
             try
             {
-                // LOH 85000 bytes
-                using (var stream = new VgcApis.Libs.Streams.ArrayPoolMemoryStream(null, 64 * 1024))
+                using (var stream = new VgcApis.Libs.Streams.ArrayPoolMemoryStream())
                 using (var w = new StreamWriter(stream))
                 {
                     VgcApis.Libs.Sys.FileLogger.Info(

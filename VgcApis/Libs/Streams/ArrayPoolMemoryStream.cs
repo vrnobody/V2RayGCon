@@ -13,10 +13,13 @@ namespace VgcApis.Libs.Streams
         public ArrayPoolMemoryStream()
             : this(null) { }
 
-        public ArrayPoolMemoryStream(Encoding encoding, int buffSize = 4 * 1024)
+        public ArrayPoolMemoryStream(Encoding encoding)
         {
             m_Pool = ArrayPool<byte>.Shared;
-            _currentbuffer = m_Pool.Rent(buffSize);
+
+            // less GC when using 4k memory block
+            _currentbuffer = m_Pool.Rent(4 * 1024);
+
             _Length = 0;
             _CanWrite = true;
             _Position = 0;

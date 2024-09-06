@@ -15,6 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace VgcApis.UserControls.AcmComboBoxComps
@@ -593,8 +594,20 @@ namespace VgcApis.UserControls.AcmComboBoxComps
             var tb = TargetControlWrapper;
             string text = tb.Text;
             var result = new Range(tb);
-            result.Start = text.StartsWith(searchPattern) ? 0 : text.Length;
-            result.End = result.Start + 1;
+            if (string.IsNullOrEmpty(text))
+            {
+                return result;
+            }
+            var regex = new Regex(searchPattern);
+            result.End = text.Length;
+            var i = text.Length - 1;
+            while (i > 0)
+            {
+                if (regex.IsMatch(text[i].ToString()))
+                    break;
+                i--;
+            }
+            result.Start = Math.Max(i, 0);
             return result;
         }
 

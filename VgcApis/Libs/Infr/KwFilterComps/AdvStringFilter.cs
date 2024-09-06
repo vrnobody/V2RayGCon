@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using VgcApis.Interfaces.CoreCtrlComponents;
-using VgcApis.UserControls.AcmComboBoxComps;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace VgcApis.Libs.Infr.KwFilterComps
 {
@@ -118,7 +118,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 r.Add($"#{tag.ToLower()}");
                 foreach (var op in Enum.GetNames(typeof(StringOperators)))
                 {
-                    r.Add($"#{tag.ToLower()} {op.ToLower()} ");
+                    r.Add($"#{tag.ToLower()} {op.ToLower()}");
                 }
             }
             return r;
@@ -248,6 +248,16 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 }
             }
             return ok;
+        }
+
+        internal static AdvStringFilter CreateFilter(string kw)
+        {
+            if (string.IsNullOrEmpty(kw) || !kw.StartsWith("#") || "#".Equals(kw))
+            {
+                return null;
+            }
+            var kws = Helpers.ParseLiteral(kw.ToLower());
+            return CreateFilter(kws);
         }
 
         internal static AdvStringFilter CreateFilter(string[] kws)

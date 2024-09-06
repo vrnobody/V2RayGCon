@@ -36,12 +36,13 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 MaximumSize = new Size(300, 200),
                 ToolTipDuration = 20000,
                 SearchPattern = "#",
-                MinFragmentLength = 1,
+                MinFragmentLength = 0,
                 ImageList = new ImageList(),
             };
 
             m.ImageList.Images.Add(Properties.Resources.DomainType_16x);
             m.ImageList.Images.Add(Properties.Resources.TextBlock_16x);
+            m.ImageList.Images.Add(Properties.Resources.Attribute_16x);
 
             var numSnippets = VgcApis
                 .Libs.Infr.KeywordFilter.GetNumericTips()
@@ -49,9 +50,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var strSnippets = VgcApis
                 .Libs.Infr.KeywordFilter.GetStringTips()
                 .Select(t => new Snippet(t, 1));
+            var boolExprSnippets = VgcApis
+                .Libs.Infr.KeywordFilter.GetBoolExprTips()
+                .Select(t => new Snippet(t, 2));
 
             m.TargetControlWrapper = new ExToolStripComboBoxWrapper(box);
-            m.SetAutocompleteItems(numSnippets.Concat(strSnippets));
+            m.SetAutocompleteItems(numSnippets.Concat(strSnippets).Concat(boolExprSnippets));
             return m;
         }
         #endregion

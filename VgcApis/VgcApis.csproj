@@ -69,6 +69,8 @@
     <Compile Include="Interfaces\PostOfficeComponents\ILuaMail.cs" />
     <Compile Include="Interfaces\PostOfficeComponents\ILuaMailBox.cs" />
     <Compile Include="Interfaces\Services\IPostOffice.cs" />
+    <Compile Include="Libs\Infr\KwFilterComps\Modles.cs" />
+    <Compile Include="Libs\Infr\KwFilterComps\BoolExprFilter.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\AutocompleteItem.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\AutocompleteItems.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\AutocompleteListView.cs">

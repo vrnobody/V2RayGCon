@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace VgcApis.Libs.Infr.KwFilterComps
 {
-    public interface ISimpleFilter
+    public interface IFilter
     {
         List<Interfaces.ICoreServCtrl> Filter(List<Interfaces.ICoreServCtrl> coreServs);
+    }
 
+    public interface ISimpleFilter : IFilter
+    {
         Highlighter GetHighlighter();
     }
 

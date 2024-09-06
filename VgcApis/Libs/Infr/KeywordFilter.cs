@@ -9,22 +9,15 @@ namespace VgcApis.Libs.Infr
     {
         public KeywordFilter(string keyword)
         {
-            ISimpleFilter f = SimpleIndexFilter.CreateFilter(keyword);
-
             keyword = keyword?.ToLower() ?? "";
-            if (f == null)
+            ISimpleFilter f = null;
+            foreach (var creator in creators)
             {
-                f = SimpleTitleFilter.CreateFilter(keyword);
-            }
-
-            string[] tokens = Helpers.Tokenize(keyword);
-            if (f == null)
-            {
-                f = AdvNumberFilter.CreateFilter(tokens);
-            }
-            if (f == null)
-            {
-                f = AdvStringFilter.CreateFilter(tokens);
+                f = creator.Invoke(keyword);
+                if (f != null)
+                {
+                    break;
+                }
             }
 
             if (f == null)
@@ -41,6 +34,18 @@ namespace VgcApis.Libs.Infr
             this.filter = f;
         }
 
+        #region tables
+        static List<Func<string, ISimpleFilter>> creators = new List<Func<string, ISimpleFilter>>()
+        {
+            (kw) => SimpleIndexFilter.CreateFilter(kw),
+            (kw) => SimpleTitleFilter.CreateFilter(kw),
+            (kw) => BoolExprFilter.CreateFilter(kw),
+            (kw) => AdvNumberFilter.CreateFilter(kw),
+            (kw) => AdvStringFilter.CreateFilter(kw),
+        };
+
+        #endregion
+
         #region properties
 
         readonly bool isIndexFilter = false;
@@ -51,7 +56,9 @@ namespace VgcApis.Libs.Infr
         #endregion
 
         #region public methods
-        static public ReadOnlyCollection<string> GetNumericTips() => AdvNumberFilter.GetTips();
+        static public ReadOnlyCollection<string> GetBoolExprTips() => BoolExprFilter.GetTips();
+
+        public static ReadOnlyCollection<string> GetNumericTips() => AdvNumberFilter.GetTips();
 
         public static ReadOnlyCollection<string> GetStringTips() => AdvStringFilter.GetTips();
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using VgcApis.UserControls;
 
 namespace VgcApis.UserControls.AcmComboBoxComps
 {

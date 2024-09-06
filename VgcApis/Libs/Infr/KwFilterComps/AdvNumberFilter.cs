@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using VgcApis.Interfaces.CoreCtrlComponents;
-using VgcApis.UserControls.AcmComboBoxComps;
 
 namespace VgcApis.Libs.Infr.KwFilterComps
 {
@@ -116,7 +115,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 r.Add($"#{tag.ToLower()}");
                 foreach (var op in keys)
                 {
-                    r.Add($"#{tag.ToLower()} {op} ");
+                    r.Add($"#{tag.ToLower()} {op}");
                 }
             }
             return r;
@@ -201,6 +200,16 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 }
             }
             return ok;
+        }
+
+        internal static AdvNumberFilter CreateFilter(string kw)
+        {
+            if (string.IsNullOrEmpty(kw) || !kw.StartsWith("#") || "#".Equals(kw))
+            {
+                return null;
+            }
+            var kws = Helpers.ParseLiteral(kw.ToLower());
+            return CreateFilter(kws);
         }
 
         // remove later

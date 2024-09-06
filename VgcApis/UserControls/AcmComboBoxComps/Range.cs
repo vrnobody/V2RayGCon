@@ -16,16 +16,35 @@
             get
             {
                 var text = TargetWrapper.Text;
-                if (string.IsNullOrEmpty(text))
+                if (
+                    string.IsNullOrEmpty(text)
+                    || Start < 0
+                    || Start >= text.Length
+                    || Start >= End
+                    || End > text.Length
+                )
+                {
                     return "";
-                if (Start >= text.Length)
-                    return "";
-                if (End > text.Length)
-                    return "";
-
-                return TargetWrapper.Text.Substring(Start, End - Start);
+                }
+                return text.Substring(Start, End - Start);
             }
-            set { TargetWrapper.Text = value; }
+            set
+            {
+                var text = TargetWrapper.Text;
+                if (Start >= text.Length)
+                {
+                    return;
+                }
+
+                if (Start < 1)
+                {
+                    TargetWrapper.Text = value;
+                    return;
+                }
+
+                text = text.Substring(0, Start) + value;
+                TargetWrapper.Text = text;
+            }
         }
     }
 }

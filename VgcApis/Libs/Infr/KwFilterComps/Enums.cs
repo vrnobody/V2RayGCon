@@ -1,5 +1,16 @@
 ﻿namespace VgcApis.Libs.Infr.KwFilterComps
 {
+    #region expr
+    internal enum ExprTokenTypes
+    {
+        OPEN_PAREN,
+        CLOSE_PAREN,
+        BINARY_OP,
+        LITERAL,
+        EXPR_END,
+    }
+    #endregion
+
     #region strings
 
     public enum StringTagNames
@@ -29,6 +40,7 @@
     }
 
     #endregion
+
     #region numbers
 
     public enum NumberTagNames

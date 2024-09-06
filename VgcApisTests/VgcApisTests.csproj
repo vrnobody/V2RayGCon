@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base64Tests.cs" />
+    <Compile Include="LibsTests\BoolExprFilterTests.cs" />
     <Compile Include="VeeLegacyTests\BitStreamTests.cs" />
     <Compile Include="LibsTests\ArrayPoolMemoryStreamTests.cs" />
     <Compile Include="LibsTests\AsciiRoStrStreamTests.cs" />

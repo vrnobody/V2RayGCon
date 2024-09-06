@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using VgcApis.UserControls;
+﻿using System.Text.RegularExpressions;
 using VgcApis.UserControls.AcmComboBoxComps;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace V2RayGCon.Controllers.FormMainComponent
 {
@@ -16,20 +10,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         public override CompareResult Compare(string _)
         {
-            var ctext = this.Parent.TargetControlWrapper.Text;
+            var ctext = this.Parent.Fragment.Text;
             if (string.IsNullOrEmpty(ctext))
-            {
-                return CompareResult.Hidden;
-            }
-
-            try
-            {
-                if (Regex.IsMatch(ctext, @"^#\d+"))
-                {
-                    return CompareResult.Hidden;
-                }
-            }
-            catch
             {
                 return CompareResult.Hidden;
             }
@@ -46,9 +28,16 @@ namespace V2RayGCon.Controllers.FormMainComponent
             return CompareResult.Hidden;
         }
 
+        #region public methods
+
         public override string GetTextForReplace()
         {
             return Text;
         }
+        #endregion
+
+        #region private methods
+
+        #endregion
     }
 }

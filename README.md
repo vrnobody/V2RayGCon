@@ -29,8 +29,9 @@ Require .net framework 4.5+
 WinFormUI  
 ![Demo v1.4.3.5 GIF](https://vrnobody.github.io/V2RayGCon/images/forms/demo_basics_v1.4.3.5.gif)  
   
-WebUI [手册manual](https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/40-web-ui/)  
-![Web UI light](https://vrnobody.github.io/V2RayGCon/images/luna/web_ui_light_v0.0.2.0.png)  
+WebUI [手册manual](https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/web-ui/)  
+
+![Web UI light](https://vrnobody.github.io/V2RayGCon/images/webui/light_v0.0.2.0.png)  
   
 <details>
 <summary><b>引用按字母排序 Credits (in alphabetical order)</b></summary>  

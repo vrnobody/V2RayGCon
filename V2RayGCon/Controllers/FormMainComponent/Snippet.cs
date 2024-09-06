@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using VgcApis.UserControls;
 using VgcApis.UserControls.AcmComboBoxComps;
 using static System.Net.Mime.MediaTypeNames;
@@ -17,6 +18,18 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             var ctext = this.Parent.TargetControlWrapper.Text;
             if (string.IsNullOrEmpty(ctext))
+            {
+                return CompareResult.Hidden;
+            }
+
+            try
+            {
+                if (Regex.IsMatch(ctext, @"^#\d+"))
+                {
+                    return CompareResult.Hidden;
+                }
+            }
+            catch
             {
                 return CompareResult.Hidden;
             }

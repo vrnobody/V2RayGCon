@@ -290,10 +290,6 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         #region UI event handler
-        private void toolStripComboBoxMarkFilter_MouseEnter(object sender, EventArgs e)
-        {
-            toolStripComboBoxMarkFilter.Focus();
-        }
 
         readonly List<ToolStripItem> tsItems = new List<ToolStripItem>();
 

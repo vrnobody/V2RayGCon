@@ -1,0 +1,174 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Sys库示例 - V2RayGCon手册</title><meta name=generator content="Hugo 0.119.0"><link href=https://vrnobody.github.io/V2RayGConindex.xml rel=alternate type=application/rss+xml><link rel=canonical href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/sys-api/><link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/theme.min.css><script src=https://use.fontawesome.com/releases/v5.0.6/js/all.js></script>
+<link rel=stylesheet href=https://vrnobody.github.io/V2RayGCon/css/chroma.min.css><script src=https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js></script>
+<script src=https://vrnobody.github.io/V2RayGCon/js/bundle.js></script><style>:root{}.highlight{line-height:1.1}.highlight div{background-color:#eed!important}.highlight pre{background-color:#eed!important}</style><meta property="og:title" content="Sys库示例"><meta property="og:description" content="存取键值对 1 2 3 4 5 6 7 8 9 10 11 12 13 -- 用SnapCacheApply()申请的SnapCache在申请者脚本结束时自动清理 local token = std.Sys:SnapCacheApply() -- key的"><meta property="og:type" content="article"><meta property="og:url" content="https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/sys-api/"><meta property="article:section" content="03-plugins"><meta property="article:published_time" content="2020-04-14T17:35:52+08:00"><meta property="article:modified_time" content="2020-04-14T17:35:52+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Sys库示例"><meta name=twitter:description content="存取键值对 1 2 3 4 5 6 7 8 9 10 11 12 13 -- 用SnapCacheApply()申请的SnapCache在申请者脚本结束时自动清理 local token = std.Sys:SnapCacheApply() -- key的"><meta itemprop=name content="Sys库示例"><meta itemprop=description content="存取键值对 1 2 3 4 5 6 7 8 9 10 11 12 13 -- 用SnapCacheApply()申请的SnapCache在申请者脚本结束时自动清理 local token = std.Sys:SnapCacheApply() -- key的"><meta itemprop=datePublished content="2020-04-14T17:35:52+08:00"><meta itemprop=dateModified content="2020-04-14T17:35:52+08:00"><meta itemprop=wordCount content="1008"><meta itemprop=keywords content></head><body><div class=container><header><h1>V2RayGCon手册</h1><img src=https://img.shields.io/github/release/vrnobody/V2RayGCon.svg alt="Release Badge"></header><div class=content-container><main><h1>Sys库示例</h1><h5 id=存取键值对>存取键值对</h5><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=display:flex><span><span style=color:green>-- 用SnapCacheApply()申请的SnapCache在申请者脚本结束时自动清理</span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> token = std.Sys:SnapCacheApply()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green>-- key的类型是string, value的类型是object所以存什么都可以</span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> key = <span style=color:#a31515>&#34;hello&#34;</span>
+</span></span><span style=display:flex><span>std.Sys:SnapCacheSet(token, key, <span style=color:#a31515>&#34;world&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green>-- 知道token的其他脚本可以通过Get获取内容</span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> value = std.Sys:SnapCacheGet(token, key)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>print(<span style=color:#a31515>&#34;token:&#34;</span>, token)
+</span></span><span style=display:flex><span>print(<span style=color:#a31515>&#34;key:&#34;</span>, key)
+</span></span><span style=display:flex><span>print(<span style=color:#a31515>&#34;value:&#34;</span>, value)
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=display:flex><span><span style=color:green>-- 也可以自定义token</span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> token = <span style=color:#a31515>&#34;任意字符串&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> ok = std.Sys:SnapCacheCreate(token)
+</span></span><span style=display:flex><span>print(<span style=color:#a31515>&#34;success:&#34;</span>, ok)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green>-- 但是用完要手工删除token，不然还会占内存</span>
+</span></span><span style=display:flex><span>std.Sys:SnapCacheRemove(token)
+</span></span></code></pre></td></tr></table></div></div><h5 id=启动系统中的程序>启动系统中的程序</h5><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=display:flex><span><span style=color:green>-- 在浏览器中打开网址  </span>
+</span></span><span style=display:flex><span>std.Sys:Start(<span style=color:#a31515>&#34;https://www.baidu.com&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green>-- 还可以填.lnk路径，启动系统中的程序  </span>
+</span></span></code></pre></td></tr></table></div></div><h5 id=运行可执行文件>运行可执行文件</h5><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=display:flex><span><span style=color:green>-- 假设trojan的位置是V2RayGCon/trojan/trojan.exe</span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> trojan = <span style=color:#a31515>&#34;trojan/trojan.exe&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> args = <span style=color:#a31515>&#34;-c trojan/config.json&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green>-- 代码</span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> proc = std.Sys:Run(trojan, args, <span style=color:#00f>nil</span>, <span style=color:#00f>nil</span>, <span style=color:#00f>false</span>, <span style=color:#00f>true</span>)
+</span></span><span style=display:flex><span><span style=color:#00f>while</span> <span style=color:#00f>not</span> std.Signal:Stop() <span style=color:#00f>and</span> <span style=color:#00f>not</span> std.Sys:HasExited(proc) <span style=color:#00f>do</span>
+</span></span><span style=display:flex><span>    std.Misc:Sleep(1000)
+</span></span><span style=display:flex><span><span style=color:#00f>end</span>
+</span></span><span style=display:flex><span><span style=color:#00f>if</span> <span style=color:#00f>not</span> std.Sys:HasExited(proc) <span style=color:#00f>then</span>
+</span></span><span style=display:flex><span>    std.Sys:SendStopSignal(proc)
+</span></span><span style=display:flex><span>    std.Sys:WaitForExit(proc)
+</span></span><span style=display:flex><span><span style=color:#00f>end</span>
+</span></span></code></pre></td></tr></table></div></div><h5 id=多个脚本之间通信>多个脚本之间通信</h5><p>开2个窗口，同时运行以下脚本</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=display:flex><span><span style=color:#00f>local</span> from = <span style=color:#a31515>&#34;Alex&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> to = <span style=color:#a31515>&#34;Bob&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> mailbox = std.Sys:CreateMailBox(from)
+</span></span><span style=display:flex><span><span style=color:#00f>if</span> mailbox == <span style=color:#00f>nil</span> <span style=color:#00f>then</span>
+</span></span><span style=display:flex><span>    from, to = to, from
+</span></span><span style=display:flex><span>    mailbox = std.Sys:CreateMailBox(from)
+</span></span><span style=display:flex><span><span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>assert(mailbox ~= <span style=color:#00f>nil</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>mailbox:SendCode(to, 1)
+</span></span><span style=display:flex><span>print(<span style=color:#a31515>&#34;等待&#34;</span>, to, <span style=color:#a31515>&#34;的信息...&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#00f>repeat</span>
+</span></span><span style=display:flex><span>    <span style=color:#00f>local</span> mail = mailbox:Wait()
+</span></span><span style=display:flex><span>    <span style=color:#00f>if</span> mail ~= <span style=color:#00f>nil</span> <span style=color:#00f>then</span>
+</span></span><span style=display:flex><span>        <span style=color:#00f>local</span> code = mail:GetCode()
+</span></span><span style=display:flex><span>        print(<span style=color:#a31515>&#34;来自:&#34;</span>, mail:GetAddress(), <span style=color:#a31515>&#34;信息:&#34;</span>, code)
+</span></span><span style=display:flex><span>        std.Misc:Sleep(800)
+</span></span><span style=display:flex><span>        mailbox:ReplyCode(mail, code + 1)
+</span></span><span style=display:flex><span>    <span style=color:#00f>end</span>
+</span></span><span style=display:flex><span><span style=color:#00f>until</span> mail == <span style=color:#00f>nil</span>
+</span></span></code></pre></td></tr></table></div></div><p>Mailbox里面还有个SendAndWait()函数，配合Sys:CreateMailBox(name, capacity)使用，相当于一个golang的channel。</p><h5 id=全局热键>全局热键</h5><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=display:flex><span><span style=color:#00f>local</span> hkMgr = require(<span style=color:#a31515>&#39;3rd/neolua/mods/hotkey&#39;</span>).new()
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span><span style=color:#00f>local</span> hkCfgs = {
+</span></span><span style=display:flex><span>    <span style=color:green>-- ctrl + 5 打开记事本</span>
+</span></span><span style=display:flex><span>    {<span style=color:#a31515>&#34;D5&#34;</span>, <span style=color:#00f>function</span>() std.Sys:Run(<span style=color:#a31515>&#34;notepad.exe&#34;</span>) <span style=color:#00f>end</span>},
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:green>-- ctrl + 6 打开cmd.exe</span>
+</span></span><span style=display:flex><span>    {<span style=color:#a31515>&#34;D6&#34;</span>, <span style=color:#00f>function</span>() std.Sys:Run(<span style=color:#a31515>&#34;cmd.exe&#34;</span>) <span style=color:#00f>end</span>},
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:green>-- ctrl + 7 打开画图</span>
+</span></span><span style=display:flex><span>    {<span style=color:#a31515>&#34;D7&#34;</span>, <span style=color:#00f>function</span>() std.Sys:Run(<span style=color:#a31515>&#34;mspaint.exe&#34;</span>) <span style=color:#00f>end</span>},
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#00f>for</span> index, hkCfg <span style=color:#00f>in</span> ipairs(hkCfgs) <span style=color:#00f>do</span>
+</span></span><span style=display:flex><span>    <span style=color:#00f>if</span> <span style=color:#00f>not</span> hkMgr:Reg(hkCfg[1], hkCfg[2], <span style=color:#00f>true</span>, <span style=color:#00f>true</span>, <span style=color:#00f>false</span>) <span style=color:#00f>then</span>
+</span></span><span style=display:flex><span>        <span style=color:#00f>local</span> msg = <span style=color:#a31515>&#34;注册热键[&#34;</span> .. hkCfg[1] .. <span style=color:#a31515>&#34;]失败&#34;</span>
+</span></span><span style=display:flex><span>        assert(<span style=color:#00f>false</span>, msg)
+</span></span><span style=display:flex><span>    <span style=color:#00f>end</span>
+</span></span><span style=display:flex><span><span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#00f>while</span> <span style=color:#00f>not</span> std.Signal:Stop() <span style=color:#00f>do</span>
+</span></span><span style=display:flex><span>    <span style=color:#00f>if</span> <span style=color:#00f>not</span> hkMgr:Wait(1500) <span style=color:#00f>then</span>
+</span></span><span style=display:flex><span>        print(<span style=color:#a31515>&#34;请按 Ctrl + Alt + 5 或 6 或 7&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:#00f>end</span>
+</span></span><span style=display:flex><span><span style=color:#00f>end</span>
+</span></span><span style=display:flex><span>hkMgr:Destroy()
+</span></span></code></pre></td></tr></table></div></div><p>基本步骤是先用<code>Reg</code>把快捷键和某个函数绑定，然后按需选 <code>Check()</code>轮询 或者 <code>Wait()</code>阻塞 等待按键消息。<br>其实<code>hotkey</code>模块只是对<code>std.Sys</code>库中的<code>std.Sys:RegisterHotKey(...)</code>等几个函数简单包装了一下。<br>如果你想硬核一点可以直接使用<code>std.Sys</code>库中的函数。具体代码参考<code>3rd/neolua/mods/hotkey.lua</code>。</p><p>小技巧：不知道键码（比如上面的 &ldquo;D5&rdquo;, &ldquo;D6&rdquo;, &ldquo;D7&rdquo;）的时候，可以打开ProxySetter插件来查。</p><div class=edit-meta>Last updated on 14 Apr 2020<br>Published on 14 Apr 2020<br><a href=03-plugins/04-neoluna/sys-api.md/edit/master/content/03-plugins/04-neoluna/sys-api.md class=edit-page><i class="fas fa-pen-square"></i> Edit on GitHub</a></div><nav class=pagination><a class="nav nav-prev" href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/io-ctrols/ title=用户交互控件><i class="fas fa-arrow-left" aria-hidden=true></i> Prev - 用户交互控件</a>
+<a class="nav nav-next" href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/web-ui/ title="Web UI">Next - Web UI <i class="fas fa-arrow-right" aria-hidden=true></i></a></nav><footer><p class=powered>Powered by <a href=https://gohugo.io>Hugo</a>. Theme by <a href=https://themes.gohugo.io/hugo-theme-techdoc/>TechDoc</a>. Designed by <a href=https://github.com/thingsym/hugo-theme-techdoc>Thingsym</a>.</p></footer></main><div class=sidebar><nav class=open-menu><ul><li><a href=https://vrnobody.github.io/V2RayGCon>Home</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/>使用说明</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/tun-and-system-proxy/>TUN和系统代理</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/options/>订阅及各项设置</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/search/>搜索功能</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/import-share-links/>导入链接(重要)</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/front-proxy/>前置代理</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/multiple-inst-lnk/>多实例</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/autorun/>开机启动</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/share-links/>各种分享链接</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/01-usage/keyboard-shortcut/>快捷键</a></li></ul></li><li class=parent><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/>插件</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/01-luna/>Luna</a></li><li class=parent><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/>NeoLuna</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/basics/>开始使用</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/io-ctrols/>用户交互控件</a></li><li class=active><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/sys-api/>Sys库示例</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/web-ui/>Web UI</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/hy2-decoder/>导入hy2://...链接</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/hot-swap-outbounds/>热切换节点</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/all-apis/>全部函数</a></li></ul></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/02-pacman/>Pacman</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/03-plugins/03-proxysetter/>ProxySetter</a></li></ul></li><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/>开发相关</a><ul class=sub-menu><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/01-release-log/>发布记录</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/obsolete-features/>将删除的功能</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/02-services-relationship/>各服务调用关系</a></li><li><a href=https://vrnobody.github.io/V2RayGCon/04-dev/03-concepts/>设计理念</a></li></ul></li></ul></nav><div class=sidebar-footer></div></div></div><a href=# id=backtothetop-fixed class=backtothetop data-backtothetop-duration=600 data-backtothetop-easing=easeOutQuart data-backtothetop-fixed-fadein=1000 data-backtothetop-fixed-fadeout=1000 data-backtothetop-fixed-bottom=10 data-backtothetop-fixed-right=20><span class="fa-layers fa-fw"><i class="fas fa-circle"></i>
+<i class="fas fa-arrow-circle-up"></i></span></a></div></body></html>

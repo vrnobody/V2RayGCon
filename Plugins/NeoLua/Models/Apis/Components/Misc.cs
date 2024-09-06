@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using Neo.IronLua;
@@ -279,7 +280,7 @@ namespace NeoLuna.Models.Apis.Components
         public LuaTable DecodeShareLink(string shareLink)
         {
             var kv = vgcSlinkMgr.DecodeShareLinkToConfig(shareLink);
-            var r = new LuaTable { ["name"] = kv.name, ["config"] = kv.config, };
+            var r = new LuaTable { ["name"] = kv.name, ["config"] = kv.config };
             return r;
         }
 
@@ -340,9 +341,9 @@ namespace NeoLuna.Models.Apis.Components
             foreach (var row in rows.Values)
             {
                 var cells = row.Value as LuaTable;
-                foreach (var cell in cells.Values)
+                foreach (var kv in cells.Values)
                 {
-                    ts.Add(cell.GetType());
+                    ts.Add(kv.Value.GetType());
                 }
                 return ts;
             }
@@ -361,9 +362,9 @@ namespace NeoLuna.Models.Apis.Components
             var ts = GetTypesFromRows(rows);
 
             var idx = 0;
-            foreach (var column in columns.Values)
+            foreach (var kv in columns.Values)
             {
-                var name = column.ToString();
+                var name = kv.Value.ToString();
                 if (ts == null)
                 {
                     d.Columns.Add(name);
@@ -378,17 +379,15 @@ namespace NeoLuna.Models.Apis.Components
             {
                 return d;
             }
-            var rowsKey = rows.Members.Keys;
-            foreach (var rowkey in rowsKey)
-            {
-                var row = rows[rowkey] as LuaTable;
-                var items = new List<object>();
-                foreach (var item in row.Values)
-                {
-                    items.Add(item);
-                }
 
-                d.Rows.Add(items.ToArray());
+            foreach (var row in rows.Values)
+            {
+                var cells = row.Value as LuaTable;
+                var items = cells?.Select(c => c.Value).ToArray();
+                if (items != null)
+                {
+                    d.Rows.Add(items);
+                }
             }
             return d;
         }

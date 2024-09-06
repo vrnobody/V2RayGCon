@@ -2,7 +2,7 @@
 title: "搜索功能"
 date: 2020-02-01T16:12:15+08:00
 draft: false
-weight: 25
+weight: 30
 ---
 
 `v2.0.1+`  

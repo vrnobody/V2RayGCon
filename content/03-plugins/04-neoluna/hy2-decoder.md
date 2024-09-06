@@ -2,11 +2,22 @@
 title: "导入hy2://...链接"
 date: 2020-02-01T12:31:46+08:00
 draft: false
-weight: 10
+weight: 50
 ---
 
 hysteria2支持把分享链接写进配置，所以手搓个解码器很简单。  
-在NeoLuna的脚本编辑器中粘贴并运行以下代码：  
+
+##### 添加hy2自定义core
+{{< figure src="../../../images/neoluna/hy2_custom_core_settings.png" >}}  
+注：需要下载hysteria2内核放到3rd/hy2目录内  
+
+##### 添加hy2http配置模板
+```yaml
+http:
+  listen: %host%:%port%
+```
+
+##### 执行以下代码
 ```lua
 -- 自定义core名称
 local customCoreName = "hy2"
@@ -88,13 +99,3 @@ end
 
 Main()
 ```
-
-hy2http模板如下：  
-```yaml
-http:
-  listen: %host%:%port%
-```
-
-hy2的自定义core配置：  
-{{< figure src="../../../images/luna/hy2_custom_core_settings.png" >}}  
-注：需要下载hysteria2内核放到3rd/hy2目录内  

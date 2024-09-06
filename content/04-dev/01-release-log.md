@@ -186,7 +186,7 @@ Luna Sys库添加一堆Lua相关函数
 ##### `v1.6.9.0`
 修复core下载器无法使用的问题  
 支持Xray-core的reality（仅可用于vless和trojan协议）  
-添加一个网页版客户瑞，详见[Web UI]({{< relref "03-plugins/01-luna/40-web-ui.md" >}})  
+添加一个网页版客户瑞，详见 WebUI
 修复lua.modules.reader.lua中的一个bug  
 Luna插件添加string.split(), Web:Ping()等多个函数  
 替换随机数生成器  

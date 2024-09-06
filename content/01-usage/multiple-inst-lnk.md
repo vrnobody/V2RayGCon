@@ -2,10 +2,11 @@
 title: "多实例"
 date: 2020-02-06T11:05:55+08:00
 draft: false
-weight: 35
+weight: 60
 ---
 
 `v1.8.9` 开始支持同时运行多个V2RayGCon图形界面实例。  
+
 双击V2RayGCon.exe时，默认使用当前目录下的userSettings.json作为配置文件。可以通过命令行参数指定配置文件名，开启更多实例。假设软件安装在 `c:\vgc\V2RayGCon.exe`，那么在cmd执行以下命令：
 ```bash
 c:
@@ -29,5 +30,3 @@ V2RayGCon.exe -s="us2.json" -t="233"
  * 不要玩路径穿越。比如一个实例用 `-s="us3.json"`，另一个实例用 `-s="../vgc/us3.json"`
  * 更新V2RayGCon前需要手动退出其他实例，只保留一个实例
  * 更新core前需要停止其他所有实例的服务器，否则会出现文件被占用无法写入
-
-暂时想到这么多，欢迎补充。  

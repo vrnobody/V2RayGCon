@@ -12,3 +12,5 @@ weight: 10
 {{< figure src="../../images/systray/menu_proxy_setter.png" >}}
 
 更详细的用法请看[ProxySetter使用说明]({{< relref "03-plugins/03-proxysetter.md" >}})
+
+{{< figure src="../../images/plugins/proxysetter_tuna.png" >}}

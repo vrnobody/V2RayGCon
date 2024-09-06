@@ -2,11 +2,11 @@
 title: "各种分享链接"
 date: 2020-02-01T22:27:56+08:00
 draft: false
-weight: 60
+weight: 80
 ---
 
 ##### socks://...
-`v1.8.9`起支持v2rayN的socks://auth@host:port#remark链接  
+`v1.8.9`起支持v2rayN的`socks://auth@host:port#remark`链接  
 auth是把`username:password`进行base64编码得出  
 host如果是IPv6要加中括号  
 remark需要进行URI encode  
@@ -57,12 +57,15 @@ p.s. 这个学院派的标准设想得很美好，然而经过两年多（2023-0
 ##### vmess://...
 仅支持v2rayN的vmess(ver2)分享链接，不支持其他vmess分享链接  
 
-##### 平均长度(bytes)  
-vless/trojan: 200  
-vmess: 300  
-config.json: 1000  
-v2cfg v2: 800  
-userSettings.json: 240  
+##### 各种链接长度
+| 链接类型 | 平均长度(bytes) |
+| ------ | --- |
+| vless | 200 |
+| trojan | 200 |
+| vmess | 300 |
+| config.json | 1000 |
+| v2cfg v2 | 800 |
+| userSettings.json | 240 |
 
 [1]: https://github.com/vrnobody/V2RayGCon/blob/1.8.3/V2RayGCon/Services/ShareLinkComponents/VeeDecoder.cs "VeeDecoder.cs"
 [2]: https://github.com/v2ray/v2ray-core/issues/1392 "v2ray-core #1392"

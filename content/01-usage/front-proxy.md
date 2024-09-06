@@ -2,12 +2,12 @@
 title: "前置代理"
 date: 2020-02-06T11:05:55+08:00
 draft: false
-weight: 45
+weight: 50
 ---
 
 `v1.9.5.7+`
 
-v2ray的outbound里面有个proxySettings配置项，可以用来实现前置代理。  
+V2Ray的outbound里面有个proxySettings配置项，可以用来实现前置代理。  
 首先在选项窗口里面添加两个模板：  
 ```json
 {
@@ -52,6 +52,6 @@ v2ray的outbound里面有个proxySettings配置项，可以用来实现前置代
 ##### 落地代理
 当A是B的前置代理时，B就是A的落地代理。  
 
-提示：  
+小技巧：  
 把http出站替换为freedom出站，就可以使用分片功能。  
 前置代理不一定是单个服务器，还可以是多个outbounds组成的负载均衡器。落地代理也可以是负载均衡器。  

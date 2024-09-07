@@ -51,13 +51,10 @@ namespace V2RayGCon.Controllers.Comm
         {
             var serverList = servers.GetAllServersOrderByIndex();
             var servInfos = new List<string[]>();
-            for (int i = 0; i < serverList.Count; i++)
+            foreach (var coreServ in serverList)
             {
-                var coreServ = serverList[i];
                 var coreState = coreServ.GetCoreStates();
-
                 var name = string.Format("{0}.{1}", coreState.GetIndex(), coreState.GetLongName());
-
                 var uid = coreServ.GetCoreStates().GetUid();
                 servInfos.Add(new string[] { name, uid });
             }

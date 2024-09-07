@@ -30,7 +30,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
             this.keywords = keywords;
         }
 
-        public virtual List<ICoreServCtrl> Filter(List<ICoreServCtrl> servs)
+        public virtual IReadOnlyCollection<ICoreServCtrl> Filter(
+            IReadOnlyCollection<ICoreServCtrl> servs
+        )
         {
             throw new NotImplementedException();
         }
@@ -52,7 +54,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
         public NotExpr(BoolExpr left, BoolExpr right)
             : base(left, right, null) { }
 
-        public override List<ICoreServCtrl> Filter(List<ICoreServCtrl> servs)
+        public override IReadOnlyCollection<ICoreServCtrl> Filter(
+            IReadOnlyCollection<ICoreServCtrl> servs
+        )
         {
             var l = left?.Filter(servs) ?? new List<ICoreServCtrl>();
             var r = right?.Filter(l) ?? new List<ICoreServCtrl>();
@@ -71,7 +75,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
         public AndExpr(BoolExpr left, BoolExpr right)
             : base(left, right, null) { }
 
-        public override List<ICoreServCtrl> Filter(List<ICoreServCtrl> servs)
+        public override IReadOnlyCollection<ICoreServCtrl> Filter(
+            IReadOnlyCollection<ICoreServCtrl> servs
+        )
         {
             var l = left?.Filter(servs) ?? new List<ICoreServCtrl>();
             var r = right?.Filter(l) ?? new List<ICoreServCtrl>();
@@ -84,7 +90,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
         public OrExpr(BoolExpr left, BoolExpr right)
             : base(left, right, null) { }
 
-        public override List<ICoreServCtrl> Filter(List<ICoreServCtrl> servs)
+        public override IReadOnlyCollection<ICoreServCtrl> Filter(
+            IReadOnlyCollection<ICoreServCtrl> servs
+        )
         {
             var l = left?.Filter(servs) ?? new List<ICoreServCtrl>();
             var r = right?.Filter(servs) ?? new List<ICoreServCtrl>();
@@ -104,7 +112,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
         public LeafExpr(List<ExprToken> src)
             : base(null, null, src.Select(tk => tk.value).ToArray()) { }
 
-        public override List<ICoreServCtrl> Filter(List<ICoreServCtrl> servs)
+        public override IReadOnlyCollection<ICoreServCtrl> Filter(
+            IReadOnlyCollection<ICoreServCtrl> servs
+        )
         {
             var sf = AdvStringFilter.CreateFilter(this.keywords);
             if (sf != null)

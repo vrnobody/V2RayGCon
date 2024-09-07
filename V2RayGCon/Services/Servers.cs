@@ -168,7 +168,7 @@ namespace V2RayGCon.Services
         List<ICoreServCtrl> sortedCoreServListCache = null;
         readonly object sortedCoreServListCacheLocker = new object();
 
-        public List<ICoreServCtrl> GetAllServersOrderByIndex()
+        public IReadOnlyCollection<ICoreServCtrl> GetAllServersOrderByIndex()
         {
             lock (sortedCoreServListCacheLocker)
             {
@@ -177,7 +177,7 @@ namespace V2RayGCon.Services
                     sortedCoreServListCache = queryHandler.GetAllServers(false);
                 }
                 // copy
-                return sortedCoreServListCache.ToList();
+                return sortedCoreServListCache;
             }
         }
 

@@ -584,7 +584,7 @@ namespace V2RayGCon.Services
             void onClick(object s, EventArgs a) => servers.RestartOneServerByUid(uid);
             var item = new ToolStripMenuItem(title, null, onClick)
             {
-                Checked = coreServ.GetCoreCtrl().IsCoreRunning()
+                Checked = coreServ.GetCoreCtrl().IsCoreRunning(),
             };
             item.Disposed += (s, a) => item.Click -= onClick;
             return item;
@@ -612,7 +612,7 @@ namespace V2RayGCon.Services
                     I18N.SwitchToRandomTlsserver,
                     Properties.Resources.SFTPConnection_16x,
                     (s, a) => SwitchRandomTlsServer()
-                )
+                ),
             };
 
             return qm;
@@ -681,7 +681,7 @@ namespace V2RayGCon.Services
 
             List<ToolStripItem> mis = new List<ToolStripItem>
             {
-                qsMenuCompos[qsMenuNames.StopAllServer]
+                qsMenuCompos[qsMenuNames.StopAllServer],
             };
 
             if (miTopNthServers != null && miTopNthServers.Count > 0)
@@ -765,9 +765,14 @@ namespace V2RayGCon.Services
             {
                 var cs = new List<ICoreServCtrl>();
                 var servs = servers.GetAllServersOrderByIndex();
-                for (int i = start; i < servs.Count && i < end; i++)
+                var count = 0;
+                foreach (var serv in servs)
                 {
-                    cs.Add(servs[i]);
+                    if (count >= start && count < end)
+                    {
+                        cs.Add(serv);
+                    }
+                    count++;
                 }
                 return ServerList2MenuItems(cs);
             }
@@ -1095,7 +1100,7 @@ namespace V2RayGCon.Services
 
             var texts = new List<string>
             {
-                $"{Misc.Utils.GetAppNameAndVer()} - {I18N.Servers}: {servers.Count()}"
+                $"{Misc.Utils.GetAppNameAndVer()} - {I18N.Servers}: {servers.Count()}",
             };
 
             if (curTunMode)

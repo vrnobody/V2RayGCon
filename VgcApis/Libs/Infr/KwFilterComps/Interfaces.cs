@@ -4,7 +4,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 {
     public interface IFilter
     {
-        List<Interfaces.ICoreServCtrl> Filter(List<Interfaces.ICoreServCtrl> coreServs);
+        IReadOnlyCollection<Interfaces.ICoreServCtrl> Filter(
+            IReadOnlyCollection<Interfaces.ICoreServCtrl> coreServs
+        );
     }
 
     public interface ISimpleFilter : IFilter

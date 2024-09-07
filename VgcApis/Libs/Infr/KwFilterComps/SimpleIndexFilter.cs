@@ -19,7 +19,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #region public methods
         public int GetIndex() => this.index;
 
-        public List<Interfaces.ICoreServCtrl> Filter(List<Interfaces.ICoreServCtrl> coreServs)
+        public IReadOnlyCollection<Interfaces.ICoreServCtrl> Filter(
+            IReadOnlyCollection<Interfaces.ICoreServCtrl> coreServs
+        )
         {
             return coreServs;
         }

@@ -176,9 +176,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void SelectAllServersWhere(Func<VgcApis.Interfaces.ICoreServCtrl, bool> condiction)
         {
-            servers
-                .GetAllServersOrderByIndex()
-                .ForEach(s => s.GetCoreStates().SetIsSelected(condiction(s)));
+            var servs = servers.GetAllServersOrderByIndex();
+            foreach (var serv in servs)
+            {
+                var isSelected = condiction(serv);
+                serv.GetCoreStates().SetIsSelected(isSelected);
+            }
         }
 
         FlyServer GetFlyPanel()

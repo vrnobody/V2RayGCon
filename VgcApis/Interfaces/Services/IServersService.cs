@@ -107,7 +107,8 @@ namespace VgcApis.Interfaces.Services
         );
 
         List<ICoreServCtrl> GetTrackableServerList();
-        List<ICoreServCtrl> GetAllServersOrderByIndex();
+
+        IReadOnlyCollection<ICoreServCtrl> GetAllServersOrderByIndex();
 
         ICoreServCtrl GetServerByConfig(string config);
 

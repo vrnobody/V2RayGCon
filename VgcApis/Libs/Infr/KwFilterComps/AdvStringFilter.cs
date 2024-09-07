@@ -52,7 +52,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #region public methods
         internal static ReadOnlyCollection<string> GetTips() => tips.AsReadOnly();
 
-        public List<Interfaces.ICoreServCtrl> Filter(List<Interfaces.ICoreServCtrl> coreServs)
+        public IReadOnlyCollection<Interfaces.ICoreServCtrl> Filter(
+            IReadOnlyCollection<Interfaces.ICoreServCtrl> coreServs
+        )
         {
             var r = new List<Interfaces.ICoreServCtrl>();
             foreach (var coreServ in coreServs)

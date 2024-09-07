@@ -25,9 +25,11 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region public methods
-        public List<ICoreServCtrl> Filter(List<ICoreServCtrl> coreServs)
+        public IReadOnlyCollection<ICoreServCtrl> Filter(
+            IReadOnlyCollection<ICoreServCtrl> coreServs
+        )
         {
-            List<ICoreServCtrl> r = null;
+            IReadOnlyCollection<ICoreServCtrl> r = null;
             try
             {
                 r = expr?.Filter(coreServs);

@@ -88,7 +88,8 @@ namespace NeoLuna.Models.Apis.Components
             int testTimeout
         ) => vgcConfigMgr.RunCustomSpeedTest(rawConfig, coreName, testUrl, testTimeout);
 
-        public List<ICoreServCtrl> GetAllServers() => vgcServers.GetAllServersOrderByIndex();
+        public IReadOnlyCollection<ICoreServCtrl> GetAllServers() =>
+            vgcServers.GetAllServersOrderByIndex();
 
         public List<ICoreServCtrl> GetServersByUids(LuaTable uids)
         {

@@ -108,7 +108,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             if (f != null)
             {
                 var servs = servers.GetAllServersOrderByIndex();
-                r = f.Filter(servs);
+                r = f.Filter(servs).ToList(); // copy
             }
 
             matchCountCache = r.Count;

@@ -67,7 +67,7 @@ namespace Luna.Interfaces
         /// 获取全部服务器（操作服务器的脚本通常都从这个函数开始）
         /// </summary>
         /// <returns>全部服务器</returns>
-        List<ICoreServCtrl> GetAllServers();
+        IReadOnlyCollection<ICoreServCtrl> GetAllServers();
 
         /// <summary>
         /// 根据index获取单个服务器

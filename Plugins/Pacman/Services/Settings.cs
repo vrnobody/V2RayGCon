@@ -62,7 +62,7 @@ namespace Pacman.Services
             );
         }
 
-        public List<VgcApis.Interfaces.ICoreServCtrl> GetAllServersList() =>
+        public IReadOnlyCollection<VgcApis.Interfaces.ICoreServCtrl> GetAllServersList() =>
             vgcServers.GetAllServersOrderByIndex();
 
         public List<Models.Data.Package> GetPackageList()

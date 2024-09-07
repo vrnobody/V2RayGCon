@@ -94,15 +94,16 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                             kws.Add(tk);
                             index++;
                         } while (len > index && tokens[index].type == ExprTokenTypes.LITERAL);
+                        kws.Reverse();
                         r.Enqueue(kws);
                         index--;
                         break;
                     case ExprTokenTypes.BINARY_OP:
-                    case ExprTokenTypes.OPEN_PAREN:
+                    case ExprTokenTypes.CLOSE_PAREN: // in reverse order
                         stack.Push(new List<ExprToken>() { tk });
                         break;
-                    case ExprTokenTypes.CLOSE_PAREN:
-                        while (stack.Peek().First().type != ExprTokenTypes.OPEN_PAREN)
+                    case ExprTokenTypes.OPEN_PAREN:
+                        while (stack.Peek().First().type != ExprTokenTypes.CLOSE_PAREN)
                         {
                             r.Enqueue(stack.Pop());
                         }
@@ -205,6 +206,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             {
                 r.Add(new ExprToken(ExprTokenTypes.LITERAL, token.ToString()));
             }
+            r.Reverse(); // (#1 & #2) & #3
             r.Add(new ExprToken(ExprTokenTypes.EXPR_END, exprEnd));
             return r.ToList();
         }

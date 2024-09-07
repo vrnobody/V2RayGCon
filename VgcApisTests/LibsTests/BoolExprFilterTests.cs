@@ -10,16 +10,20 @@ namespace VgcApisTests.LibsTests
         #region filter test
         [DataTestMethod]
         [DataRow(
+            "#@#smm Ends    .cOM    !     #laTenCy    >     300    &  #sUm     StArtS VLess",
+            "AndExpr(NotExpr(LeafExpr(#smm ends .com), LeafExpr(#latency > 300)), LeafExpr(#sum starts vless))"
+        )]
+        [DataRow(
             "#@ (#smm ends .com) ! (#latency > 300) & (#sum starts vless)",
-            "NotExpr(AndExpr(LeafExpr(#sum starts vless), LeafExpr(#latency > 300)), LeafExpr(#smm ends .com))"
+            "AndExpr(NotExpr(LeafExpr(#smm ends .com), LeafExpr(#latency > 300)), LeafExpr(#sum starts vless))"
         )]
         [DataRow(
             "#@ (   #mK Is a   ) &(   (   #sMm noT b)   |   (#ttl liKe C  ))",
-            "AndExpr(OrExpr(LeafExpr(#ttl like c), LeafExpr(#smm not b)), LeafExpr(#mk is a))"
+            "AndExpr(LeafExpr(#mk is a), OrExpr(LeafExpr(#smm not b), LeafExpr(#ttl like c)))"
         )]
         [DataRow(
             "#@ (#mk is \"\")&(#smm not \"a b c\")",
-            "AndExpr(LeafExpr(#smm not a b c), LeafExpr(#mk is))"
+            "AndExpr(LeafExpr(#mk is), LeafExpr(#smm not a b c))"
         )]
         public void CreateFilterTest(string src, string exp)
         {
@@ -33,12 +37,16 @@ namespace VgcApisTests.LibsTests
         #region make expression test
         [DataTestMethod]
         [DataRow(
+            " (   #mk is a   ) !(      #smm not b)   &   (#ttl like c  ) ",
+            "AndExpr(NotExpr(LeafExpr(#mk is a), LeafExpr(#smm not b)), LeafExpr(#ttl like c))"
+        )]
+        [DataRow(
             "(   #mk is a   ) &(   (   #smm not b)   |   (#ttl like c  ))",
-            "AndExpr(OrExpr(LeafExpr(#ttl like c), LeafExpr(#smm not b)), LeafExpr(#mk is a))"
+            "AndExpr(LeafExpr(#mk is a), OrExpr(LeafExpr(#smm not b), LeafExpr(#ttl like c)))"
         )]
         [DataRow(
             "(#mk is \"\")&(#smm not \"a b c\")",
-            "AndExpr(LeafExpr(#smm not a b c), LeafExpr(#mk is))"
+            "AndExpr(LeafExpr(#mk is), LeafExpr(#smm not a b c))"
         )]
         public void MakeExpressionTest(string src, string exp)
         {
@@ -58,13 +66,13 @@ namespace VgcApisTests.LibsTests
         [DataRow(
             "(   #mk is a   ) &(!   (   #smm not b)   |   (#ttl like c  ))",
             "&",
-            "!",
+            "#mk is a",
             "|",
-            "#ttl like c",
+            "!",
             "#smm not b",
-            "#mk is a"
+            "#ttl like c"
         )]
-        [DataRow("(#mk is \"\")&(#smm not \"a b c\")", "&", "#smm not a b c", "#mk is")]
+        [DataRow("(#MK iS \"\")&(#sMm noT \"a b c\")", "&", "#MK iS", "#sMm noT a b c")]
         public void TransformToPolishNotationTest(string src, params string[] tokens)
         {
             var tmp = Helpers.ParseExprToken(src);
@@ -82,14 +90,14 @@ namespace VgcApisTests.LibsTests
         [DataTestMethod]
         [DataRow(
             "#@ #mk is \"(\" \")\" \"|\" \"&\" \" \"",
-            "#@",
-            "#mk",
-            "is",
-            "(",
-            ")",
-            "|",
+            " ",
             "&",
-            " "
+            "|",
+            ")",
+            "(",
+            "is",
+            "#mk",
+            "#@"
         )]
         public void TokenizeStringTest(string str, params string[] tokens)
         {
@@ -164,14 +172,14 @@ namespace VgcApisTests.LibsTests
         )]
         public void TokenizeExpressionTest(string src, params string[] tokens)
         {
+            var len = tokens.Length;
             var table = Helpers.exprOperators;
-
             var tks = Helpers.ParseExprToken(src);
-            Assert.AreEqual(tokens.Length + 1, tks.Count);
+            Assert.AreEqual(len + 1, tks.Count);
             Assert.AreEqual(ExprTokenTypes.EXPR_END, tks.Last().type);
             for (int i = 0; i < tokens.Length; i++)
             {
-                var exp = tokens[i];
+                var exp = tokens[len - i - 1]; // reverse order
                 Assert.AreEqual(exp, tks[i].value);
                 if (exp.Length > 0 && table.ContainsKey(exp[0]))
                 {

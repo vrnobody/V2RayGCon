@@ -78,19 +78,19 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 
         static BoolExprFilter CreateFilterCore(string keywords)
         {
-            if (string.IsNullOrEmpty(keywords) || !keywords.StartsWith("#@ "))
+            if (string.IsNullOrEmpty(keywords) || !keywords.StartsWith("#@"))
             {
                 // #@ (#mk like "a")
                 return null;
             }
 
-            keywords = keywords.ToLower();
+            keywords = keywords.Substring(2).ToLower();
             var tokens = Helpers.ParseExprToken(keywords);
             if (tokens.Count < 2)
             {
                 return null;
             }
-            var pe = Helpers.TransformToPolishNotation(tokens.Skip(1).ToList());
+            var pe = Helpers.TransformToPolishNotation(tokens.ToList());
             var em = pe.GetEnumerator();
             em.MoveNext();
             var expr = Helpers.MakeExpr(ref em);

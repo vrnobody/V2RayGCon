@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Runtime.InteropServices.ComTypes;
+using System.Text.RegularExpressions;
 using VgcApis.UserControls.AcmComboBoxComps;
 
 namespace V2RayGCon.Controllers.FormMainComponent
@@ -11,7 +12,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
         public override CompareResult Compare(string _)
         {
             var ctext = this.Parent.Fragment.Text;
-            if (string.IsNullOrEmpty(ctext))
+            if (string.IsNullOrEmpty(ctext) || !ctext.StartsWith("#"))
+            {
+                return CompareResult.Hidden;
+            }
+
+            if (int.TryParse(ctext.Substring(1), out var _))
             {
                 return CompareResult.Hidden;
             }

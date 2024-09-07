@@ -55,12 +55,12 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
         public override List<ICoreServCtrl> Filter(List<ICoreServCtrl> servs)
         {
             var l = left?.Filter(servs) ?? new List<ICoreServCtrl>();
-            var r = right?.Filter(servs) ?? new List<ICoreServCtrl>();
-            var uids = new HashSet<string>(r.Select(s => s.GetCoreStates().GetUid()));
-            if (uids.Count < 1 || l.Count < 1)
+            var r = right?.Filter(l) ?? new List<ICoreServCtrl>();
+            if (r.Count < 1 || l.Count < 1)
             {
                 return l;
             }
+            var uids = new HashSet<string>(r.Select(s => s.GetCoreStates().GetUid()));
             var n = l.Where(s => !uids.Contains(s.GetCoreStates().GetUid())).ToList();
             return n;
         }
@@ -88,10 +88,13 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
         {
             var l = left?.Filter(servs) ?? new List<ICoreServCtrl>();
             var r = right?.Filter(servs) ?? new List<ICoreServCtrl>();
-            var or = l.Concat(r)
-                .GroupBy(serv => serv.GetCoreStates().GetUid())
-                .Select(g => g.First())
-                .ToList();
+            if (l.Count < 1)
+            {
+                return r;
+            }
+            var uids = new HashSet<string>(l.Select(s => s.GetCoreStates().GetUid()));
+            var patch = r.Where(s => !uids.Contains(s.GetCoreStates().GetUid()));
+            var or = l.Concat(patch).OrderBy(s => s).ToList();
             return or;
         }
     }

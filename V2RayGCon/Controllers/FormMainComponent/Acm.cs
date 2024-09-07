@@ -55,7 +55,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 .Select(t => new Snippet(t, 2));
 
             m.TargetControlWrapper = new ExToolStripComboBoxWrapper(box);
-            m.SetAutocompleteItems(numSnippets.Concat(strSnippets).Concat(boolExprSnippets));
+            m.SetAutocompleteItems(numSnippets.Concat(boolExprSnippets).Concat(strSnippets));
             return m;
         }
         #endregion

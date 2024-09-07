@@ -45,6 +45,7 @@
 
     public enum NumberTagNames
     {
+        Index,
         Latency,
         Upload,
         Download,

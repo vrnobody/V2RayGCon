@@ -150,15 +150,16 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         {
             switch (cname)
             {
+                case NumberTagNames.Index:
+                    r = (long)cs.GetIndex();
+                    return true;
                 case NumberTagNames.Latency:
                     r = cs.GetSpeedTestResult();
                     return true;
                 case NumberTagNames.Upload:
-                    // MiB
                     r = cs.GetUplinkTotalInBytes() / Helpers.MiB;
                     return true;
                 case NumberTagNames.Download:
-                    // MiB
                     r = cs.GetDownlinkTotalInBytes() / Helpers.MiB;
                     return true;
                 case NumberTagNames.Port:

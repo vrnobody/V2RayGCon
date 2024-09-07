@@ -307,6 +307,7 @@ namespace V2RayGCon.Views.WinForms
             // 
             resources.ApplyResources(this.toolStripComboBoxMarkFilter, "toolStripComboBoxMarkFilter");
             this.toolStripComboBoxMarkFilter.Name = "toolStripComboBoxMarkFilter";
+            this.toolStripComboBoxMarkFilter.ReadOnly = false;
             this.toolStripComboBoxMarkFilter.Enter += new System.EventHandler(this.toolStripComboBoxMarkFilter_Enter);
             this.toolStripComboBoxMarkFilter.Leave += new System.EventHandler(this.toolStripComboBoxMarkFilter_Leave);
             // 
@@ -841,6 +842,8 @@ namespace V2RayGCon.Views.WinForms
             this.Name = "FormMain";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.SizeChanged += new System.EventHandler(this.FormMain_SizeChanged);
+            this.Resize += new System.EventHandler(this.FormMain_Resize);
             this.toolStripContainer2.ContentPanel.ResumeLayout(false);
             this.toolStripContainer2.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer2.TopToolStripPanel.PerformLayout();
@@ -951,7 +954,6 @@ namespace V2RayGCon.Views.WinForms
         private ToolStripSeparator toolStripSeparator7;
         private ToolStripButton toolStripButtonShowFormLog;
         private ToolStripSeparator toolStripSeparator10;
-        private ToolStripComboBox toolStripComboBoxMarkFilter;
         private ToolStripSeparator toolStripSeparator13;
         private ToolStripMenuItem toolStripMenuItemStopBatchSpeedTest;
         private ToolStripSeparator toolStripMenuItem6;
@@ -966,5 +968,6 @@ namespace V2RayGCon.Views.WinForms
         private ToolStripMenuItem toolStripMenuItemSortByUploadTotal;
         private ToolStripLabel toolStripLabelSearch;
         private ToolStripMenuItem toolStripMenuItemTextEditor;
+        private VgcApis.UserControls.AcmComboBox toolStripComboBoxMarkFilter;
     }
 }

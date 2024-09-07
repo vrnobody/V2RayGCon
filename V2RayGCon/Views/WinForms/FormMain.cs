@@ -23,9 +23,6 @@ namespace V2RayGCon.Views.WinForms
         Controllers.FormMainCtrl formMainCtrl;
         readonly string formTitle = "";
 
-        int searchBoxWidthSmall;
-        int searchBoxWidthLarge;
-
         public FormMain()
         {
             CreateHandle();
@@ -34,11 +31,6 @@ namespace V2RayGCon.Views.WinForms
             Misc.UI.AutoScaleToolStripControls(this, 16);
 
             formTitle = Misc.Utils.GetAppNameAndVer();
-            searchBoxWidthSmall = toolStripComboBoxMarkFilter.Width;
-            searchBoxWidthLarge =
-                searchBoxWidthSmall
-                + toolStripComboBoxMarkFilter.Bounds.Left
-                - toolStripButtonImportFromClipboard.Bounds.Left;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -317,34 +309,42 @@ namespace V2RayGCon.Views.WinForms
             return tsItems;
         }
 
-        bool curZoomState = false;
+        bool isMarkFilterEntered = false;
 
-        void ZoomSearchBoxSize(bool isZoomin)
+        void FixFilterBoxSize()
         {
-            if (curZoomState == isZoomin)
-            {
-                return;
-            }
-            curZoomState = isZoomin;
-
-            toolStrip1.SuspendLayout();
             var box = toolStripComboBoxMarkFilter;
+            toolStrip1.SuspendLayout();
+            if (!isMarkFilterEntered && box.Width != 1)
+            {
+                box.Width = 1;
+            }
             foreach (var c in GetAllToolStripItems())
             {
-                c.Visible = !isZoomin;
+                if (c.Visible == isMarkFilterEntered)
+                {
+                    c.Visible = !isMarkFilterEntered;
+                }
             }
-            box.Width = isZoomin ? searchBoxWidthLarge : searchBoxWidthSmall;
             toolStrip1.ResumeLayout();
+            var margin = toolStripLabelSearch.Width;
+            var size = this.Width - box.Bounds.Left - (4 * margin);
+            if (box.Width != size)
+            {
+                box.Width = size;
+            }
         }
 
         private void toolStripComboBoxMarkFilter_Enter(object sender, EventArgs e)
         {
-            ZoomSearchBoxSize(true);
+            isMarkFilterEntered = true;
+            FixFilterBoxSize();
         }
 
         private void toolStripComboBoxMarkFilter_Leave(object sender, EventArgs e)
         {
-            ZoomSearchBoxSize(false);
+            isMarkFilterEntered = false;
+            FixFilterBoxSize();
         }
 
         private void closeWindowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -362,6 +362,17 @@ namespace V2RayGCon.Views.WinForms
             setting.OnPortableModeChanged -= UpdateFormTitle;
             formMainCtrl?.Cleanup();
             setting.SaveFormRect(this);
+        }
+
+        private void FormMain_Resize(object sender, EventArgs e)
+        {
+            FixFilterBoxSize();
+        }
+
+        private void FormMain_SizeChanged(object sender, EventArgs e)
+        {
+            FixFilterBoxSize();
+            formMainCtrl?.ResetServUiBorders();
         }
         #endregion
     }

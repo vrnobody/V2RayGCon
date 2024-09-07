@@ -86,6 +86,18 @@ namespace V2RayGCon.Controllers.FormMainComponent
         }
 
         #region public method
+        public void ResetServUiBorders()
+        {
+            var panel = flyPanel;
+            var isFullBorder = IsMultiColumn(panel);
+            foreach (var ctrls in panel.Controls)
+            {
+                if (ctrls is Views.UserControls.ServerUI sui)
+                {
+                    sui.SetBorderStyle(isFullBorder);
+                }
+            }
+        }
 
         public List<ICoreServCtrl> GetFilteredList()
         {
@@ -261,17 +273,27 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 flyPanel.Controls.Remove(welcomeItem);
                 var rmServUis = VgcApis.Misc.UI.DoHouseKeeping<Views.UserControls.ServerUI>(
                     flyPanel,
-                    pagedList.Count,
-                    true
+                    pagedList.Count
                 );
                 removed.AddRange(rmServUis);
                 var servUis = GetAllServerControls();
                 BindServUiToCoreServCtrl(servUis, pagedList);
                 flyPanel.ResumeLayout();
+                ResetServUiBorders();
                 ScrollIntoView();
             }
 
             VgcApis.Misc.UI.InvokeThen(worker, next);
+        }
+
+        bool IsMultiColumn(FlowLayoutPanel panel)
+        {
+            HashSet<int> ws = new HashSet<int>();
+            foreach (Control ctrl in panel.Controls)
+            {
+                ws.Add(ctrl.Left);
+            }
+            return ws.Count > 1;
         }
 
         private void BindServUiToCoreServCtrl(
@@ -644,6 +666,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             height += flyPanel.Padding.Vertical + 2;
             width += flyPanel.Padding.Horizontal + 2;
 
+            formMain.WindowState = FormWindowState.Normal;
             if (num <= 12)
             {
                 formMain.Height += height - flyPanel.Height;

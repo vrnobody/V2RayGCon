@@ -25,6 +25,7 @@ namespace V2RayGCon.Views.UserControls
 
         static readonly Bitmap[] btnBgCaches = new Bitmap[3];
         readonly List<Control> roundLables;
+        Label bottomLine = null;
 
         public ServerUI()
         {
@@ -138,16 +139,17 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region private method
-        private void InitBottomLine()
+
+
+        public void InitBottomLine()
         {
-            Controls.Add(
-                new Label()
-                {
-                    Height = 1,
-                    Dock = DockStyle.Bottom,
-                    BackColor = Color.LightGray,
-                }
-            );
+            bottomLine = new Label()
+            {
+                Height = 1,
+                Dock = DockStyle.Bottom,
+                BackColor = Color.LightGray,
+            };
+            Controls.Add(bottomLine);
         }
 
         private void ResetControls()
@@ -644,6 +646,20 @@ namespace V2RayGCon.Views.UserControls
         #endregion
 
         #region public method
+
+
+        public void SetBorderStyle(bool isFullBorder)
+        {
+            if (!isFullBorder && bottomLine.Visible == true)
+            {
+                return;
+            }
+            bottomLine.Visible = !isFullBorder;
+            var top = isFullBorder ? 3 : 0;
+            this.Margin = new Padding(3, top, 3, top);
+            this.BorderStyle = isFullBorder ? BorderStyle.FixedSingle : BorderStyle.None;
+        }
+
         public bool IsButtonsVisible() => btnStart.Visible;
 
         public void SetCtrlButtonsVisiblity(bool isVisable)

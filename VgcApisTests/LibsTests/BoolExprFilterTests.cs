@@ -86,6 +86,30 @@ namespace VgcApisTests.LibsTests
         }
         #endregion
 
+        #region PatchParentheses test
+        [DataTestMethod]
+        [DataRow(")()()(((", "()()()((()))")]
+        [DataRow("()))", "((()))")]
+        [DataRow("()", "()")]
+        [DataRow(null, null)]
+        [DataRow("", "")]
+        public void PatchParenthesesTest(string src, string exp)
+        {
+            var exprSrc = Helpers.ParseExprToken(src);
+            var exprExp = Helpers.ParseExprToken(exp);
+
+            Assert.AreEqual(exprExp.Count, exprSrc.Count);
+            Assert.AreEqual(ExprTokenTypes.EXPR_END, exprSrc.Last().type);
+            Assert.AreEqual(ExprTokenTypes.EXPR_END, exprExp.Last().type);
+
+            for (int i = 0; i < exprExp.Count; i++)
+            {
+                Assert.AreEqual(exprExp[i].type, exprSrc[i].type);
+                Assert.AreEqual(exprExp[i].value, exprSrc[i].value);
+            }
+        }
+        #endregion
+
         #region tokenizer test
         [DataTestMethod]
         [DataRow(
@@ -154,7 +178,8 @@ namespace VgcApisTests.LibsTests
             "(",
             "#smm",
             "not",
-            "a ) (b c"
+            "a ) (b c",
+            ")"
         )]
         [DataRow(
             "(#mk is \"\")&(#smm not \"a b c\")",

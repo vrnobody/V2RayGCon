@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using VgcApis.Libs.Infr.KwFilterComps.BoolExprComps;
 
@@ -133,9 +134,53 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 { '!', new KeyValuePair<ExprTokenTypes, string>(ExprTokenTypes.BINARY_OP, "!") },
             };
 
+        static void PatchParentheses(ref List<ExprToken> tokens)
+        {
+            var open = 0;
+            var close = 0;
+            var first = false;
+            foreach (var token in tokens)
+            {
+                switch (token.type)
+                {
+                    case ExprTokenTypes.OPEN_PAREN:
+                        first = true;
+                        close++;
+                        break;
+                    case ExprTokenTypes.CLOSE_PAREN:
+                        if (first)
+                        {
+                            close--;
+                        }
+                        else
+                        {
+                            open++;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if (close < 0)
+            {
+                open -= close;
+            }
+
+            for (int i = 0; i < open; i++)
+            {
+                tokens.Insert(0, new ExprToken(ExprTokenTypes.OPEN_PAREN, "("));
+            }
+
+            for (int i = 0; i < close; i++)
+            {
+                tokens.Add(new ExprToken(ExprTokenTypes.CLOSE_PAREN, ")"));
+            }
+        }
+
         internal static List<ExprToken> ParseExprToken(string line)
         {
-            var exprEnd = Guid.NewGuid().ToString();
+            var exprEnd = @"0b56d0b6-91db-4dd0-8678-f040fe1ffd97"; // any not empty string
             if (string.IsNullOrWhiteSpace(line))
             {
                 return new List<ExprToken>() { new ExprToken(ExprTokenTypes.EXPR_END, exprEnd) };
@@ -206,6 +251,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             {
                 r.Add(new ExprToken(ExprTokenTypes.LITERAL, token.ToString()));
             }
+            PatchParentheses(ref r);
             r.Reverse(); // (#1 & #2) & #3
             r.Add(new ExprToken(ExprTokenTypes.EXPR_END, exprEnd));
             return r.ToList();

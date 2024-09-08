@@ -538,21 +538,14 @@ namespace VgcApis.Misc
             return r;
         }
 
-        static ArrayPool<byte> bufferPool = ArrayPool<byte>.Shared;
-
         public static byte[] RentBuffer()
         {
-            return bufferPool.Rent(Models.Consts.Libs.DefaultBufferSize);
-        }
-
-        public static byte[] RentBuffer(int size)
-        {
-            return bufferPool.Rent(size);
+            return ArrayPool<byte>.Shared.Rent(Models.Consts.Libs.DefaultBufferSize);
         }
 
         public static void ReturnBuffer(byte[] buff)
         {
-            bufferPool.Return(buff);
+            ArrayPool<byte>.Shared.Return(buff);
         }
 
         public static string UriEncode(string content)

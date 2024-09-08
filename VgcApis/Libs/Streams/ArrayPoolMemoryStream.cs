@@ -17,8 +17,7 @@ namespace VgcApis.Libs.Streams
         {
             m_Pool = ArrayPool<byte>.Shared;
 
-            // less GC when using 4k memory block
-            _currentbuffer = m_Pool.Rent(4 * 1024);
+            _currentbuffer = m_Pool.Rent(2 * 1024);
 
             _Length = 0;
             _CanWrite = true;

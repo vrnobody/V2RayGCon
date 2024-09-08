@@ -26,17 +26,23 @@ namespace VgcApis.Libs.Streams
         {
             if (string.IsNullOrEmpty(content))
             {
-                var lenBuff = BitConverter.GetBytes(0);
+                var lenBuff = BitConverter.GetBytes((int)0);
                 stream.Write(lenBuff, 0, lenBuff.Length);
+                stream.Flush();
+                return;
             }
-            else
+
+            var encoding = new UnicodeEncoding(false, false);
+            using (var apms = new ArrayPoolMemoryStream())
+            using (var w = new StreamWriter(apms, encoding))
             {
-                var buff = Encoding.Unicode.GetBytes(content);
-                var lenBuff = BitConverter.GetBytes(buff.Length);
+                w.Write(content);
+                w.Flush();
+                var lenBuff = BitConverter.GetBytes((int)apms.Length);
+                apms.Position = 0;
                 stream.Write(lenBuff, 0, lenBuff.Length);
-                stream.Write(buff, 0, buff.Length);
+                apms.CopyTo(stream);
             }
-            stream.Flush();
         }
         #endregion
     }

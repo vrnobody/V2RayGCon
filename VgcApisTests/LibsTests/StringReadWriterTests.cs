@@ -2,7 +2,7 @@
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace VgcApisTests.VeeLegacyTests
+namespace VgcApisTests.LibsTests
 {
     [TestClass]
     public class StringReadWriterTests
@@ -30,6 +30,24 @@ namespace VgcApisTests.VeeLegacyTests
             stream.Dispose();
 
             Assert.AreEqual(content, s);
+        }
+
+        [TestMethod]
+        public void ReadLargeStringTest()
+        {
+            var exp = VgcApis.Misc.Utils.RandomHex(5 * 1024 * 1024);
+            var stream = new MemoryStream();
+            var w = new VgcApis.Libs.Streams.StringWriter(stream);
+            w.Write(exp);
+
+            stream.Position = 0;
+
+            var reader = new VgcApis.Libs.Streams.StringReader(stream);
+            var s = reader.Read();
+
+            stream.Dispose();
+
+            Assert.AreEqual(exp, s);
         }
 
         [TestMethod]

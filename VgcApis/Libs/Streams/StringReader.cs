@@ -24,7 +24,7 @@ namespace VgcApis.Libs.Streams
         #region public methods
         public string Read()
         {
-            var lenBuff = new byte[sizeof(int)];
+            var lenBuff = BitConverter.GetBytes((int)0);
             var readed = 0;
             while (readed < lenBuff.Length)
             {
@@ -40,18 +40,29 @@ namespace VgcApis.Libs.Streams
             {
                 return string.Empty;
             }
-            var buff = new byte[len];
-            readed = 0;
-            while (readed < len)
+
+            var apms = new ArrayPoolMemoryStream(Encoding.Unicode);
+            var buff = Misc.Utils.RentBuffer();
+            using (apms)
             {
-                var c = stream.Read(buff, readed, len - readed);
-                if (c == 0 && readed < len)
+                readed = 0;
+                while (readed < len)
                 {
-                    return null;
+                    var max = Math.Min(buff.Length, len - readed);
+                    var c = stream.Read(buff, 0, max);
+                    if (c == 0 && readed < len)
+                    {
+                        break;
+                    }
+                    else if (c > 0)
+                    {
+                        readed += c;
+                        apms.Write(buff, 0, c);
+                    }
                 }
-                readed += c;
             }
-            return Encoding.Unicode.GetString(buff);
+            Misc.Utils.ReturnBuffer(buff);
+            return apms.GetString() ?? "";
         }
         #endregion
     }

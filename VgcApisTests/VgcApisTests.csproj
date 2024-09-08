@@ -83,7 +83,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Jsons.resx</DependentUpon>
     </Compile>
-    <Compile Include="VeeLegacyTests\StringReadWriterTests.cs" />
+    <Compile Include="LibsTests\StringReadWriterTests.cs" />
     <Compile Include="VeeLegacyTests\RecorderTests.cs" />
     <Compile Include="VeeLegacyTests\Crc8Tests.cs" />
     <Compile Include="IComponentOfTests\CompLv3.cs" />

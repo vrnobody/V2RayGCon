@@ -48,7 +48,7 @@ namespace V2RayGCon.Views.WinForms
         {
             int count = 0;
             int seg = 1000;
-            int ok = 0;
+            var reasons = new Dictionary<string, int>();
 
             var it = results.GetEnumerator();
             bool stop = false;
@@ -71,9 +71,14 @@ namespace V2RayGCon.Views.WinForms
                                 result[0] = (++count).ToString();
                                 var item = new ListViewItem(result);
                                 lvResult.Items.Add(item);
-                                if (VgcApis.Misc.Utils.IsImportResultSuccess(result))
+                                var reason = result[4];
+                                if (reasons.ContainsKey(reason))
                                 {
-                                    ok++;
+                                    reasons[reason]++;
+                                }
+                                else
+                                {
+                                    reasons[reason] = 1;
                                 }
                             }
                         }
@@ -86,8 +91,10 @@ namespace V2RayGCon.Views.WinForms
                 (MethodInvoker)
                     delegate
                     {
-                        lbResult.Text =
-                            $"{I18N.Success}: {ok} {I18N.Failed}: {count - ok} {I18N.Total}: {count}";
+                        var s = string.Join(", ", reasons.Select(kv => $"{kv.Key}: {kv.Value}"));
+                        var text = $"{I18N.Total}: {count}, {s}";
+                        lbResult.Text = text;
+                        toolTip1.SetToolTip(lbResult, text);
                         lvResult.ResumeLayout();
                         pbLoading.Visible = false;
                     }

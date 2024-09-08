@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormImportLinksResult));
             this.lvResult = new System.Windows.Forms.ListView();
             this.index = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -40,6 +41,7 @@
             this.btnCopyAll = new System.Windows.Forms.Button();
             this.pbLoading = new System.Windows.Forms.ProgressBar();
             this.lbResult = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // lvResult
@@ -107,6 +109,7 @@
             // lbResult
             // 
             resources.ApplyResources(this.lbResult, "lbResult");
+            this.lbResult.AutoEllipsis = true;
             this.lbResult.Name = "lbResult";
             // 
             // FormImportLinksResult
@@ -139,5 +142,6 @@
         private System.Windows.Forms.ColumnHeader mark;
         private System.Windows.Forms.ProgressBar pbLoading;
         private System.Windows.Forms.Label lbResult;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

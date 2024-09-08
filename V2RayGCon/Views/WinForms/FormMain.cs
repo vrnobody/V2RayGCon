@@ -166,10 +166,22 @@ namespace V2RayGCon.Views.WinForms
                     ToolStripMenuItem selectAllCurPage,
                     ToolStripMenuItem invertSelectionCurPage,
                     ToolStripMenuItem selectNoneCurPage,
-                    */
+                    ToolStripMenuItem selectAutorunCurPage,
+                    ToolStripMenuItem selectRunningCurPage,
+                    ToolStripMenuItem selectTimeoutCurPage,
+                    ToolStripMenuItem selectNoSpeedTestCurPage,
+                    ToolStripMenuItem selectNoMarkCurPage,
+                    ToolStripMenuItem selectUntrackCurPage
+                   */
                     selectAllCurPageToolStripMenuItem,
                     invertSelectionCurPageToolStripMenuItem,
                     selectNoneCurPageToolStripMenuItem1,
+                    selectAutorunCurPageToolStripMenuItem,
+                    selectRunningCurPageToolStripMenuItem,
+                    selectTimeoutCurPageToolStripMenuItem,
+                    selectNotSpeedTestedCurPageToolStripMenuItem,
+                    selectNoMarkCurPageToolStripMenuItem,
+                    selectUntrackCurPageToolStripMenuItem,
                     /*
                     ToolStripMenuItem selectAllAllPages,
                     ToolStripMenuItem invertSelectionAllPages,

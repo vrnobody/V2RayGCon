@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using VgcApis.Interfaces;
 
 namespace V2RayGCon.Controllers.FormMainComponent
 {
@@ -9,9 +10,17 @@ namespace V2RayGCon.Controllers.FormMainComponent
         readonly Services.Servers servers;
 
         public MenuItemsSelect(
+            // current page
             ToolStripMenuItem selectAllCurPage,
             ToolStripMenuItem invertSelectionCurPage,
             ToolStripMenuItem selectNoneCurPage,
+            ToolStripMenuItem selectAutorunCurPage,
+            ToolStripMenuItem selectRunningCurPage,
+            ToolStripMenuItem selectTimeoutCurPage,
+            ToolStripMenuItem selectNoSpeedTestCurPage,
+            ToolStripMenuItem selectNoMarkCurPage,
+            ToolStripMenuItem selectUntrackCurPage,
+            //all pages
             ToolStripMenuItem selectAllAllPages,
             ToolStripMenuItem invertSelectionAllPages,
             ToolStripMenuItem selectNoneAllPages,
@@ -21,6 +30,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem selectRunningAllPages,
             ToolStripMenuItem selectTimeoutAllPages,
             ToolStripMenuItem selectUntrackAllPages,
+            // all servers
             ToolStripMenuItem selectAllAllServers,
             ToolStripMenuItem invertSelectionAllServers,
             ToolStripMenuItem selectNoneAllServers,
@@ -56,7 +66,17 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 selectNoMarkAllServers,
                 selectUntrackAllServers
             );
-            InitCurPageSelectors(selectAllCurPage, selectNoneCurPage, invertSelectionCurPage);
+            InitCurPageSelectors(
+                selectAllCurPage,
+                selectNoneCurPage,
+                invertSelectionCurPage,
+                selectAutorunCurPage,
+                selectRunningCurPage,
+                selectTimeoutCurPage,
+                selectNoSpeedTestCurPage,
+                selectNoMarkCurPage,
+                selectUntrackCurPage
+            );
         }
 
         #region public method
@@ -148,22 +168,46 @@ namespace V2RayGCon.Controllers.FormMainComponent
         private void InitCurPageSelectors(
             ToolStripMenuItem selectAllCurPage,
             ToolStripMenuItem selectNoneCurPage,
-            ToolStripMenuItem invertSelectionCurPage
+            ToolStripMenuItem invertSelectionCurPage,
+            ToolStripMenuItem selectAutorunCurPage,
+            ToolStripMenuItem selectRunningCurPage,
+            ToolStripMenuItem selectTimeoutCurPage,
+            ToolStripMenuItem selectNoSpeedTestCurPage,
+            ToolStripMenuItem selectNoMarkCurPage,
+            ToolStripMenuItem selectUntrackCurPage
         )
         {
-            selectAllCurPage.Click += (s, a) => SelectCurPageWhere(el => true);
+            selectAllCurPage.Click += (s, a) => SelectCurPageWhere(_ => true);
 
-            selectNoneCurPage.Click += (s, a) => SelectCurPageWhere(el => false);
+            selectNoneCurPage.Click += (s, a) => SelectCurPageWhere(_ => false);
 
-            invertSelectionCurPage.Click += (s, a) => SelectCurPageWhere(el => !el.isSelected);
+            invertSelectionCurPage.Click += (s, a) =>
+                SelectCurPageWhere(coreServ => !coreServ.GetCoreStates().IsSelected());
+
+            selectAutorunCurPage.Click += (s, a) =>
+                SelectCurPageWhere(coreServ => coreServ.GetCoreStates().IsAutoRun());
+            selectRunningCurPage.Click += (s, a) =>
+                SelectCurPageWhere(coreServ => coreServ.GetCoreCtrl().IsCoreRunning());
+            selectTimeoutCurPage.Click += (s, a) =>
+                SelectCurPageWhere(coreServ =>
+                    coreServ.GetCoreStates().GetSpeedTestResult() == SpeedtestTimeout
+                );
+            selectNoSpeedTestCurPage.Click += (s, a) =>
+                SelectCurPageWhere(coreServ => coreServ.GetCoreStates().GetSpeedTestResult() <= 0);
+            selectNoMarkCurPage.Click += (s, a) =>
+                SelectCurPageWhere(coreServ =>
+                    string.IsNullOrEmpty(coreServ.GetCoreStates().GetMark())
+                );
+            selectUntrackCurPage.Click += (s, a) =>
+                SelectCurPageWhere(coreServ => coreServ.GetCoreStates().IsUntrack());
         }
 
-        void SelectCurPageWhere(Func<Views.UserControls.ServerUI, bool> condiction)
+        void SelectCurPageWhere(Func<ICoreServCtrl, bool> condiction)
         {
             GetFlyPanel()
                 .LoopThroughAllServerUI(s =>
                 {
-                    s.SetSelected(condiction(s));
+                    s.GetCoreStates().SetIsSelected(condiction(s));
                 });
         }
 

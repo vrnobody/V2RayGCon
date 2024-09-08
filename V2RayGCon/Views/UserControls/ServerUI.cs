@@ -645,6 +645,10 @@ namespace V2RayGCon.Views.UserControls
         }
         #endregion
 
+        #region internal
+        internal VgcApis.Interfaces.ICoreServCtrl GetInnerCoreServCtrl() => this.coreServCtrl;
+        #endregion
+
         #region public method
 
 
@@ -693,11 +697,6 @@ namespace V2RayGCon.Views.UserControls
         }
 
         public string GetConfig() => coreServCtrl?.GetConfiger()?.GetConfig() ?? "";
-
-        public void SetSelected(bool selected)
-        {
-            coreServCtrl.GetCoreStates().SetIsSelected(selected);
-        }
 
         public double GetIndex() => coreServCtrl?.GetCoreStates().GetIndex() ?? double.MinValue;
 

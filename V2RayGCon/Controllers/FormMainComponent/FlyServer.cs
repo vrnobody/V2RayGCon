@@ -122,12 +122,16 @@ namespace V2RayGCon.Controllers.FormMainComponent
             return r;
         }
 
-        public void LoopThroughAllServerUI(Action<Views.UserControls.ServerUI> operation)
+        public void LoopThroughAllServerUI(Action<ICoreServCtrl> operation)
         {
             var controls = GetAllServerControls();
             foreach (var control in controls)
             {
-                VgcApis.Misc.UI.Invoke(() => operation?.Invoke(control));
+                if (control is Views.UserControls.ServerUI servUi)
+                {
+                    var serv = servUi.GetInnerCoreServCtrl();
+                    VgcApis.Misc.UI.Invoke(() => operation?.Invoke(serv));
+                }
             }
         }
 

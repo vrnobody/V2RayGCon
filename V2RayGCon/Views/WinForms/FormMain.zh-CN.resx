@@ -135,10 +135,6 @@
   <data name="toolStripContainer2.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="toolStrip1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>None</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripButtonImportFromClipboard.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -293,7 +289,7 @@
   <data name="toolStripLabelSearch.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAPRJREFUOE/NkL0NgzAUhL1ApEyRmjI1dZAyQiSyQRagYZBUtIQBkFLSpaCny49o
+        wQAADsEBuJFr7QAAAPRJREFUOE/NkL0NgzAUhL1ApEyRmjI1dZAyQiSyQRagYZBUtIQBkFLSpaCny49o
         oKF9eWfxLBusQJnik8/23cnPahiGgOlGoJ09EalfoKC7X84EoLv3s78d9ma/VKL6z4sQuO42OiQa66oC
         NpzsEgnjJUthoP9Ani0Fa58PlB3GKnosWcQUAGgZBwVFUVAYhl7iOEZBZ0YA0Iz+k7IsvUEQRRE1TYOC
         o55jDJp5WSd1XXvDoKoqhBP9BxKawobcN0KWZQjn4psFBTZtmUeapiYMjTPciW8WtGFj0LatKYDGme1x
@@ -312,7 +308,7 @@
   <data name="toolMenuItemImportLinkFromClipboard.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAOBJREFUOE+dkTsOgzAMhukNKlW9EMw8zsTKxMLepXdgYOvQk5Qg1NJXWF3HjVFK
+        wQAADsEBuJFr7QAAAOBJREFUOE+dkTsOgzAMhukNKlW9EMw8zsTKxMLepXdgYOvQk5Qg1NJXWF3HjVFK
         SZTW0jeQ+P9imQAACLPGcdwgO+SJSGSPbPX1VJSzCA5N00CappAkCdR1DXh2RFa6hWpRgE2qGbIsA9EK
         EKIjkZSSzpG1bv0UcFARhiHRngR0KIiiiL77vp96kG8BB004bOIUXIebEy9BHMeLeAtc6LDfBGVZ0var
         qqK7oijMv2EXKC7nwRUmrAL1uhlewim43x7U8LdATcAjsyTP82l0xipg5pN4LXHOfHlOwS+8cxC8AGSu
@@ -353,25 +349,61 @@
     <value>文件</value>
   </data>
   <data name="selectAllCurPageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="selectAllCurPageToolStripMenuItem.Text" xml:space="preserve">
     <value>全选</value>
   </data>
   <data name="invertSelectionCurPageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="invertSelectionCurPageToolStripMenuItem.Text" xml:space="preserve">
     <value>反选</value>
   </data>
   <data name="selectNoneCurPageToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="selectNoneCurPageToolStripMenuItem1.Text" xml:space="preserve">
     <value>清除选择</value>
   </data>
-  <data name="currentPageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 22</value>
+  <data name="toolStripMenuItem8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>177, 6</value>
+  </data>
+  <data name="selectNotSpeedTestedToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="selectNotSpeedTestedToolStripMenuItem.Text" xml:space="preserve">
+    <value>选中未测速</value>
+  </data>
+  <data name="selectTimeoutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="selectTimeoutToolStripMenuItem.Text" xml:space="preserve">
+    <value>选中测速超时</value>
+  </data>
+  <data name="selectNoMarkToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="selectNoMarkToolStripMenuItem.Text" xml:space="preserve">
+    <value>选中未标记</value>
+  </data>
+  <data name="selectAutorunToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="selectAutorunToolStripMenuItem.Text" xml:space="preserve">
+    <value>选中自启动</value>
+  </data>
+  <data name="selectRunningToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="selectRunningToolStripMenuItem.Text" xml:space="preserve">
+    <value>选中运行中</value>
+  </data>
+  <data name="selectUntrackToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="selectUntrackToolStripMenuItem.Text" xml:space="preserve">
+    <value>选中不追踪</value>
   </data>
   <data name="currentPageToolStripMenuItem.Text" xml:space="preserve">
     <value>当前页面</value>
@@ -380,64 +412,61 @@
     <value>仅对当前分页有效</value>
   </data>
   <data name="selectAllAllPagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>142, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="selectAllAllPagesToolStripMenuItem.Text" xml:space="preserve">
     <value>全选</value>
   </data>
   <data name="invertSelectionAllPagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>142, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="invertSelectionAllPagesToolStripMenuItem.Text" xml:space="preserve">
     <value>反选</value>
   </data>
   <data name="selectNoneAllPagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>142, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="selectNoneAllPagesToolStripMenuItem.Text" xml:space="preserve">
     <value>消除选择</value>
   </data>
   <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>139, 6</value>
+    <value>177, 6</value>
   </data>
   <data name="selectNoSpeedTestAllPagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>142, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="selectNoSpeedTestAllPagesToolStripMenuItem.Text" xml:space="preserve">
     <value>选中未测速</value>
   </data>
   <data name="selectTimeoutAllPagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>142, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="selectTimeoutAllPagesToolStripMenuItem.Text" xml:space="preserve">
     <value>选中测速超时</value>
   </data>
   <data name="selectNoMarkAllPagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>142, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="selectNoMarkAllPagesToolStripMenuItem.Text" xml:space="preserve">
     <value>选中未标记</value>
   </data>
   <data name="selectAutorunAllPagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>142, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="selectAutorunAllPagesToolStripMenuItem.Text" xml:space="preserve">
     <value>选中自启动</value>
   </data>
   <data name="selectRunningAllPagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>142, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="selectRunningAllPagesToolStripMenuItem.Text" xml:space="preserve">
     <value>选中运行中</value>
   </data>
   <data name="selectUntrackAllPagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>142, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="selectUntrackAllPagesToolStripMenuItem.Text" xml:space="preserve">
     <value>选中不追踪</value>
-  </data>
-  <data name="allPagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 22</value>
   </data>
   <data name="allPagesToolStripMenuItem.Text" xml:space="preserve">
     <value>全部页面</value>
@@ -501,9 +530,6 @@
   </data>
   <data name="selectUntrackAllServersToolStripMenuItem.Text" xml:space="preserve">
     <value>选中不追踪</value>
-  </data>
-  <data name="allServersToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 22</value>
   </data>
   <data name="allServersToolStripMenuItem.Text" xml:space="preserve">
     <value>全部服务器</value>
@@ -595,7 +621,7 @@
   <data name="toolStripMenuItemModifySelected.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAANRJREFUOE+dkDESgjAURHM2rmBDYUkrl8Ch9gB2cg4ruYnaqg1tZHfYzE8gMLoz
+        wQAADsEBuJFr7QAAANRJREFUOE+dkDESgjAURHM2rmBDYUkrl8Ch9gB2cg4ruYnaqg1tZHfYzE8gMLoz
         O5//8/dNghuGwW/ZrQkLRVFk/ROgaY7+/fqw/gXobz0BqCkA1ZphCA0Wy7JkuD7UrOhTgNud6UVAd+kY
         lNFvAbwfiwCP+zO8HRW9AFhMAWEmQM44ly0gzGyT8/50ZbWAMNP71owQAgLom2cCrF3fhi0kAsht2zJc
         VRV7/az0BjqjtJSGR0fnCM7CUCZMTysBAkdhCEO929oCIARnYUjkJU8rGTn3BZ1cWLtWGSqyAAAAAElF
@@ -635,7 +661,7 @@
   <data name="toolStripMenuItemRunBatchSpeedTest.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAS5JREFUOE+dkb9OhEAQh6l9D9/ARBM7CIlgaEgIBTWJ9OcLQGyOw85XsOfOwsTW
+        wQAADsEBuJFr7QAAAS5JREFUOE+dkb9OhEAQh6l9D9/ARBM7CIlgaEgIBTWJ9OcLQGyOw85XsOfOwsTW
         67x4NFoKehc9vbDYkFj93N3cEvAPoJN82cnO7pedWaksS1Ayiin9J5jg6NzF/eKOiS4p25tSv2CCveEO
         9ke7OL0aYV2sP+jeCWVrc6Q9hEBweHaAi2RStQVAaqNN0ItvLWTLDFEUQVEUyLLcSiUQQ4zjGIQUKMh7
         Jw0BhfXLN1nRtm0YhtEgHIYIw5DnXwV84nUBO8Rygeu6IHmBPCdwHKcpENOsCyzLou2MoaoqNE3Dy/MK
@@ -664,7 +690,7 @@
   <data name="toolStripMenuItemClearSpeedTestResults.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAUVJREFUOE+VkbFOg3AQxkmcjGsfoU/CKxACKwNlcHNyIoUQ0rcohLRoIwmDGwT6
+        wQAADsEBuJFr7QAAAUVJREFUOE+VkbFOg3AQxkmcjGsfoU/CKxACKwNlcHNyIoUQ0rcohLRoIwmDGwT6
         IgzqqLUYhPW8I0e11CJ+yYX87+77XbgT/qumaS4wvLIsAb+PnB4nNq/yPAdRFIEgXPpbfTN98e1xeVhn
         zCvKc8u3MHmJoWP4GAHGDcZ6rHla13WRZRm4rgu2bUMcx5Cm6bAZExOMBS7l03EcUBQFfN+HMLwDXddb
         c5IkZF6TGd/sRHXGMAxBkqS22TRNeN/todx/wNvrDmYzA6IoIsAtmY8AVVWBYRitcZtv4fnpBTRNg/nc
@@ -771,7 +797,7 @@
   <data name="toolMenuItemCheckUpdate.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAbhJREFUOE+lkk9LAlEUxY2WbVtG2zZt+gqiCJKYguLKVeKmReLejSSJGw104b4v
+        wQAADsEBuJFr7QAAAbhJREFUOE+lkk9LAlEUxY2WbVtG2zZt+gqiCJKYguLKVeKmReLejSSJGw104b4v
         YBbE9AXGCFtYIg4IUlGW48z4JyjidO9rpvJfFF348Xj3nXPenac2AP9iZvMvjNVoNFokdokmAUInDolV
         UzK/SLTAYlmWEYlEYLfb4fP5UCwWMRgMhnTWJerEDmtN21dR01+r1RAIBKA0FWg9HY+dJ6T30wiHw/B6
         vYhGo6hWqzzZnmn7KGqsEZfJZBKVyrkwW/RUDaXSEdRuD9dXdTGVqqovpF+2zOuGYej5fB5utxu3N3dj
@@ -854,7 +880,7 @@
   <data name="toolStripStatusLabelPrePage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAAMBJREFUOE/dkrENwyAQRRkhI2QEz8AKaTNC5qBOHbEFfZoM4FFIZIv2wiccOgxY
+        wQAADsEBuJFr7QAAAMBJREFUOE/dkrENwyAQRRkhI2QEz8AKaTNC5qBOHbEFfZoM4FFIZIv2wiccOgxY
         Ssqc9GQ4+E+2dYorhDBFfIR2mCOHHFFE9FnEZgqfr3dSJ0t4OudIa11hrWXJEbkk6IXjvuLpX0VijEEP
         bzqxoIR7bAVS8rMAoN/9hMvtkQ4lEEgqASpumv+wLmsTZBoBiiU4YJaBZCQoQclXAhxI/kSw7TFDAaYM
         8KU9GoGYc5/X4kZbjSCHMQ9lJvJxt4hIvQH8YJzAMwuHCAAAAABJRU5ErkJggg==
@@ -872,7 +898,7 @@
   <data name="toolStripStatusLabelNextPage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wgAADsIBFShKgAAAALBJREFUOE/dk80RgyAQhSnJGmgh19TDOQWkFlsiGuH65CXArCz+5Jqd+UYE3jeo
+        wQAADsEBuJFr7QAAALBJREFUOE/dk80RgyAQhSnJGmgh19TDOQWkFlsiGuH65CXArCz+5Jqd+UYE3jeo
         q4kxDgmfwAW4bzC5AHwHnOTi/THC3J7glQHnHKy1Fd5LyUfAjZJWMk8zXn7qSqqAgR6UhBA2Aim5JFje
         ixIQ5k4foYRbNgJWulEvcS9M2hOoz3gUJuoELCmQ/CTgguRPBO1cYVfALiv/AOeOUALR5z6PxQ5dSpDD
         7IvaG3m5WwDMClPOr3NXTu3CAAAAAElFTkSuQmCC

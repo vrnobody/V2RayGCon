@@ -30,11 +30,8 @@
     public enum StringOperators
     {
         IS,
-        NOT,
         HAS,
-        HASNOT,
         LIKE,
-        UNLIKE,
         STARTS,
         ENDS,
     }
@@ -59,7 +56,6 @@
         SmallerThen,
         Between,
         Is,
-        Not,
     }
 
     #endregion

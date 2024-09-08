@@ -9,6 +9,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 {
     internal static class Helpers
     {
+        public static readonly string NOT = "not";
         public static readonly long MiB = 1024 * 1024;
 
         #region functions

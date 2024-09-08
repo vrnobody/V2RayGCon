@@ -45,7 +45,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
                 var s = string.Join(" ", keywords);
                 return $"{type}({s})";
             }
-            return $"{type}({left}, {right})";
+            var sl = left?.ToString() ?? "Null";
+            var sr = right?.ToString() ?? "Null";
+            return $"{type}({sl}, {sr})";
         }
     }
 

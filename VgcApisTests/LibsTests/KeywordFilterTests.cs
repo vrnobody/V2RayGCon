@@ -10,17 +10,27 @@ namespace VgcApisTests.LibsTests
     public class KeywordFilterTests
     {
         #region adv number filter
-        [TestMethod]
-        [DataRow("#MOd  <  02", 1, true)]
-        [DataRow("#moD  <  2", 2, true)]
-        [DataRow("#moD  <  02", 3, false)]
-        [DataRow("#MOd  >  2", 1, false)]
-        [DataRow("#moD  >  02", 2, true)]
-        [DataRow("#moD  >  2", 3, true)]
+        [DataTestMethod]
+        [DataRow("#MOd  <  02", 01, true)]
+        [DataRow("#moD  >  02", 02, false)]
+        [DataRow("#moD  <  02", 03, false)]
+        [DataRow("#moD  =  02", 03, false)]
+        [DataRow("#moD  =  02", 02, true)]
+        [DataRow("#moD  ~  05 01", 03, true)]
+        [DataRow("#moD  ~  05 01", 01, true)]
+        [DataRow("#moD  ~  05 01", 06, false)]
+        // not
+        [DataRow("#MOd not <  02", 01, false)]
+        [DataRow("#moD  not >  02", 02, true)]
+        [DataRow("#moD not <  02", 03, true)]
+        [DataRow("#moD not =  02", 03, true)]
+        [DataRow("#moD  not  02", 02, false)]
+        [DataRow("#moD  not  ~  05 01", 03, false)]
+        [DataRow("#moD not ~  05 01", 01, false)]
+        [DataRow("#moD not ~  05 01", 06, true)]
         public void AdvNumberFilterTagModifyDayTest(string keyword, long value, bool expResult)
         {
-            string[] tokens = Helpers.ParseLiteral(keyword.ToLower());
-            var np = AdvNumberFilter.CreateFilter(tokens);
+            var np = AdvNumberFilter.CreateFilter(keyword);
             var now = DateTime.UtcNow.ToLocalTime();
 
             Assert.IsNotNull(np);
@@ -29,17 +39,27 @@ namespace VgcApisTests.LibsTests
             Assert.AreEqual(expResult, r);
         }
 
-        [TestMethod]
-        [DataRow("#MOd  <  802", 801, true)]
-        [DataRow("#moD  <  0802", 802, true)]
-        [DataRow("#moD  <  802", 803, false)]
-        [DataRow("#MOd  >  0802", 801, false)]
-        [DataRow("#moD  >  802", 802, true)]
-        [DataRow("#moD  >  0802", 803, true)]
+        [DataTestMethod]
+        [DataRow("#MOd  <  0802", 0801, true)]
+        [DataRow("#moD  >  0802", 0802, false)]
+        [DataRow("#moD  <  0802", 0803, false)]
+        [DataRow("#moD  =  0802", 0803, false)]
+        [DataRow("#moD  =  0802", 0802, true)]
+        [DataRow("#moD  ~  0805 0801", 0803, true)]
+        [DataRow("#moD  ~  0805 0801", 0801, true)]
+        [DataRow("#moD  ~  0805 0801", 0806, false)]
+        // not
+        [DataRow("#MOd not <  0802", 0801, false)]
+        [DataRow("#moD  not >  0802", 0802, true)]
+        [DataRow("#moD not <  0802", 0803, true)]
+        [DataRow("#moD not =  0802", 0803, true)]
+        [DataRow("#moD  not  0802", 0802, false)]
+        [DataRow("#moD  not  ~  0805 0801", 0803, false)]
+        [DataRow("#moD not ~  0805 0801", 0801, false)]
+        [DataRow("#moD not ~  0805 0801", 0806, true)]
         public void AdvNumberFilterTagModifyMonthDayTest(string keyword, long value, bool expResult)
         {
-            string[] tokens = Helpers.ParseLiteral(keyword.ToLower());
-            var np = AdvNumberFilter.CreateFilter(tokens);
+            var np = AdvNumberFilter.CreateFilter(keyword);
             var d = DateTime.UtcNow.ToLocalTime().Year * 10000;
 
             Assert.IsNotNull(np);
@@ -47,9 +67,24 @@ namespace VgcApisTests.LibsTests
             Assert.AreEqual(expResult, r);
         }
 
+        [DataTestMethod]
         [DataRow("#MOd  <  240802", 240801, true)]
-        [DataRow("#moD  >  240802", 240802, true)]
+        [DataRow("#moD  >  240802", 240802, false)]
         [DataRow("#moD  <  240802", 240803, false)]
+        [DataRow("#moD  =  240802", 240803, false)]
+        [DataRow("#moD  =  240802", 240802, true)]
+        [DataRow("#moD  ~  240805 240801", 240803, true)]
+        [DataRow("#moD  ~  240805 240801", 240801, true)]
+        [DataRow("#moD  ~  240805 240801", 240806, false)]
+        // not
+        [DataRow("#MOd not <  240802", 240801, false)]
+        [DataRow("#moD  not >  240802", 240802, true)]
+        [DataRow("#moD not <  240802", 240803, true)]
+        [DataRow("#moD not =  240802", 240803, true)]
+        [DataRow("#moD  not  240802", 240802, false)]
+        [DataRow("#moD  not  ~  240805 240801", 240803, false)]
+        [DataRow("#moD not ~  240805 240801", 240801, false)]
+        [DataRow("#moD not ~  240805 240801", 240806, true)]
         public void AdvNumberFilterTagModifyYMDTest(string keyword, long value, bool expResult)
         {
             string[] tokens = Helpers.ParseLiteral(keyword.ToLower());
@@ -62,219 +97,198 @@ namespace VgcApisTests.LibsTests
         }
 
         [DataTestMethod]
+        // between
         [DataRow("#lten ~ -1 2", -3, false)]
         [DataRow("#lten ~ -1 2", 3, false)]
         [DataRow("#lten ~ -1 2", 1, true)]
+        [DataRow("#lten ~ -1 2", 2, true)]
+        [DataRow("#LTen not ~ -1 2", -3, true)]
+        [DataRow("#lteNc not ~ -1 2", 3, true)]
+        [DataRow("#lTeny not ~ -1 2", 1, false)]
+        [DataRow("#lten NOt ~ -1 2", 2, false)]
+        // equals
         [DataRow("#Upd = -1", -1, true)]
         [DataRow("#upd = -2", 1, false)]
-        [DataRow("#uPd ! -1", 456, true)]
-        [DataRow("#upd ! -1", -1, false)]
-        [DataRow("#lTeN ~ -1 2", -1, true)]
+        [DataRow("#Upd not = -1", -1, false)]
+        [DataRow("#upd not -2", 1, true)]
+        [DataRow("#upd not 1", 1, false)]
+        // smaller then
         [DataRow("#lAtency < 200", 123, true)]
+        [DataRow("#lAtency < 200", 234, false)]
+        [DataRow("#lAtency < 200", 200, false)]
+        [DataRow("#lAtency not < 200", 123, false)]
+        [DataRow("#lAtency not < 200", 234, true)]
+        [DataRow("#lAtency not < 200", 200, true)]
+        // larget then
         [DataRow("#upd > -1", 456, true)]
         [DataRow("#down > -1", -456, false)]
-        [DataRow("#prt > 1080 ", 1080, true)]
-        [DataRow("#MOd  <  20240802", 20240801, true)]
-        [DataRow("#moD  >  20240802", 20240802, true)]
-        [DataRow("#moD  <  20240802", 20240803, false)]
-        [DataRow("#moD  <  120240802", 120240701, true)]
-        [DataRow("#moD  <  120240802", 120240803, false)]
+        [DataRow("#prt > 1080 ", 1080, false)]
+        [DataRow("#uPd nOt > -1", 456, false)]
+        [DataRow("#doWn noT > -1", -456, true)]
+        [DataRow("#pRt  not > 1080 ", 1080, true)]
         public void AdvNumberFilterMatchCoreTest(string keyword, long value, bool expResult)
         {
-            string[] tokens = Helpers.ParseLiteral(keyword.ToLower());
-            var np = AdvNumberFilter.CreateFilter(tokens);
+            var np = AdvNumberFilter.CreateFilter(keyword);
             Assert.IsNotNull(np);
             Assert.AreEqual(expResult, np.MatchCore(value));
         }
 
         [DataTestMethod]
-        [DataRow("#upd = 123 456 aaa", NumberTagNames.Upload, NumberOperators.Is)]
-        [DataRow("#upd ! 123 456 aaa", NumberTagNames.Upload, NumberOperators.Not)]
-        [DataRow("#upd ~ 123 123 aaa", NumberTagNames.Upload, NumberOperators.Between)]
-        [DataRow("#upd ~ 123 456 aaa", NumberTagNames.Upload, NumberOperators.Between)]
-        [DataRow("#download > 0000123 bbbb", NumberTagNames.Download, NumberOperators.LargerThen)]
-        [DataRow("#lat < 123", NumberTagNames.Latency, NumberOperators.SmallerThen)]
-        [DataRow("#prt = 1080", NumberTagNames.Port, NumberOperators.Is)]
-        [DataRow("#mod ! 123", NumberTagNames.Modify, NumberOperators.Not)]
-        public void AdvNumberFilterParseTagNameAndOperatorTest(
-            string kw,
-            NumberTagNames expContentName,
-            NumberOperators expOp
-        )
+        [DataRow("#upd 123 456 aaa", "#(upload) is 123 0")]
+        [DataRow("#load = 123 456 aaa", "#(upload, download) is 123 0")]
+        [DataRow("#upd = 123 456 aaa", "#(upload) is 123 0")]
+        [DataRow("#upD ~ 123 123 aaa", "#(upload) between 123 123")]
+        [DataRow("#upD Not ~ 123 123 aaa", "#(upload) not between 123 123")]
+        [DataRow("#UPld ~ 123 456 aaa", "#(upload) between 123 456")]
+        [DataRow("#doWnload > 0000123 bbbb", "#(download) largerthen 123 0")]
+        [DataRow("#doWnload nOT > 0000123 bbbb", "#(download) not largerthen 123 0")]
+        [DataRow("#LaT < 123", "#(latency) smallerthen 123 0")]
+        [DataRow("#prt = 1080", "#(port) is 1080 0")]
+        [DataRow("#prt not 1080", "#(port) not is 1080 0")]
+        public void AdvNumberFilterParseTagNameAndOperatorTest(string kw, string exp)
         {
+            var parser1 = AdvNumberFilter.CreateFilter(kw);
+            Assert.IsNotNull(parser1);
+            Assert.AreEqual(exp, parser1.ToString());
+
             string[] tokens = Helpers.ParseLiteral(kw.ToLower());
-            var parser = AdvNumberFilter.CreateFilter(tokens);
-            Assert.IsNotNull(parser);
-
-            var cnames = parser.GetTagNames();
-            Assert.AreEqual(1, cnames.Count);
-            Assert.IsTrue(cnames.Contains(expContentName));
-
-            Assert.AreEqual(expOp, parser.GetOperator());
+            var parser2 = AdvNumberFilter.CreateFilter(tokens);
+            Assert.IsNotNull(parser2);
+            Assert.AreEqual(exp, parser2.ToString());
         }
 
         [DataTestMethod]
-        [DataRow("#laty = 13")]
-        [DataRow("#latency ! 145")]
-        [DataRow("#upd > 123 aaa 456 ")]
-        [DataRow("#latency < 100")]
-        [DataRow("#upd > 100")]
-        [DataRow("#down ~ 321 45")]
-        [DataRow("#laty     =    13")]
-        [DataRow("#lAtEncy    !   145   ")]
-        [DataRow("#upd  >    123   aaa   456  ")]
-        [DataRow("#laTency    <    100")]
-        [DataRow("#upD    >    100")]
-        [DataRow("#dOwN   ~    321   45")]
-        [DataRow("#port  =    1080")]
-        [DataRow("#modify  =   240230")]
-        public void CreateAdvNumberFilterTest(string kw)
+        [DataRow("#upd")]
+        [DataRow("#upd ! 123 456 aaa")]
+        [DataRow("#upD @ not 123 123 aaa")]
+        [DataRow("#UPld ~ not 123 456 aaa")]
+        [DataRow("#doWnload not")]
+        public void AdvNumberFilterParserFailTest(string kw)
         {
-            var kwf = new KeywordFilter(kw);
-            var f = kwf.GetFilter();
-            Assert.IsTrue(f is AdvNumberFilter);
+            var parser1 = AdvNumberFilter.CreateFilter(kw);
+            Assert.IsNull(parser1);
+
+            string[] tokens = Helpers.ParseLiteral(kw.ToLower());
+            var parser2 = AdvNumberFilter.CreateFilter(tokens);
+            Assert.IsNull(parser2);
         }
 
         #endregion
+
 
         #region adv string filter
         [DataTestMethod]
-        [DataRow("#tg")]
-        [DataRow("#tag1")]
-        [DataRow("#mk")]
-        [DataRow("#rk    ")]
-        [DataRow("#nAe")]
-        [DataRow("#smMY")]
-        [DataRow("#tTl    ")]
-        public void CreateAdvStringFilterTest(string kw)
+        [DataRow("#tG", "#(tag1, tag2, tag3) like \"\"")]
+        [DataRow("#tG nOT", "#(tag1, tag2, tag3) not like \"\"")]
+        [DataRow("#tG nOT is", "#(tag1, tag2, tag3) not is \"\"")]
+        [DataRow("#TG nOT has 😀 \"a 😀b c\"", "#(tag1, tag2, tag3) not has \"😀a 😀b c\"")]
+        [DataRow("#tag1 not", "#(tag1) not like \"\"")]
+        [DataRow("#mk", "#(mark, remark) like \"\"")]
+        [DataRow("#Mk has ", "#(mark, remark) has \"\"")]
+        [DataRow(
+            "#Mk not has a😀bc \"1 23 \" 中文 \"\"\"",
+            "#(mark, remark) not has \"a😀bc1 23 中文\"\""
+        )]
+        [DataRow("#rk like a 😀b c d e ", "#(mark, remark) like \"a😀bcde\"")]
+        [DataRow("#rk not ends a 😀b c d e ", "#(mark, remark) not ends \"a😀bcde\"")]
+        [DataRow("#remark not ends a 😀b c d e ", "#(remark) not ends \"a😀bcde\"")]
+        [DataRow("#nAe not em😀pty", "#(name) not like \"em😀pty\"")]
+        [DataRow("#smMY starts empt😀y", "#(summary) starts \"empt😀y\"")]
+        public void CreateAdvStringFilterSuccessTest(string kw, string exp)
         {
-            var kwf = new KeywordFilter(kw);
-            var f = kwf.GetFilter();
-            Assert.IsTrue(f is AdvStringFilter);
+            var parser1 = AdvStringFilter.CreateFilter(kw);
+            Assert.IsNotNull(parser1);
+            var s1 = parser1.ToString();
+            Assert.AreEqual(exp, s1);
+
+            var tokens = Helpers.ParseLiteral(kw.ToLower());
+            var parser2 = AdvStringFilter.CreateFilter(tokens);
+            Assert.IsNotNull(parser2);
+            var s2 = parser1.ToString();
+            Assert.AreEqual(exp, s2);
         }
 
         [DataTestMethod]
-        [DataRow("#TiLE \"\"", "", StringOperators.LIKE, StringTagNames.Title)]
-        [DataRow("#TiLE  hAs  \"\"", "", StringOperators.HAS, StringTagNames.Title)]
-        [DataRow("#TiLE", "", StringOperators.LIKE, StringTagNames.Title)]
-        [DataRow(
-            "#tITle     \" is \" \"\"\" not  \"\"\"  ",
-            " is \"not\"",
-            StringOperators.LIKE,
-            StringTagNames.Title
-        )]
-        [DataRow("#TiLE \" is \"", " is ", StringOperators.LIKE, StringTagNames.Title)]
-        [DataRow(
-            "#tg1 not a B ,;😁! cDDE 中文",
-            "ab,;😁!cdde中文",
-            StringOperators.NOT,
-            StringTagNames.Tag1
-        )]
-        [DataRow("#NaMe  IS Is", "is", StringOperators.IS, StringTagNames.Name)]
-        [DataRow(
-            "#tg1 not a B ,;😁! cDDE 中文",
-            "ab,;😁!cdde中文",
-            StringOperators.NOT,
-            StringTagNames.Tag1
-        )]
-        [DataRow("#suMmaRy  hAs", "", StringOperators.HAS, StringTagNames.Summary)]
-        [DataRow(
-            "#ttl hasnot 测 A 试 1 😊 ",
-            "测a试1😊",
-            StringOperators.HASNOT,
-            StringTagNames.Title
-        )]
-        [DataRow("#tg2", "", StringOperators.LIKE, StringTagNames.Tag2)]
-        [DataRow("#summary has", "", StringOperators.HAS, StringTagNames.Summary)]
-        [DataRow(
-            "#tg",
-            "",
-            StringOperators.LIKE,
-            StringTagNames.Tag1,
-            StringTagNames.Tag2,
-            StringTagNames.Tag3
-        )]
-        [DataRow("#coRe hAs raY", "ray", StringOperators.HAS, StringTagNames.Core)]
-        [DataRow("#selt uNlike  fAl", "fal", StringOperators.UNLIKE, StringTagNames.Selected)]
-        public void AdvStringFilterParseTagNameAndOpTest(
-            string kw,
-            string expKw,
-            StringOperators expMatchType,
-            params StringTagNames[] expContentNames
-        )
+        [DataRow("#Mark", "", true)]
+        [DataRow("#mArk", "abc", true)]
+        [DataRow("#mark like a b c", "abcde", true)]
+        [DataRow("#tAg like a b e", "abcde", true)]
+        [DataRow("#mark like a b f", "abcde", false)]
+        [DataRow("#mArk has a b c", "ab", false)]
+        [DataRow("#maRk is", "", true)]
+        [DataRow("#mark is", "abc", false)]
+        [DataRow("#nMe is a b c", "abcde", false)]
+        [DataRow("#mar is a b f", "abcde", false)]
+        [DataRow("#mark has a b c", "abc", true)]
+        [DataRow("#maRk has", "", true)]
+        [DataRow("#mark has", "abc", true)]
+        [DataRow("#mark has a b c", "abcde", true)]
+        [DataRow("#smM has a b f", "abcde", false)]
+        [DataRow("#mark has a b c", "ab", false)]
+        [DataRow("#rk starts", "", true)]
+        [DataRow("#mark starts", "abc", true)]
+        [DataRow("#mark starts a b c", "abcde", true)]
+        [DataRow("#ttl starts a b f", "abcde", false)]
+        [DataRow("#mark starts a b c", "ab", false)]
+        [DataRow("#mark ends", "", true)]
+        [DataRow("#mark ends", "abc", true)]
+        [DataRow("#mark ends a b c", "abcde", false)]
+        [DataRow("#mark ends cde", "abcde", true)]
+        [DataRow("#mark ends a ", "ab", false)]
+        public void CreateAdvStringFilterMatchCoreTest(string kw, string content, bool exp)
         {
-            string[] tokens = Helpers.ParseLiteral(kw.ToLower());
-            var parser = AdvStringFilter.CreateFilter(tokens);
-            Assert.IsNotNull(parser);
-            Assert.AreEqual(expKw, parser.GetParsedKeyword());
-            Assert.AreEqual(expMatchType, parser.GetOperator());
-            var cnames = parser.GetTagNames();
-            Assert.AreEqual(expContentNames.Count(), cnames.Count());
-            foreach (var cname in cnames)
-            {
-                Assert.IsTrue(expContentNames.Contains(cname));
-            }
+            var parser1 = AdvStringFilter.CreateFilter(kw);
+            Assert.IsNotNull(parser1);
+            Assert.AreEqual(exp, parser1.MatchCore(content));
+
+            var tokens = Helpers.ParseLiteral(kw.ToLower());
+            var parser2 = AdvStringFilter.CreateFilter(tokens);
+            Assert.IsNotNull(parser2);
+            Assert.AreEqual(exp, parser2.MatchCore(content));
         }
 
         [DataTestMethod]
-        [DataRow("#tITlE   Is   \"\" ", "", true)]
-        [DataRow("#tItlE   Is   \"\" ", "   ", false)]
-        [DataRow("#tItlE   not   \" \" \" \" \" \" ", "   ", false)]
-        [DataRow("#tItlE   not   \"  \" ", "   ", true)]
-        [DataRow("#tg not a", "A", false)]
-        [DataRow("#tg unlike abc", "abcd", false)]
-        [DataRow("#tG  uNlike abc", "bcd", true)]
-        [DataRow("#tg unlike  aBc", "bc", true)]
-        [DataRow("#tg unlike A cd,😀 文", ";-,a C  D中,😀文,Bc", false)]
-        [DataRow("#tg unlike a# ,😀 文", ";-,a 中,😀文,bc", true)]
-        [DataRow("#tg unlike a", "", true)]
-        [DataRow("#tg unlike ", "aa", true)]
-        [DataRow("#tg unlike ", "", false)]
-        [DataRow("#tg like a ,BcD😀 文", ";-,a 中, bv C d😀文,bc", true)]
-        [DataRow("#tg like a", "", false)]
-        [DataRow("#tg has ab", "abc", true)]
-        [DataRow("#tg has bc", "abc", true)]
-        [DataRow("#tg has abcd", "abc", false)]
-        [DataRow("#tg has ac", "abc", false)]
-        [DataRow("#tg has e", "abc", false)]
-        [DataRow("#tg has ", "a", true)]
-        [DataRow("#tg has ", "", true)]
-        [DataRow("#tg hasnot ab", "abc", false)]
-        [DataRow("#tTl haSnot bc", "abc", false)]
-        [DataRow("#tg hasnot abcd", "abc", true)]
-        [DataRow("#tg hasnot ac", "abc", true)]
-        [DataRow("#nm hasnot e", "abc", true)]
-        [DataRow("#tg hasnot ", "a", true)]
-        [DataRow("#tg hasnot ", "", false)]
-        [DataRow("#tg nOt ", "a", true)]
-        [DataRow("#tg not a", "a", false)]
-        [DataRow("#tg not   ", "", false)]
-        [DataRow("#tg Is a", "a", true)]
-        [DataRow("#tg is a", "aa", false)]
-        [DataRow("#tg is a", "A", true)]
-        [DataRow("#tg is A", "a", true)]
-        [DataRow("#tg is a", "", false)]
-        [DataRow("#tg is is", "is", true)]
-        [DataRow("#tg is", "", true)]
-        [DataRow("#tg is", "aaa", false)]
-        [DataRow("#smm  a ,😀 文", ";-,a 中,😀文,bc", true)]
-        [DataRow("#tg a", "", false)]
-        [DataRow("#tg ", "aa", true)]
-        [DataRow("#tg ", "", true)]
-        [DataRow("#tg like a", "a", true)]
-        [DataRow("#tg a", "a", true)]
-        [DataRow("#tg like ", "aa", true)]
-        [DataRow("#tg like ", "", true)]
-        [DataRow("#tg", "", true)]
-        public void AdvStringFilterMatchCoreTest(string keyword, string content, bool exp)
+        [DataRow("#Mark not", "", true)]
+        [DataRow("#mArk not", "abc", false)]
+        [DataRow("#mark not like a b c", "abcde", true)]
+        [DataRow("#tAg not like a b e", "abcde", true)]
+        [DataRow("#mark not like a b f", "abcde", false)]
+        [DataRow("#mArk not has a b c", "ab", false)]
+        [DataRow("#maRk not is", "", true)]
+        [DataRow("#mark not is", "abc", false)]
+        [DataRow("#NamE not is a b c", "abcde", false)]
+        [DataRow("#mar not is a b f", "abcde", false)]
+        [DataRow("#mark not has a b c", "abc", true)]
+        [DataRow("#maRk not has", "", true)]
+        [DataRow("#mark not has", "abc", false)]
+        [DataRow("#mark not has a b c", "abcde", true)]
+        [DataRow("#smM not has a b f", "abcde", false)]
+        [DataRow("#mark not has a b c", "ab", false)]
+        [DataRow("#rk not starts", "", true)]
+        [DataRow("#mark not starts", "abc", true)]
+        [DataRow("#mark not starts a b c", "abcde", true)]
+        [DataRow("#ttl not starts a b f", "abcde", false)]
+        [DataRow("#mark not starts a b c", "ab", false)]
+        [DataRow("#mark not ends", "", true)]
+        [DataRow("#mark not ends", "abc", true)]
+        [DataRow("#mark not ends a b c", "abcde", false)]
+        [DataRow("#mark not ends cde", "abcde", true)]
+        [DataRow("#mark not ends a ", "ab", false)]
+        public void CreateAdvStringFilterMatchCoreNotTest(string kw, string content, bool expNot)
         {
-            string[] tokens = Helpers.ParseLiteral(keyword.ToLower());
-            var kws = AdvStringFilter.CreateFilter(tokens);
-            Assert.IsNotNull(kws);
-            Assert.AreEqual(exp, kws.MatchCore(content));
+            var exp = !expNot;
+            var parser1 = AdvStringFilter.CreateFilter(kw);
+            Assert.IsNotNull(parser1);
+            Assert.AreEqual(exp, parser1.MatchCore(content));
+
+            var tokens = Helpers.ParseLiteral(kw.ToLower());
+            var parser2 = AdvStringFilter.CreateFilter(tokens);
+            Assert.IsNotNull(parser2);
+            Assert.AreEqual(exp, parser2.MatchCore(content));
         }
 
         #endregion
+
 
         #region simple title filter
         [DataTestMethod]

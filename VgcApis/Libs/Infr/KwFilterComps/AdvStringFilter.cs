@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web.UI;
 using VgcApis.Interfaces.CoreCtrlComponents;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -9,11 +11,17 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 {
     public class AdvStringFilter : IAdvanceFilter<StringTagNames, StringOperators, string>
     {
-        public AdvStringFilter(HashSet<StringTagNames> tagNames, StringOperators op, string keyword)
+        public AdvStringFilter(
+            HashSet<StringTagNames> tagNames,
+            bool not,
+            StringOperators op,
+            string keyword
+        )
         {
             this.parsedKeyword = keyword.ToLower();
             this.tagNames = tagNames;
             this.op = op;
+            this.not = not;
 
             this.matcher = CreateMatcher(this.op, this.parsedKeyword);
             this.highlighter = CreateHighlighter();
@@ -21,6 +29,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 
         #region properties
 
+        readonly bool not = false;
         readonly string parsedKeyword = "";
         readonly HashSet<StringTagNames> tagNames = new HashSet<StringTagNames>() { };
         readonly StringOperators op = StringOperators.LIKE;
@@ -75,20 +84,23 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             return r;
         }
 
+        public override string ToString()
+        {
+            var n = this.not ? $" {Helpers.NOT}" : "";
+            var o = this.op.ToString().ToLower();
+            var ts = string.Join(", ", this.tagNames).ToString().ToLower();
+            var r = $"#({ts}){n} {o} \"{this.parsedKeyword}\"";
+            return r;
+        }
+
         public Highlighter GetHighlighter() => this.highlighter;
 
         #endregion
 
         #region for unit tests
-        internal string GetParsedKeyword() => parsedKeyword;
-
-        public StringOperators GetOperator() => op;
-
-        public HashSet<StringTagNames> GetTagNames() => new HashSet<StringTagNames>(tagNames);
-
         public bool MatchCore(string content)
         {
-            var cname = GetTagNames().First();
+            var cname = tagNames.First();
             return CachedMatchCore(cname, content);
         }
 
@@ -118,9 +130,11 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             foreach (var tag in Enum.GetNames(typeof(StringTagNames)))
             {
                 r.Add($"#{tag.ToLower()}");
+                r.Add($"#{tag.ToLower()} {Helpers.NOT}");
                 foreach (var op in Enum.GetNames(typeof(StringOperators)))
                 {
                     r.Add($"#{tag.ToLower()} {op.ToLower()}");
+                    r.Add($"#{tag.ToLower()} {Helpers.NOT} {op.ToLower()}");
                 }
             }
             return r;
@@ -148,35 +162,47 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             switch (op)
             {
                 case StringOperators.IS:
-                    return (c) => c.Equals(k);
-                case StringOperators.NOT:
-                    return (c) => !c.Equals(k);
+                    return (c) => this.not ? !c.Equals(k) : c.Equals(k);
                 case StringOperators.HAS:
-                    return (c) => string.IsNullOrEmpty(k) || c.Contains(k);
-                case StringOperators.HASNOT:
                     return (c) =>
                     {
                         if (string.IsNullOrEmpty(k))
                         {
-                            return !string.IsNullOrEmpty(c);
+                            if (not)
+                            {
+                                return !string.IsNullOrEmpty(c);
+                            }
+                            return true;
                         }
-                        return !c.Contains(k);
+                        var has = c.Contains(k);
+                        return not ? !has : has;
                     };
                 case StringOperators.LIKE:
-                    return (c) => string.IsNullOrEmpty(k) || Misc.Utils.PartialMatch(c, k);
-                case StringOperators.UNLIKE:
                     return (c) =>
                     {
                         if (string.IsNullOrEmpty(k))
                         {
-                            return !string.IsNullOrEmpty(c);
+                            if (not)
+                            {
+                                return !string.IsNullOrEmpty(c);
+                            }
+                            return true;
                         }
-                        return !Misc.Utils.PartialMatch(c, k);
+                        var like = Misc.Utils.PartialMatch(c, k);
+                        return not ? !like : like;
                     };
                 case StringOperators.STARTS:
-                    return (c) => c.StartsWith(k);
+                    return (c) =>
+                    {
+                        var ok = c.StartsWith(k);
+                        return not ? !ok : ok;
+                    };
                 case StringOperators.ENDS:
-                    return (c) => c.EndsWith(k);
+                    return (c) =>
+                    {
+                        var ok = c.EndsWith(k);
+                        return not ? !ok : ok;
+                    };
                 default:
                     break;
             }
@@ -280,27 +306,23 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 return null;
             }
 
-            string parsedKeyword;
-            StringOperators op;
-            if (kws.Length < 2)
+            var idx = 1;
+            var not = false;
+            if (kws.Length > idx && kws[idx] == Helpers.NOT)
             {
-                // #tag1 like $""
-                op = StringOperators.LIKE;
-                parsedKeyword = "";
-            }
-            else if (!operatorLookupTable.TryGetValue(kws[1], out op))
-            {
-                // #tag1 like ...
-                op = StringOperators.LIKE;
-                parsedKeyword = string.Join("", kws.Skip(1));
-            }
-            else
-            {
-                // #tag1 <op> ...
-                parsedKeyword = string.Join("", kws.Skip(2));
+                not = true;
+                idx++;
             }
 
-            var parser = new AdvStringFilter(cnames, op, parsedKeyword);
+            var op = StringOperators.LIKE;
+            if (kws.Length > idx && operatorLookupTable.TryGetValue(kws[idx], out var tmpOp))
+            {
+                op = tmpOp;
+                idx++;
+            }
+
+            var parsedKeyword = string.Join("", kws.Skip(idx));
+            var parser = new AdvStringFilter(cnames, not, op, parsedKeyword);
             return parser;
         }
 

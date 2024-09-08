@@ -37,6 +37,14 @@ namespace VgcApisTests.LibsTests
         #region make expression test
         [DataTestMethod]
         [DataRow(
+            " (      #smm not b)!|& ",
+            "AndExpr(OrExpr(NotExpr(LeafExpr(#smm not b), Null), Null), Null)"
+        )]
+        [DataRow(
+            " &|!(      #smm not b) ",
+            "NotExpr(OrExpr(AndExpr(LeafExpr(#smm not b), Null), Null), Null)"
+        )]
+        [DataRow(
             " (   #mk is a   ) !(      #smm not b)   &   (#ttl like c  ) ",
             "AndExpr(NotExpr(LeafExpr(#mk is a), LeafExpr(#smm not b)), LeafExpr(#ttl like c))"
         )]

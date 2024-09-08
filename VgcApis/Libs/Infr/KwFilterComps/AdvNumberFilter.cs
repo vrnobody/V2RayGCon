@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using VgcApis.Interfaces.CoreCtrlComponents;
+using VgcApis.Libs.Streams;
 
 namespace VgcApis.Libs.Infr.KwFilterComps
 {
@@ -9,12 +10,14 @@ namespace VgcApis.Libs.Infr.KwFilterComps
     {
         public AdvNumberFilter(
             HashSet<NumberTagNames> contentNames,
+            bool not,
             NumberOperators op,
             long firstNumber,
             long secondNumber
         )
         {
             this.contentNames = contentNames;
+            this.not = not;
             this.op = op;
             this.first = firstNumber;
             this.second = secondNumber;
@@ -37,7 +40,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         }
 
         #region properties
-
+        readonly bool not = false;
         readonly long first = 0;
         readonly long second = 0;
 
@@ -60,7 +63,6 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 { ">", NumberOperators.LargerThen },
                 { "<", NumberOperators.SmallerThen },
                 { "=", NumberOperators.Is },
-                { "!", NumberOperators.Not },
                 { "~", NumberOperators.Between },
             };
 
@@ -69,6 +71,15 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region public methods
+        public override string ToString()
+        {
+            var n = this.not ? $" {Helpers.NOT}" : "";
+            var o = this.op.ToString().ToLower();
+            var ts = string.Join(", ", this.contentNames).ToString().ToLower();
+            var r = $"#({ts}){n} {o} {this.first} {this.second}";
+            return r;
+        }
+
         internal static ReadOnlyCollection<string> GetTips() => tips.AsReadOnly();
 
         public IReadOnlyCollection<Interfaces.ICoreServCtrl> Filter(
@@ -97,10 +108,6 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 
         #region for unit tests
 
-        public NumberOperators GetOperator() => op;
-
-        public HashSet<NumberTagNames> GetTagNames() => new HashSet<NumberTagNames>(contentNames);
-
         public bool MatchCore(long num)
         {
             return matcher.Invoke(num);
@@ -115,9 +122,11 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             foreach (var tag in Enum.GetNames(typeof(NumberTagNames)))
             {
                 r.Add($"#{tag.ToLower()}");
+                r.Add($"#{tag.ToLower()} {Helpers.NOT}");
                 foreach (var op in keys)
                 {
                     r.Add($"#{tag.ToLower()} {op}");
+                    r.Add($"#{tag.ToLower()} {Helpers.NOT} {op}");
                 }
             }
             return r;
@@ -128,15 +137,13 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             switch (numMatchingType)
             {
                 case NumberOperators.SmallerThen:
-                    return (n) => n <= first;
+                    return (n) => not ? n >= first : n < first;
                 case NumberOperators.LargerThen:
-                    return (n) => n >= first;
+                    return (n) => not ? n <= first : n > first;
                 case NumberOperators.Is:
-                    return (n) => n == first;
-                case NumberOperators.Not:
-                    return (n) => n != first;
+                    return (n) => not ? n != first : n == first;
                 case NumberOperators.Between:
-                    return (n) => n >= first && n <= second;
+                    return (n) => not ? (n < first || n > second) : (n >= first && n <= second);
                 default:
                     break;
             }
@@ -218,7 +225,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         // remove later
         internal static AdvNumberFilter CreateFilter(string[] kws)
         {
-            if (kws.Length < 3)
+            if (kws.Length < 2)
             {
                 // #latency < 100
                 return null;
@@ -235,29 +242,52 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 return null;
             }
 
-            if (!operatorLookupTable.TryGetValue(kws[1], out var op))
+            var idx = 1;
+            var not = false;
+            if (kws[1] == Helpers.NOT)
+            {
+                idx++;
+                not = true;
+                if (kws.Length < idx + 1)
+                {
+                    return null;
+                }
+            }
+
+            var op = NumberOperators.Is;
+            if (operatorLookupTable.TryGetValue(kws[idx], out var tmpOp))
+            {
+                op = tmpOp;
+                idx++;
+                if (kws.Length < idx + 1)
+                {
+                    return null;
+                }
+            }
+
+            if (!TryParseParams(kws, idx, op, out var firstNumber, out var secondNumber))
             {
                 return null;
             }
 
-            if (!TryParseParams(kws, op, out var firstNumber, out var secondNumber))
-            {
-                return null;
-            }
-
-            var parser = new AdvNumberFilter(cnames, op, firstNumber, secondNumber);
+            var parser = new AdvNumberFilter(cnames, not, op, firstNumber, secondNumber);
             return parser;
         }
 
         private static bool TryParseParams(
             string[] kws,
+            int idx,
             NumberOperators op,
             out long firstNumber,
             out long secondNumber
         )
         {
+            // not idx = 2
+            // op idx = 3
+            // 0    1   2   3     4
+            // #tag not op first second
             secondNumber = 0;
-            if (!long.TryParse(kws[2], out firstNumber))
+            if (!long.TryParse(kws[idx], out firstNumber))
             {
                 return false;
             }
@@ -265,12 +295,12 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             if (op == NumberOperators.Between)
             {
                 // #latency ~ 100 200
-                if (kws.Length < 4)
+                if (kws.Length < idx + 2)
                 {
                     return false;
                 }
 
-                var ok = long.TryParse(kws[3], out secondNumber);
+                var ok = long.TryParse(kws[idx + 1], out secondNumber);
                 if (!ok)
                 {
                     return false;

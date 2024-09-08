@@ -108,7 +108,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
             if (f != null)
             {
                 var servs = servers.GetAllServersOrderByIndex();
-                r = f.Filter(servs).ToList(); // copy
+                r =
+                    (f.Filter(servs) as List<ICoreServCtrl>)
+                    ?? throw new NullReferenceException("Filterd list is null!");
             }
 
             matchCountCache = r.Count;

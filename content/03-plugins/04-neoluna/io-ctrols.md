@@ -64,8 +64,7 @@ until not again
 ```
 
 ##### ShowData输出控件
-
-这个控件有点bug，待修复。  
+ 
 ```lua
 local utils = require('3rd/neolua/libs/utils')
 

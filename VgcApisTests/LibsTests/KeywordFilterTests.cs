@@ -178,6 +178,9 @@ namespace VgcApisTests.LibsTests
 
         #region adv string filter
         [DataTestMethod]
+        [DataRow("#tag1 match", "#(tag1) match \"\"")]
+        [DataRow("#mArK nOt mAtCh   ", "#(mark) not match \"\"")]
+        [DataRow("#mArK nOt mAtCh  aB cD 中文 ", "#(mark) not match \"aBcD中文\"")]
         [DataRow("#tG", "#(tag1, tag2, tag3) like \"\"")]
         [DataRow("#tG nOT", "#(tag1, tag2, tag3) not like \"\"")]
         [DataRow("#tG nOT is", "#(tag1, tag2, tag3) not is \"\"")]
@@ -209,6 +212,9 @@ namespace VgcApisTests.LibsTests
         }
 
         [DataTestMethod]
+        [DataRow("#nMe mAtch \\w+", "abcde", true)]
+        [DataRow("#nMe mAtch ^\\d+", "abcde123", false)]
+        [DataRow("#nMe mAtch \\d+$", "abcde123", true)]
         [DataRow("#Mark", "", true)]
         [DataRow("#mArk", "abc", true)]
         [DataRow("#mark like a b c", "abcde", true)]
@@ -248,6 +254,9 @@ namespace VgcApisTests.LibsTests
         }
 
         [DataTestMethod]
+        [DataRow("#nMe not mAtch \\w+", "abcde", true)]
+        [DataRow("#nMe not mAtch ^\\d+", "abcde123", false)]
+        [DataRow("#nMe not mAtch \\d+$", "abcde123", true)]
         [DataRow("#Mark not", "", true)]
         [DataRow("#mArk not", "abc", false)]
         [DataRow("#mark not like a b c", "abcde", true)]

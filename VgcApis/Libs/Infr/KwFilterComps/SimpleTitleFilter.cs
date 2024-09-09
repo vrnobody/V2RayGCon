@@ -57,7 +57,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             {
                 return null;
             }
-            return new SimpleTitleFilter(kw);
+            return new SimpleTitleFilter(kw.ToLower());
         }
 
         #endregion

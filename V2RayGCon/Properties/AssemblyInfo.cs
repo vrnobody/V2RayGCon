@@ -33,11 +33,13 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.1.13")]
+[assembly: AssemblyVersion("2.0.1.14")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+--------------------------------------------------------------------
+v2.0.1.14 Add MATCH string operator.
 v2.0.1.13 Add "NOT" operator and remove conflict operators.
 v2.0.1.12 Add more menu itesm to current page selecting menu.
 v2.0.1.11 Show more detail result after importing share links.

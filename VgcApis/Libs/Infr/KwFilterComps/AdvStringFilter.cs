@@ -18,7 +18,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             string keyword
         )
         {
-            this.parsedKeyword = keyword.ToLower();
+            this.parsedKeyword = (op == StringOperators.MATCH) ? keyword : keyword.ToLower();
             this.tagNames = tagNames;
             this.op = op;
             this.not = not;
@@ -108,7 +108,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 
         bool CachedMatchCore(StringTagNames cname, string content)
         {
-            content = content?.ToLower() ?? "";
+            content = content ?? "";
             if (matchCache.TryGetValue(content, out var r))
             {
                 return r;
@@ -162,7 +162,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             switch (op)
             {
                 case StringOperators.IS:
-                    return (c) => this.not ? !c.Equals(k) : c.Equals(k);
+                    return (c) => this.not ? !c.ToLower().Equals(k) : c.ToLower().Equals(k);
                 case StringOperators.HAS:
                     return (c) =>
                     {
@@ -174,7 +174,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                             }
                             return true;
                         }
-                        var has = c.Contains(k);
+                        var has = c.ToLower().Contains(k);
                         return not ? !has : has;
                     };
                 case StringOperators.LIKE:
@@ -188,19 +188,30 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                             }
                             return true;
                         }
-                        var like = Misc.Utils.PartialMatch(c, k);
+                        var like = Misc.Utils.PartialMatch(c.ToLower(), k);
                         return not ? !like : like;
                     };
                 case StringOperators.STARTS:
                     return (c) =>
                     {
-                        var ok = c.StartsWith(k);
+                        var ok = c.ToLower().StartsWith(k);
                         return not ? !ok : ok;
                     };
                 case StringOperators.ENDS:
                     return (c) =>
                     {
-                        var ok = c.EndsWith(k);
+                        var ok = c.ToLower().EndsWith(k);
+                        return not ? !ok : ok;
+                    };
+                case StringOperators.MATCH:
+                    return (c) =>
+                    {
+                        var ok = false;
+                        try
+                        {
+                            ok = Regex.IsMatch(c, k);
+                        }
+                        catch { }
                         return not ? !ok : ok;
                     };
                 default:
@@ -284,7 +295,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             {
                 return null;
             }
-            var kws = Helpers.ParseLiteral(kw.ToLower());
+            var kws = Helpers.ParseLiteral(kw);
             return CreateFilter(kws);
         }
 
@@ -301,21 +312,24 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 return null;
             }
 
-            if (!TryParseTagName(tag.Substring(1), out var cnames))
+            if (!TryParseTagName(tag.Substring(1).ToLower(), out var cnames))
             {
                 return null;
             }
 
             var idx = 1;
             var not = false;
-            if (kws.Length > idx && kws[idx] == Helpers.NOT)
+            if (kws.Length > idx && kws[idx].ToLower() == Helpers.NOT)
             {
                 not = true;
                 idx++;
             }
 
             var op = StringOperators.LIKE;
-            if (kws.Length > idx && operatorLookupTable.TryGetValue(kws[idx], out var tmpOp))
+            if (
+                kws.Length > idx
+                && operatorLookupTable.TryGetValue(kws[idx].ToLower(), out var tmpOp)
+            )
             {
                 op = tmpOp;
                 idx++;

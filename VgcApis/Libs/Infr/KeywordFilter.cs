@@ -9,7 +9,6 @@ namespace VgcApis.Libs.Infr
     {
         public KeywordFilter(string keyword)
         {
-            keyword = keyword?.ToLower() ?? "";
             ISimpleFilter f = null;
             foreach (var creator in creators)
             {

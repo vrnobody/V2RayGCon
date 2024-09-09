@@ -10,8 +10,12 @@ namespace VgcApisTests.LibsTests
         #region filter test
         [DataTestMethod]
         [DataRow(
+            "#@ (#smm mAtCh \"#!&|.cOM$\") ! (#lAt > 300) & (#sum staRts vLeSS)",
+            "AndExpr(NotExpr(LeafExpr(#smm mAtCh #!&|.cOM$), LeafExpr(#lAt > 300)), LeafExpr(#sum staRts vLeSS))"
+        )]
+        [DataRow(
             "#@#smm Ends    .cOM    !     #laTenCy    >     300    &  #sUm     StArtS VLess",
-            "AndExpr(NotExpr(LeafExpr(#smm ends .com), LeafExpr(#latency > 300)), LeafExpr(#sum starts vless))"
+            "AndExpr(NotExpr(LeafExpr(#smm Ends .cOM), LeafExpr(#laTenCy > 300)), LeafExpr(#sUm StArtS VLess))"
         )]
         [DataRow(
             "#@ (#smm ends .com) ! (#latency > 300) & (#sum starts vless)",
@@ -19,7 +23,7 @@ namespace VgcApisTests.LibsTests
         )]
         [DataRow(
             "#@ (   #mK Is a   ) &(   (   #sMm noT b)   |   (#ttl liKe C  ))",
-            "AndExpr(LeafExpr(#mk is a), OrExpr(LeafExpr(#smm not b), LeafExpr(#ttl like c)))"
+            "AndExpr(LeafExpr(#mK Is a), OrExpr(LeafExpr(#sMm noT b), LeafExpr(#ttl liKe C)))"
         )]
         [DataRow(
             "#@ (#mk is \"\")&(#smm not \"a b c\")",

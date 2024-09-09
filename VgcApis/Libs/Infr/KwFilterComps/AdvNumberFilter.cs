@@ -218,7 +218,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             {
                 return null;
             }
-            var kws = Helpers.ParseLiteral(kw.ToLower());
+            var kws = Helpers.ParseLiteral(kw);
             return CreateFilter(kws);
         }
 
@@ -237,14 +237,14 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 return null;
             }
 
-            if (!TryParseContenName(tag.Substring(1), out var cnames))
+            if (!TryParseContenName(tag.Substring(1).ToLower(), out var cnames))
             {
                 return null;
             }
 
             var idx = 1;
             var not = false;
-            if (kws[1] == Helpers.NOT)
+            if (kws[1].ToLower() == Helpers.NOT)
             {
                 idx++;
                 not = true;
@@ -255,7 +255,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             }
 
             var op = NumberOperators.Is;
-            if (operatorLookupTable.TryGetValue(kws[idx], out var tmpOp))
+            if (operatorLookupTable.TryGetValue(kws[idx].ToLower(), out var tmpOp))
             {
                 op = tmpOp;
                 idx++;

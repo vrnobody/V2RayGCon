@@ -34,6 +34,7 @@
         LIKE,
         STARTS,
         ENDS,
+        MATCH,
     }
 
     #endregion

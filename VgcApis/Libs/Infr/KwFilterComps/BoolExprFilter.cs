@@ -86,7 +86,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 return null;
             }
 
-            keywords = keywords.Substring(2).ToLower();
+            keywords = keywords.Substring(2);
             var tokens = Helpers.ParseExprToken(keywords);
             if (tokens.Count < 2)
             {

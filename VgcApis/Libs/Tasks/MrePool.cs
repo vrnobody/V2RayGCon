@@ -10,8 +10,9 @@ namespace VgcApis.Libs.Tasks
 {
     internal static class MrePool
     {
-        static int maxSize = 50;
-        static ConcurrentQueue<ManualResetEvent> pool = new ConcurrentQueue<ManualResetEvent>();
+        static readonly int maxSize = 80;
+        static readonly ConcurrentQueue<ManualResetEvent> pool =
+            new ConcurrentQueue<ManualResetEvent>();
 
         static MrePool() { }
 
@@ -21,31 +22,25 @@ namespace VgcApis.Libs.Tasks
             get => pool.Count;
         }
 
-        public static ManualResetEvent Rent()
+        public static ManualResetEvent Rent(bool signaled)
         {
             if (pool.TryDequeue(out var mre))
             {
-                return mre;
-            }
-            return new ManualResetEvent(true);
-        }
-
-        public static ManualResetEvent Rent(bool signaled)
-        {
-            var mre = Rent();
-            try
-            {
-                if (signaled)
+                try
                 {
-                    mre.Set();
+                    if (signaled)
+                    {
+                        mre.Set();
+                    }
+                    else
+                    {
+                        mre.Reset();
+                    }
+                    return mre;
                 }
-                else
-                {
-                    mre.Reset();
-                }
+                catch { }
             }
-            catch { }
-            return mre;
+            return new ManualResetEvent(signaled);
         }
 
         public static void Return(ManualResetEvent mre)

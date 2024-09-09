@@ -60,18 +60,14 @@ namespace VgcApis.Libs.Tasks
             return true;
         }
 
-        public bool Wait()
+        public void Wait()
         {
             var mre = this.mre;
             try
             {
-                if (mre != null)
-                {
-                    return mre.WaitOne();
-                }
+                mre?.WaitOne();
             }
             catch { }
-            return true;
         }
 
         public void Stop()

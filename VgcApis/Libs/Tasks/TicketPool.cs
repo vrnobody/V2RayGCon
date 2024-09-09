@@ -14,7 +14,7 @@ namespace VgcApis.Libs.Tasks
         int size = 0;
 
         readonly List<ManualResetEvent> waitQ = new List<ManualResetEvent>();
-        readonly ManualResetEventSlim emptyWaiter = new ManualResetEventSlim(true);
+        readonly ManualResetEvent emptyWaiter = new ManualResetEvent(true);
 
         public TicketPool()
             : this(0) { }
@@ -32,7 +32,7 @@ namespace VgcApis.Libs.Tasks
 
         public void WaitUntilEmpty()
         {
-            emptyWaiter.Wait();
+            emptyWaiter.WaitOne();
         }
 
         public void WaitOne()

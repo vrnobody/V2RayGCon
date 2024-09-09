@@ -20,14 +20,14 @@ namespace VgcApisTests.LibsTests
             Assert.IsFalse(w.Wait(100));
             Assert.IsTrue(w.IsWaiting());
             w.Stop();
-            Assert.IsTrue(w.Wait());
+            w.Wait();
             Assert.IsFalse(w.IsWaiting());
             w.Start();
             Assert.IsTrue(w.IsWaiting());
             Assert.IsFalse(w.Wait(100));
             Assert.IsTrue(w.IsWaiting());
             w.Dispose();
-            Assert.IsTrue(w.Wait());
+            w.Wait();
             Assert.IsFalse(w.IsWaiting());
         }
     }

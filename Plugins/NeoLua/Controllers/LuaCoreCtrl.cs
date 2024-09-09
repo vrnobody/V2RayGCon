@@ -18,7 +18,7 @@ namespace NeoLuna.Controllers
         Models.Apis.LuaSys luaSys = null;
 
         string result = null;
-        readonly ManualResetEvent coreStopBar = new ManualResetEvent(true);
+        readonly VgcApis.Libs.Tasks.Waiter coreStopBar = new VgcApis.Libs.Tasks.Waiter();
 
         Thread luaCoreThread;
         private readonly bool enableTracebackFeature;
@@ -131,11 +131,11 @@ namespace NeoLuna.Controllers
             {
                 if (value)
                 {
-                    coreStopBar.Reset();
+                    coreStopBar.Start();
                 }
                 else
                 {
-                    coreStopBar.Set();
+                    coreStopBar.Stop();
                 }
 
                 if (coreSetting.isRunning == value)
@@ -171,11 +171,11 @@ namespace NeoLuna.Controllers
         {
             if (ms > 0)
             {
-                coreStopBar.WaitOne(ms);
+                coreStopBar.Wait(ms);
             }
             else
             {
-                coreStopBar.WaitOne();
+                coreStopBar.Wait();
             }
         }
 
@@ -370,7 +370,7 @@ namespace NeoLuna.Controllers
             {
                 AbortNow();
             }
-            coreStopBar.WaitOne();
+            coreStopBar.Wait();
             coreStopBar.Dispose();
         }
         #endregion

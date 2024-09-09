@@ -15,7 +15,7 @@ namespace V2RayGCon.Libs.V2Ray
         public event EventHandler OnCoreStatusChanged;
 
         readonly Services.Settings setting;
-        readonly AutoResetEvent coreStartStopLocker = new AutoResetEvent(true);
+        readonly object coreStartStopLocker = new object();
         readonly VgcApis.Libs.Tasks.Waiter coreReadyWaiter = new VgcApis.Libs.Tasks.Waiter();
         Process coreProc;
         static int curConcurrentV2RayCoreNum = 0;
@@ -158,9 +158,10 @@ namespace V2RayGCon.Libs.V2Ray
         // blocking
         public void StopCore()
         {
-            coreStartStopLocker.WaitOne();
-            StopCoreIgnoreError(coreProc);
-            coreStartStopLocker.Set();
+            lock (coreStartStopLocker)
+            {
+                StopCoreIgnoreError(coreProc);
+            }
         }
 
         string envs = "";
@@ -240,23 +241,21 @@ namespace V2RayGCon.Libs.V2Ray
                 return;
             }
 
-            coreStartStopLocker.WaitOne();
-            StopCoreIgnoreError(this.coreProc);
-
-            try
-            {
-                if (!setting.IsClosing())
-                {
-                    StartCore(config, quiet);
-                }
-            }
-            catch
+            lock (coreStartStopLocker)
             {
                 StopCoreIgnoreError(this.coreProc);
-            }
-            finally
-            {
-                coreStartStopLocker.Set();
+
+                try
+                {
+                    if (!setting.IsClosing())
+                    {
+                        StartCore(config, quiet);
+                    }
+                }
+                catch
+                {
+                    StopCoreIgnoreError(this.coreProc);
+                }
             }
 
             // do not run in background
@@ -632,7 +631,6 @@ namespace V2RayGCon.Libs.V2Ray
                 if (disposing)
                 {
                     // TODO: 释放托管状态(托管对象)
-                    coreStartStopLocker.Dispose();
                     coreReadyWaiter.Dispose();
                 }
 

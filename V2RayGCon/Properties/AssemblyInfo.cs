@@ -39,6 +39,7 @@ using System.Runtime.InteropServices;
 /*
 
 v2.0.2.1 Add VgcLibs.Libs.Tasks.Waiter().
+         Repalce ManualResetEvent with waiter.
 --------------------------------------------------------------------
 v2.0.1.14 Add MATCH string operator.
 v2.0.1.13 Add "NOT" operator and remove conflict operators.

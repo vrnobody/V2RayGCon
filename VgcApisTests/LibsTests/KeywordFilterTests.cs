@@ -393,15 +393,6 @@ namespace VgcApisTests.LibsTests
         [DataTestMethod]
         [DataRow("#1a")]
         [DataRow("#1.0")]
-        [DataRow("#rkz")]
-        [DataRow("#latency")]
-        [DataRow("#upd")]
-        [DataRow("#doWn")]
-        [DataRow("#ltny < ")]
-        [DataRow("#ltny ~ 123")]
-        [DataRow("#ltny # 123")]
-        [DataRow("#upd > aaa")]
-        [DataRow("#down ~ 12")]
         public void CreateSimpleIndexFilterFailTest(string kw)
         {
             var kwf = new KeywordFilter(kw);

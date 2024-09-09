@@ -65,9 +65,6 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region creator
-        internal static ReadOnlyCollection<string> GetTips() =>
-            new List<string>() { "#@" }.AsReadOnly();
-
         internal static BoolExprFilter CreateFilter(string keywords)
         {
             try
@@ -80,13 +77,12 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 
         static BoolExprFilter CreateFilterCore(string keywords)
         {
-            if (string.IsNullOrEmpty(keywords) || !keywords.StartsWith("#@"))
+            if (!Helpers.IsAdvSearchKeyword(keywords))
             {
-                // #@ (#mk like "a")
+                // (#mk like "a")
                 return null;
             }
 
-            keywords = keywords.Substring(2);
             var tokens = Helpers.ParseExprToken(keywords);
             if (tokens.Count < 2)
             {

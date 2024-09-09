@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime;
 using System.Text;
+using System.Text.RegularExpressions;
 using VgcApis.Libs.Infr.KwFilterComps.BoolExprComps;
 
 namespace VgcApis.Libs.Infr.KwFilterComps
@@ -13,6 +14,24 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         public static readonly long MiB = 1024 * 1024;
 
         #region functions
+
+        public static bool IsAdvSearchKeyword(string kw)
+        {
+            if (string.IsNullOrEmpty(kw))
+            {
+                return false;
+            }
+            try
+            {
+                if (Regex.IsMatch(kw, @"^[\( ]*#[a-zA-Z]+"))
+                {
+                    return true;
+                }
+            }
+            catch { }
+            return false;
+        }
+
         public static Dictionary<string, TEnum> CreateEnumLookupTable<TEnum>()
             where TEnum : struct
         {

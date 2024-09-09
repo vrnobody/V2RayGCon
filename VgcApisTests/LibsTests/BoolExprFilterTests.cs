@@ -7,26 +7,48 @@ namespace VgcApisTests.LibsTests
     [TestClass]
     public class BoolExprFilterTests
     {
+        #region helper funcs
+        [DataTestMethod]
+        [DataRow(null, false)]
+        [DataRow("", false)]
+        [DataRow("#maRk", true)]
+        [DataRow("   ", false)]
+        [DataRow("#", false)]
+        [DataRow("##abcde", false)]
+        [DataRow("#0123456", false)]
+        [DataRow("(#TaG ", true)]
+        [DataRow("       #TaG ", true)]
+        [DataRow("  (     #TaG ", true)]
+        [DataRow("(((((#lat", true)]
+        [DataRow(" (((( ( # lat", false)]
+        [DataRow(" ( ( (  ( ( #lat", true)]
+        public void IsAdvSearchKeywordTest(string kw, bool exp)
+        {
+            var r = Helpers.IsAdvSearchKeyword(kw);
+            Assert.AreEqual(exp, r);
+        }
+        #endregion
+
         #region filter test
         [DataTestMethod]
         [DataRow(
-            "#@ (#smm mAtCh \"#!&|.cOM$\") ! (#lAt > 300) & (#sum staRts vLeSS)",
+            " (#smm mAtCh \"#!&|.cOM$\") ! (#lAt > 300) & (#sum staRts vLeSS)",
             "AndExpr(NotExpr(LeafExpr(#smm mAtCh #!&|.cOM$), LeafExpr(#lAt > 300)), LeafExpr(#sum staRts vLeSS))"
         )]
         [DataRow(
-            "#@#smm Ends    .cOM    !     #laTenCy    >     300    &  #sUm     StArtS VLess",
+            "#smm Ends    .cOM    !     #laTenCy    >     300    &  #sUm     StArtS VLess",
             "AndExpr(NotExpr(LeafExpr(#smm Ends .cOM), LeafExpr(#laTenCy > 300)), LeafExpr(#sUm StArtS VLess))"
         )]
         [DataRow(
-            "#@ (#smm ends .com) ! (#latency > 300) & (#sum starts vless)",
+            " (#smm ends .com) ! (#latency > 300) & (#sum starts vless)",
             "AndExpr(NotExpr(LeafExpr(#smm ends .com), LeafExpr(#latency > 300)), LeafExpr(#sum starts vless))"
         )]
         [DataRow(
-            "#@ (   #mK Is a   ) &(   (   #sMm noT b)   |   (#ttl liKe C  ))",
+            " (   #mK Is a   ) &(   (   #sMm noT b)   |   (#ttl liKe C  ))",
             "AndExpr(LeafExpr(#mK Is a), OrExpr(LeafExpr(#sMm noT b), LeafExpr(#ttl liKe C)))"
         )]
         [DataRow(
-            "#@ (#mk is \"\")&(#smm not \"a b c\")",
+            " (#mk is \"\")&(#smm not \"a b c\")",
             "AndExpr(LeafExpr(#mk is), LeafExpr(#smm not a b c))"
         )]
         public void CreateFilterTest(string src, string exp)
@@ -124,17 +146,7 @@ namespace VgcApisTests.LibsTests
 
         #region tokenizer test
         [DataTestMethod]
-        [DataRow(
-            "#@ #mk is \"(\" \")\" \"|\" \"&\" \" \"",
-            " ",
-            "&",
-            "|",
-            ")",
-            "(",
-            "is",
-            "#mk",
-            "#@"
-        )]
+        [DataRow(" #mk is \"(\" \")\" \"|\" \"&\" \" \"", " ", "&", "|", ")", "(", "is", "#mk")]
         public void TokenizeStringTest(string str, params string[] tokens)
         {
             var tks = Helpers.ParseExprToken(str);
@@ -163,8 +175,7 @@ namespace VgcApisTests.LibsTests
 
         [DataTestMethod]
         [DataRow(
-            "#@ !(#mk is \" \")|!()&()",
-            "#@",
+            " !(#mk is \" \")|!()&()",
             "!",
             "(",
             "#mk",

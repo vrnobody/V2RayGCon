@@ -43,25 +43,31 @@ namespace VgcApis.Libs.Streams
 
             var apms = new ArrayPoolMemoryStream(Encoding.Unicode);
             var buff = Misc.Utils.RentBuffer();
-            using (apms)
+            try
             {
-                readed = 0;
-                while (readed < len)
+                using (apms)
                 {
-                    var max = Math.Min(buff.Length, len - readed);
-                    var c = stream.Read(buff, 0, max);
-                    if (c == 0 && readed < len)
+                    readed = 0;
+                    while (readed < len)
                     {
-                        break;
-                    }
-                    else if (c > 0)
-                    {
-                        readed += c;
-                        apms.Write(buff, 0, c);
+                        var max = Math.Min(buff.Length, len - readed);
+                        var c = stream.Read(buff, 0, max);
+                        if (c == 0 && readed < len)
+                        {
+                            break;
+                        }
+                        else if (c > 0)
+                        {
+                            readed += c;
+                            apms.Write(buff, 0, c);
+                        }
                     }
                 }
             }
-            Misc.Utils.ReturnBuffer(buff);
+            finally
+            {
+                Misc.Utils.ReturnBuffer(buff);
+            }
             return apms.GetString() ?? "";
         }
         #endregion

@@ -62,7 +62,7 @@ namespace NeoLuna.Models.Apis.SysCmpos
             "index.html",
             "index.htm",
             "default.html",
-            "default.htm"
+            "default.htm",
         };
 
         static readonly Dictionary<string, string> mimeTypeMaps = new Dictionary<string, string>(
@@ -398,10 +398,16 @@ namespace NeoLuna.Models.Apis.SysCmpos
             context.Response.AddHeader("Last-Modified", lastModified.ToString("r"));
 
             var buffer = VgcApis.Misc.Utils.RentBuffer();
-            int nbytes;
-            while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
-                context.Response.OutputStream.Write(buffer, 0, nbytes);
-            VgcApis.Misc.Utils.ReturnBuffer(buffer);
+            try
+            {
+                int nbytes;
+                while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
+                    context.Response.OutputStream.Write(buffer, 0, nbytes);
+            }
+            finally
+            {
+                VgcApis.Misc.Utils.ReturnBuffer(buffer);
+            }
             input.Close();
             context.Response.OutputStream.Flush();
             context.Response.StatusCode = (int)HttpStatusCode.OK;

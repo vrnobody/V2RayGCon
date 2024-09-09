@@ -1185,8 +1185,8 @@ namespace VgcApis.Misc
             var wc = CreateWebClient(isSocks5, localhost, port, username, password);
             DoItLater(() => CancelWebClientAsync(wc), timeout);
 
-            var buffer = RentBuffer();
             long size = 0;
+            var buffer = RentBuffer();
             var sw = new Stopwatch();
             sw.Restart();
             try
@@ -1207,8 +1207,10 @@ namespace VgcApis.Misc
                 }
             }
             catch { }
-            sw.Stop();
+
             ReturnBuffer(buffer);
+
+            sw.Stop();
             wc.Dispose();
 
             var time = sw.ElapsedMilliseconds;

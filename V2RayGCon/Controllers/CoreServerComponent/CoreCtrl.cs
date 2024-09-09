@@ -16,7 +16,8 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         VgcApis.Libs.Tasks.Routine bookKeeper;
         readonly VgcApis.Libs.Tasks.Bar isRecordingBar = new VgcApis.Libs.Tasks.Bar();
-        readonly ManualResetEvent speedTestingEvt = new ManualResetEvent(true);
+
+        VgcApis.Libs.Tasks.Waiter speedTestWaiter = new VgcApis.Libs.Tasks.Waiter();
 
         public CoreCtrl(Services.Settings setting, CoreInfo coreInfo, Services.ConfigMgr configMgr)
         {
@@ -48,19 +49,12 @@ namespace V2RayGCon.Controllers.CoreServerComponent
             StopCore();
             ReleaseEvents();
             core.Dispose();
-            speedTestingEvt.Dispose();
+            speedTestWaiter.Dispose();
         }
 
-        public bool IsSpeedTesting() => !speedTestingEvt.WaitOne(0);
+        public bool IsSpeedTesting() => speedTestWaiter.IsWaiting();
 
-        public void ReleaseSpeedTestLock()
-        {
-            try
-            {
-                speedTestingEvt.Set();
-            }
-            catch { }
-        }
+        public void ReleaseSpeedTestLock() => speedTestWaiter.Stop();
 
         public string GetCustomCoreName() => coreInfo.customCoreName;
 
@@ -129,7 +123,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
         public void RunSpeedTest()
         {
             AddToSpeedTestQueue();
-            speedTestingEvt.WaitOne();
+            speedTestWaiter.Wait();
         }
 
         public void RunSpeedTestThen()
@@ -180,7 +174,7 @@ namespace V2RayGCon.Controllers.CoreServerComponent
 
         void AddToSpeedTestQueue()
         {
-            speedTestingEvt.Reset();
+            speedTestWaiter.Start();
             coreStates.SetSpeedTestResult(0);
             coreStates.SetStatus(I18N.Testing);
             configMgr.AddToSpeedTestQueue(GetParent());

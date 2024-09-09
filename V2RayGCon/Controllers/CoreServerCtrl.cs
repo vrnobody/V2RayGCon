@@ -5,9 +5,7 @@ using VgcApis.Models.Datas;
 
 namespace V2RayGCon.Controllers
 {
-#pragma warning disable CA1036 // Override methods on comparable types
     public class CoreServerCtrl
-#pragma warning restore CA1036 // Override methods on comparable types
         : VgcApis.BaseClasses.ComponentOf<CoreServerCtrl>,
             ICoreServCtrl,
             IComparable

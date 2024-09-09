@@ -14,6 +14,34 @@ namespace VgcApisTests
     {
         public Experiments() { }
 
+#if DEBUG
+        [TestMethod]
+        public void ManualResetEventTest()
+        {
+            var r = false;
+
+            // false 阻塞
+            var mre = new ManualResetEvent(false);
+            r = mre.WaitOne(0);
+            Assert.IsFalse(r);
+
+            VgcApis.Misc.Utils.RunInBackground(() =>
+            {
+                try
+                {
+                    r = mre.WaitOne();
+                }
+                catch { }
+            });
+            VgcApis.Misc.Utils.Sleep(1000);
+            mre.Set();
+            mre.Dispose();
+            VgcApis.Misc.Utils.Sleep(500);
+
+            Assert.IsTrue(r);
+        }
+#endif
+
         [TestMethod]
         public void DateTimeTest()
         {

@@ -71,6 +71,7 @@
     <Compile Include="Interfaces\Services\IPostOffice.cs" />
     <Compile Include="Libs\Infr\KwFilterComps\Modles.cs" />
     <Compile Include="Libs\Infr\KwFilterComps\BoolExprFilter.cs" />
+    <Compile Include="Libs\Tasks\Waiter.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\AutocompleteItem.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\AutocompleteItems.cs" />
     <Compile Include="UserControls\AcmComboBoxComps\AutocompleteListView.cs">

@@ -16,7 +16,7 @@ namespace V2RayGCon.Libs.V2Ray
 
         readonly Services.Settings setting;
         readonly AutoResetEvent coreStartStopLocker = new AutoResetEvent(true);
-        readonly ManualResetEvent coreReadEvt = new ManualResetEvent(false);
+        readonly VgcApis.Libs.Tasks.Waiter coreReadyWaiter = new VgcApis.Libs.Tasks.Waiter();
         Process coreProc;
         static int curConcurrentV2RayCoreNum = 0;
         bool isForcedExit = false;
@@ -67,8 +67,8 @@ namespace V2RayGCon.Libs.V2Ray
         #region public method
         public bool WaitUntilReady()
         {
-            var r = coreReadEvt.WaitOne(TimeSpan.FromSeconds(30));
-            coreReadEvt.Set();
+            var r = coreReadyWaiter.Wait(30 * 1000);
+            coreReadyWaiter.Stop();
             return r;
         }
 
@@ -137,7 +137,7 @@ namespace V2RayGCon.Libs.V2Ray
             var cores = new string[]
             {
                 VgcApis.Models.Consts.Core.XrayCoreExeFileName,
-                VgcApis.Models.Consts.Core.V2RayCoreExeFileName
+                VgcApis.Models.Consts.Core.V2RayCoreExeFileName,
             };
 
             foreach (var core in cores)
@@ -339,7 +339,7 @@ namespace V2RayGCon.Libs.V2Ray
                     RedirectStandardInput = customSettings.useStdin,
                     StandardOutputEncoding = ec,
                     StandardErrorEncoding = ec,
-                }
+                },
             };
             if (customSettings.setWorkingDir && !string.IsNullOrEmpty(customSettings.dir))
             {
@@ -374,7 +374,7 @@ namespace V2RayGCon.Libs.V2Ray
                     // 定时炸弹
                     StandardOutputEncoding = Encoding.UTF8,
                     StandardErrorEncoding = Encoding.UTF8,
-                }
+                },
             };
             p.EnableRaisingEvents = true;
             return p;
@@ -433,7 +433,7 @@ namespace V2RayGCon.Libs.V2Ray
 
         void OnCoreExitedHandler(object sender, bool quiet)
         {
-            coreReadEvt.Reset();
+            coreReadyWaiter.Stop();
 
             var core = sender as Process;
 
@@ -534,7 +534,7 @@ namespace V2RayGCon.Libs.V2Ray
         void StartCore(string config, bool quiet)
         {
             var isCustomCore = IsCustomCore();
-            coreReadEvt.Reset();
+            coreReadyWaiter.Start();
             var cs = isCustomCore ? GetCustomCoreSettings() : null;
             var core = isCustomCore ? CreateCustomCoreProcess(cs) : CreateV2RayCoreProcess();
             VgcApis.Misc.Utils.SetProcessEnvs(core, envs);
@@ -586,9 +586,9 @@ namespace V2RayGCon.Libs.V2Ray
                 return;
             }
 
-            if (!coreReadEvt.WaitOne(0) && MatchAllReadyMarks(msg))
+            if (!coreReadyWaiter.Wait(0) && MatchAllReadyMarks(msg))
             {
-                coreReadEvt.Set();
+                coreReadyWaiter.Stop();
             }
 
             SendLog(msg);
@@ -633,7 +633,7 @@ namespace V2RayGCon.Libs.V2Ray
                 {
                     // TODO: 释放托管状态(托管对象)
                     coreStartStopLocker.Dispose();
-                    coreReadEvt.Dispose();
+                    coreReadyWaiter.Dispose();
                 }
 
                 // TODO: 释放未托管的资源(未托管的对象)并重写终结器

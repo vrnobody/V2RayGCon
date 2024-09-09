@@ -9,8 +9,8 @@ namespace VgcApis.Libs.Tasks
 {
     public class Waiter : IDisposable
     {
-        readonly object innerMre = new object();
-        ManualResetEvent coreReadyEvt = null;
+        readonly object mreLocker = new object();
+        ManualResetEvent mre = null;
 
         public Waiter() { }
 
@@ -22,17 +22,19 @@ namespace VgcApis.Libs.Tasks
             {
                 return;
             }
-            var mre = GetWaiter();
-            try
+
+            lock (mreLocker)
             {
-                mre.Reset();
+                if (mre == null)
+                {
+                    mre = MrePool.Rent(false);
+                }
             }
-            catch { }
         }
 
         public bool IsWaiting()
         {
-            var mre = this.coreReadyEvt;
+            var mre = this.mre;
             try
             {
                 if (mre != null)
@@ -46,7 +48,7 @@ namespace VgcApis.Libs.Tasks
 
         public bool Wait(int ms)
         {
-            var mre = coreReadyEvt;
+            var mre = this.mre;
             try
             {
                 if (mre != null)
@@ -60,7 +62,7 @@ namespace VgcApis.Libs.Tasks
 
         public bool Wait()
         {
-            var mre = coreReadyEvt;
+            var mre = this.mre;
             try
             {
                 if (mre != null)
@@ -75,35 +77,22 @@ namespace VgcApis.Libs.Tasks
         public void Stop()
         {
             ManualResetEvent mre = null;
-            lock (innerMre)
+            lock (mreLocker)
             {
-                mre = coreReadyEvt;
-                coreReadyEvt = null;
+                mre = this.mre;
+                this.mre = null;
             }
             try
             {
                 mre?.Set();
-                mre?.Dispose();
+                MrePool.Return(mre);
             }
             catch { }
         }
         #endregion
 
         #region private methods
-        ManualResetEvent GetWaiter()
-        {
-            ManualResetEvent mre = null;
-            lock (innerMre)
-            {
-                if (coreReadyEvt == null)
-                {
-                    coreReadyEvt = new ManualResetEvent(false);
-                }
-                mre = coreReadyEvt;
-            }
 
-            return mre;
-        }
         #endregion
 
         #region IDisposable

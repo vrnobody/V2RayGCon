@@ -13,7 +13,7 @@ namespace VgcApis.Libs.Tasks
         int count = 0;
         int size = 0;
 
-        readonly List<ManualResetEventSlim> waitQ = new List<ManualResetEventSlim>();
+        readonly List<ManualResetEvent> waitQ = new List<ManualResetEvent>();
         readonly ManualResetEventSlim emptyWaiter = new ManualResetEventSlim(true);
 
         public TicketPool()
@@ -47,13 +47,13 @@ namespace VgcApis.Libs.Tasks
                 return;
             }
 
-            var mev = new ManualResetEventSlim(false);
+            var mev = MrePool.Rent(false);
             lock (waitQ)
             {
                 waitQ.Add(mev);
             }
-            mev.Wait();
-            mev.Dispose();
+            mev.WaitOne();
+            MrePool.Return(mev);
         }
 
         public bool WaitOne(int ms)
@@ -73,27 +73,27 @@ namespace VgcApis.Libs.Tasks
                 return false;
             }
 
-            var mev = new ManualResetEventSlim(false);
+            var mev = MrePool.Rent(false);
             lock (waitQ)
             {
                 waitQ.Add(mev);
             }
 
-            if (mev.Wait(ms))
+            if (mev.WaitOne(ms))
             {
-                mev.Dispose();
+                MrePool.Return(mev);
                 return true;
             }
 
             lock (waitQ)
             {
-                if (mev.Wait(0))
+                if (mev.WaitOne(0))
                 {
-                    mev.Dispose();
+                    MrePool.Return(mev);
                     return true;
                 }
                 waitQ.Remove(mev);
-                mev.Dispose();
+                MrePool.Return(mev);
             }
             return false;
         }

@@ -33,11 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.2.1")]
+[assembly: AssemblyVersion("2.0.2.2")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v2.0.2.2 Add ManualResetEvent pool.
 v2.0.2.1 Add VgcLibs.Libs.Tasks.Waiter().
          Repalce ManualResetEvent with waiter.
 --------------------------------------------------------------------

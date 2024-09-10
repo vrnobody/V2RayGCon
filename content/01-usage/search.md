@@ -97,6 +97,8 @@ weight: 30
 `#@ #smm starts trojan & #name is ""` 搜索trojan协议并且名字是空白的服务器  
 `#@ #smm has .ws & (#idx < 10 ! #idx = 5)` 搜索除5号外前9个服务器中使用ws协议的服务器  
 
+注：(v2.0.3)起不需要输入前面的`#@ `  
+
 ##### 快捷键
 `Ctrl + F` 进入搜索框  
 `Esc` 离开搜索框  

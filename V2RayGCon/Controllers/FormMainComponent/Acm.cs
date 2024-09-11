@@ -35,7 +35,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 MaximumSize = new Size(300, 200),
                 ToolTipDuration = 20000,
-                SearchPattern = "#",
                 MinFragmentLength = 0,
                 ImageList = new ImageList(),
             };

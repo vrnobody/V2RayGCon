@@ -1,4 +1,5 @@
-﻿using VgcApis.UserControls.AcmComboBoxComps;
+﻿using System.Linq;
+using VgcApis.UserControls.AcmComboBoxComps;
 
 namespace V2RayGCon.Controllers.FormMainComponent
 {
@@ -15,7 +16,8 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 return CompareResult.Hidden;
             }
 
-            if (int.TryParse(fragment.Substring(1), out var _))
+            var first = fragment.Substring(1).FirstOrDefault();
+            if (first != default(char) && !char.IsLetter(first))
             {
                 return CompareResult.Hidden;
             }

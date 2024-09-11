@@ -64,7 +64,6 @@ namespace VgcApis.UserControls.AcmComboBoxComps
             MaximumSize = new Size(180, 200);
             AutoPopup = true;
 
-            SearchPattern = @"[\w\.]";
             MinFragmentLength = 2;
         }
 
@@ -214,13 +213,6 @@ namespace VgcApis.UserControls.AcmComboBoxComps
         /// </summary>
         [Browsable(false)]
         public Range Fragment { get; internal set; }
-
-        /// <summary>
-        /// Regex pattern for serach fragment around caret
-        /// </summary>
-        [Description("Regex pattern for serach fragment around caret")]
-        [DefaultValue(@"[\w\.]")]
-        public string SearchPattern { get; set; }
 
         /// <summary>
         /// Minimum fragment length for popup
@@ -531,7 +523,7 @@ namespace VgcApis.UserControls.AcmComboBoxComps
             bool foundSelected = false;
             int selectedIndex = -1;
             //get fragment around caret
-            Range fragment = GetFragment(SearchPattern);
+            Range fragment = GetFragment();
             string text = fragment.Text;
             //
             if (sourceItems != null)
@@ -589,7 +581,7 @@ namespace VgcApis.UserControls.AcmComboBoxComps
             Host.CalcSize(Math.Min(MaximumSize.Width, mxWidth));
         }
 
-        private Range GetFragment(string searchPattern)
+        private Range GetFragment()
         {
             var tb = TargetControlWrapper;
             string text = tb.Text;
@@ -598,7 +590,7 @@ namespace VgcApis.UserControls.AcmComboBoxComps
             {
                 return result;
             }
-            var regex = new Regex(searchPattern);
+
             result.End = tb.SelectionStart;
             for (int i = tb.SelectionStart; i <= text.Length; i++)
             {
@@ -608,7 +600,7 @@ namespace VgcApis.UserControls.AcmComboBoxComps
                     break;
                 }
                 var c = text[i];
-                if (c == ' ' || regex.IsMatch(c.ToString()))
+                if (!char.IsLetterOrDigit(c))
                 {
                     break;
                 }
@@ -617,7 +609,7 @@ namespace VgcApis.UserControls.AcmComboBoxComps
             for (int i = result.End - 1; i >= 0; i--)
             {
                 result.Start = i;
-                if (regex.IsMatch(text[i].ToString()))
+                if (text[i] == '#')
                     break;
             }
             return result;

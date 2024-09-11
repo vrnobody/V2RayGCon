@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using System.Text.RegularExpressions;
-using VgcApis.UserControls.AcmComboBoxComps;
+﻿using VgcApis.UserControls.AcmComboBoxComps;
 
 namespace V2RayGCon.Controllers.FormMainComponent
 {
@@ -11,23 +9,29 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         public override CompareResult Compare(string _)
         {
-            var ctext = this.Parent.Fragment.Text;
-            if (string.IsNullOrEmpty(ctext) || !ctext.StartsWith("#"))
+            var fragment = this.Parent.Fragment.Text;
+            if (string.IsNullOrEmpty(fragment) || !fragment.StartsWith("#"))
             {
                 return CompareResult.Hidden;
             }
 
-            if (int.TryParse(ctext.Substring(1), out var _))
+            if (int.TryParse(fragment.Substring(1), out var _))
             {
                 return CompareResult.Hidden;
             }
 
-            var space = @" ";
-            var requireSpace = ctext.Contains(space);
-            if (
-                Text.Contains(space) == requireSpace
-                && VgcApis.Misc.Utils.PartialMatchCi(Text, ctext)
-            )
+            var nFrag = $"{fragment}dirtyhack"
+                .Split(new char[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries)
+                .Length;
+            var nText = Text.Split(
+                new char[] { ' ' },
+                System.StringSplitOptions.RemoveEmptyEntries
+            ).Length;
+            if (nFrag != nText)
+            {
+                return CompareResult.Hidden;
+            }
+            if (VgcApis.Misc.Utils.PartialMatchCi(Text, fragment))
             {
                 return CompareResult.Visible;
             }

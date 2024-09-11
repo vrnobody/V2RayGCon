@@ -30,20 +30,27 @@
             }
             set
             {
+                if (Start >= End)
+                {
+                    return;
+                }
+
                 var text = TargetWrapper.Text;
                 if (Start >= text.Length)
                 {
                     return;
                 }
 
-                if (Start < 1)
+                var tail = "";
+                if (End < text.Length)
                 {
-                    TargetWrapper.Text = value;
-                    return;
+                    tail = text.Substring(End);
                 }
 
-                text = text.Substring(0, Start) + value;
+                var front = text.Substring(0, Start) + value;
+                text = front + tail;
                 TargetWrapper.Text = text;
+                TargetWrapper.Select(front.Length);
             }
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VgcApis.Libs.Infr;
 using VgcApis.Libs.Infr.KwFilterComps;

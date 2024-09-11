@@ -8,13 +8,15 @@ namespace VgcApis.UserControls.AcmComboBoxComps
     /// </summary>
     public interface ITextBoxWrapper
     {
+        int SelectionStart { get; }
+
         Control TargetControl { get; }
 
         string Text { get; set; }
 
         bool Readonly { get; }
 
-        void Focus();
+        void Select(int pos);
 
         void InvokeKeyDownCallback(Keys e);
 

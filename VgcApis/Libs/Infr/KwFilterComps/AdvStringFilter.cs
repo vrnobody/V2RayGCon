@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web.UI;
 using VgcApis.Interfaces.CoreCtrlComponents;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace VgcApis.Libs.Infr.KwFilterComps
 {

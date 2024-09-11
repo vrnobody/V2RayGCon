@@ -12,6 +12,18 @@ namespace VgcApis.UserControls.AcmComboBoxComps
             this.target = target;
         }
 
+        public int SelectionStart
+        {
+            get => target.SelectionStart;
+        }
+
+        public void Select(int pos)
+        {
+            var max = target.Text.Length;
+            pos = pos > max ? max : Math.Max(0, pos);
+            target.Select(pos, 0);
+        }
+
         public bool Readonly
         {
             get => target.ReadOnly;
@@ -26,13 +38,6 @@ namespace VgcApis.UserControls.AcmComboBoxComps
         {
             get => target.Text ?? "";
             set => target.Text = value ?? "";
-        }
-
-        public void Focus()
-        {
-            target.Focus();
-            var p = Math.Max(0, target.Text.Length);
-            target.Select(p, 0);
         }
 
         public void InvokeKeyDownCallback(Keys key)

@@ -599,15 +599,27 @@ namespace VgcApis.UserControls.AcmComboBoxComps
                 return result;
             }
             var regex = new Regex(searchPattern);
-            result.End = text.Length;
-            var i = text.Length - 1;
-            while (i > 0)
+            result.End = tb.SelectionStart;
+            for (int i = tb.SelectionStart; i <= text.Length; i++)
             {
+                result.End = i;
+                if (i >= text.Length)
+                {
+                    break;
+                }
+                var c = text[i];
+                if (c == ' ' || regex.IsMatch(c.ToString()))
+                {
+                    break;
+                }
+            }
+            result.Start = 0;
+            for (int i = result.End - 1; i >= 0; i--)
+            {
+                result.Start = i;
                 if (regex.IsMatch(text[i].ToString()))
                     break;
-                i--;
             }
-            result.Start = Math.Max(i, 0);
             return result;
         }
 
@@ -681,7 +693,6 @@ namespace VgcApis.UserControls.AcmComboBoxComps
             string newText = item.GetTextForReplace();
             //replace text of fragment
             fragment.Text = newText;
-            fragment.TargetWrapper.Focus();
         }
 
         public void SetColumns(string[] columns, int[] columnsWidth = null)

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using VgcApis.Interfaces.CoreCtrlComponents;
-using VgcApis.Libs.Streams;
 
 namespace VgcApis.Libs.Infr.KwFilterComps
 {

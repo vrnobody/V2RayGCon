@@ -722,7 +722,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void UpdateMarkFilterItems(ToolStripComboBox marker)
         {
-            var marks = servers.GetMarkList().Select(mk => $"#mark like {mk}").ToArray();
+            var marks = servers
+                .GetMarkList()
+                .Select(mk => mk?.Replace("\"", ""))
+                .Where(mk => !string.IsNullOrEmpty(mk))
+                .Select(mk => $"#mark like \"{mk}\"")
+                .ToArray();
             marker.Items.Clear();
             marker.Items.AddRange(marks);
         }

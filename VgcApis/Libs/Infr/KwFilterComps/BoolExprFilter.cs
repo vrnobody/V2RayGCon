@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using VgcApis.Interfaces;
 using VgcApis.Libs.Infr.KwFilterComps.BoolExprComps;
 
@@ -86,7 +85,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             {
                 return null;
             }
-            var pe = Helpers.TransformToPolishNotation(tokens.ToList());
+            var pe = Helpers.TransformToPolishNotation(tokens);
             var em = pe.GetEnumerator();
             em.MoveNext();
             var expr = Helpers.MakeExpr(ref em);

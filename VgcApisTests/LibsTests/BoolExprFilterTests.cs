@@ -33,23 +33,23 @@ namespace VgcApisTests.LibsTests
         [DataTestMethod]
         [DataRow(
             " (#smm mAtCh \"#!&|.cOM$\") ! (#lAt > 300) & (#sum staRts vLeSS)",
-            "AndExpr(NotExpr(LeafExpr(#smm mAtCh #!&|.cOM$), LeafExpr(#lAt > 300)), LeafExpr(#sum staRts vLeSS))"
+            "AndExpr@1(NotExpr@1(LeafExpr@0(#smm mAtCh #!&|.cOM$), LeafExpr@1(#lAt > 300)), LeafExpr@0(#sum staRts vLeSS))"
         )]
         [DataRow(
             "#smm Ends    .cOM    !     #laTenCy    >     300    &  #sUm     StArtS VLess",
-            "AndExpr(NotExpr(LeafExpr(#smm Ends .cOM), LeafExpr(#laTenCy > 300)), LeafExpr(#sUm StArtS VLess))"
+            "AndExpr@1(NotExpr@1(LeafExpr@0(#smm Ends .cOM), LeafExpr@1(#laTenCy > 300)), LeafExpr@0(#sUm StArtS VLess))"
         )]
         [DataRow(
             " (#smm ends .com) ! (#latency > 300) & (#sum starts vless)",
-            "AndExpr(NotExpr(LeafExpr(#smm ends .com), LeafExpr(#latency > 300)), LeafExpr(#sum starts vless))"
+            "AndExpr@1(NotExpr@1(LeafExpr@0(#smm ends .com), LeafExpr@1(#latency > 300)), LeafExpr@0(#sum starts vless))"
         )]
         [DataRow(
             " (   #mK Is a   ) &(   (   #sMm noT b)   |   (#ttl liKe C  ))",
-            "AndExpr(LeafExpr(#mK Is a), OrExpr(LeafExpr(#sMm noT b), LeafExpr(#ttl liKe C)))"
+            "AndExpr@0(LeafExpr@0(#mK Is a), OrExpr@0(LeafExpr@0(#sMm noT b), LeafExpr@0(#ttl liKe C)))"
         )]
         [DataRow(
             " (#mk is \"\")&(#smm not \"a b c\")",
-            "AndExpr(LeafExpr(#mk is), LeafExpr(#smm not a b c))"
+            "AndExpr@0(LeafExpr@0(#mk is), LeafExpr@0(#smm not a b c))"
         )]
         public void CreateFilterTest(string src, string exp)
         {
@@ -64,23 +64,23 @@ namespace VgcApisTests.LibsTests
         [DataTestMethod]
         [DataRow(
             " (      #smm not b)!|& ",
-            "AndExpr(OrExpr(NotExpr(LeafExpr(#smm not b), Null), Null), Null)"
+            "AndExpr@6(OrExpr@4(NotExpr@2(LeafExpr@0(#smm not b), Null), Null), Null)"
         )]
         [DataRow(
             " &|!(      #smm not b) ",
-            "NotExpr(OrExpr(AndExpr(LeafExpr(#smm not b), Null), Null), Null)"
+            "NotExpr@6(OrExpr@4(AndExpr@2(LeafExpr@0(#smm not b), Null), Null), Null)"
         )]
         [DataRow(
             " (   #mk is a   ) !(      #smm not b)   &   (#ttl like c  ) ",
-            "AndExpr(NotExpr(LeafExpr(#mk is a), LeafExpr(#smm not b)), LeafExpr(#ttl like c))"
+            "AndExpr@0(NotExpr@0(LeafExpr@0(#mk is a), LeafExpr@0(#smm not b)), LeafExpr@0(#ttl like c))"
         )]
         [DataRow(
             "(   #mk is a   ) &(   (   #smm not b)   |   (#ttl like c  ))",
-            "AndExpr(LeafExpr(#mk is a), OrExpr(LeafExpr(#smm not b), LeafExpr(#ttl like c)))"
+            "AndExpr@0(LeafExpr@0(#mk is a), OrExpr@0(LeafExpr@0(#smm not b), LeafExpr@0(#ttl like c)))"
         )]
         [DataRow(
             "(#mk is \"\")&(#smm not \"a b c\")",
-            "AndExpr(LeafExpr(#mk is), LeafExpr(#smm not a b c))"
+            "AndExpr@0(LeafExpr@0(#mk is), LeafExpr@0(#smm not a b c))"
         )]
         public void MakeExpressionTest(string src, string exp)
         {

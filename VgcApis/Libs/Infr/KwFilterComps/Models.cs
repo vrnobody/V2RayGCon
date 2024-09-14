@@ -22,13 +22,20 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
         protected readonly string[] keywords;
         protected readonly BoolExpr left;
         protected readonly BoolExpr right;
+        internal int pri;
 
         public BoolExpr(BoolExpr left, BoolExpr right, string[] keywords)
         {
             this.left = left;
             this.right = right;
             this.keywords = keywords;
+            this.pri = GetPri(left) + GetPri(right);
         }
+
+        #region public methods
+        public BoolExpr GetHightPriExpr() => GetPri(left) < GetPri(right) ? right : left;
+
+        public BoolExpr GetLowPriExpr() => GetPri(left) < GetPri(right) ? left : right;
 
         public virtual IReadOnlyCollection<ICoreServCtrl> Filter(
             IReadOnlyCollection<ICoreServCtrl> servs
@@ -43,12 +50,24 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
             if (this.keywords != null)
             {
                 var s = string.Join(" ", keywords);
-                return $"{type}({s})";
+                return $"{type}@{pri}({s})";
             }
             var sl = left?.ToString() ?? "Null";
             var sr = right?.ToString() ?? "Null";
-            return $"{type}({sl}, {sr})";
+            return $"{type}@{pri}({sl}, {sr})";
         }
+        #endregion
+
+        #region private methods
+        int GetPri(BoolExpr expr)
+        {
+            if (expr == null)
+            {
+                return 2;
+            }
+            return expr.pri;
+        }
+        #endregion
     }
 
     internal class NotExpr : BoolExpr
@@ -61,14 +80,20 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
         )
         {
             var l = left?.Filter(servs) ?? new List<ICoreServCtrl>();
-            var r = right?.Filter(l) ?? new List<ICoreServCtrl>();
-            if (r.Count < 1 || l.Count < 1)
+            if (l.Count < 1)
             {
                 return l;
             }
+
+            var r = right?.Filter(l) ?? new List<ICoreServCtrl>();
+            if (r.Count < 1)
+            {
+                return l;
+            }
+
             var uids = new HashSet<string>(r.Select(s => s.GetCoreStates().GetUid()));
-            var n = l.Where(s => !uids.Contains(s.GetCoreStates().GetUid())).ToList();
-            return n;
+            var nt = l.Where(s => !uids.Contains(s.GetCoreStates().GetUid())).ToList();
+            return nt;
         }
     }
 
@@ -81,8 +106,12 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
             IReadOnlyCollection<ICoreServCtrl> servs
         )
         {
-            var l = left?.Filter(servs) ?? new List<ICoreServCtrl>();
-            var r = right?.Filter(l) ?? new List<ICoreServCtrl>();
+            var l = GetHightPriExpr()?.Filter(servs) ?? new List<ICoreServCtrl>();
+            if (l.Count < 1)
+            {
+                return l;
+            }
+            var r = GetLowPriExpr()?.Filter(l) ?? new List<ICoreServCtrl>();
             return r;
         }
     }
@@ -98,10 +127,16 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
         {
             var l = left?.Filter(servs) ?? new List<ICoreServCtrl>();
             var r = right?.Filter(servs) ?? new List<ICoreServCtrl>();
+
             if (l.Count < 1)
             {
                 return r;
             }
+            else if (r.Count < 1)
+            {
+                return l;
+            }
+
             var uids = new HashSet<string>(l.Select(s => s.GetCoreStates().GetUid()));
             var patch = r.Where(s => !uids.Contains(s.GetCoreStates().GetUid()));
             var or = l.Concat(patch).OrderBy(s => s).ToList();
@@ -111,24 +146,30 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
 
     internal class LeafExpr : BoolExpr
     {
+        readonly ISimpleFilter filter;
+
         public LeafExpr(List<ExprToken> src)
-            : base(null, null, src.Select(tk => tk.value).ToArray()) { }
+            : base(null, null, src.Select(tk => tk.value).ToArray())
+        {
+            this.filter = AdvStringFilter.CreateFilter(this.keywords);
+            this.pri = 0;
+            if (this.filter == null)
+            {
+                this.filter = AdvNumberFilter.CreateFilter(this.keywords);
+                this.pri = 1;
+            }
+            if (this.filter == null)
+            {
+                this.pri = 2;
+            }
+        }
 
         public override IReadOnlyCollection<ICoreServCtrl> Filter(
             IReadOnlyCollection<ICoreServCtrl> servs
         )
         {
-            var sf = AdvStringFilter.CreateFilter(this.keywords);
-            if (sf != null)
-            {
-                return sf.Filter(servs);
-            }
-            var nf = AdvNumberFilter.CreateFilter(this.keywords);
-            if (nf != null)
-            {
-                return nf.Filter(servs);
-            }
-            return new List<ICoreServCtrl>();
+            var r = this.filter?.Filter(servs) ?? new List<ICoreServCtrl>();
+            return r;
         }
     }
 }

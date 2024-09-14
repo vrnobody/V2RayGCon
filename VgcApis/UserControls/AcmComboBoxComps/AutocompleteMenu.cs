@@ -15,7 +15,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace VgcApis.UserControls.AcmComboBoxComps

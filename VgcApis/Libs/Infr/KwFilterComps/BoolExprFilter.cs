@@ -12,10 +12,11 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         public BoolExprFilter(BoolExpr expr)
         {
             this.expr = expr;
+            this.highlighter = expr.GetHighlighter() ?? new Highlighter();
         }
 
         #region properties methods
-        Highlighter highlighter = new Highlighter();
+        readonly Highlighter highlighter;
         #endregion
 
         #region private methods

@@ -17,12 +17,13 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
         }
     }
 
-    internal class BoolExpr : IFilter
+    internal class BoolExpr : ISimpleFilter
     {
         protected readonly string[] keywords;
         protected readonly BoolExpr left;
         protected readonly BoolExpr right;
-        internal int pri;
+        protected Highlighter highlighter;
+        protected int pri;
 
         public BoolExpr(BoolExpr left, BoolExpr right, string[] keywords)
         {
@@ -30,9 +31,16 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
             this.right = right;
             this.keywords = keywords;
             this.pri = GetPri(left) + GetPri(right);
+            this.highlighter = this.left?.GetHighlighter();
+            if (this.highlighter == null)
+            {
+                this.highlighter = this.right?.GetHighlighter();
+            }
         }
 
         #region public methods
+        public Highlighter GetHighlighter() => this.highlighter;
+
         public BoolExpr GetHightPriExpr() => GetPri(left) < GetPri(right) ? right : left;
 
         public BoolExpr GetLowPriExpr() => GetPri(left) < GetPri(right) ? left : right;
@@ -162,12 +170,14 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
             {
                 this.pri = 2;
             }
+            this.highlighter = this.filter?.GetHighlighter();
         }
 
         public override IReadOnlyCollection<ICoreServCtrl> Filter(
             IReadOnlyCollection<ICoreServCtrl> servs
         )
         {
+            // debug: Console.WriteLine($"{ToString()}");
             var r = this.filter?.Filter(servs) ?? new List<ICoreServCtrl>();
             return r;
         }

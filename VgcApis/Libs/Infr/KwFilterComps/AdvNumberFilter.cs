@@ -47,7 +47,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         readonly NumberOperators op;
         readonly Func<long, bool> matcher;
 
-        readonly Highlighter highlighter = new Highlighter();
+        readonly Highlighter highlighter = null;
 
         #endregion
 

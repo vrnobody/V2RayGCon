@@ -143,12 +143,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 
         Highlighter CreateHighlighter()
         {
-            foreach (var tag in titleTagNames)
+            if (this.tagNames.Contains(StringTagNames.Title))
             {
-                if (this.tagNames.Contains(StringTagNames.Title))
-                {
-                    return new Highlighter(this.parsedKeyword);
-                }
+                return new Highlighter(this.parsedKeyword);
             }
             return null;
         }

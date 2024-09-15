@@ -85,6 +85,26 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             IReadOnlyCollection<Interfaces.ICoreServCtrl> coreServs
         )
         {
+            if (
+                !not
+                && this.contentNames.Count == 1
+                && this.contentNames.Contains(NumberTagNames.Index)
+            )
+            {
+                switch (this.op)
+                {
+                    case NumberOperators.Is:
+                        return BinarySearchIndexIs(coreServs, first);
+                    case NumberOperators.SmallerThen:
+                        return GetIndexSmallerThen(coreServs, first);
+                    case NumberOperators.Between:
+                        return GetIndexBetween(coreServs, first, second);
+                    default:
+                        // fall back to matcher
+                        break;
+                }
+            }
+
             var r = new List<Interfaces.ICoreServCtrl>();
             foreach (var coreServ in coreServs)
             {
@@ -112,6 +132,89 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             return matcher.Invoke(num);
         }
 
+        #endregion
+
+        #region optimize index matching
+        List<Interfaces.ICoreServCtrl> BinarySearchIndexIs(
+            IReadOnlyCollection<Interfaces.ICoreServCtrl> coreServs,
+            long index
+        )
+        {
+            var r = new List<Interfaces.ICoreServCtrl>();
+            if (!(coreServs is List<Interfaces.ICoreServCtrl> servs))
+            {
+                return r;
+            }
+
+            // credit: https://stackoverflow.com/questions/8067643/binary-search-of-a-sorted-array
+            var left = 0;
+            var right = servs.Count - 1;
+            while (left <= right)
+            {
+                var mid = (left + right) / 2;
+                var coreServ = servs[mid];
+                var guess = (long)(coreServ.GetCoreStates().GetIndex());
+
+                if (guess == index)
+                {
+                    r.Add(coreServ);
+                    break;
+                }
+                else if (guess > index)
+                {
+                    right = mid - 1;
+                }
+                else
+                {
+                    left = mid + 1;
+                }
+            }
+
+            return r;
+        }
+
+        List<Interfaces.ICoreServCtrl> GetIndexBetween(
+            IReadOnlyCollection<Interfaces.ICoreServCtrl> coreServs,
+            long left,
+            long right
+        )
+        {
+            var r = new List<Interfaces.ICoreServCtrl>();
+            foreach (var coreServ in coreServs)
+            {
+                var idx = (long)coreServ.GetCoreStates().GetIndex();
+                if (idx > right)
+                {
+                    break;
+                }
+                if (idx >= left)
+                {
+                    r.Add(coreServ);
+                }
+            }
+            return r;
+        }
+
+        List<Interfaces.ICoreServCtrl> GetIndexSmallerThen(
+            IReadOnlyCollection<Interfaces.ICoreServCtrl> coreServs,
+            long index
+        )
+        {
+            var r = new List<Interfaces.ICoreServCtrl>();
+            foreach (var coreServ in coreServs)
+            {
+                var idx = (long)coreServ.GetCoreStates().GetIndex();
+                if (idx < index)
+                {
+                    r.Add(coreServ);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return r;
+        }
         #endregion
 
         #region private methods

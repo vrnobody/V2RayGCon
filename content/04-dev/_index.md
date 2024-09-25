@@ -46,4 +46,11 @@ openssl rsa -in private.pem -pubout -out public.pem
 echo "aGVsbG8K..." | base64 -d | openssl pkeyutl -decrypt -inkey private.pem
 ```
 
+图片嵌入文件：  
+```bash
+# 写入文件
+cat vgc-v2.0.3.zip | base64 -w0 | exiftool -z '-Description<=-' vgc.png
 
+# 读取文件
+exiftool -s3 -Description vgc.png | base64 -d > vgc.zip
+```

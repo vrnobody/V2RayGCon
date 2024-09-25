@@ -25,6 +25,11 @@ V2RayGCon是windows下[v2ray-core](https://www.v2fly.org)的图形(graphic)配�
 Download and unzip [V2RayGCon-box.zip][9] to any directory you like.  
 Require .net framework 4.5+  
 
+### 备用 Plan B
+V2RayGCon v2.0.3  
+MD5: 42024DE3AF80D8DA26AEC6D536FF0F97  
+![vgc-v2.0.3.png](https://vrnobody.github.io/V2RayGCon/images/releases/vgc-v2.0.3.png)  
+
 ### 演示 Demo
 WinFormUI  
 ![Demo v1.4.3.5 GIF](https://vrnobody.github.io/V2RayGCon/images/forms/demo_basics_v1.4.3.5.gif)  

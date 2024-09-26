@@ -8,6 +8,32 @@ namespace VgcApisTests.LibsTests
     [TestClass]
     public class KeywordFilterTests
     {
+        #region adv orderby filter
+        [DataTestMethod]
+        [DataRow("#ord tag", "#orderby tag1, tag2, tag3")]
+        [DataRow("#ORdY -idx", "#orderby -index")]
+        [DataRow("#oRd -idx mk", "#orderby -index, mark, remark")]
+        public void CreateAdvOrderByFilterSuccessTest(string kw, string exp)
+        {
+            var filter = AdvOrderByFilter.CreateFilter(kw);
+            Assert.IsNotNull(filter);
+            var r = filter.ToString();
+            Assert.AreEqual(exp, r);
+        }
+
+        [DataTestMethod]
+        [DataRow("#ordt tag")]
+        [DataRow("#ord     ")]
+        [DataRow("#ord")]
+        [DataRow("#ord   zzzzzz  ")]
+        public void CreateAdvOrderByFilterFailTest(string kw)
+        {
+            var filter = AdvOrderByFilter.CreateFilter(kw);
+            Assert.IsNull(filter);
+        }
+
+        #endregion
+
         #region adv number filter
         [DataTestMethod]
         [DataRow("#MOd  <  02", 01, true)]

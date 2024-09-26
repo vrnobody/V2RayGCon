@@ -3,8 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using VgcApis.Interfaces;
 
-namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
+namespace VgcApis.Libs.Infr.KwFilterComps
 {
+    internal class TagName
+    {
+        public readonly bool not;
+        public readonly object tag;
+
+        public TagName(object tag, bool not)
+        {
+            this.tag = tag;
+            this.not = not;
+        }
+
+        public override string ToString()
+        {
+            var n = not ? "-" : "";
+            switch (tag)
+            {
+                case StringTagNames stag:
+                    return $"{n}{stag.ToString().ToLower()}";
+                case NumberTagNames ntag:
+                    return $"{n}{ntag.ToString().ToLower()}";
+                default:
+                    throw new InvalidCastException($"unknow tag name: {tag}");
+            }
+        }
+    }
+
     internal class ExprToken
     {
         public readonly ExprTokenTypes type;
@@ -159,16 +185,21 @@ namespace VgcApis.Libs.Infr.KwFilterComps.BoolExprComps
         public LeafExpr(List<ExprToken> src)
             : base(null, null, src.Select(tk => tk.value).ToArray())
         {
-            this.filter = AdvStringFilter.CreateFilter(this.keywords);
             this.pri = 0;
+            this.filter = AdvOrderByFilter.CreateFilter(this.keywords);
             if (this.filter == null)
             {
-                this.filter = AdvNumberFilter.CreateFilter(this.keywords);
                 this.pri = 1;
+                this.filter = AdvStringFilter.CreateFilter(this.keywords);
             }
             if (this.filter == null)
             {
+                this.filter = AdvNumberFilter.CreateFilter(this.keywords);
                 this.pri = 2;
+            }
+            if (this.filter == null)
+            {
+                this.pri = 4;
             }
             this.highlighter = this.filter?.GetHighlighter();
         }

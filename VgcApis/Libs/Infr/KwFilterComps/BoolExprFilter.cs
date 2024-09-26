@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using VgcApis.Interfaces;
-using VgcApis.Libs.Infr.KwFilterComps.BoolExprComps;
 
 namespace VgcApis.Libs.Infr.KwFilterComps
 {

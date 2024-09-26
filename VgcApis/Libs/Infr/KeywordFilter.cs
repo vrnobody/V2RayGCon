@@ -58,6 +58,8 @@ namespace VgcApis.Libs.Infr
 
         public static ReadOnlyCollection<string> GetStringTips() => AdvStringFilter.GetTips();
 
+        public static ReadOnlyCollection<string> GetOrderByTips() => AdvOrderByFilter.GetTips();
+
         public ISimpleFilter GetFilter() => this.filter;
 
         public Highlighter GetHighlighter()

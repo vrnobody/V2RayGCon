@@ -307,6 +307,16 @@ namespace V2RayGCon.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap SortAscending_16x {
+            get {
+                object obj = ResourceManager.GetObject("SortAscending_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap StatusHelp_16x {
             get {
                 object obj = ResourceManager.GetObject("StatusHelp_16x", resourceCulture);

@@ -41,6 +41,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             m.ImageList.Images.Add(Properties.Resources.DomainType_16x);
             m.ImageList.Images.Add(Properties.Resources.TextBlock_16x);
+            m.ImageList.Images.Add(Properties.Resources.SortAscending_16x);
 
             var numSnippets = VgcApis
                 .Libs.Infr.KeywordFilter.GetNumericTips()
@@ -48,9 +49,12 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var strSnippets = VgcApis
                 .Libs.Infr.KeywordFilter.GetStringTips()
                 .Select(t => new Snippet(t, 1));
+            var orderBySnippets = VgcApis
+                .Libs.Infr.KeywordFilter.GetOrderByTips()
+                .Select(t => new Snippet(t, 2));
 
             m.TargetControlWrapper = new ExToolStripComboBoxWrapper(box);
-            m.SetAutocompleteItems(numSnippets.Concat(strSnippets));
+            m.SetAutocompleteItems(numSnippets.Concat(strSnippets).Concat(orderBySnippets));
             return m;
         }
         #endregion

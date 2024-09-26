@@ -59,6 +59,52 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #region public methods
         internal static ReadOnlyCollection<string> GetTips() => tips.AsReadOnly();
 
+        internal static bool TryGetStrTagValue(
+            Interfaces.ICoreServCtrl coreServ,
+            ICoreStates cs,
+            StringTagNames tag,
+            out string r
+        )
+        {
+            switch (tag)
+            {
+                case StringTagNames.Tag1:
+                    r = cs.GetTag1();
+                    break;
+                case StringTagNames.Tag2:
+                    r = cs.GetTag2();
+                    break;
+                case StringTagNames.Tag3:
+                    r = cs.GetTag3();
+                    break;
+                case StringTagNames.Name:
+                    r = cs.GetName();
+                    break;
+                case StringTagNames.Summary:
+                    r = cs.GetSummary();
+                    break;
+                case StringTagNames.Remark:
+                    r = cs.GetRemark();
+                    break;
+                case StringTagNames.Mark:
+                    r = cs.GetMark();
+                    break;
+                case StringTagNames.Title:
+                    r = cs.GetTitle();
+                    break;
+                case StringTagNames.Core:
+                    r = coreServ.GetCoreCtrl().GetCustomCoreName();
+                    break;
+                case StringTagNames.Selected:
+                    r = cs.IsSelected().ToString();
+                    break;
+                default:
+                    r = "";
+                    return false;
+            }
+            return true;
+        }
+
         public IReadOnlyCollection<Interfaces.ICoreServCtrl> Filter(
             IReadOnlyCollection<Interfaces.ICoreServCtrl> coreServs
         )
@@ -215,53 +261,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             return null;
         }
 
-        bool TryGetStrTagValue(
-            Interfaces.ICoreServCtrl coreServ,
-            ICoreStates cs,
-            StringTagNames tag,
-            out string r
-        )
-        {
-            switch (tag)
-            {
-                case StringTagNames.Tag1:
-                    r = cs.GetTag1();
-                    break;
-                case StringTagNames.Tag2:
-                    r = cs.GetTag2();
-                    break;
-                case StringTagNames.Tag3:
-                    r = cs.GetTag3();
-                    break;
-                case StringTagNames.Name:
-                    r = cs.GetName();
-                    break;
-                case StringTagNames.Summary:
-                    r = cs.GetSummary();
-                    break;
-                case StringTagNames.Remark:
-                    r = cs.GetRemark();
-                    break;
-                case StringTagNames.Mark:
-                    r = cs.GetMark();
-                    break;
-                case StringTagNames.Title:
-                    r = cs.GetTitle();
-                    break;
-                case StringTagNames.Core:
-                    r = coreServ.GetCoreCtrl().GetCustomCoreName();
-                    break;
-                case StringTagNames.Selected:
-                    r = cs.IsSelected().ToString();
-                    break;
-                default:
-                    r = "";
-                    return false;
-            }
-            return true;
-        }
-
-        static bool TryParseTagName(string tagName, out HashSet<StringTagNames> r)
+        internal static bool TryParseTagName(string tagName, out HashSet<StringTagNames> r)
         {
             r = new HashSet<StringTagNames>();
 

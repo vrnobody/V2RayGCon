@@ -81,6 +81,41 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 
         internal static ReadOnlyCollection<string> GetTips() => tips.AsReadOnly();
 
+        internal static bool TryGetContent(
+            Interfaces.ICoreServCtrl coreServ,
+            ICoreStates cs,
+            NumberTagNames cname,
+            out long r
+        )
+        {
+            switch (cname)
+            {
+                case NumberTagNames.Index:
+                    r = (long)cs.GetIndex();
+                    return true;
+                case NumberTagNames.Latency:
+                    r = cs.GetSpeedTestResult();
+                    return true;
+                case NumberTagNames.Upload:
+                    r = cs.GetUplinkTotalInBytes() / Helpers.MiB;
+                    return true;
+                case NumberTagNames.Download:
+                    r = cs.GetDownlinkTotalInBytes() / Helpers.MiB;
+                    return true;
+                case NumberTagNames.Port:
+                    r = cs.GetInboundPort();
+                    return true;
+                case NumberTagNames.Modify:
+                    var utick = cs.GetLastModifiedUtcTicks();
+                    var d = new DateTime(utick, DateTimeKind.Utc).ToLocalTime();
+                    var str = d.ToString("yyyyMMdd");
+                    r = (long)Misc.Utils.Str2Int(str);
+                    return true;
+            }
+            r = 0;
+            return false;
+        }
+
         public IReadOnlyCollection<Interfaces.ICoreServCtrl> Filter(
             IReadOnlyCollection<Interfaces.ICoreServCtrl> coreServs
         )
@@ -252,46 +287,11 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             return null;
         }
 
-        bool TryGetContent(
-            Interfaces.ICoreServCtrl coreServ,
-            ICoreStates cs,
-            NumberTagNames cname,
-            out long r
-        )
-        {
-            switch (cname)
-            {
-                case NumberTagNames.Index:
-                    r = (long)cs.GetIndex();
-                    return true;
-                case NumberTagNames.Latency:
-                    r = cs.GetSpeedTestResult();
-                    return true;
-                case NumberTagNames.Upload:
-                    r = cs.GetUplinkTotalInBytes() / Helpers.MiB;
-                    return true;
-                case NumberTagNames.Download:
-                    r = cs.GetDownlinkTotalInBytes() / Helpers.MiB;
-                    return true;
-                case NumberTagNames.Port:
-                    r = cs.GetInboundPort();
-                    return true;
-                case NumberTagNames.Modify:
-                    var utick = cs.GetLastModifiedUtcTicks();
-                    var d = new DateTime(utick, DateTimeKind.Utc).ToLocalTime();
-                    var str = d.ToString("yyyyMMdd");
-                    r = (long)Misc.Utils.Str2Int(str);
-                    return true;
-            }
-            r = 0;
-            return false;
-        }
-
         #endregion
 
         #region creator
 
-        static bool TryParseContenName(string name, out HashSet<NumberTagNames> r)
+        internal static bool TryParseContenName(string name, out HashSet<NumberTagNames> r)
         {
             r = new HashSet<NumberTagNames>();
 

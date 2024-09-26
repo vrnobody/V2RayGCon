@@ -32,6 +32,10 @@ namespace VgcApisTests.LibsTests
         #region filter test
         [DataTestMethod]
         [DataRow(
+            "#smm Ends    .cOM   &    #oRdB -idx  &     #laTenCy    >     300  ",
+            "AndExpr@3(AndExpr@1(LeafExpr@1(#smm Ends .cOM), LeafExpr@0(#oRdB -idx)), LeafExpr@2(#laTenCy > 300))"
+        )]
+        [DataRow(
             " (#smm mAtCh \"#!&|.cOM$\") ! (#lAt > 300) & (#sum staRts vLeSS)",
             "AndExpr@4(NotExpr@3(LeafExpr@1(#smm mAtCh #!&|.cOM$), LeafExpr@2(#lAt > 300)), LeafExpr@1(#sum staRts vLeSS))"
         )]

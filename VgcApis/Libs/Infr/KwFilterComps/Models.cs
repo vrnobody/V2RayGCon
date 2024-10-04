@@ -51,6 +51,15 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         protected Highlighter highlighter;
         protected int pri;
 
+        protected static readonly List<Func<string[], ISimpleFilter>> creators = new List<
+            Func<string[], ISimpleFilter>
+        >()
+        {
+            kw => AdvOrderByFilter.CreateFilter(kw),
+            kw => AdvStringFilter.CreateFilter(kw),
+            kw => AdvNumberFilter.CreateFilter(kw),
+        };
+
         public BoolExpr(BoolExpr left, BoolExpr right, string[] keywords)
         {
             this.left = left;
@@ -97,7 +106,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         {
             if (expr == null)
             {
-                return 2;
+                return 1 << creators.Count;
             }
             return expr.pri;
         }
@@ -185,23 +194,24 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         public LeafExpr(List<ExprToken> src)
             : base(null, null, src.Select(tk => tk.value).ToArray())
         {
-            this.pri = 0;
-            this.filter = AdvOrderByFilter.CreateFilter(this.keywords);
+            for (int i = 0; i < creators.Count; i++)
+            {
+                this.filter = creators[i].Invoke(this.keywords);
+                if (this.filter != null)
+                {
+                    this.pri = 1 << i;
+                    break;
+                }
+            }
+
             if (this.filter == null)
             {
-                this.pri = 1;
-                this.filter = AdvStringFilter.CreateFilter(this.keywords);
+                this.pri = 1 << creators.Count;
             }
-            if (this.filter == null)
+            else
             {
-                this.filter = AdvNumberFilter.CreateFilter(this.keywords);
-                this.pri = 2;
+                this.highlighter = this.filter.GetHighlighter();
             }
-            if (this.filter == null)
-            {
-                this.pri = 4;
-            }
-            this.highlighter = this.filter?.GetHighlighter();
         }
 
         public override IReadOnlyCollection<ICoreServCtrl> Filter(

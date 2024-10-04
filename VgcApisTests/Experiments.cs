@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -13,6 +14,17 @@ namespace VgcApisTests
     public class Experiments
     {
         public Experiments() { }
+
+        [TestMethod]
+        public void ShiftLeftOperandTest()
+        {
+            var s0 = 1 << 0;
+            Assert.AreEqual(1, s0);
+            var s1 = 1 << 1;
+            Assert.AreEqual(2, s1);
+            var s2 = 1 << 2;
+            Assert.AreEqual(4, s2);
+        }
 
 #if DEBUG
         [TestMethod]

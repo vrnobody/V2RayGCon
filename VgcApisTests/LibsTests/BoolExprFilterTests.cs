@@ -33,27 +33,27 @@ namespace VgcApisTests.LibsTests
         [DataTestMethod]
         [DataRow(
             "#smm Ends    .cOM   &    #oRdB -idx  &     #laTenCy    >     300  ",
-            "AndExpr@3(AndExpr@1(LeafExpr@1(#smm Ends .cOM), LeafExpr@0(#oRdB -idx)), LeafExpr@2(#laTenCy > 300))"
+            "AndExpr@7(AndExpr@3(LeafExpr@2(#smm Ends .cOM), LeafExpr@1(#oRdB -idx)), LeafExpr@4(#laTenCy > 300))"
         )]
         [DataRow(
             " (#smm mAtCh \"#!&|.cOM$\") ! (#lAt > 300) & (#sum staRts vLeSS)",
-            "AndExpr@4(NotExpr@3(LeafExpr@1(#smm mAtCh #!&|.cOM$), LeafExpr@2(#lAt > 300)), LeafExpr@1(#sum staRts vLeSS))"
+            "AndExpr@8(NotExpr@6(LeafExpr@2(#smm mAtCh #!&|.cOM$), LeafExpr@4(#lAt > 300)), LeafExpr@2(#sum staRts vLeSS))"
         )]
         [DataRow(
             "#smm Ends    .cOM    !     #laTenCy    >     300    &  #sUm     StArtS VLess",
-            "AndExpr@4(NotExpr@3(LeafExpr@1(#smm Ends .cOM), LeafExpr@2(#laTenCy > 300)), LeafExpr@1(#sUm StArtS VLess))"
+            "AndExpr@8(NotExpr@6(LeafExpr@2(#smm Ends .cOM), LeafExpr@4(#laTenCy > 300)), LeafExpr@2(#sUm StArtS VLess))"
         )]
         [DataRow(
             " (#smm ends .com) ! (#latency > 300) & (#sum starts vless)",
-            "AndExpr@4(NotExpr@3(LeafExpr@1(#smm ends .com), LeafExpr@2(#latency > 300)), LeafExpr@1(#sum starts vless))"
+            "AndExpr@8(NotExpr@6(LeafExpr@2(#smm ends .com), LeafExpr@4(#latency > 300)), LeafExpr@2(#sum starts vless))"
         )]
         [DataRow(
             " (   #mK Is a   ) &(   (   #sMm noT b)   |   (#ttl liKe C  ))",
-            "AndExpr@3(LeafExpr@1(#mK Is a), OrExpr@2(LeafExpr@1(#sMm noT b), LeafExpr@1(#ttl liKe C)))"
+            "AndExpr@6(LeafExpr@2(#mK Is a), OrExpr@4(LeafExpr@2(#sMm noT b), LeafExpr@2(#ttl liKe C)))"
         )]
         [DataRow(
             " (#mk is \"\")&(#smm not \"a b c\")",
-            "AndExpr@2(LeafExpr@1(#mk is), LeafExpr@1(#smm not a b c))"
+            "AndExpr@4(LeafExpr@2(#mk is), LeafExpr@2(#smm not a b c))"
         )]
         public void CreateFilterTest(string src, string exp)
         {
@@ -68,23 +68,23 @@ namespace VgcApisTests.LibsTests
         [DataTestMethod]
         [DataRow(
             " (      #smm not b)!|& ",
-            "AndExpr@7(OrExpr@5(NotExpr@3(LeafExpr@1(#smm not b), Null), Null), Null)"
+            "AndExpr@26(OrExpr@18(NotExpr@10(LeafExpr@2(#smm not b), Null), Null), Null)"
         )]
         [DataRow(
             " &|!(      #smm not b) ",
-            "NotExpr@7(OrExpr@5(AndExpr@3(LeafExpr@1(#smm not b), Null), Null), Null)"
+            "NotExpr@26(OrExpr@18(AndExpr@10(LeafExpr@2(#smm not b), Null), Null), Null)"
         )]
         [DataRow(
             " (   #mk is a   ) !(      #smm not b)   &   (#ttl like c  ) ",
-            "AndExpr@3(NotExpr@2(LeafExpr@1(#mk is a), LeafExpr@1(#smm not b)), LeafExpr@1(#ttl like c))"
+            "AndExpr@6(NotExpr@4(LeafExpr@2(#mk is a), LeafExpr@2(#smm not b)), LeafExpr@2(#ttl like c))"
         )]
         [DataRow(
             "(   #mk is a   ) &(   (   #smm not b)   |   (#ttl like c  ))",
-            "AndExpr@3(LeafExpr@1(#mk is a), OrExpr@2(LeafExpr@1(#smm not b), LeafExpr@1(#ttl like c)))"
+            "AndExpr@6(LeafExpr@2(#mk is a), OrExpr@4(LeafExpr@2(#smm not b), LeafExpr@2(#ttl like c)))"
         )]
         [DataRow(
             "(#mk is \"\")&(#smm not \"a b c\")",
-            "AndExpr@2(LeafExpr@1(#mk is), LeafExpr@1(#smm not a b c))"
+            "AndExpr@4(LeafExpr@2(#mk is), LeafExpr@2(#smm not a b c))"
         )]
         public void MakeExpressionTest(string src, string exp)
         {

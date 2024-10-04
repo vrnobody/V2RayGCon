@@ -154,6 +154,18 @@ namespace Luna.Interfaces
         new void Log(string message);
 
         /// <summary>
+        /// 互斥锁池当前计数
+        /// </summary>
+        /// <returns>当前计数</returns>
+        int GetMutexPoolCount();
+
+        /// <summary>
+        /// 互斥锁池历史最大计数
+        /// </summary>
+        /// <returns>历史最大计数</returns>
+        int GetMutexPoolMaxCount();
+
+        /// <summary>
         /// 获取日志窗口的内容
         /// </summary>
         /// <returns></returns>

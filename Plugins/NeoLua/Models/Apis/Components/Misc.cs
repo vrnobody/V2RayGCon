@@ -221,6 +221,10 @@ namespace NeoLuna.Models.Apis.Components
             return VgcApis.Misc.Logger.GetTrimedContent();
         }
 
+        public int GetMutexPoolCount() => VgcApis.Libs.Tasks.MrePool.Count;
+
+        public int GetMutexPoolMaxCount() => VgcApis.Libs.Tasks.MrePool.HistMaxCount;
+
         public int GetSpeedtestQueueLength() => vgcSettings.GetSpeedtestQueueLength();
 
         public string Replace(string text, string oldStr, string newStr) =>

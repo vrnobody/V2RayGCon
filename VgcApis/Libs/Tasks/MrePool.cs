@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace VgcApis.Libs.Tasks
 {
-    internal static class MrePool
+    public static class MrePool
     {
         static readonly int maxSize = 80;
         static readonly ConcurrentQueue<ManualResetEvent> pool =
@@ -12,6 +12,8 @@ namespace VgcApis.Libs.Tasks
         static MrePool() { }
 
         #region public methods
+        static public int HistMaxCount { get; private set; }
+
         public static int Count
         {
             get => pool.Count;
@@ -56,6 +58,12 @@ namespace VgcApis.Libs.Tasks
             else
             {
                 pool.Enqueue(mre);
+            }
+
+            var c = pool.Count;
+            if (c > HistMaxCount)
+            {
+                HistMaxCount = c;
             }
         }
         #endregion

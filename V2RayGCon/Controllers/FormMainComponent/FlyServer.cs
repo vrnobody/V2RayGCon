@@ -722,14 +722,16 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void UpdateMarkFilterItems(ToolStripComboBox marker)
         {
+            var pdf = new List<string>() { @"#latency ~ 1 60000 & #orderby latency" };
+
             var marks = servers
                 .GetMarkList()
                 .Select(mk => mk?.Replace("\"", ""))
                 .Where(mk => !string.IsNullOrEmpty(mk))
-                .Select(mk => $"#mark like \"{mk}\"")
-                .ToArray();
+                .Select(mk => $"#mark like \"{mk}\"");
+
             marker.Items.Clear();
-            marker.Items.AddRange(marks);
+            marker.Items.AddRange(pdf.Concat(marks).ToArray());
         }
 
         void DisposeFlyPanelControlByList(List<Views.UserControls.ServerUI> controlList)

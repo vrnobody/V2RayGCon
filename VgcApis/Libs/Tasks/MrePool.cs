@@ -5,7 +5,7 @@ namespace VgcApis.Libs.Tasks
 {
     public static class MrePool
     {
-        static readonly int maxSize = 80;
+        static readonly int maxSize = 20;
         static readonly ConcurrentQueue<ManualResetEvent> pool =
             new ConcurrentQueue<ManualResetEvent>();
 

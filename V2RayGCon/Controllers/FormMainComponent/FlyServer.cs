@@ -15,6 +15,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         readonly Form formMain;
         readonly FlowLayoutPanel flyPanel;
+        private readonly ToolStripLabel tslbClearKeyword;
         readonly Services.Servers servers;
         readonly Services.Settings setting;
         readonly VgcApis.UserControls.AcmComboBox cboxKeyword;
@@ -51,6 +52,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
             this.formMain = formMain;
             this.flyPanel = panel;
+            this.tslbClearKeyword = lbClearKeyword;
             this.cboxKeyword = cboxKeyword as VgcApis.UserControls.AcmComboBox;
             this.tsdbtnPager = tsdbtnPager;
             this.tslbTotal = tslbTotal;
@@ -685,6 +687,21 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             UpdateMarkFilterItems(cboxKeyword);
 
+            cboxKeyword.MouseHover += (s, e) =>
+            {
+                if (cboxKeyword.Focused)
+                {
+                    return;
+                }
+
+                var mx = formMain.PointToClient(Cursor.Position).X;
+                var right = cboxKeyword.Bounds.Right;
+                if (Math.Abs(right - mx) < tslbClearKeyword.Width)
+                {
+                    cboxKeyword.Focus();
+                }
+            };
+
             cboxKeyword.DropDown += (s, e) =>
             {
                 UpdateMarkFilterItems(cboxKeyword);
@@ -722,7 +739,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         void UpdateMarkFilterItems(ToolStripComboBox marker)
         {
-            var pdf = new List<string>() { @"#latency ~ 1 60000 & #orderby latency" };
+            var customKeywords = (setting.CustomFilterKeywords ?? "")
+                .Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                .Where(s => !s.StartsWith("//"));
 
             var marks = servers
                 .GetMarkList()
@@ -731,7 +750,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 .Select(mk => $"#mark like \"{mk}\"");
 
             marker.Items.Clear();
-            marker.Items.AddRange(pdf.Concat(marks).ToArray());
+            marker.Items.AddRange(customKeywords.Concat(marks).ToArray());
         }
 
         void DisposeFlyPanelControlByList(List<Views.UserControls.ServerUI> controlList)

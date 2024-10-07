@@ -223,15 +223,6 @@
   <data name="btnSetOpenStartupFolder.ToolTip" xml:space="preserve">
     <value>拖个快捷方式进去就可以开机启动啦</value>
   </data>
-  <data name="chkSetUseV4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>108, 16</value>
-  </data>
-  <data name="chkSetUseV4.Text" xml:space="preserve">
-    <value>优先使用v4格式</value>
-  </data>
-  <data name="chkSetUseV4.ToolTip" xml:space="preserve">
-    <value>导入/编辑时使用v4的in(out)bounds</value>
-  </data>
   <data name="chkSetSysPortable.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 16</value>
   </data>
@@ -391,6 +382,15 @@
   <data name="tabPageSetting.ToolTip" xml:space="preserve">
     <value />
   </data>
+  <data name="rtboxCustomFilterKeywords.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="groupBox7.Text" xml:space="preserve">
+    <value>搜索关键词</value>
+  </data>
+  <data name="groupBox7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="cboxCustomUserAgent.ToolTip" xml:space="preserve">
     <value />
   </data>
@@ -424,18 +424,6 @@
   <data name="chkDefImportSocksShareLink.ToolTip" xml:space="preserve">
     <value>导入时处理socks链接</value>
   </data>
-  <data name="chkDefImportUseDecoderMailbox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>392, 45</value>
-  </data>
-  <data name="chkDefImportUseDecoderMailbox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
-  <data name="chkDefImportUseDecoderMailbox.Text" xml:space="preserve">
-    <value>使用</value>
-  </data>
-  <data name="chkDefImportUseDecoderMailbox.ToolTip" xml:space="preserve">
-    <value>使用自定义解码器（详见GitHub手册）</value>
-  </data>
   <data name="chkDefImportTrojanShareLink.ToolTip" xml:space="preserve">
     <value>导入时处理trojan链接</value>
   </data>
@@ -444,9 +432,6 @@
   </data>
   <data name="cboxDefImportInbName.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="label21.ToolTip" xml:space="preserve">
-    <value>自定义解码器mailbox名（详见GitHub手册）</value>
   </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>

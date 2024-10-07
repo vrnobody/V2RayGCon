@@ -6,6 +6,9 @@ namespace V2RayGCon.Models.Datas
     {
         #region public properties
 
+        public string CustomFilterKeywords { get; set; } =
+            "// show tested servers orderby latency\n#latency ~ 1 30000 & #orderby latency";
+
         public bool isLoad3rdPartyPlugins { get; set; }
         public string CompressedUnicodeLocalStorage { get; set; }
 

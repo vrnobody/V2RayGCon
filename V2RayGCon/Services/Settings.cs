@@ -206,6 +206,16 @@ namespace V2RayGCon.Services
         #endregion
 
         #region Properties
+        public string CustomFilterKeywords
+        {
+            get => userSettings.CustomFilterKeywords;
+            set
+            {
+                userSettings.CustomFilterKeywords = value;
+                SaveSettingsLater();
+            }
+        }
+
         public bool isTunMode { get; set; } = false;
 
         public bool isLoad3rdPartyPlugins
@@ -642,6 +652,7 @@ namespace V2RayGCon.Services
         #endregion
 
         #region public methods
+
         public void DisposeFileMutex()
         {
             var m = fileMutex;

@@ -21,6 +21,7 @@ namespace V2RayGCon.Controllers.OptionComponent
         readonly TextBox tboxDefImportAddr = null,
             tboxSetSpeedtestCycles = null,
             tboxSetSpeedtestTimeout = null;
+        private readonly RichTextBox rtboxCustomFilterKeywords;
 
         public TabDefaults(
             ComboBox cboxDefInboundName,
@@ -36,7 +37,9 @@ namespace V2RayGCon.Controllers.OptionComponent
             ComboBox cboxDefSpeedtestUrl,
             TextBox tboxSetSpeedtestCycles,
             ComboBox cboxDefSpeedtestExpectedSize,
-            TextBox tboxSetSpeedtestTimeout
+            TextBox tboxSetSpeedtestTimeout,
+            // filter
+            RichTextBox rtboxCustomFilterKeywords
         )
         {
             this.settings = Services.Settings.Instance;
@@ -54,8 +57,9 @@ namespace V2RayGCon.Controllers.OptionComponent
             this.tboxSetSpeedtestCycles = tboxSetSpeedtestCycles;
             this.cboxDefSpeedtestExpectedSize = cboxDefSpeedtestExpectedSize;
             this.tboxSetSpeedtestTimeout = tboxSetSpeedtestTimeout;
+            this.rtboxCustomFilterKeywords = rtboxCustomFilterKeywords;
 
-            InitElement();
+            InitControls();
         }
 
         #region public method
@@ -102,6 +106,8 @@ namespace V2RayGCon.Controllers.OptionComponent
                 tboxSetSpeedtestTimeout.Text
             );
 
+            settings.CustomFilterKeywords = rtboxCustomFilterKeywords.Text;
+
             return true;
         }
 
@@ -131,6 +137,7 @@ namespace V2RayGCon.Controllers.OptionComponent
                     != VgcApis.Misc.Utils.Str2Int(tboxSetSpeedtestCycles.Text)
                 || settings.CustomSpeedtestTimeout
                     != VgcApis.Misc.Utils.Str2Int(tboxSetSpeedtestTimeout.Text)
+                || settings.CustomFilterKeywords != rtboxCustomFilterKeywords.Text
             )
             {
                 return true;
@@ -173,7 +180,7 @@ namespace V2RayGCon.Controllers.OptionComponent
             VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxDefCoreName);
         }
 
-        private void InitElement()
+        private void InitControls()
         {
             chkImportVmessShareLink.Checked = settings.CustomDefImportVmessShareLink;
             chkImportVlessShareLink.Checked = settings.CustomDefImportVlessShareLink;
@@ -203,6 +210,9 @@ namespace V2RayGCon.Controllers.OptionComponent
             cboxDefSpeedtestExpectedSize.Text =
                 settings.CustomSpeedtestExpectedSizeInKib.ToString();
             tboxSetSpeedtestTimeout.Text = settings.CustomSpeedtestTimeout.ToString();
+
+            // filter
+            rtboxCustomFilterKeywords.Text = settings.CustomFilterKeywords;
         }
 
         void OnTboxImportAddrTextChanged(object sender, EventArgs e) =>

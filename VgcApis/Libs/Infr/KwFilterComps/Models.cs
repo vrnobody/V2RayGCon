@@ -182,7 +182,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 
             var uids = new HashSet<string>(l.Select(s => s.GetCoreStates().GetUid()));
             var patch = r.Where(s => !uids.Contains(s.GetCoreStates().GetUid()));
-            var or = l.Concat(patch).OrderBy(s => s).ToList();
+            var or = l.Concat(patch).ToList();
             return or;
         }
     }

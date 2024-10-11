@@ -728,9 +728,8 @@ namespace VgcApis.UserControls.AcmComboBoxComps
                         }
                         else
                         {
-                            timer.Stop();
                             TargetControlWrapper?.InvokeKeyDownCallback(Keys.Enter);
-                            Close();
+                            Misc.Utils.DoItLater(() => Misc.UI.Invoke(Close), timer.Interval + 100);
                         }
                         return true;
                     case Keys.Tab:

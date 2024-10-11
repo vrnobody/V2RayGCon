@@ -55,8 +55,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 
         #endregion
 
-
         #region public methods
+        public int GetPri() => 1 << 1;
+
         internal static ReadOnlyCollection<string> GetTips() => tips.AsReadOnly();
 
         internal static bool TryGetStrTagValue(

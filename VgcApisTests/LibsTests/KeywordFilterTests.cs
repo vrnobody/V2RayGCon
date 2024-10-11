@@ -8,6 +8,32 @@ namespace VgcApisTests.LibsTests
     [TestClass]
     public class KeywordFilterTests
     {
+        #region adv take filter
+        [DataTestMethod]
+        [DataRow("#TaKe 1", "#take 1 0")]
+        [DataRow("#AkE 123 -1", "#take 123 0")]
+        [DataRow("#tK 123 0", "#take 123 0")]
+        [DataRow("#AKE 123 456", "#take 123 456")]
+        public void CreateAdvTakeFilterSuccessTest(string kw, string exp)
+        {
+            var filter = AdvTakeFilter.CreateFilter(kw);
+            Assert.IsNotNull(filter);
+            var r = filter.ToString();
+            Assert.AreEqual(exp, r);
+        }
+
+        [DataTestMethod]
+        [DataRow("#TaKe 0")]
+        [DataRow("#tK -1")]
+        [DataRow("#tKe abc")]
+        public void CreateAdvTakeFilterFailTest(string kw)
+        {
+            var filter = AdvTakeFilter.CreateFilter(kw);
+            Assert.IsNull(filter);
+        }
+
+        #endregion
+
         #region adv orderby filter
         [DataTestMethod]
         [DataRow("#ord tag", "#orderby tag1, tag2, tag3")]

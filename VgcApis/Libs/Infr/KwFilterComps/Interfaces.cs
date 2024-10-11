@@ -11,6 +11,8 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 
     public interface ISimpleFilter : IFilter
     {
+        int GetPri();
+
         Highlighter GetHighlighter();
     }
 

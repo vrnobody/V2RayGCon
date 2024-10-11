@@ -29,6 +29,8 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region public methods
+        public int GetPri() => 1;
+
         public override string ToString()
         {
             var ts = string.Join(", ", this.tagNames).ToLower();
@@ -36,7 +38,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             return r;
         }
 
-        internal static ReadOnlyCollection<string> GetTips() => tips.AsReadOnly();
+        public static ReadOnlyCollection<string> GetTips() => tips.AsReadOnly();
 
         public IReadOnlyCollection<Interfaces.ICoreServCtrl> Filter(
             IReadOnlyCollection<Interfaces.ICoreServCtrl> coreServs

@@ -221,10 +221,13 @@
   <data name="DomainType_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icon\FormMainToolStrip\DomainType_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TextBlock_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon\FormMainToolStrip\TextBlock_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="SortAscending_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icon\FormMainToolStrip\SortAscending_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Button_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon\FormMainToolStrip\Button_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CheckboxUncheckCancel_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icon\FormMainToolStrip\CheckboxUncheckCancel_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -40,8 +40,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
             };
 
             m.ImageList.Images.Add(Properties.Resources.DomainType_16x);
-            m.ImageList.Images.Add(Properties.Resources.TextBlock_16x);
+            m.ImageList.Images.Add(Properties.Resources.Button_16x);
             m.ImageList.Images.Add(Properties.Resources.SortAscending_16x);
+            m.ImageList.Images.Add(Properties.Resources.CheckboxUncheckCancel_16x);
 
             var numSnippets = VgcApis
                 .Libs.Infr.KeywordFilter.GetNumericTips()
@@ -52,9 +53,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var orderBySnippets = VgcApis
                 .Libs.Infr.KeywordFilter.GetOrderByTips()
                 .Select(t => new Snippet(t, 2));
+            var takeSnippets = VgcApis
+                .Libs.Infr.KeywordFilter.GetTakeTips()
+                .Select(t => new Snippet(t, 3));
 
             m.TargetControlWrapper = new ExToolStripComboBoxWrapper(box);
-            m.SetAutocompleteItems(numSnippets.Concat(strSnippets).Concat(orderBySnippets));
+            m.SetAutocompleteItems(
+                numSnippets.Concat(strSnippets).Concat(orderBySnippets).Concat(takeSnippets)
+            );
             return m;
         }
         #endregion

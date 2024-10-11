@@ -55,9 +55,10 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             Func<string[], ISimpleFilter>
         >()
         {
-            kw => AdvOrderByFilter.CreateFilter(kw),
-            kw => AdvStringFilter.CreateFilter(kw),
-            kw => AdvNumberFilter.CreateFilter(kw),
+            kws => AdvTakeFilter.CreateFilter(kws),
+            kws => AdvOrderByFilter.CreateFilter(kws),
+            kws => AdvStringFilter.CreateFilter(kws),
+            kws => AdvNumberFilter.CreateFilter(kws),
         };
 
         public BoolExpr(BoolExpr left, BoolExpr right, string[] keywords)
@@ -65,7 +66,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             this.left = left;
             this.right = right;
             this.keywords = keywords;
-            this.pri = GetPri(left) + GetPri(right);
+            this.pri = InnerGetPri(left) + InnerGetPri(right);
             this.highlighter = this.left?.GetHighlighter();
             if (this.highlighter == null)
             {
@@ -73,12 +74,44 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             }
         }
 
+        #region protected methods
+        protected int InnerGetPri(BoolExpr expr)
+        {
+            if (expr == null)
+            {
+                return KeywordFilter.GetMaxPri();
+            }
+            return expr.GetPri();
+        }
+        #endregion
+
         #region public methods
+        public int GetPri() => this.pri;
+
         public Highlighter GetHighlighter() => this.highlighter;
 
-        public BoolExpr GetHightPriExpr() => GetPri(left) < GetPri(right) ? right : left;
+        public BoolExpr GetHightPriExpr()
+        {
+            var pl = InnerGetPri(left);
+            var pr = InnerGetPri(right);
+            // pri = 0 means do not change evaluating order
+            if (pl == 0 || pr == 0)
+            {
+                return left;
+            }
+            return pl > pr ? left : right;
+        }
 
-        public BoolExpr GetLowPriExpr() => GetPri(left) < GetPri(right) ? left : right;
+        public BoolExpr GetLowPriExpr()
+        {
+            var pl = InnerGetPri(left);
+            var pr = InnerGetPri(right);
+            if (pl == 0 || pr == 0)
+            {
+                return right;
+            }
+            return pl > pr ? right : left;
+        }
 
         public virtual IReadOnlyCollection<ICoreServCtrl> Filter(
             IReadOnlyCollection<ICoreServCtrl> servs
@@ -98,17 +131,6 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             var sl = left?.ToString() ?? "Null";
             var sr = right?.ToString() ?? "Null";
             return $"{type}@{pri}({sl}, {sr})";
-        }
-        #endregion
-
-        #region private methods
-        int GetPri(BoolExpr expr)
-        {
-            if (expr == null)
-            {
-                return 1 << creators.Count;
-            }
-            return expr.pri;
         }
         #endregion
     }
@@ -199,17 +221,17 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 this.filter = creators[i].Invoke(this.keywords);
                 if (this.filter != null)
                 {
-                    this.pri = 1 << i;
                     break;
                 }
             }
 
             if (this.filter == null)
             {
-                this.pri = 1 << creators.Count;
+                this.pri = VgcApis.Libs.Infr.KeywordFilter.GetMaxPri();
             }
             else
             {
+                this.pri = filter.GetPri();
                 this.highlighter = this.filter.GetHighlighter();
             }
         }

@@ -53,12 +53,15 @@ namespace VgcApis.Libs.Infr
         #endregion
 
         #region public methods
+        public static int GetMaxPri() => 1 << 3;
 
         public static ReadOnlyCollection<string> GetNumericTips() => AdvNumberFilter.GetTips();
 
         public static ReadOnlyCollection<string> GetStringTips() => AdvStringFilter.GetTips();
 
         public static ReadOnlyCollection<string> GetOrderByTips() => AdvOrderByFilter.GetTips();
+
+        public static ReadOnlyCollection<string> GetTakeTips() => AdvTakeFilter.GetTips();
 
         public ISimpleFilter GetFilter() => this.filter;
 

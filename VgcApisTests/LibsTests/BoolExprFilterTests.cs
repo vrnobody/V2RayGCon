@@ -55,6 +55,18 @@ namespace VgcApisTests.LibsTests
             " (#mk is \"\")&(#smm not \"a b c\")",
             "AndExpr@4(LeafExpr@2(#mk is), LeafExpr@2(#smm not a b c))"
         )]
+        [DataRow(
+            "#smm has vless & #take 10 & #idx > 10 & #take 3 2",
+            "AndExpr@6(AndExpr@6(AndExpr@2(LeafExpr@2(#smm has vless), LeafExpr@0(#take 10)), LeafExpr@4(#idx > 10)), LeafExpr@0(#take 3 2))"
+        )]
+        [DataRow(
+            "#idx ~ 13 23 & #ord -idx & #tk 3",
+            "AndExpr@5(AndExpr@5(LeafExpr@4(#idx ~ 13 23), LeafExpr@1(#ord -idx)), LeafExpr@0(#tk 3))"
+        )]
+        [DataRow(
+            "#idx ~ 13 23 & #tk 3 & #ord -idx & #tk 2",
+            "AndExpr@5(AndExpr@5(AndExpr@4(LeafExpr@4(#idx ~ 13 23), LeafExpr@0(#tk 3)), LeafExpr@1(#ord -idx)), LeafExpr@0(#tk 2))"
+        )]
         public void CreateFilterTest(string src, string exp)
         {
             var filter = BoolExprFilter.CreateFilter(src);

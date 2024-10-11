@@ -102,6 +102,26 @@ namespace V2RayGCon.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap Button_16x {
+            get {
+                object obj = ResourceManager.GetObject("Button_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap CheckboxUncheckCancel_16x {
+            get {
+                object obj = ResourceManager.GetObject("CheckboxUncheckCancel_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap CloseSolution_16x {
             get {
                 object obj = ResourceManager.GetObject("CloseSolution_16x", resourceCulture);
@@ -370,16 +390,6 @@ namespace V2RayGCon.Properties {
         internal static string Text {
             get {
                 return ResourceManager.GetString("Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Bitmap TextBlock_16x {
-            get {
-                object obj = ResourceManager.GetObject("TextBlock_16x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

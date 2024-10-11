@@ -51,11 +51,13 @@ namespace VgcApis.UserControls.AcmComboBoxComps
             add { target.OnAcmKeyDown += value; }
             remove { target.OnAcmKeyDown -= value; }
         }
+
         public virtual event EventHandler LostFocus
         {
             add { target.LostFocus += value; }
             remove { target.LostFocus -= value; }
         }
+
         public virtual event MouseEventHandler MouseDown
         {
             add { target.MouseDown += value; }

@@ -102,11 +102,15 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             foreach (var tag1 in tags)
             {
                 r.Add($"{prefix} {tag1}");
+                r.Add($"{prefix} -{tag1}");
                 foreach (var tag2 in tags)
                 {
                     if (tag1 != tag2)
                     {
                         r.Add($"{prefix} {tag1} {tag2}");
+                        r.Add($"{prefix} {tag1} -{tag2}");
+                        r.Add($"{prefix} -{tag1} {tag2}");
+                        r.Add($"{prefix} -{tag1} -{tag2}");
                     }
                 }
             }

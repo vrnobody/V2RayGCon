@@ -14,6 +14,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -721,7 +722,15 @@ namespace VgcApis.UserControls.AcmComboBoxComps
                         SelectNext(-page);
                         return true;
                     case Keys.Enter:
-                        OnSelecting();
+                        if (SelectedItemIndex >= 0 && SelectedItemIndex < VisibleItems.Count)
+                        {
+                            OnSelecting();
+                        }
+                        else
+                        {
+                            Close();
+                            TargetControlWrapper?.InvokeKeyDownCallback(Keys.Enter);
+                        }
                         return true;
                     case Keys.Tab:
                         if (!AllowsTabKey)

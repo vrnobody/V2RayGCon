@@ -414,6 +414,7 @@ namespace VgcApis.UserControls.AcmComboBoxComps
                         e.SuppressKeyPress = true;
                         return;
                     case Keys.Enter:
+                        timer.Stop();
                         TargetControlWrapper.InvokeKeyDownCallback(Keys.Enter);
                         e.SuppressKeyPress = true;
                         return;
@@ -729,7 +730,7 @@ namespace VgcApis.UserControls.AcmComboBoxComps
                         else
                         {
                             TargetControlWrapper?.InvokeKeyDownCallback(Keys.Enter);
-                            Misc.Utils.DoItLater(() => Misc.UI.Invoke(Close), timer.Interval + 100);
+                            Close();
                         }
                         return true;
                     case Keys.Tab:

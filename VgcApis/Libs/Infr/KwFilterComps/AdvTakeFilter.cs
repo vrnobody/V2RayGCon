@@ -34,8 +34,6 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region public methods
-        public int GetPri() => 0;
-
         public override string ToString()
         {
             var r = $"#{FILTER_NAME} {take} {skip}";

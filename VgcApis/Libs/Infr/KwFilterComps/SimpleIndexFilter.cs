@@ -17,7 +17,6 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region public methods
-        public int GetPri() => 1;
 
         public int GetIndex() => this.index;
 

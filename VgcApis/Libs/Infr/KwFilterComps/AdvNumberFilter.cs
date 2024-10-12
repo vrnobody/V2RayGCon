@@ -70,7 +70,6 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region public methods
-        public int GetPri() => 1 << 2;
 
         public override string ToString()
         {

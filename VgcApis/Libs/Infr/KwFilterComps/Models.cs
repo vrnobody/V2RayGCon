@@ -49,7 +49,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         protected readonly BoolExpr left;
         protected readonly BoolExpr right;
         protected Highlighter highlighter;
-        protected int pri;
+
+        // priority not works well with "orderby" and "take" operators
+        // protected int pri;
 
         protected static readonly List<Func<string[], ISimpleFilter>> creators = new List<
             Func<string[], ISimpleFilter>
@@ -66,7 +68,6 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             this.left = left;
             this.right = right;
             this.keywords = keywords;
-            this.pri = InnerGetPri(left) + InnerGetPri(right);
             this.highlighter = this.left?.GetHighlighter();
             if (this.highlighter == null)
             {
@@ -74,44 +75,10 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             }
         }
 
-        #region protected methods
-        protected int InnerGetPri(BoolExpr expr)
-        {
-            if (expr == null)
-            {
-                return KeywordFilter.GetMaxPri();
-            }
-            return expr.GetPri();
-        }
-        #endregion
-
         #region public methods
-        public int GetPri() => this.pri;
+
 
         public Highlighter GetHighlighter() => this.highlighter;
-
-        public BoolExpr GetHightPriExpr()
-        {
-            var pl = InnerGetPri(left);
-            var pr = InnerGetPri(right);
-            // pri = 0 means do not change evaluating order
-            if (pl == 0 || pr == 0)
-            {
-                return left;
-            }
-            return pl > pr ? left : right;
-        }
-
-        public BoolExpr GetLowPriExpr()
-        {
-            var pl = InnerGetPri(left);
-            var pr = InnerGetPri(right);
-            if (pl == 0 || pr == 0)
-            {
-                return right;
-            }
-            return pl > pr ? right : left;
-        }
 
         public virtual IReadOnlyCollection<ICoreServCtrl> Filter(
             IReadOnlyCollection<ICoreServCtrl> servs
@@ -126,11 +93,11 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             if (this.keywords != null)
             {
                 var s = string.Join(" ", keywords);
-                return $"{type}@{pri}({s})";
+                return $"{type}({s})";
             }
             var sl = left?.ToString() ?? "Null";
             var sr = right?.ToString() ?? "Null";
-            return $"{type}@{pri}({sl}, {sr})";
+            return $"{type}({sl}, {sr})";
         }
         #endregion
     }
@@ -171,12 +138,12 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             IReadOnlyCollection<ICoreServCtrl> servs
         )
         {
-            var l = GetHightPriExpr()?.Filter(servs) ?? new List<ICoreServCtrl>();
+            var l = left?.Filter(servs) ?? new List<ICoreServCtrl>();
             if (l.Count < 1)
             {
                 return l;
             }
-            var r = GetLowPriExpr()?.Filter(l) ?? new List<ICoreServCtrl>();
+            var r = right?.Filter(l) ?? new List<ICoreServCtrl>();
             return r;
         }
     }
@@ -225,13 +192,8 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 }
             }
 
-            if (this.filter == null)
+            if (this.filter != null)
             {
-                this.pri = VgcApis.Libs.Infr.KeywordFilter.GetMaxPri();
-            }
-            else
-            {
-                this.pri = filter.GetPri();
                 this.highlighter = this.filter.GetHighlighter();
             }
         }

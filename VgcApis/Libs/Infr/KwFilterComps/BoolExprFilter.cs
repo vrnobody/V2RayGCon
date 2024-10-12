@@ -22,7 +22,6 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region public methods
-        public int GetPri() => this.expr.GetPri();
 
         public IReadOnlyCollection<ICoreServCtrl> Filter(
             IReadOnlyCollection<ICoreServCtrl> coreServs

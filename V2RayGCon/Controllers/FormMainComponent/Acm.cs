@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -39,28 +40,26 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 ImageList = new ImageList(),
             };
 
-            m.ImageList.Images.Add(Properties.Resources.DomainType_16x);
-            m.ImageList.Images.Add(Properties.Resources.Button_16x);
-            m.ImageList.Images.Add(Properties.Resources.SortAscending_16x);
-            m.ImageList.Images.Add(Properties.Resources.CheckboxUncheckCancel_16x);
+            var icons = new Bitmap[]
+            {
+                Properties.Resources.DomainType_16x, // num
+                Properties.Resources.Button_16x, // str
+                Properties.Resources.SortAscending_16x, // orderby
+                Properties.Resources.CheckboxUncheckCancel_16x, // take
+            };
 
-            var numSnippets = VgcApis
-                .Libs.Infr.KeywordFilter.GetNumericTips()
-                .Select(t => new Snippet(t, 0));
-            var strSnippets = VgcApis
-                .Libs.Infr.KeywordFilter.GetStringTips()
-                .Select(t => new Snippet(t, 1));
-            var orderBySnippets = VgcApis
-                .Libs.Infr.KeywordFilter.GetOrderByTips()
-                .Select(t => new Snippet(t, 2));
-            var takeSnippets = VgcApis
-                .Libs.Infr.KeywordFilter.GetTakeTips()
-                .Select(t => new Snippet(t, 3));
+            m.ImageList.Images.AddRange(icons);
+
+            var tooltips = VgcApis.Libs.Infr.KeywordFilter.GetTips();
+            var snippets = new List<Snippet>();
+            for (int i = 0; i < tooltips.Count; i++)
+            {
+                var snp = tooltips[i].Select(tip => new Snippet(tip, i));
+                snippets.AddRange(snp);
+            }
 
             m.TargetControlWrapper = new ExToolStripComboBoxWrapper(box);
-            m.SetAutocompleteItems(
-                numSnippets.Concat(strSnippets).Concat(orderBySnippets).Concat(takeSnippets)
-            );
+            m.SetAutocompleteItems(snippets);
             return m;
         }
         #endregion

@@ -34,8 +34,8 @@ namespace DyFetch.Models
 
         public Configs()
         {
-            version = "0.0.5";
-            date = "2023-11-17";
+            version = "0.0.6";
+            date = "2024-10-17";
 
             opts = new OptionSet()
             {

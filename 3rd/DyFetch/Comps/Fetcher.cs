@@ -31,6 +31,7 @@ namespace DyFetch.Comps
             {
                 var span = TimeSpan.FromMilliseconds(timeout);
                 var w = new WebDriverWait(driver, span);
+                driver.Manage().Timeouts().PageLoad = span;
                 driver.Navigate().GoToUrl(url);
                 if (csses != null && csses.Count > 0)
                 {
@@ -126,7 +127,7 @@ namespace DyFetch.Comps
                     Kind = ProxyKind.Manual,
                     IsAutoDetect = false,
                     HttpProxy = configs.proxy,
-                    SslProxy = configs.proxy
+                    SslProxy = configs.proxy,
                 };
                 options.Proxy = proxy;
             }
@@ -161,7 +162,7 @@ namespace DyFetch.Comps
                     Kind = ProxyKind.Manual,
                     IsAutoDetect = false,
                     HttpProxy = configs.proxy,
-                    SslProxy = configs.proxy
+                    SslProxy = configs.proxy,
                 };
                 options.Proxy = proxy;
             }

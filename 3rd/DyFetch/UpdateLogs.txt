@@ -1,3 +1,6 @@
+v0.0.6
+enforce page-load timeout
+
 v0.0.3
 add save to file option
 

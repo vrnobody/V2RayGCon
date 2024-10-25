@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using VgcApis.Libs.Infr;
 using VgcApis.Libs.Infr.KwFilterComps;
 
@@ -56,6 +59,33 @@ namespace VgcApisTests.LibsTests
         {
             var filter = AdvOrderByFilter.CreateFilter(kw);
             Assert.IsNull(filter);
+        }
+
+        #endregion
+
+        #region adv index filter
+        [TestMethod]
+        public void AdvIndexFilterTest()
+        {
+            List<VgcApis.Interfaces.ICoreServCtrl> CreateCoreServs(params int[] indexies)
+            {
+                var moqServs = new List<VgcApis.Interfaces.ICoreServCtrl>();
+                foreach (var i in indexies)
+                {
+                    var idx = i;
+                    var moqState = new Mock<VgcApis.Interfaces.CoreCtrlComponents.ICoreStates>();
+                    moqState.Setup(s => s.GetIndex()).Returns(idx);
+                    var moqServ = new Mock<VgcApis.Interfaces.ICoreServCtrl>();
+                    moqServ.Setup(s => s.GetCoreStates()).Returns(moqState.Object);
+                    moqServs.Add(moqServ.Object);
+                }
+                return moqServs;
+            }
+            var servs = CreateCoreServs(6, 7, 8, 1, 2, 3);
+            var filter = AdvNumberFilter.CreateFilter("#idx < 8");
+            var r = filter.Filter(servs);
+            Assert.AreEqual(5, r.Count);
+            Assert.AreEqual(3, (int)r.Last().GetCoreStates().GetIndex());
         }
 
         #endregion

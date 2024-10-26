@@ -928,6 +928,13 @@ namespace V2RayGCon.Services
             var rect = list[key];
             var screen = Screen.PrimaryScreen.WorkingArea;
 
+            var ratio = 0.95;
+            if (rect.Width > screen.Width * ratio && rect.Height > screen.Height * ratio)
+            {
+                form.WindowState = FormWindowState.Maximized;
+                return;
+            }
+
             form.Width = Math.Max(rect.Width, 300);
             form.Height = Math.Max(rect.Height, 200);
             form.Left = VgcApis.Misc.Utils.Clamp(rect.Left, 0, screen.Right - form.Width);

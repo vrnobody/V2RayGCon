@@ -296,6 +296,7 @@ namespace V2RayGCon.Misc
         }
 
         #endregion
+
         #region files
 
         private static void WriteToFileAtOnce(string path, string userSettings)

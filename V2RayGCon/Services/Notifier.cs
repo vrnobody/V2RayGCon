@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
@@ -307,6 +308,8 @@ namespace V2RayGCon.Services
 
         public void ShowFormOption() => Views.WinForms.FormOption.ShowForm();
 
+        public void ShowFormWebUI() => Views.WinForms.FormWebUI.ShowForm();
+
         public void ShowFormMain() => Views.WinForms.FormMain.ShowForm();
 
         public void ShowFormLog() => Views.WinForms.FormLog.ShowForm();
@@ -495,7 +498,14 @@ namespace V2RayGCon.Services
                             try
                             {
                                 var cmd = setting.SystrayLeftClickCommand;
-                                System.Diagnostics.Process.Start(cmd);
+                                if (Regex.IsMatch(cmd, VgcApis.Models.Consts.Patterns.VgcWebUiUrl))
+                                {
+                                    Views.WinForms.FormWebUI.ShowForm();
+                                }
+                                else
+                                {
+                                    System.Diagnostics.Process.Start(cmd);
+                                }
                             }
                             catch (Exception err)
                             {

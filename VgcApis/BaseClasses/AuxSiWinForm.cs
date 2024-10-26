@@ -40,6 +40,10 @@ namespace VgcApis.BaseClasses
         public TForm ShowForm()
         {
             var form = GetForm();
+            if (form.WindowState == FormWindowState.Minimized)
+            {
+                form.WindowState = FormWindowState.Normal;
+            }
             Misc.UI.Invoke(() => form.Show());
             return form;
         }

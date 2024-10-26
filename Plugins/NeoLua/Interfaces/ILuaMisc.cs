@@ -79,6 +79,11 @@ namespace NeoLuna.Interfaces
         void ShowFormMain();
 
         /// <summary>
+        /// 调出WebUI窗口
+        /// </summary>
+        void ShowFormWebUI();
+
+        /// <summary>
         /// 调出日志窗口
         /// </summary>
         void ShowFormLog();

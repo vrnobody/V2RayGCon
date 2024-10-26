@@ -2,6 +2,9 @@
 {
     public static class Patterns
     {
+        public static readonly string VgcWebUiUrlPrefix = @"webui";
+        public static readonly string VgcWebUiUrl = $"^{VgcWebUiUrlPrefix}s?://.*";
+
         public static string V2RayCoreReleaseAssets =
             @"/releases/download/(v[\.0-9a-zA-Z\-]+)/[v2X]+ray-windows-64.zip";
 

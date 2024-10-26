@@ -59,7 +59,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 
         internal static ReadOnlyCollection<string> GetTips() => tips.AsReadOnly();
 
-        internal static bool TryGetStrTagValue(
+        internal static bool TryGetContent(
             Interfaces.ICoreServCtrl coreServ,
             ICoreStates cs,
             StringTagNames tag,
@@ -116,7 +116,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 foreach (var cname in tagNames)
                 {
                     if (
-                        TryGetStrTagValue(coreServ, cst, cname, out var content)
+                        TryGetContent(coreServ, cst, cname, out var content)
                         && CachedMatchCore(cname, content)
                     )
                     {

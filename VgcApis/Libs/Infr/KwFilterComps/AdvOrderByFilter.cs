@@ -54,6 +54,20 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region private methods
+        bool TryGetNumberContent(
+            Interfaces.ICoreServCtrl coreServ,
+            Interfaces.CoreCtrlComponents.ICoreStates coreState,
+            NumberTagNames tag,
+            out long value
+        )
+        {
+            if (tag == NumberTagNames.Modify)
+            {
+                value = coreState.GetLastModifiedUtcTicks();
+                return true;
+            }
+            return AdvNumberFilter.TryGetContent(coreServ, coreState, tag, out value);
+        }
 
         int Compare(Interfaces.ICoreServCtrl x, Interfaces.ICoreServCtrl y)
         {
@@ -66,8 +80,8 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 {
                     case StringTagNames stag:
                         if (
-                            AdvStringFilter.TryGetStrTagValue(x, csx, stag, out var sx)
-                            && AdvStringFilter.TryGetStrTagValue(y, csy, stag, out var sy)
+                            AdvStringFilter.TryGetContent(x, csx, stag, out var sx)
+                            && AdvStringFilter.TryGetContent(y, csy, stag, out var sy)
                         )
                         {
                             r = sx.CompareTo(sy);
@@ -75,8 +89,8 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                         break;
                     case NumberTagNames ntag:
                         if (
-                            AdvNumberFilter.TryGetContent(x, csx, ntag, out var nx)
-                            && AdvNumberFilter.TryGetContent(y, csy, ntag, out var ny)
+                            TryGetNumberContent(x, csx, ntag, out var nx)
+                            && TryGetNumberContent(y, csy, ntag, out var ny)
                         )
                         {
                             r = nx.CompareTo(ny);

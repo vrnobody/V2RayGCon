@@ -25,6 +25,6 @@ loadfile('3rd/neolua/webui/server.lua')()
 然后在浏览器中访问[http://localhost:4000/](http://localhost:4000/)  
 
 小技巧：  
-WinForm界面的选项窗口-设置-托盘单击中输入'http://localhost:4000'可以实现点下图标就打开WebUI。  
-上面这个设置项也可以填快捷方式(.lnk)的路径，这个玩法就更多了。  
+(v2.0.6+)WinForm界面的选项窗口-设置-托盘单击中填入'webui://localhost:4000'可以实现点下图标就打开WebUI。  
+上面这个设置项也可以填'http://localhost:4000'调出浏览器，或者填快捷方式(.lnk)的路径启动一个程序。  
 更多信息请看[WebUI项目](https://github.com/vrnobody/WebUI)。  

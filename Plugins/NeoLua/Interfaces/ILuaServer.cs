@@ -82,6 +82,13 @@ namespace NeoLuna.Interfaces
         IReadOnlyCollection<ICoreServCtrl> GetAllServers();
 
         /// <summary>
+        /// 过滤服务器
+        /// </summary>
+        /// <param name="keyword">过滤规则，详见手册中的搜索说明</param>
+        /// <returns>符合规则的服务器列表</returns>
+        IReadOnlyCollection<ICoreServCtrl> GetFilteredServers(string keyword);
+
+        /// <summary>
         /// 根据index获取单个服务器
         /// </summary>
         /// <param name="index">index</param>

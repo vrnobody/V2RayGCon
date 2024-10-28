@@ -91,6 +91,9 @@ namespace NeoLuna.Models.Apis.Components
         public IReadOnlyCollection<ICoreServCtrl> GetAllServers() =>
             vgcServers.GetAllServersOrderByIndex();
 
+        public IReadOnlyCollection<ICoreServCtrl> GetFilteredServers(string keyword) =>
+            vgcServers.GetFilteredServers(keyword);
+
         public List<ICoreServCtrl> GetServersByUids(LuaTable uids)
         {
             var list = global::NeoLuna.Misc.Utils.LuaTableToList(uids, false);

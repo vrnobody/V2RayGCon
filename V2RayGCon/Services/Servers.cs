@@ -181,6 +181,18 @@ namespace V2RayGCon.Services
             }
         }
 
+        public IReadOnlyCollection<ICoreServCtrl> GetFilteredServers(string keyword)
+        {
+            var r = new List<ICoreServCtrl>();
+            try
+            {
+                var kf = new VgcApis.Libs.Infr.KeywordFilter(keyword);
+                return kf.GetFilter()?.Filter(GetAllServersOrderByIndex()) ?? r;
+            }
+            catch { }
+            return r;
+        }
+
         public List<ICoreServCtrl> GetServersByUids(IEnumerable<string> uids) =>
             queryHandler.GetServersByUids(uids);
 

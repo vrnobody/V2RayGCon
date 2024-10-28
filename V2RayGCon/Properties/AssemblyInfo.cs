@@ -33,11 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.5.3")]
+[assembly: AssemblyVersion("2.0.5.4")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v2.0.5.4 Add std.Servers:GetFilteredServers(keyword).
 v2.0.5.3 Add WebView2 form for WebUI.
 v2.0.5.2 Improve #orderby modify speed.
 v2.0.5.1 Remove index optimization in AdvNumberFilter.

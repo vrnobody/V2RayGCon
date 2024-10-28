@@ -110,6 +110,8 @@ namespace VgcApis.Interfaces.Services
 
         IReadOnlyCollection<ICoreServCtrl> GetAllServersOrderByIndex();
 
+        IReadOnlyCollection<ICoreServCtrl> GetFilteredServers(string keyword);
+
         ICoreServCtrl GetServerByConfig(string config);
 
         ICoreServCtrl GetServerByIndex(int index);

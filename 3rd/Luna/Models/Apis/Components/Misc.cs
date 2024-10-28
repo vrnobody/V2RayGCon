@@ -71,8 +71,6 @@ namespace Luna.Models.Apis.Components
 
         public void ShowFormLunaEditor() => formMgr.ShowOrCreateFirstEditor();
 
-        public void ShowFormWebUI() => vgcNotifier.ShowFormWebUI();
-
         public void ShowFormMain() => vgcNotifier.ShowFormMain();
 
         public void ShowFormLog() => vgcNotifier.ShowFormLog();

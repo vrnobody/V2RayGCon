@@ -102,6 +102,15 @@
     <Reference Include="ImpromptuInterface, Version=7.0.1.0, Culture=neutral, PublicKeyToken=0b1781c923b2975b, processorArchitecture=MSIL">
       <HintPath>..\packages\ImpromptuInterface.7.0.1\lib\net40\ImpromptuInterface.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.2478.35, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2478.35\lib\net45\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.2478.35, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2478.35\lib\net45\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.2478.35, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.2478.35\lib\net45\Microsoft.Web.WebView2.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Moq, Version=4.14.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.14.1\lib\net45\Moq.dll</HintPath>
     </Reference>
@@ -382,6 +391,12 @@
     <Compile Include="Views\WinForms\FormTextConfigEditor.Designer.cs">
       <DependentUpon>FormTextConfigEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\WinForms\FormWebUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormWebUI.Designer.cs">
+      <DependentUpon>FormWebUI.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Resources\Resx\StrConst.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>StrConst.Designer.cs</LastGenOutput>
@@ -532,6 +547,12 @@
     <EmbeddedResource Include="Views\WinForms\FormTextConfigEditor.zh-CN.resx">
       <DependentUpon>FormTextConfigEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormWebUI.resx">
+      <DependentUpon>FormWebUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormWebUI.zh-CN.resx">
+      <DependentUpon>FormWebUI.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
@@ -630,7 +651,7 @@
     <PostBuildEvent>set "libsDir=libs\"
 set "copyFolderList=3rd"
 set "pluginDlls=VgcApis NeoLuna Pacman ProxySetter"
-set "otherDlls=System.Buffers NDesk.Options MihaZupan.HttpToSocks5Proxy HtmlAgilityPack Neo.Lua ImpromptuInterface Dynamitey AutocompleteMenu-ScintillaNET DotNetZip Newtonsoft ScintillaNET zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
+set "otherDlls=Microsoft.Web.WebView2.Core Microsoft.Web.WebView2.WinForms Microsoft.Web.WebView2.Wpf System.Buffers NDesk.Options MihaZupan.HttpToSocks5Proxy HtmlAgilityPack Neo.Lua ImpromptuInterface Dynamitey AutocompleteMenu-ScintillaNET DotNetZip Newtonsoft ScintillaNET zxing Castle.Core Moq System.Runtime.CompilerServices.Unsafe System.Threading.Tasks.Extensions"
 
 call:RemoveDbgFiles "%25otherDlls%25"
 
@@ -639,6 +660,7 @@ rem call:CopyLunaAssets
 call:CreateFoldersOnDemand "%25libsDir%25 %25copyFolderList%25"
 call:MoveFilesByList "%25pluginDlls%25 %25otherDlls%25"
 call:CopyFolders "%25copyFolderList%25"
+call:MoveFolders "runtimes"
 
 call:RemoveOtherFiles
 
@@ -707,4 +729,11 @@ goto:eof</PostBuildEvent>
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\Microsoft.Web.WebView2.1.0.2478.35\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.2478.35\build\Microsoft.Web.WebView2.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.2478.35\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.2478.35\build\Microsoft.Web.WebView2.targets'))" />
+  </Target>
 </Project>

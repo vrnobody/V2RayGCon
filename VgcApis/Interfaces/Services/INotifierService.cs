@@ -10,6 +10,9 @@ namespace VgcApis.Interfaces.Services
         void ShowFormSimpleEditor(ICoreServCtrl coreServ);
         void ShowFormOption();
         void ShowFormMain();
+
+        void ShowFormWebUI();
+
         void ShowFormLog();
         #endregion
 

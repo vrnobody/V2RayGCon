@@ -27,9 +27,10 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.AutoSetFormIcon(this);
         }
 
-        private async void FormWeb_Load(object sender, EventArgs e)
+        private async void FormWeb_Load(object sender, EventArgs args)
         {
             settings.RestoreFormRect(this);
+            webView2.SourceChanged += (s, a) => this.Text = $"WebUI {webView2.Source}";
             await InitWebView();
             Navigate();
         }
@@ -51,7 +52,6 @@ namespace V2RayGCon.Views.WinForms
                     url = $"http{url.Substring(prefix.Length)}";
                     if (!string.IsNullOrEmpty(url))
                     {
-                        this.Text = $"WebUI {url}";
                         this.webView2.Source = new Uri(url);
                     }
                 }

@@ -5,6 +5,13 @@ draft: false
 weight: 10
 ---
 
+##### `v2.0.6.0`
+优化`#orderby modify`速度  
+更新WebUI至v1.0.2  
+添加WebUI专用窗口，详见手册NeoLuna/WebUI最底说明  
+添加std.Misc:ShowFormWebUI()  
+添加std.Servers:GetFilteredServers(keyword)  
+
 ##### `v2.0.5.0`
 选项窗口添加自定义搜索关键词  
 搜索功能添加#take过滤器  

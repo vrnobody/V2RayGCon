@@ -26,7 +26,7 @@ jobs:
       obsoleteFeaturesUrl: "https://vrnobody.github.io/V2RayGCon/04-dev/obsolete-features/"
       boxAppend: box
       webuiPkgName: 'webui.zip'
-      webuiVer: '1.0.1.1'
+      webuiVer: '1.0.2'
       webuiUrl: 'https://github.com/vrnobody/WebUI/releases/download'
       v2rayCorePkgName: 'Xray-win7-64.zip'
       v2rayCoreVer: 'v24.10.16'

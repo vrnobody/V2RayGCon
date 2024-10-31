@@ -1,12 +1,12 @@
 {
-  "version": "2.0.5.0",
-  "md5": "56733ED7C1E27B5D4E957DE73AF210DF",
+  "version": "2.0.6.0",
+  "md5": "1790837977328C53D4B97B60806E4BC5",
   "warnings": [],
   "changes": [
-    "选项窗口添加自定义搜索关键词",
-    "搜索功能添加#take过滤器",
-    "修复搜索时回车键被自动补全拦截问题",
-    "取消`|`(OR操作符)的自动排序功能",
-    "NeoLuna插件添加std.Misc.GetMutexPoolCount()函数"
+    "优化`#orderby modify`速度",
+    "添加WebUI专用窗口，详见手册NeoLuna/WebUI最底说明",
+    "添加std.Misc:ShowFormWebUI()",
+    "添加std.Servers:GetFilteredServers(keyword)",
+    "更新WebUI至v1.0.2"
   ]
 }

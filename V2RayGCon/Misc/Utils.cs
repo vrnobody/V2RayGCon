@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Ionic.Zip;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
@@ -368,18 +368,62 @@ namespace V2RayGCon.Misc
 
         public static bool VerifyZipFile(string zipFile)
         {
-            using (ZipFile zip = ZipFile.Read(zipFile))
+            using (ZipArchive archive = ZipFile.OpenRead(zipFile))
             {
-                return zip.Entries.Count > 0;
+                var c = archive.Entries.Count;
+                return c > 0;
             }
         }
 
         public static void DecompressZipFile(string zipFile, string outFolder)
         {
             // let downloader handle exception
-            using (ZipFile zip = ZipFile.Read(zipFile))
+            using (ZipArchive archive = ZipFile.OpenRead(zipFile))
             {
-                zip.ExtractAll(outFolder, ExtractExistingFileAction.OverwriteSilently);
+                ExtractToDirectory(archive, outFolder, true);
+            }
+        }
+
+        // credit: https://stackoverflow.com/questions/14795197/forcefully-replacing-existing-files-during-extracting-file-using-system-io-compr
+        static void ExtractToDirectory(
+            ZipArchive archive,
+            string destinationDirectoryName,
+            bool overwrite
+        )
+        {
+            if (!overwrite)
+            {
+                archive.ExtractToDirectory(destinationDirectoryName);
+                return;
+            }
+
+            DirectoryInfo di = Directory.CreateDirectory(destinationDirectoryName);
+            string destinationDirectoryFullPath = di.FullName;
+
+            foreach (ZipArchiveEntry file in archive.Entries)
+            {
+                string completeFileName = Path.GetFullPath(
+                    Path.Combine(destinationDirectoryFullPath, file.FullName)
+                );
+
+                if (
+                    !completeFileName.StartsWith(
+                        destinationDirectoryFullPath,
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                )
+                {
+                    throw new IOException(
+                        "Trying to extract file outside of destination directory. See this link for more info: https://snyk.io/research/zip-slip-vulnerability"
+                    );
+                }
+
+                if (file.Name == "")
+                { // Assuming Empty for Directory
+                    Directory.CreateDirectory(Path.GetDirectoryName(completeFileName));
+                    continue;
+                }
+                file.ExtractToFile(completeFileName, true);
             }
         }
         #endregion

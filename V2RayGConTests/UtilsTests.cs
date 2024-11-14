@@ -1,16 +1,57 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
+using V2RayGCon.Misc;
 using V2RayGCon.Test.Resource.Resx;
 using static V2RayGCon.Misc.Utils;
 
 namespace V2RayGCon.Test
 {
     [TestClass]
-    public class LibTest
+    public class UtilsTests
     {
         static readonly long SpeedtestTimeout = VgcApis.Models.Consts.Core.SpeedtestTimeout;
+
+        [TestMethod]
+        public void UnzipFileTest()
+        {
+            var zip = @"test.zip";
+            var dir = @"ziptest";
+
+            // create test.zip
+            var files = new List<string> { @"V2RayGCon.pdb", @"V2RayGCon.Test.pdb" };
+            using (FileStream fs = new FileStream(zip, FileMode.Create))
+            using (ZipArchive za = new ZipArchive(fs, ZipArchiveMode.Create))
+            {
+                foreach (var file in files)
+                {
+                    za.CreateEntryFromFile(file, file);
+                }
+            }
+
+            Assert.IsTrue(VerifyZipFile(zip));
+
+            try
+            {
+                DecompressZipFile(zip, dir);
+            }
+            catch
+            {
+                Assert.Fail($"failed to unzip {zip}");
+            }
+
+            foreach (var file in files)
+            {
+                var src = File.ReadAllText(file);
+                var dest = File.ReadAllText(Path.Combine(dir, file));
+                var hashSrc = VgcApis.Misc.Utils.Sha512Hex(src);
+                var hashDest = VgcApis.Misc.Utils.Sha512Hex(dest);
+                Assert.AreEqual(hashSrc, hashDest);
+            }
+        }
 
         [TestMethod]
         public void ParseStatApiResultTestXray()

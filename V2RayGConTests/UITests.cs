@@ -6,9 +6,9 @@ using static V2RayGCon.Misc.UI;
 namespace V2RayGCon.Test
 {
     [TestClass]
-    public class UITest
+    public class UITests
     {
-        public UITest() { }
+        public UITests() { }
 
         [TestMethod]
         public void UpdateControlOnDemandTest()

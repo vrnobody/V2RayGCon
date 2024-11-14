@@ -5,6 +5,9 @@ draft: false
 weight: 10
 ---
 
+##### `v2.0.7.0`
+修复`CVE-2024-48510` ZIP文件路径穿越漏洞  
+
 ##### `v2.0.6.0`
 优化`#orderby modify`速度  
 更新WebUI至v1.0.2  

@@ -1,12 +1,10 @@
 {
-  "version": "2.0.6.0",
-  "md5": "1790837977328C53D4B97B60806E4BC5",
-  "warnings": [],
+  "version": "2.0.7.0",
+  "md5": "2BE1469D97B41FA1F2894D101148304F",
+  "warnings": [
+    "请尽快升级！"
+  ],
   "changes": [
-    "优化`#orderby modify`速度",
-    "添加WebUI专用窗口，详见手册NeoLuna/WebUI最底说明",
-    "添加std.Misc:ShowFormWebUI()",
-    "添加std.Servers:GetFilteredServers(keyword)",
-    "更新WebUI至v1.0.2"
+    "修复CVE-2024-48510，ZIP文件路径穿越漏洞"
   ]
 }

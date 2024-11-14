@@ -33,11 +33,13 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.6.1")]
+[assembly: AssemblyVersion("2.0.7.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+--------------------------------------------------------------------
+v2.0.6.2 Fix CVE-2024-48510 in ZipExtractor.
 v2.0.6.1 Remove DotNetZip NuGet package.
 --------------------------------------------------------------------
 v2.0.5.4 Add std.Servers:GetFilteredServers(keyword).

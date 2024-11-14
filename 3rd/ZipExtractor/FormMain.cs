@@ -85,7 +85,7 @@ namespace ZipExtractor
             _backgroundWorker = new BackgroundWorker
             {
                 WorkerReportsProgress = true,
-                WorkerSupportsCancellation = true
+                WorkerSupportsCancellation = true,
             };
 
             _backgroundWorker.DoWork += (_, eventArgs) =>
@@ -199,6 +199,7 @@ namespace ZipExtractor
                             try
                             {
                                 filePath = Path.Combine(extractionPath, entry.FullName);
+                                ValidateFilePath(extractionPath, filePath);
                                 if (!entry.IsDirectory())
                                 {
                                     string parentDirectory = Path.GetDirectoryName(filePath);
@@ -408,5 +409,20 @@ namespace ZipExtractor
                 _logBuilder.ToString()
             );
         }
+
+        #region private methods
+        void ValidateFilePath(string dir, string file)
+        {
+            // a patch for CVE-2024-48510
+            var dest = Path.GetFullPath(dir);
+            var full = Path.GetFullPath(file);
+            if (!full.StartsWith(dest, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new IOException(
+                    "Trying to extract file outside of destination directory. See this link for more info: https://snyk.io/research/zip-slip-vulnerability"
+                );
+            }
+        }
+        #endregion
     }
 }

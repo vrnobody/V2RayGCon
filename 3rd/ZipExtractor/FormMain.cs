@@ -136,6 +136,7 @@ namespace ZipExtractor
 
                 ReadOnlyCollection<ZipArchiveEntry> entries = archive.Entries;
 
+                var extrRoot = Path.GetFullPath(extractionPath);
                 try
                 {
                     var progress = 0;
@@ -199,7 +200,7 @@ namespace ZipExtractor
                             try
                             {
                                 filePath = Path.Combine(extractionPath, entry.FullName);
-                                ValidateFilePath(extractionPath, filePath);
+                                ValidateFilePath(extrRoot, filePath);
                                 if (!entry.IsDirectory())
                                 {
                                     string parentDirectory = Path.GetDirectoryName(filePath);
@@ -411,12 +412,11 @@ namespace ZipExtractor
         }
 
         #region private methods
-        void ValidateFilePath(string dir, string file)
+        void ValidateFilePath(string root, string file)
         {
             // a patch for CVE-2024-48510
-            var dest = Path.GetFullPath(dir);
             var full = Path.GetFullPath(file);
-            if (!full.StartsWith(dest, StringComparison.OrdinalIgnoreCase))
+            if (!full.StartsWith(root, StringComparison.OrdinalIgnoreCase))
             {
                 throw new IOException(
                     "Trying to extract file outside of destination directory. See this link for more info: https://snyk.io/research/zip-slip-vulnerability"

@@ -26,9 +26,9 @@ Download and unzip [V2RayGCon-box.zip][9] to any directory you like.
 Require .net framework 4.5+  
 
 ### 备用 Plan B
-V2RayGCon v2.0.3  
-MD5: 42024DE3AF80D8DA26AEC6D536FF0F97  
-![vgc-v2.0.3.png](https://vrnobody.github.io/V2RayGCon/images/releases/vgc-v2.0.3.png)  
+V2RayGCon v2.0.7  
+MD5: 2BE1469D97B41FA1F2894D101148304F  
+![vgc-v2.0.7.png](https://vrnobody.github.io/V2RayGCon/images/releases/vgc-v2.0.7.png)  
 
 ### 演示 Demo
 WinFormUI  

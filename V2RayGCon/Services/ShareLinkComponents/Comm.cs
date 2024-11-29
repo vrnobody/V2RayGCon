@@ -47,7 +47,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             {
                 name = parts.Last(),
                 proto = proto,
-                auth1 = parts[0]
+                auth1 = parts[0],
             };
 
             var addr = parts[1];
@@ -98,14 +98,24 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 case "h2":
                 case "httpupgrade":
                 case "splithttp":
+                    vc.streamParam1 = GetValue("path", "/");
                     vc.streamParam2 = GetValue("host", "");
                     if (string.IsNullOrEmpty(vc.streamParam2) && hostIsDomain)
                     {
                         vc.streamParam2 = vc.host;
                     }
-                    vc.streamParam1 = GetValue("path", "/");
+                    break;
+                case "xhttp":
+                    vc.streamParam1 = GetValue("mode", "auto");
+                    vc.streamParam2 = GetValue("path", "/");
+                    vc.streamParam3 = GetValue("host", "");
+                    if (string.IsNullOrEmpty(vc.streamParam3) && hostIsDomain)
+                    {
+                        vc.streamParam3 = vc.host;
+                    }
                     break;
                 case "tcp":
+                case "raw":
                     // 木有 tcp.http ??
                     vc.streamParam1 = "none";
                     break;
@@ -131,13 +141,15 @@ namespace V2RayGCon.Services.ShareLinkComponents
             string[] streamTypes =
             {
                 "ws",
+                "raw",
                 "tcp",
                 "kcp",
                 "h2",
                 "quic",
                 "grpc",
                 "httpupgrade",
-                "splithttp"
+                "splithttp",
+                "xhttp",
             };
             string st = meta?.streamType?.ToLower();
 
@@ -300,14 +312,16 @@ namespace V2RayGCon.Services.ShareLinkComponents
                         token["grpcSettings"]["serviceName"] = sn;
                     }
                     break;
+                case "raw":
                 case "tcp":
+                    var tkey = $"{streamType}Settings";
                     if (string.IsNullOrEmpty(mainParam) || mainParam == "none")
                     {
-                        token["tcpSettings"] = new JObject();
+                        token[tkey] = new JObject();
                     }
                     else
                     {
-                        token["tcpSettings"]["header"]["type"] = mainParam;
+                        token[tkey]["header"]["type"] = mainParam;
                     }
                     break;
                 case "tcp_http":
@@ -328,11 +342,23 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 case "httpupgrade":
                 case "splithttp":
-                    var key = $"{streamType}Settings";
-                    token[key]["path"] = mainParam;
+                    var hkey = $"{streamType}Settings";
+                    token[hkey]["path"] = mainParam;
                     if (!string.IsNullOrEmpty(meta.streamParam2))
                     {
-                        token[key]["host"] = meta.streamParam2;
+                        token[hkey]["host"] = meta.streamParam2;
+                    }
+                    break;
+                case "xhttp":
+                    var xkey = $"{streamType}Settings";
+                    token[xkey]["mode"] = mainParam;
+                    if (!string.IsNullOrEmpty(meta.streamParam2))
+                    {
+                        token[xkey]["path"] = meta.streamParam2;
+                    }
+                    if (!string.IsNullOrEmpty(meta.streamParam3))
+                    {
+                        token[xkey]["host"] = meta.streamParam3;
                     }
                     break;
                 case "ws":
@@ -376,10 +402,12 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     meta.streamParam3 = GetStr(subPrefix, "grpcSettings.authority");
                     break;
                 case "tcp":
-                    mainParam = GetStr(subPrefix, "tcpSettings.header.type");
+                case "raw":
+                    var tkey = $"{meta.streamType}Settings";
+                    mainParam = GetStr(subPrefix, $"{tkey}Settings.header.type");
                     if (mainParam?.ToLower() == "http")
                     {
-                        ExtractTcpHttpSettings(meta, config);
+                        ExtractTcpHttpSettings(meta, config, tkey);
                     }
                     break;
                 case "kcp":
@@ -394,6 +422,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 case "splithttp":
                     mainParam = GetStr(subPrefix, $"{meta.streamType}Settings.path");
                     meta.streamParam2 = GetStr(subPrefix, $"{meta.streamType}Settings.host");
+                    break;
+                case "xhttp":
+                    mainParam = GetStr(subPrefix, $"{meta.streamType}Settings.mode");
+                    meta.streamParam2 = GetStr(subPrefix, $"{meta.streamType}Settings.path");
+                    meta.streamParam3 = GetStr(subPrefix, $"{meta.streamType}Settings.host");
                     break;
                 case "h2":
                     mainParam = GetStr(subPrefix, "httpSettings.path");
@@ -417,21 +450,19 @@ namespace V2RayGCon.Services.ShareLinkComponents
             meta.streamParam1 = mainParam;
         }
 
-        static void ExtractTcpHttpSettings(SharelinkMetaData meta, JObject json)
+        static void ExtractTcpHttpSettings(SharelinkMetaData meta, JObject json, string key)
         {
             try
             {
-                var path = json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"][
-                    "request"
-                ]["path"];
+                var path = json["outbounds"][0]["streamSettings"][key]["header"]["request"]["path"];
                 meta.streamParam2 = VgcApis.Misc.Utils.JArray2Str(path as JArray);
             }
             catch { }
             try
             {
-                var hosts = json["outbounds"][0]["streamSettings"]["tcpSettings"]["header"][
-                    "request"
-                ]["headers"]["Host"];
+                var hosts = json["outbounds"][0]["streamSettings"][key]["header"]["request"][
+                    "headers"
+                ]["Host"];
                 meta.streamParam3 = VgcApis.Misc.Utils.JArray2Str(hosts as JArray);
             }
             catch { }

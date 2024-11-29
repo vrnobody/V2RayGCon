@@ -19,11 +19,7 @@ namespace V2RayGCon.Models.Datas
             StreamComponent
         >
         {
-            //public bool dropDownStyle;
-            //public string name;
-            //public string network;
-            //public string optionPath;
-            //public Dictionary<string, string> options;
+            // please see 8.xhttp for comments
 
             // kcp
             {
@@ -78,8 +74,8 @@ namespace V2RayGCon.Models.Datas
                     dropDownStyle = false,
                     name = "HTTP/2",
                     network = "h2",
-                    paths = new List<string> { "httpSettings.path", "httpSettings.host", },
-                    options = new Dictionary<string, string> { { "none", "h2" }, },
+                    paths = new List<string> { "httpSettings.path", "httpSettings.host" },
+                    options = new Dictionary<string, string> { { "none", "h2" } },
                 }
             },
             {
@@ -89,8 +85,8 @@ namespace V2RayGCon.Models.Datas
                     dropDownStyle = false,
                     name = "WebSocket",
                     network = "ws",
-                    paths = new List<string> { "wsSettings.path", "wsSettings.headers.Host", },
-                    options = new Dictionary<string, string> { { "none", "ws" }, },
+                    paths = new List<string> { "wsSettings.path", "wsSettings.headers.Host" },
+                    options = new Dictionary<string, string> { { "none", "ws" } },
                 }
             },
             // quic
@@ -151,7 +147,7 @@ namespace V2RayGCon.Models.Datas
                         "httpupgradeSettings.path",
                         "httpupgradeSettings.host",
                     },
-                    options = new Dictionary<string, string> { { "none", "httpupgrade" }, },
+                    options = new Dictionary<string, string> { { "none", "httpupgrade" } },
                 }
             },
             {
@@ -161,12 +157,43 @@ namespace V2RayGCon.Models.Datas
                     dropDownStyle = false,
                     name = "SplitHTTP",
                     network = "splithttp",
+                    paths = new List<string> { "splithttpSettings.path", "splithttpSettings.host" },
+                    options = new Dictionary<string, string> { { "none", "splithttp" } },
+                }
+            },
+            {
+                8, // index (obsolete)
+                new StreamComponent
+                {
+                    dropDownStyle = true,
+                    name = "XHTTP", // name (obsolete)
+                    network = "xhttp",
                     paths = new List<string>
                     {
-                        "splithttpSettings.path",
-                        "splithttpSettings.host",
+                        "xhttpSettings.mode", // must be streamParam1
+                        "xhttpSettings.path", // must be streamParam2
+                        "xhttpSettings.host", // must be streamParam3
                     },
-                    options = new Dictionary<string, string> { { "none", "splithttp" }, },
+                    options = new Dictionary<string, string>
+                    {
+                        // do not forget: dropDownStyle = true
+                        // value, templateName (obsolete)
+                        { "auto", "auto" },
+                        { "packet-up", "packet-up" },
+                        { "stream-up", "stream-up" },
+                    },
+                }
+            },
+            // raw
+            {
+                9,
+                new StreamComponent
+                {
+                    dropDownStyle = true,
+                    name = "RAW",
+                    network = "raw",
+                    paths = new List<string> { "rawSettings.header.type" },
+                    options = new Dictionary<string, string> { { "none", "raw" } },
                 }
             },
         };

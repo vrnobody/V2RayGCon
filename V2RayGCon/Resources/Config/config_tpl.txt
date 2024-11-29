@@ -157,6 +157,15 @@
       }
     }
   },
+  "raw": {
+    "network": "raw",
+    "security": "",
+    "rawSettings": {
+      "header": {
+        "type": "none"
+      }
+    }
+  },
   "tcp": {
     "network": "tcp",
     "security": "",
@@ -235,6 +244,14 @@
     "network": "splithttp",
     "security": "tls",
     "splithttpSettings": {
+      "path": "/"
+    }
+  },
+  "xhttp": {
+    "network": "xhttp",
+    "security": "tls",
+    "xhttpSettings": {
+      "mode": "auto",
       "path": "/"
     }
   },

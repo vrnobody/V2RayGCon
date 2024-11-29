@@ -24,7 +24,7 @@ namespace VgcApis.Models.Datas
             "none",
             "tls",
             "xtls",
-            "reality"
+            "reality",
         };
         public string tlsType
         {
@@ -157,6 +157,17 @@ namespace VgcApis.Models.Datas
                     if (!string.IsNullOrWhiteSpace(streamParam2))
                     {
                         ps["host"] = streamParam2;
+                    }
+                    break;
+                case "xhttp":
+                    ps["mode"] = streamParam1;
+                    if (!string.IsNullOrWhiteSpace(streamParam2))
+                    {
+                        ps["path"] = streamParam2;
+                    }
+                    if (!string.IsNullOrWhiteSpace(streamParam3))
+                    {
+                        ps["host"] = streamParam3;
                     }
                     break;
                 case "kcp":

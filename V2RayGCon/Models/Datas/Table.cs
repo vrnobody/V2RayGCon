@@ -181,6 +181,7 @@ namespace V2RayGCon.Models.Datas
                         { "auto", "auto" },
                         { "packet-up", "packet-up" },
                         { "stream-up", "stream-up" },
+                        { "stream-one", "stream-one" },
                     },
                 }
             },

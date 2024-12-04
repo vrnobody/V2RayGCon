@@ -58,7 +58,10 @@ namespace Luna.Interfaces
 
         bool LuaServChangeSettings(string name, string settings);
 
+        // should be deleted on 2026-01-01
         bool LusServSetIndex(string name, double index);
+
+        bool LuaServSetIndex(string name, double index);
 
         bool LuaServRemove(string name);
 

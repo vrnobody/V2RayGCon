@@ -301,7 +301,10 @@ namespace Luna.Models.Apis
             return false;
         }
 
-        public bool LusServSetIndex(string name, double index)
+        // should be deleted on 2026-01-01
+        public bool LusServSetIndex(string name, double index) => LuaServSetIndex(name, index);
+
+        public bool LuaServSetIndex(string name, double index)
         {
             var core = GetLuaCoreCtrlByName(name);
             if (core != null)
@@ -430,7 +433,7 @@ namespace Luna.Models.Apis
 
         public string LuaVmCreate(string name)
         {
-            var vm = new LuaVm() { logger = new VgcApis.Libs.Sys.QueueLogger(), };
+            var vm = new LuaVm() { logger = new VgcApis.Libs.Sys.QueueLogger() };
 
             void log(string msg)
             {
@@ -1377,7 +1380,7 @@ namespace Luna.Models.Apis
                     RedirectStandardInput = useStdIn,
                     RedirectStandardError = redirectOutput,
                     RedirectStandardOutput = redirectOutput,
-                }
+                },
             };
 
             DataReceivedEventHandler logHandler = CreateLogHandler(outputEncoding, logable);

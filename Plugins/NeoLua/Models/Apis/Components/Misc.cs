@@ -218,6 +218,8 @@ namespace NeoLuna.Models.Apis.Components
 
         public void Log(string message) => settings.SendLog(message);
 
+        public string GetNeoLunaLogAsString() => settings.GetLogger().GetLogAsString(false);
+
         public string GetLogAsString()
         {
             return VgcApis.Misc.Logger.GetTrimedContent();

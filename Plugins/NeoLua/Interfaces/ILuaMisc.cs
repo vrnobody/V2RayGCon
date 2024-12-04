@@ -185,9 +185,15 @@ namespace NeoLuna.Interfaces
         int GetMutexPoolMaxCount();
 
         /// <summary>
+        /// 获取NeoLuna日志窗口的内容
+        /// </summary>
+        /// <returns>日志</returns>
+        string GetNeoLunaLogAsString();
+
+        /// <summary>
         /// 获取日志窗口的内容
         /// </summary>
-        /// <returns></returns>
+        /// <returns>日志</returns>
         string GetLogAsString();
 
         /// <summary>

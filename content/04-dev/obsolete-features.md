@@ -5,6 +5,10 @@ draft: false
 weight: 20
 ---
 
+##### 预计 2026-01-01 删除以下功能
+NeoLuna插件内的下列函数：  
+std.Sys:LusServSetIndex() // 改名为LuaServSetIndex()  
+
 ##### 2024-05-25 已删除以下功能
 NeoLuna插件内的下列函数：  
 std.Misc:AddV2cfgPrefix(b64Str)  

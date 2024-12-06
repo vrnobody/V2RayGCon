@@ -5,6 +5,12 @@ draft: false
 weight: 10
 ---
 
+##### `v2.0.8.0`
+支持raw（原tcp）传输协议  
+支持xhttp的mode参数，不-支-持 extra 参数  
+添加std.Misc:GetNeoLunaLogAsString()函数  
+修复拼写错误std.Sys:Lu[s]ServSetIndex()  
+
 ##### `v2.0.7.0`
 修复`CVE-2024-48510` ZIP文件路径穿越漏洞  
 

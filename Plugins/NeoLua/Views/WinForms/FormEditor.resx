@@ -244,7 +244,7 @@
     <value>264, 20</value>
   </data>
   <data name="cboxScriptName.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="cboxScriptName.ToolTip" xml:space="preserve">
     <value>Load script or set name for new script.</value>
@@ -267,7 +267,7 @@
   <data name="btnKillScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAKpJREFUOE/dU0sOQDAU7CEcwIWcgEW3Entns+EIPYUNEolFt/WGJ9GnxGdnklm0
+        wAAADsABataJCQAAAKpJREFUOE/dU0sOQDAU7CEcwIWcgEW3Entns+EIPYUNEolFt/WGJ9GnxGdnklm0
         b2bSMlUS1lpNbIhOEHuaZUfQMCaaqa5clyaujZRH7GEGDbRsW8Hmsc+zg1FyKAuEjF4ILQwGIUOIHGI2
         s8bRQsIr8nU0Ahp55zPsNfDAiwBvAJ5B6uD9ScDnj/jtN3IXzJ0WbvSKBNBiqfKdNgarDHDIu8e0Bw0f
         PGelZoKjbA1QHzFCAAAAAElFTkSuQmCC
@@ -312,7 +312,7 @@
   <data name="btnClearOutput.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAUVJREFUOE+VkbFOg3AQxkmcjGsfoU/CKxACKwNlcHNyIoUQ0rcohLRoIwmDGwT6
+        wAAADsABataJCQAAAUVJREFUOE+VkbFOg3AQxkmcjGsfoU/CKxACKwNlcHNyIoUQ0rcohLRoIwmDGwT6
         IgzqqLUYhPW8I0e11CJ+yYX87+77XbgT/qumaS4wvLIsAb+PnB4nNq/yPAdRFIEgXPpbfTN98e1xeVhn
         zCvKc8u3MHmJoWP4GAHGDcZ6rHla13WRZRm4rgu2bUMcx5Cm6bAZExOMBS7l03EcUBQFfN+HMLwDXddb
         c5IkZF6TGd/sRHXGMAxBkqS22TRNeN/todx/wNvrDmYzA6IoIsAtmY8AVVWBYRitcZtv4fnpBTRNg/nc
@@ -380,7 +380,7 @@
     <value>20, 20</value>
   </data>
   <data name="btnNewScript.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="btnNewScript.ToolTip" xml:space="preserve">
     <value>New script.</value>
@@ -403,7 +403,7 @@
   <data name="btnStopScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
+        vwAADr8BOAVTJAAAAClJREFUOE9jGGbg27dv/4nBUOWYACS5UI0XLx41YGQYQAyGKh8egIEBAMuiAHSi
         jpx4AAAAAElFTkSuQmCC
 </value>
   </data>
@@ -443,7 +443,7 @@
   <data name="btnSaveScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAHhJREFUOE9j+PbtWzgQvwHi/yRikJ5wkAFvtAvW/GcInkMSBukB6QUZgFUBMRis
+        wAAADsABataJCQAAAHhJREFUOE9j+PbtWzgQvwHi/yRikJ5wkAFvtAvW/GcInkMSBukB6QUZgFUBMRis
         F9mAD+8/EoWHswGk4kFqADY/I2NktbQ1AJ2PLg7CMAPuFM8/hqEBnY8uDsIwA2SQDUFXiKwZWRyEwQaA
         AMwQkABIEYgmDn/7DwBpTOrUXkrGYgAAAABJRU5ErkJggg==
 </value>
@@ -461,7 +461,7 @@
     <value>20, 20</value>
   </data>
   <data name="btnSaveScript.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="btnSaveScript.ToolTip" xml:space="preserve">
     <value>Save script.</value>
@@ -484,7 +484,7 @@
   <data name="btnRunScript.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
+        wAAADsABataJCQAAAJRJREFUOE+tkssNgCAQRE30bls0QBE2YTdeaAQtggNNcF3HZE12Evw7yYTMsm8u
         0IjIJ1eHT8xBVUrp4RFudUQihgKk8JJzFpxTrYQYG7DcwXMIQZxzEmOslliGA4TlIaUk3vvDEmIoqK5K
         iKFgdFZCDAWjTwVn8HZPDIUb8CZibMDSL8/4/iPt0pLnX/mNq8P7lmYFTOJvU/foAJoAAAAASUVORK5C
         YII=
@@ -563,7 +563,7 @@
     <value>433, 294</value>
   </data>
   <data name="pnlScriptEditor.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="&gt;&gt;pnlScriptEditor.Name" xml:space="preserve">
     <value>pnlScriptEditor</value>
@@ -593,7 +593,7 @@
     <value>62, 21</value>
   </data>
   <data name="tboxQuickSearch.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="tboxQuickSearch.Text" xml:space="preserve">
     <value>0</value>
@@ -622,7 +622,7 @@
   <data name="btnGotoLine.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAHpJREFUOE9joAr4+vXr/G/fvv1HxyBxqBLCAGZIzIR9/xmC54Bpog1BtpUsQ0CK
+        vwAADr8BOAVTJAAAAHpJREFUOE9joAr4+vXr/G/fvv1HxyBxqBLCAGZIzIR9/xmC54Bpog1BtpUsQ0CK
         QBqwYaIMoYoByBjdC7gwVDsEAAX6QYLomtva2v47OTlhYBQDYDFAKoZqRwCQIDbbsGHaGUAKhmpDAJAg
         NtuwYZwGkIKh2gYUMDAAAGbutJT12UwwAAAAAElFTkSuQmCC
 </value>
@@ -643,7 +643,7 @@
     <value>20, 20</value>
   </data>
   <data name="btnGotoLine.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>11</value>
   </data>
   <data name="btnGotoLine.ToolTip" xml:space="preserve">
     <value>Goto line</value>
@@ -666,7 +666,7 @@
   <data name="btnShowFormSearch.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAXZJREFUOE+dkrFqwmAUhYNurh18jA4+QhbR3SVDMmYVXJUUAj5AB5csBurwt5Og
+        wAAADsABataJCQAAAXZJREFUOE+dkrFqwmAUhYNurh18jA4+QhbR3SVDMmYVXJUUAj5AB5csBurwt5Og
         gx2cpO3gEzRLWrBbtUHEoXJ7TvwllMRCPfARvDnn+v/3xjin3W5XAjZYgD04gAj0wZW2FQuGCpgul0vp
         dDpSr9fFNE1xHEeUUrLdbld4f63teeFlOJlMpNlsShiGEr1G8ha/y2z2KLZtS7fbPTXJnwTFWhzH0mg0
         5PnpRTbrr1+sVh9pE54E3r6OZWIxCALxPC8XPsGT8DrwRjqWCUXV6/XkXj0Uhgmvw5nAe9CxTCiOfN+X
@@ -691,7 +691,7 @@
     <value>20, 20</value>
   </data>
   <data name="btnShowFormSearch.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>10</value>
   </data>
   <data name="btnShowFormSearch.ToolTip" xml:space="preserve">
     <value>Show search window. (Ctrl + F)</value>
@@ -718,7 +718,7 @@
     <value>127, 22</value>
   </data>
   <data name="panel2.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;panel2.Name" xml:space="preserve">
     <value>panel2</value>
@@ -741,7 +741,7 @@
   <data name="panel4.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        xAAADsQBlSsOGwAAAP5JREFUOE+dUzsSgjAQzVE4gmegZ8YZW+k4ACXWegBbnHRyCSnkEjRqYaO2aEO7
+        wAAADsABataJCQAAAP5JREFUOE+dUzsSgjAQzVE4gmegZ8YZW+k4ACXWegBbnHRyCSnkEjRqYaO2aEO7
         7osJEzB8dGceO7vZ93ZDElHXdcUgC4hnYqqhGKTl9khiIQn+JxEubLr/J8IEFyyROaNgIIb3NFObgwxo
         AQUpJfm+rzzHEI01e3ALVJYlRVFESbKi8+miPGLkef0zDX/wE69dMroFQUD5Iadn9WqAGHkzTd8xqpHT
         dNciGyCPddTpjbTNCGT7jMIwVOODCI8Y+UkCNmm93rTEJgsYuOJRgfvt4RRAfkyg6p6CEfg6BZfxgsco
@@ -818,7 +818,7 @@
     <value>132, 25</value>
   </data>
   <data name="panelSelectMethods.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;panelSelectMethods.Name" xml:space="preserve">
     <value>panelSelectMethods</value>
@@ -835,7 +835,7 @@
   <data name="panel5.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAGRJREFUOE9j+Pr16/xv3779R8cgcQZiAcyQmAn7/jMEzwHTRBuCbCtZhoAUgTRg
+        vwAADr8BOAVTJAAAAGRJREFUOE9j+Pr16/xv3779R8cgcQZiAcyQmAn7/jMEzwHTRBuCbCtZhoAUgTRg
         w0QZQhUDkHHOrMPEa4YBoMJ+kGKS/Q8CIEUgxaRgqFbsAKTAyckJJx41YMgYQAhDlQIBAwMAFgSXtfZW
         CQsAAAAASUVORK5CYII=
 </value>
@@ -880,7 +880,7 @@
     <value>102, 20</value>
   </data>
   <data name="cboxVarList.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>8</value>
   </data>
   <data name="cboxVarList.ToolTip" xml:space="preserve">
     <value>Variables</value>
@@ -910,7 +910,7 @@
     <value>132, 25</value>
   </data>
   <data name="panelSelectVariable.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;panelSelectVariable.Name" xml:space="preserve">
     <value>panelSelectVariable</value>
@@ -967,7 +967,7 @@
     <value>264, 25</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;panel1.Name" xml:space="preserve">
     <value>panel1</value>
@@ -1027,7 +1027,7 @@
     <value>437, 25</value>
   </data>
   <data name="panelScriptDebugTools.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;panelScriptDebugTools.Name" xml:space="preserve">
     <value>panelScriptDebugTools</value>

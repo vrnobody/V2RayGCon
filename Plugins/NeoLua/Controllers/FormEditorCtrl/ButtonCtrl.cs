@@ -129,6 +129,9 @@ namespace NeoLuna.Controllers.FormEditorCtrl
                         tboxGoto.Focus();
                         tboxGoto.SelectAll();
                         break;
+                    case Keys.Tab:
+                        cboxScriptName.Focus();
+                        break;
                     case Keys.F:
                     case Keys.H:
                         ShowFormSearchHandler(this, EventArgs.Empty);
@@ -139,37 +142,47 @@ namespace NeoLuna.Controllers.FormEditorCtrl
                     case Keys.N:
                         ClearEditorHandler(this, EventArgs.Empty);
                         break;
+                    default:
+                        // pass down key event
+                        return;
                 }
-                return;
             }
-
-            switch (keyCode)
+            else
             {
-                case Keys.Escape:
-                    VgcApis.Misc.UI.CloseFormIgnoreError(formSearch);
-                    break;
-                case Keys.F2:
-                    formSearch?.SearchPrevious();
-                    break;
-                case Keys.F3:
-                    formSearch?.SearchNext();
-                    break;
-                case Keys.F4:
-                    formSearch?.SearchFirst(true);
-                    break;
-                case Keys.F5:
-                    btnRunScript.PerformClick();
-                    break;
-                case Keys.F6:
-                    btnStopLuaCore.PerformClick();
-                    break;
-                case Keys.F7:
-                    btnKillLuaCore.PerformClick();
-                    break;
-                case Keys.F8:
-                    btnClearOutput.PerformClick();
-                    break;
+                switch (keyCode)
+                {
+                    case Keys.Escape:
+                        VgcApis.Misc.UI.CloseFormIgnoreError(formSearch);
+                        break;
+                    case Keys.F2:
+                        formSearch?.SearchPrevious();
+                        break;
+                    case Keys.F3:
+                        formSearch?.SearchNext();
+                        break;
+                    case Keys.F4:
+                        formSearch?.SearchFirst(true);
+                        break;
+                    case Keys.F5:
+                        btnRunScript.PerformClick();
+                        break;
+                    case Keys.F6:
+                        btnStopLuaCore.PerformClick();
+                        break;
+                    case Keys.F7:
+                        btnKillLuaCore.PerformClick();
+                        break;
+                    case Keys.F8:
+                        btnClearOutput.PerformClick();
+                        break;
+                    default:
+                        // pass down key event
+                        return;
+                }
             }
+            keyEvent.Handled = true;
+            keyEvent.SuppressKeyPress = true;
+            return;
         }
 
         public bool IsChanged() => editor.Text != preScriptContent;

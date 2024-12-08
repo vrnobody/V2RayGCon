@@ -107,6 +107,11 @@ namespace NeoLuna.Views.WinForms
             this.KeyDown += KeyDownHandler;
         }
 
+        private void FormEditor_Shown(object sender, System.EventArgs e)
+        {
+            editor.Focus();
+        }
+
         #region private methods
         void KeyDownHandler(object sender, KeyEventArgs a)
         {

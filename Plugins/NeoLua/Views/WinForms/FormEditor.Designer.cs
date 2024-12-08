@@ -463,6 +463,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormEditor";
             this.Load += new System.EventHandler(this.FormEditor_Load);
+            this.Shown += new System.EventHandler(this.FormEditor_Shown);
             this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);

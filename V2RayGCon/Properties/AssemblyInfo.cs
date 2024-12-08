@@ -33,11 +33,14 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.8.0")]
+[assembly: AssemblyVersion("2.0.8.1")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v2.0.8.1 Change auto-generated search keywords to #mark is "mark".
+         NeoLuna focus to editor-control after opened.
+         Neoluna initiate with navigating bar disabled.
 --------------------------------------------------------------------
 v2.0.7.2 Add std.Misc:GetNeoLunaLogAsString() in NeoLuna plug-in.
          Fix typo std.Sys:Lu[s -> a]ServSetIndex().

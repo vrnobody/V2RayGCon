@@ -747,7 +747,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 .GetMarkList()
                 .Select(mk => mk?.Replace("\"", ""))
                 .Where(mk => !string.IsNullOrEmpty(mk))
-                .Select(mk => $"#mark like \"{mk}\"");
+                .Select(mk => $"#mark is \"{mk}\"");
 
             marker.Items.Clear();
             marker.Items.AddRange(customKeywords.Concat(marks).ToArray());

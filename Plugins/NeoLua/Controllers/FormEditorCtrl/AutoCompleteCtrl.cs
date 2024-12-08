@@ -239,6 +239,24 @@ namespace NeoLuna.Controllers.FormEditorCtrl
             return sb.ToString();
         }
 
+        void SetNavigationComboBoxEnableState(JObject ast)
+        {
+            var enabled = false;
+            if (ast != null)
+            {
+                foreach (var kv in ast)
+                {
+                    if (kv.Value.Count() > 0)
+                    {
+                        enabled = true;
+                        break;
+                    }
+                }
+            }
+            cboxVarList.Enabled = enabled;
+            cboxFunctionList.Enabled = enabled;
+        }
+
         JObject currentCodeAst = null;
 
         void AnalizeScriptWorker()
@@ -267,6 +285,10 @@ namespace NeoLuna.Controllers.FormEditorCtrl
             {
                 currentCodeAst = ast;
             }
+            VgcApis.Misc.UI.Invoke(() =>
+            {
+                SetNavigationComboBoxEnableState(ast);
+            });
 
             // var debug = ast.ToString();
 
@@ -461,6 +483,7 @@ namespace NeoLuna.Controllers.FormEditorCtrl
             luaAcm = CreateAcm(editor);
             miEanbleCodeAnalyzeEx.Checked = false;
             smiLbCodeanalyze.Enabled = false;
+            SetNavigationComboBoxEnableState(null);
         }
 
         void ReleaseEvents()
@@ -554,13 +577,10 @@ namespace NeoLuna.Controllers.FormEditorCtrl
             }
             funcDefTable = funcs;
 
-            VgcApis.Misc.UI.Invoke(() =>
-            {
-                var items = cboxFunctionList.Items;
-                items.Clear();
-                items.AddRange(funcs.Keys.OrderBy(x => x).ToArray());
-                VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxFunctionList);
-            });
+            var items = cboxFunctionList.Items;
+            items.Clear();
+            items.AddRange(funcs.Keys.OrderBy(x => x).ToArray());
+            VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxFunctionList);
         }
 
         bool ScrollToVariable(string v)
@@ -617,13 +637,10 @@ namespace NeoLuna.Controllers.FormEditorCtrl
                 }
             }
 
-            VgcApis.Misc.UI.Invoke(() =>
-            {
-                var items = cboxVarList.Items;
-                items.Clear();
-                items.AddRange(vars.OrderBy(x => x).ToArray());
-                VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxVarList);
-            });
+            var items = cboxVarList.Items;
+            items.Clear();
+            items.AddRange(vars.OrderBy(x => x).ToArray());
+            VgcApis.Misc.UI.ResetComboBoxDropdownMenuWidth(cboxVarList);
         }
 
         #endregion

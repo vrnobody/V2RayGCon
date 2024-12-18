@@ -168,6 +168,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                         }
                         else
                         {
+                            streamToken["wsSettings"]["host"] = vmess.host;
                             streamToken["wsSettings"]["headers"]["Host"] = vmess.host;
                         }
                     }

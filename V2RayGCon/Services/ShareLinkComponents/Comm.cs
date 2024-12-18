@@ -365,6 +365,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     token["wsSettings"]["path"] = mainParam;
                     if (!string.IsNullOrEmpty(meta.streamParam2))
                     {
+                        token["wsSettings"]["host"] = meta.streamParam2;
                         token["wsSettings"]["headers"]["Host"] = meta.streamParam2;
                     }
                     break;
@@ -416,7 +417,12 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 case "ws":
                     mainParam = GetStr(subPrefix, "wsSettings.path");
-                    meta.streamParam2 = GetStr(subPrefix, "wsSettings.headers.Host");
+                    var wsHost = GetStr(subPrefix, "wsSettings.host");
+                    if (string.IsNullOrEmpty(wsHost))
+                    {
+                        wsHost = GetStr(subPrefix, "wsSettings.headers.Host");
+                    }
+                    meta.streamParam2 = wsHost;
                     break;
                 case "httpupgrade":
                 case "splithttp":

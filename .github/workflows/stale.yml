@@ -1,19 +1,17 @@
 name: 'stale bot'
 on:
   schedule:
-    - cron: '30 1 * * *'
+    - cron: '30 19 * * *'
 
 permissions:
   issues: write
 
 jobs:
   stale:
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v8
+      - uses: actions/stale@v9
         with:
-          stale-issue-message: 'This issue has been inactive for 30 days. It would be closed in 7 days.'
-          close-issue-message: 'This issue is closed for inactivity.'
           days-before-issue-stale: 30
           days-before-issue-close: 7
-          stale-issue-label: 'nobot'
+          exempt-issue-labels: 'pin'

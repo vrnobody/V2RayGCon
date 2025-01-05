@@ -59,8 +59,10 @@ namespace V2RayGCon.Views.WinForms
                 case (Keys.Control | Keys.K):
                     btnFormat.PerformClick();
                     break;
+                default:
+                    return base.ProcessCmdKey(ref msg, keyCode);
             }
-            return base.ProcessCmdKey(ref msg, keyCode);
+            return true;
         }
         #endregion
 
@@ -92,10 +94,17 @@ namespace V2RayGCon.Views.WinForms
             var src = "%port%";
             var rep = "\"%port%\"";
             var txt = rtboxTemplate.Text?.Replace(src, rep);
-            txt = VgcApis.Misc.Utils.FormatConfig(txt)?.Replace(rep, src);
-            if (!string.IsNullOrEmpty(txt))
+            try
             {
-                rtboxTemplate.Text = txt;
+                txt = VgcApis.Misc.Utils.FormatConfig(txt)?.Replace(rep, src);
+                if (!string.IsNullOrEmpty(txt))
+                {
+                    rtboxTemplate.Text = txt;
+                }
+            }
+            catch (Exception ex)
+            {
+                VgcApis.Misc.UI.MsgBox(ex.Message);
             }
         }
 

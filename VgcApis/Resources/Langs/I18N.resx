@@ -144,6 +144,9 @@
   <data name="FileIsEmpty" xml:space="preserve">
     <value>File [{0}] is empty.</value>
   </data>
+  <data name="InvalidJson" xml:space="preserve">
+    <value>Invalid JSON.</value>
+  </data>
   <data name="KeywordIsTooLong" xml:space="preserve">
     <value>Max keyword length is 100 character.</value>
   </data>

@@ -141,8 +141,10 @@ namespace V2RayGCon.Views.WinForms
                 case (Keys.Control | Keys.Oem6):
                     ctrl.GetEditor().ZoomIn();
                     break;
+                default:
+                    return base.ProcessCmdKey(ref msg, keyCode);
             }
-            return base.ProcessCmdKey(ref msg, keyCode);
+            return true;
         }
         #endregion
 

@@ -142,6 +142,15 @@ namespace VgcApis.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 Invalid JSON. 的本地化字符串。
+        /// </summary>
+        internal static string InvalidJson {
+            get {
+                return ResourceManager.GetString("InvalidJson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Max keyword length is 100 character. 的本地化字符串。
         /// </summary>
         internal static string KeywordIsTooLong {

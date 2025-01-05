@@ -144,6 +144,9 @@
   <data name="FileIsEmpty" xml:space="preserve">
     <value>文件 [{0}] 为空。</value>
   </data>
+  <data name="InvalidJson" xml:space="preserve">
+    <value>无效的JSON</value>
+  </data>
   <data name="KeywordIsTooLong" xml:space="preserve">
     <value>搜索内容太长了!</value>
   </data>

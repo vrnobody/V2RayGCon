@@ -55,11 +55,18 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
             switch (ty)
             {
                 case VgcApis.Models.Datas.Enums.ConfigType.json:
-                    var config = VgcApis.Misc.Utils.FormatConfig(content);
-                    if (!string.IsNullOrEmpty(config))
+                    try
                     {
-                        content = config;
-                        RestorePreviousPosition();
+                        var config = VgcApis.Misc.Utils.FormatConfig(content);
+                        if (!string.IsNullOrEmpty(config))
+                        {
+                            content = config;
+                            RestorePreviousPosition();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        VgcApis.Misc.UI.MsgBox(ex.Message);
                     }
                     break;
                 case VgcApis.Models.Datas.Enums.ConfigType.yaml:

@@ -2944,7 +2944,15 @@ namespace VgcApis.Misc
 
         public static string FormatConfig(string config)
         {
-            var json = ParseJToken(config);
+            if (string.IsNullOrEmpty(config))
+            {
+                return null;
+            }
+            if (!IsJson(config))
+            {
+                throw new FormatException(I18N.InvalidJson);
+            }
+            var json = JToken.Parse(config);
             return FormatConfig(json);
         }
 
@@ -2956,19 +2964,6 @@ namespace VgcApis.Misc
         public static bool IsJson(string config)
         {
             return DetectConfigType(config) == Enums.ConfigType.json;
-        }
-
-        public static JToken ParseJToken(string config)
-        {
-            if (IsJson(config))
-            {
-                try
-                {
-                    return JToken.Parse(config);
-                }
-                catch { }
-            }
-            return null;
         }
 
         public static JObject ParseJObject(string config)

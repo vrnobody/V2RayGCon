@@ -50,28 +50,21 @@ namespace V2RayGCon.Controllers.FormTextConfigEditorComponent
 
         public void Format()
         {
-            var ty = VgcApis.Misc.Utils.DetectConfigType(content);
             SaveCurrentPosition();
-            switch (ty)
+            try
             {
-                case VgcApis.Models.Datas.Enums.ConfigType.json:
-                    try
-                    {
-                        var config = VgcApis.Misc.Utils.FormatConfig(content);
-                        if (!string.IsNullOrEmpty(config))
-                        {
-                            content = config;
-                            RestorePreviousPosition();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        VgcApis.Misc.UI.MsgBox(ex.Message);
-                    }
-                    break;
-                case VgcApis.Models.Datas.Enums.ConfigType.yaml:
-                default:
-                    break;
+                var config = VgcApis.Misc.Utils.FormatConfig(content);
+                content = config;
+                RestorePreviousPosition();
+            }
+            catch (Newtonsoft.Json.JsonReaderException jex)
+            {
+                ScrollToLine(jex.LineNumber);
+                VgcApis.Misc.UI.MsgBox(jex.Message);
+            }
+            catch (Exception ex)
+            {
+                VgcApis.Misc.UI.MsgBox(ex.Message);
             }
         }
 

@@ -17,6 +17,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ScintillaNET;
@@ -2944,10 +2945,6 @@ namespace VgcApis.Misc
 
         public static string FormatConfig(string config)
         {
-            if (string.IsNullOrEmpty(config))
-            {
-                return null;
-            }
             if (!IsJson(config))
             {
                 throw new FormatException(I18N.InvalidJson);

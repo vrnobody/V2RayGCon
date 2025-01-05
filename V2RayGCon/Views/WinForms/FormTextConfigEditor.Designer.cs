@@ -38,7 +38,6 @@ namespace V2RayGCon.Views.WinForms
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.formatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.loadFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +50,7 @@ namespace V2RayGCon.Views.WinForms
             this.loadConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overwriteServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.formatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simpleConfigerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripCboxNavigtion = new System.Windows.Forms.ToolStripComboBox();
@@ -118,7 +118,6 @@ namespace V2RayGCon.Views.WinForms
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
-            this.formatToolStripMenuItem,
             this.toolStripMenuItem1,
             this.loadFileToolStripMenuItem,
             this.saveAsToolStripMenuItem,
@@ -132,12 +131,6 @@ namespace V2RayGCon.Views.WinForms
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             resources.ApplyResources(this.openToolStripMenuItem, "openToolStripMenuItem");
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            // 
-            // formatToolStripMenuItem
-            // 
-            this.formatToolStripMenuItem.Name = "formatToolStripMenuItem";
-            resources.ApplyResources(this.formatToolStripMenuItem, "formatToolStripMenuItem");
-            this.formatToolStripMenuItem.Click += new System.EventHandler(this.formatToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -208,10 +201,17 @@ namespace V2RayGCon.Views.WinForms
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.formatToolStripMenuItem,
             this.searchToolStripMenuItem,
             this.simpleConfigerToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             resources.ApplyResources(this.viewToolStripMenuItem, "viewToolStripMenuItem");
+            // 
+            // formatToolStripMenuItem
+            // 
+            this.formatToolStripMenuItem.Name = "formatToolStripMenuItem";
+            resources.ApplyResources(this.formatToolStripMenuItem, "formatToolStripMenuItem");
+            this.formatToolStripMenuItem.Click += new System.EventHandler(this.formatToolStripMenuItem_Click);
             // 
             // searchToolStripMenuItem
             // 
@@ -285,7 +285,7 @@ namespace V2RayGCon.Views.WinForms
         private System.Windows.Forms.ToolStripMenuItem overwriteServerToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStripComboBox toolStripCboxNavigtion;
-        private System.Windows.Forms.ToolStripMenuItem formatToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem simpleConfigerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem formatToolStripMenuItem;
     }
 }

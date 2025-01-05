@@ -97,10 +97,7 @@ namespace V2RayGCon.Views.WinForms
             try
             {
                 txt = VgcApis.Misc.Utils.FormatConfig(txt)?.Replace(rep, src);
-                if (!string.IsNullOrEmpty(txt))
-                {
-                    rtboxTemplate.Text = txt;
-                }
+                rtboxTemplate.Text = txt;
             }
             catch (Exception ex)
             {

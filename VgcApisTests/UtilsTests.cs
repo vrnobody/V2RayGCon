@@ -96,6 +96,7 @@ namespace VgcApisTests
         }
 
         #endregion
+
         [DataTestMethod]
         [DataRow("", false, 0, "")]
         [DataRow("1", false, 0, "1")]

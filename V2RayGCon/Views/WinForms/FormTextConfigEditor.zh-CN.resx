@@ -124,12 +124,6 @@
   <data name="openToolStripMenuItem.Text" xml:space="preserve">
     <value>新窗口</value>
   </data>
-  <data name="formatToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>136, 22</value>
-  </data>
-  <data name="formatToolStripMenuItem.Text" xml:space="preserve">
-    <value>格式化</value>
-  </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>133, 6</value>
   </data>
@@ -192,6 +186,12 @@
   </data>
   <data name="serverToolStripMenuItem.Text" xml:space="preserve">
     <value>服务器</value>
+  </data>
+  <data name="formatToolStripMenuItem.Text" xml:space="preserve">
+    <value>格式化</value>
+  </data>
+  <data name="formatToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>格式化JSON文本</value>
   </data>
   <data name="searchToolStripMenuItem.Text" xml:space="preserve">
     <value>搜索</value>

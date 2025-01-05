@@ -5,6 +5,13 @@ draft: false
 weight: 10
 ---
 
+##### `v2.0.9.0`
+格式化JSON失败时，显示详细错误信息  
+给 websocket 协议添加一个重复的 host 配置项  
+自动生成的搜索关键词改为 #mark is (mark)  
+NeoLuna 编辑器打开时聚焦到编辑区域  
+NeoLuna 的导航栏初始状态修改为禁用  
+
 ##### `v2.0.8.0`
 支持raw（原tcp）传输协议  
 支持xhttp的mode参数，不-支-持 extra 参数  

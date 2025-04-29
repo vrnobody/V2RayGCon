@@ -1,12 +1,8 @@
 {
-  "version": "2.0.9.0",
-  "md5": "3D14D570E76C3A7838342CF36E269F7E",
+  "version": "2.1.0.0",
+  "md5": "3663FC80E0E977EE6149E09E5DE8F18D",
   "warnings": [],
   "changes": [
-    "格式化JSON失败时，显示详细错误信息",
-    "给 websocket 协议添加一个重复的 host 配置项",
-    "自动生成的搜索关键词改为 #mark is (mark)",
-    "NeoLuna 编辑器打开时聚焦到编辑区域",
-    "NeoLuna 的导航栏初始状态修改为禁用"
+    "配置编辑器格式化JSON失败时，滚动到相应行"
   ]
 }

@@ -23,7 +23,7 @@ namespace V2RayGCon.Views.UserControls
         readonly VgcApis.Libs.Tasks.LazyGuy lazyUiUpdater,
             lazyHighlighter;
 
-        static readonly Bitmap[] btnBgCaches = new Bitmap[3];
+        static readonly Bitmap[] btnBgCaches = new Bitmap[4];
         readonly List<Control> roundLables;
         Label bottomLine = null;
 
@@ -161,6 +161,7 @@ namespace V2RayGCon.Views.UserControls
         private void InitButtonBackgroundImage()
         {
             CreateBgImgForButton(btnStart, ButtonTypes.Start);
+            CreateBgImgForButton(btnRestart, ButtonTypes.Restart);
             CreateBgImgForButton(btnStop, ButtonTypes.Stop);
             CreateBgImgForButton(btnMenu, ButtonTypes.Menu);
         }
@@ -327,9 +328,10 @@ namespace V2RayGCon.Views.UserControls
 
         enum ButtonTypes
         {
-            Start,
-            Stop,
-            Menu,
+            Start = 0,
+            Restart = 1,
+            Stop = 2,
+            Menu = 3,
         }
 
         readonly object drawImageLocker = new object();
@@ -363,10 +365,10 @@ namespace V2RayGCon.Views.UserControls
             var r = Math.Min(bmp.Width, bmp.Height) * 0.6f / 2f;
             var cx = bmp.Width / 2f;
             var cy = bmp.Height / 2f;
-            var pw = r * 0.4f;
+            var penWeight = r * 0.4f;
             var pc = Color.FromArgb(45, 45, 45);
             using (var g = Graphics.FromImage(bmp))
-            using (var pen = new Pen(pc, pw))
+            using (var pen = new Pen(pc, penWeight))
             {
                 pen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
                 pen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
@@ -377,16 +379,37 @@ namespace V2RayGCon.Views.UserControls
                     case ButtonTypes.Stop:
                         DrawRect(g, cx, cy, r);
                         break;
+                    case ButtonTypes.Restart:
+                        DrawRefresh(g, pen, penWeight, cx, cy, r);
+                        break;
                     case ButtonTypes.Start:
-                        DrawTriangle(g, pen, pw, cx, cy, r);
+                        DrawTriangle(g, pen, penWeight, cx, cy, r);
                         break;
                     case ButtonTypes.Menu:
                     default:
-                        DrawHamburg(g, pen, pw, cx, cy, r);
+                        DrawHamburg(g, pen, penWeight, cx, cy, r);
                         break;
                 }
             }
             return bmp;
+        }
+
+        void DrawRefresh(Graphics g, Pen pen, float pw, float cx, float cy, float r)
+        {
+            // C
+            var circle = new RectangleF(cx - r, cy - r, r * 2, r * 2);
+            g.DrawArc(pen, circle, 15, 360 - 45 - 15);
+
+            // >
+            var d = (float)(r * Math.Sqrt(2) / 2);
+            var len = r / 2;
+            var points = new PointF[]
+            {
+                new PointF(cx + d - len, cy - d + pw / 2),
+                new PointF(cx + d, cy - d + pw / 2),
+                new PointF(cx + d, cy - d - len),
+            };
+            g.DrawLines(pen, points);
         }
 
         void DrawHamburg(Graphics g, Pen pen, float pw, float cx, float cy, float r)
@@ -673,6 +696,7 @@ namespace V2RayGCon.Views.UserControls
                 if (btnStart.Visible != isVisable)
                 {
                     btnStart.Visible = isVisable;
+                    btnRestart.Visible = isVisable;
                     btnStop.Visible = isVisable;
                     btnMenu.Visible = isVisable;
                 }
@@ -906,6 +930,16 @@ namespace V2RayGCon.Views.UserControls
         {
             var uid = coreServCtrl.GetCoreStates().GetUid();
             WinForms.FormTextConfigEditor.ShowServer(uid);
+        }
+
+        private void restartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            coreServCtrl.GetCoreCtrl().RestartCoreThen();
+        }
+
+        private void btnRestart_Click(object sender, EventArgs e)
+        {
+            coreServCtrl.GetCoreCtrl().RestartCoreThen();
         }
 
         private void rlbRemark_Click(object sender, EventArgs e)

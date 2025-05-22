@@ -47,10 +47,12 @@
             this.rlbTotalNetFlow = new VgcApis.UserControls.RoundLabel();
             this.rlbLastModifyDate = new VgcApis.UserControls.RoundLabel();
             this.rlbInboundMode = new VgcApis.UserControls.RoundLabel();
+            this.btnRestart = new System.Windows.Forms.Button();
             this.ctxMenuStripMore = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.multiboxingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
             this.moveToTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -118,8 +120,8 @@
             // rlbTag3
             // 
             this.rlbTag3._BackColor = System.Drawing.Color.PowderBlue;
-            resources.ApplyResources(this.rlbTag3, "rlbTag3");
             this.rlbTag3.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbTag3, "rlbTag3");
             this.rlbTag3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rlbTag3.ForeColor = System.Drawing.Color.DimGray;
             this.rlbTag3.Name = "rlbTag3";
@@ -129,8 +131,8 @@
             // rlbCoreName
             // 
             this.rlbCoreName._BackColor = System.Drawing.Color.Lavender;
-            resources.ApplyResources(this.rlbCoreName, "rlbCoreName");
             this.rlbCoreName.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbCoreName, "rlbCoreName");
             this.rlbCoreName.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rlbCoreName.ForeColor = System.Drawing.Color.DimGray;
             this.rlbCoreName.Name = "rlbCoreName";
@@ -140,8 +142,8 @@
             // rlbTag2
             // 
             this.rlbTag2._BackColor = System.Drawing.Color.PowderBlue;
-            resources.ApplyResources(this.rlbTag2, "rlbTag2");
             this.rlbTag2.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbTag2, "rlbTag2");
             this.rlbTag2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rlbTag2.ForeColor = System.Drawing.Color.DimGray;
             this.rlbTag2.Name = "rlbTag2";
@@ -151,8 +153,8 @@
             // rlbTag1
             // 
             this.rlbTag1._BackColor = System.Drawing.Color.PowderBlue;
-            resources.ApplyResources(this.rlbTag1, "rlbTag1");
             this.rlbTag1.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbTag1, "rlbTag1");
             this.rlbTag1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rlbTag1.ForeColor = System.Drawing.Color.DimGray;
             this.rlbTag1.Name = "rlbTag1";
@@ -162,8 +164,8 @@
             // rlbSpeedtest
             // 
             this.rlbSpeedtest._BackColor = System.Drawing.Color.Wheat;
-            resources.ApplyResources(this.rlbSpeedtest, "rlbSpeedtest");
             this.rlbSpeedtest.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbSpeedtest, "rlbSpeedtest");
             this.rlbSpeedtest.BackColor = System.Drawing.SystemColors.Control;
             this.rlbSpeedtest.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rlbSpeedtest.ForeColor = System.Drawing.Color.Red;
@@ -174,9 +176,9 @@
             // rlbIsRunning
             // 
             this.rlbIsRunning._BackColor = System.Drawing.Color.DarkOrange;
-            resources.ApplyResources(this.rlbIsRunning, "rlbIsRunning");
             this.rlbIsRunning.AutoEllipsis = true;
             this.rlbIsRunning.Cursor = System.Windows.Forms.Cursors.Hand;
+            resources.ApplyResources(this.rlbIsRunning, "rlbIsRunning");
             this.rlbIsRunning.ForeColor = System.Drawing.Color.Ivory;
             this.rlbIsRunning.Name = "rlbIsRunning";
             this.toolTip1.SetToolTip(this.rlbIsRunning, resources.GetString("rlbIsRunning.ToolTip"));
@@ -186,8 +188,8 @@
             // rlbSetting
             // 
             this.rlbSetting._BackColor = System.Drawing.Color.Silver;
-            resources.ApplyResources(this.rlbSetting, "rlbSetting");
             this.rlbSetting.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbSetting, "rlbSetting");
             this.rlbSetting.BackColor = System.Drawing.SystemColors.Control;
             this.rlbSetting.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rlbSetting.ForeColor = System.Drawing.Color.DimGray;
@@ -198,8 +200,8 @@
             // rlbMark
             // 
             this.rlbMark._BackColor = System.Drawing.Color.LightGreen;
-            resources.ApplyResources(this.rlbMark, "rlbMark");
             this.rlbMark.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbMark, "rlbMark");
             this.rlbMark.BackColor = System.Drawing.SystemColors.Control;
             this.rlbMark.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rlbMark.ForeColor = System.Drawing.Color.DimGray;
@@ -210,8 +212,8 @@
             // rlbRemark
             // 
             this.rlbRemark._BackColor = System.Drawing.Color.LightSkyBlue;
-            resources.ApplyResources(this.rlbRemark, "rlbRemark");
             this.rlbRemark.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbRemark, "rlbRemark");
             this.rlbRemark.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rlbRemark.ForeColor = System.Drawing.Color.DimGray;
             this.rlbRemark.Name = "rlbRemark";
@@ -221,8 +223,8 @@
             // rlbTotalNetFlow
             // 
             this.rlbTotalNetFlow._BackColor = System.Drawing.Color.LightSteelBlue;
-            resources.ApplyResources(this.rlbTotalNetFlow, "rlbTotalNetFlow");
             this.rlbTotalNetFlow.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbTotalNetFlow, "rlbTotalNetFlow");
             this.rlbTotalNetFlow.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rlbTotalNetFlow.ForeColor = System.Drawing.Color.DimGray;
             this.rlbTotalNetFlow.Name = "rlbTotalNetFlow";
@@ -232,8 +234,8 @@
             // rlbLastModifyDate
             // 
             this.rlbLastModifyDate._BackColor = System.Drawing.Color.SandyBrown;
-            resources.ApplyResources(this.rlbLastModifyDate, "rlbLastModifyDate");
             this.rlbLastModifyDate.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbLastModifyDate, "rlbLastModifyDate");
             this.rlbLastModifyDate.BackColor = System.Drawing.SystemColors.Control;
             this.rlbLastModifyDate.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rlbLastModifyDate.ForeColor = System.Drawing.Color.DimGray;
@@ -244,8 +246,8 @@
             // rlbInboundMode
             // 
             this.rlbInboundMode._BackColor = System.Drawing.Color.MediumTurquoise;
-            resources.ApplyResources(this.rlbInboundMode, "rlbInboundMode");
             this.rlbInboundMode.AutoEllipsis = true;
+            resources.ApplyResources(this.rlbInboundMode, "rlbInboundMode");
             this.rlbInboundMode.BackColor = System.Drawing.SystemColors.Control;
             this.rlbInboundMode.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rlbInboundMode.ForeColor = System.Drawing.Color.DimGray;
@@ -253,9 +255,18 @@
             this.toolTip1.SetToolTip(this.rlbInboundMode, resources.GetString("rlbInboundMode.ToolTip"));
             this.rlbInboundMode.Click += new System.EventHandler(this.rlbInboundMode_Click);
             // 
+            // btnRestart
+            // 
+            resources.ApplyResources(this.btnRestart, "btnRestart");
+            this.btnRestart.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnRestart.ForeColor = System.Drawing.Color.DimGray;
+            this.btnRestart.Name = "btnRestart";
+            this.toolTip1.SetToolTip(this.btnRestart, resources.GetString("btnRestart.ToolTip"));
+            this.btnRestart.UseVisualStyleBackColor = true;
+            this.btnRestart.Click += new System.EventHandler(this.btnRestart_Click);
+            // 
             // ctxMenuStripMore
             // 
-            resources.ApplyResources(this.ctxMenuStripMore, "ctxMenuStripMore");
             this.ctxMenuStripMore.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.ctxMenuStripMore.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem3,
@@ -270,137 +281,144 @@
             this.logOfThisServerToolStripMenuItem,
             this.runSpeedTestToolStripMenuItem1});
             this.ctxMenuStripMore.Name = "ctxMenuStripMore";
-            this.toolTip1.SetToolTip(this.ctxMenuStripMore, resources.GetString("ctxMenuStripMore.ToolTip"));
+            resources.ApplyResources(this.ctxMenuStripMore, "ctxMenuStripMore");
             // 
             // toolStripMenuItem3
             // 
-            resources.ApplyResources(this.toolStripMenuItem3, "toolStripMenuItem3");
             this.toolStripMenuItem3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.startToolStripMenuItem,
             this.multiboxingToolStripMenuItem1,
+            this.restartToolStripMenuItem,
             this.stopToolStripMenuItem1});
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            resources.ApplyResources(this.toolStripMenuItem3, "toolStripMenuItem3");
             // 
             // startToolStripMenuItem
             // 
-            resources.ApplyResources(this.startToolStripMenuItem, "startToolStripMenuItem");
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
+            resources.ApplyResources(this.startToolStripMenuItem, "startToolStripMenuItem");
             this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
             // 
             // multiboxingToolStripMenuItem1
             // 
-            resources.ApplyResources(this.multiboxingToolStripMenuItem1, "multiboxingToolStripMenuItem1");
             this.multiboxingToolStripMenuItem1.Name = "multiboxingToolStripMenuItem1";
+            resources.ApplyResources(this.multiboxingToolStripMenuItem1, "multiboxingToolStripMenuItem1");
             this.multiboxingToolStripMenuItem1.Click += new System.EventHandler(this.multiboxingToolStripMenuItem1_Click);
+            // 
+            // restartToolStripMenuItem
+            // 
+            this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
+            resources.ApplyResources(this.restartToolStripMenuItem, "restartToolStripMenuItem");
+            this.restartToolStripMenuItem.Click += new System.EventHandler(this.restartToolStripMenuItem_Click);
             // 
             // stopToolStripMenuItem1
             // 
-            resources.ApplyResources(this.stopToolStripMenuItem1, "stopToolStripMenuItem1");
             this.stopToolStripMenuItem1.Name = "stopToolStripMenuItem1";
+            resources.ApplyResources(this.stopToolStripMenuItem1, "stopToolStripMenuItem1");
             this.stopToolStripMenuItem1.Click += new System.EventHandler(this.stopToolStripMenuItem1_Click);
             // 
             // toolStripMenuItem6
             // 
-            resources.ApplyResources(this.toolStripMenuItem6, "toolStripMenuItem6");
             this.toolStripMenuItem6.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.moveToTopToolStripMenuItem,
             this.moveToBottomToolStripMenuItem});
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            resources.ApplyResources(this.toolStripMenuItem6, "toolStripMenuItem6");
             // 
             // moveToTopToolStripMenuItem
             // 
-            resources.ApplyResources(this.moveToTopToolStripMenuItem, "moveToTopToolStripMenuItem");
             this.moveToTopToolStripMenuItem.Name = "moveToTopToolStripMenuItem";
+            resources.ApplyResources(this.moveToTopToolStripMenuItem, "moveToTopToolStripMenuItem");
             this.moveToTopToolStripMenuItem.Click += new System.EventHandler(this.moveToTopToolStripMenuItem_Click);
             // 
             // moveToBottomToolStripMenuItem
             // 
-            resources.ApplyResources(this.moveToBottomToolStripMenuItem, "moveToBottomToolStripMenuItem");
             this.moveToBottomToolStripMenuItem.Name = "moveToBottomToolStripMenuItem";
+            resources.ApplyResources(this.moveToBottomToolStripMenuItem, "moveToBottomToolStripMenuItem");
             this.moveToBottomToolStripMenuItem.Click += new System.EventHandler(this.moveToBottomToolStripMenuItem_Click);
             // 
             // copyToolStripMenuItem
             // 
-            resources.ApplyResources(this.copyToolStripMenuItem, "copyToolStripMenuItem");
             this.copyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.autoShareLinkToolStripMenuItem,
             this.v2cfgToolStripMenuItem});
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            resources.ApplyResources(this.copyToolStripMenuItem, "copyToolStripMenuItem");
             // 
             // autoShareLinkToolStripMenuItem
             // 
-            resources.ApplyResources(this.autoShareLinkToolStripMenuItem, "autoShareLinkToolStripMenuItem");
             this.autoShareLinkToolStripMenuItem.Name = "autoShareLinkToolStripMenuItem";
+            resources.ApplyResources(this.autoShareLinkToolStripMenuItem, "autoShareLinkToolStripMenuItem");
             this.autoShareLinkToolStripMenuItem.Click += new System.EventHandler(this.autoShareLinkToolStripMenuItem_Click);
             // 
             // v2cfgToolStripMenuItem
             // 
-            resources.ApplyResources(this.v2cfgToolStripMenuItem, "v2cfgToolStripMenuItem");
             this.v2cfgToolStripMenuItem.Name = "v2cfgToolStripMenuItem";
+            resources.ApplyResources(this.v2cfgToolStripMenuItem, "v2cfgToolStripMenuItem");
             this.v2cfgToolStripMenuItem.Click += new System.EventHandler(this.v2cfgToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
-            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
             // 
             // showSettingWindowToolStripMenuItem
             // 
-            resources.ApplyResources(this.showSettingWindowToolStripMenuItem, "showSettingWindowToolStripMenuItem");
             this.showSettingWindowToolStripMenuItem.Name = "showSettingWindowToolStripMenuItem";
+            resources.ApplyResources(this.showSettingWindowToolStripMenuItem, "showSettingWindowToolStripMenuItem");
             this.showSettingWindowToolStripMenuItem.Click += new System.EventHandler(this.showSettingsWindowToolStripMenuItem_Click);
             // 
             // textEditortoolStripMenuItem
             // 
-            resources.ApplyResources(this.textEditortoolStripMenuItem, "textEditortoolStripMenuItem");
             this.textEditortoolStripMenuItem.Name = "textEditortoolStripMenuItem";
+            resources.ApplyResources(this.textEditortoolStripMenuItem, "textEditortoolStripMenuItem");
             this.textEditortoolStripMenuItem.Click += new System.EventHandler(this.textEditortoolStripMenuItem_Click);
             // 
             // debugToolStripMenuItem
             // 
-            resources.ApplyResources(this.debugToolStripMenuItem, "debugToolStripMenuItem");
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
+            resources.ApplyResources(this.debugToolStripMenuItem, "debugToolStripMenuItem");
             this.debugToolStripMenuItem.Click += new System.EventHandler(this.showFinalConfigToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
-            resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
-            resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
             // 
             // logOfThisServerToolStripMenuItem
             // 
-            resources.ApplyResources(this.logOfThisServerToolStripMenuItem, "logOfThisServerToolStripMenuItem");
             this.logOfThisServerToolStripMenuItem.Name = "logOfThisServerToolStripMenuItem";
+            resources.ApplyResources(this.logOfThisServerToolStripMenuItem, "logOfThisServerToolStripMenuItem");
             this.logOfThisServerToolStripMenuItem.Click += new System.EventHandler(this.logOfThisServerToolStripMenuItem_Click);
             // 
             // runSpeedTestToolStripMenuItem1
             // 
-            resources.ApplyResources(this.runSpeedTestToolStripMenuItem1, "runSpeedTestToolStripMenuItem1");
             this.runSpeedTestToolStripMenuItem1.Name = "runSpeedTestToolStripMenuItem1";
+            resources.ApplyResources(this.runSpeedTestToolStripMenuItem1, "runSpeedTestToolStripMenuItem1");
             this.runSpeedTestToolStripMenuItem1.Click += new System.EventHandler(this.runSpeedTestToolStripMenuItem1_Click);
             // 
             // rtboxServerTitle
             // 
-            resources.ApplyResources(this.rtboxServerTitle, "rtboxServerTitle");
             this.rtboxServerTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtboxServerTitle.Cursor = System.Windows.Forms.Cursors.Default;
             this.rtboxServerTitle.DetectUrls = false;
+            resources.ApplyResources(this.rtboxServerTitle, "rtboxServerTitle");
             this.rtboxServerTitle.ForeColor = System.Drawing.SystemColors.ControlText;
             this.rtboxServerTitle.Name = "rtboxServerTitle";
             this.rtboxServerTitle.ReadOnly = true;
-            this.toolTip1.SetToolTip(this.rtboxServerTitle, resources.GetString("rtboxServerTitle.ToolTip"));
             this.rtboxServerTitle.Click += new System.EventHandler(this.rtboxServerTitle_Click);
             // 
             // ServerUI
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnRestart);
             this.Controls.Add(this.rlbSetting);
             this.Controls.Add(this.btnMenu);
             this.Controls.Add(this.btnStop);
@@ -467,5 +485,7 @@
         private VgcApis.UserControls.RoundLabel rlbTag3;
         private System.Windows.Forms.ToolStripMenuItem textEditortoolStripMenuItem;
         private VgcApis.UserControls.RoundLabel rlbCoreName;
+        private System.Windows.Forms.ToolStripMenuItem restartToolStripMenuItem;
+        private System.Windows.Forms.Button btnRestart;
     }
 }

@@ -173,6 +173,11 @@
     <Compile Include="Models\Datas\SpeedTestConfigInfos.cs" />
     <Compile Include="Models\Datas\SpeedTestOptions.cs" />
     <Compile Include="Models\Datas\UpdateInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Resx\I18N1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -450,14 +455,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Resources\Resx\I18N.zh-CN.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>I18N.zh-CN.Designer.cs</LastGenOutput>
@@ -586,9 +586,6 @@
     <None Include="Resources\Icon\TaskTray\RemoteServer_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\ExpandScope_16x.png" />
     <None Include="Resources\Icon\TaskTray\Module_16x.png" />
-    <None Include="Resources\Icon\ServerUI\StepOverArrow_16x.png" />
-    <None Include="Resources\Icon\ServerUI\StepBackArrow_16x.png" />
-    <None Include="Resources\Icon\ServerUI\GlyphUp_16x.png" />
     <None Include="Resources\Icon\TaskTray\ExpandScope_16x.png" />
     <None Include="Resources\Icon\TaskTray\WindowsForm_16x.png" />
     <None Include="Resources\Icon\TaskTray\StatusHelp_16x.png" />
@@ -643,6 +640,7 @@
     <Folder Include="Resources\Files\3rd\neolua\libs\" />
     <Folder Include="Resources\Files\3rd\neolua\mods\" />
     <Folder Include="Resources\Icon\CustomCoreUI\" />
+    <Folder Include="Resources\Icon\ServerUI\" />
     <Folder Include="Resources\Pkg\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

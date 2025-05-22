@@ -239,16 +239,6 @@ namespace V2RayGCon.Properties {
         }
         
         /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Bitmap GlyphUp_16x {
-            get {
-                object obj = ResourceManager.GetObject("GlyphUp_16x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 https://github.com/vrnobody/V2RayGCon/issues 的本地化字符串。
         /// </summary>
         internal static string IssueLink {
@@ -340,26 +330,6 @@ namespace V2RayGCon.Properties {
         internal static System.Drawing.Bitmap StatusHelp_16x {
             get {
                 object obj = ResourceManager.GetObject("StatusHelp_16x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Bitmap StepBackArrow_16x {
-            get {
-                object obj = ResourceManager.GetObject("StepBackArrow_16x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Bitmap StepOverArrow_16x {
-            get {
-                object obj = ResourceManager.GetObject("StepOverArrow_16x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

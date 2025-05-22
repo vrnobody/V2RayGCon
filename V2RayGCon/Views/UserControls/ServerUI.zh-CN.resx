@@ -147,9 +147,8 @@
   <data name="rlbInboundMode.ToolTip" xml:space="preserve">
     <value>Inbound信息</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="startToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 22</value>
+  <data name="btnRestart.ToolTip" xml:space="preserve">
+    <value>重启这个服务器</value>
   </data>
   <data name="startToolStripMenuItem.Text" xml:space="preserve">
     <value>开启</value>
@@ -157,17 +156,17 @@
   <data name="startToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>关闭全部服务器，然后运行这个服务器</value>
   </data>
-  <data name="multiboxingToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 22</value>
-  </data>
   <data name="multiboxingToolStripMenuItem1.Text" xml:space="preserve">
     <value>多开</value>
   </data>
   <data name="multiboxingToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>和其他已开启服务器并行运行（注意错开inbound端口）</value>
   </data>
-  <data name="stopToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 22</value>
+  <data name="restartToolStripMenuItem.Text" xml:space="preserve">
+    <value>重启</value>
+  </data>
+  <data name="restartToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>重启这个服务器</value>
   </data>
   <data name="stopToolStripMenuItem1.Text" xml:space="preserve">
     <value>停止</value>
@@ -175,6 +174,7 @@
   <data name="stopToolStripMenuItem1.ToolTipText" xml:space="preserve">
     <value>停止这个服务器</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
   </data>
@@ -273,6 +273,12 @@
   </data>
   <data name="ctxMenuStripMore.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 214</value>
+  </data>
+  <data name="ctxMenuStripMore.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="rtboxServerTitle.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value>拖放可调整顺序</value>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 using V2RayGCon.Services.ShareLinkComponents;
 using VgcApis.Models.Datas;
@@ -26,6 +27,11 @@ namespace V2RayGCon.Services
         #endregion
 
         #region IShareLinkMgrService methods
+        public string ToServerConfig(SharelinkMetaData meta)
+        {
+            return this.codecs.ToServerConfig(meta);
+        }
+
         public string DecodeShareLinkToMetadata(string shareLink)
         {
             var r = DecodeShareLinkToConfig(shareLink);

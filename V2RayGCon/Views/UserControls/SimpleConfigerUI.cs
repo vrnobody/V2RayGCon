@@ -23,9 +23,9 @@ namespace V2RayGCon.Views.UserControls
             tboxName.Visible = false;
         }
 
-        public string ToShareLink()
+        public VgcApis.Models.Datas.SharelinkMetaData ToShareLinkMetaData()
         {
-            var sc = new VgcApis.Models.Datas.SharelinkMetaData
+            var meta = new VgcApis.Models.Datas.SharelinkMetaData
             {
                 name = tboxName.Text,
                 proto = cboxProtocol.Text,
@@ -47,7 +47,7 @@ namespace V2RayGCon.Views.UserControls
                 tlsFingerPrint = cboxTlsFingerprint.Text,
             };
 
-            return sc.ToShareLink();
+            return meta;
         }
 
         public void FromCoreConfig(string config)

@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="btnOK.ToolTip" xml:space="preserve">
-    <value />
+  <data name="btnClient.Text" xml:space="preserve">
+    <value>客户端</value>
+  </data>
+  <data name="btnClient.ToolTip" xml:space="preserve">
+    <value>生成客户端配置</value>
+  </data>
+  <data name="btnServer.Text" xml:space="preserve">
+    <value>服务器</value>
+  </data>
+  <data name="btnServer.ToolTip" xml:space="preserve">
+    <value>生成服务器配置</value>
   </data>
   <data name="btnExit.Text" xml:space="preserve">
     <value>取消</value>

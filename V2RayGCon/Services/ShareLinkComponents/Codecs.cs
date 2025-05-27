@@ -56,6 +56,55 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region public methods
+        public string ToServerConfig(VgcApis.Models.Datas.SharelinkMetaData meta)
+        {
+            if (meta == null)
+            {
+                return null;
+            }
+
+            var tpl = Misc.Caches.Jsons.LoadTemplate("serverV4Tpl");
+            var inb = tpl["inbounds"][0];
+            inb["protocol"] = meta.proto;
+            inb["listen"] = meta.host;
+            inb["port"] = meta.port;
+            inb["streamSettings"] = Comm.GenStreamSetting(meta);
+
+            var set = new JObject();
+            var client = new JObject();
+            var key = "clients";
+            switch (meta.proto)
+            {
+                case "vless":
+                    set["decryption"] = "none";
+                    client["id"] = meta.auth1;
+                    if (!string.IsNullOrEmpty(meta.auth2))
+                    {
+                        client["flow"] = meta.auth2;
+                    }
+                    break;
+                case "vmess":
+                    client["id"] = meta.auth1;
+                    break;
+                case "trojan":
+                    client["password"] = meta.auth1;
+                    break;
+                case "shadowsocks":
+                    client["password"] = meta.auth1;
+                    client["method"] = meta.auth2;
+                    break;
+                case "socks":
+                    key = "accounts";
+                    client["user"] = meta.auth1;
+                    client["pass"] = meta.auth2;
+                    break;
+                default:
+                    return null;
+            }
+            set[key] = new JArray { client };
+            inb["settings"] = set;
+            return VgcApis.Misc.Utils.ToJson(tpl);
+        }
 
         public string Encode<TDecoder>(string name, string config)
             where TDecoder : VgcApis.BaseClasses.ComponentOf<Codecs>,

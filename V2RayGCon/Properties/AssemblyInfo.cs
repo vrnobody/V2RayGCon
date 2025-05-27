@@ -38,7 +38,7 @@ using System.Runtime.InteropServices;
 
 /*
 
-
+v2.1.0.2 Add generate server config feature in FormSimpleConfiger.
 v2.1.0.1 Add restart button in ServerUI.
 --------------------------------------------------------------------
 v2.0.9.1 Scroll to the corresponding line when formatting json fails.

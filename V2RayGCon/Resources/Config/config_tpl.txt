@@ -1,4 +1,24 @@
 ﻿{
+  "serverV4Tpl": {
+    "log": {
+      "loglevel": "warning"
+    },
+    "inbounds": [
+      {
+        "tag": "agentin",
+        "protocol": "vless",
+        "listen": "127.0.0.1",
+        "port": 443,
+        "settings": {},
+        "streamSettings": {}
+      }
+    ],
+    "outbounds": [
+      {
+        "protocol": "freedom"
+      }
+    ]
+  },
   "statsApiV4Inb": {
     "inbounds": [
       {

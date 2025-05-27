@@ -225,9 +225,7 @@ namespace V2RayGCon.Views.WinForms
                 {
                     if (simpleConfiger.DialogResult == DialogResult.OK)
                     {
-                        var shareLink = simpleConfiger.shareLink;
-                        var r = ShareLinkMgr.Instance.DecodeShareLinkToConfig(shareLink);
-                        ctrl.GetEditor().content = r.config;
+                        ctrl.GetEditor().content = simpleConfiger.config;
                     }
                     simpleConfiger = null;
                 };

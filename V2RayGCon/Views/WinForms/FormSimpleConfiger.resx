@@ -125,33 +125,36 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnExit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 21</value>
+    <value>56, 21</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnServer.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;btnClient.Name" xml:space="preserve">
     <value>btnClient</value>
   </data>
+  <data name="panelVeeImporter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
+  </data>
   <data name="btnClient.Text" xml:space="preserve">
-    <value>Client</value>
+    <value>Gen. Client</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnClient.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;panelVeeImporter.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="panelVeeImporter.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
+  </data>
+  <data name="SimpleConfigerUI1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
   </data>
   <data name="btnServer.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnExit.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
-  </data>
-  <data name="btnExit.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="&gt;&gt;btnExit.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -159,50 +162,47 @@
   <data name="$this.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="btnServer.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
   <data name="btnExit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>245, 476</value>
+    <value>265, 476</value>
   </data>
-  <data name="btnServer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 21</value>
+  <data name="&gt;&gt;panelVeeImporter.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnClient.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
   <data name="btnExit.Text" xml:space="preserve">
     <value>Exit</value>
   </data>
-  <data name="panelVeeImporter.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Simple editor</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>406, 507</value>
+  <data name="panelVeeImporter.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="&gt;&gt;SimpleConfigerUI1.Parent" xml:space="preserve">
     <value>panelVeeImporter</value>
   </data>
-  <data name="btnExit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom</value>
-  </data>
   <data name="panelVeeImporter.Size" type="System.Drawing.Size, System.Drawing">
     <value>382, 452</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Simple editor</value>
+  <data name="btnExit.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="btnClient.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 21</value>
+    <value>84, 21</value>
   </data>
   <data name="&gt;&gt;btnExit.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="btnServer.ToolTip" xml:space="preserve">
-    <value>Generate server config.</value>
+  <data name="btnExit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="panelVeeImporter.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>8, 8, 8, 8</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>406, 507</value>
   </data>
   <data name="&gt;&gt;btnServer.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -210,14 +210,14 @@
   <data name="SimpleConfigerUI1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="btnClient.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom</value>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
+  </data>
+  <data name="panelVeeImporter.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
   </data>
   <data name="&gt;&gt;btnClient.Parent" xml:space="preserve">
     <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btnClient.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SimpleConfigerUI1.ToolTip" xml:space="preserve">
     <value />
@@ -238,19 +238,19 @@
     <value>0, 0</value>
   </data>
   <data name="btnServer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>167, 476</value>
+    <value>175, 476</value>
   </data>
   <data name="btnClient.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 476</value>
+    <value>85, 476</value>
   </data>
-  <data name="btnClient.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="btnServer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>84, 21</value>
   </data>
-  <data name="panelVeeImporter.ToolTip" xml:space="preserve">
-    <value />
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>400, 425</value>
+  <data name="&gt;&gt;btnServer.Name" xml:space="preserve">
+    <value>btnServer</value>
   </data>
   <data name="btnClient.ToolTip" xml:space="preserve">
     <value>Generate client config.</value>
@@ -258,32 +258,32 @@
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FormSimpleConfiger</value>
-  </data>
-  <data name="&gt;&gt;btnServer.Name" xml:space="preserve">
-    <value>btnServer</value>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>400, 425</value>
   </data>
   <data name="btnServer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom</value>
   </data>
   <data name="&gt;&gt;SimpleConfigerUI1.Type" xml:space="preserve">
-    <value>V2RayGCon.Views.UserControls.SimpleConfigerUI, V2RayGCon, Version=2.1.0.1, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SimpleConfigerUI1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="panelVeeImporter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
+    <value>V2RayGCon.Views.UserControls.SimpleConfigerUI, V2RayGCon, Version=2.1.0.2, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;btnServer.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="SimpleConfigerUI1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
+  <data name="&gt;&gt;SimpleConfigerUI1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormSimpleConfiger</value>
+  </data>
+  <data name="panelVeeImporter.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>8, 8, 8, 8</value>
+  </data>
+  <data name="btnServer.ToolTip" xml:space="preserve">
+    <value>Copy corresponding server config to clipboard.</value>
+  </data>
+  <data name="btnClient.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom</value>
   </data>
   <data name="SimpleConfigerUI1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -292,10 +292,10 @@
     <value>btnExit</value>
   </data>
   <data name="btnServer.Text" xml:space="preserve">
-    <value>Server</value>
+    <value>Copy Server</value>
   </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
+  <data name="&gt;&gt;btnClient.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;panelVeeImporter.Parent" xml:space="preserve">
     <value>$this</value>

@@ -14,7 +14,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             try
             {
                 var json = VgcApis.Misc.Utils.ExtractTrimedRoutingAndOutbound(config);
-                meta = ExtractFromJsonConfig(json);
+                meta = ExtractFromOutboundConfig(json);
                 return true;
             }
             catch { }
@@ -174,7 +174,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             return token;
         }
 
-        public static SharelinkMetaData ExtractFromJsonConfig(JObject config)
+        public static SharelinkMetaData ExtractFromOutboundConfig(JObject config)
         {
             var GetStr = VgcApis.Misc.Utils.GetStringByPrefixAndKeyHelper(config);
 

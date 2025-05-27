@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 using V2RayGCon.Services;
+using ZXing;
 using static ScintillaNET.Style;
 
 namespace V2RayGCon.Views.WinForms
@@ -30,18 +31,6 @@ namespace V2RayGCon.Views.WinForms
         }
 
         #region private methods
-        void ShowResult(string result)
-        {
-            if (result == null)
-            {
-                VgcApis.Misc.UI.MsgBox(I18N.DecodeFail);
-                return;
-            }
-            this.config = result;
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-        }
-
         #endregion
 
         #region UI events
@@ -53,10 +42,11 @@ namespace V2RayGCon.Views.WinForms
         private void btnServer_Click(object sender, EventArgs e)
         {
             var meta = this.SimpleConfigerUI1.ToShareLinkMetaData();
-            var r = ShareLinkMgr.Instance.ToServerConfig(meta);
-            ShowResult(r);
+            var s = ShareLinkMgr.Instance.ToServerConfig(meta);
+            var ok = VgcApis.Misc.Utils.CopyToClipboard(s);
+            var msg = ok ? I18N.CopySuccess : I18N.DecodeFail;
+            VgcApis.Misc.UI.MsgBox(msg);
         }
-
         #endregion
 
         private void btnClient_Click(object sender, EventArgs e)
@@ -64,7 +54,14 @@ namespace V2RayGCon.Views.WinForms
             var meta = this.SimpleConfigerUI1.ToShareLinkMetaData();
             var shareLink = meta.ToShareLink();
             var r = ShareLinkMgr.Instance.DecodeShareLinkToConfig(shareLink)?.config;
-            ShowResult(r);
+            if (r == null)
+            {
+                VgcApis.Misc.UI.MsgBox(I18N.DecodeFail);
+                return;
+            }
+            this.config = r;
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }

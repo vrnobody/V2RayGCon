@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="tabPageSubscribe.Text" xml:space="preserve">
+    <value>订阅</value>
+  </data>
+  <data name="tabPageSetting.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="tabPageDefaults.Text" xml:space="preserve">
+    <value>默认值</value>
+  </data>
+  <data name="tabPageCustomCoresSetting.Text" xml:space="preserve">
+    <value>多内核</value>
+  </data>
+  <data name="tabPageConfigTemplates.Text" xml:space="preserve">
+    <value>模板</value>
+  </data>
+  <data name="tabPageConfigTemplates.ToolTip" xml:space="preserve">
+    <value>自定义config模板</value>
+  </data>
+  <data name="tabPagePlugins.Text" xml:space="preserve">
+    <value>插件</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkSubsIsAutoPatch.Location" type="System.Drawing.Point, System.Drawing">
     <value>397, 85</value>
@@ -166,15 +187,6 @@
   <data name="btnAddSubsUrl.ToolTip" xml:space="preserve">
     <value>添加订阅url</value>
   </data>
-  <data name="flySubsUrlContainer.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPageSubscribe.Text" xml:space="preserve">
-    <value>订阅</value>
-  </data>
-  <data name="tabPageSubscribe.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="chkSetEnableDebugFile.Location" type="System.Drawing.Point, System.Drawing">
     <value>395, 22</value>
   </data>
@@ -184,17 +196,11 @@
   <data name="chkSetEnableDebugFile.Text" xml:space="preserve">
     <value>启用</value>
   </data>
-  <data name="chkSetEnableDebugFile.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnSetBrowseDebugFile.ToolTip" xml:space="preserve">
     <value>浏览debug文件位置</value>
   </data>
-  <data name="tboxSetDebugFilePath.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox8.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>更新</value>
   </data>
   <data name="chkSetCheckV2RayCoreUpdateWhenStart.ToolTip" xml:space="preserve">
     <value>启动时检查 V2Ray/Xray core 更新</value>
@@ -211,11 +217,8 @@
   <data name="chkSetUpgradeUseProxy.ToolTip" xml:space="preserve">
     <value>随机选一个运行中的HTTP代理用于升级</value>
   </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>更新</value>
-  </data>
-  <data name="groupBox2.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox6.Text" xml:space="preserve">
+    <value>系统</value>
   </data>
   <data name="btnSetOpenStartupFolder.Text" xml:space="preserve">
     <value>自启动文件夹</value>
@@ -232,11 +235,8 @@
   <data name="chkSetSysPortable.ToolTip" xml:space="preserve">
     <value>将配置信息保存到软件运行目录内</value>
   </data>
-  <data name="groupBox6.Text" xml:space="preserve">
-    <value>系统</value>
-  </data>
-  <data name="groupBox6.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox5.Text" xml:space="preserve">
+    <value>服务器</value>
   </data>
   <data name="chkSetServStatistics.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 16</value>
@@ -256,23 +256,11 @@
   <data name="chkSetSelfSignedCert.ToolTip" xml:space="preserve">
     <value>是否允许使用自签名证书</value>
   </data>
-  <data name="cboxSettingsUtlsFingerprint.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxSettingsRandomSelectServerLatency.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 12</value>
   </data>
   <data name="label14.Text" xml:space="preserve">
     <value>ms (零表示忽略延迟)</value>
-  </data>
-  <data name="label14.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxSettingsMaxCoreNum.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="label16.ToolTip" xml:space="preserve">
     <value>自定义TLS指纹</value>
@@ -304,9 +292,6 @@
   <data name="chkSetServAutotrack.ToolTip" xml:space="preserve">
     <value>保持上次退出时的服务器运行状态。</value>
   </data>
-  <data name="label13.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>
   </data>
@@ -316,11 +301,8 @@
   <data name="label12.ToolTip" xml:space="preserve">
     <value>测速时并发运行的v2ray-core最大数量</value>
   </data>
-  <data name="groupBox5.Text" xml:space="preserve">
-    <value>服务器</value>
-  </data>
-  <data name="groupBox5.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>界面</value>
   </data>
   <data name="chkIsEnableSystrayLeftClickCommand.Location" type="System.Drawing.Point, System.Drawing">
     <value>395, 74</value>
@@ -330,21 +312,6 @@
   </data>
   <data name="chkIsEnableSystrayLeftClickCommand.Text" xml:space="preserve">
     <value>启用</value>
-  </data>
-  <data name="chkIsEnableSystrayLeftClickCommand.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxSettingPageSize.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label8.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tboxSystrayLeftClickCommand.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label3.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>
@@ -364,35 +331,8 @@
   <data name="label2.ToolTip" xml:space="preserve">
     <value>主窗口服务器列表每页显示服务器数</value>
   </data>
-  <data name="cboxSettingLanguage.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="label1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>界面</value>
-  </data>
-  <data name="groupBox1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPageSetting.Text" xml:space="preserve">
-    <value>设置</value>
-  </data>
-  <data name="tabPageSetting.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="rtboxCustomFilterKeywords.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="groupBox7.Text" xml:space="preserve">
     <value>搜索关键词</value>
-  </data>
-  <data name="groupBox7.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxCustomUserAgent.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="label18.ToolTip" xml:space="preserve">
     <value>自定义user agent</value>
@@ -409,11 +349,8 @@
   <data name="chkIsUseCustomUserAgent.ToolTip" xml:space="preserve">
     <value>使用自定义user agent</value>
   </data>
-  <data name="groupBox9.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxDefImportCoreName.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>导入分享链接</value>
   </data>
   <data name="chkDefImportVlessShareLink.ToolTip" xml:space="preserve">
     <value>导入时处理vless链接</value>
@@ -430,23 +367,20 @@
   <data name="chkDefImportSsShareLink.ToolTip" xml:space="preserve">
     <value>导入时处理ss链接</value>
   </data>
-  <data name="cboxDefImportInbName.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 12</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
-    <value>默认地址</value>
+    <value>入站地址</value>
   </data>
   <data name="label9.ToolTip" xml:space="preserve">
-    <value>默认代理地址</value>
+    <value>默认Inbound代理地址</value>
   </data>
   <data name="label20.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
+    <value>65, 12</value>
   </data>
   <data name="label20.Text" xml:space="preserve">
-    <value>默认core</value>
+    <value>自定义core</value>
   </data>
   <data name="label20.ToolTip" xml:space="preserve">
     <value>默认自定义core配置名</value>
@@ -455,22 +389,13 @@
     <value>53, 12</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
-    <value>默认模板</value>
+    <value>入站模板</value>
   </data>
   <data name="label10.ToolTip" xml:space="preserve">
     <value>默认inbound配置模板名</value>
   </data>
-  <data name="groupBox4.Text" xml:space="preserve">
-    <value>导入分享链接</value>
-  </data>
-  <data name="groupBox4.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxDefSpeedTestExpectedSize.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cboxDefSpeedTestUrl.ToolTip" xml:space="preserve">
-    <value />
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>测速</value>
   </data>
   <data name="tboxDefSpeedtestTimeout.ToolTip" xml:space="preserve">
     <value>20000（20秒）</value>
@@ -519,32 +444,11 @@
   <data name="label11.ToolTip" xml:space="preserve">
     <value>超时（单位毫秒）</value>
   </data>
-  <data name="groupBox3.Text" xml:space="preserve">
-    <value>测速</value>
-  </data>
-  <data name="groupBox3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPageDefaults.Text" xml:space="preserve">
-    <value>默认值</value>
-  </data>
-  <data name="tabPageDefaults.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnCoresSettingAdd.Text" xml:space="preserve">
     <value>添加</value>
   </data>
   <data name="btnCoresSettingAdd.ToolTip" xml:space="preserve">
     <value>添加自定义core配置</value>
-  </data>
-  <data name="flyCoresSetting.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPageCustomCoresSetting.Text" xml:space="preserve">
-    <value>多内核</value>
-  </data>
-  <data name="tabPageCustomCoresSetting.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="label19.Size" type="System.Drawing.Size, System.Drawing">
     <value>305, 12</value>
@@ -552,23 +456,11 @@
   <data name="label19.Text" xml:space="preserve">
     <value>钩选表示将相应模板注入所有服务器，注意看最终配置。</value>
   </data>
-  <data name="label19.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnCustomTemplatesAdd.Text" xml:space="preserve">
     <value>添加</value>
   </data>
   <data name="btnCustomTemplatesAdd.ToolTip" xml:space="preserve">
     <value>添加自定义config模板</value>
-  </data>
-  <data name="flyCustomTemplates.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPageConfigTemplates.Text" xml:space="preserve">
-    <value>模板</value>
-  </data>
-  <data name="tabPageConfigTemplates.ToolTip" xml:space="preserve">
-    <value>自定义config模板</value>
   </data>
   <data name="chkIsLoad3rdPartyPlugins.Location" type="System.Drawing.Point, System.Drawing">
     <value>407, 35</value>
@@ -594,21 +486,6 @@
   <data name="label4.Text" xml:space="preserve">
     <value>钩选并保存后，主窗口及托盘图标将多出一个插件菜单。</value>
   </data>
-  <data name="label4.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="flyPluginsItemsContainer.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabPagePlugins.Text" xml:space="preserve">
-    <value>插件</value>
-  </data>
-  <data name="tabPagePlugins.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tabControl1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnOptionSave.Text" xml:space="preserve">
     <value>保存</value>
   </data>
@@ -618,13 +495,7 @@
   <data name="btnOptionExit.Text" xml:space="preserve">
     <value>退出</value>
   </data>
-  <data name="btnOptionExit.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>V2RayGCon - 选项</value>
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>

@@ -2,18 +2,18 @@
 {
     public static class Import
     {
-        public const int DecodeCacheSize = 10;
+        public static readonly int DecodeCacheSize = 10;
 
-        public const int HtmlCacheSize = 30;
+        public static readonly int HtmlCacheSize = 30;
 
-        public const int ParseImportTimeout = 12 * 1000;
+        public static readonly int ParseImportTimeout = 30 * 1000;
 
-        public const int ParseImportDepth = 5;
+        public static readonly int ParseImportDepth = 5;
 
-        public const int ParseImportRetry = 3;
+        public static readonly int ParseImportRetry = 3;
 
-        public const string MarkImportSuccess = @"√";
+        public static readonly string MarkImportSuccess = @"√";
 
-        public const string MarkImportFail = @"×";
+        public static readonly string MarkImportFail = @"×";
     }
 }

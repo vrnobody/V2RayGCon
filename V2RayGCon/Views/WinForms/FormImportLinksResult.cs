@@ -90,7 +90,7 @@ namespace V2RayGCon.Views.WinForms
                                 {
                                     LoadOneRow(reasons, idx);
                                 }
-                                if ((DateTime.Now - prev).TotalMilliseconds < 500)
+                                if ((DateTime.Now - prev).TotalMilliseconds > 500)
                                 {
                                     break;
                                 }

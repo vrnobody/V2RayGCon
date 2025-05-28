@@ -5,6 +5,10 @@ draft: false
 weight: 20
 ---
 
+##### 预计 2026-06-01 删除以下功能
+NeoLuna插件内的下列函数：  
+std.Misc:EncodeToShareLinkMetaData(config) // 替换为 std.Misc:GetMetaData(config)  
+
 ##### 预计 2026-01-01 删除以下功能
 NeoLuna插件内的下列函数：  
 std.Sys:LusServSetIndex() // 改名为LuaServSetIndex()  

@@ -4,9 +4,10 @@ namespace VgcApis.Interfaces.Services
 {
     public interface IShareLinkMgrService
     {
-        string ToServerConfig(SharelinkMetaData meta);
+        string GenServerSideConfig(SharelinkMetaData meta);
 
         string DecodeShareLinkToMetadata(string shareLink);
+
         string EncodeMetadataToShareLink(string meta);
 
         DecodeResult DecodeShareLinkToConfig(string shareLink);

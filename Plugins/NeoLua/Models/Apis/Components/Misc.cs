@@ -169,6 +169,19 @@ namespace NeoLuna.Models.Apis.Components
             return null;
         }
 
+        public string GenServerSideConfig(LuaTable meta)
+        {
+            try
+            {
+                var j = JsonConvert.SerializeObject(meta);
+                var d = JsonConvert.DeserializeObject<VgcApis.Models.Datas.SharelinkMetaData>(j);
+                var c = vgcSlinkMgr.GenServerSideConfig(d);
+                return c;
+            }
+            catch { }
+            return null;
+        }
+
         public string EncodeMetadataToShareLink(LuaTable meta)
         {
             try
@@ -267,6 +280,20 @@ namespace NeoLuna.Models.Apis.Components
             if (vgcSlinkMgr.TryParseConfig(config, out var meta) && meta != null)
             {
                 return meta;
+            }
+            return null;
+        }
+
+        public LuaTable GetMetaData(string config)
+        {
+            if (vgcSlinkMgr.TryParseConfig(config, out var meta) && meta != null)
+            {
+                try
+                {
+                    var j = meta.ToJson();
+                    return JsonConvert.DeserializeObject<LuaTable>(j);
+                }
+                catch { }
             }
             return null;
         }

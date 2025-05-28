@@ -27,7 +27,7 @@ namespace V2RayGCon.Services
         #endregion
 
         #region IShareLinkMgrService methods
-        public string ToServerConfig(SharelinkMetaData meta)
+        public string GenServerSideConfig(SharelinkMetaData meta)
         {
             return this.codecs.ToServerConfig(meta);
         }

@@ -6,7 +6,7 @@ namespace NeoLuna.Interfaces
 {
     public interface ILuaMisc : ILogable
     {
-        #region do net stuff
+        #region dot net stuff
         /// <summary>
         /// 清理.net Regex缓存
         /// </summary>
@@ -439,12 +439,20 @@ namespace NeoLuna.Interfaces
         string Basse64EncodeBytes(byte[] bytes);
         byte[] Base64DecodeToBytes(string b64Str);
 
+        // obsolete! delete in 20260601
         /// <summary>
         /// 从json类型的config中提取分享链接元数据
         /// </summary>
         /// <param name="config">json类型的config</param>
         /// <returns>分享链接元数据</returns>
         VgcApis.Models.Datas.SharelinkMetaData EncodeToShareLinkMetaData(string config);
+
+        /// <summary>
+        /// 从json类型的config中提取分享链接元数据
+        /// </summary>
+        /// <param name="config">json类型的config</param>
+        /// <returns>分享链接元数据</returns>
+        LuaTable GetMetaData(string config);
 
         /// <summary>
         /// 将config编码为分享链接
@@ -482,6 +490,13 @@ namespace NeoLuna.Interfaces
         /// <param name="meta">用json表示的元数据</param>
         /// <returns>分享链接</returns>
         string EncodeMetadataToShareLink(LuaTable meta);
+
+        /// <summary>
+        /// 根据分享链接元数据生成相对应的服务端配置
+        /// </summary>
+        /// <param name="meta">用json表示的元数据</param>
+        /// <returns>服务端配置</returns>
+        string GenServerSideConfig(LuaTable meta);
 
         // links = "vmess://... ss://...  (...)"
         /// <summary>

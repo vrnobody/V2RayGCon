@@ -42,7 +42,7 @@ namespace V2RayGCon.Views.WinForms
         private void btnServer_Click(object sender, EventArgs e)
         {
             var meta = this.SimpleConfigerUI1.ToShareLinkMetaData();
-            var s = ShareLinkMgr.Instance.ToServerConfig(meta);
+            var s = ShareLinkMgr.Instance.GenServerSideConfig(meta);
             var ok = VgcApis.Misc.Utils.CopyToClipboard(s);
             var msg = ok ? I18N.CopySuccess : I18N.DecodeFail;
             VgcApis.Misc.UI.MsgBox(msg);

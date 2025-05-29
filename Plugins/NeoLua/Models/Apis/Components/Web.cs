@@ -146,7 +146,7 @@ namespace NeoLuna.Models.Apis.Components
         public List<string> ExtractBase64String(string text, int minLen) =>
             VgcApis.Misc.Utils.ExtractBase64Strings(text, minLen);
 
-        public List<string> ExtractBase64String(string text) => ExtractBase64String(text, 1);
+        public List<string> ExtractBase64String(string text) => ExtractBase64String(text, 4);
 
         public int GetProxyPort() => GetHttpProxyPort();
 

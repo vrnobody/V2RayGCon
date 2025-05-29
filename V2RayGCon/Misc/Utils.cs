@@ -278,7 +278,10 @@ namespace V2RayGCon.Misc
                 }
 
                 var links = new List<string> { subsString };
-                var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(subsString, 24);
+
+                // average length of vless://... is 200
+                var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(subsString, 200 * 4 / 3);
+
                 foreach (var b64 in b64s)
                 {
                     try

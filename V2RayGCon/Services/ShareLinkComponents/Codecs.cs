@@ -56,7 +56,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region public methods
-        public string ToServerConfig(VgcApis.Models.Datas.SharelinkMetaData meta)
+        public string GenServerSideConfig(VgcApis.Models.Datas.SharelinkMetaData meta)
         {
             if (meta == null)
             {
@@ -95,6 +95,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                     break;
                 case "socks":
                     key = "accounts";
+                    set["auth"] = "password";
                     client["user"] = meta.auth1;
                     client["pass"] = meta.auth2;
                     break;

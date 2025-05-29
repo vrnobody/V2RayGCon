@@ -29,7 +29,7 @@ namespace V2RayGCon.Services
         #region IShareLinkMgrService methods
         public string GenServerSideConfig(SharelinkMetaData meta)
         {
-            return this.codecs.ToServerConfig(meta);
+            return this.codecs.GenServerSideConfig(meta);
         }
 
         public string DecodeShareLinkToMetadata(string shareLink)

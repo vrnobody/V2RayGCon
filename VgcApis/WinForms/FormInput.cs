@@ -30,5 +30,18 @@ namespace VgcApis.WinForms
         {
             this.Close();
         }
+
+        private void tboxContent_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Enter:
+                    btnOk.PerformClick();
+                    break;
+                case Keys.Escape:
+                    btnCancel.PerformClick();
+                    break;
+            }
+        }
     }
 }

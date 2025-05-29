@@ -40,6 +40,7 @@ namespace VgcApis.WinForms
             // 
             resources.ApplyResources(this.tboxContent, "tboxContent");
             this.tboxContent.Name = "tboxContent";
+            this.tboxContent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tboxContent_KeyDown);
             // 
             // btnOk
             // 

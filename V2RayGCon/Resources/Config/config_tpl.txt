@@ -15,6 +15,7 @@
     ],
     "outbounds": [
       {
+        "tag": "agentout",
         "protocol": "freedom"
       }
     ]

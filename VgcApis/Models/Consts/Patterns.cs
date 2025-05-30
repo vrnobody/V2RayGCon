@@ -21,24 +21,24 @@
 
         public static readonly string NonAlphabets = @"[^0-9a-zA-Z]";
 
-        public static readonly string Base64Characters =
-            @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/-_";
+        public static readonly string LetterDigit =
+            @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        public static readonly string Base64NonStandard = @"[A-Za-z0-9+/_\-]+={0,3}";
-
-        public static readonly string SsShareLinkContent =
-            @"[a-zA-Z0-9@#\-\.\?\,\'\/\+&;%\$_\[\]\+:=]+";
-
-        public static readonly string UriContent = @"[\w\-\.\:\?\,\'\[\]+&;@%\$#_=]+";
+        public static readonly string Base64Chars = $"{LetterDigit}+/-_";
 
         // [/]for alpn=http/1.1
         // \u0026 => &
-        public static readonly string UriContentNonStandard = @"[\w\-\.\:\?\,\'\[\]+&;@%\$#_=/\\]+";
+        public static readonly string NonStandardUriBodyChars =
+            $"{LetterDigit}@#-.?,'/&;%$_[]+:=\\";
 
         public static readonly string HttpUrl =
             @"(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&;%\$#_=]*)?";
 
-        public static readonly string Base64Standard =
-            @"(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})";
+        // deleted 2025-05-30
+        // public static readonly string UriContent = @"[\w\-\.\:\?\,\'\[\]+&;@%\$#_=]+";
+        // public static readonly string Base64NonStandard = @"[A-Za-z0-9+/_\-]+={0,3}";
+        // public static readonly string Base64Standard = @"(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})";
+        // public static readonly string SsShareLinkContent = @"[a-zA-Z0-9@#\-\.\?\,\'\/\+&;%\$_\[\]\+:=]+";
+        // public static readonly string UriContentNonStandard = @"[\w\-\.\:\?\,\'\[\]+&;@%\$#_=/\\]+";
     }
 }

@@ -594,12 +594,21 @@ ab12-_中文: |
 
         [DataTestMethod]
         [DataRow(
+            @"vless://1234@[1::2:3:4]:1234?security=reality\u0026amp;encryption=none\u0026headerType=none\u0026type=tcp\u0026flow=xtls-rprx-vision#1aA中😀",
+            @"vless://1234@[1::2:3:4]:1234?security=reality&amp;encryption=none&headerType=none&type=tcp&flow=xtls-rprx-vision#1aA中😀"
+        )]
+        [DataRow(
             @"vless://1234@[1::2:3:4]:1234?security=reality\u0026encryption=none\u0026headerType=none\u0026type=tcp\u0026flow=xtls-rprx-vision#1aA中😀",
             @"vless://1234@[1::2:3:4]:1234?security=reality&encryption=none&headerType=none&type=tcp&flow=xtls-rprx-vision#1aA中😀"
         )]
         [DataRow(
             @"\u8ba1\u7b97\u673a\u2022\u7f51\u7edc\u2022\u6280\u672f\u7c7b",
-            "计算机•网络•技术类"
+            @"计算机•网络•技术类"
+        )]
+        [DataRow(@"\a\b2022\\c2022\\u2022\u\2022", @"\a\b2022\\c2022\•\u\2022")]
+        [DataRow(
+            @"\\\\u8ba1\u\u7B97\u673A\u2022\u7f51\U7edc\u2022\U6280\u672f\u1\u12\u123\u7c7b\ut\uu\u",
+            @"\\\计\u算机•网络•技术\u1\u12\u123类\ut\uu\u"
         )]
         [DataRow(null, null)]
         [DataRow("", "")]

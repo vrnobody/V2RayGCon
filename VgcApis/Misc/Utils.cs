@@ -3,6 +3,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -769,9 +770,89 @@ namespace VgcApis.Misc
             {
                 return source;
             }
+            var r = new StringBuilder();
+            var cache = new StringBuilder();
+
+            void clearCache()
+            {
+                if (cache.Length < 1)
+                {
+                    return;
+                }
+
+                var s = cache.ToString();
+                if (cache.Length != 6)
+                {
+                    r.Append(s);
+                    cache.Clear();
+                    return;
+                }
+
+                var hex = cache.ToString(2, 4);
+                try
+                {
+                    var c = (char)ushort.Parse(hex, NumberStyles.AllowHexSpecifier);
+                    r.Append(c);
+                }
+                catch
+                {
+                    r.Append(s);
+                }
+                cache.Clear();
+            }
+
+            var hexChars = @"0123456789abcdefABCDEF";
+            foreach (char c in source)
+            {
+                if (cache.Length == 6)
+                {
+                    clearCache();
+                }
+
+                if (c == '\\')
+                {
+                    if (cache.Length == 0)
+                    {
+                        cache.Append(c);
+                    }
+                    else
+                    {
+                        clearCache();
+                        cache.Append(c);
+                    }
+                    continue;
+                }
+
+                if (cache.Length == 1 && (c == 'u' || c == 'U'))
+                {
+                    cache.Append(c);
+                    continue;
+                }
+
+                if (cache.Length > 1 && hexChars.IndexOf(c) >= 0)
+                {
+                    cache.Append(c);
+                    continue;
+                }
+
+                clearCache();
+                r.Append(c);
+            }
+
+            clearCache();
+            return r.ToString();
+        }
+
+        public static string Delete_UnescapeUnicode(string source)
+        {
+            if (string.IsNullOrEmpty(source))
+            {
+                return source;
+            }
 
             // https://stackoverflow.com/questions/8558671/how-to-unescape-unicode-string-in-c-sharp
-            return Regex.Replace(
+
+            var result = Regex.Replace(
                 source,
                 @"\\[Uu]([0-9A-Fa-f]{4})",
                 m =>
@@ -783,6 +864,7 @@ namespace VgcApis.Misc
                             )
                     )
             );
+            return result;
         }
 
         public static string DecodeAmpersand(string source)
@@ -3184,7 +3266,7 @@ namespace VgcApis.Misc
 
         public static List<string> ExtractBase64Strings(string text, int minLen)
         {
-            var chars = Patterns.Base64Characters;
+            var chars = Patterns.Base64Chars;
             var len = chars.Length;
 
             var b64s = new List<string>();
@@ -3206,7 +3288,7 @@ namespace VgcApis.Misc
                 {
                     b64s.Add(sb.ToString());
                 }
-                sb = new StringBuilder();
+                sb.Clear();
             }
             if (sb.Length >= minLen)
             {
@@ -3328,42 +3410,9 @@ namespace VgcApis.Misc
             return marks;
         }
 
-        static string GenLinkPrefix(Enums.LinkTypes linkType) => $"{linkType}";
-
-        public static string GenPattern(Enums.LinkTypes linkType)
-        {
-            string pattern;
-            switch (linkType)
-            {
-                case Enums.LinkTypes.ss:
-                case Enums.LinkTypes.socks:
-                    pattern = GenLinkPrefix(linkType) + "://" + Patterns.SsShareLinkContent;
-                    break;
-                case Enums.LinkTypes.vmess:
-                case Enums.LinkTypes.v2cfg:
-                    pattern = GenLinkPrefix(linkType) + "://" + Patterns.Base64NonStandard;
-                    break;
-                case Enums.LinkTypes.http:
-                case Enums.LinkTypes.https:
-                    pattern = Patterns.HttpUrl;
-                    break;
-                case Enums.LinkTypes.trojan:
-                    pattern = GenLinkPrefix(linkType) + "://" + Patterns.UriContentNonStandard;
-                    break;
-                case Enums.LinkTypes.vless:
-                    // pattern = GenLinkPrefix(linkType) + "://" + VgcApis.Models.Consts.Patterns.UriContent;
-                    pattern = GenLinkPrefix(linkType) + "://" + Patterns.UriContentNonStandard;
-                    break;
-                default:
-                    throw new NotSupportedException($"Not supported link type {linkType}:// ...");
-            }
-
-            return Patterns.NonAlphabets + pattern;
-        }
-
         public static string AddLinkPrefix(string b64Content, Enums.LinkTypes linkType)
         {
-            return GenLinkPrefix(linkType) + "://" + b64Content;
+            return $"{linkType}://{b64Content}";
         }
 
         public static string GetLinkBody(string link)

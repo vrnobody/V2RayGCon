@@ -4,11 +4,15 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
+using Castle.DynamicProxy;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
+using VgcApis.Models.Consts;
 using VgcApis.Models.Datas;
+using static System.Windows.Forms.LinkLabel;
 
 namespace V2RayGCon.Misc
 {
@@ -122,21 +126,94 @@ namespace V2RayGCon.Misc
         /// <returns></returns>
         public static List<string> ExtractLinks(string text, Enums.LinkTypes linkType)
         {
-            var links = new List<string>();
+            var protocol = $"{linkType}://";
+            switch (linkType)
+            {
+                case Enums.LinkTypes.vless:
+                case Enums.LinkTypes.trojan:
+                case Enums.LinkTypes.ss:
+                case Enums.LinkTypes.socks:
+                    return LinksTextExtractor(text, protocol, Patterns.NonStandardUriBodyChars);
+                case Enums.LinkTypes.vmess:
+                case Enums.LinkTypes.v2cfg:
+                    return LinksTextExtractor(text, protocol, Patterns.Base64Chars);
+                case Enums.LinkTypes.http:
+                case Enums.LinkTypes.https:
+                    return LinksRegexExtractor(text, Patterns.HttpUrl);
+                default:
+                    break;
+            }
+            return new List<string>();
+        }
+
+        public static List<string> LinksRegexExtractor(string text, string pattern)
+        {
+            var r = new List<string>();
             try
             {
-                string pattern = VgcApis.Misc.Utils.GenPattern(linkType);
                 var matches = Regex.Matches("\n" + text, pattern, RegexOptions.IgnoreCase);
-
                 foreach (Match match in matches)
                 {
                     var link = match.Value.Substring(1);
                     link = VgcApis.Misc.Utils.UnescapeUnicode(link);
                     link = VgcApis.Misc.Utils.DecodeAmpersand(link);
-                    links.Add(link);
+                    r.Add(link);
                 }
             }
             catch { }
+            return r;
+        }
+
+        public static List<string> LinksTextExtractor(
+            string text,
+            string protocol,
+            string bodyChars
+        )
+        {
+            var links = new List<string>();
+            if (string.IsNullOrEmpty(protocol) || string.IsNullOrEmpty(bodyChars))
+            {
+                return links;
+            }
+            var idx = 0;
+            var sb = new StringBuilder();
+            foreach (var c in text)
+            {
+                if (idx < protocol.Length)
+                {
+                    if (c == protocol[idx])
+                    {
+                        idx++;
+                    }
+                    else
+                    {
+                        idx = c == protocol[0] ? 1 : 0;
+                    }
+                    continue;
+                }
+                if (bodyChars.IndexOf(c) >= 0)
+                {
+                    sb.Append(c);
+                    continue;
+                }
+                if (sb.Length > 0)
+                {
+                    try
+                    {
+                        var link = $"{protocol}{sb}";
+                        link = VgcApis.Misc.Utils.UnescapeUnicode(link);
+                        link = VgcApis.Misc.Utils.DecodeAmpersand(link);
+                        links.Add(link);
+                    }
+                    catch { }
+                    sb.Clear();
+                }
+                idx = c == protocol[0] ? 1 : 0;
+            }
+            if (sb.Length > 0)
+            {
+                links.Add($"{protocol}{sb}");
+            }
             return links;
         }
 

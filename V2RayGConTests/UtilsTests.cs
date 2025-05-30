@@ -2,6 +2,7 @@
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Misc;
@@ -145,6 +146,49 @@ stat: <
             var links = ExtractLinks(text, VgcApis.Models.Datas.Enums.LinkTypes.vless);
             Assert.AreEqual(1, links.Count);
             Assert.AreEqual(expected, links[0]);
+        }
+
+        [DataTestMethod]
+        [DataRow(
+            "abc://1/\\bc://222dbc:///12bc",
+            "bc://",
+            "12bc:/\\",
+            "bc://1/\\bc://222",
+            "bc:///12bc"
+        )]
+        [DataRow(
+            "ccc://ccc://c://12322211cc\nccdcccc://cccc://123c://11111ccccc://2222c://ccc",
+            "c://",
+            "123",
+            "c://12322211",
+            "c://123",
+            "c://11111",
+            "c://2222"
+        )]
+        [DataRow(
+            "abc://12322211\ncc://cccc://123\n,c://1c1c1c://",
+            "c://",
+            "123c",
+            "c://12322211",
+            "c://cccc",
+            "c://1c1c1c"
+        )]
+        [DataRow("abc://12322211@222", "c://", "123", "c://12322211")]
+        [DataRow("abc://def", "ccc://", "def")]
+        [DataRow("abc://def", "abc://", "def", "abc://def")]
+        public void LinksTextExtractorTest(
+            string text,
+            string protocol,
+            string bodyChars,
+            params string[] expLinks
+        )
+        {
+            var links = LinksTextExtractor(text, protocol, bodyChars);
+            Assert.AreEqual(expLinks.Length, links.Count);
+            for (var i = 0; i < links.Count; i++)
+            {
+                Assert.AreEqual(expLinks[i], links[i]);
+            }
         }
 
         [DataTestMethod]

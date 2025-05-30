@@ -791,6 +791,7 @@ namespace VgcApis.Misc
                 var hex = cache.ToString(2, 4);
                 try
                 {
+                    // https://stackoverflow.com/questions/8558671/how-to-unescape-unicode-string-in-c-sharp
                     var c = (char)ushort.Parse(hex, NumberStyles.AllowHexSpecifier);
                     r.Append(c);
                 }
@@ -841,30 +842,6 @@ namespace VgcApis.Misc
 
             clearCache();
             return r.ToString();
-        }
-
-        public static string Delete_UnescapeUnicode(string source)
-        {
-            if (string.IsNullOrEmpty(source))
-            {
-                return source;
-            }
-
-            // https://stackoverflow.com/questions/8558671/how-to-unescape-unicode-string-in-c-sharp
-
-            var result = Regex.Replace(
-                source,
-                @"\\[Uu]([0-9A-Fa-f]{4})",
-                m =>
-                    char.ToString(
-                        (char)
-                            ushort.Parse(
-                                m.Groups[1].Value,
-                                System.Globalization.NumberStyles.AllowHexSpecifier
-                            )
-                    )
-            );
-            return result;
         }
 
         public static string DecodeAmpersand(string source)

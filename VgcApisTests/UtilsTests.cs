@@ -17,6 +17,23 @@ namespace VgcApisTests
     {
         #region short date int
 
+        [DataTestMethod]
+        [DataRow("中aGVsbG8=文aGVsbG8\naGVsbG8=💛aGVsbG8=", 10, 0)]
+        [DataRow("中aGVsbG8=文aGVsbG8\naGVsbG8=💛aGVsbG8=", 0, 4)]
+        [DataRow("aGVsbG8=", 0, 1)]
+        [DataRow("", 0, 0)]
+        [DataRow("", 1, 0)]
+        [DataRow(null, 1, 0)]
+        public void ExtractBase64StringsTest(string text, int minLen, int expCount)
+        {
+            // b64(hello) = "aGVsbG8="
+            var matches = ExtractBase64Strings(text, minLen);
+            Assert.AreEqual(expCount, matches.Count);
+            foreach (var match in matches)
+            {
+                Assert.AreEqual("aGVsbG8", match);
+            }
+        }
 
         [TestMethod]
         public void ToShortDateIntTest()

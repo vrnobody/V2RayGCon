@@ -19,7 +19,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
         {
             var vmess = Misc.Utils.VmessLink2Vmess(shareLink);
             var config = Vmess2Config(vmess);
-            return new DecodeResult(vmess.ps, config);
+            return string.IsNullOrEmpty(config) ? null : new DecodeResult(vmess.ps, config);
         }
 
         public string Encode(string name, string config)

@@ -3182,26 +3182,36 @@ namespace VgcApis.Misc
             return null;
         }
 
-        /// <summary>
-        /// Return empty list if some thing goes wrong.
-        /// </summary>
         public static List<string> ExtractBase64Strings(string text, int minLen)
         {
+            var chars = Patterns.Base64Characters;
+            var len = chars.Length;
+
             var b64s = new List<string>();
-            try
+            if (string.IsNullOrEmpty(text))
             {
-                var matches = Regex.Matches(text, Patterns.Base64NonStandard);
-                foreach (Match match in matches)
-                {
-                    var v = match.Value;
-                    if (string.IsNullOrEmpty(v) || v.Length < minLen)
-                    {
-                        continue;
-                    }
-                    b64s.Add(v);
-                }
+                return b64s;
             }
-            catch { }
+            minLen = Math.Max(1, minLen);
+            var sb = new StringBuilder();
+            foreach (char c in text)
+            {
+                if (chars.IndexOf(c, 0, len) >= 0)
+                {
+                    sb.Append(c);
+                    continue;
+                }
+
+                if (sb.Length >= minLen)
+                {
+                    b64s.Add(sb.ToString());
+                }
+                sb = new StringBuilder();
+            }
+            if (sb.Length >= minLen)
+            {
+                b64s.Add(sb.ToString());
+            }
             return b64s;
         }
 

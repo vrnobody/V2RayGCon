@@ -146,6 +146,10 @@ namespace V2RayGCon.Misc
             {
                 var body = VgcApis.Misc.Utils.GetLinkBody(link);
                 string plainText = VgcApis.Misc.Utils.Base64DecodeToString(body);
+                if (string.IsNullOrEmpty(plainText))
+                {
+                    return null;
+                }
                 var vmess = JsonConvert.DeserializeObject<Vmess>(plainText);
                 if (
                     !string.IsNullOrEmpty(vmess.add)
@@ -281,9 +285,13 @@ namespace V2RayGCon.Misc
 
                 // average length of vless://... is 200
                 var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(subsString, 200 * 4 / 3);
-
                 foreach (var b64 in b64s)
                 {
+                    if (b64.StartsWith("//"))
+                    {
+                        continue;
+                    }
+
                     try
                     {
                         var text = VgcApis.Misc.Utils.Base64DecodeToString(b64);

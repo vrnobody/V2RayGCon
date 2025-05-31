@@ -5,6 +5,19 @@ draft: false
 weight: 10
 ---
 
+##### `v2.1.1.0`
+非便携模式下，用户数据改为保存到 %ProgramData% 目录内  
+主窗口的服务器面板添加一个重启按钮  
+降低导入大量（10万+）节点的内存占用量  
+简易编辑器添加生成服务端配置功能  
+修复导入结果窗口加载完成前关闭，会崩溃的问题  
+
+NeoLuna 插件添加以下函数：  
+std.Misc:GenServerSideConfig(meta)  
+std.Misc:GetMetaData(config)  
+std.Web:UnicodeEncode(str)  
+std.Web:UnicodeDecode(str)  
+
 ##### `v2.1.0.0`
 配置编辑器格式化JSON失败时，滚动到相应行  
 

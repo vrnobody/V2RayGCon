@@ -31,7 +31,7 @@ MD5: 2BE1469D97B41FA1F2894D101148304F
 ![vgc-v2.0.7.png](https://vrnobody.github.io/V2RayGCon/images/releases/vgc-v2.0.7.png)  
 
 ### 演示 Demo
-WinFormUI  
+WinFormsUI  
 ![Demo v1.4.3.5 GIF](https://vrnobody.github.io/V2RayGCon/images/forms/demo_basics_v1.4.3.5.gif)  
   
 WebUI [手册manual](https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/web-ui/)  

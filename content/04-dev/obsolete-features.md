@@ -6,6 +6,8 @@ weight: 20
 ---
 
 ##### 预计 2026-06-01 删除以下功能
+Settings service 从 Properties 加载配置功能  
+
 NeoLuna插件内的下列函数：  
 std.Misc:EncodeToShareLinkMetaData(config) // 替换为 std.Misc:GetMetaData(config)  
 

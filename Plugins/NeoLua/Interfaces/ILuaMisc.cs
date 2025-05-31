@@ -437,6 +437,7 @@ namespace NeoLuna.Interfaces
         string Base64Decode(string b64Str);
 
         string Basse64EncodeBytes(byte[] bytes);
+
         byte[] Base64DecodeToBytes(string b64Str);
 
         // obsolete! delete in 20260601

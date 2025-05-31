@@ -23,6 +23,19 @@ namespace Luna.Models.Apis.Components
         }
 
         #region ILuaWeb thinggy
+        public string UnicodeDecode(string str)
+        {
+            return VgcApis.Misc.Utils.UnescapeUnicode(str);
+        }
+
+        public string UnicodeEncode(string str)
+        {
+            return VgcApis.Misc.Utils.EscapeUnicode(str);
+        }
+
+        public string UriEncode(string content) => VgcApis.Misc.Utils.UriEncode(content);
+
+        public string UriDecode(string content) => VgcApis.Misc.Utils.UriDecode(content);
 
         public int GetFreeTcpPort() => VgcApis.Misc.Utils.GetFreeTcpPort();
 

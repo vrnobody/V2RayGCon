@@ -763,6 +763,26 @@ namespace VgcApis.Misc
             return indexes;
         }
 
+        // https://stackoverflow.com/questions/1615559/convert-a-unicode-string-to-an-escaped-ascii-string
+        public static string EscapeUnicode(string source)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in source)
+            {
+                if (c > 127)
+                {
+                    // This character is too big for ASCII
+                    string encodedValue = "\\u" + ((int)c).ToString("x4");
+                    sb.Append(encodedValue);
+                }
+                else
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
+        }
+
         public static string UnescapeUnicode(string source)
         {
             if (string.IsNullOrEmpty(source))

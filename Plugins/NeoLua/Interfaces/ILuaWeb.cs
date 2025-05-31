@@ -26,6 +26,20 @@ namespace NeoLuna.Interfaces
         int GetFreeTcpPort();
 
         /// <summary>
+        /// 解码Unidcode编码字符（\u03a0 -> π）
+        /// </summary>
+        /// <param name="str">Unicode转义后字符</param>
+        /// <returns>解码后的字符</returns>
+        string UnicodeDecode(string str);
+
+        /// <summary>
+        /// 编码Unidcode字符（π -> \u03a0）
+        /// </summary>
+        /// <param name="str">带Unicode的字符串</param>
+        /// <returns>编码后的字符</returns>
+        string UnicodeEncode(string str);
+
+        /// <summary>
         /// 编码URI字符串
         /// </summary>
         /// <param name="content">a b</param>

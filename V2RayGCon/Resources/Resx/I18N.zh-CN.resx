@@ -394,8 +394,9 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="GenQRCode" xml:space="preserve">
     <value>生成二维码</value>
   </data>
-  <data name="ConfirmRemoveV2RayCore" xml:space="preserve">
-    <value>从这台电脑中删除v2ray-core?</value>
+  <data name="ConfirmRemoveProgramDataFolder" xml:space="preserve">
+    <value>警告：非便携模式的数据将会丢失！
+确定要删除 "%ProgramData%/V2RayGCon" 目录吗?</value>
   </data>
   <data name="FileInUse" xml:space="preserve">
     <value>文件正在使用，请先关闭v2ray-core.</value>

@@ -155,7 +155,7 @@ namespace V2RayGCon.Views.WinForms
                     toolMenuItemLog,
                     toolMenuItemOptions,
                     toolStripMenuItemDownLoadV2rayCore,
-                    toolStripMenuItemRemoveV2rayCore,
+                    toolStripMenuItemCleanupProgramData,
                     toolMenuItemCheckUpdate
                 )
             );

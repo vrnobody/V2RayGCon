@@ -396,8 +396,9 @@ Please use [Add new server] or [Replace server].</value>
   <data name="GenQRCode" xml:space="preserve">
     <value>Generate QRCode</value>
   </data>
-  <data name="ConfirmRemoveV2RayCore" xml:space="preserve">
-    <value>Remove v2ray-core from this computer?</value>
+  <data name="ConfirmRemoveProgramDataFolder" xml:space="preserve">
+    <value>WARNING! ALL DATA IN NON-PORTABLE MODE WILL GONE!
+Remove "%ProgramData%/V2RayGCon" anyway?</value>
   </data>
   <data name="FileInUse" xml:space="preserve">
     <value>The file is in use. Please close v2ray-core first.</value>

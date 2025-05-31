@@ -2,10 +2,8 @@
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using V2RayGCon.Misc;
 using V2RayGCon.Test.Resource.Resx;
 using static V2RayGCon.Misc.Utils;
 

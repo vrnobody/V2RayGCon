@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 using V2RayGCon.Services.ShareLinkComponents;
 using VgcApis.Models.Datas;

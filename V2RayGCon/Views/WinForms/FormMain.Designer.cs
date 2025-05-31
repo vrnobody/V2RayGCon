@@ -135,7 +135,7 @@ namespace V2RayGCon.Views.WinForms
             this.toolMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemRemoveV2rayCore = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemCleanupProgramData = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteAllServersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -436,35 +436,35 @@ namespace V2RayGCon.Views.WinForms
             resources.ApplyResources(this.toolStripMenuItem8, "toolStripMenuItem8");
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
             // 
-            // selectNotSpeedTestedToolStripMenuItem
+            // selectNotSpeedTestedCurPageToolStripMenuItem
             // 
-            resources.ApplyResources(this.selectNotSpeedTestedCurPageToolStripMenuItem, "selectNotSpeedTestedToolStripMenuItem");
-            this.selectNotSpeedTestedCurPageToolStripMenuItem.Name = "selectNotSpeedTestedToolStripMenuItem";
+            resources.ApplyResources(this.selectNotSpeedTestedCurPageToolStripMenuItem, "selectNotSpeedTestedCurPageToolStripMenuItem");
+            this.selectNotSpeedTestedCurPageToolStripMenuItem.Name = "selectNotSpeedTestedCurPageToolStripMenuItem";
             // 
-            // selectTimeoutToolStripMenuItem
+            // selectTimeoutCurPageToolStripMenuItem
             // 
-            resources.ApplyResources(this.selectTimeoutCurPageToolStripMenuItem, "selectTimeoutToolStripMenuItem");
-            this.selectTimeoutCurPageToolStripMenuItem.Name = "selectTimeoutToolStripMenuItem";
+            resources.ApplyResources(this.selectTimeoutCurPageToolStripMenuItem, "selectTimeoutCurPageToolStripMenuItem");
+            this.selectTimeoutCurPageToolStripMenuItem.Name = "selectTimeoutCurPageToolStripMenuItem";
             // 
-            // selectNoMarkToolStripMenuItem
+            // selectNoMarkCurPageToolStripMenuItem
             // 
-            resources.ApplyResources(this.selectNoMarkCurPageToolStripMenuItem, "selectNoMarkToolStripMenuItem");
-            this.selectNoMarkCurPageToolStripMenuItem.Name = "selectNoMarkToolStripMenuItem";
+            resources.ApplyResources(this.selectNoMarkCurPageToolStripMenuItem, "selectNoMarkCurPageToolStripMenuItem");
+            this.selectNoMarkCurPageToolStripMenuItem.Name = "selectNoMarkCurPageToolStripMenuItem";
             // 
-            // selectAutorunToolStripMenuItem
+            // selectAutorunCurPageToolStripMenuItem
             // 
-            resources.ApplyResources(this.selectAutorunCurPageToolStripMenuItem, "selectAutorunToolStripMenuItem");
-            this.selectAutorunCurPageToolStripMenuItem.Name = "selectAutorunToolStripMenuItem";
+            resources.ApplyResources(this.selectAutorunCurPageToolStripMenuItem, "selectAutorunCurPageToolStripMenuItem");
+            this.selectAutorunCurPageToolStripMenuItem.Name = "selectAutorunCurPageToolStripMenuItem";
             // 
-            // selectRunningToolStripMenuItem
+            // selectRunningCurPageToolStripMenuItem
             // 
-            resources.ApplyResources(this.selectRunningCurPageToolStripMenuItem, "selectRunningToolStripMenuItem");
-            this.selectRunningCurPageToolStripMenuItem.Name = "selectRunningToolStripMenuItem";
+            resources.ApplyResources(this.selectRunningCurPageToolStripMenuItem, "selectRunningCurPageToolStripMenuItem");
+            this.selectRunningCurPageToolStripMenuItem.Name = "selectRunningCurPageToolStripMenuItem";
             // 
-            // selectUntrackToolStripMenuItem
+            // selectUntrackCurPageToolStripMenuItem
             // 
-            resources.ApplyResources(this.selectUntrackCurPageToolStripMenuItem, "selectUntrackToolStripMenuItem");
-            this.selectUntrackCurPageToolStripMenuItem.Name = "selectUntrackToolStripMenuItem";
+            resources.ApplyResources(this.selectUntrackCurPageToolStripMenuItem, "selectUntrackCurPageToolStripMenuItem");
+            this.selectUntrackCurPageToolStripMenuItem.Name = "selectUntrackCurPageToolStripMenuItem";
             // 
             // allPagesToolStripMenuItem
             // 
@@ -817,7 +817,7 @@ namespace V2RayGCon.Views.WinForms
             this.toolMenuItemAbout,
             this.toolMenuItemHelp,
             this.toolStripMenuItem5,
-            this.toolStripMenuItemRemoveV2rayCore,
+            this.toolStripMenuItemCleanupProgramData,
             this.deleteAllServersToolStripMenuItem});
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
             // 
@@ -848,10 +848,10 @@ namespace V2RayGCon.Views.WinForms
             resources.ApplyResources(this.toolStripMenuItem5, "toolStripMenuItem5");
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
             // 
-            // toolStripMenuItemRemoveV2rayCore
+            // toolStripMenuItemCleanupProgramData
             // 
-            resources.ApplyResources(this.toolStripMenuItemRemoveV2rayCore, "toolStripMenuItemRemoveV2rayCore");
-            this.toolStripMenuItemRemoveV2rayCore.Name = "toolStripMenuItemRemoveV2rayCore";
+            resources.ApplyResources(this.toolStripMenuItemCleanupProgramData, "toolStripMenuItemCleanupProgramData");
+            this.toolStripMenuItemCleanupProgramData.Name = "toolStripMenuItemCleanupProgramData";
             // 
             // deleteAllServersToolStripMenuItem
             // 
@@ -960,7 +960,7 @@ namespace V2RayGCon.Views.WinForms
         private ToolStripMenuItem toolStripMenuItemCopyAsV2cfgLink;
         private ToolStripMenuItem toolStripMenuItemCopyAsVmixLink;
         private ToolStripMenuItem toolStripMenuItemDownLoadV2rayCore;
-        private ToolStripMenuItem toolStripMenuItemRemoveV2rayCore;
+        private ToolStripMenuItem toolStripMenuItemCleanupProgramData;
         private ToolStripMenuItem toolStripMenuItemModifySelected;
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripMenuItem toolStripMenuItemSortBySpeedTest;

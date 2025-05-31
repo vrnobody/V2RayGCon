@@ -33,11 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.1.0.7")]
+[assembly: AssemblyVersion("2.1.0.8")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v2.1.0.8 Save user settings to "%ProgramData%/V2RayGCon/" in non-portable mode.
 v2.1.0.7 Refactor algorithm for extracting share links from text.
 v2.1.0.6 Add "auth" property in generated server side socks config.
 v2.1.0.5 Increase min len of base64 subs. string to 260 chars.

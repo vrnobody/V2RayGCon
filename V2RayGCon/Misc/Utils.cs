@@ -6,13 +6,11 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using Castle.DynamicProxy;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Models.Consts;
 using VgcApis.Models.Datas;
-using static System.Windows.Forms.LinkLabel;
 
 namespace V2RayGCon.Misc
 {
@@ -428,13 +426,17 @@ namespace V2RayGCon.Misc
             return Path.Combine(appData, appName);
         }
 
-        public static void CreateAppDataFolder()
+        public static void CreateSysAppDataFolder()
         {
             var path = GetSysAppDataFolder();
 
             if (!Directory.Exists(path))
             {
-                Directory.CreateDirectory(path);
+                try
+                {
+                    Directory.CreateDirectory(path);
+                }
+                catch { }
             }
         }
 

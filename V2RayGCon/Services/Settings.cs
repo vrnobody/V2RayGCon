@@ -1181,17 +1181,19 @@ namespace V2RayGCon.Services
                     if (isPortable)
                     {
                         VgcApis.Misc.Logger.Debug("Try save settings to file.");
-                        SaveUserSettingsToFile(configSlim);
+                        SaveUserSettingsToFile(
+                            configSlim,
+                            cmdArgs.userSettings,
+                            cmdArgs.userSettingsBak
+                        );
                     }
                     else
                     {
-                        VgcApis.Misc.Logger.Debug("Try save settings to properties");
+                        VgcApis.Misc.Logger.Debug("Try save settings to %AppData%");
                         SetUserSettingFileIsPortableToFalse(configSlim);
-                        var configFull = ReplacePlaceHoldersWithData(configSlim);
-                        SaveUserSettingsToProperties(configFull);
-                        VgcApis.Libs.Sys.FileLogger.Info(
-                            "Settings.SaveUserSettingsToProperties() done"
-                        );
+                        var usFiles = GetSysAppDataUserSettingFilenames();
+                        Misc.Utils.CreateSysAppDataFolder();
+                        SaveUserSettingsToFile(configSlim, usFiles[0], usFiles[1]);
                     }
                     VgcApis.Libs.Sys.FileLogger.Info("Settings.SaveUserSettingsWorker() done");
                     return;
@@ -1261,19 +1263,6 @@ namespace V2RayGCon.Services
             }
         }
 
-        void SaveUserSettingsToProperties(string us)
-        {
-            try
-            {
-                Properties.Settings.Default.UserSettings = us;
-                Properties.Settings.Default.Save();
-            }
-            catch
-            {
-                VgcApis.Misc.Logger.Debug("Save user settings to Properties fail!");
-            }
-        }
-
         void WriteMemoryStreamToFile(Stream source, string filename)
         {
             // https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
@@ -1334,10 +1323,10 @@ namespace V2RayGCon.Services
             return false;
         }
 
-        void SaveUserSettingsToFile(string configSlim)
+        void SaveUserSettingsToFile(string configSlim, string mainFilename, string bakFilename)
         {
             var parts = VgcApis.Misc.Utils.SplitAndKeep(configSlim, placeHolderLookupTable.Keys);
-            if (TryWriteUserSettings(parts, cmdArgs.userSettings, cmdArgs.userSettingsBak))
+            if (TryWriteUserSettings(parts, mainFilename, bakFilename))
             {
                 VgcApis.Libs.Sys.FileLogger.Info("Settings.SaverUserSettingsToFile() success");
                 return;
@@ -1374,6 +1363,7 @@ namespace V2RayGCon.Services
             }
         }
 
+        // obsolete! delete after 2026-06-01
         Models.Datas.UserSettings LoadUserSettingsFromPorperties()
         {
             try
@@ -1393,13 +1383,17 @@ namespace V2RayGCon.Services
             return null;
         }
 
-        Models.Datas.UserSettings LoadUserSettingsFromFile()
+        Models.Datas.UserSettings LoadUserSettingsFromFile(
+            string mainFilename,
+            string bakFilename,
+            bool ignorePartableSetting
+        )
         {
             // try to load userSettings.json
             Models.Datas.UserSettings result = null;
             try
             {
-                var content = File.ReadAllText(cmdArgs.userSettings);
+                var content = File.ReadAllText(mainFilename);
                 result = JsonConvert.DeserializeObject<Models.Datas.UserSettings>(content);
             }
             catch { }
@@ -1408,15 +1402,23 @@ namespace V2RayGCon.Services
             if (result == null)
             {
                 result = VgcApis.Misc.Utils.LoadAndParseJsonFile<Models.Datas.UserSettings>(
-                    cmdArgs.userSettingsBak
+                    bakFilename
                 );
             }
 
-            if (result != null && result.isPortable)
+            if (result != null && (ignorePartableSetting || result.isPortable))
             {
                 return result;
             }
             return null;
+        }
+
+        string[] GetSysAppDataUserSettingFilenames()
+        {
+            var folder = Misc.Utils.GetSysAppDataFolder();
+            var main = Path.Combine(folder, Properties.Resources.PortableUserSettingsFilename);
+            var bak = VgcApis.Misc.Utils.ReplaceFileExtention(main, ".bak");
+            return new string[] { main, bak };
         }
 
         Models.Datas.UserSettings LoadUserSettings()
@@ -1424,7 +1426,11 @@ namespace V2RayGCon.Services
             var mainUsFile = cmdArgs.userSettings;
             var bakUsFile = cmdArgs.userSettingsBak;
 
-            var result = LoadUserSettingsFromFile() ?? LoadUserSettingsFromPorperties();
+            var appDataUsFiles = GetSysAppDataUserSettingFilenames();
+            var result =
+                LoadUserSettingsFromFile(cmdArgs.userSettings, cmdArgs.userSettingsBak, false)
+                ?? LoadUserSettingsFromFile(appDataUsFiles[0], appDataUsFiles[1], true)
+                ?? LoadUserSettingsFromPorperties();
             if (
                 result == null
                 && (File.Exists(mainUsFile) || File.Exists(bakUsFile))

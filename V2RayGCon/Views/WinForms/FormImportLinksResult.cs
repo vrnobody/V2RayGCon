@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Moq;
 using V2RayGCon.Resources.Resx;
 
 namespace V2RayGCon.Views.WinForms

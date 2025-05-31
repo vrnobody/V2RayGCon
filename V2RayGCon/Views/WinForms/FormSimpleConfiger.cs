@@ -2,8 +2,6 @@
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 using V2RayGCon.Services;
-using ZXing;
-using static ScintillaNET.Style;
 
 namespace V2RayGCon.Views.WinForms
 {

@@ -23,7 +23,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem miFormLog,
             ToolStripMenuItem miFormOptions,
             ToolStripMenuItem miDownloadV2rayCore,
-            ToolStripMenuItem miRemoveV2rayCore,
+            ToolStripMenuItem miCleanupProgramData,
             ToolStripMenuItem miCheckVgcUpdate
         )
         {
@@ -41,7 +41,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 miAbout,
                 miHelp,
                 miDownloadV2rayCore,
-                miRemoveV2rayCore,
+                miCleanupProgramData,
                 miCheckVgcUpdate
             );
         }
@@ -100,14 +100,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem aboutVGC,
             ToolStripMenuItem help,
             ToolStripMenuItem downloadV2rayCore,
-            ToolStripMenuItem removeV2rayCore,
+            ToolStripMenuItem cleanupProgramData,
             ToolStripMenuItem miCheckVgcUpdate
         )
         {
             // menu about
             downloadV2rayCore.Click += (s, a) => Views.WinForms.FormDownloadCore.ShowForm();
 
-            removeV2rayCore.Click += (s, a) => RemoveV2RayCore();
+            cleanupProgramData.Click += (s, a) => CleanupProgramDataFolder();
 
             aboutVGC.Click += (s, a) =>
                 VgcApis.Misc.UI.VisitUrl(I18N.VistProjectPage, Properties.Resources.ProjectLink);
@@ -142,9 +142,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
             miFormOptions.Click += (s, a) => Views.WinForms.FormOption.ShowForm();
         }
 
-        private void RemoveV2RayCore()
+        private void CleanupProgramDataFolder()
         {
-            if (!VgcApis.Misc.UI.Confirm(I18N.ConfirmRemoveV2RayCore))
+            if (!VgcApis.Misc.UI.Confirm(I18N.ConfirmRemoveProgramDataFolder))
             {
                 return;
             }

@@ -461,11 +461,12 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Remove v2ray-core from this computer? 的本地化字符串。
+        ///   查找类似 WARNING! ALL DATA IN NON-PORTABLE MODE WILL GONE!
+        ///Remove &quot;%ProgramData%/V2RayGCon&quot; anyway? 的本地化字符串。
         /// </summary>
-        internal static string ConfirmRemoveV2RayCore {
+        internal static string ConfirmRemoveProgramDataFolder {
             get {
-                return ResourceManager.GetString("ConfirmRemoveV2RayCore", resourceCulture);
+                return ResourceManager.GetString("ConfirmRemoveProgramDataFolder", resourceCulture);
             }
         }
         

@@ -173,44 +173,51 @@ namespace V2RayGCon.Misc
             {
                 return links;
             }
+
+            void addToLinks(string link)
+            {
+                link = VgcApis.Misc.Utils.UnescapeUnicode(link);
+                link = VgcApis.Misc.Utils.DecodeAmpersand(link);
+                while (link.Length > protocol.Length)
+                {
+                    links.Add(link);
+                    var pos = link.IndexOf(protocol, protocol.Length);
+                    if (pos < 0)
+                    {
+                        break;
+                    }
+                    link = link.Substring(pos);
+                }
+            }
+
             var idx = 0;
             var sb = new StringBuilder();
             foreach (var c in text)
             {
                 if (idx < protocol.Length)
                 {
-                    if (c == protocol[idx])
-                    {
-                        idx++;
-                    }
-                    else
-                    {
-                        idx = c == protocol[0] ? 1 : 0;
-                    }
+                    idx = c == protocol[idx] ? idx + 1 : (c == protocol[0] ? 1 : 0);
                     continue;
                 }
+
                 if (bodyChars.IndexOf(c) >= 0)
                 {
                     sb.Append(c);
                     continue;
                 }
+
                 if (sb.Length > 0)
                 {
-                    try
-                    {
-                        var link = $"{protocol}{sb}";
-                        link = VgcApis.Misc.Utils.UnescapeUnicode(link);
-                        link = VgcApis.Misc.Utils.DecodeAmpersand(link);
-                        links.Add(link);
-                    }
-                    catch { }
+                    addToLinks($"{protocol}{sb}");
                     sb.Clear();
                 }
+
                 idx = c == protocol[0] ? 1 : 0;
             }
+
             if (sb.Length > 0)
             {
-                links.Add($"{protocol}{sb}");
+                addToLinks($"{protocol}{sb}");
             }
             return links;
         }

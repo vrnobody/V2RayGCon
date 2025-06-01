@@ -148,11 +148,21 @@ stat: <
 
         [DataTestMethod]
         [DataRow(
-            "abc://1/\\bc://222dbc:///12bc",
-            "bc://",
-            "12bc:/\\",
-            "bc://1/\\bc://222",
-            "bc:///12bc"
+            @"bc://1/\bc://222bc:///12bc://bc//",
+            @"bc://",
+            @"12bc:/\",
+            @"bc://1/\bc://222bc:///12bc://bc//",
+            @"bc://222bc:///12bc://bc//",
+            @"bc:///12bc://bc//",
+            @"bc://bc//"
+        )]
+        [DataRow(
+            @"abc/bc://1/\bc://222bc:///12bc://",
+            @"bc://",
+            @"12bc:/\",
+            @"bc://1/\bc://222bc:///12bc://",
+            @"bc://222bc:///12bc://",
+            @"bc:///12bc://"
         )]
         [DataRow(
             "ccc://ccc://c://12322211cc\nccdcccc://cccc://123c://11111ccccc://2222c://ccc",

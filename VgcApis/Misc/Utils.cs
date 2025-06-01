@@ -468,6 +468,44 @@ namespace VgcApis.Misc
 
         #region string
 
+        public static string MatchTailString(string needle, string hastack)
+        {
+            var idx = MatchTailIndex(needle, hastack);
+            return idx > 0 ? needle.Substring(0, idx) : "";
+        }
+
+        public static int MatchTailIndex(string needle, string hastack)
+        {
+            // "c://" "c://abc" => "c"
+            if (string.IsNullOrEmpty(needle) || string.IsNullOrEmpty(hastack))
+            {
+                return 0;
+            }
+
+            var lenH = hastack.Length;
+            var lenN = needle.Length;
+            var max = Math.Min(lenH, lenN);
+
+            for (int i = max; i > 0; i--)
+            {
+                int j = i;
+                for (; j > 0; j--)
+                {
+                    var idxN = j - 1;
+                    var idxH = lenH - i + j - 1;
+                    if (needle[idxN] != hastack[idxH])
+                    {
+                        break;
+                    }
+                }
+                if (j <= 0)
+                {
+                    return i;
+                }
+            }
+            return 0;
+        }
+
         public static bool TryParseSearchKeywordAsIndex(string s, out int index, out string keyword)
         {
             index = 0;

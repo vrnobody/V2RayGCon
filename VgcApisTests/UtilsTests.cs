@@ -115,6 +115,23 @@ namespace VgcApisTests
         #endregion
 
         [DataTestMethod]
+        [DataRow("f", "f", "f")]
+        [DataRow("def", "ef", "")]
+        [DataRow("defghi", "def", "def")]
+        [DataRow("cdef", "abcdef", "cdef")]
+        [DataRow("f", "abcdef", "f")]
+        [DataRow("abcdef", "efgh", "")]
+        [DataRow("efgh", "abcdef", "ef")]
+        [DataRow("abc", "123", "")]
+        [DataRow(null, "", "")]
+        [DataRow(null, null, "")]
+        public void MatchTailStringTest(string needle, string haystack, string exp)
+        {
+            var r = MatchTailString(needle, haystack);
+            Assert.AreEqual(exp, r);
+        }
+
+        [DataTestMethod]
         [DataRow("", false, 0, "")]
         [DataRow("1", false, 0, "1")]
         [DataRow("#-1", true, -1, "")]

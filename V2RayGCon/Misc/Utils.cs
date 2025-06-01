@@ -209,7 +209,10 @@ namespace V2RayGCon.Misc
                 if (sb.Length > 0)
                 {
                     addToLinks($"{protocol}{sb}");
+                    sb.Append(c);
+                    idx = VgcApis.Misc.Utils.MatchTailIndex(protocol, sb.ToString());
                     sb.Clear();
+                    continue;
                 }
 
                 idx = c == protocol[0] ? 1 : 0;

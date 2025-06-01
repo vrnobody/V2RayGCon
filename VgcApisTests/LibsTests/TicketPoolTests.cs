@@ -19,6 +19,7 @@ namespace VgcApisTests.LibsTests
             var pool = new VgcApis.Libs.Tasks.TicketPool(5);
 
             Assert.IsTrue(pool.TryTakeOne());
+            logs.Enqueue($"TryTakeOne() {pool}");
             var waiters = new List<Task>();
             for (int i = 0; i < 3; i++)
             {
@@ -26,13 +27,14 @@ namespace VgcApisTests.LibsTests
                 var task = Task.Run(() =>
                 {
                     logs.Enqueue($"Waiter[{id}] waiting");
-                    pool.WaitUntilEmpty();
+                    pool.WaitUntilRecovery();
                     logs.Enqueue($"Waiter[{id}] done");
                 });
                 waiters.Add(task);
             }
 
             Assert.IsTrue(pool.TryTake(4));
+            logs.Enqueue($"TryTake(4) {pool}");
             var customers = new List<Task>();
             for (int i = 0; i < 10; i++)
             {
@@ -66,7 +68,9 @@ namespace VgcApisTests.LibsTests
             }
 
             logs.Enqueue("begin to serve");
+
             pool.Return(4);
+            logs.Enqueue($"Return(4) {pool}");
 
             Thread.Sleep(1000);
             foreach (var waiter in waiters)
@@ -76,6 +80,7 @@ namespace VgcApisTests.LibsTests
 
             Task.WaitAll(customers.ToArray());
             pool.ReturnOne();
+            logs.Enqueue($"ReturnOne() {pool}");
             Thread.Sleep(1000);
             foreach (var waiter in waiters)
             {
@@ -84,6 +89,7 @@ namespace VgcApisTests.LibsTests
             Task.WaitAll(waiters.ToArray());
             Assert.AreEqual(5, pool.GetHistoryMaxSize());
 
+            // logs is complete now
             foreach (var log in logs)
             {
                 Console.WriteLine(log);
@@ -106,9 +112,10 @@ namespace VgcApisTests.LibsTests
                     {
                         if (pool.TryTake(2))
                         {
-                            Console.WriteLine("take 2");
+                            Console.WriteLine($"TryTake(2), {pool}");
                             Thread.Sleep(500);
                             pool.Return(2);
+                            Console.WriteLine($"Return(2) {pool}");
                         }
                     }
                 });
@@ -123,9 +130,10 @@ namespace VgcApisTests.LibsTests
                     {
                         if (pool.TryTakeOne())
                         {
-                            Console.WriteLine("take one");
+                            Console.WriteLine($"TryTakeOne() {pool}");
                             Thread.Sleep(500);
                             pool.ReturnOne();
+                            Console.WriteLine($"ReturnOne() {pool}");
                         }
                     }
                 });
@@ -140,9 +148,10 @@ namespace VgcApisTests.LibsTests
                     {
                         if (pool.WaitOne(200))
                         {
-                            Console.WriteLine("wait 200");
+                            Console.WriteLine($"WaitOne(200) {pool}");
                             Thread.Sleep(200);
                             pool.ReturnOne();
+                            Console.WriteLine($"ReturnOne() {pool}");
                         }
                     }
                 });
@@ -156,9 +165,10 @@ namespace VgcApisTests.LibsTests
                     for (int j = 0; j < 15; j++)
                     {
                         pool.WaitOne();
-                        Console.WriteLine("wait()");
+                        Console.WriteLine($"WaitOne() {pool}");
                         Thread.Sleep(200);
                         pool.ReturnOne();
+                        Console.WriteLine($"ReturnOne() {pool}");
                     }
                 });
                 tasks.Add(task);
@@ -166,10 +176,9 @@ namespace VgcApisTests.LibsTests
 
             Thread.Sleep(2000);
             Assert.IsTrue(pool.GetWaitQueueSize() > 0);
-
             Task.WaitAll(tasks.ToArray());
             Assert.IsTrue(pool.Count() == 0);
-            Assert.IsTrue(pool.GetWaitQueueSize() == 0);
+            Assert.AreEqual(0, pool.GetWaitQueueSize());
             Assert.AreEqual(5, pool.GetHistoryMaxSize());
         }
 #endif
@@ -210,37 +219,37 @@ namespace VgcApisTests.LibsTests
         {
             var pool = new VgcApis.Libs.Tasks.TicketPool(10);
             Assert.IsTrue(pool.TryTake(5));
-            Assert.IsFalse(pool.IsEmpty());
+            Assert.IsFalse(pool.IsDrained());
             Assert.IsTrue(pool.Count() == 5);
             Assert.AreEqual(5, pool.GetHistoryMaxSize());
 
             Assert.IsTrue(pool.TryTake(5));
             Assert.IsTrue(pool.Count() == 10);
-            Assert.IsTrue(pool.IsEmpty());
+            Assert.IsTrue(pool.IsDrained());
             Assert.AreEqual(10, pool.GetHistoryMaxSize());
 
             Assert.IsFalse(pool.TryTake(1));
             Assert.IsFalse(pool.TryTake(1));
             Assert.IsFalse(pool.TryTake(1));
             Assert.IsTrue(pool.Count() == 10);
-            Assert.IsTrue(pool.IsEmpty());
+            Assert.IsTrue(pool.IsDrained());
             Assert.AreEqual(10, pool.GetHistoryMaxSize());
 
             Assert.IsTrue(pool.GetPoolSize() == 10);
             pool.SetPoolSize(15);
-            Assert.IsFalse(pool.IsEmpty());
+            Assert.IsFalse(pool.IsDrained());
             Assert.IsTrue(pool.GetPoolSize() == 15);
             pool.WaitOne();
             Assert.IsTrue(pool.Count() == 11);
             pool.SetPoolSize(10);
-            Assert.IsTrue(pool.IsEmpty());
+            Assert.IsTrue(pool.IsDrained());
             Assert.IsFalse(pool.WaitOne(10));
             pool.ReturnOne();
             Assert.IsTrue(pool.GetPoolSize() == 10);
             Assert.IsTrue(pool.Count() == 10);
 
             Assert.IsFalse(pool.TryTakeOne());
-            Assert.IsTrue(pool.IsEmpty());
+            Assert.IsTrue(pool.IsDrained());
 
             Assert.IsFalse(pool.WaitOne(10));
             pool.ReturnOne();

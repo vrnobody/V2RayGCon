@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,11 +8,13 @@ namespace VgcApis.Libs.Tasks
     {
         int historyMaxSize = 0;
 
-        int count = 0;
-        int size = 0;
+        int taken = 0;
+        int poolSize = 0;
+        int queueSize = 0;
 
-        readonly List<ManualResetEvent> waitQ = new List<ManualResetEvent>();
-        readonly ManualResetEvent emptyWaiter = new ManualResetEvent(true);
+        readonly object queueLock = new object();
+        ManualResetEvent queueWaiter = new ManualResetEvent(false);
+        readonly ManualResetEvent freeWaiter = new ManualResetEvent(true);
 
         public TicketPool()
             : this(0) { }
@@ -25,77 +25,47 @@ namespace VgcApis.Libs.Tasks
             {
                 throw new ArgumentOutOfRangeException("Capacity should be a positve number.");
             }
-            this.size = capacity;
+            this.poolSize = capacity;
         }
 
         #region public methods
 
-        public void WaitUntilEmpty()
+        public override string ToString()
         {
-            emptyWaiter.WaitOne();
+            return $"Total: {poolSize} Remain: {poolSize - taken} Full: {IsFull()} Drained: {IsDrained()} Waiting: {queueSize} ";
+        }
+
+        public void WaitUntilRecovery()
+        {
+            freeWaiter.WaitOne();
         }
 
         public void WaitOne()
         {
-            if (TryTakeOne())
+            Interlocked.Add(ref queueSize, 1);
+            while (!TryTakeOne() && !isDisposed)
             {
-                return;
+                GetTicketWaiter().WaitOne();
             }
-
-            if (isDisposed)
-            {
-                return;
-            }
-
-            var mev = MrePool.Rent(false);
-            lock (waitQ)
-            {
-                waitQ.Add(mev);
-            }
-            mev.WaitOne();
-            MrePool.Return(mev);
+            Interlocked.Add(ref queueSize, -1);
         }
 
         public bool WaitOne(int ms)
         {
-            if (TryTakeOne())
+            Interlocked.Add(ref queueSize, 1);
+            var now = DateTime.Now;
+            while (!TryTakeOne() && !isDisposed)
             {
-                return true;
-            }
-
-            if (ms == 0)
-            {
-                return false;
-            }
-
-            if (isDisposed)
-            {
-                return false;
-            }
-
-            var mev = MrePool.Rent(false);
-            lock (waitQ)
-            {
-                waitQ.Add(mev);
-            }
-
-            if (mev.WaitOne(ms))
-            {
-                MrePool.Return(mev);
-                return true;
-            }
-
-            lock (waitQ)
-            {
-                if (mev.WaitOne(0))
+                var remain = ms - (int)(DateTime.Now - now).TotalMilliseconds;
+                if (remain < 1)
                 {
-                    MrePool.Return(mev);
-                    return true;
+                    Interlocked.Add(ref queueSize, -1);
+                    return false;
                 }
-                waitQ.Remove(mev);
-                MrePool.Return(mev);
+                GetTicketWaiter().WaitOne(remain);
             }
-            return false;
+            Interlocked.Add(ref queueSize, -1);
+            return !isDisposed;
         }
 
         public bool TryTakeOne()
@@ -110,17 +80,23 @@ namespace VgcApis.Libs.Tasks
                 throw new ArgumentOutOfRangeException("Num should be a positve number.");
             }
 
-            Interlocked.Add(ref count, -1 * num);
+            var n = Interlocked.Add(ref taken, -1 * num);
+            if (n < 1)
+            {
+                freeWaiter.Set();
+            }
+
             Task.Delay(5)
                 .ContinueWith(_ =>
                 {
-                    CheckWaitQ();
-                    if (count < 1)
+                    ManualResetEvent w;
+                    lock (queueLock)
                     {
-                        emptyWaiter.Set();
+                        w = this.queueWaiter;
+                        this.queueWaiter = new ManualResetEvent(false);
                     }
-                })
-                .ConfigureAwait(false);
+                    w.Set();
+                });
         }
 
         public void ReturnOne() => Return(1);
@@ -132,29 +108,31 @@ namespace VgcApis.Libs.Tasks
                 throw new ArgumentOutOfRangeException("Num should be a positve number.");
             }
 
-            if (count >= size)
+            if (taken >= poolSize)
             {
                 return false;
             }
 
-            var n = Interlocked.Add(ref count, num);
-            if (n <= size)
+            var n = Interlocked.Add(ref taken, num);
+            if (n <= poolSize)
             {
-                emptyWaiter.Reset();
+                freeWaiter.Reset();
                 MarkDownMaxSize(n);
                 return true;
             }
-            Interlocked.Add(ref count, -1 * num);
+            Interlocked.Add(ref taken, -1 * num);
             return false;
         }
 
-        public bool IsEmpty() => count >= size;
+        public bool IsFull() => taken < 1;
 
-        public int Count() => count;
+        public bool IsDrained() => taken >= poolSize;
 
-        public int GetWaitQueueSize() => waitQ.Count();
+        public int Count() => taken;
 
-        public int GetPoolSize() => size;
+        public int GetWaitQueueSize() => queueSize;
+
+        public int GetPoolSize() => poolSize;
 
         public int GetHistoryMaxSize() => historyMaxSize;
 
@@ -164,12 +142,20 @@ namespace VgcApis.Libs.Tasks
             {
                 throw new ArgumentOutOfRangeException("Capacity should be a positve number.");
             }
-            this.size = capacity;
+            this.poolSize = capacity;
         }
 
         #endregion
 
         #region private methods
+        ManualResetEvent GetTicketWaiter()
+        {
+            lock (queueLock)
+            {
+                return this.queueWaiter;
+            }
+        }
+
         void MarkDownMaxSize(int n)
         {
             var v = historyMaxSize;
@@ -179,22 +165,6 @@ namespace VgcApis.Libs.Tasks
             }
         }
 
-        void CheckWaitQ()
-        {
-            if (count >= size)
-            {
-                return;
-            }
-
-            lock (waitQ)
-            {
-                while (waitQ.Count() > 0 && TryTakeOne())
-                {
-                    waitQ[0].Set();
-                    waitQ.RemoveAt(0);
-                }
-            }
-        }
         #endregion
 
         #region IDisposable
@@ -210,14 +180,7 @@ namespace VgcApis.Libs.Tasks
                 {
                     isDisposed = true;
                     // TODO: 释放托管状态(托管对象)
-                    lock (waitQ)
-                    {
-                        foreach (var w in waitQ)
-                        {
-                            w.Set();
-                        }
-                        waitQ.Clear();
-                    }
+                    GetTicketWaiter().Set();
                 }
 
                 // TODO: 释放未托管的资源(未托管的对象)并重写终结器

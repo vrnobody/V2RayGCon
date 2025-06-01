@@ -1192,7 +1192,7 @@ namespace V2RayGCon.Services
             {
                 while (setting.SpeedtestCounter > 0)
                 {
-                    setting.SpeedTestPool.WaitUntilEmpty();
+                    setting.SpeedTestPool.WaitUntilRecovery();
                 }
                 speedTestingBar.Remove();
                 VgcApis.Misc.Logger.Log(I18N.SpeedTestFinished);

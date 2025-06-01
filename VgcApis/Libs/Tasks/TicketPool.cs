@@ -6,7 +6,7 @@ namespace VgcApis.Libs.Tasks
 {
     public class TicketPool : IDisposable
     {
-        int historyMaxSize = 0;
+        int historyMaxTaken = 0;
 
         int taken = 0;
         int poolSize = 0;
@@ -35,7 +35,7 @@ namespace VgcApis.Libs.Tasks
             return $"Total: {poolSize} Remain: {poolSize - taken} Full: {IsFull()} Drained: {IsDrained()} Waiting: {queueSize} ";
         }
 
-        public void WaitUntilRecovery()
+        public void WaitUntilPoolIsFull()
         {
             freeWaiter.WaitOne();
         }
@@ -86,17 +86,13 @@ namespace VgcApis.Libs.Tasks
                 freeWaiter.Set();
             }
 
-            Task.Delay(5)
-                .ContinueWith(_ =>
-                {
-                    ManualResetEvent w;
-                    lock (queueLock)
-                    {
-                        w = this.queueWaiter;
-                        this.queueWaiter = new ManualResetEvent(false);
-                    }
-                    w.Set();
-                });
+            ManualResetEvent w;
+            lock (queueLock)
+            {
+                w = this.queueWaiter;
+                this.queueWaiter = new ManualResetEvent(false);
+            }
+            w.Set();
         }
 
         public void ReturnOne() => Return(1);
@@ -128,13 +124,13 @@ namespace VgcApis.Libs.Tasks
 
         public bool IsDrained() => taken >= poolSize;
 
-        public int Count() => taken;
+        public int GetOccupiedTicketCount() => taken;
 
-        public int GetWaitQueueSize() => queueSize;
+        public int GetMaxOccupiedTicketCount() => historyMaxTaken;
+
+        public int GetWaitingQueueSize() => queueSize;
 
         public int GetPoolSize() => poolSize;
-
-        public int GetHistoryMaxSize() => historyMaxSize;
 
         public void SetPoolSize(int capacity)
         {
@@ -158,10 +154,10 @@ namespace VgcApis.Libs.Tasks
 
         void MarkDownMaxSize(int n)
         {
-            var v = historyMaxSize;
+            var v = historyMaxTaken;
             while (n > v)
             {
-                v = Interlocked.CompareExchange(ref historyMaxSize, n, v);
+                v = Interlocked.CompareExchange(ref historyMaxTaken, n, v);
             }
         }
 

@@ -476,8 +476,18 @@ namespace VgcApis.Misc
 
         public static int MatchTailIndex(string needle, string hastack)
         {
-            // "c://" "c://abc" => "c"
             if (string.IsNullOrEmpty(needle) || string.IsNullOrEmpty(hastack))
+            {
+                return 0;
+            }
+            var sb = new StringBuilder(hastack);
+            return MatchTailIndex(needle, sb);
+        }
+
+        public static int MatchTailIndex(string needle, StringBuilder hastack)
+        {
+            // "c://" "c://abc" => "c"
+            if (string.IsNullOrEmpty(needle) || hastack.Length < 1)
             {
                 return 0;
             }

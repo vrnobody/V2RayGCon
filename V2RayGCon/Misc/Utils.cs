@@ -210,7 +210,7 @@ namespace V2RayGCon.Misc
                 {
                     addToLinks($"{protocol}{sb}");
                     sb.Append(c);
-                    idx = VgcApis.Misc.Utils.MatchTailIndex(protocol, sb.ToString());
+                    idx = VgcApis.Misc.Utils.MatchTailIndex(protocol, sb);
                     sb.Clear();
                     continue;
                 }

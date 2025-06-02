@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace VgcApis.Libs.Tasks
 {
@@ -13,7 +12,7 @@ namespace VgcApis.Libs.Tasks
         int queueSize = 0;
 
         readonly object queueLock = new object();
-        ManualResetEvent queueWaiter = new ManualResetEvent(false);
+        ManualResetEvent queueWaiter = MrePool.Rent(false);
         readonly ManualResetEvent freeWaiter = new ManualResetEvent(true);
 
         public TicketPool()
@@ -45,7 +44,11 @@ namespace VgcApis.Libs.Tasks
             Interlocked.Add(ref queueSize, 1);
             while (!TryTakeOne() && !isDisposed)
             {
-                GetTicketWaiter().WaitOne();
+                try
+                {
+                    GetTicketWaiter().WaitOne();
+                }
+                catch { }
             }
             Interlocked.Add(ref queueSize, -1);
         }
@@ -62,7 +65,11 @@ namespace VgcApis.Libs.Tasks
                     Interlocked.Add(ref queueSize, -1);
                     return false;
                 }
-                GetTicketWaiter().WaitOne(remain);
+                try
+                {
+                    GetTicketWaiter().WaitOne(remain);
+                }
+                catch { }
             }
             Interlocked.Add(ref queueSize, -1);
             return !isDisposed;
@@ -90,9 +97,10 @@ namespace VgcApis.Libs.Tasks
             lock (queueLock)
             {
                 w = this.queueWaiter;
-                this.queueWaiter = new ManualResetEvent(false);
+                this.queueWaiter = MrePool.Rent(false);
             }
             w.Set();
+            MrePool.Return(w);
         }
 
         public void ReturnOne() => Return(1);
@@ -144,6 +152,8 @@ namespace VgcApis.Libs.Tasks
         #endregion
 
         #region private methods
+
+
         ManualResetEvent GetTicketWaiter()
         {
             lock (queueLock)
@@ -176,7 +186,9 @@ namespace VgcApis.Libs.Tasks
                 {
                     isDisposed = true;
                     // TODO: 释放托管状态(托管对象)
+
                     GetTicketWaiter().Set();
+                    freeWaiter.Set();
                 }
 
                 // TODO: 释放未托管的资源(未托管的对象)并重写终结器

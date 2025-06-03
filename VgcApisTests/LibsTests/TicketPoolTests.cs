@@ -10,7 +10,6 @@ namespace VgcApisTests.LibsTests
     [TestClass]
     public class TicketPoolTests
     {
-#if DEBUG
         [TestMethod]
         public void MultiThreadWaitEmptyTest()
         {
@@ -95,9 +94,7 @@ namespace VgcApisTests.LibsTests
                 Console.WriteLine(log);
             }
         }
-#endif
 
-#if DEBUG
         [TestMethod]
         public void MultiThreadTests()
         {
@@ -180,9 +177,7 @@ namespace VgcApisTests.LibsTests
             Assert.AreEqual(0, pool.GetWaitingQueueSize());
             Assert.AreEqual(5, pool.GetMaxOccupiedTicketCount());
         }
-#endif
 
-#if DEBUG
         [TestMethod]
         public void HighConcurrencyTests()
         {
@@ -245,9 +240,7 @@ namespace VgcApisTests.LibsTests
             }
             Assert.IsTrue(total > 0);
         }
-#endif
 
-#if DEBUG
         [TestMethod]
         public void MultiThreadDisposeTests()
         {
@@ -276,7 +269,6 @@ namespace VgcApisTests.LibsTests
             Assert.IsTrue(pool.GetWaitingQueueSize() == 0);
             Assert.AreEqual(5, pool.GetMaxOccupiedTicketCount());
         }
-#endif
 
         [TestMethod]
         public void SingleThreadTests()

@@ -11,9 +11,9 @@ namespace VgcApis.Libs.Tasks
         int poolSize = 0;
         int queueSize = 0;
 
-        readonly object queueLock = new object();
+        readonly object mreLock = new object();
         ManualResetEvent queueWaiter = MrePool.Rent(false);
-        readonly ManualResetEvent freeWaiter = new ManualResetEvent(true);
+        ManualResetEvent freeWaiter = MrePool.Rent(true);
 
         public TicketPool()
             : this(0) { }
@@ -36,7 +36,11 @@ namespace VgcApis.Libs.Tasks
 
         public void WaitUntilPoolIsFull()
         {
-            freeWaiter.WaitOne();
+            try
+            {
+                freeWaiter?.WaitOne();
+            }
+            catch { }
         }
 
         public void WaitOne()
@@ -46,7 +50,7 @@ namespace VgcApis.Libs.Tasks
             {
                 try
                 {
-                    GetTicketWaiter().WaitOne();
+                    GetTicketWaiter(false)?.WaitOne();
                 }
                 catch { }
             }
@@ -67,7 +71,7 @@ namespace VgcApis.Libs.Tasks
                 }
                 try
                 {
-                    GetTicketWaiter().WaitOne(remain);
+                    GetTicketWaiter(false)?.WaitOne(remain);
                 }
                 catch { }
             }
@@ -90,17 +94,20 @@ namespace VgcApis.Libs.Tasks
             var n = Interlocked.Add(ref taken, -1 * num);
             if (n < 1)
             {
-                freeWaiter.Set();
+                try
+                {
+                    freeWaiter?.Set();
+                }
+                catch { }
             }
 
             ManualResetEvent w;
-            lock (queueLock)
+            lock (mreLock)
             {
                 w = this.queueWaiter;
                 this.queueWaiter = MrePool.Rent(false);
             }
-            w.Set();
-            MrePool.Return(w);
+            ReturnMre(w);
         }
 
         public void ReturnOne() => Return(1);
@@ -120,7 +127,11 @@ namespace VgcApis.Libs.Tasks
             var n = Interlocked.Add(ref taken, num);
             if (n <= poolSize)
             {
-                freeWaiter.Reset();
+                try
+                {
+                    freeWaiter?.Reset();
+                }
+                catch { }
                 MarkDownMaxSize(n);
                 return true;
             }
@@ -153,13 +164,28 @@ namespace VgcApis.Libs.Tasks
 
         #region private methods
 
-
-        ManualResetEvent GetTicketWaiter()
+        void ReturnMre(ManualResetEvent mre)
         {
-            lock (queueLock)
+            try
             {
-                return this.queueWaiter;
+                mre.Set();
             }
+            catch { }
+            MrePool.Return(mre);
+        }
+
+        ManualResetEvent GetTicketWaiter(bool setToNull)
+        {
+            ManualResetEvent r;
+            lock (mreLock)
+            {
+                r = this.queueWaiter;
+                if (setToNull)
+                {
+                    this.queueWaiter = null;
+                }
+            }
+            return r;
         }
 
         void MarkDownMaxSize(int n)
@@ -186,9 +212,12 @@ namespace VgcApis.Libs.Tasks
                 {
                     isDisposed = true;
                     // TODO: 释放托管状态(托管对象)
+                    var t = GetTicketWaiter(true);
+                    ReturnMre(t);
 
-                    GetTicketWaiter().Set();
-                    freeWaiter.Set();
+                    var f = freeWaiter;
+                    freeWaiter = null;
+                    ReturnMre(f);
                 }
 
                 // TODO: 释放未托管的资源(未托管的对象)并重写终结器

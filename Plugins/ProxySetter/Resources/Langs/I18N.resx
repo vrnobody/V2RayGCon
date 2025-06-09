@@ -226,7 +226,9 @@ Please read the online manual first. (simple chinese)
 
 This plug-in use the following project as the default PAC source.
 https://github.com/txthinking/blackwhite
-You can modify the default PAC in tab setting as follows.
+https://github.com/Loyalsoldier/v2ray-rules-dat
+
+You can modify the default PAC in tab “setting” as follows.
 
 // this is a comment
 

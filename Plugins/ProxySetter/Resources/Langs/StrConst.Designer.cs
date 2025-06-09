@@ -19,7 +19,7 @@ namespace ProxySetter.Resources.Langs {
     // 类通过类似于 ResGen 或 Visual Studio 的工具自动生成的。
     // 若要添加或移除成员，请编辑 .ResX 文件，然后重新运行 ResGen
     // (以 /str 作为命令选项)，或重新生成 VS 项目。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class StrConst {
@@ -61,56 +61,6 @@ namespace ProxySetter.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 030buy.com
-        ///0rz.tw
-        ///1-apple.com.tw
-        ///1000giri.net
-        ///100ke.org
-        ///10conditionsoflove.com
-        ///10musume.com
-        ///123rf.com
-        ///12bet.com
-        ///12vpn.com
-        ///12vpn.net
-        ///14.102.250.18
-        ///14.102.250.19
-        ///141hongkong.com
-        ///141tube.com
-        ///1688.com.au
-        ///173ng.com
-        ///174.142.105.153
-        ///177pic.info
-        ///17t17p.com
-        ///18board.com
-        ///18board.info
-        ///18onlygirls.com
-        ///18p2p.com
-        ///18virginsex.com
-        ///1949er.org
-        ///1984bbs.com
-        ///1984bbs.org
-        ///1989report.hkja.org.hk
-        ///199.59.148.20
-        ///1991way.com
-        ///1998cdp.org
-        ///1bao.org
-        ///1dumb.com
-        ///1e100.net
-        ///1eew.com
-        ///1mobile.com
-        ///1mobile.tw
-        ///1pondo.tv
-        ///2-hand.info
-        ///2000fun.com
-        ///2008x [字符串的其余部分被截断]&quot;; 的本地化字符串。
-        /// </summary>
-        internal static string black {
-            get {
-                return ResourceManager.GetString("black", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 45.33.128.0/20
         ///64.233.160.0/19
         ///66.102.0.0/20
@@ -141,6 +91,64 @@ namespace ProxySetter.Resources.Langs {
         }
         
         /// <summary>
+        ///   查找类似 0.zone
+        ///00.net
+        ///000.link
+        ///000000.net
+        ///00042.com
+        ///00058.com
+        ///0006266.com
+        ///000700.com
+        ///000714.xyz
+        ///000793.com
+        ///00086.net
+        ///0008bet.com
+        ///000dn.com
+        ///000e.com
+        ///000pc.net
+        ///001.com
+        ///00117163.xyz
+        ///001daima.com
+        ///001fzc.com
+        ///001jm.com
+        ///001job.com
+        ///001jp.com
+        ///001kd.com
+        ///001km.com
+        ///001pp.com
+        ///001pt.com
+        ///001sj.net
+        ///001tech.com
+        ///001town.com
+        ///001tudou.com
+        ///001u.com
+        ///001wifi.com
+        ///002049.com
+        ///00222.net
+        ///00257.com
+        ///002574.com
+        ///002lzj.com
+        ///0033.com
+        ///0037wan.com
+        ///00394.net
+        ///003store.com
+        ///004218.com
+        ///004678.com
+        ///004837963.xyz
+        ///005.tv
+        ///00563.com
+        ///0058.com
+        ///00615.net
+        ///007.pub
+        ///0 [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string direct_list {
+            get {
+                return ResourceManager.GetString("direct_list", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 &lt;!DOCTYPE html&gt;
         ///&lt;html&gt;
         ///
@@ -161,8 +169,7 @@ namespace ProxySetter.Resources.Langs {
         ///            display: inline-block;
         ///        }
         ///        
-        ///        .title {
-        ///            tex [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///        .tit [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string PacDebuggerTpl {
             get {
@@ -183,7 +190,7 @@ namespace ProxySetter.Resources.Langs {
         ///        if (isInNet(dnsResolve(c), &quot;10.0.0.0&quot;, &quot;255.0.0.0&quot;) ||
         ///            isInNet(dnsResolve(c), &quot;172.16.0.0&quot;, &quot;255.240.0.0&quot;) ||
         ///            isInNet(dnsResolve(c), &quot;192.168.0.0&quot;, &quot;255.255.0.0&quot;) ||
-        ///            isInNet(dnsReso [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///            isI [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string PacJsTpl {
             get {
@@ -192,60 +199,51 @@ namespace ProxySetter.Resources.Langs {
         }
         
         /// <summary>
-        ///   查找类似 0-6.com
-        ///0001688.com
-        ///001cndc.com
-        ///001en.com
-        ///001jm.com
-        ///001job.com
-        ///001pp.com
-        ///001sj.net
-        ///001sxy.com
-        ///001uk.com
-        ///001xin.com
-        ///005.tv
-        ///00615.net
-        ///007swz.com
-        ///00817.com
-        ///0086gd.com
-        ///00cdn.com
-        ///01-123.com
-        ///010lf.com
-        ///01dai.com
-        ///01dianzi.com
-        ///01hr.com
-        ///01w.com
-        ///01wed.com
-        ///020.com
-        ///020h.com
-        ///020job.com
-        ///020p.net
-        ///0214.com
-        ///022china.com
-        ///022job.net
-        ///022net.com
-        ///022s.com
-        ///022v.com
-        ///0231230.com
-        ///023zp.com
-        ///024anfang.net
-        ///024zxw.com
-        ///025ct.com
-        ///025syedu.com
-        ///025xl.com
-        ///025zp.com
-        ///027.net
-        ///027art.com
-        ///029k.com
-        ///0312mc.com
-        ///0316.cc
-        ///0352fang.com
-        ///0356f.com
-        ///0357hz.c [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///   查找类似 000webhost.com
+        ///01.org
+        ///02weqj32.com
+        ///030buy.com
+        ///04647.club
+        ///0cgdklr5sfwj.com
+        ///0emm.com
+        ///0plkijj.vip
+        ///0rz.tw
+        ///0x0.st
+        ///0xxx.ws
+        ///1-apple.com.tw
+        ///10.tt
+        ///1000giri.net
+        ///100beatscheap.com
+        ///100bucksbabes.com
+        ///100classicbooks.com
+        ///100ke.org
+        ///1010.com.hk
+        ///101boyvideos.com
+        ///101tubeporn.com
+        ///101xxx.xyz
+        ///10beasts.net
+        ///10bet.com
+        ///10c10qoo.one
+        ///10conditionsoflove.com
+        ///10musume.com
+        ///10xfotolia.com
+        ///110xnxx.com
+        ///1111mod-tube.buzz
+        ///1111mode.xyz
+        ///1111modpo.info
+        ///112263.com
+        ///114av.xyz
+        ///114bank.co.jp
+        ///119474.xyz
+        ///11jav.com
+        ///123-hp.com
+        ///123bin.cc
+        ///123dapp.com
+        ///123da [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
-        internal static string white {
+        internal static string proxy_list {
             get {
-                return ResourceManager.GetString("white", resourceCulture);
+                return ResourceManager.GetString("proxy_list", resourceCulture);
             }
         }
         
@@ -290,10 +288,7 @@ namespace ProxySetter.Resources.Langs {
         ///1.56.0.0/13
         ///1.68.0.0/14
         ///1.80.0.0/12
-        ///1.116.0.0/14
-        ///1.180.0.0/14
-        ///1.184.0.0/15
-        ///1.188 [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///1.11 [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string white_cidr {
             get {

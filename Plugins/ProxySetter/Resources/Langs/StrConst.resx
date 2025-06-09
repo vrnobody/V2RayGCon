@@ -118,11 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="black" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\PAC\black.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
-  </data>
   <data name="black_cidr" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\PAC\black_cidr.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <data name="direct_list" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\PAC\direct-list.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
   </data>
   <data name="PacDebuggerTpl" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\PAC\PacDebuggerTpl.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -130,8 +130,8 @@
   <data name="PacJsTpl" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\PAC\PacJsTpl.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="white" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\PAC\white.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  <data name="proxy_list" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\PAC\proxy-list.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
   </data>
   <data name="white_cidr" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\PAC\white_cidr.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>

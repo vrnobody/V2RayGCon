@@ -125,8 +125,8 @@
     <value>..\Resources\Icons\App\VBDynamicWeb_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>0.1.6</value>
-    <comment>Add Tuna.</comment>
+    <value>0.1.7</value>
+    <comment>Switch domain source to Loyalsoldier/v2ray-rules-dat.</comment>
   </data>
   <data name="WebConfiguration_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icons\App\WebConfiguration_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

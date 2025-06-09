@@ -124,8 +124,25 @@ namespace ProxySetter.Misc
 
         public static List<string> GetPacDomainList(bool isWhiteList)
         {
-            return (isWhiteList ? StrConst.white : StrConst.black)
-                .Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)
+            string parseOneLine(string domain)
+            {
+                if (string.IsNullOrEmpty(domain) || domain.StartsWith("regexp:"))
+                {
+                    return null;
+                }
+                var tag = "full:";
+                if (domain.StartsWith(tag))
+                {
+                    var r = domain.Substring(tag.Length);
+                    return r;
+                }
+                return domain;
+            }
+
+            return (isWhiteList ? StrConst.direct_list : StrConst.proxy_list)
+                .Split(new char[] { '\n', '\r' })
+                .Select(s => parseOneLine(s))
+                .Where(s => !string.IsNullOrEmpty(s))
                 .ToList();
         }
 

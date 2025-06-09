@@ -52,6 +52,7 @@ WebUI [手册manual](https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/
 [Html Agility Pack](https://html-agility-pack.net/) HTML解释器  
 [jacobslusser/ScintillaNET](https://github.com/jacobslusser/ScintillaNET) 编辑器  
 [JamesNK/Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) 处理json  
+[Loyalsoldier/v2ray-rules-dat](https://github.com/Loyalsoldier/v2ray-rules-dat) ProxySetter插件中的PAC域名列表来源  
 [micjahn/ZXing.Net](https://github.com/micjahn/ZXing.Net/) 处理二维码  
 [MihaZupan/HttpToSocks5Proxy](https://github.com/MihaZupan/HttpToSocks5Proxy/tree/archived/src/HttpToSocks5Proxy) HTTP转SOCKS5  
 [moq/moq4](https://github.com/moq/moq4) 自动补全  
@@ -65,7 +66,7 @@ WebUI [手册manual](https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/
 [ravibpatel/AutoUpdater.NET](https://github.com/ravibpatel/AutoUpdater.NET) 自动更新功能及ZipExtractor源码  
 [rxi/json.lua](https://github.com/rxi/json.lua) Luna插件中的json解释器  
 [shadowsocksr-backup/shadowsocksr-csharp](https://github.com/shadowsocksr-backup/shadowsocksr-csharp) 屏幕扫码实现代码  
-[txthinking/blackwhite](https://github.com/txthinking/blackwhite) ProxySetter插件中的默认PAC  
+[txthinking/blackwhite](https://github.com/txthinking/blackwhite) ProxySetter插件中的PAC代码及IP列表来源  
 [v2ray/v2ray-core](https://github.com/v2ray/v2ray-core) v2ray-core服务端  
 [wilhelmy/lua-bencode](https://bitbucket.org/wilhelmy/lua-bencode) bencode(torrent)解释器  
 [wintun.net](https://www.wintun.net/) wintun.dll  

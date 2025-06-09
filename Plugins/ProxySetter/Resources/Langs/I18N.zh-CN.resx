@@ -221,8 +221,11 @@ https://github.com/xjasonlyu/tun2socks
 v1.8.8及以上的V2RayGCon-box.zip包含上面两个软件。
 用法这里写不下，请看GitHub上的在线手册。
 
-默认PAC是https://github.com/txthinking/blackwhite
-可以在设置页面按以下格式修改默认PAC
+默认PAC来源：
+https://github.com/txthinking/blackwhite
+https://github.com/Loyalsoldier/v2ray-rules-dat
+
+可以在设置页面按以下格式修改默认PAC：
 
 // 这是一行注释
 // 添加域名、IP、CIDR

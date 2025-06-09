@@ -145,18 +145,16 @@
     <Folder Include="Resources\Icons\TabTuna\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\PAC\black.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\PAC\black_cidr.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\PAC\proxy-list.txt" />
     <None Include="Resources\Icons\App\VBDynamicWeb_16x.png" />
     <None Include="Resources\Icons\App\WebConfiguration_16x.png" />
+    <None Include="Resources\PAC\direct-list.txt" />
     <Content Include="Resources\PAC\PacDebuggerTpl.txt" />
     <Content Include="Resources\PAC\PacJsTpl.txt" />
     <None Include="Resources\PAC\white_cidr.txt" />
-    <None Include="Resources\PAC\white.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\VgcApis\VgcApis.csproj">

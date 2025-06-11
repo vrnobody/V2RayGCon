@@ -1,4 +1,9 @@
-[![Master Action Status][1]][2] [![Release][3]][4] [![Total Downloads][5]][6] [![License][7]][8] [![codebeat badge][13]][14]
+V2RayGCon 是 windows 下 [xray-core](http://github.com/xtls/xray-core) 及 [v2ray-core v4.x](https://www.v2fly.org) 的图形(graphic)配置器(configer)。  
+
+[![Master Action Status][1]][2] [![Release][3]][4] [![Total Downloads][5]][6] [![License][7]][8] [![codebeat badge][9]][10]
+
+[使用说明 manual][11]  
+[唯一联系方式 issue][12]  
 
 [1]: https://github.com/vrnobody/V2RayGCon/actions/workflows/release.yml/badge.svg "Build Status Badge"
 [2]: https://github.com/vrnobody/V2RayGCon/actions "Actions detail"
@@ -8,38 +13,14 @@
 [6]: https://somsubhra.github.io/github-release-stats/?username=vrnobody&repository=V2RayGCon&per_page=30 "Download Details"
 [7]: https://img.shields.io/github/license/vrnobody/V2RayGCon.svg "Licence Badge"
 [8]: https://github.com/vrnobody/V2RayGCon/blob/master/LICENSE "Licence"
-[9]: https://github.com/vrnobody/V2RayGCon/releases/latest "Latest release"
-[10]: https://vrnobody.github.io/V2RayGCon/ "github.io"
-[11]: https://github.com/vrnobody/V2RayGCon/issues "Issues"
-[12]: https://github.com/vrnobody/luna-scripts "Luna scripts"
-[13]: https://codebeat.co/badges/2877dcc5-5f53-4cb0-8178-6b39cd74e788 "codebeat badge"
-[14]: https://codebeat.co/projects/github-com-vrnobody-v2raygcon-master "codebeat report"
+[9]: https://codebeat.co/badges/2877dcc5-5f53-4cb0-8178-6b39cd74e788 "codebeat badge"
+[10]: https://codebeat.co/projects/github-com-vrnobody-v2raygcon-master "codebeat report"
+[11]: https://vrnobody.github.io/V2RayGCon/ "github.io"
+[12]: https://github.com/vrnobody/V2RayGCon/issues "Issues"
 
-V2RayGCon是windows下[v2ray-core](https://www.v2fly.org)的图形(graphic)配置器(configer)。  
+#### 感谢（按字母排序）
 
-[\[下载 download\]][9]&nbsp;&nbsp;[\[手册 manual\]][10]&nbsp;&nbsp;[\[唯一联系方式 issue\]][11]  
-
-### 安装 Install
-先安装.net framework 4.5+（win10自带），然后下载解压[V2RayGCon-box.zip][9]到任意目录。  
-  
-Download and unzip [V2RayGCon-box.zip][9] to any directory you like.  
-Require .net framework 4.5+  
-
-### 备用 Plan B
-V2RayGCon v2.0.7  
-MD5: 2BE1469D97B41FA1F2894D101148304F  
-![vgc-v2.0.7.png](https://vrnobody.github.io/V2RayGCon/images/releases/vgc-v2.0.7.png)  
-
-### 演示 Demo
-WinFormsUI  
-![Demo v1.4.3.5 GIF](https://vrnobody.github.io/V2RayGCon/images/forms/demo_basics_v1.4.3.5.gif)  
-  
-WebUI [手册manual](https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/web-ui/)  
-
-![Web UI light](https://vrnobody.github.io/V2RayGCon/images/webui/light_v0.0.2.0.png)  
-  
-<details>
-<summary><b>引用按字母排序 Credits (in alphabetical order)</b></summary>  
+##### 主程序用到的项目：
   
 [2dust/v2rayN](https://github.com/2dust/v2rayN) vmess分享链接及订阅格式  
 [Ahmad45123/AutoCompleteMenu-ScintillaNET](https://github.com/Ahmad45123/AutoCompleteMenu-ScintillaNET) 自动补全  
@@ -73,9 +54,7 @@ WebUI [手册manual](https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/
 [xjasonlyu/tun2socks](https://github.com/xjasonlyu/tun2socks) tun2socks  
 [XTLS/Xray-core](https://github.com/XTLS/Xray-core) Xray-core服务端  
   
-以及上面的部分包的依赖包。  
-  
-<b>WebUI引用到的包</b>  
+##### WebUI用到的项目：
 [ajaxorg/ace](https://github.com/ajaxorg/ace) 代码编辑器  
 [anish2690/vue-draggable-next](https://github.com/anish2690/vue-draggable-next) 拖放排序  
 [HENNGE/vue3-pagination](https://github.com/HENNGE/vue3-pagination) 分页  
@@ -85,5 +64,4 @@ WebUI [手册manual](https://vrnobody.github.io/V2RayGCon/03-plugins/04-neoluna/
 [yangss3/vue3-i18n](https://github.com/yangss3/vue3-i18n) 多语言支持  
   
 当然还有 vue, pinia, eslint, tailwind, prettier, fontawesome 等等。  
-  
-</details>
+

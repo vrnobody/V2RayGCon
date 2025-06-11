@@ -5,7 +5,7 @@ draft: false
 weight: 10
 ---
 
-NeoLuna插件是采用NeoLua作为后端的Lua脚本管理器。多插个字母n是为了避免c#命名空间重复问题。NeoLua是直接用c#写的lua5.3。Luna插件过P/Invoke调用c写的lua53.dll。  
+NeoLuna插件是采用NeoLua作为后端的Lua脚本管理器。多插个字母n是为了避免c#命名空间重复问题。NeoLua是直接用c#写的lua5.3。而Luna插件则是通过P/Invoke调用c写的lua53.dll。  
 
 使用NeoLua的时候注意这些坑：  
  1. 正则是通过简单的查找、替换把lua的pattern转成c#的regex，所以像string.gsub(), string.match()之类的函数，执行结果会和NLua不完全一致。要特别注意参数带table或者function的情况。  

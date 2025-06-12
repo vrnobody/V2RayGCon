@@ -2,7 +2,7 @@ V2RayGCon 是 windows 下 [xray-core](http://github.com/xtls/xray-core) 及 [v2r
 
 [![Master Action Status][1]][2] [![Release][3]][4] [![Total Downloads][5]][6] [![License][7]][8] [![codebeat badge][9]][10]
 
-[使用说明 manual][11]  
+[安装方法 install-guide][11]  
 [唯一联系方式 issue][12]  
 
 [1]: https://github.com/vrnobody/V2RayGCon/actions/workflows/release.yml/badge.svg "Build Status Badge"
@@ -64,4 +64,3 @@ V2RayGCon 是 windows 下 [xray-core](http://github.com/xtls/xray-core) 及 [v2r
 [yangss3/vue3-i18n](https://github.com/yangss3/vue3-i18n) 多语言支持  
   
 当然还有 vue, pinia, eslint, tailwind, prettier, fontawesome 等等。  
-

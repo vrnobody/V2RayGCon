@@ -92,13 +92,13 @@ Mailbox里面还有个SendAndWait()函数，配合Sys:CreateMailBox(name, capaci
 local hkMgr = require('3rd/neolua/mods/hotkey').new()
     
 local hkCfgs = {
-    -- ctrl + 5 打开记事本
+    -- ctrl + alt + 5 打开记事本
     {"D5", function() std.Sys:Run("notepad.exe") end},
 
-    -- ctrl + 6 打开cmd.exe
+    -- ctrl + alt + 6 打开cmd.exe
     {"D6", function() std.Sys:Run("cmd.exe") end},
 
-    -- ctrl + 7 打开画图
+    -- ctrl + alt + 7 打开画图
     {"D7", function() std.Sys:Run("mspaint.exe") end},
 }
 
@@ -120,4 +120,5 @@ hkMgr:Destroy()
 其实`hotkey`模块只是对`std.Sys`库中的`std.Sys:RegisterHotKey(...)`等几个函数简单包装了一下。  
 如果你想硬核一点可以直接使用`std.Sys`库中的函数。具体代码参考`3rd/neolua/mods/hotkey.lua`。  
   
-小技巧：不知道键码（比如上面的 "D5", "D6", "D7"）的时候，可以打开ProxySetter插件来查。  
+小技巧：  
+不知道键码（比如上面的 "D5", "D6", "D7"）的时候，可以打开ProxySetter插件查。  

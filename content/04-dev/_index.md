@@ -8,7 +8,7 @@ weight: 4
 这个项目使用 Visual Studio 2019 编写。如果你用的是 Visual Studio 2022 请看下面这链接：  
 [https://stackoverflow.com/questions/70022194/open-net-framework-4-5-project-in-vs-2022-is-there-any-workaround](https://stackoverflow.com/questions/70022194/open-net-framework-4-5-project-in-vs-2022-is-there-any-workaround)  
 
-这个软件的运行数据都在内存里，每1万个服务器约占用100M内存。  
+这个软件的运行数据都在内存里，每1万个服务器约占用100M内存。服务器数量设计上限是100万个。  
 
 ##### 在GitHub上发送加密信息：
 把下面的内容保存为`nobody.pub`
@@ -33,6 +33,7 @@ zviSOYV9eF1wKxSNCP6KnasCAwEAAQ==
 ```bash
 echo "你好😀" | openssl pkeyutl -encrypt -inkey nobody.pub -pubin | base64 -w 0
 ```
+*注意，这个方法只能发送少量文本*
 
 解密接收信息：
 ```bash

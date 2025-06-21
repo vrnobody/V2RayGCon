@@ -117,458 +117,494 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lbV2rayCoreGitHub.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>227, 12</value>
-  </data>
-  <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="&gt;&gt;label5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label4.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lbScanQRCode.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
-    <value>3, 12</value>
+  <data name="label4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
   </data>
-  <data name="&gt;&gt;label4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="label5.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="lbCopyFromClipboard.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
-    <value>31, 21</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbIssue.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;label2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
+  <data name="lbCopyFromClipboard.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;label3.Parent" xml:space="preserve">
     <value>pnlBasicUsage</value>
   </data>
-  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>305, 12</value>
-  </data>
-  <data name="lbConfigEditor.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
-    <value>7, 11</value>
-  </data>
-  <data name="lbDownloadV2rayCore.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="&gt;&gt;lbCopyFromClipboard.Parent" xml:space="preserve">
-    <value>pnlBasicUsage</value>
-  </data>
-  <data name="&gt;&gt;lbV2rayCoreGitHub.Name" xml:space="preserve">
-    <value>lbV2rayCoreGitHub</value>
-  </data>
-  <data name="pnlDownloadV2RayCore.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;lbDownloadV2rayCore.Name" xml:space="preserve">
-    <value>lbDownloadV2rayCore</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="label3.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="lbWiki.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 115</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
-  </data>
-  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 12</value>
-  </data>
-  <data name="label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;lbV2rayCoreGitHub.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="lbIssue.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>There are several ways to add server:</value>
-  </data>
-  <data name="lbWiki.Size" type="System.Drawing.Size, System.Drawing">
-    <value>215, 19</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>you can omit the steps above. </value>
-  </data>
-  <data name="&gt;&gt;lbV2rayCoreGitHub.Parent" xml:space="preserve">
-    <value>pnlDownloadV2RayCore</value>
-  </data>
-  <data name="lbIssue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 133</value>
-  </data>
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;pnlBasicUsage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pnlDownloadV2RayCore.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lbCopyFromClipboard.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
-    <value>pnlDownloadV2RayCore</value>
-  </data>
-  <data name="&gt;&gt;lbCopyFromClipboard.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lbConfigEditor.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;lbIssue.Parent" xml:space="preserve">
-    <value>pnlBasicUsage</value>
-  </data>
-  <data name="&gt;&gt;lbConfigEditor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbCopyFromClipboard.Name" xml:space="preserve">
-    <value>lbCopyFromClipboard</value>
-  </data>
-  <data name="&gt;&gt;pnlBasicUsage.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="lbConfigEditor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 19</value>
-  </data>
-  <data name="&gt;&gt;lbDownloadV2rayCore.Parent" xml:space="preserve">
-    <value>pnlDownloadV2RayCore</value>
-  </data>
-  <data name="&gt;&gt;label5.Name" xml:space="preserve">
-    <value>label5</value>
-  </data>
-  <data name="&gt;&gt;pnlBasicUsage.Name" xml:space="preserve">
-    <value>pnlBasicUsage</value>
-  </data>
-  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbWiki.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 61</value>
-  </data>
-  <data name="&gt;&gt;lbV2rayCoreGitHub.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>65, 9</value>
-  </data>
-  <data name="lbCopyFromClipboard.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbDownloadV2rayCore.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>WelcomeUI</value>
-  </data>
-  <data name="&gt;&gt;lbScanQRCode.Name" xml:space="preserve">
-    <value>lbScanQRCode</value>
-  </data>
-  <data name="lbScanQRCode.Text" xml:space="preserve">
-    <value>2. Scan QR Code from the screen</value>
-  </data>
-  <data name="lbIssue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="lbCopyFromClipboard.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;lbScanQRCode.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pnlBasicUsage.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;lbIssue.Name" xml:space="preserve">
-    <value>lbIssue</value>
-  </data>
-  <data name="&gt;&gt;lbIssue.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbWiki.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pnlDownloadV2RayCore.Size" type="System.Drawing.Size, System.Drawing">
     <value>361, 96</value>
   </data>
-  <data name="lbWiki.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbWiki.Text" xml:space="preserve">
-    <value>The manual page has a brief usage.</value>
-  </data>
-  <data name="lbV2rayCoreGitHub.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 78</value>
-  </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
-    <value>pnlDownloadV2RayCore</value>
-  </data>
-  <data name="label4.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="lbConfigEditor.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>378, 296</value>
-  </data>
-  <data name="lbV2rayCoreGitHub.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;lbCopyFromClipboard.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="label5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
+  <data name="&gt;&gt;lbScanQRCode.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;pnlDownloadV2RayCore.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;lbScanQRCode.Parent" xml:space="preserve">
-    <value>pnlBasicUsage</value>
+  <data name="&gt;&gt;lbCopyFromClipboard.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="label3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;linkLabelAddSubs.Name" xml:space="preserve">
+    <value>linkLabelAddSubs</value>
+  </data>
+  <data name="lbWiki.Text" xml:space="preserve">
+    <value>The manual page has a brief usage.</value>
+  </data>
+  <data name="lbConfigEditor.Text" xml:space="preserve">
+    <value>3. Use text editor</value>
+  </data>
+  <data name="lbConfigEditor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbDownloadV2rayCore.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbIssue.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 133</value>
+  </data>
+  <data name="linkLabelAddSubs.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;pnlDownloadV2RayCore.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="pnlDownloadV2RayCore.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 31</value>
+  </data>
+  <data name="lbScanQRCode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 47</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="lbV2rayCoreGitHub.Text" xml:space="preserve">
+    <value>Or download them from GitHub repo manually, and then</value>
+  </data>
+  <data name="lbCopyFromClipboard.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 30</value>
+  </data>
+  <data name="&gt;&gt;lbV2rayCoreGitHub.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lbCopyFromClipboard.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
+    <value>31, 21</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>378, 296</value>
+  </data>
+  <data name="lbScanQRCode.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lbConfigEditor.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>2, 0, 2, 0</value>
   </data>
   <data name="lbWiki.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;label4.Name" xml:space="preserve">
-    <value>label4</value>
-  </data>
-  <data name="lbCopyFromClipboard.Size" type="System.Drawing.Size, System.Drawing">
-    <value>326, 19</value>
-  </data>
-  <data name="lbV2rayCoreGitHub.Text" xml:space="preserve">
-    <value>Or download them from GitHub repo manually, and then</value>
-  </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 10</value>
-  </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="lbConfigEditor.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="lbIssue.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
-    <value>21, 5</value>
-  </data>
-  <data name="lbDownloadV2rayCore.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbIssue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>326, 19</value>
-  </data>
-  <data name="&gt;&gt;lbDownloadV2rayCore.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="pnlBasicUsage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>361, 155</value>
-  </data>
-  <data name="&gt;&gt;lbDownloadV2rayCore.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;lbWiki.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="lbScanQRCode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="lbDownloadV2rayCore.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 10</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>extract the assets into this software's directory.</value>
-  </data>
-  <data name="lbScanQRCode.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;lbWiki.Parent" xml:space="preserve">
-    <value>pnlBasicUsage</value>
-  </data>
-  <data name="&gt;&gt;lbScanQRCode.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="pnlDownloadV2RayCore.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 31</value>
-  </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
-  </data>
-  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="lbScanQRCode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 19</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>249, 19</value>
-  </data>
-  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 2, 0</value>
-  </data>
-  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Welcome</value>
-  </data>
-  <data name="lbCopyFromClipboard.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 30</value>
-  </data>
-  <data name="lbConfigEditor.Text" xml:space="preserve">
-    <value>3. Use text editor</value>
-  </data>
-  <data name="&gt;&gt;lbConfigEditor.Name" xml:space="preserve">
-    <value>lbConfigEditor</value>
-  </data>
-  <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="lbV2rayCoreGitHub.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
-    <value>22, 11</value>
-  </data>
-  <data name="lbScanQRCode.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbDownloadV2rayCore.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
-    <value>7, 24</value>
-  </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 45</value>
-  </data>
-  <data name="&gt;&gt;pnlDownloadV2RayCore.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="lbConfigEditor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 66</value>
-  </data>
   <data name="lbCopyFromClipboard.Text" xml:space="preserve">
     <value>1. Copy share link(s) and then import from clipboard</value>
-  </data>
-  <data name="lbIssue.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>黑体, 14pt</value>
-  </data>
-  <data name="&gt;&gt;lbWiki.Name" xml:space="preserve">
-    <value>lbWiki</value>
-  </data>
-  <data name="lbDownloadV2rayCore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>239, 19</value>
-  </data>
-  <data name="lbScanQRCode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 47</value>
-  </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;pnlDownloadV2RayCore.Name" xml:space="preserve">
-    <value>pnlDownloadV2RayCore</value>
-  </data>
-  <data name="lbDownloadV2rayCore.Text" xml:space="preserve">
-    <value>Please Download V2Ray/Xray core first.</value>
-  </data>
-  <data name="lbV2rayCoreGitHub.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 27</value>
   </data>
   <data name="pnlBasicUsage.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 133</value>
   </data>
+  <data name="&gt;&gt;lbV2rayCoreGitHub.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lbConfigEditor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 66</value>
+  </data>
+  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>WelcomeUI</value>
+  </data>
+  <data name="&gt;&gt;linkLabelAddSubs.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lbDownloadV2rayCore.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
+    <value>7, 24</value>
+  </data>
   <data name="lbIssue.Text" xml:space="preserve">
     <value>Feel free to open an issue if you have any question.</value>
   </data>
-  <data name="pnlBasicUsage.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="lbConfigEditor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 19</value>
+  </data>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbScanQRCode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 19</value>
+  </data>
+  <data name="&gt;&gt;lbIssue.Parent" xml:space="preserve">
+    <value>pnlBasicUsage</value>
+  </data>
+  <data name="lbIssue.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="&gt;&gt;lbConfigEditor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 10</value>
+  </data>
+  <data name="label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>There are several ways to add server:</value>
+  </data>
+  <data name="lbScanQRCode.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
+    <value>3, 12</value>
+  </data>
+  <data name="linkLabelAddSubs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 19</value>
+  </data>
+  <data name="lbIssue.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>65, 9</value>
+  </data>
+  <data name="linkLabelAddSubs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 85</value>
+  </data>
+  <data name="&gt;&gt;lbDownloadV2rayCore.Parent" xml:space="preserve">
+    <value>pnlDownloadV2RayCore</value>
+  </data>
+  <data name="lbV2rayCoreGitHub.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
+    <value>22, 11</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>249, 19</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="lbCopyFromClipboard.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="&gt;&gt;lbDownloadV2rayCore.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbV2rayCoreGitHub.Parent" xml:space="preserve">
+    <value>pnlDownloadV2RayCore</value>
   </data>
   <data name="lbWiki.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
     <value>4, 11</value>
   </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 12</value>
+  <data name="&gt;&gt;lbDownloadV2rayCore.Name" xml:space="preserve">
+    <value>lbDownloadV2rayCore</value>
   </data>
-  <data name="lbV2rayCoreGitHub.Size" type="System.Drawing.Size, System.Drawing">
-    <value>326, 19</value>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>pnlDownloadV2RayCore</value>
+  </data>
+  <data name="&gt;&gt;lbIssue.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lbScanQRCode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lbScanQRCode.Text" xml:space="preserve">
+    <value>2. Scan QR Code from the screen</value>
+  </data>
+  <data name="lbDownloadV2rayCore.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="&gt;&gt;pnlBasicUsage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;label4.Parent" xml:space="preserve">
     <value>pnlDownloadV2RayCore</value>
   </data>
-  <data name="&gt;&gt;lbConfigEditor.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lbDownloadV2rayCore.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>pnlDownloadV2RayCore</value>
+  </data>
+  <data name="&gt;&gt;pnlBasicUsage.Name" xml:space="preserve">
+    <value>pnlBasicUsage</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
+  </data>
+  <data name="lbDownloadV2rayCore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>239, 19</value>
+  </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lbCopyFromClipboard.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="lbDownloadV2rayCore.Text" xml:space="preserve">
+    <value>Please Download V2Ray/Xray core first.</value>
+  </data>
+  <data name="&gt;&gt;pnlDownloadV2RayCore.Name" xml:space="preserve">
+    <value>pnlDownloadV2RayCore</value>
+  </data>
+  <data name="linkLabelAddSubs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="linkLabelAddSubs.Text" xml:space="preserve">
+    <value>4. Add a subscription.</value>
+  </data>
+  <data name="label1.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="linkLabelAddSubs.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="lbV2rayCoreGitHub.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="linkLabelAddSubs.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lbIssue.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
+    <value>21, 5</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="pnlBasicUsage.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;lbScanQRCode.Parent" xml:space="preserve">
+    <value>pnlBasicUsage</value>
+  </data>
+  <data name="&gt;&gt;lbV2rayCoreGitHub.Name" xml:space="preserve">
+    <value>lbV2rayCoreGitHub</value>
+  </data>
+  <data name="lbDownloadV2rayCore.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 10</value>
+  </data>
+  <data name="lbWiki.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbV2rayCoreGitHub.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 27</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>305, 12</value>
+  </data>
+  <data name="lbScanQRCode.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 12</value>
+  </data>
+  <data name="&gt;&gt;lbWiki.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbCopyFromClipboard.Name" xml:space="preserve">
+    <value>lbCopyFromClipboard</value>
+  </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="pnlDownloadV2RayCore.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="lbV2rayCoreGitHub.Size" type="System.Drawing.Size, System.Drawing">
+    <value>326, 19</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 61</value>
+  </data>
+  <data name="lbConfigEditor.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="label2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="&gt;&gt;lbCopyFromClipboard.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lbCopyFromClipboard.Size" type="System.Drawing.Size, System.Drawing">
+    <value>326, 19</value>
+  </data>
+  <data name="lbV2rayCoreGitHub.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbIssue.Name" xml:space="preserve">
+    <value>lbIssue</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 78</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="linkLabelAddSubs.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
+    <value>9, 12</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 12</value>
+  </data>
+  <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="&gt;&gt;pnlBasicUsage.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="pnlBasicUsage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>361, 155</value>
+  </data>
+  <data name="lbIssue.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>extract the assets into this software's directory.</value>
+  </data>
+  <data name="&gt;&gt;lbCopyFromClipboard.Parent" xml:space="preserve">
+    <value>pnlBasicUsage</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
     <value>If you downloaded V2RayGCon-box.zip,</value>
   </data>
+  <data name="&gt;&gt;lbWiki.Parent" xml:space="preserve">
+    <value>pnlBasicUsage</value>
+  </data>
+  <data name="label3.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="lbIssue.Size" type="System.Drawing.Size, System.Drawing">
+    <value>326, 19</value>
+  </data>
+  <data name="lbDownloadV2rayCore.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>227, 12</value>
+  </data>
+  <data name="&gt;&gt;lbScanQRCode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;lbConfigEditor.Parent" xml:space="preserve">
     <value>pnlBasicUsage</value>
+  </data>
+  <data name="&gt;&gt;lbIssue.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lbWiki.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>黑体, 14pt</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lbWiki.Size" type="System.Drawing.Size, System.Drawing">
+    <value>215, 19</value>
+  </data>
+  <data name="&gt;&gt;linkLabelAddSubs.Parent" xml:space="preserve">
+    <value>pnlBasicUsage</value>
+  </data>
+  <data name="&gt;&gt;pnlBasicUsage.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lbConfigEditor.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
+    <value>7, 11</value>
+  </data>
+  <data name="&gt;&gt;linkLabelAddSubs.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>you can omit the steps above. </value>
+  </data>
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;lbWiki.Name" xml:space="preserve">
+    <value>lbWiki</value>
+  </data>
+  <data name="&gt;&gt;lbScanQRCode.Name" xml:space="preserve">
+    <value>lbScanQRCode</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;lbConfigEditor.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;lbWiki.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;lbConfigEditor.Name" xml:space="preserve">
+    <value>lbConfigEditor</value>
+  </data>
+  <data name="lbV2rayCoreGitHub.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 45</value>
+  </data>
+  <data name="&gt;&gt;pnlDownloadV2RayCore.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="label5.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 2, 0</value>
+  </data>
+  <data name="lbWiki.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 115</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

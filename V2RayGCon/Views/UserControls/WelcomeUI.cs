@@ -88,5 +88,10 @@ namespace V2RayGCon.Views.UserControls
         {
             WinForms.FormTextConfigEditor.ShowEmptyConfig();
         }
+
+        private void linkLabelAddSubs_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            WinForms.FormOption.ShowForm();
+        }
     }
 }

@@ -43,6 +43,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.pnlDownloadV2RayCore = new System.Windows.Forms.Panel();
             this.pnlBasicUsage = new System.Windows.Forms.Panel();
+            this.linkLabelAddSubs = new System.Windows.Forms.LinkLabel();
             this.pnlDownloadV2RayCore.SuspendLayout();
             this.pnlBasicUsage.SuspendLayout();
             this.SuspendLayout();
@@ -142,12 +143,21 @@
             // 
             resources.ApplyResources(this.pnlBasicUsage, "pnlBasicUsage");
             this.pnlBasicUsage.Controls.Add(this.lbIssue);
+            this.pnlBasicUsage.Controls.Add(this.linkLabelAddSubs);
             this.pnlBasicUsage.Controls.Add(this.lbConfigEditor);
             this.pnlBasicUsage.Controls.Add(this.lbScanQRCode);
             this.pnlBasicUsage.Controls.Add(this.label3);
             this.pnlBasicUsage.Controls.Add(this.lbCopyFromClipboard);
             this.pnlBasicUsage.Controls.Add(this.lbWiki);
             this.pnlBasicUsage.Name = "pnlBasicUsage";
+            // 
+            // linkLabelAddSubs
+            // 
+            resources.ApplyResources(this.linkLabelAddSubs, "linkLabelAddSubs");
+            this.linkLabelAddSubs.Name = "linkLabelAddSubs";
+            this.linkLabelAddSubs.TabStop = true;
+            this.linkLabelAddSubs.UseCompatibleTextRendering = true;
+            this.linkLabelAddSubs.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAddSubs_LinkClicked);
             // 
             // WelcomeUI
             // 
@@ -182,5 +192,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel pnlDownloadV2RayCore;
         private System.Windows.Forms.Panel pnlBasicUsage;
+        private System.Windows.Forms.LinkLabel linkLabelAddSubs;
     }
 }

@@ -231,7 +231,7 @@
     <value>3. 或者Text编辑器</value>
   </data>
   <data name="lbWiki.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
-    <value>5, 4</value>
+    <value>6, 4</value>
   </data>
   <data name="lbWiki.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 111</value>
@@ -240,10 +240,10 @@
     <value>1, 0, 1, 0</value>
   </data>
   <data name="lbWiki.Size" type="System.Drawing.Size, System.Drawing">
-    <value>239, 19</value>
+    <value>128, 19</value>
   </data>
   <data name="lbWiki.Text" xml:space="preserve">
-    <value>这个项目的手册页面里面有简要的使用说明</value>
+    <value>更多功能请看在线手册</value>
   </data>
   <data name="lbIssue.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
     <value>8, 5</value>
@@ -301,6 +301,18 @@
   </data>
   <data name="pnlBasicUsage.Size" type="System.Drawing.Size, System.Drawing">
     <value>272, 153</value>
+  </data>
+  <data name="linkLabelAddSubs.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
+    <value>9, 4</value>
+  </data>
+  <data name="linkLabelAddSubs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 81</value>
+  </data>
+  <data name="linkLabelAddSubs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>171, 19</value>
+  </data>
+  <data name="linkLabelAddSubs.Text" xml:space="preserve">
+    <value>4. 订阅功能藏在选项窗口里面</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 1, 1, 1</value>

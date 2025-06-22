@@ -273,6 +273,9 @@
   <data name="&gt;&gt;btnCopyAll.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="pbLoading.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
+  </data>
   <data name="pbLoading.Location" type="System.Drawing.Point, System.Drawing">
     <value>48, 142</value>
   </data>

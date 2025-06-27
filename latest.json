@@ -1,13 +1,9 @@
 {
-  "version": "2.1.1.0",
-  "md5": "ABCFE8072789F0A3CB2B93DF0E43277B",
+  "version": "2.1.2.0",
+  "md5": "ACD4FF70A801C215AA603F4795C3AD9B",
   "warnings": [],
   "changes": [
-    "非便携模式下，用户数据改为保存到 %ProgramData% 目录内",
-    "主窗口的服务器面板添加一个重启按钮",
-    "降低导入大量（10万+）节点的内存占用量",
-    "简易编辑器添加生成服务端配置功能",
-    "修复导入结果窗口加载完成前关闭，会崩溃的问题",
-    "NeoLuna 插件添加 std.Misc:GenServerSideConfig(meta) 等多个函数"
+    "PAC 白名单改用 Loyalsoldier/v2ray-rules-dat",
+    "界面少量调整"
   ]
 }

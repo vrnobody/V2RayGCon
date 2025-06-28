@@ -228,7 +228,9 @@ namespace VgcApisTests
 
         [DataTestMethod]
         [DataRow(0.1, 0.2, false)]
-        [DataRow(0.000000001, 0.00000002, true)]
+        [DataRow(0.000_000_01, 0.000_000_02, false)]
+        [DataRow(0.000_000_001, 0.000_000_002, true)]
+        [DataRow(0.000_000_000_1, 0.000_000_000_2, true)]
         [DataRow(0.001, 0.002, false)]
         [DataRow(-0.1, 0.1, false)]
         [DataRow(2, 2, true)]

@@ -194,7 +194,7 @@ namespace V2RayGCon.Services.ServersComponents
             {
                 selectedServers.Sort(comparer);
                 var minIndex = selectedServers.Min(s => s.GetCoreStates().GetIndex());
-                var delta = 1.0 / 2 / selectedServers.Count;
+                var delta = 0.9 / selectedServers.Count;
                 for (int i = 0; i < selectedServers.Count; i++)
                 {
                     selectedServers[i].GetCoreStates().SetIndexQuiet(minIndex + delta * (i + 1));

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
@@ -227,12 +228,14 @@ namespace V2RayGCon.Controllers.FormMainComponent
         {
             moveToTop.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                SetServerItemsIndex(0);
+                var selected = servers.GetSelectedServers();
+                servers.MoveCoreServCtrlList(selected, 0);
             });
 
             moveToBottom.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
-                SetServerItemsIndex(double.MaxValue);
+                var selected = servers.GetSelectedServers();
+                servers.MoveCoreServCtrlList(selected, servers.Count() + selected.Count());
             });
         }
 
@@ -275,20 +278,6 @@ namespace V2RayGCon.Controllers.FormMainComponent
             var panel = GetFlyPanel();
             panel.RemoveAllServersConrol();
             panel.RefreshFlyPanelLater();
-        }
-
-        void SetServerItemsIndex(double index)
-        {
-            servers
-                .GetSelectedServers()
-                .Select(s =>
-                {
-                    s.GetCoreStates().SetIndex(index);
-                    return true;
-                })
-                .ToList(); // force linq to execute
-            servers.ResetIndexQuiet();
-            RemoveAllControlsAndRefreshFlyPanel();
         }
 
         string EncodeSelectedServersIntoVmixShareLinks()

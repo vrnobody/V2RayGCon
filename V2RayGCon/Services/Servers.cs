@@ -68,6 +68,14 @@ namespace V2RayGCon.Services
         #endregion
 
         #region sort
+
+        public void MoveCoreServCtrlList(List<ICoreServCtrl> coreList, double destBottomIndex)
+        {
+            indexHandler.MoveCoreServCtrlList(ref coreList, destBottomIndex);
+            RequireFormMainReload();
+            InvokeEventOnServerPropertyChange(this, EventArgs.Empty);
+        }
+
         public void ResetIndex() => indexHandler.ResetIndex(false);
 
         public void ResetIndexQuiet() => indexHandler.ResetIndex(true);

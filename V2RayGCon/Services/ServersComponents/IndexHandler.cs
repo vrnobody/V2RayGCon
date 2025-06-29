@@ -68,6 +68,30 @@ namespace V2RayGCon.Services.ServersComponents
             SortServerItemList(ref coreList, SummaryComparer);
         }
 
+        public void MoveCoreServCtrlList(
+            ref List<VgcApis.Interfaces.ICoreServCtrl> coreList,
+            double destBottomIndex
+        )
+        {
+            locker.EnterWriteLock();
+            try
+            {
+                coreList
+                    .OrderByDescending(s => s)
+                    .Select(s =>
+                    {
+                        s.GetCoreStates().SetIndexQuiet(destBottomIndex--);
+                        return true;
+                    })
+                    .Count();
+            }
+            finally
+            {
+                locker.ExitWriteLock();
+            }
+            ResetIndexWorker(true);
+        }
+
         public void ResetIndex(bool isQuiet) => ResetIndexWorker(isQuiet);
 
         #endregion

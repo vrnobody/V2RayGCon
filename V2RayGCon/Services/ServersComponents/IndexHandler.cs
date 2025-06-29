@@ -192,19 +192,41 @@ namespace V2RayGCon.Services.ServersComponents
             locker.EnterWriteLock();
             try
             {
+                var idxs = new HashSet<int>(
+                    selectedServers.Select(s => (int)s.GetCoreStates().GetIndex())
+                );
+                var min = idxs.Min();
+                var max = idxs.Max();
+                var c = min + idxs.Count;
+
+                // must process tail first
+                coreServCache
+                    .Where(kv =>
+                    {
+                        var idx = (int)kv.Value.GetCoreStates().GetIndex();
+                        return idx > min && idx < max && !idxs.Contains(idx);
+                    })
+                    .Select(kv => kv.Value)
+                    .OrderBy(s => s)
+                    .Select(s =>
+                    {
+                        s.GetCoreStates().SetIndexQuiet(c++);
+                        return true;
+                    })
+                    .Count();
+
+                // head
                 selectedServers.Sort(comparer);
-                var minIndex = selectedServers.Min(s => s.GetCoreStates().GetIndex());
-                var delta = 0.9 / selectedServers.Count;
+                c = min;
                 for (int i = 0; i < selectedServers.Count; i++)
                 {
-                    selectedServers[i].GetCoreStates().SetIndexQuiet(minIndex + delta * (i + 1));
+                    selectedServers[i].GetCoreStates().SetIndexQuiet(c++);
                 }
             }
             finally
             {
                 locker.ExitWriteLock();
             }
-            ResetIndexWorker(true);
         }
         #endregion
 

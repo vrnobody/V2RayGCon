@@ -14,7 +14,7 @@ namespace VgcApis.Models.Consts
         public static int QuickSwitchMenuItemNum = 9;
 
         public static double CustomSpeedtestMeanWeight = 0.6;
-        public static double FloatPointNumberTolerance = 0.00000001;
+        public static double FloatPointNumberTolerance = 0.000_000_01;
 
         public static int MinDynamicMenuSize = 512;
         public static int MenuItemGroupSize = 16;

@@ -155,7 +155,7 @@
 https://github.com/v2ray/v2ray-core</value>
   </data>
   <data name="DownloadV2rayCore" xml:space="preserve">
-    <value>下载 V2Ray/Xray core</value>
+    <value>下载 V2Ray / Xray 内核</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>完成</value>
@@ -234,7 +234,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>注意：IE 不支持 PAC 文件！</value>
   </data>
   <data name="PleaseCheckConfig" xml:space="preserve">
-    <value>无法解析 Json，请检查当前配置内容。</value>
+    <value>无法解析 JSON，请检查当前配置内容。</value>
   </data>
   <data name="WarnMultipleInstance" xml:space="preserve">
     <value>已存在另一个实例，确定要再开一个？</value>
@@ -259,7 +259,7 @@ https://github.com/v2ray/v2ray-core</value>
 确定要加载新配置？</value>
   </data>
   <data name="LoadJsonFail" xml:space="preserve">
-    <value>加载 Json 文件失败！</value>
+    <value>加载 JSON 文件失败！</value>
   </data>
   <data name="AvailableExamples" xml:space="preserve">
     <value>可用示例 ...</value>
@@ -374,7 +374,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>解码 Import 失败!</value>
   </data>
   <data name="AnalysingImport" xml:space="preserve">
-    <value>正在分析 import 请稍等...</value>
+    <value>正在分析 Import 请稍等...</value>
   </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>未能找到文件！</value>
@@ -535,7 +535,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>未标记</value>
   </data>
   <data name="SysNotSupportTLS12" xml:space="preserve">
-    <value>你的系统不支持 TLS1.2，请升级 .net 至 4.5 或更高版本。
+    <value>你的系统不支持 TLS 1.2，请升级 .net 至 4.5 或更高版本。
 否则涉及网络的操作可能失败。</value>
   </data>
   <data name="Total" xml:space="preserve">
@@ -557,7 +557,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>获取 Inbound 信息失败!</value>
   </data>
   <data name="SetAnyServerAsPacServerFirst" xml:space="preserve">
-    <value>请先将任意服务器设为PAC代理。</value>
+    <value>请先将任意服务器设为 PAC 代理。</value>
   </data>
   <data name="VisitWebPage" xml:space="preserve">
     <value>访问以下网址？</value>
@@ -608,7 +608,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>解压文件失败!</value>
   </data>
   <data name="InjectPackagingImportsFail" xml:space="preserve">
-    <value>注入打包 import 失败，忽略相应 import 项</value>
+    <value>注入打包 Import 失败，忽略相应 Import 项</value>
   </data>
   <data name="ConfirmClearLog" xml:space="preserve">
     <value>确定要清空日志？</value>
@@ -641,7 +641,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>导入订阅设置？</value>
   </data>
   <data name="AndThenSaveThisFileAs" xml:space="preserve">
-    <value>并把记事本中的 json 数据另存为 {0}。</value>
+    <value>并把记事本中的 JSON 数据另存为 {0}。</value>
   </data>
   <data name="OrDisablePortableMode" xml:space="preserve">
     <value>或者在选项中关闭便携模式。</value>
@@ -668,7 +668,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>服务器</value>
   </data>
   <data name="CheckForVgcUpdate" xml:space="preserve">
-    <value>检查 V2RayGCon更新</value>
+    <value>检查 V2RayGCon 更新</value>
   </data>
   <data name="StopAllServers" xml:space="preserve">
     <value>全部停止</value>
@@ -698,7 +698,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>第 {0} 页 ({1,5:D5} - {2,5:D5})</value>
   </data>
   <data name="StatusBarMessageTpl" xml:space="preserve">
-    <value>共 {0}/{1} 个服务器 选中 {2}/{3} 项</value>
+    <value>共 {0}/{1} 个服务器，选中 {2}/{3} 项</value>
   </data>
   <data name="TotalNum" xml:space="preserve">
     <value>合计：</value>
@@ -737,7 +737,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>定位目标文件不会失败！</value>
   </data>
   <data name="ParseCustomInboundsSettingFail" xml:space="preserve">
-    <value>解释自定义 inbounds 失败！</value>
+    <value>解释自定义 Inbounds 失败！</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>自定义</value>
@@ -791,7 +791,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>解释配置失败！JSON 编辑器仅支持 JSON 格式的配置。</value>
   </data>
   <data name="TextEditor" xml:space="preserve">
-    <value>Text编辑器</value>
+    <value>Text 编辑器</value>
   </data>
   <data name="ConfirmDeleteTpl" xml:space="preserve">
     <value>确定删除 [{0}] 吗？</value>

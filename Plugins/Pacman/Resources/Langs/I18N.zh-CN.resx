@@ -121,7 +121,7 @@
     <value>删除此项？</value>
   </data>
   <data name="DeleteTpl" xml:space="preserve">
-    <value>删除{0}？</value>
+    <value>删除 {0}？</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>将多个服务器打包成一个服务器。</value>

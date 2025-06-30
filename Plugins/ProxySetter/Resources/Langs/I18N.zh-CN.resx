@@ -136,14 +136,14 @@
     <value>完成</value>
   </data>
   <data name="ExeNotFound" xml:space="preserve">
-    <value>Exe文件不存在！
+    <value>Exe 文件不存在！
 {0}</value>
   </data>
   <data name="Failed" xml:space="preserve">
     <value>失败</value>
   </data>
   <data name="GlobalProxyRequireHttpServer" xml:space="preserve">
-    <value>HTTP服务器才可以设置为全局代理</value>
+    <value>HTTP 服务器才可以设置为全局代理</value>
   </data>
   <data name="LaunchNotepadFail" xml:space="preserve">
     <value>启动记事本失败！</value>
@@ -167,19 +167,19 @@
     <value>选项</value>
   </data>
   <data name="PacProxyRequireSocksOrHttpServer" xml:space="preserve">
-    <value>SOCKS或HTTP服务器才可以设置为PAC代理</value>
+    <value>SOCKS 或 HTTP 服务器才可以设置为 PAC 代理</value>
   </data>
   <data name="PacServerIsOff" xml:space="preserve">
-    <value>PAC服务器已停止。</value>
+    <value>PAC 服务器已停止。</value>
   </data>
   <data name="PacServerIsOn" xml:space="preserve">
-    <value>PAC服务器运行中。</value>
+    <value>PAC 服务器运行中。</value>
   </data>
   <data name="ParseKeyCodeFail" xml:space="preserve">
-    <value>尝试解释热键名失败！请检查ProxySetter的热键设置。</value>
+    <value>尝试解释热键名失败！请检查 ProxySetter 的热键设置。</value>
   </data>
   <data name="PleaseConfigTunaFirst" xml:space="preserve">
-    <value>请先在本插件的选项窗口中配置Tuna，并生成启动参数。</value>
+    <value>请先在本插件的选项窗口中配置 Tuna，并生成启动参数。</value>
   </data>
   <data name="RegHotKeySuccess" xml:space="preserve">
     <value>热键设置成功！</value>
@@ -191,7 +191,7 @@
     <value>设为系统代理</value>
   </data>
   <data name="StartPacServFail" xml:space="preserve">
-    <value>启动PAC服务器失败，请检查选项中的端口设置</value>
+    <value>启动 PAC 服务器失败，请检查选项中的端口设置</value>
   </data>
   <data name="SysProxyChangeTo" xml:space="preserve">
     <value>当前系统代理指向 </value>
@@ -203,29 +203,29 @@
     <value>系统代理设置已更新</value>
   </data>
   <data name="TunaIsRunning" xml:space="preserve">
-    <value>Tuna运行中</value>
+    <value>Tuna 运行中</value>
   </data>
   <data name="TunaStarts" xml:space="preserve">
-    <value>Tuna启动</value>
+    <value>Tuna 启动</value>
   </data>
   <data name="TunaStopped" xml:space="preserve">
-    <value>Tuna已停止</value>
+    <value>Tuna 已停止</value>
   </data>
   <data name="UnregisterHotKey" xml:space="preserve">
-    <value>清除热键{0}</value>
+    <value>清除热键 {0}</value>
   </data>
   <data name="UsageReadme" xml:space="preserve">
-    <value>Tuna需要用到以下两个软件，请自行下载：
+    <value>Tuna 需要用到以下两个软件，请自行下载：
 https://www.wintun.net/
 https://github.com/xjasonlyu/tun2socks
-v1.8.8及以上的V2RayGCon-box.zip包含上面两个软件。
-用法这里写不下，请看GitHub上的在线手册。
+v1.8.8 及以上的 V2RayGCon-box.zip 包含上面两个软件。
+具体用法请看 GitHub 上的在线手册。
 
-默认PAC来源：
+默认 PAC 来源：
 https://github.com/txthinking/blackwhite
 https://github.com/Loyalsoldier/v2ray-rules-dat
 
-可以在设置页面按以下格式修改默认PAC：
+可以在设置页面按以下格式修改默认 PAC：
 
 // 这是一行注释
 // 添加域名、IP、CIDR
@@ -243,7 +243,7 @@ example.com
 -192.168.1.0/24</value>
   </data>
   <data name="VisitPacDebugger" xml:space="preserve">
-    <value>打开PAC调试器页面？</value>
+    <value>打开 PAC 调试器页面？</value>
   </data>
   <data name="WriteFileFail" xml:space="preserve">
     <value>写入文件错误！</value>

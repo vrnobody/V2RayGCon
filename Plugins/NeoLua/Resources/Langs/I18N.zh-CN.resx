@@ -133,7 +133,7 @@
     <value>复制成功！</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>NeoLua脚本管理器。</value>
+    <value>NeoLua 脚本管理器。</value>
   </data>
   <data name="DiscardUnsavedChanges" xml:space="preserve">
     <value>放弃未保存的修改?</value>

@@ -118,6 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 25</value>
+  </data>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>文件</value>
+  </data>
   <data name="openToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>136, 22</value>
   </data>
@@ -148,11 +154,11 @@
   <data name="closeToolStripMenuItem.Text" xml:space="preserve">
     <value>关闭</value>
   </data>
-  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 25</value>
+  <data name="serverToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 25</value>
   </data>
-  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>文件</value>
+  <data name="serverToolStripMenuItem.Text" xml:space="preserve">
+    <value>服务器</value>
   </data>
   <data name="addNewServerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>148, 22</value>
@@ -181,11 +187,14 @@
   <data name="overwriteServerToolStripMenuItem.Text" xml:space="preserve">
     <value>覆盖服务器</value>
   </data>
-  <data name="serverToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 25</value>
+  <data name="viewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 25</value>
   </data>
-  <data name="serverToolStripMenuItem.Text" xml:space="preserve">
-    <value>服务器</value>
+  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
+    <value>视图</value>
+  </data>
+  <data name="formatToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>136, 22</value>
   </data>
   <data name="formatToolStripMenuItem.Text" xml:space="preserve">
     <value>格式化</value>
@@ -193,19 +202,19 @@
   <data name="formatToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>格式化JSON文本</value>
   </data>
+  <data name="searchToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>136, 22</value>
+  </data>
   <data name="searchToolStripMenuItem.Text" xml:space="preserve">
     <value>搜索</value>
+  </data>
+  <data name="simpleConfigerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>136, 22</value>
   </data>
   <data name="simpleConfigerToolStripMenuItem.Text" xml:space="preserve">
     <value>简易编辑器</value>
   </data>
-  <data name="viewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 25</value>
-  </data>
-  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
-    <value>视图</value>
-  </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Text编辑器</value>
+    <value>Text 编辑器</value>
   </data>
 </root>

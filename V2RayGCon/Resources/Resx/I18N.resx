@@ -840,4 +840,10 @@ c:\vgc\V2RayGCon.exe -s s2.json</value>
   <data name="Failed" xml:space="preserve">
     <value>Failed</value>
   </data>
+  <data name="DestIndex" xml:space="preserve">
+    <value>Destination index:</value>
+  </data>
+  <data name="ParseNumberFailed" xml:space="preserve">
+    <value>Parse number failed.</value>
+  </data>
 </root>

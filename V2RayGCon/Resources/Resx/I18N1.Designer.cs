@@ -741,6 +741,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Destination index: 的本地化字符串。
+        /// </summary>
+        internal static string DestIndex {
+            get {
+                return ResourceManager.GetString("DestIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Done 的本地化字符串。
         /// </summary>
         internal static string Done {
@@ -1488,6 +1497,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string ParseCustomInboundsSettingFail {
             get {
                 return ResourceManager.GetString("ParseCustomInboundsSettingFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Parse number failed. 的本地化字符串。
+        /// </summary>
+        internal static string ParseNumberFailed {
+            get {
+                return ResourceManager.GetString("ParseNumberFailed", resourceCulture);
             }
         }
         

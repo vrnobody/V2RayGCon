@@ -32,6 +32,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             // view
             ToolStripMenuItem moveToTop,
             ToolStripMenuItem moveToBottom,
+            ToolStripMenuItem moveToCustomIndex,
             ToolStripMenuItem reverseByIndex,
             ToolStripMenuItem sortBySpeed,
             ToolStripMenuItem sortByDate,
@@ -53,7 +54,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 sortByUploadTotal
             );
 
-            InitCtrlView(moveToTop, moveToBottom);
+            InitCtrlView(moveToTop, moveToBottom, moveToCustomIndex);
 
             InitCtrlCopyToClipboard(copyAsV2cfgLinks, copyAsVmixLinks);
 
@@ -224,7 +225,11 @@ namespace V2RayGCon.Controllers.FormMainComponent
             });
         }
 
-        private void InitCtrlView(ToolStripMenuItem moveToTop, ToolStripMenuItem moveToBottom)
+        private void InitCtrlView(
+            ToolStripMenuItem moveToTop,
+            ToolStripMenuItem moveToBottom,
+            ToolStripMenuItem moveToCustomIndex
+        )
         {
             moveToTop.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
@@ -238,6 +243,26 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 var selected = servers.GetSelectedServers();
                 var uids = selected.Select(s => s.GetCoreStates().GetUid()).ToList();
                 servers.MoveTo(uids, servers.Count() + 1);
+            });
+
+            moveToCustomIndex.Click += RunWhenSelectionIsNotEmptyHandler(() =>
+            {
+                VgcApis.Misc.UI.GetUserInput(
+                    I18N.DestIndex,
+                    str =>
+                    {
+                        if (double.TryParse(str, out var index))
+                        {
+                            var selected = servers.GetSelectedServers();
+                            var uids = selected.Select(s => s.GetCoreStates().GetUid()).ToList();
+                            servers.MoveTo(uids, index);
+                        }
+                        else
+                        {
+                            VgcApis.Misc.UI.MsgBox(I18N.ParseNumberFailed);
+                        }
+                    }
+                );
             });
         }
 

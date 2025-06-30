@@ -121,10 +121,10 @@
     <value>关于</value>
   </data>
   <data name="CannotParseJson" xml:space="preserve">
-    <value>无法解析JSON文件，丢弃更改?</value>
+    <value>无法解析 JSON 文件，丢弃更改?</value>
   </data>
   <data name="CantLauchCore" xml:space="preserve">
-    <value>错误：无法运行v2ray-core!</value>
+    <value>错误：无法运行 v2ray-core!</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>确认</value>
@@ -142,10 +142,10 @@
     <value>无法设置本地代理地址</value>
   </data>
   <data name="CoreExit" xml:space="preserve">
-    <value>core已关闭!</value>
+    <value>core 已关闭!</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>v2ray-core图形配置编辑工具</value>
+    <value>v2ray-core 图形配置编辑工具</value>
   </data>
   <data name="DownloadCompleted" xml:space="preserve">
     <value>下载 v2ray-core 完成！</value>
@@ -164,7 +164,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>正在下载，请稍后。</value>
   </data>
   <data name="EditorCheckConfig" xml:space="preserve">
-    <value>无法解析JSON文件，请仔细检查。</value>
+    <value>无法解析 JSON 文件，请仔细检查。</value>
   </data>
   <data name="EditorDiscardChange" xml:space="preserve">
     <value>配置文件存在无效项！
@@ -177,7 +177,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>配置已修改，是否保存修改？</value>
   </data>
   <data name="ExeNotFound" xml:space="preserve">
-    <value>找不到core可执行文件！</value>
+    <value>找不到 core 可执行文件！</value>
   </data>
   <data name="Exit" xml:space="preserve">
     <value>退出</value>
@@ -192,7 +192,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>链接导入成功！</value>
   </data>
   <data name="JsonEditor" xml:space="preserve">
-    <value>Json编辑器</value>
+    <value>Json 编辑器</value>
   </data>
   <data name="Windows" xml:space="preserve">
     <value>窗口</value>
@@ -225,16 +225,16 @@ https://github.com/v2ray/v2ray-core</value>
     <value>不使用代理</value>
   </data>
   <data name="ProxyModePAC" xml:space="preserve">
-    <value>根据PAC设置自动选择</value>
+    <value>根据 PAC 设置自动选择</value>
   </data>
   <data name="SetProxyMode" xml:space="preserve">
     <value>设置代理模式</value>
   </data>
   <data name="WarnIENotSupportPac" xml:space="preserve">
-    <value>注意：IE不支持PAC文件！</value>
+    <value>注意：IE 不支持 PAC 文件！</value>
   </data>
   <data name="PleaseCheckConfig" xml:space="preserve">
-    <value>无法解析Json，请检查当前配置内容。</value>
+    <value>无法解析 Json，请检查当前配置内容。</value>
   </data>
   <data name="WarnMultipleInstance" xml:space="preserve">
     <value>已存在另一个实例，确定要再开一个？</value>
@@ -259,7 +259,7 @@ https://github.com/v2ray/v2ray-core</value>
 确定要加载新配置？</value>
   </data>
   <data name="LoadJsonFail" xml:space="preserve">
-    <value>加载Json文件失败！</value>
+    <value>加载 Json 文件失败！</value>
   </data>
   <data name="AvailableExamples" xml:space="preserve">
     <value>可用示例 ...</value>
@@ -289,7 +289,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>获取版本号失败！</value>
   </data>
   <data name="GetVersionListFail" xml:space="preserve">
-    <value>获取v2ray-core可用版本失败！</value>
+    <value>获取 v2ray-core 可用版本失败！</value>
   </data>
   <data name="CancelDownload" xml:space="preserve">
     <value>取消当前下载？</value>
@@ -301,10 +301,10 @@ https://github.com/v2ray/v2ray-core</value>
     <value>有新版 V2RayGCon v{0} 可用，是否升级?</value>
   </data>
   <data name="GetVGCVerFail" xml:space="preserve">
-    <value>获取最新V2RayGCon版本号失败！</value>
+    <value>获取最新 V2RayGCon 版本号失败！</value>
   </data>
   <data name="NoNewVGC" xml:space="preserve">
-    <value>当前V2RayGCon已经是最新版本。</value>
+    <value>当前 V2RayGCon 已经是最新版本。</value>
   </data>
   <data name="VistProjectPage" xml:space="preserve">
     <value>访问项目主页？</value>
@@ -323,10 +323,10 @@ https://github.com/v2ray/v2ray-core</value>
     <value>添加服务器失败，请检查你的设置。</value>
   </data>
   <data name="CurrentCoreVerIs" xml:space="preserve">
-    <value>当前core版本是 v{0}</value>
+    <value>当前 core 版本是 v{0}</value>
   </data>
   <data name="GetCoreVerFail" xml:space="preserve">
-    <value>获取v2ray-core版本失败！</value>
+    <value>获取 v2ray-core 版本失败！</value>
   </data>
   <data name="ConfirmCloseWindow" xml:space="preserve">
     <value>关闭窗口?</value>
@@ -347,10 +347,10 @@ https://github.com/v2ray/v2ray-core</value>
     <value>CF 和 Google</value>
   </data>
   <data name="DecodeVLinkFail" xml:space="preserve">
-    <value>解码v-link失败!</value>
+    <value>解码 v-link 失败!</value>
   </data>
   <data name="GenVLinkFail" xml:space="preserve">
-    <value>生成v-link失败!</value>
+    <value>生成 v-link 失败!</value>
   </data>
   <data name="DecodeFail" xml:space="preserve">
     <value>解码失败</value>
@@ -371,10 +371,10 @@ https://github.com/v2ray/v2ray-core</value>
     <value>Import</value>
   </data>
   <data name="DecodeImportFail" xml:space="preserve">
-    <value>解码Import失败!</value>
+    <value>解码 Import 失败!</value>
   </data>
   <data name="AnalysingImport" xml:space="preserve">
-    <value>正在分析import请稍等...</value>
+    <value>正在分析 import 请稍等...</value>
   </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>未能找到文件！</value>
@@ -399,16 +399,16 @@ https://github.com/v2ray/v2ray-core</value>
 确定要删除 "%ProgramData%/V2RayGCon" 目录吗?</value>
   </data>
   <data name="FileInUse" xml:space="preserve">
-    <value>文件正在使用，请先关闭v2ray-core.</value>
+    <value>文件正在使用，请先关闭 v2ray-core.</value>
   </data>
   <data name="ConfirmCloseWinWithoutSave" xml:space="preserve">
     <value>放弃未保存的修改并关闭窗口？</value>
   </data>
   <data name="AttachToV2rayCoreProcessFail" xml:space="preserve">
-    <value>附加到v2ray-core进程失败！</value>
+    <value>附加到 v2ray-core 进程失败！</value>
   </data>
   <data name="V2rayCoreExitAbnormally" xml:space="preserve">
-    <value>{0}错误代码{1}！
+    <value>{0} 错误代码 {1}！
 请检查服务器配置及日志。</value>
   </data>
   <data name="Options" xml:space="preserve">
@@ -466,10 +466,10 @@ https://github.com/v2ray/v2ray-core</value>
     <value>停止全部服务器？</value>
   </data>
   <data name="VisitV2rayCoreReleasePage" xml:space="preserve">
-    <value>访问v2ray-core发布页面？</value>
+    <value>访问 v2ray-core 发布页面？</value>
   </data>
   <data name="VisitVGCIssuePage" xml:space="preserve">
-    <value>访问V2RayGCon的issue页面？</value>
+    <value>访问 V2RayGCon 的 issue 页面？</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
@@ -508,7 +508,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>请先选择要进行此操作的服务器</value>
   </data>
   <data name="LooksLikeABug" xml:space="preserve">
-    <value>看来你遇到bug了,请将以下内容发给作者。</value>
+    <value>看来你遇到 bug 了,请将以下内容发给作者。</value>
   </data>
   <data name="PackageFail" xml:space="preserve">
     <value>打包失败</value>
@@ -535,17 +535,17 @@ https://github.com/v2ray/v2ray-core</value>
     <value>未标记</value>
   </data>
   <data name="SysNotSupportTLS12" xml:space="preserve">
-    <value>你的系统不支持TLS1.2，请升级.net至4.5或更高版本。
+    <value>你的系统不支持 TLS1.2，请升级 .net 至 4.5 或更高版本。
 否则涉及网络的操作可能失败。</value>
   </data>
   <data name="Total" xml:space="preserve">
     <value>合计</value>
   </data>
   <data name="StatusBarPagerInfoTpl" xml:space="preserve">
-    <value>第{0}/{1}页</value>
+    <value>第 {0}/{1} 页</value>
   </data>
   <data name="SysProxyRequireHttpOrSocksMode" xml:space="preserve">
-    <value>请先把模式设为HTTP或SOCKS</value>
+    <value>请先把模式设为 HTTP 或 SOCKS</value>
   </data>
   <data name="AutoTracker" xml:space="preserve">
     <value>自动追踪</value>
@@ -554,7 +554,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>设置系统代理失败！详见日志。</value>
   </data>
   <data name="GetInboundInfoFail" xml:space="preserve">
-    <value>获取Inbound信息失败!</value>
+    <value>获取 Inbound 信息失败!</value>
   </data>
   <data name="SetAnyServerAsPacServerFirst" xml:space="preserve">
     <value>请先将任意服务器设为PAC代理。</value>
@@ -566,7 +566,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>保存配置失败!请将本软件移至可写入目录。</value>
   </data>
   <data name="UnsetPortableModeFail" xml:space="preserve">
-    <value>取消便携模式失败，请删除本软件目录中的{0}。</value>
+    <value>取消便携模式失败，请删除本软件目录中的 {0}。</value>
   </data>
   <data name="Portable" xml:space="preserve">
     <value>便携模式</value>
@@ -578,7 +578,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>全局代理</value>
   </data>
   <data name="PacProxy" xml:space="preserve">
-    <value>PAC代理</value>
+    <value>PAC 代理</value>
   </data>
   <data name="Plugins" xml:space="preserve">
     <value>插件</value>
@@ -608,7 +608,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>解压文件失败!</value>
   </data>
   <data name="InjectPackagingImportsFail" xml:space="preserve">
-    <value>注入打包import失败，忽略相应import项</value>
+    <value>注入打包 import 失败，忽略相应 import 项</value>
   </data>
   <data name="ConfirmClearLog" xml:space="preserve">
     <value>确定要清空日志？</value>
@@ -635,13 +635,13 @@ https://github.com/v2ray/v2ray-core</value>
     <value>原有配置将被重置，真的要继续吗？</value>
   </data>
   <data name="ConfirmRestoreGlobalImportSettings" xml:space="preserve">
-    <value>导入全局Import设置？</value>
+    <value>导入全局 Import 设置？</value>
   </data>
   <data name="ConfirmRestoreSubscriptionSettings" xml:space="preserve">
     <value>导入订阅设置？</value>
   </data>
   <data name="AndThenSaveThisFileAs" xml:space="preserve">
-    <value>并把记事本中的json数据另存为 {0}。</value>
+    <value>并把记事本中的 json 数据另存为 {0}。</value>
   </data>
   <data name="OrDisablePortableMode" xml:space="preserve">
     <value>或者在选项中关闭便携模式。</value>
@@ -668,7 +668,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>服务器</value>
   </data>
   <data name="CheckForVgcUpdate" xml:space="preserve">
-    <value>检查V2RayGCon更新</value>
+    <value>检查 V2RayGCon更新</value>
   </data>
   <data name="StopAllServers" xml:space="preserve">
     <value>全部停止</value>
@@ -692,13 +692,13 @@ https://github.com/v2ray/v2ray-core</value>
     <value>当前测速延迟：</value>
   </data>
   <data name="ConcurrentV2RayCoreNum" xml:space="preserve">
-    <value>并发core数量：</value>
+    <value>并发 core 数量：</value>
   </data>
   <data name="StatusBarPagerMenuItemTpl" xml:space="preserve">
-    <value>第{0}页 ({1,5:D5} - {2,5:D5})</value>
+    <value>第 {0} 页 ({1,5:D5} - {2,5:D5})</value>
   </data>
   <data name="StatusBarMessageTpl" xml:space="preserve">
-    <value>共{0}/{1}个服务器 选中{2}/{3}项</value>
+    <value>共 {0}/{1} 个服务器 选中 {2}/{3} 项</value>
   </data>
   <data name="TotalNum" xml:space="preserve">
     <value>合计：</value>
@@ -725,10 +725,10 @@ https://github.com/v2ray/v2ray-core</value>
     <value>切换至随机服务器</value>
   </data>
   <data name="SwitchToRandomTlsserver" xml:space="preserve">
-    <value>切换至随机TLS服务器</value>
+    <value>切换至随机 TLS 服务器</value>
   </data>
   <data name="TheNthServer" xml:space="preserve">
-    <value>第{0}个服务器</value>
+    <value>第 {0} 个服务器</value>
   </data>
   <data name="ConfirmClearSpeedTestResults" xml:space="preserve">
     <value>清除速度测试数据?</value>
@@ -737,7 +737,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>定位目标文件不会失败！</value>
   </data>
   <data name="ParseCustomInboundsSettingFail" xml:space="preserve">
-    <value>解释自定义inbounds失败！</value>
+    <value>解释自定义 inbounds 失败！</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>自定义</value>
@@ -746,7 +746,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>上传：{0} MiB 下载：{1} MiB</value>
   </data>
   <data name="ConfirmUpgradeV2rayCore" xml:space="preserve">
-    <value>发现新的core {0}是否升级？</value>
+    <value>发现新的 core {0} 是否升级？</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>密码</value>
@@ -779,28 +779,28 @@ https://github.com/v2ray/v2ray-core</value>
     <value>[管理员]</value>
   </data>
   <data name="CheckMd5SumFailed" xml:space="preserve">
-    <value>MD5校验失败！</value>
+    <value>MD5 校验失败！</value>
   </data>
   <data name="DownloadSpeedMessage" xml:space="preserve">
-    <value>以{0}/s下载</value>
+    <value>以 {0}/s 下载</value>
   </data>
   <data name="UnableToDetermineFilenameMessage" xml:space="preserve">
     <value>无法确定更新文件的文件名！</value>
   </data>
   <data name="ConfigerSupportsJsonOnly" xml:space="preserve">
-    <value>解释配置失败！JSON编辑器仅支持JSON格式的配置。</value>
+    <value>解释配置失败！JSON 编辑器仅支持 JSON 格式的配置。</value>
   </data>
   <data name="TextEditor" xml:space="preserve">
     <value>Text编辑器</value>
   </data>
   <data name="ConfirmDeleteTpl" xml:space="preserve">
-    <value>确定删除[{0}]吗？</value>
+    <value>确定删除 [{0}] 吗？</value>
   </data>
   <data name="CustomCoreName" xml:space="preserve">
     <value>自定义内核</value>
   </data>
   <data name="ConfirmChangeAllDefCoreTo" xml:space="preserve">
-    <value>把所有服务器的core设置为 [{0}] 吗？</value>
+    <value>把所有服务器的 core 设置为 [{0}] 吗？</value>
   </data>
   <data name="NewServerName" xml:space="preserve">
     <value>新服务器名：</value>
@@ -830,5 +830,11 @@ c:\vgc\V2RayGCon.exe -s s2.json</value>
   </data>
   <data name="Failed" xml:space="preserve">
     <value>失败</value>
+  </data>
+  <data name="DestIndex" xml:space="preserve">
+    <value>目标序号：</value>
+  </data>
+  <data name="ParseNumberFailed" xml:space="preserve">
+    <value>解析数字失败！</value>
   </data>
 </root>

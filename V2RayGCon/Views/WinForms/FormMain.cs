@@ -259,6 +259,7 @@ namespace V2RayGCon.Views.WinForms
                     //ToolStripMenuItem sortBySummary)
                     toolStripMenuItemMoveToTop,
                     toolStripMenuItemMoveToBottom,
+                    toolStripMenuItemMoveToCustomIndex,
                     toolStripMenuItemReverseByIndex,
                     toolStripMenuItemSortBySpeedTest,
                     toolStripMenuItemSortByDateT,

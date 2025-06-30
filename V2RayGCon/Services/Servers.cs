@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using V2RayGCon.Resources.Resx;
 using VgcApis.Interfaces;
+using VgcApis.Libs.Streams.RawBitStream;
 using VgcApis.Models.Consts;
 using static VgcApis.Models.Datas.Enums;
 
@@ -69,9 +70,10 @@ namespace V2RayGCon.Services
 
         #region sort
 
-        public void MoveCoreServCtrlList(List<ICoreServCtrl> coreList, double destBottomIndex)
+        public void MoveTo(List<string> uids, double destTopIndex)
         {
-            indexHandler.MoveCoreServCtrlList(ref coreList, destBottomIndex);
+            var coreList = queryHandler.GetServersByUids(uids);
+            indexHandler.MoveCoreServCtrlListTo(ref coreList, destTopIndex);
             RequireFormMainReload();
             InvokeEventOnServerPropertyChange(this, EventArgs.Empty);
         }

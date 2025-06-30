@@ -288,6 +288,13 @@ namespace NeoLuna.Interfaces
         void ReverseServersByIndex(LuaTable uids);
 
         /// <summary>
+        /// 把服务器移动到指定的序号
+        /// </summary>
+        /// <param name="uids">服务器的uuid</param>
+        /// <param name="destTopIndex">目标序号</param>
+        void MoveServers(LuaTable uids, double destTopIndex);
+
+        /// <summary>
         /// 按最后修改时间排序服务器
         /// </summary>
         void SortServersByLastModifiedDate(LuaTable uids);

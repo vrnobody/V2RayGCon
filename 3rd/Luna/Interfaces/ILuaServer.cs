@@ -243,6 +243,13 @@ namespace Luna.Interfaces
 
         void ReverseServersByIndex(LuaTable uids);
 
+        /// <summary>
+        /// 把服务器移动到指定的序号
+        /// </summary>
+        /// <param name="uids">服务器的uuid</param>
+        /// <param name="destTopIndex">目标序号</param>
+        void MoveServers(LuaTable uids, double destTopIndex);
+
         void SortServersByLastModifiedDate(LuaTable uids);
 
         void SortServersBySpeedTest(LuaTable uids);

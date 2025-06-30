@@ -119,6 +119,12 @@ namespace NeoLuna.Models.Apis.Components
             vgcServers.ReverseServersByIndex(list);
         }
 
+        public void MoveServers(LuaTable uids, double destTopIndex)
+        {
+            var list = global::NeoLuna.Misc.Utils.LuaTableToList(uids, false);
+            vgcServers.MoveTo(list, destTopIndex);
+        }
+
         public void SortServersByLastModifiedDate(LuaTable uids)
         {
             var list = global::NeoLuna.Misc.Utils.LuaTableToList(uids, false);

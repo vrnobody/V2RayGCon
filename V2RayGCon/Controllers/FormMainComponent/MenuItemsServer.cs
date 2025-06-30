@@ -229,13 +229,15 @@ namespace V2RayGCon.Controllers.FormMainComponent
             moveToTop.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 var selected = servers.GetSelectedServers();
-                servers.MoveCoreServCtrlList(selected, 0);
+                var uids = selected.Select(s => s.GetCoreStates().GetUid()).ToList();
+                servers.MoveTo(uids, 1);
             });
 
             moveToBottom.Click += RunWhenSelectionIsNotEmptyHandler(() =>
             {
                 var selected = servers.GetSelectedServers();
-                servers.MoveCoreServCtrlList(selected, servers.Count() + selected.Count());
+                var uids = selected.Select(s => s.GetCoreStates().GetUid()).ToList();
+                servers.MoveTo(uids, servers.Count() + 1);
             });
         }
 

@@ -68,28 +68,65 @@ namespace V2RayGCon.Services.ServersComponents
             SortServerItemList(ref coreList, SummaryComparer);
         }
 
-        public void MoveCoreServCtrlList(
+        public void MoveCoreServCtrlListTo(
             ref List<VgcApis.Interfaces.ICoreServCtrl> coreList,
-            double destBottomIndex
+            double destTopIndex
         )
         {
+            if (coreList == null || coreList.Count() < 1)
+            {
+                return;
+            }
+
             locker.EnterWriteLock();
             try
             {
+                var idxs = new HashSet<int>(
+                    coreList.Select(s => (int)s.GetCoreStates().GetIndex())
+                );
+
+                var top = (int)Math.Ceiling(destTopIndex);
+                var start = Math.Min(idxs.Min(), top);
+                var end = Math.Max(idxs.Max(), top + idxs.Count());
+
+                var effectives = coreServCache
+                    .Where(kv =>
+                    {
+                        var idx = (int)kv.Value.GetCoreStates().GetIndex();
+                        return idx >= start && idx <= end && !idxs.Contains(idx);
+                    })
+                    .Select(kv => kv.Value)
+                    .OrderBy(s => s)
+                    .ToList();
+
+                var c = Math.Max(start, 1);
+                var i = 0;
+                var len = Math.Min(top - start, effectives.Count());
+
+                for (; i < len; i++)
+                {
+                    effectives[i].GetCoreStates().SetIndexQuiet(c++);
+                }
+
                 coreList
-                    .OrderByDescending(s => s)
+                    .OrderBy(s => s)
                     .Select(s =>
                     {
-                        s.GetCoreStates().SetIndexQuiet(destBottomIndex--);
+                        s.GetCoreStates().SetIndexQuiet(c++);
                         return true;
                     })
                     .Count();
+
+                for (; i < effectives.Count(); i++)
+                {
+                    effectives[i].GetCoreStates().SetIndexQuiet(c++);
+                }
             }
             finally
             {
                 locker.ExitWriteLock();
             }
-            ResetIndexWorker(true);
+            InvokeOnIndexChangedHandlerIgnoreError();
         }
 
         public void ResetIndex(bool isQuiet) => ResetIndexWorker(isQuiet);
@@ -251,6 +288,7 @@ namespace V2RayGCon.Services.ServersComponents
             {
                 locker.ExitWriteLock();
             }
+            InvokeOnIndexChangedHandlerIgnoreError();
         }
         #endregion
 

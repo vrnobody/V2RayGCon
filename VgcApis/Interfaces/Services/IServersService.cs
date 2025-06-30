@@ -47,6 +47,8 @@ namespace VgcApis.Interfaces.Services
 
         void ReverseSelectedByIndex();
 
+        void MoveTo(List<string> uids, double destTopIndex);
+
         void SortSelectedByLastModifiedDate();
 
         void SortSelectedBySpeedTest();

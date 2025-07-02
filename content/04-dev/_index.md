@@ -5,9 +5,14 @@ draft: false
 weight: 4
 ---
 
+##### 开发环境
 这个项目使用 Visual Studio 2019 编写。如果你用的是 Visual Studio 2022 请看下面这链接：  
 [https://stackoverflow.com/questions/70022194/open-net-framework-4-5-project-in-vs-2022-is-there-any-workaround](https://stackoverflow.com/questions/70022194/open-net-framework-4-5-project-in-vs-2022-is-there-any-workaround)  
 
+##### 备用
+[.net framework SDK 4.5](../images/releases/dotnetf45.zip)
+
+##### 内存占用
 这个软件的运行数据都在内存里，每 1 万个服务器约占用 100M 内存。服务器数量设计上限是 100 万个。  
 
 ##### 在GitHub上发送加密信息：

@@ -11,10 +11,6 @@ namespace VgcApis.Libs.Infr.KwFilterComps
 
         public AdvTakeFilter(int take, int skip)
         {
-            if (take < 1)
-            {
-                throw new ArgumentOutOfRangeException($"{nameof(take)} should larger than zero");
-            }
             this.skip = skip;
             this.take = take;
         }
@@ -46,6 +42,18 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             IReadOnlyCollection<Interfaces.ICoreServCtrl> coreServs
         )
         {
+            if (take == 0)
+            {
+                return new List<Interfaces.ICoreServCtrl>();
+            }
+
+            if (take < 0)
+            {
+                var t = coreServs.Reverse();
+                t = skip > 0 ? t.Skip(skip) : t;
+                return t.Take(-1 * take).Reverse().ToList();
+            }
+
             // clone
             var r = skip > 0 ? coreServs.Skip(skip) : coreServs;
             return r.Take(take).ToList();
@@ -96,7 +104,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
                 return null;
             }
 
-            if (!int.TryParse(kws[1], out var take) || take < 1)
+            if (!int.TryParse(kws[1], out var take))
             {
                 return null;
             }

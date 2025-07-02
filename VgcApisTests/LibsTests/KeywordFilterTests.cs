@@ -17,6 +17,8 @@ namespace VgcApisTests.LibsTests
         [DataRow("#AkE 123 -1", "#take 123 0")]
         [DataRow("#tK 123 0", "#take 123 0")]
         [DataRow("#AKE 123 456", "#take 123 456")]
+        [DataRow("#AKE 0 456", "#take 0 456")]
+        [DataRow("#tK -3 456", "#take -3 456")]
         public void CreateAdvTakeFilterSuccessTest(string kw, string exp)
         {
             var filter = AdvTakeFilter.CreateFilter(kw);
@@ -26,8 +28,6 @@ namespace VgcApisTests.LibsTests
         }
 
         [DataTestMethod]
-        [DataRow("#TaKe 0")]
-        [DataRow("#tK -1")]
         [DataRow("#tKe abc")]
         public void CreateAdvTakeFilterFailTest(string kw)
         {

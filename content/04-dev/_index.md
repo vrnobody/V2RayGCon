@@ -9,11 +9,11 @@ weight: 4
 这个项目使用 Visual Studio 2019 编写。如果你用的是 Visual Studio 2022 请看下面这链接：  
 [https://stackoverflow.com/questions/70022194/open-net-framework-4-5-project-in-vs-2022-is-there-any-workaround](https://stackoverflow.com/questions/70022194/open-net-framework-4-5-project-in-vs-2022-is-there-any-workaround)  
 
-##### 备用
-[.net framework SDK 4.5](../images/releases/dotnetf45.zip)
+##### 备用 SDK
+[.net framework v4.5 SDK](../images/releases/dotnetf45.zip)
 
-##### 内存占用
-这个软件的运行数据都在内存里，每 1 万个服务器约占用 100M 内存。服务器数量设计上限是 100 万个。  
+##### 资源需求
+这个软件的运行数据都在内存里，每 1 万个服务器需要大约 100M 内存。  
 
 ##### 在GitHub上发送加密信息：
 把下面的内容保存为 `nobody.pub`
@@ -52,7 +52,7 @@ openssl rsa -in private.pem -pubout -out public.pem
 echo "aGVsbG8K..." | base64 -d | openssl pkeyutl -decrypt -inkey private.pem
 ```
 
-图片嵌入文件：  
+##### 图片中嵌入文件
 ```bash
 # 写入文件
 cat V2RayGCon.zip | base64 -w0 | exiftool -z '-Description<=-' vgc.png

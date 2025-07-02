@@ -3,16 +3,17 @@ name: debug
 on:
   workflow_dispatch:
   push:
-    branches:
-      - master
+    branches: ['master']
 
 jobs:
   build:
     env:
       projName: V2RayGCon
       projCfg: Release
+      net45SdkUrl: 'https://vrnobody.github.io/V2RayGCon/images/releases/dotnetf45.zip'
+      sysSdkPath: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework'
 
-    runs-on: windows-2019
+    runs-on: windows-2025
 
     steps:
       - name: Checkout master
@@ -34,6 +35,14 @@ jobs:
           echo "2. hello = ${hello}"
           echo "3. hello = ${ env.hello }"
           echo "4. hello = ${{ env.hello }}"
+
+      - name: Install .net framework 4.5 SDK
+        shell: pwsh
+        run: |
+          echo "download ${env:net45SdkUrl}"
+          Invoke-WebRequest -Uri "${env:net45SdkUrl}" -OutFile "dotnetfw45sdk.zip"
+          echo "unzip to: ${env:sysSdkPath}"
+          Expand-Archive -Force -LiteralPath "dotnetfw45sdk.zip" -DestinationPath "${env:sysSdkPath}"
 
       - name: Setup .net framework env
         uses: vrnobody/Setup-DotNetFrameworkEnv@v1.20

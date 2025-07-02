@@ -14,11 +14,13 @@ jobs:
       contents: write
       attestations: write
 
-    runs-on: windows-2019
+    runs-on: windows-2025
 
     env:
       projName: V2RayGCon
       projCfg: Release
+      net45SdkUrl: 'https://vrnobody.github.io/V2RayGCon/images/releases/dotnetf45.zip'
+      sysSdkPath: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework'
       projLuna: '3rd/Luna'
       pkgLunaPlugin: 'Luna-plugin.zip'
       publishDir: './publish_assets'
@@ -45,6 +47,14 @@ jobs:
           python --version
           echo "power shell version:"
           $Host.Version
+
+      - name: Install .net framework 4.5 SDK
+        shell: pwsh
+        run: |
+          echo "download ${env:net45SdkUrl}"
+          Invoke-WebRequest -Uri "${env:net45SdkUrl}" -OutFile "dotnetfw45sdk.zip"
+          echo "unzip to: ${env:sysSdkPath}"
+          Expand-Archive -Force -LiteralPath "dotnetfw45sdk.zip" -DestinationPath "${env:sysSdkPath}"
 
       - name: Setup .net framework build enviroment
         uses: vrnobody/Setup-DotNetFrameworkEnv@v1.20

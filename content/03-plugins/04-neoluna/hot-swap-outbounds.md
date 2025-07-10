@@ -5,13 +5,11 @@ draft: false
 weight: 60
 ---
 
-以前想给服务器包添加、删除节点，通常要用 Pacman 插件或者 lua 脚本重新打包生成配置，然后替换当前服务器的 config 并重启。这会导致所有连接断开，体验不是很好。xray/v2ray 支持通过 GRPC 调用 API 接口来热增删节点。但是它没提供查询当前节点的方法，删除节点永远返回成功 "{}"。于是调用 API 一段时间后，只有上帝和 gdb 知道 core 里面究竟还剩下哪些节点。  
-
-为了改进 core 的 API 体验，于是有了 [xraye](https://github.com/vrnobody/xraye) 这个项目。这个项目 fork 自 [Xray-core](https://github.com/xtls/xray-core)，修改、添加了一些 API 命令，让热增删节点功能更易用。下面是一个通过调用 API 把测速结果小于 5000ms 的节点替换掉第一个服务器 outbounds 的示例。  
+给服务器包增删节点，通常需要用 Pacman 插件或者 lua 脚本重新打包生成配置，然后替换当前服务器的 config 并重启。这会导致所有连接断开，体验不是很好。为了改进体验，于是有了 [xraye](https://github.com/vrnobody/xraye) 这个项目。它 fork 自 [Xray-core](https://github.com/xtls/xray-core)，修改、添加了一些 API 命令，让热增删节点功能更容易使用。下面是一个通过调用 API 把测速结果小于 5000ms 的节点替换掉第一个服务器 outbounds 的示例。  
 
 先下载修改版 xray 解压并替换掉原来的 xray.exe（也可以配置自定义内核，把修改版 xray.exe 放到其他文件夹）。  
   
-然后配置一个开启了 http/socks/api 功能的模板，应用到第一个服务器上。示例中的 API 端口是 12345。  
+然后配置一个开启了 socks + api 功能的模板，应用到第一个服务器上并启动。示例中的 API 端口是 `12345`。  
 ```json
 {
   "log": {
@@ -19,33 +17,18 @@ weight: 60
   },
   "inbounds": [
     {
-      "tag": "http",
-      "protocol": "http",
-      "port": %port%,
-      "listen": "%host%",
-      "settings": {}
-    },
-    {
       "tag": "socks",
       "protocol": "socks",
-      "port": 1080,
+      "port": %port%,
       "listen": "%host%",
       "settings": {
         "udp": true
       }
-    },
-    {
-      "listen": "127.0.0.1",
-      "port": 12345,
-      "protocol": "dokodemo-door",
-      "settings": {
-        "address": "%host%"
-      },
-      "tag": "api-in"
     }
   ],
   "api": {
     "tag": "api-serv",
+    "listen": "127.0.0.1:12345",
     "services": [
       "HandlerService"
     ]
@@ -53,16 +36,8 @@ weight: 60
   "routing": {
     "rules": [
       {
-        "inboundTag": [
-          "api-in"
-        ],
-        "outboundTag": "api-serv",
-        "type": "field"
-      },
-      {
         "type": "field",
         "inboundTag": [
-          "http",
           "socks"
         ],
         "balancerTag": "pacman"
@@ -79,8 +54,6 @@ weight: 60
   }
 }
 ```
-
-接着启动服务器（不然没法用 API 命令）  
 
 最后在 NeoLuna 插件中运行以下脚本：  
 ```lua

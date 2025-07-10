@@ -10,12 +10,10 @@ namespace V2RayGCon.Controllers.FormMainComponent
 {
     internal class Acm : IDisposable
     {
-        private readonly AcmComboBox cbox;
         private AutocompleteMenu menu;
 
         public Acm(AcmComboBox box)
         {
-            this.cbox = box;
             this.menu = CreateAcm(box);
         }
 
@@ -44,8 +42,9 @@ namespace V2RayGCon.Controllers.FormMainComponent
             {
                 Properties.Resources.DomainType_16x, // num
                 Properties.Resources.Button_16x, // str
-                Properties.Resources.SortAscending_16x, // orderby
-                Properties.Resources.CheckboxUncheckCancel_16x, // take
+                Properties.Resources.SortAscending_16x, // #orderby
+                Properties.Resources.CheckboxUncheckCancel_16x, // #take
+                Properties.Resources.GoToLastRow_16x, // #goto
             };
 
             m.ImageList.Images.AddRange(icons);

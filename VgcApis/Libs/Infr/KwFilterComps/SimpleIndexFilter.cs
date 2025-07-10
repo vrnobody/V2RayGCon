@@ -2,7 +2,7 @@
 
 namespace VgcApis.Libs.Infr.KwFilterComps
 {
-    internal class SimpleIndexFilter : ISimpleFilter
+    internal class SimpleIndexFilter : IIndexFilter
     {
         public SimpleIndexFilter(int index)
         {

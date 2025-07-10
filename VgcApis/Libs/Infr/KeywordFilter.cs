@@ -25,17 +25,13 @@ namespace VgcApis.Libs.Infr
                 Sys.FileLogger.Error(err);
             }
 
-            if (f is SimpleIndexFilter sif)
-            {
-                isIndexFilter = true;
-                parsedIndex = sif.GetIndex();
-            }
             this.filter = f;
         }
 
         #region tables
         static List<Func<string, ISimpleFilter>> creators = new List<Func<string, ISimpleFilter>>()
         {
+            (kw) => AdvGotoIndexFilter.CreateFilter(kw),
             (kw) => BoolExprFilter.CreateFilter(kw),
             (kw) => SimpleIndexFilter.CreateFilter(kw),
             (kw) => SimpleTitleFilter.CreateFilter(kw),
@@ -45,8 +41,6 @@ namespace VgcApis.Libs.Infr
 
         #region properties
 
-        readonly bool isIndexFilter = false;
-        readonly int parsedIndex = 0;
         readonly ISimpleFilter filter;
         readonly Highlighter emptyHighlighter = new Highlighter();
 
@@ -61,6 +55,7 @@ namespace VgcApis.Libs.Infr
                 AdvStringFilter.GetTips(),
                 AdvOrderByFilter.GetTips(),
                 AdvTakeFilter.GetTips(),
+                new List<string>() { "#goto" }.AsReadOnly(),
             };
 
         public ISimpleFilter GetFilter() => this.filter;
@@ -72,8 +67,13 @@ namespace VgcApis.Libs.Infr
 
         public bool TryGetIndex(out int index)
         {
-            index = parsedIndex;
-            return isIndexFilter;
+            index = 0;
+            var hasIndex = this.filter is IIndexFilter;
+            if (hasIndex)
+            {
+                index = (this.filter as IIndexFilter).GetIndex();
+            }
+            return hasIndex;
         }
 
         #endregion

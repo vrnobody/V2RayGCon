@@ -14,6 +14,11 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         Highlighter GetHighlighter();
     }
 
+    public interface IIndexFilter : ISimpleFilter
+    {
+        int GetIndex();
+    }
+
     public interface IAdvanceFilter<TContent, TOpertor, TValue> : ISimpleFilter
     {
         #region for unit testing

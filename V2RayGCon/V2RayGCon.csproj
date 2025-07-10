@@ -570,6 +570,8 @@
     <Content Include="icon_dark.ico" />
     <Content Include="Resources\Files\3rd\plugins\readme.txt" />
     <Content Include="Resources\Files\3rd\tun2socks\readme.txt" />
+    <None Include="Resources\Icon\FormMainToolStrip\GoToLastRow_16x.png" />
+    <None Include="Resources\Icon\FormMainToolStrip\GoToTop_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\CheckboxUncheckCancel_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\Button_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\SortAscending_16x.png" />

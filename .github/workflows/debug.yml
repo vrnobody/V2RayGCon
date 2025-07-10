@@ -7,29 +7,26 @@ on:
 
 jobs:
   build:
+    runs-on: windows-2025
+
     env:
       projName: V2RayGCon
       projCfg: Release
-      net45SdkUrl: 'https://vrnobody.github.io/V2RayGCon/images/releases/dotnetf45.zip'
-      sysSdkPath: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework'
-
-    runs-on: windows-2025
+      net45SdkUrl: 'https://www.nuget.org/api/v2/package/Microsoft.NETFramework.ReferenceAssemblies.net45/1.0.3'
+      sdkSystemPath: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework'
 
     steps:
-      - name: Checkout master
-        uses: actions/checkout@v4
-
-      - name: Show versions
+      - name: Show tools version
         run: |
           python --version
           echo "power shell version:"
           $Host.Version
 
-      - name: Export env test
+      - name: Try export value to env
         run: |
           echo "hello=world" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
-      - name: Show value of env
+      - name: Try get value from env
         run: |
           echo "1. hello = $hello"
           echo "2. hello = ${hello}"
@@ -40,17 +37,24 @@ jobs:
         shell: pwsh
         run: |
           echo "download ${env:net45SdkUrl}"
-          Invoke-WebRequest -Uri "${env:net45SdkUrl}" -OutFile "dotnetfw45sdk.zip"
-          echo "unzip to: ${env:sysSdkPath}"
-          Expand-Archive -Force -LiteralPath "dotnetfw45sdk.zip" -DestinationPath "${env:sysSdkPath}"
+          Invoke-WebRequest -Uri "${env:net45SdkUrl}" -OutFile "${env:temp}\net45sdk.zip"
+          echo "unzip net45sdk.zip"
+          Expand-Archive -Force -LiteralPath "${env:temp}\net45sdk.zip" -DestinationPath "${env:temp}\net45sdk"
+          echo "delete ${env:sdkSystemPath}\v4.5"
+          [IO.Directory]::Delete("${env:sdkSystemPath}\v4.5", $True)
+          echo "move SDK to ${env:sdkSystemPath}\v4.5"
+          Move-Item -Force -LiteralPath "${env:temp}\net45sdk\build\.NETFramework\v4.5" -Destination "${env:sdkSystemPath}"
 
-      - name: Setup .net framework env
+      - name: Setup .net framework build enviroment
         uses: vrnobody/Setup-DotNetFrameworkEnv@v1.20
+
+      - name: Checkout master
+        uses: actions/checkout@v4
 
       - name: Restore packages
         run: nuget restore ${env:projName}.sln
 
-      - name: Build with MSBuild
+      - name: Build solution
         run: msbuild ${env:projName}.sln -p:Configuration=${env:projCfg}
 
       - name: Run unit tests

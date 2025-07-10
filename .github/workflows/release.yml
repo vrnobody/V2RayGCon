@@ -19,8 +19,8 @@ jobs:
     env:
       projName: V2RayGCon
       projCfg: Release
-      net45SdkUrl: 'https://vrnobody.github.io/V2RayGCon/images/releases/dotnetf45.zip'
-      sysSdkPath: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework'
+      net45SdkUrl: 'https://www.nuget.org/api/v2/package/Microsoft.NETFramework.ReferenceAssemblies.net45/1.0.3'
+      sdkSystemPath: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework'
       projLuna: '3rd/Luna'
       pkgLunaPlugin: 'Luna-plugin.zip'
       publishDir: './publish_assets'
@@ -39,25 +39,23 @@ jobs:
       actionRunsUrl: 'https://github.com/vrnobody/V2RayGCon/actions/runs/'
 
     steps:
-      - name: Checkout master
-        uses: actions/checkout@v4
-
-      - name: Show system information
-        run: |
-          python --version
-          echo "power shell version:"
-          $Host.Version
-
       - name: Install .net framework 4.5 SDK
         shell: pwsh
         run: |
           echo "download ${env:net45SdkUrl}"
-          Invoke-WebRequest -Uri "${env:net45SdkUrl}" -OutFile "dotnetfw45sdk.zip"
-          echo "unzip to: ${env:sysSdkPath}"
-          Expand-Archive -Force -LiteralPath "dotnetfw45sdk.zip" -DestinationPath "${env:sysSdkPath}"
+          Invoke-WebRequest -Uri "${env:net45SdkUrl}" -OutFile "${env:temp}\net45sdk.zip"
+          echo "unzip net45sdk.zip"
+          Expand-Archive -Force -LiteralPath "${env:temp}\net45sdk.zip" -DestinationPath "${env:temp}\net45sdk"
+          echo "delete ${env:sdkSystemPath}\v4.5"
+          [IO.Directory]::Delete("${env:sdkSystemPath}\v4.5", $True)
+          echo "move SDK to ${env:sdkSystemPath}\v4.5"
+          Move-Item -Force -LiteralPath "${env:temp}\net45sdk\build\.NETFramework\v4.5" -Destination "${env:sdkSystemPath}"
 
       - name: Setup .net framework build enviroment
         uses: vrnobody/Setup-DotNetFrameworkEnv@v1.20
+
+      - name: Checkout master
+        uses: actions/checkout@v4
 
       - name: Restore NuGet packages
         run: nuget restore ${env:projName}.sln
@@ -76,7 +74,7 @@ jobs:
           Invoke-VSTest "Plugins\ProxySetterTests\bin\${{ env.projCfg }}\ProxySetterTests.dll"
           Invoke-VSTest "Plugins\NeoLunaTests\bin\${{ env.projCfg }}\NeoLunaTests.dll"
 
-      - name: Create publish asset directory
+      - name: Create assets directory
         shell: pwsh
         run: mkdir "${env:publishDir}"
 

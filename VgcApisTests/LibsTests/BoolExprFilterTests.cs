@@ -109,6 +109,7 @@ namespace VgcApisTests.LibsTests
             var em = pe.GetEnumerator();
             em.MoveNext();
             var expr = Helpers.MakeExpr(ref em);
+            em.Dispose();
             Assert.IsNotNull(expr);
             var r = expr.ToString();
             Assert.AreEqual(exp, r);

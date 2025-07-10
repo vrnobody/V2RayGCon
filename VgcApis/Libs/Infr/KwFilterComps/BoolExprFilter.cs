@@ -90,6 +90,7 @@ namespace VgcApis.Libs.Infr.KwFilterComps
             var em = pe.GetEnumerator();
             em.MoveNext();
             var expr = Helpers.MakeExpr(ref em);
+            em.Dispose();
             if (expr == null)
             {
                 return null;

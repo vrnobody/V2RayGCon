@@ -274,18 +274,6 @@
   <ItemGroup>
     <None Include="Resources\icons\icon_tun_mode.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons\Integer_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons\String_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons\DomainType_16x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons\TextBlock_16x.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -45,6 +45,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
                 Properties.Resources.SortAscending_16x, // #orderby
                 Properties.Resources.CheckboxUncheckCancel_16x, // #take
                 Properties.Resources.GoToLastRow_16x, // #goto
+                Properties.Resources.CPPCommentCode_16x, // #//
             };
 
             m.ImageList.Images.AddRange(icons);

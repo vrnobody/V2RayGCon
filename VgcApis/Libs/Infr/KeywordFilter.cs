@@ -35,6 +35,7 @@ namespace VgcApis.Libs.Infr
             (kw) => BoolExprFilter.CreateFilter(kw),
             (kw) => SimpleIndexFilter.CreateFilter(kw),
             (kw) => SimpleTitleFilter.CreateFilter(kw),
+            (kw) => AdvEmptyFilter.CreateFilter(kw),
         };
 
         #endregion
@@ -55,7 +56,8 @@ namespace VgcApis.Libs.Infr
                 AdvStringFilter.GetTips(),
                 AdvOrderByFilter.GetTips(),
                 AdvTakeFilter.GetTips(),
-                new List<string>() { "#goto" }.AsReadOnly(),
+                AdvGotoIndexFilter.GetTips(),
+                AdvEmptyFilter.GetTips(),
             };
 
         public ISimpleFilter GetFilter() => this.filter;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace VgcApis.Libs.Infr.KwFilterComps
@@ -18,6 +19,9 @@ namespace VgcApis.Libs.Infr.KwFilterComps
         #endregion
 
         #region public methods
+        static List<string> tips = new List<string>() { "#goto" };
+
+        internal static ReadOnlyCollection<string> GetTips() => tips.AsReadOnly();
 
         public int GetIndex() => this.index;
 

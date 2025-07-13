@@ -5,6 +5,13 @@ draft: false
 weight: 10
 ---
 
+##### `v2.1.3.0`
+解除服务器数量上限封印  
+修复置顶、置底时服务器顺序错乱的问题  
+缩短生成的服务器包配置的 tag 序号长度  
+添加 #goto #note 搜索过滤器，原 #take 过滤器支持负数参数  
+添加 std.Server:MoveServers(uids, destTopIndex) 函数  
+
 ##### `v2.1.2.0`
 PAC 白名单改用 Loyalsoldier/v2ray-rules-dat  
 界面少量调整  

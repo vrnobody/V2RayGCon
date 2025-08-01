@@ -250,9 +250,6 @@ Are you sure to launch another one?</value>
   <data name="WriteFileFail" xml:space="preserve">
     <value>Write to file fail!</value>
   </data>
-  <data name="AddNewServer" xml:space="preserve">
-    <value>Save current config as new server?</value>
-  </data>
   <data name="ReplaceServer" xml:space="preserve">
     <value>Use current config to replace selected server?</value>
   </data>
@@ -422,8 +419,8 @@ Please check server configuration and log.</value>
   <data name="DownloadFail" xml:space="preserve">
     <value>Download fail!</value>
   </data>
-  <data name="ConfirmDeleteControl" xml:space="preserve">
-    <value>Delete this item?</value>
+  <data name="ConfirmDeletion" xml:space="preserve">
+    <value>Are you sure want to delete this item?</value>
   </data>
   <data name="SaveChangeFirst" xml:space="preserve">
     <value>Please save the modified option first!</value>

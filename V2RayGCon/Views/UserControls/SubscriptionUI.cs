@@ -133,7 +133,7 @@ namespace V2RayGCon.Views.UserControls
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (!VgcApis.Misc.UI.Confirm(I18N.ConfirmDeleteControl))
+            if (!VgcApis.Misc.UI.Confirm(I18N.ConfirmDeletion))
             {
                 return;
             }

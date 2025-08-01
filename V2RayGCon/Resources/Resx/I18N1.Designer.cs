@@ -79,15 +79,6 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Save current config as new server? 的本地化字符串。
-        /// </summary>
-        internal static string AddNewServer {
-            get {
-                return ResourceManager.GetString("AddNewServer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Add server 的本地化字符串。
         /// </summary>
         internal static string AddServer {
@@ -386,15 +377,6 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Delete this item? 的本地化字符串。
-        /// </summary>
-        internal static string ConfirmDeleteControl {
-            get {
-                return ResourceManager.GetString("ConfirmDeleteControl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Delete selected servers? 的本地化字符串。
         /// </summary>
         internal static string ConfirmDeleteSelectedServers {
@@ -409,6 +391,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string ConfirmDeleteTpl {
             get {
                 return ResourceManager.GetString("ConfirmDeleteTpl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Are you sure want to delete this item? 的本地化字符串。
+        /// </summary>
+        internal static string ConfirmDeletion {
+            get {
+                return ResourceManager.GetString("ConfirmDeletion", resourceCulture);
             }
         }
         

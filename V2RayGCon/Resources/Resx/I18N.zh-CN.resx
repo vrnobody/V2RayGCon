@@ -248,9 +248,6 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="WriteFileFail" xml:space="preserve">
     <value>写入文件失败！</value>
   </data>
-  <data name="AddNewServer" xml:space="preserve">
-    <value>用当前配置新增一个服务器?</value>
-  </data>
   <data name="ReplaceServer" xml:space="preserve">
     <value>用当前配置覆盖选定服务器?</value>
   </data>
@@ -420,8 +417,8 @@ https://github.com/v2ray/v2ray-core</value>
   <data name="DownloadFail" xml:space="preserve">
     <value>下载失败！</value>
   </data>
-  <data name="ConfirmDeleteControl" xml:space="preserve">
-    <value>删除此项？</value>
+  <data name="ConfirmDeletion" xml:space="preserve">
+    <value>确定要删除吗？</value>
   </data>
   <data name="SaveChangeFirst" xml:space="preserve">
     <value>请先保存已更改的配置项!</value>

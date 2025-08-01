@@ -783,7 +783,9 @@ namespace V2RayGCon.Views.UserControls
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!VgcApis.Misc.UI.Confirm(I18N.ConfirmDeleteControl))
+            var title = this.coreServCtrl.GetCoreStates().GetTitle();
+            var msg = $"{title}{Environment.NewLine}{I18N.ConfirmDeletion}";
+            if (!VgcApis.Misc.UI.Confirm(msg))
             {
                 return;
             }

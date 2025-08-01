@@ -166,10 +166,7 @@ namespace V2RayGCon.Views.WinForms
 
         private void addNewServerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (VgcApis.Misc.UI.Confirm(I18N.AddNewServer))
-            {
-                ctrl.AddNewServer();
-            }
+            ctrl.AddNewServer();
         }
 
         private void overwriteCurrentServerToolStripMenuItem_Click(object sender, EventArgs e)

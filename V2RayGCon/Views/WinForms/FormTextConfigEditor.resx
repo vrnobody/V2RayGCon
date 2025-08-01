@@ -327,6 +327,9 @@
   <data name="&gt;&gt;tsStBarStatus.Name" xml:space="preserve">
     <value>tsStBarStatus</value>
   </data>
+  <data name="addNewServerToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Save current config as new server.</value>
+  </data>
   <data name="addNewServerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>217, 22</value>
   </data>

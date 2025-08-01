@@ -117,13 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="chkSubsIsAutoPatch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>397, 85</value>
-  </data>
-  <data name="chkSubsIsAutoPatch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 16</value>
-  </data>
   <data name="chkSubsIsAutoPatch.Text" xml:space="preserve">
     <value>自动修整</value>
   </data>
@@ -141,12 +134,6 @@
   </data>
   <data name="btnSubsUseAll.ToolTip" xml:space="preserve">
     <value>把所有"启用"都打上钩</value>
-  </data>
-  <data name="chkSubsIsUseProxy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>397, 63</value>
-  </data>
-  <data name="chkSubsIsUseProxy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 16</value>
   </data>
   <data name="chkSubsIsUseProxy.Text" xml:space="preserve">
     <value>使用代理</value>
@@ -175,12 +162,6 @@
   <data name="tabPageSubscribe.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="chkSetEnableDebugFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>395, 22</value>
-  </data>
-  <data name="chkSetEnableDebugFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
   <data name="chkSetEnableDebugFile.Text" xml:space="preserve">
     <value>启用</value>
   </data>
@@ -202,9 +183,6 @@
   <data name="chkSetCheckVgcUpdateWhenStart.ToolTip" xml:space="preserve">
     <value>启动时检查V2RayGCon更新</value>
   </data>
-  <data name="chkSetUpgradeUseProxy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 16</value>
-  </data>
   <data name="chkSetUpgradeUseProxy.Text" xml:space="preserve">
     <value>使用代理</value>
   </data>
@@ -223,9 +201,6 @@
   <data name="btnSetOpenStartupFolder.ToolTip" xml:space="preserve">
     <value>拖个快捷方式进去就可以开机启动啦</value>
   </data>
-  <data name="chkSetSysPortable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 16</value>
-  </data>
   <data name="chkSetSysPortable.Text" xml:space="preserve">
     <value>便携模式</value>
   </data>
@@ -238,17 +213,11 @@
   <data name="groupBox6.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="chkSetServStatistics.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 16</value>
-  </data>
   <data name="chkSetServStatistics.Text" xml:space="preserve">
     <value>流量统计</value>
   </data>
   <data name="chkSetServStatistics.ToolTip" xml:space="preserve">
     <value>开启流量统计</value>
-  </data>
-  <data name="chkSetSelfSignedCert.Size" type="System.Drawing.Size, System.Drawing">
-    <value>132, 16</value>
   </data>
   <data name="chkSetSelfSignedCert.Text" xml:space="preserve">
     <value>自签名证书(不安全)</value>
@@ -262,9 +231,6 @@
   <data name="cboxSettingsRandomSelectServerLatency.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 12</value>
-  </data>
   <data name="label14.Text" xml:space="preserve">
     <value>ms (零表示忽略延迟)</value>
   </data>
@@ -277,26 +243,17 @@
   <data name="label16.ToolTip" xml:space="preserve">
     <value>自定义TLS指纹</value>
   </data>
-  <data name="label15.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
-  </data>
   <data name="label15.Text" xml:space="preserve">
     <value>快速切换</value>
   </data>
   <data name="label15.ToolTip" xml:space="preserve">
     <value>使用托盘图标快速切换功能时，随机选取的服务器的最大延迟</value>
   </data>
-  <data name="chkSettingsEnableUtlsFingerprint.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
   <data name="chkSettingsEnableUtlsFingerprint.Text" xml:space="preserve">
     <value>启用</value>
   </data>
   <data name="chkSettingsEnableUtlsFingerprint.ToolTip" xml:space="preserve">
     <value>启用自定义TLS指纹</value>
-  </data>
-  <data name="chkSetServAutotrack.Size" type="System.Drawing.Size, System.Drawing">
-    <value>72, 16</value>
   </data>
   <data name="chkSetServAutotrack.Text" xml:space="preserve">
     <value>自动追踪</value>
@@ -306,9 +263,6 @@
   </data>
   <data name="label13.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
   </data>
   <data name="label12.Text" xml:space="preserve">
     <value>最大并发</value>
@@ -321,12 +275,6 @@
   </data>
   <data name="groupBox5.ToolTip" xml:space="preserve">
     <value />
-  </data>
-  <data name="chkIsEnableSystrayLeftClickCommand.Location" type="System.Drawing.Point, System.Drawing">
-    <value>395, 74</value>
-  </data>
-  <data name="chkIsEnableSystrayLeftClickCommand.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
   </data>
   <data name="chkIsEnableSystrayLeftClickCommand.Text" xml:space="preserve">
     <value>启用</value>
@@ -346,17 +294,11 @@
   <data name="label3.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
-  </data>
   <data name="label17.Text" xml:space="preserve">
     <value>托盘单击</value>
   </data>
   <data name="label17.ToolTip" xml:space="preserve">
     <value>单击托盘图标时执行的命令（原默认命令是弹出主窗口）</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>分页大小</value>
@@ -397,12 +339,6 @@
   <data name="label18.ToolTip" xml:space="preserve">
     <value>自定义user agent</value>
   </data>
-  <data name="chkIsUseCustomUserAgent.Location" type="System.Drawing.Point, System.Drawing">
-    <value>392, 18</value>
-  </data>
-  <data name="chkIsUseCustomUserAgent.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
   <data name="chkIsUseCustomUserAgent.Text" xml:space="preserve">
     <value>使用</value>
   </data>
@@ -433,26 +369,17 @@
   <data name="cboxDefImportInbName.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
-  </data>
   <data name="label9.Text" xml:space="preserve">
     <value>入站地址</value>
   </data>
   <data name="label9.ToolTip" xml:space="preserve">
     <value>默认Inbound代理地址</value>
   </data>
-  <data name="label20.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 12</value>
-  </data>
   <data name="label20.Text" xml:space="preserve">
     <value>自定义core</value>
   </data>
   <data name="label20.ToolTip" xml:space="preserve">
     <value>默认自定义core配置名</value>
-  </data>
-  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
     <value>入站模板</value>
@@ -475,9 +402,6 @@
   <data name="tboxDefSpeedtestTimeout.ToolTip" xml:space="preserve">
     <value>20000（20秒）</value>
   </data>
-  <data name="chkDefSpeedtestIsUse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 16</value>
-  </data>
   <data name="chkDefSpeedtestIsUse.Text" xml:space="preserve">
     <value>使用</value>
   </data>
@@ -492,26 +416,17 @@
 -1：下载整个页面
 0：相当于tcp ping</value>
   </data>
-  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
-  </data>
   <data name="label6.Text" xml:space="preserve">
     <value>测试次数</value>
   </data>
   <data name="label6.ToolTip" xml:space="preserve">
     <value>测速次数</value>
   </data>
-  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 12</value>
-  </data>
   <data name="label5.Text" xml:space="preserve">
     <value>自定义URL</value>
   </data>
   <data name="label5.ToolTip" xml:space="preserve">
     <value>自定义测速URL</value>
-  </data>
-  <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 12</value>
   </data>
   <data name="label11.Text" xml:space="preserve">
     <value>超时(ms)</value>
@@ -546,9 +461,6 @@
   <data name="tabPageCustomCoresSetting.ToolTip" xml:space="preserve">
     <value />
   </data>
-  <data name="label19.Size" type="System.Drawing.Size, System.Drawing">
-    <value>305, 12</value>
-  </data>
   <data name="label19.Text" xml:space="preserve">
     <value>钩选表示将相应模板注入所有服务器，注意看最终配置。</value>
   </data>
@@ -570,12 +482,6 @@
   <data name="tabPageConfigTemplates.ToolTip" xml:space="preserve">
     <value>自定义config模板</value>
   </data>
-  <data name="chkIsLoad3rdPartyPlugins.Location" type="System.Drawing.Point, System.Drawing">
-    <value>407, 35</value>
-  </data>
-  <data name="chkIsLoad3rdPartyPlugins.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 16</value>
-  </data>
   <data name="chkIsLoad3rdPartyPlugins.Text" xml:space="preserve">
     <value>第三方</value>
   </data>
@@ -587,9 +493,6 @@
   </data>
   <data name="btnRefreshPluginsPanel.ToolTip" xml:space="preserve">
     <value>刷新插件面板</value>
-  </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>305, 12</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
     <value>钩选并保存后，主窗口及托盘图标将多出一个插件菜单。</value>

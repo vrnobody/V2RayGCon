@@ -596,7 +596,7 @@ Please delete {0} in app folder.</value>
   </data>
   <data name="NoQualifyProxyServer" xml:space="preserve">
     <value>No qualify proxy server available!
-Switch to direct download.</value>
+Switch to direct download?</value>
   </data>
   <data name="ListIsEmpty" xml:space="preserve">
     <value>List is empty!</value>

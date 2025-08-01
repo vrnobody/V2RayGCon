@@ -304,7 +304,13 @@ namespace V2RayGCon.Controllers.OptionComponent
 
                 VgcApis.Misc.Utils.RunInBackground(() =>
                 {
-                    GetAvailableProxyInfo(out var isSocks5, out var proxyPort);
+                    var confirm = TryGetAvailableProxyInfo(out var isSocks5, out var proxyPort);
+                    if (!confirm)
+                    {
+                        VgcApis.Misc.UI.Invoke(() => this.btnUpdate.Enabled = true);
+                        return;
+                    }
+
                     var links = Misc.Utils.FetchLinksFromSubcriptions(subs, isSocks5, proxyPort);
 
                     LogDownloadFails(
@@ -412,17 +418,16 @@ namespace V2RayGCon.Controllers.OptionComponent
             MarkDuplicatedSubsInfo();
         }
 
-        void GetAvailableProxyInfo(out bool isSocks5, out int port)
+        bool TryGetAvailableProxyInfo(out bool isSocks5, out int port)
         {
             isSocks5 = false;
             port = -1;
 
             if (!chkSubsIsUseProxy.Checked || servers.GetAvailableProxyInfo(out isSocks5, out port))
             {
-                return;
+                return true;
             }
-
-            VgcApis.Misc.UI.MsgBoxAsync(I18N.NoQualifyProxyServer);
+            return VgcApis.Misc.UI.Confirm(I18N.NoQualifyProxyServer);
         }
         #endregion
     }

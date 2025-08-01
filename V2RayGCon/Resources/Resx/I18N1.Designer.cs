@@ -1365,7 +1365,7 @@ namespace V2RayGCon.Resources.Resx {
         
         /// <summary>
         ///   查找类似 No qualify proxy server available!
-        ///Switch to direct download. 的本地化字符串。
+        ///Switch to direct download? 的本地化字符串。
         /// </summary>
         internal static string NoQualifyProxyServer {
             get {

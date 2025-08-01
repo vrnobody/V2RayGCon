@@ -587,7 +587,7 @@ https://github.com/v2ray/v2ray-core</value>
     <value>没找到任何插件。</value>
   </data>
   <data name="NoQualifyProxyServer" xml:space="preserve">
-    <value>没有可用代理服务器，转为直接下载。</value>
+    <value>没有可用代理服务器，转为直接下载吗？</value>
   </data>
   <data name="ListIsEmpty" xml:space="preserve">
     <value>列表为空！</value>

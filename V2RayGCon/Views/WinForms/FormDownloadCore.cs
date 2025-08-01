@@ -168,8 +168,6 @@ namespace V2RayGCon.Views.WinForms
 
         private void BtnRefreshVer_Click(object sender, EventArgs e)
         {
-            btnRefreshVer.Enabled = false;
-
             var sourceUrl = VgcApis.Models.Consts.Core.GetSourceUrlByIndex(
                 cboxDownloadSource.SelectedIndex
             );
@@ -177,13 +175,16 @@ namespace V2RayGCon.Views.WinForms
             var proxyPort = -1;
             var isSocks5 = false;
 
-            if (chkUseProxy.Checked)
+            if (
+                chkUseProxy.Checked
+                && !servers.GetAvailableProxyInfo(out isSocks5, out proxyPort)
+                && !VgcApis.Misc.UI.Confirm(I18N.NoQualifyProxyServer)
+            )
             {
-                if (setting.isUpdateUseProxy)
-                {
-                    servers.GetAvailableProxyInfo(out isSocks5, out proxyPort);
-                }
+                return;
             }
+
+            btnRefreshVer.Enabled = false;
             var isV2fly = cboxDownloadSource.SelectedIndex == 1;
 
             void done(List<string> versions)
@@ -232,12 +233,13 @@ namespace V2RayGCon.Views.WinForms
 
             bool isSocks5 = false;
             int proxyPort = -1;
-            if (chkUseProxy.Checked)
+            if (
+                chkUseProxy.Checked
+                && !servers.GetAvailableProxyInfo(out isSocks5, out proxyPort)
+                && !VgcApis.Misc.UI.Confirm(I18N.NoQualifyProxyServer)
+            )
             {
-                if (!servers.GetAvailableProxyInfo(out isSocks5, out proxyPort))
-                {
-                    VgcApis.Misc.UI.MsgBoxAsync(I18N.NoQualifyProxyServer);
-                }
+                return;
             }
 
             btnDownload.Enabled = false;

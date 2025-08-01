@@ -310,7 +310,7 @@ namespace V2RayGCon.Misc
                 apiUrl,
                 VgcApis.Models.Consts.Webs.LoopBackIP,
                 proxyPort,
-                -1,
+                VgcApis.Models.Consts.Intervals.DefaultCheckNewCoreVersionsTimeout,
                 null,
                 null
             );

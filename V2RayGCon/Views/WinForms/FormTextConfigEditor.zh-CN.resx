@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
-    <value>文件</value>
-  </data>
   <data name="openToolStripMenuItem.Text" xml:space="preserve">
     <value>新窗口</value>
   </data>
@@ -132,8 +129,8 @@
   <data name="closeToolStripMenuItem.Text" xml:space="preserve">
     <value>关闭</value>
   </data>
-  <data name="serverToolStripMenuItem.Text" xml:space="preserve">
-    <value>服务器</value>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>文件</value>
   </data>
   <data name="addNewServerToolStripMenuItem.Text" xml:space="preserve">
     <value>添加新服务器</value>
@@ -153,8 +150,8 @@
   <data name="overwriteServerToolStripMenuItem.Text" xml:space="preserve">
     <value>覆盖服务器</value>
   </data>
-  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
-    <value>视图</value>
+  <data name="serverToolStripMenuItem.Text" xml:space="preserve">
+    <value>服务器</value>
   </data>
   <data name="formatToolStripMenuItem.Text" xml:space="preserve">
     <value>格式化</value>
@@ -167,6 +164,9 @@
   </data>
   <data name="simpleConfigerToolStripMenuItem.Text" xml:space="preserve">
     <value>简易编辑器</value>
+  </data>
+  <data name="viewToolStripMenuItem.Text" xml:space="preserve">
+    <value>工具</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Text 编辑器</value>

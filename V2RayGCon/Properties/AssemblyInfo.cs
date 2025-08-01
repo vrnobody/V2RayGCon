@@ -33,11 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.1.3.2")]
+[assembly: AssemblyVersion("2.1.3.3")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v2.1.3.3 Change check new core versions timeout to 10 seconds.
 v2.1.3.2 Show server's title in confirm-deletion prompt.
 v2.1.3.1 Confirm whether switch to direct download before updating subscription.
 --------------------------------------------------------------------

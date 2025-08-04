@@ -10,7 +10,7 @@
         public static int LazySaveServerListIntreval = 5 * 60 * 1000;
         public static int LazySaveLunaSettingsInterval = 5 * 60 * 1000;
 
-        public static int DefaultCheckNewCoreVersionsTimeout = 10 * 1000;
+        public static int DefaultCheckNewCoreVersionsTimeout = 20 * 1000;
         public static int DefaultSpeedTestTimeout = 30 * 1000;
         public static int DefaultFetchTimeout = 60 * 1000;
 

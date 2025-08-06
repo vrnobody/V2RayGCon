@@ -113,7 +113,11 @@ namespace VgcApis.Models.Datas
 
         string CompressOnDemand(string s)
         {
-            if (Misc.Utils.StrLenInBytes(s) > Consts.Libs.MinCompressStringLength)
+            var len = Misc.Utils.StrLenInBytes(s);
+            if (
+                len > Consts.Libs.MinCompressStringLength
+                && len < Consts.Libs.MaxCompressStringLength
+            )
             {
                 return Libs.Infr.ZipExtensions.CompressToBase64(s);
             }

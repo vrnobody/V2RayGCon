@@ -59,7 +59,6 @@
             // 
             resources.ApplyResources(this.btnExit, "btnExit");
             this.btnExit.Name = "btnExit";
-            this.toolTip1.SetToolTip(this.btnExit, resources.GetString("btnExit.ToolTip"));
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
@@ -68,13 +67,11 @@
             resources.ApplyResources(this.panelVeeImporter, "panelVeeImporter");
             this.panelVeeImporter.Controls.Add(this.SimpleConfigerUI1);
             this.panelVeeImporter.Name = "panelVeeImporter";
-            this.toolTip1.SetToolTip(this.panelVeeImporter, resources.GetString("panelVeeImporter.ToolTip"));
             // 
             // SimpleConfigerUI1
             // 
             resources.ApplyResources(this.SimpleConfigerUI1, "SimpleConfigerUI1");
             this.SimpleConfigerUI1.Name = "SimpleConfigerUI1";
-            this.toolTip1.SetToolTip(this.SimpleConfigerUI1, resources.GetString("SimpleConfigerUI1.ToolTip"));
             // 
             // FormSimpleConfiger
             // 
@@ -85,7 +82,6 @@
             this.Controls.Add(this.btnServer);
             this.Controls.Add(this.btnClient);
             this.Name = "FormSimpleConfiger";
-            this.toolTip1.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.Load += new System.EventHandler(this.FormSimpleEditor_Load);
             this.panelVeeImporter.ResumeLayout(false);
             this.ResumeLayout(false);

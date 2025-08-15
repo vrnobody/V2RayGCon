@@ -78,6 +78,8 @@ namespace V2RayGCon.Services.ShareLinkComponents
             vc.tlsParam1 = GetValue("pbk", "");
             vc.tlsParam2 = GetValue("sid", "");
             vc.tlsParam3 = Uri.UnescapeDataString(GetValue("spx", ""));
+            vc.tlsEch = GetValue("ech", "");
+            vc.tlsParam4 = Uri.UnescapeDataString(GetValue("pqv", ""));
 
             // patch sni
             var hostIsDomain = !VgcApis.Misc.Utils.TryParseIp(vc.host, out _);
@@ -273,6 +275,10 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
             SetValue("serverName", meta.tlsServName);
             SetValue("fingerprint", meta.tlsFingerPrint);
+            if (tt == "tls")
+            {
+                SetValue("echConfigList", meta.tlsEch);
+            }
 
             if (!string.IsNullOrEmpty(meta.tlsAlpn))
             {
@@ -284,6 +290,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 o["publicKey"] = meta.tlsParam1;
                 SetValue("shortId", meta.tlsParam2);
                 SetValue("spiderX", meta.tlsParam3);
+                SetValue("mldsa65Verify", meta.tlsParam4);
             }
 
             var k = $"{tt}Settings";
@@ -492,6 +499,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             var ts = $"{tt}Settings";
             meta.tlsServName = reader(prefix, $"{ts}.serverName") ?? "";
             meta.tlsFingerPrint = reader(prefix, $"{ts}.fingerprint") ?? "";
+            meta.tlsEch = reader(prefix, $"{ts}.echConfigList") ?? "";
 
             try
             {
@@ -506,6 +514,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
                 meta.tlsParam1 = reader(prefix, $"{ts}.publicKey") ?? "";
                 meta.tlsParam2 = reader(prefix, $"{ts}.shortId") ?? "";
                 meta.tlsParam3 = reader(prefix, $"{ts}.spiderX") ?? "";
+                meta.tlsParam4 = reader(prefix, $"{ts}.mldsa65Verify") ?? "";
             }
         }
         #endregion

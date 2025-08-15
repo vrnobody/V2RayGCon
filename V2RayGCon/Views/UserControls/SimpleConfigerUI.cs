@@ -25,6 +25,8 @@ namespace V2RayGCon.Views.UserControls
 
         public VgcApis.Models.Datas.SharelinkMetaData ToShareLinkMetaData()
         {
+            var tlsType = cboxTlsType.Text;
+
             var meta = new VgcApis.Models.Datas.SharelinkMetaData
             {
                 name = tboxName.Text,
@@ -37,15 +39,27 @@ namespace V2RayGCon.Views.UserControls
                 streamParam1 = cboxStreamParma1.Text,
                 streamParam2 = tboxStreamParam2.Text,
                 streamParam3 = tboxStreamParam3.Text,
-                tlsType = cboxTlsType.Text,
-                tlsParam1 = tboxTlsPublicKey.Text,
-                tlsParam2 = tboxTlsShortId.Text,
-                tlsParam3 = tboxTlsSpiderX.Text,
-                tlsServName = tboxTlsServName.Text,
+
+                tlsType = tlsType,
                 useSelfSignCert = chkTlsCertSelfSign.Checked,
+                tlsServName = tboxTlsServName.Text,
                 tlsAlpn = tboxTlsAlpn.Text,
                 tlsFingerPrint = cboxTlsFingerprint.Text,
+
+                tlsParam2 = tboxTlsShortId.Text,
+                tlsParam3 = tboxTlsSpiderX.Text,
+                tlsParam4 = tboxRealityMlDsa65Verify.Text,
             };
+
+            var pbk = tboxTlsPublicKey.Text;
+            if (tlsType == "reality")
+            {
+                meta.tlsParam1 = pbk;
+            }
+            else
+            {
+                meta.tlsEch = pbk;
+            }
 
             return meta;
         }
@@ -88,9 +102,10 @@ namespace V2RayGCon.Views.UserControls
 
             tboxTlsAlpn.Text = sc.tlsAlpn;
             cboxTlsFingerprint.Text = sc.tlsFingerPrint;
-            tboxTlsPublicKey.Text = sc.tlsParam1;
+            tboxTlsPublicKey.Text = sc.tlsType == "reality" ? sc.tlsParam1 : sc.tlsEch;
             tboxTlsShortId.Text = sc.tlsParam2;
             tboxTlsSpiderX.Text = sc.tlsParam3;
+            tboxRealityMlDsa65Verify.Text = sc.tlsParam4;
         }
         #endregion
 
@@ -325,13 +340,16 @@ namespace V2RayGCon.Views.UserControls
             bool tlsDisabled = cboxTlsType.Text == "none";
             bool realityEnabled = cboxTlsType.Text == "reality";
 
+            lbRealityPubKey.Text = realityEnabled ? "PublicKey" : "Ech";
+
             chkTlsCertSelfSign.Enabled = !tlsDisabled;
             tboxTlsServName.Enabled = !tlsDisabled;
             cboxTlsFingerprint.Enabled = !tlsDisabled;
             tboxTlsAlpn.Enabled = !tlsDisabled;
-            tboxTlsPublicKey.Enabled = !tlsDisabled && realityEnabled;
+            tboxTlsPublicKey.Enabled = !tlsDisabled;
             tboxTlsShortId.Enabled = !tlsDisabled && realityEnabled;
             tboxTlsSpiderX.Enabled = !tlsDisabled && realityEnabled;
+            tboxRealityMlDsa65Verify.Enabled = !tlsDisabled && realityEnabled;
         }
 
         #endregion

@@ -56,6 +56,23 @@ namespace V2RayGCon.Services.ShareLinkComponents
         #endregion
 
         #region public methods
+
+        void TryRemoveEchAndMlDsa65(JToken streamSettings)
+        {
+            try
+            {
+                var tls = streamSettings["tlsSettings"] as JObject;
+                tls.Remove("echConfigList");
+            }
+            catch { }
+            try
+            {
+                var tls = streamSettings["realitySettings"] as JObject;
+                tls.Remove("mldsa65Verify");
+            }
+            catch { }
+        }
+
         public string GenServerSideConfig(VgcApis.Models.Datas.SharelinkMetaData meta)
         {
             if (meta == null)
@@ -68,7 +85,9 @@ namespace V2RayGCon.Services.ShareLinkComponents
             inb["protocol"] = meta.proto;
             inb["listen"] = meta.host;
             inb["port"] = meta.port;
-            inb["streamSettings"] = Comm.GenStreamSetting(meta);
+            var stream = Comm.GenStreamSetting(meta);
+            TryRemoveEchAndMlDsa65(stream);
+            inb["streamSettings"] = stream;
 
             var set = new JObject();
             var client = new JObject();

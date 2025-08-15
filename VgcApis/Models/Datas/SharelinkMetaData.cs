@@ -39,6 +39,15 @@ namespace VgcApis.Models.Datas
         public string tlsServName = @"";
         public bool useSelfSignCert = false;
 
+        // tls.fingerprint
+        public string tlsFingerPrint = string.Empty;
+
+        // tls.alpn
+        public string tlsAlpn = string.Empty;
+
+        // tls.ech
+        public string tlsEch = string.Empty;
+
         // reality.publicKey
         public string tlsParam1 = string.Empty;
 
@@ -48,11 +57,8 @@ namespace VgcApis.Models.Datas
         // reality.spiderX
         public string tlsParam3 = string.Empty;
 
-        // tls.fingerprint
-        public string tlsFingerPrint = string.Empty;
-
-        // tls.alpn (not support yet)
-        public string tlsAlpn = string.Empty;
+        // reality.ML-DSA-65
+        public string tlsParam4 = string.Empty;
 
         public SharelinkMetaData() { }
 
@@ -228,9 +234,12 @@ namespace VgcApis.Models.Datas
             ps["security"] = tlsType;
             ps["fp"] = tlsFingerPrint;
             ps["alpn"] = tlsAlpn;
+            ps["ech"] = tlsEch;
+
             ps["pbk"] = tlsParam1;
             ps["sid"] = tlsParam2;
             ps["spx"] = tlsParam3;
+            ps["pqv"] = tlsParam4;
 
             if (!string.IsNullOrWhiteSpace(tlsServName))
             {
@@ -260,9 +269,12 @@ namespace VgcApis.Models.Datas
 
             tlsAlpn = source.tlsAlpn;
             tlsFingerPrint = source.tlsFingerPrint;
+            tlsEch = source.tlsEch;
+
             tlsParam1 = source.tlsParam1;
             tlsParam2 = source.tlsParam2;
             tlsParam3 = source.tlsParam3;
+            tlsParam4 = source.tlsParam4;
         }
 
         #endregion

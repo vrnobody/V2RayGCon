@@ -46,8 +46,6 @@ namespace VgcApis.Models.Datas
         public string tlsAlpn = string.Empty;
 
         // tls.ech
-        public string tlsEch = string.Empty;
-
         // reality.publicKey
         public string tlsParam1 = string.Empty;
 
@@ -234,9 +232,16 @@ namespace VgcApis.Models.Datas
             ps["security"] = tlsType;
             ps["fp"] = tlsFingerPrint;
             ps["alpn"] = tlsAlpn;
-            ps["ech"] = tlsEch;
 
-            ps["pbk"] = tlsParam1;
+            if (tlsType == "tls")
+            {
+                ps["ech"] = tlsParam1;
+            }
+            else
+            {
+                ps["pbk"] = tlsParam1;
+            }
+
             ps["sid"] = tlsParam2;
             ps["spx"] = tlsParam3;
             ps["pqv"] = tlsParam4;
@@ -269,7 +274,6 @@ namespace VgcApis.Models.Datas
 
             tlsAlpn = source.tlsAlpn;
             tlsFingerPrint = source.tlsFingerPrint;
-            tlsEch = source.tlsEch;
 
             tlsParam1 = source.tlsParam1;
             tlsParam2 = source.tlsParam2;

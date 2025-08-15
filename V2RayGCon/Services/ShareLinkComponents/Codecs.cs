@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web.UI;
 using Newtonsoft.Json.Linq;
 
 namespace V2RayGCon.Services.ShareLinkComponents
@@ -57,20 +58,21 @@ namespace V2RayGCon.Services.ShareLinkComponents
 
         #region public methods
 
-        void TryRemoveEchAndMlDsa65(JToken streamSettings)
+        void TryRemoveClientOnlySettings(JToken streamSettings)
         {
-            try
+            void tryRemove(string root, string key)
             {
-                var tls = streamSettings["tlsSettings"] as JObject;
-                tls.Remove("echConfigList");
+                try
+                {
+                    var o = streamSettings[root] as JObject;
+                    o?.Remove(key);
+                }
+                catch { }
             }
-            catch { }
-            try
-            {
-                var tls = streamSettings["realitySettings"] as JObject;
-                tls.Remove("mldsa65Verify");
-            }
-            catch { }
+
+            tryRemove("tlsSettings", "echConfigList");
+            tryRemove("realitySettings", "mldsa65Verify");
+            tryRemove("realitySettings", "publicKey");
         }
 
         public string GenServerSideConfig(VgcApis.Models.Datas.SharelinkMetaData meta)
@@ -86,7 +88,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             inb["listen"] = meta.host;
             inb["port"] = meta.port;
             var stream = Comm.GenStreamSetting(meta);
-            TryRemoveEchAndMlDsa65(stream);
+            TryRemoveClientOnlySettings(stream);
             inb["streamSettings"] = stream;
 
             var set = new JObject();

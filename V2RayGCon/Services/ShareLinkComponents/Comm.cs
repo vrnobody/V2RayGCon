@@ -78,8 +78,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
             vc.tlsParam1 = GetValue("pbk", "");
             vc.tlsParam2 = GetValue("sid", "");
             vc.tlsParam3 = Uri.UnescapeDataString(GetValue("spx", ""));
-            vc.tlsEch = GetValue("ech", "");
             vc.tlsParam4 = Uri.UnescapeDataString(GetValue("pqv", ""));
+            if (vc.tlsType == "tls")
+            {
+                vc.tlsParam1 = GetValue("ech", "");
+            }
 
             // patch sni
             var hostIsDomain = !VgcApis.Misc.Utils.TryParseIp(vc.host, out _);
@@ -277,7 +280,7 @@ namespace V2RayGCon.Services.ShareLinkComponents
             SetValue("fingerprint", meta.tlsFingerPrint);
             if (tt == "tls")
             {
-                SetValue("echConfigList", meta.tlsEch);
+                SetValue("echConfigList", meta.tlsParam1);
             }
 
             if (!string.IsNullOrEmpty(meta.tlsAlpn))
@@ -499,7 +502,11 @@ namespace V2RayGCon.Services.ShareLinkComponents
             var ts = $"{tt}Settings";
             meta.tlsServName = reader(prefix, $"{ts}.serverName") ?? "";
             meta.tlsFingerPrint = reader(prefix, $"{ts}.fingerprint") ?? "";
-            meta.tlsEch = reader(prefix, $"{ts}.echConfigList") ?? "";
+
+            if (tt == "tls")
+            {
+                meta.tlsParam1 = reader(prefix, $"{ts}.echConfigList") ?? "";
+            }
 
             try
             {

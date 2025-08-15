@@ -25,8 +25,6 @@ namespace V2RayGCon.Views.UserControls
 
         public VgcApis.Models.Datas.SharelinkMetaData ToShareLinkMetaData()
         {
-            var tlsType = cboxTlsType.Text;
-
             var meta = new VgcApis.Models.Datas.SharelinkMetaData
             {
                 name = tboxName.Text,
@@ -40,26 +38,17 @@ namespace V2RayGCon.Views.UserControls
                 streamParam2 = tboxStreamParam2.Text,
                 streamParam3 = tboxStreamParam3.Text,
 
-                tlsType = tlsType,
+                tlsType = cboxTlsType.Text,
                 useSelfSignCert = chkTlsCertSelfSign.Checked,
                 tlsServName = tboxTlsServName.Text,
                 tlsAlpn = tboxTlsAlpn.Text,
                 tlsFingerPrint = cboxTlsFingerprint.Text,
 
+                tlsParam1 = tboxTlsPublicKey.Text,
                 tlsParam2 = tboxTlsShortId.Text,
                 tlsParam3 = tboxTlsSpiderX.Text,
                 tlsParam4 = tboxRealityMlDsa65Verify.Text,
             };
-
-            var pbk = tboxTlsPublicKey.Text;
-            if (tlsType == "reality")
-            {
-                meta.tlsParam1 = pbk;
-            }
-            else
-            {
-                meta.tlsEch = pbk;
-            }
 
             return meta;
         }
@@ -102,7 +91,7 @@ namespace V2RayGCon.Views.UserControls
 
             tboxTlsAlpn.Text = sc.tlsAlpn;
             cboxTlsFingerprint.Text = sc.tlsFingerPrint;
-            tboxTlsPublicKey.Text = sc.tlsType == "reality" ? sc.tlsParam1 : sc.tlsEch;
+            tboxTlsPublicKey.Text = sc.tlsParam1;
             tboxTlsShortId.Text = sc.tlsParam2;
             tboxTlsSpiderX.Text = sc.tlsParam3;
             tboxRealityMlDsa65Verify.Text = sc.tlsParam4;

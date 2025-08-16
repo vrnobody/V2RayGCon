@@ -23,9 +23,13 @@ namespace V2RayGCon.Views.WinForms
         public static void ShowForm() => auxSiForm.ShowForm();
         #endregion
 
+        readonly string title;
+
         public FormKeyGen()
         {
             InitializeComponent();
+
+            this.title = this.Text;
 
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             VgcApis.Misc.UI.AddTagToFormTitle(this);
@@ -34,13 +38,12 @@ namespace V2RayGCon.Views.WinForms
         #region helpers
         string GetCoreFullPath()
         {
-            var exe = @"xray.exe";
             var folder = VgcApis.Misc.Utils.GetCoreFolderFullPath();
-            var path = Path.Combine(folder, exe);
+            var path = Path.Combine(folder, @"xray.exe");
             return path;
         }
 
-        void TryExecCore(string args)
+        void TryExecCoreCmd(string keyType, string args)
         {
             var exe = GetCoreFullPath();
             if (!File.Exists(exe))
@@ -49,7 +52,12 @@ namespace V2RayGCon.Views.WinForms
                 return;
             }
             var result = VgcApis.Misc.Utils.ExecuteAndGetStdOut(exe, args, 5000, null);
+            if (string.IsNullOrEmpty(result))
+            {
+                return;
+            }
             rtBoxOutput.Text = result;
+            this.Text = $"{title} - {keyType}";
         }
         #endregion
 
@@ -73,31 +81,32 @@ namespace V2RayGCon.Views.WinForms
                 ids.Add(id);
             }
             this.rtBoxOutput.Text = string.Join(Environment.NewLine, ids);
+            this.Text = $"{title} - UUID v4";
         }
 
         private void tLSECHToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TryExecCore("tls ech");
+            TryExecCoreCmd("TLS.ECH", "tls ech");
         }
 
         private void tLSCertToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TryExecCore("tls cert");
+            TryExecCoreCmd("TLS.Cert", "tls cert");
         }
 
         private void x25519ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TryExecCore("x25519");
+            TryExecCoreCmd("x25519", "x25519");
         }
 
         private void wireGuardToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TryExecCore("wg");
+            TryExecCoreCmd("WireGuard", "wg");
         }
 
         private void mLDSA65ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TryExecCore("mldsa65");
+            TryExecCoreCmd("ML-DSA-65", "mldsa65");
         }
         #endregion
     }

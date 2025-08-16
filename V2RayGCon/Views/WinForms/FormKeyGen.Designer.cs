@@ -50,14 +50,13 @@
             // 
             // menuStrip1
             // 
-            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.generateToolStripMenuItem});
+            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Name = "menuStrip1";
             // 
             // generateToolStripMenuItem
             // 
-            resources.ApplyResources(this.generateToolStripMenuItem, "generateToolStripMenuItem");
             this.generateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tLSECHToolStripMenuItem,
             this.tLSCertToolStripMenuItem,
@@ -68,52 +67,53 @@
             this.toolStripMenuItem1,
             this.closeToolStripMenuItem});
             this.generateToolStripMenuItem.Name = "generateToolStripMenuItem";
+            resources.ApplyResources(this.generateToolStripMenuItem, "generateToolStripMenuItem");
             // 
             // tLSECHToolStripMenuItem
             // 
-            resources.ApplyResources(this.tLSECHToolStripMenuItem, "tLSECHToolStripMenuItem");
             this.tLSECHToolStripMenuItem.Name = "tLSECHToolStripMenuItem";
+            resources.ApplyResources(this.tLSECHToolStripMenuItem, "tLSECHToolStripMenuItem");
             this.tLSECHToolStripMenuItem.Click += new System.EventHandler(this.tLSECHToolStripMenuItem_Click);
             // 
             // tLSCertToolStripMenuItem
             // 
-            resources.ApplyResources(this.tLSCertToolStripMenuItem, "tLSCertToolStripMenuItem");
             this.tLSCertToolStripMenuItem.Name = "tLSCertToolStripMenuItem";
+            resources.ApplyResources(this.tLSCertToolStripMenuItem, "tLSCertToolStripMenuItem");
             this.tLSCertToolStripMenuItem.Click += new System.EventHandler(this.tLSCertToolStripMenuItem_Click);
             // 
             // uUIDV4ToolStripMenuItem
             // 
-            resources.ApplyResources(this.uUIDV4ToolStripMenuItem, "uUIDV4ToolStripMenuItem");
             this.uUIDV4ToolStripMenuItem.Name = "uUIDV4ToolStripMenuItem";
+            resources.ApplyResources(this.uUIDV4ToolStripMenuItem, "uUIDV4ToolStripMenuItem");
             this.uUIDV4ToolStripMenuItem.Click += new System.EventHandler(this.uUIDV4ToolStripMenuItem_Click);
             // 
             // x25519ToolStripMenuItem
             // 
-            resources.ApplyResources(this.x25519ToolStripMenuItem, "x25519ToolStripMenuItem");
             this.x25519ToolStripMenuItem.Name = "x25519ToolStripMenuItem";
+            resources.ApplyResources(this.x25519ToolStripMenuItem, "x25519ToolStripMenuItem");
             this.x25519ToolStripMenuItem.Click += new System.EventHandler(this.x25519ToolStripMenuItem_Click);
             // 
             // wireGuardToolStripMenuItem
             // 
-            resources.ApplyResources(this.wireGuardToolStripMenuItem, "wireGuardToolStripMenuItem");
             this.wireGuardToolStripMenuItem.Name = "wireGuardToolStripMenuItem";
+            resources.ApplyResources(this.wireGuardToolStripMenuItem, "wireGuardToolStripMenuItem");
             this.wireGuardToolStripMenuItem.Click += new System.EventHandler(this.wireGuardToolStripMenuItem_Click);
             // 
             // mLDSA65ToolStripMenuItem
             // 
-            resources.ApplyResources(this.mLDSA65ToolStripMenuItem, "mLDSA65ToolStripMenuItem");
             this.mLDSA65ToolStripMenuItem.Name = "mLDSA65ToolStripMenuItem";
+            resources.ApplyResources(this.mLDSA65ToolStripMenuItem, "mLDSA65ToolStripMenuItem");
             this.mLDSA65ToolStripMenuItem.Click += new System.EventHandler(this.mLDSA65ToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
-            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
             // 
             // closeToolStripMenuItem
             // 
-            resources.ApplyResources(this.closeToolStripMenuItem, "closeToolStripMenuItem");
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            resources.ApplyResources(this.closeToolStripMenuItem, "closeToolStripMenuItem");
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // FormKeyGen

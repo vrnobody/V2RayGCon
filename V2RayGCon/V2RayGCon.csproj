@@ -339,6 +339,12 @@
     <Compile Include="Views\WinForms\FormBatchModifyServerSetting.Designer.cs">
       <DependentUpon>FormBatchModifyServerSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\WinForms\FormKeyGen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WinForms\FormKeyGen.Designer.cs">
+      <DependentUpon>FormKeyGen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\WinForms\FormModifyServerSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -494,6 +500,12 @@
     <EmbeddedResource Include="Views\WinForms\FormImportLinksResult.zh-CN.resx">
       <DependentUpon>FormImportLinksResult.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormKeyGen.resx">
+      <DependentUpon>FormKeyGen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WinForms\FormKeyGen.zh-CN.resx">
+      <DependentUpon>FormKeyGen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\WinForms\FormModifyServerSettings.resx">
       <DependentUpon>FormModifyServerSettings.cs</DependentUpon>
     </EmbeddedResource>
@@ -570,6 +582,7 @@
     <Content Include="icon_dark.ico" />
     <Content Include="Resources\Files\3rd\plugins\readme.txt" />
     <Content Include="Resources\Files\3rd\tun2socks\readme.txt" />
+    <None Include="Resources\Icon\TaskTray\NewKey_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\CPPCommentCode_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\GoToLastRow_16x.png" />
     <None Include="Resources\Icon\FormMainToolStrip\GoToTop_16x.png" />

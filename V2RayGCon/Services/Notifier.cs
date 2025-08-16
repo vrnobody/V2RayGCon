@@ -1236,6 +1236,11 @@ namespace V2RayGCon.Services
                                 (s, a) => Views.WinForms.FormTextConfigEditor.ShowEmptyConfig()
                             ),
                             new ToolStripMenuItem(
+                                I18N.KeyGenForm,
+                                Properties.Resources.NewKey_16x,
+                                (s, a) => Views.WinForms.FormKeyGen.ShowForm()
+                            ),
+                            new ToolStripMenuItem(
                                 I18N.Log,
                                 Properties.Resources.FSInteractiveWindow_16x,
                                 (s, a) => Views.WinForms.FormLog.ShowForm()

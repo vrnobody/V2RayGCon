@@ -746,6 +746,12 @@
   <data name="toolStripMenuItemTextEditor.Text" xml:space="preserve">
     <value>Text 编辑器</value>
   </data>
+  <data name="toolStripMenuItemKeyGenForm.Text" xml:space="preserve">
+    <value>密钥生成器</value>
+  </data>
+  <data name="toolStripMenuItemKeyGenForm.ToolTipText" xml:space="preserve">
+    <value>生成各种密钥</value>
+  </data>
   <data name="toolMenuItemLog.Text" xml:space="preserve">
     <value>日志</value>
   </data>

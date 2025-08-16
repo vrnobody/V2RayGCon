@@ -20,6 +20,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             ToolStripMenuItem miAbout,
             ToolStripMenuItem miHelp,
             ToolStripMenuItem miFormTextEditor,
+            ToolStripMenuItem miFormKeyGen,
             ToolStripMenuItem miFormLog,
             ToolStripMenuItem miFormOptions,
             ToolStripMenuItem miDownloadV2rayCore,
@@ -35,7 +36,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             InitMenuPlugin(pluginToolStrip);
 
             InitMenuFile(miImportLinkFromClipboard);
-            InitMenuWindows(miFormTextEditor, miFormLog, miFormOptions);
+            InitMenuWindows(miFormTextEditor, miFormKeyGen, miFormLog, miFormOptions);
 
             InitMenuAbout(
                 miAbout,
@@ -130,12 +131,15 @@ namespace V2RayGCon.Controllers.FormMainComponent
 
         private static void InitMenuWindows(
             ToolStripMenuItem miFormTextEditor,
+            ToolStripMenuItem miFormKeyGen,
             ToolStripMenuItem miFormLog,
             ToolStripMenuItem miFormOptions
         )
         {
             miFormTextEditor.Click += (s, a) =>
                 Views.WinForms.FormTextConfigEditor.ShowEmptyConfig();
+
+            miFormKeyGen.Click += (s, a) => Views.WinForms.FormKeyGen.ShowForm();
 
             miFormLog.Click += (s, a) => Views.WinForms.FormLog.ShowForm();
 

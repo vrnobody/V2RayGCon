@@ -1147,6 +1147,15 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
+        ///   查找类似 Key generator 的本地化字符串。
+        /// </summary>
+        internal static string KeyGenForm {
+            get {
+                return ResourceManager.GetString("KeyGenForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 was killed by user or another app. 的本地化字符串。
         /// </summary>
         internal static string KilledByUserOrOtherApp {

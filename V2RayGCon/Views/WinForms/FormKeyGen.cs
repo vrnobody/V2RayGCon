@@ -86,12 +86,12 @@ namespace V2RayGCon.Views.WinForms
 
         private void tLSECHToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TryExecCoreCmd("TLS.ECH", "tls ech");
+            TryExecCoreCmd("TLS ECH", "tls ech");
         }
 
         private void tLSCertToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TryExecCoreCmd("TLS.Cert", "tls cert");
+            TryExecCoreCmd("TLS Certificate", "tls cert");
         }
 
         private void x25519ToolStripMenuItem_Click(object sender, EventArgs e)

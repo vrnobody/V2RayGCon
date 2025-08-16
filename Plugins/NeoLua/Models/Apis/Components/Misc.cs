@@ -79,6 +79,8 @@ namespace NeoLuna.Models.Apis.Components
 
         public void ShowFormMain() => vgcNotifier.ShowFormMain();
 
+        public void ShowFormKeyGen() => vgcNotifier.ShowFormKeyGen();
+
         public void ShowFormLog() => vgcNotifier.ShowFormLog();
 
         #endregion

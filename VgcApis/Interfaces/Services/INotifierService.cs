@@ -11,6 +11,8 @@ namespace VgcApis.Interfaces.Services
         void ShowFormOption();
         void ShowFormMain();
 
+        void ShowFormKeyGen();
+
         void ShowFormWebUI();
 
         void ShowFormLog();

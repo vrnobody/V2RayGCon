@@ -312,6 +312,8 @@ namespace V2RayGCon.Services
 
         public void ShowFormMain() => Views.WinForms.FormMain.ShowForm();
 
+        public void ShowFormKeyGen() => Views.WinForms.FormKeyGen.ShowForm();
+
         public void ShowFormLog() => Views.WinForms.FormLog.ShowForm();
 
         #endregion

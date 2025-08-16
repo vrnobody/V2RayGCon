@@ -65,6 +65,11 @@ namespace Luna.Interfaces
         void ShowFormMain();
 
         /// <summary>
+        /// 调出密钥生成器窗口
+        /// </summary>
+        void ShowFormKeyGen();
+
+        /// <summary>
         /// 调出WebUI窗口
         /// </summary>
         void ShowFormWebUI();

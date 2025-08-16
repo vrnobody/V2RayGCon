@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -19,14 +19,18 @@ namespace VgcApis.Libs.Sys
             out PointF scale
         )
         {
-            const float dpi = 96.0f;
-
-            GetDpi(screen, DpiType.Angular, out var dpiX, out var dpiY);
-
-            var sx = Round(dpi / dpiX);
-            var sy = Round(dpi / dpiY);
-
-            scale = new PointF(sx, sy);
+            if (VgcApis.Misc.Utils.IsWin8OrLater())
+            {
+                const float dpi = 96.0f;
+                GetDpi(screen, DpiType.Angular, out var dpiX, out var dpiY);
+                var sx = Round(dpi / dpiX);
+                var sy = Round(dpi / dpiY);
+                scale = new PointF(sx, sy);
+            }
+            else
+            {
+                scale = new PointF(1, 1);
+            }
 
             var width = scale.X * screen.Bounds.Width;
             var height = scale.Y * screen.Bounds.Height;

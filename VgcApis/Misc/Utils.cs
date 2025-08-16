@@ -207,6 +207,27 @@ namespace VgcApis.Misc
         #endregion
 
         #region system
+        public static bool IsWin8OrLater()
+        {
+            // https://stackoverflow.com/questions/2819934/detect-windows-version-in-net
+
+            if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+            {
+                return false;
+            }
+
+            var ver = Environment.OSVersion.Version;
+            if (ver.Major < 6)
+            {
+                return false;
+            }
+            if (ver.Major == 6 && ver.Minor < 2)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public static void CollectOnHighPressure(int pressure)
         {
             if (pressure < 256 * 1024)

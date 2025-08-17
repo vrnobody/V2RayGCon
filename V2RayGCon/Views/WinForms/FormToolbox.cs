@@ -132,6 +132,12 @@ namespace V2RayGCon.Views.WinForms
             Misc.Utils.CopyToClipboardAndPrompt(content);
         }
 
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var content = VgcApis.Misc.Utils.ReadFromClipboard();
+            SetResult("Paste", content);
+        }
+
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var content = rtBoxOutput.Text;
@@ -145,8 +151,6 @@ namespace V2RayGCon.Views.WinForms
         #endregion
 
         #region password
-
-
         private void uUIDV4ToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             DoFiveTimes("UUID v4", () => Guid.NewGuid().ToString());
@@ -230,7 +234,7 @@ namespace V2RayGCon.Views.WinForms
         {
             // vmess://abc... -> vmess:::abc...
             var content = (rtBoxOutput.Text ?? "").Replace("://", ":::");
-            var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(content, 3);
+            var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(content, 8);
             var r = new List<string>();
             foreach (var b64 in b64s)
             {

@@ -33,6 +33,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,6 +87,7 @@
             resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyToolStripMenuItem,
+            this.toolStripMenuItemPaste,
             this.saveAsToolStripMenuItem,
             this.toolStripMenuItem2,
             this.closeToolStripMenuItem1});
@@ -96,6 +98,12 @@
             resources.ApplyResources(this.copyToolStripMenuItem, "copyToolStripMenuItem");
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItemPaste
+            // 
+            resources.ApplyResources(this.toolStripMenuItemPaste, "toolStripMenuItemPaste");
+            this.toolStripMenuItemPaste.Name = "toolStripMenuItemPaste";
+            this.toolStripMenuItemPaste.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
@@ -341,5 +349,6 @@
         private System.Windows.Forms.ToolStripMenuItem base64ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem unicodeToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem uRIToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemPaste;
     }
 }

@@ -48,7 +48,7 @@ namespace NeoLuna.Views.WinForms
         bool Choose(int idx)
         {
             var len = radioButtons.Count;
-            if (idx >= len)
+            if (idx >= len || len < 1)
             {
                 return false;
             }
@@ -126,7 +126,7 @@ namespace NeoLuna.Views.WinForms
                     new object[]
                     {
                         ControlStyles.StandardClick | ControlStyles.StandardDoubleClick,
-                        true
+                        true,
                     }
                 );
             }

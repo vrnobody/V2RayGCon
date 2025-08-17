@@ -26,7 +26,10 @@ namespace NeoLuna.Views.WinForms
         private void FormChoice_Load(object sender, EventArgs e)
         {
             InitControls();
-            checkBoxes[0].Focus();
+            if (choices.Length > 0)
+            {
+                checkBoxes[0].Focus();
+            }
             this.FormClosed += (s, a) => done.Set();
         }
 

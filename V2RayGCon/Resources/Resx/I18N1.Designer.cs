@@ -1147,15 +1147,6 @@ namespace V2RayGCon.Resources.Resx {
         }
         
         /// <summary>
-        ///   查找类似 Key generator 的本地化字符串。
-        /// </summary>
-        internal static string KeyGenForm {
-            get {
-                return ResourceManager.GetString("KeyGenForm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 was killed by user or another app. 的本地化字符串。
         /// </summary>
         internal static string KilledByUserOrOtherApp {
@@ -1979,6 +1970,15 @@ namespace V2RayGCon.Resources.Resx {
         internal static string Timeout {
             get {
                 return ResourceManager.GetString("Timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Toolbox 的本地化字符串。
+        /// </summary>
+        internal static string ToolboxForm {
+            get {
+                return ResourceManager.GetString("ToolboxForm", resourceCulture);
             }
         }
         

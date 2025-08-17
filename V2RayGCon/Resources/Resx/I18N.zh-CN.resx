@@ -834,7 +834,7 @@ c:\vgc\V2RayGCon.exe -s s2.json</value>
   <data name="ParseNumberFailed" xml:space="preserve">
     <value>解析数字失败！</value>
   </data>
-  <data name="KeyGenForm" xml:space="preserve">
-    <value>密钥生成器</value>
+  <data name="ToolboxForm" xml:space="preserve">
+    <value>工具箱</value>
   </data>
 </root>

@@ -139,7 +139,7 @@ namespace V2RayGCon.Controllers.FormMainComponent
             miFormTextEditor.Click += (s, a) =>
                 Views.WinForms.FormTextConfigEditor.ShowEmptyConfig();
 
-            miFormKeyGen.Click += (s, a) => Views.WinForms.FormKeyGen.ShowForm();
+            miFormKeyGen.Click += (s, a) => Views.WinForms.FormToolbox.ShowForm();
 
             miFormLog.Click += (s, a) => Views.WinForms.FormLog.ShowForm();
 

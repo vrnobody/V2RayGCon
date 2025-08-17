@@ -843,7 +843,7 @@ c:\vgc\V2RayGCon.exe -s s2.json</value>
   <data name="ParseNumberFailed" xml:space="preserve">
     <value>Parse number failed.</value>
   </data>
-  <data name="KeyGenForm" xml:space="preserve">
-    <value>Key generator</value>
+  <data name="ToolboxForm" xml:space="preserve">
+    <value>Toolbox</value>
   </data>
 </root>

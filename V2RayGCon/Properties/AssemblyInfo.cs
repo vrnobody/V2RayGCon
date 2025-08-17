@@ -33,13 +33,15 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.1.4.4")]
+[assembly: AssemblyVersion("2.1.4.5")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v2.1.4.5 Rename FormKeyGen to FormToolbox.
+         Add encode/decode tools to FormToolbox.
 v2.1.4.4 Add gen-password feature to FormKeyGen.
-v2.1.4.3 Add std.Misc:ShowFormKeyGen().
+v2.1.4.3 Add std.Misc:ShowFormToolbox().
 v2.1.4.2 Add KeyGenForm.
 v2.1.4.1 Fix crash when scanning QR code in Win7.
 --------------------------------------------------------------------

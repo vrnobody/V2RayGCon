@@ -312,7 +312,7 @@ namespace V2RayGCon.Services
 
         public void ShowFormMain() => Views.WinForms.FormMain.ShowForm();
 
-        public void ShowFormKeyGen() => Views.WinForms.FormKeyGen.ShowForm();
+        public void ShowFormToolbox() => Views.WinForms.FormToolbox.ShowForm();
 
         public void ShowFormLog() => Views.WinForms.FormLog.ShowForm();
 
@@ -1238,9 +1238,9 @@ namespace V2RayGCon.Services
                                 (s, a) => Views.WinForms.FormTextConfigEditor.ShowEmptyConfig()
                             ),
                             new ToolStripMenuItem(
-                                I18N.KeyGenForm,
-                                Properties.Resources.NewKey_16x,
-                                (s, a) => Views.WinForms.FormKeyGen.ShowForm()
+                                I18N.ToolboxForm,
+                                Properties.Resources.Toolbox_16x,
+                                (s, a) => Views.WinForms.FormToolbox.ShowForm()
                             ),
                             new ToolStripMenuItem(
                                 I18N.Log,

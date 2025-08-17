@@ -11,23 +11,24 @@ using System.Windows.Forms;
 using NeoLuna.Misc;
 using V2RayGCon.Controllers.FormTextConfigEditorComponent;
 using V2RayGCon.Resources.Resx;
+using static ScintillaNET.Style;
 
 namespace V2RayGCon.Views.WinForms
 {
-    public partial class FormKeyGen : Form
+    public partial class FormToolbox : Form
     {
         #region Sigleton
-        static readonly VgcApis.BaseClasses.AuxSiWinForm<FormKeyGen> auxSiForm =
-            new VgcApis.BaseClasses.AuxSiWinForm<FormKeyGen>();
+        static readonly VgcApis.BaseClasses.AuxSiWinForm<FormToolbox> auxSiForm =
+            new VgcApis.BaseClasses.AuxSiWinForm<FormToolbox>();
 
-        public static FormKeyGen GetForm() => auxSiForm.GetForm();
+        public static FormToolbox GetForm() => auxSiForm.GetForm();
 
         public static void ShowForm() => auxSiForm.ShowForm();
         #endregion
 
         readonly string title;
 
-        public FormKeyGen()
+        public FormToolbox()
         {
             InitializeComponent();
 
@@ -38,6 +39,24 @@ namespace V2RayGCon.Views.WinForms
         }
 
         #region helpers
+
+        void SetTitle(string keyType)
+        {
+            this.Text = $"{title} - {keyType}";
+        }
+
+        void SetResult(string title, string result)
+        {
+            rtBoxOutput.Text = result;
+            SetTitle(title);
+        }
+
+        void SetResults(string title, IEnumerable<string> results)
+        {
+            rtBoxOutput.Text = string.Join(Environment.NewLine, results);
+            SetTitle(title);
+        }
+
         void DoFiveTimes(string keyType, Func<string> gen)
         {
             var r = new List<string>();
@@ -45,8 +64,7 @@ namespace V2RayGCon.Views.WinForms
             {
                 r.Add(gen());
             }
-            rtBoxOutput.Text = string.Join(Environment.NewLine, r);
-            SetTitleKeyType(keyType);
+            SetResults(keyType, r);
         }
 
         string GetCoreFullPath()
@@ -70,11 +88,11 @@ namespace V2RayGCon.Views.WinForms
                 return;
             }
             rtBoxOutput.Text = result;
-            SetTitleKeyType(keyType);
+            SetTitle(keyType);
         }
         #endregion
 
-        #region UI event handler
+        #region key gen.
 
 
 
@@ -103,15 +121,10 @@ namespace V2RayGCon.Views.WinForms
             TryExecCoreCmd("ML-DSA-65", "mldsa65");
         }
 
-        private void uUIDV4ToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            DoFiveTimes("UUID v4", () => Guid.NewGuid().ToString());
-        }
+        #endregion
 
-        void SetTitleKeyType(string keyType)
-        {
-            this.Text = $"{title} - {keyType}";
-        }
+
+        #region file menu
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -128,6 +141,15 @@ namespace V2RayGCon.Views.WinForms
         private void closeToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+        #endregion
+
+        #region password
+
+
+        private void uUIDV4ToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            DoFiveTimes("UUID v4", () => Guid.NewGuid().ToString());
         }
 
         private void numberToolStripMenuItem_Click(object sender, EventArgs e)
@@ -168,16 +190,99 @@ namespace V2RayGCon.Views.WinForms
             DoFiveTimes("Number", () => VgcApis.Misc.Utils.RandomHex(32));
         }
 
+        #endregion
+
+        #region examples
         private void fragmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             rtBoxOutput.Text = Misc.Caches.Jsons.LoadExample("frag01");
-            SetTitleKeyType("Fragment - #01");
+            SetTitle("Fragment - #01");
         }
 
-        private void cNDirectToolStripMenuItem_Click(object sender, EventArgs e)
+        private void routingCNToolStripMenuItem_Click(object sender, EventArgs e)
         {
             rtBoxOutput.Text = Misc.Caches.Jsons.LoadExample("routeCnDirect01");
-            SetTitleKeyType("Routing - CN direct");
+            SetTitle("Routing CN");
+        }
+        #endregion
+
+        #region menu tool
+        private void scanQRCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            void ok(string result)
+            {
+                VgcApis.Misc.UI.Invoke(() =>
+                {
+                    rtBoxOutput.Text = result;
+                    SetTitle("Scan QR code");
+                });
+            }
+
+            void fail()
+            {
+                VgcApis.Misc.UI.MsgBox(I18N.NoQRCode);
+            }
+
+            Libs.QRCode.QRCode.ScanQRCode(ok, fail);
+        }
+
+        private void decodeBase64ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // vmess://abc... -> vmess:::abc...
+            var content = (rtBoxOutput.Text ?? "").Replace("://", ":::");
+            var b64s = VgcApis.Misc.Utils.ExtractBase64Strings(content, 3);
+            var r = new List<string>();
+            foreach (var b64 in b64s)
+            {
+                var text = VgcApis.Misc.Utils.Base64DecodeToString(b64);
+                if (!string.IsNullOrEmpty(text))
+                {
+                    r.Add(text);
+                }
+            }
+            SetResults("Decode - Base64", r);
+        }
+
+        private void decodeUnicodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var content = rtBoxOutput.Text ?? "";
+            var r = VgcApis.Misc.Utils.UnescapeUnicode(content);
+            SetResult("Decode - Unicode", r);
+        }
+
+        private void decodeUriToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var content = rtBoxOutput.Text ?? "";
+            var r = VgcApis.Misc.Utils.UriDecode(content);
+            SetResult("Decode - URI", r);
+        }
+
+        private void encodeBase64ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var content = rtBoxOutput.Text ?? "";
+            try
+            {
+                var b64 = VgcApis.Misc.Utils.Base64EncodeString(content);
+                SetResult("Encode - Base64", b64);
+            }
+            catch (Exception ex)
+            {
+                VgcApis.Misc.UI.MsgBox(ex.Message);
+            }
+        }
+
+        private void encodeUnicodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var content = rtBoxOutput.Text ?? "";
+            var r = VgcApis.Misc.Utils.EscapeUnicode(content);
+            SetResult("Encode - Unicode", r);
+        }
+
+        private void encodeUriToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var content = rtBoxOutput.Text ?? "";
+            var r = VgcApis.Misc.Utils.UriEncode(content);
+            SetResult("Encode - URI", r);
         }
         #endregion
     }

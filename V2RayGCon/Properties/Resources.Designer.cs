@@ -287,16 +287,6 @@ namespace V2RayGCon.Properties {
         }
         
         /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Bitmap NewKey_16x {
-            get {
-                object obj = ResourceManager.GetObject("NewKey_16x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 userSettings.json 的本地化字符串。
         /// </summary>
         internal static string PortableUserSettingsFilename {
@@ -390,6 +380,16 @@ namespace V2RayGCon.Properties {
         internal static string Text {
             get {
                 return ResourceManager.GetString("Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Toolbox_16x {
+            get {
+                object obj = ResourceManager.GetObject("Toolbox_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

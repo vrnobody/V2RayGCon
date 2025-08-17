@@ -298,11 +298,7 @@ namespace NeoLuna.Views.WinForms
                 .Enums
                 .SaveFileErrorCode
                 .Cancel;
-            ok = VgcApis.Misc.UI.ShowSaveFileDialog(
-                VgcApis.Models.Consts.Files.CsvExt,
-                text,
-                out _
-            );
+            ok = VgcApis.Misc.UI.SaveToFile(VgcApis.Models.Consts.Files.CsvExt, text, out _);
             switch (ok)
             {
                 case VgcApis.Models.Datas.Enums.SaveFileErrorCode.Fail:

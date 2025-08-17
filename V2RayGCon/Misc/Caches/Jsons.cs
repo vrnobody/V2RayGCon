@@ -7,16 +7,24 @@ namespace V2RayGCon.Misc.Caches
     public static class Jsons
     {
         static readonly JObject template,
-            package;
+            package,
+            example;
 
         static Jsons()
         {
             template = JObject.Parse(StrConst.config_tpl);
             package = JObject.Parse(StrConst.config_pkg);
+            example = JObject.Parse(StrConst.config_example);
         }
 
         #region public method
-        static public JObject LoadPackage(string key)
+        static public string LoadExample(string key)
+        {
+            var node = LoadJObjectPart(example, key);
+            return node.ToString();
+        }
+
+        public static JObject LoadPackage(string key)
         {
             var node = LoadJObjectPart(package, key);
             return JObject.Parse(node.ToString());

@@ -199,7 +199,7 @@ namespace Luna.Controllers.FormMainCtrl
                 {
                     var scripts = luaServer.GetAllScripts();
                     var serializedScripts = JsonConvert.SerializeObject(scripts);
-                    VgcApis.Misc.UI.SaveToFile(
+                    VgcApis.Misc.UI.SaveToFileAndPrompt(
                         VgcApis.Models.Consts.Files.TxtExt,
                         serializedScripts
                     );

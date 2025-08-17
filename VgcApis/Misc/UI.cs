@@ -377,9 +377,9 @@ namespace VgcApis.Misc
         /// <param name="content"></param>
         /// <param name="extentions"></param>
         /// <returns>file name</returns>
-        static public string SaveToFile(string extentions, string content)
+        static public string SaveToFileAndPrompt(string extentions, string content)
         {
-            var err = ShowSaveFileDialog(extentions, content, out string filename);
+            var err = SaveToFile(extentions, content, out string filename);
 
             switch (err)
             {
@@ -396,7 +396,7 @@ namespace VgcApis.Misc
             return filename;
         }
 
-        public static Models.Datas.Enums.SaveFileErrorCode ShowSaveFileDialog(
+        public static Models.Datas.Enums.SaveFileErrorCode SaveToFile(
             string extension,
             string content,
             out string fileName

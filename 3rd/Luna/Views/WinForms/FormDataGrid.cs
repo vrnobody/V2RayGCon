@@ -292,7 +292,7 @@ namespace Luna.Views.WinForms
         {
             var content = GetColumns(true, isSelectedOnly);
             var text = List2Csv(content);
-            VgcApis.Models.Datas.Enums.SaveFileErrorCode ok = VgcApis.Misc.UI.ShowSaveFileDialog(
+            VgcApis.Models.Datas.Enums.SaveFileErrorCode ok = VgcApis.Misc.UI.SaveToFile(
                 VgcApis.Models.Consts.Files.CsvExt,
                 text,
                 out _

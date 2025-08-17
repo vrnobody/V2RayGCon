@@ -117,21 +117,63 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="closeToolStripMenuItem.Text" xml:space="preserve">
+  <data name="copyToolStripMenuItem.Text" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="saveAsToolStripMenuItem.Text" xml:space="preserve">
+    <value>另存为</value>
+  </data>
+  <data name="closeToolStripMenuItem1.Text" xml:space="preserve">
     <value>关闭</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="fileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 21</value>
+  </data>
+  <data name="fileToolStripMenuItem.Text" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="tLSECHToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>142, 22</value>
+  </data>
+  <data name="tLSCertToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>142, 22</value>
+  </data>
+  <data name="x25519ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>142, 22</value>
+  </data>
+  <data name="wireGuardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>142, 22</value>
+  </data>
+  <data name="mLDSA65ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>142, 22</value>
+  </data>
   <data name="generateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 21</value>
   </data>
   <data name="generateToolStripMenuItem.Text" xml:space="preserve">
     <value>生成</value>
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 12</value>
+  <data name="numberToolStripMenuItem.Text" xml:space="preserve">
+    <value>数字</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>密钥类型：</value>
+  <data name="alphabetToolStripMenuItem.Text" xml:space="preserve">
+    <value>字母</value>
+  </data>
+  <data name="numAlphabetToolStripMenuItem.Text" xml:space="preserve">
+    <value>字母 + 数字</value>
+  </data>
+  <data name="numAlphabetSymbolToolStripMenuItem.Text" xml:space="preserve">
+    <value>字母 + 数字 +符号</value>
+  </data>
+  <data name="passwordToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 21</value>
+  </data>
+  <data name="passwordToolStripMenuItem.Text" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="fragmentToolStripMenuItem.Text" xml:space="preserve">
+    <value>分片</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>密钥生成器</value>

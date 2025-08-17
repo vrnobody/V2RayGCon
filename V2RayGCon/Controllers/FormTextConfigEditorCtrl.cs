@@ -45,7 +45,7 @@ namespace V2RayGCon.Controllers
         {
             var cfg = editor.content;
 
-            var r = VgcApis.Misc.UI.ShowSaveFileDialog(
+            var r = VgcApis.Misc.UI.SaveToFile(
                 VgcApis.Models.Consts.Files.AllExt,
                 cfg,
                 out string filename

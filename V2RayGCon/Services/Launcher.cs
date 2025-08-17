@@ -93,6 +93,7 @@ namespace V2RayGCon.Services
 
             // Views.WinForms.FormLog.ShowForm();
             Views.WinForms.FormMain.ShowForm();
+            // Views.WinForms.FormKeyGen.ShowForm();
 
             //notifier.InjectDebugMenuItem(new ToolStripMenuItem(
             //    "Debug",

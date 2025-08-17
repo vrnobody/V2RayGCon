@@ -3749,15 +3749,14 @@ namespace VgcApis.Misc
             return Math.Max(Math.Min(value, max - 1), min);
         }
 
-        public static string RandomHex(int length)
+        public static string PickRandomChars(string chars, int length)
         {
             //  https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c
-            if (length <= 0)
+            if (string.IsNullOrEmpty(chars) || length <= 0)
             {
                 return string.Empty;
             }
 
-            const string chars = "0123456789abcdef";
             int charLen = chars.Length;
 
             int rndIndex;
@@ -3770,6 +3769,11 @@ namespace VgcApis.Misc
             }
 
             return sb.ToString();
+        }
+
+        public static string RandomHex(int length)
+        {
+            return PickRandomChars("0123456789abcdef", length);
         }
         #endregion
 

@@ -178,6 +178,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Content Include="Resources\Config\config_example.txt" />
     <Compile Include="Resources\Resx\I18N1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -136,7 +136,7 @@ namespace Luna.Controllers.FormEditorCtrl
         void OnMiSaveAslickHandler(object sender, EventArgs args)
         {
             var script = editorCtrl.GetCurrentEditorContent();
-            var err = VgcApis.Misc.UI.ShowSaveFileDialog(
+            var err = VgcApis.Misc.UI.SaveToFile(
                 VgcApis.Models.Consts.Files.LuaExt,
                 script,
                 out var filename

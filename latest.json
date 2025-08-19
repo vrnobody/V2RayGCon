@@ -1,10 +1,12 @@
 {
-  "version": "2.1.4.0",
-  "md5": "5690BB0F884E21051CC0ED8EA33179FF",
+  "version": "2.1.5.0",
+  "md5": "405FC9773563F1B588CD453E7F39A1A5",
   "warnings": [],
   "changes": [
-    "支持 tls.ech 和 reality.mldsa65",
-    "更新订阅无代理可用时，询问是否切换到直接下载",
-    "检查 core 更新超时从 60 秒调整为 20 秒"
+    "修复 win7 扫描二维码会崩溃的问题",
+    "修复 std.Misc:Choice() 传入空列表会崩溃的问题",
+    "添加工具箱窗口，用于生成密钥对、密码等",
+    "添加 std.Misc:ShowFormToolbox()",
+    "Text 编辑器添加示例菜单"
   ]
 }

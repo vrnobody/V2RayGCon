@@ -39,17 +39,19 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.AddTagToFormTitle(this);
 
             this.formTitle = this.Text;
-            LoadExamples();
+
+            configToolStripMenuItem.DropDownOpening += (s, a) => ReloadExamples();
         }
 
         #region config examples
         string appRoot = VgcApis.Misc.Utils.GetAppDir();
 
-        void LoadExamples()
+        void ReloadExamples()
         {
             var dirRoot = Path.Combine(appRoot, "3rd", "examples");
             var items = GenMenuForFolder(dirRoot);
             var menuRoot = configToolStripMenuItem.DropDownItems;
+            menuRoot.Clear();
             menuRoot.AddRange(items.ToArray());
         }
 

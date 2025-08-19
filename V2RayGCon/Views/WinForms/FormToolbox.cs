@@ -69,7 +69,7 @@ namespace V2RayGCon.Views.WinForms
                 }
             }
 
-            var allowedExtensions = new[] { ".txt", ".json", ".md" };
+            var allowedExtensions = new[] { ".txt", ".json", ".jsonc", ".md" };
             var files = Directory
                 .GetFiles(root, "*", SearchOption.TopDirectoryOnly)
                 .Where(file => allowedExtensions.Any(file.ToLower().EndsWith))

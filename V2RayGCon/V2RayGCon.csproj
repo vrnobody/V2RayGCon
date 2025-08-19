@@ -178,7 +178,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="Resources\Files\3rd\examples\Others\01.MITM.json" />
+    <None Include="Resources\Files\3rd\examples\Others\01.MITM.jsonc" />
     <None Include="Resources\Files\3rd\examples\Routing\01.CN-direct.json" />
     <Compile Include="Resources\Resx\I18N1.Designer.cs">
       <AutoGen>True</AutoGen>

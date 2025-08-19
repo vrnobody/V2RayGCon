@@ -9,7 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NeoLuna.Misc;
+using ScintillaNET;
 using V2RayGCon.Controllers.FormTextConfigEditorComponent;
+using V2RayGCon.Properties;
 using V2RayGCon.Resources.Resx;
 using static ScintillaNET.Style;
 
@@ -26,23 +28,86 @@ namespace V2RayGCon.Views.WinForms
         public static void ShowForm() => auxSiForm.ShowForm();
         #endregion
 
-        readonly string title;
+
+        readonly string formTitle;
 
         public FormToolbox()
         {
             InitializeComponent();
 
-            this.title = this.Text;
-
             VgcApis.Misc.UI.AutoSetFormIcon(this);
             VgcApis.Misc.UI.AddTagToFormTitle(this);
+
+            this.formTitle = this.Text;
+            LoadExamples();
         }
+
+        #region config examples
+        string appRoot = VgcApis.Misc.Utils.GetAppDir();
+
+        void LoadExamples()
+        {
+            var dirRoot = Path.Combine(appRoot, "3rd", "examples");
+            var items = GenMenuForFolder(dirRoot);
+            var menuRoot = configToolStripMenuItem.DropDownItems;
+            menuRoot.AddRange(items.ToArray());
+        }
+
+        List<ToolStripMenuItem> GenMenuForFolder(string root)
+        {
+            var r = new List<ToolStripMenuItem>();
+            var dirs = Directory.GetDirectories(root, "*", SearchOption.TopDirectoryOnly);
+            foreach (var dir in dirs)
+            {
+                var name = new DirectoryInfo(dir).Name;
+                var mi = new ToolStripMenuItem(name);
+                var subs = GenMenuForFolder(dir);
+                if (subs.Count > 0)
+                {
+                    mi.DropDownItems.AddRange(subs.ToArray());
+                    r.Add(mi);
+                }
+            }
+
+            var allowedExtensions = new[] { ".txt", ".json", ".md" };
+            var files = Directory
+                .GetFiles(root, "*", SearchOption.TopDirectoryOnly)
+                .Where(file => allowedExtensions.Any(file.ToLower().EndsWith))
+                .ToList();
+
+            foreach (var file in files)
+            {
+                var name = new FileInfo(file).Name;
+                var mi = new ToolStripMenuItem(name);
+
+                mi.Click += (s, a) =>
+                {
+                    try
+                    {
+                        var content = File.ReadAllText(file);
+                        var title =
+                            file.Length > appRoot.Length + 1
+                                ? file.Substring(appRoot.Length + 1)
+                                : file;
+                        SetResult($"Config - {title}", content);
+                    }
+                    catch (Exception ex)
+                    {
+                        VgcApis.Misc.UI.MsgBox(ex.Message);
+                    }
+                };
+                r.Add(mi);
+            }
+            return r;
+        }
+
+        #endregion
 
         #region helpers
 
         void SetTitle(string keyType)
         {
-            this.Text = $"{title} - {keyType}";
+            this.Text = $"{formTitle} - {keyType}";
         }
 
         void SetResult(string title, string result)
@@ -196,19 +261,7 @@ namespace V2RayGCon.Views.WinForms
 
         #endregion
 
-        #region examples
-        private void fragmentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            rtBoxOutput.Text = Misc.Caches.Jsons.LoadExample("frag01");
-            SetTitle("Fragment - #01");
-        }
 
-        private void routingCNToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            rtBoxOutput.Text = Misc.Caches.Jsons.LoadExample("routeCnDirect01");
-            SetTitle("Routing CN");
-        }
-        #endregion
 
         #region menu tool
         private void scanQRCodeToolStripMenuItem_Click(object sender, EventArgs e)

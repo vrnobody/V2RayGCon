@@ -62,41 +62,6 @@ namespace V2RayGCon.Resources.Resx {
         
         /// <summary>
         ///   查找类似 {
-        ///  &quot;routeCn01&quot;: {},
-        ///  &quot;frag01&quot;: {
-        ///    &quot;outbounds&quot;: [
-        ///      {
-        ///        &quot;tag&quot;: &quot;agentout&quot;,
-        ///        &quot;proxySettings&quot;: {
-        ///          &quot;tag&quot;: &quot;fragment&quot;,
-        ///          &quot;transportLayer&quot;: true
-        ///        }
-        ///      },
-        ///      {
-        ///        &quot;tag&quot;: &quot;fragment&quot;,
-        ///        &quot;protocol&quot;: &quot;freedom&quot;,
-        ///        &quot;settings&quot;: {
-        ///          &quot;fragment&quot;: {
-        ///            &quot;packets&quot;: &quot;1-3&quot;,
-        ///            &quot;length&quot;: &quot;100-200&quot;,
-        ///            &quot;interval&quot;: &quot;10-20&quot;,
-        ///            &quot;maxSplit&quot;: &quot;100-200&quot;
-        ///          }
-        ///        }
-        ///      }
-        ///    ]
-        ///  }
-        ///}
-        /// 的本地化字符串。
-        /// </summary>
-        internal static string config_example {
-            get {
-                return ResourceManager.GetString("config_example", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 {
         ///  &quot;log&quot;: {
         ///    &quot;loglevel&quot;: &quot;warning&quot;
         ///  },

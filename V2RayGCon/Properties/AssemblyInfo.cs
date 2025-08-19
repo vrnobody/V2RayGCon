@@ -33,11 +33,12 @@ using System.Runtime.InteropServices;
 // 可以指定所有值，也可以使用以下所示的 "*" 预置版本号和修订号
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.1.4.6")]
+[assembly: AssemblyVersion("2.1.4.7")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 /*
 
+v2.1.4.7 Refactor config example feature in FormToolbox.
 v2.1.4.6 Fix crash bug in std.Misc:Choice().
 v2.1.4.5 Rename FormKeyGen to FormToolbox.
          Add encode/decode tools to FormToolbox.

@@ -178,7 +178,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Content Include="Resources\Config\config_example.txt" />
+    <None Include="Resources\Files\3rd\examples\Others\01.MITM.json" />
+    <None Include="Resources\Files\3rd\examples\Routing\01.CN-direct.json" />
     <Compile Include="Resources\Resx\I18N1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -408,6 +409,7 @@
     <Compile Include="Views\WinForms\FormWebUI.Designer.cs">
       <DependentUpon>FormWebUI.cs</DependentUpon>
     </Compile>
+    <None Include="Resources\Files\3rd\examples\Fragment\01.head-only.json" />
     <None Include="Resources\Icon\TaskTray\Toolbox_16x.png" />
     <EmbeddedResource Include="Resources\Resx\StrConst.resx">
       <Generator>ResXFileCodeGenerator</Generator>

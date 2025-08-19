@@ -1,0 +1,25 @@
+﻿{
+    "outbounds": [
+        {
+            "tag": "agentout"
+        },
+        {
+            "tag": "direct",
+            "protocol": "freedom"
+        }
+    ],
+    "routing": {
+        "rules": [
+            {
+                "domain": [
+                    "geosite:cn"
+                ],
+                "ip": [
+                    "geoip:cn",
+                    "geoip:private"
+                ],
+                "outboundTag": "direct"
+            }
+        ]
+    }
+}

@@ -92,8 +92,8 @@ namespace V2RayGCon.Services
             // ShowPlugin(@"ProxySetter");
 
             // Views.WinForms.FormLog.ShowForm();
-            Views.WinForms.FormMain.ShowForm();
-            // Views.WinForms.FormKeyGen.ShowForm();
+            // Views.WinForms.FormMain.ShowForm();
+            Views.WinForms.FormToolbox.ShowForm();
 
             //notifier.InjectDebugMenuItem(new ToolStripMenuItem(
             //    "Debug",

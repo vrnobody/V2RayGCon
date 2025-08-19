@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using V2RayGCon.Resources.Resx;
 using V2RayGCon.Services;
+using static ScintillaNET.Style;
 
 namespace V2RayGCon.Views.WinForms
 {
@@ -148,6 +152,96 @@ namespace V2RayGCon.Views.WinForms
         }
         #endregion
 
+
+        #region config examples
+        private readonly string appRoot = VgcApis.Misc.Utils.GetAppDir();
+
+        void ReloadExamples()
+        {
+            var dirRoot = Path.Combine(appRoot, "3rd", "examples");
+            var items = GenMenuForFolder(dirRoot);
+            var menuRoot = examplesToolStripMenuItem.DropDownItems;
+            menuRoot.Clear();
+            if (items.Count > 0)
+            {
+                menuRoot.AddRange(items.ToArray());
+                return;
+            }
+            var empty = new ToolStripMenuItem(I18N.Empty) { Enabled = false };
+            menuRoot.Add(empty);
+        }
+
+        List<ToolStripMenuItem> GenMenuForFolder(string root)
+        {
+            var r = new List<ToolStripMenuItem>();
+            if (!Directory.Exists(root))
+            {
+                return r;
+            }
+            var dirs = Directory.GetDirectories(root, "*", SearchOption.TopDirectoryOnly);
+            foreach (var dir in dirs)
+            {
+                var name = new DirectoryInfo(dir).Name;
+                var mi = new ToolStripMenuItem(name);
+                var subs = GenMenuForFolder(dir);
+                if (subs.Count > 0)
+                {
+                    mi.DropDownItems.AddRange(subs.ToArray());
+                    r.Add(mi);
+                }
+            }
+
+            var allowedExtensions = new[]
+            {
+                ".txt",
+                ".json",
+                ".jsonc",
+                ".md",
+                ".yml",
+                ".yaml",
+                ".toml",
+                ".ini",
+            };
+            var files = Directory
+                .GetFiles(root, "*", SearchOption.TopDirectoryOnly)
+                .Where(file => allowedExtensions.Any(file.ToLower().EndsWith))
+                .ToList();
+
+            foreach (var file in files)
+            {
+                var name = new FileInfo(file).Name;
+                var mi = new ToolStripMenuItem(name);
+
+                mi.Click += (s, a) =>
+                {
+                    if (
+                        ctrl.IsConfigChanged()
+                        && !VgcApis.Misc.UI.Confirm(I18N.ConfirmLoadNewServer)
+                    )
+                    {
+                        return;
+                    }
+
+                    try
+                    {
+                        var content = File.ReadAllText(file);
+                        ctrl.LoadConfig(content);
+                        SetTitle(file);
+                    }
+                    catch (Exception ex)
+                    {
+                        VgcApis.Misc.UI.MsgBox(ex.Message);
+                    }
+                };
+                r.Add(mi);
+            }
+            return r;
+        }
+
+        #endregion
+
+
+
         #region UI
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -175,6 +269,11 @@ namespace V2RayGCon.Views.WinForms
             {
                 ctrl.OverwriteCurServer();
             }
+        }
+
+        private void examplesToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            ReloadExamples();
         }
 
         private void loadFileToolStripMenuItem_Click(object sender, EventArgs e)

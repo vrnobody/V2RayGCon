@@ -28,7 +28,6 @@ namespace V2RayGCon.Views.WinForms
         public static void ShowForm() => auxSiForm.ShowForm();
         #endregion
 
-
         readonly string formTitle;
 
         public FormToolbox()
@@ -39,71 +38,7 @@ namespace V2RayGCon.Views.WinForms
             VgcApis.Misc.UI.AddTagToFormTitle(this);
 
             this.formTitle = this.Text;
-
-            configToolStripMenuItem.DropDownOpening += (s, a) => ReloadExamples();
         }
-
-        #region config examples
-        string appRoot = VgcApis.Misc.Utils.GetAppDir();
-
-        void ReloadExamples()
-        {
-            var dirRoot = Path.Combine(appRoot, "3rd", "examples");
-            var items = GenMenuForFolder(dirRoot);
-            var menuRoot = configToolStripMenuItem.DropDownItems;
-            menuRoot.Clear();
-            menuRoot.AddRange(items.ToArray());
-        }
-
-        List<ToolStripMenuItem> GenMenuForFolder(string root)
-        {
-            var r = new List<ToolStripMenuItem>();
-            var dirs = Directory.GetDirectories(root, "*", SearchOption.TopDirectoryOnly);
-            foreach (var dir in dirs)
-            {
-                var name = new DirectoryInfo(dir).Name;
-                var mi = new ToolStripMenuItem(name);
-                var subs = GenMenuForFolder(dir);
-                if (subs.Count > 0)
-                {
-                    mi.DropDownItems.AddRange(subs.ToArray());
-                    r.Add(mi);
-                }
-            }
-
-            var allowedExtensions = new[] { ".txt", ".json", ".jsonc", ".md" };
-            var files = Directory
-                .GetFiles(root, "*", SearchOption.TopDirectoryOnly)
-                .Where(file => allowedExtensions.Any(file.ToLower().EndsWith))
-                .ToList();
-
-            foreach (var file in files)
-            {
-                var name = new FileInfo(file).Name;
-                var mi = new ToolStripMenuItem(name);
-
-                mi.Click += (s, a) =>
-                {
-                    try
-                    {
-                        var content = File.ReadAllText(file);
-                        var title =
-                            file.Length > appRoot.Length + 1
-                                ? file.Substring(appRoot.Length + 1)
-                                : file;
-                        SetResult($"Config - {title}", content);
-                    }
-                    catch (Exception ex)
-                    {
-                        VgcApis.Misc.UI.MsgBox(ex.Message);
-                    }
-                };
-                r.Add(mi);
-            }
-            return r;
-        }
-
-        #endregion
 
         #region helpers
 
@@ -161,8 +96,6 @@ namespace V2RayGCon.Views.WinForms
 
         #region key gen.
 
-
-
         private void tLSECHToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TryExecCoreCmd("TLS ECH", "tls ech");
@@ -189,7 +122,6 @@ namespace V2RayGCon.Views.WinForms
         }
 
         #endregion
-
 
         #region file menu
 
@@ -262,8 +194,6 @@ namespace V2RayGCon.Views.WinForms
         }
 
         #endregion
-
-
 
         #region menu tool
         private void scanQRCodeToolStripMenuItem_Click(object sender, EventArgs e)

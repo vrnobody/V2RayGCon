@@ -49,7 +49,6 @@
             this.alphabetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.numAlphabetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.numAlphabetSymbolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.configToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.base64ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,8 +69,7 @@
             this.fileToolStripMenuItem,
             this.generateToolStripMenuItem,
             this.passwordToolStripMenuItem,
-            this.toolToolStripMenuItem,
-            this.configToolStripMenuItem});
+            this.toolToolStripMenuItem});
             resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Name = "menuStrip1";
             // 
@@ -204,11 +202,6 @@
             resources.ApplyResources(this.numAlphabetSymbolToolStripMenuItem, "numAlphabetSymbolToolStripMenuItem");
             this.numAlphabetSymbolToolStripMenuItem.Click += new System.EventHandler(this.numAlphabetSymbolToolStripMenuItem_Click);
             // 
-            // configToolStripMenuItem
-            // 
-            this.configToolStripMenuItem.Name = "configToolStripMenuItem";
-            resources.ApplyResources(this.configToolStripMenuItem, "configToolStripMenuItem");
-            // 
             // toolToolStripMenuItem
             // 
             this.toolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -318,7 +311,6 @@
         private System.Windows.Forms.ToolStripMenuItem alphabetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem numAlphabetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem numAlphabetSymbolToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem configToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hexToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem decodeToolStripMenuItem;

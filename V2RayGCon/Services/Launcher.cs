@@ -94,6 +94,7 @@ namespace V2RayGCon.Services
             // Views.WinForms.FormLog.ShowForm();
             // Views.WinForms.FormMain.ShowForm();
             Views.WinForms.FormToolbox.ShowForm();
+            Views.WinForms.FormTextConfigEditor.ShowEmptyConfig();
 
             //notifier.InjectDebugMenuItem(new ToolStripMenuItem(
             //    "Debug",
@@ -103,13 +104,9 @@ namespace V2RayGCon.Services
             //        servers.DbgFastRestartTest(100);
             //    }));
 
-            // new Views.WinForms.FormConfiger(@"{}");
-            // new Views.WinForms.FormConfigTester();
+
             // Views.WinForms.FormOption.GetForm();
-            // Views.WinForms.FormMain.ShowForm();
-            // Views.WinForms.FormLog.ShowForm();
             // setting.WakeupAutorunServer();
-            // Views.WinForms.FormSimpleEditor.GetForm();
             // Views.WinForms.FormDownloadCore.GetForm();
         }
 

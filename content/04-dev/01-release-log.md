@@ -5,8 +5,12 @@ draft: false
 weight: 10
 ---
 
-##### `v2.1.5.0`（还没发布）
-修复 Win7 扫描二维码时崩溃的问题  
+##### `v2.1.5.0` 20250819
+修复 win7 扫描二维码会崩溃的问题  
+修复 std.Misc:Choice() 传入空列表会崩溃的问题  
+添加工具箱窗口，用于生成密钥对、密码等  
+添加 std.Misc:ShowFormToolbox()  
+Text 编辑器添加示例菜单  
 
 ##### `v2.1.4.0`
 支持 tls.ech 和 reality.mldsa65  
